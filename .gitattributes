@@ -10,7 +10,7 @@
 *.sln       eol=crlf
 *.txt       eol=crlf
 *.fbtpl     eol=crlf
-*.rc eol=crlf
+*.rc        eol=crlf
 
 # Standard to msysgit
 *.doc	 diff=astextplain
