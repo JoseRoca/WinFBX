@@ -11,6 +11,8 @@
 *.txt       eol=crlf
 *.fbtpl     eol=crlf
 *.rc        eol=crlf
+*.zip       eol=crlf
+*.rar       eol=crlf
 
 # Standard to msysgit
 *.doc	 diff=astextplain
