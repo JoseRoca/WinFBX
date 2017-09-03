@@ -11,8 +11,18 @@
 *.txt       eol=crlf
 *.fbtpl     eol=crlf
 *.rc        eol=crlf
-*.zip       eol=crlf
-*.rar       eol=crlf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.gif binary
+*.bmp binary
+*.ico binary
+*.zip binary
+*.rar binary
+*.exe binary
+*.dll binary
+*.lib binary
 
 # Standard to msysgit
 *.doc	 diff=astextplain
