@@ -1,0 +1,59 @@
+//=============================================================================
+// Application icons
+//=============================================================================
+
+// Icon Identifiers
+#define IDI_TLB_LOGO_32       100
+#define IDI_TLB_LOGO_48       101
+
+// Icon with lowest ID value is placed first to ensure that
+// the application icon remains consistent on all systems.
+IDI_TLB_LOGO_32               ICON "Resources/TLB_LOGO_32.ico"
+IDI_TLB_LOGO_48               ICON "Resources/TLB_LOGO_48.ico"
+
+//=============================================================================
+// PNG icons
+//=============================================================================
+
+IDI_TLB_OPEN_48               RCDATA "Resources/TLB_OPEN_48.png"
+IDI_TLB_COLLAPSE_48           RCDATA "Resources/TLB_COLLAPSE_48.png"
+IDI_TLB_EXPAND_48             RCDATA "Resources/TLB_EXPAND_48.png"
+IDI_TLB_EVENTS_48             RCDATA "Resources/TLB_EVENTS_48.png"
+IDI_TLB_SAVE_48               RCDATA "Resources/TLB_SAVE_48.png"
+IDI_TLB_INFO_48               RCDATA "Resources/TLB_INFO_48.png"
+IDI_TLB_VIEW_48               RCDATA "Resources/TLB_VIEW_48.png"
+IDI_TLB_EXIT_48               RCDATA "Resources/TLB_EXIT_48.png"
+
+//=============================================================================
+// Manifest
+//=============================================================================
+
+1 24 "Resources/WThemes.xml"
+
+//=============================================================================
+// Application Version Information.
+//=============================================================================
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION 1, 0, 0, 0
+PRODUCTVERSION 1, 0, 0, 0
+// FILEOS VOS_WINDOWS32
+FILETYPE VFT_APP
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904E4"
+    BEGIN
+      VALUE "CompanyName",      "José Roca\0"
+      VALUE "FileDescription",  "Application\0"
+      VALUE "FileVersion",      "Version 1.00\0"
+      VALUE "InternalName",     "TLB_100"
+      VALUE "OriginalFilename", "TLB_100.EXE\0"
+      VALUE "LegalCopyright",   "Coded in 2016 by José Roca\0"
+      VALUE "LegalTrademarks",  "\0"
+      VALUE "ProductName",      "TypeLib Browser\0"
+      VALUE "ProductVersion",   "1.00\0"
+      VALUE "Comments",         "Typelib browser and interface generator for FreeBASIC\0"
+    END
+  END
+END
