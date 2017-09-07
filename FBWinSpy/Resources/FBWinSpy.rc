@@ -1,0 +1,46 @@
+//=============================================================================
+// Application icons
+//=============================================================================
+
+// Icon Identifiers
+#define IDI_FBWINSPY_32       100
+#define IDI_FBWINSPY_48       101
+
+// Icon with lowest ID value is placed first to ensure that
+// the application icon remains consistent on all systems.
+IDI_FBWINSPY_32               ICON "Resources/FBWINSPY_32.ico"
+IDI_FBWINSPY_48               ICON "Resources/FBWINSPY_48.ico"
+
+//=============================================================================
+// Manifest
+//=============================================================================
+
+1 24 "Resources/WThemes.xml"
+
+//=============================================================================
+// Application Version Information.
+//=============================================================================
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION 1, 0, 0, 0
+PRODUCTVERSION 1, 0, 0, 0
+// FILEOS VOS_WINDOWS32
+FILETYPE VFT_APP
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904E4"
+    BEGIN
+      VALUE "CompanyName",      "José Roca\0"
+      VALUE "FileDescription",  "Application\0"
+      VALUE "FileVersion",      "Version 1.00\0"
+      VALUE "InternalName",     "FBWINSPY"
+      VALUE "OriginalFilename", "FBWINSPY.EXE\0"
+      VALUE "LegalCopyright",   "Coded in 2017 by José Roca\0"
+      VALUE "LegalTrademarks",  "\0"
+      VALUE "ProductName",      "Windows Spy\0"
+      VALUE "ProductVersion",   "1.00\0"
+      VALUE "Comments",         "Windows Spy for FreeBASIC\0"
+    END
+  END
+END
