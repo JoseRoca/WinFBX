@@ -12,8 +12,15 @@
 #pragma once
 #include once "windows.bi"
 #include once "win/ole2.bi"
+#include once "Afx/CWSTR.inc"
+#INCLUDE ONCE "Afx/CDispInvoke.inc"
 
 NAMESPACE Afx
+
+' // The definition for BSTR in the FreeBASIC headers was inconveniently changed to WCHAR
+#ifndef AFX_BSTR
+   #define AFX_BSTR WSTRING PTR
+#endif
 
 ' ########################################################################################
 #ifndef __Afx_IUnknown_INTERFACE_DEFINED__
@@ -317,6 +324,8 @@ END TYPE
 TYPE CCLRHost
 
 Private:
+   m_bUninitCOM AS BOOLEAN
+   m_pCoreeLib AS ANY PTR
    m_pCorRuntimeHost AS Afx_ICorRuntimeHost PTR
    m_pAppDomain AS Afx__AppDomain PTR
 
@@ -328,10 +337,10 @@ Public:
    DECLARE PROPERTY CurrentDomain () AS Afx__AppDomain PTR
    DECLARE FUNCTION CreateDomain (BYREF wszFriendlyName AS WSTRING, BYVAL pIdentityArray AS IUnknown PTR) AS Afx__AppDomain PTR
    DECLARE FUNCTION UnloadDomain (BYVAL pDomain AS Afx__AppDomain PTR) AS HRESULT
-   DECLARE FUNCTION CreateInstance (BYVAL AssemblyName AS Afx_BSTR, BYVAL typeName AS Afx_BSTR) AS Afx_IDIspatch PTR
-   DECLARE FUNCTION CreateInstance (BYVAL pDomain AS Afx__AppDomain PTR, BYVAL AssemblyName AS Afx_BSTR, BYVAL typeName AS Afx_BSTR) AS Afx_IDIspatch PTR
-   DECLARE FUNCTION CreateInstanceFrom (BYVAL AssemblyName AS Afx_BSTR, BYVAL typeName AS Afx_BSTR) AS Afx_IDIspatch PTR
-   DECLARE FUNCTION CreateInstanceFrom (BYVAL pDomain AS Afx__AppDomain PTR, BYVAL AssemblyName AS Afx_BSTR, BYVAL typeName AS Afx_BSTR) AS Afx_IDIspatch PTR
+   DECLARE FUNCTION CreateInstance (BYREF AssemblyName AS CBSTR, BYREF typeName AS CBSTR) AS IDispatch PTR
+   DECLARE FUNCTION CreateInstance (BYVAL pDomain AS Afx__AppDomain PTR, BYREF AssemblyName AS CBSTR, BYREF typeName AS CBSTR) AS IDispatch PTR
+   DECLARE FUNCTION CreateInstanceFrom (BYREF AssemblyName AS CBSTR, BYREF typeName AS CBSTR) AS IDispatch PTR
+   DECLARE FUNCTION CreateInstanceFrom (BYVAL pDomain AS Afx__AppDomain PTR, BYREF AssemblyName AS CBSTR, BYREF typeName AS CBSTR) AS IDispatch PTR
 
 END TYPE
 ' ########################################################################################
@@ -341,17 +350,20 @@ END TYPE
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CCLRHost (BYREF wszVersion AS WSTRING = "v4.0.30319")
 
+   ' // Initialize the COM library
+   DIM hr AS HRESULT = CoInitialize(NULL)
+   IF hr = S_OK OR hr = S_FALSE THEN m_bUninitCOM = TRUE
+
    ' // Create an instance of the ICLRMetaHost interface
    DIM pCLRMetaHost AS Afx_ICLRMetaHost PTR
    DIM CLSID_CLRMetaHost_ AS GUID = TYPE(&h9280188d, &h0e8e, &h4867, {&hb3, &h0c, &h7f, &ha8, &h38, &h84, &he8, &hde})
    DIM IID_ICLRMetaHost_ AS GUID = TYPE(&hD332DB9E, &hB9B3, &h4125, {&h82, &h07, &hA1, &h48, &h84, &hF5, &h32, &h16})
-   DIM AS ANY PTR pLib = DyLibLoad("mscoree.dll")
-   IF pLib = 0 THEN EXIT CONSTRUCTOR
+   m_pCoreeLib = DyLibLoad("mscoree.dll")
+   IF m_pCoreeLib = 0 THEN EXIT CONSTRUCTOR
    DIM pProc AS FUNCTION (BYVAL clsid AS REFCLSID, BYVAL riid AS REFIID, BYVAL ppInterface AS LPVOID) AS HRESULT
-   pProc = DyLibSymbol(pLib, "CLRCreateInstance")
+   pProc = DyLibSymbol(m_pCoreeLib, "CLRCreateInstance")
    IF pProc = 0 THEN EXIT CONSTRUCTOR
-   DIM hr AS HRESULT = pProc(@CLSID_CLRMetaHost_, @IID_ICLRMetaHost_, @pCLRMetaHost)
-   DyLibFree(pLib)
+   hr = pProc(@CLSID_CLRMetaHost_, @IID_ICLRMetaHost_, @pCLRMetaHost)
    IF hr <> S_OK THEN SetLastError(E_FAIL) : EXIT CONSTRUCTOR
 
    ' // Gets the ICLRRuntimeInfo interface that corresponds to a particular version of
@@ -380,8 +392,11 @@ PRIVATE CONSTRUCTOR CCLRHost (BYREF wszVersion AS WSTRING = "v4.0.30319")
    ' // Start the runtime (this also creates a default AppDomain)
    hr = m_pCorRuntimeHost->Start
    ' // Get the default AppDomain
-   IF hr = S_OK THEN hr = m_pCorRuntimeHost->GetDefaultDomain(cast(ANY PTR, @m_pAppDomain))
-   IF hr <> S_OK THEN SetLastError(hr)
+   DIM pUnk AS Afx_IUnknown PTR
+   IF hr = S_OK THEN hr = m_pCorRuntimeHost->GetDefaultDomain(cast(ANY PTR, @pUnk))
+   IF hr <> S_OK THEN SetLastError(hr) : EXIT CONSTRUCTOR
+   DIM IID__AppDomain AS GUID = TYPE(&h05F696DC, &h2B29, &h3663, {&hAD, &h8B, &hC4, &h38, &h9C, &hF2, &hA7, &h13})
+   pUnk->QueryInterface(@IID__AppDomain, @m_pAppDomain)
 
 END CONSTRUCTOR
 ' ========================================================================================
@@ -395,6 +410,9 @@ PRIVATE DESTRUCTOR CCLRHost
    ' // Cleanup
    IF m_pAppDomain THEN m_pAppDomain->Release
    IF m_pCorRuntimeHost THEN m_pCorRuntimeHost->Release
+   IF m_pCoreeLib THEN DyLibFree(m_pCoreeLib)
+   ' // Free the COM library
+   IF m_bUninitCOM THEN CoUninitialize
 END DESTRUCTOR
 ' ========================================================================================
 
@@ -450,7 +468,7 @@ END FUNCTION
 ' ========================================================================================
 ' Creates a new instance of the specified type defined in the specified assembly.
 ' ========================================================================================
-PRIVATE FUNCTION CCLRHost.CreateInstance (BYVAL AssemblyName AS Afx_BSTR, BYVAL typeName AS Afx_BSTR) AS Afx_IDIspatch PTR
+PRIVATE FUNCTION CCLRHost.CreateInstance (BYREF AssemblyName AS CBSTR, BYREF typeName AS CBSTR) AS IDispatch PTR
    ' // The default domain must exist
    IF m_pAppDomain = NULL THEN SetLastError(E_FAIL) : RETURN NULL
    ' // Create the instance
@@ -462,14 +480,14 @@ PRIVATE FUNCTION CCLRHost.CreateInstance (BYVAL AssemblyName AS Afx_BSTR, BYVAL 
    hr = pObjectHandle->Unwrap(@vObj)
    pObjectHandle->Release
    IF hr <> S_OK THEN RETURN NULL
-   RETURN cast(ANY PTR, vObj.pdispVal)
+   RETURN vObj.pdispVal
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
 ' Creates a new instance of the specified type defined in the specified assembly.
 ' ========================================================================================
-PRIVATE FUNCTION CCLRHost.CreateInstance (BYVAL pDomain AS Afx__AppDomain PTR, BYVAL AssemblyName AS Afx_BSTR, BYVAL typeName AS Afx_BSTR) AS Afx_IDIspatch PTR
+PRIVATE FUNCTION CCLRHost.CreateInstance (BYVAL pDomain AS Afx__AppDomain PTR, BYREF AssemblyName AS CBSTR, BYREF typeName AS CBSTR) AS IDispatch PTR
    IF pDomain = NULL THEN SetLastError(E_FAIL) : RETURN NULL
    ' // Create the instance
    DIM pObjectHandle AS Afx__ObjectHandle PTR
@@ -480,14 +498,14 @@ PRIVATE FUNCTION CCLRHost.CreateInstance (BYVAL pDomain AS Afx__AppDomain PTR, B
    hr = pObjectHandle->Unwrap(@vObj)
    pObjectHandle->Release
    IF hr <> S_OK THEN RETURN NULL
-   RETURN cast(ANY PTR, vObj.pdispVal)
+   RETURN vObj.pdispVal
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
 ' Creates a new instance of the specified type defined in the specified assembly file.
 ' ========================================================================================
-PRIVATE FUNCTION CCLRHost.CreateInstanceFrom (BYVAL AssemblyName AS Afx_BSTR, BYVAL typeName AS Afx_BSTR) AS Afx_IDIspatch PTR
+PRIVATE FUNCTION CCLRHost.CreateInstanceFrom (BYREF AssemblyName AS CBSTR, BYREF typeName AS CBSTR) AS IDispatch PTR
    ' // The default domain must exist
    IF m_pAppDomain = NULL THEN SetLastError(E_FAIL) : RETURN NULL
    ' // Create the instance
@@ -499,14 +517,14 @@ PRIVATE FUNCTION CCLRHost.CreateInstanceFrom (BYVAL AssemblyName AS Afx_BSTR, BY
    hr = pObjectHandle->Unwrap(@vObj)
    pObjectHandle->Release
    IF hr <> S_OK THEN RETURN NULL
-   RETURN cast(ANY PTR, vObj.pdispVal)
+   RETURN vObj.pdispVal
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
 ' Creates a new instance of the specified type defined in the specified assembly file.
 ' ========================================================================================
-PRIVATE FUNCTION CCLRHost.CreateInstanceFrom (BYVAL pDomain AS Afx__AppDomain PTR, BYVAL AssemblyName AS Afx_BSTR, BYVAL typeName AS Afx_BSTR) AS Afx_IDIspatch PTR
+PRIVATE FUNCTION CCLRHost.CreateInstanceFrom (BYVAL pDomain AS Afx__AppDomain PTR, BYREF AssemblyName AS CBSTR, BYREF typeName AS CBSTR) AS IDispatch PTR
    IF pDomain = NULL THEN SetLastError(E_FAIL) : RETURN NULL
    ' // Create the instance
    DIM pObjectHandle AS Afx__ObjectHandle PTR
@@ -517,7 +535,7 @@ PRIVATE FUNCTION CCLRHost.CreateInstanceFrom (BYVAL pDomain AS Afx__AppDomain PT
    hr = pObjectHandle->Unwrap(@vObj)
    pObjectHandle->Release
    IF hr <> S_OK THEN RETURN NULL
-   RETURN cast(ANY PTR, vObj.pdispVal)
+   RETURN vObj.pdispVal
 END FUNCTION
 ' ========================================================================================
 
