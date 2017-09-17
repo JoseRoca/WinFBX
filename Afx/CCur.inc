@@ -72,7 +72,7 @@ Public:
    DECLARE CONSTRUCTOR (BYVAL fSrc AS SINGLE)
    DECLARE CONSTRUCTOR (BYVAL dSrc AS DOUBLE)
    DECLARE CONSTRUCTOR (BYVAL dSrc AS DECIMAL)
-   DECLARE CONSTRUCTOR (BYREF pwszSrc AS WSTRING)
+   DECLARE CONSTRUCTOR (BYREF szSrc AS STRING)
    DECLARE CONSTRUCTOR (BYVAL varSrc AS VARIANT)
    DECLARE CONSTRUCTOR (BYVAL pDispSrc AS IDispatch PTR)
    DECLARE DESTRUCTOR
@@ -88,7 +88,7 @@ Public:
    DECLARE OPERATOR LET (BYVAL fSrc AS SINGLE)
    DECLARE OPERATOR LET (BYVAL dSrc AS DOUBLE)
    DECLARE OPERATOR LET (BYVAL dSrc AS DECIMAL)
-   DECLARE OPERATOR LET (BYREF pwszSrc AS WSTRING)
+   DECLARE OPERATOR LET (BYREF szSrc AS STRING)
    DECLARE OPERATOR LET (BYVAL varSrc AS VARIANT)
    DECLARE OPERATOR LET (BYVAL pDispSrc AS IDispatch PTR)
    DECLARE OPERATOR += (BYREF cur AS CCUR)
@@ -143,37 +143,37 @@ END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CCur (BYVAL bSrc AS BYTE)
-   m_cur.int64 = bSrc
+   this.SetInteger(bSrc)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CCur (BYVAL ubSrc AS UBYTE)
-   m_cur.int64 = ubSrc
+   this.SetInteger(ubSrc)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CCur (BYVAL sSrc AS SHORT)
-   m_cur.int64 = sSrc
+   this.SetInteger(sSrc)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CCur (BYVAL usSrc AS USHORT)
-   m_cur.int64 = usSrc
+   this.SetInteger(usSrc)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CCur (BYVAL lSrc AS LONG)
-   m_cur.int64 = lSrc
+   this.SetInteger(lSrc)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CCur (BYVAL ulSrc AS ULONG)
-   m_cur.int64 = ulSrc
+   this.SetInteger(ulSrc)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CCur (BYVAL fSrc AS SINGLE)
-   m_cur.int64 = fSrc
+   VarCyFromR4(fSrc, @m_cur)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
@@ -187,9 +187,8 @@ PRIVATE CONSTRUCTOR CCur (BYVAL dSrc AS DECIMAL)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CCur (BYREF pwszSrc AS WSTRING)
-   VarCyFromStr(@pwszSrc, GetThreadLocale(), LOCALE_NOUSEROVERRIDE, @m_cur)
-   m_Cur.int64 /= CY_SCALE
+PRIVATE CONSTRUCTOR CCur (BYREF szSrc AS STRING)
+   VarCyFromR8(VAL(szSrc), @m_cur)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
@@ -314,9 +313,8 @@ PRIVATE OPERATOR CCur.LET (BYVAL dSrc AS DECIMAL)
    VarCyFromDec(@dSrc, @m_cur)
 END OPERATOR
 ' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYREF pwszSrc AS WSTRING)
-   VarCyFromStr(@pwszSrc, GetThreadLocale(), LOCALE_NOUSEROVERRIDE, @m_cur)
-   m_Cur.int64 /= CY_SCALE
+PRIVATE OPERATOR CCur.LET (BYREF szSrc AS STRING)
+   VarCyFromR8(VAL(szSrc), @m_cur)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
