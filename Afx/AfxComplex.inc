@@ -38,61 +38,12 @@
 
 NAMESPACE Afx
 
-' ########################################################################################
-' Additional math functions.
-' ########################################################################################
-
+#ifndef DBL_EPSILON
 #define DBL_EPSILON      2.2204460492503131e-016   ' /* smallest such that 1.0+DBL_EPSILON != 1.0 */
+#endif
+#ifndef SQRT_DBL_EPSILON
 #define SQRT_DBL_EPSILON 1.4901161193847656e-08
-
-' ========================================================================================
-' A function returns this value when the result of a mathematical operation yields a value
-' that is too large in magnitude to be representable with its return type. This is one of
-' the possible range errors, and is signaled by setting errno to ERANGE.
-' Actually, functions may either return a positive or a negative HUGE_VAL (HUGE_VAL or -HUGE_VAL)
-' to indicate the sign of the result.
-' Returns: 1.#INF
-' Note: Use HUGE_VALF, that is defined as #define HUGE_VALF (1.0F/0.0F) and returns the same value.
-' ========================================================================================
-PRIVATE FUNCTION HUGE_VAL () AS DOUBLE
-   DIM hLib AS HMODULE, phuge AS DOUBLE PTR
-   hLib = LoadLibraryW("msvcrt.dll")
-   IF hLib THEN
-      phuge = cast(DOUBLE PTR, GetProcAddress(hLib, "_HUGE"))
-      IF phuge THEN FUNCTION = *phuge
-      FreeLibrary hLib
-   END IF
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' * Computes the value of exp(x)-1 in a way that is accurate for small x.
-' The true value of exp(1e-10) - 1 is 1.00000000005e-010 to about 32 significant digits.
-' This example shows the superiority of expm1 in this case.
-' expm1(1e-10)
-'   1.00000000005e-010
-' exp(1e-10) - 1
-'   1.000000082740371e-010
-' ========================================================================================
-PRIVATE FUNCTION expm1 (BYVAL x AS DOUBLE) AS DOUBLE
-   DIM AS DOUBLE i, sum, term
-   IF fabs(x) < M_LN2 THEN
-      ' /* Compute the Taylor series S = x + (1/2!) x^2 + (1/3!) x^3 + ... */
-      i = 1
-      sum = x
-      term = x / 1
-      DO
-         i += 1
-         term *= x / i
-         sum += term
-         IF fabs(term) <= fabs(sum) * DBL_EPSILON THEN EXIT DO
-      LOOP
-      FUNCTION = sum
-   ELSE
-      FUNCTION = exp(x) - 1
-   END IF
-END FUNCTION
-' ========================================================================================
+#endif
 
 ' ========================================================================================
 ' * Calculates the inverse hyperbolic cosine.
@@ -100,14 +51,14 @@ END FUNCTION
 '   DIM AS double pi = 3.1415926535
 '   DIM AS double x, y
 '   x = cosh(pi / 4)
-'   y = acosh(x)
+'   y = AfxArcCosH(x)
 '   print "cosh = ", pi/4, x
 '   print "acosh = ", x, y
 ' Output:
 '   cosh =         0.785398163375              1.324609089232506
 '   acosh =        1.324609089232506           0.7853981633749999
 ' ========================================================================================
-PRIVATE FUNCTION acosh (BYVAL x AS DOUBLE) AS DOUBLE
+PRIVATE FUNCTION AfxArcCosH (BYVAL x AS DOUBLE) AS DOUBLE
    DIM t AS DOUBLE
    IF x > 1.0 / SQRT_DBL_EPSILON THEN
       FUNCTION = log(x) + M_LN2
@@ -123,7 +74,6 @@ PRIVATE FUNCTION acosh (BYVAL x AS DOUBLE) AS DOUBLE
    END IF
 END FUNCTION
 ' ========================================================================================
-#define ArcCosH acosh
 
 ' ========================================================================================
 ' * Calculates the inverse hyperbolic sine.
@@ -138,7 +88,7 @@ END FUNCTION
 '   sinh =         0.785398163375              0.8686709614562744
 '   asinh =        0.8686709614562744          0.7853981633750001
 ' ========================================================================================
-PRIVATE FUNCTION asinh (BYVAL x AS DOUBLE) AS DOUBLE
+PRIVATE FUNCTION AfxArcSinH (BYVAL x AS DOUBLE) AS DOUBLE
    DIM AS DOUBLE a, s, a2
    a = fabs(x)
    s = IIF(x < 0, -1, 1)
@@ -154,7 +104,6 @@ PRIVATE FUNCTION asinh (BYVAL x AS DOUBLE) AS DOUBLE
    END IF
 END FUNCTION
 ' ========================================================================================
-#define ArcSinH asinh
 
 ' ========================================================================================
 ' * Returns the inverse hyperbolic tangent of a number.
@@ -164,7 +113,7 @@ END FUNCTION
 ' print atanh(-0.1)
 '   -0.1003353477310756
 ' ========================================================================================
-PRIVATE FUNCTION atanh (BYVAL x AS DOUBLE) AS DOUBLE
+PRIVATE FUNCTION AfxArcTanH (BYVAL x AS DOUBLE) AS DOUBLE
    DIM AS DOUBLE a, s
    a = fabs(x)
    s = IIF(x < 0, -1, 1)
@@ -181,55 +130,12 @@ PRIVATE FUNCTION atanh (BYVAL x AS DOUBLE) AS DOUBLE
    END IF
 END FUNCTION
 ' ========================================================================================
-#define ArcTanH atanh
 
 ' ========================================================================================
 ' Computes the value of sqr(x^2 + y^2 + z^2).
 ' ========================================================================================
-PRIVATE FUNCTION hypot3 (BYVAL x AS DOUBLE, BYVAL y AS DOUBLE, BYVAL z AS DOUBLE) AS DOUBLE
+PRIVATE FUNCTION AfxHypot3 (BYVAL x AS DOUBLE, BYVAL y AS DOUBLE, BYVAL z AS DOUBLE) AS DOUBLE
    RETURN hypot(hypot(x, y), z)
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Computes the value of sqr(x^2 + y^2 + z^2) in a way that avoids overflow.
-' ========================================================================================
-'PRIVATE FUNCTION hypot3 (BYVAL x AS DOUBLE, BYVAL y AS DOUBLE, BYVAL z AS DOUBLE) AS DOUBLE
-'   DIM AS DOUBLE xabs, yabs, zabs, w, r
-'   xabs = fabs(x)
-'   yabs = fabs(y)
-'   zabs = fabs(z)
-'   w = MAX(xabs, MAX(yabs, zabs))
-'   IF w = 0 THEN
-'      FUNCTION = 0
-'   ELSE
-'      r = w * SQR((xabs / w) * (xabs / w) + _
-'                  (yabs / w) * (yabs / w) + _
-'                  (zabs / w) * (zabs / w))
-'      FUNCTION = r
-'   END IF
-'END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Determines whether x and y are approximately equal to a relative accuracy EPSILON.
-' ========================================================================================
-PRIVATE FUNCTION fcmp (BYVAL x1 AS DOUBLE, BYVAL x2 AS DOUBLE, BYVAL epsilon AS DOUBLE) AS LONG
-   DIM exponent AS LONG
-   DIM AS DOUBLE delta, diff, dmax
-   ' /* Find exponent of largest absolute value */
-   dmax = IIF(fabs(x1) > fabs(x2), x1, x2)
-   frexp(dmax, @exponent)
-   ' /* Form a neighborhood of size  2 * delta */
-   delta = ldexp(epsilon, exponent)
-   diff = x1 - x2
-   IF diff > delta THEN        ' /* x1 > x2 */
-      FUNCTION = 1
-   ELSEIF diff < -delta THEN   ' /* x1 < x2 */
-      FUNCTION = -1
-   ELSE                        ' /* -delta <= diff <= delta */
-      FUNCTION = 0             ' /* x1 ~=~ x2 */
-   END IF
 END FUNCTION
 ' ========================================================================================
 
@@ -713,7 +619,7 @@ END FUNCTION
 ' - NET 4.7 code:
 'public static Complex FromPolarCoordinates(Double magnitude, Double phase) /* Factory method to take polar inputs and create a Complex object */
 '   { return new Complex((magnitude * Math.Cos(phase)), (magnitude * Math.Sin(phase))); }
-FUNCTION AfxCFromPolarCoordinates (BYVAL magnitude AS DOUBLE, BYVAL phase AS DOUBLE) AS _complex
+PRIVATE FUNCTION AfxCFromPolarCoordinates (BYVAL magnitude AS DOUBLE, BYVAL phase AS DOUBLE) AS _complex
    RETURN TYPE<_complex>(magnitude * COS(phase), magnitude * SIN(phase))
 END FUNCTION
 ' ========================================================================================
@@ -722,7 +628,7 @@ END FUNCTION
 'public static Complex Sqrt(Complex value) /* Square root ot the complex number */
 '{ return Complex.FromPolarCoordinates(Math.Sqrt(value.Magnitude), value.Phase / 2.0); }
 ' ========================================================================================
-FUNCTION AfxCSqr (BYREF value AS _complex) AS _complex
+PRIVATE FUNCTION AfxCSqr (BYREF value AS _complex) AS _complex
    DIM z AS _complex = AfxCFromPolarCoordinates(SQR(AfxCMagnitude(value)), AfxCPhase(value) / 2.0)
    IF value.x < 0 AND value.y = 0 THEN z.x = 0   ' // For negative real numbers
    RETURN z
@@ -731,7 +637,7 @@ END FUNCTION
 #define AfxCSqrt AfxCSqr
 
 ' ========================================================================================
-' * Returns the complex square root of the real number x, where x may be negative.
+' * Returns the complex square root of the real number value, where value may be negative.
 ' ========================================================================================
 PRIVATE FUNCTION AfxCSqrReal (BYVAL value AS DOUBLE) AS _complex
    IF value >= 0 THEN RETURN TYPE<_complex>(SQR(value), 0)
@@ -871,7 +777,7 @@ PRIVATE FUNCTION AfxCPow OVERLOAD (BYREF value AS _complex, BYREF power AS _comp
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-OPERATOR ^ (BYREF value AS _complex, BYREF power AS _complex) AS _complex
+PRIVATE OPERATOR ^ (BYREF value AS _complex, BYREF power AS _complex) AS _complex
    OPERATOR = AfxCPow(value, power)
 END OPERATOR
 ' ========================================================================================
@@ -893,7 +799,7 @@ PRIVATE FUNCTION AfxCPow OVERLOAD (BYREF value AS _complex, BYVAL power AS DOUBL
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-OPERATOR ^ (BYREF value AS _complex, BYVAL power AS DOUBLE) AS _complex
+PRIVATE OPERATOR ^ (BYREF value AS _complex, BYVAL power AS DOUBLE) AS _complex
    OPERATOR = AfxCPow(value, power)
 END OPERATOR
 ' ========================================================================================
@@ -902,12 +808,14 @@ END OPERATOR
 ' * Returns a a real number raised to a complex number.
 ' Example:
 '   DIM z AS _complex = (1, 1)
-'   z = AfxCStr(2 ^ z)
-'   PRINT z
+'   z = 2 ^ z
+'   PRINT AfxCStr(z)
 ' Output: 1.538477802727944 +1.27792255262727 * i
 ' ========================================================================================
-OPERATOR ^ (BYVAL value AS DOUBLE, BYREF power AS _complex) AS _complex
-   OPERATOR = AfxCExp(power * LOG(value))
+PRIVATE OPERATOR ^ (BYVAL value AS DOUBLE, BYREF power AS _complex) AS _complex
+   DIM z AS _complex
+   z.x = value
+   OPERATOR = AfxCPow(z, power)
 END OPERATOR
 ' ========================================================================================
 
@@ -1011,9 +919,9 @@ END FUNCTION
 ' Output: 1.570796326794897 +0 * i
 ' ========================================================================================
 PRIVATE FUNCTION AfxCArcSinReal (BYVAL value AS DOUBLE) AS _complex
-   IF ABS(value) <= 1 THEN RETURN TYPE<_complex>(ASIN(value))
-   IF value < 0 THEN RETURN TYPE<_complex>(-M_PI_2, acosh(-value))
-   RETURN TYPE<_complex>(M_PI_2, acosh(value))
+   IF ABS(value) <= 1 THEN RETURN TYPE<_complex>(asin(value))
+   IF value < 0 THEN RETURN TYPE<_complex>(-M_PI_2, AfxArcCosH(-value))
+   RETURN TYPE<_complex>(M_PI_2, AfxArcCosH(value))
 END FUNCTION
 ' ========================================================================================
 #define AfxCASinReal AfxCArcSinReal
@@ -1052,8 +960,8 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION AfxCArcCosReal (BYVAL value AS DOUBLE) AS _complex
    IF ABS(value) <= 1.0 THEN RETURN TYPE<_complex>(acos(value))
-   IF value < 0 THEN RETURN TYPE<_complex>(M_PI, -acosh(-value))
-   RETURN TYPE<_complex>(0, acosh(value))
+   IF value < 0 THEN RETURN TYPE<_complex>(M_PI, -AfxArcCosH(-value))
+   RETURN TYPE<_complex>(0, AfxArcCosH(value))
 END FUNCTION
 ' ========================================================================================
 #define AfxCACosReal AfxCArcCosReal
@@ -1088,8 +996,8 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION AfxCArcSecReal (BYVAL value AS DOUBLE) AS _complex
    IF value <= -1 OR value >= 1 THEN RETURN TYPE<_complex>(acos(1 / value), 0)
-   IF value >= 0 THEN RETURN TYPE<_complex>(0, acosh(1 / value))
-   RETURN TYPE<_complex>(M_PI, -acosh(-1 / value))
+   IF value >= 0 THEN RETURN TYPE<_complex>(0, AfxArcCosH(1 / value))
+   RETURN TYPE<_complex>(M_PI, -AfxArcCosH(-1 / value))
 END FUNCTION
 ' ========================================================================================
 #define AfxCASecReal AfxCArcSecReal
@@ -1112,13 +1020,13 @@ END FUNCTION
 ' Returns the complex arccosecant of a real number.
 ' Example:
 '   DIM z AS _complex = (1, 1)
-'   print AfxCStr(AfcCArcCscReal(1))
+'   print AfxCStr(AfxCArcCscReal(1))
 ' Output: 1.570796326794897 0 * i
 ' ========================================================================================
 PRIVATE FUNCTION AfxCArcCscReal (BYVAL value AS DOUBLE) AS _complex
    IF value <= -1 OR value >= 1 THEN RETURN TYPE<_complex>(ASIN(1 / value))
-   IF value >= 0 THEN RETURN TYPE<_complex>(M_PI_2, -acosh(1 / value))
-   RETURN TYPE<_complex>(-M_PI_2, acosh(-1 / value))
+   IF value >= 0 THEN RETURN TYPE<_complex>(M_PI_2, -AfxArcCosH(1 / value))
+   RETURN TYPE<_complex>(-M_PI_2, AfxArcCosH(-1 / value))
 END FUNCTION
 ' ========================================================================================
 #define AfxCACscReal AfxCArcCscReal
@@ -1239,7 +1147,7 @@ END FUNCTION
 '   DIM z AS _complex = (1, 1)
 '   z = AfxCTanH(z)
 '   PRINT AfxCStr(z)
-' Output: 1.083923327338695 +0.2717525853195117 * i
+' Output: 1.083923327338695 +0.2717525853195119 * i
 ' ========================================================================================
 ' ========================================================================================
 ' - NET 4.7 code:
@@ -1247,7 +1155,7 @@ END FUNCTION
 ' { return (Sinh(value) / Cosh(value)); }
 ' ========================================================================================
 PRIVATE FUNCTION AfxCTanH (BYREF value AS _complex) AS _complex
-   RETURN AfxCSinH(value) / AfxCCosh(value)
+   RETURN AfxCSinH(value) / AfxCCosH(value)
 END FUNCTION
 ' ========================================================================================
 
@@ -1257,7 +1165,7 @@ END FUNCTION
 '   DIM z AS _complex = (1, 1)
 '   z = AfxCCotH(cpx)
 '   PRINT AfxCStr(z)
-' Output: 0.8680141428959249 -0.2176215618544027 * i
+' Output: 0.8680141428959249 -0.2176215618544028 * i
 ' ========================================================================================
 PRIVATE FUNCTION AfxCCotH (BYREF value AS _complex) AS _complex
    RETURN TYPE<_complex>(AfxCReciprocal(AfxCTanH(value)))
@@ -1273,7 +1181,7 @@ END FUNCTION
 '   DIM z AS _complex = (1, 1)
 '   z = AfxCArcSinH(z)
 '   PRINT AfxCStr(z)
-' Output: 1.061275061905036 +0.6662394324925152 * i
+' Output: 1.061275061905036 +0.6662394324925153 * i
 ' ========================================================================================
 PRIVATE FUNCTION AfxCArcSinH (BYREF value AS _complex) AS _complex
    RETURN AfxCMulImag(AfxCArcSin(AfxCMulImag(value, 1.0)), -1.0)
@@ -1285,9 +1193,9 @@ END FUNCTION
 ' Returns the complex hyperbolic arccosine of a real number.
 ' ========================================================================================
 PRIVATE FUNCTION AfxCArcCoshReal (BYVAL value AS DOUBLE) AS _complex
-   IF value >= 1 THEN RETURN TYPE<_complex>(acosh(value), 0)
+   IF value >= 1 THEN RETURN TYPE<_complex>(AfxArcCosH(value), 0)
    IF value >= -1 THEN RETURN TYPE<_complex>(0, acos(value))
-   RETURN TYPE<_complex>(acosh(-value), M_PI)
+   RETURN TYPE<_complex>(AfxArcCosH(-value), M_PI)
 END FUNCTION
 ' ========================================================================================
 #define AfxCACoshReal AfxCArcCoshReal
@@ -1299,7 +1207,7 @@ END FUNCTION
 '   DIM z AS _complex = (1, 1)
 '   z = AfxCArcCosH(z)
 '   PRINT AfxCStr(z)
-' Output: 1.061275061905036 +0.9045568943023814 * i
+' Output: 1.061275061905036 +0.9045568943023813 * i
 ' ========================================================================================
 PRIVATE FUNCTION AfxCArcCosH (BYREF value AS _complex) AS _complex
    DIM z AS _complex = AfxCArcCos(value)
@@ -1314,7 +1222,7 @@ END FUNCTION
 '   DIM z AS _complex = (1, 1)
 '   z = AfxCArcSecH(z)
 '   PRINT AfxCStr(z)
-' Output: 0.5306375309525179 -1.118517879643706 * i
+' Output: 0.5306375309525178 -1.118517879643706 * i
 ' ========================================================================================
 PRIVATE FUNCTION AfxCArcSecH (BYREF value AS _complex) AS _complex
    RETURN AfxCArcCosH(AfxCReciprocal(value))
@@ -1339,8 +1247,8 @@ END FUNCTION
 ' ========================================================================================
 ' Returns the complex hyperbolic arctangent of a real number.
 PRIVATE FUNCTION AfxCArcTanhReal (BYVAL value AS DOUBLE) AS _complex
-   IF value > -1 AND value < 1 THEN RETURN TYPE<_complex>(atanh(value), 0)
-   RETURN TYPE<_complex>(atanh(1 / value), IIF(value < 0, M_PI_2, -M_PI_2))
+   IF value > -1 AND value < 1 THEN RETURN TYPE<_complex>(AfxArcTanH(value), 0)
+   RETURN TYPE<_complex>(AfxArcTanH(1 / value), IIF(value < 0, M_PI_2, -M_PI_2))
 END FUNCTION
 ' ========================================================================================
 #define AfxCATanhReal AfxCArcTanhReal
@@ -1367,7 +1275,7 @@ END FUNCTION
 '   DIM z AS _complex = (1, 1)
 '   z = AfxCArcCotH(z)
 '   PRINT AfxCStr(z)
-' Output: 0.4023594781085251 -0.5535743588970453 * i
+' Output: 0.4023594781085251 -0.5535743588970452 * i
 ' ========================================================================================
 PRIVATE FUNCTION AfxCArcCotH (BYREF value AS _complex) AS _complex
    RETURN AfxCArcTanH(AfxCReciprocal(value))

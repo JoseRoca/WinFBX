@@ -77,6 +77,7 @@ Public:
    DECLARE CONSTRUCTOR (BYVAL pDispSrc AS IDispatch PTR)
    DECLARE DESTRUCTOR
    DECLARE FUNCTION SetInteger (BYVAL nInteger AS LONGLONG) AS HRESULT
+   DECLARE FUNCTION SetValues (BYVAL nInteger AS LONGLONG, BYVAL nFraction AS SHORT) AS HRESULT
    DECLARE FUNCTION SetFraction (BYVAL nFraction AS SHORT) AS HRESULT
    DECLARE OPERATOR LET (BYREF cSrc AS CCUR)
    DECLARE OPERATOR LET (BYVAL bSrc AS BYTE)
@@ -251,6 +252,17 @@ PRIVATE FUNCTION CCur.SetFraction (BYVAL nFraction AS SHORT) AS HRESULT
    m_cur.int64 = cyTemp.int64 * CY_SCALE
    m_cur.int64 += nFraction
    RETURN S_OK
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the integer and fractional components.
+' Based on 4 digits. To set .2, pass 2000, to set .0002, pass a 2
+' ========================================================================================
+PRIVATE FUNCTION CCur.SetValues (BYVAL nInteger AS LONGLONG, BYVAL nFraction AS SHORT) AS HRESULT
+   DIM hr AS HRESuLT = this.SetInteger(nInteger)
+   IF hr = S_OK THEN hr = this.SetFraction(nFraction)
+   RETURN hr
 END FUNCTION
 ' ========================================================================================
 
