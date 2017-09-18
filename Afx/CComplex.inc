@@ -47,6 +47,30 @@ NAMESPACE Afx
 #define SQRT_DBL_EPSILON 1.4901161193847656e-08
 #endif
 
+#ifndef gsl_complex
+type gsl_complex
+	x as double
+	y as double
+end type
+#endif
+
+' ========================================================================================
+' Macro for debug
+' To allow debugging, define _CCOMPLEX_DEBUG_ 1 in your application before including this file.
+' ========================================================================================
+#ifndef _CCOMPLEX_DEBUG_
+   #define _CCOMPLEX_DEBUG_ 0
+#ENDIF
+#ifndef _CCOMPLEX_DP_
+   #define _CCOMPLEX_DP_ 1
+   #MACRO CCOMPLEX_DP(st)
+      #IF (_CCOMPLEX_DEBUG_ = 1)
+         OutputDebugStringW(st)
+      #ENDIF
+   #ENDMACRO
+#ENDIF
+' ========================================================================================
+
 ' ########################################################################################
 ' CComplex class
 ' ########################################################################################
@@ -59,11 +83,14 @@ TYPE CComplex
    DECLARE CONSTRUCTOR (BYVAL x AS DOUBLE = 0, BYVAL y AS DOUBLE = 0)
    DECLARE CONSTRUCTOR (BYREF cpx AS CComplex)
    DECLARE CONSTRUCTOR (BYREF cpx AS _complex)
+   DECLARE CONSTRUCTOR (BYREF cpx AS gsl_complex)
    DECLARE DESTRUCTOR
    ' // Assignment and cast
    DECLARE OPERATOR LET (BYREF z AS CComplex)
    DECLARE OPERATOR LET (BYREF z AS _complex)
+   DECLARE OPERATOR LET (BYREF z AS gsl_complex)
    DECLARE OPERATOR CAST () AS _complex
+   DECLARE OPERATOR CAST () AS gsl_complex
    DECLARE OPERATOR CAST () AS STRING
    ' // Complex number methods
    DECLARE FUNCTION IsInf (BYVAL x AS DOUBLE) AS LONG
@@ -79,6 +106,8 @@ TYPE CComplex
    DECLARE PROPERTY CPolar (BYVAL r AS DOUBLE, BYVAL theta AS DOUBLE)
    DECLARE SUB CSwap (BYREF z AS CComplex)
    DECLARE SUB CNegate
+   DECLARE SUB CNeg
+   DECLARE SUB CNegative
    ' // Operators
    DECLARE OPERATOR += (BYREF z AS CComplex)
    DECLARE OPERATOR -= (BYREF z AS CComplex)
@@ -182,6 +211,7 @@ END TYPE
 ' Default constructor
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CComplex
+   CCOMPLEX_DP("CCOMPLEX CONSTRUCTOR")
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -192,6 +222,7 @@ END CONSTRUCTOR
 ' DIM cpx AS CComplex = TYPE(3, 4)
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CComplex (BYVAL x AS DOUBLE = 0, BYVAL y AS DOUBLE = 0)
+   CCOMPLEX_DP("CCOMPLEX CONSTRUCTOR x, y")
    m_cpx = TYPE<_complex>(x, y)
 END CONSTRUCTOR
 ' ========================================================================================
@@ -199,14 +230,24 @@ END CONSTRUCTOR
 ' Example: DIM cpx AS CComplex = TYPE<_complex>(3, 4)
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CComplex (BYREF cpx AS _complex)
+   CCOMPLEX_DP("CCOMPLEX CONSTRUCTOR _complex")
    m_cpx = cpx
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+' Example: DIM cpx AS CComplex = TYPE<gsl_complex>(3, 4)
+' ========================================================================================
+PRIVATE CONSTRUCTOR CComplex (BYREF cpx AS gsl_complex)
+   CCOMPLEX_DP("CCOMPLEX CONSTRUCTOR gsl_complex")
+   m_cpx = TYPE<_complex>(cpx.x, cpx.y)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
 ' Example: DIM cpx AS CComplex = TYPE(3, 4) : DIM cpx2 AS CComplex = cpx
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CComplex (BYREF cpx AS CComplex)
-   m_cpx = cpx
+   CCOMPLEX_DP("CCOMPLEX CONSTRUCTOR CComplex")
+   m_cpx = cpx.m_cpx
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -214,6 +255,7 @@ END CONSTRUCTOR
 ' Default constructor
 ' ========================================================================================
 PRIVATE DESTRUCTOR CComplex
+   CCOMPLEX_DP("CCOMPLEX DESTRUCTOR")
    ' // Nothing to do
 END DESTRUCTOR
 ' ========================================================================================
@@ -224,6 +266,7 @@ END DESTRUCTOR
 ' Example: DIM cpx AS CComplex : cpx = CComplex(3, 4)
 ' ========================================================================================
 PRIVATE OPERATOR CComplex.LET (BYREF z AS CComplex)
+   CCOMPLEX_DP("CCOMPLEX LET CComplex")
    m_cpx = z.m_cpx
 END OPERATOR
 ' ========================================================================================
@@ -231,7 +274,16 @@ END OPERATOR
 ' Example: DIM cpx AS CComplex : cpx = TYPE<_complex>(3, 4)
 ' ========================================================================================
 PRIVATE OPERATOR CComplex.LET (BYREF z AS _complex)
+   CCOMPLEX_DP("CCOMPLEX LET _complex")
    m_cpx = z
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+' Example: DIM cpx AS CComplex : cpx = TYPE<gsl_complex>(3, 4)
+' ========================================================================================
+PRIVATE OPERATOR CComplex.LET (BYREF z AS gsl_complex)
+   CCOMPLEX_DP("CCOMPLEX LET gsl_complex")
+   m_cpx = TYPE<_complex>(z.x, z.y)
 END OPERATOR
 ' ========================================================================================
 
@@ -239,13 +291,21 @@ END OPERATOR
 ' * Returns the underlying _complex number.
 ' ========================================================================================
 PRIVATE OPERATOR CComplex.CAST () AS _complex
+   CCOMPLEX_DP("CCOMPLEX CAST _complex")
    OPERATOR = m_cpx
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CComplex.CAST () AS gsl_complex
+   CCOMPLEX_DP("CCOMPLEX CAST gsl_complex")
+   OPERATOR = TYPE<gsl_complex>(m_cpx.x, m_cpx.y)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
 ' * Returns the underlying _complex number as a formated string.
 ' ========================================================================================
 PRIVATE OPERATOR CComplex.CAST () AS STRING
+   CCOMPLEX_DP("CCOMPLEX CAST String")
    OPERATOR = STR(m_cpx.x) & IIF(SGN(m_cpx.y) = -1 OR SGN(m_cpx.y) = 0, " ", " +") & STR(m_cpx.y) & " * i"
 END OPERATOR
 ' ========================================================================================
@@ -255,6 +315,7 @@ END OPERATOR
 ' Returns +1 if x is positive infinity, -1 if x is negative infinity and 0 otherwise.
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.IsInf (BYVAL x AS DOUBLE) AS LONG
+   CCOMPLEX_DP("CCOMPLEX IsInf")
    IF _finite(x) = TRUE AND _isnan(x) = FALSE THEN
       FUNCTION = IIF&(x > 0, 1, -1)
    END IF
@@ -262,6 +323,7 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.IsInfinity (BYVAL x AS DOUBLE) AS LONG
+   CCOMPLEX_DP("CCOMPLEX IsInfinity")
    IF _finite(x) = TRUE AND _isnan(x) = FALSE THEN
       FUNCTION = IIF&(x > 0, 1, -1)
    END IF
@@ -273,15 +335,17 @@ END FUNCTION
 ' Example:
 '   DIM AS double pi = 3.1415926535
 '   DIM AS double x, y
+'   DIM c AS CComplex
 '   x = cosh(pi / 4)
-'   y = AfxArcCosH(x)
+'   y = c.AfxArcCosH(x)
 '   print "cosh = ", pi/4, x
-'   print "acosh = ", x, y
+'   print "ArcCosH = ", x, y
 ' Output:
 '   cosh =         0.785398163375              1.324609089232506
 '   acosh =        1.324609089232506           0.7853981633749999
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.ArcCosH (BYVAL x AS DOUBLE) AS DOUBLE
+   CCOMPLEX_DP("CCOMPLEX ArcCosH")
    DIM t AS DOUBLE
    IF x > 1.0 / SQRT_DBL_EPSILON THEN
       FUNCTION = LOG(x) + M_LN2
@@ -307,6 +371,7 @@ END FUNCTION
 '   -0.1003353477310756
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.ArcTanH (BYVAL x AS DOUBLE) AS DOUBLE
+   CCOMPLEX_DP("CCOMPLEX ArcTanH")
    DIM AS DOUBLE a, s
    a = fabs(x)
    s = IIF(x < 0, -1, 1)
@@ -330,11 +395,13 @@ END FUNCTION
 ' Example: DIM cpx AS CComplex : cpx.CRect = 3, 4
 ' ========================================================================================
 PRIVATE PROPERTY CComplex.CSet (BYVAL x AS DOUBLE, BYVAL y AS DOUBLE)
+   CCOMPLEX_DP("CCOMPLEX CSet")
    m_cpx = TYPE<_complex>(x, y)
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE PROPERTY CComplex.CRect (BYVAL x AS DOUBLE, BYVAL y AS DOUBLE)
+   CCOMPLEX_DP("CCOMPLEX CRect")
    m_cpx = TYPE<_complex>(x, y)
 END PROPERTY
 ' ========================================================================================
@@ -343,11 +410,13 @@ END PROPERTY
 ' * Gets/sets the real part of a complex numbe.
 ' ========================================================================================
 PRIVATE PROPERTY CComplex.CReal () AS DOUBLE
+   CCOMPLEX_DP("CCOMPLEX PROPGET CReal")
    RETURN m_cpx.x
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE PROPERTY CComplex.CReal (BYVAL x AS DOUBLE)
+   CCOMPLEX_DP("CCOMPLEX PROPSET CReal")
    m_cpx.x = x
 END PROPERTY
 ' ========================================================================================
@@ -356,11 +425,13 @@ END PROPERTY
 ' * Gets/sets the imaginary part of a complex numbe.
 ' ========================================================================================
 PRIVATE PROPERTY CComplex.CImag () AS DOUBLE
+   CCOMPLEX_DP("CCOMPLEX PROPGET CImag")
    RETURN m_cpx.y
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE PROPERTY CComplex.CImag (BYVAL y AS DOUBLE)
+   CCOMPLEX_DP("CCOMPLEX PROPSET CImag")
    m_cpx.y = y
 END PROPERTY
 ' ========================================================================================
@@ -369,6 +440,7 @@ END PROPERTY
 ' Sets the complex number from the polar representation.
 ' =====================================================================================
 PRIVATE PROPERTY CComplex.CPolar (BYVAL r AS DOUBLE, BYVAL theta AS DOUBLE)
+   CCOMPLEX_DP("CCOMPLEX CPolar")
    m_cpx = TYPE<_complex> (r * cos(theta), r * sin(theta))
 END PROPERTY
 ' =====================================================================================
@@ -377,6 +449,7 @@ END PROPERTY
 ' Exchanges the contents of two complex numbers.
 ' ========================================================================================
 PRIVATE SUB CComplex.CSwap (BYREF z AS CComplex)
+   CCOMPLEX_DP("CCOMPLEX CSwap")
    DIM cpxTemp AS _complex = m_cpx
    m_cpx = z.m_cpx
    z.m_cpx = cpxTemp
@@ -391,6 +464,7 @@ END SUB
 ' IF cpx1 = cpx2 THEN PRINT "equal" ELSE PRINT "different"
 ' ========================================================================================
 PRIVATE OPERATOR = (BYREF z1 AS CComplex, BYREF z2 AS CComplex) AS BOOLEAN
+   CCOMPLEX_DP("CCOMPLEX OPERATOR = (CComplex, CComplex)")
    RETURN (z1.m_cpx.x = z2.m_cpx.x AND z1.m_cpx.y = z2.m_cpx.y)
 END OPERATOR
 ' ========================================================================================
@@ -401,6 +475,7 @@ END OPERATOR
 ' IF cpx1 <> cpx2 THEN PRINT "different" ELSE PRINT "equal"
 ' ========================================================================================
 PRIVATE OPERATOR <> (BYREF z1 AS CComplex, BYREF z2 AS CComplex) AS BOOLEAN
+   CCOMPLEX_DP("CCOMPLEX OPERATOR <> (CComplex, CComplex)")
    RETURN (z1.m_cpx.x <> z2.m_cpx.x OR z1.m_cpx.y <> z2.m_cpx.y)
 END OPERATOR
 ' ========================================================================================
@@ -410,6 +485,7 @@ END OPERATOR
 ' Example: DIM cpx1 AS CComplex = CComplex(3, 4) : DIM cpx2 AS CComplex = -cpx1
 ' ========================================================================================
 PRIVATE OPERATOR - (BYREF z AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX OPERATOR - (CComplex)")
    RETURN TYPE<CComplex>(-z.m_cpx.x, -z.m_cpx.y) 
 END OPERATOR
 ' ========================================================================================
@@ -417,6 +493,19 @@ END OPERATOR
 ' Negates the complex number.
 ' ========================================================================================
 PRIVATE SUB CComplex.CNegate
+   CCOMPLEX_DP("CCOMPLEX CNegate")
+   m_cpx = TYPE<_complex>(-m_cpx.x, -m_cpx.y)
+END SUB
+' ========================================================================================
+' ========================================================================================
+PRIVATE SUB CComplex.CNeg
+   CCOMPLEX_DP("CCOMPLEX CNeg")
+   m_cpx = TYPE<_complex>(-m_cpx.x, -m_cpx.y)
+END SUB
+' ========================================================================================
+' ========================================================================================
+PRIVATE SUB CComplex.CNegative
+   CCOMPLEX_DP("CCOMPLEX CNegative")
    m_cpx = TYPE<_complex>(-m_cpx.x, -m_cpx.y)
 END SUB
 ' ========================================================================================
@@ -428,16 +517,19 @@ END SUB
 ' Example: DIM cpx1 AS CComplex(3, 4) : DIM cpx2 = CComplex(5, 6) : cpx2 = 11 + cpx1
 ' ========================================================================================
 PRIVATE OPERATOR + (BYREF z1 AS CComplex, BYREF z2 AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX OPERATOR + (CComplex, CComplex)")
    RETURN TYPE<CComplex>(z1.m_cpx.x + z2.m_cpx.x, z1.m_cpx.y + z2.m_cpx.y) 
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR + (BYVAL a AS DOUBLE, BYREF z AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX OPERATOR + (Double, CComplex)")
    RETURN TYPE<CComplex>(z.m_cpx.x + a, z.m_cpx.y) 
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR + (BYREF z AS CComplex, BYVAL a AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX OPERATOR + (CComplex, Double)")
    RETURN TYPE<CComplex>(z.m_cpx.x + a, z.m_cpx.y) 
 END OPERATOR
 ' ========================================================================================
@@ -449,17 +541,20 @@ END OPERATOR
 ' Example: DIM cpx1 AS CComplex(3, 4) : DIM cpx2 AS CComplex: cpx2 = 11 - cpx1
 ' ========================================================================================
 PRIVATE OPERATOR - (BYREF z1 AS CComplex, BYREF z2 AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX OPERATOR - (CComplex, CComplex)")
    RETURN TYPE<CComplex>(z1.m_cpx.x - z2.m_cpx.x, z1.m_cpx.y - z2.m_cpx.y) 
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR - (BYVAL a AS DOUBLE, BYREF z AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX OPERATOR - (Double, CComplex)")
    RETURN TYPE<CComplex>(a - z.m_cpx.x, -z.m_cpx.y) 
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR - (BYREF z AS CComplex, BYVAL a AS DOUBLE) AS CComplex
-  RETURN TYPE<_complex> (z.m_cpx.x - a, z.m_cpx.y) 
+   CCOMPLEX_DP("CCOMPLEX OPERATOR - (CComplex, Double)")
+   RETURN TYPE<_complex> (z.m_cpx.x - a, z.m_cpx.y) 
 END OPERATOR
 ' ========================================================================================
 
@@ -470,16 +565,19 @@ END OPERATOR
 ' Example: DIM cpx1 AS CComplex(3, 4) : DIM cpx2 AS CComplex = CComplex : cpx2 = 11 * cpx1
 ' ========================================================================================
 PRIVATE OPERATOR * (BYREF z1 AS CComplex, BYREF z2 AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX OPERATOR * (CComplex, CComplex)")
    RETURN TYPE<_complex>(z1.m_cpx.x * z2.m_cpx.x - z1.m_cpx.y * z2.m_cpx.y, z1.m_cpx.x * z2.m_cpx.y + z1.m_cpx.y * z2.m_cpx.x) 
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR * (BYVAL a AS DOUBLE, BYREF z AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX OPERATOR * (Double, CComplex)")
    RETURN TYPE<_complex> (a * z.m_cpx.x, a * z.m_cpx.y) 
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR * (BYREF z AS CComplex, BYVAL a AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX OPERATOR * (CComplex, Double)")
    RETURN TYPE<_complex> (a * z.m_cpx.x, a * z.m_cpx.y) 
 END OPERATOR
 ' ========================================================================================
@@ -509,6 +607,7 @@ END OPERATOR
 ' }
 ' ========================================================================================
 PRIVATE OPERATOR / (BYREF leftside AS CComplex, BYREF rightside AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX OPERATOR / (CComplex, CComplex)")
    ' // Division : Smith's formula.
    DIM a AS double = leftside.m_cpx.x
    DIM b AS DOUBLE = leftside.m_cpx.y
@@ -531,12 +630,14 @@ END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR / (BYVAL a AS DOUBLE, BYREF z AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX OPERATOR / (Double, CComplex)")
    DIM d AS DOUBLE = a / (z.m_cpx.x * z.m_cpx.x + z.m_cpx.y * z.m_cpx.y)
    RETURN TYPE<_complex>(z.m_cpx.x * d, -z.m_cpx.y * d)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR / (BYREF z AS CComplex, BYVAL a AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX OPERATOR / (CComplex, Double)")
    RETURN TYPE<_complex>(z.m_cpx.x / a, z.m_cpx.y / a)
 END OPERATOR
 ' ========================================================================================
@@ -547,6 +648,7 @@ END OPERATOR
 ' DIM cpx2 AS CComplex = CComplex(5, 6) : cpx += cpx2
 ' ========================================================================================
 PRIVATE OPERATOR CComplex.+= (BYREF z AS CComplex)
+   CCOMPLEX_DP("CCOMPLEX OPERATOR += (CComplex)")
    m_cpx = CComplex(m_cpx) + z
 END OPERATOR
 ' ========================================================================================
@@ -556,6 +658,7 @@ END OPERATOR
 ' DIM cpx2 AS CComplex = CComplex(5, 6) : cpx2 -= cpx
 ' ========================================================================================
 PRIVATE OPERATOR CComplex.-= (BYREF z AS CComplex)
+   CCOMPLEX_DP("CCOMPLEX OPERATOR -= (CComplex)")
    m_cpx = CComplex(m_cpx) - z
 END OPERATOR
 ' ========================================================================================
@@ -565,6 +668,7 @@ END OPERATOR
 ' DIM cpx2 AS CComplex = CComplex(5, 6) : cpx *= cpx2
 ' ========================================================================================
 PRIVATE OPERATOR CComplex.*= (BYREF z AS CComplex)
+   CCOMPLEX_DP("CCOMPLEX OPERATOR *= (CComplex)")
    m_cpx = CComplex(m_cpx) * z
 END OPERATOR
 ' ========================================================================================
@@ -574,6 +678,7 @@ END OPERATOR
 ' DIM cpx2 AS CComplex = CComplex(5, 6) : cpx2 /= cpx
 ' ========================================================================================
 PRIVATE OPERATOR CComplex./= (BYREF z AS CComplex)
+   CCOMPLEX_DP("CCOMPLEX OPERATOR /= (CComplex)")
    m_cpx = CComplex(m_cpx) / z
 END OPERATOR
 ' ========================================================================================
@@ -585,6 +690,7 @@ END OPERATOR
 ' --or-- cpx = cpx.CAdd(CComplex(2, 3))
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CAdd (BYREF z AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CAdd (CComplex)")
    RETURN TYPE<_complex>(m_cpx.x + z.m_cpx.x, m_cpx.y + z.m_cpx.y)
 END FUNCTION
 ' ========================================================================================
@@ -592,6 +698,7 @@ END FUNCTION
 ' DIM cpx AS CComplex = CComplex(5, 6) : cpx = cpx.CAdd(2, 3)
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CAdd (BYVAL x AS DOUBLE, BYVAL y AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CAdd (Double, Double)")
    RETURN TYPE<_complex>(m_cpx.x + x, m_cpx.y + y)
 END FUNCTION
 ' ========================================================================================
@@ -600,6 +707,7 @@ END FUNCTION
 ' DIM cpx AS CComplex = CComplex(5, 6) : cpx = cpx.CAddReal(10)
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CAddReal (BYVAL x AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CAddReal (Double)")
    RETURN TYPE<_complex>(m_cpx.x + x, m_cpx.y)
 END FUNCTION
 ' ========================================================================================
@@ -608,6 +716,7 @@ END FUNCTION
 ' DIM cpx AS CComplex = CComplex(5, 6) : cpx = cpx.CAddImag(10)
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CAddImag (BYVAL y AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CAddImag (Double)")
    RETURN TYPE<_complex>(m_cpx.x, m_cpx.y + y)
 END FUNCTION
 ' ========================================================================================
@@ -619,6 +728,7 @@ END FUNCTION
 ' --or-- cpx = cpx.CSub(CComplex(2, 3))
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CSub (BYREF z AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CSub (CComplex)")
    RETURN TYPE<_complex>(m_cpx.x - z.m_cpx.x, m_cpx.y - z.m_cpx.y)
 END FUNCTION
 ' ========================================================================================
@@ -627,6 +737,7 @@ END FUNCTION
 ' Example: DIM cpx AS CComplex = CComplex(5, 6) : cpx = cpx.CSub(2, 3)
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CSub (BYVAL x AS DOUBLE, BYVAL y AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CSub (Double, Double)")
    RETURN TYPE<_complex>(m_cpx.x - x, m_cpx.y - y)
 END FUNCTION
 ' ========================================================================================
@@ -635,6 +746,7 @@ END FUNCTION
 ' Example: DIM cpx AS CComplex = CComplex(5, 6) : cpx = cpx.CSubReal(2)
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CSubReal (BYVAL x AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CSubReal (Double)")
    RETURN TYPE<_complex>(m_cpx.x - x, m_cpx.y)
 END FUNCTION
 ' ========================================================================================
@@ -643,6 +755,7 @@ END FUNCTION
 ' Example: DIM cpx AS CComplex = CComplex(5, 6) : cx = cpx.CSubImag(3)
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CSubImag (BYVAL y AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CSubImag (Double)")
    RETURN TYPE<_complex>(m_cpx.x, m_cpx.y - y)
 END FUNCTION
 ' ========================================================================================
@@ -654,6 +767,7 @@ END FUNCTION
 ' --or-- cpx = cpx.CMul(CComplex(2, 3))
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CMul (BYREF z AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CMul (CComplex)")
    RETURN TYPE<_complex>(m_cpx.x * z.m_cpx.x - m_cpx.y * z.m_cpx.y, m_cpx.x * z.m_cpx.y + m_cpx.y * z.m_cpx.x) 
 END FUNCTION
 ' ========================================================================================
@@ -662,6 +776,7 @@ END FUNCTION
 ' Example: DIM cpx AS CComplex = CComplex(5, 6) : cpx = cpx.CMul(2, 3)
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CMul (BYVAL x AS DOUBLE, BYVAL y AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CMul (Double, Double)")
    RETURN TYPE<_complex>(m_cpx.x * x - m_cpx.y * y, m_cpx.x * y + m_cpx.y * x) 
 END FUNCTION
 ' ========================================================================================
@@ -669,6 +784,7 @@ END FUNCTION
 ' * Multiplies by a real number.
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CMulReal (BYVAL x AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CMulReal (Double)")
    RETURN TYPE<_complex>(m_cpx.x * x, m_cpx.y * x)
 END FUNCTION
 ' ========================================================================================
@@ -676,6 +792,7 @@ END FUNCTION
 ' * Multiplies by an imaginary number.
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CMulImag (BYVAL y AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CMulImag (Double)")
    RETURN TYPE<_complex>(-y * m_cpx.y, y * m_cpx.x)
 END FUNCTION
 ' ========================================================================================
@@ -684,6 +801,7 @@ END FUNCTION
 ' * Divides by a complex number.
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CDiv (BYREF z AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CDiv (CComplex)")
    RETURN CComplex(m_cpx) / z
 END FUNCTION
 ' ========================================================================================
@@ -691,6 +809,7 @@ END FUNCTION
 ' * Divides by a real and an imaginary number.
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CDiv (BYVAL x AS DOUBLE, BYVAL y AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CDiv (Double, Double)")
    RETURN CComplex(m_cpx) / CComplex(x, y)
 END FUNCTION
 ' ========================================================================================
@@ -698,6 +817,7 @@ END FUNCTION
 ' * Divides by a real number.
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CDivReal (BYVAL x AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CDivReal (Double)")
    RETURN TYPE<_complex>(m_cpx.x / x, m_cpx.y / x)
 END FUNCTION
 ' ========================================================================================
@@ -705,6 +825,7 @@ END FUNCTION
 ' * Divides by an imaginar number.
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CDivImag (BYVAL y AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CDivImag (Double)")
    RETURN TYPE<_complex>(m_cpx.y / y, - m_cpx.x / y)
 END FUNCTION
 ' ========================================================================================
@@ -727,11 +848,13 @@ END FUNCTION
 ' Conjugates this complex number.
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CConjugate () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CConjugate")
    RETURN TYPE<_complex>(m_cpx.x, -m_cpx.y)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CConj () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CConj")
    RETURN TYPE<_complex>(m_cpx.x, -m_cpx.y)
 END FUNCTION
 ' ========================================================================================
@@ -755,11 +878,13 @@ END FUNCTION
 ' Output: 3.141592653589793
 ' =====================================================================================
 PRIVATE FUNCTION CComplex.CArg () AS DOUBLE
+   CCOMPLEX_DP("CCOMPLEX CArg")
    RETURN atan2(m_cpx.y, m_cpx.x)
 END FUNCTION
 ' =====================================================================================
 ' =====================================================================================
 PRIVATE FUNCTION CComplex.CArgument () AS DOUBLE
+   CCOMPLEX_DP("CCOMPLEX CArgument")
    RETURN atan2(m_cpx.y, m_cpx.x)
 END FUNCTION
 ' =====================================================================================
@@ -771,8 +896,8 @@ END FUNCTION
 '   get { return Math.Atan2(m_imaginary, m_real); }
 ' }
 ' =====================================================================================
-' =====================================================================================
 PRIVATE FUNCTION CComplex.CPhase () AS DOUBLE
+   CCOMPLEX_DP("CCOMPLEX CPhase")
    RETURN atan2(m_cpx.y, m_cpx.x)
 END FUNCTION
 ' =====================================================================================
@@ -807,6 +932,7 @@ END FUNCTION
 ' }
 ' =====================================================================================
 PRIVATE FUNCTION CComplex.CAbs () AS DOUBLE
+   CCOMPLEX_DP("CCOMPLEX CAbs")
    IF this.IsInfinity(m_cpx.x) OR this.IsInfinity(m_cpx.y) THEN RETURN HUGE_VALF
    ' // |value| == sqrt(a^2 + b^2)
    ' // sqrt(a^2 + b^2) == a/a * sqrt(a^2 + b^2) = a * sqrt(a^2/a^2 + b^2/a^2)
@@ -826,6 +952,7 @@ END FUNCTION
 ' =====================================================================================
 ' =====================================================================================
 PRIVATE FUNCTION CComplex.CMagnitude () AS DOUBLE
+   CCOMPLEX_DP("CCOMPLEX CMagnitude")
    IF this.IsInfinity(m_cpx.x) OR this.IsInfinity(m_cpx.y) THEN RETURN HUGE_VALF
    ' // |value| == sqrt(a^2 + b^2)
    ' // sqrt(a^2 + b^2) == a/a * sqrt(a^2 + b^2) = a * sqrt(a^2/a^2 + b^2/a^2)
@@ -856,11 +983,13 @@ END FUNCTION
 ' Output: 13
 ' =====================================================================================
 PRIVATE FUNCTION CComplex.CAbs2 () AS DOUBLE
+   CCOMPLEX_DP("CCOMPLEX CAbs2")
    FUNCTION = (m_cpx.x * m_cpx.x) + (m_cpx.y * m_cpx.y)
 END FUNCTION
 ' =====================================================================================
 ' =====================================================================================
 PRIVATE FUNCTION CComplex.CNorm () AS DOUBLE
+   CCOMPLEX_DP("CCOMPLEX CNorm")
    FUNCTION = (m_cpx.x * m_cpx.x) + (m_cpx.y * m_cpx.y)
 END FUNCTION
 ' =====================================================================================
@@ -875,6 +1004,7 @@ END FUNCTION
 ' Output: 0.09942542937258279
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CLogAbs () AS DOUBLE
+   CCOMPLEX_DP("CCOMPLEX CLogAbs")
    RETURN LOG(this.CAbs)
 END FUNCTION
 ' ========================================================================================
@@ -897,12 +1027,14 @@ END FUNCTION
 ' }
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CReciprocal () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CReciprocal")
    IF m_cpx.x = 0 AND m_cpx.y = 0 THEN RETURN CComplex(0, 0)
    RETURN CComplex(1, 0) / CComplex(m_cpx)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CInverse () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CInverse")
    IF m_cpx.x = 0 AND m_cpx.y = 0 THEN RETURN CComplex(0, 0)
    RETURN CComplex(1, 0) / CComplex(m_cpx)
 END FUNCTION
@@ -929,6 +1061,7 @@ END FUNCTION
 '   { return new Complex((magnitude * Math.Cos(phase)), (magnitude * Math.Sin(phase))); }
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CFromPolarCoordinates (BYVAL magnitude AS DOUBLE, BYVAL phase AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CFromPolarCoordinates")
    RETURN TYPE<_complex>(magnitude * COS(phase), magnitude * SIN(phase))
 END FUNCTION
 ' ========================================================================================
@@ -938,6 +1071,7 @@ END FUNCTION
 '{ return Complex.FromPolarCoordinates(Math.Sqrt(value.Magnitude), value.Phase / 2.0); }
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CSqr () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CSQr")
    DIM z AS CComplex = this.CFromPolarCoordinates(SQR(this.CMagnitude), this.CPhase / 2.0)
    IF m_cpx.x < 0 AND m_cpx.y = 0 THEN z.m_cpx.x = 0   ' // For negative real numbers
    RETURN z
@@ -945,6 +1079,7 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CSqrt () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CSQrt")
    DIM z AS CComplex = this.CFromPolarCoordinates(SQR(this.CMagnitude), this.CPhase / 2.0)
    IF m_cpx.x < 0 AND m_cpx.y = 0 THEN z.m_cpx.x = 0   ' // For negative real numbers
    RETURN z
@@ -955,12 +1090,14 @@ END FUNCTION
 ' * Returns the complex square root of the real number x, where x may be negative.
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CSqr (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CSQr (Double)")
    IF value >= 0 THEN RETURN TYPE<_complex>(SQR(value), 0)
    RETURN TYPE<_complex>(0, SQR(-value))
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CSqrt (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CSQrt (Double)")
    IF value >= 0 THEN RETURN TYPE<_complex>(SQR(value), 0)
    RETURN TYPE<_complex>(0, SQR(-value))
 END FUNCTION
@@ -984,6 +1121,7 @@ END FUNCTION
 '}
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CExp () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CExp")
    DIM factor AS DOUBLE = EXP(m_cpx.x)
    RETURN TYPE<_complex>(factor * COS(m_cpx.y), factor * SIN(m_cpx.y))
 END FUNCTION
@@ -1006,6 +1144,7 @@ END FUNCTION
 ' { return (new Complex((Math.Log(Abs(value))), (Math.Atan2(value.m_imaginary, value.m_real)))); }
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CLog () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CLog")
    RETURN TYPE<_complex>(LOG(this.CAbs), atan2(m_cpx.y, m_cpx.x))
 END FUNCTION
 ' ========================================================================================
@@ -1022,6 +1161,7 @@ END FUNCTION
 ' { return (Log(value) / Log(baseValue)); }
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CLog (BYVAL baseValue AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CLog (Double)")
    DIM z AS CComplex = this.CLog
    z.m_cpx.x /= LOG(baseValue)
    z.m_cpx.y /= LOG(baseValue)
@@ -1050,6 +1190,7 @@ END FUNCTION
 ' }
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CLog10 () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CLog10")
    DIM z AS _complex = this.CLog
    z.x = z.x * M_LOG10E
    z.y = z.y * M_LOG10E
@@ -1083,6 +1224,7 @@ END FUNCTION
 ' }
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CPow (BYREF power AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CPow (CComplex)")
    IF m_cpx.x = 0 AND m_cpx.y = 0 THEN RETURN TYPE<_complex>(0, 0)
    IF power.m_cpx.x = 0 AND power.m_cpx.y = 0 THEN RETURN TYPE<_complex>(1, 0)
    DIM rho AS DOUBLE = this.CAbs
@@ -1094,6 +1236,7 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR ^ (BYREF value AS CComplex, BYREF power AS CComplex) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX ^ (CComplex, CComplex)")
    OPERATOR = value.CPow(power)
 END OPERATOR
 ' ========================================================================================
@@ -1111,11 +1254,13 @@ END OPERATOR
 '{ return Pow(value, new Complex(power, 0)); }
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CPow (BYVAL power AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CPow (Double)")
    RETURN CComplex(m_cpx) ^ CComplex(power, 0)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR ^ (BYREF value AS CComplex, BYVAL power AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX ^ (CComplex, Double)")
    OPERATOR = value.CPow(power)
 END OPERATOR
 ' ========================================================================================
@@ -1130,6 +1275,7 @@ END OPERATOR
 ' Output: 1.298457581415977 +0.6349639147847361 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CSin () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CSin")
    IF m_cpx.y = 0 THEN RETURN TYPE<_complex>(SIN(m_cpx.x), 0)
    RETURN TYPE<_complex>(SIN(m_cpx.x) * cosh(m_cpx.y), COS(m_cpx.x) * sinh(m_cpx.y))
 END FUNCTION
@@ -1143,6 +1289,7 @@ END FUNCTION
 ' Output: 0.8337300251311491 -0.9888977057628651 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CCos () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CCos")
    IF m_cpx.y = 0 THEN RETURN TYPE<_complex>(COS(m_cpx.x), 0)
    RETURN TYPE<_complex>(COS(m_cpx.x) * cosh(m_cpx.y), SIN(m_cpx.x) * sinh(-m_cpx.y))
 END FUNCTION
@@ -1156,6 +1303,7 @@ END FUNCTION
 ' Output: 0.4983370305551869 +0.591083841721045 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CSec () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CSec")
    DIM z AS CComplex = this.CCos
    RETURN z.CReciprocal
 END FUNCTION
@@ -1169,6 +1317,7 @@ END FUNCTION
 ' Output: 0.6215180171704285 -0.3039310016284265 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CCsc () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CCsc")
    DIM z AS CComplex = this.CSin
    RETURN z.CReciprocal
 END FUNCTION
@@ -1185,6 +1334,7 @@ END FUNCTION
 ' public static Complex Tan(Complex value) { return (Sin(value) / Cos(value)); }
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CTan () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CTan")
    DIM z AS CComplex = this.CSin
    RETURN z / this.CCos
 END FUNCTION
@@ -1198,6 +1348,7 @@ END FUNCTION
 ' Output: 0.2176215618544027 -0.8680141428959249 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CCot () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CCot")
    DIM z AS CComplex = this.CTan
    RETURN z.CReciprocal
 END FUNCTION
@@ -1216,6 +1367,7 @@ END FUNCTION
 ' Output: 1.570796326794897 +0 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcSinReal (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcSinReal")
    IF ABS(value) <= 1 THEN RETURN TYPE<_complex>(ASIN(value))
    IF value < 0 THEN RETURN TYPE<_complex>(-M_PI_2, this.ArcCosH(-value))
    RETURN TYPE<_complex>(M_PI_2, this.ArcCosH(value))
@@ -1223,6 +1375,7 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CASinReal (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CASinReal")
    IF ABS(value) <= 1 THEN RETURN TYPE<_complex>(ASIN(value))
    IF value < 0 THEN RETURN TYPE<_complex>(-M_PI_2, this.ArcCosH(-value))
    RETURN TYPE<_complex>(M_PI_2, this.ArcCosH(value))
@@ -1238,12 +1391,14 @@ END FUNCTION
 ' Output: 0.6662394324925152 +1.061275061905036 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcSin () AS CComplex
-   RETURN Afx.AfxCArcSin(m_cpx)
+   CCOMPLEX_DP("CCOMPLEX CArcSin")
+   RETURN Afx.CArcSin(m_cpx)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CASin () AS CComplex
-   RETURN Afx.AfxCArcSin(m_cpx)
+   CCOMPLEX_DP("CCOMPLEX CAsin")
+   RETURN Afx.CArcSin(m_cpx)
 END FUNCTION
 ' ========================================================================================
 
@@ -1259,6 +1414,7 @@ END FUNCTION
 ' print cpx.CArcCosReal(2) ' = 0 +1.316957896924817 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcCosReal (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcCosReal")
    IF ABS(value) <= 1.0 THEN RETURN TYPE<_complex>(acos(value))
    IF value < 0 THEN RETURN TYPE<_complex>(M_PI, -this.ArcCosH(-value))
    RETURN TYPE<_complex>(0, this.ArcCosH(value))
@@ -1266,6 +1422,7 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CACosReal (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CACosReal")
    IF ABS(value) <= 1.0 THEN RETURN TYPE<_complex>(acos(value))
    IF value < 0 THEN RETURN TYPE<_complex>(M_PI, -this.ArcCosH(-value))
    RETURN TYPE<_complex>(0, this.ArcCosH(value))
@@ -1286,12 +1443,14 @@ END FUNCTION
 ' { return (-ImaginaryOne) * Log(value + ImaginaryOne*Sqrt(One - (value * value))); }
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcCos () AS CComplex
-   RETURN Afx.AfxCArcCos(m_cpx)
+   CCOMPLEX_DP("CCOMPLEX CArcCos")
+   RETURN Afx.CArcCos(m_cpx)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CACos () AS CComplex
-   RETURN Afx.AfxCArcCos(m_cpx)
+      CCOMPLEX_DP("CCOMPLEX CACos")
+RETURN Afx.CArcCos(m_cpx)
 END FUNCTION
 ' ========================================================================================
 
@@ -1303,6 +1462,7 @@ END FUNCTION
 ' Output: 0.4296996661514246 0 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcSecReal (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcSecReal")
    IF value <= -1 OR value >= 1 THEN RETURN TYPE<_complex>(acos(1 / value), 0)
    IF value >= 0 THEN RETURN TYPE<_complex>(0, this.ArcCosH(1 / value))
    RETURN TYPE<_complex>(M_PI, -this.ArcCosH(-1 / value))
@@ -1310,6 +1470,7 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CASecReal (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CASecReal")
    IF value <= -1 OR value >= 1 THEN RETURN TYPE<_complex>(acos(1 / value), 0)
    IF value >= 0 THEN RETURN TYPE<_complex>(0, this.ArcCosH(1 / value))
    RETURN TYPE<_complex>(M_PI, -this.ArcCosH(-1 / value))
@@ -1324,12 +1485,14 @@ END FUNCTION
 ' Output: 1.118517879643706 +0.5306375309525176 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcSec () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcSec")
    DIM z AS CComplex = this.CReciprocal
    RETURN z.CArcCos
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CASec () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CSec")
    DIM z AS CComplex = this.CReciprocal
    RETURN z.CArcCos
 END FUNCTION
@@ -1343,6 +1506,7 @@ END FUNCTION
 ' Output: 1.570796326794897 0 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcCscReal (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcCscReal")
    IF value <= -1 OR value >= 1 THEN RETURN TYPE<_complex>(asin(1 / value))
    IF value >= 0 THEN RETURN TYPE<_complex>(M_PI_2, -ArcCosH(1 / value))
    RETURN TYPE<_complex>(-M_PI_2, ArcCosH(-1 / value))
@@ -1350,6 +1514,7 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CACscReal (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CACscReal")
    IF value <= -1 OR value >= 1 THEN RETURN TYPE<_complex>(asin(1 / value))
    IF value >= 0 THEN RETURN TYPE<_complex>(M_PI_2, -ArcCosH(1 / value))
    RETURN TYPE<_complex>(-M_PI_2, ArcCosH(-1 / value))
@@ -1364,12 +1529,14 @@ END FUNCTION
 ' Output: 0.4522784471511907 -0.5306375309525178 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcCsc () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcCsc")
    DIM z AS CComplex = this.CReciprocal
    RETURN z.CArcSin
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CACsc () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CACsc")
    DIM z AS CComplex = this.CReciprocal
    RETURN z.CArcSin
 END FUNCTION
@@ -1393,12 +1560,14 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcTan () AS CComplex
-   RETURN AfxCArcTan(m_cpx)
+   CCOMPLEX_DP("CCOMPLEX CArcTan")
+   RETURN Afx.CArcTan(m_cpx)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CATan () AS CComplex
-   RETURN AfxCArcTan(m_cpx)
+   CCOMPLEX_DP("CCOMPLEX CATan")
+   RETURN Afx.CArcTan(m_cpx)
 END FUNCTION
 ' ========================================================================================
 
@@ -1410,6 +1579,7 @@ END FUNCTION
 ' Output: 0.5535743588970452 -0.4023594781085251 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcCot () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcCot")
    IF m_cpx.x = 0 AND m_cpx.y = 0 THEN RETURN TYPE<_complex>(M_PI_2)
    DIM z AS CComplex = this.CReciprocal
    RETURN z.CArcTan
@@ -1417,6 +1587,7 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CACot () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CACot")
    IF m_cpx.x = 0 AND m_cpx.y = 0 THEN RETURN TYPE<_complex>(M_PI_2)
    DIM z AS CComplex = this.CReciprocal
    RETURN z.CArcTan
@@ -1433,6 +1604,7 @@ END FUNCTION
 ' Output: 0.6349639147847361 +1.298457581415977 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CSinH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CSinH")
    RETURN TYPE<_complex>(sinh(m_cpx.x) * cos(m_cpx.y), cosh(m_cpx.x) * sin(m_cpx.y))
 END FUNCTION
 ' ========================================================================================
@@ -1445,6 +1617,7 @@ END FUNCTION
 ' Output: 0.8337300251311491 +0.9888977057628651 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CCosH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CCosH")
    RETURN TYPE<_complex>(cosh(m_cpx.x) * cos(m_cpx.y), sinh(m_cpx.x) * sin(m_cpx.y))
 END FUNCTION
 ' ========================================================================================
@@ -1457,6 +1630,7 @@ END FUNCTION
 ' Output: 0.4983370305551869 -0.591083841721045 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CSecH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CSecH")
    DIM z AS CComplex = this.CCosH
    RETURN z.CReciprocal
 END FUNCTION
@@ -1470,6 +1644,7 @@ END FUNCTION
 ' Output: 0.3039310016284265 -0.6215180171704285 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CCscH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CCScH")
    DIM z AS CComplex = this.CSinH
    RETURN z.CReciprocal
 END FUNCTION
@@ -1488,6 +1663,7 @@ END FUNCTION
 ' { return (Sinh(value) / Cosh(value)); }
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CTanH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CTanH")
    RETURN this.CSinH / this.CCosH
 END FUNCTION
 ' ========================================================================================
@@ -1500,6 +1676,7 @@ END FUNCTION
 ' Output: 0.8680141428959249 -0.2176215618544029 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CCotH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CCotH")
    DIM z AS CComplex = this.CTanH
    RETURN z.CReciprocal
 END FUNCTION
@@ -1516,8 +1693,17 @@ END FUNCTION
 ' Output: 1.061275061905036 +0.6662394324925153 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcSinH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcSinH")
    DIM z AS CComplex = this.CMulImag(1.0)
-   z = this.CArcSin
+   z = z.CArcSin
+   RETURN z.CMulImag(-1.0)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CComplex.CASinH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CASinH")
+   DIM z AS CComplex = this.CMulImag(1.0)
+   z = z.CArcSin
    RETURN z.CMulImag(-1.0)
 END FUNCTION
 ' ========================================================================================
@@ -1526,6 +1712,7 @@ END FUNCTION
 ' Returns the complex hyperbolic arccosine of a real number.
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcCosHReal (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcCosReal")
    IF value >= 1 THEN RETURN TYPE<_complex>(this.ArcCosH(value), 0)
    IF value >= -1 THEN RETURN TYPE<_complex>(0, acos(value))
    RETURN TYPE<_complex>(this.ArcCosH(-value), M_PI)
@@ -1533,6 +1720,7 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CACosHReal (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CACosReal")
    IF value >= 1 THEN RETURN TYPE<_complex>(this.ArcCosH(value), 0)
    IF value >= -1 THEN RETURN TYPE<_complex>(0, acos(value))
    RETURN TYPE<_complex>(this.ArcCosH(-value), M_PI)
@@ -1544,16 +1732,18 @@ END FUNCTION
 ' The branch cut is on the real axis, less than 1.
 ' Example:
 '   DIM cpx AS CComplex = CComplex(1, 1)
-'   print cpx.CArcCosH(z)
+'   print cpx.CArcCosH
 ' Output: 1.061275061905036 +0.9045568943023813 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcCosH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcCosH")
    DIM z AS CComplex = this.CArcCos
    RETURN z.CMulImag(IIF(z.m_cpx.y > 0, -1.0, 1.0))
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CACosH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CACosH")
    DIM z AS CComplex = this.CArcCos
    RETURN z.CMulImag(IIF(z.m_cpx.y > 0, -1.0, 1.0))
 END FUNCTION
@@ -1567,12 +1757,14 @@ END FUNCTION
 ' Output: 0.5306375309525178 -1.118517879643706 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcSecH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcSecH")
    DIM z AS CComplex = this.CReciprocal
    RETURN z.CArcCosH
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CASecH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CASecH")
    DIM z AS CComplex = this.CReciprocal
    RETURN z.CArcCosH
 END FUNCTION
@@ -1586,12 +1778,14 @@ END FUNCTION
 ' Output: 0.5306375309525179 -0.4522784471511906 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcCscH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcCscH")
    DIM z AS CComplex = this.CReciprocal
    RETURN z.CArcSinH
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CACscH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CACscH")
    DIM z AS CComplex = this.CReciprocal
    RETURN z.CArcSinH
 END FUNCTION
@@ -1600,13 +1794,15 @@ END FUNCTION
 ' ========================================================================================
 ' Returns the complex hyperbolic arctangent of a real number.
 ' ========================================================================================
-PRIVATE FUNCTION CComplex.CArcTanhReal (BYVAL value AS DOUBLE) AS CComplex
+PRIVATE FUNCTION CComplex.CArcTanHReal (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcTanHeRal")
    IF value > -1 AND value < 1 THEN RETURN TYPE<_complex>(this.ArcTanH(value), 0)
    RETURN TYPE<_complex>(ArcTanH(1 / value), IIF(value < 0, M_PI_2, -M_PI_2))
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION CComplex.CATanhReal (BYVAL value AS DOUBLE) AS CComplex
+PRIVATE FUNCTION CComplex.CATanHReal (BYVAL value AS DOUBLE) AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CATanHReal")
    IF value > -1 AND value < 1 THEN RETURN TYPE<_complex>(this.ArcTanH(value), 0)
    RETURN TYPE<_complex>(ArcTanH(1 / value), IIF(value < 0, M_PI_2, -M_PI_2))
 END FUNCTION
@@ -1621,6 +1817,7 @@ END FUNCTION
 ' Output: 0.4023594781085251 +1.017221967897851 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcTanH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcTanH")
    IF m_cpx.y = 0 THEN RETURN this.CArcTanHReal(m_cpx.x)
    DIM z AS CComplex = this.CMulImag(1)
    z = z.CArcTan
@@ -1629,6 +1826,7 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CATanH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CATanH")
    IF m_cpx.y = 0 THEN RETURN this.CArcTanHReal(m_cpx.x)
    DIM z AS CComplex = this.CMulImag(1)
    z = z.CArcTan
@@ -1644,12 +1842,14 @@ END FUNCTION
 ' Output: 0.4023594781085251 -0.5535743588970452 * i
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CArcCotH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CArcCotH")
    DIM z AS CComplex = this.CReciprocal
    RETURN z.CArcTanH
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CACotH () AS CComplex
+   CCOMPLEX_DP("CCOMPLEX CACotH")
    DIM z AS CComplex = this.CReciprocal
    RETURN z.CArcTanH
 END FUNCTION
@@ -1662,6 +1862,7 @@ END FUNCTION
 ' If number is less than zero, then CSgn returns -1.
 ' ========================================================================================
 PRIVATE FUNCTION CComplex.CSgn () AS LONG
+   CCOMPLEX_DP("CCOMPLEX CSgn")
    IF m_cpx.x > 0 THEN RETURN 1
    IF m_cpx.x < 0 THEN RETURN -1
    IF m_cpx.y > 0 THEN RETURN 1
