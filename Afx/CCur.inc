@@ -111,6 +111,7 @@ Public:
    DECLARE FUNCTION Round (BYVAL nDecimals AS LONG) AS CCUR
    DECLARE FUNCTION GetInteger () AS LONGLONG
    DECLARE FUNCTION GetFraction () AS SHORT
+   DECLARE FUNCTION ToVar () AS VARIANT
 
 END TYPE
 ' ========================================================================================
@@ -189,7 +190,6 @@ END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CCur (BYREF szSrc AS STRING)
-print "----------"
    VarCyFromR8(VAL(szSrc), @m_cur)
 END CONSTRUCTOR
 ' ========================================================================================
@@ -655,6 +655,12 @@ PRIVATE OPERATOR CCur.CAST () AS STRING
    OPERATOR = s
 END OPERATOR
 ' ========================================================================================
+
+' ========================================================================================
+' Returns the currency value as a VT_CY variant.
+' DIM c AS CCUR = 12345.1234
+' DIM v AS VARIANT = c
+' cv = v
 ' ========================================================================================
 PRIVATE OPERATOR CCur.CAST () AS VARIANT
    DIM v AS VARIANT, cy AS CURRENCY
@@ -664,6 +670,9 @@ PRIVATE OPERATOR CCur.CAST () AS VARIANT
    RETURN v
 END OPERATOR
 ' ========================================================================================
+
+' ========================================================================================
+' Returns the address of the underlying currency value.
 ' ========================================================================================
 PRIVATE OPERATOR * (BYREF cur AS CCUR) AS CURRENCY PTR
    OPERATOR = VARPTR(cur.m_cur)
@@ -693,6 +702,21 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CCur.GetFraction () AS SHORT
    IF m_cur.int64 THEN RETURN m_cur.int64 MOD CY_SCALE
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Converts the currency to a VT_CY variant.
+' To allow to assign the currency to a CVAR variable
+' DIM c AS CCUR = 12345.1234
+' DIM cv AS CVAR = c.ToVar
+' ========================================================================================
+PRIVATE FUNCTION CCur.ToVar () AS VARIANT
+   DIM v AS VARIANT, cy AS CURRENCY
+   VarCyFromR8(m_cur.int64 / CY_SCALE, @cy)
+   v.vt = VT_CY
+   v.cyVal = cy
+   RETURN v
 END FUNCTION
 ' ========================================================================================
 

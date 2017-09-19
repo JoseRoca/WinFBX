@@ -672,6 +672,16 @@ PRIVATE FUNCTION AfxVarToStr OVERLOAD (BYVAL pvarIn AS VARIANT PTR, BYVAL bClear
       ' // Unsupported by VariantToStringAlloc
       CASE VT_ERROR : cws = WSTR(pvarin->scode)
       CASE VT_R4 : cws = WSTR(pvarIn->fltVal)
+      CASE VT_CY   ' // Currency
+         DIM s AS STRING = STR(pvarIn->cyVal.int64 / 10000)
+         DIM p AS LONG = INSTR(s, ".")
+         DIM dec AS STRING
+         IF p THEN
+            dec = MID(s + "0000", p + 1, 4)
+            s = LEFT(s, p) & dec
+         END IF
+         IF s = "0" THEN s = "0.0000"
+         RETURN s
 
       ' // VT_BYREF variants
       CASE VT_BSTR OR VT_BYREF : IF pVarIn->pbstrVal THEN cws = *pVarin->pbstrVal
