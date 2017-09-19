@@ -4,7 +4,7 @@
 ' Contents: Currency data type
 ' Compiler: FreeBasic 32 & 64-bit
 ' Written in 2017 by José Roca. Freeware. Use at your own risk.
-' Portions of this code are based in the ATL's CComCurrency class.
+' MOst of this code is based in the ATL's CComCurrency class.
 ' Copyright (C) Microsoft Corporation.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
