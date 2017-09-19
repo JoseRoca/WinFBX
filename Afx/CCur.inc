@@ -647,8 +647,12 @@ PRIVATE OPERATOR CCur.CAST () AS STRING
    DIM s AS STRING = STR(m_cur.int64 / CY_SCALE)
    DIM p AS LONG = INSTR(s, ".")
    DIM dec AS STRING
-   IF p THEN dec = MID(s + "0000", p + 1, 4)
-   OPERATOR = LEFT(s, p) & dec
+   IF p THEN
+      dec = MID(s + "0000", p + 1, 4)
+      s = LEFT(s, p) & dec
+   END IF
+   IF s = "0" THEN s = "0.0000"
+   OPERATOR = s
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
