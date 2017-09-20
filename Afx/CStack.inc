@@ -87,7 +87,7 @@ END FUNCTION
 ' Removes all the elements in the collection.
 ' ========================================================================================
 PRIVATE FUNCTION CStack.Clear () AS HRESULT
-   RETURN m_psa->Clear
+   RETURN m_psa->Reset
 END FUNCTION
 ' ========================================================================================
 
@@ -162,7 +162,7 @@ END FUNCTION
 ' Removes all the elements in the collection.
 ' ========================================================================================
 PRIVATE FUNCTION CQueue.Clear () AS HRESULT
-   RETURN m_psa->Clear
+   RETURN m_psa->Reset
 END FUNCTION
 ' ========================================================================================
 

@@ -931,11 +931,6 @@ PRIVATE FUNCTION CSafeArray.Destroy () AS HRESULT
    RETURN hr
 END FUNCTION
 ' ========================================================================================
-' ========================================================================================
-PRIVATE FUNCTION CSafeArray.Clear () AS HRESULT
-   RETURN this.Destroy
-END FUNCTION
-' ========================================================================================
 
 ' ========================================================================================
 ' Destroys all the data in a safe array.
@@ -957,9 +952,15 @@ PRIVATE FUNCTION CSafeArray.DestroyData () AS HRESULT
    IF m_psa THEN
       SafeArrayUnlock(m_psa)
       hr = SafeArrayDestroyData(m_psa)
-      SafeArrayLock(m_psa)
+'      Don't lock the erased array
+'      SafeArrayLock(m_psa)
    END IF
    RETURN hr
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CSafeArray.Clear () AS HRESULT
+   RETURN this.Destroy
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
