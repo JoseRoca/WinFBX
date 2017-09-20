@@ -66,6 +66,8 @@ TYPE CVar
    DECLARE CONSTRUCTOR (BYREF cws AS CWSTR)
    DECLARE CONSTRUCTOR (BYREF cbs AS CBSTR)
    DECLARE CONSTRUCTOR (BYVAL pvar AS VARIANT PTR)
+   DECLARE CONSTRUCTOR (BYVAL cy AS CURRENCY)
+   DECLARE CONSTRUCTOR (BYVAL dec AS DECIMAL)
    DECLARE CONSTRUCTOR (BYVAL pdisp AS IDispatch PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE CONSTRUCTOR (BYVAL punk AS IUnknown PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE CONSTRUCTOR (BYVAL _value AS LONGINT, BYVAL _vType AS WORD = VT_I4)
@@ -121,11 +123,13 @@ TYPE CVar
    DECLARE FUNCTION ToStringArrayAlloc (BYVAL pprgsz AS PWSTR PTR) AS ULONG
    ' // LET assignments
    DECLARE OPERATOR Let (BYREF cv AS CVAR)
-   DECLARE OPERATOR Let (BYREF v AS VARIANT)
+   DECLARE OPERATOR Let (BYVAL v AS VARIANT)
    DECLARE OPERATOR Let (BYREF wszStr AS WSTRING)
    DECLARE OPERATOR Let (BYREF cws AS CWSTR)
    DECLARE OPERATOR Let (BYREF cbs AS CBSTR)
    DECLARE OPERATOR Let (BYVAL pvar AS VARIANT PTR)
+   DECLARE OPERATOR Let (BYVAL cy AS CURRENCY)
+   DECLARE OPERATOR Let (BYVAL dec AS DECIMAL)
    DECLARE OPERATOR Let (BYVAL pdisp AS IDispatch PTR)
    DECLARE OPERATOR Let (BYVAL punk AS IUnknown PTR)
    ' // Assignments
@@ -169,7 +173,7 @@ TYPE CVar
    DECLARE FUNCTION PutFileTime (BYVAL pft AS FILETIME PTR) AS HRESULT
    DECLARE FUNCTION PutFileTimeArray (BYVAL prgft AS FILETIME PTR, BYVAL cElems AS ULONG) AS HRESULT
    DECLARE FUNCTION PutStrRet (BYVAL pstrret AS STRRET PTR, BYVAL pidl AS PCUITEMID_CHILD) AS HRESULT
-   DECLARE FUNCTION PutDec (BYREF dec AS DECIMAL) AS HRESULT
+   DECLARE FUNCTION PutDec (BYVAL dec AS DECIMAL) AS HRESULT
    DECLARE FUNCTION PutDecFromStr (BYVAL pwszIn AS WSTRING PTR, BYVAL lcid AS LCID = 0, BYVAL dwFlags AS ULONG = 0) AS HRESULT
    DECLARE FUNCTION PutDecFromDouble (BYVAL dbIn AS DOUBLE) AS HRESULT
    DECLARE FUNCTION PutDecFromCy (BYVAL cyIn AS CY) AS HRESULT
@@ -302,6 +306,26 @@ END CONSTRUCTOR
 PRIVATE CONSTRUCTOR CVar (BYVAL pvar AS VARIANT PTR)
    CVAR_DP("CVAR CONSTRUCTOR - VARIANT PTR")
    VariantCopy(@vd, pvar)
+END CONSTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' Initializes a CVAR from a CURRENCY structure.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CVar (BYVAL cy AS CURRENCY)
+   CVAR_DP("CVAR CONSTRUCTOR - CURRENCY")
+   vd.vt = VT_CY
+   vd.cyVal = cy
+END CONSTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' Initializes a CVAR from a DECIMAL structure.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CVar (BYVAL dec AS DECIMAL)
+   CVAR_DP("CVAR CONSTRUCTOR - DECIMAL")
+   vd.vt = VT_DECIMAL
+   vd.decVal = dec
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -1137,7 +1161,7 @@ END OPERATOR
 ' ========================================================================================
 ' Assigns a VARIANT.
 ' ========================================================================================
-PRIVATE OPERATOR CVar.Let (BYREF v AS VARIANT)
+PRIVATE OPERATOR CVar.Let (BYVAL v AS VARIANT)
    CVAR_DP("CVAR LET = VARIANT")
    VariantClear(@vd) : VariantCopy(@vd, @v)
 END OPERATOR
@@ -1158,6 +1182,24 @@ END OPERATOR
 PRIVATE OPERATOR CVar.Let (BYVAL pvar AS VARIANT PTR)
    CVAR_DP("CVAR LET = VARIANT PTR")
    VariantClear(@vd) : VariantCopy(@vd, pvar)
+END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+' Assigns a CURRENCY structure.
+' ========================================================================================
+PRIVATE OPERATOR CVar.Let (BYVAL cy AS CURRENCY)
+   CVAR_DP("CVAR LET - CURRENCY")
+   VariantClear(@vd) : vd.vt = VT_CY : vd.cyVal = cy
+END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+' Assigns a CURRENCY structure.
+' ========================================================================================
+PRIVATE OPERATOR CVar.Let (BYVAL dec AS DECIMAL)
+   CVAR_DP("CVAR LET - DECIMAL")
+   VariantClear(@vd) : vd.vt = VT_DECIMAL : vd.decVal = dec
 END OPERATOR
 ' ========================================================================================
 
@@ -1762,7 +1804,7 @@ END FUNCTION
 ' =====================================================================================
 ' Initializes a CVAR as VT_DECIMAL from a DECIMAL structure.
 ' =====================================================================================
-PRIVATE FUNCTION CVar.PutDec (BYREF dec AS DECIMAL) AS HRESULT
+PRIVATE FUNCTION CVar.PutDec (BYVAL dec AS DECIMAL) AS HRESULT
    CVAR_DP("CVAR PutDec")
    VariantClear(@vd)
    vd.vt = VT_DECIMAL

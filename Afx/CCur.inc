@@ -4,7 +4,7 @@
 ' Contents: Currency data type
 ' Compiler: FreeBasic 32 & 64-bit
 ' Written in 2017 by José Roca. Freeware. Use at your own risk.
-' MOst of this code is based in the ATL's CComCurrency class.
+' Most of this code is based in the ATL's CComCurrency class.
 ' Copyright (C) Microsoft Corporation.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
@@ -56,7 +56,7 @@ const CY_SCALE         = 10000
 TYPE CCur
 
 Public:
-   DIM m_cur AS CY                    ' // The underlying CURRENCY structure
+   DIM m_cur AS CY   ' // The underlying CURRENCY structure
 
 Public:
    DECLARE CONSTRUCTOR
@@ -73,7 +73,7 @@ Public:
    DECLARE CONSTRUCTOR (BYVAL fSrc AS SINGLE)
    DECLARE CONSTRUCTOR (BYVAL dSrc AS DOUBLE)
    DECLARE CONSTRUCTOR (BYVAL dSrc AS DECIMAL)
-   DECLARE CONSTRUCTOR (BYREF szSrc AS STRING)
+   DECLARE CONSTRUCTOR (BYREF strSrc AS STRING)
    DECLARE CONSTRUCTOR (BYVAL varSrc AS VARIANT)
    DECLARE CONSTRUCTOR (BYVAL pDispSrc AS IDispatch PTR)
    DECLARE DESTRUCTOR
@@ -81,6 +81,7 @@ Public:
    DECLARE FUNCTION SetValues (BYVAL nInteger AS LONGLONG, BYVAL nFraction AS SHORT) AS HRESULT
    DECLARE FUNCTION SetFraction (BYVAL nFraction AS SHORT) AS HRESULT
    DECLARE OPERATOR LET (BYREF cSrc AS CCUR)
+   DECLARE OPERATOR LET (BYVAL cySrc AS CURRENCY)
    DECLARE OPERATOR LET (BYVAL bSrc AS BYTE)
    DECLARE OPERATOR LET (BYVAL ubSrc AS UBYTE)
    DECLARE OPERATOR LET (BYVAL sSrc AS SHORT)
@@ -90,7 +91,7 @@ Public:
    DECLARE OPERATOR LET (BYVAL fSrc AS SINGLE)
    DECLARE OPERATOR LET (BYVAL dSrc AS DOUBLE)
    DECLARE OPERATOR LET (BYVAL dSrc AS DECIMAL)
-   DECLARE OPERATOR LET (BYREF szSrc AS STRING)
+   DECLARE OPERATOR LET (BYREF strSrc AS STRING)
    DECLARE OPERATOR LET (BYVAL varSrc AS VARIANT)
    DECLARE OPERATOR LET (BYVAL pDispSrc AS IDispatch PTR)
    DECLARE OPERATOR += (BYREF cur AS CCUR)
@@ -113,13 +114,13 @@ Public:
    DECLARE FUNCTION GetInteger () AS LONGLONG
    DECLARE FUNCTION GetFraction () AS SHORT
    DECLARE FUNCTION ToVar () AS VARIANT
-   DECLARE FUNCTION FormatCurrency (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+   DECLARE FUNCTION FormatCurrency (BYVAL iNumDig AS LONG = -1, BYVAL iIncLead AS LONG = -2, _
            BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS STRING
-   DECLARE FUNCTION FormatCurrencyW (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+   DECLARE FUNCTION FormatCurrencyW (BYVAL iNumDig AS LONG = -1, BYVAL iIncLead AS LONG = -2, _
            BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS CBSTR
-   DECLARE FUNCTION FormatNumber (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+   DECLARE FUNCTION FormatNumber (BYVAL iNumDig AS LONG = -1, BYVAL iIncLead AS LONG = -2, _
            BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS STRING
-   DECLARE FUNCTION FormatNumberW (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+   DECLARE FUNCTION FormatNumberW (BYVAL iNumDig AS LONG = -1, BYVAL iIncLead AS LONG = -2, _
            BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS CBSTR
 
 END TYPE
@@ -198,8 +199,8 @@ PRIVATE CONSTRUCTOR CCur (BYVAL dSrc AS DECIMAL)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CCur (BYREF szSrc AS STRING)
-   VarCyFromR8(VAL(szSrc), @m_cur)
+PRIVATE CONSTRUCTOR CCur (BYREF strSrc AS STRING)
+   VarCyFromR8(VAL(strSrc), @m_cur)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
@@ -291,6 +292,11 @@ PRIVATE OPERATOR CCur.LET (BYREF cSrc AS CCUR)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
+PRIVATE OPERATOR CCur.LET (BYVAL cySrc AS CURRENCY)
+   m_cur = cySrc
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
 PRIVATE OPERATOR CCur.LET (BYVAL bSrc AS BYTE)
    VarCyFromI1(bSrc, @m_cur)
 END OPERATOR
@@ -334,6 +340,7 @@ END OPERATOR
 PRIVATE OPERATOR CCur.LET (BYVAL dSrc AS DECIMAL)
    VarCyFromDec(@dSrc, @m_cur)
 END OPERATOR
+' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR CCur.LET (BYREF szSrc AS STRING)
    VarCyFromR8(VAL(szSrc), @m_cur)
@@ -753,11 +760,11 @@ END FUNCTION
 ' DIM c AS CCUR = 12345.1234
 ' PRINT c.FormatCurrency   --> 12.345,12 € (Spain)
 ' =====================================================================================
-PRIVATE FUNCTION CCur.FormatCurrency (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+PRIVATE FUNCTION CCur.FormatCurrency (BYVAL iNumDig AS LONG = -1, BYVAL iIncLead AS LONG = -2, _
 BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS STRING
    DIM s AS STRING, bstrOut AS BSTR
    DIM v AS VARIANT = this.ToVar
-   VarFormatCurrency(@v, iNumDig, ilncLead, iUseParens, iGroup, dwFlags, @bstrOut)
+   VarFormatCurrency(@v, iNumDig, iIncLead, iUseParens, iGroup, dwFlags, @bstrOut)
    s = *cast(WSTRING PTR, bstrOut)
    SysFreeString bstrOut
    RETURN s
@@ -770,11 +777,11 @@ END FUNCTION
 '   DIM cbs AS CBSTR = c.FormatCurrencyW
 '   AfxMsg cbs
 ' =====================================================================================
-PRIVATE FUNCTION CCur.FormatCurrencyW (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+PRIVATE FUNCTION CCur.FormatCurrencyW (BYVAL iNumDig AS LONG = -1, BYVAL iIncLead AS LONG = -2, _
 BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS CBSTR
    DIM bstrOut AS BSTR
    DIM v AS VARIANT = this.ToVar
-   VarFormatCurrency(@v, iNumDig, ilncLead, iUseParens, iGroup, dwFlags, @bstrOut)
+   VarFormatCurrency(@v, iNumDig, iIncLead, iUseParens, iGroup, dwFlags, @bstrOut)
    RETURN bstrOut
 END FUNCTION
 ' =====================================================================================
@@ -786,11 +793,11 @@ END FUNCTION
 '   DIM c AS CCUR = 12345.1234
 '   PRINT c.FormatNumber   --> 12.345,12 (Spain)
 ' =====================================================================================
-PRIVATE FUNCTION CCur.FormatNumber (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+PRIVATE FUNCTION CCur.FormatNumber (BYVAL iNumDig AS LONG = -1, BYVAL iIncLead AS LONG = -2, _
 BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS STRING
    DIM s AS STRING, bstrOut AS BSTR
    DIM v AS VARIANT = this.ToVar
-   VarFormatNumber(@v, iNumDig, ilncLead, iUseParens, iGroup, dwFlags, @bstrOut)
+   VarFormatNumber(@v, iNumDig, iIncLead, iUseParens, iGroup, dwFlags, @bstrOut)
    s = *cast(WSTRING PTR, bstrOut)
    SysFreeString bstrOut
    RETURN s
@@ -803,11 +810,11 @@ END FUNCTION
 '   DIM cbs AS CBSTR = c.FormatNumberW
 '   AfxMsg cbs
 ' =====================================================================================
-PRIVATE FUNCTION CCur.FormatNumberW (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+PRIVATE FUNCTION CCur.FormatNumberW (BYVAL iNumDig AS LONG = -1, BYVAL iIncLead AS LONG = -2, _
 BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS CBSTR
    DIM bstrOut AS BSTR
    DIM v AS VARIANT = this.ToVar
-   VarFormatNumber(@v, iNumDig, ilncLead, iUseParens, iGroup, dwFlags, @bstrOut)
+   VarFormatNumber(@v, iNumDig, iIncLead, iUseParens, iGroup, dwFlags, @bstrOut)
    RETURN bstrOut
 END FUNCTION
 ' =====================================================================================
