@@ -55,6 +55,10 @@ NAMESPACE Afx
 ' ########################################################################################
 TYPE CVar
 
+Private:
+   cws AS CWSTR          ' // To allow to return a WSTRING by reference
+
+Public:
    vd AS VARIANT         ' // Variant data
 
    ' // COnstructors
@@ -84,6 +88,7 @@ TYPE CVar
    DECLARE FUNCTION bstr () AS CBSTR
    DECLARE OPERATOR CAST () AS VARIANT
    DECLARE OPERATOR CAST () AS ANY PTR
+   DECLARE OPERATOR CAST () BYREF AS WSTRING
    DECLARE FUNCTION ToStr () AS CWSTR
    DECLARE FUNCTION ToWStr () AS CWSTR
    DECLARE FUNCTION ToBStr () AS CBSTR
@@ -645,6 +650,13 @@ END OPERATOR
 
 ' =====================================================================================
 ' Extracts the contents of a VARIANT and returns them as a CWSTR.
+' =====================================================================================
+PRIVATE OPERATOR CVar.CAST () BYREF AS WSTRING
+   CWSTR_DP("CWSTR CAST BYREF AS WSTRING")
+   cws = AfxVarToStr(@vd)
+   OPERATOR = *cast(WSTRING PTR, cws.m_pBuffer)
+END OPERATOR
+' ========================================================================================
 ' =====================================================================================
 PRIVATE FUNCTION CVar.ToStr () AS CWSTR
    CVAR_DP("CVAR ToStr")
