@@ -166,5 +166,4 @@ PRIVATE FUNCTION CQueue.Clear () AS HRESULT
 END FUNCTION
 ' ========================================================================================
 
-
 END NAMESPACE
