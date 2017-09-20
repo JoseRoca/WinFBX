@@ -12,7 +12,7 @@
 #pragma once
 #include once "windows.bi"
 #include once "win/ole2.bi"
-#include once "Afx/CWSTR.inc"
+'#include once "Afx/CWSTR.inc"
 #include once "Afx/CCur.inc"
 using Afx
 
