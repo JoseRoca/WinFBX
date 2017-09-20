@@ -783,8 +783,8 @@ END FUNCTION
 ' Formats a currency number into a string form.
 ' Same as FormatCurrency but without adding the currency symbol.
 ' Example:
-' DIM c AS CCUR = 12345.1234
-' PRINT c.FormatCurrency   --> 12.345,12 (Spain)
+'   DIM c AS CCUR = 12345.1234
+'   PRINT c.FormatNumber   --> 12.345,12 (Spain)
 ' =====================================================================================
 PRIVATE FUNCTION CCur.FormatNumber (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
 BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS STRING
