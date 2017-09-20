@@ -14,6 +14,7 @@
 #pragma once
 #include once "windows.bi"
 #include once "win/ole2.bi"
+#include once "Afx/CWSTR.inc"
 
 NAMESPACE Afx
 
@@ -112,6 +113,14 @@ Public:
    DECLARE FUNCTION GetInteger () AS LONGLONG
    DECLARE FUNCTION GetFraction () AS SHORT
    DECLARE FUNCTION ToVar () AS VARIANT
+   DECLARE FUNCTION FormatCurrency (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+           BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS STRING
+   DECLARE FUNCTION FormatCurrencyW (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+           BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS CBSTR
+   DECLARE FUNCTION FormatNumber (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+           BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS STRING
+   DECLARE FUNCTION FormatNumberW (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+           BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS CBSTR
 
 END TYPE
 ' ========================================================================================
@@ -719,5 +728,88 @@ PRIVATE FUNCTION CCur.ToVar () AS VARIANT
    RETURN v
 END FUNCTION
 ' ========================================================================================
+
+' =====================================================================================
+' Formats a currency number into a string form.
+' Parameters:
+' - iNumDig: The number of digits to pad to after the decimal point.
+'     Specify -1 to use the system default value.
+' - iIncLead: Specifies whether to include the leading digit on numbers.
+'     -2 : Use the system default.
+'     -1 : Include the leading digit.
+'      0 : Do not include the leading digit.
+' - iUseParens: Specifies whether negative numbers should use parentheses.
+'     -2 : Use the system default.
+'     -1 : Use parentheses.
+'      0 : Do not use parentheses.
+' - iGroup: Specifies whether thousands should be grouped. For example 10,000 versus 10000.
+'      Note Regular numbers and currencies have separate system defaults for all the above options.
+'     -2 : Use the system default.
+'     -1 : Group thousands.
+'      0 : Do not group thousands.
+' - dwFlags
+'     VAR_CALENDAR_HIJRI is the only flag that can be set.
+' Example:
+' DIM c AS CCUR = 12345.1234
+' PRINT c.FormatCurrency   --> 12.345,12 € (Spain)
+' =====================================================================================
+PRIVATE FUNCTION CCur.FormatCurrency (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS STRING
+   DIM s AS STRING, bstrOut AS BSTR
+   DIM v AS VARIANT = this.ToVar
+   VarFormatCurrency(@v, iNumDig, ilncLead, iUseParens, iGroup, dwFlags, @bstrOut)
+   s = *cast(WSTRING PTR, bstrOut)
+   SysFreeString bstrOut
+   RETURN s
+END FUNCTION
+' =====================================================================================
+' =====================================================================================
+' Unicode version.
+' Example:
+'   DIM c AS CCUR = 12345.12
+'   DIM cbs AS CBSTR = c.FormatCurrencyW
+'   AfxMsg cbs
+' =====================================================================================
+PRIVATE FUNCTION CCur.FormatCurrencyW (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS CBSTR
+   DIM bstrOut AS BSTR
+   DIM v AS VARIANT = this.ToVar
+   VarFormatCurrency(@v, iNumDig, ilncLead, iUseParens, iGroup, dwFlags, @bstrOut)
+   RETURN bstrOut
+END FUNCTION
+' =====================================================================================
+
+' =====================================================================================
+' Formats a currency number into a string form.
+' Same as FormatCurrency but without adding the currency symbol.
+' Example:
+' DIM c AS CCUR = 12345.1234
+' PRINT c.FormatCurrency   --> 12.345,12 (Spain)
+' =====================================================================================
+PRIVATE FUNCTION CCur.FormatNumber (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS STRING
+   DIM s AS STRING, bstrOut AS BSTR
+   DIM v AS VARIANT = this.ToVar
+   VarFormatNumber(@v, iNumDig, ilncLead, iUseParens, iGroup, dwFlags, @bstrOut)
+   s = *cast(WSTRING PTR, bstrOut)
+   SysFreeString bstrOut
+   RETURN s
+END FUNCTION
+' =====================================================================================
+' =====================================================================================
+' Unicode version.
+' Example:
+'   DIM c AS CCUR = 12345.12
+'   DIM cbs AS CBSTR = c.FormatNumberW
+'   AfxMsg cbs
+' =====================================================================================
+PRIVATE FUNCTION CCur.FormatNumberW (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS CBSTR
+   DIM bstrOut AS BSTR
+   DIM v AS VARIANT = this.ToVar
+   VarFormatNumber(@v, iNumDig, ilncLead, iUseParens, iGroup, dwFlags, @bstrOut)
+   RETURN bstrOut
+END FUNCTION
+' =====================================================================================
 
 END NAMESPACE

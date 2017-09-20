@@ -3731,11 +3731,11 @@ END FUNCTION
 ' =====================================================================================
 ' Formats a variant containing numbers into a string form.
 ' =====================================================================================
-PRIVATE FUNCTION CPropVar.FormatNumber (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+PRIVATE FUNCTION CPropVar.FormatNumber (BYVAL iNumDig AS LONG = -1, BYVAL iIncLead AS LONG = -2, _
    BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS CWSTR
    CPROPVAR_DP("CPropVar FormatNumber")
    DIM cwsOut AS CWSTR, bstrOut AS AFX_BSTR
-   SetLastError(VarFormatNumber(cast(VARIANT PTR, @pvd), iNumDig, ilncLead, iUseParens, iGroup, dwFlags, @bstrOut))
+   SetLastError(VarFormatNumber(cast(VARIANT PTR, @pvd), iNumDig, iIncLead, iUseParens, iGroup, dwFlags, @bstrOut))
    cwsOut = *bstrOut
    SysFreeString bstrOut
    RETURN cwsOut
