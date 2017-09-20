@@ -13,6 +13,8 @@
 #include once "windows.bi"
 #include once "win/ole2.bi"
 #include once "Afx/CWSTR.inc"
+#include once "Afx/CCur.inc"
+using Afx
 
 NAMESPACE Afx
 
@@ -30,6 +32,7 @@ Public:
    DECLARE CONSTRUCTOR (BYREF cSrc AS CDec, BYVAL lcid AS LCID = 0)
    DECLARE CONSTRUCTOR (BYREF decSrc AS DECIMAL, BYVAL lcid AS LCID = 0)
    DECLARE CONSTRUCTOR (BYVAL cySrc AS CURRENCY, BYVAL lcid AS LCID = 0)
+   DECLARE CONSTRUCTOR (BYREF cur AS CCUR, BYVAL lcid AS LCID = 0)
    DECLARE CONSTRUCTOR (BYVAL bSrc AS BYTE, BYVAL lcid AS LCID = 0)
    DECLARE CONSTRUCTOR (BYVAL ubSrc AS UBYTE, BYVAL lcid AS LCID = 0)
    DECLARE CONSTRUCTOR (BYVAL sSrc AS SHORT, BYVAL lcid AS LCID = 0)
@@ -47,6 +50,7 @@ Public:
    DECLARE OPERATOR LET (BYREF cSrc AS CDec)
    DECLARE OPERATOR LET (BYVAL decSrc AS DECIMAL)
    DECLARE OPERATOR LET (BYVAL cySrc AS CURRENCY)
+   DECLARE OPERATOR LET (BYREF cur AS CCUR)
    DECLARE OPERATOR LET (BYVAL bSrc AS BYTE)
    DECLARE OPERATOR LET (BYVAL ubSrc AS UBYTE)
    DECLARE OPERATOR LET (BYVAL sSrc AS SHORT)
@@ -63,15 +67,19 @@ Public:
    DECLARE OPERATOR += (BYREF dec AS CDec)
    DECLARE OPERATOR += (BYVAL nValue AS LONG)
    DECLARE OPERATOR += (BYVAL nValue AS DOUBLE)
+   DECLARE OPERATOR += (BYREF cur AS CCUR)
    DECLARE OPERATOR -= (BYREF dec AS CDec)
    DECLARE OPERATOR -= (BYREF nValue AS LONG)
    DECLARE OPERATOR -= (BYREF nValue AS DOUBLE)
+   DECLARE OPERATOR -= (BYREF cur AS CCUR)
    DECLARE OPERATOR *= (BYREF dec AS CDec)
    DECLARE OPERATOR *= (BYVAL nOperand AS LONG)
    DECLARE OPERATOR *= (BYVAL nOperand AS DOUBLE)
+   DECLARE OPERATOR *= (BYREF cur AS CCUR)
    DECLARE OPERATOR /= (BYREF cOperand AS CDec)
    DECLARE OPERATOR /= (BYVAL nOperand AS LONG)
    DECLARE OPERATOR /= (BYVAL nOperand AS DOUBLE)
+   DECLARE OPERATOR /= (BYREF cur AS CCUR)
    DECLARE OPERATOR CAST () AS BYTE
    DECLARE OPERATOR CAST () AS UBYTE
    DECLARE OPERATOR CAST () AS SHORT
@@ -83,6 +91,7 @@ Public:
    DECLARE OPERATOR CAST () AS SINGLE
    DECLARE OPERATOR CAST () AS DOUBLE
    DECLARE OPERATOR CAST () AS CURRENCY
+   DECLARE OPERATOR CAST () AS CCUR
    DECLARE OPERATOR CAST () AS VARIANT
    DECLARE OPERATOR CAST () AS STRING
    DECLARE FUNCTION DecAbs () AS CDec
@@ -124,6 +133,12 @@ END CONSTRUCTOR
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CDec (BYVAL cySrc AS CURRENCY, BYVAL lcid AS LCID = 0)
    VarDecFromCy(cySrc, @m_dec)
+   m_lcid = lcid
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE CONSTRUCTOR CDec (BYREF cur AS CCUR, BYVAL lcid AS LCID = 0)
+   VarDecFromCy(cur.m_cur, @m_dec)
    m_lcid = lcid
 END CONSTRUCTOR
 ' ========================================================================================
@@ -231,6 +246,11 @@ END OPERATOR
 ' ========================================================================================
 PRIVATE OPERATOR CDec.LET (BYVAL cySrc AS CURRENCY)
    VarDecFromCy(cySrc, @m_dec)
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CDec.LET (BYREF cur AS CCUR)
+   VarDecFromCy(cur.m_cur, @m_dec)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
@@ -383,6 +403,24 @@ PRIVATE OPERATOR + (BYVAL nValue AS DOUBLE, BYREF decSrc AS CDec) AS CDec
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
+PRIVATE OPERATOR + (BYREF decSrc AS CDec, BYREF cur AS CCUR) AS CDec
+   DIM dec AS DECIMAL
+   DIM d AS DECIMAL
+   VarDecFromCY(cur.m_cur, @d)
+   VarDecAdd(@decSrc.m_dec, @d, @dec)
+   RETURN dec
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR + (BYREF cur AS CCUR, BYREF decSrc AS CDec) AS CDec
+   DIM dec AS DECIMAL
+   DIM d AS DECIMAL
+   VarDecFromCY(cur.m_cur, @d)
+   VarDecAdd(@decSrc.m_dec, @d, @dec)
+   RETURN dec
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
 PRIVATE OPERATOR CDec.+= (BYREF decSrc AS CDec)
    VarDecAdd(@m_dec, @decSrc.m_dec, @m_dec)
 END OPERATOR
@@ -398,6 +436,13 @@ END OPERATOR
 PRIVATE OPERATOR CDec.+= (BYVAL nValue AS DOUBLE)
    DIM dec AS DECIMAL
    VarDecFromR8(nValue, @dec)
+   VarDecAdd(@m_dec, @dec, @m_dec)
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CDec.+= (BYREF cur AS CCUR)
+   DIM dec AS DECIMAL
+   VarDecFromCy(cur.m_cur, @dec)
    VarDecAdd(@m_dec, @dec, @m_dec)
 END OPERATOR
 ' ========================================================================================
@@ -446,6 +491,24 @@ PRIVATE OPERATOR - (BYVAL nValue AS DOUBLE, BYREF decSrc AS CDec) AS CDec
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
+PRIVATE OPERATOR - (BYREF decSrc AS CDec, BYREF cur AS CCUR) AS CDec
+   DIM dec AS DECIMAL
+   DIM d AS DECIMAL
+   VarDecFromCY(cur.m_cur, @d)
+   VarDecSub(@decSrc.m_dec, @d, @dec)
+   RETURN dec
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR - (BYVAL cur AS CCUR, BYREF decSrc AS CDec) AS CDec
+   DIM dec AS DECIMAL
+   DIM d AS DECIMAL
+   VarDecFromCY(cur.m_cur, @d)
+   VarDecSub(@d, @decSrc.m_dec, @dec)
+   RETURN dec
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
 PRIVATE OPERATOR CDec.-= (BYREF decSrc AS CDec)
    VarDecSub(@m_dec, @decSrc.m_dec, @m_dec)
 END OPERATOR
@@ -461,6 +524,13 @@ END OPERATOR
 PRIVATE OPERATOR CDec.-= (BYREF nValue AS DOUBLE)
    DIM d AS DECIMAL
    VarDecFromR8(nValue, @d)
+   VarDecSub(@m_dec, @d, @m_dec)
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CDec.-= (BYREF cur AS CCUR)
+   DIM d AS DECIMAL
+   VarDecFromCy(cur.m_cur, @d)
    VarDecSub(@m_dec, @d, @m_dec)
 END OPERATOR
 ' ========================================================================================
@@ -517,6 +587,24 @@ PRIVATE OPERATOR * (BYVAL nOperand AS DOUBLE, BYREF decSrc AS CDec) AS CDec
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
+PRIVATE OPERATOR * (BYREF decSrc AS CDec, BYREF cur AS CCUR) AS CDec
+   DIM dec AS DECIMAL
+   DIM d AS DECIMAL
+   VarDecFromCY(cur.m_cur, @d)
+   VarDecMul(@decSrc.m_dec, @d, @dec)
+   RETURN dec
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR * (BYREF cur AS CCUR, BYREF decSrc AS CDec) AS CDec
+   DIM dec AS DECIMAL
+   DIM d AS DECIMAL
+   VarDecFromCY(cur.m_cur, @d)
+   VarDecMul(@decSrc.m_dec, @d, @dec)
+   RETURN dec
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
 PRIVATE OPERATOR CDec.*= (BYREF decSrc AS CDec)
    VarDecMul(@m_dec, @decSrc.m_dec, @m_dec)
 END OPERATOR
@@ -532,6 +620,13 @@ END OPERATOR
 PRIVATE OPERATOR CDec.*= (BYVAL nOperand AS DOUBLE)
    DIM d AS DECIMAL
    VarDecFromR8(nOperand, @d)
+   VarDecMul(@m_dec, @d, @m_dec)
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CDec.*= (BYREF cur AS CCUR)
+   DIM d AS DECIMAL
+   VarDecFromCy(cur.m_cur, @d)
    VarDecMul(@m_dec, @d, @m_dec)
 END OPERATOR
 ' ========================================================================================
@@ -562,6 +657,15 @@ PRIVATE OPERATOR / (BYREF decSrc AS CDec, BYVAL nOperand AS DOUBLE) AS CDec
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
+PRIVATE OPERATOR / (BYREF decSrc AS CDec, BYREF cur AS CCUR) AS CDec
+   DIM dec AS DECIMAL
+   DIM d AS DECIMAL
+   VarDecFromCY(cur.m_cur, @d)
+   VarDecDiv(@decSrc.m_dec, @d, @dec)
+   RETURN dec
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
 PRIVATE OPERATOR / (BYVAL nValue AS LONG, BYREF decSrc AS CDec) AS CDec
    DIM dec AS DECIMAL
    DIM d AS DECIMAL
@@ -575,6 +679,15 @@ PRIVATE OPERATOR / (BYVAL nValue AS DOUBLE, BYREF decSrc AS CDec) AS CDec
    DIM dec AS DECIMAL
    DIM d AS DECIMAL
    VarDecFromR8(nValue, @d)
+   VarDecDiv(@d, @decSrc.m_dec, @dec)
+   RETURN dec
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR / (BYREF cur AS CCUR, BYREF decSrc AS CDec) AS CDec
+   DIM dec AS DECIMAL
+   DIM d AS DECIMAL
+   VarDecFromCY(cur.m_cur, @d)
    VarDecDiv(@d, @decSrc.m_dec, @dec)
    RETURN dec
 END OPERATOR
@@ -595,6 +708,13 @@ END OPERATOR
 PRIVATE OPERATOR CDec./= (BYVAL nOperand AS DOUBLE)
    DIM d AS DECIMAL
    VarDecFromR8(nOperand, @d)
+   VarDecDiv(@m_dec, @d, @m_dec)
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CDec./= (BYREF cur AS CCUR)
+   DIM d AS DECIMAL
+   VarDecFromCy(cur.m_cur, @d)
    VarDecDiv(@m_dec, @d, @m_dec)
 END OPERATOR
 ' ========================================================================================
@@ -673,6 +793,13 @@ END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR CDec.CAST () AS CURRENCY
+   DIM cy AS CURRENCY
+   VarCyFromDec(@m_dec, @cy)
+   OPERATOR = cy
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CDec.CAST () AS CCUR
    DIM cy AS CURRENCY
    VarCyFromDec(@m_dec, @cy)
    OPERATOR = cy
