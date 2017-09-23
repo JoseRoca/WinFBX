@@ -514,6 +514,44 @@ END FUNCTION
 ' ########################################################################################
 
 ' ========================================================================================
+' - Usage:
+' '#CONSOLE ON
+' #INCLUDE ONCE "Afx/AfxCom.inc"
+' #INCLUDE ONCE "Afx/AfxSapi.bi"
+' using Afx
+' ' // The COM library must be initialized to call AfxNewCom
+' CoInitialize NULL
+' ' // Create an instance of the Afx_ISpVoice interface
+' DIM pSpVoice AS Afx_ISpVoice PTR = AfxNewCom("SAPI.SpVoice")
+' DIM pCComPtrSpVoice AS CComPtr = pSpVoice
+' ' // Call the Speak method
+' pSpVoice->Speak("Hello World", 0, NULL)
+' ' // Uninitialize the COM library
+' CoUninitialize
+' PRINT
+' PRINT "Press any key..."
+' SLEEP
+' ========================================================================================
+' ========================================================================================
+' - Usage:
+' '#CONSOLE ON
+' #INCLUDE ONCE "Afx/AfxCom.inc"
+' #INCLUDE ONCE "Afx/AfxSapi.bi"
+' using Afx
+' ' // The COM library must be initialized to call AfxNewCom
+' CoInitialize NULL
+' ' // Create an instance of the Afx_ISpVoice interface
+' DIM pSpVoice AS CComPtr = AfxNewCom("SAPI.SpVoice")
+' ' // Call the Speak method
+' cast(Afx_ISpVoice PTR, *pSpVoice)->Speak("Hello World", 0, NULL)
+' ' // Uninitialize the COM library
+' CoUninitialize
+' PRINT
+' PRINT "Press any key..."
+' SLEEP
+' ========================================================================================
+
+' ========================================================================================
 ' CComPtr class
 ' ========================================================================================
 TYPE CComPtr
@@ -521,6 +559,8 @@ TYPE CComPtr
    DECLARE CONSTRUCTOR (BYVAL pUnk AS ANY PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
    DECLARE OPERATOR Let (BYVAL pUnk AS ANY PTR)
+   DECLARE SUB Attach (BYVAL pUnk AS ANY PTR)
+   DECLARE FUNCTION Detach () AS ANY PTR
 END TYPE
 ' ========================================================================================
 ' ========================================================================================
@@ -541,10 +581,130 @@ PRIVATE OPERATOR CComPtr.Let (BYVAL pUnk AS ANY PTR)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
+PRIVATE SUB CComPtr.Attach (BYVAL pUnk AS ANY PTR)
+   IF m_pUnk <> pUnk THEN
+      AfxSafeRelease(m_pUnk)
+      m_pUnk = pUnk
+   END IF
+END SUB
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CComPtr.Detach () AS ANY PTR
+   DIM temp AS IUnknown PTR = m_pUnk
+   m_pUnk = NULL
+   RETURN temp
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
 PRIVATE OPERATOR * (BYREF _ccomptr AS CComPtr) AS ANY PTR
    OPERATOR = _ccomptr.m_pUnk
 END OPERATOR
 ' ========================================================================================
+
+' ########################################################################################
+'                                *** _CComPtr macro ***
+' ########################################################################################
+
+' ========================================================================================
+' - Usage:
+' '#CONSOLE ON
+' #INCLUDE ONCE "Afx/AfxCom.inc"
+' #INCLUDE ONCE "Afx/AfxSapi.bi"
+' using Afx
+' ' // The COM library must be initialized to call AfxNewCom
+' CoInitialize NULL
+' ' // Define the _CComPtrAfx_ISpVoice class
+' _CComPtr(Afx_ISpVoice)
+' ' // Create an instance of the _CComPtrAfx_ISpVoice class
+' ' // and assign an instance of the Afx_ISpVoice interface to it
+' DIM pSpVoice AS CComPtrAfx_ISpVoice = AfxNewCom("SAPI.SpVoice")
+' ' // Call the Speak method
+' DIM cwsText AS CWSTR = "Hello World"
+' pSpVoice.vtbl->Speak(cwsText, 0, NULL)
+' ' // Uninitialize the COM library
+' CoUninitialize
+' PRINT
+' PRINT "Press any key..."
+' SLEEP
+' ========================================================================================
+
+' ========================================================================================
+' _CComPtr macro
+' ========================================================================================
+#macro _CComPtr(T)
+#ifndef CComPtr##T
+TYPE CComPtr##T
+Private:
+   DIM m_pUnk AS T PTR
+   m_bUninitCOM AS BOOLEAN
+Public:
+   DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pUnk AS T PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
+   DECLARE DESTRUCTOR
+   DECLARE OPERATOR CAST () AS T PTR
+   DECLARE OPERATOR LET (BYVAL pUnk AS T PTR)
+   DECLARE FUNCTION vtbl () AS T PTR
+   DECLARE FUNCTION vptr () AS T PTR
+END TYPE
+' ========================================================================================
+' ========================================================================================
+CONSTRUCTOR CComPtr##T
+   ' // Initialize the COM library
+   DIM hr AS HRESULT = CoInitialize(NULL)
+   IF hr = S_OK OR hr = S_FALSE THEN m_bUninitCOM = TRUE
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+' // The first time that is called, pUnk receives a NULL (?), the 2nd time, works!
+CONSTRUCTOR CComPtr##T (BYVAL pUnk AS T PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
+   ' // Initialize the COM library
+   DIM hr AS HRESULT = CoInitialize(NULL)
+   IF hr = S_OK OR hr = S_FALSE THEN m_bUninitCOM = TRUE
+   ' // Assign the passed pointer
+   m_pUnk = pUnk
+   ' // Increase the reference count if requested
+   IF fAddRef THEN AfxSafeAddRef(m_pUnk)
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+DESTRUCTOR CComPtr##T
+   ' // Release the interface pointer
+   AfxSafeRelease(m_pUnk)
+   ' // Uninitialize the COM library
+   IF m_bUninitCOM THEN CoUninitialize
+END DESTRUCTOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CComPtr##T.CAST () AS T PTR
+   ' // Return an addrefed interface pointer
+   AfxSafeAddRef(m_pUnk)
+   OPERATOR = m_pUnk
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CComPtr##T.LET (BYVAL pUnk AS T PTR)
+   ' // Release the interface pointer
+   AfxSafeRelease(m_pUnk)
+   ' // Assign the passed reference counted interface pointer
+   m_pUnk= pUnk
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CComPtr##T.vtbl () AS T PTR
+   ' // Return the stored interface pointer
+   RETURN m_pUnk
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CComPtr##T.vptr () AS T PTR
+   ' // Release the interface pointer
+   AfxSafeRelease(m_pUnk)
+   ' // Return the address of the interface pointer
+   RETURN @m_pUnk
+END FUNCTION
+' ========================================================================================
+#endif
+#endmacro
 
 ' ########################################################################################
 '                                *** VARIANT WRAPPERS ***
