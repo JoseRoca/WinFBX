@@ -2474,6 +2474,7 @@ END NAMESPACE
 ' ########################################################################################
 
 ' // Outside a namespace because they are global
+using Afx
 
 ' ========================================================================================
 PRIVATE OPERATOR & (BYREF cv1 AS CVAR, BYREF cv2 AS CVAR) AS CVAR
