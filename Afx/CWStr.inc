@@ -106,6 +106,9 @@ TYPE CBSTR
       DECLARE OPERATOR LET (BYREF cbs AS CBStr)
       DECLARE OPERATOR LET (BYREF cws AS CWStr_)
       DECLARE OPERATOR LET (BYREF bstrHandle AS AFX_BSTR)
+      DECLARE OPERATOR LET (BYREF cbs AS CBSTR_)
+      DECLARE OPERATOR LET (BYVAL n AS LONGINT)
+      DECLARE OPERATOR LET (BYVAL n AS DOUBLE)
       DECLARE OPERATOR CAST () BYREF AS WSTRING
       DECLARE OPERATOR CAST () AS ANY PTR
       DECLARE PROPERTY CodePage () AS UINT
@@ -119,9 +122,13 @@ TYPE CBSTR
       DECLARE OPERATOR += (BYREF wszStr AS CONST WSTRING)
       DECLARE OPERATOR += (BYREF cbs AS CBStr)
       DECLARE OPERATOR += (BYREF cws AS CWStr_)
+      DECLARE OPERATOR += (BYVAL n AS LONGINT)
+      DECLARE OPERATOR += (BYVAL n AS DOUBLE)
       DECLARE OPERATOR &= (BYREF wszStr AS CONST WSTRING)
       DECLARE OPERATOR &= (BYREF cbs AS CBStr)
       DECLARE OPERATOR &= (BYREF cws AS CWStr_)
+      DECLARE OPERATOR &= (BYVAL n AS LONGINT)
+      DECLARE OPERATOR &= (BYVAL n AS DOUBLE)
       DECLARE FUNCTION LeftChars (BYVAL nChars AS LONG) AS CBSTR
       DECLARE FUNCTION RightChars (BYVAL nChars AS LONG) AS CBSTR
       DECLARE FUNCTION MidChars (BYVAL nStart AS LONG, BYVAL nChars AS LONG = 0) AS CBSTR
@@ -183,7 +190,7 @@ TYPE CWSTR
       DECLARE OPERATOR [] (BYVAL nIndex AS UINT) AS USHORT
       DECLARE FUNCTION DelChars (BYVAL nIndex AS UINT, BYVAL nCount AS UINT) AS BOOLEAN
 		DECLARE FUNCTION Insert (BYREF cws AS CWSTR, BYVAL nIndex AS UINT) AS BOOLEAN
-      DECLARE FUNCTION Insert (BYREF cbs AS CBSTR_, BYVAL nIndex AS LONG) AS LONG
+      DECLARE FUNCTION Insert (BYREF cbs AS CBSTR_, BYVAL nIndex AS LONG) AS BOOLEAN
       DECLARE FUNCTION Insert (BYVAL pwszStr AS WSTRING PTR, BYVAL nIndex AS UINT) AS BOOLEAN
       DECLARE FUNCTION Insert (BYREF ansiStr AS STRING, BYVAL nIndex AS UINT, BYVAL nCodePage AS UINT = 0) AS BOOLEAN
       DECLARE OPERATOR CAST () BYREF AS WSTRING
@@ -193,15 +200,21 @@ TYPE CWSTR
       DECLARE OPERATOR LET (BYREF pwszStr AS WSTRING PTR)
       DECLARE OPERATOR LET (BYREF cws AS CWSTR)
       DECLARE OPERATOR LET (BYREF cbs AS CBSTR_)
+      DECLARE OPERATOR LET (BYVAL n AS LONGINT)
+      DECLARE OPERATOR LET (BYVAL n AS DOUBLE)
 '      DECLARE OPERATOR @ () AS WSTRING PTR
       DECLARE OPERATOR += (BYREF wszStr AS WSTRING)
       DECLARE OPERATOR += (BYREF cws AS CWSTR)
       DECLARE OPERATOR += (BYREF cbs AS CBSTR_)
       DECLARE OPERATOR += (BYREF ansiStr AS STRING)
+      DECLARE OPERATOR += (BYVAL n AS LONGINT)
+      DECLARE OPERATOR += (BYVAL n AS DOUBLE)
       DECLARE OPERATOR &= (BYREF wszStr AS WSTRING)
       DECLARE OPERATOR &= (BYREF cws AS CWSTR)
       DECLARE OPERATOR &= (BYREF cbs AS CBSTR_)
       DECLARE OPERATOR &= (BYREF ansiStr AS STRING)
+      DECLARE OPERATOR &= (BYVAL n AS LONGINT)
+      DECLARE OPERATOR &= (BYVAL n AS DOUBLE)
       DECLARE FUNCTION vptr () AS WSTRING PTR
       DECLARE FUNCTION sptr () AS WSTRING PTR
       DECLARE FUNCTION wstr () BYREF AS WSTRING
@@ -447,6 +460,22 @@ PRIVATE OPERATOR CWstr.Let (BYREF cbs AS CBStr_)
    this.AppendBuffer(cast(ANY PTR, cbs), nLenString * 2)
 END OPERATOR
 ' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CWstr.Let (BYVAL n AS LONGINT)
+   CWSTR_DP("CWSTR OPERATOR Let LONGINT")
+   this.Clear
+   DIM wsz AS WSTRING * 260 = .WSTR(n)
+   this.Add(wsz)
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CWstr.Let (BYVAL n AS DOUBLE)
+   CWSTR_DP("CWSTR OPERATOR Let DOUBLE")
+   this.Clear
+   DIM wsz AS WSTRING * 260 = .WSTR(n)
+   this.Add(wsz)
+END OPERATOR
+' ========================================================================================
 
 ' ========================================================================================
 ' ResizeBuffer
@@ -595,6 +624,21 @@ END OPERATOR
 ' ========================================================================================
 
 ' ========================================================================================
+PRIVATE OPERATOR CWStr.+= (BYVAL n AS LONGINT)
+   CWSTR_DP("CWSTR OPERATOR += LONGINT")
+   DIM wsz AS WSTRING * 260 = .WSTR(n)
+   this.Add(wsz)
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CWStr.+= (BYVAL n AS DOUBLE)
+   CWSTR_DP("CWSTR OPERATOR += DOUBLE")
+   DIM wsz AS WSTRING * 260 = .WSTR(n)
+   this.Add(wsz)
+END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
 ' Appends a WSTRING to the CWSTR
 ' ========================================================================================
 PRIVATE OPERATOR CWStr.&= (BYREF wszStr AS WSTRING)
@@ -631,6 +675,21 @@ END OPERATOR
 ' ========================================================================================
 
 ' ========================================================================================
+PRIVATE OPERATOR CWStr.&= (BYVAL n AS LONGINT)
+   CWSTR_DP("CWSTR OPERATOR &= LONGINT")
+   DIM wsz AS WSTRING * 260 = .WSTR(n)
+   this.Add(wsz)
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CWStr.&= (BYVAL n AS DOUBLE)
+   CWSTR_DP("CWSTR OPERATOR &= DOUBLE")
+   DIM wsz AS WSTRING * 260 = .WSTR(n)
+   this.Add(wsz)
+END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
 ' Number of characters to preallocate to minimize multiple allocations when doing multiple
 ' concatenations. A value of less than 0 indicates that it must double the capacity each
 ' time that the buffer needs to be resized.
@@ -658,7 +717,7 @@ END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 ' The internal string buffer is expanded to the specified number of bytes. If the new
-' capacity is smaller or equal to the current capacity, no operation is performed. f it is
+' capacity is smaller or equal to the current capacity, no operation is performed. If it is
 ' smaller, the buffer is shortened and the contents that exceed the new capacity are lost.
 ' ========================================================================================
 PRIVATE PROPERTY CWstr.Capacity (BYVAL nValue AS UINT)
@@ -775,7 +834,7 @@ PRIVATE FUNCTION CWstr.InsertBuffer (BYVAL addrMemory AS ANY PTR, BYVAL nIndex A
    IF nIndex < 1 OR nIndex > m_BufferLen \ 2 THEN RETURN FALSE
    ' Determine the size of the new buffer
    IF m_BufferLen + nNumBytes > m_Capacity THEN m_Capacity = m_BufferLen + nNumBytes
-   DIM pNewBuffer AS UBYTE PTR = Allocate(m_Capacity * 2)
+   DIM pNewBuffer AS UBYTE PTR = Allocate((m_Capacity + 1) * 2)
    IF m_pBuffer THEN
       nIndex -= 1
       ' Copy the existing data into the new buffer
@@ -808,7 +867,7 @@ PRIVATE FUNCTION CWstr.Insert (BYREF cws AS CWSTR, BYVAL nIndex AS UINT) AS BOOL
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION CWstr.Insert (BYREF cbs AS CBSTR_, BYVAL nIndex AS LONG) AS LONG
+PRIVATE FUNCTION CWstr.Insert (BYREF cbs AS CBSTR_, BYVAL nIndex AS LONG) AS BOOLEAN
    CWSTR_DP("CWSTR Insert CBSTR")
    IF (nIndex < 1) OR nIndex > m_BufferLen \ 2 THEN RETURN 0
    DIM AS LONG nLenString = SysStringLen(cbs)
@@ -894,12 +953,9 @@ END FUNCTION
 ' Returns a substring of the string.
 ' ========================================================================================
 PRIVATE FUNCTION CWStr.MidChars (BYVAL nStart AS LONG, BYVAL nChars AS LONG = 0) AS CWSTR
-   CWSTR_DP("CBSTR LeftChars")
-   IF nChars = 0 THEN
-      RETURN MID(*cast(WSTRING PTR, m_pBuffer), nStart)
-   ELSE
-      RETURN MID(*cast(WSTRING PTR, m_pBuffer), nStart, nChars)
-   END IF
+   CWSTR_DP("CBSTR MidChars")
+   IF nChars = 0 THEN RETURN MID(*cast(WSTRING PTR, m_pBuffer), nStart)
+   RETURN MID(*cast(WSTRING PTR, m_pBuffer), nStart, nChars)
 END FUNCTION
 ' ========================================================================================
 
@@ -985,7 +1041,7 @@ END FUNCTION
 ' =====================================================================================
 PRIVATE FUNCTION CWStr.wchar () AS WSTRING PTR
    DIM pwchar AS WSTRING PTR
-   pwchar = CoTaskMemAlloc(m_BufferLen)
+   pwchar = CoTaskMemAlloc((m_BufferLen + 1) * 2)
    IF pwchar = NULL THEN RETURN NULL
    IF m_BufferLen THEN memcpy pwchar, m_pBuffer, m_BufferLen
    IF m_BufferLen = 0 THEN *pwchar = CHR(0)
@@ -1183,7 +1239,7 @@ END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR CBStr.Let (BYREF cws AS CWStr)
-   CWSTR_DP("CBSTR LET CWSTR")
+   CBSTR_DP("CBSTR LET CWSTR")
    IF m_bstr THEN SysFreeString(m_bstr)
    m_bstr = SysAllocString(cws)
 END OPERATOR
@@ -1211,6 +1267,22 @@ PRIVATE OPERATOR CBStr.Let (BYREF bstrHandle AS AFX_BSTR)
       m_bstr = SysAllocString(*bstrHandle)
    END IF
    CBSTR_DP("-END CBSTR LET AFX_BSTR - m_bstr: " & .WSTR(m_bstr))
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CBSTR.Let (BYVAL n AS LONGINT)
+   CBSTR_DP("CBSTR OPERATOR Let LONGINT")
+   this.Clear
+   DIM wsz AS WSTRING * 260 = .WSTR(n)
+   m_bstr = SysAllocString(wsz)
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CBSTR.Let (BYVAL n AS DOUBLE)
+   CBSTR_DP("CBSTR OPERATOR Let DOUBLE")
+   this.Clear
+   DIM wsz AS WSTRING * 260 = .WSTR(n)
+   m_bstr = SysAllocString(wsz)
 END OPERATOR
 ' ========================================================================================
 
@@ -1382,8 +1454,23 @@ END OPERATOR
 ' Appends a CBSTR to the CBSTR.
 ' ========================================================================================
 PRIVATE OPERATOR CBStr.+= (BYREF cbs AS CWStr)
-   CWSTR_DP("CBSTR OPERATOR += CWSTR")
+   CBSTR_DP("CBSTR OPERATOR += CWSTR")
    this.Append(**cbs)
+END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+PRIVATE OPERATOR CBStr.+= (BYVAL n AS LONGINT)
+   CBSTR_DP("CBSTR OPERATOR += LONGINT")
+   DIM wsz AS WSTRING * 260 = .WSTR(n)
+   this.Append(wsz)
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CBStr.+= (BYVAL n AS DOUBLE)
+   CBSTR_DP("CBSTR OPERATOR += DOUBLE")
+   DIM wsz AS WSTRING * 260 = .WSTR(n)
+   this.Append(wsz)
 END OPERATOR
 ' ========================================================================================
 
@@ -1409,8 +1496,23 @@ END OPERATOR
 ' Appends a CBSTR to the CBSTR.
 ' ========================================================================================
 PRIVATE OPERATOR CBStr.&= (BYREF cbs AS CWStr)
-   CWSTR_DP("CBSTR OPERATOR &= CWSTR")
+   CBSTR_DP("CBSTR OPERATOR &= CWSTR")
    this.Append(**cbs)
+END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+PRIVATE OPERATOR CBStr.&= (BYVAL n AS LONGINT)
+   CBSTR_DP("CBSTR OPERATOR &= LONGINT")
+   DIM wsz AS WSTRING * 260 = .WSTR(n)
+   this.Append(wsz)
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CBStr.&= (BYVAL n AS DOUBLE)
+   CBSTR_DP("CBSTR OPERATOR &= DOUBLE")
+   DIM wsz AS WSTRING * 260 = .WSTR(n)
+   this.Append(wsz)
 END OPERATOR
 ' ========================================================================================
 
@@ -1510,7 +1612,7 @@ END FUNCTION
 ' Converts the CBSTR to UTF8.
 ' ========================================================================================
 PRIVATE PROPERTY CBStr.Utf8 () AS STRING
-   CWSTR_DP("CBSTR Utf8 GET PROPERTY")
+   CBSTR_DP("CBSTR Utf8 GET PROPERTY")
    DIM cbLen AS INTEGER, bstrLen AS LONG
    IF m_bstr = NULL THEN RETURN ""
    bstrLen = SysStringLen(m_bstr)
@@ -1523,7 +1625,7 @@ END PROPERTY
 ' Converts UTF8 to unicode and assigns it to the CWSTR.
 ' ========================================================================================
 PRIVATE PROPERTY CBStr.Utf8 (BYREF utf8String AS STRING)
-   CWSTR_DP("CWSTR Utf8 SET PROPERTY")
+   CBSTR_DP("CWSTR Utf8 SET PROPERTY")
    IF m_bstr THEN SysFreeString(m_bstr)
    DIM dwLen AS DWORD = MultiByteToWideChar(CP_UTF8, 0, STRPTR(utf8String), LEN(utf8String), NULL, 0)
    IF dwLen THEN

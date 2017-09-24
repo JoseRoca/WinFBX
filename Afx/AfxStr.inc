@@ -17,6 +17,106 @@
 USING Afx
 
 ' ========================================================================================
+' Returns an uppercase version of a string.
+' - pwszStr [in]:
+'      The string to convert. Cannot have a size of 0.
+' - pwszLocaleName [in, optional]:
+'      Pointer to a locale name or one of these pre-defined values:
+'         LOCALE_NAME_INVARIANT
+'         LOCALE_NAME_SYSTEM_DEFAULT
+'         LOCALE_NAME_USER_DEFAULT
+'      For a table of language culture names see: 
+'         https://msdn.microsoft.com/es-es/library/ee825488(v=cs.20).aspx
+' - dwMapFlags [in, optional]:
+'      Flag specifying the type of transformation to use during string mapping or the type
+'      of sort key to generate. This parameter can have the following values
+'      For a complete list see:
+'      https://msdn.microsoft.com/en-us/library/windows/desktop/dd318702(v=vs.85).aspx
+' Return value:
+'   The uppercased string.
+' ========================================================================================
+PRIVATE FUNCTION AfxStrUCase (BYVAL pwszStr AS WSTRING PTR, _
+   BYVAL pwszLocaleName AS WSTRING PTR = LOCALE_NAME_USER_DEFAULT, _
+   BYVAL dwMapFlags AS DWORD = 0) AS CWSTR
+
+   ' // Check the vailidy of the passed parameters
+   IF pwszStr = NULL THEN RETURN ""
+   IF LEN(*pwszStr) = 0 THEN RETURN ""
+   DIM cwsOut AS CWSTR = *pwszStr
+   ' // Make sure that LCMAP_LOWERCASE is not being used
+   dwMapFlags = dwMapFlags AND (NOT LCMAP_LOWERCASE)
+   ' // Make sure that LCMAP_LINGUISTIC_CASING OR LCMAP_UPPERCASE is being used
+   dwMapFlags OR= LCMAP_LINGUISTIC_CASING OR LCMAP_UPPERCASE
+   ' // Ususally, the length of the converted string will be the same that the one of
+   ' // the input string, so let's try it
+   DIM cbLen AS LONG = LCMapStringEx(pwszLocaleName, dwMapFlags, pwszStr, LEN(*pwszStr), _
+       cwsOut.vptr, LEN(cwsOut), NULL, NULL, 0)
+   ' // If the output length is bigger than the inpur one, request the needed length,
+   ' // mke the buffer bigger and try it again
+   IF cbLen = 0 AND GetLastError = ERROR_INSUFFICIENT_BUFFER THEN
+      cbLen = LCMapStringEx(pwszLocaleName, dwMapFlags, pwszStr, LEN(*pwszStr), NULL, 0, NULL, NULL, 0)
+      IF cbLen THEN
+         cwsOut += SPACE(cbLen)
+         cbLen = LCMapStringEx(pwszLocaleName, dwMapFlags, pwszStr, LEN(*pwszStr), _
+                 cwsOut.vptr, LEN(cwsOut), NULL, NULL, 0)
+      END IF
+   END IF
+   RETURN cwsOut
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a lowercase version of a string.
+' - pwszStr [in]:
+'      The string to convert. Cannot have a size of 0.
+' - pwszLocaleName [in, optional]:
+'      Pointer to a locale name or one of these pre-defined values:
+'         LOCALE_NAME_INVARIANT
+'         LOCALE_NAME_SYSTEM_DEFAULT
+'         LOCALE_NAME_USER_DEFAULT
+'      For a table of language culture names see: 
+'         https://msdn.microsoft.com/es-es/library/ee825488(v=cs.20).aspx
+' - dwMapFlags [in, optional]:
+'      Flag specifying the type of transformation to use during string mapping or the type
+'      of sort key to generate. This parameter can have the following values
+'      For a complete list see:
+'      https://msdn.microsoft.com/en-us/library/windows/desktop/dd318702(v=vs.85).aspx
+' Return value:
+'   The lowercased string.
+' ========================================================================================
+PRIVATE FUNCTION AfxStrLCase (BYVAL pwszStr AS WSTRING PTR, _
+   BYVAL pwszLocaleName AS WSTRING PTR = LOCALE_NAME_USER_DEFAULT, _
+   BYVAL dwMapFlags AS DWORD = 0) AS CWSTR
+
+   ' // Check the vailidy of the passed parameters
+   IF pwszStr = NULL THEN RETURN ""
+   IF LEN(*pwszStr) = 0 THEN RETURN ""
+   DIM cwsOut AS CWSTR = *pwszStr
+   ' // Make sure that LCMAP_UPPERCASE is not being used
+   dwMapFlags = dwMapFlags AND (NOT LCMAP_UPPERCASE)
+   ' // Make sure that LCMAP_LINGUISTIC_CASING OR LCMAP_LOWERCASE is being used
+   dwMapFlags OR= LCMAP_LINGUISTIC_CASING OR LCMAP_LOWERCASE
+   ' // Ususally, the length of the converted string will be the same that the one of
+   ' // the input string, so let's try it
+   DIM cbLen AS LONG = LCMapStringEx(pwszLocaleName, dwMapFlags, pwszStr, LEN(*pwszStr), _
+       cwsOut.vptr, LEN(cwsOut), NULL, NULL, 0)
+   ' // If the output length is bigger than the inpur one, request the needed length,
+   ' // mke the buffer bigger and try it again
+   IF cbLen = 0 AND GetLastError = ERROR_INSUFFICIENT_BUFFER THEN
+      cbLen = LCMapStringEx(pwszLocaleName, dwMapFlags, pwszStr, LEN(*pwszStr), NULL, 0, NULL, NULL, 0)
+      IF cbLen THEN
+         cwsOut += SPACE(cbLen)
+         cbLen = LCMapStringEx(pwszLocaleName, dwMapFlags, pwszStr, LEN(*pwszStr), _
+                 cwsOut.vptr, LEN(cwsOut), NULL, NULL, 0)
+      END IF
+   END IF
+   RETURN cwsOut
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Translates ansi bytes to unicode bytes.
 ' Parameters:
 ' - ansiStr = An ansi or UTF8 string.
@@ -74,7 +174,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Returns a copy of a string with strings removed.
+' Returns a copy of a string with substrings removed.
 ' If wszMatchStr is not present in wszMainStr, all of wszMainStr is returned intact.
 ' This function is case sensitive.
 ' Example: DIM cws AS CWSTR = AfxStrRemove("[]Hello[]", "[]")

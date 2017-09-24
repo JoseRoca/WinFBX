@@ -897,7 +897,7 @@ PRIVATE FUNCTION CDec.Scale () AS UBYTE
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' Returns the scale of this decimal number.
+' Returns the sign of this decimal number.
 ' Returns 0 if it is not signed of &h80 (128) if it is signed.
 ' ========================================================================================
 PRIVATE FUNCTION CDec.Sign () AS UBYTE
