@@ -174,22 +174,6 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Finds the first occurrence of a substring within a string.
-' The comparison is not case-sensitive.
-' Example: DIM nPos AS LONG = StrInStrI("Hello World. Welcome to the Freebasic World", "world")
-' Example: DIM nPos AS LONG = StrInStrI(12, "Hello World. Welcome to the Freebasic World", "world")
-' ========================================================================================
-PRIVATE FUNCTION AfxInStrI OVERLOAD (BYREF wszStr AS WSTRING, BYREF wszSearch AS WSTRING) AS LONG
-   RETURN InStr(UCASE(wszStr), UCASE(wszSearch))
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
-PRIVATE FUNCTION AfxInStrI OVERLOAD (BYVAL nStart AS LONG, BYREF wszStr AS WSTRING, BYREF wszSearch AS WSTRING) AS LONG
-   RETURN InStr(nStart, UCASE(wszStr), UCASE(wszSearch))
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
 ' Returns a copy of a string with substrings removed.
 ' If wszMatchStr is not present in wszMainStr, all of wszMainStr is returned intact.
 ' This function is case sensitive.
