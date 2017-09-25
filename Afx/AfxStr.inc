@@ -12,6 +12,7 @@
 #pragma once
 #include once "windows.bi"
 #include once "win/ole2.bi"
+#include once "win/shlwapi.bi"
 #include once "Afx/AfxWin.inc"
 #include once "Afx/CWStr.inc"
 USING Afx
@@ -1194,18 +1195,76 @@ PRIVATE FUNCTION AfxStrParse OVERLOAD (BYREF wszMainStr AS WSTRING, BYVAL nPosit
    ' The parse must match the entire deliminter string
    RETURN AfxStrParse(wszMainStr, wszDelimiter, nPosition, FALSE, Len(wszDelimiter))
 END FUNCTION
-'==============================================================================
+' ========================================================================================
 
-'==============================================================================
+' ========================================================================================
 ' Return a delimited field from a string expression.
 ' Delimiter contains a set of characters (one or more), any of which may act as a delimiter character.
 ' If nPosition evaluates to zero or is outside of the actual field count, an empty string is returned.
 ' If nPosition is negative then fields are searched from the right to left of the MainString.
 ' Delimiters are case-sensitive.
 ' Example: DIM cws AS CWSTR = AfxStrParseAny("1;2,3", 2, ",;")
-'==============================================================================
+' ========================================================================================
 PRIVATE FUNCTION AfxStrParseAny (BYREF wszMainStr AS WSTRING, BYVAL nPosition AS LONG = 1, BYREF wszDelimiter AS WSTRING = ",") AS CWSTR
    ' The parse must match one character (len = 1) in the delimiter string
    RETURN AfxStrParse(wszMainStr, wszDelimiter, nPosition, TRUE, 1)
 END FUNCTION
-'==============================================================================
+' ========================================================================================
+
+' ========================================================================================
+' Returns the length of the initial portion of a string which consists only of characters
+' that are part of a specified set of characters.
+' Example:
+' DIM wszText AS WSTRING * 260 = "129th"
+' DIM wszSet AS WSTRING * 260 = "1234567890"
+' DIM n AS LONG = StrSpnW(@wszText, @wszSet)
+' printf(!"The initial number has %d digits.\n", n)
+' ========================================================================================
+PRIVATE FUNCTION AfxStrSpn (BYREF wszText AS WSTRING, BYREF wszSet AS WSTRING) AS LONG
+   RETURN StrSpnW(@wszText, @wszSet)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Converts a numeric value into a string that represents the number expressed as a size
+' value in bytes, kilobytes, megabytes, or gigabytes, depending on the size.
+' ========================================================================================
+PRIVATE FUNCTION AfxStrFormatByteSize (BYVAL ull AS ULONGLONG) AS CWSTR
+   DIM cws AS CWSTR = SPACE(260)
+   StrFormatByteSizeW(ull, cws.vptr, 260)
+   RETURN cws
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Converts a numeric value into a string that represents the number expressed as a size
+' value in kilobytes.
+' ========================================================================================
+PRIVATE FUNCTION AfxStrFormatKBSize (BYVAL ull AS ULONGLONG) AS CWSTR
+   DIM cws AS CWSTR = SPACE(260)
+   StrFormatKBSizeW(ull, cws.vptr, 260)
+   RETURN cws
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Converts a time interval, specified in milliseconds, to a string.
+' Parameters:
+' - dwTimeMS: The time interval, in milliseconds.
+' - digits  : The maximum number of significant digits to be represented in the output
+'             string. Some examples are:
+'             dwTimeMS digits   cwsOut
+'             -------- ------ -----------
+'                34000    3        34 sec
+'                34000    2        34 sec
+'                34000    1        30 sec
+'                74000    3  1 min 14 sec
+'                74000    2  1 min 10 sec
+'                74000    1  1 min
+' ========================================================================================
+PRIVATE FUNCTION AfxStrFromTimeInterval (BYVAL dwTimeMS AS DWORD, BYVAL digits AS LONG) AS CWSTR
+   DIM cws AS CWSTR = SPACE(260)
+   StrFromTimeIntervalW(cws.vptr, 260, dwTimeMS, digits)
+   RETURN cws
+END FUNCTION
+' ========================================================================================
