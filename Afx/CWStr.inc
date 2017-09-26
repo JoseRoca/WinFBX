@@ -106,7 +106,6 @@ TYPE CBSTR
       DECLARE OPERATOR LET (BYREF cbs AS CBStr)
       DECLARE OPERATOR LET (BYREF cws AS CWStr_)
       DECLARE OPERATOR LET (BYREF bstrHandle AS AFX_BSTR)
-      DECLARE OPERATOR LET (BYREF cbs AS CBSTR_)
       DECLARE OPERATOR LET (BYVAL n AS LONGINT)
       DECLARE OPERATOR LET (BYVAL n AS DOUBLE)
       DECLARE OPERATOR CAST () BYREF AS WSTRING
@@ -1314,6 +1313,7 @@ PRIVATE OPERATOR CBStr.CAST () AS ANY PTR
    OPERATOR =  CAST(ANY PTR, m_bstr)
 END OPERATOR
 ' ========================================================================================
+
 ' ========================================================================================
 ' * Returns a pointer to the string data (same as **)
 ' ========================================================================================
