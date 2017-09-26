@@ -225,6 +225,20 @@ END FUNCTION
 
 ' ========================================================================================
 ' Returns the path of the program which is currently executing.
+' The path name has not a trailing backslash, except if it is a drive, e.g. "C:\".
+' ========================================================================================
+PRIVATE FUNCTION AfxGetExePath () AS CWSTR
+   DIM buffer AS WSTRING * MAX_PATH, p AS LONG
+   GetModuleFileNameW NULL, buffer, SIZEOF(buffer)
+   p = INSTRREV(buffer, ANY ":/\")
+   IF p THEN buffer = AfxPathRemoveBackslash(LEFT(buffer, p))
+   RETURN buffer
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns the path of the program which is currently executing.
+' The path name has a trailing backslash.
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetExePathName () AS CWSTR
    DIM buffer AS WSTRING * MAX_PATH, p AS LONG

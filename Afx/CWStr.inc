@@ -398,7 +398,7 @@ END OPERATOR
 ' Returns the string data (same as **).
 ' ========================================================================================
 PRIVATE FUNCTION CWstr.wstr () BYREF AS WSTRING
-   CWSTR_DP("CWSTR StrAddr - buffer: " & .WSTR(m_pBuffer))
+   CWSTR_DP("CWSTR wstr - buffer: " & .WSTR(m_pBuffer))
    RETURN *cast(WSTRING PTR, m_pBuffer)
 END FUNCTION
 ' ========================================================================================
