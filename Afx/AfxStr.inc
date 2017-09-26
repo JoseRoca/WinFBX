@@ -27,7 +27,7 @@ USING Afx
 '         LOCALE_NAME_INVARIANT
 '         LOCALE_NAME_SYSTEM_DEFAULT
 '         LOCALE_NAME_USER_DEFAULT
-'      For a table of language culture names see: 
+'      For a table of language culture names see:
 '         https://msdn.microsoft.com/es-es/library/ee825488(v=cs.20).aspx
 ' - dwMapFlags [in, optional]:
 '      Flag specifying the type of transformation to use during string mapping or the type
@@ -77,7 +77,7 @@ END FUNCTION
 '         LOCALE_NAME_INVARIANT
 '         LOCALE_NAME_SYSTEM_DEFAULT
 '         LOCALE_NAME_USER_DEFAULT
-'      For a table of language culture names see: 
+'      For a table of language culture names see:
 '         https://msdn.microsoft.com/es-es/library/ee825488(v=cs.20).aspx
 ' - dwMapFlags [in, optional]:
 '      Flag specifying the type of transformation to use during string mapping or the type
@@ -259,13 +259,14 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION AfxStrReplace OVERLOAD (BYREF wszMainStr AS WSTRING, BYREF wszMatchStr AS WSTRING, BYREF wszReplaceWith AS WSTRING) AS CWSTR
    DIM cwsMainStr AS CWSTR = wszMainStr
-   DIM nLen AS LONG = LEN(wszReplaceWith)
+   DIM nLenReplaceWith AS LONG = LEN(wszReplaceWith)
+   DIM nLenMatchStr AS LONG = LEN(wszMatchStr)
    DIM nPos AS LONG = 1
    DO
       nPos = INSTR(nPos, cwsMainStr, wszMatchStr)
       IF nPos = 0 THEN EXIT DO
-      cwsMainStr = MID(cwsMainStr, 1, nPos - 1) + wszReplaceWith + MID(cwsMainStr, nPos + nLen)
-      nPos += nLen
+      cwsMainStr = MID(cwsMainStr, 1, nPos - 1) + wszReplaceWith + MID(cwsMainStr, nPos + nLenMatchStr)
+      nPos += nLenReplaceWith
    LOOP
    RETURN cwsMainStr
 END FUNCTION
@@ -277,13 +278,14 @@ END FUNCTION
 PRIVATE FUNCTION AfxStrReplaceI (BYREF wszMainStr AS WSTRING, BYREF wszMatchStr AS WSTRING, BYREF wszReplaceWith AS WSTRING) AS CWSTR
    DIM cwsMainStr AS CWSTR = wszMainStr
    DIM cwsMatchStr AS CWSTR = UCASE(wszMatchStr)
-   DIM nLen AS LONG = LEN(wszReplaceWith)
+   DIM nLenReplaceWith AS LONG = LEN(wszReplaceWith)
+   DIM nLenMatchStr AS LONG = LEN(wszMatchStr)
    DIM nPos AS LONG = 1
    DO
       nPos = INSTR(nPos, UCASE(cwsMainStr), cwsMatchStr)
       IF nPos = 0 THEN EXIT DO
-      cwsMainStr = MID(cwsMainStr, 1, nPos - 1) + wszReplaceWith + MID(cwsMainStr, nPos + nLen)
-      nPos += nLen
+      cwsMainStr = MID(cwsMainStr, 1, nPos - 1) + wszReplaceWith + MID(cwsMainStr, nPos + nLenMatchStr)
+      nPos += nLenReplaceWith
    LOOP
    RETURN cwsMainStr
 END FUNCTION
