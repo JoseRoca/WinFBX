@@ -277,13 +277,10 @@ END FUNCTION
 ' * Returns a copy of a string with text replaced using a regular expression as the search string.
 ' ========================================================================================
 PRIVATE FUNCTION CRegExp.Replace (BYREF cbsSourceString AS CBSTR, BYREF cvReplaceString AS CVAR) AS CBSTR
+   IF m_pRegExp = NULL THEN this.SetResult(E_POINTER) : RETURN cbsSourceString
    DIM bstrDestString AS AFX_BSTR
-   IF m_pRegExp = NULL THEN
-      this.SetResult(E_POINTER)
-   ELSE
-      this.SetResult(m_pRegExp->Replace(cbsSourceString, cvReplaceString, @bstrDestString))
-   END IF
-   RETURN bstrDestString
+   this.SetResult(m_pRegExp->Replace(cbsSourceString, cvReplaceString, @bstrDestString))
+   IF m_Result = S_OK THEN RETURN bstrDestString ELSE RETURN cbsSourceString
 END FUNCTION
 ' ========================================================================================
 
