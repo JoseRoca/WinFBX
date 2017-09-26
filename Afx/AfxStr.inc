@@ -17,6 +17,7 @@
 #include once "Afx/CWStr.inc"
 USING Afx
 
+#if _WIN32_WINNT = &h0602
 ' ========================================================================================
 ' Returns an uppercase version of a string.
 ' - pwszStr [in]:
@@ -116,6 +117,7 @@ PRIVATE FUNCTION AfxStrLCase (BYVAL pwszStr AS WSTRING PTR, _
 
 END FUNCTION
 ' ========================================================================================
+#endif
 
 ' ========================================================================================
 ' Translates ansi bytes to unicode bytes.
