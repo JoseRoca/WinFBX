@@ -316,9 +316,9 @@ FUNCTION TLB_VarTypeToKeyword OVERLOAD (BYVAL VarType AS LONG, BYVAL cElements A
 '            s = "BYTE"
 '         END IF
          IF cElements THEN
-            s = "(0 TO " & STR(cElements) & " AS " & IIF&(VarType = 16, "BYTE", "UBYTE") & ")"
+            s = "(0 TO " & STR(cElements) & " AS " & IIF(VarType = 16, "BYTE", "UBYTE") & ")"
          ELSE
-            s = IIF&(VarType = 16, "BYTE", "UBYTE")
+            s = IIF(VarType = 16, "BYTE", "UBYTE")
          END IF
       CASE    18 : s = "USHORT"                            ' VT_UI2
       CASE    19 : s = "ULONG"                             ' VT_UI4

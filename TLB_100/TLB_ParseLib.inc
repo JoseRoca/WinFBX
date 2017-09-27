@@ -1017,7 +1017,7 @@ PRIVATE FUNCTION CParseTypeLib.ParseTypeInfos () AS HRESULT
       ' // Retrieves the TypeKind
       DIM hr AS HRESULT = m_pTypeLib->GetTypeInfoType(i, @pTKind)
       IF hr <> S_OK THEN
-         TLB_MsgBox m_pWindow->hWindow, "Error &h" & HEX$(hr, 8) & " retrieving the info type", _
+         TLB_MsgBox m_pWindow->hWindow, "Error &h" & HEX(hr, 8) & " retrieving the info type", _
             MB_OK OR MB_ICONERROR OR MB_APPLMODAL, "CParseTypeLib.ParseTypeInfos"
          EXIT FOR
       END IF
@@ -1025,7 +1025,7 @@ PRIVATE FUNCTION CParseTypeLib.ParseTypeInfos () AS HRESULT
       ' // Retrieves the ITypeInfo interface
       hr = m_pTypeLib->GetTypeInfo(i, @pTypeInfo)
       IF hr <> S_OK OR pTypeInfo = NULL THEN
-         TLB_MsgBox m_pWindow->hWindow, "Error &h" & HEX$(hr, 8) & " retrieving the ITypeInfo interface", _
+         TLB_MsgBox m_pWindow->hWindow, "Error &h" & HEX(hr, 8) & " retrieving the ITypeInfo interface", _
             MB_OK OR MB_ICONERROR OR MB_APPLMODAL, "CParseTypeLib.ParseTypeInfos"
          EXIT FOR
       END IF
@@ -1033,7 +1033,7 @@ PRIVATE FUNCTION CParseTypeLib.ParseTypeInfos () AS HRESULT
       ' // Gets the address of a pointer to the TYPEATTR structure
       hr = pTypeInfo->GetTypeAttr(@pTypeAttr)
       IF hr <> S_OK OR pTypeAttr = NULL THEN
-         TLB_MsgBox m_pWindow->hWindow, "Error &h" & HEX$(hr, 8) & " retrieving the address of the TypeAttr structure", _
+         TLB_MsgBox m_pWindow->hWindow, "Error &h" & HEX(hr, 8) & " retrieving the address of the TypeAttr structure", _
             MB_OK OR MB_ICONERROR OR MB_APPLMODAL, "CParseTypeLib.ParseTypeInfos"
          EXIT FOR
       END IF
