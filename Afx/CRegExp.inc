@@ -381,7 +381,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CRegExp.SubMatchValue (BYVAL MatchIndex AS LONG, BYVAL SubMatchIndex AS LONG) AS CVAR
    DIM vValue AS VARIANT
-   IF m_pMatches = NULL THEN
+   IF m_pMatches = NULL THEN 
       this.SetResult(E_POINTER)
    ELSE
       DIM pMatch AS Afx_IMatch2 PTR
