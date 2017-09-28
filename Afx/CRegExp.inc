@@ -54,11 +54,11 @@ TYPE CRegExp
       DECLARE FUNCTION Test (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
               BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bMultiline AS BOOLEAN = FALSE) AS BOOLEAN
       DECLARE FUNCTION Replace (BYREF cbsSourceString AS CBSTR, BYREF cvReplaceString AS CVAR) AS CBSTR
-      DECLARE FUNCTION MatchCount () AS LONG
+      DECLARE FUNCTION MatchesCount () AS LONG
       DECLARE FUNCTION MatchValue (BYVAL index AS LONG = 0) AS CBSTR
       DECLARE FUNCTION MatchPos (BYVAL index AS LONG = 0) AS LONG
       DECLARE FUNCTION MatchLen (BYVAL index AS LONG = 0) AS LONG
-      DECLARE FUNCTION SubMatchCount (BYVAL index AS LONG = 0) AS LONG
+      DECLARE FUNCTION SubMatchesCount (BYVAL index AS LONG = 0) AS LONG
       DECLARE FUNCTION SubMatchValue (BYVAL MatchIndex AS LONG = 0, BYVAL SubMatchIndex AS LONG = 0) AS CVAR
       DECLARE FUNCTION RemoveStr (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
               BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = FALSE) AS CBSTR
@@ -300,7 +300,7 @@ END FUNCTION
 ' ========================================================================================
 ' Returns the number of matches.
 ' ========================================================================================
-PRIVATE FUNCTION CRegExp.MatchCount () AS LONG
+PRIVATE FUNCTION CRegExp.MatchesCount () AS LONG
    IF m_pMatches = NULL THEN this.SetResult(E_POINTER): RETURN 0
    DIM nCount AS LONG
    this.SetResult(m_pMatches->get_Count(@nCount))
@@ -372,7 +372,7 @@ END FUNCTION
 ' ========================================================================================
 ' Returns the number of submatches.
 ' ========================================================================================
-PRIVATE FUNCTION CRegExp.SubMatchCount (BYVAL index AS LONG) AS LONG
+PRIVATE FUNCTION CRegExp.SubMatchesCount (BYVAL index AS LONG) AS LONG
    DIM nCount AS LONG
    IF m_pMatches = NULL THEN
       this.SetResult(E_POINTER)
