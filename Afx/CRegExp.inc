@@ -66,7 +66,7 @@ TYPE CRegExp
               BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = FALSE) AS CBSTR
       DECLARE FUNCTION Find (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS LONG
       DECLARE FUNCTION Find (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS LONG
-      DECLARE FUNCTION FindAll (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
+      DECLARE FUNCTION FindEx (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
               BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = TRUE) AS CBSTR
       DECLARE FUNCTION ExtractStr (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS CBSTR
       DECLARE FUNCTION ExtractStr (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS CBSTR
@@ -548,9 +548,9 @@ END FUNCTION
 '   DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
 '   DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
 '   DIM cbsOut AS CBSTR
-'   cbsOut = pRegExp.FindAll(cbsText, cbsPattern)
+'   cbsOut = pRegExp.FindEx(cbsText, cbsPattern)
 ' ========================================================================================
-PRIVATE FUNCTION CRegExp.FindAll (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
+PRIVATE FUNCTION CRegExp.FindEx (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
    BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = TRUE) AS CBSTR
 
    IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN ""
