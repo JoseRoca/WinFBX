@@ -6,11 +6,15 @@
 *.bi        eol=crlf
 *.bas       eol=crlf
 *.inc       eol=crlf
+*.inl       eol=crlf
 *.bat       eol=crlf
 *.sln       eol=crlf
 *.txt       eol=crlf
 *.fbtpl     eol=crlf
 *.rc        eol=crlf
+*.res       eol=crlf
+*.rh        eol=crlf
+*.xml       eol=crlf
 
 # Denote all files that are truly binary and should not be modified.
 *.png binary
