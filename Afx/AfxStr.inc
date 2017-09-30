@@ -1004,7 +1004,13 @@ END FUNCTION
 
 ' ========================================================================================
 ' Retuns TRUE if c is a number (0-9), a numeric sign (+-) or a decimal point (.).
-' Note: Works both with single characters and strings.
+' Works both with single characters and strings.
+' Note: For strings that can contain floating decimal numbers with exponents, e.g.
+' "1.2345678901234567e+029", use the CRegExp (regular expressions class):
+' DIM pRegExp AS CRegExp
+' DIM cbsText AS CBSTR = "1.2345678901234567e+029"
+' DIM cbsPattern AS CBSTR = "^[\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?$"
+' DIM bIsNumeric AS BOOLEAN = pRegExp.Test(cbsText, cbsPattern)
 ' ========================================================================================
 PRIVATE FUNCTION AfxIsNumeric (BYREF c AS WSTRING) AS BOOLEAN
    RETURN (AfxStrRetainAny(c, "+-.0123456789") = c) AND c <> ""
