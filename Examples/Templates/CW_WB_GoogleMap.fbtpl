@@ -7,7 +7,7 @@ CWindow: WebBrowser: Google Map
 ' File: CW_WB_GoogleMap.fbtpl
 ' Contents: WebBrowser - Google Map
 ' Compiler: FreeBasic 32 & 64 bit
-' Copyright (c) 2016-2017 José Roca. Freeware. Use at your own risk.
+' Copyright (c) 2016 José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
@@ -32,8 +32,9 @@ DECLARE FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam A
 
 ' ========================================================================================
 ' Build the script
-' Note: .infomsg {display:none;} is a workaround for not displaying the following Google message:
-' "You are using a browser that is not supported by the Google Maps JavaScript API. Consider changing your browser"
+' Added ".infomsg {display:none;}" to the style to avoid this message:
+' "You are using a browser that is not supported by the Google Maps JavaScript API.
+' Consider changing your browser".
 ' ========================================================================================
 FUNCTION BuildScript () AS STRING
    DIM s AS STRING
@@ -41,15 +42,15 @@ FUNCTION BuildScript () AS STRING
    s += "<html>"
    s += "   <head>"
    s += "      <meta http-equiv='X-UA-Compatible' content='IE=edge'>"
-   s += "      <meta http-equiv='MSThemeCompatible' content='Yes'>"
+   s += "      <meta http-equiv='MSThemeCompatible' content='yes'>"
    s += "      <style>"
+   s += "         .infomsg {display:none;}"
    s += "         html, body, #map-canvas"
    s += "         {"
    s += "            height: 100%;"
    s += "            margin: 0px;"
    s += "            padding: 0px"
    s += "         }"
-   s += "         .infomsg {display:none;}"
    s += "      </style>"
    s += "      <script src='https://maps.googleapis.com/maps/api/js?v=3'></script>"
    s += "      <script>"
