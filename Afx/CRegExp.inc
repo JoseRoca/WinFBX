@@ -417,11 +417,10 @@ END FUNCTION
 ' - bMultiline : TRUE = Match at the start and the end of multiple lines separated by line breaks.
 ' Note: The Global property has no effect on the Test method.
 ' ========================================================================================
-PRIVATE FUNCTION CRegExp.Test (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
-   BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bMultiline AS BOOLEAN = FALSE) AS BOOLEAN
+PRIVATE FUNCTION CRegExp.Test (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
+   BYVAL bMultiline AS BOOLEAN = FALSE) AS BOOLEAN
    IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN FALSE
    m_pRegExp->put_IgnoreCase(bIgnoreCase)
-   m_pRegExp->put_Pattern(cbsPattern)
    m_pRegExp->put_Multiline(bMultiline)
    DIM bMatch AS VARIANT_BOOL
    this.SetResult(m_pRegExp->Test(cbsSourceString, @bMatch))
@@ -429,10 +428,11 @@ PRIVATE FUNCTION CRegExp.Test (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern 
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION CRegExp.Test (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
-   BYVAL bMultiline AS BOOLEAN = FALSE) AS BOOLEAN
+PRIVATE FUNCTION CRegExp.Test (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
+   BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bMultiline AS BOOLEAN = FALSE) AS BOOLEAN
    IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN FALSE
    m_pRegExp->put_IgnoreCase(bIgnoreCase)
+   m_pRegExp->put_Pattern(cbsPattern)
    m_pRegExp->put_Multiline(bMultiline)
    DIM bMatch AS VARIANT_BOOL
    this.SetResult(m_pRegExp->Test(cbsSourceString, @bMatch))
@@ -455,6 +455,17 @@ END FUNCTION
 '   DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
 '   DIM nPos AS LONG = pRegExp.Find(cbsText, cbsPattern)
 ' ========================================================================================
+PRIVATE FUNCTION CRegExp.Find (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS LONG
+   IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN 0
+   IF m_pMatches THEN AfxSafeRelease(m_pMatches)
+   m_pRegExp->put_IgnoreCase(bIgnoreCase)
+   m_pRegExp->put_Global(FALSE)
+   m_pRegExp->put_Multiline(FALSE)
+   this.SetResult(m_pRegExp->Execute(cbsSourceString, cast(Afx_IDispatch PTR PTR, @m_pMatches)))
+   RETURN this.MatchPos(0)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
 PRIVATE FUNCTION CRegExp.Find (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS LONG
    IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN 0
    IF m_pMatches THEN AfxSafeRelease(m_pMatches)
@@ -462,17 +473,6 @@ PRIVATE FUNCTION CRegExp.Find (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern 
    m_pRegExp->put_Global(FALSE)
    m_pRegExp->put_Multiline(FALSE)
    m_pRegExp->put_Pattern(cbsPattern)
-   this.SetResult(m_pRegExp->Execute(cbsSourceString, cast(Afx_IDispatch PTR PTR, @m_pMatches)))
-   RETURN this.MatchPos(0)
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
-PRIVATE FUNCTION CRegExp.Find (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS LONG
-   IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN 0
-   IF m_pMatches THEN AfxSafeRelease(m_pMatches)
-   m_pRegExp->put_IgnoreCase(bIgnoreCase)
-   m_pRegExp->put_Global(FALSE)
-   m_pRegExp->put_Multiline(FALSE)
    this.SetResult(m_pRegExp->Execute(cbsSourceString, cast(Afx_IDispatch PTR PTR, @m_pMatches)))
    RETURN this.MatchPos(0)
 END FUNCTION
@@ -495,13 +495,12 @@ END FUNCTION
 '   DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
 '   DIM nPos AS LONG = pRegExp.Find(15, cbsText, cbsPattern)
 ' ========================================================================================
-PRIVATE FUNCTION CRegExp.Find (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS LONG
+PRIVATE FUNCTION CRegExp.Find (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS LONG
    IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN 0
    IF m_pMatches THEN AfxSafeRelease(m_pMatches)
    m_pRegExp->put_IgnoreCase(bIgnoreCase)
    m_pRegExp->put_Global(FALSE)
    m_pRegExp->put_Multiline(FALSE)
-   m_pRegExp->put_Pattern(cbsPattern)
    DIM pbstr AS BSTR
    IF nStart < 0 OR nStart > SysStringLen(cbsSourceString.m_bstr) THEN RETURN 0
    DIM cbs AS CBSTR = cbsSourceString.MidChars(nStart)
@@ -510,12 +509,13 @@ PRIVATE FUNCTION CRegExp.Find (BYVAL nStart AS LONG, BYREF cbsSourceString AS CB
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION CRegExp.Find (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS LONG
+PRIVATE FUNCTION CRegExp.Find (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS LONG
    IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN 0
    IF m_pMatches THEN AfxSafeRelease(m_pMatches)
    m_pRegExp->put_IgnoreCase(bIgnoreCase)
    m_pRegExp->put_Global(FALSE)
    m_pRegExp->put_Multiline(FALSE)
+   m_pRegExp->put_Pattern(cbsPattern)
    DIM pbstr AS BSTR
    IF nStart < 0 OR nStart > SysStringLen(cbsSourceString.m_bstr) THEN RETURN 0
    DIM cbs AS CBSTR = cbsSourceString.MidChars(nStart)
@@ -542,14 +542,13 @@ END FUNCTION
 '   DIM cbsOut AS CBSTR
 '   cbsOut = pRegExp.FindEx(cbsText, cbsPattern)
 ' ========================================================================================
-PRIVATE FUNCTION CRegExp.FindEx (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
-   BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = TRUE) AS CBSTR
+PRIVATE FUNCTION CRegExp.FindEx (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
+   BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = TRUE) AS CBSTR
 
    IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN ""
    m_pRegExp->put_IgnoreCase(bIgnoreCase)
    m_pRegExp->put_Global(bGlobal)
    m_pRegExp->put_Multiline(bMultiline)
-   m_pRegExp->put_Pattern(cbsPattern)
 
    DIM cbsOut AS CBSTR, pMatches AS Afx_IMatchCollection2 PTR
    this.SetResult(m_pRegExp->Execute(cbsSourceString, cast(Afx_IDispatch PTR PTR, @pMatches)))
@@ -579,13 +578,14 @@ PRIVATE FUNCTION CRegExp.FindEx (BYREF cbsSourceString AS CBSTR, BYREF cbsPatter
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION CRegExp.FindEx (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
-   BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = TRUE) AS CBSTR
+PRIVATE FUNCTION CRegExp.FindEx (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
+   BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = TRUE) AS CBSTR
 
    IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN ""
    m_pRegExp->put_IgnoreCase(bIgnoreCase)
    m_pRegExp->put_Global(bGlobal)
    m_pRegExp->put_Multiline(bMultiline)
+   m_pRegExp->put_Pattern(cbsPattern)
 
    DIM cbsOut AS CBSTR, pMatches AS Afx_IMatchCollection2 PTR
    this.SetResult(m_pRegExp->Execute(cbsSourceString, cast(Afx_IDispatch PTR PTR, @pMatches)))
@@ -753,7 +753,7 @@ END FUNCTION
 '   DIM pRegExp AS CRegExp
 '   DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
 '   DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
-'   DIM nPos AS LONG = pRegExp.Extract(15, cbsText, cbsPattern)
+'   DIM cbs AS CBSTR = pRegExp.Extract(15, cbsText, cbsPattern)
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CRegExp.Extract (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS CBSTR
