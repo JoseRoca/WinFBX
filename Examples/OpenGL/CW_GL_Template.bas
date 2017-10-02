@@ -33,12 +33,11 @@ DECLARE FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam A
 ' =======================================================================================
 TYPE COGL
 
-   Public:
+   Private:
       m_hDC AS HDC      ' // Device context handle
       m_hRC AS HGLRC    ' // Rendering context handle
       m_hwnd AS HWND    ' // Window handle
 
-   Private:
       rtri AS SINGLE
       rquad AS SINGLE
 

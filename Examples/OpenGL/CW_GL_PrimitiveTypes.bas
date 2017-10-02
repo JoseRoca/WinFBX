@@ -6,7 +6,7 @@
 ' quads strips, and polygon.
 ' It is based on ogl_primitive_types.cpp, by Kevin Harris, 02/01/05.
 ' Compiler: FreeBasic 32 & 64 bit
-' Copyright (c) 2017 José Roca. Freeware. Use at your own risk.
+' Adapted in 2017 by José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
@@ -51,12 +51,11 @@ DECLARE FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam A
 ' =======================================================================================
 TYPE COGL
 
-   Public:
+   Private:
       m_hDC AS HDC      ' // Device context handle
       m_hRC AS HGLRC    ' // Rendering context handle
       m_hwnd AS HWND    ' // Window handle
 
-   Private:
       DIM m_currentPrimitive AS LONG
       '// Note: We'll use the same vertices for both the line-strip and line-loop
       '// demonstrations. The difference between the two primitive types will not be

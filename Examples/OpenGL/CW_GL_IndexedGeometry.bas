@@ -6,7 +6,7 @@
 ' cube’s geometry using an indices array.
 ' It is based on ogl_indexed_geometry.cpp, by Kevin Harris, 02/01/05.
 ' Compiler: FreeBasic 32 & 64 bit
-' Copyright (c) 2017 José Roca. Freeware. Use at your own risk.
+' Adapted in 2017 by José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
@@ -51,15 +51,14 @@ DECLARE FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam A
 ' =======================================================================================
 TYPE COGL
 
-   Public:
+   Private:
       m_hDC AS HDC      ' // Device context handle
       m_hRC AS HGLRC    ' // Rendering context handle
       m_hwnd AS HWND    ' // Window handle
 
-   Private:
-      DIM m_bUseIndexedGeometry AS BOOLEAN = TRUE
-      DIM m_fSpinX AS SINGLE
-      DIM m_fSpinY AS SINGLE
+      m_bUseIndexedGeometry AS BOOLEAN = TRUE
+      m_fSpinX AS SINGLE
+      m_fSpinY AS SINGLE
 
       '// To understand how indexed geometry works, we must first build something
       '// which can be optimized through the use of indices.

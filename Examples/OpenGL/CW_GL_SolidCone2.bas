@@ -2,7 +2,7 @@
 ' Microsoft Windows
 ' File: CW_GL_SolidCone2.bas
 ' Compiler: FreeBasic 32 & 64 bit
-' Copyright (c) 2017 José Roca. Freeware. Use at your own risk.
+' Adapted in 2017 by José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
@@ -32,16 +32,15 @@ DECLARE FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam A
 ' =======================================================================================
 TYPE COGL
 
-   Public:
+   Private:
       m_hDC AS HDC      ' // Device context handle
       m_hRC AS HGLRC    ' // Rendering context handle
       m_hwnd AS HWND    ' // Window handle
 
-   Private:
-      DIM light_ambient(3) AS SINGLE  = { 0.0, 0.0, 0.0, 1.0 }
-      DIM light_diffuse(3) AS SINGLE  = { 1.0, 1.0, 1.0, 1.0 }
-      DIM light_specular(3) AS SINGLE = { 1.0, 1.0, 1.0, 1.0 }
-      DIM light_position(3) AS SINGLE = { 1.0, 1.0, 1.0, 0.0 }
+      light_ambient(3) AS SINGLE  = { 0.0, 0.0, 0.0, 1.0 }
+      light_diffuse(3) AS SINGLE  = { 1.0, 1.0, 1.0, 1.0 }
+      light_specular(3) AS SINGLE = { 1.0, 1.0, 1.0, 1.0 }
+      light_position(3) AS SINGLE = { 1.0, 1.0, 1.0, 0.0 }
 
    Public:
       DECLARE CONSTRUCTOR (BYVAL hwnd AS HWND, BYVAL nBitsPerPel AS LONG = 32, BYVAL cDepthBits AS LONG = 24)

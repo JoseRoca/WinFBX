@@ -1,7 +1,11 @@
 ' ########################################################################################
 ' Microsoft Windows
-' File: CW_GL_accanti.bas
-' Contents: CWindow OpenGL example
+' File: CW_GL_MoleHill.bas
+' /* Copyright (c) Mark J. Kilgard, 1995. */
+' /* This program is freely distributable without licensing fees
+'    and is provided without guarantee or warrantee expressed or
+'    implied. This program is -not- in the public domain. */
+' /* molehill uses the GLU NURBS routines to draw some nice surfaces. */
 ' Compiler: FreeBasic 32 & 64 bit
 ' Adapted in 2017 by José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
@@ -9,63 +13,14 @@
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 ' ########################################################################################
 
-'/*
-' * Copyright (c) 1993-1997, Silicon Graphics, Inc.
-' * ALL RIGHTS RESERVED
-' * Permission to use, copy, modify, and distribute this software for
-' * any purpose and without fee is hereby granted, provided that the above
-' * copyright notice appear in all copies and that both the copyright notice
-' * and this permission notice appear in supporting documentation, and that
-' * the name of Silicon Graphics, Inc. not be used in advertising
-' * or publicity pertaining to distribution of the software without specific,
-' * written prior permission.
-' *
-' * THE MATERIAL EMBODIED ON THIS SOFTWARE IS PROVIDED TO YOU "AS-IS"
-' * AND WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED OR OTHERWISE,
-' * INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY OR
-' * FITNESS FOR A PARTICULAR PURPOSE.  IN NO EVENT SHALL SILICON
-' * GRAPHICS, INC.  BE LIABLE TO YOU OR ANYONE ELSE FOR ANY DIRECT,
-' * SPECIAL, INCIDENTAL, INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY
-' * KIND, OR ANY DAMAGES WHATSOEVER, INCLUDING WITHOUT LIMITATION,
-' * LOSS OF PROFIT, LOSS OF USE, SAVINGS OR REVENUE, OR THE CLAIMS OF
-' * THIRD PARTIES, WHETHER OR NOT SILICON GRAPHICS, INC.  HAS BEEN
-' * ADVISED OF THE POSSIBILITY OF SUCH LOSS, HOWEVER CAUSED AND ON
-' * ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE
-' * POSSESSION, USE OR PERFORMANCE OF THIS SOFTWARE.
-' *
-' * US Government Users Restricted Rights
-' * Use, duplication, or disclosure by the Government is subject to
-' * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
-' * (c)(1)(ii) of the Rights in Technical Data and Computer Software
-' * clause at DFARS 252.227-7013 and/or in similar or successor
-' * clauses in the FAR or the DOD or NASA FAR Supplement.
-' * Unpublished-- rights reserved under the copyright laws of the
-' * United States.  Contractor/manufacturer is Silicon Graphics,
-' * Inc., 2011 N.  Shoreline Blvd., Mountain View, CA 94039-7311.
-' *
-' * OpenGL(R) is a registered trademark of Silicon Graphics, Inc.
-' */
-
-'/*  accanti.c
-' *  Use the accumulation buffer to do full-scene antialiasing
-' *  on a scene with orthographic parallel projection.
-' */
-
 #define UNICODE
 #INCLUDE ONCE "Afx/CWindow.inc"
 #INCLUDE ONCE "Afx/AfxGlut.inc"
 USING Afx
 
-CONST GL_WINDOWWIDTH   = 600                  ' Window width
-CONST GL_WINDOWHEIGHT  = 400                  ' Window height
-CONST GL_WindowCaption = "OpenGL - accanti"   ' Window caption
-
-' // jitter_point structure
-TYPE jitter_point
-  x AS SINGLE
-  y AS SINGLE
-END TYPE
-CONST ACSIZE = 8
+CONST GL_WINDOWWIDTH   = 600               ' Window width
+CONST GL_WINDOWHEIGHT  = 400               ' Window height
+CONST GL_WindowCaption = "Mole Hill"       ' Window caption
 
 DECLARE FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
                           BYVAL hPrevInstance AS HINSTANCE, _
@@ -87,24 +42,6 @@ TYPE COGL
       m_hRC AS HGLRC    ' // Rendering context handle
       m_hwnd AS HWND    ' // Window handle
 
-      DIM m_j8(7) AS jitter_point = { _
-          (-0.334818,  0.435331), _
-          ( 0.286438, -0.393495), _
-          ( 0.459462,  0.141540), _
-          (-0.414498, -0.192829), _
-          (-0.183790,  0.082102), _
-          (-0.079263, -0.317383), _
-          ( 0.102254,  0.299133), _
-          ( 0.164216, -0.054399) _
-          }
-      DIM mat_ambient(3) AS SINGLE = { 1.0, 1.0, 1.0, 1.0 }
-      DIM mat_specular(3) AS SINGLE = { 1.0, 1.0, 1.0, 1.0 }
-      DIM light_position(3) AS SINGLE = { 0.0, 0.0, 10.0, 1.0 }
-      DIM lm_ambient(3) AS SINGLE = { 0.2, 0.2, 0.2, 1.0 }
-      DIM torus_diffuse(3) AS SINGLE = { 0.7, 0.7, 0.0, 1.0 }
-      DIM cube_diffuse(3) AS SINGLE = { 0.0, 0.7, 0.7, 1.0 }
-      DIM sphere_diffuse(3) AS SINGLE = { 0.7, 0.0, 0.7, 1.0 }
-      DIM octa_diffuse(3) AS SINGLE = { 0.7, 0.4, 0.4, 1.0 }
 
    Public:
       DECLARE CONSTRUCTOR (BYVAL hwnd AS HWND, BYVAL nBitsPerPel AS LONG = 32, BYVAL cDepthBits AS LONG = 24)
@@ -114,8 +51,6 @@ TYPE COGL
       DECLARE SUB RenderScene
       DECLARE SUB ProcessKeystrokes (BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM)
       DECLARE SUB ProcessMouse (BYVAL uMsg AS UINT, BYVAL wKeyState AS DWORD, BYVAL x AS LONG, BYVAL y AS LONG)
-      ' // Internal method
-      DECLARE SUB displayObjects
 
 END TYPE
 ' =======================================================================================
@@ -197,19 +132,139 @@ END DESTRUCTOR
 ' =======================================================================================
 SUB COGL.SetupScene (BYVAL nWidth AS LONG, BYVAL nHeight AS LONG)
 
-   glMaterialfv GL_FRONT, GL_AMBIENT, @mat_ambient(0)
-   glMaterialfv GL_FRONT, GL_SPECULAR, @mat_specular(0)
-   glMaterialf GL_FRONT, GL_SHININESS, 50.0
-   glLightfv GL_LIGHT0, GL_POSITION, @light_position(0)
-   glLightModelfv GL_LIGHT_MODEL_AMBIENT, @lm_ambient(0)
+   DIM nurb AS GLUnurbs PTR
+   DIM AS LONG u, v
 
+   DIM mat_red_diffuse(3) AS SINGLE = {0.7, 0.0, 0.1, 1.0}
+   DIM mat_green_diffuse(3) AS SINGLE = {0.0, 0.7, 0.1, 1.0}
+   DIM mat_blue_diffuse(3) AS SINGLE = {0.0, 0.1, 0.7, 1.0}
+   DIM mat_yellow_diffuse(3) AS SINGLE = {0.7, 0.8, 0.1, 1.0}
+   DIM mat_specular(3) AS SINGLE = {1.0, 1.0, 1.0, 1.0}
+   DIM mat_shininess(0) AS SINGLE = {100.0}
+   DIM knots(7) AS SINGLE = {0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0}
+
+   DIM pts1(3, 3, 2) AS SINGLE
+   DIM pts2(3, 3, 2) AS SINGLE
+   DIM pts3(3, 3, 2) AS SINGLE
+   DIM pts4(3, 3, 2) AS SINGLE
+
+   glMaterialfv GL_FRONT, GL_SPECULAR, @mat_specular(0)
+   glMaterialfv GL_FRONT, GL_SHININESS, @mat_shininess(0)
    glEnable GL_LIGHTING
    glEnable GL_LIGHT0
    glEnable GL_DEPTH_TEST
-   glShadeModel GL_FLAT
+   glEnable GL_AUTO_NORMAL
+   glEnable GL_NORMALIZE
+   nurb = gluNewNurbsRenderer
+   gluNurbsProperty nurb, GLU_SAMPLING_TOLERANCE, 25.0
+   gluNurbsProperty nurb, GLU_DISPLAY_MODE, GLU_FILL
 
-   glClearColor 0.0, 0.0, 0.0, 0.0
-   glClearAccum 0.0, 0.0, 0.0, 0.0
+   ' /* Build control points for NURBS mole hills. */
+   FOR u = 0 TO 3
+      FOR v = 0 TO 3
+         '/* Red. */
+         pts1(u, v, 0) = 2.0 * u
+         pts1(u, v, 1) = 2.0 * v
+         IF  (u=1 OR u = 2) AND (v = 1 OR v = 2) THEN
+            ' /* Stretch up middle. */
+            pts1(u, v, 2) = 6.0
+         ELSE
+            pts1(u, v, 2) = 0.0
+         END IF
+         ' /* Green. */
+         pts2(u, v, 0) = 2.0 * (u - 3.0)
+         pts2(u, v, 1) = 2.0 * (v - 3.0)
+         IF (u = 1 OR u = 2) AND (v = 1 OR v = 2) THEN
+            IF u = 1 AND v = 1 THEN
+               ' /* Pull hard on single middle square. */
+               pts2(u, v, 2) = 15.0
+            ELSE
+               ' /* Push down on other middle squares. */
+               pts2(u, v, 2) = -2.0
+            END IF
+         ELSE
+            pts2(u, v, 2) = 0.0
+         END IF
+         ' /* Blue. */
+         pts3(u, v, 0) = 2.0 * (u - 3.0)
+         pts3(u, v, 1) = 2.0 * v
+         IF (u=1 OR u = 2) AND (v = 1 OR v = 2) THEN
+            IF u = 1 AND v = 2 THEN
+               ' /* Pull up on single middple square. */
+               pts3(u, v, 2) = 11.0
+            ELSE
+               ' /* Pull up slightly on other middle squares. */
+               pts3(u, v, 2) = 2.0
+            END IF
+         ELSE
+            pts3(u, v, 2) = 0.0
+         END IF
+         ' /* Yellow. */
+         pts4(u, v, 0) = 2.0 * u
+         pts4(u, v, 1) = 2.0 * (v - 3.0)
+         IF (u=1 OR u = 2 OR u = 3) AND (v = 1 OR v = 2) THEN
+            IF v = 1 THEN
+               ' /* Push down front middle and right squares. */
+               pts4(u, v, 2) = -2.0
+            ELSE
+               ' /* Pull up back middle and right squares. */
+               pts4(u, v, 2) = 5.0
+            END IF
+         ELSE
+            pts4(u, v, 2) = 0.0
+         END IF
+      NEXT
+   NEXT
+
+   ' /* Stretch up red's far right corner. */
+   pts1(3, 3, 2) = 6
+   ' /* Pull down green's near left corner a little. */
+   pts2(0, 0, 2) = -2
+   ' /* Turn up meeting of four corners. */
+   pts1(0, 0, 2) = 1
+   pts2(3, 3, 2) = 1
+   pts3(3, 0, 2) = 1
+   pts4(0, 3, 2) = 1
+
+   glMatrixMode GL_PROJECTION
+   gluPerspective 55.0, 1.0, 2.0, 24.0
+   glMatrixMode GL_MODELVIEW
+   glTranslatef 0.0, 0.0, -15.0
+   glRotatef 330.0, 1.0, 0.0, 0.0
+
+   glNewList 1, GL_COMPILE
+   ' /* Render red hill. */
+   glMaterialfv GL_FRONT, GL_DIFFUSE, @mat_red_diffuse(0)
+   gluBeginSurface nurb
+      gluNurbsSurface nurb, 8, @knots(0), 8, @knots(0), _
+        4 * 3, 3, @pts1(0, 0, 0), _
+        4, 4, GL_MAP2_VERTEX_3
+   gluEndSurface nurb
+
+   ' /* Render green hill. */
+   glMaterialfv GL_FRONT, GL_DIFFUSE, @mat_green_diffuse(0)
+   gluBeginSurface nurb
+      gluNurbsSurface nurb, 8, @knots(0), 8, @knots(0), _
+        4 * 3, 3, @pts2(0, 0, 0), _
+        4, 4, GL_MAP2_VERTEX_3
+   gluEndSurface nurb
+
+   ' /* Render blue hill. */
+   glMaterialfv GL_FRONT, GL_DIFFUSE, @mat_blue_diffuse(0)
+   gluBeginSurface nurb
+      gluNurbsSurface nurb, 8, @knots(0), 8, @knots(0), _
+        4 * 3, 3, @pts3(0, 0, 0), _
+        4, 4, GL_MAP2_VERTEX_3
+   gluEndSurface nurb
+
+   ' /* Render yellow hill. */
+   glMaterialfv GL_FRONT, GL_DIFFUSE, @mat_yellow_diffuse(0)
+   gluBeginSurface nurb
+      gluNurbsSurface nurb, 8, @knots(0), 8, @knots(0), _
+        4 * 3, 3, @pts4(0, 0, 0), _
+        4, 4, GL_MAP2_VERTEX_3
+   gluEndSurface nurb
+   glEndList
 
 END SUB
 ' =======================================================================================
@@ -223,61 +278,6 @@ SUB COGL.ResizeScene (BYVAL nWidth AS LONG, BYVAL nHeight AS LONG)
    IF nHeight = 0 THEN nHeight = 1
    ' // Reset the current viewport
    glViewport 0, 0, nWidth, nHeight
-   ' // Select the projection matrix
-   glMatrixMode GL_PROJECTION
-   ' // Reset the projection matrix
-   glLoadIdentity
-   ' // Calculate the aspect ratio of the window
-   IF nWidth <= nHeight THEN
-      glOrtho -2.25, 2.25, -2.25 * nHeight / nWidth, 2.25 * nHeight / nWidth, -10.0, 10.0
-   ELSE
-      glOrtho -2.25 * nWidth / nHeight, 2.25 * nWidth / nHeight, -2.25, 2.25, -10.0, 10.0
-   END IF
-   ' // Select the model view matrix
-   glMatrixMode GL_MODELVIEW
-   ' // Reset the model view matrix
-   glLoadIdentity
-
-END SUB
-' =======================================================================================
-
-' =======================================================================================
-' Auxiliary procedure
-' =======================================================================================
-SUB COGL.displayObjects
-
-   glPushMatrix
-   glRotatef 30.0, 1.0, 0.0, 0.0
-
-   glPushMatrix
-   glTranslatef -0.80, 0.35, 0.0
-   glRotatef 100.0, 1.0, 0.0, 0.0
-   glMaterialfv GL_FRONT, GL_DIFFUSE, @torus_diffuse(0)
-   AfxGlutSolidTorus 0.275, 0.85, 16, 16
-   glPopMatrix
-
-   glPushMatrix
-   glTranslatef -0.75, -0.50, 0.0
-   glRotatef 45.0, 0.0, 0.0, 1.0
-   glRotatef 45.0, 1.0, 0.0, 0.0
-   glMaterialfv GL_FRONT, GL_DIFFUSE, @cube_diffuse(0)
-   AfxGlutSolidCube 1.5
-   glPopMatrix
-
-   glPushMatrix
-   glTranslatef 0.75, 0.60, 0.0
-   glRotatef 30.0, 1.0, 0.0, 0.0
-   glMaterialfv GL_FRONT, GL_DIFFUSE, @sphere_diffuse(0)
-   AfxGlutSolidSphere 1.0, 16, 16
-   glPopMatrix
-
-   glPushMatrix
-   glTranslatef 0.70, -0.90, 0.25
-   glMaterialfv GL_FRONT, GL_DIFFUSE, @octa_diffuse(0)
-   AfxGlutSolidOctahedron
-   glPopMatrix
-
-   glPopMatrix
 
 END SUB
 ' =======================================================================================
@@ -287,24 +287,11 @@ END SUB
 ' =======================================================================================
 SUB COGL.RenderScene
 
-   DIM viewport(3) AS LONG
-   glGetIntegerv GL_VIEWPORT, @viewport(0)
+   ' // Clear the screen buffer
+   glClear GL_COLOR_BUFFER_BIT OR GL_DEPTH_BUFFER_BIT
 
-   glClear GL_ACCUM_BUFFER_BIT
-   FOR jitter AS LONG = 0 TO ACSIZE - 1
-      glClear GL_COLOR_BUFFER_BIT OR GL_DEPTH_BUFFER_BIT
-      glPushMatrix
-      ' // Note that 4.5 is the distance in world space between
-      ' // left and right and bottom and top.
-      ' // This formula converts fractional pixel movement to
-      ' // world coordinates.
-      glTranslatef m_j8(jitter).x * 4.5 / viewport(2), _
-                   m_j8(jitter).y * 4.5 / viewport(3), 0.0
-      this.displayObjects
-      glPopMatrix
-      glAccum GL_ACCUM, 1.0 / ACSIZE
-   NEXT
-   glAccum GL_RETURN, 1.0
+   ' // Call the list
+   glCallList 1
    glFlush
 
    ' // Exchange the front and back buffers
@@ -440,7 +427,7 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
          SetTimer(hwnd, 1, 0, NULL)
          EXIT FUNCTION
 
-       CASE WM_DESTROY
+    	CASE WM_DESTROY
          ' // Kill the timer
          KillTimer(hwnd, 1)
          ' // Delete the COGL class
@@ -474,4 +461,3 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
 
 END FUNCTION
 ' ========================================================================================
-

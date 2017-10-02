@@ -3,7 +3,7 @@
 ' File: CW_GL_Teapots.bas
 ' Contents: CWindow OpenGL Template
 ' Compiler: FreeBasic 32 & 64 bit
-' Copyright (c) 2017 José Roca. Freeware. Use at your own risk.
+' Adapted in 2017 by José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
@@ -70,19 +70,18 @@ DECLARE FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam A
 ' =======================================================================================
 TYPE COGL
 
-   Public:
+   Private:
       m_hDC AS HDC      ' // Device context handle
       m_hRC AS HGLRC    ' // Rendering context handle
       m_hwnd AS HWND    ' // Window handle
 
-   Private:
-      DIM teapotList AS GLUint
-      DIM ambient(3) AS SINGLE = { 0.0, 0.0, 0.0, 1.0 }
-      DIM diffuse(3) AS SINGLE = { 1.0, 1.0, 1.0, 1.0 }
-      DIM specular(3) AS SINGLE = { 1.0, 1.0, 1.0, 1.0 }
-      DIM position(3) AS SINGLE = { 0.0, 3.0, 3.0, 0.0 }
-      DIM lmodel_ambient(3) AS SINGLE = { 0.2, 0.2, 0.2, 1.0 }
-      DIM local_view(0) AS SINGLE = { 0.0 }
+      teapotList AS GLUint
+      ambient(3) AS SINGLE = { 0.0, 0.0, 0.0, 1.0 }
+      diffuse(3) AS SINGLE = { 1.0, 1.0, 1.0, 1.0 }
+      specular(3) AS SINGLE = { 1.0, 1.0, 1.0, 1.0 }
+      position(3) AS SINGLE = { 0.0, 3.0, 3.0, 0.0 }
+      lmodel_ambient(3) AS SINGLE = { 0.2, 0.2, 0.2, 1.0 }
+      local_view(0) AS SINGLE = { 0.0 }
 
    Public:
       DECLARE CONSTRUCTOR (BYVAL hwnd AS HWND, BYVAL nBitsPerPel AS LONG = 32, BYVAL cDepthBits AS LONG = 24)
