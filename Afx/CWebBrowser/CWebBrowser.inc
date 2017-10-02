@@ -99,6 +99,7 @@ TYPE CWebBrowser
    DECLARE PROPERTY RegisterAsDropTarget (BYVAL bRegister AS BOOLEAN)
 
    ' // IHtmlDoc2 wrappers
+   DECLARE FUNCTION SetFocus () AS HRESULT
    DECLARE FUNCTION WriteHtml (BYREF cwsHtml AS CWSTR, BYVAL cr AS BOOLEAN = FALSE) AS HRESULT
    DECLARE FUNCTION GetActiveElementId () AS CWSTR
    DECLARE FUNCTION GetElementValueById (BYREF cwsId AS CWSTR) AS VARIANT
@@ -328,6 +329,25 @@ PRIVATE FUNCTION CWebBrowser.SetUIEventProc (BYVAL pwszEventName AS WSTRING PTR,
       CASE ELSE
          RETURN E_INVALIDARG
    END SELECT
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the focus in the hosted document.
+' Return value:
+' - S_OK if successful, or an error value otherwise.
+' ========================================================================================
+PRIVATE FUNCTION CWebBrowser.SetFocus () AS HRESULT
+   IF m_pWebBrowser = NULL THEN RETURN E_POINTER
+   DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
+   m_pWebBrowser->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   IF pIHTMLDocument2 = NULL THEN RETURN E_NOINTERFACE
+   DIM pWindow2 AS IHTMLWindow2 PTR
+   pIHTMLDocument2->lpvtbl->get_parentWindow(pIHTMLDocument2, @pWindow2)
+   AfxSafeRelease(pIHTMLDocument2)
+   IF pWindow2 = NULL THEN RETURN E_NOINTERFACE
+   pWindow2->lpvtbl->focus(pWindow2)
+   AfxSafeRelease(pWindow2)
 END FUNCTION
 ' ========================================================================================
 
