@@ -2089,7 +2089,7 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CSafeArray.Find (BYREF wszFind AS WSTRING, BYVAL bNoCase AS BOOLEAN = FALSE) AS LONG
-   RETURN this.Find(wszFind, bNoCase)
+   RETURN this.FindElement(wszFind, bNoCase)
 END FUNCTION
 ' ========================================================================================
 
