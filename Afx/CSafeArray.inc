@@ -2214,12 +2214,13 @@ END FUNCTION
 ' data. This is to ensure that the data remains intact without modification during
 ' transport. Base64 is used commonly in a number of applications including email via MIME,
 ' and storing complex data in XML.
+' Note: For a non COM version, see AfxBase64Encode in AfxStr.inc
 ' ========================================================================================
 
 ' ========================================================================================
 ' Base64 mime encoding
 ' ========================================================================================
-PRIVATE FUNCTION AfxBase64Encode (BYREF strData AS STRING) AS STRING
+PRIVATE FUNCTION AfxXmlBase64Encode (BYREF strData AS STRING) AS STRING
 
    ' // Create a byte safe array
    DIM rgsabound AS SAFEARRAYBOUND
@@ -2285,7 +2286,7 @@ END FUNCTION
 ' ========================================================================================
 ' Base64 mime decoding
 ' ========================================================================================
-PRIVATE FUNCTION AfxBase64Decode (BYREF strData AS STRING) AS STRING
+PRIVATE FUNCTION AfxXmlBase64Decode (BYREF strData AS STRING) AS STRING
 
    ' // Create an instance of the IXMLDOMDocument interface
    DIM pXmlDocument AS IXMLDOMDocument PTR
