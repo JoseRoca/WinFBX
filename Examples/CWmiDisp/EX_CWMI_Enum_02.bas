@@ -21,30 +21,30 @@ IF nCount = 0 THEN PRINT "No objects found" : SLEEP : END
 ' // and retrieve the properties using the CDispInvoke class.
 DIM pDispServ AS CDispInvoke = pServices.NextObject
 IF pDispServ.DispPtr THEN
-   PRINT "BIOS version: : "; pDispServ.Get("BIOSVersion").ToStr
-   PRINT "BIOS characteristics:"; pDispServ.Get("BIOSCharacteristics").ToStr
-   PRINT "Build number: "; pDispServ.Get("BuildNumber").ToStr
-   PRINT "Caption: "; pDispServ.Get("Caption").ToStr
-   PRINT "Current language: "; pDispServ.Get("CurrentLanguage").ToStr
-   PRINT "Description: "; pDispServ.Get("Description").ToStr
-   PRINT "Identification code: "; pDispServ.Get("IdentificationCode").ToStr
-   PRINT "Installable languages: "; pDispServ.Get("InstallableLanguages").ToStr
-   PRINT "Install date: "; pDispServ.Get("InstallDate").ToStr
-   PRINT "Language edition: "; pDispServ.Get("LanguageEdition").ToStr
-   PRINT "List of languages: "; pDispServ.Get("ListOfLanguages").ToStr
-   PRINT "Manufacturer: "; pDispServ.Get("Manufacturer").ToStr
-   PRINT "Other target OS: "; pDispServ.Get("OtherTargetOS").ToStr
-   PRINT "Primary BIOS: "; pDispServ.Get("PrimaryBIOS").ToStr
+   PRINT "BIOS version: : "; pDispServ.Get("BIOSVersion")
+   PRINT "BIOS characteristics:"; pDispServ.Get("BIOSCharacteristics")
+   PRINT "Build number: "; pDispServ.Get("BuildNumber")
+   PRINT "Caption: "; pDispServ.Get("Caption")
+   PRINT "Current language: "; pDispServ.Get("CurrentLanguage")
+   PRINT "Description: "; pDispServ.Get("Description")
+   PRINT "Identification code: "; pDispServ.Get("IdentificationCode")
+   PRINT "Installable languages: "; pDispServ.Get("InstallableLanguages")
+   PRINT "Install date: "; pDispServ.Get("InstallDate")
+   PRINT "Language edition: "; pDispServ.Get("LanguageEdition")
+   PRINT "List of languages: "; pDispServ.Get("ListOfLanguages")
+   PRINT "Manufacturer: "; pDispServ.Get("Manufacturer")
+   PRINT "Other target OS: "; pDispServ.Get("OtherTargetOS")
+   PRINT "Primary BIOS: "; pDispServ.Get("PrimaryBIOS")
    PRINT "Release date: "; pServices.WmiDateToStr(pDispServ.Get("ReleaseDate"), "dd-MM-yyyy")
-   PRINT "Serial number: "; pDispServ.Get("SerialNumber").ToStr
-   PRINT "SMBIOS BIOS version: "; pDispServ.Get("SMBIOSBIOSVersion").ToStr
-   PRINT "SMBIOS major version: "; pDispServ.Get("SMBIOSMajorVersion").ToStr
-   PRINT "SMBIOS minor version: "; pDispServ.Get("SMBIOSMinorVersion").ToStr
-   PRINT "SMBIOS present: "; pDispServ.Get("SMBIOSPresent").ToStr
-   PRINT "Software element ID: "; pDispServ.Get("SoftwareElementID").ToStr
-   PRINT "Software element state: "; pDispServ.Get("SoftwareElementState").ToStr
-   PRINT "Target operating system: "; pDispServ.Get("TargetOperatingSystem").ToStr
-   PRINT "Version: "; pDispServ.Get("Version").ToStr
+   PRINT "Serial number: "; pDispServ.Get("SerialNumber")
+   PRINT "SMBIOS BIOS version: "; pDispServ.Get("SMBIOSBIOSVersion")
+   PRINT "SMBIOS major version: "; pDispServ.Get("SMBIOSMajorVersion")
+   PRINT "SMBIOS minor version: "; pDispServ.Get("SMBIOSMinorVersion")
+   PRINT "SMBIOS present: "; pDispServ.Get("SMBIOSPresent")
+   PRINT "Software element ID: "; pDispServ.Get("SoftwareElementID")
+   PRINT "Software element state: "; pDispServ.Get("SoftwareElementState")
+   PRINT "Target operating system: "; pDispServ.Get("TargetOperatingSystem")
+   PRINT "Version: "; pDispServ.Get("Version")
 END IF
 
 PRINT

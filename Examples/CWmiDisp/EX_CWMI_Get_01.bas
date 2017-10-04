@@ -16,9 +16,9 @@ PRINT "Number of properties: ", pServices.PropsCount
 PRINT
 
 ' // Display some properties
-PRINT "Port name: "; pServices.PropValue("PortName").ToStr
-PRINT "Attributes: "; pServices.PropValue("Attributes").ToStr
-PRINT "Paper sizes supported: "; pServices.PropValue("PaperSizesSupported").ToStr
+PRINT "Port name: "; pServices.PropValue("PortName")
+PRINT "Attributes: "; pServices.PropValue("Attributes")
+PRINT "Paper sizes supported: "; pServices.PropValue("PaperSizesSupported")
 
 PRINT
 PRINT "Press any key..."

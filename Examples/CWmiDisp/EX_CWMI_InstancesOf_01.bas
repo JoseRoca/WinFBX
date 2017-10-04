@@ -18,8 +18,8 @@ DIM pDispServ AS CDispInvoke
 DO
    pDispServ = pServices.NextObject
    IF pDispServ.DispPtr = NULL THEN EXIT DO
-   PRINT "Caption: "; pDispServ.Get("Caption").ToStr
-   PRINT "Capabilities "; pDispServ.Get("Capabilities").ToStr
+   PRINT "Caption: "; pDispServ.Get("Caption")
+   PRINT "Capabilities "; pDispServ.Get("Capabilities")
 LOOP
 
 PRINT

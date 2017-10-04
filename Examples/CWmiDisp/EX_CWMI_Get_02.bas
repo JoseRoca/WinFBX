@@ -19,11 +19,11 @@ PRINT "Number of properties: ", pServices.PropsCount
 PRINT
 
 ' // Display some properties
-PRINT "Relative path: "; pServices.PropValue("Path").ToStr
-PRINT "FileName: "; pServices.PropValue("FileName").ToStr
-PRINT "Extension: "; pServices.PropValue("Extension").ToStr
-PRINT "Size: "; pServices.PropValue("Filesize").ToStr
-'PRINT pServices.PropValue("LastModified").ToStr
+PRINT "Relative path: "; pServices.PropValue("Path")
+PRINT "FileName: "; pServices.PropValue("FileName")
+PRINT "Extension: "; pServices.PropValue("Extension")
+PRINT "Size: "; pServices.PropValue("Filesize")
+'PRINT pServices.PropValue("LastModified")
 PRINT "Date last modified: "; pServices.WmiDateToStr(pServices.PropValue("LastModified"), "dd-MM-yyyy")   ' // change the mask if needed
 
 PRINT

@@ -17,14 +17,9 @@ DIM pDispServices AS CDispInvoke = CDispInvoke(pServices.ServicesObj)
 ' vPath   = [IN]  "Software\Microsoft\Windows NT\CurrentVersion"
 ' vValue  = [OUT] "ProductName"
 
-'DIM cbsValue AS CBSTR
-'DIM cvValue AS CVAR = CVAR(cbsValue.vptr, VT_BSTR)
-'DIM cvRes AS CVAR = pDispServices.Invoke("GetStringValue", 4, CVAR("2147483650"), _
-'   CVAR($"Software\Microsoft\Windows NT\CurrentVersion"), CVAR("ProductName"), cvValue)
-
 DIM cbsValue AS CBSTR
-DIM cvRes AS CVAR = pDispServices.Invoke("GetStringValue", 4, CVAR("2147483650"), _
-   CVAR($"Software\Microsoft\Windows NT\CurrentVersion"), CVAR("ProductName"), CVAR(cbsValue.vptr, VT_BSTR))
+DIM cvRes AS CVAR = pDispServices.Invoke("GetStringValue", "2147483650", _
+    $"Software\Microsoft\Windows NT\CurrentVersion", "ProductName", CVAR(cbsValue.vptr, VT_BSTR))
 PRINT cbsValue
 
 PRINT

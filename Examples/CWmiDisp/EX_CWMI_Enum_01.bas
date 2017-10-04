@@ -21,8 +21,8 @@ IF nCount = 0 THEN PRINT "No objects found" : SLEEP : END
 ' // and retrieve the properties using the CDispInvoke class.
 DIM pDispServ AS CDispInvoke = pServices.NextObject
 IF pDispServ.DispPtr THEN
-   PRINT "Caption: "; pDispServ.Get("Caption").ToStr
-   PRINT "Serial number: "; pDispServ.Get("SerialNumber").ToStr
+   PRINT "Caption: "; pDispServ.Get("Caption")
+   PRINT "Serial number: "; pDispServ.Get("SerialNumber")
 END IF
 
 PRINT

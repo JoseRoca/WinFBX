@@ -22,8 +22,8 @@ FOR i AS LONG = 0 TO nCount - 1
    PRINT "--- Index " & STR(i) & " ---"
    ' // Get a collection of named properties
    IF pServices.GetNamedProperties(i) = S_OK THEN
-      PRINT pServices.PropValue("Caption").ToStr
-      PRINT pServices.PropValue("Capabilities").ToStr
+      PRINT pServices.PropValue("Caption")
+      PRINT pServices.PropValue("Capabilities")
    END IF
 NEXT
 

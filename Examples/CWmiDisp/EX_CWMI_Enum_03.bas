@@ -22,8 +22,8 @@ FOR i AS LONG = 0 TO nCount - 1
    PRINT "--- Index " & STR(i) & " ---"
    DIM pDispServ AS CDispInvoke = pServices.NextObject
    IF pDispServ.DispPtr THEN
-      PRINT "Caption: "; pDispServ.Get("Caption").ToStr
-      PRINT "Capabilities "; pDispServ.Get("Capabilities").ToStr
+      PRINT "Caption: "; pDispServ.Get("Caption")
+      PRINT "Capabilities "; pDispServ.Get("Capabilities")
    END IF
 NEXT
 

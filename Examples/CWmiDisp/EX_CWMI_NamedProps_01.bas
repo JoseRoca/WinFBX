@@ -23,8 +23,8 @@ IF pServices.GetNamedProperties <> S_OK THEN PRINT "Failed to get the named prop
 ' // Retrieve the value of the properties
 'DIM cv AS CVAR = pServices.PropValue("Caption")
 'PRINT cv.ToStr
-PRINT pServices.PropValue("Caption").ToStr
-PRINT pServices.PropValue("SerialNumber").ToStr
+PRINT pServices.PropValue("Caption")
+PRINT pServices.PropValue("SerialNumber")
 
 PRINT
 PRINT "Press any key..."
