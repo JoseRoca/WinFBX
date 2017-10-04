@@ -1315,6 +1315,12 @@ BYVAL dwFlags AS DWORD, BYVAL pszString AS LPWSTR, BYVAL pcchString AS DWORD PTR
    DyLibFree(pLib)
 END FUNCTION
 ' ========================================================================================
+#ifndef UNICODE
+   #define AfxCryptBinaryToString(p1, p2, p3, p4, p5) AfxCryptBinaryToStringA(p1, p2, p3, p4, p5)
+#else
+   #define AfxCryptBinaryToString(p1, p2, p3, p4, p5) AfxCryptBinaryToStringW(p1, p2, p3, p4, p5)
+#endif
+
 ' ========================================================================================
 PRIVATE FUNCTION AfxBase64Encode (BYREF strData AS STRING) AS STRING
    DIM cchStr AS DWORD, strOut AS STRING
@@ -1325,7 +1331,7 @@ PRIVATE FUNCTION AfxBase64Encode (BYREF strData AS STRING) AS STRING
    FUNCTION = strOut
 END FUNCTION
 ' ========================================================================================
-
+   
 ' ========================================================================================
 ' Converts a formatted string into an array of bytes.
 ' ========================================================================================
@@ -1356,6 +1362,12 @@ BYVAL pdwSkip AS DWORD PTR, BYVAL pdwFlags AS DWORD PTR) AS WINBOOL
    DyLibFree(pLib)
 END FUNCTION
 ' ========================================================================================
+#ifndef UNICODE
+   #define AfxCryptStringToBinary(p1, p2, p3, p4, p5, p6, p7) AfxCryptStringToBinaryA(p1, p2, p3, p4, p5, p6, p7)
+#else
+   #define AfxCryptStringToBinary(p1, p2, p3, p4, p5, p6, p7) AfxCryptStringToBinaryW(p1, p2, p3, p4, p5, p6, p7)
+#endif
+
 ' ========================================================================================
 PRIVATE FUNCTION AfxBase64Decode (BYREF strData AS STRING) AS STRING
    DIM cbBinary AS DWORD, strOut AS STRING
