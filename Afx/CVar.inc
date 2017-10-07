@@ -659,6 +659,10 @@ END OPERATOR
 '    PRINT *cv
 ' END SUB
 ' Foo4 @CVAR(12345, "LONG")
+'
+' Remarks: I haven't added a cast to return a numeric value because with procedures like
+' PRINT that can use both a number or a string the compiler will fail, not knowing which
+' cast it should use. If you want to convert it to a number, use VAL(cvar).
 ' ========================================================================================
 
 ' ========================================================================================
@@ -2490,6 +2494,14 @@ PRIVATE FUNCTION AfxCVarOptPrm () AS CVAR
 END FUNCTION
 ' ========================================================================================
 #define CVAR_OPTPRM AfxCVarOptPrm
+
+' ========================================================================================
+' Extracts the contents of a variant that contains an array of bytes.
+' ========================================================================================
+PRIVATE FUNCTION AfxCVariantToBuffer (BYREF cvIn AS CVAR, BYVAL pv AS LPVOID, BYVAL cb AS ULONG) AS ULONG
+   RETURN AfxVariantToBuffer(@cvIn.vd, pv, cb)
+END FUNCTION
+' ========================================================================================
 
 END NAMESPACE
 
