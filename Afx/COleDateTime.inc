@@ -30,7 +30,7 @@ NAMESPACE Afx
 TYPE COleDateTimeSpan
 
 Public:
-   m_span AS DOUBLE   ' The underlying double value for this COleDateTime object.
+   m_span AS DOUBLE   ' The underlying double value for this COleDateTimeSpan object.
    m_status AS BOOLEAN
    OLE_DATETIME_HALFSECOND AS DOUBLE = 1.0 / (2.0 * (60.0 * 60.0 * 24.0))
    maxDaysInSpan AS LONG = 3615897
@@ -218,7 +218,7 @@ END FUNCTION
 ' The return values from this function range between – 23 and 23.
 ' ========================================================================================
 PRIVATE FUNCTION COleDateTimeSpan.GetHours () AS LONG
-   RETURN this.GetTotalHours
+   RETURN this.GetTotalHours MOD 24
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -226,7 +226,7 @@ END FUNCTION
 ' The return values from this function range between – 59 and 59.
 ' ========================================================================================
 PRIVATE FUNCTION COleDateTimeSpan.GetMinutes () AS LONG
-   RETURN this.GetTotalMinutes
+   RETURN this.GetTotalMinutes MOD 60
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -234,7 +234,7 @@ END FUNCTION
 ' The return values from this function range between – 59 and 59.
 ' ========================================================================================
 PRIVATE FUNCTION COleDateTimeSpan.GetSeconds () AS LONG
-   RETURN this.GetTotalSeconds
+   RETURN this.GetTotalSeconds MOD 60
 END FUNCTION
 ' ========================================================================================
 
@@ -271,7 +271,6 @@ Public:
 Public:
    DECLARE CONSTRUCTOR
    DECLARE CONSTRUCTOR (BYVAL nYear AS WORD, BYVAL nMonth AS WORD, BYVAL nDay AS WORD, BYVAL nHour AS WORD, BYVAL nMin AS WORD, BYVAL nSec AS WORD)
-   DECLARE CONSTRUCTOR (BYVAL timeSrc AS LONGINT)
    DECLARE CONSTRUCTOR (BYVAL dtSrc AS DATE_)
    DECLARE CONSTRUCTOR (BYREF varSrc AS VARIANT)
    DECLARE CONSTRUCTOR (BYREF systimeSrc AS SYSTEMTIME)
@@ -283,7 +282,6 @@ Public:
    DECLARE CONSTRUCTOR (BYREF wsz AS WSTRING, BYVAL dwFlags AS DWORD = 0, BYVAL lcid AS LCID = LANG_USER_DEFAULT)
    DECLARE DESTRUCTOR
    DECLARE OPERATOR CAST () AS DATE_
-   DECLARE OPERATOR LET (BYVAL timeSrc AS LONGINT)
    DECLARE OPERATOR LET (BYVAL dtSrc AS DATE_)
    DECLARE OPERATOR LET (BYREF varSrc AS VARIANT)
    DECLARE OPERATOR LET (BYREF systimeSrc AS SYSTEMTIME)
@@ -300,6 +298,8 @@ Public:
    DECLARE FUNCTION SetDate (BYVAL nYear AS WORD, BYVAL nMonth AS WORD, BYVAL nDay AS WORD) AS LONG
    DECLARE FUNCTION SetTime (BYVAL nHour AS WORD, BYVAL nMin AS WORD, BYVAL nSec AS WORD) AS LONG
    DECLARE FUNCTION GetCurrentTime () AS COleDateTime
+   DECLARE FUNCTION GetLocalTime () AS COleDateTime
+   DECLARE FUNCTION GetSystemTime () AS COleDateTime
    DECLARE FUNCTION GetAsSystemTime (BYREF sysTime AS SYSTEMTIME) AS BOOLEAN
    DECLARE FUNCTION GetYear () AS WORD
    DECLARE FUNCTION GetMonth () AS WORD
@@ -348,11 +348,6 @@ END CONSTRUCTOR
 ' ========================================================================================
 PRIVATE CONSTRUCTOR COleDateTime (BYVAL nYear AS WORD, BYVAL nMonth AS WORD, BYVAL nDay AS WORD, BYVAL nHour AS WORD, BYVAL nMin AS WORD, BYVAL nSec AS WORD)
    this.SetDateTime(nYear, nMonth, nDay, nHour, nMin, nSec)
-END CONSTRUCTOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE CONSTRUCTOR COleDateTime (BYVAL timeSrc AS LONGINT)
-   this = timeSrc
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
@@ -447,9 +442,6 @@ END OPERATOR
 '   of this object is set to zero (30 December 1899, midnight) and its status to invalid.
 ' - operator =( dtSrc ) The DATE value is copied into this COleDateTime object and its
 '   status is set to valid.
-' - operator =( timeSrc ) The value is converted and copied into this COleDateTime object.
-'   If the conversion is successful, the status of this object is set to valid; if
-'   unsuccessful, it is set to invalid.
 ' - operator =( systimeSrc ) The SYSTEMTIME value is converted and copied into this
 '   COleDateTime object. If the conversion is successful, the status of this object is set
 '    to valid; if unsuccessful, it is set to invalid.
@@ -463,12 +455,6 @@ END OPERATOR
 '   time to local time, and will be stored as variant time. This behavior is the same as
 '   in Visual C++ 6.0 and Visual C++.NET 2003 SP2. See File Times in the Windows SDK for
 '   more information.
-' ========================================================================================
-PRIVATE OPERATOR COleDateTime.LET (BYVAL timeSrc AS LONGINT)
-   m_dt = timeSrc
-   m_status = TRUE
-END OPERATOR
-' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR COleDateTime.LET (BYVAL dtSrc AS DATE_)
    m_dt = dtSrc
@@ -599,7 +585,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Returns the current date/time value.
+' Returns the current date/time value in local time.
 ' Usage example: DIM ct AS COleDateTime = COleDateTime().GetCurrentTime()
 ' --or--
 ' DIM ct AS COleDateTime
@@ -607,7 +593,30 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION COleDateTime.GetCurrentTime () AS COleDateTime
    DIM st AS SYSTEMTIME, d AS DOUBLE
-   GetLocalTime @st
+   .GetLocalTime @st
+   m_status = SystemTimeToVariantTime(@st, @d)
+   RETURN COleDateTime(d)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION COleDateTime.GetLocalTime () AS COleDateTime
+   DIM st AS SYSTEMTIME, d AS DOUBLE
+   .GetLocalTime @st
+   m_status = SystemTimeToVariantTime(@st, @d)
+   RETURN COleDateTime(d)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns the current date/time value in Coordinated Universal Time (UTC).
+' Usage example: DIM ct AS COleDateTime = COleDateTime().GetSystemTime()
+' --or--
+' DIM ct AS COleDateTime
+' ct = ct.GetSystemTime()
+' ========================================================================================
+PRIVATE FUNCTION COleDateTime.GetSystemTime () AS COleDateTime
+   DIM st AS SYSTEMTIME, d AS DOUBLE
+   .GetSystemTime @st
    m_status = SystemTimeToVariantTime(@st, @d)
    RETURN COleDateTime(d)
 END FUNCTION
@@ -919,7 +928,7 @@ END OPERATOR
 ' ========================================================================================
 ' Comparison operators
 ' ========================================================================================
-PRIVATE OPERATOR = (BYREF dateSpan1 AS COleDateTimeSpan, BYREF dateSPan2 AS COleDateTimeSpan) AS BOOLEAN
+PRIVATE OPERATOR = (BYREF dateSpan1 AS COleDateTimeSpan, BYREF dateSpan2 AS COleDateTimeSpan) AS BOOLEAN
    IF dateSpan1.m_status = FALSE OR dateSpan2.m_status = FALSE THEN EXIT OPERATOR
    ' // it has to be in precision range to say that it is equal         
    IF (dateSpan1.m_span + dateSpan1.OLE_DATETIME_HALFSECOND > dateSpan2.m_span AND _
