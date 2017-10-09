@@ -274,7 +274,8 @@ Public:
    DECLARE CONSTRUCTOR (BYVAL dtSrc AS DATE_)
    DECLARE CONSTRUCTOR (BYREF varSrc AS VARIANT)
    DECLARE CONSTRUCTOR (BYREF systimeSrc AS SYSTEMTIME)
-   DECLARE CONSTRUCTOR (BYREF filetimeSrc AS FILETIME)
+   DECLARE CONSTRUCTOR (BYVAL filetimeSrc AS LONGLONG)
+   DECLARE CONSTRUCTOR (BYREF timeSrc AS FILETIME)
    DECLARE CONSTRUCTOR (BYVAL wDosDate AS DWORD, BYVAL wDosTime AS WORD)
    DECLARE CONSTRUCTOR (BYREF dbts AS DBTIMESTAMP)
    DECLARE CONSTRUCTOR (BYREF ud AS UDATE)
@@ -286,6 +287,7 @@ Public:
    DECLARE OPERATOR LET (BYREF varSrc AS VARIANT)
    DECLARE OPERATOR LET (BYREF systimeSrc AS SYSTEMTIME)
    DECLARE OPERATOR LET (BYREF filetimeSrc AS FILETIME)
+   DECLARE OPERATOR LET (BYVAL timeSrc AS LONGLONG)
    DECLARE OPERATOR LET (BYREF dbts AS DBTIMESTAMP)
    DECLARE OPERATOR LET (BYREF ud AS UDATE)
    DECLARE OPERATOR LET (BYREF dt AS COleDateTime)
@@ -334,7 +336,11 @@ END TYPE
 ' - systimeSrc: A SYSTEMTIME structure to be converted to a date/time value and copied into
 ' the new COleDateTime object.
 ' - filetimeSrc: A FILETIME structure to be converted to a date/time value and copied into
-' the new COleDateTime object. Note that FILETIME uses Universal Coordinated Time (UTC), so if you pass a local time in the structure, your results will be incorrect. See File Times in the Windows SDK for more information.
+' the new COleDateTime object. Note that FILETIME uses Universal Coordinated Time (UTC), so
+' if you pass a local time in the structure, your results will be incorrect. See File Times
+' in the Windows SDK for more information.
+' - timeSrc: A LongIntvalue to be converted to a date/time value and copied into the new
+' COleDateTime object.
 ' - nYear, nMonth, nDay, nHour, nMin, nSec
 ' Indicate the date and time values to be copied into the new COleDateTime object.
 ' - wDosDate, wDosTime
@@ -368,6 +374,11 @@ END CONSTRUCTOR
 ' ========================================================================================
 PRIVATE CONSTRUCTOR COleDateTime (BYREF filetimeSrc AS FILETIME)
    this = filetimeSrc
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE CONSTRUCTOR COleDateTime (BYVAL timeSrc AS LONGLONG)
+   this = timeSrc
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
@@ -491,6 +502,20 @@ PRIVATE OPERATOR COleDateTime.LET (BYREF filetimeSrc AS FILETIME)
    END IF
 END OPERATOR
 ' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR COleDateTime.LET (BYVAL timeSrc AS LONGLONG)
+   DIM uli AS ULARGE_INTEGER, filetimesrc AS FILETIME, ft AS FILETIME, st AS SYSTEMTIME
+   uli.QuadPart = timeSrc
+   filetimesrc.dwLowDateTime = uli.LowPart
+   filetimesrc.dwHighDateTime = uli.HighPart
+   IF FileTimeToLocalFileTime(@filetimesrc, @ft) THEN
+      IF FileTimeToSystemTime(@ft, @st) THEN
+         m_status = SystemTimeToVariantTime(@st, @m_dt)
+      END IF
+   END IF
+END OPERATOR
+' ========================================================================================
+
 ' ========================================================================================
 PRIVATE OPERATOR COleDateTime.LET (BYREF dbts AS DBTIMESTAMP)
 	DIM st AS SYSTEMTIME
