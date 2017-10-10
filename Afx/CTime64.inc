@@ -165,7 +165,7 @@ PRIVATE FUNCTION CTimeSpan.GetTotalSeconds () AS LONGLONG
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' Returns a value that represents the number of complete days in this CTimeSpan.
+' Returns a value that represents the number of days in this CTimeSpan.
 ' ========================================================================================
 PRIVATE FUNCTION CTimeSpan.GetDays () AS LONG
    RETURN m_timeSpan/(24*3600) 
@@ -217,6 +217,8 @@ Public:
    DECLARE DESTRUCTOR
    DECLARE OPERATOR CAST () AS LONGLONG
    DECLARE OPERATOR LET (BYVAL timeSrc AS LONGINT)
+   DECLARE OPERATOR LET (BYREF st AS SYSTEMTIME)
+   DECLARE OPERATOR LET (BYREF ft AS FILETIME)
    DECLARE OPERATOR += (BYREF dateSpan AS CTimeSpan)
    DECLARE OPERATOR -= (BYREF dateSpan AS CTimeSpan)
    DECLARE FUNCTION SetDateTime (BYVAL nYear AS WORD, BYVAL nMonth AS WORD, BYVAL nDay AS WORD, BYVAL nHour AS WORD = 0, BYVAL nMin AS WORD = 0, BYVAL nSec AS WORD = 0) AS BOOLEAN
@@ -232,6 +234,9 @@ Public:
    DECLARE FUNCTION GetGmtTime () AS tm
    DECLARE FUNCTION GetLocalTime () AS tm
    DECLARE FUNCTION GetAsSystemTime () AS SYSTEMTIME
+   DECLARE FUNCTION GetAsFileTime () AS FILETIME
+   DECLARE FUNCTION Format (BYREF wszFmt AS WSTRING) AS CWSTR
+   DECLARE FUNCTION FormatGmt (BYREF wszFmt AS WSTRING) AS CWSTR
 
 END TYPE
 ' ========================================================================================
@@ -245,18 +250,31 @@ END TYPE
 ' - filetimeSrc: A FILETIME structure to be converted to a __time64_t (LONGLONG) value
 '   and copied into  the new CTime64 object. Note that FILETIME uses Universal Coordinated
 '   Time (UTC), so if you pass a local time in the structure, your results will be incorrect.
-' - nYear, nMonth, nDay, nHour, nMin, nSec, bDTS
-'   Indicates the date and time values to be copied into the new CTime object.
+' - nYear, nMonth, nDay, nHour, nMin, nSec
+'   Indicates the date and time values to be copied into the new CTime64 object.
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTime64
 END CONSTRUCTOR
 ' ========================================================================================
+' ========================================================================================
+' CTime64 destructor
+' ========================================================================================
+PRIVATE DESTRUCTOR CTime64
+END DESTRUCTOR
+' ========================================================================================
+' ========================================================================================
+' * Initializes a CTime64 object from an existing __time64_t value.
+' Example:
+' DIM ct1 AS CTime64 = CTime64().GetCurrentTime()
+' DIM ct2 AS CTime64 = ct1.GetTime
+' Note: You can also use DIM ct2 AS CTime64 = ct1
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTime64 (BYVAL timeSrc AS LONGINT)
    m_time = timeSrc
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
+' * Initializes a CTime64 object from individual date/time values.
 ' Parameters:
 ' - nYear  : The year
 ' - nMonth : The month
@@ -264,6 +282,9 @@ END CONSTRUCTOR
 ' - nHour  : The hour
 ' - nMin   : The minutes
 ' - nSec   : The seconds
+' Usage example:
+' ' // Year = 2017, Month = 10 (October), Day = 9, Hour = 11, Minutes = 32, Seconds = 45
+' DIM ct AS CTime64 = CTime64(2017, 10, 9, 11, 32, 45)
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTime64 (BYVAL nYear AS LONG, BYVAL nMonth AS LONG, BYVAL nDay AS LONG, BYVAL nHour AS LONG, BYVAL nMin AS LONG, BYVAL nSec AS LONG)
 	IF nYear < 1900 THEN EXIT CONSTRUCTOR
@@ -283,11 +304,40 @@ PRIVATE CONSTRUCTOR CTime64 (BYVAL nYear AS LONG, BYVAL nMonth AS LONG, BYVAL nD
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
+' * Initializes a CTime64 object from a SYSTEMTIME structure.
+' Example:
+' ' // Year = 2017, Month = 10 (October), Day = 9, Hour = 11, Minutes = 32, Seconds = 45
+' DIM st AS SYSTEMTIME 
+' st.wYear = 2017
+' st.wMonth = 10
+' st.wDayOfWeek = 0
+' st.wDay = 9
+' st.wHour = 11
+' st.wMinute = 32
+' st.wSecond = 45
+' st.wMilliseconds = 0
+' --or--
+' DIM st AS SYSTEMTIME = (2017, 10, 0, 9, 11, 32, 45, 0)
+' DIM ct AS CTime64 = st
+' --or--
+' DIM ct AS CTime64
+' ct.SetDateTime(2017, 10, 9, 11, 32, 45)
+' DIM st AS SYSTEMTIME = ct.GetAsSystemtime
+' DIM ct2 AS CTime64 = st
+' --or--
+' DIM ct AS CTime64
+' ct.SetDateTime(2017, 10, 9, 11, 32, 45)
+' DIM ct2 AS CTime64 = ct.GetAsSystemtime
+' ========================================================================================
 PRIVATE CONSTRUCTOR CTime64 (BYREF systimeSrc AS SYSTEMTIME)
    this = CTime64(systimeSrc.wYear, systimeSrc.wMonth, systimeSrc.wDay, _
           systimeSrc.wHour, systimeSrc.wMinute, systimeSrc.wSecond)
 END CONSTRUCTOR
 ' ========================================================================================
+' ========================================================================================
+' Constructs a CTime64 object from a FILETIME structure.
+' This constructor assumes a time based on UTC and automatically converts the value to
+' local time before storing the result.
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTime64 (BYREF filetimeSrc AS FILETIME)
    ' // first convert file time (UTC time) to local time
@@ -302,14 +352,7 @@ END CONSTRUCTOR
 ' ========================================================================================
 
 ' ========================================================================================
-' CTime destructor
-' ========================================================================================
-PRIVATE DESTRUCTOR CTime64
-END DESTRUCTOR
-' ========================================================================================
-
-' ========================================================================================
-' Returns the CTime value.
+' * Returns the underlying m_time value from this CTime64 object.
 ' ========================================================================================
 PRIVATE OPERATOR CTime64.CAST () AS LONGLONG
    RETURN m_time
@@ -317,7 +360,7 @@ END OPERATOR
 ' ========================================================================================
 
 ' ========================================================================================
-' Assigns a __time64_t (LONGLONG) value.
+' Assigns a __time64_t (LONGLONG) value to this CTime64 object.
 ' ========================================================================================
 PRIVATE OPERATOR CTime64.LET (BYVAL timeSrc AS LONGINT)
    m_time = timeSrc
@@ -325,7 +368,36 @@ END OPERATOR
 ' ========================================================================================
 
 ' ========================================================================================
-' Adss a CTimeSpan value to this CTime64 object.
+' Assigns a SYSTEMTIME structure.
+' Example:
+' DIM ct AS CTime64
+' ct.SetDateTime(2017, 10, 9, 11, 32, 45)
+' DIM st AS SYSTEMTIME = ct.GetAsSystemtime
+' DIM ct2 AS CTime64
+' ct2 = st
+' ========================================================================================
+PRIVATE OPERATOR CTime64.LET (BYREF st AS SYSTEMTIME)
+   this = CTime64(st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond)
+END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+' Assigns a FILETIME structure.
+' ========================================================================================
+PRIVATE OPERATOR CTime64.LET (BYREF ft AS FILETIME)
+   ' // first convert file time (UTC time) to local time
+   DIM ftlocalTime AS FILETIME
+   IF FileTimeToLocalFileTime(@ft, @ftlocalTime) = 0 THEN EXIT OPERATOR
+   ' // then convert that time to system time
+   DIM sysTime AS SYSTEMTIME
+   IF FileTimeToSystemTime(@ftlocalTime, @sysTime) = 0 THEN EXIT OPERATOR
+   this = CTime64(systime.wYear, systime.wMonth, systime.wDay, systime.wHour, _
+          systime.wMinute, systime.wSecond)
+END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+' Adds a CTimeSpan value to this CTime64 object.
 ' ========================================================================================
 PRIVATE OPERATOR CTime64.+= (BYREF dateSpan AS CTimeSpan)
    m_time += dateSpan.GetTimeSpan
@@ -341,14 +413,18 @@ END OPERATOR
 ' ========================================================================================
 
 ' ========================================================================================
-' Sets the date and time of this CTime object.
+' Sets the date and time of this CTime64 object.
 ' Parameters:
-' - nYear  : The year
-' - nMonth : The month
-' - nDay   : The day
-' - nHour  : The hour
-' - nMin   : The minutes
-' - nSec   : The seconds
+' - nYear  : The year (1970-3000)
+' - nMonth : The month (1-12)
+' - nDay   : The day (1-31)
+' - nHour  : The hour (0-23)
+' - nMin   : The minutes (0-59)
+' - nSec   : The seconds (0-59)
+' Example:
+' ' // Year = 2017, Month = 10 (October), Day = 9, Hour = 11, Minutes = 32, Seconds = 45
+' DIM ct AS CTime64
+' ct.SetDateTime(2017, 10, 9, 11, 32, 45)
 ' ========================================================================================
 PRIVATE FUNCTION CTime64.SetDateTime (BYVAL nYear AS WORD, BYVAL nMonth AS WORD, BYVAL nDay AS WORD, BYVAL nHour AS WORD = 0, BYVAL nMin AS WORD = 0, BYVAL nSec AS WORD = 0) AS BOOLEAN
 	IF nYear < 1900 THEN RETURN FALSE
@@ -370,11 +446,16 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Returns a CTime object that represents the current time.
+' * Returns a CTime64 object that represents the current time.
 ' Usage example: DIM ct AS CTime64 = CTime64().GetCurrentTime()
 ' --or--
 ' DIM ct AS CTime64
 ' ct = ct.GetCurrentTime()
+' Usage example:
+' DIM ct1 AS CTime64 = CTime64().GetCurrentTime()
+' DIM ct2 AS CTime64 = ct1 + CTimeSpan(0, 1, 0, 0)   ' // 1 hour later
+' Note: The use of () after GetCurrentTime is needed with FreeBasic; otherwise, the
+' compiler returns an error 18: Element not defined.
 ' ========================================================================================
 PRIVATE FUNCTION CTime64.GetCurrentTime () AS CTime64
    RETURN CTime64(AfxTime64)
@@ -393,7 +474,7 @@ END FUNCTION
 ' Returns the year represented by the CTime64 object.
 ' ========================================================================================
 PRIVATE FUNCTION CTime64.GetYear() AS LONG
-   DIM _tm AS tm = AfxGetLocalTime64(m_time)
+   DIM _tm AS tm = AfxLocalTime64(m_time)
    RETURN _tm.tm_year + 1900
 END FUNCTION
 ' ========================================================================================
@@ -402,7 +483,7 @@ END FUNCTION
 ' Returns the month represented by the CTime64 object.
 ' ========================================================================================
 PRIVATE FUNCTION CTime64.GetMonth() AS LONG
-   DIM _tm AS tm = AfxGetLocalTime64(m_time)
+   DIM _tm AS tm = AfxLocalTime64(m_time)
    RETURN _tm.tm_mon + 1
 END FUNCTION
 ' ========================================================================================
@@ -411,7 +492,7 @@ END FUNCTION
 ' Returns the day represent by the CTime64 object.
 ' ========================================================================================
 PRIVATE FUNCTION CTime64.GetDay() AS LONG
-   DIM _tm AS tm = AfxGetLocalTime64(m_time)
+   DIM _tm AS tm = AfxLocalTime64(m_time)
    RETURN _tm.tm_mday
 END FUNCTION
 ' ========================================================================================
@@ -420,7 +501,7 @@ END FUNCTION
 ' Returns the hour represented by the CTime64 object.
 ' ========================================================================================
 PRIVATE FUNCTION CTime64.GetHour() AS LONG
-   DIM _tm AS tm = AfxGetLocalTime64(m_time)
+   DIM _tm AS tm = AfxLocalTime64(m_time)
    RETURN _tm.tm_hour
 END FUNCTION
 ' ========================================================================================
@@ -429,7 +510,7 @@ END FUNCTION
 ' Returns the minute represented by the CTime64 object.
 ' ========================================================================================
 PRIVATE FUNCTION CTime64.GetMinute() AS LONG
-   DIM _tm AS tm = AfxGetLocalTime64(m_time)
+   DIM _tm AS tm = AfxLocalTime64(m_time)
    RETURN _tm.tm_min
 END FUNCTION
 ' ========================================================================================
@@ -438,7 +519,7 @@ END FUNCTION
 ' Returns the second represented by the CTime64 object.
 ' ========================================================================================
 PRIVATE FUNCTION CTime64.GetSecond() AS LONG
-   DIM _tm AS tm = AfxGetLocalTime64(m_time)
+   DIM _tm AS tm = AfxLocalTime64(m_time)
    RETURN _tm.tm_sec
 END FUNCTION
 ' ========================================================================================
@@ -447,13 +528,13 @@ END FUNCTION
 ' Returns the day of the week represented by the CTime64 object.
 ' ========================================================================================
 PRIVATE FUNCTION CTime64.GetDayOfWeek () AS LONG
-   DIM _tm AS tm = AfxGetLocalTime64(m_time)
+   DIM _tm AS tm = AfxLocalTime64(m_time)
    RETURN _tm.tm_wday + 1
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Gets a tm structure that contains a decomposition of the time contained in this CTime object.
+' Gets a tm structure that contains a decomposition of the time contained in this CTime64 object.
 ' The fields of the structure type tm store the following values, each of which is an int:
 ' tm_sec : Seconds after minute (0 – 59).
 ' tm_min : Minutes after hour (0 – 59).
@@ -472,7 +553,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Gets a tm  structure containing a decomposition of the time contained in this CTime object.
+' Gets a tm  structure containing a decomposition of the time contained in this CTime64 object.
 ' The fields of the structure type tm store the following values, each of which is an int:
 ' tm_sec : Seconds after minute (0 – 59).
 ' tm_min : Minutes after hour (0 – 59).
@@ -486,15 +567,15 @@ END FUNCTION
 ' time is not in effect; negative value if status of daylight saving time is unknown.
 ' ========================================================================================
 PRIVATE FUNCTION CTime64.GetLocalTime () AS tm
-   RETURN AfxGetLocalTime64(m_time)
+   RETURN AfxLocalTime64(m_time)
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Convertsthe time information stored in the CTime object to a Win32–compatible
+' Converts the time information stored in the CTime64 object to a Win32–compatible
 ' SYSTEMTIME structure.
 ' ========================================================================================
-PRIVATE FUNCTION Ctime64.GetAsSystemTime () AS SYSTEMTIME
+PRIVATE FUNCTION CTime64.GetAsSystemTime () AS SYSTEMTIME
    DIM ttm AS tm = this.GetLocalTime
    DIM ts AS SYSTEMTIME
    ts.wYear = 1900 + ttm.tm_year
@@ -506,6 +587,48 @@ PRIVATE FUNCTION Ctime64.GetAsSystemTime () AS SYSTEMTIME
 	ts.wSecond = ttm.tm_sec
 	ts.wMilliseconds = 0
    RETURN ts
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Converts the time information stored in the CTime64 object to a Win32–compatible
+' FILETIME structure. A FILETIME structure contains a 64-bit value representing the number
+' of 100-nanosecond intervals since January 1, 1601 (UTC).
+' ========================================================================================
+PRIVATE FUNCTION CTime64.GetAsFileTime () AS FILETIME
+   DIM ft AS FILETIME
+   DIM st AS SYSTEMTIME = this.GetAsSystemTime
+   SystemTimeToFileTime(@st, @ft)
+   RETURN ft
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Converts a CTime64 object to a string.
+' This form formats the value by using the format string which contains special formatting
+' codes that are preceded by a percent sign (%), as in printf.
+' For more information about the formatting codes, see strftime, wcsftime in the Run-Time
+' Library Reference: https://msdn.microsoft.com/en-us/library/38wh24td.aspx#coledatetime__format
+' Example: print ct2.Format("%A, %B %d, %Y %H:%M:%S")
+' Example: print ct2.FormatGmt("%A, %B %d, %Y %H:%M:%S")
+' ========================================================================================
+PRIVATE FUNCTION CTime64.Format (BYREF wszFmt AS WSTRING) AS CWSTR
+   DIM cwsOut AS CWSTR
+   IF LEN(wszFmt) = 0 THEN RETURN cwsOut
+   cwsOut = STRING(128, CHR(0))
+   DIM tmTemp AS tm = AfxLocalTime64(m_time)
+   wcsftime(cwsOut.vptr, 128, @wszFmt, @tmTemp)
+   RETURN cwsOut
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CTime64.FormatGmt (BYREF wszFmt AS WSTRING) AS CWSTR
+   DIM cwsOut AS CWSTR
+   IF LEN(wszFmt) = 0 THEN RETURN cwsOut
+   cwsOut = STRING(128, CHR(0))
+   DIM tmTemp AS tm = AfxGmtTime64(m_time)
+   wcsftime(cwsOut.vptr, 128, @wszFmt, @tmTemp)
+   RETURN cwsOut
 END FUNCTION
 ' ========================================================================================
 
@@ -526,6 +649,8 @@ END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
 ' Subtracts CTimeSpan values.
+' Note: Can also be used to find the difference between two dates. Subtract one date
+' from another and call the CTimeSpan GetDays, GetHours, GetMinutes or GetSeconds methods.
 ' ========================================================================================
 PRIVATE OPERATOR - (BYREF cSpan1 AS CTimeSpan, BYREF cSpan2 AS CTimeSpan) AS CTimeSpan
    OPERATOR = CTimeSpan(cSpan1.m_timeSpan - cSpan2.m_timeSpan )

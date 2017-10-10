@@ -403,7 +403,7 @@ END CONSTRUCTOR
 ' ========================================================================================
 
 ' ========================================================================================
-' A null-terminated unicode string which is to be parsed. 
+' A null-terminated unicode string which is to be parsed.
 ' - dwFlags: Indicates flags for locale settings and parsing.
 '   LOCALE_NOUSEROVERRIDE Use the system default locale settings, rather than custom user settings.
 '   VAR_TIMEVALUEONLY Ignore the date portion during parsing.
@@ -444,7 +444,7 @@ END OPERATOR
 
 ' ========================================================================================
 ' These overloaded assignment operators copy the source date/time value into this
-' COleDateTime object. 
+' COleDateTime object.
 ' - operator =( dateSrc ) The value and status of the operand are copied into this
 '   COleDateTime object.
 ' - operator =( varSrc ) If the conversion of the VARIANT value (or COleVariant object) to
@@ -816,7 +816,7 @@ END FUNCTION
 ' ========================================================================================
 ' Converts a COleDateTime to a string.
 ' This form formats the value by using the format string which contains special formatting
-' codes that are preceded by a percent sign (%), as in printf. 
+' codes that are preceded by a percent sign (%), as in printf.
 ' For more information about the formatting codes, see strftime, wcsftime in the Run-Time
 ' Library Reference: https://msdn.microsoft.com/en-us/library/38wh24td.aspx#coledatetime__format
 ' ========================================================================================
@@ -834,12 +834,12 @@ PRIVATE FUNCTION COleDateTime.Format (BYREF wszFmt AS WSTRING) AS CWSTR
    tmTemp.tm_wday	 = ud.st.wDayOfWeek
    tmTemp.tm_yday	 = ud.wDayOfYear - 1
    tmTemp.tm_isdst = 0
-   cwsOut = SPACE(256)
+   cwsOut = STRING(256, CHR(0))
    wcsftime(cwsOut.vptr, 256, @wszFmt, @tmTemp)
    RETURN cwsOut
 END FUNCTION
 ' ========================================================================================
-   
+
 END NAMESPACE
 
 ' ########################################################################################
@@ -880,7 +880,7 @@ END OPERATOR
 ' ========================================================================================
 PRIVATE OPERATOR = (BYREF dt1 AS COleDateTime, BYREF dt2 AS COleDateTime) AS BOOLEAN
    IF dt1.m_status = FALSE OR dt2.m_status = FALSE THEN EXIT OPERATOR
-   ' // it has to be in precision range to say that it is equal         
+   ' // it has to be in precision range to say that it is equal
    IF (dt1.m_dt + dt1.OLE_DATETIME_HALFSECOND > dt2.m_dt AND _
        dt1.m_dt - dt1.OLE_DATETIME_HALFSECOND < dt2.m_dt) THEN OPERATOR = TRUE
 END OPERATOR
@@ -888,7 +888,7 @@ END OPERATOR
 ' ========================================================================================
 PRIVATE OPERATOR <> (BYREF dt1 AS COleDateTime, BYREF dt2 AS COleDateTime) AS BOOLEAN
    IF dt1.m_status = FALSE OR dt2.m_status = FALSE THEN EXIT OPERATOR
-   ' // it has to be in precision range to say that it is equal         
+   ' // it has to be in precision range to say that it is equal
    IF (dt1.m_dt + dt1.OLE_DATETIME_HALFSECOND > dt2.m_dt AND _
        dt1.m_dt - dt1.OLE_DATETIME_HALFSECOND < dt2.m_dt) THEN _
        OPERATOR = FALSE ELSE OPERATOR = TRUE
@@ -955,7 +955,7 @@ END OPERATOR
 ' ========================================================================================
 PRIVATE OPERATOR = (BYREF dateSpan1 AS COleDateTimeSpan, BYREF dateSpan2 AS COleDateTimeSpan) AS BOOLEAN
    IF dateSpan1.m_status = FALSE OR dateSpan2.m_status = FALSE THEN EXIT OPERATOR
-   ' // it has to be in precision range to say that it is equal         
+   ' // it has to be in precision range to say that it is equal
    IF (dateSpan1.m_span + dateSpan1.OLE_DATETIME_HALFSECOND > dateSpan2.m_span AND _
        dateSpan1.m_span - dateSpan1.OLE_DATETIME_HALFSECOND < dateSpan2.m_span) THEN OPERATOR = TRUE
 END OPERATOR
@@ -963,7 +963,7 @@ END OPERATOR
 ' ========================================================================================
 PRIVATE OPERATOR <> (BYREF dateSpan1 AS COleDateTimeSpan, BYREF dateSPan2 AS COleDateTimeSpan) AS BOOLEAN
    IF dateSpan1.m_status = FALSE OR dateSpan2.m_status = FALSE THEN EXIT OPERATOR
-   ' // it has to be in precision range to say that it is equal         
+   ' // it has to be in precision range to say that it is equal
    IF (dateSpan1.m_span + dateSpan1.OLE_DATETIME_HALFSECOND > dateSpan2.m_span AND _
        dateSpan1.m_span - dateSpan1.OLE_DATETIME_HALFSECOND < dateSpan2.m_span) THEN _
        OPERATOR = FALSE ELSE OPERATOR = TRUE

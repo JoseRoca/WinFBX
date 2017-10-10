@@ -1024,7 +1024,7 @@ END FUNCTION
 ' tm_isdst : Positive value if daylight saving time is in effect; 0 if daylight saving
 ' time is not in effect; negative value if status of daylight saving time is unknown.
 ' ========================================================================================
-PRIVATE FUNCTION AfxGetLocalTime64 (BYVAL t64 AS LONGLONG) AS tm
+PRIVATE FUNCTION AfxLocalTime64 (BYVAL t64 AS LONGLONG) AS tm
    DIM AS FILETIME ft, ftLocal
    ft = AfxTime64ToFileTime(t64)
    FileTimeToLocalFiletime(@ft, @ftLocal)
