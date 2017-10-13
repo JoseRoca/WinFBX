@@ -45,7 +45,7 @@ END TYPE
 ' ========================================================================================
 ' Default constructor
 ' Initializes a new instance of the CIniFile class.
-' - wszFileSpec: The ini file to read and write from.
+' - wszFileName: The ini file to read and write from.
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CIniFile (BYREF wszFileName AS WSTRING)
    ' // Convert to the full path. Because of backward compatibility, 
