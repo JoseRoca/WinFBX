@@ -11,6 +11,7 @@
 
 #pragma once
 #include once "windows.bi"
+#include once "crt/stdio.bi"
 #include once "Afx/CSafeArray.inc"
 #include once "Afx/CDicObj.inc"
 USING Afx
@@ -55,9 +56,20 @@ PRIVATE CONSTRUCTOR CIniFile (BYREF wszFileName AS WSTRING)
    DIM nLen AS LONG, buffer AS WSTRING * 4096
    nLen = .GetFullPathNameW(wszFileName, SIZEOF(buffer) \ 2, buffer, NULL)
    IF nLen THEN m_Path = LEFT(buffer, nLen)
+   ' // Even if we use WritePrivateProfileStringW, it will only write unicode text if the
+   ' // file has been created using UTF 16 little endian. The solution is to create the
+   ' // ini-file with the encoding UTF-16LE before writing an unicode string to it.
+   ' // Make sure the file does not already exist
+   IF AfxFileExists(m_Path) = FALSE THEN
+      ' // create file with encoding UTF-16LE
+      DIM fileHandle AS FILE PTR
+      DIM wszMode AS WSTRING * 260 = "w, ccs=UTF-16LE"
+      fileHandle = _wfopen(@m_Path, @wszMode)
+      IF fileHandle THEN fclose(fileHandle)
+   END IF
 END CONSTRUCTOR
 ' ========================================================================================
-
+ 
 ' ========================================================================================
 ' Destructor
 ' ========================================================================================
@@ -194,6 +206,8 @@ PRIVATE FUNCTION CIniFile.GetKeyNames (BYREF wszSectionName AS WSTRING) AS CSafe
 END FUNCTION
 ' ========================================================================================
 
+' ========================================================================================
+' Returns the keys and values of the specified section as a dictionary object.
 ' ========================================================================================
 PRIVATE FUNCTION CIniFile.GetSectionValues (BYREF wszSectionName AS WSTRING, BYREF pDic AS CDicObj) AS BOOLEAN
    IF pDic.m_pDictionary = NULL THEN RETURN FALSE
