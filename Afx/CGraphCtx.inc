@@ -1211,4 +1211,13 @@ FUNCTION CGraphCtx.MakeNotCurrent () AS BOOLEAN
 END FUNCTION
 ' ========================================================================================
 
+' ========================================================================================
+' Returns a pointer to the CWindow class given the handle of its associated window handle.
+' To retrieve it from the handle of any of its child windows or controls, use AfxCWindowOwnerPtr.
+' ========================================================================================
+PRIVATE FUNCTION AfxCGraphCtxPtr (BYVAL hwnd AS HWND) AS CGraphCtx PTR
+   FUNCTION = CAST(CGraphCtx PTR, .GetWindowLongPtrW(hwnd, 0))
+END FUNCTION
+' ========================================================================================
+
 END NAMESPACE
