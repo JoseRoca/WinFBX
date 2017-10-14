@@ -53,10 +53,6 @@ TYPE COGL
       DECLARE SUB RenderScene
       DECLARE SUB ProcessKeystrokes (BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM)
       DECLARE SUB ProcessMouse (BYVAL uMsg AS UINT, BYVAL wKeyState AS DWORD, BYVAL x AS LONG, BYVAL y AS LONG)
-      DECLARE SUB renderTeapot (BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
-         BYVAL ambr AS SINGLE, BYVAL ambg AS SINGLE, BYVAL ambb AS SINGLE, _
-         BYVAL difr AS SINGLE, BYVAL difg AS SINGLE, BYVAL difb AS SINGLE, _
-         BYVAL specr AS SINGLE, BYVAL specg AS SINGLE, BYVAL specb AS SINGLE, BYVAL shine AS SINGLE)
 
 END TYPE
 ' =======================================================================================
