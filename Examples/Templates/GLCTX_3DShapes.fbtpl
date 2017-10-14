@@ -5,10 +5,10 @@ CWindow: GRAPHCTX: OpenGL - 3D Shapes
 ' ########################################################################################
 ' Microsoft Windows
 ' File: GLCTX_3DShapes.fbtpl
-' Contents: CWindow OpenGL: 3D shapes
+' Contents: Graphic Control OpenGL: 3D shapes
 ' Compiler: FreeBasic 32 & 64 bit
 ' Based on NeHe Lesson 5.
-' Translated in 2017 by José Roca. Freeware. Use at your own risk.
+' Adapted in 2017 by José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.

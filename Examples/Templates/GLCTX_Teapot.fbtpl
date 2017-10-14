@@ -5,9 +5,9 @@ CWindow: GRAPHCTX: OpenGL - Teapot
 ' ########################################################################################
 ' Microsoft Windows
 ' File: GLCTX_Teapot.fbtpl
-' Contents: CWindow OpenGL - Teapot
+' Contents: Graphic Control OpenGL - Teapot
 ' Compiler: FreeBasic 32 & 64 bit
-' Translated in 2017 by José Roca. Freeware. Use at your own risk.
+' Adapted in 2017 by José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.

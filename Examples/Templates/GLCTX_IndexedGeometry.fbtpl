@@ -5,13 +5,13 @@ CWindow: GRAPHCTX: OpenGL - Indexed geometry
 ' ########################################################################################
 ' Microsoft Windows
 ' File: GLCTX_Indexed Geometry.fbtpl
-' Contents: CWindow Graphic Control - Indexed geometry
+' Contents: Graphic Control OpenGL - Indexed geometry
 ' Compiler: FreeBasic 32 & 64 bit
 ' Demonstrates how to optimize performance by using indexed geometry. As a demonstration,
 ' the sample reduces the vertex count of a simple cube from 24 to 8 by redefining the
 ' cube’s geometry using an indices array.
 ' Based on ogl_indexed_geometry.cpp, by Kevin Harris, 02/01/05.
-' Translated in 2017 by José Roca. Freeware. Use at your own risk.
+' Adapted in 2017 by José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
