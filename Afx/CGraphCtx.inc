@@ -1212,8 +1212,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Returns a pointer to the CWindow class given the handle of its associated window handle.
-' To retrieve it from the handle of any of its child windows or controls, use AfxCWindowOwnerPtr.
+' Returns a pointer to the CGraphCtx class given the handle of its associated window handle.
 ' ========================================================================================
 PRIVATE FUNCTION AfxCGraphCtxPtr (BYVAL hwnd AS HWND) AS CGraphCtx PTR
    FUNCTION = CAST(CGraphCtx PTR, .GetWindowLongPtrW(hwnd, 0))
