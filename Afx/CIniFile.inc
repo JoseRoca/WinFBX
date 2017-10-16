@@ -163,7 +163,7 @@ END FUNCTION
 '    print csa.GetStr(i)
 ' NEXT
 ' ========================================================================================
-PRIVATE FUNCTION CIniFile.GetSectionNames () AS CSafeARray
+PRIVATE FUNCTION CIniFile.GetSectionNames () AS CSafeArray
    DIM csa AS CSafeArray = CSafeArray(VT_BSTR, 0, 1)
    DIM wsz AS WSTRING * 32767
    DIM dwLen AS DWORD = GetPrivateProfileSectionNamesW(@wsz, 32767, m_path)
@@ -184,7 +184,7 @@ END FUNCTION
 ' Returns a safe array with the names of all the keys of the specified section.
 ' Example:
 ' DIM cIni AS CInifile = "Test.ini"
-' DIM csa AS CSafeArray = cIni.GetKeyNames("StARtup")
+' DIM csa AS CSafeArray = cIni.GetKeyNames("Startup")
 ' FOR i AS LONG = csa.LBound TO csa.UBound
 '    print csa.GetStr(i)
 ' NEXT

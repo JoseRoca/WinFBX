@@ -210,13 +210,13 @@ Public:
 
 Public:
    DECLARE CONSTRUCTOR
-   DECLARE CONSTRUCTOR (BYVAL timeSrc AS LONGINT)
+   DECLARE CONSTRUCTOR (BYVAL timeSrc AS LONGLONG)
    DECLARE CONSTRUCTOR (BYVAL nYear AS LONG, BYVAL nMonth AS LONG, BYVAL nDay AS LONG, BYVAL nHour AS LONG, BYVAL nMin AS LONG, BYVAL nSec AS LONG)
    DECLARE CONSTRUCTOR (BYREF systimeSrc AS SYSTEMTIME)
    DECLARE CONSTRUCTOR (BYREF filetimeSrc AS FILETIME)
    DECLARE DESTRUCTOR
    DECLARE OPERATOR CAST () AS LONGLONG
-   DECLARE OPERATOR LET (BYVAL timeSrc AS LONGINT)
+   DECLARE OPERATOR LET (BYVAL timeSrc AS LONGLONG)
    DECLARE OPERATOR LET (BYREF st AS SYSTEMTIME)
    DECLARE OPERATOR LET (BYREF ft AS FILETIME)
    DECLARE OPERATOR += (BYREF dateSpan AS CTimeSpan)
@@ -269,7 +269,7 @@ END DESTRUCTOR
 ' DIM ct2 AS CTime64 = ct1.GetTime
 ' Note: You can also use DIM ct2 AS CTime64 = ct1
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CTime64 (BYVAL timeSrc AS LONGINT)
+PRIVATE CONSTRUCTOR CTime64 (BYVAL timeSrc AS LONGLONG)
    m_time = timeSrc
 END CONSTRUCTOR
 ' ========================================================================================
@@ -362,7 +362,7 @@ END OPERATOR
 ' ========================================================================================
 ' Assigns a __time64_t (LONGLONG) value to this CTime64 object.
 ' ========================================================================================
-PRIVATE OPERATOR CTime64.LET (BYVAL timeSrc AS LONGINT)
+PRIVATE OPERATOR CTime64.LET (BYVAL timeSrc AS LONGLONG)
    m_time = timeSrc
 END OPERATOR
 ' ========================================================================================
@@ -463,7 +463,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' eturns a __time64_t value for the given CTime64 object.
+' Returns a __time64_t (LONGLONG) value for the given CTime64 object.
 ' ========================================================================================
 PRIVATE FUNCTION CTime64.GetTime() AS LONGLONG
    RETURN m_time
@@ -609,8 +609,8 @@ END FUNCTION
 ' codes that are preceded by a percent sign (%), as in printf.
 ' For more information about the formatting codes, see strftime, wcsftime in the Run-Time
 ' Library Reference: https://msdn.microsoft.com/en-us/library/38wh24td.aspx#coledatetime__format
-' Example: print ct2.Format("%A, %B %d, %Y %H:%M:%S")
-' Example: print ct2.FormatGmt("%A, %B %d, %Y %H:%M:%S")
+' Example: print ct.Format("%A, %B %d, %Y %H:%M:%S")
+' Example: print ct.FormatGmt("%A, %B %d, %Y %H:%M:%S")
 ' ========================================================================================
 PRIVATE FUNCTION CTime64.Format (BYREF wszFmt AS WSTRING) AS CWSTR
    DIM cwsOut AS CWSTR
