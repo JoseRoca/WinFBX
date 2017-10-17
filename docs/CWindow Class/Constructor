@@ -1,0 +1,26 @@
+Description
+
+Registers the class name and initializes the common controls library.
+
+Syntax
+
+CONSTRUCTOR CWindow (BYREF wszClassName AS CONST WSTRING = "")
+
+Parameter
+
+wszClassName
+[in, opt] The name of the class name to register. If omitted, the class will use "FBWindowClass:" and a number as the class name.
+
+Return value
+
+A pointer to the new instance of the class.
+
+Examples
+
+DIM pWindow AS CWindow
+
+DIM pWindow AS CWindow = "MyClassName"
+
+Include file
+
+CWindow.inc
