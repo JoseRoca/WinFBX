@@ -39,6 +39,7 @@ Public:
 Public:
    DECLARE CONSTRUCTOR
    DECLARE CONSTRUCTOR (BYVAL nSpan AS LONGLONG)
+   DECLARE CONSTRUCTOR (BYREF cSpan AS CFileTimeSpan)
    DECLARE DESTRUCTOR
    DECLARE OPERATOR CAST () AS LONGLONG
    DECLARE OPERATOR LET (BYVAL nSpan AS LONGLONG)
@@ -64,10 +65,17 @@ PRIVATE CONSTRUCTOR CFileTimeSpan
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-' - lltnSpanime: A time value, which is the number of seconds in the time span.
+' - nSpan: A period of time in milliseconds.
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CFileTimeSpan (BYVAL nSpan AS LONGLONG)
    m_nSpan = nSpan
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+' - cSpan: A CFileTimeSpan object.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CFileTimeSpan (BYREF cSpan AS CFileTimeSpan)
+   m_nSpan = cSpan.m_nSpan
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
@@ -204,11 +212,14 @@ Public:
 
 Public:
    DECLARE CONSTRUCTOR
-   DECLARE CONSTRUCTOR (BYREF ft AS FILETIME)
    DECLARE CONSTRUCTOR (BYVAL nTime AS ULONGLONG)
+   DECLARE CONSTRUCTOR (BYREF ft AS FILETIME)
+   DECLARE CONSTRUCTOR (BYREF st AS SYSTEMTIME)
    DECLARE DESTRUCTOR
    DECLARE OPERATOR CAST () AS LONGLONG
+   DECLARE OPERATOR LET (BYVAL nTime AS ULONGLONG)
    DECLARE OPERATOR LET (BYREF ft AS FILETIME)
+   DECLARE OPERATOR LET (BYREF st AS SYSTEMTIME)
    DECLARE OPERATOR += (BYREF dateSpan AS CFileTimeSpan)
    DECLARE OPERATOR -= (BYREF dateSpan AS CFileTimeSpan)
    DECLARE FUNCTION GetTime () AS ULONGLONG
@@ -224,6 +235,7 @@ Public:
    DECLARE FUNCTION Week () AS ULONGLONG
    DECLARE FUNCTION GetAsFileTime () AS FILETIME
    DECLARE FUNCTION GetAsSystemTime () AS SYSTEMTIME
+   DECLARE FUNCTION Format (BYREF wszFmt AS WSTRING) AS CWSTR
 
 END TYPE
 ' ========================================================================================
@@ -235,6 +247,14 @@ PRIVATE CONSTRUCTOR CFileTime
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
+' Constructs a CFileTime object from a date and time expressed as a 64-bit value.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CFileTime (BYVAL nTime AS ULONGLONG)
+	dwLowDateTime = CULNG(nTime)
+	dwHighDateTime = CULNG(nTime shr 32)
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
 ' Constructs a CFileTime object from a FILETIME structure.
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CFileTime (BYREF ft AS FILETIME)
@@ -243,11 +263,13 @@ PRIVATE CONSTRUCTOR CFileTime (BYREF ft AS FILETIME)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-' Constructs a CFileTime object from a FILETIME structure.
+' Constructs a CFileTime object from a SYSTEMTIME structure.
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CFileTime (BYVAL nTime AS ULONGLONG)
-	dwLowDateTime = CULNG(nTime)
-	dwHighDateTime = CULNG(nTime shr 32)
+PRIVATE CONSTRUCTOR CFileTime (BYREF st AS SYSTEMTIME)
+   DIM ft AS FILETIME
+   SystemTimeToFileTime @st, @ft
+	dwLowDateTime = ft.dwLowDateTime
+	dwHighDateTime = ft.dwHighDateTime
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -260,12 +282,25 @@ END DESTRUCTOR
 
 ' ========================================================================================
 ' Returns the underlying m_time value from this CFileTime object.
+' Example:
+'   DIM cft AS CFileTime = CFileTime().GetCurrentTime()
+'   DIM nTime AS LONGLONG = cft
+'   print nTime
 ' ========================================================================================
 PRIVATE OPERATOR CFileTime.CAST () AS LONGLONG
    RETURN (CULNGINT(dwHighDateTime) shl 32) OR dwLowDateTime
 END OPERATOR
 ' ========================================================================================
 
+' ========================================================================================
+' Assigns a time value to this CFileTime object.
+' nTime: A date and time expressed as a 64-bit value.
+' ========================================================================================
+PRIVATE OPERATOR CFileTime.LET (BYVAL nTime AS ULONGLONG)
+	dwLowDateTime = CULNG(nTime)
+	dwHighDateTime = CULNG(nTime shr 32)
+END OPERATOR
+' ========================================================================================
 ' ========================================================================================
 ' Assigns a FILETIME value to this CFileTime object.
 ' ========================================================================================
@@ -274,9 +309,22 @@ PRIVATE OPERATOR CFileTime.LET (BYREF ft AS FILETIME)
 	dwHighDateTime = ft.dwHighDateTime
 END OPERATOR
 ' ========================================================================================
+' ========================================================================================
+' Assigns a SYSTEMTIME value to this CFileTime object.
+' ========================================================================================
+PRIVATE OPERATOR CFileTime.LET (BYREF st AS SYSTEMTIME)
+   DIM ft AS FILETIME
+   SystemTimeToFileTime @st, @ft
+	dwLowDateTime = ft.dwLowDateTime
+	dwHighDateTime = ft.dwHighDateTime
+END OPERATOR
+' ========================================================================================
 
 ' ========================================================================================
 ' Retrieve the time from the CFileTime object.
+' Example:
+'   DIM cft AS CFileTime = CFileTime().GetCurrentTime()
+'   print cft.GetTime
 ' ========================================================================================
 PRIVATE FUNCTION CFileTime.GetTime () AS ULONGLONG
    RETURN (CULNGINT(dwHighDateTime) shl 32) OR dwLowDateTime
@@ -406,6 +454,34 @@ PRIVATE FUNCTION CFileTime.GetAsSystemTime () AS SYSTEMTIME
    RETURN st
 END FUNCTION
 ' ========================================================================================
+
+' ========================================================================================
+' Converts a CFileTime object to a string.
+' This form formats the value by using the format string which contains special formatting
+' codes that are preceded by a percent sign (%), as in printf.
+' For more information about the formatting codes, see strftime, wcsftime in the Run-Time
+' Library Reference: https://msdn.microsoft.com/en-us/library/38wh24td.aspx#coledatetime__format
+' Example: print ct.Format("%A, %B %d, %Y %H:%M:%S")
+' Example: print ct.FormatGmt("%A, %B %d, %Y %H:%M:%S")
+' ========================================================================================
+PRIVATE FUNCTION CFileTime.Format (BYREF wszFmt AS WSTRING) AS CWSTR
+   DIM cwsOut AS CWSTR
+   IF LEN(wszFmt) = 0 THEN RETURN cwsOut
+   cwsOut = STRING(128, CHR(0))
+   DIM st AS SYSTEMTIME = this.GetAsSystemTime
+   DIM tmTemp AS tm
+   tmTemp.tm_wday = st.wDayOfWeek
+   tmTemp.tm_min = st.wMinute
+   tmTemp.tm_sec = st.wSecond
+   tmTemp.tm_mon = st.wMonth - 1
+   tmTemp.tm_mday = st.wDay
+   tmTemp.tm_hour = st.wHour
+   tmTemp.tm_year = st.wYear - 1900
+   wcsftime(cwsOut.vptr, 128, @wszFmt, @tmTemp)
+   RETURN cwsOut
+END FUNCTION
+' ========================================================================================
+
 
 END NAMESPACE
 

@@ -331,7 +331,7 @@ END TYPE
 ' - varSrc: An existing VARIANT data structure (possibly a COleVariant object) to be converted
 ' to a date/time value ( VT_DATE) and copied into the new COleDateTime object.
 ' - dtSrc: A date/time ( DATE) value to be copied into the new COleDateTime object.
-' - timeSrc: A LongIntvalue to be converted to a date/time value and copied into the new
+' - timeSrc: A LongInt value to be converted to a date/time value and copied into the new
 ' COleDateTime object.
 ' - systimeSrc: A SYSTEMTIME structure to be converted to a date/time value and copied into
 ' the new COleDateTime object.
@@ -339,8 +339,6 @@ END TYPE
 ' the new COleDateTime object. Note that FILETIME uses Universal Coordinated Time (UTC), so
 ' if you pass a local time in the structure, your results will be incorrect. See File Times
 ' in the Windows SDK for more information.
-' - timeSrc: A LongIntvalue to be converted to a date/time value and copied into the new
-' COleDateTime object.
 ' - nYear, nMonth, nDay, nHour, nMin, nSec
 ' Indicate the date and time values to be copied into the new COleDateTime object.
 ' - wDosDate, wDosTime
@@ -349,6 +347,11 @@ END TYPE
 ' - dbts: A reference to a DBTimeStamp structure containing the current local time.
 ' ========================================================================================
 PRIVATE CONSTRUCTOR COleDateTime
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE CONSTRUCTOR COleDateTime (BYREF dateSrc AS COleDateTime)
+   this = dateSrc
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
@@ -394,11 +397,6 @@ END CONSTRUCTOR
 ' ========================================================================================
 PRIVATE CONSTRUCTOR COleDateTime (BYREF ud aS UDATE)
    this = ud
-END CONSTRUCTOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE CONSTRUCTOR COleDateTime (BYREF dt AS COleDateTime)
-   this = dt
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -455,7 +453,7 @@ END OPERATOR
 '   status is set to valid.
 ' - operator =( systimeSrc ) The SYSTEMTIME value is converted and copied into this
 '   COleDateTime object. If the conversion is successful, the status of this object is set
-'    to valid; if unsuccessful, it is set to invalid.
+'   to valid; if unsuccessful, it is set to invalid.
 ' - operator =( udate ) The UDATE value is converted and copied into this COleDateTime
 '   object. If the conversion is successful, the status of this object is set to valid;
 '   if unsuccessful, it is set to invalid. A UDATE structure represents an "unpacked" date. See the function VarDateFromUdate for more details.
@@ -717,7 +715,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Gets the day of the month represented by this date/time value.
+' Gets the day of the week represented by this date/time value.
 ' Valid return values range between 1 and 7, where 1=Sunday, 2=Monday, and so on.
 ' ========================================================================================
 PRIVATE FUNCTION COleDateTime.GetDayOfWeek () AS WORD
@@ -727,7 +725,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Call this method to obtain the time in the COleDateTime object as a SYSTEMTIME data structure.
+' Call this method to obtain the time in the COleDateTime object as a UDATE structure.
 ' ========================================================================================
 PRIVATE FUNCTION COleDateTime.GetAsUDATE (BYREF ud AS UDATE) AS BOOLEAN
    RETURN SUCCEEDED(VarUdateFromDate(m_dt, 0, @ud))
@@ -735,7 +733,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Gets the day of the month represented by this date/time value.
+' Gets the day of the year represented by this date/time value.
 ' Valid return values range between 1 and 366, where January 1 = 1.
 ' ========================================================================================
 PRIVATE FUNCTION COleDateTime.GetDayOfYear () AS WORD
