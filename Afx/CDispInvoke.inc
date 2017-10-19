@@ -93,45 +93,16 @@ Public:
    DECLARE FUNCTION Get (BYVAL pwszName AS WSTRING PTR, BYVAL prgArgs AS VARIANT PTR, BYVAL cArgs AS UINT, BYVAL lcid AS LCID = LOCALE_USER_DEFAULT) AS HRESULT
    DECLARE FUNCTION Get (BYVAL pwszName AS WSTRING PTR) AS CVAR
    DECLARE FUNCTION Get (BYVAL dispID AS DISPID) AS CVAR
-   DECLARE FUNCTION Get (BYVAL dispID AS DISPID, BYVAL vArg AS VARIANT PTR) AS CVAR
-   DECLARE FUNCTION Get (BYVAL pwszName AS WSTRING PTR, BYVAL vArg AS VARIANT PTR) AS CVAR
-   DECLARE FUNCTION Get (BYVAL dispID AS DISPID, BYVAL vArg1 AS VARIANT PTR, BYVAL vArg2 AS VARIANT PTR) AS CVAR
-   DECLARE FUNCTION Get (BYVAL pwszName AS WSTRING PTR, BYVAL vArg1 AS VARIANT PTR, BYVAL vArg2 AS VARIANT PTR) AS CVAR
    DECLARE FUNCTION Get (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR) AS CVAR
    DECLARE FUNCTION Get (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS CVAR
    DECLARE FUNCTION Get (BYVAL pwszName AS WSTRING PTR, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR) AS CVAR
    DECLARE FUNCTION Get (BYVAL dispID AS DISPID, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR) AS CVAR
 
-   DECLARE FUNCTION Put (BYVAL dispID AS DISPID, BYVAL vArg AS VARIANT PTR) AS HRESULT
-   DECLARE FUNCTION Put (BYVAL pwszName AS WSTRING PTR, BYVAL vArg AS VARIANT PTR) AS HRESULT
    DECLARE FUNCTION Put (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS HRESULT
    DECLARE FUNCTION Put (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR) AS HRESULT
 
-   DECLARE FUNCTION PutRef (BYVAL pwszName AS WSTRING PTR, BYVAL vArg AS VARIANT PTR) AS HRESULT
-   DECLARE FUNCTION PutRef (BYVAL dispID AS DISPID, BYVAL vArg AS VARIANT PTR) AS HRESULT
    DECLARE FUNCTION PutRef (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR) AS HRESULT
    DECLARE FUNCTION PutRef (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS HRESULT
-
-   DECLARE FUNCTION Invoke (BYVAL dispID AS DISPID, BYVAL cArgs AS UBYTE = 0, _
-      BYVAL vArg1  AS VARIANT PTR = NULL, BYVAL vArg2  AS VARIANT PTR = NULL, _
-      BYVAL vArg3  AS VARIANT PTR = NULL, BYVAL vArg4  AS VARIANT PTR = NULL, _
-      BYVAL vArg5  AS VARIANT PTR = NULL, BYVAL vArg6  AS VARIANT PTR = NULL, _
-      BYVAL vArg7  AS VARIANT PTR = NULL, BYVAL vArg8  AS VARIANT PTR = NULL, _
-      BYVAL vArg9  AS VARIANT PTR = NULL, BYVAL vArg10 AS VARIANT PTR = NULL, _
-      BYVAL vArg11 AS VARIANT PTR = NULL, BYVAL vArg12 AS VARIANT PTR = NULL, _
-      BYVAL vArg13 AS VARIANT PTR = NULL, BYVAL vArg14 AS VARIANT PTR = NULL, _
-      BYVAL vArg15 AS VARIANT PTR = NULL, BYVAL vArg16 AS VARIANT PTR = NULL _
-      ) AS CVAR
-   DECLARE FUNCTION Invoke (BYVAL pwszName AS WSTRING PTR, BYVAL cArgs AS UBYTE = 0, _
-      BYVAL vArg1  AS VARIANT PTR = NULL, BYVAL vArg2  AS VARIANT PTR = NULL, _
-      BYVAL vArg3  AS VARIANT PTR = NULL, BYVAL vArg4  AS VARIANT PTR = NULL, _
-      BYVAL vArg5  AS VARIANT PTR = NULL, BYVAL vArg6  AS VARIANT PTR = NULL, _
-      BYVAL vArg7  AS VARIANT PTR = NULL, BYVAL vArg8  AS VARIANT PTR = NULL, _
-      BYVAL vArg9  AS VARIANT PTR = NULL, BYVAL vArg10 AS VARIANT PTR = NULL, _
-      BYVAL vArg11 AS VARIANT PTR = NULL, BYVAL vArg12 AS VARIANT PTR = NULL, _
-      BYVAL vArg13 AS VARIANT PTR = NULL, BYVAL vArg14 AS VARIANT PTR = NULL, _
-      BYVAL vArg15 AS VARIANT PTR = NULL, BYVAL vArg16 AS VARIANT PTR = NULL _
-      ) AS CVAR
 
    DECLARE FUNCTION Invoke (BYVAL dispID AS DISPID) AS CVAR
    DECLARE FUNCTION Invoke (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS CVAR
@@ -896,37 +867,6 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.Get (BYVAL dispID AS DISPID, BYVAL vArg AS VARIANT PTR) AS CVAR
-   CDISPINVOKE_DP("CDISPINVOKE DispInvoke Get 3 - DISPID")
-   SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, dispID, vArg, 1, m_lcid))
-   RETURN m_varResult
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.Get (BYVAL pwszName AS WSTRING PTR, BYVAL vArg AS VARIANT PTR) AS CVAR
-   CDISPINVOKE_DP("CDISPINVOKE DispInvoke Get 3 - Name")
-   SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, pwszName, vArg, 1, m_lcid))
-   RETURN m_varResult
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.Get (BYVAL dispID AS DISPID, BYVAL vArg1 AS VARIANT PTR, BYVAL vArg2 AS VARIANT PTR) AS CVAR
-   CDISPINVOKE_DP("CDISPINVOKE DispInvoke Get 4 - Name")
-   DIM vArgs(1 TO 2) AS VARIANT : vArgs(1) = *vArg2 : vArgs(2) = *vArg1
-   SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, dispID, @vArgs(1), 2, m_lcid))
-   RETURN m_varResult
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.Get (BYVAL pwszName AS WSTRING PTR, BYVAL vArg1 AS VARIANT PTR, BYVAL vArg2 AS VARIANT PTR) AS CVAR
-   CDISPINVOKE_DP("CDISPINVOKE DispInvoke Get 4 - Name")
-   DIM vArgs(1 TO 2) AS VARIANT : vArgs(1) = *vArg2 : vArgs(2) = *vArg1
-   SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, pwszName, @vArgs(1), 2, m_lcid))
-   RETURN m_varResult
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
 PRIVATE FUNCTION CDispInvoke.Get (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS CVAR
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke Get 1 - DispId - CVAR")
    SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, dispID, cvArg, 1, m_lcid))
@@ -962,19 +902,7 @@ END FUNCTION
 ' ****************************************************************************************
 
 ' ========================================================================================
-' Wrapper function to call the Invoke method to set a property value.
-' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.Put (BYVAL dispID AS DISPID, BYVAL vArg AS VARIANT PTR) AS HRESULT
-   CDISPINVOKE_DP("CDISPINVOKE DispInvoke Put - DISPID")
-   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, dispID, vArg, 1, m_lcid))
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.Put (BYVAL pwszName AS WSTRING PTR, BYVAL vArg AS VARIANT PTR) AS HRESULT
-   CDISPINVOKE_DP("CDISPINVOKE DispInvoke Put - Name")
-   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, pwszName, vArg, 1, m_lcid))
-END FUNCTION
-' ========================================================================================
+' Wrapper functions to call the Invoke method to set a property value.
 ' ========================================================================================
 PRIVATE FUNCTION CDispInvoke.Put (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS HRESULT
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke Put - DISPID - CVAR")
@@ -989,19 +917,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Wrapper function to call the Invoke method to call a putref property.
-' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.PutRef (BYVAL dispID AS DISPID, BYVAL vArg AS VARIANT PTR) AS HRESULT
-   CDISPINVOKE_DP("CDISPINVOKE DispInvoke PutRef - DISPID")
-   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, dispID, vArg, 1, m_lcid))
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.PutRef (BYVAL pwszName AS WSTRING PTR, BYVAL vArg AS VARIANT PTR) AS HRESULT
-   CDISPINVOKE_DP("CDISPINVOKE DispInvoke PutRef - Name")
-   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, pwszName, vArg, 1, m_lcid))
-END FUNCTION
-' ========================================================================================
+' Wrapper functions to call the Invoke method to call a putref property.
 ' ========================================================================================
 PRIVATE FUNCTION CDispInvoke.PutRef (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS HRESULT
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke PutRef - DISPID - CVAR")
@@ -1020,109 +936,7 @@ END FUNCTION
 ' ****************************************************************************************
 
 ' ========================================================================================
-' Wrapper function to call the Invoke method to call a method or get property.
-' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.Invoke (BYVAL dispID AS DISPID, BYVAL cArgs AS UBYTE = 0, _
-   BYVAL vArg1  AS VARIANT PTR = NULL, BYVAL vArg2  AS VARIANT PTR = NULL, _
-   BYVAL vArg3  AS VARIANT PTR = NULL, BYVAL vArg4  AS VARIANT PTR = NULL, _
-   BYVAL vArg5  AS VARIANT PTR = NULL, BYVAL vArg6  AS VARIANT PTR = NULL, _
-   BYVAL vArg7  AS VARIANT PTR = NULL, BYVAL vArg8  AS VARIANT PTR = NULL, _
-   BYVAL vArg9  AS VARIANT PTR = NULL, BYVAL vArg10 AS VARIANT PTR = NULL, _
-   BYVAL vArg11 AS VARIANT PTR = NULL, BYVAL vArg12 AS VARIANT PTR = NULL, _
-   BYVAL vArg13 AS VARIANT PTR = NULL, BYVAL vArg14 AS VARIANT PTR = NULL, _
-   BYVAL vArg15 AS VARIANT PTR = NULL, BYVAL vArg16 AS VARIANT PTR = NULL _
-   ) AS CVAR
-
-   CDISPINVOKE_DP("CDISPINVOKE Invoke - DISPID")
-   IF cArgs = 0 THEN
-      ' // Call the method
-      SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, dispID, NULL, cArgs, m_lcid))
-   ELSE
-      IF cArgs > 16 THEN cArgs = 16
-      DIM vArgs(1 TO cArgs) AS VARIANT
-      ' // Default argument values to optional
-      FOR i AS LONG = 1 TO cArgs
-         vArgs(i) = TYPE(VT_ERROR, 0, 0, 0, DISP_E_PARAMNOTFOUND)
-      NEXT
-      ' // Fill the arguments array with the passed values, in reverse order
-      FOR i AS LONG = cArgs TO 1 STEP -1
-         IF i = cArgs AND vArg1 <> NULL THEN vArgs(i) = *vArg1
-         IF i = cArgs - 1  AND vArg2  <> NULL THEN vArgs(i) = *vArg2
-         IF i = cArgs - 2  AND vArg3  <> NULL THEN vArgs(i) = *vArg3
-         IF i = cArgs - 3  AND vArg4  <> NULL THEN vArgs(i) = *vArg4
-         IF i = cArgs - 4  AND vArg5  <> NULL THEN vArgs(i) = *vArg5
-         IF i = cArgs - 5  AND vArg6  <> NULL THEN vArgs(i) = *vArg6
-         IF i = cArgs - 6  AND vArg7  <> NULL THEN vArgs(i) = *vArg7
-         IF i = cArgs - 7  AND vArg8  <> NULL THEN vArgs(i) = *vArg8
-         IF i = cArgs - 8  AND vArg9  <> NULL THEN vArgs(i) = *vArg9
-         IF i = cArgs - 9  AND vArg10 <> NULL THEN vArgs(i) = *vArg10
-         IF i = cArgs - 10 AND vArg11 <> NULL THEN vArgs(i) = *vArg11
-         IF i = cArgs - 11 AND vArg11 <> NULL THEN vArgs(i) = *vArg12
-         IF i = cArgs - 12 AND vArg11 <> NULL THEN vArgs(i) = *vArg13
-         IF i = cArgs - 13 AND vArg11 <> NULL THEN vArgs(i) = *vArg14
-         IF i = cArgs - 14 AND vArg11 <> NULL THEN vArgs(i) = *vArg15
-         IF i = cArgs - 15 AND vArg11 <> NULL THEN vArgs(i) = *vArg16
-      NEXT
-      ' // Call the method
-      SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, dispID, @vArgs(1), cArgs, m_lcid))
-   END IF
-   ' // Return the result
-   RETURN m_varResult
-
-END FUNCTION
-
-' ========================================================================================
-' Wrapper function to call the Invoke method to call a method or get property.
-' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.Invoke (BYVAL pwszName AS WSTRING PTR, BYVAL cArgs AS UBYTE = 0, _
-   BYVAL vArg1  AS VARIANT PTR = NULL, BYVAL vArg2  AS VARIANT PTR = NULL, _
-   BYVAL vArg3  AS VARIANT PTR = NULL, BYVAL vArg4  AS VARIANT PTR = NULL, _
-   BYVAL vArg5  AS VARIANT PTR = NULL, BYVAL vArg6  AS VARIANT PTR = NULL, _
-   BYVAL vArg7  AS VARIANT PTR = NULL, BYVAL vArg8  AS VARIANT PTR = NULL, _
-   BYVAL vArg9  AS VARIANT PTR = NULL, BYVAL vArg10 AS VARIANT PTR = NULL, _
-   BYVAL vArg11 AS VARIANT PTR = NULL, BYVAL vArg12 AS VARIANT PTR = NULL, _
-   BYVAL vArg13 AS VARIANT PTR = NULL, BYVAL vArg14 AS VARIANT PTR = NULL, _
-   BYVAL vArg15 AS VARIANT PTR = NULL, BYVAL vArg16 AS VARIANT PTR = NULL _
-   ) AS CVAR
-
-   CDISPINVOKE_DP("CDISPINVOKE Invoke - NAME")
-   IF cArgs = 0 THEN
-      ' // Call the method
-      SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, pwszName, NULL, cArgs, m_lcid))
-   ELSE
-      IF cArgs > 16 THEN cArgs = 16
-      DIM vArgs(1 TO cArgs) AS VARIANT
-      ' // Default argument values to optional
-      FOR i AS LONG = 1 TO cArgs
-         vArgs(i) = TYPE(VT_ERROR, 0, 0, 0, DISP_E_PARAMNOTFOUND)
-      NEXT
-      ' // Fill the arguments array with the passed values, in reverse order
-      FOR i AS LONG = cArgs TO 1 STEP -1
-         IF i = cArgs AND vArg1 <> NULL THEN vArgs(i) = *vArg1
-         IF i = cArgs - 1  AND vArg2  <> NULL THEN vArgs(i) = *vArg2
-         IF i = cArgs - 2  AND vArg3  <> NULL THEN vArgs(i) = *vArg3
-         IF i = cArgs - 3  AND vArg4  <> NULL THEN vArgs(i) = *vArg4
-         IF i = cArgs - 4  AND vArg5  <> NULL THEN vArgs(i) = *vArg5
-         IF i = cArgs - 5  AND vArg6  <> NULL THEN vArgs(i) = *vArg6
-         IF i = cArgs - 6  AND vArg7  <> NULL THEN vArgs(i) = *vArg7
-         IF i = cArgs - 7  AND vArg8  <> NULL THEN vArgs(i) = *vArg8
-         IF i = cArgs - 8  AND vArg9  <> NULL THEN vArgs(i) = *vArg9
-         IF i = cArgs - 9  AND vArg10 <> NULL THEN vArgs(i) = *vArg10
-         IF i = cArgs - 10 AND vArg11 <> NULL THEN vArgs(i) = *vArg11
-         IF i = cArgs - 11 AND vArg11 <> NULL THEN vArgs(i) = *vArg12
-         IF i = cArgs - 12 AND vArg11 <> NULL THEN vArgs(i) = *vArg13
-         IF i = cArgs - 13 AND vArg11 <> NULL THEN vArgs(i) = *vArg14
-         IF i = cArgs - 14 AND vArg11 <> NULL THEN vArgs(i) = *vArg15
-         IF i = cArgs - 15 AND vArg11 <> NULL THEN vArgs(i) = *vArg16
-      NEXT
-      ' // Call the method
-      SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, pwszName, @vArgs(1), cArgs, m_lcid))
-   END IF
-   ' // Return the result
-   RETURN m_varResult
-
-END FUNCTION
-
+' Wrapper functions to call the Invoke method to call a method or get property.
 ' ========================================================================================
 PRIVATE FUNCTION CDispInvoke.Invoke (BYVAL dispId AS DISPID) AS CVAR
    CDISPINVOKE_DP("CDISPINVOKE Invoke - DISPID - CVAR 0")
