@@ -337,7 +337,7 @@ END FUNCTION
 '   DIM AS double x, y
 '   DIM c AS CComplex
 '   x = cosh(pi / 4)
-'   y = c.AfxArcCosH(x)
+'   y = c.ArcCosH(x)
 '   print "cosh = ", pi/4, x
 '   print "ArcCosH = ", x, y
 ' Output:
@@ -391,7 +391,7 @@ END FUNCTION
 
 ' ========================================================================================
 ' Uses the cartesian components (x,y) to set the real and imaginary parts of the complex number.
-' Example: DIM cpx AS CComplex : cpx.CSe = 3, 4
+' Example: DIM cpx AS CComplex : cpx.CSet = 3, 4
 ' Example: DIM cpx AS CComplex : cpx.CRect = 3, 4
 ' ========================================================================================
 PRIVATE PROPERTY CComplex.CSet (BYVAL x AS DOUBLE, BYVAL y AS DOUBLE)
@@ -407,7 +407,7 @@ END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
-' * Gets/sets the real part of a complex numbe.
+' * Gets/sets the real part of a complex number.
 ' ========================================================================================
 PRIVATE PROPERTY CComplex.CReal () AS DOUBLE
    CCOMPLEX_DP("CCOMPLEX PROPGET CReal")

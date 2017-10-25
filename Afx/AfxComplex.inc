@@ -430,7 +430,7 @@ END FUNCTION
 ' ========================================================================================
 ' * Returns the quotient of a complex number and a real number.
 ' ========================================================================================
-PRIVATE FUNCTION AfxCDivReal (BYREF z AS _complex, BYVAL x AS DOUBLE) AS _complex
+PRIVATE FUNCTION CDivReal (BYREF z AS _complex, BYVAL x AS DOUBLE) AS _complex
    RETURN TYPE<_complex>(z.x / x, z.y / x)
 END FUNCTION
 ' ========================================================================================
