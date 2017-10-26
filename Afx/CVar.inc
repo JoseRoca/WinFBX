@@ -2525,7 +2525,7 @@ END NAMESPACE
 ' ########################################################################################
 
 ' // Outside a namespace because they are global
-using Afx
+USING Afx
 
 ' ========================================================================================
 PRIVATE OPERATOR & (BYREF cv1 AS CVAR, BYREF cv2 AS CVAR) AS CVAR
@@ -2719,4 +2719,12 @@ PRIVATE OPERATOR Int (BYREF cv AS CVAR) AS DOUBLE
    VarInt(@cv.vd, cvRes.vptr)
    OPERATOR = VAL(cvRes)
 END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+' Helper procedure to display messages
+' ========================================================================================
+PRIVATE FUNCTION AfxMsg OVERLOAD (BYREF cv AS CVAR, BYREF wszCaption AS WSTRING = "Message", BYVAL uType AS DWORD = 0) AS LONG
+   FUNCTION = MessageBoxW(GetActiveWindow, cv.wstr, @wszCaption, MB_APPLMODAL OR uType)
+END FUNCTION
 ' ========================================================================================
