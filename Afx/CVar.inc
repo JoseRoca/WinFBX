@@ -1293,7 +1293,12 @@ END OPERATOR
 ' Assigns numeric values
 ' ========================================================================================
 PRIVATE OPERATOR CVar.Let (BYVAL _value AS LONGINT)
-   VariantClear(@vd) : vd.vt = VT_I8   : vd.llVal = CLNGINT(_value)
+   VariantClear(@vd)
+   IF CLNG(_value) = _value THEN
+      vd.vt = VT_I4   : vd.lVal = CLNG(_value)
+   ELSE
+      vd.vt = VT_I8   : vd.llVal = CLNGINT(_value)
+   END IF
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
