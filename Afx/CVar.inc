@@ -137,6 +137,8 @@ Public:
    DECLARE OPERATOR Let (BYVAL dec AS DECIMAL)
    DECLARE OPERATOR Let (BYVAL pdisp AS IDispatch PTR)
    DECLARE OPERATOR Let (BYVAL punk AS IUnknown PTR)
+   DECLARE OPERATOR Let (BYVAL _value AS LONGINT)
+   DECLARE OPERATOR Let (BYVAL _value AS DOUBLE)
    ' // Assignments
    DECLARE SUB Put (BYREF wszStr AS WSTRING)
    DECLARE SUB Put (BYREF cws AS CWSTR)
@@ -244,7 +246,7 @@ Public:
    DECLARE OPERATOR ^= (BYREF cv AS CVAR)
    DECLARE OPERATOR And= (BYREF cv AS CVAR)
    DECLARE OPERATOR Or= (BYREF cv AS CVAR)
-   DECLARE OPERATOR XOr= (BYREF cv AS CVAR)
+   DECLARE OPERATOR Xor= (BYREF cv AS CVAR)
    DECLARE OPERATOR Eqv= (BYREF cv AS CVAR)
    DECLARE OPERATOR Imp= (BYREF cv AS CVAR)
    DECLARE OPERATOR Mod= (BYREF cv AS CVAR)
@@ -1284,6 +1286,19 @@ END OPERATOR
 PRIVATE OPERATOR CVar.Let (BYVAL punk AS IUnknown PTR)
    CVAR_DP("CVAR LET = IUnknown PTR")
    VariantClear(@vd) : V_VT(@vd) = VT_UNKNOWN : V_UNKNOWN(@vd) = punk : IUnknown_AddRef(punk)
+END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+' Assigns numeric values
+' ========================================================================================
+PRIVATE OPERATOR CVar.Let (BYVAL _value AS LONGINT)
+   VariantClear(@vd) : vd.vt = VT_I8   : vd.llVal = CLNGINT(_value)
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR CVar.Let (BYVAL _value AS DOUBLE)
+   VariantClear(@vd) : vd.vt = VT_R8   : vd.dblVal = CDBL(_value)
 END OPERATOR
 ' ========================================================================================
 
