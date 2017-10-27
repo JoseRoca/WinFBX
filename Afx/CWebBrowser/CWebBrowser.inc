@@ -289,6 +289,7 @@ PRIVATE FUNCTION CWebBrowser.SetEventProc (BYVAL pwszEventName AS WSTRING PTR, B
       CASE "filedownload" : IF m_pEvtObj THEN m_pEvtObj->m_FileDownloadProc = pProc
       CASE "navigateerror" : IF m_pEvtObj THEN m_pEvtObj->m_NavigateErrorProc = pProc
       CASE "privacyimpactedstatechange" : IF m_pEvtObj THEN m_pEvtObj->m_PrivacyImpactedStateChangeProc = pProc
+      CASE "newwindow2" : IF m_pEvtObj THEN m_pEvtObj->m_NewWindow2Proc = pProc
       CASE "newwindow3" : IF m_pEvtObj THEN m_pEvtObj->m_NewWindow3Proc = pProc
       CASE "windowstatechanged" : IF m_pEvtObj THEN m_pEvtObj->m_WindowStateChangedProc = pProc
       CASE "htmldocumentevents"

@@ -49,6 +49,7 @@ TYPE CWebBrowserEventsImpl EXTENDS Afx_IDispatch
    m_NavigateErrorProc AS SUB (BYVAL hwndContainer AS HWND, BYVAL pdisp AS IDispatch PTR, _
       BYVAL vUrl AS VARIANT PTR, BYVAL vFrame AS VARIANT PTR, BYVAL StatusCode AS VARIANT PTR, BYVAL pbCancel AS VARIANT_BOOL PTR)
    m_PrivacyImpactedStateChangeProc AS SUB (BYVAL hwndContainer AS HWND, BYVAL bImpacted AS VARIANT_BOOL)
+   m_NewWindow2Proc AS SUB (BYVAL hwndContainer AS HWND, BYVAL ppdispVal AS IDispatch PTR PTR, BYVAL pbCancel AS VARIANT_BOOL PTR)
    m_NewWindow3Proc AS SUB (BYVAL hwndContainer AS HWND, BYVAL ppdispVal AS IDispatch PTR PTR, _
       BYVAL pbCancel AS VARIANT_BOOL PTR, BYVAL dwFlags AS ULONG, BYVAL pwszUrlContext AS WSTRING PTR, BYVAL pwszUrl AS WSTRING PTR)
    m_WindowStateChangedProc AS SUB (BYVAL hwndContainer AS HWND, BYVAL dwFlags AS LONG, BYVAL dwValidFlagsMask AS LONG)
@@ -372,6 +373,14 @@ FUNCTION CWebBrowserEventsImpl.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid 
       ' // from a URL that has impacted privacy.
       ' DIM bImpacted AS BOOLEAN = pDispParams->rgvarg[0].boolVal
       IF m_PrivacyImpactedStateChangeProc THEN m_PrivacyImpactedStateChangeProc(m_hwndContainer, pDispParams->rgvarg[0].boolVal)
+
+      ' ----------------------------------------------------------------------------------
+      CASE 251   ' // NewWindow2
+      ' ----------------------------------------------------------------------------------
+      CWB_DP("CWebBrowserEventsImpl.NewWindow2")
+      ' // Raised when a new window is to be created.
+      IF m_NewWindow2Proc THEN m_NewWindow2Proc(m_hwndContainer, @pDispParams->rgvarg[1].pdispVal, _
+         @pDispParams->rgvarg[0].boolVal)
 
       ' ----------------------------------------------------------------------------------
       CASE 273   ' // NewWindow3
