@@ -15,6 +15,7 @@ CWindow: WebBrowser: YouTube (HTML5 player)
 
 #define UNICODE
 #INCLUDE ONCE "Afx/CWindow.inc"
+#INCLUDE ONCE "Afx/CVAR.inc"
 #INCLUDE ONCE "Afx/CWebBrowser/CWebBrowser.inc"
 USING Afx
 
@@ -151,7 +152,6 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
 
 END FUNCTION
 ' ========================================================================================
-
 ' ========================================================================================
 ' If the user clicks a link, prevent the creation of a new instance of Internet Explorer
 ' and display it in our embedded web browser control.
@@ -166,9 +166,12 @@ SUB WebBrowser_NewWindow3Proc (BYVAL hwndContainer AS HWND, BYVAL ppdispVal AS I
    ' // Cancel the new window creation
    *pbCancel = VARIANT_TRUE
    ' // Navigate to the page
-   DIM vUrl AS VARIANT : vUrl.vt = VT_BSTR : vUrl.bstrVal = SysAllocString(pwszUrl)
-   pwb->Navigate2(@vUrl, NULL, NULL, NULL, NULL)
-   VariantClear @vurl
+'   DIM vUrl AS VARIANT : vUrl.vt = VT_BSTR : vUrl.bstrVal = SysAllocString(pwszUrl)
+'   pwb->Navigate2(@vUrl)
+'   VariantClear @vurl
+   ' // Alternate way
+   DIM cvUrl AS CVAR = *pwszUrl
+   pwb->Navigate2(cvUrl)
 
 END SUB
 ' ========================================================================================
