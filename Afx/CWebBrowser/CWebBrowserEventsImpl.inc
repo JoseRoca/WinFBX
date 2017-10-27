@@ -241,8 +241,8 @@ FUNCTION CWebBrowserEventsImpl.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid 
       CWB_DP("CWebBrowserEventsImpl.BeforeNavigate2")
       ' // Fires before navigation occurs in the given object (on either a window or frameset element).
       IF m_BeforeNavigate2Proc THEN m_BeforeNavigate2Proc(m_hwndContainer, pDispParams->rgvarg[6].pdispVal,_
-         @pDispParams->rgvarg[5], @pDispParams->rgvarg[4], @pDispParams->rgvarg[3], _
-         @pDispParams->rgvarg[2], @pDispParams->rgvarg[1], @pDispParams->rgvarg[0].boolVal)
+         pDispParams->rgvarg[5].pvarVal, pDispParams->rgvarg[4].pvarVal, pDispParams->rgvarg[3].pvarVal, _
+         pDispParams->rgvarg[2].pvarVal, pDispParams->rgvarg[1].pvarVal, pDispParams->rgvarg[0].pboolVal)
 
       ' ----------------------------------------------------------------------------------
       CASE 252   ' // NavigateComplete2
@@ -305,7 +305,7 @@ FUNCTION CWebBrowserEventsImpl.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid 
       ' ----------------------------------------------------------------------------------
       CWB_DP("CWebBrowserEventsImpl.WindowClosing")
       ' // Fires when the window of the object is about to be closed by script.
-      IF m_WindowClosingProc THEN m_WindowClosingProc(m_hwndContainer, pDispParams->rgvarg[1].boolVal, @pDispParams->rgvarg[0].boolVal)
+      IF m_WindowClosingProc THEN m_WindowClosingProc(m_hwndContainer, pDispParams->rgvarg[1].boolVal, pDispParams->rgvarg[0].pboolVal)
 
       ' ----------------------------------------------------------------------------------
       CASE 264   ' // WindowSetLeft
@@ -340,7 +340,7 @@ FUNCTION CWebBrowserEventsImpl.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid 
       ' ----------------------------------------------------------------------------------
       CWB_DP("CWebBrowserEventsImpl.ClientToHostWindow")
       ' // Fires to request that the client window size be converted to the host window size.
-      IF m_ClientToHostWindowProc THEN m_ClientToHostWindowProc(m_hwndContainer, @pDispParams->rgvarg[1].lVal, @pDispParams->rgvarg[0].lVal)
+      IF m_ClientToHostWindowProc THEN m_ClientToHostWindowProc(m_hwndContainer, pDispParams->rgvarg[1].plVal, pDispParams->rgvarg[0].plVal)
 
       ' ----------------------------------------------------------------------------------
       CASE 269   ' // SetSecureLockIcon
@@ -355,7 +355,7 @@ FUNCTION CWebBrowserEventsImpl.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid 
       CWB_DP("CWebBrowserEventsImpl.FileDownload")
       ' // Fires to indicate that a file download is about to occur. If a file download
       ' // dialog is to be displayed, this event is fired prior to the display of the dialog.
-      IF m_FileDownloadProc THEN m_FileDownloadProc(m_hwndContainer, @pDispParams->rgvarg[0].boolVal)
+      IF m_FileDownloadProc THEN m_FileDownloadProc(m_hwndContainer, pDispParams->rgvarg[0].pboolVal)
 
       ' ----------------------------------------------------------------------------------
       CASE 271   ' // NavigateError
@@ -363,7 +363,7 @@ FUNCTION CWebBrowserEventsImpl.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid 
       CWB_DP("CWebBrowserEventsImpl.NavigateError")
       ' // Fires when an error occurs during navigation.
       IF m_NavigateErrorProc THEN m_NavigateErrorProc(m_hwndContainer, pDispParams->rgvarg[4].pdispVal, _
-         @pDispParams->rgvarg[3], @pDispParams->rgvarg[2], @pDispParams->rgvarg[1], @pDispParams->rgvarg[0].boolVal)
+         @pDispParams->rgvarg[3], @pDispParams->rgvarg[2], @pDispParams->rgvarg[1], pDispParams->rgvarg[0].pboolVal)
 
       ' ----------------------------------------------------------------------------------
       CASE 272   ' // PrivacyImpactedStateChange
@@ -379,16 +379,16 @@ FUNCTION CWebBrowserEventsImpl.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid 
       ' ----------------------------------------------------------------------------------
       CWB_DP("CWebBrowserEventsImpl.NewWindow2")
       ' // Raised when a new window is to be created.
-      IF m_NewWindow2Proc THEN m_NewWindow2Proc(m_hwndContainer, @pDispParams->rgvarg[1].pdispVal, _
-         @pDispParams->rgvarg[0].boolVal)
+      IF m_NewWindow2Proc THEN m_NewWindow2Proc(m_hwndContainer, pDispParams->rgvarg[1].ppdispVal, _
+         pDispParams->rgvarg[0].pboolVal)
 
       ' ----------------------------------------------------------------------------------
       CASE 273   ' // NewWindow3
       ' ----------------------------------------------------------------------------------
       CWB_DP("CWebBrowserEventsImpl.NewWindow3")
       ' // Raised when a new window is to be created.
-      IF m_NewWindow3Proc THEN m_NewWindow3Proc(m_hwndContainer, @pDispParams->rgvarg[4].pdispVal, _
-         @pDispParams->rgvarg[3].boolVal, pDispParams->rgvarg[2].ulVal, pDispParams->rgvarg[1].bstrVal, _
+      IF m_NewWindow3Proc THEN m_NewWindow3Proc(m_hwndContainer, pDispParams->rgvarg[4].ppdispVal, _
+         pDispParams->rgvarg[3].pboolVal, pDispParams->rgvarg[2].ulVal, pDispParams->rgvarg[1].bstrVal, _
          pDispParams->rgvarg[0].bstrVal)
 
       ' ----------------------------------------------------------------------------------
