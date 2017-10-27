@@ -15,6 +15,7 @@ CWindow: WebBrowser: Events
 
 #define UNICODE
 #INCLUDE ONCE "Afx/CWindow.inc"
+#INCLUDE ONCE "Afx/CVAR.inc"
 #INCLUDE ONCE "Afx/CWebBrowser/CWebBrowser.inc"
 USING Afx
 
@@ -221,9 +222,9 @@ SUB WebBrowser_BeforeNavigate2Proc (BYVAL hwndContainer AS HWND, BYVAL pdisp AS 
 '         pwb->Stop
 '         ' // Cancel the navigation operation
 '         *pbCancel = VARIANT_TRUE
-'         ' // Navigate to another new url
-'         DIM cvNewUrl AS CVARIANT = "http://www.planetsquires.com/protect/forum/index.php"
-'         pwb->Navigate2(@cvNewUrl)
+'         ' // Navigate to another url
+'         DIM cvNewUrl AS CVAR = "http://www.planetsquires.com/protect/forum/index.php"
+'         pwb->Navigate2(cvNewUrl)
 '      END IF
 '   END IF
 
