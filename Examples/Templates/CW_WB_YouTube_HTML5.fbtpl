@@ -27,8 +27,11 @@ DECLARE FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
 
    END WinMain(GetModuleHandleW(NULL), NULL, COMMAND(), SW_NORMAL)
 
-' // Forward declaration
+' // Forward declarations
 DECLARE FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
+DECLARE SUB WebBrowser_NewWindow3Proc (BYVAL hwndContainer AS HWND, BYVAL ppdispVal AS IDispatch PTR PTR, _
+   BYVAL pbCancel AS VARIANT_BOOL PTR, BYVAL dwFlags AS ULONG, BYVAL pwszUrlContext AS WSTRING PTR, _
+   BYVAL pwszUrl AS WSTRING PTR)
 
 ' ========================================================================================
 ' Build the script
@@ -86,6 +89,10 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    DIM pwb AS CWebBrowser = CWebBrowser(@pWindow, IDC_WEBBROWSER, 0, 0, pWindow.ClientWidth, pWindow.ClientHeight)
    ' // Set the IDocHostUIHandler interface
    pwb.SetUIHandler
+   ' // Connect events
+   pwb.Advise
+   ' // Set event callback procedures
+   pwb.SetEventProc("NewWindow3", @WebBrowser_NewWindow3Proc)
 
    ' // Build the script
    DIM strCode AS STRING = "sJFOhTBelpU"   ' --> Change me: 11 character video code
@@ -143,4 +150,25 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
    FUNCTION = DefWindowProcW(hwnd, uMsg, wParam, lParam)
 
 END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' If the user clicks a link, prevent the creation of a new instance of Internet Explorer
+' and display it in our embedded web browser control.
+' ========================================================================================
+SUB WebBrowser_NewWindow3Proc (BYVAL hwndContainer AS HWND, BYVAL ppdispVal AS IDispatch PTR PTR, _
+   BYVAL pbCancel AS VARIANT_BOOL PTR, BYVAL dwFlags AS ULONG, BYVAL pwszUrlContext AS WSTRING PTR, _
+   BYVAL pwszUrl AS WSTRING PTR)
+
+   ' // Get a pointer to the hosted web browser control
+   DIM pwb AS Afx_IWebBrowser2 PTR = AfxGetBrowserPtr(hwndContainer, IDC_WEBBROWSER)
+   IF pwb = NULL THEN EXIT SUB
+   ' // Cancel the new window creation
+   *pbCancel = VARIANT_TRUE
+   ' // Navigate to the page
+   DIM vUrl AS VARIANT : vUrl.vt = VT_BSTR : vUrl.bstrVal = SysAllocString(pwszUrl)
+   pwb->Navigate2(@vUrl, NULL, NULL, NULL, NULL)
+   VariantClear @vurl
+
+END SUB
 ' ========================================================================================
