@@ -7,7 +7,7 @@ CWindow: WebBrowser: YouTube (HTML5 player)
 ' File: CW_WB_YouTube_HTML5.fbtpl
 ' Contents: WebBrowser - YouTube HTML5 Player
 ' Compiler: FreeBasic 32 & 64 bit
-' Copyright (c) 2016 José Roca. Freeware. Use at your own risk.
+' Copyright (c) 2016-2017 José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
@@ -163,6 +163,7 @@ SUB WebBrowser_NewWindow3Proc (BYVAL hwndContainer AS HWND, BYVAL ppdispVal AS I
    ' // Get a pointer to the hosted web browser control
    DIM pwb AS Afx_IWebBrowser2 PTR = AfxGetBrowserPtr(hwndContainer, IDC_WEBBROWSER)
    IF pwb = NULL THEN EXIT SUB
+
    ' // Cancel the new window creation
    *pbCancel = VARIANT_TRUE
    ' // Navigate to the page
