@@ -111,7 +111,10 @@ END FUNCTION
 ' IServiceProvider.
 ' ========================================================================================
 FUNCTION Afx_IServiceProviderImpl.QueryService (BYVAL guidService AS const GUID const PTR, BYVAL riid AS const IID const PTR, BYVAL ppvObject AS ANY PTR PTR) AS HRESULT
-   OC_DP("Afx_IServiceProviderImpl QueryService")
+   DIM pwsz AS WSTRING PTR
+   StringFromIID(guidService, CAST(LPOLESTR PTR, @pwsz))
+   DIM s AS STRING : IF pwsz THEN s = *pwsz : CoTaskMemFree(pwsz)
+   OC_DP("Afx_IServiceProviderImpl QueryService : " & s)
    ' // Handle SID_SInPlaceBrowser (needed to enable the filesystem object to navigate
    ' // in-place within the WebBrowser control when running on Windows 7)
    IF IsEqualIID(@guidService, @SID_SInPlaceBrowser) THEN
