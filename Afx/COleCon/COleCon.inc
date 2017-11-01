@@ -227,7 +227,7 @@ PRIVATE DESTRUCTOR COleCon
    ' // (it will destroy and/or release the other objects and interfaces)
    IF m_pData THEN Delete m_pData
    ' // Free the COM library
-   OC_DP("DESTRUCTOR COleCon - m_bUninitCOM = " & WSTR(m_bUninitOLE))
+   OC_DP("DESTRUCTOR COleCon - m_bUninitOLE = " & WSTR(m_bUninitOLE))
    IF m_bUninitOLE THEN OleUninitialize
 END DESTRUCTOR
 ' ========================================================================================
