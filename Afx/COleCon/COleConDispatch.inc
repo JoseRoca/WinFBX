@@ -123,14 +123,17 @@ DESTRUCTOR Afx_OleConDispatch
    IF m_pIFontDisp THEN cRef = IUnknown_Release(m_pIFontDisp) : m_pIFontDisp = NULL
    OC_DP("Release IFontDisp - cRef (must be 0) = " & WSTR(cRef))
    ' // Release the IOleInPlaceObject interface
+   cRef = 0
    IF m_pIOleInPlaceObject THEN cRef = m_pIOleInPlaceObject->Release : m_pIOleInPlaceObject = NULL
    OC_DP("Release IOleInPlaceObject - cRef (must be 0) = " & WSTR(cRef))
    ' // Release the IOleObject interface
    ' // The returned reference count must be at least 1 because the
    ' // ActiveX control holds a reference to it.
+   cRef = 0
    IF m_pIOleObject THEN cRef = m_pIOleObject->Release : m_pIOleObject = NULL
    OC_DP("Release IOleObject - cRef (must be 1) = " & WSTR(cRef))
    ' // Release the ActiveX control
+   cRef = 0
    IF m_pOcx THEN cRef = IUnknown_Release(m_pOcx) : m_pOcx = NULL
    OC_DP("Release OCX - cRef (must be 0) = " & WSTR(cRef))
    ' // Delete the implemented classess
