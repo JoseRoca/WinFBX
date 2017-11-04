@@ -487,7 +487,7 @@ PRIVATE FUNCTION CWebBrowser.GoHome () AS HRESULT
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' Navigates to the current home or start page.
+' Navigates to the default search page of the current user.
 ' ========================================================================================
 PRIVATE FUNCTION CWebBrowser.GoSearch () AS HRESULT
    IF m_pWebBrowser THEN RETURN m_pWebBrowser->GoSearch
