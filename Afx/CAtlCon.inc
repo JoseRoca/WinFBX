@@ -1790,32 +1790,49 @@ END FUNCTION
 '         END IF
 '      END IF
 '   WEND
-'   FUNCTION = uMsg.wParam
 ' Note: WM_FORWARDMSG = &H37F ' (895)
 ' ========================================================================================
 PRIVATE FUNCTION AtlForwardMessage (BYVAL hctl AS HWND, BYVAL pMsg AS tagMsg PTR) AS BOOLEAN
-'   IF (pMsg->message < WM_KEYFIRST OR pMsg->message > WM_KEYLAST) AND _
-'      (pMsg->message < WM_MOUSEFIRST OR pMsg->message > WM_MOUSELAST) THEN RETURN FALSE
-   IF (pMsg->message < WM_KEYFIRST OR pMsg->message > WM_KEYLAST) THEN RETURN FALSE
+   IF (pMsg->message < WM_KEYFIRST OR pMsg->message > WM_KEYLAST) AND _
+      (pMsg->message < WM_MOUSEFIRST OR pMsg->message > WM_MOUSELAST) THEN RETURN FALSE
+   DIM hwnd AS HWND = hctl
    DIM wszClassName AS WSTRING * 260
-   DIM hwndParent AS HWND, hwndTmp AS HWND
-   hwndParent = hCtl
-   DO
-      hwndTmp = GetParent(hwndParent)
-      IF hwndTmp = NULL THEN EXIT DO
-      hwndParent = hwndTmp
-      GetClassNameW hwndParent, wszClassName, SIZEOF(wszClassName)
-OutputDebugStringW wszClassName
-      IF LEFT(wszClassName, 8) = "AtlAxWin" OR _
-         wszClassName = "Shell Embedding" OR _
-         wszClassName = "Shell DocObject View" OR _
-         wszClassName = "Internet Explorer_Server" THEN EXIT DO
-   LOOP
-   IF LEFT(wszClassName, 8) <> "AtlAxWin" AND _
-      wszClassName <> "Shell Embedding" AND _
-      wszClassName <> "Shell DocObject View" AND _
-      wszClassName <> "Internet Explorer_Server" THEN RETURN FALSE
-   RETURN SendMessageW(hwndParent, &H37F, 0, cast(LPARAM, pMsg))
+   WHILE (GetWindowLongPtrW(hwnd, GWL_STYLE) AND WS_CHILD)
+      IF (GetWindowLongPtrW(hwnd, GWL_EXSTYLE) AND WS_EX_MDICHILD) THEN EXIT WHILE
+      GetClassNameW hwnd, wszClassName, SIZEOF(wszClassName)
+      IF LEFT(wszClassName, 8) = "AtlAxWin" THEN EXIT WHILE
+      hwnd = GetParent(hwnd)
+   WEND
+   IF LEFT(wszClassName, 8) <> "AtlAxWin" THEN RETURN FALSE
+   RETURN SendMessageW(hwnd, &H37F, 0, cast(LPARAM, pMsg))
+
+'DO
+'   IF hwnd = NULL THEN EXIT DO
+'   IF (GetWindowLongPtrW(hwnd, GWL_STYLE) AND WS_CHILD) <> WS_CHILD THEN EXIT DO
+'   IF (GetWindowLongPtrW(hwnd, GWL_EXSTYLE) AND WS_EX_MDICHILD) = WS_EX_MDICHILD THEN EXIT DO
+'   DIM wszClassName AS WSTRING * 260
+'   GetClassNameW hctl, wszClassName, SIZEOF(wszClassName)
+'   OutputDebugStringW wszClassName
+'LOOP
+
+'   DIM hwndParent AS HWND, hwndTmp AS HWND
+'   hwndParent = hCtl
+'   DO
+'      hwndTmp = GetParent(hwndParent)
+'      IF hwndTmp = NULL THEN EXIT DO
+'      hwndParent = hwndTmp
+'      GetClassNameW hwndParent, wszClassName, SIZEOF(wszClassName)
+'OutputDebugStringW wszClassName
+'      IF LEFT(wszClassName, 8) = "AtlAxWin" OR _
+'         wszClassName = "Shell Embedding" OR _
+'         wszClassName = "Shell DocObject View" OR _
+'         wszClassName = "Internet Explorer_Server" THEN EXIT DO
+'   LOOP
+'   IF LEFT(wszClassName, 8) <> "AtlAxWin" AND _
+'      wszClassName <> "Shell Embedding" AND _
+'      wszClassName <> "Shell DocObject View" AND _
+'      wszClassName <> "Internet Explorer_Server" THEN RETURN FALSE
+'   RETURN SendMessageW(hwndParent, &H37F, 0, cast(LPARAM, pMsg))
 END FUNCTION
 ' ========================================================================================
 
