@@ -473,7 +473,7 @@ PRIVATE FUNCTION CWebBrowser.GoBack () AS HRESULT
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' Navigates backward one item in the history list.
+' Navigates forward one item in the history list.
 ' ========================================================================================
 PRIVATE FUNCTION CWebBrowser.GoForward () AS HRESULT
    IF m_pWebBrowser THEN RETURN m_pWebBrowser->GoForward
