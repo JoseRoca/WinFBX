@@ -13,6 +13,7 @@
 #include once "windows.bi"
 #include once "Afx/AfxAtlLib.bi"
 #include once "Afx/AfxExDisp.bi"
+#include once "Afx/AfxCOM.inc"
 #include once "Afx/CWindow.inc"
 
 NAMESPACE Afx
@@ -56,13 +57,28 @@ Protected:
 
 Public:
    DECLARE CONSTRUCTOR
-   DECLARE CONSTRUCTOR (BYREF pWindow AS CWindow, BYVAL cID AS INTEGER, BYREF wszName AS WSTRING = "", _
-           BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
-           BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0)
+   DECLARE DESTRUCTOR
    DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszName AS WSTRING = "", _
            BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
            BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0)
-   DECLARE DESTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+           BYREF wszLicKey AS WSTRING, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+           BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0)
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS CONST WSTRING, _
+           BYREF rclsid AS CONST CLSID, BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING = "", _
+           BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+           BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0)
+   DECLARE FUNCTION AddControl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, _
+           BYREF wszName AS WSTRING = "", BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
+           BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0) AS HWND
+   DECLARE FUNCTION AddControl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, _
+           BYREF wszProgID AS WSTRING, BYREF wszLicKey AS WSTRING, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
+           BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0) AS HWND
+   DECLARE FUNCTION AddContol (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS CONST WSTRING, _
+           BYREF rclsid AS CONST CLSID, BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING = "", _
+           BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+           BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0) AS HWND
+   DECLARE FUNCTION AttachControl (BYVAL pControl AS IUnknown PTR, BYVAL hCtl AS HWND) AS HRESULT
    DECLARE FUNCTION Init () AS BOOLEAN
    DECLARE FUNCTION AtlVersion () AS DWORD
    DECLARE FUNCTION HiMetricToPixel (BYREF SizeInHiMetric AS SIZEL) AS SIZEL
@@ -90,14 +106,25 @@ Public:
    DECLARE PROPERTY DisplayAsDefault (BYVAL hwnd AS .HWND) AS VARIANT_BOOL
    DECLARE PROPERTY MessageReflect (BYVAL hwnd AS .HWND, BYVAL bMessageReflect AS VARIANT_BOOL)
    DECLARE PROPERTY MessageReflect (BYVAL hwnd AS .HWND) AS VARIANT_BOOL
-   DECLARE FUNCTION AddControl (BYREF pWindow AS CWindow, BYVAL cID AS INTEGER, _
-           BYREF wszName AS WSTRING = "", BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
-           BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0) AS HWND
-   DECLARE FUNCTION AddControl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, _
-           BYREF wszName AS WSTRING = "", BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
-           BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0) AS HWND
+   DECLARE PROPERTY Font (BYVAL hwnd AS .HWND, BYVAL pFont AS IFontDisp PTR)
+   DECLARE PROPERTY Font (BYVAL hwnd AS .HWND) AS IFontDisp PTR
 
 END TYPE
+' ========================================================================================
+
+' ========================================================================================
+' Initializes ATL's control hosting code by registering the "AtlAxWin" and "AtlAxWinLic"
+' window classes plus a couple of custom window messages, WM_GetHost and WM_GetControl.
+' AtlAxWinInit cheks if the class has already been registered. Therefore, there is no
+' danger in calling it more than once.
+' ========================================================================================
+PRIVATE FUNCTION CAtlCon.WinInit () AS BOOLEAN
+   CATL_DP("CAtlCon WinInit")
+   DIM pProc AS FUNCTION () AS BOOLEAN
+   pProc = cast(ANY PTR, GetProcAddress(m_hAtlLib, "AtlAxWinInit"))
+   IF pProc = NULL THEN RETURN FALSE
+   RETURN pProc()
+END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
@@ -122,42 +149,30 @@ END FUNCTION
 
 ' ========================================================================================
 ' Default constructor
+' Example:
+'   ' // Create an instance of the WebBrowser control
+'   DIM pCon AS CAtlCon
+'   ' // Create an instance of the WebBrowser control
+'   DIM pObj AS ANY PTR = AfxNewCom("Shell.Explorer")
+'   ' // Add an AtlAxWindow
+'   DIM hWb AS HWND = pCon.AddControl(@pWindow, IDC_WEBBROWSER, "", 0, 0, pWindow.ClientWidth, pWindow.ClientHeight)
+'   ' // Attach the WebBrowser control to the ATL window
+'   DIM hr AS HRESULT = pCon.AttachControl(pObj, hWb)
+'   ' // Make the web page themed and DPI aware
+'   pCon.DocHostFlags(hWb) = DOCHOSTUIFLAG_NO3DBORDER OR DOCHOSTUIFLAG_THEME OR DOCHOSTUIFLAG_DPI_AWARE
+'   ' // Get a direct pointer to the Afx_IWebBrowser2 interface
+'   DIM pWb AS Afx_IWebBrowser2 PTR = AtlBrowserDispatch(hWb)
+'   ' // Make navigation silent (disables annoying popups of the script debugger)
+'   pWb->put_Silent(VARIANT_TRUE)
+'   ' // Navigate to a web page
+'   DIM wszUrl AS WSTRING * 260 = "https://forum.powerbasic.com/"
+'   DIM vUrl AS VARIANT : vUrl.vt = VT_BSTR : vUrl.bstrVal = SysAllocString(wszUrl)
+'   hr = pWb->Navigate2(@vUrl, NULL, NULL, NULL, NULL)
+'   VariantClear @vurl
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CAtlCon
    CATL_DP("CAtlCon Default constructor")
    this.Init
-END CONSTRUCTOR
-' ========================================================================================
-
-' ========================================================================================
-' Creates an instance of the ATL container. 
-' - pWindow: A reference to an instance of the CWindow class.
-' - cID: The identifier of the control.
-' - wszName: A string to be passed to the control.
-'   Must be formatted in one of the following ways:
-'   - A ProgID such as "MSCAL.Calendar.7"
-'   - A CLSID such as "{8E27C92B-1264-101C-8A2F-040224009C02}"
-'   - A URL such as "http://www.microsoft.com"
-'   - A reference to an Active document such as "file://\\Documents\MyDoc.doc"
-'   - A fragment of HTML such as "MSHTML:<HTML><BODY>This is a line of text</BODY></HTML>"
-'     "MSHTML:" must precede the HTML fragment so that it is designated as being an MSHTML stream.
-' Example: DIM hWB AS HWND = pAtlCon.AddControl(pWindow, IDC_ATLWIN, "Shell.Explorer")
-' ========================================================================================
-PRIVATE CONSTRUCTOR CAtlCon (BYREF pWindow AS CWindow, BYVAL cID AS INTEGER, BYREF wszName AS WSTRING = "", _
-BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
-BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0)
-   CATL_DP("CAtlCon Constructor CWindow")
-   this.Init
-   pWindow.AddControl(m_wszAtlClassName, pWindow.hWindow, cID, wszName, x, y, nWidth, nHeight, dwStyle, dwExStyle)
-END CONSTRUCTOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE CONSTRUCTOR CAtlCon (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszName AS WSTRING = "", _
-BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
-BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0)
-   CATL_DP("CAtlCon Constructor CWindow Ptr")
-   this.Init
-   pWindow->AddControl(m_wszAtlClassName, pWindow->hWindow, cID, wszName, x, y, nWidth, nHeight, dwStyle, dwExStyle)
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -174,17 +189,208 @@ END DESTRUCTOR
 ' ========================================================================================
 
 ' ========================================================================================
-' Initializes ATL's control hosting code by registering the "AtlAxWin80" and "AtlAxWinLic80"
-' window classes plus a couple of custom window messages, WM_GetHost and WM_GetControl.
-' AtlAxWinInit cheks if the class has already been registered. Therefore, there is no
-' danger in calling it more than once.
+' Creates an instance of the ATL container and attaches an ActiveX control to it. 
+' - pWindow: A reference to an instance of the CWindow class.
+' - cID: The identifier of the control.
+' - wszName: A string to be passed to the control.
+'   Must be formatted in one of the following ways:
+'   - A ProgID such as "MSCAL.Calendar.7"
+'   - A CLSID such as "{8E27C92B-1264-101C-8A2F-040224009C02}"
+'   - A URL such as "http://www.microsoft.com"
+'   - A reference to an Active document such as "file://\\Documents\MyDoc.doc"
+'   - A fragment of HTML such as "MSHTML:<HTML><BODY>This is a line of text</BODY></HTML>"
+'     "MSHTML:" must precede the HTML fragment so that it is designated as being an MSHTML stream.
+' Example:
+'   ' // Create an instance of the WebBrowser control
+'   DIM pCon AS CAtlCon = CAtlCon(@pWindow, IDC_WEBBROWSER, "Shell.Explorer", 0, 0, pWindow.ClientWidth, pWindow.ClientHeight)
+'   ' // Make the web page themed and DPI aware
+'   DIM hWb AS HWND = AtlControlWindow(pWindow.hWindow, IDC_WEBBROWSER)
+'   pCon.DocHostFlags(hWb) = DOCHOSTUIFLAG_NO3DBORDER OR DOCHOSTUIFLAG_THEME OR DOCHOSTUIFLAG_DPI_AWARE
+'   ' // Get a direct pointer to the Afx_IWebBrowser2 interface
+'   DIM pWb AS Afx_IWebBrowser2 PTR = AtlBrowserDispatch(hWb)
+'   ' // Make navigation silent (disables annoying popups of the script debugger)
+'   pWb->put_Silent(VARIANT_TRUE)
+'   ' // Navigate to a web page
+'   DIM wszUrl AS WSTRING * 260 = "https://forum.powerbasic.com/"
+'   DIM vUrl AS VARIANT : vUrl.vt = VT_BSTR : vUrl.bstrVal = SysAllocString(wszUrl)
+'   pWb->Navigate2(@vUrl, NULL, NULL, NULL, NULL)
+'   VariantClear @vurl
 ' ========================================================================================
-PRIVATE FUNCTION CAtlCon.WinInit () AS BOOLEAN
-   CATL_DP("CAtlCon WinInit")
-   DIM pProc AS FUNCTION () AS BOOLEAN
-   pProc = cast(ANY PTR, GetProcAddress(m_hAtlLib, "AtlAxWinInit"))
+PRIVATE CONSTRUCTOR CAtlCon (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszName AS WSTRING = "", _
+BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0)
+   CATL_DP("CAtlCon Constructor CWindow Ptr")
+   this.Init
+   pWindow->AddControl(m_wszAtlClassName, pWindow->hWindow, cID, wszName, x, y, nWidth, nHeight, dwStyle, dwExStyle)
+END CONSTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' Creates an instance of the ATL container and attaches a licensed ActiveX control to it. 
+' Parameters:
+' - pWindow: A reference to an instance of the CWindow class.
+' - cID: The identifier of the control.
+' - wszProgID
+'   The ProgID or the CLSID of the object to create.
+'   - A ProgID such as "MSCAL.Calendar.7"
+'   - A CLSID such as "{8E27C92B-1264-101C-8A2F-040224009C02}"
+' - wszLicKey: The license key.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CAtlCon (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+BYREF wszLicKey AS WSTRING, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0)
+   CATL_DP("CAtlCon Constructor ProgID/LicKey")
+   this.Init
+   ' // Create an instance of the licensed ActiveX control
+   DIM pObj AS ANY PTR = AfxNewCom(wszProgID, wszLicKey)
+   ' // Add an AtlAxWindow
+   DIM hCtl AS HWND = this.AddControl(pWindow, cID, "", x, y, nWidth, nHeight, dwStyle, dwExStyle)
+   ' // Attach the ActiveX control to the ATL window
+   DIM hr AS HRESULT = this.AttachControl(pObj, hCtl)
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+' Creates an instance of the ATL container and attaches a licensed ActiveX control to it. 
+' Parameters:
+' - pWindow: A reference to an instance of the CWindow class.
+' - cID: The identifier of the control.
+' - wszLibName = Full path where the library is located.
+' - rclsid = The CLSID (class identifier) associated with the data and code that will be
+'   used to create the object.
+' - riid = A reference to the identifier of the interface to be used to communicate with the object.
+' - wszLicKey = The license key.
+' Not every component is a suitable candidate for use under this overloaded AfxNewCom function.
+'  - Only in-process servers (DLLs) are supported.
+'  - Components that are system components or part of the operating system, such as XML,
+'    Data Access, Internet Explorer, or DirectX, aren't supported
+'  - Components that are part of an application, such Microsoft Office, aren't supported.
+'  - Components intended for use as an add-in or a snap-in, such as an Office add-in or
+'    a control in a Web browser, aren't supported.
+'  - Components that manage a shared physical or virtual system resource aren't supported.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CAtlCon (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS CONST WSTRING, _
+BYREF rclsid AS CONST CLSID, BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING = "", _
+BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0)
+   CATL_DP("CAtlCon Constructor LibName")
+   this.Init
+   ' // Create an instance of the licensed ActiveX control
+   DIM pObj AS ANY PTR = AfxNewCom(wszLibName, rclsid, riid)
+   ' // Add an AtlAxWindow
+   DIM hCtl AS HWND = this.AddControl(pWindow, cID, "", x, y, nWidth, nHeight, dwStyle, dwExStyle)
+   ' // Attach the ActiveX control to the ATL window
+   DIM hr AS HRESULT = this.AttachControl(pObj, hCtl)
+END CONSTRUCTOR
+' ========================================================================================
+
+
+' ========================================================================================
+' Adds an ActiveX control to the specified window.
+' Parameters:
+' - pWindow: A reference to an instance of the CWindow class.
+' - cID: The identifier of the control.
+' - wszName: A string to be passed to the control.
+'   Must be formatted in one of the following ways:
+'   - A ProgID such as "MSCAL.Calendar.7"
+'   - A CLSID such as "{8E27C92B-1264-101C-8A2F-040224009C02}"
+'   - A URL such as "http://www.microsoft.com"
+'   - A reference to an Active document such as "file://\\Documents\MyDoc.doc"
+'   - A fragment of HTML such as "MSHTML:<HTML><BODY>This is a line of text</BODY></HTML>"
+'     "MSHTML:" must precede the HTML fragment so that it is designated as being an MSHTML stream.
+' Return value:
+'   The handle of the ATL window that hosts the ActiveX control.
+' Example:
+'   // Create an instance of the container
+'   DIM pAtlCon AS CAtlCon = CAtlCon(@pWindow, IDC_ATLWIN, "http://www.planetsquires.com/protect/forum/index.php", 10, 10, 500, 300)
+'   // Get the handle of the control
+'   DIM hWb AS HWND = GetDlgItem(pWindow.hWindow, IDC_ATLWIN)
+'   // Make the web page themed and DPI aware
+'   pAtlCon.DocHostFlags(hWb) = DOCHOSTUIFLAG_NO3DBORDER OR DOCHOSTUIFLAG_THEME OR DOCHOSTUIFLAG_DPI_AWARE
+' ========================================================================================
+PRIVATE FUNCTION CAtlCon.AddControl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, _
+BYREF wszName AS WSTRING = "", BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
+BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0) AS HWND
+   CATL_DP("CAtlCon AddControl CWindow Ptr")
+   IF pWindow = NULL THEN RETURN NULL
+   RETURN pWindow->AddControl(m_wszAtlClassName, pWindow->hWindow, cID, wszName, x, y, nWidth, nHeight, dwStyle, dwExStyle)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Adds a licensed ActiveX control to the specified window.
+' Parameters:
+' - pWindow: A reference to an instance of the CWindow class.
+' - cID: The identifier of the control.
+' - wszProgID: A string to be passed to the control.
+'   Must be formatted in one of the following ways:
+'   - A ProgID such as "MSCAL.Calendar.7"
+'   - A CLSID such as "{8E27C92B-1264-101C-8A2F-040224009C02}"
+' Return value:
+'   The handle of the ATL window that hosts the ActiveX control.
+' ========================================================================================
+PRIVATE FUNCTION CAtlCon.AddControl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+BYREF wszLicKey AS WSTRING, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0) AS HWND
+   CATL_DP("CAtlCon AddControl ProgID/LicKey")
+   ' // Create an instance of the licensed ActiveX control
+   DIM pObj AS ANY PTR = AfxNewCom(wszProgID, wszLicKey)
+   ' // Add an AtlAxWindow
+   DIM hCtl AS HWND = this.AddControl(pWindow, cID, "", x, y, nWidth, nHeight, dwStyle, dwExStyle)
+   ' // Attach the ActiveX control to the ATL window
+   DIM hr AS HRESULT = this.AttachControl(pObj, hCtl)
+   ' // Return the handle of hosting ATL window
+   RETURN hCtl
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Creates an instance of the ATL container and attaches a licensed ActiveX control to it. 
+' Parameters:
+' - pWindow: A reference to an instance of the CWindow class.
+' - cID: The identifier of the control.
+' - wszLibName = Full path where the library is located.
+' - rclsid = The CLSID (class identifier) associated with the data and code that will be
+'   used to create the object.
+' - riid = A reference to the identifier of the interface to be used to communicate with the object.
+' - wszLicKey = The license key.
+' Not every component is a suitable candidate for use under this overloaded AfxNewCom function.
+'  - Only in-process servers (DLLs) are supported.
+'  - Components that are system components or part of the operating system, such as XML,
+'    Data Access, Internet Explorer, or DirectX, aren't supported
+'  - Components that are part of an application, such Microsoft Office, aren't supported.
+'  - Components intended for use as an add-in or a snap-in, such as an Office add-in or
+'    a control in a Web browser, aren't supported.
+'  - Components that manage a shared physical or virtual system resource aren't supported.
+' Return value:
+'   The handle of the ATL window that hosts the ActiveX control.
+' ========================================================================================
+PRIVATE FUNCTION CAtlCon.AddContol (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS CONST WSTRING, _
+BYREF rclsid AS CONST CLSID, BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING = "", _
+BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0) AS HWND
+   CATL_DP("CAtlCon AddControl LibName")
+   ' // Create an instance of the licensed ActiveX control
+   DIM pObj AS ANY PTR = AfxNewCom(wszLibName, rclsid, riid)
+   ' // Add an AtlAxWindow
+   DIM hCtl AS HWND = this.AddControl(pWindow, cID, "", x, y, nWidth, nHeight, dwStyle, dwExStyle)
+   ' // Attach the ActiveX control to the ATL window
+   DIM hr AS HRESULT = this.AttachControl(pObj, hCtl)
+   ' // Return the handle of hosting ATL window
+   RETURN hCtl
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Attaches a previously created ActiveX control to the specified window.
+' Parameters:
+' - pControl: A pointer to the IUnknown of the control.
+' - hCtl: Handle to the window that will host the control.
+' ========================================================================================
+PRIVATE FUNCTION CAtlCon.AttachControl (BYVAL pControl AS IUnknown PTR, BYVAL hCtl AS HWND) AS HRESULT
+   CATL_DP("CAtlCon AttachControl")
+   DIM pProc AS FUNCTION (BYVAL pControl AS IUnknown PTR, BYVAL hCtl AS HWND, BYVAL ppUnkContainer AS IUnknown PTR PTR) AS HRESULT
+   pProc = cast(ANY PTR, GetProcAddress(m_hAtlLib, "AtlAxAttachControl"))
    IF pProc = NULL THEN RETURN FALSE
-   RETURN pProc()
+   RETURN pProc(pControl, hCtl, NULL)
 END FUNCTION
 ' ========================================================================================
 
@@ -273,7 +479,7 @@ PRIVATE FUNCTION CAtlCon.GetDispatch (BYVAL hwnd AS .HWND) AS IDispatch PTR
    DIM punk AS IUnknown PTR = this.GetControl(hwnd)
    IF punk = NULL THEN RETURN NULL
    ' // Query for the IDispatch interface
-   DIM pdisp AS IDIspatch PTR
+   DIM pdisp AS IDispatch PTR
    pUnk->lpVtbl->QueryInterface(pUnk, @IID_IDispatch, @pdisp)
    RETURN pdisp
 END FUNCTION
@@ -759,40 +965,39 @@ END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
-' Adds a control to the specified window.
-' - pWindow: A reference to an instance of the CWindow class.
-' - cID: The identifier of the control.
-' - wszName: A string to be passed to the control.
-'   Must be formatted in one of the following ways:
-'   - A ProgID such as "MSCAL.Calendar.7"
-'   - A CLSID such as "{8E27C92B-1264-101C-8A2F-040224009C02}"
-'   - A URL such as "http://www.microsoft.com"
-'   - A reference to an Active document such as "file://\\Documents\MyDoc.doc"
-'   - A fragment of HTML such as "MSHTML:<HTML><BODY>This is a line of text</BODY></HTML>"
-'     "MSHTML:" must precede the HTML fragment so that it is designated as being an MSHTML stream.
-' Example:
-' // Create an instance of the container
-' DIM pAtlCon AS CAtlCon = CAtlCon(@pWindow, IDC_ATLWIN, "http://www.planetsquires.com/protect/forum/index.php", 10, 10, 500, 300)
-' // Get the handle of the control
-' DIM hWb AS HWND = GetDlgItem(pWindow.hWindow, IDC_ATLWIN)
-' // Make the web page themed and DPI aware
-' pAtlCon.DocHostFlags(hWb) = DOCHOSTUIFLAG_NO3DBORDER OR DOCHOSTUIFLAG_THEME OR DOCHOSTUIFLAG_DPI_AWARE
+' Specifies the ambient font of the container.
+' - pFont: Pointer to the IFontDisp object to set.
+' The ATL host object implementation uses the default GUI font or the system font as the
+' default value of this property.
 ' ========================================================================================
-PRIVATE FUNCTION CAtlCon.AddControl (BYREF pWindow AS CWindow, BYVAL cID AS INTEGER, _
-BYREF wszName AS WSTRING = "", BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
-BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0) AS HWND
-   CATL_DP("CAtlCon AddControl CWindow")
-   RETURN pWindow.AddControl(m_wszAtlClassName, pWindow.hWindow, cID, wszName, x, y, nWidth, nHeight, dwStyle, dwExStyle)
-END FUNCTION
+PRIVATE PROPERTY CAtlCon.Font (BYVAL hwnd AS .HWND, BYVAL pFont AS IFontDisp PTR)
+   CATL_DP("CAtlCon put_Font")
+   DIM pDocHost AS IUnknown PTR = this.GetHost(hwnd)
+   DIM pAmbientDisp AS Afx_IAxWinAmbientDispatch PTR
+   IF pDocHost THEN
+      pDocHost->lpvtbl->QueryInterface(pDocHost, @AFX_IID_IAxWinAmbientDispatch_, @pAmbientDisp)
+      IF pAmbientDisp THEN
+         pAmbientDisp->put_Font(pFont)
+         pAmbientDisp->Release
+      END IF
+   END IF
+END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION CAtlCon.AddControl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, _
-BYREF wszName AS WSTRING = "", BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
-BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0) AS HWND
-   CATL_DP("CAtlCon AddControl CWindow Ptr")
-   IF pWindow = NULL THEN RETURN NULL
-   RETURN pWindow->AddControl(m_wszAtlClassName, pWindow->hWindow, cID, wszName, x, y, nWidth, nHeight, dwStyle, dwExStyle)
-END FUNCTION
+PRIVATE PROPERTY CAtlCon.Font (BYVAL hwnd AS .HWND) AS IFontDisp PTR
+   CATL_DP("CAtlCon get_Font")
+   DIM pDocHost AS IUnknown PTR = this.GetHost(hwnd)
+   DIM pAmbientDisp AS Afx_IAxWinAmbientDispatch PTR
+   DIM pFont AS IFontDisp PTR
+   IF pDocHost THEN
+      pDocHost->lpvtbl->QueryInterface(pDocHost, @AFX_IID_IAxWinAmbientDispatch_, @pAmbientDisp)
+      IF pAmbientDisp THEN
+         pAmbientDisp->get_Font(@pFont)
+         pAmbientDisp->Release
+      END IF
+   END IF
+   PROPERTY = pFont
+END PROPERTY
 ' ========================================================================================
 
 
@@ -842,6 +1047,8 @@ Public:
    DECLARE PROPERTY DisplayAsDefault () AS VARIANT_BOOL
    DECLARE PROPERTY MessageReflect (BYVAL bMessageReflect AS VARIANT_BOOL)
    DECLARE PROPERTY MessageReflect () AS VARIANT_BOOL
+   DECLARE PROPERTY Font (BYVAL hwnd AS .HWND, BYVAL pFont AS IFontDisp PTR)
+   DECLARE PROPERTY Font (BYVAL hwnd AS .HWND) AS IFontDisp PTR
    DECLARE FUNCTION Navigate (BYVAL pwszUrl AS WSTRING PTR, BYVAL Flags AS VARIANT PTR = NULL, BYVAL TargetFrameName AS VARIANT PTR = NULL, BYVAL PostData AS VARIANT PTR = NULL, BYVAL Headers AS VARIANT PTR = NULL) AS HRESULT
    DECLARE FUNCTION Navigate (BYVAL pvUrl AS VARIANT PTR, BYVAL Flags AS VARIANT PTR = NULL, BYVAL TargetFrameName AS VARIANT PTR = NULL, BYVAL PostData AS VARIANT PTR = NULL, BYVAL Headers AS VARIANT PTR = NULL) AS HRESULT
    DECLARE FUNCTION WaitForPageLoad (BYVAL nTimeout AS DOUBLE = 10) AS READYSTATE
@@ -863,6 +1070,8 @@ Public:
    DECLARE FUNCTION PageProperties () AS HRESULT
    DECLARE FUNCTION SaveAs () AS HRESULT
    DECLARE FUNCTION Find () AS HRESULT
+   DECLARE FUNCTION ShowSource () AS HRESULT
+   DECLARE FUNCTION InternetOptions () AS HRESULT
    DECLARE PROPERTY Document () AS IHtmlDocument2 PTR
    DECLARE PROPERTY LocationName () AS CWSTR
    DECLARE PROPERTY LocationURL () AS CWSTR
@@ -897,9 +1106,9 @@ BYVAL bSilent AS VARIANT_BOOL = VARIANT_TRUE, BYVAL dwDocHostFlags AS DWORD = DO
    CATL_DP("CWebCtx Constructor CWindow")
 
    ' // Create the control
-   pWindow.AddControl(m_wszAtlClassName, pWindow.hWindow, cID, "Shell Explorer", x, y, nWidth, nHeight, dwStyle, dwExStyle)
-   ' // Get the window handle of the control
-   m_hWb = GetDlgItem(pWindow.hWindow, cID)
+   m_hWb = pWindow.AddControl(m_wszAtlClassName, pWindow.hWindow, cID, "Shell Explorer", x, y, nWidth, nHeight, dwStyle, dwExStyle)
+   ' // Store a pointer to the class as a property
+   SetPropW(m_hWb, "CWEBCTXPTR", CAST(HANDLE, @this))
    ' // Get an addrefed pointer to the IWebBrowser2 interface
    m_pWb = cast(Afx_IWebBrowser2 PTR, cast(ULONG_PTR, this.GetDispatch(m_hWb)))
    ' // Make navigation silent (disables annoying popups of the script debugger)
@@ -919,9 +1128,9 @@ BYVAL bSilent AS VARIANT_BOOL = VARIANT_TRUE, BYVAL dwDocHostFlags AS DWORD = DO
    CATL_DP("CWebCtx Constructor CWindow Ptr")
 
    ' // Create the control
-   pWindow->AddControl(m_wszAtlClassName, pWindow->hWindow, cID, "Shell Explorer", x, y, nWidth, nHeight, dwStyle, dwExStyle)
-   ' // Get the window handle of the control
-   m_hWb = GetDlgItem(pWindow->hWindow, cID)
+   m_hWb = pWindow->AddControl(m_wszAtlClassName, pWindow->hWindow, cID, "Shell Explorer", x, y, nWidth, nHeight, dwStyle, dwExStyle)
+   ' // Store a pointer to the class as a property
+   SetPropW(m_hWb, "CWEBCTXPTR", CAST(HANDLE, @this))
    ' // Get an addrefed pointer to the IWebBrowser2 interface
    m_pWb = cast(Afx_IWebBrowser2 PTR, cast(ULONG_PTR, this.GetDispatch(m_hWb)))
    ' // Make navigation silent (disables annoying popups of the script debugger)
@@ -938,6 +1147,12 @@ END CONSTRUCTOR
 ' CWebCtx class destructor
 ' ========================================================================================
 PRIVATE DESTRUCTOR CWebCtx
+   ' // Clear the web page
+   this.Navigate("about:blank")
+   ' // Stop navigation
+   this.Stop
+   ' // Remove the window property
+   RemovePropW(m_hWb, "CWEBCTXPTR")
    ' // Release the IWebBrowser2 inteface
    DIM r AS DWORD
    IF m_pWb THEN r = m_pWb->Release
@@ -1135,6 +1350,24 @@ END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
+' Specifies the ambient font of the container.
+' - pFont: Pointer to the IFontDisp object to set.
+' The ATL host object implementation uses the default GUI font or the system font as the
+' default value of this property.
+' ========================================================================================
+PRIVATE PROPERTY CWebCtx.Font (BYVAL hwnd AS .HWND, BYVAL pFont AS IFontDisp PTR)
+'   CATL_DP("CWebCtx put_Font")
+   Base.Font(m_hWb) = pFont
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CWebCtx.Font (BYVAL hwnd AS .HWND) AS IFontDisp PTR
+'   CATL_DP("CWebCtx get_Font")
+   RETURN Base.Font(m_hWb)
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
 ' Navigates to the specified URL.
 ' Note: To clear a web page, simply navigate to "about:blank".
 ' ========================================================================================
@@ -1158,9 +1391,20 @@ END FUNCTION
 
 ' ========================================================================================
 ' Waits until the page had been fully downloaded or te timeout has expired.
-' - nTimeOut: Timeout in seconds.
+' - dbTimeout Timeout in seconds.
+' Return value:
+' READYSTATE_UNINITIALIZED = 0
+'   Default initialization state.
+' READYSTATE_LOADING = 1
+'   Object is currently loading its properties.
+' READYSTATE_LOADED = 2
+'   Object has been initialized.
+' READYSTATE_INTERACTIVE = 3
+'   Object is interactive, but not all of its data is available.
+' READYSTATE_COMPLETE = 4
+'   Object has received all of its data.
 ' ========================================================================================
-PRIVATE FUNCTION CWebCtx.WaitForPageLoad (BYVAL nTimeOut AS DOUBLE = 10) AS tagREADYSTATE
+PRIVATE FUNCTION CWebCtx.WaitForPageLoad (BYVAL dbTimeout AS DOUBLE = 10) AS tagREADYSTATE
    CATL_DP("CWebCtx WaitForPageLoad")
    DIM lReadyState AS tagREADYSTATE
    DIM starttime AS DOUBLE = timer
@@ -1171,9 +1415,9 @@ PRIVATE FUNCTION CWebCtx.WaitForPageLoad (BYVAL nTimeOut AS DOUBLE = 10) AS tagR
       ' // Retrieves the ready state
       m_pWb->get_ReadyState(@lReadyState)
       IF lReadyState = READYSTATE_COMPLETE THEN EXIT DO
-      IF timer - starttime > nTimeOut THEN EXIT DO
+      IF timer - starttime > dbTimeout THEN EXIT DO
       ' // Needed to update timer
-      Sleep 1, 1
+      SLEEP 1, 1
    LOOP
    RETURN lReadyState
 END FUNCTION
@@ -1323,6 +1567,7 @@ PRIVATE FUNCTION CWebCtx.SaveAs () AS HRESULT
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
+' Activates the find dialog.
 ' Warning: This code uses an undocumented command-group GUID that is subject to change in
 ' the future. Currently it works in all versions of Internet Explorer up to 11.
 ' See http://support.microsoft.com/?kbid=311288
@@ -1338,6 +1583,38 @@ PRIVATE FUNCTION CWebCtx.Find () AS HRESULT
    pIHTMLDocument2->lpvtbl->Release(pIHTMLDocument2)
    IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN hr
    hr = pCmdTarget->lpvtbl->Exec(pCmdTarget, @CGID_WebBrowser_, 1, 0, NULL, NULL)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Displays the source code of the page in an instance of NotePad.
+' ========================================================================================
+PRIVATE FUNCTION CWebCtx.ShowSource () AS HRESULT
+   IF m_pWb = NULL THEN RETURN E_NOINTERFACE
+   DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
+   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN hr
+   DIM CGID_WebBrowser_ AS GUID = (&hED016940, &hBD5B, &h11CF, {&hBA, &h4E, &h00, &hC0, &h4F, &hD7, &h08, &h16})
+   DIM pCmdTarget AS IOleCommandTarget PTR
+   hr = pIHTMLDocument2->lpvtbl->QueryInterface(pIHTMLDocument2, @IID_IOleCommandTarget, @pCmdTarget)
+   pIHTMLDocument2->lpvtbl->Release(pIHTMLDocument2)
+   IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN hr
+   hr = pCmdTarget->lpvtbl->Exec(pCmdTarget, @CGID_WebBrowser_, 2, 0, NULL, NULL)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Activates the Internet options dialog.
+' ========================================================================================
+PRIVATE FUNCTION CWebCtx.InternetOptions () AS HRESULT
+   IF m_pWb = NULL THEN RETURN E_NOINTERFACE
+   DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
+   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN hr
+   DIM CGID_WebBrowser_ AS GUID = (&hED016940, &hBD5B, &h11CF, {&hBA, &h4E, &h00, &hC0, &h4F, &hD7, &h08, &h16})
+   DIM pCmdTarget AS IOleCommandTarget PTR
+   hr = pIHTMLDocument2->lpvtbl->QueryInterface(pIHTMLDocument2, @IID_IOleCommandTarget, @pCmdTarget)
+   pIHTMLDocument2->lpvtbl->Release(pIHTMLDocument2)
+   IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN hr
+   hr = pCmdTarget->lpvtbl->Exec(pCmdTarget, @CGID_WebBrowser_, 3, 0, NULL, NULL)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -1405,6 +1682,17 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 ' Gets the ready state of the object.
+' Return value:
+' READYSTATE_UNINITIALIZED = 0
+'   Default initialization state.
+' READYSTATE_LOADING = 1
+'   Object is currently loading its properties.
+' READYSTATE_LOADED = 2
+'   Object has been initialized.
+' READYSTATE_INTERACTIVE = 3
+'   Object is interactive, but not all of its data is available.
+' READYSTATE_COMPLETE = 4
+'   Object has received all of its data.
 ' ========================================================================================
 PRIVATE PROPERTY CWebCtx.ReadyState () AS tagREADYSTATE
    DIM nState AS tagREADYSTATE
@@ -1414,6 +1702,7 @@ END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 ' Sets or gets a value that indicates whether the object is registered as a top-level browser window.
+' bRegister: VARIANT_TRUE or VARIANT_FALSE
 ' ========================================================================================
 PRIVATE PROPERTY CWebCtx.RegisterAsBrowser () AS BOOLEAN
    DIM bRegister AS VARIANT_BOOL
@@ -1428,6 +1717,7 @@ END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 ' Sets or gets a value that indicates whether the object is registered as a drop target for navigation.
+' bRegister: VARIANT_TRUE or VARIANT_FALSE (disables drag and drop)
 ' ========================================================================================
 PRIVATE PROPERTY CWebCtx.RegisterAsDropTarget () AS BOOLEAN
    DIM bRegister AS VARIANT_BOOL
@@ -1527,8 +1817,6 @@ PRIVATE FUNCTION CWebCtx.GetBodyInnerHtml () AS CWSTR
    RETURN cwsText
 END FUNCTION
 ' ========================================================================================
-
-'++++++++++++
 
 ' ========================================================================================
 ' Retrieves the ID of the active element (the object that has the focus when the parent
@@ -1751,12 +2039,29 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Returns a direct pointer to the WebBrowser control given the handle of the control that hosts it.
-' - hwnd = THe ATL control handle
-' Returns a pointer to the IWeBbrowser2 interface or NULL.
-' You must release the returned pointer when you no longer need it.
+' Returns the ATL container window handle given the handle of the form, or any control in the
+' form, and its control identifier.
+' Parameters:
+' - hwnd = Reference window handle.
+' - Control identifier, e.g. IDC_WEBBROWSER.
+' Returns the ATL container window handle or NULL.
 ' ========================================================================================
-PRIVATE FUNCTION AtlGetBrowserPtr (BYVAL hwnd AS HWND) AS Afx_IWebBrowser2 PTR
+PRIVATE FUNCTION AtlControlWindow (BYVAL hwnd AS HWND, BYVAL cID AS WORD) AS HWND
+   DIM wszClassName AS WSTRING * 260
+   DIM hwndChild AS .HWND = AfxGetControlHandle(hwnd, cID)
+   GetClassNameW hwndChild, wszClassName, SIZEOF(wszClassName)
+   IF wszClassName <> "AtlAxWin" THEN RETURN NULL
+   RETURN hwndChild
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a direct IUnknown pointer to the hosted control given the handle of the
+' control that hosts it.
+' - hwnd = The ATL control handle
+' Don't release the returned pointer because it is a direct pointer.
+' ========================================================================================
+PRIVATE FUNCTION AtlControlUnknown (BYVAL hwnd AS HWND) AS Afx_IUnknown PTR
    DIM hAtlLib AS HMODULE
    hAtlLib = LoadLibraryW("Atl.dll")
    IF hAtlLib = NULL THEN RETURN NULL
@@ -1766,13 +2071,139 @@ PRIVATE FUNCTION AtlGetBrowserPtr (BYVAL hwnd AS HWND) AS Afx_IWebBrowser2 PTR
    IF pProc = NULL THEN RETURN NULL
    DIM punk AS IUnknown PTR
    DIM hr AS HRESULT = pProc(hwnd, punk)
-   IF pUnk = NULL THEN RETURN NULL
+   RETURN cast(Afx_IUnknown PTR, cast(ULONG_PTR, punk))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Returns a direct IDispatch pointer to the hosted control given the handle of the
+' control that hosts it.
+' - hwnd = The ATL control handle
+' Don't release the returned pointer because it is a direct pointer.
+' ========================================================================================
+PRIVATE FUNCTION AtlControlDispatch (BYVAL hwnd AS HWND) AS Afx_IDispatch PTR
+   DIM punk AS Afx_IUnknown PTR = AtlControlUnknown(hwnd)
+   IF punk = NULL THEN RETURN NULL
    ' // Query for the IDispatch interface
-   DIM pdisp AS IDIspatch PTR
-   pUnk->lpVtbl->QueryInterface(pUnk, @IID_IDispatch, @pdisp)
+   DIM pdisp AS Afx_IDispatch PTR
+   punk->QueryInterface(@IID_IDispatch, @pdisp)
    ' // Decrease the reference count to make it a direct pointer
-   pDisp->lpvtbl->Release(pdisp)
-   RETURN cast(Afx_IWebBrowser2 PTR, cast(ULONG_PTR, pDisp))
+   pDisp->Release
+   RETURN pdisp
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Returns a reference counted pointer to the WebBrowser control given the handle of the
+' control that hosts it.
+' - hwnd = The ATL control handle
+' Release the returned pointer when you no longer need it.
+' ========================================================================================
+PRIVATE FUNCTION AtlControlObject (BYVAL hwnd AS HWND) AS Afx_IDispatch PTR
+   DIM punk AS Afx_IUnknown PTR = AtlControlUnknown(hwnd)
+   IF punk = NULL THEN RETURN NULL
+   ' // Query for the IDispatch interface
+   DIM pdisp AS Afx_IDispatch PTR
+   punk->QueryInterface(@IID_IDispatch, @pdisp)
+   RETURN pdisp
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a direct pointer to the WebBrowser control given the handle of the control
+' that hosts it.
+' - hwnd = The ATL control handle
+' Don't release the returned pointer because it is a direct pointer.
+' ========================================================================================
+PRIVATE FUNCTION AtlBrowserDispatch OVERLOAD (BYVAL hwnd AS HWND) AS Afx_IWebBrowser2 PTR
+   RETURN CAST(Afx_IWebBrowser2 PTR, cast(ULONG_PTR, AtlControlDispatch(hwnd)))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Returns a direct pointer to the WebBrowser control given the handle of the form, or any
+' control in the form, and its control identifier.
+' Parameters:
+' - hwnd = Reference window handle.
+' - Control identifier, e.g. IDC_WEBBROWSER.
+' Don't release the returned pointer because it is a direct pointer.
+' ========================================================================================
+PRIVATE FUNCTION AtlBrowserDispatch OVERLOAD (BYVAL hwnd AS HWND, BYVAL cID AS WORD) AS Afx_IWebBrowser2 PTR
+   DIM hWb AS .HWND = AtlControlWindow(hwnd, cID)
+   IF hWb = NULL THEN RETURN NULL
+   RETURN AtlBrowserDispatch(hWb)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Returns a reference counted pointer to the WebBrowser control given the handle of the
+' control that hosts it.
+' - hwnd = The ATL control handle
+' You must release the returned pointer when you no longer need it.
+' ========================================================================================
+PRIVATE FUNCTION AtlBrowserObject OVERLOAD (BYVAL hwnd AS HWND) AS Afx_IWebBrowser2 PTR
+   RETURN CAST(Afx_IWebBrowser2 PTR, cast(ULONG_PTR, AtlControlObject(hwnd)))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Returns a reference counted pointer to the WebBrowser control given the handle of the
+' form, or any control in the form, and its control identifier.
+' Parameters:
+' - hwnd = Reference window handle.
+' - Control identifier, e.g. IDC_WEBBROWSER.
+' Don't release the returned pointer because it is a direct pointer.
+' ========================================================================================
+PRIVATE FUNCTION AtlBrowserObject OVERLOAD (BYVAL hwnd AS HWND, BYVAL cID AS WORD) AS Afx_IWebBrowser2 PTR
+   DIM hWb AS .HWND = AtlControlWindow(hwnd, cID)
+   IF hWb = NULL THEN RETURN NULL
+   RETURN AtlBrowserObject(hWb)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a direct pointer to the CWebCtx class given the handle of the window of the ATL
+' control created with it.
+' ========================================================================================
+PRIVATE FUNCTION AtlCWebCtx OVERLOAD (BYVAL hwnd AS HWND) AS CWebCtx PTR
+   IF hwnd = NULL THEN RETURN NULL
+   RETURN CAST(CWebCtx PTR, GetPropW(hwnd, "CWEBCTXPTR"))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Returns a direct pointer to the CWebCtx class given the handle of the form, or any
+' control in the form, and its control identifier.
+' ========================================================================================
+PRIVATE FUNCTION AtlCWebCtx OVERLOAD (BYVAL hwnd AS HWND, BYVAL cID AS WORD) AS CWebCtx PTR
+   DIM hWb AS .HWND = AtlControlWindow(hwnd, cID)
+   IF hWb = NULL THEN RETURN NULL
+   RETURN CAST(CWebCtx PTR, GetPropW(hWb, "CWEBCTXPTR"))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Creates a standard IFontDisp object.
+' It returns a pointer to a new IFontDisp object on success, or NULL on failure.
+' Release the returned interface pointer when the new object is no longer needed. 
+' ========================================================================================
+PRIVATE FUNCTION AtlCreateFontDisp ( _
+   BYREF wszFontName AS WSTRING, _            ' __in  Font name
+   BYVAL cySize AS LONGLONG, _                ' __in  Point size
+   BYVAL fWeight AS SHORT, _                  ' __in  Weight (%FW_NORMAL, etc.)
+   BYVAL fCharset AS SHORT, _                 ' __in  Character set
+   BYVAL fItalic AS WINBOOL, _                ' __in  Italic state
+   BYVAL fUnderline AS WINBOOL, _             ' __in  Underline state
+   BYVAL fStrikethrough AS WINBOOL _          ' __in  Strikethrough state
+   ) AS IFontDisp PTR
+
+   DIM tf AS FONTDESC
+   tf.cbSizeOfStruct = SIZEOF(FONTDESC)
+   tf.lpstrName =  @wszFontName
+   tf.cySize.int64 = cySize * 10000
+   tf.sWeight = fWeight
+   tf.sCharset = fCharset
+   tf.fItalic = fItalic
+   tf.fUnderline = fUnderline
+   tf.fStrikethrough = fStrikethrough
+   DIM pFont AS IFontDisp PTR
+   OleCreateFontIndirect(@tf, @IID_IDispatch, @pFont)
+   RETURN pFont
+
 END FUNCTION
 ' ========================================================================================
 
@@ -1800,41 +2231,12 @@ PRIVATE FUNCTION AtlForwardMessage (BYVAL hctl AS HWND, BYVAL pMsg AS tagMsg PTR
    WHILE (GetWindowLongPtrW(hwnd, GWL_STYLE) AND WS_CHILD)
       IF (GetWindowLongPtrW(hwnd, GWL_EXSTYLE) AND WS_EX_MDICHILD) THEN EXIT WHILE
       GetClassNameW hwnd, wszClassName, SIZEOF(wszClassName)
-      IF LEFT(wszClassName, 8) = "AtlAxWin" THEN EXIT WHILE
+      IF wszClassName = "AtlAxWin" THEN EXIT WHILE
       hwnd = GetParent(hwnd)
    WEND
-   IF LEFT(wszClassName, 8) <> "AtlAxWin" THEN RETURN FALSE
+   IF wszClassName <> "AtlAxWin" THEN RETURN FALSE
    RETURN SendMessageW(hwnd, &H37F, 0, cast(LPARAM, pMsg))
-
-'DO
-'   IF hwnd = NULL THEN EXIT DO
-'   IF (GetWindowLongPtrW(hwnd, GWL_STYLE) AND WS_CHILD) <> WS_CHILD THEN EXIT DO
-'   IF (GetWindowLongPtrW(hwnd, GWL_EXSTYLE) AND WS_EX_MDICHILD) = WS_EX_MDICHILD THEN EXIT DO
-'   DIM wszClassName AS WSTRING * 260
-'   GetClassNameW hctl, wszClassName, SIZEOF(wszClassName)
-'   OutputDebugStringW wszClassName
-'LOOP
-
-'   DIM hwndParent AS HWND, hwndTmp AS HWND
-'   hwndParent = hCtl
-'   DO
-'      hwndTmp = GetParent(hwndParent)
-'      IF hwndTmp = NULL THEN EXIT DO
-'      hwndParent = hwndTmp
-'      GetClassNameW hwndParent, wszClassName, SIZEOF(wszClassName)
-'OutputDebugStringW wszClassName
-'      IF LEFT(wszClassName, 8) = "AtlAxWin" OR _
-'         wszClassName = "Shell Embedding" OR _
-'         wszClassName = "Shell DocObject View" OR _
-'         wszClassName = "Internet Explorer_Server" THEN EXIT DO
-'   LOOP
-'   IF LEFT(wszClassName, 8) <> "AtlAxWin" AND _
-'      wszClassName <> "Shell Embedding" AND _
-'      wszClassName <> "Shell DocObject View" AND _
-'      wszClassName <> "Internet Explorer_Server" THEN RETURN FALSE
-'   RETURN SendMessageW(hwndParent, &H37F, 0, cast(LPARAM, pMsg))
 END FUNCTION
 ' ========================================================================================
-
 
 END NAMESPACE
