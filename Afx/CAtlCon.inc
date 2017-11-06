@@ -74,7 +74,7 @@ Public:
    DECLARE FUNCTION AddControl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, _
            BYREF wszProgID AS WSTRING, BYREF wszLicKey AS WSTRING, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
            BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0) AS HWND
-   DECLARE FUNCTION AddContol (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS CONST WSTRING, _
+   DECLARE FUNCTION AddControl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS CONST WSTRING, _
            BYREF rclsid AS CONST CLSID, BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING = "", _
            BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
            BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0) AS HWND
@@ -108,6 +108,8 @@ Public:
    DECLARE PROPERTY MessageReflect (BYVAL hwnd AS .HWND) AS VARIANT_BOOL
    DECLARE PROPERTY Font (BYVAL hwnd AS .HWND, BYVAL pFont AS IFontDisp PTR)
    DECLARE PROPERTY Font (BYVAL hwnd AS .HWND) AS IFontDisp PTR
+   DECLARE FUNCTION Advise (BYVAL punkCP AS IUnknown PTR, BYVAL punk AS IUnknown PTR, BYVAL riid AS IID PTR, BYREF dwCookie AS DWORD) AS HRESULT
+   DECLARE FUNCTION Unadvise (BYVAL punkCP AS IUnknown PTR, BYVAL riid AS IID PTR, BYVAL dwCookie AS DWORD) AS HRESULT
 
 END TYPE
 ' ========================================================================================
@@ -121,7 +123,7 @@ END TYPE
 PRIVATE FUNCTION CAtlCon.WinInit () AS BOOLEAN
    CATL_DP("CAtlCon WinInit")
    DIM pProc AS FUNCTION () AS BOOLEAN
-   pProc = cast(ANY PTR, GetProcAddress(m_hAtlLib, "AtlAxWinInit"))
+   pProc = CAST(ANY PTR, GetProcAddress(m_hAtlLib, "AtlAxWinInit"))
    IF pProc = NULL THEN RETURN FALSE
    RETURN pProc()
 END FUNCTION
@@ -363,7 +365,7 @@ END FUNCTION
 ' Return value:
 '   The handle of the ATL window that hosts the ActiveX control.
 ' ========================================================================================
-PRIVATE FUNCTION CAtlCon.AddContol (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS CONST WSTRING, _
+PRIVATE FUNCTION CAtlCon.AddControl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS CONST WSTRING, _
 BYREF rclsid AS CONST CLSID, BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING = "", _
 BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
 BYVAL dwStyle AS DWORD = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP, BYVAL dwExStyle AS DWORD = 0) AS HWND
@@ -388,7 +390,7 @@ END FUNCTION
 PRIVATE FUNCTION CAtlCon.AttachControl (BYVAL pControl AS IUnknown PTR, BYVAL hCtl AS HWND) AS HRESULT
    CATL_DP("CAtlCon AttachControl")
    DIM pProc AS FUNCTION (BYVAL pControl AS IUnknown PTR, BYVAL hCtl AS HWND, BYVAL ppUnkContainer AS IUnknown PTR PTR) AS HRESULT
-   pProc = cast(ANY PTR, GetProcAddress(m_hAtlLib, "AtlAxAttachControl"))
+   pProc = CAST(ANY PTR, GetProcAddress(m_hAtlLib, "AtlAxAttachControl"))
    IF pProc = NULL THEN RETURN FALSE
    RETURN pProc(pControl, hCtl, NULL)
 END FUNCTION
@@ -400,7 +402,7 @@ END FUNCTION
 PRIVATE FUNCTION CAtlCon.AtlVersion () AS DWORD
    CATL_DP("CAtlCon AtlVersion")
    DIM pProc AS FUNCTION () AS DWORD
-   pProc = cast(ANY PTR, GetProcAddress(m_hAtlLib, "AtlVersion"))
+   pProc = CAST(ANY PTR, GetProcAddress(m_hAtlLib, "AtlVersion"))
    IF pProc = NULL THEN RETURN 0
    RETURN pProc()
 END FUNCTION
@@ -414,7 +416,7 @@ END FUNCTION
 PRIVATE FUNCTION CAtlCon.HiMetricToPixel (BYREF SizeInHiMetric AS SIZEL) AS SIZEL
    CATL_DP("CAtlCon HiMetricToPixel")
    DIM pProc AS SUB (BYREF SizeInHiMetric AS SIZEL, BYREF SizeInPix AS SIZEL)
-   pProc = cast(ANY PTR, GetProcAddress(m_hAtlLib, "AtlHiMetricToPixel"))
+   pProc = CAST(ANY PTR, GetProcAddress(m_hAtlLib, "AtlHiMetricToPixel"))
    DIM SizeInPix AS SIZEL
    IF pProc = NULL THEN pProc(SizeInHiMetric, SizeInPix)
    RETURN SizeInPix
@@ -429,7 +431,7 @@ END FUNCTION
 PRIVATE FUNCTION CAtlCon.PixelToHiMetric (BYREF SizeInPix AS SIZEL) AS SIZEL
    CATL_DP("CAtlCon PixelToHiMetric")
    DIM pProc AS SUB (BYREF SizeInPix AS SIZEL, BYREF SizeInHiMetric AS SIZEL)
-   pProc = cast(ANY PTR, GetProcAddress(m_hAtlLib, "AtlPixelToHiMetric"))
+   pProc = CAST(ANY PTR, GetProcAddress(m_hAtlLib, "AtlPixelToHiMetric"))
    DIM SizeInHiMetric AS SIZEL
    IF pProc = NULL THEN pProc(SizeInPix, SizeInHiMetric)
    RETURN SizeInHiMetric
@@ -446,7 +448,7 @@ END FUNCTION
 PRIVATE FUNCTION CAtlCon.GetHost (BYVAL hwnd AS .HWND) AS IUnknown PTR
    CATL_DP("CAtlCon GetHost")
    DIM pProc AS FUNCTION (BYVAL hwnd AS .HWND, BYREF punk AS IUnknown PTR) AS HRESULT
-   pProc = cast(ANY PTR, GetProcAddress(m_hAtlLib, "AtlAxGetHost"))
+   pProc = CAST(ANY PTR, GetProcAddress(m_hAtlLib, "AtlAxGetHost"))
    IF pProc = NULL THEN RETURN NULL
    DIM punk AS IUnknown PTR
    DIM hr AS HRESULT = pProc(hwnd, punk)
@@ -461,7 +463,7 @@ END FUNCTION
 PRIVATE FUNCTION CAtlCon.GetControl (BYVAL hwnd AS .HWND) AS IUnknown PTR
    CATL_DP("CAtlCon GetControl")
    DIM pProc AS FUNCTION (BYVAL hwnd AS .HWND, BYREF punk AS IUnknown PTR) AS HRESULT
-   pProc = cast(ANY PTR, GetProcAddress(m_hAtlLib, "AtlAxGetControl"))
+   pProc = CAST(ANY PTR, GetProcAddress(m_hAtlLib, "AtlAxGetControl"))
    IF pProc = NULL THEN RETURN NULL
    DIM punk AS IUnknown PTR
    DIM hr AS HRESULT = pProc(hwnd, punk)
@@ -1000,6 +1002,39 @@ PRIVATE PROPERTY CAtlCon.Font (BYVAL hwnd AS .HWND) AS IFontDisp PTR
 END PROPERTY
 ' ========================================================================================
 
+' ========================================================================================
+' Creates a connection between an object's connection point and a client's sink.
+' - pUnkCP: [in] A pointer to the IUnknown of the object that the client is connected with.
+' - pUnk: [in] A pointer to the client's IUnknown.
+' - iid: [in] The GUID of the connection point. Typically, this is the same as the outgoing
+'   interface managed by the connection point.
+' - dwCookie: [out] A cookie that uniquely identifies the connection.
+' ========================================================================================
+PRIVATE FUNCTION CAtlCon.Advise (BYVAL punkCP AS IUnknown PTR, BYVAL punk AS IUnknown PTR, BYVAL riid AS IID PTR, BYREF dwCookie AS DWORD) AS HRESULT
+   CATL_DP("CAtlCon Advise")
+   DIM pProc AS FUNCTION (BYVAL punkCP AS IUnknown PTR, BYVAL punk AS IUnknown PTR, BYVAL riid AS IID PTR, BYREF dwCookie AS DWORD) AS HRESULT
+   pProc = CAST(ANY PTR, GetProcAddress(m_hAtlLib, "AtlAdvise"))
+   IF pProc = NULL THEN RETURN 0
+   RETURN pProc(punkCP, punk, riid, dwCookie)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Terminates the connection established through Advise.
+' Parameters:
+' - pUnkCP: [in] A pointer to the IUnknown of the object that the client is connected with.
+' - iid: [in] The GUID of the connection point. Typically, this is the same as the outgoing
+'   interface managed by the connection point.
+' - dwCookie: [in] The cookie that uniquely identifies the connection.
+' ========================================================================================
+PRIVATE FUNCTION CAtlCon.Unadvise (BYVAL punkCP AS IUnknown PTR, BYVAL riid AS IID PTR, BYVAL dwCookie AS DWORD) AS HRESULT
+   CATL_DP("CAtlCon Unadvise")
+   DIM pProc AS FUNCTION (BYVAL punkCP AS IUnknown PTR, BYVAL riid AS IID PTR, BYVAL dwCookie AS DWORD) AS HRESULT
+   pProc = CAST(ANY PTR, GetProcAddress(m_hAtlLib, "AtlUnadvise"))
+   IF pProc = NULL THEN RETURN 0
+   RETURN pProc(punkCP, riid, dwCookie)
+END FUNCTION
+' ========================================================================================
 
 ' ########################################################################################
 '                                *** CWebCtx class ***
@@ -1014,6 +1049,7 @@ TYPE CWebCtx EXTENDS CAtlCon
 Private:
    m_hWb AS HWND                   ' // Handle of the ATL control window
    m_pWb AS Afx_IWebBrowser2 PTR   ' // Pointer to the IWebBrowser2 interface
+   m_dwCookie AS DWORD             ' // Event's connection cookies
 
 Public:
    DECLARE CONSTRUCTOR (BYREF pWindow AS CWindow, BYVAL cID AS INTEGER, BYREF wszURL AS WSTRING = "about:blank", _
@@ -1047,8 +1083,8 @@ Public:
    DECLARE PROPERTY DisplayAsDefault () AS VARIANT_BOOL
    DECLARE PROPERTY MessageReflect (BYVAL bMessageReflect AS VARIANT_BOOL)
    DECLARE PROPERTY MessageReflect () AS VARIANT_BOOL
-   DECLARE PROPERTY Font (BYVAL hwnd AS .HWND, BYVAL pFont AS IFontDisp PTR)
-   DECLARE PROPERTY Font (BYVAL hwnd AS .HWND) AS IFontDisp PTR
+   DECLARE PROPERTY Font (BYVAL pFont AS IFontDisp PTR)
+   DECLARE PROPERTY Font () AS IFontDisp PTR
    DECLARE FUNCTION Navigate (BYVAL pwszUrl AS WSTRING PTR, BYVAL Flags AS VARIANT PTR = NULL, BYVAL TargetFrameName AS VARIANT PTR = NULL, BYVAL PostData AS VARIANT PTR = NULL, BYVAL Headers AS VARIANT PTR = NULL) AS HRESULT
    DECLARE FUNCTION Navigate (BYVAL pvUrl AS VARIANT PTR, BYVAL Flags AS VARIANT PTR = NULL, BYVAL TargetFrameName AS VARIANT PTR = NULL, BYVAL PostData AS VARIANT PTR = NULL, BYVAL Headers AS VARIANT PTR = NULL) AS HRESULT
    DECLARE FUNCTION WaitForPageLoad (BYVAL nTimeout AS DOUBLE = 10) AS READYSTATE
@@ -1092,6 +1128,8 @@ Public:
    DECLARE FUNCTION GetElementInnerHtmlById (BYREF cwsId AS CWSTR) AS CWSTR
    DECLARE FUNCTION SetElementInnerHtmlById (BYREF cwsId AS CWSTR, BYREF cwsHtml AS CWSTR) AS HRESULT
    DECLARE FUNCTION SetElementFocusById (BYREF cwsId AS CWSTR) AS HRESULT
+   DECLARE FUNCTION Advise () AS HRESULT
+   DECLARE FUNCTION Unadvise () AS HRESULT
 
 END TYPE
 ' ========================================================================================
@@ -1110,7 +1148,7 @@ BYVAL bSilent AS VARIANT_BOOL = VARIANT_TRUE, BYVAL dwDocHostFlags AS DWORD = DO
    ' // Store a pointer to the class as a property
    SetPropW(m_hWb, "CWEBCTXPTR", CAST(HANDLE, @this))
    ' // Get an addrefed pointer to the IWebBrowser2 interface
-   m_pWb = cast(Afx_IWebBrowser2 PTR, cast(ULONG_PTR, this.GetDispatch(m_hWb)))
+   m_pWb = CAST(Afx_IWebBrowser2 PTR, CAST(ULONG_PTR, this.GetDispatch(m_hWb)))
    ' // Make navigation silent (disables annoying popups of the script debugger)
    this.Silent = bSilent
    ' // Make the web page themed and DPI aware
@@ -1132,7 +1170,7 @@ BYVAL bSilent AS VARIANT_BOOL = VARIANT_TRUE, BYVAL dwDocHostFlags AS DWORD = DO
    ' // Store a pointer to the class as a property
    SetPropW(m_hWb, "CWEBCTXPTR", CAST(HANDLE, @this))
    ' // Get an addrefed pointer to the IWebBrowser2 interface
-   m_pWb = cast(Afx_IWebBrowser2 PTR, cast(ULONG_PTR, this.GetDispatch(m_hWb)))
+   m_pWb = CAST(Afx_IWebBrowser2 PTR, CAST(ULONG_PTR, this.GetDispatch(m_hWb)))
    ' // Make navigation silent (disables annoying popups of the script debugger)
    this.Silent = bSilent
    ' // Make the web page themed and DPI aware
@@ -1156,7 +1194,7 @@ PRIVATE DESTRUCTOR CWebCtx
    ' // Release the IWebBrowser2 inteface
    DIM r AS DWORD
    IF m_pWb THEN r = m_pWb->Release
-   CATL_DP("CWebCtx Destructor - ref = " & WSTR(r) & " (must be 1)")
+   CATL_DP("CWebCtx Destructor - ref = " & WSTR(r))
 END DESTRUCTOR
 ' ========================================================================================
 
@@ -1355,13 +1393,13 @@ END PROPERTY
 ' The ATL host object implementation uses the default GUI font or the system font as the
 ' default value of this property.
 ' ========================================================================================
-PRIVATE PROPERTY CWebCtx.Font (BYVAL hwnd AS .HWND, BYVAL pFont AS IFontDisp PTR)
+PRIVATE PROPERTY CWebCtx.Font (BYVAL pFont AS IFontDisp PTR)
 '   CATL_DP("CWebCtx put_Font")
    Base.Font(m_hWb) = pFont
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE PROPERTY CWebCtx.Font (BYVAL hwnd AS .HWND) AS IFontDisp PTR
+PRIVATE PROPERTY CWebCtx.Font () AS IFontDisp PTR
 '   CATL_DP("CWebCtx get_Font")
    RETURN Base.Font(m_hWb)
 END PROPERTY
@@ -1373,9 +1411,9 @@ END PROPERTY
 ' ========================================================================================
 PRIVATE FUNCTION CWebCtx.Navigate (BYVAL pwszUrl AS WSTRING PTR, BYVAL Flags AS VARIANT PTR = NULL, BYVAL TargetFrameName AS VARIANT PTR = NULL, BYVAL PostData AS VARIANT PTR = NULL, BYVAL Headers AS VARIANT PTR = NULL) AS HRESULT
    CATL_DP("CWebCtx Navigate pwszUrl")
-   IF m_pWB = NULL THEN RETURN E_NOINTERFACE
+   IF m_pWB = NULL THEN RETURN E_POINTER
    DIM vUrl AS VARIANT : vUrl.vt = VT_BSTR : vUrl.bstrVal = SysAllocString(pwszUrl)
-   DIM hr AS HRESULT = m_pWB->Navigate2(@vUrl, Flags, TargetFrameName, PostData, Headers)
+   DIM hr AS HRESULT = m_pWb->Navigate2(@vUrl, Flags, TargetFrameName, PostData, Headers)
    VariantClear @vurl
    RETURN hr
 END FUNCTION
@@ -1383,8 +1421,8 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CWebCtx.Navigate (BYVAL pvUrl AS VARIANT PTR, BYVAL Flags AS VARIANT PTR = NULL, BYVAL TargetFrameName AS VARIANT PTR = NULL, BYVAL PostData AS VARIANT PTR = NULL, BYVAL Headers AS VARIANT PTR = NULL) AS HRESULT
    CATL_DP("CWebCtx Navigate Variant Ptr")
-   IF m_pWB = NULL THEN RETURN E_NOINTERFACE
-   DIM hr AS HRESULT = m_pWB->Navigate2(pvUrl, Flags, TargetFrameName, PostData, Headers)
+   IF m_pWB = NULL THEN RETURN E_POINTER
+   DIM hr AS HRESULT = m_pWb->Navigate2(pvUrl, Flags, TargetFrameName, PostData, Headers)
    RETURN hr
 END FUNCTION
 ' ========================================================================================
@@ -1431,9 +1469,9 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CWebCtx.SetFocus () AS HRESULT
    CATL_DP("CWebCtx SetFocus")
-   IF m_pWB = NULL THEN RETURN E_NOINTERFACE
+   IF m_pWB = NULL THEN RETURN E_POINTER
    DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
-   DIM hr AS HRESULT =  m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   DIM hr AS HRESULT =  m_pWb->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
    IF hr <> S_OK THEN RETURN hr
    DIM pWindow2 AS IHTMLWindow2 PTR
    hr = pIHTMLDocument2->lpvtbl->get_parentWindow(pIHTMLDocument2, @pWindow2)
@@ -1537,7 +1575,7 @@ END FUNCTION
 ' Activates de print dialog.
 ' ========================================================================================
 PRIVATE FUNCTION CWebCtx.PrintPage (BYVAL bPromptUser AS BOOLEAN = TRUE) AS HRESULT
-   IF m_pWb = NULL THEN RETURN E_NOINTERFACE
+   IF m_pWb = NULL THEN RETURN E_POINTER
    IF bPromptUser THEN
       m_pWb->ExecWB(OLECMDID_PRINT, OLECMDEXECOPT_PROMPTUSER, NULL, NULL)
    ELSE
@@ -1573,9 +1611,9 @@ END FUNCTION
 ' See http://support.microsoft.com/?kbid=311288
 ' ========================================================================================
 PRIVATE FUNCTION CWebCtx.Find () AS HRESULT
-   IF m_pWb = NULL THEN RETURN E_NOINTERFACE
+   IF m_pWb = NULL THEN RETURN E_POINTER
    DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
-   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   DIM hr AS HRESULT = m_pWb->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
    IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN hr
    DIM CGID_WebBrowser_ AS GUID = (&hED016940, &hBD5B, &h11CF, {&hBA, &h4E, &h00, &hC0, &h4F, &hD7, &h08, &h16})
    DIM pCmdTarget AS IOleCommandTarget PTR
@@ -1589,9 +1627,9 @@ END FUNCTION
 ' Displays the source code of the page in an instance of NotePad.
 ' ========================================================================================
 PRIVATE FUNCTION CWebCtx.ShowSource () AS HRESULT
-   IF m_pWb = NULL THEN RETURN E_NOINTERFACE
+   IF m_pWb = NULL THEN RETURN E_POINTER
    DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
-   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   DIM hr AS HRESULT = m_pWb->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
    IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN hr
    DIM CGID_WebBrowser_ AS GUID = (&hED016940, &hBD5B, &h11CF, {&hBA, &h4E, &h00, &hC0, &h4F, &hD7, &h08, &h16})
    DIM pCmdTarget AS IOleCommandTarget PTR
@@ -1605,9 +1643,9 @@ END FUNCTION
 ' Activates the Internet options dialog.
 ' ========================================================================================
 PRIVATE FUNCTION CWebCtx.InternetOptions () AS HRESULT
-   IF m_pWb = NULL THEN RETURN E_NOINTERFACE
+   IF m_pWb = NULL THEN RETURN E_POINTER
    DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
-   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   DIM hr AS HRESULT = m_pWb->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
    IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN hr
    DIM CGID_WebBrowser_ AS GUID = (&hED016940, &hBD5B, &h11CF, {&hBA, &h4E, &h00, &hC0, &h4F, &hD7, &h08, &h16})
    DIM pCmdTarget AS IOleCommandTarget PTR
@@ -1631,8 +1669,8 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE PROPERTY CWebCtx.Document () AS IHtmlDocument2 PTR
    DIM pdisp AS IDispatch PTR
-   IF m_pWb THEN m_pWb->get_Document(cast(ANY PTR, @pdisp))
-   PROPERTY = cast(IHtmlDocument2 PTR, pdisp)
+   IF m_pWb THEN m_pWb->get_Document(CAST(ANY PTR, @pdisp))
+   PROPERTY = CAST(IHtmlDocument2 PTR, pdisp)
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
@@ -1744,9 +1782,9 @@ END PROPERTY
 ' - S_OK if successful, or an error value otherwise.
 ' ========================================================================================
 PRIVATE FUNCTION CWebCtx.WriteHtml (BYREF cwsHtml AS CWSTR, BYVAL cr AS BOOLEAN = FALSE) AS HRESULT
-   IF m_pWb = NULL THEN RETURN E_NOINTERFACE
+   IF m_pWb = NULL THEN RETURN E_POINTER
    DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
-   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   DIM hr AS HRESULT = m_pWb->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
    IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN hr
    ' // Create a safearray of variants of one element
    DIM psarray AS SafeArray PTR
@@ -1782,7 +1820,7 @@ END FUNCTION
 PRIVATE FUNCTION CWebCtx.GetBodyInnerText () AS CWSTR
    IF m_pWb = NULL THEN RETURN ""
    DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
-   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   DIM hr AS HRESULT = m_pWb->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
    IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN ""
    DIM pIHTMLElement AS IHTMLElement PTR
    hr = pIHTMLDocument2->lpvtbl->get_body(pIHTMLDocument2, @pIHTMLElement)
@@ -1803,7 +1841,7 @@ END FUNCTION
 PRIVATE FUNCTION CWebCtx.GetBodyInnerHtml () AS CWSTR
    IF m_pWb = NULL THEN RETURN ""
    DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
-   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   DIM hr AS HRESULT = m_pWb->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
    IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN ""
    DIM pIHTMLElement AS IHTMLElement PTR
    hr = pIHTMLDocument2->lpvtbl->get_body(pIHTMLDocument2, @pIHTMLElement)
@@ -1826,7 +1864,7 @@ END FUNCTION
 PRIVATE FUNCTION CWebCtx.GetActiveElementId () AS CWSTR
    IF m_pWb = NULL THEN RETURN ""
    DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
-   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   DIM hr AS HRESULT = m_pWb->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
    IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN ""
    DIM pIHTMLElement AS IHTMLElement PTR
    hr = pIHTMLDocument2->lpvtbl->get_activeElement(pIHTMLDocument2, @pIHTMLElement)
@@ -1857,7 +1895,7 @@ PRIVATE FUNCTION CWebCtx.GetElementValueById (BYREF cwsId AS CWSTR) AS VARIANT
    IF m_pWb = NULL THEN EXIT FUNCTION
    ' // Get a reference to the IHTMLDocument2 interface
    DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
-   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   DIM hr AS HRESULT = m_pWb->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
    IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN EXIT FUNCTION
    ' // Get a reference to the IHTMLDocument3 interface
    DIM pIHTMLDocument3 AS IHTMLDocument3 PTR
@@ -1894,10 +1932,10 @@ END FUNCTION
 ' - S_OK if successful, or an error value otherwise.
 ' ========================================================================================
 PRIVATE FUNCTION CWebCtx.SetElementValueById (BYREF cwsId AS CWSTR, BYVAL vValue AS VARIANT) AS HRESULT
-   IF m_pWb = NULL THEN RETURN E_NOINTERFACE
+   IF m_pWb = NULL THEN RETURN E_POINTER
    ' // Get a reference to the IHTMLDocument2 interface
    DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
-   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   DIM hr AS HRESULT = m_pWb->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
    IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN hr
    ' // Get a reference to the IHTMLDocument3 interface
    DIM pIHTMLDocument3 AS IHTMLDocument3 PTR
@@ -1936,7 +1974,7 @@ PRIVATE FUNCTION CWebCtx.GetElementInnerHtmlById (BYREF cwsId AS CWSTR) AS CWSTR
    IF m_pWb = NULL THEN RETURN ""
    ' // Get a reference to the IHTMLDocument2 interface
    DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
-   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   DIM hr AS HRESULT = m_pWb->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
    IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN ""
    ' // Get a reference to the IHTMLDocument3 interface
    DIM pIHTMLDocument3 AS IHTMLDocument3 PTR
@@ -1977,7 +2015,7 @@ PRIVATE FUNCTION CWebCtx.SetElementInnerHtmlById (BYREF cwsId AS CWSTR, BYREF cw
    IF m_pWb = NULL THEN RETURN E_POINTER
    ' // Get a reference to the IHTMLDocument2 interface
    DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
-   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   DIM hr AS HRESULT = m_pWb->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
    IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN hr
    ' // Get a reference to the IHTMLDocument3 interface
    DIM pIHTMLDocument3 AS IHTMLDocument3 PTR
@@ -2011,7 +2049,7 @@ PRIVATE FUNCTION CWebCtx.SetElementFocusById (BYREF cwsId AS CWSTR) AS HRESULT
    IF m_pWb = NULL THEN RETURN E_POINTER
    ' // Get a reference to the IHTMLDocument2 interface
    DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
-   DIM hr AS HRESULT = m_pWb->get_Document(@cast(ANY PTR, pIHTMLDocument2))
+   DIM hr AS HRESULT = m_pWb->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
    IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN hr
    ' // Get a reference to the IHTMLDocument3 interface
    DIM pIHTMLDocument3 AS IHTMLDocument3 PTR
@@ -2066,12 +2104,12 @@ PRIVATE FUNCTION AtlControlUnknown (BYVAL hwnd AS HWND) AS Afx_IUnknown PTR
    hAtlLib = LoadLibraryW("Atl.dll")
    IF hAtlLib = NULL THEN RETURN NULL
    DIM pProc AS FUNCTION (BYVAL hwnd AS .HWND, BYREF punk AS IUnknown PTR) AS HRESULT
-   pProc = cast(ANY PTR, GetProcAddress(hAtlLib, "AtlAxGetControl"))
+   pProc = CAST(ANY PTR, GetProcAddress(hAtlLib, "AtlAxGetControl"))
    FreeLibrary hAtlLib
    IF pProc = NULL THEN RETURN NULL
    DIM punk AS IUnknown PTR
    DIM hr AS HRESULT = pProc(hwnd, punk)
-   RETURN cast(Afx_IUnknown PTR, cast(ULONG_PTR, punk))
+   RETURN CAST(Afx_IUnknown PTR, CAST(ULONG_PTR, punk))
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -2114,7 +2152,7 @@ END FUNCTION
 ' Don't release the returned pointer because it is a direct pointer.
 ' ========================================================================================
 PRIVATE FUNCTION AtlBrowserDispatch OVERLOAD (BYVAL hwnd AS HWND) AS Afx_IWebBrowser2 PTR
-   RETURN CAST(Afx_IWebBrowser2 PTR, cast(ULONG_PTR, AtlControlDispatch(hwnd)))
+   RETURN CAST(Afx_IWebBrowser2 PTR, CAST(ULONG_PTR, AtlControlDispatch(hwnd)))
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -2138,7 +2176,7 @@ END FUNCTION
 ' You must release the returned pointer when you no longer need it.
 ' ========================================================================================
 PRIVATE FUNCTION AtlBrowserObject OVERLOAD (BYVAL hwnd AS HWND) AS Afx_IWebBrowser2 PTR
-   RETURN CAST(Afx_IWebBrowser2 PTR, cast(ULONG_PTR, AtlControlObject(hwnd)))
+   RETURN CAST(Afx_IWebBrowser2 PTR, CAST(ULONG_PTR, AtlControlObject(hwnd)))
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -2235,7 +2273,42 @@ PRIVATE FUNCTION AtlForwardMessage (BYVAL hctl AS HWND, BYVAL pMsg AS tagMsg PTR
       hwnd = GetParent(hwnd)
    WEND
    IF wszClassName <> "AtlAxWin" THEN RETURN FALSE
-   RETURN SendMessageW(hwnd, &H37F, 0, cast(LPARAM, pMsg))
+   RETURN SendMessageW(hwnd, &H37F, 0, CAST(LPARAM, pMsg))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Waits until the page had been fully downloaded or te timeout has expired.
+' - dbTimeout Timeout in seconds.
+' Return value:
+' READYSTATE_UNINITIALIZED = 0
+'   Default initialization state.
+' READYSTATE_LOADING = 1
+'   Object is currently loading its properties.
+' READYSTATE_LOADED = 2
+'   Object has been initialized.
+' READYSTATE_INTERACTIVE = 3
+'   Object is interactive, but not all of its data is available.
+' READYSTATE_COMPLETE = 4
+'   Object has received all of its data.
+' ========================================================================================
+PRIVATE FUNCTION AtlWaitForPageLoad (BYVAL hCtl AS HWND, BYVAL dbTimeout AS DOUBLE = 10) AS tagREADYSTATE
+   DIM lReadyState AS tagREADYSTATE
+   DIM starttime AS DOUBLE = timer
+   DIM pWb AS Afx_IWebBrowser2 PTR = AtlBrowserDispatch(hCtl)
+   IF pWb = NULL THEN RETURN 0
+   DO
+      ' // Processes pending messages
+      ' // Needed to allow the page to load
+      AfxPumpMessages
+      ' // Retrieves the ready state
+      pWb->get_ReadyState(@lReadyState)
+      IF lReadyState = READYSTATE_COMPLETE THEN EXIT DO
+      IF timer - starttime > dbTimeout THEN EXIT DO
+      ' // Needed to update timer
+      SLEEP 1, 1
+   LOOP
+   RETURN lReadyState
 END FUNCTION
 ' ========================================================================================
 
