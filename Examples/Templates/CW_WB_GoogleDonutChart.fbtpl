@@ -89,7 +89,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    ' // Creates the main window
    DIM pWindow AS CWindow
    ' -or- DIM pWindow AS CWindow = "MyClassName" (use the name that you wish)
-   DIM hwndMain AS HWND = pWindow.Create(NULL, "WebBrowser - Google Pie Chart 3D", @WndProc)
+   DIM hwndMain AS HWND = pWindow.Create(NULL, "WebBrowser - Google Donut Chart", @WndProc)
    ' // Sizes it by setting the wanted width and height of its client area
    pWindow.SetClientSize(600, 400)
    ' // Centers the window
