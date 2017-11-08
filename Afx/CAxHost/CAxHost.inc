@@ -1,0 +1,1378 @@
+' ########################################################################################
+' Microsoft Windows
+' File: CAxHost.inc
+' Contents: OLE Container class
+' Compiler: FreeBasic 32 & 64-bit
+' Copyright (c) 2017 José Roca. Freeware. Use at your own risk.
+' this CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+' ########################################################################################
+
+#pragma once
+#include once "windows.bi"
+#include once "Afx/AfxCOM.inc"
+#include once "Afx/CWindow.inc"
+#include once "Afx/AfxExDisp.bi"
+#include once "Afx/CAxHost/CAxHost.bi"
+USING Afx
+
+NAMESPACE Afx
+
+' // Forward references
+TYPE CAxHost_ AS CAxHost
+TYPE CAxHost_IUnknown_ AS CAxHost_IUnknown
+TYPE CAxHost_IDispatch_ AS CAxHost_IDispatch
+TYPE CAxHost_IOleClientSite_ AS CAxHost_IOleClientSite
+TYPE CAxHost_IServiceProvider_ AS CAxHost_IServiceProvider
+TYPE CAxHost_IParseDisplayName_ AS CAxHost_IParseDisplayName
+TYPE CAxHost_IOleContainer_ AS CAxHost_IOleContainer
+TYPE CAxHost_IOleWindow_ AS CAxHost_IOleWindow
+TYPE CAxHost_IOleInPlaceUIWindow_ AS CAxHost_IOleInPlaceUIWindow
+TYPE CAxHost_IOleInPlaceFrame_ AS CAxHost_IOleInPlaceFrame
+TYPE CAxHost_IOleInPlaceSite_ AS CAxHost_IOleInPlaceSite
+TYPE CAxHost_IOleInPlaceSiteEx_ AS CAxHost_IOleInPlaceSiteEx
+TYPE CAxHost_IOleControlSite_ AS CAxHost_IOleControlSite
+TYPE CAxHost_ISimpleFrameSite_ AS CAxHost_ISimpleFrameSite
+
+' ########################################################################################
+'                                *** CAXHost class ***
+' ########################################################################################
+
+' ========================================================================================
+' CAxHost class
+' Implements an OLE container AS a Windows custom control.
+' ========================================================================================
+TYPE CAxHost
+
+Public:
+   m_bUninitOLE AS BOOLEAN   ' // Ole initialization flag
+
+   m_hwnd                     AS HWND            ' // Window handle
+   m_pOcx                     AS IDispatch PTR   ' // Address of a pointer to the ActiveX's Vtable
+   m_hFont                    AS HFONT           ' // Window font
+   m_pIFontDisp               AS IFontDisp PTR   ' // IFontDisp interface
+   m_dwMiscStatus             AS DWORD           ' // Status bitwise flags
+   m_bLocked                  AS BOOLEAN         ' // Container locked
+   m_bInPlaceActive           AS BOOLEAN         ' // The control is in-place active
+   m_bUIActive                AS BOOLEAN         ' // The control is UI Active
+   m_bHaveFocus               AS BOOLEAN         ' // The control has focus
+   m_AmbientDlControl         AS DWORD           ' // Ambient flags to control the WebBrowser behavior
+   m_rxRatio                  AS SINGLE          ' // DPI horizontal ratio
+   m_ryRatio                  AS SINGLE          ' // DPI vertical ratio
+   m_wszProgID                AS WSTRING * 260   ' // ActiveX ProgID
+   m_wszLibName               AS WSTRING * 260   ' // ActiveX path
+   m_wszLicKey                AS WSTRING * 260   ' // ActiveX license key
+   m_rclsid                   AS CLSID           ' // ActiveX ClsId
+   m_riid                     AS IID             ' // ActiveX IID
+   m_bIsRegFree               AS BOOLEAN         ' // Register free OCX
+   m_bIsLicensed              AS BOOLEAN         ' // Licensed OCX
+   m_dwCookie                 AS DWORD           ' // Cookie for Unadvise
+   m_riidEvt                  AS IID PTR         ' // IID of the events interface
+
+   ' *** Implemented interfaces ***
+   m_pIUnknownImpl            AS CAxHost_IUnknown_ PTR              ' // IUnknown interface (implemented)
+   m_pIDispatchImpl           AS CAxHost_IDispatch_ PTR             ' // IDispatch interface (implemented)
+   m_pIOleClientSiteImpl      AS CAxHost_IOleClientSite_ PTR        ' // IOleClientSite interface (implemented)
+   m_pIOleContainerImpl       AS CAxHost_IOleContainer_ PTR         ' // IOleContainer interface (implemented)
+   m_pIOleControlSiteImpl     AS CAxHost_IOleControlSite_ PTR       ' // IOleControlSite interface (implemented)
+   m_pIOleInPlaceFrameImpl    AS CAxHost_IOleInPlaceFrame_ PTR      ' // IOleInPlaceFrame interface (implemented)
+   m_pIOleInPlaceSiteImpl     AS CAxHost_IOleInPlaceSite_ PTR       ' // IOleInPlaceSite interface (implemented)
+   m_pIOleInplaceSiteExImpl   AS CAxHost_IOleInPlaceSiteEx_ PTR     ' // IOleInPlaceSiteEx interface (implemented)
+   m_pIOleInPlaceUIWindowImpl AS CAxHost_IOleInplaceUIWindow_ PTR   ' // IOleInplaceUIWindow interface (implemented)
+   m_pIOleWindowImpl          AS CAxHost_IOleWindow_ PTR            ' // IOleWindow interface (implemented)
+   m_pIParseDisplayNameImpl   AS CAxHost_IParseDisplayName_ PTR     ' // IParseDisplayName interface (implemented)
+   m_pIServiceProviderImpl    AS CAxHost_IServiceProvider_ PTR      ' // IServiceProvider interface (implemented)
+   m_pISimpleFrameSiteImpl    AS CAxHost_ISimpleFrameSite_ PTR      ' // ISimpleFrameSite interface (implemented)
+
+   ' *** Control interfaces ***
+   m_pIOleObject              AS Afx_IOleObject PTR                 ' // IOleObject interface
+   m_pIOleInPlaceObject       AS Afx_IOleInPlaceObject PTR          ' // IOleInPlaceObject interface
+   m_pIOleInPlaceActiveObject AS Afx_IOleInPlaceActiveObject PTR    ' // IOleInPlaceActiveObject interface
+
+Protected:
+   DECLARE FUNCTION RegisterClass () AS ATOM
+   DECLARE STATIC FUNCTION CAxHostProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
+   DECLARE SUB CreateContainer (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+      BYREF wszLibName AS WSTRING, BYREF rclsid AS const CLSID, BYREF riid AS const IID, BYREF wszLicKey AS WSTRING, _
+      BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+      BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+
+Public:
+   DECLARE CONSTRUCTOR
+   DECLARE DESTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS WSTRING, _
+      BYREF rclsid AS const CLSID, BYREF riid AS const IID, BYREF wszLicKey AS WSTRING, _
+      BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+      BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS WSTRING, _
+      BYREF rclsid AS const CLSID, BYREF riid AS const IID, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
+      BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+      BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+      BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+      BYREF wszLicKey AS WSTRING, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+      BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF classID AS CONST CLSID, _
+      BYREF riid AS CONST IID, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
+      BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF classID AS CONST CLSID, _
+      BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, _
+      BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = 0, _
+      BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+   DECLARE FUNCTION CreateObject (BYREF wszProgID AS WSTRING) AS IDispatch PTR
+   DECLARE FUNCTION CreateObject (BYREF wszProgID AS WSTRING, BYREF wszLicKey AS WSTRING) AS IDispatch PTR
+   DECLARE FUNCTION CreateObject (BYREF classID AS CONST CLSID, BYREF riid AS CONST IID) AS IDispatch PTR
+   DECLARE FUNCTION CreateObject (BYREF classID AS CONST CLSID, BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING) AS IDispatch PTR
+   DECLARE FUNCTION CreateObject (BYREF wszLibName AS CONST WSTRING, BYREF rclsid AS CONST CLSID, _
+      BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING = "") AS IDispatch PTR
+   DECLARE FUNCTION hWindow () AS HANDLE
+   DECLARE SUB PixelsToHiMetric (BYVAL SizeInPix AS SIZEL PTR, BYVAL SizeInHiMetric AS SIZEL PTR)
+   DECLARE FUNCTION OcxDispPtr () AS IDispatch PTR
+   DECLARE FUNCTION OcxDispObj () AS IDispatch PTR
+   DECLARE FUNCTION Advise (BYVAL pEvtObj AS IDispatch PTR, BYVAL riid AS IID PTR) AS HRESULT
+   DECLARE FUNCTION Advise (BYVAL pEvtObj AS IDispatch PTR, BYREF riid AS CONST IID) AS HRESULT
+   DECLARE FUNCTION Advise (BYVAL pEvtObj AS IDispatch PTR, BYREF riid AS IID) AS HRESULT
+   DECLARE FUNCTION Advise (BYVAL pEvtObj AS Afx_IDispatch PTR, BYVAL riid AS IID PTR) AS HRESULT
+   DECLARE FUNCTION Advise (BYVAL pEvtObj AS Afx_IDispatch PTR, BYREF riid AS CONST IID) AS HRESULT
+   DECLARE FUNCTION Advise (BYVAL pEvtObj AS Afx_IDispatch PTR, BYREF riid AS IID) AS HRESULT
+   DECLARE FUNCTION Unadvise () AS HRESULT
+   DECLARE FUNCTION OleCreateFontDisp (BYREF wszFontName AS WSTRING, BYVAL cySize AS LONGLONG, _
+           BYVAL fWeight AS SHORT, BYVAL fCharset AS SHORT, BYVAL fItalic AS WINBOOL, _
+           BYVAL fUnderline AS WINBOOL, BYVAL fStrikethrough AS WINBOOL) AS IFontDisp PTR
+   DECLARE FUNCTION StrToGuid (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS GUID
+   DECLARE FUNCTION GuidText (BYVAL classID AS CLSID PTR) AS STRING
+   DECLARE FUNCTION GuidText (BYVAL riid AS REFIID) AS STRING
+   DECLARE FUNCTION GuidText (BYVAL classID AS CLSID) AS STRING
+   DECLARE FUNCTION GuidFromStr (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS GUID
+   DECLARE FUNCTION GetInterfaceName (BYVAL riid AS REFIID) AS STRING
+   DECLARE FUNCTION QueryInterface (BYVAL riid AS REFIID, BYVAL ppvObj AS LPVOID PTR) AS HRESULT
+
+END TYPE
+' ========================================================================================
+
+' ========================================================================================
+' Constructor
+' ========================================================================================
+PRIVATE CONSTRUCTOR CAxHost
+   CAXH_DP("CaxHost CONSTRUCTOR")
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+' Destructor
+' ========================================================================================
+PRIVATE DESTRUCTOR CAxHost
+   CAXH_DP("--- CAXHOST DESTRUCTOR - BEGIN ---")
+
+'   ' // Disconnects events if needed
+'   IF this.m_pUnkSink <> %NULL OR this.m_pEvtObj <> %NULL THEN OC_Unadvise(hWnd)
+'   ' // Removes the IID property
+'   hr = RemoveProp(hWnd, BYCOPY $OC_IID)
+'   CAXH_DP("RemoveProp = " & WSTR(hr) & " - " & WSTR(pData))
+
+   ' // Required: Deactivate the IOleInPlaceObject if it active.
+   ' // It forces the release of the IOleInPlaceSite interface.
+   IF m_bInPlaceActive THEN
+      IF m_pIOleInPlaceObject THEN m_pIOleInPlaceObject->InPlaceDeactivate
+   END IF
+
+   ' // Close the control
+   IF m_pIOleObject THEN
+      m_pIOleObject->Close(OLECLOSE_NOSAVE)
+      m_pIOleObject->SetClientSite(NULL)
+   END IF
+
+   ' // Release de IFontDisp object
+   IF m_pIFontDisp THEN
+      DIM cRef AS ULONG = AfxSafeRelease(m_pIFontDisp)
+      CAXH_DP("Release IFontDisp - cRef (must be 0) = " & WSTR(cRef))
+   END IF
+   ' // Release the IOleInPlaceObject interface
+'   IF m_pIOleInPlaceObject THEN
+'      DIM cRef AS ULONG = m_pIOleInPlaceObject->Release
+'      CAXH_DP("Release IOleInPlaceObject - cRef (must be 0) = " & WSTR(cRef))
+'   END IF
+   ' // Release the IOleObject interface
+   ' // The returned reference count must be at least 1 because the
+   ' // ActiveX control holds a reference to it.
+   IF m_pIOleObject THEN
+      DIM cRef AS ULONG = m_pIOleObject->Release
+      m_pIOleObject = NULL
+      CAXH_DP("Release IOleObject - cRef (must be 1) = " & WSTR(cRef))
+   END IF
+   ' // Release the ActiveX control
+   IF m_pOcx THEN
+      DIM cRef AS ULONG = m_pOcx->lpvtbl->Release(m_pOcx)
+      CAXH_DP("Release OCX - cRef (must be 0) = " & WSTR(cRef))
+   END IF
+
+   ' // Checks for memory lesaks (if a pointer <> 0 then memory leak)
+   CAXH_DP("*** IUnknown = " & WSTR(this.m_pIUnknownImpl))
+   CAXH_DP("*** IsDispatch = " & WSTR(this.m_pIDispatchImpl))
+   CAXH_DP("*** IOleClientSite = " & WSTR(this.m_pIOleClientSiteImpl))
+   CAXH_DP("*** IOleContainer = " & WSTR(this.m_pIOleContainerImpl))
+   CAXH_DP("*** IOleControlSite = " & WSTR(this.m_pIOleControlSiteImpl))
+   CAXH_DP("*** IOleInPlaceActiveObject = " & WSTR(this.m_pIOleInPlaceActiveObject))
+   CAXH_DP("*** IOleInPlaceFrame = " & WSTR(this.m_pIOleInPlaceFrameImpl))
+   CAXH_DP("*** IOleInPlaceObject = " & WSTR(this.m_pIOleInPlaceObject))
+   CAXH_DP("*** IOleInPlaceSite = " & WSTR(this.m_pIOleInPlaceSiteImpl))
+   CAXH_DP("*** IOleInPlaceSiteEx = " & WSTR(this.m_pIOleInPlaceSiteExImpl))
+   CAXH_DP("*** IOleInPlaceUIWindow = " & WSTR(this.m_pIOleInPlaceUIWindowImpl))
+   CAXH_DP("*** IOleObject = " & WSTR(this.m_pIOleObject))
+   CAXH_DP("*** IOleWindow = " & WSTR(this.m_pIOleWindowImpl))
+   CAXH_DP("*** IParseDisplayName = " & WSTR(this.m_pIParseDisplayNameImpl))
+   CAXH_DP("*** IServiceProvider = " & WSTR(this.m_pIServiceProviderImpl))
+   CAXH_DP("*** ISimpleFrameSite = " & WSTR(this.m_pISimpleFrameSiteImpl))
+
+   ' // WORKAROUND: The DHTML Edit Control doesn't release this interface
+'   IF this.m_pIOleControlSite THEN
+'      IUnknown_Release this.m_pIOleControlSite
+'   END IF
+
+   ' // Free the COM library
+   CAXH_DP("DESTRUCTOR CAxHost - m_bUninitOLE = " & WSTR(m_bUninitOLE))
+   IF m_bUninitOLE THEN OleUninitialize
+
+   CAXH_DP("--- CAXHOST DESTRUCTOR - END ---")
+
+END DESTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' Registers the class
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.RegisterClass () AS ATOM
+   DIM wAtom AS ATOM
+   DIM wcexw AS WNDCLASSEXW
+   DIM wszClassName AS WSTRING * 260 = CAXHOST_CLASSNAME
+   IF .GetClassInfoExW(.GetModuleHandleW(NULL), @wszClassName, @wcexw) = 0 THEN
+      ' // Fill the WNDCLASSEXW structure
+      WITH wcexw
+         .cbSize        = SIZEOF(wcexw)
+         .style         = CS_DBLCLKS OR CS_HREDRAW OR CS_VREDRAW
+         .lpfnWndProc   = @CAxHostProc
+         .cbClsExtra    = 0
+         .cbWndExtra    = SIZEOF(HANDLE)
+         .hInstance     = ..GetModuleHandleW(NULL)
+         .hCursor       = ..LoadCursorW(NULL, CAST(LPCWSTR, IDC_ARROW))
+         .hbrBackground = NULL
+         .lpszMenuName  = NULL
+         .lpszClassName = @wszClassName
+         .hIcon         = NULL
+         .hIconSm       = NULL
+      END WITH
+      wAtom = .RegisterClassExW(@wcexw)
+   END IF
+   RETURN wAtom
+END FUNCTION
+' ========================================================================================
+
+' TODO:
+' - Register the class
+' - Create the host control
+' - Create an instance of the ActiveX
+' - Retrieve the IOleObject interface of the activeX
+' - Create an instance of the CIOleClientStiteImpl class
+' - Set the client site
+' - CIOleCLientSiteImpl will call the dispatch methods of the CAxHost class
+' - The other classes will also call the dispatch methods of the CAxHost class
+' - The centralized QueryInterface method will create instances of the requested interfaces
+'   if they haven't yet be created or return and addrefed existing pointer
+' - The destructor will call Release on all the non null pointers
+
+' ========================================================================================
+' Create container window
+' ========================================================================================
+PRIVATE SUB CAxHost.CreateContainer (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+   BYREF wszLibName AS WSTRING, BYREF rclsid AS const CLSID, BYREF riid AS const IID, BYREF wszLicKey AS WSTRING, _
+   BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+   BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+
+   CAXH_DP("CONSTRUCTOR CAxHost")
+   ' // Initialize the COM library
+   DIM hr AS HRESULT = OleInitialize(NULL)
+   IF hr = S_OK OR hr = S_FALSE THEN m_bUninitOLE = TRUE
+   CAXH_DP("CONSTRUCTOR CAxHost - OleInitialize hr = " & WSTR(hr))
+   ' // Register the class
+   DIM wszClassName AS WSTRING * 260 = CAXHOST_CLASSNAME
+   this.RegisterClass
+   ' // Store values
+   m_AmbientDlControl = ambientFlags
+   m_rxRatio = pWindow->rxRatio
+   m_ryRatio = pWindow->ryRatio
+   m_wszProgID = wszProgID     ' // ActiveX ProgID
+   m_wszLibName = wszLibName   ' // ActiveX path
+   m_wszLicKey = wszLicKey     ' // Active license key
+   m_rclsid = rclsid           ' // ActiveX CLSID
+   m_riid = riid               ' // ActiveX IID
+   IF LEN(wszLibName) THEN m_bIsRegFree = TRUE
+   IF LEN(wszLicKey) THEN m_bIsLicensed = TRUE
+
+   ' // Create the control
+   IF dwStyle = 0 THEN dwStyle = WS_VISIBLE OR WS_TABSTOP
+   IF pWindow THEN m_hwnd = pWindow->AddControl(wszClassName, pWindow->hWindow, cID, "", _
+      x, y, nWidth, nHeight, dwStyle, dwExStyle, CAST(LONG_PTR, @this))
+   IF m_hwnd THEN
+      .SetWindowLongPtrW m_hwnd, 0, CAST(LONG_PTR, @this)
+      ' // Set the same font used by the parent
+      DIM lfw AS LOGFONTW
+      IF pWindow->Font THEN
+         IF .GetObjectW(pWindow->Font, SIZEOF(lfw), @lfw) THEN m_hFont = CreateFontIndirectW(@lfw)
+      END IF
+   END IF
+
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' COleCon class constructors
+' ========================================================================================
+PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS WSTRING, _
+BYREF rclsid AS const CLSID, BYREF riid AS const IID, BYREF wszLicKey AS WSTRING, _
+BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+   this.CreateContainer(pWindow, cID, "", wszLibName, rclsid, riid, wszLicKey, x, y, nWidth, nHeight, dwStyle, dwExStyle, ambientFlags)
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS WSTRING, _
+BYREF rclsid AS const CLSID, BYREF riid AS const IID, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
+BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+   this.CreateContainer(pWindow, cID, "", wszLibName, rclsid, riid, "", x, y, nWidth, nHeight, dwStyle, dwExStyle, ambientFlags)
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+   this.CreateContainer(pWindow, cID, wszProgID, "", GUID_NULL, GUID_NULL, "", x, y, nWidth, nHeight, dwStyle, dwExStyle, ambientFlags)
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+BYREF wszLicKey AS WSTRING, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+   this.CreateContainer(pWindow, cID, wszProgID, "", GUID_NULL, GUID_NULL, wszLicKey, x, y, nWidth, nHeight, dwStyle, dwExStyle, ambientFlags)
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF classID AS CONST CLSID, _
+BYREF riid AS CONST IID, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
+BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+   this.CreateContainer(pWindow, cID, "", "", classID, riid, "", x, y, nWidth, nHeight, dwStyle, dwExStyle, ambientFlags)
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF classID AS CONST CLSID, _
+BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, _
+BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = 0, _
+BYVAL dwExStyle AS DWORD = 0, BYVAL ambientFlags AS DWORD = 0)
+   this.CreateContainer(pWindow, cID, "", "", classID, riid, wszLicKey, x, y, nWidth, nHeight, dwStyle, dwExStyle, ambientFlags)
+END CONSTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' Returns the handle of the container's window
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.hWindow () AS HANDLE
+   FUNCTION = m_hwnd
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a reference to the hosted ActiveX control dispatch interface.
+' Don't call IUnknown_Release.
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.OcxDispPtr () AS IDispatch PTR
+   RETURN m_pOcx
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a counted reference to the hosted ActiveX control dispatch interface.
+' You must call IUnknown_Release when no longer need it.
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.OcxDispObj () AS IDispatch PTR
+   IF m_pOcx <> NULL THEN
+      m_pOcx->lpvtbl->AddRef(m_pOcx)
+      RETURN m_pOcx
+   END IF
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Establishes a connection between the connection point object and the client's sink.
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.Advise (BYVAL pEvtObj AS IDispatch PTR, BYVAL riid AS IID PTR) AS HRESULT
+   CAXH_DP("BEGIN CAxHost.Advise")
+   IF pEvtObj = NULL THEN RETURN E_POINTER
+   m_riidEvt = riid
+   ' // Query for the IConnectionPointContainer interface
+   DIM pCPC AS IConnectionPointContainer PTR
+   DIM hr AS HRESULT = IUnknown_QueryInterface(m_pOcx, @IID_IConnectionPointContainer, @pCPC)
+   IF hr <> S_OK OR pCPC = NULL THEN RETURN hr
+   ' // Query for the IConnectionPoint interface
+   DIM pCP AS IConnectionPoint PTR
+   hr = pCPC->lpvtbl->FindConnectionPoint(pCPC, riid, @pCP)
+   IF hr <> S_OK OR pCP = NULL THEN
+      IUnknown_Release(pCPC)
+      RETURN hr
+   END IF
+   ' // Terminates the advisory connection previously established between a connection point object and a client's sink.
+   IF m_dwCookie THEN hr = pCP->lpvtbl->Unadvise(pCP, m_dwCookie)
+   m_dwCookie = 0
+   ' // Establishes a connection between a connection point object and the client's sink.
+   hr = pCP->lpvtbl->Advise(pCP, cast(IUnknown PTR, pEvtObj), @m_dwCookie)
+   IF pCPC THEN IUnknown_Release(pCPC)
+   IF pCP THEN IUnknown_Release(pCP)
+   CAXH_DP("END CAxHost.Advise")
+   RETURN hr
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.Advise (BYVAL pEvtObj AS IDispatch PTR, BYREF riid AS CONST IID) AS HRESULT
+   RETURN this.Advise(pEvtObj, cast(IID PTR, @riid))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.Advise (BYVAL pEvtObj AS IDispatch PTR, BYREF riid AS IID) AS HRESULT
+   RETURN this.Advise(pEvtObj, cast(IID PTR, @riid))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.Advise (BYVAL pEvtObj AS Afx_IDispatch PTR, BYVAL riid AS IID PTR) AS HRESULT
+   RETURN this.Advise(cast(IDispatch PTR, cast(ULONG_PTR, pEvtObj)), riid)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.Advise (BYVAL pEvtObj AS Afx_IDispatch PTR, BYREF riid AS CONST IID) AS HRESULT
+   RETURN this.Advise(cast(IDispatch PTR, cast(ULONG_PTR, pEvtObj)), cast(IID PTR, @riid))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.Advise (BYVAL pEvtObj AS Afx_IDispatch PTR, BYREF riid AS IID) AS HRESULT
+   RETURN this.Advise(cast(IDispatch PTR, cast(ULONG_PTR, pEvtObj)), cast(IID PTR, @riid))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Releases the events connection identified with the cookie returned by the Advise method.
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.Unadvise () AS HRESULT
+   CAXH_DP("BEGIN CAxHost.Unadvise")
+   ' // Not a valid connection
+   IF m_dwCookie = 0 THEN RETURN E_POINTER
+   ' // Query for the IConnectionPointContainer interface
+   DIM pCPC AS IConnectionPointContainer PTR
+   DIM hr AS HRESULT = m_pOcx->lpvtbl->QueryInterface(m_pOcx, @IID_IConnectionPointContainer, @pCPC)
+   IF hr <> S_OK OR pCPC = NULL THEN RETURN hr
+   ' // Query for the IConnectionPoint interface
+   DIM pCP AS IConnectionPoint PTR
+   hr = pCPC->lpvtbl->FindConnectionPoint(pCPC, m_riidEvt, @pCP)
+   IF hr <> S_OK OR pCP = NULL THEN
+      IUnknown_Release(pCPC)
+      RETURN hr
+   END IF
+   ' // Terminates the advisory connection previously established between a connection point object and a client's sink.
+   hr = pCP->lpvtbl->Unadvise(pCP, m_dwCookie)
+   m_dwCookie = 0
+   IF pCPC THEN IUnknown_Release(pCPC)
+   IF pCP THEN IUnknown_Release(pCP)
+   CAXH_DP("END CAxHost.Unadvise")
+   RETURN hr
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Converts from Pixel to HiMetric
+' Note: Himetric is a scaling unit similar to twips used in computing. It is one
+' thousandth of a centimeter and is independent of the screen resolution.
+' HIMETRIC_PER_INCH = 2540   ' 1 inch = 2.54 mm
+' ========================================================================================
+PRIVATE SUB CAxHost.PixelsToHiMetric (BYVAL SizeInPix AS SIZEL PTR, BYVAL SizeInHiMetric AS SIZEL PTR)
+
+   DIM nPixelsPerInchX AS LONG   ' // Pixels per logical inch along width
+   DIM nPixelsPerInchY AS LONG   ' // Pixels per logical inch along height
+
+   DIM hDCSCreen AS HDC = GetDC(NULL)
+   IF hDCScreen = NULL THEN EXIT SUB
+   nPixelsPerInchX = GetDeviceCaps(hDCScreen, LOGPIXELSX)
+   nPixelsPerInchY = GetDeviceCaps(hDCScreen, LOGPIXELSY)
+   ReleaseDC(NULL, hDCScreen)
+
+   SizeInHiMetric->cx = MulDiv(SizeInPix->cx, 2540, nPixelsPerInchX)
+   SizeInHiMetric->cy = MulDiv(SizeInPix->cy, 2540, nPixelsPerInchY)
+
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Creates a standard IFontDisp object
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.OleCreateFontDisp ( _
+   BYREF wszFontName AS WSTRING, _            ' __in  Font name
+   BYVAL cySize AS LONGLONG, _                ' __in  Point size
+   BYVAL fWeight AS SHORT, _                  ' __in  Weight (%FW_NORMAL, etc.)
+   BYVAL fCharset AS SHORT, _                 ' __in  Character set
+   BYVAL fItalic AS WINBOOL, _                ' __in  Italic state
+   BYVAL fUnderline AS WINBOOL, _             ' __in  Underline state
+   BYVAL fStrikethrough AS WINBOOL _          ' __in  Strikethrough state
+   ) AS IFontDisp PTR
+
+   CAXH_DP("OleCreateFontDisp " & wszFontName)
+   DIM tf AS FONTDESC
+   tf.cbSizeOfStruct = SIZEOF(FONTDESC)
+   tf.lpstrName =  @wszFontName
+   tf.cySize.int64 = cySize * 10000
+   tf.sWeight = fWeight
+   tf.sCharset = fCharset
+   tf.fItalic = fItalic
+   tf.fUnderline = fUnderline
+   tf.fStrikethrough = fStrikethrough
+   DIM pFont AS IFontDisp PTR
+   OleCreateFontIndirect(@tf, @IID_IDispatch, @pFont)
+   RETURN pFont
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Converts a string into a 16-byte (128-bit) Globally Unique Identifier (GUID)
+' To be valid, the string must contain exactly 32 hexadecimal digits, delimited by hyphens
+' and enclosed by curly braces. For example: {B09DE715-87C1-11D1-8BE3-0000F8754DA1}
+' If pwszGuidText is omited, OC_Guid generates a new unique guid.
+' Remarks: I have need to call the UuidCreate function dynamically because, at the time of
+' writing, the library for the RPCRT4.DLL seems broken and the linker fails.
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.StrToGuid (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS GUID
+   DIM rguid AS GUID
+   IF pwszGuidText = NULL THEN
+      ' // Generate a new guid
+      DIM AS ANY PTR pLib = DyLibLoad("RPCRT4.DLL")
+      IF pLib  THEN
+         DIM pProc AS FUNCTION (BYVAL Uuid AS UUID PTR) AS RPC_STATUS
+         pProc = DyLibSymbol(pLib, "UuidCreate")
+         IF pProc THEN pProc(@rguid)
+         DyLibFree(pLib)
+      END IF
+   ELSE
+      CLSIDFromString(pwszGuidText, @rGuid)
+   END IF
+   FUNCTION = rguid
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a 38-byte human-readable guid string from a 16-byte GUID.
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.GuidText (BYVAL classID AS CLSID PTR) AS STRING
+   DIM pwsz AS WSTRING PTR
+   StringFromCLSID(classID, CAST(LPOLESTR PTR, @pwsz))
+   FUNCTION = *pwsz
+   CoTaskMemFree(pwsz)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.GuidText (BYVAL riid AS REFIID) AS STRING
+   DIM pwsz AS WSTRING PTR
+   StringFromIID(riid, CAST(LPOLESTR PTR, @pwsz))
+   FUNCTION = *pwsz
+   CoTaskMemFree(pwsz)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.GuidText (BYVAL classID AS CLSID) AS STRING
+   DIM pwsz AS WSTRING PTR
+   StringFromCLSID(@classID, CAST(LPOLESTR PTR, @pwsz))
+   FUNCTION = *pwsz
+   CoTaskMemFree(pwsz)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Converts a string into a 16-byte (128-bit) Globally Unique Identifier (GUID)
+' To be valid, the string must contain exactly 32 hexadecimal digits, delimited by hyphens
+' and enclosed by curly braces. For example: {B09DE715-87C1-11D1-8BE3-0000F8754DA1}
+' If pwszGuidText is omited, AfxGuid generates a new unique guid.
+' Remarks: I have need to call the UuidCreate function dynamically because, at the time of
+' writing, the library for the RPCRT4.DLL seems broken and the linker fails.
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.GuidFromStr (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS GUID
+   DIM rguid AS GUID
+   IF pwszGuidText = NULL THEN
+      ' // Generate a new guid
+      DIM AS ANY PTR pLib = DyLibLoad("RPCRT4.DLL")
+      IF pLib  THEN
+         DIM pProc AS FUNCTION (BYVAL Uuid AS UUID PTR) AS RPC_STATUS
+         pProc = DyLibSymbol(pLib, "UuidCreate")
+         IF pProc THEN pProc(@rguid)
+         DyLibFree(pLib)
+      END IF
+   ELSE
+      CLSIDFromString(pwszGuidText, @rGuid)
+   END IF
+   RETURN rguid
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Creates an instance of an object.
+' Parameters:
+' - wszProgID: Required. The ProgID or the CLSID of the object to create.
+'   - A ProgID such as "MSCAL.Calendar.7"
+'   - A CLSID such as "{8E27C92B-1264-101C-8A2F-040224009C02}"
+' Return value: The dispatch interface of the control.
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.CreateObject (BYREF wszProgID AS WSTRING) AS IDispatch PTR
+
+   CAXH_DP("CAxHist.CreateObject - ProgID: " & wszProgID)
+   ' // Exit if wszProgID is a null string
+   IF LEN(wszProgID) = 0 THEN RETURN NULL
+   ' // Convert the ProgID in a CLSID
+   DIM ClassID AS CLSID
+   CLSIDFromProgID(@wszProgID, @ClassID)
+   ' // If it fails, see if it is a CLSID
+   IF IsEqualIID(@ClassID, @IID_NULL) THEN
+      ClassID = this.GuidFromStr(@wszProgID)
+   END IF
+'   ' // If not a valid ProgID or CLSID return NULL
+   IF IsEqualIID(@ClassID, @IID_NULL) THEN RETURN NULL
+
+   ' // Create an instance of the object
+   DIM pDisp AS IDispatch PTR
+   DIM hr AS HRESULT = CoCreateInstance(@ClassID, NULL, CLSCTX_SERVER, @IID_IDispatch, cast(LPVOID, @pDisp))
+   CAXH_DP("CAxHost.CreateObject - hr - " & STR(hr) & " - IDispatch = " & WSTR(pDisp))
+   RETURN pDisp
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Creates an instance of an object.
+' Parameters:
+' - wszProgID: Required. The ProgID or the CLSID of the object to create.
+'   - A ProgID such as "MSCAL.Calendar.7"
+'   - A CLSID such as "{8E27C92B-1264-101C-8A2F-040224009C02}"
+' - wszLicKey: The license key of the control.
+' Return value: The dispatch interface of the control.
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.CreateObject (BYREF wszProgID AS WSTRING, BYREF wszLicKey AS WSTRING) AS IDispatch PTR
+
+   CAXH_DP("CAxHost.CreateObject - ProgID: " & wszProgID)
+   ' // Exit if wszProgID is a null string
+   IF LEN(wszProgID) = 0 THEN RETURN NULL
+   ' // Convert the ProgID in a CLSID
+   DIM ClassID  AS CLSID
+   CLSIDFromProgID(@wszProgID, @ClassID)
+   ' // If it fails, see if it is a CLSID
+   IF IsEqualIID(@ClassID, @IID_NULL) THEN ClassID = this.GuidFromStr(@wszProgID)
+'   ' // If not a valid CLSID return NULL
+   IF IsEqualIID(@ClassID, @IID_NULL) THEN RETURN NULL
+
+   ' // Get a reference to the IClassFactory2 interface of the control
+   DIM pIClassFactory2 AS IClassFactory2 PTR, pDisp AS IDispatch PTR
+   DIM hr AS HRESULT = CoGetClassObject(@ClassID, CLSCTX_SERVER, NULL, @IID_IClassFactory2, @pIClassFactory2)
+   CAXH_DP("CoGetClassObject - hr - " & STR(hr) & " - IClassFactory2 = " & WSTR(pIClassFactory2))
+   IF hr = S_OK AND pIClassFactory2 <> NULL THEN
+      ' // Create a licensed instance of the control
+      hr = pIClassFactory2->lpvtbl->CreateInstanceLic(pIClassFactory2, NULL, NULL, @IID_IDispatch, @wszLicKey, @pDisp)
+      CAXH_DP("CreateInstanceLic - hr - " & STR(hr) & " - IDispatch = " & WSTR(pDisp))
+      RETURN pDisp
+   END IF
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Creates an instance of an object.
+' Parameters:
+' - classID: A CLSID such as "{8E27C92B-1264-101C-8A2F-040224009C02}"
+' - riid: An IID such "{C1AFAFB8-03E9-4E18-8DA5-51FBFF27CC66}"
+' Return value: The dispatch interface of the control.
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.CreateObject (BYREF classID AS CONST CLSID, BYREF riid AS CONST IID) AS IDispatch PTR
+   CAXH_DP("CAxHost.CreateObject - classID & riid")
+   ' // Create an instance of the object
+   DIM pDisp AS IDIspatch PTR
+   DIM hr AS HRESULT = CoCreateInstance(@ClassID, NULL, CLSCTX_SERVER, @riid, cast(LPVOID, @pDisp))
+   CAXH_DP("CAxHost.CreateObject - hr - " & STR(hr) & " - IDIspatch = " & WSTR(pDisp))
+   RETURN pDisp
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Creates an instance of an object.
+' Parameters:
+' - classID: A CLSID such as "{8E27C92B-1264-101C-8A2F-040224009C02}"
+' - riid: An IID such "{C1AFAFB8-03E9-4E18-8DA5-51FBFF27CC66}"
+' - wszLicKey: The license key of the control.
+' Return value: The dispatch interface of the control.
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.CreateObject (BYREF classID AS CONST CLSID, BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING) AS IDispatch PTR
+   CAXH_DP("CAxHost.CreateObject - classID & riid & LicKey")
+   ' // Get a reference to the IClassFactory2 interface of the control
+   DIM pIClassFactory2 AS IClassFactory2 PTR, pDisp AS IDispatch PTR
+   DIM hr AS HRESULT = CoGetClassObject(@classID, CLSCTX_SERVER, NULL, @IID_IClassFactory2, @pIClassFactory2)
+   CAXH_DP("CoGetClassObject - hr - " & STR(hr) & " - IClassFactory2 = " & WSTR(pIClassFactory2))
+   IF hr = S_OK AND pIClassFactory2 <> NULL THEN
+      ' // Create a licensed instance of the control
+      hr = pIClassFactory2->lpvtbl->CreateInstanceLic(pIClassFactory2, NULL, NULL, @riid, @wszLicKey, @pDisp)
+      CAXH_DP("CreateInstanceLic - hr - " & STR(hr) & " - IDispatch = " & WSTR(pDisp))
+      RETURN pDisp
+   END IF
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Loads the specified library from file and creates an instance of an object.
+' Parameters:
+' - wszLibName = Full path where the library is located.
+' - rclsid = The CLSID (class identifier) associated with the data and code that will be
+'   used to create the object.
+' - riid = A reference to the identifier of the interface to be used to communicate with the object.
+' - wszLicKey = The license key.
+' If it succeeds, returns a reference to the requested interface; otherwise, it returns null.
+' Not every component is a suitable candidate for use under this overloaded AfxNewCom function.
+'  - Only in-process servers (DLLs) are supported.
+'  - Components that are system components or part of the operating system, such as XML,
+'    Data Access, Internet Explorer, or DirectX, aren't supported
+'  - Components that are part of an application, such Microsoft Office, aren't supported.
+'  - Components intended for use as an add-in or a snap-in, such as an Office add-in or
+'    a control in a Web browser, aren't supported.
+'  - Components that manage a shared physical or virtual system resource aren't supported.
+'  - Visual ActiveX controls aren't supported because they need to be initilized and
+'    activated by the OLE container.
+' Note: Do not use DyLibFree to unload the library once you have got a valid reference
+' to an interface or your application will GPF. Before calling DyLibFree, all the
+' interface references must be released. If you don't need to unload the library until
+' the application ends, then you don't need to call FreeLibrary because CoUninitialize
+' closes the COM library on the current thread, unloads all DLLs loaded by the thread,
+' frees any other resources that the thread maintains, and forces all RPC connections on
+' the thread to close.
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.CreateObject (BYREF wszLibName AS CONST WSTRING, BYREF rclsid AS CONST CLSID, _
+   BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING = "") AS IDispatch PTR
+   CAXH_DP("CAxHost.CreateObject - LibName & classID & riid & LicKey")
+
+   ' // See if the library is already loaded in the address space
+   DIM hLib AS HANDLE = GetModuleHandleW(wszLibName)
+   ' // If it is not loaded, load it
+   IF hLib = NULL THEN hLib = DyLibLoad(wszLibName)
+   ' // If it fails, abort
+   IF hLib = NULL THEN RETURN NULL
+
+   ' // Retrieve the address of the exported function DllGetClassObject
+   DIM pfnDllGetClassObject AS FUNCTION (BYVAL rclsid AS CONST IID CONST PTR, BYVAL riid AS CONST IID CONST PTR, BYVAL ppv AS LPVOID PTR) AS HRESULT
+   pfnDllGetClassObject = DyLibSymbol(hLib, "DllGetClassObject")
+   IF pfnDllGetClassObject = NULL THEN RETURN NULL
+
+   IF LEN(wszLicKey) = 0 THEN
+      ' // Request a reference to the IClassFactory interface
+      DIM pIClassFactory AS IClassFactory PTR, pDisp AS IDispatch PTR
+      DIM hr AS HRESULT = pfnDllGetClassObject(@rclsid, @IID_IClassFactory, @pIClassFactory)
+      IF hr <> S_OK THEN RETURN NULL
+      ' // Create an instance of the server or control
+      hr = pIClassFactory->lpVtbl->CreateInstance(pIClassFactory, NULL, @riid, @pDisp)
+      pIClassFactory->lpVtbl->Release(pIClassFactory)
+      IF hr <> S_OK THEN RETURN NULL
+      RETURN pDisp
+   ELSE
+      ' // Request a reference to the IClassFactory2 interface
+      DIM pIClassFactory2 AS IClassFactory2 PTR, pDisp AS IDispatch PTR
+      DIM hr AS HRESULT = pfnDllGetClassObject(@rclsid, @IID_IClassFactory, @pIClassFactory2)
+      IF hr <> S_OK THEN RETURN NULL
+      ' // Create a licensed instance of the server or control
+      hr = pIClassFactory2->lpVtbl->CreateInstanceLic(pIClassFactory2, NULL, NULL, @riid, @wszLicKey, @pDisp)
+      pIClassFactory2->lpVtbl->Release(pIClassFactory2)
+      IF hr <> S_OK THEN RETURN NULL
+      RETURN pDisp
+   END IF
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Include the implemented interfaces
+' We need to include them here because CAxHostProc and QueryInterface uses them.
+' ========================================================================================
+#include once "CAxHost_IDispatch.inc"
+#include once "CAxHost_IOleClientSite.inc"
+#include once "CAxHost_IServiceProvider.inc"
+#include once "CAxHost_IOleInPlaceSite.inc"
+#include once "CAxHost_IOleInPlaceFrame.inc"
+#include once "CAxHost_IOleContainer.inc"
+#include once "CAxHost_IOleControlSite.inc"
+' ========================================================================================
+
+' ========================================================================================
+' OLE container control window procedure
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.CAxHostProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
+
+   DIM hr AS HRESULT
+
+   SELECT CASE uMsg
+
+      ' ==================================================================================
+      CASE WM_CREATE
+      ' ==================================================================================
+         CAXH_DP("--- WM_CREATE BEGIN ---")
+
+         ' ===============================================================================
+         ' // Get a pointer to the OLE Container class
+         DIM pCreateStruct AS CREATESTRUCT PTR = CAST(CREATESTRUCT PTR, lParam)
+         DIM pAxHost AS CAxHost PTR = CAST(CAxHost PTR, pCreateStruct->lpCreateParams)
+         IF pAxHost = NULL THEN RETURN -1
+         ' // Store the handle of the window
+         pAxHost->m_hwnd = hwnd
+         ' ===============================================================================
+
+         ' ===============================================================================
+         ' // Create an instance of the ActiveX control
+         IF LEN(pAxHost->m_wszLibName) THEN
+            pAxHost->m_pOcx = pAxHost->CreateObject(pAxHost->m_wszLibName, _
+               pAxHost->m_rclsid, pAxHost->m_riid, pAxHost->m_wszLicKey)
+         ELSEIF LEN(pAxHost->m_wszProgID) <> 0 AND LEN(pAxHost->m_wszLicKey) <> 0 THEN
+            pAxHost->m_pOcx = pAxHost->CreateObject(pAxHost->m_wszProgID, pAxHost->m_wszLicKey)
+         ELSEIF LEN(pAxHost->m_wszProgID) <> 0 THEN
+            pAxHost->m_pOcx = pAxHost->CreateObject(pAxHost->m_wszProgID)
+         ELSEIF IsEqualIID(@pAxHost->m_rclsid, @IID_NULL) = FALSE AND IsEqualIID(@pAxHost->m_riid, @IID_NULL) = FALSE AND LEN(pAxHost->m_wszLicKey) <> 0 THEN
+            pAxHost->m_pOcx = pAxHost->CreateObject(pAxHost->m_rclsid, pAxHost->m_riid, pAxHost->m_wszLicKey)
+         ELSEIF IsEqualIID(@pAxHost->m_rclsid, @IID_NULL) = FALSE AND IsEqualIID(@pAxHost->m_riid, @IID_NULL) = FALSE THEN
+            pAxHost->m_pOcx = pAxHost->CreateObject(pAxHost->m_rclsid, pAxHost->m_riid)
+         END IF
+        ' // If it fails, abort the creation of the control
+         IF pAxHost->m_pOcx = NULL THEN RETURN -1
+         ' ===============================================================================
+
+         ' ===============================================================================
+         ' // Creates a default font
+         IF AfxWindowsVersion >= 600 AND CLNG(AfxIsProcessDpiAware) THEN
+            pAxHost->m_pIFontDisp = pAxHost->OleCreateFontDisp("Segoe UI", 9, FW_NORMAL, ANSI_CHARSET, 0, 0, 0)
+         ELSE
+            pAxHost->m_pIFontDisp = pAxHost->OleCreateFontDisp("Tahoma", 8, FW_NORMAL, ANSI_CHARSET, 0, 0, 0)
+         END IF
+         ' ===============================================================================
+
+         ' ===============================================================================
+         ' // Retrieves the IOleObject interface
+         pAxHost->m_pOcx->lpvtbl->QueryInterface(pAxHost->m_pOcx, @IID_IOleObject, @pAxHost->m_pIOleObject)
+         ' // If it doesn't exist, it's not a visual control
+         IF pAxHost->m_pIOleObject = NULL THEN RETURN -1
+         ' ===============================================================================
+
+         ' ===============================================================================
+         ' // Creates an instance of our implemented IOleClientSite interface
+         pAxHost->m_pIOleClientSiteImpl = NEW CAxHost_IOleClientSite(pAxHost)
+         IF pAxHost->m_pIOleClientSiteImpl = NULL THEN EXIT FUNCTION
+         ' ===============================================================================
+
+         ' ===============================================================================
+         ' // Gets the status bitwise flags
+         pAxHost->m_pIOleObject->GetMiscStatus(DVASPECT_CONTENT, @pAxHost->m_dwMiscStatus)
+         ' // The control needs to be put on running state
+         IF (pAxHost->m_dwMiscStatus AND OLEMISC_ALWAYSRUN) = OLEMISC_ALWAYSRUN THEN
+            hr = OleRun(cast(IUnknown PTR, pAxHost->m_pOcx))
+            CAXH_DP("OleRun: " & HEX(hr))
+         END IF
+         IF (pAxHost->m_dwMiscStatus AND OLEMISC_SIMPLEFRAME) = OLEMISC_SIMPLEFRAME THEN
+            CAXH_DP("--- Simple frame ---")
+         END IF
+         ' // The control wants that you set the client site first
+         IF (pAxHost->m_dwMiscStatus AND OLEMISC_SETCLIENTSITEFIRST) = OLEMISC_SETCLIENTSITEFIRST THEN
+            ' // Sets the client site
+            CAXH_DP("--- SetClientSite - Begin ---")
+            IF pAxHost->m_pIOleClientSiteImpl THEN
+               hr = pAxHost->m_pIOleObject->SetClientSite(CAST(ANY PTR, pAxHost->m_pIOleClientSiteImpl))
+               CAXH_DP("--- SetClientSite - End --- " & HEX(hr))
+            END IF
+         END IF
+         ' ===============================================================================
+
+         ' ===============================================================================
+         ' // Sets the host name
+         DIM wszContainerApp AS WSTRING * 260 = CAXHOST_CLASSNAME
+         hr = pAxHost->m_pIOleObject->SetHostNames(@wszContainerApp, NULL)
+         CAXH_DP("SetHostNames: " & HEX(hr))
+         ' ===============================================================================
+
+         ' ===============================================================================
+         ' // Initializes the object to a default state
+         DIM psi AS IPersistStreamInit PTR
+         hr = IUnknown_QueryInterface(pAxHost->m_pOcx, @IID_IPersistStreamInit, @psi)
+         IF hr = S_OK AND psi <> NULL THEN
+            hr = psi->lpvtbl->InitNew(psi)
+            CAXH_DP("IPersistStreamInit.InitNew - hr: " & HEX(hr))
+            IUnknown_Release(psi)
+         END IF
+         IF (pAxHost->m_dwMiscStatus AND OLEMISC_SETCLIENTSITEFIRST) = OLEMISC_SETCLIENTSITEFIRST THEN
+            ' // Sets the client site
+            CAXH_DP("--- SetClientSite - Begin ---")
+            IF pAxHost->m_pIOleClientSiteImpl THEN
+               DIM pIOleClientSite AS ANY PTR = pAxHost->m_pIOleClientSiteImpl
+               hr = pAxHost->m_pIOleObject->SetClientSite(pIOleClientSite)
+               CAXH_DP("--- SetClientSite - End --- " & HEX(hr))
+            END IF
+         END IF
+         ' ===============================================================================
+
+         ' ===============================================================================
+         ' // Gets the size of the container's window
+         DIM rc AS RECT
+         GetClientRect pAxHost->m_hwnd, @rc
+         ' // Converts from pixel to himetric
+         DIM pxSize AS SIZEL, hmSize AS SIZEL
+         pxSize.cx = rc.Right - rc.Left
+         pxSize.cy = rc.Bottom - rc.Top
+         pAxHost->PixelsToHiMetric(@pxSize, @hmSize)
+         ' // Sets extent of object's display area
+         CAXH_DP("--- DoVerb - INPLACEACTIVATE - Begin ---")
+         IF pAxHost->m_pIOleObject THEN pAxHost->m_pIOleObject->SetExtent(DVASPECT_CONTENT, @hmSize)
+         ' ===============================================================================
+
+         ' ===============================================================================
+         ' // Activates the control in place
+         IF pAxHost->m_pIOleClientSiteImpl THEN
+            DIM pIOleClientSite AS ANY PTR = pAxHost->m_pIOleClientSiteImpl
+            IF pAxHost->m_pIOleObject THEN
+               DIM hr AS HRESULT = pAxHost->m_pIOleObject->DoVerb(OLEIVERB_INPLACEACTIVATE, NULL, _
+                  cast(IOleClientSite PTR, pIOleClientSite), 0, pAxHost->m_hwnd, @rc)
+            END IF
+            CAXH_DP("--- DoVerb - INPLACEACTIVATE - End --- " & HEX(hr))
+            ' // Sets extent of object's display area
+            IF pAxHost->m_pIOleObject THEN pAxHost->m_pIOleObject->SetExtent(DVASPECT_CONTENT, @hmSize)
+            ' // Indicates how much of the in-place object is visible.
+            IF pAxHost->m_pIOleInPlaceObject = NULL THEN
+               IUnknown_QueryInterface(pAxHost->m_pOcx, @IID_IOleInPlaceObject, @pAxHost->m_pIOleInPlaceObject)
+            END IF
+            IF pAxHost->m_pIOleInPlaceObject THEN
+               pAxHost->m_pIOleInPlaceObject->SetObjectRects(@rc, @rc)
+            END IF
+         END IF
+         ' ===============================================================================
+
+         CAXH_DP("--- WM_CREATE END ---")
+         EXIT FUNCTION
+
+      ' ==================================================================================
+      CASE WM_ERASEBKGND
+      ' ==================================================================================
+         ' // Don't erase the background to avoid flicker
+         FUNCTION = 1
+         EXIT FUNCTION
+
+      ' ==================================================================================
+   	CASE WM_ENABLE
+      ' ==================================================================================
+         InvalidateRect hwnd, NULL, 0
+         UpdateWindow hwnd
+         EXIT FUNCTION
+
+      ' ==================================================================================
+      CASE WM_SETFOCUS
+      ' ==================================================================================
+         CAXH_DP("--- WM_SETFOCUS BEGIN ---")
+         DIM pAxHost AS CAxHost PTR = CAST(CAxHost PTR, GetWindowLongPtrW(hwnd, 0))
+         IF pAxHost = NULL THEN EXIT FUNCTION
+         pAxHost->m_bHaveFocus = TRUE
+         ' // Activates an object in place, along with its full set of user-interface tools.
+         IF pAxHost->m_pIOleObject <> NULL AND pAxHost->m_bInPlaceActive = FALSE THEN
+            DIM rc AS RECT
+            GetClientRect hwnd, @rc
+            IF pAxHost->m_pIOleClientSiteImpl THEN
+               DIM pIOleClientSite AS ANY PTR = pAxHost->m_pIOleClientSiteImpl
+               pAxHost->m_pIOleObject->DoVerb(OLEIVERB_UIACTIVATE, NULL, pIOleClientSite, 0, hwnd, @rc)
+            END IF
+         END IF
+         IF pAxHost->m_pIOleInPlaceObject = NULL THEN
+            IUnknown_QueryInterface(pAxHost->m_pOcx, @IID_IOleInPlaceObject, @pAxHost->m_pIOleInPlaceObject)
+         END IF
+         IF pAxHost->m_pIOleInPlaceObject THEN
+            DIM hwndCtrl AS HANDLE
+            pAxHost->m_pIOleInPlaceObject->GetWindow(@hwndCtrl)
+            IF IsWindow(hwndCtrl) THEN SetFocus hwndCtrl
+         END IF
+         CAXH_DP("--- WM_SETFOCUS END ---")
+         EXIT FUNCTION
+
+      ' ==================================================================================
+      CASE WM_KILLFOCUS
+      ' ==================================================================================
+         CAXH_DP("--- WM_KILLFOCUS BEGIN ---")
+         DIM pAxHost AS CAxHost PTR = CAST(CAxHost PTR, GetWindowLongPtrW(hwnd, 0))
+         IF pAxHost = NULL THEN EXIT FUNCTION
+         pAxHost->m_bHaveFocus = FALSE
+         CAXH_DP("--- WM_KILLFOCUS END ---")
+         EXIT FUNCTION
+
+      ' ==================================================================================
+      ' Resizes the control to fill the client area of the host window
+      ' ==================================================================================
+      CASE WM_SIZE
+      ' ==================================================================================
+         CAXH_DP("--- WM_SIZE BEGIN ---")
+         DIM pAxHost AS CAxHost PTR = CAST(CAxHost PTR, GetWindowLongPtrW(hwnd, 0))
+         IF pAxHost = NULL THEN EXIT FUNCTION
+         IF pAxHost->m_bInPlaceActive THEN
+            ' // Retrieves the coordinates of a window's client area.
+            DIM rc AS RECT
+            GetClientRect hwnd, @rc
+            ' // Converts from pixel to himetric
+            DIM pxSize AS SIZEL, hmSize AS SIZEL
+            pxSize.cx = rc.Right - rc.Left
+            pxSize.cy = rc.Bottom - rc.Top
+            pAxHost->PixelsToHiMetric(@pxSize, @hmSize)
+            ' // Sets extent of object's display area
+            IF pAxHost->m_pIOleObject THEN pAxHost->m_pIOleObject->SetExtent(DVASPECT_CONTENT, @hmSize)
+            ' // Indicates how much of the in-place object is visible.
+            IF pAxHost->m_pIOleInPlaceObject = NULL THEN
+               IUnknown_QueryInterface(pAxHost->m_pOcx, @IID_IOleInPlaceObject, @pAxHost->m_pIOleInPlaceObject)
+            END IF
+            IF pAxHost->m_pIOleInPlaceObject THEN
+               pAxHost->m_pIOleInPlaceObject->SetObjectRects(@rc, @rc)
+            END IF
+         END IF
+         CAXH_DP("--- WM_SIZE END ---")
+         EXIT FUNCTION
+
+   END SELECT
+
+   ' // Default processing for other messages.
+   FUNCTION = DefWindowProcW(hWnd, uMsg, wParam, lParam)
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns the interface name for debugging purposes
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.GetInterfaceName (BYVAL riid AS REFIID) AS STRING
+
+   IF IsEqualIID(riid, @IID_IUnknown) THEN
+      FUNCTION = "IID_IUnknown"
+   ELSEIF IsEqualIID(riid, @IID_IDispatch) THEN
+      FUNCTION = "IID_IDispatch"
+   ELSEIF IsEqualIID(riid, @IID_IAdviseSink) THEN
+      FUNCTION = "IID_IAdviseSink"
+   ELSEIF IsEqualIID(riid, @IID_IErrorInfo) THEN
+      FUNCTION = "IID_IErrorInfo"
+   ELSEIF IsEqualIID(riid, @IID_IOleClientSite) THEN
+      FUNCTION = "IID_IOleClientSite"
+   ELSEIF IsEqualIID(riid, @IID_IOleContainer) THEN
+      FUNCTION = "IID_IOleContainer"
+   ELSEIF IsEqualIID(riid, @IID_IOleControl) THEN
+      FUNCTION = "IID_IOleControl"
+   ELSEIF IsEqualIID(riid, @IID_IOleControlSite) THEN
+      FUNCTION = "IID_IOleControlSite"
+   ELSEIF IsEqualIID(riid, @IID_IOleDocumentSite) THEN
+      FUNCTION = "IID_IOleDocumentSite"
+   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceActiveObject) THEN
+      FUNCTION = "IID_IOleInPlaceActiveObject"
+   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceFrame) THEN
+      FUNCTION = "IID_IOleInPlaceFrame"
+   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceObject) THEN
+      FUNCTION = "IID_IOleInPlaceObject"
+   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceObjectWindowless) THEN
+      FUNCTION = "IID_IOleInPlaceObjectWindowless"
+   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceSite) THEN
+      FUNCTION = "IID_IOleInPlaceSite"
+   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceSiteEx) THEN
+      FUNCTION = "IID_IOleInPlaceSiteEx"
+   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceUIWindow) THEN
+      FUNCTION = "IID_IOleInPlaceUIWindow"
+   ELSEIF IsEqualIID(riid, @IID_IOleObject) THEN
+      FUNCTION = "IID_IOleObject"
+   ELSEIF IsEqualIID(riid, @IID_IOleWindow) THEN
+      FUNCTION = "IID_IOleWindow"
+   ELSEIF IsEqualIID(riid, @IID_IParseDisplayName) THEN
+      FUNCTION = "IID_IParseDisplayName"
+   ELSEIF IsEqualIID(riid, @IID_IPersistStreamInit) THEN
+      FUNCTION = "IID_IPersistStreamInit"
+   ELSEIF IsEqualIID(riid, @IID_IPropertyNotifySink) THEN
+      FUNCTION = "IID_IPropertyNotifySink"
+   ELSEIF IsEqualIID(riid, @IID_IServiceProvider) THEN
+      FUNCTION = "IID_IServiceProvider"
+   ELSEIF IsEqualIID(riid, @IID_ISimpleFrameSite) THEN
+      FUNCTION = "IID_ISimpleFrameSite"
+   ' // VB-only interfaces - Listed here for debugging purposes
+'   ELSEIF IsEqualIID(riid, @IID_IVBGetControl) THEN
+'      FUNCTION = "IID_IVBGetControl"
+'   ELSEIF IsEqualIID(riid, @IID_IGetOleObject) THEN
+'      FUNCTION = "IID_IGetOleObject"
+'   ELSEIF IsEqualIID(riid, @IID_IVBFormat) THEN
+'      FUNCTION = "IID_IVBFormat"
+'   ELSEIF IsEqualIID(riid, @IID_IGetVBAObject) THEN
+'      FUNCTION = "IID_IGetVBAObject"
+   ELSE
+      FUNCTION = this.GuidText(riid)
+   END IF
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns pointers to the implemented classes and supported interfaces.
+' ========================================================================================
+FUNCTION CAxHost.QueryInterface (BYVAL riid AS REFIID, BYVAL ppvObj AS LPVOID PTR) AS HRESULT
+   IF ppvObj = NULL THEN RETURN E_INVALIDARG
+   CAXH_DP("CAxHost.QueryInterface : " & this.GetInterfaceName(riid))
+
+   IF IsEqualIID(riid, @IID_IUnknown) THEN
+      IF this.m_pIUnknownImpl THEN
+         this.m_pIUnknownImpl->AddRef
+         *ppvObj = this.m_pIUnknownImpl
+      ELSE
+         DIM p AS ANY PTR = NEW CAxHost_IUnknown(@this)
+         this.m_pIUnknownImpl = p
+         *ppvObj = p
+      END IF
+   ELSEIF IsEqualIID(riid, @IID_IDispatch) THEN
+      IF this.m_pIDispatchImpl THEN
+         this.m_pIDispatchImpl->AddRef
+         *ppvObj = this.m_pIDispatchImpl
+      ELSE
+         DIM p AS ANY PTR = NEW CAxHost_IDispatch(@this)
+         this.m_pIDispatchImpl = p
+         *ppvObj = p
+      END IF
+   ELSEIF IsEqualIID(riid, @IID_IOleClientSite) THEN
+      IF this.m_pIOleClientSiteImpl THEN
+         this.m_pIOleClientSiteImpl->AddRef
+         *ppvObj = this.m_pIOleClientSiteImpl
+      ELSE
+         DIM p AS ANY PTR = NEW CAxHost_IOleClientSite(@this)
+         this.m_pIOleClientSiteImpl = p
+         *ppvObj = p
+      END IF
+   ELSEIF IsEqualIID(riid, @IID_IOleContainer) THEN
+      IF this.m_pIOleContainerImpl THEN
+         this.m_pIOleContainerImpl->AddRef
+         *ppvObj = this.m_pIOleContainerImpl
+      ELSE
+         DIM p AS ANY PTR = NEW CAxHost_IOleContainer(@this)
+         this.m_pIOleContainerImpl = p
+         *ppvObj = p
+      END IF
+   ELSEIF IsEqualIID(riid, @IID_IOleControlSite) THEN
+      IF this.m_pIOleControlSiteImpl THEN
+         this.m_pIOleControlSiteImpl->AddRef
+         *ppvObj = this.m_pIOleControlSiteImpl
+      ELSE
+         DIM p AS ANY PTR = NEW CAxHost_IOleControlSite(@this)
+         this.m_pIOleControlSiteImpl = p
+         *ppvObj = p
+      END IF
+   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceFrame) THEN
+      IF this.m_pIOleInPlaceFrameImpl THEN
+         this.m_pIOleInPlaceFrameImpl->AddRef
+         *ppvObj = this.m_pIOleInPlaceFrameImpl
+      ELSE
+         DIM p AS ANY PTR = NEW CAxHost_IOleInPlaceFrame(@this)
+         this.m_pIOleInPlaceFrameImpl = p
+         *ppvObj = p
+      END IF
+   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceSite) THEN
+      IF this.m_pIOleInPlaceSiteImpl THEN
+         this.m_pIOleInPlaceSiteImpl->AddRef
+         *ppvObj = this.m_pIOleInPlaceSiteImpl
+      ELSE
+         DIM p AS ANY PTR = NEW CAxHost_IOleInPlaceSite(@this)
+         this.m_pIOleInPlaceSiteImpl = p
+         *ppvObj = p
+      END IF
+   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceSiteEx) THEN
+      IF this.m_pIOleInPlaceSiteExImpl THEN
+         this.m_pIOleInPlaceSiteExImpl->AddRef
+         *ppvObj = this.m_pIOleInPlaceSiteExImpl
+      ELSE
+         DIM p AS ANY PTR = NEW CAxHost_IOleInPlaceSiteEx(@this)
+         this.m_pIOleInPlaceSiteExImpl = p
+         *ppvObj = p
+      END IF
+   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceUIWindow) THEN
+      IF this.m_pIOleInPlaceUIWindowImpl THEN
+         this.m_pIOleInPlaceUIWindowImpl->AddRef
+         *ppvObj = this.m_pIOleInPlaceUIWindowImpl
+      ELSE
+         DIM p AS ANY PTR = NEW CAxHost_IOleInPlaceUIWindow(@this)
+         this.m_pIOleInPlaceUIWindowImpl = p
+         *ppvObj = p
+      END IF
+   ELSEIF IsEqualIID(riid, @IID_IOleWindow) THEN
+      IF this.m_pIOleWindowImpl THEN
+         this.m_pIOleWindowImpl->AddRef
+         *ppvObj = this.m_pIOleWindowImpl
+      ELSE
+         DIM p AS ANY PTR = NEW CAxHost_IOleWindow(@this)
+         this.m_pIOleWindowImpl = p
+         *ppvObj = p
+      END IF
+   ELSEIF IsEqualIID(riid, @IID_IParseDisplayName) THEN
+      IF this.m_pIParseDisplayNameImpl THEN
+         this.m_pIParseDisplayNameImpl->AddRef
+         *ppvObj = this.m_pIParseDisplayNameImpl
+      ELSE
+         DIM p AS ANY PTR = NEW CAxHost_IParseDisplayName(@this)
+         this.m_pIParseDisplayNameImpl = p
+         *ppvObj = p
+      END IF
+   ELSEIF IsEqualIID(riid, @IID_IServiceProvider) THEN
+      IF this.m_pIServiceProviderImpl THEN
+         this.m_pIServiceProviderImpl->AddRef
+         *ppvObj = this.m_pIServiceProviderImpl
+      ELSE
+         DIM p AS ANY PTR = NEW CAxHost_IServiceProvider(@this)
+         this.m_pIServiceProviderImpl = p
+         *ppvObj = p
+      END IF
+   ELSEIF IsEqualIID(riid, @IID_ISimpleFrameSite) THEN
+      IF this.m_pISimpleFrameSiteImpl THEN
+         this.m_pISimpleFrameSiteImpl->AddRef
+         *ppvObj = this.m_pISimpleFrameSiteImpl
+      ELSE
+         DIM p AS ANY PTR = NEW CAxHost_ISimpleFrameSite(@this)
+         this.m_pISimpleFrameSiteImpl = p
+         *ppvObj = p
+      END IF
+   END IF
+
+   IF *ppvObj = NULL THEN RETURN E_NOINTERFACE
+   RETURN S_OK
+
+END FUNCTION
+' ========================================================================================
+
+END NAMESPACE
+
+' ########################################################################################
+'                              *** HELPER PROCEDURES ***
+' ########################################################################################
+
+USING Afx
+
+' ========================================================================================
+' Returns the OLE container window handle given the handle of the form or any control in the
+' form and its control identifier.
+' Parameters:
+' - hwnd = Reference window handle.
+' - Control identifier, e.g. IDC_WEBBROWSER.
+' Returns the OLE container window handle or NULL.
+' ========================================================================================
+PRIVATE FUNCTION AfxCAxHostWindow (BYVAL hwnd AS HWND, BYVAL cID AS WORD) AS HWND
+   DIM wszClassName AS WSTRING * 260
+   DIM hwndChild AS .HWND = AfxGetControlHandle(hwnd, cID)
+   GetClassNameW hwndChild, wszClassName, SIZEOF(wszClassName)
+   IF wszClassName <> CAXHOST_CLASSNAME THEN RETURN NULL
+   RETURN hwndChild
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a pointer to the CAxHost class given the handle of its associated window.
+' ========================================================================================
+PRIVATE FUNCTION AfxCAxHostPtr OVERLOAD (BYVAL hwnd AS HWND) AS CAxHost PTR
+   DIM wszClassName AS WSTRING * 260
+   GetClassNameW hwnd, wszClassName, SIZEOF(wszClassName)
+   IF wszClassName <> CAXHOST_CLASSNAME THEN RETURN NULL
+   RETURN CAST(CAxHost PTR, .GetWindowLongPtrW(hwnd, 0))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a pointer to the CAxHost class given the handle of the form or any control in the
+' form and the control identifier.
+' Parameters:
+' - hwnd = Reference window handle.
+' - Control identifier, e.g. IDC_WEBBROWSER.
+' Returns a pointer to the COleCon class or NULL.
+' ========================================================================================
+PRIVATE FUNCTION AfxCAxHostPtr OVERLOAD (BYVAL hwnd AS HWND, BYVAL cID AS WORD) AS CAxHost PTR
+   DIM wszClassName AS WSTRING * 260
+   DIM hwndChild AS .HWND = AfxGetControlHandle(hwnd, cID)
+   GetClassNameW hwndChild, wszClassName, SIZEOF(wszClassName)
+   IF wszClassName <> CAXHOST_CLASSNAME THEN RETURN NULL
+   RETURN CAST(CAxHost PTR, .GetWindowLongPtrW(hwndChild, 0))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a reference to the hosted ActiveX control dispatch interface given the handle of
+' the window that hosts it. Don't call IUnknown_Release.
+' ========================================================================================
+PRIVATE FUNCTION AfxCAxHostDispPtr (BYVAL hwnd AS HWND) AS IDispatch PTR
+   DIM wszClassName AS WSTRING * 260
+   GetClassNameW hwnd, wszClassName, SIZEOF(wszClassName)
+   IF wszClassName <> CAXHOST_CLASSNAME THEN RETURN NULL
+   DIM pAxHost AS CAxHost PTR = CAST(CAxHost PTR, .GetWindowLongPtrW(hwnd, 0))
+   IF pAxHost THEN RETURN pAxHost->m_pOcx
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Returns a counted reference to the hosted ActiveX control dispatch interface given the
+' handle of the window that hosts it. You must call IUnknown_Release when no longer need it.
+' ========================================================================================
+PRIVATE FUNCTION AfxCAxHostDispObj (BYVAL hwnd AS HWND) AS IDispatch PTR
+   DIM wszClassName AS WSTRING * 260
+   GetClassNameW hwnd, wszClassName, SIZEOF(wszClassName)
+   IF wszClassName <> CAXHOST_CLASSNAME THEN RETURN NULL
+   DIM pAxHost AS CAxHost PTR = CAST(CAxHost PTR, .GetWindowLongPtrW(hwnd, 0))
+   IF pAxHost THEN
+      IF pAxHost->m_pOcx <> NULL THEN
+         pAxHost->m_pOcx->lpvtbl->AddRef(pAxHost->m_pOcx)
+         RETURN pAxHost->m_pOcx
+      END IF
+   END IF
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Forwards the message to the control. Active in-place objects must always be given the
+' first chance at translating accelerator keystrokes. You can provide this opportunity by
+' calling IOleInPlaceActiveObject.TranslateAccelerator from your container's message loop
+' before doing any other translation. You should apply your own translation only when this
+' method returns FALSE.
+' Remarks: If the control is the WebBrowser control, TranslateAccelerator calls the namesake
+' method of the IDocHostUIHandler interface.
+' Usage example:
+'   ' // Dispatch Windows messages
+'   DIM uMsg AS MSG
+'   WHILE (GetMessageW(@uMsg, NULL, 0, 0) <> FALSE)
+'      IF AfxCAxHostForwardMessage(GetFocus, @uMsg) = FALSE THEN
+'         IF IsDialogMessageW(hWndMain, @uMsg) = 0 THEN
+'            TranslateMessage(@uMsg)
+'            DispatchMessageW(@uMsg)
+'         END IF
+'      END IF
+'   WEND
+'   FUNCTION = uMsg.wParam
+' ========================================================================================
+PRIVATE FUNCTION AfxCAxHostForwardMessage (BYVAL hctl AS HWND, BYVAL pMsg AS tagMsg PTR) AS BOOLEAN
+   IF pMsg->message >= WM_KEYFIRST AND pMsg->message <= WM_KEYLAST THEN
+      ' // See if the window that has the focus is a child of our container window
+      DIM wszClassName AS WSTRING * 260
+      DIM hWndParent AS HWND, hWndTmp AS HWND
+      hWndParent = hCtl
+      DO
+         hWndTmp = GetParent(hWndParent)
+         IF hWndTmp = NULL THEN EXIT DO
+         hWndParent = hWndTmp
+         GetClassNameW hWndParent, wszClassName, SIZEOF(wszClassName)
+         IF wszClassName = CAXHOST_CLASSNAME THEN EXIT DO
+      LOOP
+      IF wszClassName <> CAXHOST_CLASSNAME THEN RETURN FALSE
+      ' // Get a pointer to the OLE container class
+      DIM pAxHost AS CAxHost PTR = cast(CAxHost PTR, GetWindowLongPtrW(hwndParent, 0))
+      IF pAxHost = NULL THEN RETURN FALSE
+      IF pAxHost->m_pOcx = NULL THEN RETURN FALSE
+      ' // Translate the message
+      DIM hr AS HRESULT, pActiveObject AS IOleInPlaceActiveObject PTR
+      hr = IUnknown_QueryInterface(pAxHost->m_pOcx, @IID_IOleInPlaceActiveObject, @pActiveObject)
+      IF pActiveObject = NULL THEN RETURN FALSE
+      hr = pActiveObject->lpvtbl->TranslateAccelerator(pActiveObject, pMsg)
+      pActiveObject->lpvtbl->Release(pActiveObject)
+      IF hr = S_OK THEN RETURN TRUE
+   END IF
+   RETURN FALSE
+END FUNCTION
+' ========================================================================================
