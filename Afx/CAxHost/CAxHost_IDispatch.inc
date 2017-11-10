@@ -13,88 +13,6 @@
 #pragma once
 
 ' ########################################################################################
-'                              *** CAxHost_IUnknown class ***
-' ########################################################################################
-
-' ========================================================================================
-' CAxHost_IUnknown class
-' IUnknown class implementation.
-' ========================================================================================
-TYPE CAxHost_IUnknown EXTENDS OBJECT
-
-   DECLARE VIRTUAL FUNCTION QueryInterface (BYVAL riid AS REFIID, BYVAL ppvObject AS LPVOID PTR) AS HRESULT
-   DECLARE VIRTUAL FUNCTION AddRef () AS ULONG
-   DECLARE VIRTUAL FUNCTION Release () AS ULONG
-
-Public:
-   DECLARE CONSTRUCTOR
-   DECLARE CONSTRUCTOR (BYVAL pAxHost AS CAxHost PTR)
-   DECLARE DESTRUCTOR
-
-Private:
-   cRef AS ULONG = 1
-   m_pAxHost AS CAxHost PTR
-
-END TYPE
-' ========================================================================================
-
-' ========================================================================================
-' Constructors
-' ========================================================================================
-CONSTRUCTOR CAxHost_IUnknown
-   CAXH_DP("CAxHost_IUnknown Default constructor")
-END CONSTRUCTOR
-' ========================================================================================
-' ========================================================================================
-CONSTRUCTOR CAxHost_IUnknown (BYVAL pAxHost AS CAxHost PTR)
-   CAXH_DP("CAxHost_IUnknown constructor pAxHost = " & WSTR(pAxHost))
-   m_pAxHost = pAxHost
-END CONSTRUCTOR
-' ========================================================================================
-' ========================================================================================
-' Destructor
-' ========================================================================================
-DESTRUCTOR CAxHost_IUnknown
-   CAXH_DP("### CAxHost_IUnknown destructor")
-   m_pAxHost->m_pIUnknownImpl = NULL
-END DESTRUCTOR
-' ========================================================================================
-
-' ========================================================================================
-' Returns pointers to the implemented classes and supported interfaces.
-' ========================================================================================
-FUNCTION CAxHost_IUnknown.QueryInterface (BYVAL riid AS REFIID, BYVAL ppvObj AS LPVOID PTR) AS HRESULT
-   IF m_pAxHost = NULL THEN RETURN E_POINTER
-   IF ppvObj = NULL THEN RETURN E_INVALIDARG
-   RETURN m_pAxHost->QueryInterface(riid, ppvObj)
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Increments the reference count for an interface on an object. This method should be called
-' for every new copy of a pointer to an interface on an object.
-' ========================================================================================
-FUNCTION CAxHost_IUnknown.AddRef () AS ULONG
-   this.cRef += 1
-   CAXH_DP("CAxHost_IUnknown AddRef = " & WSTR(this.cRef))
-   RETURN this.cRef
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Decrements the reference count for an interface on an object.
-' If the count reaches 0, it deletes itself.
-' ========================================================================================
-FUNCTION CAxHost_IUnknown.Release () AS DWORD
-   this.cRef -= 1
-   CAXH_DP("CAxHost_IUnknown Release = " & WSTR(this.cRef))
-   FUNCTION = this.cRef
-   IF this.cRef = 0 THEN DELETE @this
-END FUNCTION
-' ========================================================================================
-
-
-' ########################################################################################
 '                              *** CAxHost_IDispatch class ***
 ' ########################################################################################
 
@@ -116,7 +34,7 @@ Public:
    DECLARE DESTRUCTOR
 
 Private:
-   cRef AS ULONG = 1
+   cRef AS ULONG = 0
    m_pAxHost AS CAxHost PTR
 
 END TYPE
@@ -259,7 +177,7 @@ END FUNCTION
 ' images, videos and sounds.
 ' ========================================================================================
 FUNCTION CAxHost_IDispatch.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid AS CONST IID CONST PTR, BYVAL lcid AS LCID, BYVAL wFlags AS WORD, BYVAL pDispParams AS DISPPARAMS PTR, BYVAL pVarResult AS VARIANT PTR, BYVAL pExcepInfo AS EXCEPINFO PTR, BYVAL puArgErr AS UINT PTR) AS HRESULT
-   CAXH_DP("CAxHost_IDispatch Invoke")
+   CAXH_DP("CAxHost_IDispatch Invoke - dispid = " & WSTR(dispIdMember))
 
    ' // riid must be a null guid
    IF IsEqualIID(riid, @IID_NULL) = FALSE THEN RETURN DISP_E_UNKNOWNINTERFACE
@@ -281,7 +199,7 @@ FUNCTION CAxHost_IDispatch.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid AS C
    	CASE -703   ' DISPID_AMBIENT_FONT
          IF m_pAxHost->m_pIFontDisp <> NULL THEN
             ' Incremenet the reference count
-            IUnknown_AddRef(m_pAxHost->m_pIFontDisp)
+            AfxSafeAddRef(m_pAxHost->m_pIFontDisp)
             ' Return a reference to the ambient font
             pvarResult->vt = VT_DISPATCH
             pvarResult->pdispVal = CAST(IDispatch PTR, CAST(ULONG_PTR, m_pAxHost->m_pIFontDisp))

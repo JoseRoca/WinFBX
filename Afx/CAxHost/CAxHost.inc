@@ -21,19 +21,12 @@ NAMESPACE Afx
 
 ' // Forward references
 TYPE CAxHost_ AS CAxHost
-TYPE CAxHost_IUnknown_ AS CAxHost_IUnknown
 TYPE CAxHost_IDispatch_ AS CAxHost_IDispatch
 TYPE CAxHost_IOleClientSite_ AS CAxHost_IOleClientSite
-TYPE CAxHost_IServiceProvider_ AS CAxHost_IServiceProvider
-TYPE CAxHost_IParseDisplayName_ AS CAxHost_IParseDisplayName
-TYPE CAxHost_IOleContainer_ AS CAxHost_IOleContainer
-TYPE CAxHost_IOleWindow_ AS CAxHost_IOleWindow
-TYPE CAxHost_IOleInPlaceUIWindow_ AS CAxHost_IOleInPlaceUIWindow
+TYPE CAxHost_IOleControlSite_ AS CAxHost_IOleControlSite
 TYPE CAxHost_IOleInPlaceFrame_ AS CAxHost_IOleInPlaceFrame
 TYPE CAxHost_IOleInPlaceSite_ AS CAxHost_IOleInPlaceSite
-TYPE CAxHost_IOleInPlaceSiteEx_ AS CAxHost_IOleInPlaceSiteEx
-TYPE CAxHost_IOleControlSite_ AS CAxHost_IOleControlSite
-TYPE CAxHost_ISimpleFrameSite_ AS CAxHost_ISimpleFrameSite
+TYPE CAxHost_IServiceProvider_ AS CAxHost_IServiceProvider
 
 ' ########################################################################################
 '                                *** CAXHost class ***
@@ -56,7 +49,7 @@ Public:
    m_bLocked                  AS BOOLEAN         ' // Container locked
    m_bInPlaceActive           AS BOOLEAN         ' // The control is in-place active
    m_bUIActive                AS BOOLEAN         ' // The control is UI Active
-   m_bHaveFocus               AS BOOLEAN         ' // The control has focus
+'   m_bHaveFocus               AS BOOLEAN         ' // The control has focus
    m_AmbientDlControl         AS DWORD           ' // Ambient flags to control the WebBrowser behavior
    m_rxRatio                  AS SINGLE          ' // DPI horizontal ratio
    m_ryRatio                  AS SINGLE          ' // DPI vertical ratio
@@ -71,19 +64,12 @@ Public:
    m_riidEvt                  AS IID PTR         ' // IID of the events interface
 
    ' *** Implemented interfaces ***
-   m_pIUnknownImpl            AS CAxHost_IUnknown_ PTR              ' // IUnknown interface (implemented)
    m_pIDispatchImpl           AS CAxHost_IDispatch_ PTR             ' // IDispatch interface (implemented)
    m_pIOleClientSiteImpl      AS CAxHost_IOleClientSite_ PTR        ' // IOleClientSite interface (implemented)
-   m_pIOleContainerImpl       AS CAxHost_IOleContainer_ PTR         ' // IOleContainer interface (implemented)
    m_pIOleControlSiteImpl     AS CAxHost_IOleControlSite_ PTR       ' // IOleControlSite interface (implemented)
    m_pIOleInPlaceFrameImpl    AS CAxHost_IOleInPlaceFrame_ PTR      ' // IOleInPlaceFrame interface (implemented)
    m_pIOleInPlaceSiteImpl     AS CAxHost_IOleInPlaceSite_ PTR       ' // IOleInPlaceSite interface (implemented)
-   m_pIOleInplaceSiteExImpl   AS CAxHost_IOleInPlaceSiteEx_ PTR     ' // IOleInPlaceSiteEx interface (implemented)
-   m_pIOleInPlaceUIWindowImpl AS CAxHost_IOleInplaceUIWindow_ PTR   ' // IOleInplaceUIWindow interface (implemented)
-   m_pIOleWindowImpl          AS CAxHost_IOleWindow_ PTR            ' // IOleWindow interface (implemented)
-   m_pIParseDisplayNameImpl   AS CAxHost_IParseDisplayName_ PTR     ' // IParseDisplayName interface (implemented)
    m_pIServiceProviderImpl    AS CAxHost_IServiceProvider_ PTR      ' // IServiceProvider interface (implemented)
-   m_pISimpleFrameSiteImpl    AS CAxHost_ISimpleFrameSite_ PTR      ' // ISimpleFrameSite interface (implemented)
 
    ' *** Control interfaces ***
    m_pIOleObject              AS Afx_IOleObject PTR                 ' // IOleObject interface
@@ -171,23 +157,32 @@ PRIVATE DESTRUCTOR CAxHost
 '   hr = RemoveProp(hWnd, BYCOPY $OC_IID)
 '   CAXH_DP("RemoveProp = " & WSTR(hr) & " - " & WSTR(pData))
 
-   ' // Required: Deactivate the IOleInPlaceObject if it active.
-   ' // It forces the release of the IOleInPlaceSite interface.
-   IF m_bInPlaceActive THEN
-      IF m_pIOleInPlaceObject THEN m_pIOleInPlaceObject->InPlaceDeactivate
-   END IF
+   ' // Release de IFontDisp object
+   DIM cRef AS ULONG = AfxSafeRelease(m_pIFontDisp)
+   CAXH_DP("Release IFontDisp - cRef (must be 0) = " & WSTR(cRef))
+
+   ' // Releases IOleInPlaceActiveObject
+   cRef = AfxSafeRelease(m_pIOleInPlaceActiveObject)
+   CAXH_DP("Release IOleInPlaceActiveObject - cRef (must be 0) = " & WSTR(cRef))
 
    ' // Close the control
+   ' // It forces the release of the IOleInPlaceSite interface.
    IF m_pIOleObject THEN
+      CAXH_DP("--- CAXHOST DESTRUCTOR - CLOSE - BEGIN ---")
       m_pIOleObject->Close(OLECLOSE_NOSAVE)
+      CAXH_DP("--- CAXHOST DESTRUCTOR - CLOSE - END ---")
       m_pIOleObject->SetClientSite(NULL)
+      CAXH_DP("--- CAXHOST DESTRUCTOR - SetClientSite NULL ---")
    END IF
 
-   ' // Release de IFontDisp object
-   IF m_pIFontDisp THEN
-      DIM cRef AS ULONG = AfxSafeRelease(m_pIFontDisp)
-      CAXH_DP("Release IFontDisp - cRef (must be 0) = " & WSTR(cRef))
-   END IF
+   ' // Required: Deactivate the IOleInPlaceObject if it is active.
+   ' // It forces the release of the IOleInPlaceSite interface.
+'   cRef = AfxSafeRelease(m_pIOleInPlaceObject)
+'   CAXH_DP("Release IOleInPlaceObject - cRef (must be 0) = " & WSTR(cRef))
+'   IF m_bInPlaceActive THEN
+'      IF m_pIOleInPlaceObject THEN m_pIOleInPlaceObject->InPlaceDeactivate
+'   END IF
+
    ' // Release the IOleInPlaceObject interface
 '   IF m_pIOleInPlaceObject THEN
 '      DIM cRef AS ULONG = m_pIOleInPlaceObject->Release
@@ -196,39 +191,31 @@ PRIVATE DESTRUCTOR CAxHost
    ' // Release the IOleObject interface
    ' // The returned reference count must be at least 1 because the
    ' // ActiveX control holds a reference to it.
-   IF m_pIOleObject THEN
-      DIM cRef AS ULONG = m_pIOleObject->Release
-      m_pIOleObject = NULL
-      CAXH_DP("Release IOleObject - cRef (must be 1) = " & WSTR(cRef))
-   END IF
-   ' // Release the ActiveX control
-   IF m_pOcx THEN
-      DIM cRef AS ULONG = m_pOcx->lpvtbl->Release(m_pOcx)
-      CAXH_DP("Release OCX - cRef (must be 0) = " & WSTR(cRef))
-   END IF
-
-   ' // Checks for memory lesaks (if a pointer <> 0 then memory leak)
-   CAXH_DP("*** IUnknown = " & WSTR(this.m_pIUnknownImpl))
-   CAXH_DP("*** IsDispatch = " & WSTR(this.m_pIDispatchImpl))
-   CAXH_DP("*** IOleClientSite = " & WSTR(this.m_pIOleClientSiteImpl))
-   CAXH_DP("*** IOleContainer = " & WSTR(this.m_pIOleContainerImpl))
-   CAXH_DP("*** IOleControlSite = " & WSTR(this.m_pIOleControlSiteImpl))
-   CAXH_DP("*** IOleInPlaceActiveObject = " & WSTR(this.m_pIOleInPlaceActiveObject))
-   CAXH_DP("*** IOleInPlaceFrame = " & WSTR(this.m_pIOleInPlaceFrameImpl))
-   CAXH_DP("*** IOleInPlaceObject = " & WSTR(this.m_pIOleInPlaceObject))
-   CAXH_DP("*** IOleInPlaceSite = " & WSTR(this.m_pIOleInPlaceSiteImpl))
-   CAXH_DP("*** IOleInPlaceSiteEx = " & WSTR(this.m_pIOleInPlaceSiteExImpl))
-   CAXH_DP("*** IOleInPlaceUIWindow = " & WSTR(this.m_pIOleInPlaceUIWindowImpl))
-   CAXH_DP("*** IOleObject = " & WSTR(this.m_pIOleObject))
-   CAXH_DP("*** IOleWindow = " & WSTR(this.m_pIOleWindowImpl))
-   CAXH_DP("*** IParseDisplayName = " & WSTR(this.m_pIParseDisplayNameImpl))
-   CAXH_DP("*** IServiceProvider = " & WSTR(this.m_pIServiceProviderImpl))
-   CAXH_DP("*** ISimpleFrameSite = " & WSTR(this.m_pISimpleFrameSiteImpl))
+   cRef = AfxSafeRelease(m_pIOleObject)
+   CAXH_DP("Release IOleObject - cRef (must be 1) = " & WSTR(cRef))
 
    ' // WORKAROUND: The DHTML Edit Control doesn't release this interface
-'   IF this.m_pIOleControlSite THEN
-'      IUnknown_Release this.m_pIOleControlSite
-'   END IF
+   IF this.m_pIOleControlSiteImpl THEN AfxSafeRelease(this.m_pIOleControlSiteImpl)
+
+   ' // WORKAROUND: The WebBroser control calls IOleClientSite->AddRef after
+   ' // calling IOleClientSite->SetSite, leaving a reference count of 1 at this point
+   IF this.m_pIOleClientSiteImpl THEN AfxSafeRelease(this.m_pIOleClientSiteImpl)
+
+   ' // Release the ActiveX control
+   cRef = m_pOcx->lpvtbl->Release(m_pOcx)
+   CAXH_DP("Release OCX - cRef (must be 0) = " & WSTR(cRef))
+
+   ' // Checks for memory leaks (if a pointer <> 0 then memory leak)
+   CAXH_DP("*** IsDispatch = " & WSTR(this.m_pIDispatchImpl))
+   CAXH_DP("*** IOleClientSite = " & WSTR(this.m_pIOleClientSiteImpl))
+   CAXH_DP("*** IOleControlSite = " & WSTR(this.m_pIOleControlSiteImpl))
+   CAXH_DP("*** IOleInPlaceFrame = " & WSTR(this.m_pIOleInPlaceFrameImpl))
+   CAXH_DP("*** IOleInPlaceSite = " & WSTR(this.m_pIOleInPlaceSiteImpl))
+   CAXH_DP("*** IServiceProvider = " & WSTR(this.m_pIServiceProviderImpl))
+   CAXH_DP("*** IOleInPlaceActiveObject = " & WSTR(this.m_pIOleInPlaceActiveObject))
+   CAXH_DP("*** IOleInPlaceObject = " & WSTR(this.m_pIOleInPlaceObject))
+   CAXH_DP("*** IOleObject = " & WSTR(this.m_pIOleObject))
+   CAXH_DP("*** bInPlaceActive = " & WSTR(this.m_bInPlaceActive))
 
    ' // Free the COM library
    CAXH_DP("DESTRUCTOR CAxHost - m_bUninitOLE = " & WSTR(m_bUninitOLE))
@@ -416,7 +403,7 @@ PRIVATE FUNCTION CAxHost.Advise (BYVAL pEvtObj AS IDispatch PTR, BYVAL riid AS I
    DIM pCP AS IConnectionPoint PTR
    hr = pCPC->lpvtbl->FindConnectionPoint(pCPC, riid, @pCP)
    IF hr <> S_OK OR pCP = NULL THEN
-      IUnknown_Release(pCPC)
+      AfxSafeRelease(pCPC)
       RETURN hr
    END IF
    ' // Terminates the advisory connection previously established between a connection point object and a client's sink.
@@ -424,8 +411,8 @@ PRIVATE FUNCTION CAxHost.Advise (BYVAL pEvtObj AS IDispatch PTR, BYVAL riid AS I
    m_dwCookie = 0
    ' // Establishes a connection between a connection point object and the client's sink.
    hr = pCP->lpvtbl->Advise(pCP, cast(IUnknown PTR, pEvtObj), @m_dwCookie)
-   IF pCPC THEN IUnknown_Release(pCPC)
-   IF pCP THEN IUnknown_Release(pCP)
+   AfxSafeRelease(pCPC)
+   AfxSafeRelease(pCP)
    CAXH_DP("END CAxHost.Advise")
    RETURN hr
 END FUNCTION
@@ -471,14 +458,14 @@ PRIVATE FUNCTION CAxHost.Unadvise () AS HRESULT
    DIM pCP AS IConnectionPoint PTR
    hr = pCPC->lpvtbl->FindConnectionPoint(pCPC, m_riidEvt, @pCP)
    IF hr <> S_OK OR pCP = NULL THEN
-      IUnknown_Release(pCPC)
+      AfxSafeRelease(pCPC)
       RETURN hr
    END IF
    ' // Terminates the advisory connection previously established between a connection point object and a client's sink.
    hr = pCP->lpvtbl->Unadvise(pCP, m_dwCookie)
    m_dwCookie = 0
-   IF pCPC THEN IUnknown_Release(pCPC)
-   IF pCP THEN IUnknown_Release(pCP)
+   AfxSafeRelease(pCPC)
+   AfxSafeRelease(pCP)
    CAXH_DP("END CAxHost.Unadvise")
    RETURN hr
 END FUNCTION
@@ -798,11 +785,10 @@ END FUNCTION
 ' ========================================================================================
 #include once "CAxHost_IDispatch.inc"
 #include once "CAxHost_IOleClientSite.inc"
-#include once "CAxHost_IServiceProvider.inc"
-#include once "CAxHost_IOleInPlaceSite.inc"
-#include once "CAxHost_IOleInPlaceFrame.inc"
-#include once "CAxHost_IOleContainer.inc"
 #include once "CAxHost_IOleControlSite.inc"
+#include once "CAxHost_IOleInPlaceFrame.inc"
+#include once "CAxHost_IOleInPlaceSite.inc"
+#include once "CAxHost_IServiceProvider.inc"
 ' ========================================================================================
 
 ' ========================================================================================
@@ -863,18 +849,12 @@ PRIVATE FUNCTION CAxHost.CAxHostProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BY
          ' ===============================================================================
 
          ' ===============================================================================
-         ' // Creates an instance of our implemented IOleClientSite interface
-         pAxHost->m_pIOleClientSiteImpl = NEW CAxHost_IOleClientSite(pAxHost)
-         IF pAxHost->m_pIOleClientSiteImpl = NULL THEN EXIT FUNCTION
-         ' ===============================================================================
-
-         ' ===============================================================================
          ' // Gets the status bitwise flags
          pAxHost->m_pIOleObject->GetMiscStatus(DVASPECT_CONTENT, @pAxHost->m_dwMiscStatus)
          ' // The control needs to be put on running state
          IF (pAxHost->m_dwMiscStatus AND OLEMISC_ALWAYSRUN) = OLEMISC_ALWAYSRUN THEN
             hr = OleRun(cast(IUnknown PTR, pAxHost->m_pOcx))
-            CAXH_DP("OleRun: " & HEX(hr))
+            CAXH_DP("OleRun: hr = " & HEX(hr))
          END IF
          IF (pAxHost->m_dwMiscStatus AND OLEMISC_SIMPLEFRAME) = OLEMISC_SIMPLEFRAME THEN
             CAXH_DP("--- Simple frame ---")
@@ -882,10 +862,11 @@ PRIVATE FUNCTION CAxHost.CAxHostProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BY
          ' // The control wants that you set the client site first
          IF (pAxHost->m_dwMiscStatus AND OLEMISC_SETCLIENTSITEFIRST) = OLEMISC_SETCLIENTSITEFIRST THEN
             ' // Sets the client site
-            CAXH_DP("--- SetClientSite - Begin ---")
+            pAxHost->QueryInterface(@IID_IOleClientSite, @pAxHost->m_pIOleClientSiteImpl)
             IF pAxHost->m_pIOleClientSiteImpl THEN
+               CAXH_DP("--- SetClientSite - Begin ---")
                hr = pAxHost->m_pIOleObject->SetClientSite(CAST(ANY PTR, pAxHost->m_pIOleClientSiteImpl))
-               CAXH_DP("--- SetClientSite - End --- " & HEX(hr))
+               CAXH_DP("--- SetClientSite - End --- hr = " & HEX(hr))
             END IF
          END IF
          ' ===============================================================================
@@ -903,16 +884,16 @@ PRIVATE FUNCTION CAxHost.CAxHostProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BY
          hr = IUnknown_QueryInterface(pAxHost->m_pOcx, @IID_IPersistStreamInit, @psi)
          IF hr = S_OK AND psi <> NULL THEN
             hr = psi->lpvtbl->InitNew(psi)
-            CAXH_DP("IPersistStreamInit.InitNew - hr: " & HEX(hr))
-            IUnknown_Release(psi)
+            CAXH_DP("IPersistStreamInit.InitNew - hr = " & HEX(hr))
+            AfxSafeRelease(psi)
          END IF
-         IF (pAxHost->m_dwMiscStatus AND OLEMISC_SETCLIENTSITEFIRST) = OLEMISC_SETCLIENTSITEFIRST THEN
+         IF (pAxHost->m_dwMiscStatus AND OLEMISC_SETCLIENTSITEFIRST) <> OLEMISC_SETCLIENTSITEFIRST THEN
             ' // Sets the client site
-            CAXH_DP("--- SetClientSite - Begin ---")
+            pAxHost->QueryInterface(@IID_IOleClientSite, @pAxHost->m_pIOleClientSiteImpl)
             IF pAxHost->m_pIOleClientSiteImpl THEN
-               DIM pIOleClientSite AS ANY PTR = pAxHost->m_pIOleClientSiteImpl
-               hr = pAxHost->m_pIOleObject->SetClientSite(pIOleClientSite)
-               CAXH_DP("--- SetClientSite - End --- " & HEX(hr))
+               CAXH_DP("--- SetClientSite - Begin ---")
+               hr = pAxHost->m_pIOleObject->SetClientSite(CAST(ANY PTR, pAxHost->m_pIOleClientSiteImpl))
+               CAXH_DP("--- SetClientSite - End --- hr = " & HEX(hr))
             END IF
          END IF
          ' ===============================================================================
@@ -926,21 +907,17 @@ PRIVATE FUNCTION CAxHost.CAxHostProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BY
          pxSize.cx = rc.Right - rc.Left
          pxSize.cy = rc.Bottom - rc.Top
          pAxHost->PixelsToHiMetric(@pxSize, @hmSize)
-         ' // Sets extent of object's display area
-         CAXH_DP("--- DoVerb - INPLACEACTIVATE - Begin ---")
-         IF pAxHost->m_pIOleObject THEN pAxHost->m_pIOleObject->SetExtent(DVASPECT_CONTENT, @hmSize)
          ' ===============================================================================
 
          ' ===============================================================================
          ' // Activates the control in place
          IF pAxHost->m_pIOleClientSiteImpl THEN
+            CAXH_DP("--- DoVerb - INPLACEACTIVATE - Begin ---")
             DIM pIOleClientSite AS ANY PTR = pAxHost->m_pIOleClientSiteImpl
-            IF pAxHost->m_pIOleObject THEN
-               DIM hr AS HRESULT = pAxHost->m_pIOleObject->DoVerb(OLEIVERB_INPLACEACTIVATE, NULL, _
-                  cast(IOleClientSite PTR, pIOleClientSite), 0, pAxHost->m_hwnd, @rc)
-            END IF
-            CAXH_DP("--- DoVerb - INPLACEACTIVATE - End --- " & HEX(hr))
-            ' // Sets extent of object's display area
+            DIM hr AS HRESULT = pAxHost->m_pIOleObject->DoVerb(OLEIVERB_INPLACEACTIVATE, NULL, _
+               cast(IOleClientSite PTR, pIOleClientSite), 0, pAxHost->m_hwnd, @rc)
+            CAXH_DP("--- DoVerb - INPLACEACTIVATE - End --- hr = " & HEX(hr))
+            ' // Sets the extent of object's display area
             IF pAxHost->m_pIOleObject THEN pAxHost->m_pIOleObject->SetExtent(DVASPECT_CONTENT, @hmSize)
             ' // Indicates how much of the in-place object is visible.
             IF pAxHost->m_pIOleInPlaceObject = NULL THEN
@@ -975,23 +952,26 @@ PRIVATE FUNCTION CAxHost.CAxHostProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BY
          CAXH_DP("--- WM_SETFOCUS BEGIN ---")
          DIM pAxHost AS CAxHost PTR = CAST(CAxHost PTR, GetWindowLongPtrW(hwnd, 0))
          IF pAxHost = NULL THEN EXIT FUNCTION
-         pAxHost->m_bHaveFocus = TRUE
-         ' // Activates an object in place, along with its full set of user-interface tools.
-         IF pAxHost->m_pIOleObject <> NULL AND pAxHost->m_bInPlaceActive = FALSE THEN
-            DIM rc AS RECT
-            GetClientRect hwnd, @rc
-            IF pAxHost->m_pIOleClientSiteImpl THEN
-               DIM pIOleClientSite AS ANY PTR = pAxHost->m_pIOleClientSiteImpl
-               pAxHost->m_pIOleObject->DoVerb(OLEIVERB_UIACTIVATE, NULL, pIOleClientSite, 0, hwnd, @rc)
-            END IF
-         END IF
-         IF pAxHost->m_pIOleInPlaceObject = NULL THEN
-            IUnknown_QueryInterface(pAxHost->m_pOcx, @IID_IOleInPlaceObject, @pAxHost->m_pIOleInPlaceObject)
-         END IF
+''         pAxHost->m_bHaveFocus = TRUE
+''         ' // Activates an object in place, along with its full set of user-interface tools.
+''         IF pAxHost->m_pIOleObject <> NULL AND pAxHost->m_bInPlaceActive = FALSE THEN
+''            DIM rc AS RECT
+''            GetClientRect hwnd, @rc
+''            IF pAxHost->m_pIOleClientSiteImpl THEN
+''               DIM pIOleClientSite AS ANY PTR = pAxHost->m_pIOleClientSiteImpl
+''               pAxHost->m_pIOleObject->DoVerb(OLEIVERB_UIACTIVATE, NULL, pIOleClientSite, 0, hwnd, @rc)
+''               CAXH_DP("--- WM_SETFOCUS OLEIVERB_UIACTIVATE ---")
+''            END IF
+''         END IF
+'         IF pAxHost->m_pIOleInPlaceObject = NULL THEN
+'            IUnknown_QueryInterface(pAxHost->m_pOcx, @IID_IOleInPlaceObject, @pAxHost->m_pIOleInPlaceObject)
+'         END IF
+         CAXH_DP("--- WM_SETFOCUS --- " & WSTR(pAxHost->m_pIOleInPlaceObject))
          IF pAxHost->m_pIOleInPlaceObject THEN
             DIM hwndCtrl AS HANDLE
             pAxHost->m_pIOleInPlaceObject->GetWindow(@hwndCtrl)
             IF IsWindow(hwndCtrl) THEN SetFocus hwndCtrl
+            CAXH_DP("--- WM_SETFOCUS hwndCtrl = " & WSTR(hwndCtrl) & " ---")
          END IF
          CAXH_DP("--- WM_SETFOCUS END ---")
          EXIT FUNCTION
@@ -1000,9 +980,9 @@ PRIVATE FUNCTION CAxHost.CAxHostProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BY
       CASE WM_KILLFOCUS
       ' ==================================================================================
          CAXH_DP("--- WM_KILLFOCUS BEGIN ---")
-         DIM pAxHost AS CAxHost PTR = CAST(CAxHost PTR, GetWindowLongPtrW(hwnd, 0))
-         IF pAxHost = NULL THEN EXIT FUNCTION
-         pAxHost->m_bHaveFocus = FALSE
+'         DIM pAxHost AS CAxHost PTR = CAST(CAxHost PTR, GetWindowLongPtrW(hwnd, 0))
+'         IF pAxHost = NULL THEN EXIT FUNCTION
+'         pAxHost->m_bHaveFocus = FALSE
          CAXH_DP("--- WM_KILLFOCUS END ---")
          EXIT FUNCTION
 
@@ -1011,9 +991,9 @@ PRIVATE FUNCTION CAxHost.CAxHostProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BY
       ' ==================================================================================
       CASE WM_SIZE
       ' ==================================================================================
-         CAXH_DP("--- WM_SIZE BEGIN ---")
          DIM pAxHost AS CAxHost PTR = CAST(CAxHost PTR, GetWindowLongPtrW(hwnd, 0))
          IF pAxHost = NULL THEN EXIT FUNCTION
+         CAXH_DP("--- WM_SIZE BEGIN ---")
          IF pAxHost->m_bInPlaceActive THEN
             ' // Retrieves the coordinates of a window's client area.
             DIM rc AS RECT
@@ -1118,22 +1098,14 @@ FUNCTION CAxHost.QueryInterface (BYVAL riid AS REFIID, BYVAL ppvObj AS LPVOID PT
    IF ppvObj = NULL THEN RETURN E_INVALIDARG
    CAXH_DP("CAxHost.QueryInterface : " & this.GetInterfaceName(riid))
 
-   IF IsEqualIID(riid, @IID_IUnknown) THEN
-      IF this.m_pIUnknownImpl THEN
-         this.m_pIUnknownImpl->AddRef
-         *ppvObj = this.m_pIUnknownImpl
-      ELSE
-         DIM p AS ANY PTR = NEW CAxHost_IUnknown(@this)
-         this.m_pIUnknownImpl = p
-         *ppvObj = p
-      END IF
-   ELSEIF IsEqualIID(riid, @IID_IDispatch) THEN
+   IF IsEqualIID(riid, @IID_IUnknown) OR IsEqualIID(riid, @IID_IDispatch) THEN
       IF this.m_pIDispatchImpl THEN
          this.m_pIDispatchImpl->AddRef
          *ppvObj = this.m_pIDispatchImpl
       ELSE
          DIM p AS ANY PTR = NEW CAxHost_IDispatch(@this)
          this.m_pIDispatchImpl = p
+         this.m_pIDispatchImpl->AddRef
          *ppvObj = p
       END IF
    ELSEIF IsEqualIID(riid, @IID_IOleClientSite) THEN
@@ -1143,15 +1115,7 @@ FUNCTION CAxHost.QueryInterface (BYVAL riid AS REFIID, BYVAL ppvObj AS LPVOID PT
       ELSE
          DIM p AS ANY PTR = NEW CAxHost_IOleClientSite(@this)
          this.m_pIOleClientSiteImpl = p
-         *ppvObj = p
-      END IF
-   ELSEIF IsEqualIID(riid, @IID_IOleContainer) THEN
-      IF this.m_pIOleContainerImpl THEN
-         this.m_pIOleContainerImpl->AddRef
-         *ppvObj = this.m_pIOleContainerImpl
-      ELSE
-         DIM p AS ANY PTR = NEW CAxHost_IOleContainer(@this)
-         this.m_pIOleContainerImpl = p
+         this.m_pIOleClientSiteImpl->AddRef
          *ppvObj = p
       END IF
    ELSEIF IsEqualIID(riid, @IID_IOleControlSite) THEN
@@ -1161,15 +1125,17 @@ FUNCTION CAxHost.QueryInterface (BYVAL riid AS REFIID, BYVAL ppvObj AS LPVOID PT
       ELSE
          DIM p AS ANY PTR = NEW CAxHost_IOleControlSite(@this)
          this.m_pIOleControlSiteImpl = p
+         this.m_pIOleControlSiteImpl->AddRef
          *ppvObj = p
       END IF
-   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceFrame) THEN
+   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceFrame) OR IsEqualIID(riid, @IID_IOleWindow) OR IsEqualIID(riid, @IID_IOleInPlaceUIWindow) THEN
       IF this.m_pIOleInPlaceFrameImpl THEN
          this.m_pIOleInPlaceFrameImpl->AddRef
          *ppvObj = this.m_pIOleInPlaceFrameImpl
       ELSE
          DIM p AS ANY PTR = NEW CAxHost_IOleInPlaceFrame(@this)
          this.m_pIOleInPlaceFrameImpl = p
+         this.m_pIOleInPlaceFrameImpl->AddRef
          *ppvObj = p
       END IF
    ELSEIF IsEqualIID(riid, @IID_IOleInPlaceSite) THEN
@@ -1179,42 +1145,7 @@ FUNCTION CAxHost.QueryInterface (BYVAL riid AS REFIID, BYVAL ppvObj AS LPVOID PT
       ELSE
          DIM p AS ANY PTR = NEW CAxHost_IOleInPlaceSite(@this)
          this.m_pIOleInPlaceSiteImpl = p
-         *ppvObj = p
-      END IF
-   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceSiteEx) THEN
-      IF this.m_pIOleInPlaceSiteExImpl THEN
-         this.m_pIOleInPlaceSiteExImpl->AddRef
-         *ppvObj = this.m_pIOleInPlaceSiteExImpl
-      ELSE
-         DIM p AS ANY PTR = NEW CAxHost_IOleInPlaceSiteEx(@this)
-         this.m_pIOleInPlaceSiteExImpl = p
-         *ppvObj = p
-      END IF
-   ELSEIF IsEqualIID(riid, @IID_IOleInPlaceUIWindow) THEN
-      IF this.m_pIOleInPlaceUIWindowImpl THEN
-         this.m_pIOleInPlaceUIWindowImpl->AddRef
-         *ppvObj = this.m_pIOleInPlaceUIWindowImpl
-      ELSE
-         DIM p AS ANY PTR = NEW CAxHost_IOleInPlaceUIWindow(@this)
-         this.m_pIOleInPlaceUIWindowImpl = p
-         *ppvObj = p
-      END IF
-   ELSEIF IsEqualIID(riid, @IID_IOleWindow) THEN
-      IF this.m_pIOleWindowImpl THEN
-         this.m_pIOleWindowImpl->AddRef
-         *ppvObj = this.m_pIOleWindowImpl
-      ELSE
-         DIM p AS ANY PTR = NEW CAxHost_IOleWindow(@this)
-         this.m_pIOleWindowImpl = p
-         *ppvObj = p
-      END IF
-   ELSEIF IsEqualIID(riid, @IID_IParseDisplayName) THEN
-      IF this.m_pIParseDisplayNameImpl THEN
-         this.m_pIParseDisplayNameImpl->AddRef
-         *ppvObj = this.m_pIParseDisplayNameImpl
-      ELSE
-         DIM p AS ANY PTR = NEW CAxHost_IParseDisplayName(@this)
-         this.m_pIParseDisplayNameImpl = p
+         this.m_pIOleInPlaceSiteImpl->AddRef
          *ppvObj = p
       END IF
    ELSEIF IsEqualIID(riid, @IID_IServiceProvider) THEN
@@ -1224,15 +1155,7 @@ FUNCTION CAxHost.QueryInterface (BYVAL riid AS REFIID, BYVAL ppvObj AS LPVOID PT
       ELSE
          DIM p AS ANY PTR = NEW CAxHost_IServiceProvider(@this)
          this.m_pIServiceProviderImpl = p
-         *ppvObj = p
-      END IF
-   ELSEIF IsEqualIID(riid, @IID_ISimpleFrameSite) THEN
-      IF this.m_pISimpleFrameSiteImpl THEN
-         this.m_pISimpleFrameSiteImpl->AddRef
-         *ppvObj = this.m_pISimpleFrameSiteImpl
-      ELSE
-         DIM p AS ANY PTR = NEW CAxHost_ISimpleFrameSite(@this)
-         this.m_pISimpleFrameSiteImpl = p
+         this.m_pIServiceProviderImpl->AddRef
          *ppvObj = p
       END IF
    END IF

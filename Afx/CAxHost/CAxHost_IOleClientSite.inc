@@ -43,7 +43,7 @@ Public:
    DECLARE DESTRUCTOR
 
 Private:
-   cRef AS ULONG = 1
+   cRef AS ULONG = 0
    m_pAxHost AS CAxHost PTR
 
 END TYPE
@@ -110,7 +110,7 @@ END FUNCTION
 ' ========================================================================================
 FUNCTION CAxHost_IOleClientSite.SaveObject () AS HRESULT
    CAXH_DP("CAxHost_IOleClientSite SaveObject")
-   RETURN S_OK
+   RETURN E_NOTIMPL
 END FUNCTION
 ' ========================================================================================
 
@@ -131,7 +131,8 @@ END FUNCTION
 FUNCTION CAxHost_IOleClientSite.GetContainer (BYVAL ppContainer AS LPOLECONTAINER PTR) AS HRESULT
    CAXH_DP("CAxHost_IOleClientSite GetContainer")
    IF ppContainer = NULL THEN RETURN E_INVALIDARG
-   RETURN m_pAxHost->QueryInterface(@IID_IOleContainer, ppContainer)
+   *ppContainer = NULL
+   RETURN E_NOINTERFACE
 END FUNCTION
 ' ========================================================================================
 
@@ -140,7 +141,6 @@ END FUNCTION
 ' ========================================================================================
 FUNCTION CAxHost_IOleClientSite.ShowObject () AS HRESULT
    CAXH_DP("CAxHost_IOleClientSite ShowObject")
-   ShowWindow m_pAxHost->m_hwnd, SW_SHOW
    RETURN S_OK
 END FUNCTION
 ' ========================================================================================

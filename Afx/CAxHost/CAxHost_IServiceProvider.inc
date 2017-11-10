@@ -60,7 +60,7 @@ Public:
    DECLARE DESTRUCTOR
 
 Private:
-   cRef AS ULONG = 1
+   cRef AS ULONG = 0
    m_pAxHost AS CAxHost PTR
 
 END TYPE

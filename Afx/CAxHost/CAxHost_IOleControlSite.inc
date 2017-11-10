@@ -42,7 +42,7 @@ Public:
    DECLARE DESTRUCTOR
 
 Private:
-   cRef AS ULONG = 1
+   cRef AS ULONG = 0
    m_pAxHost AS CAxHost PTR
 
 END TYPE
@@ -128,7 +128,7 @@ END FUNCTION
 ' ========================================================================================
 FUNCTION CAxHost_IOleControlSite.GetExtendedControl (BYVAL ppDisp AS IDispatch PTR PTR) AS HRESULT
    IF ppDisp = NULL THEN RETURN E_POINTER
-   ppDisp = NULL
+   *ppDisp = NULL
    RETURN E_NOTIMPL
 END FUNCTION
 ' ========================================================================================
