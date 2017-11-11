@@ -192,69 +192,67 @@ FUNCTION CAxHost_IDispatch.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid AS C
    FUNCTION = DISP_E_MEMBERNOTFOUND
 
    SELECT CASE dispIdMember
-   	CASE -701   ' DISPID_AMBIENT_BACKCOLOR
+      CASE -701   ' DISPID_AMBIENT_BACKCOLOR
          pvarResult->vt = VT_UI4
-         pvarResult->lVal = GetSysColor(COLOR_WINDOW)
+         pvarResult->lVal = m_pAxHost->m_AmbientDisp.BackColor
          RETURN NOERROR
-   	CASE -703   ' DISPID_AMBIENT_FONT
-         IF m_pAxHost->m_pIFontDisp <> NULL THEN
+      CASE -703   ' DISPID_AMBIENT_FONT
+         IF m_pAxHost->m_AmbientDisp.Font THEN
             ' Incremenet the reference count
-            AfxSafeAddRef(m_pAxHost->m_pIFontDisp)
+            AfxSafeAddRef(m_pAxHost->m_AmbientDisp.Font)
             ' Return a reference to the ambient font
             pvarResult->vt = VT_DISPATCH
-            pvarResult->pdispVal = CAST(IDispatch PTR, CAST(ULONG_PTR, m_pAxHost->m_pIFontDisp))
+            pvarResult->pdispVal = CAST(IDispatch PTR, CAST(ULONG_PTR, m_pAxHost->m_AmbientDisp.Font))
             RETURN NOERROR
          END IF
-   	CASE DISPID_AMBIENT_FORECOLOR '-704
+      CASE DISPID_AMBIENT_FORECOLOR '-704
          pvarResult->vt = VT_UI4
-         pvarResult->lVal = GetSysColor(COLOR_WINDOWTEXT)
+         pvarResult->lVal = m_pAxHost->m_AmbientDisp.Forecolor
          RETURN NOERROR
-   	CASE  DISPID_AMBIENT_LOCALEID '-705
+      CASE  DISPID_AMBIENT_LOCALEID '-705
          pvarResult->vt = VT_I4
-         pvarResult->lVal = LOCALE_USER_DEFAULT
+         pvarResult->lVal = m_pAxHost->m_AmbientDisp.LocaleID
          RETURN NOERROR
-   	CASE  DISPID_AMBIENT_MESSAGEREFLECT '-706
+      CASE  DISPID_AMBIENT_MESSAGEREFLECT '-706
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = 0
          RETURN NOERROR
-   	CASE  DISPID_AMBIENT_USERMODE   '  -709
+      CASE  DISPID_AMBIENT_USERMODE   '  -709
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = -1
          RETURN NOERROR
-   	CASE  DISPID_AMBIENT_UIDEAD   ' -710
+      CASE  DISPID_AMBIENT_UIDEAD   ' -710
+         pvarResult->vt = VT_BOOL
+         pvarResult->boolVal = m_pAxHost->m_AmbientDisp.UIDead
+         RETURN NOERROR
+      CASE  DISPID_AMBIENT_SHOWGRABHANDLES ' -711
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = 0
          RETURN NOERROR
-   	CASE  DISPID_AMBIENT_SHOWGRABHANDLES ' -711
+      CASE  DISPID_AMBIENT_SHOWHATCHING ' -712
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = 0
          RETURN NOERROR
-   	CASE  DISPID_AMBIENT_SHOWHATCHING ' -712
+      CASE  DISPID_AMBIENT_DISPLAYASDEFAULT  ' -713
          pvarResult->vt = VT_BOOL
-         pvarResult->boolVal = 0
+         pvarResult->boolVal = m_pAxHost->m_AmbientDisp.DisplayAsDefault
          RETURN NOERROR
-   	CASE  DISPID_AMBIENT_DISPLAYASDEFAULT  ' -713
+      CASE  DISPID_AMBIENT_SUPPORTSMNEMONICS  ' -714
          pvarResult->vt = VT_BOOL
-         pvarResult->boolVal = 0
+         pvarResult->boolVal = m_pAxHost->m_AmbientDisp.SupportMnemonics
          RETURN NOERROR
-   	CASE  DISPID_AMBIENT_SUPPORTSMNEMONICS  ' -714
+      CASE -5501 ' DISPID_AMBIENT_OFFLINEIFNOTCONNECTED
          pvarResult->vt = VT_BOOL
-         pvarResult->boolVal = -1
+         pvarResult->boolVal = m_pAxHost->m_AmbientDisp.OffLineIfNoConnected
          RETURN NOERROR
-   	CASE -5501 ' DISPID_AMBIENT_OFFLINEIFNOTCONNECTED
+      CASE -5502   '  DISPID_AMBIENT_SILENT
          pvarResult->vt = VT_BOOL
-         pvarResult->boolVal = -1
+         pvarResult->boolVal = m_pAxHost->m_AmbientDisp.Silent
          RETURN NOERROR
-   	CASE -5502   '  DISPID_AMBIENT_SILENT
-         pvarResult->vt = VT_BOOL
-         pvarResult->boolVal = -1
+      CASE -5512   ' DISPID_AMBIENT_DLCONTROL
+         pvarResult->vt = VT_I4
+         pvarResult->lVal = m_pAxHost->m_AmbientDisp.DlCtFlags
          RETURN NOERROR
-   	CASE -5512   ' DISPID_AMBIENT_DLCONTROL
-         IF m_pAxHost->m_AmbientDlControl THEN
-            pvarResult->vt = VT_I4
-            pvarResult->lVal = m_pAxHost->m_AmbientDlControl
-            RETURN NOERROR
-         END IF
 '      CASE -702   ' DISPID_AMBIENT_DISPLAYNAME
 '      CASE -707   ' DISPID_AMBIENT_SCALEUNITS
 '      CASE -708   ' DISPID_AMBIENT_TEXTALIGN
@@ -269,3 +267,4 @@ FUNCTION CAxHost_IDispatch.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid AS C
 
 END FUNCTION
 ' ========================================================================================
+
