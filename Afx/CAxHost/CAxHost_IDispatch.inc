@@ -245,14 +245,16 @@ FUNCTION CAxHost_IDispatch.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid AS C
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = m_pAxHost->m_AmbientDisp.OffLineIfNoConnected
          RETURN NOERROR
-      CASE -5502   '  DISPID_AMBIENT_SILENT
+      CASE -5502   '  DISPID_AMBIENT_SILENsT
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = m_pAxHost->m_AmbientDisp.Silent
          RETURN NOERROR
       CASE -5512   ' DISPID_AMBIENT_DLCONTROL
-         pvarResult->vt = VT_I4
-         pvarResult->lVal = m_pAxHost->m_AmbientDisp.DlCtFlags
-         RETURN NOERROR
+         IF m_pAxHost->m_AmbientDisp.DlCtFlags THEN
+            pvarResult->vt = VT_I4
+            pvarResult->lVal = m_pAxHost->m_AmbientDisp.DlCtFlags
+            RETURN NOERROR
+         END IF
 '      CASE -702   ' DISPID_AMBIENT_DISPLAYNAME
 '      CASE -707   ' DISPID_AMBIENT_SCALEUNITS
 '      CASE -708   ' DISPID_AMBIENT_TEXTALIGN

@@ -119,7 +119,7 @@ END FUNCTION
 FUNCTION CAxHost_IOleInPlaceSite.GetWindow(BYVAL phwnd AS HWND PTR) AS HRESULT
    CAXH_DP("CAxHost_IOleInPlaceSite GetWindow")
    IF phwnd = NULL THEN RETURN E_INVALIDARG
-   *phwnd = m_pAxHost->m_hwnd
+   *phwnd = m_pAxHost->m_hwndContainer
    FUNCTION = S_OK
 END FUNCTION
 ' ========================================================================================
@@ -190,14 +190,14 @@ FUNCTION CAxHost_IOleInPlaceSite.GetWindowContext (BYVAL ppFrame AS IOleInPlaceF
    *ppDoc = NULL
 
    IF lprcPosRect THEN
-      GetClientRect m_pAxHost->m_hWnd, lprcPosRect
-      GetClientRect m_pAxHost->m_hWnd, lprcClipRect
+      GetClientRect m_pAxHost->m_hWndContainer, lprcPosRect
+      GetClientRect m_pAxHost->m_hWndContainer, lprcClipRect
    END IF
 
    IF lpFrameInfo THEN
       lpFrameInfo->cb = SIZEOF(OLEINPLACEFRAMEINFO)
       lpFrameInfo->fMDIApp = FALSE
-      lpFrameInfo->hWndFrame = m_pAxHost->m_hWnd
+      lpFrameInfo->hWndFrame = m_pAxHost->m_hWndContainer
       lpFrameInfo->hAccel = 0
       lpFrameInfo->cAccelEntries = 0
    END IF

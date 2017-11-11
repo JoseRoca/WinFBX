@@ -117,7 +117,7 @@ END FUNCTION
 FUNCTION CAxHost_IOleInPlaceFrame.GetWindow (BYVAL phwnd AS HWND PTR) AS HRESULT
    CAXH_DP("CAxHost_IOleInPlaceFrame GetWindow")
    IF phwnd = NULL THEN RETURN E_INVALIDARG
-   *phwnd = m_pAxHost->m_hwnd
+   *phwnd = m_pAxHost->m_hwndContainer
    FUNCTION = S_OK
 END FUNCTION
 ' ========================================================================================

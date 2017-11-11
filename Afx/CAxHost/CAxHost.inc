@@ -88,9 +88,8 @@ END TYPE
 TYPE CAxHost
 
 Public:
-   m_bUninitOLE AS BOOLEAN   ' // Ole initialization flag
-
-   m_hwnd                     AS HWND                               ' // Window handle
+   m_bUninitOLE AS BOOLEAN                                          ' // Ole initialization flag
+   m_hwndContainer            AS HWND                               ' // Window handle
    m_pOcx                     AS IDispatch PTR                      ' // Address of a pointer to the ActiveX's Vtable
    m_hFont                    AS HFONT                              ' // Window font
    m_dwMiscStatus             AS DWORD                              ' // Status bitwise flags
@@ -352,10 +351,10 @@ PRIVATE SUB CAxHost.CreateContainer (BYVAL pWindow AS CWindow PTR, BYVAL cID AS 
 
    ' // Create the control
    IF dwStyle = 0 THEN dwStyle = WS_VISIBLE OR WS_TABSTOP
-   IF pWindow THEN m_hwnd = pWindow->AddControl(wszClassName, pWindow->hWindow, cID, "", _
+   IF pWindow THEN m_hwndContainer = pWindow->AddControl(wszClassName, pWindow->hWindow, cID, "", _
       x, y, nWidth, nHeight, dwStyle, dwExStyle, CAST(LONG_PTR, @this))
-   IF m_hwnd THEN
-      .SetWindowLongPtrW m_hwnd, 0, CAST(LONG_PTR, @this)
+   IF m_hwndContainer THEN
+      .SetWindowLongPtrW m_hwndContainer, 0, CAST(LONG_PTR, @this)
       ' // Set the same font used by the parent
       DIM lfw AS LOGFONTW
       IF pWindow->Font THEN
@@ -417,7 +416,7 @@ END CONSTRUCTOR
 ' Returns the handle of the container's window
 ' ========================================================================================
 PRIVATE FUNCTION CAxHost.hWindow () AS HANDLE
-   FUNCTION = m_hwnd
+   FUNCTION = m_hwndContainer
 END FUNCTION
 ' ========================================================================================
 
@@ -853,7 +852,7 @@ PRIVATE FUNCTION CAxHost.CAxHostProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BY
          DIM pAxHost AS CAxHost PTR = CAST(CAxHost PTR, pCreateStruct->lpCreateParams)
          IF pAxHost = NULL THEN RETURN -1
          ' // Store the handle of the window
-         pAxHost->m_hwnd = hwnd
+         pAxHost->m_hwndContainer = hwnd
          ' ===============================================================================
 
          ' ===============================================================================
@@ -945,7 +944,7 @@ PRIVATE FUNCTION CAxHost.CAxHostProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BY
          ' ===============================================================================
          ' // Gets the size of the container's window
          DIM rc AS RECT
-         GetClientRect pAxHost->m_hwnd, @rc
+         GetClientRect pAxHost->m_hwndContainer, @rc
          ' // Converts from pixel to himetric
          DIM pxSize AS SIZEL, hmSize AS SIZEL
          pxSize.cx = rc.Right - rc.Left
@@ -959,7 +958,7 @@ PRIVATE FUNCTION CAxHost.CAxHostProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BY
             CAXH_DP("--- DoVerb - INPLACEACTIVATE - Begin ---")
             DIM pIOleClientSite AS ANY PTR = pAxHost->m_pIOleClientSiteImpl
             DIM hr AS HRESULT = pAxHost->m_pIOleObject->DoVerb(OLEIVERB_INPLACEACTIVATE, NULL, _
-               cast(IOleClientSite PTR, pIOleClientSite), 0, pAxHost->m_hwnd, @rc)
+               cast(IOleClientSite PTR, pIOleClientSite), 0, pAxHost->m_hwndContainer, @rc)
             CAXH_DP("--- DoVerb - INPLACEACTIVATE - End --- hr = " & HEX(hr))
             ' // Sets the extent of object's display area
             IF pAxHost->m_pIOleObject THEN pAxHost->m_pIOleObject->SetExtent(DVASPECT_CONTENT, @hmSize)
@@ -1219,7 +1218,7 @@ USING Afx
 
 ' ========================================================================================
 ' Returns the OLE container window handle given the handle of the form or any control in the
-' form and its control identifier.
+' form and the control identifier.
 ' Parameters:
 ' - hwnd = Reference window handle.
 ' - Control identifier, e.g. IDC_WEBBROWSER.
