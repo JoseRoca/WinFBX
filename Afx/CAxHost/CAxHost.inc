@@ -126,7 +126,7 @@ Public:
 Protected:
    DECLARE FUNCTION RegisterClass () AS ATOM
    DECLARE STATIC FUNCTION CAxHostProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
-   DECLARE SUB CreateContainer (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+   DECLARE SUB CreateContainer (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszProgID AS WSTRING, _
       BYREF wszLibName AS WSTRING, BYREF rclsid AS const CLSID, BYREF riid AS const IID, BYREF wszLicKey AS WSTRING, _
       BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
       BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
@@ -134,23 +134,23 @@ Protected:
 Public:
    DECLARE CONSTRUCTOR
    DECLARE DESTRUCTOR
-   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS WSTRING, _
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszLibName AS WSTRING, _
       BYREF rclsid AS const CLSID, BYREF riid AS const IID, BYREF wszLicKey AS WSTRING, _
       BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
       BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
-   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS WSTRING, _
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszLibName AS WSTRING, _
       BYREF rclsid AS const CLSID, BYREF riid AS const IID, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
       BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
-   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszProgID AS WSTRING, _
       BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
       BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
-   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszProgID AS WSTRING, _
       BYREF wszLicKey AS WSTRING, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
       BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
-   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF classID AS CONST CLSID, _
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF classID AS CONST CLSID, _
       BYREF riid AS CONST IID, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
       BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
-   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF classID AS CONST CLSID, _
+   DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF classID AS CONST CLSID, _
       BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, _
       BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = 0, _
       BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
@@ -231,7 +231,7 @@ PRIVATE DESTRUCTOR CAxHost
    ' // The returned reference count must be at least 1 because the
    ' // ActiveX control holds a reference to it.
    cRef = AfxSafeRelease(m_pIOleObject)
-   CAXH_DP("Release IOleObject - cRef (must be 1) = " & WSTR(cRef))
+   CAXH_DP("Release IOleObject - cRef (should be 1) = " & WSTR(cRef))
 
    ' // WORKAROUND: The DHTML Edit Control doesn't release this interface
    IF this.m_pIOleControlSiteImpl THEN AfxSafeRelease(this.m_pIOleControlSiteImpl)
@@ -244,10 +244,10 @@ PRIVATE DESTRUCTOR CAxHost
 
    ' // Release the ActiveX control
    cRef = m_pOcx->lpvtbl->Release(m_pOcx)
-   CAXH_DP("Release OCX - cRef (must be 0) = " & WSTR(cRef))
+   CAXH_DP("Release OCX - cRef (should be 0) = " & WSTR(cRef))
 
    ' // Checks for memory leaks (if a pointer <> 0 then memory leak)
-   CAXH_DP("*** IsDispatch = " & WSTR(this.m_pIDispatchImpl))
+   CAXH_DP("*** IDispatch = " & WSTR(this.m_pIDispatchImpl))
    CAXH_DP("*** IOleClientSite = " & WSTR(this.m_pIOleClientSiteImpl))
    CAXH_DP("*** IOleControlSite = " & WSTR(this.m_pIOleControlSiteImpl))
    CAXH_DP("*** IOleInPlaceFrame = " & WSTR(this.m_pIOleInPlaceFrameImpl))
@@ -312,7 +312,7 @@ END FUNCTION
 ' ========================================================================================
 ' Create container window
 ' ========================================================================================
-PRIVATE SUB CAxHost.CreateContainer (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+PRIVATE SUB CAxHost.CreateContainer (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszProgID AS WSTRING, _
    BYREF wszLibName AS WSTRING, BYREF rclsid AS const CLSID, BYREF riid AS const IID, BYREF wszLicKey AS WSTRING, _
    BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
    BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
@@ -368,7 +368,7 @@ END SUB
 ' ========================================================================================
 ' COleCon class constructors
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS WSTRING, _
+PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszLibName AS WSTRING, _
 BYREF rclsid AS const CLSID, BYREF riid AS const IID, BYREF wszLicKey AS WSTRING, _
 BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
 BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
@@ -376,35 +376,35 @@ BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS 
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszLibName AS WSTRING, _
+PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszLibName AS WSTRING, _
 BYREF rclsid AS const CLSID, BYREF riid AS const IID, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
 BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
    this.CreateContainer(pWindow, cID, "", wszLibName, rclsid, riid, "", x, y, nWidth, nHeight, dwStyle, dwExStyle, pAmbientDisp)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszProgID AS WSTRING, _
 BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
 BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
    this.CreateContainer(pWindow, cID, wszProgID, "", GUID_NULL, GUID_NULL, "", x, y, nWidth, nHeight, dwStyle, dwExStyle, pAmbientDisp)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF wszProgID AS WSTRING, _
+PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszProgID AS WSTRING, _
 BYREF wszLicKey AS WSTRING, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
 BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
    this.CreateContainer(pWindow, cID, wszProgID, "", GUID_NULL, GUID_NULL, wszLicKey, x, y, nWidth, nHeight, dwStyle, dwExStyle, pAmbientDisp)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF classID AS CONST CLSID, _
+PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF classID AS CONST CLSID, _
 BYREF riid AS CONST IID, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
 BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
    this.CreateContainer(pWindow, cID, "", "", classID, riid, "", x, y, nWidth, nHeight, dwStyle, dwExStyle, pAmbientDisp)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, BYREF classID AS CONST CLSID, _
+PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF classID AS CONST CLSID, _
 BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING, BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, _
 BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS DWORD = 0, _
 BYVAL dwExStyle AS DWORD = 0, BYVAL pAmbientDisp AS CAXHOST_AMBIENTDISP PTR = NULL)
