@@ -10,7 +10,6 @@
 ' ########################################################################################
 
 #define UNICODE
-#INCLUDE ONCE "Afx/CWindow.inc"
 #INCLUDE ONCE "Afx/CGdiPlus/CGdiPlus.inc"
 #INCLUDE ONCE "Afx/CGraphCtx.inc"
 USING Afx
