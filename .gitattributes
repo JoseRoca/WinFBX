@@ -1,5 +1,5 @@
 # Auto detect text files and perform LF normalization
-* text=auto
+* text eol=crlf
 
 # FreeBASIC source files (need cr/lf line endings)
 *.h         eol=crlf
