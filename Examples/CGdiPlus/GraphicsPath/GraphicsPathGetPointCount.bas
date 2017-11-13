@@ -3,14 +3,13 @@
 ' File: GraphicsPathGetPointCount.bas
 ' Contents: GDI+ - GraphicsPathGetPointCount example
 ' Compiler: FreeBasic 32 & 64 bit
-' Copyright (c) 2016 José Roca. Freeware. Use at your own risk.
+' Copyright (c) 2017 José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 ' ########################################################################################
 
 #define UNICODE
-#INCLUDE ONCE "Afx/CWindow.inc"
 #INCLUDE ONCE "Afx/CGdiPlus/CGdiPlus.inc"
 #INCLUDE ONCE "Afx/CGraphCtx.inc"
 USING Afx
@@ -82,7 +81,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    ' // Change the window style
    pWindow.WindowStyle = WS_OVERLAPPED OR WS_CAPTION OR WS_SYSMENU
    ' // Sizes it by setting the wanted width and height of its client area
-   pWindow.SetClientSize(420, 380)
+   pWindow.SetClientSize(400, 250)
    ' // Centers the window
    pWindow.Center
 
