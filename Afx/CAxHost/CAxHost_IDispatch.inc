@@ -205,39 +205,39 @@ FUNCTION CAxHost_IDispatch.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid AS C
             pvarResult->pdispVal = CAST(IDispatch PTR, CAST(ULONG_PTR, m_pAxHost->m_AmbientDisp.Font))
             RETURN NOERROR
          END IF
-      CASE DISPID_AMBIENT_FORECOLOR '-704
+      CASE DISPID_AMBIENT_FORECOLOR ' -704
          pvarResult->vt = VT_UI4
          pvarResult->lVal = m_pAxHost->m_AmbientDisp.Forecolor
          RETURN NOERROR
-      CASE  DISPID_AMBIENT_LOCALEID '-705
+      CASE DISPID_AMBIENT_LOCALEID ' -705
          pvarResult->vt = VT_I4
          pvarResult->lVal = m_pAxHost->m_AmbientDisp.LocaleID
          RETURN NOERROR
-      CASE  DISPID_AMBIENT_MESSAGEREFLECT '-706
+      CASE DISPID_AMBIENT_MESSAGEREFLECT ' -706
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = 0
          RETURN NOERROR
-      CASE  DISPID_AMBIENT_USERMODE   '  -709
+      CASE DISPID_AMBIENT_USERMODE   ' -709
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = -1
          RETURN NOERROR
-      CASE  DISPID_AMBIENT_UIDEAD   ' -710
+      CASE DISPID_AMBIENT_UIDEAD   ' -710
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = m_pAxHost->m_AmbientDisp.UIDead
          RETURN NOERROR
-      CASE  DISPID_AMBIENT_SHOWGRABHANDLES ' -711
+      CASE DISPID_AMBIENT_SHOWGRABHANDLES ' -711
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = 0
          RETURN NOERROR
-      CASE  DISPID_AMBIENT_SHOWHATCHING ' -712
+      CASE DISPID_AMBIENT_SHOWHATCHING ' -712
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = 0
          RETURN NOERROR
-      CASE  DISPID_AMBIENT_DISPLAYASDEFAULT  ' -713
+      CASE DISPID_AMBIENT_DISPLAYASDEFAULT  ' -713
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = m_pAxHost->m_AmbientDisp.DisplayAsDefault
          RETURN NOERROR
-      CASE  DISPID_AMBIENT_SUPPORTSMNEMONICS  ' -714
+      CASE DISPID_AMBIENT_SUPPORTSMNEMONICS  ' -714
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = m_pAxHost->m_AmbientDisp.SupportMnemonics
          RETURN NOERROR
@@ -245,7 +245,7 @@ FUNCTION CAxHost_IDispatch.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid AS C
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = m_pAxHost->m_AmbientDisp.OffLineIfNoConnected
          RETURN NOERROR
-      CASE -5502   '  DISPID_AMBIENT_SILENsT
+      CASE -5502   '  DISPID_AMBIENT_SILENT
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = m_pAxHost->m_AmbientDisp.Silent
          RETURN NOERROR

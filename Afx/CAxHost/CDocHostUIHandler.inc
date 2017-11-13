@@ -24,30 +24,30 @@ TYPE CDocHostUIHandler2 EXTENDS OBJECT
    DECLARE VIRTUAL FUNCTION FilterDataObject (BYVAL pDO AS IDataObject PTR, BYVAL ppDORet AS IDataObject PTR PTR) AS HRESULT
    DECLARE VIRTUAL FUNCTION GetOverrideKeyPath (BYVAL pchKey AS LPOLESTR PTR, BYVAL dw AS DWORD) AS HRESULT
 
-   DECLARE CONSTRUCTOR (BYVAL pAxHost AS CAxHost PTR, BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR)
+   DECLARE CONSTRUCTOR (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR)
    DECLARE DESTRUCTOR
 
-   m_pAxHost AS CAxHost PTR                ' // Pointer to the OLE container class
+   m_pWebCtx AS CWebCtx PTR                ' // Pointer to the CWbCtx class
    m_pWebBrowser AS Afx_IWebBrowser2 PTR   ' // Pointer to the IWebBrowser interface
    cRef AS ULONG                           ' // Reference count
 
    ' // Pointers to user implemented event procedures
-   m_ShowContextMenuProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL dwID AS DWORD, BYVAL ppt AS POINT PTR, BYVAL pcmdtReserved AS IUnknown PTR, BYVAL pdispReserved AS IDispatch PTR) AS HRESULT
-   m_GetHostInfoProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL pInfo AS DOCHOSTUIINFO PTR) AS HRESULT
-   m_ShowUIProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL dwID AS DWORD, BYVAL pActiveObject AS IOleInPlaceActiveObject PTR, BYVAL pCommandTarget AS IOleCommandTarget PTR, BYVAL pFrame AS IOleInPlaceFrame PTR, BYVAL pDoc AS IOleInPlaceUIWindow PTR) AS HRESULT
-   m_HideUIProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR) AS HRESULT
-   m_UpdateUIProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR) AS HRESULT
-   m_EnableModelessProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL fEnable AS WINBOOL) AS HRESULT
-   m_OnDocWindowActivateProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL fActivate AS WINBOOL) AS HRESULT
-   m_OnFrameWindowActivateProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL fActivate AS WINBOOL) AS HRESULT
-   m_ResizeBorderProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL prcBorder AS LPCRECT, BYVAL pUIWindow AS IOleInPlaceUIWindow PTR, BYVAL frameWindow AS WINBOOL) AS HRESULT
-   m_TranslateAcceleratorProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL lpMsg AS LPMSG, BYVAL pguidCmdGroup AS const GUID PTR, BYVAL nCmdID AS DWORD) AS HRESULT
-   m_GetOptionKeyPathProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL pchKey AS LPOLESTR PTR, BYVAL dw AS DWORD) AS HRESULT
-   m_GetDropTargetProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL pDropTarget AS IDropTarget PTR, BYVAL ppDropTarget AS IDropTarget PTR PTR) AS HRESULT
-   m_GetExternalProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL ppDispatch AS IDispatch PTR PTR) AS HRESULT
-   m_TranslateUrlProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL dwTranslate AS DWORD, BYVAL pchURLIn AS LPWSTR, BYVAL ppchURLOut AS LPWSTR PTR) AS HRESULT
-   m_FilterDataObjectProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL pDO AS IDataObject PTR, BYVAL ppDORet AS IDataObject PTR PTR) AS HRESULT
-   m_GetOverrideKeyPathProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL pchKey AS LPOLESTR PTR, BYVAL dw AS DWORD) AS HRESULT
+   m_ShowContextMenuProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL dwID AS DWORD, BYVAL ppt AS POINT PTR, BYVAL pcmdtReserved AS IUnknown PTR, BYVAL pdispReserved AS IDispatch PTR) AS HRESULT
+   m_GetHostInfoProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pInfo AS DOCHOSTUIINFO PTR) AS HRESULT
+   m_ShowUIProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL dwID AS DWORD, BYVAL pActiveObject AS IOleInPlaceActiveObject PTR, BYVAL pCommandTarget AS IOleCommandTarget PTR, BYVAL pFrame AS IOleInPlaceFrame PTR, BYVAL pDoc AS IOleInPlaceUIWindow PTR) AS HRESULT
+   m_HideUIProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR) AS HRESULT
+   m_UpdateUIProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR) AS HRESULT
+   m_EnableModelessProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL fEnable AS WINBOOL) AS HRESULT
+   m_OnDocWindowActivateProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL fActivate AS WINBOOL) AS HRESULT
+   m_OnFrameWindowActivateProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL fActivate AS WINBOOL) AS HRESULT
+   m_ResizeBorderProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL prcBorder AS LPCRECT, BYVAL pUIWindow AS IOleInPlaceUIWindow PTR, BYVAL frameWindow AS WINBOOL) AS HRESULT
+   m_TranslateAcceleratorProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL lpMsg AS LPMSG, BYVAL pguidCmdGroup AS const GUID PTR, BYVAL nCmdID AS DWORD) AS HRESULT
+   m_GetOptionKeyPathProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pchKey AS LPOLESTR PTR, BYVAL dw AS DWORD) AS HRESULT
+   m_GetDropTargetProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pDropTarget AS IDropTarget PTR, BYVAL ppDropTarget AS IDropTarget PTR PTR) AS HRESULT
+   m_GetExternalProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL ppDispatch AS IDispatch PTR PTR) AS HRESULT
+   m_TranslateUrlProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL dwTranslate AS DWORD, BYVAL pchURLIn AS LPWSTR, BYVAL ppchURLOut AS LPWSTR PTR) AS HRESULT
+   m_FilterDataObjectProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pDO AS IDataObject PTR, BYVAL ppDORet AS IDataObject PTR PTR) AS HRESULT
+   m_GetOverrideKeyPathProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pchKey AS LPOLESTR PTR, BYVAL dw AS DWORD) AS HRESULT
 
 END TYPE
 ' ########################################################################################
@@ -55,9 +55,9 @@ END TYPE
 ' =====================================================================================
 ' Constructor
 ' =====================================================================================
-CONSTRUCTOR CDocHostUIHandler2 (BYVAL pAxHost AS CAxHost PTR, BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR)
+CONSTRUCTOR CDocHostUIHandler2 (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR)
    CWBX_DP("CDocHostUIHandler2 CONSTRUCTOR")
-   m_pAxHost = pAxHost
+   m_pWebCtx = pWebCtx
    m_pWebBrowser = pWebBrowser
 END CONSTRUCTOR
 ' =====================================================================================
@@ -109,7 +109,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.ShowContextMenu (BYVAL dwID AS DWORD, BYVAL ppt AS POINT PTR, BYVAL pcmdtReserved AS IUnknown PTR, BYVAL pdispReserved AS IDispatch PTR) AS HRESULT
    CWBX_DP("CDocHostUIHandler2.ShowContextMenu")
-   IF m_ShowContextMenuProc THEN RETURN m_ShowContextMenuProc(m_pAxHost, dwID, ppt, pcmdtReserved, pdispReserved)
+   IF m_ShowContextMenuProc THEN RETURN m_ShowContextMenuProc(m_pWebCtx, dwID, ppt, pcmdtReserved, pdispReserved)
    RETURN S_FALSE
 END FUNCTION
 ' =====================================================================================
@@ -235,7 +235,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.GetHostInfo (BYVAL pInfo AS DOCHOSTUIINFO PTR) AS HRESULT
    CWBX_DP("*** CDocHostUIHandler2.GetHostInfo pInfo = " & WSTR(pInfo))
-   IF m_GetHostInfoProc THEN RETURN m_GetHostInfoProc(m_pAxHost, pInfo)
+   IF m_GetHostInfoProc THEN RETURN m_GetHostInfoProc(m_pWebCtx, pInfo)
    ' // Default behavior if the user does not processes this event...
    IF pInfo THEN
       pInfo->cbSize = SIZEOF(DOCHOSTUIINFO)
@@ -254,7 +254,7 @@ END FUNCTION
 FUNCTION CDocHostUIHandler2.ShowUI (BYVAL dwID AS DWORD, BYVAL pActiveObject AS IOleInPlaceActiveObject PTR, _
 BYVAL pCommandTarget AS IOleCommandTarget PTR, BYVAL pFrame AS IOleInPlaceFrame PTR, BYVAL pDoc AS IOleInPlaceUIWindow PTR) AS HRESULT
    CWBX_DP("CDocHostUIHandler2.ShowUI")
-   IF m_ShowUIProc THEN RETURN m_ShowUIProc(m_pAxHost, dwID,pActiveObject, pCommandTarget, pFrame, pDoc)
+   IF m_ShowUIProc THEN RETURN m_ShowUIProc(m_pWebCtx, dwID,pActiveObject, pCommandTarget, pFrame, pDoc)
    RETURN S_FALSE
 END FUNCTION
 ' =====================================================================================
@@ -264,7 +264,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.HideUI () AS HRESULT
    CWBX_DP("CDocHostUIHandler2.HideUI")
-   IF m_HideUIProc THEN RETURN m_HideUIProc(m_pAxHost)
+   IF m_HideUIProc THEN RETURN m_HideUIProc(m_pWebCtx)
    RETURN E_NOTIMPL
 END FUNCTION
 ' =====================================================================================
@@ -274,7 +274,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.UpdateUI () AS HRESULT
    CWBX_DP("CDocHostUIHandler2.UpdateUI")
-   IF m_UpdateUIProc THEN RETURN m_UpdateUIProc(m_pAxHost)
+   IF m_UpdateUIProc THEN RETURN m_UpdateUIProc(m_pWebCtx)
    RETURN E_NOTIMPL
 END FUNCTION
 ' =====================================================================================
@@ -285,7 +285,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.EnableModeless (BYVAL fEnable AS WINBOOL) AS HRESULT
    CWBX_DP("CDocHostUIHandler2.EnableModeless")
-   IF m_EnableModelessProc THEN RETURN m_EnableModelessProc(m_pAxHost, fEnable)
+   IF m_EnableModelessProc THEN RETURN m_EnableModelessProc(m_pWebCtx, fEnable)
    RETURN E_NOTIMPL
 END FUNCTION
 ' =====================================================================================
@@ -295,7 +295,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.OnDocWindowActivate (BYVAL fActivate AS WINBOOL) AS HRESULT
    CWBX_DP("CDocHostUIHandler2.OnDocWindowActivate")
-   IF m_OnDocWindowActivateProc THEN RETURN m_OnDocWindowActivateProc(m_pAxHost, fActivate)
+   IF m_OnDocWindowActivateProc THEN RETURN m_OnDocWindowActivateProc(m_pWebCtx, fActivate)
    RETURN E_NOTIMPL
 END FUNCTION
 ' =====================================================================================
@@ -305,7 +305,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.OnFrameWindowActivate (BYVAL fActivate AS WINBOOL) AS HRESULT
    CWBX_DP("CDocHostUIHandler2.OnFrameWindowActivate")
-   IF m_OnFrameWindowActivateProc THEN RETURN m_OnFrameWindowActivateProc(m_pAxHost, fActivate)
+   IF m_OnFrameWindowActivateProc THEN RETURN m_OnFrameWindowActivateProc(m_pWebCtx, fActivate)
    RETURN E_NOTIMPL
 END FUNCTION
 ' =====================================================================================
@@ -315,7 +315,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.ResizeBorder (BYVAL prcBorder AS LPCRECT, BYVAL pUIWindow AS IOleInPlaceUIWindow PTR, BYVAL frameWindow AS WINBOOL) AS HRESULT
    CWBX_DP("CDocHostUIHandler2.ResizeBorder")
-   IF m_ResizeBorderProc THEN RETURN m_ResizeBorderProc(m_pAxHost, prcBorder, pUIWindow, frameWindow)
+   IF m_ResizeBorderProc THEN RETURN m_ResizeBorderProc(m_pWebCtx, prcBorder, pUIWindow, frameWindow)
    RETURN E_NOTIMPL
 END FUNCTION
 ' =====================================================================================
@@ -326,7 +326,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.TranslateAccelerator (BYVAL lpMsg AS LPMSG, BYVAL pguidCmdGroup AS const GUID PTR, BYVAL nCmdID AS DWORD) AS HRESULT
    CWBX_DP("CDocHostUIHandler2.TranslateAccelerator")
-   IF m_TranslateAcceleratorProc THEN RETURN m_TranslateAcceleratorProc(m_pAxHost, lpMsg, pguidCmdGroup, nCmdID)
+   IF m_TranslateAcceleratorProc THEN RETURN m_TranslateAcceleratorProc(m_pWebCtx, lpMsg, pguidCmdGroup, nCmdID)
    RETURN S_FALSE
 END FUNCTION
 ' =====================================================================================
@@ -337,7 +337,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.GetOptionKeyPath (BYVAL pchKey AS LPOLESTR PTR, BYVAL dw AS DWORD) AS HRESULT
    CWBX_DP("CDocHostUIHandler2.GetOptionKeyPath")
-   IF m_GetOptionKeyPathProc THEN RETURN m_GetOptionKeyPathProc(m_pAxHost, pchKey, dw)
+   IF m_GetOptionKeyPathProc THEN RETURN m_GetOptionKeyPathProc(m_pWebCtx, pchKey, dw)
    RETURN E_NOTIMPL
 END FUNCTION
 ' =====================================================================================
@@ -347,7 +347,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.GetDropTarget (BYVAL pDropTarget AS IDropTarget PTR, BYVAL ppDropTarget AS IDropTarget PTR PTR) AS HRESULT
    CWBX_DP("CDocHostUIHandler2.GetDropTarget")
-   IF m_GetDropTargetProc THEN RETURN m_GetDropTargetProc(m_pAxHost, pDropTarget, ppDropTarget)
+   IF m_GetDropTargetProc THEN RETURN m_GetDropTargetProc(m_pWebCtx, pDropTarget, ppDropTarget)
    RETURN E_NOTIMPL
 END FUNCTION
 ' =====================================================================================
@@ -357,7 +357,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.GetExternal (BYVAL ppDispatch AS IDispatch PTR PTR) AS HRESULT
    CWBX_DP("CDocHostUIHandler2.GetExternal")
-   IF m_GetExternalProc THEN RETURN m_GetExternalProc(m_pAxHost, ppDispatch)
+   IF m_GetExternalProc THEN RETURN m_GetExternalProc(m_pWebCtx, ppDispatch)
    *ppDispatch = NULL
    RETURN S_FALSE
 END FUNCTION
@@ -368,7 +368,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.TranslateUrl (BYVAL dwTranslate AS DWORD, BYVAL pchURLIn AS LPWSTR, BYVAL ppchURLOut AS LPWSTR PTR) AS HRESULT
    CWBX_DP("CDocHostUIHandler2.TranslateUrl")
-   IF m_TranslateUrlProc THEN RETURN m_TranslateUrlProc(m_pAxHost, dwTranslate, pchURLIn, ppchURLOut)
+   IF m_TranslateUrlProc THEN RETURN m_TranslateUrlProc(m_pWebCtx, dwTranslate, pchURLIn, ppchURLOut)
    RETURN S_FALSE
 END FUNCTION
 ' =====================================================================================
@@ -378,7 +378,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.FilterDataObject (BYVAL pDO AS IDataObject PTR, BYVAL ppDORet AS IDataObject PTR PTR) AS HRESULT
    CWBX_DP("CDocHostUIHandler2.FilterDataObject")
-   IF m_FilterDataObjectProc THEN RETURN m_FilterDataObjectProc(m_pAxHost, pDO, ppDORet)
+   IF m_FilterDataObjectProc THEN RETURN m_FilterDataObjectProc(m_pWebCtx, pDO, ppDORet)
    *ppDORet = NULL
    RETURN S_FALSE
 END FUNCTION
@@ -389,7 +389,7 @@ END FUNCTION
 ' =====================================================================================
 FUNCTION CDocHostUIHandler2.GetOverrideKeyPath (BYVAL pchKey AS LPOLESTR PTR, BYVAL dw AS DWORD) AS HRESULT
    CWBX_DP("CDocHostUIHandler2.GetOverrideKeyPath")
-   IF m_GetOverrideKeyPathProc THEN RETURN m_GetOverrideKeyPathProc(m_pAxHost, pchKey, dw)
+   IF m_GetOverrideKeyPathProc THEN RETURN m_GetOverrideKeyPathProc(m_pWebCtx, pchKey, dw)
    *pchKey = NULL
    RETURN E_NOTIMPL
 END FUNCTION

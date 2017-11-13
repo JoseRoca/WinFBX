@@ -43,23 +43,17 @@ DECLARE FUNCTION AfxSetElementInnerHtmlById (BYVAL pWebBrowser AS Afx_IWebBrowse
 DECLARE FUNCTION AfxSetElementFocusById (BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR, BYREF cwsId AS CWSTR) AS HRESULT
 
 TYPE CWebBrowserEvents_ AS CWebBrowserEvents
-
-' // DocHostUIHandler events class
-#include once "Afx/CAxHost/CDocHostUIHandler.inc"
-' // HtmlDocumentEvents2 class
-#include once "Afx/CAxHost/CHtmlDocumentEvents.inc"
-' // WebBrowser events class
-#include once "Afx/CAxHost/CWebBrowserEvents.inc"
+TYPE CDocHostUIHandler2_ AS CDocHostUIHandler2
 
 ' ========================================================================================
 ' CWebCtx class
 ' ========================================================================================
 TYPE CWebCtx
 
-   m_pAxHost AS CAxHost PTR                        ' // Pointer to the OLE container
-   m_pWebBrowser AS Afx_IWebBrowser2 PTR           ' // Pointer to the IWebBrowser interface
-   m_pEvtObj AS CWebBrowserEvents PTR              ' // Pointer to the implemented Web Browser events class
-   m_pDocHostUIHandler AS CDocHostUIHandler2 PTR   ' // Pointer to the implemented DocHostUIHandler interface
+   m_pAxHost AS CAxHost PTR                         ' // Pointer to the OLE container
+   m_pWebBrowser AS Afx_IWebBrowser2 PTR            ' // Pointer to the IWebBrowser interface
+   m_pEvtObj AS CWebBrowserEvents_ PTR              ' // Pointer to the implemented Web Browser events class
+   m_pDocHostUIHandler AS CDocHostUIHandler2_ PTR   ' // Pointer to the implemented DocHostUIHandler interface
 
    DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, _
       BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
@@ -68,6 +62,7 @@ TYPE CWebCtx
    DECLARE FUNCTION AxHostPtr () AS CAxHost PTR
    DECLARE FUNCTION BrowserPtr () AS Afx_IWebBrowser2 PTR
    DECLARE FUNCTION hWindow () AS HWND
+   DECLARE FUNCTION CtrlID () AS LONG
    DECLARE FUNCTION Navigate (BYVAL pwszUrl AS WSTRING PTR, BYVAL Flags AS VARIANT PTR = NULL, BYVAL TargetFrameName AS VARIANT PTR = NULL, BYVAL PostData AS VARIANT PTR = NULL, BYVAL Headers AS VARIANT PTR = NULL) AS HRESULT
    DECLARE FUNCTION Navigate (BYVAL vUrl AS VARIANT PTR, BYVAL Flags AS VARIANT PTR = NULL, BYVAL TargetFrameName AS VARIANT PTR = NULL, BYVAL PostData AS VARIANT PTR = NULL, BYVAL Headers AS VARIANT PTR = NULL) AS HRESULT
    DECLARE FUNCTION WaitForPageLoad (BYVAL dbTimeout AS DOUBLE = 10) AS tagREADYSTATE
@@ -123,6 +118,13 @@ TYPE CWebCtx
 
 END TYPE
 ' ========================================================================================
+
+' // DocHostUIHandler events class
+#include once "Afx/CAxHost/CDocHostUIHandler.inc"
+' // HtmlDocumentEvents2 class
+#include once "Afx/CAxHost/CHtmlDocumentEvents.inc"
+' // WebBrowser events class
+#include once "Afx/CAxHost/CWebBrowserEvents.inc"
 
 ' ========================================================================================
 ' Constructor
@@ -202,6 +204,15 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Returns the identifier of the OLE container hosting window
+' ========================================================================================
+PRIVATE FUNCTION CWebCtx.CtrlID () AS LONG
+   CWBX_DP("CWebCtx.CtrlID")
+   RETURN GetDlgCtrlID(m_pAxHost->hWindow)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Navigates to the specified URL.
 ' Note: To clear a web page, simply navigate to "about:blank".
 ' ========================================================================================
@@ -259,7 +270,7 @@ END FUNCTION
 PRIVATE FUNCTION CWebCtx.Advise () AS HRESULT
    CWBX_DP("CWebCtx.Advise")
    ' // Create an instance of our CWebBrowserEvents class and connect the WebBrowser events
-   m_pEvtObj = NEW CWebBrowserEvents(m_pAxHost)
+   m_pEvtObj = NEW CWebBrowserEvents(@this)
    m_pEvtObj->m_pWebBrowser = m_pWebBrowser
    RETURN m_pAxHost->Advise(CAST(IDispatch PTR, CAST(ANY PTR, m_pEvtObj)), CAST(IID PTR, @DIID_DWebBrowserEvents2))
 END FUNCTION
@@ -303,7 +314,7 @@ PRIVATE FUNCTION CWebCtx.SetUIHandler () AS HRESULT
    IF pICustomDoc = NULL THEN EXIT FUNCTION
 
    ' // Create an instance of the IDocHostUIHandler class
-   IF m_pDocHostUIHandler = NULL THEN m_pDocHostUIHandler = NEW CDocHostUIHandler2(m_pAxHost, m_pWebBrowser)
+   IF m_pDocHostUIHandler = NULL THEN m_pDocHostUIHandler = NEW CDocHostUIHandler2(@this, m_pWebBrowser)
    ' // Set our IDocHostUIHandler interface for MSHTML
    ' // MSHTML will release its previous IDocHostUIHandler interface
    ' // (if one is present) and call pDocHostUIHandler's AddRef method.

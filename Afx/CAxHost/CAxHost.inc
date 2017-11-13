@@ -161,6 +161,7 @@ Public:
    DECLARE FUNCTION CreateObject (BYREF wszLibName AS CONST WSTRING, BYREF rclsid AS CONST CLSID, _
       BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING = "") AS IDispatch PTR
    DECLARE FUNCTION hWindow () AS HANDLE
+   DECLARE FUNCTION CtrlID () AS LONG
    DECLARE SUB PixelsToHiMetric (BYVAL SizeInPix AS SIZEL PTR, BYVAL SizeInHiMetric AS SIZEL PTR)
    DECLARE FUNCTION OcxDispPtr () AS IDispatch PTR
    DECLARE FUNCTION OcxDispObj () AS IDispatch PTR
@@ -212,7 +213,7 @@ PRIVATE DESTRUCTOR CAxHost
 
    ' // Release de IFontDisp object
    DIM cRef AS ULONG = AfxSafeRelease(m_AmbientDisp.Font)
-   CAXH_DP("Release IFontDisp - cRef (must be 0) = " & WSTR(cRef))
+   CAXH_DP("Release IFontDisp - cRef = " & WSTR(cRef))
 
    ' // Close the control
    IF m_pIOleObject THEN
@@ -231,7 +232,7 @@ PRIVATE DESTRUCTOR CAxHost
    ' // The returned reference count must be at least 1 because the
    ' // ActiveX control holds a reference to it.
    cRef = AfxSafeRelease(m_pIOleObject)
-   CAXH_DP("Release IOleObject - cRef (should be 1) = " & WSTR(cRef))
+   CAXH_DP("Release IOleObject - cRef = " & WSTR(cRef))
 
    ' // WORKAROUND: The DHTML Edit Control doesn't release this interface
    IF this.m_pIOleControlSiteImpl THEN AfxSafeRelease(this.m_pIOleControlSiteImpl)
@@ -244,7 +245,7 @@ PRIVATE DESTRUCTOR CAxHost
 
    ' // Release the ActiveX control
    cRef = m_pOcx->lpvtbl->Release(m_pOcx)
-   CAXH_DP("Release OCX - cRef (should be 0) = " & WSTR(cRef))
+   CAXH_DP("Release OCX - cRef = " & WSTR(cRef))
 
    ' // Checks for memory leaks (if a pointer <> 0 then memory leak)
    CAXH_DP("*** IDispatch = " & WSTR(this.m_pIDispatchImpl))
@@ -417,6 +418,14 @@ END CONSTRUCTOR
 ' ========================================================================================
 PRIVATE FUNCTION CAxHost.hWindow () AS HANDLE
    FUNCTION = m_hwndContainer
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns the identifier of the container's window
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.CtrlID () AS LONG
+   FUNCTION = GetDLgCtrlID(m_hwndContainer)
 END FUNCTION
 ' ========================================================================================
 

@@ -11,13 +11,14 @@ TYPE CHTMLDocumentEvents2 EXTENDS OBJECT
    DECLARE VIRTUAL FUNCTION GetTypeInfo (BYVAL iTInfo AS UINT, BYVAL lcid AS LCID, BYVAL ppTInfo AS ITypeInfo PTR PTR) AS HRESULT
    DECLARE VIRTUAL FUNCTION GetIDsOfNames (BYVAL riid AS CONST IID CONST PTR, BYVAL rgszNames AS LPOLESTR PTR, BYVAL cNames AS UINT, BYVAL lcid AS LCID, BYVAL rgDispId AS DISPID PTR) AS HRESULT
    DECLARE VIRTUAL FUNCTION Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid AS CONST IID CONST PTR, BYVAL lcid AS LCID, BYVAL wFlags AS WORD, BYVAL pDispParams AS DISPPARAMS PTR, BYVAL pVarResult AS VARIANT PTR, BYVAL pExcepInfo AS EXCEPINFO PTR, BYVAL puArgErr AS UINT PTR) AS HRESULT
-   DECLARE CONSTRUCTOR (BYVAL pAxHost AS CAxHost PTR, BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR)
+
+   DECLARE CONSTRUCTOR (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR)
    DECLARE DESTRUCTOR
 
-   m_pAxHost AS CAxHost PTR                ' // Pointer to the OLE container class
+   m_pWebCtx AS CWebCtx PTR                ' // Pointer to the OLE container class
    m_pWebBrowser AS Afx_IWebBrowser2 PTR   ' // Pointer to the IWebBrowser interface
    cRef AS ULONG                           ' // Reference count
-   m_pHtmlDocumentEventsProc AS FUNCTION (BYVAL pAxHost AS CAxHost PTR, BYVAL dispId AS LONG, BYVAL pEvtObj AS IHTMLEventObj PTR) AS BOOLEAN
+   m_pHtmlDocumentEventsProc AS FUNCTION (BYVAL pWebCtx AS CWebCtx PTR, BYVAL dispId AS LONG, BYVAL pEvtObj AS IHTMLEventObj PTR) AS BOOLEAN
 
 END TYPE
 ' ########################################################################################
@@ -25,9 +26,9 @@ END TYPE
 ' ========================================================================================
 ' Constructors
 ' ========================================================================================
-CONSTRUCTOR CHTMLDocumentEvents2 (BYVAL pAxHost AS CAxHost PTR, BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR)
+CONSTRUCTOR CHTMLDocumentEvents2 (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR)
    CWBX_DP("CONSTRUCTOR CHTMLDocumentEvents2")
-   m_pAxHost = pAxHost
+   m_pWebCtx = pWebCtx
    m_pWebBrowser = pWebBrowser
 END CONSTRUCTOR
 ' ========================================================================================
@@ -200,7 +201,7 @@ FUNCTION CHTMLDocumentEvents2.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid A
    ' See: https://support.microsoft.com/en-us/kb/246247
    IF m_pHtmlDocumentEventsProc THEN
       DIM bEventRet AS BOOLEAN
-      bEventRet = m_pHtmlDocumentEventsProc(m_pAxHost, dispIdMember, CAST(IHTMLEventObj PTR, pDispParams->rgvarg[0].pdispVal))
+      bEventRet = m_pHtmlDocumentEventsProc(m_pWebCtx, dispIdMember, CAST(IHTMLEventObj PTR, pDispParams->rgvarg[0].pdispVal))
       IF bEventRet THEN
          pvarResult->vt = VT_BOOL
          pvarResult->boolVal = bEventRet
