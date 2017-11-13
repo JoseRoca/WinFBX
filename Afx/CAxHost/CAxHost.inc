@@ -297,19 +297,6 @@ PRIVATE FUNCTION CAxHost.RegisterClass () AS ATOM
 END FUNCTION
 ' ========================================================================================
 
-' TODO:
-' - Register the class
-' - Create the host control
-' - Create an instance of the ActiveX
-' - Retrieve the IOleObject interface of the activeX
-' - Create an instance of the CIOleClientStiteImpl class
-' - Set the client site
-' - CIOleCLientSiteImpl will call the dispatch methods of the CAxHost class
-' - The other classes will also call the dispatch methods of the CAxHost class
-' - The centralized QueryInterface method will create instances of the requested interfaces
-'   if they haven't yet be created or return and addrefed existing pointer
-' - The destructor will call Release on all the non null pointers
-
 ' ========================================================================================
 ' Create container window
 ' ========================================================================================
@@ -590,9 +577,10 @@ END FUNCTION
 ' Converts a string into a 16-byte (128-bit) Globally Unique Identifier (GUID)
 ' To be valid, the string must contain exactly 32 hexadecimal digits, delimited by hyphens
 ' and enclosed by curly braces. For example: {B09DE715-87C1-11D1-8BE3-0000F8754DA1}
-' If pwszGuidText is omited, OC_Guid generates a new unique guid.
-' Remarks: I have need to call the UuidCreate function dynamically because, at the time of
+' If pwszGuidText is omited, StrToGuid generates a new unique guid.
+' Remarks: I have needed to call the UuidCreate function dynamically because, at the time of
 ' writing, the library for the RPCRT4.DLL seems broken and the linker fails.
+' Note: Same as GuidFromStr.
 ' ========================================================================================
 PRIVATE FUNCTION CAxHost.StrToGuid (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS GUID
    DIM rguid AS GUID
@@ -646,6 +634,7 @@ END FUNCTION
 ' If pwszGuidText is omited, AfxGuid generates a new unique guid.
 ' Remarks: I have need to call the UuidCreate function dynamically because, at the time of
 ' writing, the library for the RPCRT4.DLL seems broken and the linker fails.
+' Note: Same as StrToGuid.
 ' ========================================================================================
 PRIVATE FUNCTION CAxHost.GuidFromStr (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS GUID
    DIM rguid AS GUID

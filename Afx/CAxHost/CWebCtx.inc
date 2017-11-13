@@ -41,6 +41,8 @@ DECLARE FUNCTION AfxSetElementValueById (BYVAL pWebBrowser AS Afx_IWebBrowser2 P
 DECLARE FUNCTION AfxGetElementInnerHtmlById (BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR, BYREF cwsId AS CWSTR) AS CWSTR
 DECLARE FUNCTION AfxSetElementInnerHtmlById (BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR, BYREF cwsId AS CWSTR, BYREF cwsHtml AS CWSTR) AS HRESULT
 DECLARE FUNCTION AfxSetElementFocusById (BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR, BYREF cwsId AS CWSTR) AS HRESULT
+DECLARE FUNCTION AfxGetBodyInnerText (BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR) AS CWSTR
+DECLARE FUNCTION AfxGetBodyInnerHtml (BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR) AS CWSTR
 
 TYPE CWebBrowserEvents_ AS CWebBrowserEvents
 TYPE CDocHostUIHandler2_ AS CDocHostUIHandler2
@@ -232,7 +234,7 @@ END FUNCTION
 
 ' ========================================================================================
 ' Waits until the page had been fully downloaded or te timeout has expired.
-' - dbTimeout Timeout in seconds.
+' - dbTimeout: Timeout in seconds.
 ' Return value:
 ' READYSTATE_UNINITIALIZED = 0
 '   Default initialization state.
@@ -1352,6 +1354,49 @@ PRIVATE FUNCTION AfxSetElementFocusById (BYVAL pWebBrowser AS Afx_IWebBrowser2 P
       pIHTMLElement2->lpvtbl->Release(pIHTMLElement2)
    END IF
    RETURN hr
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a string that represents the text between the start and end body tags without
+' any associated HTML.
+' ========================================================================================
+PRIVATE FUNCTION AfxGetBodyInnerText (BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR) AS CWSTR
+   IF pWebBrowser = NULL THEN RETURN ""
+   DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
+   DIM hr AS HRESULT = pWebBrowser->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
+   IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN ""
+   DIM pIHTMLElement AS IHTMLElement PTR
+   hr = pIHTMLDocument2->lpvtbl->get_body(pIHTMLDocument2, @pIHTMLElement)
+   pIHTMLDocument2->lpvtbl->Release(pIHTMLDocument2)
+   IF hr <> S_OK OR pIHTMLElement = NULL THEN RETURN ""
+   DIM bstrText AS AFX_BSTR
+   hr = pIHTMLElement->lpvtbl->get_innerText(pIHTMLElement, @bstrText)
+   pIHTMLElement->lpvtbl->Release(pIHTMLElement)
+   DIM cwsText AS CWSTR = *bstrText
+   SysFreeString bstrText
+   RETURN cwsText
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a string that represents the text and html elements between the start and end body tags.
+' ========================================================================================
+PRIVATE FUNCTION AfxGetBodyInnerHtml (BYVAL pWebBrowser AS Afx_IWebBrowser2 PTR) AS CWSTR
+   IF pWebBrowser = NULL THEN RETURN ""
+   DIM pIHTMLDocument2 AS IHTMLDocument2 PTR
+   DIM hr AS HRESULT = pWebBrowser->get_Document(@CAST(ANY PTR, pIHTMLDocument2))
+   IF hr <> S_OK OR pIHTMLDocument2 = NULL THEN RETURN ""
+   DIM pIHTMLElement AS IHTMLElement PTR
+   hr = pIHTMLDocument2->lpvtbl->get_body(pIHTMLDocument2, @pIHTMLElement)
+   pIHTMLDocument2->lpvtbl->Release(pIHTMLDocument2)
+   IF hr <> S_OK OR pIHTMLElement = NULL THEN RETURN ""
+   DIM bstrText AS AFX_BSTR
+   hr = pIHTMLElement->lpvtbl->get_innerHtml(pIHTMLElement, @bstrText)
+   pIHTMLElement->lpvtbl->Release(pIHTMLElement)
+   DIM cwsText AS CWSTR = *bstrText
+   SysFreeString bstrText
+   RETURN cwsText
 END FUNCTION
 ' ========================================================================================
 

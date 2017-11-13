@@ -275,8 +275,12 @@ FUNCTION CWebBrowserEvents.Invoke (BYVAL dispIdMember AS DISPID, BYVAL riid AS C
       ' ----------------------------------------------------------------------------------
       CWBX_DP("CWebBrowserEvents.DocumentComplete")
       ' // Fires when a document is completely loaded and initialized.
+      IF m_DocumentCompleteProc = NULL THEN RETURN S_OK
       IF m_DocumentCompleteProc THEN m_DocumentCompleteProc(m_pWebCtx, pDispParams->rgvarg[1].pdispVal, @pDispParams->rgvarg[0])
-
+      ' // Exit if the user has not set a callback for the Hmtl document events
+      IF m_pHTMLDocumentEvents2 THEN
+         IF m_pHTMLDocumentEvents2->m_pHtmlDocumentEventsProc = NULL THEN RETURN S_OK
+      END IF
       ' // --- Connect/disconnect with events fired by the web page ----------------------
       DIM pWebBrowser2 AS Afx_IWebBrowser2 PTR = cast(Afx_IWebBrowser2 PTR, cast(ULONG_PTR, pDispParams->rgvarg[1].pdispVal))
       IF pWebBrowser2 = NULL THEN EXIT FUNCTION
