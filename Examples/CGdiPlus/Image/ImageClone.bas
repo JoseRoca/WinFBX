@@ -3,15 +3,13 @@
 ' File: ImageClone.bas
 ' Contents: GDI+ - ImageClone example
 ' Compiler: FreeBasic 32 & 64 bit
-' Copyright (c) 2016 José Roca. Freeware. Use at your own risk.
+' Copyright (c) 2017 José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 ' ########################################################################################
 
-#define _CGDIP_DEBUG_ 1
 #define UNICODE
-#INCLUDE ONCE "Afx/CWindow.inc"
 #INCLUDE ONCE "Afx/CGdiPlus/CGdiPlus.inc"
 #INCLUDE ONCE "Afx/CGraphCtx.inc"
 USING Afx
