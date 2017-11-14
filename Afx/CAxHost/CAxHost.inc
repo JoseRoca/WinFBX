@@ -173,13 +173,15 @@ Public:
    DECLARE FUNCTION Advise (BYVAL pEvtObj AS Afx_IDispatch PTR, BYREF riid AS IID) AS HRESULT
    DECLARE FUNCTION Unadvise () AS HRESULT
    DECLARE FUNCTION OleCreateFontDisp (BYREF wszFontName AS WSTRING, BYVAL cySize AS LONGLONG, _
-           BYVAL fWeight AS SHORT, BYVAL fCharset AS SHORT, BYVAL fItalic AS WINBOOL, _
-           BYVAL fUnderline AS WINBOOL, BYVAL fStrikethrough AS WINBOOL) AS IFontDisp PTR
-   DECLARE FUNCTION StrToGuid (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS GUID
+           BYVAL fWeight AS SHORT = FW_NORMAL, BYVAL fItalic AS WINBOOL = FALSE, BYVAL fUnderline AS WINBOOL = FALSE, _
+           BYVAL fStrikethrough AS WINBOOL = FALSE, BYVAL fCharset AS SHORT = DEFAULT_CHARSET) AS IFontDisp PTR
+   DECLARE FUNCTION OleCreateFont (BYREF wszFontName AS WSTRING, BYVAL cySize AS LONGLONG, _
+           BYVAL fWeight AS SHORT = FW_NORMAL, BYVAL fItalic AS WINBOOL = FALSE, BYVAL fUnderline AS WINBOOL = FALSE, _
+           BYVAL fStrikethrough AS WINBOOL = FALSE, BYVAL fCharset AS SHORT = DEFAULT_CHARSET) AS IFont PTR
+   DECLARE FUNCTION GuidFromStr (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS GUID
    DECLARE FUNCTION GuidText (BYVAL classID AS CLSID PTR) AS STRING
    DECLARE FUNCTION GuidText (BYVAL riid AS REFIID) AS STRING
    DECLARE FUNCTION GuidText (BYVAL classID AS CLSID) AS STRING
-   DECLARE FUNCTION GuidFromStr (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS GUID
    DECLARE FUNCTION GetInterfaceName (BYVAL riid AS REFIID) AS STRING
    DECLARE FUNCTION QueryInterface (BYVAL riid AS REFIID, BYVAL ppvObj AS LPVOID PTR) AS HRESULT
 
@@ -545,15 +547,51 @@ END SUB
 
 ' ========================================================================================
 ' Creates a standard IFontDisp object
+' Parameters:
+' - wszFontName: The typeface name, e.g. "Segoe UI"
+' - cySize: The point size, e.g. 9.
+' - fWeight: Initial weight of the font. If the weight is below 550 (the average of
+'      FW_NORMAL, 400, and FW_BOLD, 700), then the Bold property is also initialized to
+'      FALSE. If the weight is above 550, the Bold property is set to TRUE.
+'      The following values are defined for convenience.
+'      FW_DONTCARE (0), FW_THIN (100), FW_EXTRALIGHT (200), FW_ULTRALIGHT (200), FW_LIGHT (300),
+'      FW_NORMAL (400), FW_REGULAR (400), FW_MEDIUM (500), FW_SEMIBOLD (600), FW_DEMIBOLD (600),
+'      FW_BOLD (700), FW_EXTRABOLD (800), FW_ULTRABOLD (800), FW_HEAVY (900), FW_BLACK (900)
+' - bItalic = Italic flag. CTRUE or FALSE
+' - bUnderline = Underline flag. CTRUE or FALSE
+' - bStrikeOut = StrikeOut flag. CTRUE or FALSE
+' - bCharset = Charset.
+'      The following values are predefined: ANSI_CHARSET, BALTIC_CHARSET, CHINESEBIG5_CHARSET,
+'      DEFAULT_CHARSET, EASTEUROPE_CHARSET, GB2312_CHARSET, GREEK_CHARSET, HANGUL_CHARSET,
+'      MAC_CHARSET, OEM_CHARSET, RUSSIAN_CHARSET, SHIFTJIS_CHARSET, SYMBOL_CHARSET, TURKISH_CHARSET,
+'      VIETNAMESE_CHARSET, JOHAB_CHARSET (Korean language edition of Windows), ARABIC_CHARSET and
+'      HEBREW_CHARSET (Middle East language edition of Windows), THAI_CHARSET (Thai language
+'      edition of Windows).
+'      The OEM_CHARSET value specifies a character set that is operating-system dependent.
+'      DEFAULT_CHARSET is set to a value based on the current system locale. For example, when
+'      the system locale is English (United States), it is set as ANSI_CHARSET.
+'      Fonts with other character sets may exist in the operating system. If an application uses
+'      a font with an unknown character set, it should not attempt to translate or interpret
+'      strings that are rendered with that font.
+'      This parameter is important in the font mapping process. To ensure consistent results,
+'      specify a specific character set. If you specify a typeface name in the lfFaceName member,
+'      make sure that the lfCharSet value matches the character set of the typeface specified in lfFaceName.
+' Return value: A pointer to the object or NULL on failure.
+' Remarks: The returned font must be destroyed calling the release method of the IFontDisp
+' interface when no longer needed to prevent memory leaks.
+' Usage examples:
+' pFont = pAxHost.OleCreateFontDisp("MS Sans Serif", 8, FW_NORMAL, , , , DEFAULT_CHARSET)
+' pFont = pAxHost.OleCreateFontDisp("Courier New", 10, FW_BOLD, , , , DEFAULT_CHARSET)
+' pFont = pAxHost.OleCreateFontDisp("Marlett", 8, FW_NORMAL, , , , SYMBOL_CHARSET)
 ' ========================================================================================
 PRIVATE FUNCTION CAxHost.OleCreateFontDisp ( _
-   BYREF wszFontName AS WSTRING, _            ' __in  Font name
-   BYVAL cySize AS LONGLONG, _                ' __in  Point size
-   BYVAL fWeight AS SHORT, _                  ' __in  Weight (%FW_NORMAL, etc.)
-   BYVAL fCharset AS SHORT, _                 ' __in  Character set
-   BYVAL fItalic AS WINBOOL, _                ' __in  Italic state
-   BYVAL fUnderline AS WINBOOL, _             ' __in  Underline state
-   BYVAL fStrikethrough AS WINBOOL _          ' __in  Strikethrough state
+   BYREF wszFontName AS WSTRING, _                  ' __in  Font name
+   BYVAL cySize AS LONGLONG, _                      ' __in  Point size
+   BYVAL fWeight AS SHORT = FW_NORMAL, _            ' __in  Weight (FW_NORMAL, etc.)
+   BYVAL fItalic AS WINBOOL = FALSE, _              ' __in  Italic state
+   BYVAL fUnderline AS WINBOOL = FALSE, _           ' __in  Underline state
+   BYVAL fStrikethrough AS WINBOOL = FALSE, _       ' __in  Strikethrough state
+   BYVAL fCharset AS SHORT = DEFAULT_CHARSET _      ' __in  Character set
    ) AS IFontDisp PTR
 
    CAXH_DP("OleCreateFontDisp " & wszFontName)
@@ -572,17 +610,43 @@ PRIVATE FUNCTION CAxHost.OleCreateFontDisp ( _
 
 END FUNCTION
 ' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CAxHost.OleCreateFont ( _
+   BYREF wszFontName AS WSTRING, _                  ' __in  Font name
+   BYVAL cySize AS LONGLONG, _                      ' __in  Point size
+   BYVAL fWeight AS SHORT = FW_NORMAL, _            ' __in  Weight (FW_NORMAL, etc.)
+   BYVAL fItalic AS WINBOOL = FALSE, _              ' __in  Italic state
+   BYVAL fUnderline AS WINBOOL = FALSE, _           ' __in  Underline state
+   BYVAL fStrikethrough AS WINBOOL = FALSE, _       ' __in  Strikethrough state
+   BYVAL fCharset AS SHORT = DEFAULT_CHARSET _      ' __in  Character set
+   ) AS IFont PTR
+
+   CAXH_DP("OleCreateFont " & wszFontName)
+   DIM tf AS FONTDESC
+   tf.cbSizeOfStruct = SIZEOF(FONTDESC)
+   tf.lpstrName =  @wszFontName
+   tf.cySize.int64 = cySize * 10000
+   tf.sWeight = fWeight
+   tf.sCharset = fCharset
+   tf.fItalic = fItalic
+   tf.fUnderline = fUnderline
+   tf.fStrikethrough = fStrikethrough
+   DIM pFont AS IFont PTR
+   OleCreateFontIndirect(@tf, @IID_IUnknown, @pFont)
+   RETURN pFont
+
+END FUNCTION
+' ========================================================================================
 
 ' ========================================================================================
 ' Converts a string into a 16-byte (128-bit) Globally Unique Identifier (GUID)
 ' To be valid, the string must contain exactly 32 hexadecimal digits, delimited by hyphens
 ' and enclosed by curly braces. For example: {B09DE715-87C1-11D1-8BE3-0000F8754DA1}
-' If pwszGuidText is omited, StrToGuid generates a new unique guid.
-' Remarks: I have needed to call the UuidCreate function dynamically because, at the time of
+' If pwszGuidText is omited, AfxGuid generates a new unique guid.
+' Remarks: I have need to call the UuidCreate function dynamically because, at the time of
 ' writing, the library for the RPCRT4.DLL seems broken and the linker fails.
-' Note: Same as GuidFromStr.
 ' ========================================================================================
-PRIVATE FUNCTION CAxHost.StrToGuid (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS GUID
+PRIVATE FUNCTION CAxHost.GuidFromStr (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS GUID
    DIM rguid AS GUID
    IF pwszGuidText = NULL THEN
       ' // Generate a new guid
@@ -596,7 +660,7 @@ PRIVATE FUNCTION CAxHost.StrToGuid (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS
    ELSE
       CLSIDFromString(pwszGuidText, @rGuid)
    END IF
-   FUNCTION = rguid
+   RETURN rguid
 END FUNCTION
 ' ========================================================================================
 
@@ -624,33 +688,6 @@ PRIVATE FUNCTION CAxHost.GuidText (BYVAL classID AS CLSID) AS STRING
    StringFromCLSID(@classID, CAST(LPOLESTR PTR, @pwsz))
    FUNCTION = *pwsz
    CoTaskMemFree(pwsz)
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Converts a string into a 16-byte (128-bit) Globally Unique Identifier (GUID)
-' To be valid, the string must contain exactly 32 hexadecimal digits, delimited by hyphens
-' and enclosed by curly braces. For example: {B09DE715-87C1-11D1-8BE3-0000F8754DA1}
-' If pwszGuidText is omited, AfxGuid generates a new unique guid.
-' Remarks: I have need to call the UuidCreate function dynamically because, at the time of
-' writing, the library for the RPCRT4.DLL seems broken and the linker fails.
-' Note: Same as StrToGuid.
-' ========================================================================================
-PRIVATE FUNCTION CAxHost.GuidFromStr (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS GUID
-   DIM rguid AS GUID
-   IF pwszGuidText = NULL THEN
-      ' // Generate a new guid
-      DIM AS ANY PTR pLib = DyLibLoad("RPCRT4.DLL")
-      IF pLib  THEN
-         DIM pProc AS FUNCTION (BYVAL Uuid AS UUID PTR) AS RPC_STATUS
-         pProc = DyLibSymbol(pLib, "UuidCreate")
-         IF pProc THEN pProc(@rguid)
-         DyLibFree(pLib)
-      END IF
-   ELSE
-      CLSIDFromString(pwszGuidText, @rGuid)
-   END IF
-   RETURN rguid
 END FUNCTION
 ' ========================================================================================
 
@@ -875,9 +912,9 @@ PRIVATE FUNCTION CAxHost.CAxHostProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BY
          ' // Creates a default font
          IF pAxHost->m_AmbientDisp.Font = NULL THEN
             IF AfxWindowsVersion >= 600 AND CLNG(AfxIsProcessDpiAware) THEN
-               pAxHost->m_AmbientDisp.Font = pAxHost->OleCreateFontDisp("Segoe UI", 9, FW_NORMAL, ANSI_CHARSET, 0, 0, 0)
+               pAxHost->m_AmbientDisp.Font = pAxHost->OleCreateFontDisp("Segoe UI", 9, FW_NORMAL, 0, 0, 0, DEFAULT_CHARSET)
             ELSE
-               pAxHost->m_AmbientDisp.Font = pAxHost->OleCreateFontDisp("Tahoma", 8, FW_NORMAL, ANSI_CHARSET, 0, 0, 0)
+               pAxHost->m_AmbientDisp.Font = pAxHost->OleCreateFontDisp("Tahoma", 8, FW_NORMAL, 0, 0, 0, DEFAULT_CHARSET)
             END IF
          END IF
          ' ===============================================================================
