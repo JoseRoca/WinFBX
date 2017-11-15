@@ -246,7 +246,7 @@ PRIVATE DESTRUCTOR CAxHost
    IF this.m_pIServiceProviderImpl THEN DELETE this.m_pIServiceProviderImpl
 
    ' // Release the ActiveX control
-   cRef = m_pOcx->lpvtbl->Release(m_pOcx)
+   cRef = AfxSafeRelease(m_pOcx)
    CAXH_DP("Release OCX - cRef = " & WSTR(cRef))
 
    ' // Checks for memory leaks (if a pointer <> 0 then memory leak)
