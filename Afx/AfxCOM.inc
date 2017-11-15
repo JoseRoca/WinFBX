@@ -272,19 +272,19 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION AfxNewCom OVERLOAD (BYREF wszLibName AS CONST WSTRING, BYREF rclsid AS CONST CLSID, BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING = "") AS ANY PTR
 
-   DIM hr AS LONG, hLib AS HANDLE, pDisp AS ANY PTR
+   DIM hr AS LONG, hLib AS HMODULE, pDisp AS ANY PTR
    DIM pIClassFactory AS IClassFactory PTR, pIClassFactory2 AS IClassFactory2 PTR
 
    ' // See if the library is already loaded in the address space
    hLib = GetModuleHandleW(wszLibName)
    ' // If it is not loaded, load it
-   IF hLib = NULL THEN hLib = DyLibLoad(wszLibName)
+   IF hLib = NULL THEN hLib = LoadLibraryW(wszLibName)
    ' // If it fails, abort
    IF hLib = NULL THEN EXIT FUNCTION
 
    ' // Retrieve the address of the exported function DllGetClassObject
    DIM pfnDllGetClassObject AS FUNCTION (BYVAL rclsid AS CONST IID CONST PTR, BYVAL riid AS CONST IID CONST PTR, BYVAL ppv AS LPVOID PTR) AS HRESULT
-   pfnDllGetClassObject = DyLibSymbol(hLib, "DllGetClassObject")
+   pfnDllGetClassObject = CAST(ANY PTR, GetProcAddress(hLib, "DllGetClassObject"))
    IF pfnDllGetClassObject = NULL THEN EXIT FUNCTION
 
    IF LEN(wszLicKey) = 0 THEN
