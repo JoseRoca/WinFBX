@@ -829,23 +829,28 @@ END FUNCTION
 PRIVATE FUNCTION CAxHost.CreateObject (BYREF wszLibName AS CONST WSTRING, BYREF rclsid AS CONST CLSID, _
    BYREF riid AS CONST IID, BYREF wszLicKey AS WSTRING = "") AS IDispatch PTR
    CAXH_DP("CAxHost.CreateObject - LibName & classID & riid & LicKey")
+   CAXH_DP("CAxHost.CreateObject - LibName = " & wszLibName)
+   CAXH_DP("CAxHost.CreateObject - LicKey = " & wszLicKey)
 
    ' // See if the library is already loaded in the address space
    DIM hLib AS HANDLE = GetModuleHandleW(wszLibName)
    ' // If it is not loaded, load it
    IF hLib = NULL THEN hLib = DyLibLoad(wszLibName)
+   CAXH_DP("CAxHost.CreateObject - hLib = " & WSTR(hLib))
    ' // If it fails, abort
    IF hLib = NULL THEN RETURN NULL
 
    ' // Retrieve the address of the exported function DllGetClassObject
    DIM pfnDllGetClassObject AS FUNCTION (BYVAL rclsid AS CONST IID CONST PTR, BYVAL riid AS CONST IID CONST PTR, BYVAL ppv AS LPVOID PTR) AS HRESULT
    pfnDllGetClassObject = DyLibSymbol(hLib, "DllGetClassObject")
+   CAXH_DP("CAxHost.CreateObject - DllGetClassObject = " & WSTR(pfnDllGetClassObject))
    IF pfnDllGetClassObject = NULL THEN RETURN NULL
 
    IF LEN(wszLicKey) = 0 THEN
       ' // Request a reference to the IClassFactory interface
       DIM pIClassFactory AS IClassFactory PTR, pDisp AS IDispatch PTR
       DIM hr AS HRESULT = pfnDllGetClassObject(@rclsid, @IID_IClassFactory, @pIClassFactory)
+      CAXH_DP("CAxHost.CreateObject - IClassFactory = " & WSTR(pIClassFactory))
       IF hr <> S_OK THEN RETURN NULL
       ' // Create an instance of the server or control
       hr = pIClassFactory->lpVtbl->CreateInstance(pIClassFactory, NULL, @riid, @pDisp)
@@ -856,9 +861,11 @@ PRIVATE FUNCTION CAxHost.CreateObject (BYREF wszLibName AS CONST WSTRING, BYREF 
       ' // Request a reference to the IClassFactory2 interface
       DIM pIClassFactory2 AS IClassFactory2 PTR, pDisp AS IDispatch PTR
       DIM hr AS HRESULT = pfnDllGetClassObject(@rclsid, @IID_IClassFactory, @pIClassFactory2)
+      CAXH_DP("CAxHost.CreateObject - IClassFactory2 = " & WSTR(pIClassFactory2))
       IF hr <> S_OK THEN RETURN NULL
       ' // Create a licensed instance of the server or control
       hr = pIClassFactory2->lpVtbl->CreateInstanceLic(pIClassFactory2, NULL, NULL, @riid, @wszLicKey, @pDisp)
+      CAXH_DP("CAxHost.CreateObject - IClassFactory2 - hr = &h" & HEX(hr))
       pIClassFactory2->lpVtbl->Release(pIClassFactory2)
       IF hr <> S_OK THEN RETURN NULL
       RETURN pDisp
