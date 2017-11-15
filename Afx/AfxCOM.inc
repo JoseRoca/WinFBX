@@ -509,6 +509,97 @@ PRIVATE FUNCTION AfxGetOleErrorInfo () AS CWSTR
 END FUNCTION
 ' ========================================================================================
 
+' ========================================================================================
+' Creates a standard IFontDisp object.
+' Parameters:
+' - wszFontName: The typeface name, e.g. "Segoe UI"
+' - cySize: The point size, e.g. 9.
+' - fWeight: Initial weight of the font. If the weight is below 550 (the average of
+'      FW_NORMAL, 400, and FW_BOLD, 700), then the Bold property is also initialized to
+'      FALSE. If the weight is above 550, the Bold property is set to TRUE.
+'      The following values are defined for convenience.
+'      FW_DONTCARE (0), FW_THIN (100), FW_EXTRALIGHT (200), FW_ULTRALIGHT (200), FW_LIGHT (300),
+'      FW_NORMAL (400), FW_REGULAR (400), FW_MEDIUM (500), FW_SEMIBOLD (600), FW_DEMIBOLD (600),
+'      FW_BOLD (700), FW_EXTRABOLD (800), FW_ULTRABOLD (800), FW_HEAVY (900), FW_BLACK (900)
+' - bItalic = Italic flag. CTRUE or FALSE
+' - bUnderline = Underline flag. CTRUE or FALSE
+' - bStrikeOut = StrikeOut flag. CTRUE or FALSE
+' - bCharset = Charset.
+'      The following values are predefined: ANSI_CHARSET, BALTIC_CHARSET, CHINESEBIG5_CHARSET,
+'      DEFAULT_CHARSET, EASTEUROPE_CHARSET, GB2312_CHARSET, GREEK_CHARSET, HANGUL_CHARSET,
+'      MAC_CHARSET, OEM_CHARSET, RUSSIAN_CHARSET, SHIFTJIS_CHARSET, SYMBOL_CHARSET, TURKISH_CHARSET,
+'      VIETNAMESE_CHARSET, JOHAB_CHARSET (Korean language edition of Windows), ARABIC_CHARSET and
+'      HEBREW_CHARSET (Middle East language edition of Windows), THAI_CHARSET (Thai language
+'      edition of Windows).
+'      The OEM_CHARSET value specifies a character set that is operating-system dependent.
+'      DEFAULT_CHARSET is set to a value based on the current system locale. For example, when
+'      the system locale is English (United States), it is set as ANSI_CHARSET.
+'      Fonts with other character sets may exist in the operating system. If an application uses
+'      a font with an unknown character set, it should not attempt to translate or interpret
+'      strings that are rendered with that font.
+'      This parameter is important in the font mapping process. To ensure consistent results,
+'      specify a specific character set. If you specify a typeface name in the lfFaceName member,
+'      make sure that the lfCharSet value matches the character set of the typeface specified in lfFaceName.
+' Return value: A pointer to the object or NULL on failure.
+' Remarks: The returned font must be destroyed calling the release method of the IFontDisp
+' interface when no longer needed to prevent memory leaks.
+' Usage examples:
+' DIM pFont AS IFontDisp PTR = AfxOleCreateFontDisp("MS Sans Serif", 8, FW_NORMAL, , , , DEFAULT_CHARSET)
+' DIM pFont AS IFontDisp PTR = AfxOleCreateFontDisp("Courier New", 10, FW_BOLD, , , , DEFAULT_CHARSET)
+' DIM pFont AS IFontDisp PTR = AfxOleCreateFontDisp("Marlett", 8, FW_NORMAL, , , , SYMBOL_CHARSET)
+' ========================================================================================
+PRIVATE FUNCTION AfxOleCreateFontDisp ( _
+   BYREF wszFontName AS WSTRING, _                  ' __in  Font name
+   BYVAL cySize AS LONGLONG, _                      ' __in  Point size
+   BYVAL fWeight AS SHORT = FW_NORMAL, _            ' __in  Weight (FW_NORMAL, etc.)
+   BYVAL fItalic AS WINBOOL = FALSE, _              ' __in  Italic state
+   BYVAL fUnderline AS WINBOOL = FALSE, _           ' __in  Underline state
+   BYVAL fStrikethrough AS WINBOOL = FALSE, _       ' __in  Strikethrough state
+   BYVAL fCharset AS SHORT = DEFAULT_CHARSET _      ' __in  Character set
+   ) AS IFontDisp PTR
+
+   DIM tf AS FONTDESC
+   tf.cbSizeOfStruct = SIZEOF(FONTDESC)
+   tf.lpstrName =  @wszFontName
+   tf.cySize.int64 = cySize * 10000
+   tf.sWeight = fWeight
+   tf.sCharset = fCharset
+   tf.fItalic = fItalic
+   tf.fUnderline = fUnderline
+   tf.fStrikethrough = fStrikethrough
+   DIM pFont AS IFontDisp PTR
+   OleCreateFontIndirect(@tf, @IID_IDispatch, @pFont)
+   RETURN pFont
+
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION AfxOleCreateFont ( _
+   BYREF wszFontName AS WSTRING, _                  ' __in  Font name
+   BYVAL cySize AS LONGLONG, _                      ' __in  Point size
+   BYVAL fWeight AS SHORT = FW_NORMAL, _            ' __in  Weight (FW_NORMAL, etc.)
+   BYVAL fItalic AS WINBOOL = FALSE, _              ' __in  Italic state
+   BYVAL fUnderline AS WINBOOL = FALSE, _           ' __in  Underline state
+   BYVAL fStrikethrough AS WINBOOL = FALSE, _       ' __in  Strikethrough state
+   BYVAL fCharset AS SHORT = DEFAULT_CHARSET _      ' __in  Character set
+   ) AS IFont PTR
+
+   DIM tf AS FONTDESC
+   tf.cbSizeOfStruct = SIZEOF(FONTDESC)
+   tf.lpstrName =  @wszFontName
+   tf.cySize.int64 = cySize * 10000
+   tf.sWeight = fWeight
+   tf.sCharset = fCharset
+   tf.fItalic = fItalic
+   tf.fUnderline = fUnderline
+   tf.fStrikethrough = fStrikethrough
+   DIM pFont AS IFont PTR
+   OleCreateFontIndirect(@tf, @IID_IUnknown, @pFont)
+   RETURN pFont
+
+END FUNCTION
+' ========================================================================================
+
 ' ########################################################################################
 '                                *** CComPtr class ***
 ' ########################################################################################

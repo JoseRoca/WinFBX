@@ -98,11 +98,13 @@ Public:
    DECLARE FUNCTION Get (BYVAL pwszName AS WSTRING PTR, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR) AS CVAR
    DECLARE FUNCTION Get (BYVAL dispID AS DISPID, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR) AS CVAR
 
-   DECLARE FUNCTION Put (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS HRESULT
-   DECLARE FUNCTION Put (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR) AS HRESULT
+   DECLARE PROPERTY Put (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR)
+   DECLARE PROPERTY Put (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR)
+   DECLARE PROPERTY Set (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR)
+   DECLARE PROPERTY Set (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR)
 
-   DECLARE FUNCTION PutRef (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR) AS HRESULT
-   DECLARE FUNCTION PutRef (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS HRESULT
+   DECLARE PROPERTY PutRef (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR)
+   DECLARE PROPERTY PutRef (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR)
 
    DECLARE FUNCTION Invoke (BYVAL dispID AS DISPID) AS CVAR
    DECLARE FUNCTION Invoke (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS CVAR
@@ -904,31 +906,43 @@ END FUNCTION
 ' ========================================================================================
 ' Wrapper functions to call the Invoke method to set a property value.
 ' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.Put (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS HRESULT
+PRIVATE PROPERTY CDispInvoke.Put (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR)
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke Put - DISPID - CVAR")
-   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, dispID, cvArg, 1, m_lcid))
-END FUNCTION
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, dispID, cvArg, 1, m_lcid))
+END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.Put (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR) AS HRESULT
+PRIVATE PROPERTY CDispInvoke.Put (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR)
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke Put - Name - CVAR")
-   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, pwszName, cvArg, 1, m_lcid))
-END FUNCTION
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, pwszName, cvArg, 1, m_lcid))
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CDispInvoke.Set (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR)
+   CDISPINVOKE_DP("CDISPINVOKE DispInvoke Set - DISPID - CVAR")
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, dispID, cvArg, 1, m_lcid))
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CDispInvoke.Set (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR)
+   CDISPINVOKE_DP("CDISPINVOKE DispInvoke Set - Name - CVAR")
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, pwszName, cvArg, 1, m_lcid))
+END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
 ' Wrapper functions to call the Invoke method to call a putref property.
 ' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.PutRef (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS HRESULT
+PRIVATE PROPERTY CDispInvoke.PutRef (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR)
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke PutRef - DISPID - CVAR")
-   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, dispID, cvArg, 1, m_lcid))
-END FUNCTION
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, dispID, cvArg, 1, m_lcid))
+END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.PutRef (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR) AS HRESULT
+PRIVATE PROPERTY CDispInvoke.PutRef (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR)
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke PutRef - Name - CVAR")
-   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, pwszName, cvArg, 1, m_lcid))
-END FUNCTION
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, pwszName, cvArg, 1, m_lcid))
+END PROPERTY
 ' ========================================================================================
 
 ' ****************************************************************************************
