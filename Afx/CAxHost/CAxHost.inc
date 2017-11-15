@@ -833,16 +833,16 @@ PRIVATE FUNCTION CAxHost.CreateObject (BYREF wszLibName AS CONST WSTRING, BYREF 
    CAXH_DP("CAxHost.CreateObject - LicKey = " & wszLicKey)
 
    ' // See if the library is already loaded in the address space
-   DIM hLib AS HANDLE = GetModuleHandleW(wszLibName)
+   DIM hLib AS HMODULE = GetModuleHandleW(wszLibName)
    ' // If it is not loaded, load it
-   IF hLib = NULL THEN hLib = DyLibLoad(wszLibName)
+   IF hLib = NULL THEN hLib = LoadLibraryW(wszLibName)
    CAXH_DP("CAxHost.CreateObject - hLib = " & WSTR(hLib))
    ' // If it fails, abort
    IF hLib = NULL THEN RETURN NULL
 
    ' // Retrieve the address of the exported function DllGetClassObject
    DIM pfnDllGetClassObject AS FUNCTION (BYVAL rclsid AS CONST IID CONST PTR, BYVAL riid AS CONST IID CONST PTR, BYVAL ppv AS LPVOID PTR) AS HRESULT
-   pfnDllGetClassObject = DyLibSymbol(hLib, "DllGetClassObject")
+   pfnDllGetClassObject = CAST(ANY PTR, GetProcAddress(hLib, "DllGetClassObject"))
    CAXH_DP("CAxHost.CreateObject - DllGetClassObject = " & WSTR(pfnDllGetClassObject))
    IF pfnDllGetClassObject = NULL THEN RETURN NULL
 
