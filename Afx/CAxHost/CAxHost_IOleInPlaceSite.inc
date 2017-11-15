@@ -181,7 +181,6 @@ FUNCTION CAxHost_IOleInPlaceSite.GetWindowContext (BYVAL ppFrame AS IOleInPlaceF
    ' going to use any of its methods, or the object will be embedded
    ' but not in-place activated.
    IF m_pAxHost->m_pIOleInPlaceFrameImpl <> NULL THEN
-      m_pAxHost->m_pIOleInPlaceFrameImpl->AddRef
       *ppFrame = cast(IOleInPlaceFrame PTR, cast(ANY PTR, m_pAxHost->m_pIOleInPlaceFrameImpl))
    ELSE
       m_pAxHost->QueryInterface(@IID_IOleInPlaceFrame, @m_pAxHost->m_pIOleInPlaceFrameImpl)
