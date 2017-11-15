@@ -58,9 +58,9 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
 
    ' // Use CDispInvoke to set the date
    DIM pdisp AS CDispInvoke = pHost.OcxDispObj
-   pdisp.Put("Year", 2017)
-   pdisp.Put("Month", 12)
-   pdisp.Put("Day", 1)
+   pdisp.Put("Year") = 2017
+   pdisp.Put("Month") = 12
+   pdisp.Put("Day") = 1
 
    ' // Display the window
    ShowWindow(hwndMain, nCmdShow)
