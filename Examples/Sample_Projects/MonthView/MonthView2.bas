@@ -50,7 +50,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
 
    DIM wszLibName AS WSTRING * 260 = ExePath & "\MSCOMCT2.OCX"
    DIM CLSID_MSComCtl2_MonthView AS CLSID = (&h232E456A, &h87C3, &h11D1, {&h8B, &hE3,&h00, &h00, &hF8, &h75, &h4D, &hA1})
-   DIM IID_MSComCtl2_MonthView AS CLSID = (&h232E4565, &h87C3, &h11D1, {&h8B, &hE3,&h00, &h00, &hF8, &h75, &h4D, &hA1})
+   DIM IID_MSComCtl2_MonthView AS IID = (&h232E4565, &h87C3, &h11D1, {&h8B, &hE3,&h00, &h00, &hF8, &h75, &h4D, &hA1})
    DIM RTLKEY_MSCOMCT2 AS WSTRING * 260 = "651A8940-87C5-11d1-8BE3-0000F8754DA1"
 
    DIM pHost1 AS CAxHost = CAxHost(@pWindow, IDC_MONTHVIEW1, wszLibName, CLSID_MSComCtl2_MonthView, _
