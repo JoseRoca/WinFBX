@@ -340,7 +340,7 @@ PRIVATE FUNCTION CFindFile.FileName () AS CWSTR
    DIM p AS LONG
    DIM wszFileName AS WSTRING * MAX_PATH = m_FileInfo.cFileName
    p = INSTRREV(wszFileName, ANY ":/\")
-   IF p THEN wszFileName = MID$(wszFileName, p + 1)
+   IF p THEN wszFileName = MID(wszFileName, p + 1)
    p = INSTRREV(wszFileName, ".")
    IF p THEN wszFileName = LEFT(wszFileName, p - 1)
    RETURN wszFileName
