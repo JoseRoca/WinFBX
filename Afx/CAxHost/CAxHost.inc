@@ -1039,7 +1039,7 @@ PRIVATE FUNCTION CAxHost.CAxHostProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BY
          IF pAxHost = NULL THEN EXIT FUNCTION
          pAxHost->m_bHaveFocus = TRUE
          ' // Activates an object in place, along with its full set of user-interface tools.
-         IF pAxHost->m_pIOleObject <> NULL AND pAxHost->m_bInPlaceActive = FALSE THEN
+         IF pAxHost->m_pIOleObject <> NULL AND CLNG(pAxHost->m_bInPlaceActive) = FALSE THEN
             DIM rc AS RECT
             GetClientRect hwnd, @rc
             IF pAxHost->m_pIOleClientSiteImpl THEN
