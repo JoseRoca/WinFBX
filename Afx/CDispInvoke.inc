@@ -110,6 +110,8 @@ Public:
 
    DECLARE PROPERTY PutRef (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR)
    DECLARE PROPERTY PutRef (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR)
+   DECLARE PROPERTY PutRef (BYVAL dispID AS DISPID, BYVAL pv AS ANY PTR)
+   DECLARE PROPERTY PutRef (BYVAL pwszName AS WSTRING PTR, BYVAL pv AS ANY PTR)
 
    DECLARE FUNCTION SetRef (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS HRESULT
    DECLARE FUNCTION SetRef (BYVAL dispID AS DISPID, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR) AS HRESULT
@@ -984,6 +986,20 @@ END PROPERTY
 ' ========================================================================================
 PRIVATE PROPERTY CDispInvoke.PutRef (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR)
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke.PutRef - Name - CVAR")
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, pwszName, cvArg, 1, m_lcid))
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CDispInvoke.PutRef (BYVAL dispID AS DISPID, BYVAL pv AS ANY PTR)
+   CDISPINVOKE_DP("CDISPINVOKE DispInvoke.PutRef - DISPID - ANY PTR")
+   DIM cvArg AS CVAR = CVAR(CAST(IUnknown PTR, pv), TRUE)
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, dispID, cvArg, 1, m_lcid))
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CDispInvoke.PutRef (BYVAL pwszName AS WSTRING PTR, BYVAL pv AS ANY PTR)
+   CDISPINVOKE_DP("CDISPINVOKE DispInvoke.PutRef - Name - ANY PTR")
+   DIM cvArg AS CVAR = CVAR(CAST(IUnknown PTR, pv), TRUE)
    SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, pwszName, cvArg, 1, m_lcid))
 END PROPERTY
 ' ========================================================================================
