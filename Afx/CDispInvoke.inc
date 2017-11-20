@@ -103,10 +103,12 @@ Public:
 
    DECLARE FUNCTION Set (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS HRESULT
    DECLARE FUNCTION Set (BYVAL dispID AS DISPID, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR) AS HRESULT
-   DECLARE FUNCTION Set (BYVAL dispID AS DISPID, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR, BYREF cvArg3 AS CVAR) AS CVAR
+   DECLARE FUNCTION Set (BYVAL dispID AS DISPID, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR, BYREF cvArg3 AS CVAR) AS HRESULT
+   DECLARE FUNCTION Set (BYVAL dispID AS DISPID, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR, BYREF cvArg3 AS CVAR, BYREF cvArg4 AS CVAR) AS HRESULT
    DECLARE FUNCTION Set (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR) AS HRESULT
    DECLARE FUNCTION Set (BYVAL pwszName AS WSTRING PTR, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR) AS HRESULT
    DECLARE FUNCTION Set (BYVAL pwszName AS WSTRING PTR, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR, BYREF cvArg3 AS CVAR) AS HRESULT
+   DECLARE FUNCTION Set (BYVAL pwszName AS WSTRING PTR, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR, BYREF cvArg3 AS CVAR, BYREF cvArg4 AS CVAR) AS HRESULT
 
    DECLARE PROPERTY PutRef (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR)
    DECLARE PROPERTY PutRef (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR)
@@ -946,11 +948,17 @@ PRIVATE FUNCTION CDispInvoke.Set (BYVAL dispID AS DISPID, BYREF cvArg1 AS CVAR, 
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION CDispInvoke.Set (BYVAL dispID AS DISPID, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR, BYREF cvArg3 AS CVAR) AS CVAR
+PRIVATE FUNCTION CDispInvoke.Set (BYVAL dispID AS DISPID, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR, BYREF cvArg3 AS CVAR) AS HRESULT
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke.Set - dispID - CVAR 3")
    DIM vArgs(1 TO 3) AS VARIANT : vArgs(1) = cvArg3 : vArgs(2) = cvArg2 : vArgs(3) = cvArg1
-   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, dispID, @vArgs(1), 3, m_lcid))
-   RETURN m_varResult
+   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, dispID, @vArgs(1), 3, m_lcid))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CDispInvoke.Set (BYVAL dispID AS DISPID, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR, BYREF cvArg3 AS CVAR, BYREF cvArg4 AS CVAR) AS HRESULT
+   CDISPINVOKE_DP("CDISPINVOKE DispInvoke.Set - dispID - CVAR 4")
+   DIM vArgs(1 TO 4) AS VARIANT : vArgs(1) = cvArg4 : vArgs(2) = cvArg3 : vArgs(3) = cvArg2 : vArgs(4) = cvArg1
+   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, dispID, @vArgs(1), 3, m_lcid))
 END FUNCTION
 ' ========================================================================================
 
@@ -971,6 +979,13 @@ END FUNCTION
 PRIVATE FUNCTION CDispInvoke.Set (BYVAL pwszName AS WSTRING PTR, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR, BYREF cvArg3 AS CVAR) AS HRESULT
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke.Set - Name - CVAR 3")
    DIM vArgs(1 TO 3) AS VARIANT : vArgs(1) = cvArg3 : vArgs(2) = cvArg2 : vArgs(3) = cvArg1
+   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, pwszName, @vArgs(1), 3, m_lcid))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CDispInvoke.Set (BYVAL pwszName AS WSTRING PTR, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR, BYREF cvArg3 AS CVAR, BYREF cvArg4 AS CVAR) AS HRESULT
+   CDISPINVOKE_DP("CDISPINVOKE DispInvoke.Set - Name - CVAR 4")
+   DIM vArgs(1 TO 4) AS VARIANT : vArgs(1) = cvArg4 : vArgs(2) = cvArg3 : vArgs(3) = cvArg2 : vArgs(4) = cvArg1
    RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, pwszName, @vArgs(1), 3, m_lcid))
 END FUNCTION
 ' ========================================================================================
