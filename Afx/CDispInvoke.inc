@@ -1332,7 +1332,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CDispInvoke.Invoke (BYVAL pwszName AS WSTRING PTR, BYREF cvArg1 AS CVAR, BYREF cvArg2 AS CVAR, BYREF cvArg3 AS CVAR, BYREF cvArg4 AS CVAR, BYREF cvArg5 AS CVAR, BYREF cvArg6 AS CVAR, BYREF cvArg7 AS CVAR, BYREF cvArg8 aS CVAR, BYREF cvArg9 AS CVAR, BYREF cvArg10 AS CVAR, BYREF cvArg11 AS CVAR, BYREF cvArg12 AS CVAR, BYREF cvArg13 AS CVAR, BYREF cvArg14 AS CVAR, BYREF cvArg15 AS CVAR, BYREF cvArg16 AS CVAR) AS CVAR
    CDISPINVOKE_DP("CDISPINVOKE Invoke - NAME - 16")
-   DIM vArgs(1 TO 15) AS VARIANT : vArgs(1) = cvArg16 : vArgs(2) = cvArg15 : vArgs(3) = cvArg14 : vArgs(4) = cvArg13 : vArgs(5) = cvArg12 : vArgs(6) = cvArg11 : vArgs(7) = cvArg10 : vArgs(8) = cvArg9 : vArgs(9) = cvArg8 : vArgs(10) = cvArg7 : vArgs(11) = cvArg6 : vArgs(12) = cvArg5 : vArgs(13) = cvArg4 : vArgs(14) = cvArg3 : vArgs(15) = cvArg2 : vArgs(16) = cvArg1
+   DIM vArgs(1 TO 16) AS VARIANT : vArgs(1) = cvArg16 : vArgs(2) = cvArg15 : vArgs(3) = cvArg14 : vArgs(4) = cvArg13 : vArgs(5) = cvArg12 : vArgs(6) = cvArg11 : vArgs(7) = cvArg10 : vArgs(8) = cvArg9 : vArgs(9) = cvArg8 : vArgs(10) = cvArg7 : vArgs(11) = cvArg6 : vArgs(12) = cvArg5 : vArgs(13) = cvArg4 : vArgs(14) = cvArg3 : vArgs(15) = cvArg2 : vArgs(16) = cvArg1
    SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, pwszName, @vArgs(1), 16, m_lcid))
    RETURN m_varResult
 END FUNCTION
