@@ -634,7 +634,7 @@ END FUNCTION
 ' ' // Create an instance of the Afx_ISpVoice interface
 ' DIM pSpVoice AS CComPtr = AfxNewCom("SAPI.SpVoice")
 ' ' // Call the Speak method
-' cast(Afx_ISpVoice PTR, *pSpVoice)->Speak("Hello World", 0, NULL)
+' CAST(Afx_ISpVoice PTR, *pSpVoice)->Speak("Hello World", 0, NULL)
 ' ' // Uninitialize the COM library
 ' CoUninitialize
 ' PRINT
@@ -777,7 +777,7 @@ PRIVATE OPERATOR CComPtr##T.LET (BYVAL pUnk AS T PTR)
    ' // Release the interface pointer
    AfxSafeRelease(m_pUnk)
    ' // Assign the passed reference counted interface pointer
-   m_pUnk= pUnk
+   m_pUnk = pUnk
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
