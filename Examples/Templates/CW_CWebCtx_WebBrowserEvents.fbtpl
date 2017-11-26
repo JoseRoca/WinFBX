@@ -224,8 +224,6 @@ SUB WebBrowser_BeforeNavigate2Proc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pdisp AS
     BYVAL vUrl AS VARIANT PTR, BYVAL Flags AS VARIANT PTR, BYVAL TargetFrameName AS VARIANT PTR, _
     BYVAL PostData AS VARIANT PTR, BYVAL Headers AS VARIANT PTR, BYVAL pbCancel AS VARIANT_BOOL PTR)
 
-   OutputDebugStringW AfxVarToStr(vUrl)
-
    ' // Sample code to redirect navigation to another url
    IF AfxVarToStr(vUrl) = "http://com.it-berater.org/" THEN
       ' // Stop loading the page
