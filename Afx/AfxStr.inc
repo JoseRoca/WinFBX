@@ -54,7 +54,7 @@ PRIVATE FUNCTION AfxStrUCase (BYVAL pwszStr AS WSTRING PTR, _
    DIM cbLen AS LONG = LCMapStringEx(pwszLocaleName, dwMapFlags, pwszStr, LEN(*pwszStr), _
        cwsOut.vptr, LEN(cwsOut), NULL, NULL, 0)
    ' // If the output length is bigger than the input one, request the needed length,
-   ' // mke the buffer bigger and try it again
+   ' // make the buffer bigger and try it again
    IF cbLen = 0 AND GetLastError = ERROR_INSUFFICIENT_BUFFER THEN
       cbLen = LCMapStringEx(pwszLocaleName, dwMapFlags, pwszStr, LEN(*pwszStr), NULL, 0, NULL, NULL, 0)
       IF cbLen THEN
@@ -104,7 +104,7 @@ PRIVATE FUNCTION AfxStrLCase (BYVAL pwszStr AS WSTRING PTR, _
    DIM cbLen AS LONG = LCMapStringEx(pwszLocaleName, dwMapFlags, pwszStr, LEN(*pwszStr), _
        cwsOut.vptr, LEN(cwsOut), NULL, NULL, 0)
    ' // If the output length is bigger than the input one, request the needed length,
-   ' // mke the buffer bigger and try it again
+   ' // make the buffer bigger and try it again
    IF cbLen = 0 AND GetLastError = ERROR_INSUFFICIENT_BUFFER THEN
       cbLen = LCMapStringEx(pwszLocaleName, dwMapFlags, pwszStr, LEN(*pwszStr), NULL, 0, NULL, NULL, 0)
       IF cbLen THEN
