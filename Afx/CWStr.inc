@@ -180,6 +180,7 @@ TYPE CWSTR
       DECLARE PROPERTY CodePage () AS UINT
       DECLARE PROPERTY CodePage (BYVAL nCodePage AS UINT)
       DECLARE SUB Clear
+      DECLARE SUB Resize (BYVAL nSize AS UINT, BYREF ch AS WSTRING = "")
       DECLARE SUB Add (BYREF cws AS CWSTR)
       DECLARE SUB Add (BYREF cbs AS CBSTR_)
       DECLARE SUB Add (BYVAL pwszStr AS WSTRING PTR)
@@ -800,6 +801,35 @@ PRIVATE SUB CWstr.Clear
    ' Mark the end of the string with a double null
    m_pBuffer[m_BufferLen] = 0
    m_pBuffer[m_BufferLen + 1] = 0
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Resizes the string to a length of n characters.
+' Parameters:
+' nSize : New string length, expressed in number of characters.
+' ch: Character used to fill the new character space added to the string (in case the
+' string is expanded).
+' If nSize is smaller than the current string length, the current value is shortened to
+' its first nSize characters.
+' If nSize is greater than the current string length, the current content is extended by
+' inserting at the end as many characters as needed to reach a size of nSize. If ch is
+' specified, the new elements are initialized as copies of ch, otherwise, spaces are added.
+' ========================================================================================
+PRIVATE SUB CWstr.Resize (BYVAL nSize AS UINT, BYREF ch AS WSTRING = "")
+   CWSTR_DP("CWSTR Resize")
+   IF m_BufferLen \ 2 = nSize THEN EXIT SUB
+   IF m_BufferLen \ 2 > nSize THEN
+      m_BufferLen = nSize * 2
+      m_Capacity = nSize * 2
+      m_pBuffer[m_BufferLen] = 0
+      m_pBuffer[m_BufferLen + 1] = 0
+   ELSE
+      DIM cws AS CWSTR
+      DIM nChars AS UINT = ((nSize * 2) - m_BufferLen) \ 2
+      IF ch <> "" THEN cws = STRING(nChars, ASC(ch, 1)) ELSE cws = SPACE(nChars)
+      this.Add(cws)
+   END IF
 END SUB
 ' ========================================================================================
 

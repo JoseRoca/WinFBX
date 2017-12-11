@@ -1,0 +1,12 @@
+WinFBX
+Windows Framework for FreeBASIC.
+
+11 Dec 2017  - Version 1.0.02
+- Added the Resize method to the CWSTR class.
+
+23 Nov 2017  - Version 1.0.01
+- Bug fix: Changed DIM vArgs(1 TO 15) AS VARIANT to DIM vArgs(1 TO 16) AS VARIANT in the
+last overloaded Invoke function of the CDispInvoke.class. Thanks to ganlinlao for reporting it.
+
+21 Nov 2017
+- Version 1.0 released
