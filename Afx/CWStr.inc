@@ -825,9 +825,14 @@ PRIVATE SUB CWstr.Resize (BYVAL nSize AS UINT, BYREF ch AS WSTRING = "")
       m_pBuffer[m_BufferLen] = 0
       m_pBuffer[m_BufferLen + 1] = 0
    ELSE
-      DIM cws AS CWSTR
+      IF LEN(ch) > 1 THEN ch = LEFT(ch, 1)
       DIM nChars AS UINT = ((nSize * 2) - m_BufferLen) \ 2
-      IF ch <> "" THEN cws = STRING(nChars, ASC(ch, 1)) ELSE cws = SPACE(nChars)
+      DIM cws AS CWSTR = SPACE(nChars)
+      IF ch <> "" THEN
+         FOR i AS LONG = 1 TO nChars
+            MID(**cws, i, 1) = ch
+         NEXT
+      END IF
       this.Add(cws)
    END IF
 END SUB
