@@ -1,8 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
-11 Dec 2017  - Version 1.0.02
+15 Dec 2017  - Version 1.0.02
 - Added the Resize method to the CWSTR class.
+- Modified the AfxStrLSet, AfxStrRSet and AfxStCSet functions to work with Unicode.
 
 23 Nov 2017  - Version 1.0.01
 - Bug fix: Changed DIM vArgs(1 TO 15) AS VARIANT to DIM vArgs(1 TO 16) AS VARIANT in the
