@@ -684,6 +684,7 @@ END FUNCTION
 ' Example: DIM cws AS CWSTR = AfxStrLSet("FreeBasic", 20, "*")
 ' ========================================================================================
 PRIVATE FUNCTION AfxStrLSet (BYREF wszMainStr AS WSTRING, BYVAL nStringLength AS LONG, BYREF wszPadCharacter AS WSTRING = " ") AS CWSTR
+   IF wszPadCharacter = "" THEN wszPadCharacter = " "
    wszPadCharacter = LEFT(wszPadCharacter, 1)
    DIM cws AS CWSTR = SPACE(nStringLength)
    FOR i AS LONG = 1 TO LEN(cws)
@@ -702,6 +703,7 @@ END FUNCTION
 ' Example: DIM cws AS CWSTR = AfxStrRSet("FreeBasic", 20, "*")
 ' ========================================================================================
 PRIVATE FUNCTION AfxStrRSet (BYREF wszMainStr AS WSTRING, BYVAL nStringLength AS LONG, BYREF wszPadCharacter AS WSTRING = " ") AS CWSTR
+   IF wszPadCharacter = "" THEN wszPadCharacter = " "
    wszPadCharacter = LEFT(wszPadCharacter, 1)
    DIM cws AS CWSTR = SPACE(nStringLength)
    FOR i AS LONG = 1 TO LEN(cws)
@@ -720,6 +722,7 @@ END FUNCTION
 ' Example: DIM cws AS CWSTR = AfxStrCSet("FreeBasic", 20, "*")
 ' ========================================================================================
 PRIVATE FUNCTION AfxStrCSet (BYREF wszMainStr AS WSTRING, BYVAL nStringLength AS LONG, BYREF wszPadCharacter AS WSTRING = " ") AS CWSTR
+   IF wszPadCharacter = "" THEN wszPadCharacter = " "
    wszPadCharacter = LEFT(wszPadCharacter, 1)
    DIM cws AS CWSTR = SPACE(nStringLength)
    FOR i AS LONG = 1 TO LEN(cws)
