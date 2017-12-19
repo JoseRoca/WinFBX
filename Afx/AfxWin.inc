@@ -570,6 +570,63 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Retrieves the handle of the top level window of the web browser.
+' Parameter:
+'    pwszClassName: The browser class name.
+' Return value:
+'    The handle of the top level window of the browser.
+' Thanks to Dominic Mitchell for the information provided in this thread:
+' https://forum.powerbasic.com/forum/user-to-user-discussions/powerbasic-for-windows/767812-handle-to-browser-window?p=767896#post767896
+' Examples:
+' DIM hwndBrowser AS HWND = AfxGetBrowserHandle("IEFrame")              ' // Internet Explorer
+' DIM hwndBrowser AS HWND = AfxGetBrowserHandle("MozillaWindowClass")   ' // Firefox
+' DIM hwndBrowser AS HWND = AfxGetBrowserHandle("Chrome_WidgetWin_1")   ' // Chrome
+' ========================================================================================
+FUNCTION AfxEnumThreadWndProc (BYVAL hwnd AS HWND, BYVAL lParam AS LPARAM) AS WINBOOL
+   DIM dwStyle AS DWORD = GetWindowLongPtr(hwnd, GWL_STYLE)
+   IF ((dwStyle AND (WS_POPUP OR WS_CHILD)) = 0) AND ((dwStyle AND WS_VISIBLE) <> 0) THEN
+      DIM phwndTop AS HWND PTR
+      CAST(LPARAM, phwndTop) = lParam
+      *phwndTop = hwnd
+      RETURN FALSE
+   END IF
+   RETURN CTRUE
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+FUNCTION AfxGetBrowserHandle (BYVAL pwszClassName AS WSTRING PTR) AS HWND
+  DIM hwndBrowser AS HWND = FindWindowW(pwszClassName, NULL)
+  IF hwndBrowser = NULL THEN RETURN NULL
+  DIM dwThread AS DWORD = GetWindowThreadProcessId(hwndBrowser, NULL)
+  IF dwThread = 0 THEN RETURN NULL
+  DIM hwndTop AS HWND
+  EnumThreadWindows(dwThread, @AfxEnumThreadWndProc, CAST(LPARAM, @hwndTop))
+  RETURN hwndTop
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Retrieves the top level window handle of Intenet Explorer.
+' ========================================================================================
+FUNCTION AfxGetInternetExplorerHandle () AS HWND
+   RETURN AfxGetBrowserHandle("IEFrame")
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Retrieves the top level window handle of Firefox.
+' ========================================================================================
+FUNCTION AfxGetFireFoxHandle () AS HWND
+   RETURN AfxGetBrowserHandle("MozillaWindowClass")
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Retrieves the top level window handle of Google Chrome.
+' ========================================================================================
+FUNCTION AfxGetGoogleChromeHandle () AS HWND
+   RETURN AfxGetBrowserHandle("Chrome_WidgetWin_1")
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Retrieves the path of the default mail client application.
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetDefaultMailClientPath () AS CWSTR

@@ -1,6 +1,13 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+19 Dec 2017  - Version 1.0.02
+- Added the following functions:
+      AfxGetBrowserHandle
+      AfxGetInternetExplorerHandle
+      AfxGetFireFoxHandle
+      AfxGetGoogleChromeHandle
+
 15 Dec 2017  - Version 1.0.02
 - Added the Resize method to the CWSTR class.
 - Modified the AfxStrLSet, AfxStrRSet and AfxStCSet functions to work with Unicode.
