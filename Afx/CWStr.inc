@@ -1775,3 +1775,145 @@ PRIVATE SUB AfxCWstrSort (BYREF rgwstr AS ANY PTR, BYVAL numElm AS LONG, BYVAL b
    END IF
 END SUB
 ' ========================================================================================
+' ========================================================================================
+PRIVATE SUB AfxCWstrArraySort (rgwstr() AS CWSTR, BYVAL bAscend AS BOOLEAN = TRUE)
+   DIM numElm AS LONG = UBOUND(rgwstr) - LBOUND(rgwstr) + 1
+   AfxCWstrSort @rgwstr(LBOUND(rgwstr)), numElm, bAscend
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Appends a CWSTR at the end of a one-dimensional CWSTR array.
+' Parameters:
+' - rgwstr(): The CWSTR array
+' - cws: The CWSTR to append
+' Return value:
+'   TRUE or FALSE
+' Example:
+' #INCLUDE ONCE "Afx/CWSTR.inc"
+' USING Afx
+' REDIM rg(1 TO 10) AS CWSTR
+' FOR i AS LONG = 1 TO 10
+'    rg(i) = "string " & i
+' NEXT
+' AfxCwstrArrayAppend(rg(), "string 11")
+' FOR i AS LONG = LBOUND(rg) TO UBOUND(rg)
+'    print rg(i)
+' NEXT
+' Note: REDIM PRESERVE cannot be used on fixed-size arrays - i.e. arrays with constant bounds
+' made with DIM. If after calling REDIM PRESERVE the upper bound has not changed, it means
+' that it is a fixed string.
+' ========================================================================================
+PRIVATE FUNCTION AfxCWstrArrayAppend (rgwstr() AS CWSTR, BYREF cws AS CWSTR) AS BOOLEAN
+   DIM upperBound AS LONG = UBOUND(rgwstr)
+   REDIM PRESERVE rgwstr(LBOUND(rgwstr) TO upperBound + 1) AS CWSTR
+   IF UBOUND(rgwstr) > upperBound THEN rgwstr(UBOUND(rgwstr)) = cws : RETURN TRUE
+   RETURN FALSE
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Inserts a new CWSTR element before the specified position in a one-dimensional CWSTR array.
+' Parameters:
+' - rgwstr(): The CWSTR array
+' - nPos: The position in the array where the new element will be added.
+'         This position is relative to the lower bound of the array.
+' - cws: The CWSTR to append
+' Return value:
+'   TRUE or FALSE
+' Example:
+' #INCLUDE ONCE "Afx/CWSTR.inc"
+' USING Afx
+' REDIM rg(1 TO 10) AS CWSTR
+' FOR i AS LONG = 1 TO 10
+'    rg(i) = "string " & i
+' NEXT
+' AfxCwstrArrayInsert(rg(), 3, "Inserted element")
+' FOR i AS LONG = LBOUND(rg) TO UBOUND(rg)
+'    print rg(i)
+' NEXT
+' Note: REDIM PRESERVE cannot be used on fixed-size arrays - i.e. arrays with constant bounds
+' made with DIM. If after calling REDIM PRESERVE the upper bound has not changed, it means
+' that it is a fixed string.
+' ========================================================================================
+PRIVATE FUNCTION AfxCWstrArrayInsert (rgwstr() AS CWSTR, BYVAL nPos AS LONG, BYREF cws AS CWSTR) AS BOOLEAN
+   DIM lowerBound AS LONG = LBOUND(rgwstr)
+   DIM upperBound AS LONG = UBOUND(rgwstr)
+   nPos = nPos - 1 + lowerBound
+   IF nPos < lowerBound OR nPos > upperBound THEN RETURN FALSE
+   REDIM PRESERVE rgwstr(lowerBound TO upperBound + 1) AS CWSTR
+   IF UBOUND(rgwstr) = upperBound THEN RETURN FALSE
+   ' // Move all the elements down
+   FOR i AS LONG = UBOUND(rgwstr) TO nPos + 1 STEP - 1
+      rgwstr(i) = rgwstr(i - 1)
+   NEXT
+   rgwstr(nPos) = cws
+   RETURN TRUE
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Removes the specified element of a one-dimensional CWSTR array.
+' Parameters:
+' - rgwstr(): The CWSTR array
+' - nPos: The position in the array of the element to remove.
+'         This position is relative to the lower bound of the array.
+' - cws: The CWSTR to append
+' Return value:
+'   TRUE or FALSE
+' Example:
+' #INCLUDE ONCE "Afx/CWSTR.inc"
+' USING Afx
+' REDIM rg(1 TO 10) AS CWSTR
+' FOR i AS LONG = 1 TO 10
+'    rg(i) = "string " & i
+' NEXT
+' AfxCwstrArrayRemove(rg(), 3)
+' FOR i AS LONG = LBOUND(rg) TO UBOUND(rg)
+'    print rg(i)
+' NEXT
+' Note: REDIM PRESERVE cannot be used on fixed-size arrays - i.e. arrays with constant bounds
+' made with DIM. If after calling REDIM PRESERVE the upper bound has not changed, it means
+' that it is a fixed string.
+' ========================================================================================
+PRIVATE FUNCTION AfxCWstrArrayRemove (rgwstr() AS CWSTR, BYVAL nPos AS LONG) AS BOOLEAN
+   DIM lowerBound AS LONG = LBOUND(rgwstr)
+   DIM upperBound AS LONG = UBOUND(rgwstr)
+   nPos = nPos - 1 + lowerBound
+   IF nPos < lowerBound OR nPos > upperBound THEN RETURN FALSE
+   FOR i AS LONG = nPos TO upperBound - 1
+      rgwstr(i) = rgwstr(i + 1)
+   NEXT
+   REDIM PRESERVE rgwstr(lowerBound TO upperBound - 1) AS CWSTR
+   IF UBOUND(rgwstr) = upperBound THEN RETURN FALSE
+   RETURN TRUE
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Removes the first element of a one-dimensional CWSTR array.
+' ========================================================================================
+PRIVATE FUNCTION AfxCWstrArrayRemoveFirst (rgwstr() AS CWSTR) AS BOOLEAN
+   DIM lowerBound AS LONG = LBOUND(rgwstr)
+   DIM upperBound AS LONG = UBOUND(rgwstr)
+   DIM nPos AS LONG = lowerBound
+   FOR i AS LONG = nPos TO upperBound - 1
+      rgwstr(i) = rgwstr(i + 1)
+   NEXT
+   REDIM PRESERVE rgwstr(lowerBound TO upperBound - 1) AS CWSTR
+   IF UBOUND(rgwstr) = upperBound THEN RETURN FALSE
+   RETURN TRUE
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Removes the last element of a one-dimensional CWSTR array.
+' ========================================================================================
+PRIVATE FUNCTION AfxCWstrArrayRemoveLast (rgwstr() AS CWSTR) AS BOOLEAN
+   DIM lowerBound AS LONG = LBOUND(rgwstr)
+   DIM upperBound AS LONG = UBOUND(rgwstr)
+   REDIM PRESERVE rgwstr(lowerBound TO upperBound - 1) AS CWSTR
+   IF UBOUND(rgwstr) = upperBound THEN RETURN FALSE
+   RETURN TRUE
+END FUNCTION
+' ========================================================================================

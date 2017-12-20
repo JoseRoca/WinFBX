@@ -1,6 +1,15 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+20 Dec 2017 - Version 1.0.02
+- Added the following functions:
+      AfxCWstrArrayAppend
+      AfxCWstrArrayInsert
+      AfxCWstrArrayRemove
+      AfxCWstrArrayRemoveFirst
+      AfxCWstrArrayRemoveLast
+      AfxCWstrArraySort
+
 19 Dec 2017  - Version 1.0.02
 - Added the following functions:
       AfxGetBrowserHandle
