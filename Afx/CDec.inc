@@ -25,7 +25,7 @@ TYPE CDec
 
 Public:
    m_lcid AS LCID     ' // The locale id
-   m_dec AS DECIMAL   ' // The underlying DECOMAL structure
+   m_dec AS DECIMAL   ' // The underlying DECIMAL structure
 
 Public:
    DECLARE CONSTRUCTOR (BYVAL lcid AS LCID = 0)
