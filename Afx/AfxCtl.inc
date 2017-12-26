@@ -259,7 +259,7 @@ DECLARE FUNCTION Toolbar_MarkButton (BYVAL hToolBar AS HWND, BYVAL idButton AS L
 DECLARE FUNCTION Toolbar_MoveButton (BYVAL hToolBar AS HWND, BYVAL uOldPos AS DWORD, BYVAL uNewPos AS DWORD) AS BOOLEAN
 DECLARE FUNCTION Toolbar_PressButton (BYVAL hToolBar AS HWND, BYVAL idButton AS LONG, BYVAL fPress AS SHORT) AS BOOLEAN
 DECLARE FUNCTION Toolbar_ReplaceBitmap (BYVAL hToolBar AS HWND, BYVAL ptbrb AS TBREPLACEBITMAP PTR) AS BOOLEAN
-DECLARE SUB Toolbar_SaveRestore (BYVAL hToolBar AS HWND, BYVAL fSave AS LONG, BYVAL ptbsp AS TBSAVEPARAMS PTR)
+DECLARE SUB Toolbar_SaveRestore (BYVAL hToolBar AS HWND, BYVAL fSave AS LONG, BYVAL ptbsp AS TBSAVEPARAMSW PTR)
 DECLARE FUNCTION Toolbar_SetAnchorHighlight (BYVAL hToolBar AS HWND, BYVAL fAnchor AS BOOLEAN) AS BOOLEAN
 DECLARE FUNCTION Toolbar_SetBitmapSize (BYVAL hToolBar AS HWND, BYVAL dxBitmap AS SHORT, BYVAL dyBitmap AS SHORT) AS BOOLEAN
 DECLARE FUNCTION Toolbar_SetButtonInfo (BYVAL hToolBar AS HWND, BYVAL iID AS LONG, BYVAL lptbbi AS TBBUTTONINFOW PTR) AS BOOLEAN
@@ -2947,8 +2947,8 @@ END FUNCTION
 ' Send this message to initiate saving or restoring a toolbar state.
 ' Minimum operating systems Windows NT 3.51, Windows 95
 ' ========================================================================================
-PRIVATE SUB Toolbar_SaveRestore (BYVAL hToolBar AS HWND, BYVAL fSave AS LONG, BYVAL ptbsp AS TBSAVEPARAMS PTR)
-   SendMessageW(hToolBar, TB_SAVERESTORE, cast(WPARAM, fSave), CAST(LPARAM, ptbsp))
+PRIVATE SUB Toolbar_SaveRestore (BYVAL hToolBar AS HWND, BYVAL fSave AS LONG, BYVAL ptbsp AS TBSAVEPARAMSW PTR)
+   SendMessageW(hToolBar, TB_SAVERESTOREW, cast(WPARAM, fSave), CAST(LPARAM, ptbsp))
 END SUB
 ' ========================================================================================
 
