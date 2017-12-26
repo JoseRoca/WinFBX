@@ -291,7 +291,7 @@ DECLARE SUB Toolbar_SetWindowTheme (BYVAL hToolBar AS HWND, BYVAL pwszTheme AS W
 DECLARE SUB Toolbar_MakeOpaque (BYVAL hToolBar AS HWND)
 DECLARE FUNCTION Toolbar_GetObject (BYVAL hToolBar AS HWND) AS IDropTarget PTR
 DECLARE FUNCTION Toolbar_GetButtonText (BYVAL hToolBar AS HWND, BYVAL idButton AS LONG, BYVAL pBuffer AS WSTRING PTR) AS LONG
-DECLARE FUNCTION Toolbar_GetTextLength (BYVAL hToolBar AS HWND, BYVAL idButton AS LONG) AS LONG
+DECLARE FUNCTION Toolbar_GetButtonTextLength (BYVAL hToolBar AS HWND, BYVAL idButton AS LONG) AS LONG
 ' Tooltips
 DECLARE FUNCTION AfxAddTooltip (BYVAL hwndCtrl AS HWND, BYREF wszText AS CONST WSTRING = "", BYVAL bBalloon AS BOOLEAN = FALSE, BYVAL bCentered AS BOOLEAN = FALSE) AS HWND
 DECLARE SUB AfxSetTooltipText (BYVAL hTooltip AS HWND, BYVAL hwndCtrl AS HWND, BYREF wszText AS CONST WSTRING)
@@ -3254,7 +3254,7 @@ END FUNCTION
 ' Returns the length, in characters, of the string pointed to by lParam. The length does
 ' not include the terminating null character. If unsuccessful, the return value is -1.
 ' ========================================================================================
-PRIVATE FUNCTION Toolbar_GetTextLength (BYVAL hToolBar AS HWND, BYVAL idButton AS LONG) AS LONG
+PRIVATE FUNCTION Toolbar_ButtonGetTextLength (BYVAL hToolBar AS HWND, BYVAL idButton AS LONG) AS LONG
    FUNCTION = SendMessageW(hToolBar, TB_GETBUTTONTEXTW, cast(WPARAM, idButton), 0)
 END FUNCTION
 ' ========================================================================================
