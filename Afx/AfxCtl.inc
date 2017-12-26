@@ -52,13 +52,13 @@ DECLARE FUNCTION ComboBoxEx_GetComboControl (BYVAL hComboboxEx AS HWND) AS HWND
 DECLARE FUNCTION ComboBoxEx_GetEditControl (BYVAL hComboboxEx AS HWND) AS HWND
 DECLARE FUNCTION ComboBoxEx_GetExtendedStyle (BYVAL hComboboxEx AS HWND) AS DWORD
 DECLARE FUNCTION ComboBoxEx_GetImageList (BYVAL hComboboxEx AS HWND) AS HIMAGELIST
-DECLARE FUNCTION ComboBoxEx_GetItem (BYVAL hComboboxEx AS HWND, BYVAL pCBItem AS COMBOBOXEXITEM PTR) AS BOOLEAN
+DECLARE FUNCTION ComboBoxEx_GetItem (BYVAL hComboboxEx AS HWND, BYVAL pCBItem AS COMBOBOXEXITEMW PTR) AS BOOLEAN
 DECLARE FUNCTION ComboBoxEx_GetUnicodeFormat (BYVAL hComboboxEx AS HWND) AS DWORD
 DECLARE FUNCTION ComboBoxEx_HasEditChanged (BYVAL hComboboxEx AS HWND) AS BOOLEAN
-DECLARE FUNCTION ComboBoxEx_InsertItem (BYVAL hComboboxEx AS HWND, BYVAL lpCBItem AS COMBOBOXEXITEM PTR) AS LONG
+DECLARE FUNCTION ComboBoxEx_InsertItem (BYVAL hComboboxEx AS HWND, BYVAL lpCBItem AS COMBOBOXEXITEMW PTR) AS LONG
 DECLARE FUNCTION ComboBoxEx_SetExtendedStyle (BYVAL hComboboxEx AS HWND, BYVAL dwMask AS DWORD, BYVAL dwExStyle AS DWORD) AS DWORD
 DECLARE FUNCTION ComboBoxEx_SetImageList (BYVAL hComboboxEx AS HWND, BYVAL himl AS HIMAGELIST) AS HIMAGELIST
-DECLARE FUNCTION ComboBoxEx_SetItem (BYVAL hComboboxEx AS HWND, BYVAL lpCBItem AS COMBOBOXEXITEM PTR) AS BOOLEAN
+DECLARE FUNCTION ComboBoxEx_SetItem (BYVAL hComboboxEx AS HWND, BYVAL lpCBItem AS COMBOBOXEXITEMW PTR) AS BOOLEAN
 DECLARE FUNCTION ComboBoxEx_SetUnicodeFormat (BYVAL hComboboxEx AS HWND, BYVAL fUnicode AS DWORD) AS DWORD
 DECLARE SUB ComboBoxEx_SetWindowTheme (BYVAL hComboboxEx AS HWND, BYVAL pwszStyle AS WSTRING PTR)
 ' Edit
@@ -841,8 +841,8 @@ END FUNCTION
 ' ========================================================================================
 ' Retrieves item information for a given ComboBoxEx item. Returns TRUE or FALSE.
 ' ========================================================================================
-PRIVATE FUNCTION ComboBoxEx_GetItem (BYVAL hComboboxEx AS HWND, BYVAL pCBItem AS COMBOBOXEXITEM PTR) AS BOOLEAN
-   FUNCTION = SendMessageW(hComboBoxEx, CBEM_GETITEM, 0, cast(LPARAM, pCBItem))
+PRIVATE FUNCTION ComboBoxEx_GetItem (BYVAL hComboboxEx AS HWND, BYVAL pCBItem AS COMBOBOXEXITEMW PTR) AS BOOLEAN
+   FUNCTION = SendMessageW(hComboBoxEx, CBEM_GETITEMW, 0, cast(LPARAM, pCBItem))
 END FUNCTION
 ' ========================================================================================
 
@@ -867,8 +867,8 @@ END FUNCTION
 ' ========================================================================================
 ' Returns the index at which the new item was inserted if successful, or -1 otherwise.
 ' ========================================================================================
-PRIVATE FUNCTION ComboBoxEx_InsertItem (BYVAL hComboboxEx AS HWND, BYVAL lpCBItem AS COMBOBOXEXITEM PTR) AS LONG
-   FUNCTION = SendMessageW(hComboBoxEx, CBEM_INSERTITEM, 0, cast(LPARAM, lpCBItem))
+PRIVATE FUNCTION ComboBoxEx_InsertItem (BYVAL hComboboxEx AS HWND, BYVAL lpCBItem AS COMBOBOXEXITEMW PTR) AS LONG
+   FUNCTION = SendMessageW(hComboBoxEx, CBEM_INSERTITEMW, 0, cast(LPARAM, lpCBItem))
 END FUNCTION
 ' ========================================================================================
 
@@ -893,8 +893,8 @@ END FUNCTION
 ' Sets the attributes for an item in a ComboBoxEx control.
 ' Returns nonzero if successful, or zero otherwise.
 ' ========================================================================================
-PRIVATE FUNCTION ComboBoxEx_SetItem (BYVAL hComboboxEx AS HWND, BYVAL lpCBItem AS COMBOBOXEXITEM PTR) AS BOOLEAN
-   FUNCTION = SendMessageW(hComboBoxEx, CBEM_SETITEM, 0, cast(LPARAM, lpCBItem))
+PRIVATE FUNCTION ComboBoxEx_SetItem (BYVAL hComboboxEx AS HWND, BYVAL lpCBItem AS COMBOBOXEXITEMW PTR) AS BOOLEAN
+   FUNCTION = SendMessageW(hComboBoxEx, CBEM_SETITEMW, 0, cast(LPARAM, lpCBItem))
 END FUNCTION
 ' ========================================================================================
 
