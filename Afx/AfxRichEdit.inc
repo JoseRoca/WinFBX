@@ -159,7 +159,7 @@ END SUB
 ' ========================================================================================
 ' Determines the current character formatting in a rich edit control.
 ' ========================================================================================
-PRIVATE FUNCTION RichEdit_GetCharFormat (BYVAL hRichEdit AS HWND, BYVAL fOption AS DWORD, BYVAL lpcf AS CHARFORMAT PTR) AS DWORD
+PRIVATE FUNCTION RichEdit_GetCharFormat (BYVAL hRichEdit AS HWND, BYVAL fOption AS DWORD, BYVAL lpcf AS CHARFORMATW PTR) AS DWORD
    FUNCTION = SendMessageW(hRichEdit, EM_GETCHARFORMAT, fOption, cast(LPARAM, lpcf))
 END FUNCTION
 ' ========================================================================================
@@ -1047,7 +1047,7 @@ PRIVATE FUNCTION RichEdit_SetFontW ( _
    DIM lResult AS LRESULT                 ' // Result code
    DIM hDC AS HDC                         ' // Handle of the device context
    DIM tlf AS LOGFONTW                    ' // LOGFONT structure
-   DIM tcf AS CHARFORMATW                 ' // CHARFORMAT structure
+   DIM tcf AS CHARFORMATW                 ' // CHARFORMATW structure
 
    hDC = GetDC(NULL)
    EnumFontFamiliesW(hDC, wszFaceName, cast(FONTENUMPROCW, @RichEdit_EnumFontFamProcW), cast(LPARAM, @tlf))
