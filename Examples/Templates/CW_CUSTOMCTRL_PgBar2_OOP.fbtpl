@@ -189,11 +189,11 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
             CASE IDC_START
                EnableWindow(GetDlgItem(hwnd, IDC_START), FALSE)   ' // Disable the start button
                DIM i AS LONG, x AS LONG, wszText AS WSTRING * 260
-               DIM pPgBarLeft AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_BARLEFT), 0))
-               DIM pPgBarRight AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_BARRIGHT), 0))
-               DIM pPgBarTop AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_BARTOP), 0))
-               DIM pPgBarBottom AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_BARBOTTOM), 0))
-               DIM pPgBarMiddle AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_BARMIDDLE), 0))
+               DIM pPgBarLeft AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_BARLEFT), 0))
+               DIM pPgBarRight AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_BARRIGHT), 0))
+               DIM pPgBarTop AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_BARTOP), 0))
+               DIM pPgBarBottom AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_BARBOTTOM), 0))
+               DIM pPgBarMiddle AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_BARMIDDLE), 0))
                wszText = "Please wait..."
                pPgBarMiddle->SetBackText wszText, CTRUE
                FOR x = 0 TO 4
@@ -215,11 +215,11 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
             CASE IDC_REVERSE
                EnableWindow(GetDlgItem(hwnd, IDC_REVERSE), FALSE)   ' // Disable the reverse button
                DIM i AS LONG, x AS LONG, wszText AS WSTRING * 260
-               DIM pPgBarLeft AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_BARLEFT), 0))
-               DIM pPgBarRight AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_BARRIGHT), 0))
-               DIM pPgBarTop AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_BARTOP), 0))
-               DIM pPgBarBottom AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_BARBOTTOM), 0))
-               DIM pPgBarMiddle AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_BARMIDDLE), 0))
+               DIM pPgBarLeft AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_BARLEFT), 0))
+               DIM pPgBarRight AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_BARRIGHT), 0))
+               DIM pPgBarTop AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_BARTOP), 0))
+               DIM pPgBarBottom AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_BARBOTTOM), 0))
+               DIM pPgBarMiddle AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_BARMIDDLE), 0))
                wszText = "Please wait..."
                pPgBarMiddle->SetBackText wszText, CTRUE
                FOR x = 0 TO 4

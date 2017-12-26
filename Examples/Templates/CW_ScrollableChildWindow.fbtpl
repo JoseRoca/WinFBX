@@ -183,7 +183,7 @@ FUNCTION ChildDlg_WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam 
       CASE WM_SIZE
          ' // In the WM_SIZE message we need to check the validity of the pointers
          ' // because this message is sent before we have had time to store them.
-         DIM pWindow AS CWindow PTR = cast(CWindow PTR, GetWindowLongPtr(hwnd, 0))
+         DIM pWindow AS CWindow PTR = cast(CWindow PTR, GetWindowLongPtrW(hwnd, 0))
          DIM pScrollWindow AS CScrollWindow PTR
          IF pWindow THEN pScrollWindow = pWindow->ScrollWindowPtr
          IF pScrollWindow THEN pScrollWindow->OnSize(wParam, lParam)

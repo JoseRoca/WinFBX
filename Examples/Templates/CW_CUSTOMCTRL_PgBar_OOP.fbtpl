@@ -127,9 +127,9 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
             CASE IDC_START
                EnableWindow(GetDlgItem(hwnd, IDC_START), FALSE)   ' // Disable the start button
                DIM i AS LONG, hCtl AS HWND, wszText AS WSTRING * 260
-               DIM pPgBar1 AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_PGBAR1), 0))
-               DIM pPgBar2 AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_PGBAR2), 0))
-               DIM pPgBar3 AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_PGBAR3), 0))
+               DIM pPgBar1 AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_PGBAR1), 0))
+               DIM pPgBar2 AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_PGBAR2), 0))
+               DIM pPgBar3 AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_PGBAR3), 0))
                FOR i = 1 TO 100
                   IF i < 34 THEN
                      pPgBar1->StepUp
@@ -149,9 +149,9 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
 
             CASE IDC_REVERSE
                EnableWindow(GetDlgItem(hwnd, IDC_REVERSE), FALSE)   ' // Disable the reverse button
-               DIM pPgBar1 AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_PGBAR1), 0))
-               DIM pPgBar2 AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_PGBAR2), 0))
-               DIM pPgBar3 AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtr(GetDlgItem(hwnd, IDC_PGBAR3), 0))
+               DIM pPgBar1 AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_PGBAR1), 0))
+               DIM pPgBar2 AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_PGBAR2), 0))
+               DIM pPgBar3 AS CPgBar3D PTR = CAST(CPgBar3D PTR, GetWindowLongPtrW(GetDlgItem(hwnd, IDC_PGBAR3), 0))
                DIM i AS LONG, hCtl AS HWND, wszText AS WSTRING * 260
                FOR i = 99 TO 0 STEP -1
                   IF i > 66 THEN

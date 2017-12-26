@@ -225,7 +225,7 @@ END FUNCTION
 ' ========================================================================================
 ' Tab page 1 window procedure
 ' To get a pointer to the CTabPage interface:
-' DIM pTabPage AS CTabPage PTR = CAST(CTabPage PTR, GetWindowLongPtr(hwnd, 0))
+' DIM pTabPage AS CTabPage PTR = CAST(CTabPage PTR, GetWindowLongPtrW(hwnd, 0))
 ' ========================================================================================
 FUNCTION TabPage1_WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
 
@@ -266,7 +266,7 @@ END FUNCTION
 ' ========================================================================================
 ' Tab page 2 window procedure
 ' To get a pointer to the CTabPage interface:
-' DIM pTabPage AS CTabPage PTR = CAST(CTabPage PTR, GetWindowLongPtr(hwnd, 0))
+' DIM pTabPage AS CTabPage PTR = CAST(CTabPage PTR, GetWindowLongPtrW(hwnd, 0))
 ' ========================================================================================
 FUNCTION TabPage2_WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
 
@@ -313,7 +313,7 @@ END FUNCTION
 ' ========================================================================================
 ' Tab page 3 window procedure
 ' To get a pointer to the CTabPage interface:
-' DIM pTabPage AS CTabPage PTR = CAST(CTabPage PTR, GetWindowLongPtr(hwnd, 0))
+' DIM pTabPage AS CTabPage PTR = CAST(CTabPage PTR, GetWindowLongPtrW(hwnd, 0))
 ' ========================================================================================
 FUNCTION TabPage3_WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
 
