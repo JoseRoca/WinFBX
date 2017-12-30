@@ -461,24 +461,24 @@ DECLARE SUB UpDown_SetRange32 (BYVAL hUDM AS HWND, BYVAL iLow AS LONG, BYVAL iHi
 DECLARE FUNCTION UpDown_SetUnicodeFormat (BYVAL hUDM AS HWND, BYVAL fUnicode AS DWORD) AS DWORD
 ' Tooltip
 DECLARE SUB Tooltip_Activate (BYVAL hTooltip AS HWND, BYVAL fActivate AS BOOLEAN)
-DECLARE FUNCTION Tooltip_AddTool (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR) AS BOOLEAN
+DECLARE FUNCTION Tooltip_AddTool (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR) AS BOOLEAN
 DECLARE FUNCTION Tooltip_AdjustRect (BYVAL hTooltip AS HWND, BYVAL fLarger AS BOOLEAN, BYVAL lprc AS RECT PTR) AS BOOLEAN
-DECLARE SUB Tooltip_DelTool (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR)
-DECLARE FUNCTION Tooltip_EnumTools (BYVAL hTooltip AS HWND, BYVAL iTool AS DWORD, BYVAL lpti AS TOOLINFO PTR) AS BOOLEAN
-DECLARE FUNCTION Tooltip_GetBubbleSize (BYVAL hTooltip AS HWND, BYVAL lpTtm AS TOOLINFO PTR) AS DWORD
-DECLARE FUNCTION Tooltip_GetCurrentTool (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR) AS BOOLEAN
+DECLARE SUB Tooltip_DelTool (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR)
+DECLARE FUNCTION Tooltip_EnumTools (BYVAL hTooltip AS HWND, BYVAL iTool AS DWORD, BYVAL lpti AS TOOLINFOW PTR) AS BOOLEAN
+DECLARE FUNCTION Tooltip_GetBubbleSize (BYVAL hTooltip AS HWND, BYVAL lpTtm AS TOOLINFOW PTR) AS DWORD
+DECLARE FUNCTION Tooltip_GetCurrentTool (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR) AS BOOLEAN
 DECLARE FUNCTION Tooltip_GetDelayTime (BYVAL hTooltip AS HWND, BYVAL dwDuration AS DWORD) AS LONG
 DECLARE FUNCTION Tooltip_GetFont (BYVAL hTooltip AS HWND) AS HFONT
 DECLARE SUB Tooltip_GetMargin (BYVAL hTooltip AS HWND, BYVAL lprc AS RECT PTR)
 DECLARE FUNCTION Tooltip_GetMaxTipWidth (BYVAL hTooltip AS HWND) AS LONG
-DECLARE SUB Tooltip_GetText (BYVAL hTooltip AS HWND, BYVAL numChars AS DWORD, BYVAL lpti AS TOOLINFO PTR)
+DECLARE SUB Tooltip_GetText (BYVAL hTooltip AS HWND, BYVAL numChars AS DWORD, BYVAL lpti AS TOOLINFOW PTR)
 DECLARE FUNCTION Tooltip_GetTipBkColor (BYVAL hTooltip AS HWND) AS COLORREF
 DECLARE FUNCTION Tooltip_GetTipTextColor (BYVAL hTooltip AS HWND) AS COLORREF
 DECLARE SUB Tooltip_GetTitle (BYVAL hTooltip AS HWND, BYVAL pTTGetTitle AS TTGETTITLE PTR)
 DECLARE FUNCTION Tooltip_GetToolCount (BYVAL hTooltip AS HWND) AS LONG
-DECLARE FUNCTION Tooltip_GetToolInfo (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR) AS BOOLEAN
+DECLARE FUNCTION Tooltip_GetToolInfo (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR) AS BOOLEAN
 DECLARE FUNCTION Tooltip_HitTest (BYVAL hTooltip AS HWND, BYVAL lphti AS TTHITTESTINFO PTR) AS BOOLEAN
-DECLARE SUB Tooltip_NewToolRect (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR)
+DECLARE SUB Tooltip_NewToolRect (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR)
 DECLARE SUB Tooltip_Pop (BYVAL hTooltip AS HWND)
 DECLARE SUB Tooltip_Popup (BYVAL hTooltip AS HWND)
 DECLARE FUNCTION Tooltip_RelayEvent (BYVAL hTooltip AS HWND, BYVAL lpmsg AS tagMSG PTR) AS LONG
@@ -489,12 +489,12 @@ DECLARE FUNCTION Tooltip_SetMaxTipWidth (BYVAL hTooltip AS HWND, BYVAL iWidth AS
 DECLARE SUB Tooltip_SetTipBkColor (BYVAL hTooltip AS HWND, BYVAL clr AS COLORREF)
 DECLARE SUB Tooltip_SetTipTextColor (BYVAL hTooltip AS HWND, BYVAL clr AS COLORREF)
 DECLARE FUNCTION Tooltip_SetTitle (BYVAL hTooltip AS HWND, BYVAL nIcon AS LONG, BYVAL pwszTitle AS WSTRING PTR) AS BOOLEAN
-DECLARE SUB Tooltip_SetToolInfo (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR)
+DECLARE SUB Tooltip_SetToolInfo (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR)
 DECLARE SUB Tooltip_SetWindowTheme (BYVAL hTooltip AS HWND, BYVAL pwszTheme AS WSTRING PTR)
-DECLARE SUB Tooltip_TrackActivate (BYVAL hTooltip AS HWND, BYVAL bActivate AS BOOLEAN, BYVAL lpti AS TOOLINFO PTR)
+DECLARE SUB Tooltip_TrackActivate (BYVAL hTooltip AS HWND, BYVAL bActivate AS BOOLEAN, BYVAL lpti AS TOOLINFOW PTR)
 DECLARE SUB Tooltip_TrackPosition (BYVAL hTooltip AS HWND, BYVAL xPos AS LONG, BYVAL yPos AS LONG)
 DECLARE SUB Tooltip_Update (BYVAL hTooltip AS HWND)
-DECLARE SUB Tooltip_UpdateTipText (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR)
+DECLARE SUB Tooltip_UpdateTipText (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR)
 DECLARE FUNCTION Tooltip_WindowFromPoint (BYVAL hTooltip AS HWND, BYVAL lppt AS POINT PTR) AS HWND
 
 
@@ -4852,8 +4852,8 @@ END SUB
 ' ========================================================================================
 ' Registers a tool with a ToolTip control.
 ' ========================================================================================
-PRIVATE FUNCTION Tooltip_AddTool (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR) AS BOOLEAN
-   FUNCTION = SendMessageW(hTooltip, TTM_ADDTOOL, 0, CAST(LPARAM, lpti))
+PRIVATE FUNCTION Tooltip_AddTool (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR) AS BOOLEAN
+   FUNCTION = SendMessageW(hTooltip, TTM_ADDTOOLW, 0, CAST(LPARAM, lpti))
 END FUNCTION
 ' ========================================================================================
 
@@ -4869,8 +4869,8 @@ END FUNCTION
 ' ========================================================================================
 ' Removes a tool from a ToolTip control.
 ' ========================================================================================
-PRIVATE SUB Tooltip_DelTool (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR)
-   SendMessageW(hTooltip, TTM_DELTOOL, 0, cast(LPARAM, lpti))
+PRIVATE SUB Tooltip_DelTool (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR)
+   SendMessageW(hTooltip, TTM_DELTOOLW, 0, cast(LPARAM, lpti))
 END SUB
 ' ========================================================================================
 
@@ -4878,15 +4878,15 @@ END SUB
 ' Retrieves the information that a ToolTip control maintains about the current tool--that
 ' is, the tool for which the ToolTip is currently displaying text.
 ' ========================================================================================
-PRIVATE FUNCTION Tooltip_EnumTools (BYVAL hTooltip AS HWND, BYVAL iTool AS DWORD, BYVAL lpti AS TOOLINFO PTR) AS BOOLEAN
-   FUNCTION = SendMessageW(hTooltip, TTM_ENUMTOOLS, cast(WPARAM, iTool), cast(LPARAM, lpti))
+PRIVATE FUNCTION Tooltip_EnumTools (BYVAL hTooltip AS HWND, BYVAL iTool AS DWORD, BYVAL lpti AS TOOLINFOW PTR) AS BOOLEAN
+   FUNCTION = SendMessageW(hTooltip, TTM_ENUMTOOLSW, cast(WPARAM, iTool), cast(LPARAM, lpti))
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
 ' Returns the width and height of a ToolTip control.
 ' ========================================================================================
-PRIVATE FUNCTION Tooltip_GetBubbleSize (BYVAL hTooltip AS HWND, BYVAL lpTtm AS TOOLINFO PTR) AS DWORD
+PRIVATE FUNCTION Tooltip_GetBubbleSize (BYVAL hTooltip AS HWND, BYVAL lpTtm AS TOOLINFOW PTR) AS DWORD
    FUNCTION = SendMessageW(hTooltip, TTM_GETBUBBLESIZE, 0, cast(LPARAM, lpTtm))
 END FUNCTION
 ' ========================================================================================
@@ -4894,8 +4894,8 @@ END FUNCTION
 ' ========================================================================================
 ' Retrieves the information for the current tool in a ToolTip control.
 ' ========================================================================================
-PRIVATE FUNCTION Tooltip_GetCurrentTool (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR) AS BOOLEAN
-   FUNCTION = SendMessageW(hTooltip, TTM_GETCURRENTTOOL, 0, cast(LPARAM, lpti))
+PRIVATE FUNCTION Tooltip_GetCurrentTool (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR) AS BOOLEAN
+   FUNCTION = SendMessageW(hTooltip, TTM_GETCURRENTTOOLW, 0, cast(LPARAM, lpti))
 END FUNCTION
 ' ========================================================================================
 
@@ -4936,8 +4936,8 @@ END FUNCTION
 ' ========================================================================================
 ' Retrieves the information a ToolTip control maintains about a tool.
 ' ========================================================================================
-PRIVATE SUB Tooltip_GetText (BYVAL hTooltip AS HWND, BYVAL numChars AS DWORD, BYVAL lpti AS TOOLINFO PTR)
-   SendMessageW(hTooltip, TTM_GETTEXT, numChars, cast(LPARAM, lpti))
+PRIVATE SUB Tooltip_GetText (BYVAL hTooltip AS HWND, BYVAL numChars AS DWORD, BYVAL lpti AS TOOLINFOW PTR)
+   SendMessageW(hTooltip, TTM_GETTEXTW, numChars, cast(LPARAM, lpti))
 END SUB
 ' ========================================================================================
 
@@ -4976,8 +4976,8 @@ END FUNCTION
 ' ========================================================================================
 ' Retrieves the information that a ToolTip control maintains about a tool.
 ' ========================================================================================
-PRIVATE FUNCTION Tooltip_GetToolInfo (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR) AS BOOLEAN
-   FUNCTION = SendMessageW(hTooltip, TTM_GETTOOLINFO, 0, cast(LPARAM, lpti))
+PRIVATE FUNCTION Tooltip_GetToolInfo (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR) AS BOOLEAN
+   FUNCTION = SendMessageW(hTooltip, TTM_GETTOOLINFOW, 0, cast(LPARAM, lpti))
 END FUNCTION
 ' ========================================================================================
 
@@ -4993,8 +4993,8 @@ END FUNCTION
 ' ========================================================================================
 ' Sets a new bounding rectangle for a tool.
 ' ========================================================================================
-PRIVATE SUB Tooltip_NewToolRect (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR)
-   SendMessageW(hTooltip, TTM_NEWTOOLRECT, 0, cast(LPARAM, lpti))
+PRIVATE SUB Tooltip_NewToolRect (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR)
+   SendMessageW(hTooltip, TTM_NEWTOOLRECTW, 0, cast(LPARAM, lpti))
 END SUB
 ' ========================================================================================
 
@@ -5089,8 +5089,8 @@ END FUNCTION
 ' ========================================================================================
 ' Sets the information that a ToolTip control maintains for a tool.
 ' ========================================================================================
-PRIVATE SUB Tooltip_SetToolInfo (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR)
-   SendMessageW(hTooltip, TTM_SETTOOLINFO, 0, cast(LPARAM, lpti))
+PRIVATE SUB Tooltip_SetToolInfo (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR)
+   SendMessageW(hTooltip, TTM_SETTOOLINFOW, 0, cast(LPARAM, lpti))
 END SUB
 ' ========================================================================================
 
@@ -5105,7 +5105,7 @@ END SUB
 ' ========================================================================================
 ' Activates or deactivates a tracking ToolTip.
 ' ========================================================================================
-PRIVATE SUB Tooltip_TrackActivate (BYVAL hTooltip AS HWND, BYVAL bActivate AS BOOLEAN, BYVAL lpti AS TOOLINFO PTR)
+PRIVATE SUB Tooltip_TrackActivate (BYVAL hTooltip AS HWND, BYVAL bActivate AS BOOLEAN, BYVAL lpti AS TOOLINFOW PTR)
    SendMessageW(hTooltip, TTM_TRACKACTIVATE, cast(WPARAM, bActivate), cast(LPARAM, lpti))
 END SUB
 ' ========================================================================================
@@ -5129,8 +5129,8 @@ END SUB
 ' ========================================================================================
 ' Sets the ToolTip text for a tool.
 ' ========================================================================================
-PRIVATE SUB Tooltip_UpdateTipText (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFO PTR)
-   SendMessageW(hTooltip, TTM_UPDATETIPTEXT, 0, cast(LPARAM, lpti))
+PRIVATE SUB Tooltip_UpdateTipText (BYVAL hTooltip AS HWND, BYVAL lpti AS TOOLINFOW PTR)
+   SendMessageW(hTooltip, TTM_UPDATETIPTEXTW, 0, cast(LPARAM, lpti))
 END SUB
 ' ========================================================================================
 
@@ -5164,9 +5164,9 @@ PRIVATE FUNCTION AfxAddTooltip (BYVAL hwnd AS HWND, BYREF wszText AS CONST WSTRI
    ' // You must explicitly define a tooltip control as topmost. Otherwise, it might be covered by the parent window.
    SetWindowPos(hTooltip, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE OR SWP_NOSIZE OR SWP_NOACTIVATE)
    ' // Registers the window with the tooltip control
-   ' // 32-bit: The size of the TOOLINFO structure is 48 bytes in
+   ' // 32-bit: The size of the TOOLINFOW structure is 48 bytes in
    '    version 6 of comctl32.dll, and 44 bytes in lower versions.
-   ' // 64-bit: The size of the TOOLINFO structure is 72 bytes in
+   ' // 64-bit: The size of the TOOLINFOW structure is 72 bytes in
    '    version 6 of comctl32.dll, and 64 bytes in lower versions.
    DIM tti AS TOOLINFOW
 #ifdef __FB_64BIT__
@@ -5207,9 +5207,9 @@ PRIVATE SUB AfxSetTooltipText (BYVAL hTooltip AS HWND, BYVAL hwnd AS HWND, BYREF
    ' // The length of the text must not exceed of 80 characters, including the terminating null.
    DIM wszTooltipText AS WSTRING * 80
    wszTooltipText = wszText
-   ' // 32-bit: The size of the TOOLINFO structure is 48 bytes in
+   ' // 32-bit: The size of the TOOLINFOW structure is 48 bytes in
    '    version 6 of comctl32.dll, and 44 bytes in lower versions.
-   ' // 64-bit: The size of the TOOLINFO structure is 72 bytes in
+   ' // 64-bit: The size of the TOOLINFOW structure is 72 bytes in
    '    version 6 of comctl32.dll, and 64 bytes in lower versions.
    DIM tti AS TOOLINFOW
 #ifdef __FB_64BIT__
@@ -5242,9 +5242,9 @@ END SUB
 ' ========================================================================================
 PRIVATE SUB AfxDeleteTooltip (BYVAL hTooltip AS HWND, BYVAL hwnd AS HWND)
    IF hTooltip = NULL OR hwnd = NULL THEN EXIT SUB
-   ' // 32-bit: The size of the TOOLINFO structure is 48 bytes in
+   ' // 32-bit: The size of the TOOLINFOW structure is 48 bytes in
    '    version 6 of comctl32.dll, and 44 bytes in lower versions.
-   ' // 64-bit: The size of the TOOLINFO structure is 72 bytes in
+   ' // 64-bit: The size of the TOOLINFOW structure is 72 bytes in
    '    version 6 of comctl32.dll, and 64 bytes in lower versions.
    DIM tti AS TOOLINFOW
 #ifdef __FB_64BIT__
