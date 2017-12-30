@@ -360,7 +360,7 @@ END FUNCTION
 ' The following line returns "aba" (match on "cad")
 ' DIM cws AS CWSTR = AfxStrExtract(1, "abacadabra","cad")
 ' ========================================================================================
-PRIVATE FUNCTION AfxStrExtract (BYVAL nStart AS LONG = 1, BYREF wszMainStr AS WSTRING, BYREF wszMatchStr AS WSTRING) AS CWSTR
+PRIVATE FUNCTION AfxStrExtract OVERLOAD (BYVAL nStart AS LONG = 1, BYREF wszMainStr AS WSTRING, BYREF wszMatchStr AS WSTRING) AS CWSTR
    DIM nLen AS LONG = LEN(wszMainStr)
    IF (nStart = 0) OR (nStart > nLen) THEN RETURN ""
    IF nStart < 0 THEN nStart = nLen + nStart + 1
@@ -381,6 +381,44 @@ PRIVATE FUNCTION AfxStrExtractI (BYVAL nStart AS LONG = 1, BYREF wszMainStr AS W
    DIM nPos AS LONG = INSTR(nStart, UCASE(wszMainStr), UCASE(wszMatchStr))
    IF nPos THEN RETURN MID(wszMainStr, nStart, nPos - nStart )
    RETURN cws = MID(wszMainStr, nStart)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns the portion of a string following the occurrence of a specified delimiter up to
+' the second delimiter. If one of the delimiters isn't found, it returns an empty string.
+' Parameters:
+' nStart: The one-based starting position where to start the search
+' wszMainStr: The main string
+' wszDelim1: The first delimiter
+' wszDelim2: The second delimiter
+' This function is case-sensitive.
+' Example:
+' DIM cwsText AS CWSTR = "blah blah (text beween parentheses) blah blah"
+' print AfxStrExtract(cwsText, "(", ")")
+' ========================================================================================
+PRIVATE FUNCTION AfxStrExtract OVERLOAD (BYREF wszMainStr AS WSTRING, BYREF wszDelim1 AS WSTRING, BYREF wszDelim2 AS WSTRING) AS CWSTR
+   DIM nPos1 AS LONG = INSTR(wszMainStr, wszDelim1)
+   IF nPos1 = 0 THEN RETURN ""
+   nPos1 += LEN(wszDelim1)
+   DIM nPos2 AS LONG = INSTR(nPos1, wszMainStr, wszDelim2)
+   IF nPos2 = 0 THEN RETURN ""
+   DIM nLen AS LONG = nPos2 - nPos1
+   RETURN MID(wszMainStr, nPos1, nLen)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION AfxStrExtract OVERLOAD (BYVAL nStart AS LONG = 1, BYREF wszMainStr AS WSTRING, BYREF wszDelim1 AS WSTRING, BYREF wszDelim2 AS WSTRING) AS CWSTR
+   DIM nLen AS LONG = LEN(wszMainStr)
+   IF (nStart = 0) OR (nStart > nLen) THEN RETURN ""
+   IF nStart < 0 THEN nStart = nLen + nStart + 1
+   DIM nPos1 AS LONG = INSTR(nStart, wszMainStr, wszDelim1)
+   IF nPos1 = 0 THEN RETURN ""
+   nPos1 += LEN(wszDelim1)
+   DIM nPos2 AS LONG = INSTR(nPos1, wszMainStr, wszDelim2)
+   IF nPos2 = 0 THEN RETURN ""
+   nLen = nPos2 - nPos1
+   RETURN MID(wszMainStr, nPos1, nLen)
 END FUNCTION
 ' ========================================================================================
 
