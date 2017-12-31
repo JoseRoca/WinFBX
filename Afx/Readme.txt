@@ -1,6 +1,6 @@
 WinFBX
 Windows Framework for FreeBASIC.
-Version 1.0.02
+Version 1.0.03
 
 Works best when used with the WinFBE editor: https://github.com/PaulSquires/WinFBE
 
