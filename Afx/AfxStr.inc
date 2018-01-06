@@ -217,23 +217,28 @@ END FUNCTION
 ' wszMainStr: The main string
 ' wszDelim1: The first delimiter
 ' wszDelim2: The second delimiter
+' fRemoveAll: TRUE or FALSE. TRUE = Recursively remove all the occurrences.
 ' This function is case-sensitive.
 ' Example:
 ' DIM cwsText AS CWSTR = "blah blah (text beween parentheses) blah blah"
 ' print AfxStrRemove(cwsText, "(", ")")   ' Returns "blah blah  blah blah"
+' Example:
+' DIM cwsText AS CWSTR = "As Long var1(34), var2(  73 ), var3(any)"
+' print AfxStrRemove(cwsText, "(", ")", TRUE)   ' Returns "As Long var1, var2, var3"
 ' ========================================================================================
-PRIVATE FUNCTION AfxStrRemove OVERLOAD (BYREF wszMainStr AS CONST WSTRING, BYREF wszDelim1 AS WSTRING, BYREF wszDelim2 AS WSTRING) AS CWSTR
+PRIVATE FUNCTION AfxStrRemove OVERLOAD (BYREF wszMainStr AS CONST WSTRING, BYREF wszDelim1 AS WSTRING, BYREF wszDelim2 AS WSTRING, BYVAL fRemoveAll AS BOOLEAN = FALSE) AS CWSTR
    DIM nPos1 AS LONG = INSTR(wszMainStr, wszDelim1)
    IF nPos1 = 0 THEN RETURN wszMainStr
    DIM nPos2 AS LONG = INSTR(nPos1 + LEN(wszDelim1), wszMainStr, wszDelim2)
    IF nPos2 = 0 THEN RETURN wszMainStr
    nPos2 += LEN(wszDelim2)
    DIM nLen AS LONG = nPos2 - nPos1
-   RETURN MID(wszMainStr, 1, nPos1 - 1) & MID(wszMainStr, nPos2)
+   IF fRemoveAll = FALSE THEN RETURN MID(wszMainStr, 1, nPos1 - 1) & MID(wszMainStr, nPos2)
+   RETURN AfxStrRemove(MID(wszMainStr, 1, nPos1 - 1) & MID(wszMainStr, nPos2), wszDelim1, wszDelim2, fRemoveAll)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION AfxStrRemove OVERLOAD (BYVAL nStart AS LONG = 1, BYREF wszMainStr AS CONST WSTRING, BYREF wszDelim1 AS WSTRING, BYREF wszDelim2 AS WSTRING) AS CWSTR
+PRIVATE FUNCTION AfxStrRemove OVERLOAD (BYVAL nStart AS LONG = 1, BYREF wszMainStr AS CONST WSTRING, BYREF wszDelim1 AS WSTRING, BYREF wszDelim2 AS WSTRING, BYVAL fRemoveAll AS BOOLEAN = FALSE) AS CWSTR
    DIM nLen AS LONG = LEN(wszMainStr)
    IF (nStart = 0) OR (nStart > nLen) THEN RETURN ""
    IF nStart < 0 THEN nStart = nLen + nStart + 1
@@ -243,7 +248,8 @@ PRIVATE FUNCTION AfxStrRemove OVERLOAD (BYVAL nStart AS LONG = 1, BYREF wszMainS
    IF nPos2 = 0 THEN RETURN wszMainStr
    nPos2 += LEN(wszDelim2)
    nLen = nPos2 - nPos1
-   RETURN MID(wszMainStr, 1, nPos1 - 1) & MID(wszMainStr, nPos2)
+   IF fRemoveAll = FALSE THEN RETURN MID(wszMainStr, 1, nPos1 - 1) & MID(wszMainStr, nPos2)
+   RETURN AfxStrRemove(nStart, MID(wszMainStr, 1, nPos1 - 1) & MID(wszMainStr, nPos2), wszDelim1, wszDelim2, fRemoveAll)
 END FUNCTION
 ' ========================================================================================
 
