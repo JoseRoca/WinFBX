@@ -582,7 +582,7 @@ END FUNCTION
 ' DIM hwndBrowser AS HWND = AfxGetBrowserHandle("MozillaWindowClass")   ' // Firefox
 ' DIM hwndBrowser AS HWND = AfxGetBrowserHandle("Chrome_WidgetWin_1")   ' // Chrome
 ' ========================================================================================
-FUNCTION AfxEnumThreadWndProc (BYVAL hwnd AS HWND, BYVAL lParam AS LPARAM) AS WINBOOL
+PRIVATE FUNCTION AfxEnumThreadWndProc (BYVAL hwnd AS HWND, BYVAL lParam AS LPARAM) AS WINBOOL
    DIM dwStyle AS DWORD = GetWindowLongPtr(hwnd, GWL_STYLE)
    IF ((dwStyle AND (WS_POPUP OR WS_CHILD)) = 0) AND ((dwStyle AND WS_VISIBLE) <> 0) THEN
       DIM phwndTop AS HWND PTR
@@ -594,7 +594,7 @@ FUNCTION AfxEnumThreadWndProc (BYVAL hwnd AS HWND, BYVAL lParam AS LPARAM) AS WI
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-FUNCTION AfxGetBrowserHandle (BYVAL pwszClassName AS WSTRING PTR) AS HWND
+PRIVATE FUNCTION AfxGetBrowserHandle (BYVAL pwszClassName AS WSTRING PTR) AS HWND
   DIM hwndBrowser AS HWND = FindWindowW(pwszClassName, NULL)
   IF hwndBrowser = NULL THEN RETURN NULL
   DIM dwThread AS DWORD = GetWindowThreadProcessId(hwndBrowser, NULL)
@@ -607,21 +607,21 @@ END FUNCTION
 ' ========================================================================================
 ' Retrieves the top level window handle of Intenet Explorer.
 ' ========================================================================================
-FUNCTION AfxGetInternetExplorerHandle () AS HWND
+PRIVATE FUNCTION AfxGetInternetExplorerHandle () AS HWND
    RETURN AfxGetBrowserHandle("IEFrame")
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 ' Retrieves the top level window handle of Firefox.
 ' ========================================================================================
-FUNCTION AfxGetFireFoxHandle () AS HWND
+PRIVATE FUNCTION AfxGetFireFoxHandle () AS HWND
    RETURN AfxGetBrowserHandle("MozillaWindowClass")
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 ' Retrieves the top level window handle of Google Chrome.
 ' ========================================================================================
-FUNCTION AfxGetGoogleChromeHandle () AS HWND
+PRIVATE FUNCTION AfxGetGoogleChromeHandle () AS HWND
    RETURN AfxGetBrowserHandle("Chrome_WidgetWin_1")
 END FUNCTION
 ' ========================================================================================
@@ -3304,7 +3304,7 @@ END FUNCTION
 ' Note: Replacement for the Windows API function IsUserAnAdmin because Microsoft warns
 ' about the use of this function and advices to call CheckTokenMembership directly.
 ' ========================================================================================
-FUNCTION AfxIsUserAnAdmin () AS BOOLEAN
+PRIVATE FUNCTION AfxIsUserAnAdmin () AS BOOLEAN
    DIM IsMember AS LONG, AdministratorsGroup AS SID PTR
    DIM ntAuthority AS SID_IDENTIFIER_AUTHORITY = ({0, 0, 0, 0, 0, 5})
    IF AllocateAndInitializeSid(@NtAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, _
