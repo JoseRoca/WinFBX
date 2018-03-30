@@ -383,6 +383,23 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Returns a string containing the name of the folder for a specified path, i.e. the path
+' minus the file name.
+' ========================================================================================
+PRIVATE FUNCTION AfxGetFolderName (BYREF wszPath AS WSTRING) AS CWSTR
+   DIM cwsPath AS CWSTR = wszPath
+   DIM p AS LONG
+   IF INSTRREV(cwsPath, ".") = 0 THEN
+      IF RIGHT(**cwsPath, 1) = "\" THEN cwsPath = LEFT(**cwsPath, LEN(cwsPath) - 1)
+      RETURN cwsPath
+   END IF
+   p = INSTRREV(cwsPath, ANY "\/")
+   IF p THEN RETURN LEFT(**cwsPath, p - 1)
+   RETURN cwsPath
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Retrieves the path of the specified system DLL.
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetSystemDllPath (BYREF wszDllName AS WSTRING) AS CWSTR
