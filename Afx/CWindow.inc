@@ -620,7 +620,8 @@ PRIVATE CONSTRUCTOR CWindow (BYREF wszClassName AS CONST WSTRING = "")
    ' // Instance handle
    m_hInstance = .GetModuleHandleW(NULL)
    ' // Scale windows according to the DPI setting.
-   IF AfxUseDpiScaling = 0 THEN this.DPI = 96 ELSE this.DPI = -1
+'   IF AfxUseDpiScaling = 0 THEN this.DPI = 96 ELSE this.DPI = -1   ' May fail in Windows 10
+   IF AfxIsProcessDpiAware = FALSE THEN this.DPI = 96 ELSE this.DPI = -1
    ' // Default font name
    IF LEN(m_wszDefaultFontName) = 0 THEN
       IF AfxWindowsVersion >= 600 AND CLNG(AfxIsProcessDpiAware) THEN m_wszDefaultFontName = "Segoe UI" ELSE m_wszDefaultFontName = "Tahoma"
