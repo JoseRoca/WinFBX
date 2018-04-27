@@ -51,7 +51,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    pWindow.Center
 
    ' // Create the first button
-   DIM pXpButton1 AS CXpButton = CXpButton(@pWindow, IDC_BUTTON1, "&Ok", 50, 20, 114, 26)
+   DIM pXpButton1 AS CXpButton = CXpButton(@pWindow, IDC_BUTTON1, "&Ok", 50, 10, 114, 34)
 '   pXpButton1.SetIconFromFile ExePath & "\16_OK.ICO", XPBI_NORMAL
 '   pXpButton1.SetIconFromFile ExePath & "\16_OKHOT.ICO", XPBI_HOT
    pXpButton1.SetIcon LoadIcon(NULL, IDI_SHIELD), XPBI_NORMAL
@@ -61,7 +61,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    pXpButton1.SetImageMargin 10
 
    ' // Create the second button
-   DIM pXpButton2 AS CXpButton = CXpButton(@pWindow, IDC_BUTTON2, "&Cancel", 50, 55, 114, 26)
+   DIM pXpButton2 AS CXpButton = CXpButton(@pWindow, IDC_BUTTON2, "&Cancel", 50, 50, 114, 34)
 '   pXpButton2.SetIconFromFile ExePath & "\16_CANCEL.ICO", XPBI_NORMAL
 '   pXpButton2.SetIconFromFile ExePath & "\16_CANCELDISABLED.ICO", XPBI_DISABLED
    pXpButton2.SetIcon LoadIcon(NULL, IDI_ERROR), XPBI_NORMAL
@@ -70,7 +70,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    EnableWindow pXpButton2.hWindow, FALSE   ' Disable the button
 
    ' // Create the third button
-   DIM pXpButton3 AS CXpButton = CXpButton(@pWindow, IDC_BUTTON3, "&Classic Button", 50, 90, 114, 26)
+   DIM pXpButton3 AS CXpButton = CXpButton(@pWindow, IDC_BUTTON3, "&Classic Button", 50, 90, 114, 34)
    SetFocus pXpButton1.hWindow
 
    |
