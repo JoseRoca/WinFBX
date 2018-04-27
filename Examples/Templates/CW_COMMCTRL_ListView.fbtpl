@@ -49,7 +49,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
 
    ' // Adds a listview
    DIM hListView AS HWND
-   hListView = pWindow.AddControl("ListView", , IDC_LISTVIEW, "")
+   hListView = pWindow.AddControl("ListView", , IDC_LISTVIEW)
 
    ' // Add some extended styles
    DIM dwExStyle AS DWORD
@@ -88,7 +88,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    ' // Set the focus in the ListView
    SetFocus hListView
 
-   |
+   
 
    ' // Dispatch Windows messages
    FUNCTION = pWindow.DoEvents(nCmdShow)
@@ -100,10 +100,6 @@ END FUNCTION
 ' Main window callback procedure
 ' ================================================================e========================
 FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
-
-   DIM pNmh  AS NMHDR PTR            ' // Pointer to a NMHDR structure
-   DIM pLvNm AS NMLISTVIEW PTR       ' // Pointer to a NMLISTVIEW structure
-   DIM pLvCd AS NMLVCUSTOMDRAW PTR   ' // Pointer to a NMLVCUSTOMDRAW structure
 
    SELECT CASE uMsg
 
@@ -120,9 +116,11 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
       CASE WM_SIZE
          ' // Resize the ListView control and its header
          IF wParam <> SIZE_MINIMIZED THEN
-            DIM hListView AS HWND, pWindow AS CWindow PTR
-            pWindow = AfxCWindowPtr(hwnd)
-            hListView = GetDlgItem(hwnd, IDC_LISTVIEW)
+            ' // Retrieve the handle of the ListView control
+            DIM hListView AS HWND = GetDlgItem(hwnd, IDC_LISTVIEW)
+            ' // Retrieve a pointer to the CWindow class
+            DIM pWindow AS CWindow PTR = AfxCWindowPtr(hwnd)
+            ' // Move the ListView control
             IF pWindow THEN pWindow->MoveWindow hListView, 5, 5, pWindow->ClientWidth - 10, pWindow->ClientHeight - 10, CTRUE
          END IF
 
