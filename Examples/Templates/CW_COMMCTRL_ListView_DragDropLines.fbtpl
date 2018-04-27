@@ -49,7 +49,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
 
    ' // Adds a listview
    DIM hListView AS HWND
-   hListView = pWindow.AddControl("ListView", , IDC_LISTVIEW, "")
+   hListView = pWindow.AddControl("ListView", , IDC_LISTVIEW)
 
    ' // Add grid lines
    DIM dwExStyle AS DWORD
@@ -77,8 +77,8 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
       ListView_InsertItem(hListView, @lvi)
    NEXT
 
-   ' // Select the fist item
-   ListView_SetItemState(hListView, 0, LVIS_FOCUSED OR LVIS_SELECTED, &H000F)
+   ' // Select the fist item (ListView items are zero based)
+   ListView_SelectItem(hListView, 0)
    ' // Set the focus in the ListView
    SetFocus hListView
 
