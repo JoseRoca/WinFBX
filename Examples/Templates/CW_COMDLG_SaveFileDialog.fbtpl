@@ -76,7 +76,7 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
             CASE IDC_OFD
                IF GET_WM_COMMAND_CMD(wParam, lParam) = BN_CLICKED THEN
                   DIM wszFile AS WSTRING * 260 = "*.*"
-                  DIM wszInitialDir AS STRING * 260 = CURDIR
+                  DIM wszInitialDir AS WSTRING * 260 = CURDIR
                   DIM wszFilter AS WSTRING * 260 = "BAS files (*.BAS)|*.BAS|" & "All Files (*.*)|*.*|"
                   DIM dwFlags AS DWORD = OFN_EXPLORER OR OFN_FILEMUSTEXIST OR OFN_HIDEREADONLY OR OFN_OVERWRITEPROMPT
                   DIM cws AS CWSTR = AfxSaveFileDialog(hwnd, "", wszFile, wszInitialDir, wszFilter, "BAS", @dwFlags)
