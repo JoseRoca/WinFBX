@@ -516,7 +516,7 @@ END FUNCTION
 ' Media Access Control (MAC) address of the network adapter. A MAC address is assigned by
 ' the manufacturer to uniquely identify the network adapter. Example: "00:80:C7:8F:6C:96".
 ' ========================================================================================
-PRIVATE FUNCTION AfxGetMACAddress (BYREF wszServerName AS WSTRING = ".") AS CWSTR
+PRIVATE FUNCTION AfxGetNetworkAdapterMACAddress (BYREF wszServerName AS WSTRING = ".") AS CWSTR
    DIM pServices AS CWmiServices = $"winmgmts:{impersonationLevel=impersonate}!\\" & wszServerName & $"\root\cimv2"
    IF pServices.ServicesPtr = NULL THEN RETURN ""
    pServices.ExecQuery("SELECT MACAddress FROM Win32_NetworkAdapterConfiguration")
