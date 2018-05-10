@@ -985,6 +985,33 @@ PRIVATE FUNCTION AfxChooseColorDialog (BYVAL hParent AS HWND, BYVAL rgbDefaultCo
 END FUNCTION
 ' ========================================================================================
 
+' ========================================================================================
+' Retrieves the MAC address of a machine's Ethernet card.
+' This function only supports one NIC card on your PC.
+' Remarks: I have need to call the UuidCreateSequential function dynamically because,
+' the time of writing, the library for the RPCRT4.DLL seems broken and the linker fails.
+' ========================================================================================
+PRIVATE FUNCTION AfxGetMACAddress () AS CWSTR
+   DIM cws AS CWSTR, rguid AS UUID
+   ' // Generate a new guid
+   DIM AS ANY PTR pLib = DyLibLoad("RPCRT4.DLL")
+   IF pLib = NULL THEN RETURN cws
+   DIM pProc AS FUNCTION (BYVAL Uuid AS UUID PTR) AS RPC_STATUS
+   pProc = DyLibSymbol(pLib, "UuidCreateSequential")
+   IF pProc THEN pProc(@rguid)
+   DyLibFree(pLib)
+   ' //  Convert it to a string
+   DIM pwsz AS WSTRING PTR
+   StringFromIID(@rguid, CAST(LPOLESTR PTR, @pwsz))
+   IF pwsz = NULL THEN RETURN cws
+   cws = MID(*pwsz, 26, 12)
+   CoTaskMemFree(pwsz)
+   cws = MID(cws, 1, 2) & "-" & MID(cws, 3, 2) & "-" & MID(cws, 5, 2) & "-" & _
+         MID(cws, 7, 2) & "-" & MID(cws, 9, 2) & "-" & MID(cws, 11, 2)
+   RETURN cws
+END FUNCTION
+' ========================================================================================
+
 
 ' ########################################################################################
 '                                      *** WINDOW ***
