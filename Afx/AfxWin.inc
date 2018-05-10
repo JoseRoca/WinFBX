@@ -991,11 +991,11 @@ END FUNCTION
 ' Remarks: I have need to call the UuidCreateSequential function dynamically because,
 ' the time of writing, the library for the RPCRT4.DLL seems broken and the linker fails.
 ' ========================================================================================
-PRIVATE FUNCTION AfxGetMACAddress () AS CWSTR
-   DIM cws AS CWSTR, rguid AS UUID
+PRIVATE FUNCTION AfxGetMACAddress () AS STRING
    ' // Generate a new guid
+   DIM rguid AS UUID
    DIM AS ANY PTR pLib = DyLibLoad("RPCRT4.DLL")
-   IF pLib = NULL THEN RETURN cws
+   IF pLib = NULL THEN RETURN ""
    DIM pProc AS FUNCTION (BYVAL Uuid AS UUID PTR) AS RPC_STATUS
    pProc = DyLibSymbol(pLib, "UuidCreateSequential")
    IF pProc THEN pProc(@rguid)
@@ -1003,12 +1003,13 @@ PRIVATE FUNCTION AfxGetMACAddress () AS CWSTR
    ' //  Convert it to a string
    DIM pwsz AS WSTRING PTR
    StringFromIID(@rguid, CAST(LPOLESTR PTR, @pwsz))
-   IF pwsz = NULL THEN RETURN cws
-   cws = MID(*pwsz, 26, 12)
+   IF pwsz = NULL THEN RETURN ""
+   DIM s AS STRING
+   s = MID(*pwsz, 26, 12)
    CoTaskMemFree(pwsz)
-   cws = MID(cws, 1, 2) & "-" & MID(cws, 3, 2) & "-" & MID(cws, 5, 2) & "-" & _
-         MID(cws, 7, 2) & "-" & MID(cws, 9, 2) & "-" & MID(cws, 11, 2)
-   RETURN cws
+   s = MID(s, 1, 2) & "-" & MID(s, 3, 2) & "-" & MID(s, 5, 2) & "-" & _
+       MID(s, 7, 2) & "-" & MID(s, 9, 2) & "-" & MID(s, 11, 2)
+   RETURN s
 END FUNCTION
 ' ========================================================================================
 
