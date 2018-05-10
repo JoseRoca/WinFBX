@@ -519,8 +519,8 @@ END FUNCTION
 PRIVATE FUNCTION AfxGetMACAddress (BYREF wszServerName AS WSTRING = ".") AS CWSTR
    DIM pServices AS CWmiServices = $"winmgmts:{impersonationLevel=impersonate}!\\" & wszServerName & $"\root\cimv2"
    IF pServices.ServicesPtr = NULL THEN RETURN ""
-   pServices.ExecQuery("SELECT Description FROM Win32_NetworkAdapterConfiguration")
+   pServices.ExecQuery("SELECT MACAddress FROM Win32_NetworkAdapterConfiguration")
    pServices.GetNamedProperties
-   RETURN pServices.PropValue("Description").ToStr
+   RETURN pServices.PropValue("MACAddress").ToStr
 END FUNCTION
 ' ========================================================================================
