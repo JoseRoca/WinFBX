@@ -765,14 +765,8 @@ END FUNCTION
 ' Example: DIM cws AS CWSTR = AfxStrLSet("FreeBasic", 20, "*")
 ' ========================================================================================
 PRIVATE FUNCTION AfxStrLSet (BYREF wszMainStr AS CONST WSTRING, BYVAL nStringLength AS LONG, BYREF wszPadCharacter AS WSTRING = " ") AS CWSTR
-   DiM cwsPadChar AS CWSTR = wszPadCharacter
-   IF cwsPadChar = "" THEN cwsPadChar = " "
-   cwsPadChar = LEFT(cwsPadChar, 1)
-   DIM cws AS CWSTR = SPACE(nStringLength)
-   FOR i AS LONG = 1 TO LEN(cws)
-      MID(**cws, i, 1) = cwsPadChar
-   NEXT
-   LSET **cws, wszMainStr
+   DIM cws AS CWSTR = WSTRING(nStringLength, wszPadCharacter)
+   MID(**cws, 1, LEN(wszMainStr)) = wszMainStr
    RETURN cws
 END FUNCTION
 ' ========================================================================================
@@ -785,14 +779,9 @@ END FUNCTION
 ' Example: DIM cws AS CWSTR = AfxStrRSet("FreeBasic", 20, "*")
 ' ========================================================================================
 PRIVATE FUNCTION AfxStrRSet (BYREF wszMainStr AS CONST WSTRING, BYVAL nStringLength AS LONG, BYREF wszPadCharacter AS WSTRING = " ") AS CWSTR
-   DiM cwsPadChar AS CWSTR = wszPadCharacter
-   IF cwsPadChar = "" THEN cwsPadChar = " "
-   cwsPadChar = LEFT(cwsPadChar, 1)
-   DIM cws AS CWSTR = SPACE(nStringLength)
-   FOR i AS LONG = 1 TO LEN(cws)
-      MID(**cws, i, 1) = cwsPadChar
-   NEXT
-   RSET **cws, wszMainStr
+   IF LEN(wszMainStr) > nStringLength THEN RETURN LEFT(wszMainStr, nStringLength)
+   DIM cws AS CWSTR = WSTRING(nStringLength, wszPadCharacter)
+   MID(**cws, nStringLength - LEN(wszMainStr) + 1, LEN(wszMainStr)) = wszMainStr
    RETURN cws
 END FUNCTION
 ' ========================================================================================
@@ -805,13 +794,8 @@ END FUNCTION
 ' Example: DIM cws AS CWSTR = AfxStrCSet("FreeBasic", 20, "*")
 ' ========================================================================================
 PRIVATE FUNCTION AfxStrCSet (BYREF wszMainStr AS CONST WSTRING, BYVAL nStringLength AS LONG, BYREF wszPadCharacter AS WSTRING = " ") AS CWSTR
-   DiM cwsPadChar AS CWSTR = wszPadCharacter
-   IF cwsPadChar = "" THEN cwsPadChar = " "
-   cwsPadChar = LEFT(cwsPadChar, 1)
-   DIM cws AS CWSTR = SPACE(nStringLength)
-   FOR i AS LONG = 1 TO LEN(cws)
-      MID(**cws, i, 1) = cwsPadChar
-   NEXT
+   IF LEN(wszMainStr) > nStringLength THEN RETURN LEFT(wszMainStr, nStringLength)
+   DIM cws AS CWSTR = WSTRING(nStringLength, wszPadCharacter)
    MID(**cws, (nStringLength - LEN(wszMainStr)) \ 2 + 1, LEN(wszMainStr)) = wszMainStr
    RETURN cws
 END FUNCTION
