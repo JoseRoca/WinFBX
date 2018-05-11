@@ -772,7 +772,7 @@ PRIVATE FUNCTION AfxStrLSet (BYREF wszMainStr AS CONST WSTRING, BYVAL nStringLen
    FOR i AS LONG = 1 TO LEN(cws)
       MID(**cws, i, 1) = cwsPadChar
    NEXT
-   MID(**cws, 1, LEN(wszMainStr)) = wszMainStr
+   LSET **cws, wszMainStr
    RETURN cws
 END FUNCTION
 ' ========================================================================================
@@ -792,7 +792,7 @@ PRIVATE FUNCTION AfxStrRSet (BYREF wszMainStr AS CONST WSTRING, BYVAL nStringLen
    FOR i AS LONG = 1 TO LEN(cws)
       MID(**cws, i, 1) = cwsPadChar
    NEXT
-   MID(**cws, nStringLength - LEN(wszMainStr) + 1, LEN(wszMainStr)) = wszMainStr
+   RSET **cws, wszMainStr
    RETURN cws
 END FUNCTION
 ' ========================================================================================
