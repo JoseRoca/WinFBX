@@ -186,7 +186,7 @@ PRIVATE FUNCTION AfxStrRemove OVERLOAD (BYREF wszMainStr AS CONST WSTRING, BYREF
    DIM cws AS CWSTR = wszMainStr
    DIM nLen AS LONG = LEN(wszMatchStr)
    DO
-      DIM nPos AS LONG = INSTR(cws, wszMatchStr)
+      DIM nPos AS LONG = INSTR(**cws, wszMatchStr)
       IF nPos = 0 THEN EXIT DO
       cws.DelChars nPos, nLen
    LOOP
@@ -202,7 +202,7 @@ PRIVATE FUNCTION AfxStrRemoveI (BYREF wszMainStr AS CONST WSTRING, BYREF wszMatc
    DIM cwsMatchStr AS CWSTR = UCASE(wszMatchStr)
    DIM nLen AS LONG = LEN(wszMatchStr)
    DO
-      DIM nPos AS LONG = INSTR(UCASE(cwsMainStr), cwsMatchStr)
+      DIM nPos AS LONG = INSTR(UCASE(**cwsMainStr), **cwsMatchStr)
       IF nPos = 0 THEN EXIT DO
       cwsMainStr.DelChars nPos, nLen
    LOOP
@@ -265,7 +265,7 @@ PRIVATE FUNCTION AfxStrRemoveAny (BYREF wszMainStr AS CONST WSTRING, BYREF wszMa
    DIM cwsMainStr AS CWSTR = wszMainStr
    FOR i AS LONG = 1 TO LEN(wszMatchStr)
       DO
-         DIM nPos AS LONG = INSTR(cwsMainStr, MID(wszMatchStr, i, 1))
+         DIM nPos AS LONG = INSTR(**cwsMainStr, MID(wszMatchStr, i, 1))
          IF nPos = 0 THEN EXIT DO
          cwsMainStr.DelChars nPos, 1
       LOOP
@@ -282,7 +282,7 @@ PRIVATE FUNCTION AfxStrRemoveAnyI (BYREF wszMainStr AS CONST WSTRING, BYREF wszM
    DIM cwsMatchStr AS CWSTR = UCASE(wszMatchStr)
    FOR i AS LONG = 1 TO LEN(wszMatchStr)
       DO
-         DIM nPos AS LONG = INSTR(UCASE(cwsMainStr), MID(cwsMatchStr, i, 1))
+         DIM nPos AS LONG = INSTR(UCASE(**cwsMainStr), MID(**cwsMatchStr, i, 1))
          IF nPos = 0 THEN EXIT DO
          cwsMainStr.DelChars nPos, 1
       LOOP
@@ -306,9 +306,9 @@ PRIVATE FUNCTION AfxStrReplace OVERLOAD (BYREF wszMainStr AS CONST WSTRING, BYRE
    DIM nLenMatchStr AS LONG = LEN(wszMatchStr)
    DIM nPos AS LONG = 1
    DO
-      nPos = INSTR(nPos, cwsMainStr, wszMatchStr)
+      nPos = INSTR(nPos, **cwsMainStr, wszMatchStr)
       IF nPos = 0 THEN EXIT DO
-      cwsMainStr = MID(cwsMainStr, 1, nPos - 1) + wszReplaceWith + MID(cwsMainStr, nPos + nLenMatchStr)
+      cwsMainStr = MID(**cwsMainStr, 1, nPos - 1) + wszReplaceWith + MID(**cwsMainStr, nPos + nLenMatchStr)
       nPos += nLenReplaceWith
    LOOP
    RETURN cwsMainStr
@@ -325,9 +325,9 @@ PRIVATE FUNCTION AfxStrReplaceI (BYREF wszMainStr AS CONST WSTRING, BYREF wszMat
    DIM nLenMatchStr AS LONG = LEN(wszMatchStr)
    DIM nPos AS LONG = 1
    DO
-      nPos = INSTR(nPos, UCASE(cwsMainStr), cwsMatchStr)
+      nPos = INSTR(nPos, UCASE(**cwsMainStr), **cwsMatchStr)
       IF nPos = 0 THEN EXIT DO
-      cwsMainStr = MID(cwsMainStr, 1, nPos - 1) + wszReplaceWith + MID(cwsMainStr, nPos + nLenMatchStr)
+      cwsMainStr = MID(**cwsMainStr, 1, nPos - 1) + wszReplaceWith + MID(**cwsMainStr, nPos + nLenMatchStr)
       nPos += nLenReplaceWith
    LOOP
    RETURN cwsMainStr
@@ -384,7 +384,7 @@ PRIVATE FUNCTION AfxStrReverse (BYREF wszMainStr AS CONST WSTRING) AS CWSTR
    DIM wszChar AS WSTRING * 2
    DIM nLen AS LONG = LEN(wszMainStr)
    FOR i AS LONG = 1 TO nLen \ 2
-      wszChar = MID(cwsMainStr, i, 1)
+      wszChar = MID(**cwsMainStr, i, 1)
       MID(**cwsMainStr, i, 1) = MID(**cwsMainStr, nLen - i + 1, 1)
       MID(**cwsMainStr, nLen - i + 1, 1) = wszChar
    NEXT
@@ -637,7 +637,7 @@ PRIVATE FUNCTION AfxStrTallyI (BYREF wszMainStr AS CONST WSTRING, BYREF wszMatch
    DIM cwsMatchStr AS CWSTR = UCASE (wszMatchStr)
    DIM nLen AS LONG = LEN(wszMatchStr)
    DO
-      nPos = INSTR(nPos, cwsMainStr, cwsMatchStr)
+      nPos = INSTR(nPos, **cwsMainStr, **cwsMatchStr)
       IF nPos = 0 THEN EXIT DO
       nCount += 1
       nPos += nLen
@@ -661,7 +661,7 @@ PRIVATE FUNCTION AfxStrTallyAny (BYREF wszMainStr AS CONST WSTRING, BYREF wszMat
    DIM nPos AS LONG
    DIM cwsMatchStr AS CWSTR = wszMatchStr
    FOR i AS LONG = 1 TO LEN(cwsMatchStr)
-      nPos = INSTR(cwsMatchStr, MID(wszMatchStr, i, 1))
+      nPos = INSTR(**cwsMatchStr, MID(wszMatchStr, i, 1))
       IF nPos = 0 THEN cwsMatchStr += MID(wszMatchStr, i, 1)
    NEXT
    ' // Do the count
@@ -669,7 +669,7 @@ PRIVATE FUNCTION AfxStrTallyAny (BYREF wszMainStr AS CONST WSTRING, BYREF wszMat
    FOR i AS LONG = 1 TO LEN(cwsMatchStr)
       nPos = 1
       DO
-         nPos = INSTR(nPos, wszMainStr, MID(cwsMatchStr, i, 1))
+         nPos = INSTR(nPos, wszMainStr, MID(**cwsMatchStr, i, 1))
          IF nPos = 0 THEN EXIT DO
          IF nPos THEN
             nCount += 1
@@ -691,7 +691,7 @@ PRIVATE FUNCTION AfxStrTallyAnyI (BYREF wszMainStr AS CONST WSTRING, BYREF wszMa
    DIM cwsMainStr AS CWSTR = UCASE(wszMainStr)
    DIM cwsMatchStr AS CWSTR = UCASE(wszMatchStr)
    FOR i AS LONG = 1 TO LEN(cwsMatchStr)
-      nPos = INSTR(cwsMatchStr, MID(wszMatchStr, i, 1))
+      nPos = INSTR(**cwsMatchStr, MID(wszMatchStr, i, 1))
       IF nPos = 0 THEN cwsMatchStr += MID(wszMatchStr, i, 1)
    NEXT
    ' // Do the count
@@ -699,7 +699,7 @@ PRIVATE FUNCTION AfxStrTallyAnyI (BYREF wszMainStr AS CONST WSTRING, BYREF wszMa
    FOR i AS LONG = 1 TO LEN(cwsMatchStr)
       nPos = 1
       DO
-         nPos = INSTR(nPos, cwsMainStr, MID(cwsMatchStr, i, 1))
+         nPos = INSTR(nPos, **cwsMainStr, MID(**cwsMatchStr, i, 1))
          IF nPos = 0 THEN EXIT DO
          IF nPos THEN
             nCount += 1
@@ -737,7 +737,7 @@ PRIVATE FUNCTION AfxStrVerify (BYVAL nStart AS LONG, BYREF wszMainStr AS CONST W
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' * Case sinsentive version of AfxStrVerify.
+' * Case sensintive version of AfxStrVerify.
 ' Example: AfxStrVerifyI(5, "123.65abcx22.5", "0123456789ABC")   ' -> 10
 ' ========================================================================================
 PRIVATE FUNCTION AfxStrVerifyI (BYVAL nStart AS LONG, BYREF wszMainStr AS CONST WSTRING, BYREF wszMatchStr AS WSTRING) AS LONG
@@ -747,7 +747,7 @@ PRIVATE FUNCTION AfxStrVerifyI (BYVAL nStart AS LONG, BYREF wszMainStr AS CONST 
    DIM cwsMatchStr AS CWSTR = UCASE(wszMatchStr)
    DIM AS LONG nPos, idx
    FOR i AS LONG = nStart TO LEN(cwsMainStr)
-      nPos = INSTR(cwsMatchStr, MID(cwsMainStr, i, 1))
+      nPos = INSTR(**cwsMatchStr, MID(**cwsMainStr, i, 1))
       IF nPos = 0 THEN
          idx = i
          EXIT FOR
@@ -956,7 +956,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION AfxStrUnWrap OVERLOAD (BYREF wszMainStr AS CONST WSTRING, BYREF wszChar AS WSTRING = CHR(34)) AS CWSTR
    DIM cws AS CWSTR = LTRIM(wszMainStr, wszChar)
-   cws = RTRIM(cws, wszChar)
+   cws = RTRIM(**cws, wszChar)
    RETURN cws
 END FUNCTION
 ' ========================================================================================
@@ -1031,7 +1031,7 @@ PRIVATE FUNCTION AfxStrRetainI (BYREF wszMainStr AS CONST WSTRING, BYREF wszMatc
    DIM nLen AS LONG = LEN(wszMatchStr)
    DIM nPos AS LONG = 1
    DO
-      nPos = INSTR(nPos, cwsMainStr, cwsMatchStr)
+      nPos = INSTR(nPos, **cwsMainStr, **cwsMatchStr)
       IF nPos = 0 THEN EXIT DO
       cws += MID(wszMainStr, nPos, nLen)
       nPos += nLen
@@ -1073,7 +1073,7 @@ PRIVATE FUNCTION AfxStrRetainAnyI (BYREF wszMainStr AS CONST WSTRING, BYREF wszM
    DIM cwsMatchStr AS CWSTR = UCASE(wszMatchStr)
    DIM nPos AS LONG
    FOR i AS LONG = 1 TO nLen
-      nPos = INSTR(cwsMatchStr, MID(cwsMainStr, i, 1))
+      nPos = INSTR(**cwsMatchStr, MID(**cwsMainStr, i, 1))
       IF nPos THEN cws += MID(wszMainStr, i, 1)
    NEXT
    RETURN cws
@@ -1125,21 +1125,21 @@ PRIVATE FUNCTION AfxStrShrink (BYREF wszMainStr AS CONST WSTRING, BYREF wszMask 
       wszDuplicate = MID(wszMask, i, 1) + MID(wszMask, i, 1)   ' usually double spaces
       nPos = 1
       DO
-         nPos = INSTR(cws, wszDuplicate)
+         nPos = INSTR(**cws, wszDuplicate)
          IF nPos = 0 THEN EXIT DO
-         cws = MID(cws, 1, nPos - 1) + wszReplace + MID(cws, nPos + LEN(wszDuplicate))
+         cws = MID(**cws, 1, nPos - 1) + wszReplace + MID(**cws, nPos + LEN(wszDuplicate))
       LOOP
    NEXT
    ' // Replace all single characters in the mask with the first character of the mask.
    nPos = 1
    DO
-      nPos = INSTR(nPos, cws, ANY wszMask)
+      nPos = INSTR(nPos, **cws, ANY wszMask)
       IF nPos = 0 THEN EXIT DO
       ' Only do the replace if the character at the position found is
       ' different than the character we need to replace it with. This saves
       ' us from having to do an unneeded string concatenation.
-      IF MID(cws, nPos, 1) <> wszReplace  THEN
-         cws = MID(cws, 1, nPos - 1) + wszReplace + MID(cws, nPos + 1)
+      IF MID(**cws, nPos, 1) <> wszReplace  THEN
+         cws = MID(**cws, 1, nPos - 1) + wszReplace + MID(**cws, nPos + 1)
       END IF
       nPos += 1
    LOOP
@@ -1148,9 +1148,9 @@ PRIVATE FUNCTION AfxStrShrink (BYREF wszMainStr AS CONST WSTRING, BYREF wszMask 
    wszDuplicate = MID(wszMask, 1, 1) + MID(wszMask, 1, 1)
    nPos = 1
    DO
-      nPos = INSTR(cws, wszDuplicate)
+      nPos = INSTR(**cws, wszDuplicate)
       IF nPos = 0 THEN EXIT DO
-      cws = MID(cws, 1, nPos - 1) + wszReplace + MID(cws, nPos + LEN(wszDuplicate))
+      cws = MID(**cws, 1, nPos - 1) + wszReplace + MID(**cws, nPos + LEN(wszDuplicate))
    LOOP
    RETURN cws
 END FUNCTION
@@ -1187,13 +1187,9 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION AfxStrParseCountAny (BYREF wszMainStr AS CONST WSTRING, BYREF wszDelimiter AS WSTRING = ",") AS LONG
    DIM nCount AS LONG = 1
-   DIM nPos AS LONG = 1
-   DO
-      nPos = INSTR(nPos, wszMainStr, ANY wszDelimiter)
-      IF nPos = 0 THEN EXIT DO
-      nCount += 1
-      nPos += LEN(wszDelimiter)
-   LOOP
+   FOR i AS LONG = 1 TO LEN(wszDelimiter)
+      nCount += AfxStrParseCount(wszMainStr, MID(wszDelimiter, i, 1))
+   NEXT
    RETURN nCount
 END FUNCTION
 ' ========================================================================================
