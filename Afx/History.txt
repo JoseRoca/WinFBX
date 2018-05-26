@@ -1,6 +1,13 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+26 May 2018
+- Modified the internal code of several functions that used INSTR with CWSTR variables.
+
+11 May 2018
+- Modified the AfxStrLSet, AfxStrRset and AfxStrCSet functions because they GPFed with
+the 64 bit compiler.
+
 6 Jan 2018 - Version 1.0.03
 - Added two overloaded AfxStrRemove functions.
 
