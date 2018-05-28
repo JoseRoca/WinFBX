@@ -852,7 +852,7 @@ PRIVATE FUNCTION AfxOpenFileDialog ( _
          IF pchar[i] = 0 THEN pchar[i] = ASC(",")
       NEXT
       ' // Trim trailing spaces
-      cwsFile = RTRIM(cwsFile, CHR(32))
+      cwsFile = RTRIM(**cwsFile, CHR(32))
       IF RIGHT(**cwsFile, 1) = "," THEN cwsFile = LEFT(**cwsFile, LEN(cwsFile) - 1)
    ELSE
       ' // Buffer too small
