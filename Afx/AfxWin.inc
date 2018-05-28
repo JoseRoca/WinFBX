@@ -809,7 +809,9 @@ PRIVATE FUNCTION AfxOpenFileDialog ( _
    NEXT
 
    ' // If the initial directory has not been specified, assume the current directory
-   IF LEN(wszInitialDir) = 0 THEN wszInitialDir = CURDIR
+   ' // FreeBasic 64 bit fails if we pass an empty string and we try to modify wszInitialDir
+   DIM _wszInitialDir AS WSTRING * MAX_PATH = wszInitialDir
+   IF LEN(_wszInitialDir) = 0 THEN _wszInitialDir = CURDIR
    ' // The size of the buffer must be at least MAX_PATH characters
    IF dwBufLen = 0 THEN
       IF (dwFlags AND OFN_ALLOWMULTISELECT = OFN_ALLOWMULTISELECT) THEN dwBufLen = 32768  ' // 64 Kb buffer
@@ -835,7 +837,7 @@ PRIVATE FUNCTION AfxOpenFileDialog ( _
    ofn.nFilterIndex    = 1
    ofn.lpstrFile       = *cwsFile
    ofn.nMaxFile        = dwFileStrSize
-   ofn.lpstrInitialDir = @wszInitialDir
+   ofn.lpstrInitialDir = @_wszInitialDir
    IF LEN(wszTitle) THEN ofn.lpstrTitle = @wszTitle
    ofn.Flags = dwFlags OR OFN_EXPLORER
    IF LEN(wszDefExt) THEN ofn.lpstrDefExt = @wszDefExt
@@ -907,7 +909,9 @@ PRIVATE FUNCTION AfxSaveFileDialog ( _
    NEXT
 
    ' // If the initial directory has not been specified, assume the current directory
-   IF LEN(wszInitialDir) = 0 THEN wszInitialDir = CURDIR
+   ' // FreeBasic 64 bit fails if we pass an empty string and we try to modify wszInitialDir
+   DIM _wszInitialDir AS WSTRING * MAX_PATH = wszInitialDir
+   IF LEN(_wszInitialDir) = 0 THEN _wszInitialDir = CURDIR
    DIM wszFile AS WSTRING * MAX_PATH = wszFileName
    DIM cwsFile AS CWSTR = wszFile & "|"
    ' // Store the position of the marker
@@ -927,7 +931,7 @@ PRIVATE FUNCTION AfxSaveFileDialog ( _
    ofn.nFilterIndex    = 1
    ofn.lpstrFile       = *cwsFile
    ofn.nMaxFile        = dwFileStrSize
-   ofn.lpstrInitialDir = @wszInitialDir
+   ofn.lpstrInitialDir = @_wszInitialDir
    IF LEN(wszTitle) THEN ofn.lpstrTitle = @wszTitle
    ofn.Flags = dwFlags OR OFN_EXPLORER
    IF LEN(wszDefExt) THEN ofn.lpstrDefExt = @wszDefExt
