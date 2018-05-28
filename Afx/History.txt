@@ -1,6 +1,10 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+27 May 2018
+- Modified the AfxOpenFileDialog and AfxSaveFileDialog functions because they GPFed with
+the 64 bit compiler.
+
 26 May 2018
 - Modified the internal code of several functions that used INSTR with CWSTR variables.
 
