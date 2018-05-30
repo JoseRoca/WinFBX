@@ -531,7 +531,7 @@ END FUNCTION
 ' buffer overflows, the class will automatically extend it to an appropriate size.
 ' ========================================================================================
 PRIVATE SUB CWstr.Add (BYREF cws AS CWSTR)
-   CWSTR_DP("CWSTR Add CWSTR - buffer = " & .WSTR(cws.m_pBuffer) & " - LEN = " & .WSTR(LEN(*cast(WSTRING PTR, @cws))))
+   CWSTR_DP("CWSTR Add CWSTR - buffer = " & .WSTR(cws.m_pBuffer) & " - LEN = " & .WSTR(cws.m_BufferLen \ 2))
    ' Incoming string is already in wide format, simply copy it to the buffer.
    DIM nLenString AS UINT = cws.m_BufferLen   ' // Length in bytes
    IF nLenString = 0 THEN RETURN
@@ -978,7 +978,7 @@ END FUNCTION
 ' Returns the rightmost substring of the string.
 ' ========================================================================================
 PRIVATE FUNCTION CWStr.RightChars (BYVAL nChars AS LONG) AS CWSTR
-   CWSTR_DP("CWBSTR LeftChars")
+   CWSTR_DP("CWSTR LeftChars")
    RETURN RIGHT(*cast(WSTRING PTR, m_pBuffer), nChars)
 END FUNCTION
 ' ========================================================================================
@@ -987,7 +987,7 @@ END FUNCTION
 ' Returns a substring of the string.
 ' ========================================================================================
 PRIVATE FUNCTION CWStr.MidChars (BYVAL nStart AS LONG, BYVAL nChars AS LONG = 0) AS CWSTR
-   CWSTR_DP("CBSTR MidChars")
+   CWSTR_DP("CWSTR MidChars")
    IF nChars = 0 THEN RETURN MID(*cast(WSTRING PTR, m_pBuffer), nStart)
    RETURN MID(*cast(WSTRING PTR, m_pBuffer), nStart, nChars)
 END FUNCTION
