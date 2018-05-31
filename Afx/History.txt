@@ -4,6 +4,8 @@ Windows Framework for FreeBASIC.
 31 May 2018
 - Modified AfxOpenFileDialog again to check for double double null only if the flag
 OFN_ALLOWMULTISELECT is used.
+- Modified the FilepPath method of the CFindFile class to use the Rooth method instead of
+the GetFullPathName API function.
 
 28 May 2018
 - Modified the AfxOpenFileDialog and AfxSaveFileDialog functions because they GPFed with

@@ -389,10 +389,7 @@ END FUNCTION
 ' FilePath returns the entire path for the file.
 ' ========================================================================================
 PRIVATE FUNCTION CFindFile.FilePath () AS CWSTR
-   DIM nLen AS LONG, buffer AS WSTRING * 4096
-   nLen = .GetFullPathNameW(m_FileInfo.cFileName, SIZEOF(buffer) \ 2, buffer, NULL)
-   IF nLen THEN RETURN LEFT(buffer, nLen)
-   RETURN ""
+   RETURN this.Root & m_FileInfo.cFileName
 END FUNCTION
 ' ========================================================================================
 
@@ -412,8 +409,8 @@ END FUNCTION
 ' Method Root
 ' Call this member function to get the root of the found file.
 ' This method returns the drive specifier and path name used to start a search.
-' For example, calling FindFile with *.dat results in GetRoot returning an empty string.
-' Passing a path, such as c:\windows\system\*.dll, to FindFile results GetRoot
+' For example, calling FindFile with *.dat results in Root returning an empty string.
+' Passing a path, such as c:\windows\system\*.dll, to FindFile results in Root
 ' returning c:\windows\system\.
 ' ========================================================================================
 PRIVATE FUNCTION CFindFile.Root () AS CWSTR
