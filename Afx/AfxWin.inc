@@ -814,7 +814,7 @@ PRIVATE FUNCTION AfxOpenFileDialog ( _
    IF LEN(_wszInitialDir) = 0 THEN _wszInitialDir = CURDIR
    ' // The size of the buffer must be at least MAX_PATH characters
    IF dwBufLen = 0 THEN
-      IF (dwFlags AND OFN_ALLOWMULTISELECT = OFN_ALLOWMULTISELECT) THEN dwBufLen = 32768  ' // 64 Kb buffer
+      IF (dwFlags AND OFN_ALLOWMULTISELECT) = OFN_ALLOWMULTISELECT THEN dwBufLen = 32768  ' // 64 Kb buffer
    END IF
    IF dwBufLen < 260 THEN dwBufLen = 260   ' // Make room for at least one path
    ' // Allocate the file name and a marker ("|") to be replaced with a null
@@ -844,13 +844,15 @@ PRIVATE FUNCTION AfxOpenFileDialog ( _
 
    ' // Call the open file dialog
    IF GetOpenFilenameW(@ofn) THEN
-      pchar = *cwsFile
-      FOR i AS LONG = 0 TO dwFileStrSize - 1
-         ' // If double null, exit
-         IF pchar[i] = 0 AND pchar[i + 1] = 0 THEN EXIT FOR
-         ' // Replace null with ","
-         IF pchar[i] = 0 THEN pchar[i] = ASC(",")
-      NEXT
+      IF (dwFlags AND OFN_ALLOWMULTISELECT) = OFN_ALLOWMULTISELECT THEN
+         pchar = *cwsFile
+         FOR i AS LONG = 0 TO dwFileStrSize - 1
+            ' // If double null, exit
+            IF pchar[i] = 0 AND pchar[i + 1] = 0 THEN EXIT FOR
+            ' // Replace null with ","
+            IF pchar[i] = 0 THEN pchar[i] = ASC(",")
+         NEXT
+      END IF
       ' // Trim trailing spaces
       cwsFile = RTRIM(**cwsFile, CHR(32))
       IF RIGHT(**cwsFile, 1) = "," THEN cwsFile = LEFT(**cwsFile, LEN(cwsFile) - 1)
