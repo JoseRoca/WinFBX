@@ -1,6 +1,10 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+31 May 2018
+- Modified AfxOpenFileDialog again to check for double double null only if the flag
+OFN_ALLOWMULTISELECT is used.
+
 28 May 2018
 - Modified the AfxOpenFileDialog and AfxSaveFileDialog functions because they GPFed with
 the 64 bit compiler. Also changed an instruction in AfxOpenFileDialog that prevented to work
