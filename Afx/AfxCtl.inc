@@ -131,7 +131,7 @@ DECLARE FUNCTION ListView_AutoSizeHeader (BYVAL hwndLV AS HWND) AS BOOLEAN
 DECLARE FUNCTION ListView_GetColumnCount (BYVAL hwndLV AS HWND) AS LONG
 DECLARE FUNCTION ListView_GetColumnOrder (BYVAL hwndLV AS HWND, BYVAL nCol AS LONG) AS LONG
 DECLARE FUNCTION ListView_GetOrderArray (BYVAL hwndLV AS HWND, BYVAL nSize AS DWORD, BYVAL lpiArray AS LONG PTR) AS LONG
-DECLARE FUNCTION LietView_GetTooltipsFont (BYVAL hwndLV AS HWND) AS HFONT
+DECLARE FUNCTION ListView_GetTooltipsFont (BYVAL hwndLV AS HWND) AS HFONT
 DECLARE SUB ListView_SetTooltipsFont (BYVAL hwndLV AS HWND, BYVAL hFont AS HFONT = NULL, BYVAL fRedraw AS BOOLEAN = FALSE)
 DECLARE FUNCTION ListView_GetColumnText (BYVAL hwndLV AS HWND, BYVAL nCol AS LONG, BYVAL pwszText AS WSTRING PTR, BYVAL cchTextMax AS LONG) AS BOOLEAN
 DECLARE FUNCTION ListView_GetHeaderText (BYVAL hwndLV AS HWND, BYVAL nCol AS LONG, BYVAL pwszText AS WSTRING PTR, BYVAL cchTextMax AS LONG) AS LONG
@@ -1682,7 +1682,7 @@ END FUNCTION
 ' The return value is a handle to the font used by the control, or NULL if the control is
 ' using the system font.
 ' ========================================================================================
-PRIVATE FUNCTION LietView_GetTooltipsFont (BYVAL hwndLV AS HWND) AS HFONT
+PRIVATE FUNCTION ListView_GetTooltipsFont (BYVAL hwndLV AS HWND) AS HFONT
    DIM hwndTooltips AS HWND = cast(HWND, SendMessageW(hwndLV, LVM_GETTOOLTIPS, 0, 0))
    FUNCTION = cast(HFONT, SendMessageW(hwndTooltips, WM_GETFONT, 0, 0))
 END FUNCTION

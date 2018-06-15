@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+16 Jun 2018
+- Typo: LietView_GetTooltipsFont changed to ListView_GetTooltipsFont.
+
 31 May 2018
 - Modified AfxOpenFileDialog again to check for double double null only if the flag
 OFN_ALLOWMULTISELECT is used.
