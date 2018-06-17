@@ -5,7 +5,7 @@
 ' Draws a themed button in Windows XP or superior and a classic button in the other Windows versions.
 ' Do not use it with Windows 95 because the TrackMouseEvent is not available in that OS.
 ' Compiler: FreeBasic 32 & 64-bit
-' Copyright (c) 2016 José Roca. Freeware. Use at your own risk.
+' Copyright (c) 2016-2018 José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
@@ -16,6 +16,7 @@
 #include once "win/tmschema.bi"
 #include once "win/uxtheme.bi"
 #include once "Afx/CWindow.inc"
+#include once "Afx/AfxGdiPlus.inc"
 
 NAMESPACE Afx
 
@@ -66,6 +67,11 @@ TYPE CXpButton
       m_bToggled          AS LONG          ' // Toggle flag
       m_bIsThemed         AS LONG          ' // Application is themed
       m_bClkDown          AS LONG          ' // Button received the button down message
+      m_hBkBrush          AS HBRUSH        ' // Background color brush
+      m_TextForeColor     AS COLORREF      ' // Text foreground color
+      m_TextBkColor       AS COLORREF      ' // Text background color
+      m_TextForeColorDown AS LONG = -1     ' // Text foreground down color
+      m_TextBkDownColor   AS LONG = -1     ' // Text background down color
 
    Public:
       DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszTitle AS WSTRING = "", _
@@ -107,6 +113,13 @@ TYPE CXpButton
       DECLARE SUB SetBitmap (BYVAL hBitmap AS HBITMAP, BYVAL ImageState AS LONG, BYVAL fRedraw AS LONG = FALSE)
       DECLARE SUB SetIconFromFile (BYVAL pwszPath AS WSTRING PTR, BYVAL ImageState AS LONG, BYVAL fRedraw AS LONG = FALSE)
       DECLARE SUB SetBitmapFromFile (BYVAL pwszPath AS WSTRING PTR, BYVAL ImageState AS LONG, BYVAL fRedraw AS LONG = FALSE)
+      DECLARE SUB SetImageFromFile (BYREF wszPath AS WSTRING, BYVAL ImageState AS LONG = XPBI_NORMAL, BYVAL fRedraw AS LONG = FALSE, BYVAL dimPercent AS LONG = 0, BYVAL bGrayScale AS LONG = FALSE)
+      DECLARE SUB SetImageFromRes (BYVAL hInstance AS HINSTANCE, BYREF wszImageName AS WSTRING, BYVAL ImageState AS LONG = XPBI_NORMAL, BYVAL fRedraw AS LONG = FALSE, BYVAL dimPercent AS LONG = 0, BYVAL bGrayScale AS LONG = FALSE)
+      DECLARE SUB SetButtonBkColor (BYVAL bkgColor AS COLORREF)
+      DECLARE SUB SetTextForeColor (BYVAL textColor AS COLORREF)
+      DECLARE SUB SetTextBkColor (BYVAL textColor AS COLORREF)
+      DECLARE SUB SetTextForeColorDown (BYVAL textColor AS COLORREF)
+      DECLARE SUB SetTextBkColorDown (BYVAL textColor AS COLORREF)
       DECLARE STATIC FUNCTION CXPButtonProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
 
 END TYPE
@@ -151,6 +164,10 @@ PRIVATE CONSTRUCTOR CXpButton (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_P
    m_TextMargin = 4
    m_hCursor = .LoadCursor(NULL, IDC_ARROW)
 
+   ' // Default text color
+   m_TextForeCOlor = GetSysColor(COLOR_BTNTEXT)
+   m_TextBkColor = GetSysColor(COLOR_BTNFACE)
+
    ' // Create the control
    IF dwStyle = 0 THEN dwStyle = WS_VISIBLE OR WS_TABSTOP OR BS_PUSHBUTTON OR BS_CENTER OR BS_VCENTER
    IF pWindow THEN m_hCtl = pWindow->AddControl(wszClassName, pWindow->hWindow, cID, wszTitle, x, y, nWidth, nHeight, dwStyle, dwExStyle, lpParam)
@@ -174,6 +191,8 @@ PRIVATE DESTRUCTOR CXpButton
    IF m_hImage THEN .DeleteObject m_hImage
    IF m_hHotImage THEN .DeleteObject m_hHotImage
    IF m_hDisabledImage THEN .DeleteObject m_hDisabledImage
+   ' // Deletes the brushes
+   IF m_hBkBrush THEN .DeleteObject m_hBkBrush
    ' // Deletes the font
    IF m_hFont THEN .DeleteObject m_hFont
 END DESTRUCTOR
@@ -250,11 +269,13 @@ PRIVATE FUNCTION CXpButton.CXPButtonProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT
          .GetWindowRect pButton->hWindow, @rc
          .GetCursorPos @pt
          IF .PtInRect(@rc, pt) THEN
-            pButton->m_bClkDown = CTRUE
-            IF pButton->m_bToggled = FALSE THEN
-               pButton->m_bToggled = CTRUE
-            ELSE
-               pButton->m_bToggled = FALSE
+            pButton->m_bClkDown = TRUE
+            IF pButton->m_bIsToggle THEN
+               IF pButton->m_bToggled = FALSE THEN
+                  pButton->m_bToggled = TRUE
+               ELSE
+                  pButton->m_bToggled = FALSE
+               END IF
             END IF
             pButton->m_fState = BST_PUSHED
             .SetCapture pButton->hWindow
@@ -288,10 +309,12 @@ PRIVATE FUNCTION CXpButton.CXPButtonProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT
          SELECT CASE wParam
             CASE VK_RETURN, VK_SPACE
                ' // Toggles the toggle flag
-               IF pButton->m_bToggled = FALSE THEN
-                  pButton->m_bToggled = CTRUE
-               ELSE
-                  pButton->m_bToggled = FALSE
+               IF pButton->m_bIsToggle THEN
+                  IF pButton->m_bToggled = FALSE THEN
+                     pButton->m_bToggled = TRUE
+                  ELSE
+                     pButton->m_bToggled = FALSE
+                  END IF
                END IF
                ' // Redraws the button in pushed state
                pButton->m_fState = BST_PUSHED
@@ -829,7 +852,7 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
             END IF
          END IF
       ELSE
-         .FillRect hDc, @rcContent, GetSysColorBrush(COLOR_BTNFACE)
+         IF m_hBkBrush = NULL THEN .FillRect hDc, @rcContent, GetSysColorBrush(COLOR_BTNFACE)
          IF bIsPressed THEN
             .FrameRect hDc, @rcContent, GetSysColorBrush(COLOR_BTNSHADOW)
          ELSE
@@ -839,6 +862,7 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
             .DrawFrameControl hDc, @rcContent, DFC_BUTTON, uState
          END IF
       END IF
+      IF m_hBkBrush THEN.FillRect hDc, @rcContent, m_hBkBrush
    END IF
 
    ' // Calculates the y-coordinate of the image
@@ -915,7 +939,7 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
          .DrawThemeText(hTheme, hDc, BP_PUSHBUTTON, iStateId, @wszCaption, -1, m_dwTextFlags, 0, @rcContent)
       ELSE
          ' // Uses GDI to draw the text
-         .SetBkMode hDc, TRANSPARENT
+         IF m_TextBkColor = GetSysColor(COLOR_BTNFACE) THEN .SetBkMode hDc, TRANSPARENT
          IF bIsDisabled THEN
             .OffsetRect @rcContent, 1, 1
             .SetTextColor hDc, GetSysColor(COLOR_3DHILIGHT)
@@ -924,8 +948,28 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
             .SetTextColor hDc, GetSysColor(COLOR_3DSHADOW)
             .DrawTextW hDc, @wszCaption, -1, @rcContent, m_dwTextFlags
          ELSE
-            .SetTextColor hDc, GetSysColor(COLOR_BTNTEXT)
-            .SetBkColor hDc, GetSysColor(COLOR_BTNFACE)
+'            .SetTextColor hDc, GetSysColor(COLOR_BTNTEXT)
+'            .SetBkColor hDc, GetSysColor(COLOR_BTNFACE)
+            IF m_bToggled THEN
+               IF m_TextForeColorDown <> -1 AND m_TextBkDownColor <> -1 THEN
+                  .SetTextColor hDc, m_TextForeColorDown
+                  .SetBkColor hDc, m_TextBkDownColor
+               ELSE
+                  .SetTextColor hDc, m_TextForeColor
+                  .SetBkColor hDc, m_TextBkColor
+               END IF
+            ELSEIF bIsPressed THEN
+               IF m_TextForeColorDown <> -1 OR m_TextBkDownColor <> -1 THEN
+                  .SetTextColor hDc, m_TextForeColorDown
+                  .SetBkColor hDc, m_TextBkDownColor
+               ELSE
+                  .SetTextColor hDc, m_TextForeColor
+                  .SetBkColor hDc, m_TextBkColor
+               END IF
+            ELSE
+               .SetTextColor hDc, m_TextForeColor
+               .SetBkColor hDc, m_TextBkColor
+            END IF
             .DrawTextW hDc, @wszCaption, -1, @rcContent, m_dwTextFlags
          END IF
       END IF
@@ -1055,6 +1099,91 @@ END SUB
 PRIVATE SUB CXpButton.SetBitmapFromFile (BYVAL pwszPath AS WSTRING PTR, BYVAL ImageState AS LONG, BYVAL fRedraw AS LONG = FALSE)
    DIM hBitmap AS HBITMAP = LoadImageW(NULL, pwszPath, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE)
    this.SetImage(hBitmap, IMAGE_BITMAP, ImageState, fRedraw)
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Loads an image from file and sets it as the image of the button.
+' - wszPath = Full path of the bitmap file.
+' - ImageState =
+'      XPBI_NORMAL = 1
+'      XPBI_HOT = 2
+'      XPBI_DISABLED = 3
+' - fRedraw       = TRUE or FALSE (redraws the button to reflect the changes)
+' - dimPercent    = Percent of dimming (1-99)
+' - bGrayScale    = TRUE or FALSE. Convert to gray scale.
+' ========================================================================================
+PRIVATE SUB CXpButton.SetImageFromFile (BYREF wszPath AS WSTRING, BYVAL ImageState AS LONG = XPBI_NORMAL, BYVAL fRedraw AS LONG = FALSE, _
+BYVAL dimPercent AS LONG = 0, BYVAL bGrayScale AS LONG = FALSE)
+   DIM hIcon AS HICON = AfxGdipIconFromFile(wszPath, dimPercent, bGrayScale)
+   this.SetIcon(hIcon, ImageState, fRedraw)
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Loads an image from a resource file and sets it as the image of the button.
+' - hInstance     = [in] A handle to the module whose portable executable file or an accompanying
+'                   MUI file contains the resource. If this parameter is NULL, the function searches
+'                   the module used to create the current process.
+' - wszImageName  = [in] Name of the image in the resource file (.RES). If the image resource uses
+'                   an integral identifier, wszImage should begin with a number symbol (#)
+'                   followed by the identifier in an ASCII format, e.g., "#998". Otherwise,
+'                   use the text identifier name for the image. Only images embedded as raw data
+'                   (type RCDATA) are valid. These must be icons in format .png, .jpg, .gif, .tiff.
+' - ImageState =
+'      XPBI_NORMAL = 1
+'      XPBI_HOT = 2
+'      XPBI_DISABLED = 3
+' - fRedraw       = TRUE or FALSE (redraws the button to reflect the changes)
+' - dimPercent    = Percent of dimming (1-99)
+' - bGrayScale    = TRUE or FALSE. Convert to gray scale.
+' ========================================================================================
+PRIVATE SUB CXpButton.SetImageFromRes (BYVAL hInstance AS HINSTANCE, BYREF wszImageName AS WSTRING, BYVAL ImageState AS LONG = XPBI_NORMAL, BYVAL fRedraw AS LONG = FALSE, _
+BYVAL dimPercent AS LONG = 0, BYVAL bGrayScale AS LONG = FALSE)
+   DIM hIcon AS HICON = AfxGdipIconFromRes(hInstance, wszImageName, dimPercent, bGrayScale)
+   this.SetIcon(hIcon, ImageState, fRedraw)
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Sets the background color of the button.
+' ========================================================================================
+PRIVATE SUB CXpButton.SetButtonBkColor (BYVAL bkColor AS COLORREF)
+   IF m_hBkBrush THEN .DeleteObject m_hBkBrush
+   m_hBkBrush = CreateSolidBrush(bkColor)
+   this.Redraw
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Sets the text foreground color of the button.
+' ========================================================================================
+PRIVATE SUB CXpButton.SetTextForeColor (BYVAL textColor AS COLORREF)
+   m_TextForeColor = textColor
+   this.Redraw
+END SUB
+' ========================================================================================
+' ========================================================================================
+' Sets the text background color of the button.
+' ========================================================================================
+PRIVATE SUB CXpButton.SetTextBkColor (BYVAL textColor AS COLORREF)
+   m_TextBkColor = textColor
+   this.Redraw
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Sets the text foreground color of the button when it is down (pressed).
+' ========================================================================================
+PRIVATE SUB CXpButton.SetTextForeColorDown (BYVAL textColor AS COLORREF)
+   m_TextForeColorDown = textColor
+END SUB
+' ========================================================================================
+' ========================================================================================
+' Sets the text background color of the button when it is down (pressed)
+' ========================================================================================
+PRIVATE SUB CXpButton.SetTextBkColorDown (BYVAL textColor AS COLORREF)
+   m_TextBkDownColor = textColor
 END SUB
 ' ========================================================================================
 
