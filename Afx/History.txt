@@ -2,7 +2,7 @@ WinFBX
 Windows Framework for FreeBASIC.
 
 17 Jun 2018
-- Modified CXpButton.inc to allow colured buttons.
+- Modified CXpButton.inc to allow coloured buttons.
 
 16 Jun 2018
 - Typo: LietView_GetTooltipsFont changed to ListView_GetTooltipsFont.
