@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+20 Jun 2018
+- AfxGetWindowLocation: Changed parameters from AS LONG PTR to BYREF AS LONG.
+
 17 Jun 2018
 - Modified CXpButton.inc to allow coloured buttons.
 
