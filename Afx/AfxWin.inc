@@ -1730,15 +1730,15 @@ END FUNCTION
 ' Gets the location of the top left corner of the window, in pixels.
 ' The location is relative to the upper-left corner of the client area in the parent window.
 ' ========================================================================================
-PRIVATE SUB AfxGetWindowLocation (BYVAL hwnd AS HWND, BYVAL nLeft AS LONG PTR, BYVAL nTop AS LONG PTR)
+PRIVATE SUB AfxGetWindowLocation (BYVAL hwnd AS HWND, BYREF nLeft AS LONG, BYREF nTop AS LONG)
    DIM rc AS RECT
    ' // Get the dimensions of the window
    GetWindowRect(hwnd, @rc)
    ' // Convert the coordinates to be relative to the parent
    MapWindowPoints(HWND_DESKTOP, GetParent(hwnd), CAST(POINT PTR, @rc), 2)
    ' // Return the left and top values
-   *nLeft = rc.Left
-   *nTop = rc.Top
+   nLeft = rc.Left
+   nTop = rc.Top
 END SUB
 ' ========================================================================================
 
