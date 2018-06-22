@@ -48,6 +48,39 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Returns command line parameters used to call the program
+' Unicode replacement for FreeBasic Command keyword.
+' Usage: result = AfxCommand ( [ index ] )
+' Parameter:
+' - index : Zero-based index for a particular command-line argument.
+' Return Value
+'   Returns the command-line arguments(s).
+' Description
+'   - AfxCommand returns command-line arguments passed to the program upon execution.
+'   - If index is less than zero (< 0), a space-separated list of all command-line arguments
+'   is returned, otherwise, a single argument is returned. A value of zero (0) returns the
+'   name of the executable; and values of one (1) and greater return each command-line argument.
+'   - If index is greater than the number of arguments passed to the program, a null
+'     string ("") is returned.
+' ========================================================================================
+PRIVATE FUNCTION AfxCommand (BYVAL nIndex AS LONG = -1) AS CWSTR
+   DIM pArgsList AS WSTRING PTR PTR, nArgs AS LONG, cwsArgs AS CWSTR
+   pArgsList = CAST(WSTRING PTR PTR, CommandLineToArgvW(GetCommandLineW, @nArgs))
+   IF pArgsList = NULL OR nIndex > nArgs THEN RETURN cwsArgs
+   IF nIndex < 0 THEN
+      FOR i AS LONG = 1 TO nArgs - 1
+         cwsArgs += *pArgsList[i] & " "
+      NEXT
+      cwsArgs = RTRIM(**cwsArgs)
+   ELSE
+      cwsArgs = *pArgsList[nIndex]
+   END IF
+   LocalFree CAST(HLOCAL, pArgsList)
+   RETURN cwsArgs
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Returns the description of the specified Windows error code.
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetWinErrMsg (BYVAL dwError AS DWORD) AS CWSTR
