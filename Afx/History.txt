@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+22 Jun 2018
+- AfxWin.inc: Added the function AfxCommand.
+
 20 Jun 2018
 - AfxGetWindowLocation: Changed parameters from AS LONG PTR to BYREF AS LONG.
 
