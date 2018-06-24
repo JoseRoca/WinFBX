@@ -110,7 +110,7 @@ TYPE CUTF16
 		DECLARE FUNCTION Insert (BYREF cws AS CUTF16, BYVAL nIndex AS UINT) AS BOOLEAN
 		DECLARE FUNCTION Insert (BYREF cws AS CWSTR, BYVAL nIndex AS UINT) AS BOOLEAN
       DECLARE FUNCTION Insert (BYREF cbs AS CBSTR_, BYVAL nIndex AS LONG) AS BOOLEAN
-      DECLARE OPERATOR CAST () BYREF AS WSTRING
+      DECLARE OPERATOR CAST () BYREF AS CONST WSTRING
       DECLARE OPERATOR CAST () AS ANY PTR
       DECLARE OPERATOR LET (BYREF wszStr AS CONST WSTRING)
       DECLARE OPERATOR LET (BYREF pwszStr AS WSTRING PTR)
@@ -137,7 +137,7 @@ TYPE CUTF16
       DECLARE OPERATOR &= (BYVAL n AS DOUBLE)
       DECLARE FUNCTION vptr () AS WSTRING PTR
       DECLARE FUNCTION sptr () AS WSTRING PTR
-      DECLARE FUNCTION wstr () BYREF AS WSTRING
+      DECLARE FUNCTION wstr () BYREF AS CONST WSTRING
       DECLARE FUNCTION wchar () AS WSTRING PTR
       DECLARE PROPERTY utf8 () AS STRING
       DECLARE PROPERTY utf8 (BYREF ansiStr AS STRING)
@@ -311,7 +311,7 @@ END OPERATOR
 ' ========================================================================================
 ' Returns the string data (same as **).
 ' ========================================================================================
-PRIVATE OPERATOR CUTF16.CAST () BYREF AS WSTRING
+PRIVATE OPERATOR CUTF16.CAST () BYREF AS CONST WSTRING
    CUTF16_DP("CUTF16 CAST BYREF AS WSTRING - buffer: " & .WSTR(m_pBuffer))
    OPERATOR = *m_pBuffer
 END OPERATOR
@@ -319,7 +319,7 @@ END OPERATOR
 ' ========================================================================================
 ' Returns the string data (same as **).
 ' ========================================================================================
-PRIVATE FUNCTION CUTF16.wstr () BYREF AS WSTRING
+PRIVATE FUNCTION CUTF16.wstr () BYREF AS CONST WSTRING
    CUTF16_DP("CUTF16 StrAddr - buffer: " & .WSTR(m_pBuffer))
    RETURN *m_pBuffer
 END FUNCTION

@@ -99,7 +99,7 @@ TYPE CBSTR
       DECLARE FUNCTION bptr () AS AFX_BSTR
       DECLARE FUNCTION vptr () AS AFX_BSTR PTR
       DECLARE FUNCTION sptr () AS WSTRING PTR
-      DECLARE FUNCTION wstr () BYREF AS WSTRING
+      DECLARE FUNCTION wstr () BYREF AS CONST WSTRING
       DECLARE FUNCTION wchar () AS WSTRING PTR
       DECLARE OPERATOR LET (BYREF ansiStr AS STRING)
       DECLARE OPERATOR LET (BYREF wszStr AS CONST WSTRING)
@@ -108,7 +108,7 @@ TYPE CBSTR
       DECLARE OPERATOR LET (BYREF bstrHandle AS AFX_BSTR)
       DECLARE OPERATOR LET (BYVAL n AS LONGINT)
       DECLARE OPERATOR LET (BYVAL n AS DOUBLE)
-      DECLARE OPERATOR CAST () BYREF AS WSTRING
+      DECLARE OPERATOR CAST () BYREF AS CONST WSTRING
       DECLARE OPERATOR CAST () AS ANY PTR
       DECLARE PROPERTY CodePage () AS UINT
       DECLARE PROPERTY CodePage (BYVAL nCodePage AS UINT)
@@ -193,7 +193,7 @@ TYPE CWSTR
       DECLARE FUNCTION Insert (BYREF cbs AS CBSTR_, BYVAL nIndex AS LONG) AS BOOLEAN
       DECLARE FUNCTION Insert (BYVAL pwszStr AS WSTRING PTR, BYVAL nIndex AS UINT) AS BOOLEAN
       DECLARE FUNCTION Insert (BYREF ansiStr AS STRING, BYVAL nIndex AS UINT, BYVAL nCodePage AS UINT = 0) AS BOOLEAN
-      DECLARE OPERATOR CAST () BYREF AS WSTRING
+      DECLARE OPERATOR CAST () BYREF AS CONST WSTRING
       DECLARE OPERATOR CAST () AS ANY PTR
       DECLARE OPERATOR LET (BYREF ansiStr AS STRING)
       DECLARE OPERATOR LET (BYREF wszStr AS CONST WSTRING)
@@ -217,7 +217,7 @@ TYPE CWSTR
       DECLARE OPERATOR &= (BYVAL n AS DOUBLE)
       DECLARE FUNCTION vptr () AS WSTRING PTR
       DECLARE FUNCTION sptr () AS WSTRING PTR
-      DECLARE FUNCTION wstr () BYREF AS WSTRING
+      DECLARE FUNCTION wstr () BYREF AS CONST WSTRING
       DECLARE FUNCTION wchar () AS WSTRING PTR
       DECLARE PROPERTY utf8 () AS STRING
       DECLARE PROPERTY utf8 (BYREF ansiStr AS STRING)
@@ -389,7 +389,7 @@ END OPERATOR
 ' ========================================================================================
 ' Returns the string data (same as **).
 ' ========================================================================================
-PRIVATE OPERATOR CWstr.CAST () BYREF AS WSTRING
+PRIVATE OPERATOR CWstr.CAST () BYREF AS CONST WSTRING
    CWSTR_DP("CWSTR CAST BYREF AS WSTRING - buffer: " & .WSTR(m_pBuffer))
    OPERATOR = *cast(WSTRING PTR, m_pBuffer)
 END OPERATOR
@@ -397,7 +397,7 @@ END OPERATOR
 ' ========================================================================================
 ' Returns the string data (same as **).
 ' ========================================================================================
-PRIVATE FUNCTION CWstr.wstr () BYREF AS WSTRING
+PRIVATE FUNCTION CWstr.wstr () BYREF AS CONST WSTRING
    CWSTR_DP("CWSTR wstr - buffer: " & .WSTR(m_pBuffer))
    RETURN *cast(WSTRING PTR, m_pBuffer)
 END FUNCTION
@@ -1335,7 +1335,7 @@ END OPERATOR
 ' ========================================================================================
 ' * Returns a pointer to the string data (same as **)
 ' ========================================================================================
-PRIVATE OPERATOR CBStr.CAST () BYREF AS WSTRING
+PRIVATE OPERATOR CBStr.CAST () BYREF AS CONST WSTRING
    CBSTR_DP("CBSTR OPERATOR CAST BYREF AS WSTRING " & .WSTR(m_bstr))
    OPERATOR =  *CAST(WSTRING PTR, m_bstr)
 END OPERATOR
@@ -1352,7 +1352,7 @@ END OPERATOR
 ' ========================================================================================
 ' * Returns a pointer to the string data (same as **)
 ' ========================================================================================
-PRIVATE FUNCTION CBStr.wstr () BYREF AS WSTRING
+PRIVATE FUNCTION CBStr.wstr () BYREF AS CONST WSTRING
    CBSTR_DP("CBSTR wstr " & .WSTR(m_bstr))
    RETURN *CAST(WSTRING PTR, m_bstr)
 END FUNCTION
