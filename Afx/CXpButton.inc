@@ -72,6 +72,8 @@ TYPE CXpButton
       m_TextBkColor       AS COLORREF      ' // Text background color
       m_TextForeColorDown AS LONG = -1     ' // Text foreground down color
       m_TextBkDownColor   AS LONG = -1     ' // Text background down color
+      m_rx                AS SINGLE = 1    ' // Horizontal scaling ratio
+      m_ry                AS SINGLE = 1    ' // Vertical scaling ratio
 
    Public:
       DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszTitle AS WSTRING = "", _
@@ -164,8 +166,12 @@ PRIVATE CONSTRUCTOR CXpButton (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_P
    m_TextMargin = 4
    m_hCursor = .LoadCursor(NULL, IDC_ARROW)
 
+   ' // Scaling
+   m_rx = pWindow->rxRatio
+   m_ry = pWindow->ryRatio
+
    ' // Default text color
-   m_TextForeCOlor = GetSysColor(COLOR_BTNTEXT)
+   m_TextForeColor = GetSysColor(COLOR_BTNTEXT)
    m_TextBkColor = GetSysColor(COLOR_BTNFACE)
 
    ' // Create the control
@@ -876,13 +882,13 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
 
    ' // Calculates the x-coordinate of the image
    IF (m_ImagePos AND XPBI_RIGHT) = XPBI_RIGHT THEN
-      ix = rcContent.Right - m_ImageMargin - m_ImageWidth
+      ix = rcContent.Right - (m_ImageMargin * m_rx) - m_ImageWidth
    ELSEIF (m_ImagePos AND XPBI_LEFT) = XPBI_LEFT THEN
-      ix = rcContent.Left + m_ImageMargin
+      ix = rcContent.Left + (m_ImageMargin * m_rx)
    ELSEIF (m_ImagePos AND XPBI_CENTER) = XPBI_CENTER THEN
       ix = ((rcClient.Right - rcClient.Left) \ 2) - (m_ImageWidth \ 2)
    ELSE
-      ix = rcContent.Left + m_ImageMargin
+      ix = rcContent.Left + (m_ImageMargin * m_rx)
    END IF
 
    ' // If state = pressed, show the icon slightly displaced
@@ -910,17 +916,17 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
          IF (m_dwTextFlags AND DT_CENTER) <> DT_CENTER AND _
             (m_dwTextFlags AND DT_RIGHT) <> DT_RIGHT THEN
             IF (m_ImagePos AND XPBI_ABOVE) = XPBI_ABOVE THEN
-               rcContent.Left = rcContent.Left + m_TextMargin
+               rcContent.Left = rcContent.Left + (m_TextMargin * m_rx)
             ELSE
-               rcContent.Left = rcContent.Left + m_TextMargin + m_ImageWidth + m_ImageMargin
+               rcContent.Left = rcContent.Left + (m_TextMargin * m_rx) + m_ImageWidth + (m_ImageMargin * m_rx)
             END IF
          END IF
       ELSEIF (m_ImagePos AND XPBI_RIGHT) = XPBI_RIGHT THEN
          IF (m_dwTextFlags AND DT_RIGHT) = DT_RIGHT THEN
             IF (m_ImagePos AND XPBI_ABOVE) = XPBI_ABOVE THEN
-               rcContent.Right = rcContent.Right - m_TextMargin
+               rcContent.Right = rcContent.Right - (m_TextMargin * m_rx)
             ELSE
-               rcContent.Right = rcContent.Right - m_TextMargin - m_ImageWidth - m_ImageMargin
+               rcContent.Right = rcContent.Right - (m_TextMargin * m_rx)  - m_ImageWidth - (m_ImageMargin * m_rx)
             END IF
          END IF
       END IF
@@ -930,9 +936,9 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
       IF (m_dwTextFlags AND DT_CENTER) = DT_CENTER THEN
          ' Do nothing
       ELSEIF (m_dwTextFlags AND DT_RIGHT) = DT_RIGHT THEN
-         rcContent.Right = rcContent.Right - m_TextMargin
+         rcContent.Right = rcContent.Right - (m_TextMargin * m_rx)
       ELSEIF (m_dwTextFlags AND DT_LEFT) = DT_LEFT THEN
-         rcContent.Left = rcContent.Left + m_TextMargin
+         rcContent.Left = rcContent.Left + (m_TextMargin * m_rx)
       END IF
       IF m_bIsThemed THEN
          ' // Draws the text using the theme-specified color and font for the "iPartId" and "iStateId"
