@@ -3,6 +3,7 @@ Windows Framework for FreeBASIC.
 
 29 Jun 2018 - Version 1.0.03
 - Removed the 80 characters limitation to the AfxAddTooltip and AfxSetTooltipText functions.
+- Added CONST to the string parameters of several procedures.
 
 27 Jun 2018 - Version 1.0.03
 - Added DPI awareness to the text and image margins.

@@ -2354,7 +2354,7 @@ END FUNCTION
 ' - wszFileName: Path of the file
 ' - szDelimiter: Delimiter of the line (CHR(13, 10) in Windows, CHR(10) in Linmux).
 ' ========================================================================================
-PRIVATE FUNCTION AfxFileReadAllLinesA (BYREF wszFileName AS WSTRING, BYREF szDelimiter AS ZSTRING = CHR(13, 10)) AS CSafeArray
+PRIVATE FUNCTION AfxFileReadAllLinesA (BYREF wszFileName AS WSTRING, BYREF szDelimiter AS CONST ZSTRING = CHR(13, 10)) AS CSafeArray
    DIM _csa AS CSafeArray = CSafeArray(VT_BSTR, 0, 1)
    DIM dwCount AS DWORD, dwFileSize AS DWORD, dwHighSize AS DWORD, dwBytesRead AS DWORD
    IF LEN(szDelimiter) = 0 THEN RETURN _csa
@@ -2427,7 +2427,7 @@ END FUNCTION
 ' - wszFileName: Path of the file
 ' - szDelimiter: Delimiter of the line (CHR(13, 10) in Windows, CHR(10) in Linmux).
 ' ========================================================================================
-PRIVATE FUNCTION AfxFileReadAllLinesW (BYREF wszFileName AS WSTRING, BYREF wszDelimiter AS WSTRING = CHR(13, 10)) AS CSafeArray
+PRIVATE FUNCTION AfxFileReadAllLinesW (BYREF wszFileName AS WSTRING, BYREF wszDelimiter AS CONST WSTRING = CHR(13, 10)) AS CSafeArray
    DIM _csa AS CSafeArray = CSafeArray(VT_BSTR, 0, 1)
    DIM dwCount AS DWORD, dwFileSize AS DWORD, dwHighSize AS DWORD, dwBytesRead AS DWORD
    IF LEN(wszDelimiter) = 0 THEN RETURN _csa
