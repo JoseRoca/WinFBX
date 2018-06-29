@@ -1,45 +1,45 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
-29 Jun 2018
+29 Jun 2018 - Version 1.0.03
 - Removed the 80 characters limitation to the AfxAddTooltip and AfxSetTooltipText functions.
 
-27 Jun 2018
+27 Jun 2018 - Version 1.0.03
 - Added DPI awareness to the text and image margins.
 
-24 Jun 2018
+24 Jun 2018 - Version 1.0.03
 - CWSTR.inc and CVAR.inc: Changed the casting from BYREF AS WSTRING to BYREF AS CONST WSTRING.
 Without the CONST typifier, if you pass a CWSTR to a function that has a WSTRING or WSTRING PTR
 as a parameter, you can indirectly modify the passed CWSTR by modyfing the parameter, which can
 cause a buffer overrun.
 
-22 Jun 2018
+22 Jun 2018 - Version 1.0.03
 - AfxWin.inc: Added the function AfxCommand.
 
-20 Jun 2018
+20 Jun 2018 - Version 1.0.03
 - AfxGetWindowLocation: Changed parameters from AS LONG PTR to BYREF AS LONG.
 
-17 Jun 2018
+17 Jun 2018 - Version 1.0.03
 - Modified CXpButton.inc to allow coloured buttons.
 
-16 Jun 2018
+16 Jun 2018 - Version 1.0.03
 - Typo: LietView_GetTooltipsFont changed to ListView_GetTooltipsFont.
 
-31 May 2018
+31 May 2018 - Version 1.0.03
 - Modified AfxOpenFileDialog again to check for double double null only if the flag
 OFN_ALLOWMULTISELECT is used.
 - Modified the FilepPath method of the CFindFile class to use the Rooth method instead of
 the GetFullPathName API function.
 
-28 May 2018
+28 May 2018 - Version 1.0.03
 - Modified the AfxOpenFileDialog and AfxSaveFileDialog functions because they GPFed with
 the 64 bit compiler. Also changed an instruction in AfxOpenFileDialog that prevented to work
 with non Latin alphabets.
 
-26 May 2018
+26 May 2018 - Version 1.0.03
 - Modified the internal code of several functions that used INSTR with CWSTR variables.
 
-11 May 2018
+11 May 2018 - Version 1.0.03
 - Modified the AfxStrLSet, AfxStrRset and AfxStrCSet functions because they GPFed with
 the 64 bit compiler.
 
