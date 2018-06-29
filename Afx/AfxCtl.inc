@@ -5186,10 +5186,7 @@ PRIVATE FUNCTION AfxAddTooltip (BYVAL hwnd AS HWND, BYREF wszText AS CONST WSTRI
    END IF
    IF bCentered THEN tti.uFlags = tti.uFlags OR TTF_CENTERTIP
    tti.hinst = GetModuleHandleW(NULL)
-   ' // The length of the string must not exceed of 80 characters, including the terminating null
-   DIM wszTooltipText AS WSTRING * 80
-   wszTooltipText = wszText
-   tti.lpszText = @wszTooltipText
+   tti.lpszText = CAST(LPWSTR, @wszText)
    SendMessageW(hTooltip, TTM_ADDTOOLW, 0, CAST(LPARAM, @tti))
    FUNCTION = hTooltip
 END FUNCTION
@@ -5204,9 +5201,6 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE SUB AfxSetTooltipText (BYVAL hTooltip AS HWND, BYVAL hwnd AS HWND, BYREF wszText AS CONST WSTRING)
    IF hTooltip = NULL OR hwnd = NULL THEN EXIT SUB
-   ' // The length of the text must not exceed of 80 characters, including the terminating null.
-   DIM wszTooltipText AS WSTRING * 80
-   wszTooltipText = wszText
    ' // 32-bit: The size of the TOOLINFOW structure is 48 bytes in
    '    version 6 of comctl32.dll, and 44 bytes in lower versions.
    ' // 64-bit: The size of the TOOLINFOW structure is 72 bytes in
@@ -5227,7 +5221,7 @@ PRIVATE SUB AfxSetTooltipText (BYVAL hTooltip AS HWND, BYVAL hwnd AS HWND, BYREF
    ' // Retrieve the tooltip information
    SendMessageW(hTooltip, TTM_GETTOOLINFOW, 0, CAST(LPARAM, @tti))
    IF SendMessageW(hTooltip, TTM_GETTOOLINFOW, 0, CAST(LPARAM, @tti)) THEN
-      tti.lpszText = @wszTooltipText
+      tti.lpszText = CAST(LPWSTR, @wszText)
       SendMessageW(hTooltip, TTM_SETTOOLINFOW, 0, CAST(LPARAM, @tti))
    END IF
    ' // Note: Windows provides the TTM_UPDATETIPTEXT message, but needs Vista or superior.
