@@ -2894,7 +2894,7 @@ END FUNCTION
 PRIVATE FUNCTION AfxDibSaveImage (BYVAL pwszFileName AS WSTRING PTR, BYVAL pbmfh AS BITMAPFILEHEADER PTR) AS BOOLEAN
    DIM bSuccess AS LONG, dwBytesWritten AS DWORD, hFile  AS HANDLE
    IF pbmfh = NULL THEN EXIT FUNCTION
-   hFile = CreateFileW(pwszFileName, GENERIC_WRITE, 0, BYVAL NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL)
+   hFile = CreateFileW(pwszFileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL)
    IF hFile = INVALID_HANDLE_VALUE THEN EXIT FUNCTION
    bSuccess = WriteFile(hFile, pbmfh, pbmfh->bfSize, @dwBytesWritten, NULL)
    CloseHandle(hFile)

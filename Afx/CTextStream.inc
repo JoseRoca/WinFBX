@@ -3,7 +3,7 @@
 ' File: CTextStream.inc
 ' Contents: Wrapper class for reading and writing text files.
 ' Compiler: FreeBasic 32 & 64-bit
-' Copyright (c) 2016 José Roca. Freeware. Use at your own risk.
+' Copyright (c) 2016-2018 José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
@@ -37,6 +37,12 @@ Public:
    DECLARE FUNCTION Create (BYREF cbsFileName AS CBSTR, BYVAL bOverwrite AS BOOLEAN = TRUE, BYVAL bUnicode AS BOOLEAN = FALSE) AS HRESULT
    DECLARE FUNCTION Open (BYREF cbsFileName AS CBSTR, BYVAL IOMode AS LONG = 1, BYVAL bCreate AS BOOLEAN = FALSE, BYVAL bUnicode AS BOOLEAN = FALSE) AS HRESULT
    DECLARE FUNCTION OpenUnicode (BYREF cbsFileName AS CBSTR, BYVAL IOMode AS LONG = 1, BYVAL bCreate AS BOOLEAN = FALSE) AS HRESULT
+   DECLARE FUNCTION OpenForInputA (BYREF cbsFileName AS CBSTR, BYVAL bCreate AS BOOLEAN = FALSE) AS HRESULT
+   DECLARE FUNCTION OpenForOutputA (BYREF cbsFileName AS CBSTR, BYVAL bCreate AS BOOLEAN = FALSE) AS HRESULT
+   DECLARE FUNCTION OpenForAppendA (BYREF cbsFileName AS CBSTR, BYVAL bCreate AS BOOLEAN = FALSE) AS HRESULT
+   DECLARE FUNCTION OpenForInputW (BYREF cbsFileName AS CBSTR, BYVAL bCreate AS BOOLEAN = FALSE) AS HRESULT
+   DECLARE FUNCTION OpenForOutputW (BYREF cbsFileName AS CBSTR, BYVAL bCreate AS BOOLEAN = FALSE) AS HRESULT
+   DECLARE FUNCTION OpenForAppendW (BYREF cbsFileName AS CBSTR, BYVAL bCreate AS BOOLEAN = FALSE) AS HRESULT
    DECLARE FUNCTION Close () AS HRESULT
    DECLARE PROPERTY Line () AS LONG
    DECLARE PROPERTY Column () AS LONG
@@ -50,6 +56,7 @@ Public:
    DECLARE FUNCTION WriteBlankLines (BYVAL numLines AS LONG) AS HRESULT
    DECLARE FUNCTION Skip (BYVAL numChars AS LONG) AS HRESULT
    DECLARE FUNCTION SkipLine () AS HRESULT
+   DECLARE FUNCTION GetErrorInfo () AS STRING
 
 END TYPE
 ' ########################################################################################
@@ -96,6 +103,33 @@ END FUNCTION
 PRIVATE FUNCTION CTextStream.SetResult (BYVAL Result AS HRESULT) AS HRESULT
    m_Result = Result
    RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a description of the last status code.
+' ========================================================================================
+PRIVATE FUNCTION CTextStream.GetErrorInfo () AS STRING
+   IF SUCCEEDED(m_Result) THEN RETURN ""
+   DIM s AS STRING = "Error &h" & HEX(m_Result, 8)
+   SELECT CASE m_Result
+      CASE &h800A0034 : s += ": Bad file name or number"
+      CASE &h800A0035 : s += ": File not found"
+      CASE &h800A0036 : s += ": Bad file mode"
+      CASE &h800A0037 : s += ": File is already open"
+      CASE &h800A0039 : s += ": Device I/O error"
+      CASE &h800A003A : s += ": File already exists"
+      CASE &h800A003D : s += ": Disk space is full"
+      CASE &h800A003E : s += ": Input beyond the end of the file"
+      CASE &h800A0043 : s += ": Too many files"
+      CASE &h800A0044 : s += ": Device not available"
+      CASE &h800A0046 : s += ": Permission denied"
+      CASE &h800A0047 : s += ": Disk not ready"
+      CASE &h800A004A : s += ": Cannot rename with different drive"
+      CASE &h800A004B : s += ": Path/file access error"
+      CASE &h800A004C : s += ": Path not found"
+   END SELECT
+   RETURN s
 END FUNCTION
 ' ========================================================================================
 
@@ -160,6 +194,70 @@ PRIVATE FUNCTION CTextStream.OpenUnicode (BYREF cbsFileName AS CBSTR, BYVAL IOMo
       m_pTxtStm = NULL
    END IF
    RETURN SetResult(m_pFileSys->OpenTextFile(**cbsFileName, IOMode, bCreate, Tristate_True, @m_pTxtStm))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Additional methods to ease opening files
+' ========================================================================================
+PRIVATE FUNCTION CTextStream.OpenForInputA (BYREF cbsFileName AS CBSTR, BYVAL bCreate AS BOOLEAN = FALSE) AS HRESULT
+   IF m_pTxtStm THEN
+      SetResult(m_pTxtStm->Close)
+      m_pTxtStm->Release
+      m_pTxtStm = NULL
+   END IF
+   RETURN SetResult(m_pFileSys->OpenTextFile(**cbsFileName, IOMode_ForReading, bCreate, TriState_False, @m_pTxtStm))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CTextStream.OpenForOutputA (BYREF cbsFileName AS CBSTR, BYVAL bCreate AS BOOLEAN = FALSE) AS HRESULT
+   IF m_pTxtStm THEN
+      SetResult(m_pTxtStm->Close)
+      m_pTxtStm->Release
+      m_pTxtStm = NULL
+   END IF
+   RETURN SetResult(m_pFileSys->OpenTextFile(**cbsFileName, IOMode_ForWriting, bCreate, TriState_False, @m_pTxtStm))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CTextStream.OpenForAppendA (BYREF cbsFileName AS CBSTR, BYVAL bCreate AS BOOLEAN = FALSE) AS HRESULT
+   IF m_pTxtStm THEN
+      SetResult(m_pTxtStm->Close)
+      m_pTxtStm->Release
+      m_pTxtStm = NULL
+   END IF
+   RETURN SetResult(m_pFileSys->OpenTextFile(**cbsFileName, IOMode_ForAppending, bCreate, TriState_False, @m_pTxtStm))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+PRIVATE FUNCTION CTextStream.OpenForInputW (BYREF cbsFileName AS CBSTR, BYVAL bCreate AS BOOLEAN = FALSE) AS HRESULT
+   IF m_pTxtStm THEN
+      SetResult(m_pTxtStm->Close)
+      m_pTxtStm->Release
+      m_pTxtStm = NULL
+   END IF
+   RETURN SetResult(m_pFileSys->OpenTextFile(**cbsFileName, IOMode_ForReading, bCreate, TriState_True, @m_pTxtStm))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CTextStream.OpenForOutputW (BYREF cbsFileName AS CBSTR, BYVAL bCreate AS BOOLEAN = FALSE) AS HRESULT
+   IF m_pTxtStm THEN
+      SetResult(m_pTxtStm->Close)
+      m_pTxtStm->Release
+      m_pTxtStm = NULL
+   END IF
+   RETURN SetResult(m_pFileSys->OpenTextFile(**cbsFileName, IOMode_ForWriting, bCreate, TriState_True, @m_pTxtStm))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CTextStream.OpenForAppendW (BYREF cbsFileName AS CBSTR, BYVAL bCreate AS BOOLEAN = FALSE) AS HRESULT
+   IF m_pTxtStm THEN
+      SetResult(m_pTxtStm->Close)
+      m_pTxtStm->Release
+      m_pTxtStm = NULL
+   END IF
+   RETURN SetResult(m_pFileSys->OpenTextFile(**cbsFileName, IOMode_ForAppending, bCreate, TriState_True, @m_pTxtStm))
 END FUNCTION
 ' ========================================================================================
 

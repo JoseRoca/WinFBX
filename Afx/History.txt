@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+2 Jul 2018 - Version 1.0.03
+- CTextStream.inc: Added OpenForInputA / W, OpenForOutputA / W and OpenForAppendA / W methods.
+
 1 Jul 2018 - Version 1.0.03
 - Modified CXpButton.inc to add properties.
 
