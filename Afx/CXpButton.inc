@@ -117,11 +117,54 @@ TYPE CXpButton
       DECLARE SUB SetBitmapFromFile (BYVAL pwszPath AS WSTRING PTR, BYVAL ImageState AS LONG, BYVAL fRedraw AS LONG = FALSE)
       DECLARE SUB SetImageFromFile (BYREF wszPath AS WSTRING, BYVAL ImageState AS LONG = XPBI_NORMAL, BYVAL fRedraw AS LONG = FALSE, BYVAL dimPercent AS LONG = 0, BYVAL bGrayScale AS LONG = FALSE)
       DECLARE SUB SetImageFromRes (BYVAL hInstance AS HINSTANCE, BYREF wszImageName AS WSTRING, BYVAL ImageState AS LONG = XPBI_NORMAL, BYVAL fRedraw AS LONG = FALSE, BYVAL dimPercent AS LONG = 0, BYVAL bGrayScale AS LONG = FALSE)
-      DECLARE SUB SetButtonBkColor (BYVAL bkgColor AS COLORREF)
-      DECLARE SUB SetTextForeColor (BYVAL textColor AS COLORREF)
-      DECLARE SUB SetTextBkColor (BYVAL textColor AS COLORREF)
+      DECLARE SUB SetButtonBkColor (BYVAL bkgColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
+      DECLARE FUNCTION GetButtonBkColor () AS COLORREF
+      DECLARE SUB SetTextForeColor (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
+      DECLARE FUNCTION GetTextForeColor () AS COLORREF
+      DECLARE SUB SetTextBkColor (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
+      DECLARE FUNCTION GetTextBkColor () AS COLORREF
       DECLARE SUB SetTextForeColorDown (BYVAL textColor AS COLORREF)
+      DECLARE FUNCTION GetTextForeColorDown () AS COLORREF
       DECLARE SUB SetTextBkColorDown (BYVAL textColor AS COLORREF)
+      DECLARE FUNCTION GetTextBkColorDown () AS COLORREF
+
+      ' // Properties
+      DECLARE PROPERTY Font () AS HFONT
+      DECLARE PROPERTY Font (BYVAL hFont AS HFONT)
+      DECLARE PROPERTY TextFormat () AS DWORD
+      DECLARE PROPERTY TextFormat (BYVAL dwTextFlags AS DWORD)
+      DECLARE PROPERTY Cursor () AS HCURSOR
+      DECLARE PROPERTY Cursor (BYVAL hCursor AS HCURSOR)
+      DECLARE PROPERTY Toggle (BYVAL fToggle AS LONG)
+      DECLARE PROPERTY Toggle () AS LONG
+      DECLARE PROPERTY ToggleState () AS LONG
+      DECLARE PROPERTY ToggleState (BYVAL fState AS LONG)
+      DECLARE PROPERTY ImageWidth () AS LONG
+      DECLARE PROPERTY ImageWidth (BYVAL nWidth AS LONG)
+      DECLARE PROPERTY ImageHeight () AS LONG
+      DECLARE PROPERTY ImageHeight (BYVAL nHeight AS LONG)
+      DECLARE PROPERTY ImagePos () AS LONG
+      DECLARE PROPERTY ImagePos (BYVAL nPos AS LONG)
+      DECLARE PROPERTY ImageMargin () AS LONG
+      DECLARE PROPERTY ImageMargin (BYVAL nMargin AS LONG)
+      DECLARE PROPERTY ButtonState () AS LONG
+      DECLARE PROPERTY ImageType () AS LONG
+      DECLARE PROPERTY ButtonBkColor () AS COLORREF
+      DECLARE PROPERTY ButtonBkColor (BYVAL bkColor AS COLORREF)
+      DECLARE PROPERTY TextForeColor () AS COLORREF
+      DECLARE PROPERTY TextForeColor (BYVAL textColor AS COLORREF)
+      DECLARE PROPERTY TextBkColor () AS COLORREF
+      DECLARE PROPERTY TextBkColor (BYVAL textColor AS COLORREF)
+      DECLARE PROPERTY TextForeColorDown () AS COLORREF
+      DECLARE PROPERTY TextForeColorDown (BYVAL textColor AS COLORREF)
+      DECLARE PROPERTY TextBkColorDown () AS COLORREF
+      DECLARE PROPERTY TextBkColorDown (BYVAL textColor AS COLORREF)
+      DECLARE PROPERTY NormalImageHandle () AS HANDLE
+      DECLARE PROPERTY HotImageHandle () AS HANDLE
+      DECLARE PROPERTY DisabledImageHandle () AS HANDLE
+      DECLARE PROPERTY BkBrush () AS HBRUSH
+
+      ' // Callback function
       DECLARE STATIC FUNCTION CXPButtonProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
 
 END TYPE
@@ -370,6 +413,14 @@ PRIVATE FUNCTION CXpButton.CXPButtonProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT
             EXIT FUNCTION
          END IF
 
+      CASE WM_SETFONT
+         ' // Sets the font that a control is to use when drawing text.
+         pButton = CAST(CXpButton PTR, .GetWindowLongPtrW(hwnd, 0))
+         IF pButton THEN
+            pButton->SetFont(CAST(.HFONT, wParam), lParam)
+            EXIT FUNCTION
+         END IF
+
       CASE WM_MOUSEMOVE
          ' // Tracks the mouse movement and stores the hot state
          DIM trackMouse AS TRACKMOUSEEVENT
@@ -566,7 +617,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Set toggle state to pushed (TRUE) or unpushed (FALSE)
+' Sets toggle state to pushed (TRUE) or unpushed (FALSE)
 ' Parameters:
 ' - fState = Toggled state (TRUE or FALSE)
 ' - fRedraw = TRUE or FALSE (redraws the button to reflect the changes)
@@ -1011,12 +1062,12 @@ END SUB
 '      XPBI_DISABLED = 3
 ' - fRedraw = TRUE or FALSE (redraws the button to reflect the changes)
 ' ========================================================================================
-PRIVATE SUB CXpButton.SetImage (BYVAL hImage AS HANDLE, BYVAL ImageType AS LONG, BYVAL ImageState AS LONG, BYVAL fRedraw AS LONG = FALSE)
+PRIVATE SUB CXpButton.SetImage (BYVAL hImage AS HANDLE, BYVAL nImageType AS LONG, BYVAL nImageState AS LONG, BYVAL fRedraw AS LONG = FALSE)
    IF hImage = NULL THEN EXIT SUB
-   IF ImageType <> IMAGE_ICON AND ImageType <> IMAGE_BITMAP THEN EXIT SUB
-   IF ImageState <> XPBI_NORMAL AND ImageState <> XPBI_HOT AND ImageState <> XPBI_DISABLED THEN EXIT SUB
+   IF nImageType <> IMAGE_ICON AND nImageType <> IMAGE_BITMAP THEN EXIT SUB
+   IF nImageState <> XPBI_NORMAL AND nImageState <> XPBI_HOT AND nImageState <> XPBI_DISABLED THEN EXIT SUB
    ' // Destroys the old image
-   SELECT CASE ImageState
+   SELECT CASE nImageState
       CASE XPBI_NORMAL
          IF m_hImage THEN DeleteObject m_hImage
          m_hImage = hImage
@@ -1028,12 +1079,12 @@ PRIVATE SUB CXpButton.SetImage (BYVAL hImage AS HANDLE, BYVAL ImageType AS LONG,
          m_hDisabledImage = hImage
    END SELECT
    ' // Image type
-   m_ImageType = ImageType
+   m_ImageType = nImageType
    ' // Default width and height of the image
    m_ImageWidth = 16
    m_ImageHeight = 16
    DIM tii AS ICONINFO, tbm AS BITMAP
-   SELECT CASE ImageType
+   SELECT CASE nImageType
       CASE IMAGE_ICON
          IF .GetIconInfo(hImage, @tii) THEN
             IF .GetObject(tii.hbmMask, SIZEOF(tbm), @tbm) THEN
@@ -1152,45 +1203,319 @@ END SUB
 ' ========================================================================================
 
 ' ========================================================================================
-' Sets the background color of the button.
+' Sets/gets the background color of the button.
 ' ========================================================================================
-PRIVATE SUB CXpButton.SetButtonBkColor (BYVAL bkColor AS COLORREF)
+PRIVATE SUB CXpButton.SetButtonBkColor (BYVAL bkColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
    IF m_hBkBrush THEN .DeleteObject m_hBkBrush
    m_hBkBrush = CreateSolidBrush(bkColor)
-   this.Redraw
+   IF fRedraw THEN this.Redraw
 END SUB
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CXpButton.GetButtonBkColor () AS COLORREF
+   IF m_hBkBrush = NULL THEN RETURN 0
+   DIM lb AS LOGBRUSH
+   GetObject(m_hBkBrush, SIZEOF(LOGBRUSH), @lb)
+   RETURN lb.lbColor
+END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Sets the text foreground color of the button.
+' Sets/gets the text foreground color of the button.
 ' ========================================================================================
-PRIVATE SUB CXpButton.SetTextForeColor (BYVAL textColor AS COLORREF)
+PRIVATE SUB CXpButton.SetTextForeColor (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
    m_TextForeColor = textColor
-   this.Redraw
+   IF fRedraw THEN this.Redraw
 END SUB
 ' ========================================================================================
 ' ========================================================================================
-' Sets the text background color of the button.
-' ========================================================================================
-PRIVATE SUB CXpButton.SetTextBkColor (BYVAL textColor AS COLORREF)
-   m_TextBkColor = textColor
-   this.Redraw
-END SUB
+PRIVATE FUNCTION CXpButton.GetTextForeColor () AS COLORREF
+   RETURN m_TextForeColor
+END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Sets the text foreground color of the button when it is down (pressed).
+' Sets/gets the text background color of the button.
+' ========================================================================================
+PRIVATE SUB CXpButton.SetTextBkColor (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
+   m_TextBkColor = textColor
+   IF fRedraw THEN this.Redraw
+END SUB
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CXpButton.GetTextBkColor () AS COLORREF
+   RETURN m_TextBkColor
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets/gets the text foreground color of the button when it is down (pressed).
 ' ========================================================================================
 PRIVATE SUB CXpButton.SetTextForeColorDown (BYVAL textColor AS COLORREF)
    m_TextForeColorDown = textColor
 END SUB
 ' ========================================================================================
 ' ========================================================================================
-' Sets the text background color of the button when it is down (pressed)
+PRIVATE FUNCTION CXpButton.GetTextForeColorDown () AS COLORREF
+   RETURN m_TextForeColorDown
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets/gets the text background color of the button when it is down (pressed)
 ' ========================================================================================
 PRIVATE SUB CXpButton.SetTextBkColorDown (BYVAL textColor AS COLORREF)
    m_TextBkDownColor = textColor
 END SUB
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CXpButton.GetTextBkColorDown () AS COLORREF
+   RETURN m_TextBkDownColor
+END FUNCTION
+' ========================================================================================
+
+
+' ========================================================================================
+' Gets/sets the font for the button
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.Font () AS HFONT
+   PROPERTY = m_hFont
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.Font (BYVAL hFont AS HFONT)
+   IF hFont = NULL THEN EXIT PROPERTY
+   IF m_hFont THEN .DeleteObject m_hFont
+   m_hFont = hFont
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets/sets the text format
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.TextFormat () AS DWORD
+   PROPERTY = m_dwTextFlags
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.TextFormat (BYVAL dwTextFlags AS DWORD)
+   m_dwTextFlags = dwTextFlags
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets/sets the cursor for the button
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.Cursor () AS HCURSOR
+   PROPERTY = m_hCursor
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.Cursor (BYVAL hCursor AS HCURSOR)
+   IF m_hCursor THEN DestroyCursor m_hCursor
+   m_hCursor = hCursor
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets/sets button to toggle state (TRUE) or to pushbutton state (FALSE)
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.Toggle (BYVAL fToggle AS LONG)
+   IF fToggle <> 0 THEN fToggle = CTRUE
+   m_bIsToggle = fToggle
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets the button toggle state
+' Returns CTRUE if the button is toggled or FALSE otherwise.
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.Toggle () AS LONG
+   PROPERTY = m_bIsToggle
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets/sets toggle state to pushed (TRUE) or unpushed (FALSE)
+' Parameters:
+' - fState = Toggled state (TRUE or FALSE)
+' - fRedraw = TRUE or FALSE (redraws the button to reflect the changes)
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ToggleState () AS LONG
+   PROPERTY = m_bToggled
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ToggleState (BYVAL fState AS LONG)
+   IF fState <> 0 THEN fState = -1
+   m_bToggled = fState
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Sets the width of the image
+' Parameters:
+' - nWidth = Width of the image, in pixels.
+' - fRedraw = TRUE or FALSE (redraws the button to reflect the changes)
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ImageWidth () AS LONG
+   PROPERTY = m_ImageWidth
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ImageWidth (BYVAL nWidth AS LONG)
+   m_ImageWidth = nWidth
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets/sets the height of the image
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ImageHeight () AS LONG
+   PROPERTY = m_ImageHeight
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ImageHeight (BYVAL nHeight AS LONG)
+   m_ImageHeight = nHeight
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets/sets the position of the image
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ImagePos () AS LONG
+   PROPERTY = m_ImagePos
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ImagePos (BYVAL nPos AS LONG)
+   m_ImagePos = nPos
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets/sets the image margin
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ImageMargin () AS LONG
+   PROPERTY = m_ImageMargin
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ImageMargin (BYVAL nMargin AS LONG)
+   m_ImageMargin = nMargin
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Returns the button state
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ButtonState () AS LONG
+   PROPERTY = m_fState
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Returns the image type
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ImageType () AS LONG
+   PROPERTY = m_ImageType
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets/sets the background color of the button.
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ButtonBkColor () AS COLORREF
+   IF m_hBkBrush = NULL THEN RETURN 0
+   DIM lb AS LOGBRUSH
+   GetObject(m_hBkBrush, SIZEOF(LOGBRUSH), @lb)
+   PROPERTY = lb.lbColor
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ButtonBkColor (BYVAL bkColor AS COLORREF)
+   IF m_hBkBrush THEN .DeleteObject m_hBkBrush
+   m_hBkBrush = CreateSolidBrush(bkColor)
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets/sets the text foreground color of the button.
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.TextForeColor () AS COLORREF
+   PROPERTY = m_TextForeColor
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.TextForeColor (BYVAL textColor AS COLORREF)
+   m_TextForeColor = textColor
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets/sets the text background color of the button.
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.TextBkColor () AS COLORREF
+   PROPERTY = m_TextBkColor
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.TextBkColor (BYVAL textColor AS COLORREF)
+   m_TextBkColor = textColor
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Sets/gets the text foreground color of the button when it is down (pressed).
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.TextForeColorDown () AS COLORREF
+   PROPERTY = m_TextForeColorDown
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.TextForeColorDown (BYVAL textColor AS COLORREF)
+   m_TextForeColorDown = textColor
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Sets/gets the text background color of the button when it is down (pressed)
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.TextBkColorDown () AS COLORREF
+   PROPERTY = m_TextBkDownColor
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.TextBkColorDown (BYVAL textColor AS COLORREF)
+   m_TextBkDownColor = textColor
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets image handles
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.NormalImageHandle () AS HANDLE
+   PROPERTY = m_hImage
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.HotImageHandle () AS HANDLE
+   PROPERTY = m_hHotImage
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.DisabledImageHandle () AS HANDLE
+   PROPERTY = m_hDisabledImage
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets the background color brush
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.BkBrush () AS HBRUSH
+   PROPERTY = m_hBkBrush
+END PROPERTY
 ' ========================================================================================
 
 END NAMESPACE

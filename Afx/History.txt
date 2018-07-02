@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+1 Jul 2018 - Version 1.0.03
+- Modified CXpButton.inc to add properties.
+
 29 Jun 2018 - Version 1.0.03
 - Removed the 80 characters limitation to the AfxAddTooltip and AfxSetTooltipText functions.
 - Added CONST to the string parameters of several procedures.
