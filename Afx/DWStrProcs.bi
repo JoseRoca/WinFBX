@@ -597,7 +597,7 @@ END FUNCTION
 ' If the optional parameter wszPadCharacter not specified, the function pads the string with
 ' space characters to the left. Otherwise, the function pads the string with the first
 ' character of wszPadCharacter
-' Example: DIM dws AS DWsTRING = DWStrLSet("FreeBasic", 20, "*")
+' Example: DIM dws AS DWSTRING = DWStrLSet("FreeBasic", 20, "*")
 ' ========================================================================================
 PRIVATE FUNCTION DWStrLSet (BYREF wszMainStr AS CONST WSTRING, BYVAL nStringLength AS LONG, BYREF wszPadCharacter AS CONST WSTRING = " ") AS DWSTRING
    DIM dws AS DWSTRING = WSTRING(nStringLength, wszPadCharacter)
