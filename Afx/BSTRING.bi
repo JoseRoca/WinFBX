@@ -53,10 +53,16 @@ Public:
    DECLARE CONSTRUCTOR
    DECLARE CONSTRUCTOR (BYREF bs AS BSTRING)
    DECLARE CONSTRUCTOR (BYREF dws AS DWSTRING)
-   DECLARE CONSTRUCTOR (BYVAL pwszStr AS WSTRING PTR)
+   DECLARE CONSTRUCTOR (BYVAL pwszStr AS WSTRING PTR, BYVAL fAttach AS LONG = TRUE)
+   DECLARE CONSTRUCTOR (BYREF ansiStr AS STRING = "", BYVAL nCodePage AS UINT = 0)
    DECLARE CONSTRUCTOR (BYVAL n AS LONGINT)
    DECLARE CONSTRUCTOR (BYVAL n AS DOUBLE)
    DECLARE DESTRUCTOR
+   DECLARE FUNCTION bptr () AS BSTR
+   DECLARE FUNCTION vptr () AS ANY PTR
+   DECLARE FUNCTION sptr () AS WSTRING PTR
+   DECLARE FUNCTION wstr () BYREF AS CONST WSTRING
+   DECLARE FUNCTION wchar () AS WSTRING PTR
    DECLARE SUB Append (BYVAL pwszStr AS WSTRING PTR)
    DECLARE SUB Clear
    DECLARE SUB Attach (BYVAL pbstrSrc AS BSTR)
@@ -64,7 +70,6 @@ Public:
    DECLARE FUNCTION Copy () AS BSTR
    DECLARE OPERATOR CAST () BYREF AS CONST WSTRING
    DECLARE OPERATOR CAST () AS ANY PTR
-   DECLARE OPERATOR @ () AS ANY PTR
    DECLARE OPERATOR LET (BYREF bs AS BSTRING)
    DECLARE OPERATOR LET (BYREF dws AS DWSTRING)
    DECLARE OPERATOR LET (BYVAL pwszStr AS WSTRING PTR)
@@ -102,21 +107,44 @@ PRIVATE CONSTRUCTOR BSTRING (BYREF dws AS DWSTRING)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE CONSTRUCTOR BSTRING (BYVAL pwszStr AS WSTRING PTR)
-   ' Free the current OLE string
-   IF m_bstr THEN SysFreeString(m_bstr)
-   ' Detect if the passed handle is an OLE string.
-   ' If it is an OLE string it must have a descriptor; otherwise, don't.
-   ' Get the length in bytes looking at the descriptor and divide by 2 to get the number of
-   ' unicode characters, that is the value returned by the FreeBASIC LEN operator.
-   DIM res AS DWORD = PEEK(DWORD, CAST(ANY PTR, pwszStr) - 4) \ 2
-   ' If the retrieved length is the same that the returned by LEN, then it must be an OLE string
-   IF res = .LEN(*pwszStr) THEN
-      ' Attach the passed handle to the class
-      m_bstr = pwszStr
+PRIVATE CONSTRUCTOR BSTRING (BYVAL pwszStr AS WSTRING PTR, BYVAL fAttach AS LONG = TRUE)
+   IF pwszStr = NULL THEN
+      m_bstr = SysAllocString("")
+      CBSTR_DP("CBSTR CONSTRUCTOR SysAllocString - " & .WSTR(m_bstr))
    ELSE
-      ' Allocate an OLE string with the contents of the string pointed by bstrHandle
-      m_bstr = SysAllocString(pwszStr)
+      ' Detect if the passed handle is an OLE string.
+      ' If it is an OLE string it must have a descriptor; otherwise, don't.
+      ' Get the length in bytes looking at the descriptor and divide by 2 to get the number of
+      ' unicode characters, that is the value returned by the FreeBASIC LEN operator.
+      DIM res AS DWORD = PEEK(DWORD, CAST(ANY PTR, pwszStr) - 4) \ 2
+      ' If the retrieved length is the same that the returned by LEN, then it must be an OLE string
+      IF res = .LEN(*pwszStr) AND fAttach <> FALSE THEN
+         ' Attach the passed handle to the class
+         m_bstr = pwszStr
+      ELSE
+         ' Allocate an OLE string with the contents of the string pointed by bstrHandle
+         m_bstr = SysAllocString(pwszStr)
+      END IF
+   END IF
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE CONSTRUCTOR BSTRING (BYREF ansiStr AS STRING = "", BYVAL nCodePage AS UINT = 0)
+   IF nCodePage = CP_UTF8 THEN
+      DIM dwLen AS DWORD = MultiByteToWideChar(CP_UTF8, 0, STRPTR(ansiStr), LEN(ansiStr), NULL, 0)
+      IF dwLen THEN
+         m_bstr = SysAllocString(.WSTR(SPACE(dwLen)))
+         MultiByteToWideChar(CP_UTF8, 0, STRPTR(ansiStr), LEN(ansiStr), m_bstr, dwLen * 2)
+      ELSE
+         m_bstr = SysAllocString("")
+      END IF
+   ELSE
+      IF LEN(ansiStr) THEN
+         m_bstr = SysAllocString(.WSTR(ansiStr))
+         MultiByteToWideChar(nCodePage, MB_PRECOMPOSED, STRPTR(ansiStr), -1, m_bstr, LEN(ansiStr) * 2)
+      ELSE
+         m_bstr = SysAllocString("")
+      END IF
    END IF
 END CONSTRUCTOR
 ' ========================================================================================
@@ -213,16 +241,61 @@ END OPERATOR
 ' ========================================================================================
 
 ' ========================================================================================
+' Returns the underlying BSTR pointer.
+' ========================================================================================
+PRIVATE FUNCTION BSTRING.bptr () AS BSTR
+   CBSTR_DP("CBSTR bptr")
+   RETURN m_bstr
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' * Frees the underlying BSTR and returns the address of BSTR pointer.
 ' To pass the underlying BSTR to an OUT BYVAL BSTR PTR parameter.
 ' If we pass a BSTRING to a function with an OUT BSTR parameter without first freeing it
 ' we will have a memory leak.
 ' ========================================================================================
-PRIVATE OPERATOR BSTRING.@ () AS ANY PTR
+PRIVATE FUNCTION BSTRING.vptr () AS ANY PTR
    IF m_bstr THEN SysFreeString(m_bstr) : m_bstr = NULL
    RETURN @m_bstr
-END OPERATOR
+END FUNCTION
 ' ========================================================================================
+
+' ========================================================================================
+' Returns the address of the BSTRING string data (same as **)
+' ========================================================================================
+PRIVATE FUNCTION BSTRING.sptr () AS WSTRING PTR
+   RETURN cast(WSTRING PTR, m_bstr)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' * Returns a pointer to the string data (same as **)
+' ========================================================================================
+PRIVATE FUNCTION BSTRING.wstr () BYREF AS CONST WSTRING
+   RETURN *CAST(WSTRING PTR, m_bstr)
+END FUNCTION
+' ========================================================================================
+
+' =====================================================================================
+' Returns the contents of the CWSTR as a WSTRING allocated with CoTaskMemAlloc.
+' Free the returned string later with CoTaskMemFree.
+' Note: This is useful when we need to pass a pointer to a null terminated wide string to a
+' function or method that will release it. If we pass a WSTRING it will GPF.
+' If the length of the input string is 0, CoTaskMemAlloc allocates a zero-length item and
+' returns a valid pointer to that item. If there is insufficient memory available,
+' CoTaskMemAlloc returns NULL.
+' =====================================================================================
+PRIVATE FUNCTION BSTRING.wchar () AS WSTRING PTR
+   DIM pwchar AS WSTRING PTR
+   DIM nLen AS LONG = SysStringLen(m_bstr) * 2
+   pwchar = CoTaskMemAlloc(nLen)
+   IF pwchar = NULL THEN RETURN NULL
+   IF nLen THEN memcpy pwchar, m_bstr, nLen
+   IF nLen = 0 THEN *pwchar = CHR(0)
+   RETURN pwchar
+END FUNCTION
+' =====================================================================================
 
 ' ========================================================================================
 ' Assigns new text to the BSTRING.
