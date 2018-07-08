@@ -517,7 +517,7 @@ END FUNCTION
 ' * Complement to the AfxStrExtract function.
 ' Returns the portion of a string following the first occurrence of a substring.
 ' wszMainStr is searched for the string specified in wszMatchStr If found, all characters
-' after cbMatchStr are returned. If wszMatchStr is not present in wszMainStr (or is null) then
+' after wszMatchStr are returned. If wszMatchStr is not present in wszMainStr (or is null) then
 ' a zero-length empty string is returned.
 ' nStart is an optional starting position to begin searching. If nStart is not specified,
 ' position 1 will be used. If nStart is zero, a nul string is returned. If nStart is negative,
@@ -608,7 +608,7 @@ END FUNCTION
 ' ========================================================================================
 ' * Count the number of occurrences of strings within a string.
 ' wszMainStr is the string expression in which to count characters.
-' cbMatchStr is the string expression to count all occurrences of.
+' wszMatchStr is the string expression to count all occurrences of.
 ' If cbMatchStr is not present in wszMainStr, zero is returned.
 ' When a match is found, the scan for the next match begins at the position immediately
 ' following the prior match.
@@ -1196,7 +1196,7 @@ END FUNCTION
 
 ' ========================================================================================
 ' * Returns the nPosition-th substring in a string wszMainStr with separations wszDelimiter
-' (one or more charcters), beginning with nPosition = 1.
+' (one or more characters), beginning with nPosition = 1.
 ' ========================================================================================
 PRIVATE FUNCTION AfxStrParse OVERLOAD (BYREF wszMainStr AS CONST WSTRING, BYREF wszDelimiter AS CONST WSTRING, BYVAL nPosition AS LONG, BYVAL bIsAny AS BOOLEAN, BYVAL nLenDelimiter AS LONG) AS CWSTR
    DIM nCount AS LONG, nStart AS LONG

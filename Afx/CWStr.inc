@@ -160,7 +160,7 @@ TYPE CWSTR
       m_BufferLen AS UINT           ' Length in bytes of the current string in the buffer
 
       DECLARE CONSTRUCTOR
-      DECLARE CONSTRUCTOR (BYVAL nChars AS UINT, BYVAL nCodePage AS UINT)
+      DECLARE CONSTRUCTOR (BYVAL nChars AS UINT, BYVAL bClear AS BOOLEAN)
       DECLARE CONSTRUCTOR (BYVAL pwszStr AS WSTRING PTR)
       DECLARE CONSTRUCTOR (BYREF ansiStr AS STRING, BYVAL nCodePage AS UINT = 0)
       DECLARE CONSTRUCTOR (BYREF cws AS CWSTR)
@@ -168,7 +168,7 @@ TYPE CWSTR
       DECLARE CONSTRUCTOR (BYVAL n AS LONGINT)
       DECLARE CONSTRUCTOR (BYVAL n AS DOUBLE)
       DECLARE DESTRUCTOR
-      DECLARE SUB ResizeBuffer (BYVAL nValue AS UINT)
+      DECLARE SUB ResizeBuffer (BYVAL nValue AS UINT, BYVAL bClear AS BOOLEAN = FALSE)
       DECLARE FUNCTION AppendBuffer (BYVAL addrMemory AS ANY PTR, BYVAL nNumBytes AS UINT) AS BOOLEAN
       DECLARE FUNCTION InsertBuffer (BYVAL addrMemory AS ANY PTR, BYVAL nIndex AS UINT, BYVAL nNumBytes AS UINT) AS BOOLEAN
       DECLARE PROPERTY GrowSize () AS LONG
@@ -241,18 +241,25 @@ END TYPE
 ' ========================================================================================
 ' CWSTR constructors
 ' ========================================================================================
+' ========================================================================================
+' Attempts to allocate, or reserve, m_GrowSize number of bytes from the free store (heap).
+' The newly allocated memory is initialized.
+' ========================================================================================
 PRIVATE CONSTRUCTOR CWSTR
    CWSTR_DP("+++BEGIN- CWSTR CONSTRUCTOR Default")
-   this.ResizeBuffer(m_GrowSize)   ' Create the initial buffer
+   this.ResizeBuffer(m_GrowSize, TRUE)   ' Create the initial buffer
    CWSTR_DP("END CWSTR CONSTRUCTOR Default - " & .WSTR(m_pBuffer))
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CWSTR (BYVAL nChars AS UINT, BYVAL nCodePage AS UINT)
+' Attempts to allocate, or reserve, nChars number of bytes from the free store (heap).
+' bClear = FALSE: The newly allocated memory is not initialized.
+' bClear = TRUE: The newly allocated memory is initialized.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CWSTR (BYVAL nChars AS UINT, BYVAL bClear AS BOOLEAN)
    CWSTR_DP("+++BEGIN- CWSTR CONSTRUCTOR nChars " & .WSTR(nChars))
-   m_CodePage = nCodePage          ' Store the code page
    IF nChars = 0 THEN nChars = m_GrowSize \ 2
-   this.ResizeBuffer(nChars * 2)   ' Create the initial buffer
+   this.ResizeBuffer(nChars * 2, bClear)   ' Create the initial buffer
    CWSTR_DP("-END- CWSTR CONSTRUCTOR nChars - " & .WSTR(m_pBuffer))
 END CONSTRUCTOR
 ' ========================================================================================
@@ -481,13 +488,14 @@ END OPERATOR
 ' ResizeBuffer
 ' Increases the size of the internal buffer capacity
 ' ========================================================================================
-PRIVATE SUB CWstr.ResizeBuffer (BYVAL nValue AS UINT)
+PRIVATE SUB CWstr.ResizeBuffer (BYVAL nValue AS UINT, BYVAL bClear AS BOOLEAN = FALSE)
    CWSTR_DP("CWSTR ResizeBuffer - Value = " & .WSTR(nValue))
    ' // If it is an odd value, make it even.
    IF (nValue MOD 2) <> 0 THEN nValue += 1
    ' Increase the size of the existing buffer by creating a new buffer copying
    ' the existing data into it and then finally deleting the original buffer.
-   DIM pNewBuffer AS UBYTE PTR = Allocate(nValue + 2)   ' // +2 to make room for the double null terminator.
+   ' // +2 to make room for the double null terminator.
+   DIM pNewBuffer AS UBYTE PTR = IIF(bClear, CAllocate(nValue + 2), Allocate(nValue + 2))
    CWSTR_DP("CWSTR ResizeBuffer - pNewBuffer = " & .WSTR(pNewBuffer) & " - old buffer = " & (.WSTR(m_pBuffer)))
    IF m_pBuffer THEN
       IF nValue < m_BufferLen THEN m_BufferLen = nValue
@@ -779,13 +787,12 @@ END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 ' Returns the corresponding ASCII or Unicode integer representation of the character at
-' the position specified by the nIndex parameter. Like the get Char property, but allowing
-' to use the [] syntax, e.g. value = cws[1]. Can't be used to change a value.
+' the zero-based position specified by the nIndex parameter (0 for the first character,
+' 1 for the second, etc.), e.g. value = cws[1]. Can't be used to change a value.
 ' ========================================================================================
 PRIVATE OPERATOR CWStr.[] (BYVAL nIndex AS UINT) AS USHORT
-   IF nIndex < 1 OR nIndex > m_BufferLen \ 2 THEN EXIT OPERATOR
+   IF nIndex < 0 OR nIndex > (m_BufferLen \ 2) - 1 THEN EXIT OPERATOR
    ' Get the numeric character code at position nIndex
-   nIndex -= 1
    OPERATOR = PEEK(USHORT, m_pBuffer + (nIndex * 2))
 END OPERATOR
 ' ========================================================================================
@@ -1698,11 +1705,56 @@ PRIVATE FUNCTION Right OVERLOAD (BYREF cws AS CWSTR, BYVAL nChars AS INTEGER) AS
    RETURN RIGHT(*cast(WSTRING PTR, cws.m_pBuffer), nChars)
 END FUNCTION
 ' ========================================================================================
+
+' ========================================================================================
+' Converts a string to a floating point number
 ' ========================================================================================
 PRIVATE FUNCTION Val OVERLOAD (BYREF cws AS CWSTR) AS DOUBLE
    RETURN .VAL(*cast(WSTRING PTR, cws.m_pBuffer))
 END FUNCTION
 ' ========================================================================================
+
+' =====================================================================================
+' Converts the string to a 32bit integer
+' =====================================================================================
+PRIVATE FUNCTION ValLng OVERLOAD (BYREF cws AS CWSTR) AS LONG
+   RETURN .ValLng(*cast(WSTRING PTR, cws.m_pBuffer))
+END FUNCTION
+' =====================================================================================
+' =====================================================================================
+PRIVATE FUNCTION ValInt OVERLOAD (BYREF cws AS CWSTR) AS LONG
+   RETURN .ValInt(*cast(WSTRING PTR, cws.m_pBuffer))
+END FUNCTION
+' =====================================================================================
+
+' =====================================================================================
+' Converts the string to an unsigned 32bit integer
+' =====================================================================================
+PRIVATE FUNCTION ValULng OVERLOAD (BYREF cws AS CWSTR) AS ULONG
+   RETURN .ValULng(*cast(WSTRING PTR, cws.m_pBuffer))
+END FUNCTION
+' =====================================================================================
+PRIVATE FUNCTION ValUInt OVERLOAD (BYREF cws AS CWSTR) AS ULONG
+   RETURN .ValUInt(*cast(WSTRING PTR, cws.m_pBuffer))
+END FUNCTION
+' =====================================================================================
+
+' =====================================================================================
+' Converts the string to a 64bit integer
+' =====================================================================================
+PRIVATE FUNCTION ValLongInt OVERLOAD (BYREF cws AS CWSTR) AS LONGINT
+   RETURN .ValLng(*cast(WSTRING PTR, cws.m_pBuffer))
+END FUNCTION
+' =====================================================================================
+
+' =====================================================================================
+' Converts the string to an unsigned 64bit integer
+' =====================================================================================
+PRIVATE FUNCTION ValULongInt OVERLOAD (BYREF cws AS CWSTR) AS ULONGINT
+   RETURN .ValULng(*cast(WSTRING PTR, cws.m_pBuffer))
+END FUNCTION
+' =====================================================================================
+
 
 ' ========================================================================================
 PRIVATE OPERATOR & (BYREF cbs1 AS CBSTR, BYREF cbs2 AS CBSTR) AS CBSTR
@@ -1719,11 +1771,55 @@ PRIVATE FUNCTION Right OVERLOAD (BYREF cbs AS CBSTR, BYVAL nChars AS INTEGER) AS
    RETURN RIGHT(**cbs, nChars)
 END FUNCTION
 ' ========================================================================================
+
+' ========================================================================================
+' Converts a string to a floating point number
 ' ========================================================================================
 PRIVATE FUNCTION Val OVERLOAD (BYREF cbs AS CBSTR) AS DOUBLE
    RETURN .VAL(**cbs)
 END FUNCTION
 ' ========================================================================================
+
+' =====================================================================================
+' Converts the string to a 32bit integer
+' =====================================================================================
+PRIVATE FUNCTION ValLng OVERLOAD (BYREF cbs AS CBSTR) AS LONG
+   RETURN .ValLng(**cbs)
+END FUNCTION
+' =====================================================================================
+' =====================================================================================
+PRIVATE FUNCTION ValInt OVERLOAD (BYREF cbs AS CBSTR) AS LONG
+   RETURN .ValInt(**cbs)
+END FUNCTION
+' =====================================================================================
+
+' =====================================================================================
+' Converts the string to an unsigned 32bit integer
+' =====================================================================================
+PRIVATE FUNCTION ValULng OVERLOAD (BYREF cbs AS CBSTR) AS ULONG
+   RETURN .ValULng(**cbs)
+END FUNCTION
+' =====================================================================================
+PRIVATE FUNCTION ValUInt OVERLOAD (BYREF cbs AS CBSTR) AS ULONG
+   RETURN .ValUInt(**cbs)
+END FUNCTION
+' =====================================================================================
+
+' =====================================================================================
+' Converts the string to a 64bit integer
+' =====================================================================================
+PRIVATE FUNCTION ValLongInt OVERLOAD (BYREF cbs AS CBSTR) AS LONGINT
+   RETURN .ValLng(**cbs)
+END FUNCTION
+' =====================================================================================
+
+' =====================================================================================
+' Converts the string to an unsigned 64bit integer
+' =====================================================================================
+PRIVATE FUNCTION ValULongInt OVERLOAD (BYREF cbs AS CBSTR) AS ULONGINT
+   RETURN .ValULng(**cbs)
+END FUNCTION
+' =====================================================================================
 
 ' ########################################################################################
 '                                *** HELPER FUNCTIONS ***

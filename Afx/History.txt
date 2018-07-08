@@ -1,6 +1,16 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+6 Jul 2018
+- Changed CONSTRUCTOR (BYVAL nChars AS UINT, BYVAL nCodePage AS UINT)
+to CONSTRUCTOR (BYVAL nChars AS UINT, BYVAL bClear AS BOOLEAN)
+The nCodePage parameter was no longer useful and the new bClear parameter allows to specify
+if the memory will be intialized (cleared) or not.
+- The default constructor now initializes the memory.
+
+4 Jul 2018 - Version 1.0.03
+- Changed the [] operator from one-based index to zero-based index.
+
 2 Jul 2018 - Version 1.0.03
 - CTextStream.inc: Added OpenForInputA / W, OpenForOutputA / W and OpenForAppendA / W methods.
 
