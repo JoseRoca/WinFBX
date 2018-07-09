@@ -72,6 +72,7 @@ Public:
    DECLARE OPERATOR CAST () AS ANY PTR
    DECLARE OPERATOR LET (BYREF bs AS BSTRING)
    DECLARE OPERATOR LET (BYREF dws AS DWSTRING)
+   DECLARE OPERATOR LET (BYREF s AS STRING)
    DECLARE OPERATOR LET (BYVAL pwszStr AS WSTRING PTR)
    DECLARE OPERATOR += (BYVAL pwszStr AS WSTRING PTR)
    DECLARE OPERATOR += (BYREF bs AS BSTRING)
@@ -311,6 +312,12 @@ END OPERATOR
 PRIVATE OPERATOR BSTRING.LET (BYREF dws AS DWSTRING)
    IF m_bstr THEN SysFreeString(m_bstr)
    m_bstr = SysAllocString(dws)
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE OPERATOR BSTRING.LET (BYREF s AS STRING)
+   IF m_bstr THEN SysFreeString(m_bstr)
+   m_bstr = SysAllocString(s)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
