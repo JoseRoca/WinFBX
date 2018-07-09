@@ -82,11 +82,9 @@ TYPE CBSTR
 
    Public:
       m_bstr AS AFX_BSTR
-      m_CodePage AS UINT
 
    Public:
       DECLARE CONSTRUCTOR
-      DECLARE CONSTRUCTOR (BYVAL nCopePage AS UINT)
       DECLARE CONSTRUCTOR (BYREF wszStr AS CONST WSTRING = "")
       DECLARE CONSTRUCTOR (BYREF ansiStr AS STRING = "", BYVAL nCodePage AS UINT = 0)
       DECLARE CONSTRUCTOR (BYREF cbs AS CBStr)
@@ -110,8 +108,6 @@ TYPE CBSTR
       DECLARE OPERATOR LET (BYVAL n AS DOUBLE)
       DECLARE OPERATOR CAST () BYREF AS CONST WSTRING
       DECLARE OPERATOR CAST () AS ANY PTR
-      DECLARE PROPERTY CodePage () AS UINT
-      DECLARE PROPERTY CodePage (BYVAL nCodePage AS UINT)
       DECLARE SUB Append (BYREF wszStr AS CONST WSTRING)
       DECLARE SUB Empty
       DECLARE SUB Clear
@@ -153,7 +149,6 @@ TYPE CWSTR
    Private:
       m_Capacity AS UINT            ' The total size of the buffer
       m_GrowSize AS LONG = 260 * 2  ' How much to grow the buffer by when required
-      m_CodePage AS UINT            ' Unicode code page
 
    Public:
       m_pBuffer AS UBYTE PTR        ' Pointer to the buffer
@@ -277,7 +272,6 @@ END CONSTRUCTOR
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CWstr (BYREF ansiStr AS STRING, BYVAL nCodePage AS UINT = 0)
    CWSTR_DP("+++BEGIN- CWSTR CONSTRUCTOR STRING - " & .WSTR(VARPTR(ansiStr)))
-   m_CodePage = nCodePage             ' Store the code page
    IF .LEN(ansiStr) THEN
       this.Add(ansiStr, nCodePage)    ' Add the passed ansi string
    ELSE
@@ -408,21 +402,6 @@ PRIVATE FUNCTION CWstr.wstr () BYREF AS CONST WSTRING
    CWSTR_DP("CWSTR wstr - buffer: " & .WSTR(m_pBuffer))
    RETURN *cast(WSTRING PTR, m_pBuffer)
 END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Gets/sets the code page used to ansi to unicode translations
-' ========================================================================================
-PRIVATE PROPERTY CWStr.CodePage () AS UINT
-   CWSTR_DP("CWSTR PROPERTY GET CodePage - " & .WSTR(m_CodePage))
-   PROPERTY = m_CodePage
-END PROPERTY
-' ========================================================================================
-' ========================================================================================
-PRIVATE PROPERTY CWStr.CodePage (BYVAL nCodePage AS UINT)
-   CWSTR_DP("CWSTR PROPERTY SET CodePage - " & .WSTR(nCodePage))
-   m_CodePage = nCodePage
-END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
@@ -574,7 +553,6 @@ PRIVATE SUB CWstr.Add (BYREF ansiStr AS STRING, BYVAL nCodePage AS UINT = 0)
    IF LEN(ansiStr) = 0 THEN RETURN
    ' Create the wide string from the incoming ansi string
    DIM dwLen AS UINT, pbuffer AS ANY PTR
-   IF nCodePage = 0 THEN nCodePage = m_CodePage
    IF nCodePage = CP_UTF8 THEN
       dwLen = MultiByteToWideChar(CP_UTF8, 0, STRPTR(ansiStr), LEN(ansiStr), NULL, 0)
       IF dwLen = 0 THEN RETURN
@@ -585,7 +563,7 @@ PRIVATE SUB CWstr.Add (BYREF ansiStr AS STRING, BYVAL nCodePage AS UINT = 0)
       dwLen = .LEN(ansiStr)
       dwLen *= 2
       pbuffer = Allocate(dwLen)
-      MultiByteToWideChar(m_CodePage, MB_PRECOMPOSED, STRPTR(ansiStr), .LEN(ansiStr), pbuffer, dwLen)
+      MultiByteToWideChar(nCodePage, MB_PRECOMPOSED, STRPTR(ansiStr), .LEN(ansiStr), pbuffer, dwLen)
    END IF
    IF pbuffer THEN
       ' Copy the string into the buffer and update the length
@@ -931,7 +909,6 @@ PRIVATE FUNCTION CWstr.Insert (BYREF ansiStr AS STRING, BYVAL nIndex AS UINT, BY
    IF nIndex < 1 OR nIndex > m_BufferLen \ 2 OR .LEN(ansiStr) = 0 THEN RETURN FALSE
    ' Create the wide string from the incoming ansi string
    DIM dwLen AS UINT, pbuffer AS ANY PTR
-   IF nCodePage = 0 THEN nCodePage = m_CodePage
    IF nCodePage = CP_UTF8 THEN
       dwLen = MultiByteToWideChar(CP_UTF8, 0, STRPTR(ansiStr), LEN(ansiStr), NULL, 0)
       IF dwLen = 0 THEN RETURN FALSE
@@ -942,7 +919,7 @@ PRIVATE FUNCTION CWstr.Insert (BYREF ansiStr AS STRING, BYVAL nIndex AS UINT, BY
       dwLen = .LEN(ansiStr)
       dwLen *= 2
       pbuffer = Allocate(dwLen)
-      MultiByteToWideChar(m_CodePage, MB_PRECOMPOSED, STRPTR(ansiStr), .LEN(ansiStr), pbuffer, dwLen)
+      MultiByteToWideChar(nCodePage, MB_PRECOMPOSED, STRPTR(ansiStr), .LEN(ansiStr), pbuffer, dwLen)
    END IF
    ' Copy the string into the buffer and update the length
    FUNCTION = this.InsertBuffer(pbuffer, nIndex, dwLen)
@@ -1102,12 +1079,6 @@ PRIVATE CONSTRUCTOR CBStr
    CBSTR_DP("CBSTR CONSTRUCTOR Default - " & .WSTR(m_bstr))
 END CONSTRUCTOR
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CBStr (BYVAL nCodePage AS UINT)
-'   m_bstr = SysAllocString("")   ' // warning: don't initialize it to an empty string
-   m_CodePage = nCodePage
-   CBSTR_DP("CBSTR CONSTRUCTOR CodePage - " & .WSTR(m_bstr))
-END CONSTRUCTOR
-' ========================================================================================
 PRIVATE CONSTRUCTOR CBStr (BYREF wszStr AS CONST WSTRING = "")
    m_bstr = SysAllocString(wszStr)
    CBSTR_DP("CBSTR CONSTRUCTOR WSTRING - " & .WSTR(m_bstr))
@@ -1115,8 +1086,7 @@ END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CBStr (BYREF ansiStr AS STRING = "", BYVAL nCodePage AS UINT = 0)
-   IF nCodePage <> 0 THEN m_CodePage = nCodePage
-   IF m_CodePage = CP_UTF8 THEN
+   IF nCodePage = CP_UTF8 THEN
       DIM dwLen AS DWORD = MultiByteToWideChar(CP_UTF8, 0, STRPTR(ansiStr), LEN(ansiStr), NULL, 0)
       IF dwLen THEN
          m_bstr = SysAllocString(.WSTR(SPACE(dwLen)))
@@ -1127,7 +1097,7 @@ PRIVATE CONSTRUCTOR CBStr (BYREF ansiStr AS STRING = "", BYVAL nCodePage AS UINT
    ELSE
       IF LEN(ansiStr) THEN
          m_bstr = SysAllocString(.WSTR(ansiStr))
-         MultiByteToWideChar(m_CodePage, MB_PRECOMPOSED, STRPTR(ansiStr), -1, m_bstr, LEN(ansiStr) * 2)
+         MultiByteToWideChar(nCodePage, MB_PRECOMPOSED, STRPTR(ansiStr), -1, m_bstr, LEN(ansiStr) * 2)
       ELSE
          m_bstr = SysAllocString("")
       END IF
@@ -1247,28 +1217,11 @@ PRIVATE OPERATOR CBStr.Let (BYREF wszStr AS CONST WSTRING)
    m_bstr = SysAllocString(wszStr)
 END OPERATOR
 ' ========================================================================================
-' ========================================================================================
 PRIVATE OPERATOR CBStr.Let (BYREF ansiStr AS STRING)
    CBSTR_DP("CBSTR LET STRING")
    IF m_bstr THEN SysFreeString(m_bstr)
-   IF m_CodePage = CP_UTF8 THEN
-      DIM dwLen AS DWORD = MultiByteToWideChar(CP_UTF8, 0, STRPTR(ansiStr), LEN(ansiStr), NULL, 0)
-      IF dwLen THEN
-         m_bstr = SysAllocString(.WSTR(SPACE(dwLen)))
-         MultiByteToWideChar(CP_UTF8, 0, STRPTR(ansiStr), LEN(ansiStr), m_bstr, dwLen * 2)
-      ELSE
-         m_bstr = SysAllocString("")
-      END IF
-   ELSE
-      IF LEN(ansiStr) THEN
-         m_bstr = SysAllocString(.WSTR(ansiStr))
-         MultiByteToWideChar(m_CodePage, MB_PRECOMPOSED, STRPTR(ansiStr), -1, m_bstr, LEN(ansiStr) * 2)
-      ELSE
-         m_bstr = SysAllocString("")
-      END IF
-   END IF
+   m_bstr = SysAllocString(ansiStr)
 END OPERATOR
-' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR CBStr.Let (BYREF cbs AS CBStr)
    CBSTR_DP("CBSTR LET CBStr")
@@ -1393,21 +1346,6 @@ PRIVATE OPERATOR LEN (BYREF cbs AS CBStr) AS INTEGER
    CBSTR_DP("CBSTR OPERATOR LEN")
    OPERATOR = SysStringLen(cbs)
 END OPERATOR
-' ========================================================================================
-
-' ========================================================================================
-' Gets/sets the code page used to ansi to unicode translations
-' ========================================================================================
-PRIVATE PROPERTY CBStr.CodePage () AS UINT
-   CBSTR_DP("CBSTR PROPERTY GET CodePage")
-   PROPERTY = m_CodePage
-END PROPERTY
-' ========================================================================================
-' ========================================================================================
-PRIVATE PROPERTY CBStr.CodePage (BYVAL nCodePage AS UINT)
-   CBSTR_DP("CBSTR PROPERTY SET CodePage")
-   m_CodePage = nCodePage
-END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
