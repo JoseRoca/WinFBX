@@ -251,7 +251,7 @@ END DESTRUCTOR
 ' ========================================================================================
 ' Window procedure
 ' ========================================================================================
-PRIVATE FUNCTION CXpButton.CXPButtonProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
+PRIVATE FUNCTION CXpButton.CXPButtonProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
 
    DIM pButton AS CXpButton PTR
    DIM hDc AS HDC, pPaint AS PAINTSTRUCT
@@ -310,6 +310,29 @@ PRIVATE FUNCTION CXpButton.CXPButtonProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT
         ' // Forwards this message for rapid button clicking...
         .SendMessageW hwnd, WM_LBUTTONDOWN, wParam, lParam
         EXIT FUNCTION
+
+      CASE BM_CLICK
+         IF .IsWindowEnabled(hwnd) = FALSE THEN EXIT FUNCTION
+         ' // Redraws the button in pushed state
+         pButton = CAST(CXpButton PTR, .GetWindowLongPtrW(hwnd, 0))
+         IF pButton = NULL THEN EXIT FUNCTION
+         IF pButton->m_bIsToggle THEN
+            IF pButton->m_bToggled = FALSE THEN
+               pButton->m_bToggled = TRUE
+            ELSE
+               pButton->m_bToggled = FALSE
+            END IF
+         END IF
+         pButton->m_fState = BST_PUSHED
+         pButton->Redraw
+         ' // Redraws the button in unpushed state
+         pButton->m_fState = 0
+         pButton->Redraw
+         ' // Set the focus in the button
+         .SetFocus hwnd
+         ' // Forwards the message to the parent window
+         .SendMessageW .GetParent(hwnd), WM_COMMAND, MAKELONG(GetDlgCtrlId(hwnd), BN_CLICKED), CAST(.LPARAM, hwnd)
+         EXIT FUNCTION
 
       CASE WM_LBUTTONDOWN
          ' // Redraws the button in pushed state

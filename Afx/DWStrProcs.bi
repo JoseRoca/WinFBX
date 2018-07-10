@@ -247,7 +247,7 @@ PRIVATE FUNCTION DWStrExtract OVERLOAD (BYVAL nStart AS LONG = 1, BYREF wszMainS
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' * Case insensitive version of AfxStrExtract.
+' * Case insensitive version of DWStrExtract.
 ' DIM dws AS DWSTRING = DWStrExtractI(1, "abacadabra","CaD")
 ' ========================================================================================
 PRIVATE FUNCTION DWStrExtractI (BYVAL nStart AS LONG = 1, BYREF wszMainStr AS CONST WSTRING, BYREF wszMatchStr AS CONST WSTRING) AS DWSTRING
@@ -349,7 +349,7 @@ END FUNCTION
 
 
 ' ========================================================================================
-' * Complement to the AfxStrExtract function.
+' * Complement to the DWStrExtract function.
 ' Returns the portion of a string following the first occurrence of a substring.
 ' wszMainStr is searched for the string specified in wszMatchStr If found, all characters
 ' after wszMatchStr are returned. If wszMatchStr is not present in wszMainStr (or is null) then
@@ -420,7 +420,7 @@ PRIVATE FUNCTION DWStrRemainAny (BYREF wszMainStr AS CONST WSTRING, BYREF wszMat
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' * Case insensitive version of AfxStrRemainAny.
+' * Case insensitive version of DwStrRemainAny.
 ' Example: DWStrRemainAnyI("I think, therefore I am", "E")   ' -> "refore I am"
 ' ========================================================================================
 PRIVATE FUNCTION DWStrRemainAnyI (BYREF wszMainStr AS CONST WSTRING, BYREF wszMatchStr AS CONST WSTRING, BYVAL nStart AS LONG = 1) AS DWSTRING
@@ -572,7 +572,7 @@ PRIVATE FUNCTION DWStrVerify (BYVAL nStart AS LONG, BYREF wszMainStr AS CONST WS
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' * Case sensintive version of AfxStrVerify.
+' * Case sensintive version of DWStrVerify.
 ' Example: DWStrVerifyI(5, "123.65abcx22.5", "0123456789ABC")   ' -> 10
 ' ========================================================================================
 PRIVATE FUNCTION DWStrVerifyI (BYVAL nStart AS LONG, BYREF wszMainStr AS CONST WSTRING, BYREF wszMatchStr AS CONST WSTRING) AS LONG
@@ -899,7 +899,7 @@ PRIVATE FUNCTION DWStrRetainAny (BYREF wszMainStr AS CONST WSTRING, BYREF wszMat
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' * Case insensitive version of AfxStrRetainAny.
+' * Case insensitive version of DWStrRetainAny.
 ' Example: DWStrRetainAnyI("<p>1234567890<ak;lk;l>1234567890</p>", "<;/P>")
 ' ========================================================================================
 PRIVATE FUNCTION DWStrRetainAnyI (BYREF wszMainStr AS CONST WSTRING, BYREF wszMatchStr AS CONST WSTRING) AS DWSTRING
