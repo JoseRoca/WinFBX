@@ -3053,13 +3053,13 @@ END FUNCTION
 '   Returns TRUE if the specified folder exists or FALSE otherwise.
 ' Remarks
 '   Prepending the string "\\?\" does not allow access to the root directory.
-'   On network shares, you can use an btrFileName in the form of the following: "\\server\service\*".
-'   However, you cannot use an btrFileName that points to the share itself; for example,
+'   On network shares, you can use a file spec in the form of the following: "\\server\service\*".
+'   However, you cannot use a file spec that points to the share itself; for example,
 '   "\\server\service" is not valid.
 '   To examine a directory that is not a root directory, use the path to that directory,
 '   without a trailing backslash. For example, an argument of "C:\Windows" returns information
 '   about the directory "C:\Windows", not about a directory or file in "C:\Windows".
-'   To examine the files and directories in "C:\Windows", use an btrFileName of "C:\Windows\*".
+'   To examine the files and directories in "C:\Windows", use a file spec of "C:\Windows\*".
 '   Be aware that some other thread or process could create or delete a file with this name
 '   between the time you query for the result and the time you act on the information.
 '   If this is a potential concern for your application, one possible solution is to use
