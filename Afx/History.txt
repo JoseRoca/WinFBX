@@ -25,7 +25,7 @@ if the memory will be intialized (cleared) or not.
 - Added CONST to the string parameters of several procedures.
 
 27 Jun 2018 - Version 1.0.03
-- Added DPI awareness to the text and image margins.
+- CXpButton: Added DPI awareness to the text and image margins.
 
 24 Jun 2018 - Version 1.0.03
 - CWSTR.inc and CVAR.inc: Changed the casting from BYREF AS WSTRING to BYREF AS CONST WSTRING.
