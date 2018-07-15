@@ -14,6 +14,7 @@
 #INCLUDE ONCE "win/ole2.bi"
 #INCLUDE ONCE "/crt/string.bi"
 #INCLUDE ONCE "utf_conv.bi"
+#INCLUDE ONCE "win/shlwapi.bi"
 
 ' // The definition for BSTR in the FreeBASIC headers was inconveniently changed to WCHAR
 #ifndef AFX_BSTR
@@ -1764,24 +1765,8 @@ END FUNCTION
 ' ########################################################################################
 
 ' ========================================================================================
-' qsort CWstr comparison function
-' ========================================================================================
-PRIVATE FUNCTION AfxCWstrArrayCompare CDECL (BYVAL a AS CWSTR PTR, BYVAL b AS CWSTR PTR) AS LONG
-   FUNCTION = wcscmp(cast(WSTRING PTR, a->m_pBuffer), cast(WSTRING PTR, b->m_pBuffer))
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
-' Reverse qsort CWstr comparison function
-' ========================================================================================
-PRIVATE FUNCTION AfxCWStrArrayReverseCompare CDECL (BYVAL a AS CWSTR PTR, BYVAL b AS CWSTR PTR) AS LONG
-   DIM r AS LONG = wcscmp(cast(WSTRING PTR, a->m_pBuffer), cast(WSTRING PTR, b->m_pBuffer))
-   IF r = 1 THEN r = -1 ELSE IF r = -1 THEN r = 1
-   RETURN r
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
 ' Sorts a one-dimensional CWSTR array calling the C qsort function.
+' This test us case sensitive.
 ' Parameters:
 ' - rgwstr : Start of target array.
 ' - numElm : Number of elements in the array.
@@ -1800,6 +1785,20 @@ END FUNCTION
 '    print rg(i)
 ' NEXT
 ' ========================================================================================
+
+' qsort CWstr comparison function
+PRIVATE FUNCTION AfxCWstrArrayCompare CDECL (BYVAL a AS CWSTR PTR, BYVAL b AS CWSTR PTR) AS LONG
+   FUNCTION = wcscmp(cast(WSTRING PTR, a->m_pBuffer), cast(WSTRING PTR, b->m_pBuffer))
+END FUNCTION
+
+' Reverse qsort CWstr comparison function
+PRIVATE FUNCTION AfxCWStrArrayReverseCompare CDECL (BYVAL a AS CWSTR PTR, BYVAL b AS CWSTR PTR) AS LONG
+   DIM r AS LONG = wcscmp(cast(WSTRING PTR, a->m_pBuffer), cast(WSTRING PTR, b->m_pBuffer))
+   IF r = 1 THEN r = -1 ELSE IF r = -1 THEN r = 1
+   RETURN r
+END FUNCTION
+
+' qsort CWstr sort function
 PRIVATE SUB AfxCWstrSort (BYREF rgwstr AS ANY PTR, BYVAL numElm AS LONG, BYVAL bAscend AS BOOLEAN = TRUE)
    IF rgwstr = NULL OR numElm < 2 THEN EXIT SUB
    IF bAscend THEN
@@ -1808,11 +1807,80 @@ PRIVATE SUB AfxCWstrSort (BYREF rgwstr AS ANY PTR, BYVAL numElm AS LONG, BYVAL b
       qsort rgwstr, numElm, SIZEOF(CWSTR) , CPTR(ANY PTR, @AfxCWStrArrayReverseCompare)
    END IF
 END SUB
-' ========================================================================================
-' ========================================================================================
+
+' qsort CWstr sort function
 PRIVATE SUB AfxCWstrArraySort (rgwstr() AS CWSTR, BYVAL bAscend AS BOOLEAN = TRUE)
    DIM numElm AS LONG = UBOUND(rgwstr) - LBOUND(rgwstr) + 1
    AfxCWstrSort @rgwstr(LBOUND(rgwstr)), numElm, bAscend
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Sorts a one-dimensional CWSTR array calling the C qsort function.
+' Digits in the strings are considered as numerical content rather than text. This test is
+' not case-sensitive.
+' Note  Behavior of this function, and therefore the results it returns, can change from
+' release to release. It should not be used for canonical sorting applications.
+' Parameters:
+' - rgwstr : Start of target array.
+' - numElm : Number of elements in the array.
+' - bAscend: TRUE for sorting in ascending order; FALSE for sorting in descending order.
+' Example:
+' #INCLUDE ONCE "Afx/CWSTR.inc"
+' USING Afx
+' DIM rg(1 TO 9) AS CWSTR
+' rg(1) = "20string"
+' rg(2) = "2string"
+' rg(3) = "3string"
+' rg(4) = "st20ring"
+' rg(5) = "st2ring"
+' rg(6) = "st3ring"
+' rg(7) = "string2"
+' rg(8) = "string20"
+' rg(9) = "string3"
+' print "---- after sorting ----"
+' AfxCWstrLogicalSort @rg(1), 9
+' FOR i AS LONG = 1 TO 9
+'   print rg(i)
+' NEXT
+' Output:
+' 2string
+' 3string
+' 20string
+' st2ring
+' st3ring
+' st20ring
+' string2
+' string3
+' string20
+' ========================================================================================
+
+' qsort CWstr logical comparison function
+PRIVATE FUNCTION AfxCWstrArrayLogicalCompare CDECL (BYVAL a AS CWSTR PTR, BYVAL b AS CWSTR PTR) AS LONG
+   FUNCTION = StrCmpLogicalW(cast(WSTRING PTR, a->m_pBuffer), cast(WSTRING PTR, b->m_pBuffer))
+END FUNCTION
+
+' Reverse qsort logical CWstr comparison function
+PRIVATE FUNCTION AfxCWStrArrayReverseLogicalCompare CDECL (BYVAL a AS CWSTR PTR, BYVAL b AS CWSTR PTR) AS LONG
+   DIM r AS LONG = StrCmpLogicalW(cast(WSTRING PTR, a->m_pBuffer), cast(WSTRING PTR, b->m_pBuffer))
+   IF r = 1 THEN r = -1 ELSE IF r = -1 THEN r = 1
+   RETURN r
+END FUNCTION
+
+' qsort CWstr logical sort function
+PRIVATE SUB AfxCWstrLogicalSort (BYREF rgwstr AS ANY PTR, BYVAL numElm AS LONG, BYVAL bAscend AS BOOLEAN = TRUE)
+   IF rgwstr = NULL OR numElm < 2 THEN EXIT SUB
+   IF bAscend THEN
+      qsort rgwstr, numElm, SIZEOF(CWSTR), CPTR(ANY PTR, @AfxCWstrArrayLogicalCompare)
+   ELSE
+      qsort rgwstr, numElm, SIZEOF(CWSTR) , CPTR(ANY PTR, @AfxCWStrArrayReverseLogicalCompare)
+   END IF
+END SUB
+
+' qsort CWstr logical sort function
+PRIVATE SUB AfxCWstrArrayLogicalSort (rgwstr() AS CWSTR, BYVAL bAscend AS BOOLEAN = TRUE)
+   DIM numElm AS LONG = UBOUND(rgwstr) - LBOUND(rgwstr) + 1
+   AfxCWstrLogicalSort @rgwstr(LBOUND(rgwstr)), numElm, bAscend
 END SUB
 ' ========================================================================================
 
