@@ -1819,8 +1819,6 @@ END SUB
 ' Sorts a one-dimensional CWSTR array calling the C qsort function.
 ' Digits in the strings are considered as numerical content rather than text. This test is
 ' not case-sensitive.
-' Note  Behavior of this function, and therefore the results it returns, can change from
-' release to release. It should not be used for canonical sorting applications.
 ' Parameters:
 ' - rgwstr : Start of target array.
 ' - numElm : Number of elements in the array.
