@@ -1870,14 +1870,14 @@ END SUB
 
 ' qsort CWstr logical comparison function
 PRIVATE FUNCTION AfxCWstrArrayLogicalCompare CDECL (BYVAL a AS CWSTR PTR, BYVAL b AS CWSTR PTR) AS LONG
-   DIM r AS LONG = CompareStringW(LOCALE_CUSTOM_DEFAULT, &h00000008, cast(WSTRING PTR, a->m_pBuffer), a->m_BufferLen \ 2, cast(WSTRING PTR, b->m_pBuffer), b->m_BufferLen \ 2)
+   DIM r AS LONG = CompareStringW(LOCALE_USER_DEFAULT, &h00000008, cast(WSTRING PTR, a->m_pBuffer), a->m_BufferLen \ 2, cast(WSTRING PTR, b->m_pBuffer), b->m_BufferLen \ 2)
    IF r <> 0 THEN r = r -2
    RETURN r
 END FUNCTION
 
 ' Reverse qsort logical CWstr comparison function
 PRIVATE FUNCTION AfxCWStrArrayReverseLogicalCompare CDECL (BYVAL a AS CWSTR PTR, BYVAL b AS CWSTR PTR) AS LONG
-   DIM r AS LONG = CompareStringW(LOCALE_CUSTOM_DEFAULT, &h00000008, cast(WSTRING PTR, a->m_pBuffer), a->m_BufferLen \ 2, cast(WSTRING PTR, b->m_pBuffer), b->m_BufferLen \ 2)
+   DIM r AS LONG = CompareStringW(LOCALE_USER_DEFAULT, &h00000008, cast(WSTRING PTR, a->m_pBuffer), a->m_BufferLen \ 2, cast(WSTRING PTR, b->m_pBuffer), b->m_BufferLen \ 2)
    IF r <> 0 THEN r = r -2
    IF r = 1 THEN r = -1 ELSE IF r = -1 THEN r = 1
    RETURN r
