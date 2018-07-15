@@ -1853,16 +1853,32 @@ END SUB
 ' string2
 ' string3
 ' string20
+' Note: &h00000008 is the value of the constant SORT_DIGITSASNUMBERS.
+' Remarks:
+' CompareStringW returns one of the following values if successful. To maintain the C runtime
+' convention of comparing strings, the value 2 can be subtracted from a nonzero return value.
+' Then, the meaning of <0, ==0, and >0 is consistent with the C runtime.
+' CSTR_LESS_THAN. The string indicated by a is less in lexical value than the string indicated by b.
+' CSTR_EQUAL. The string indicated by a is equivalent in lexical value to the string indicated by b.
+' The two strings are equivalent for sorting purposes, although not necessarily identical.
+' CSTR_GREATER_THAN. The string indicated by a is greater in lexical value than the string indicated by b.
+' The function returns 0 if it does not succeed. To get extended error information, the application
+' can call GetLastError, which can return one of the following error codes:
+' ERROR_INVALID_FLAGS. The values supplied for flags were invalid.
+' ERROR_INVALID_PARAMETER. Any of the parameter values was invalid.
 ' ========================================================================================
 
 ' qsort CWstr logical comparison function
 PRIVATE FUNCTION AfxCWstrArrayLogicalCompare CDECL (BYVAL a AS CWSTR PTR, BYVAL b AS CWSTR PTR) AS LONG
-   FUNCTION = StrCmpLogicalW(cast(WSTRING PTR, a->m_pBuffer), cast(WSTRING PTR, b->m_pBuffer))
+   DIM r AS LONG = CompareStringW(LOCALE_CUSTOM_DEFAULT, &h00000008, cast(WSTRING PTR, a->m_pBuffer), a->m_BufferLen \ 2, cast(WSTRING PTR, b->m_pBuffer), b->m_BufferLen \ 2)
+   IF r <> 0 THEN r = r -2
+   RETURN r
 END FUNCTION
 
 ' Reverse qsort logical CWstr comparison function
 PRIVATE FUNCTION AfxCWStrArrayReverseLogicalCompare CDECL (BYVAL a AS CWSTR PTR, BYVAL b AS CWSTR PTR) AS LONG
-   DIM r AS LONG = StrCmpLogicalW(cast(WSTRING PTR, a->m_pBuffer), cast(WSTRING PTR, b->m_pBuffer))
+   DIM r AS LONG = CompareStringW(LOCALE_CUSTOM_DEFAULT, &h00000008, cast(WSTRING PTR, a->m_pBuffer), a->m_BufferLen \ 2, cast(WSTRING PTR, b->m_pBuffer), b->m_BufferLen \ 2)
+   IF r <> 0 THEN r = r -2
    IF r = 1 THEN r = -1 ELSE IF r = -1 THEN r = 1
    RETURN r
 END FUNCTION
