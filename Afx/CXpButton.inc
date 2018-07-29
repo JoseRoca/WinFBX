@@ -68,10 +68,11 @@ TYPE CXpButton
       m_bIsThemed         AS LONG          ' // Application is themed
       m_bClkDown          AS LONG          ' // Button received the button down message
       m_hBkBrush          AS HBRUSH        ' // Background color brush
+      m_hBkBrushDown      AS HBRUSH        ' // Background color brush down
       m_TextForeColor     AS COLORREF      ' // Text foreground color
       m_TextBkColor       AS COLORREF      ' // Text background color
       m_TextForeColorDown AS LONG = -1     ' // Text foreground down color
-      m_TextBkDownColor   AS LONG = -1     ' // Text background down color
+      m_TextBkColorDown   AS LONG = -1     ' // Text background down color
       m_rx                AS SINGLE = 1    ' // Horizontal scaling ratio
       m_ry                AS SINGLE = 1    ' // Vertical scaling ratio
 
@@ -119,6 +120,8 @@ TYPE CXpButton
       DECLARE SUB SetImageFromRes (BYVAL hInstance AS HINSTANCE, BYREF wszImageName AS WSTRING, BYVAL ImageState AS LONG = XPBI_NORMAL, BYVAL fRedraw AS LONG = FALSE, BYVAL dimPercent AS LONG = 0, BYVAL bGrayScale AS LONG = FALSE)
       DECLARE SUB SetButtonBkColor (BYVAL bkgColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
       DECLARE FUNCTION GetButtonBkColor () AS COLORREF
+      DECLARE SUB SetButtonBkColorDown (BYVAL bkColorDown AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
+      DECLARE FUNCTION GetButtonBkColorDown () AS COLORREF
       DECLARE SUB SetTextForeColor (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
       DECLARE FUNCTION GetTextForeColor () AS COLORREF
       DECLARE SUB SetTextBkColor (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
@@ -151,6 +154,8 @@ TYPE CXpButton
       DECLARE PROPERTY ImageType () AS LONG
       DECLARE PROPERTY ButtonBkColor () AS COLORREF
       DECLARE PROPERTY ButtonBkColor (BYVAL bkColor AS COLORREF)
+      DECLARE PROPERTY ButtonBkColorDown () AS COLORREF
+      DECLARE PROPERTY ButtonBkColorDown (BYVAL bkColorDown AS COLORREF)
       DECLARE PROPERTY TextForeColor () AS COLORREF
       DECLARE PROPERTY TextForeColor (BYVAL textColor AS COLORREF)
       DECLARE PROPERTY TextBkColor () AS COLORREF
@@ -163,6 +168,7 @@ TYPE CXpButton
       DECLARE PROPERTY HotImageHandle () AS HANDLE
       DECLARE PROPERTY DisabledImageHandle () AS HANDLE
       DECLARE PROPERTY BkBrush () AS HBRUSH
+      DECLARE PROPERTY BkBrushDown () AS HBRUSH
 
       ' // Callback function
       DECLARE STATIC FUNCTION CXPButtonProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
@@ -242,6 +248,7 @@ PRIVATE DESTRUCTOR CXpButton
    IF m_hDisabledImage THEN .DeleteObject m_hDisabledImage
    ' // Deletes the brushes
    IF m_hBkBrush THEN .DeleteObject m_hBkBrush
+   IF m_hBkBrushDown THEN .DeleteObject m_hBkBrushDown
    ' // Deletes the font
    IF m_hFont THEN .DeleteObject m_hFont
 END DESTRUCTOR
@@ -942,7 +949,11 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
             .DrawFrameControl hDc, @rcContent, DFC_BUTTON, uState
          END IF
       END IF
-      IF m_hBkBrush THEN.FillRect hDc, @rcContent, m_hBkBrush
+      IF (bIsPressed = CTRUE OR m_bToggled = TRUE) AND m_hBkBrushDown <> NULL THEN
+         FillRect hDc, @rcContent, m_hBkBrushDown
+      ELSE
+         IF m_hBkBrush THEN.FillRect hDc, @rcContent, m_hBkBrush
+      END IF
    END IF
 
    ' // Calculates the y-coordinate of the image
@@ -1031,17 +1042,17 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
 '            .SetTextColor hDc, GetSysColor(COLOR_BTNTEXT)
 '            .SetBkColor hDc, GetSysColor(COLOR_BTNFACE)
             IF m_bToggled THEN
-               IF m_TextForeColorDown <> -1 AND m_TextBkDownColor <> -1 THEN
+               IF m_TextForeColorDown <> -1 AND m_TextBkColorDown <> -1 THEN
                   .SetTextColor hDc, m_TextForeColorDown
-                  .SetBkColor hDc, m_TextBkDownColor
+                  .SetBkColor hDc, m_TextBkColorDown
                ELSE
                   .SetTextColor hDc, m_TextForeColor
                   .SetBkColor hDc, m_TextBkColor
                END IF
             ELSEIF bIsPressed THEN
-               IF m_TextForeColorDown <> -1 OR m_TextBkDownColor <> -1 THEN
+               IF m_TextForeColorDown <> -1 OR m_TextBkColorDown <> -1 THEN
                   .SetTextColor hDc, m_TextForeColorDown
-                  .SetBkColor hDc, m_TextBkDownColor
+                  .SetBkColor hDc, m_TextBkColorDown
                ELSE
                   .SetTextColor hDc, m_TextForeColor
                   .SetBkColor hDc, m_TextBkColor
@@ -1242,6 +1253,21 @@ PRIVATE FUNCTION CXpButton.GetButtonBkColor () AS COLORREF
    RETURN lb.lbColor
 END FUNCTION
 ' ========================================================================================
+' ========================================================================================
+PRIVATE SUB CXpButton.SetButtonBkColorDown (BYVAL bkColorDown AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
+   IF m_hBkBrushDown THEN .DeleteObject m_hBkBrushDown
+   m_hBkBrushDown = CreateSolidBrush(bkColorDown)
+   IF fRedraw THEN this.Redraw
+END SUB
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CXpButton.GetButtonBkColorDown () AS COLORREF
+   IF m_hBkBrushDown = NULL THEN RETURN 0
+   DIM lb AS LOGBRUSH
+   GetObject(m_hBkBrushDown, SIZEOF(LOGBRUSH), @lb)
+   RETURN lb.lbColor
+END FUNCTION
+' ========================================================================================
 
 ' ========================================================================================
 ' Sets/gets the text foreground color of the button.
@@ -1288,12 +1314,12 @@ END FUNCTION
 ' Sets/gets the text background color of the button when it is down (pressed)
 ' ========================================================================================
 PRIVATE SUB CXpButton.SetTextBkColorDown (BYVAL textColor AS COLORREF)
-   m_TextBkDownColor = textColor
+   m_TextBkColorDown = textColor
 END SUB
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CXpButton.GetTextBkColorDown () AS COLORREF
-   RETURN m_TextBkDownColor
+   RETURN m_TextBkColorDown
 END FUNCTION
 ' ========================================================================================
 
@@ -1462,6 +1488,20 @@ PRIVATE PROPERTY CXpButton.ButtonBkColor (BYVAL bkColor AS COLORREF)
    m_hBkBrush = CreateSolidBrush(bkColor)
 END PROPERTY
 ' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ButtonBkColorDown () AS COLORREF
+   IF m_hBkBrushDown = NULL THEN RETURN 0
+   DIM lb AS LOGBRUSH
+   GetObject(m_hBkBrushDown, SIZEOF(LOGBRUSH), @lb)
+   PROPERTY = lb.lbColor
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ButtonBkColorDown (BYVAL bkColorDown AS COLORREF)
+   IF m_hBkBrushDown THEN .DeleteObject m_hBkBrushDown
+   m_hBkBrushDown = CreateSolidBrush(bkColorDown)
+END PROPERTY
+' ========================================================================================
 
 ' ========================================================================================
 ' Gets/sets the text foreground color of the button.
@@ -1506,12 +1546,12 @@ END PROPERTY
 ' Sets/gets the text background color of the button when it is down (pressed)
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.TextBkColorDown () AS COLORREF
-   PROPERTY = m_TextBkDownColor
+   PROPERTY = m_TextBkColorDown
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.TextBkColorDown (BYVAL textColor AS COLORREF)
-   m_TextBkDownColor = textColor
+   m_TextBkColorDown = textColor
 END PROPERTY
 ' ========================================================================================
 
@@ -1538,6 +1578,13 @@ END PROPERTY
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.BkBrush () AS HBRUSH
    PROPERTY = m_hBkBrush
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Gets the background color brush down
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.BkBrushDown () AS HBRUSH
+   PROPERTY = m_hBkBrushDown
 END PROPERTY
 ' ========================================================================================
 
