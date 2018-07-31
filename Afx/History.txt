@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+29 Jul 2018 - Version 1.0.03
+- CXputton: Added ButtonBkColorDown and BkBrushDown properties.
+
 10 Jul 2018 - Version 1.0.03
 - CXputton: Added support for the BM_CLICK message.
 
