@@ -249,7 +249,7 @@ END FUNCTION
 ' Retrieves the computer name of the current system.
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetComputerName () AS CWSTR
-   DIM buffer AS WSTRING * MAX_COMPUTERNAME_LENGTH
+   DIM buffer AS WSTRING * MAX_COMPUTERNAME_LENGTH + 1
    DIM dwBufLen AS DWORD = SIZEOF(buffer)
    GetComputerNameW(buffer, @dwBufLen)
    RETURN buffer
