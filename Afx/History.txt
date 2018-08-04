@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+4 Ago 2018 - Version 1.0.03
+- CXpButton.inc: Added a call to the Redraw method in the properties.
+
 1 Ago 2018 - Version 1.0.03
 - AfxWin.inc: Modified the function AfxGetComputerName:
 Changed DIM buffer AS WSTRING * MAX_COMPUTERNAME_LENGTH to DIM buffer AS WSTRING * MAX_COMPUTERNAME_LENGTH + 1

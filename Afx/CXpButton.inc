@@ -126,9 +126,9 @@ TYPE CXpButton
       DECLARE FUNCTION GetTextForeColor () AS COLORREF
       DECLARE SUB SetTextBkColor (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
       DECLARE FUNCTION GetTextBkColor () AS COLORREF
-      DECLARE SUB SetTextForeColorDown (BYVAL textColor AS COLORREF)
+      DECLARE SUB SetTextForeColorDown (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
       DECLARE FUNCTION GetTextForeColorDown () AS COLORREF
-      DECLARE SUB SetTextBkColorDown (BYVAL textColor AS COLORREF)
+      DECLARE SUB SetTextBkColorDown (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
       DECLARE FUNCTION GetTextBkColorDown () AS COLORREF
 
       ' // Properties
@@ -1300,8 +1300,9 @@ END FUNCTION
 ' ========================================================================================
 ' Sets/gets the text foreground color of the button when it is down (pressed).
 ' ========================================================================================
-PRIVATE SUB CXpButton.SetTextForeColorDown (BYVAL textColor AS COLORREF)
+PRIVATE SUB CXpButton.SetTextForeColorDown (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
    m_TextForeColorDown = textColor
+   IF fRedraw THEN this.Redraw
 END SUB
 ' ========================================================================================
 ' ========================================================================================
@@ -1313,8 +1314,9 @@ END FUNCTION
 ' ========================================================================================
 ' Sets/gets the text background color of the button when it is down (pressed)
 ' ========================================================================================
-PRIVATE SUB CXpButton.SetTextBkColorDown (BYVAL textColor AS COLORREF)
+PRIVATE SUB CXpButton.SetTextBkColorDown (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
    m_TextBkColorDown = textColor
+   IF fRedraw THEN this.Redraw
 END SUB
 ' ========================================================================================
 ' ========================================================================================
@@ -1336,6 +1338,7 @@ PRIVATE PROPERTY CXpButton.Font (BYVAL hFont AS HFONT)
    IF hFont = NULL THEN EXIT PROPERTY
    IF m_hFont THEN .DeleteObject m_hFont
    m_hFont = hFont
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
@@ -1349,6 +1352,7 @@ END PROPERTY
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.TextFormat (BYVAL dwTextFlags AS DWORD)
    m_dwTextFlags = dwTextFlags
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
@@ -1363,6 +1367,7 @@ END PROPERTY
 PRIVATE PROPERTY CXpButton.Cursor (BYVAL hCursor AS HCURSOR)
    IF m_hCursor THEN DestroyCursor m_hCursor
    m_hCursor = hCursor
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
@@ -1372,6 +1377,7 @@ END PROPERTY
 PRIVATE PROPERTY CXpButton.Toggle (BYVAL fToggle AS LONG)
    IF fToggle <> 0 THEN fToggle = CTRUE
    m_bIsToggle = fToggle
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
@@ -1398,6 +1404,7 @@ END PROPERTY
 PRIVATE PROPERTY CXpButton.ToggleState (BYVAL fState AS LONG)
    IF fState <> 0 THEN fState = -1
    m_bToggled = fState
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
@@ -1414,6 +1421,7 @@ END PROPERTY
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.ImageWidth (BYVAL nWidth AS LONG)
    m_ImageWidth = nWidth
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
@@ -1427,6 +1435,7 @@ END PROPERTY
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.ImageHeight (BYVAL nHeight AS LONG)
    m_ImageHeight = nHeight
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
@@ -1440,6 +1449,7 @@ END PROPERTY
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.ImagePos (BYVAL nPos AS LONG)
    m_ImagePos = nPos
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
@@ -1453,6 +1463,7 @@ END PROPERTY
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.ImageMargin (BYVAL nMargin AS LONG)
    m_ImageMargin = nMargin
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
@@ -1486,6 +1497,7 @@ END PROPERTY
 PRIVATE PROPERTY CXpButton.ButtonBkColor (BYVAL bkColor AS COLORREF)
    IF m_hBkBrush THEN .DeleteObject m_hBkBrush
    m_hBkBrush = CreateSolidBrush(bkColor)
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
@@ -1500,6 +1512,7 @@ END PROPERTY
 PRIVATE PROPERTY CXpButton.ButtonBkColorDown (BYVAL bkColorDown AS COLORREF)
    IF m_hBkBrushDown THEN .DeleteObject m_hBkBrushDown
    m_hBkBrushDown = CreateSolidBrush(bkColorDown)
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
@@ -1513,6 +1526,7 @@ END PROPERTY
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.TextForeColor (BYVAL textColor AS COLORREF)
    m_TextForeColor = textColor
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
@@ -1526,6 +1540,7 @@ END PROPERTY
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.TextBkColor (BYVAL textColor AS COLORREF)
    m_TextBkColor = textColor
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
@@ -1539,6 +1554,7 @@ END PROPERTY
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.TextForeColorDown (BYVAL textColor AS COLORREF)
    m_TextForeColorDown = textColor
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
@@ -1552,6 +1568,7 @@ END PROPERTY
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.TextBkColorDown (BYVAL textColor AS COLORREF)
    m_TextBkColorDown = textColor
+   this.Redraw
 END PROPERTY
 ' ========================================================================================
 
