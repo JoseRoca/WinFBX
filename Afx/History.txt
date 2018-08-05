@@ -1,6 +1,11 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+5 Ago 2018 - Version 1.0.03
+- AfxWin.inc: Added the AfxIsFileUnicode function.
+- AfxFile.inc: Includes all the WinFBX related file functions and classes.
+- CStream.inc: Class to wotk with streams.
+
 4 Ago 2018 - Version 1.0.03
 - CXpButton.inc: Added a call to the Redraw method in the properties.
 

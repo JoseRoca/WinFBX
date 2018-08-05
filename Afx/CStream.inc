@@ -33,62 +33,6 @@ BYVAL dwAttributes AS DWORD, BYVAL fCreate AS WINBOOL, BYVAL ppStream AS IStream
 END FUNCTION
 ' ========================================================================================
 
-' Storage HRESULT's (error codes)
-'#define STG_E_INVALIDFUNCTION _HRESULT_TYPEDEF_(&h80030001)
-'#define STG_E_FILENOTFOUND _HRESULT_TYPEDEF_(&h80030002)
-'#define STG_E_PATHNOTFOUND _HRESULT_TYPEDEF_(&h80030003)
-'#define STG_E_TOOMANYOPENFILES _HRESULT_TYPEDEF_(&h80030004)
-'#define STG_E_ACCESSDENIED _HRESULT_TYPEDEF_(&h80030005)
-'#define STG_E_INVALIDHANDLE _HRESULT_TYPEDEF_(&h80030006)
-'#define STG_E_INSUFFICIENTMEMORY _HRESULT_TYPEDEF_(&h80030008)
-'#define STG_E_INVALIDPOINTER _HRESULT_TYPEDEF_(&h80030009)
-'#define STG_E_NOMOREFILES _HRESULT_TYPEDEF_(&h80030012)
-'#define STG_E_DISKISWRITEPROTECTED _HRESULT_TYPEDEF_(&h80030013)
-'#define STG_E_SEEKERROR _HRESULT_TYPEDEF_(&h80030019)
-'#define STG_E_WRITEFAULT _HRESULT_TYPEDEF_(&h8003001D)
-'#define STG_E_READFAULT _HRESULT_TYPEDEF_(&h8003001E)
-'#define STG_E_SHAREVIOLATION _HRESULT_TYPEDEF_(&h80030020)
-'#define STG_E_LOCKVIOLATION _HRESULT_TYPEDEF_(&h80030021)
-'#define STG_E_FILEALREADYEXISTS _HRESULT_TYPEDEF_(&h80030050)
-'#define STG_E_INVALIDPARAMETER _HRESULT_TYPEDEF_(&h80030057)
-'#define STG_E_MEDIUMFULL _HRESULT_TYPEDEF_(&h80030070)
-'#define STG_E_PROPSETMISMATCHED _HRESULT_TYPEDEF_(&h800300F0)
-'#define STG_E_ABNORMALAPIEXIT _HRESULT_TYPEDEF_(&h800300FA)
-'#define STG_E_INVALIDHEADER _HRESULT_TYPEDEF_(&h800300FB)
-'#define STG_E_INVALIDNAME _HRESULT_TYPEDEF_(&h800300FC)
-'#define STG_E_UNKNOWN _HRESULT_TYPEDEF_(&h800300FD)
-'#define STG_E_UNIMPLEMENTEDFUNCTION _HRESULT_TYPEDEF_(&h800300FE)
-'#define STG_E_INVALIDFLAG _HRESULT_TYPEDEF_(&h800300FF)
-'#define STG_E_INUSE _HRESULT_TYPEDEF_(&h80030100)
-'#define STG_E_NOTCURRENT _HRESULT_TYPEDEF_(&h80030101)
-'#define STG_E_REVERTED _HRESULT_TYPEDEF_(&h80030102)
-'#define STG_E_CANTSAVE _HRESULT_TYPEDEF_(&h80030103)
-'#define STG_E_OLDFORMAT _HRESULT_TYPEDEF_(&h80030104)
-'#define STG_E_OLDDLL _HRESULT_TYPEDEF_(&h80030105)
-'#define STG_E_SHAREREQUIRED _HRESULT_TYPEDEF_(&h80030106)
-'#define STG_E_NOTFILEBASEDSTORAGE _HRESULT_TYPEDEF_(&h80030107)
-'#define STG_E_EXTANTMARSHALLINGS _HRESULT_TYPEDEF_(&h80030108)
-'#define STG_E_DOCFILECORRUPT _HRESULT_TYPEDEF_(&h80030109)
-'#define STG_E_BADBASEADDRESS _HRESULT_TYPEDEF_(&h80030110)
-'#define STG_E_DOCFILETOOLARGE _HRESULT_TYPEDEF_(&h80030111)
-'#define STG_E_NOTSIMPLEFORMAT _HRESULT_TYPEDEF_(&h80030112)
-'#define STG_E_INCOMPLETE _HRESULT_TYPEDEF_(&h80030201)
-'#define STG_E_TERMINATED _HRESULT_TYPEDEF_(&h80030202)
-'#define STG_S_CONVERTED _HRESULT_TYPEDEF_(&h00030200)
-'#define STG_S_BLOCK _HRESULT_TYPEDEF_(&h00030201)
-'#define STG_S_RETRYNOW _HRESULT_TYPEDEF_(&h00030202)
-'#define STG_S_MONITORING _HRESULT_TYPEDEF_(&h00030203)
-'#define STG_S_MULTIPLEOPENS _HRESULT_TYPEDEF_(&h00030204)
-'#define STG_S_CONSOLIDATIONFAILED _HRESULT_TYPEDEF_(&h00030205)
-'#define STG_S_CANNOTCONSOLIDATE _HRESULT_TYPEDEF_(&h00030206)
-'#define STG_E_STATUS_COPY_PROTECTION_FAILURE _HRESULT_TYPEDEF_(&h80030305)
-'#define STG_E_CSS_AUTHENTICATION_FAILURE _HRESULT_TYPEDEF_(&h80030306)
-'#define STG_E_CSS_KEY_NOT_PRESENT _HRESULT_TYPEDEF_(&h80030307)
-'#define STG_E_CSS_KEY_NOT_ESTABLISHED _HRESULT_TYPEDEF_(&h80030308)
-'#define STG_E_CSS_SCRAMBLED_SECTOR _HRESULT_TYPEDEF_(&h80030309)
-'#define STG_E_CSS_REGION_MISMATCH _HRESULT_TYPEDEF_(&h8003030A)
-'#define STG_E_RESETS_EXHAUSTED _HRESULT_TYPEDEF_(&h8003030B)
-
 ' ========================================================================================
 ' CFileStream class
 ' ========================================================================================
@@ -140,6 +84,7 @@ Public:
    DECLARE FUNCTION Stat (BYVAL grfStatFlag AS DWORD) AS STATSTG
    DECLARE FUNCTION Clone (BYVAL ppstm AS IStream PTR PTR) AS HRESULT
    DECLARE FUNCTION Clone () AS IStream PTR
+   DECLARE FUNCTION GetErrorInfo () AS STRING
 
 END TYPE
 ' ========================================================================================
@@ -607,6 +552,74 @@ PRIVATE FUNCTION CFileStream.Clone () AS IStream PTR
    DIM ppstm AS ISTREAM PTR
    this.SetResult(m_pStream->lpvtbl->Clone(m_pStream, @ppstm))
    RETURN ppstm
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a description of the last status code.
+' ========================================================================================
+PRIVATE FUNCTION CFileStream.GetErrorInfo () AS STRING
+   IF SUCCEEDED(m_Result) THEN RETURN ""
+   DIM s AS STRING = "Error &h" & HEX(m_Result, 8)
+   SELECT CASE m_Result
+      CASE E_POINTER : s += ": Null pointer"
+      CASE E_INVALIDARG : s += ": Null pointer"
+      CASE STG_E_INVALIDFUNCTION : s += ": Unable to perform requested operation"
+      CASE STG_E_FILENOTFOUND : s += ": File not found"
+      CASE STG_E_PATHNOTFOUND : s += ": Path not found"
+      CASE STG_E_TOOMANYOPENFILES : s += ": Too many open files"
+      CASE STG_E_ACCESSDENIED : s += ": Access denid"
+      CASE STG_E_INVALIDHANDLE : s += ": Invalid handle"
+      CASE STG_E_INSUFFICIENTMEMORY : s += ": Insufficient memory"
+      CASE STG_E_INVALIDPOINTER : s += ": Invalid pointer"
+      CASE STG_E_NOMOREFILES : s += ": No more files"
+      CASE STG_E_DISKISWRITEPROTECTED : s += ": Disk write protected"
+      CASE STG_E_SEEKERROR : s += ": Seek error"
+      CASE STG_E_WRITEFAULT : s += ": Write fault"
+      CASE STG_E_READFAULT : s += ": Read fault"
+      CASE STG_E_SHAREVIOLATION : s += ": Share violation"
+      CASE STG_E_LOCKVIOLATION : s += ": Lock violation"
+      CASE STG_E_FILEALREADYEXISTS : s += ": File already exists"
+      CASE STG_E_INVALIDPARAMETER : s += ": Invalid parameter"
+      CASE STG_E_MEDIUMFULL : s += ": Medium full"
+      CASE STG_E_PROPSETMISMATCHED : s += ": Property set mismatched"
+      CASE STG_E_ABNORMALAPIEXIT : s += ": Abnormal API call exit"
+      CASE STG_E_INVALIDHEADER : s += ": Invalid header"
+      CASE STG_E_INVALIDNAME : s += ": Invalid name"
+      CASE STG_E_UNKNOWN : s += ": Unknown error"
+      CASE STG_E_UNIMPLEMENTEDFUNCTION : s += ": Unimplemented function"
+      CASE STG_E_INVALIDFLAG : s += ": Invalid flag"
+      CASE STG_E_INUSE : s += ": Object is busy"
+      CASE STG_E_NOTCURRENT : s += ": The storage has been changed since the last commit"
+      CASE STG_E_REVERTED : s += ": The object has ceased to exist"
+      CASE STG_E_CANTSAVE : s += ": Can't save"
+      CASE STG_E_OLDFORMAT : s += ": The compound file was produced with an incompatible version of storage"
+      CASE STG_E_OLDDLL : s += ": The compound file was produced with a newer version of storage"
+      CASE STG_E_SHAREREQUIRED : s += ": Share.exe or equivalent is required for operation"
+      CASE STG_E_NOTFILEBASEDSTORAGE : s += ": Illegal operation called on non-file based storage"
+      CASE STG_E_EXTANTMARSHALLINGS : s += ": Illegal operation called on object with extant marshallings"
+      CASE STG_E_DOCFILECORRUPT : s += ": The docfile has been corrupted"
+      CASE STG_E_BADBASEADDRESS : s += ": OLE32.DLL has been loaded at the wrong address"
+      CASE STG_E_DOCFILETOOLARGE : s += ": The compound file is too large for the current implementation"
+      CASE STG_E_NOTSIMPLEFORMAT : s += ": The compound file was not created with the STGM_SIMPLE flag"
+      CASE STG_E_INCOMPLETE : s += ": The file download was aborted abnormally. The file is incomplete."
+      CASE STG_E_TERMINATED : s += ": The file download has been terminated"
+      CASE STG_S_CONVERTED : s += ": The underlying file was converted to compound file format"
+      CASE STG_S_BLOCK : s += ": The storage operation should block until more data is available"
+      CASE STG_S_RETRYNOW : s += ": The storage operation should retry immediately"
+      CASE STG_S_MONITORING : s += ": The notified event sink will not influence the storage operation"
+      CASE STG_S_MULTIPLEOPENS : s += ": Multiple opens prevent consolidated. (commit succeeded)."
+      CASE STG_S_CONSOLIDATIONFAILED : s += ": Consolidation of the storage file failed. (commit succeeded)."
+      CASE STG_S_CANNOTCONSOLIDATE : s += ": Consolidation of the storage file is inappropriate. (commit succeeded)."
+      CASE STG_E_STATUS_COPY_PROTECTION_FAILURE : s += ": Generic Copy Protection Error"
+      CASE STG_E_CSS_AUTHENTICATION_FAILURE : s += ": Copy Protection Error - DVD CSS Authentication failed."
+      CASE STG_E_CSS_KEY_NOT_PRESENT : s += ": Copy Protection Error - The given sector does not have a valid CSS key"
+      CASE STG_E_CSS_KEY_NOT_ESTABLISHED : s += ": Copy Protection Error - DVD session key not established"
+      CASE STG_E_CSS_SCRAMBLED_SECTOR : s += ": Copy Protection Error - The read failed because the sector is encrypted"
+      CASE STG_E_CSS_REGION_MISMATCH : s += ": Copy Protection Error - The current DVD's region does not correspond to the region setting of the drive"
+      CASE STG_E_RESETS_EXHAUSTED : s += ": Copy Protection Error - The drive's region setting may be permanent or the number of user resets has been exhausted"
+   END SELECT
+   RETURN s
 END FUNCTION
 ' ========================================================================================
 

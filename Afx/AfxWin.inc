@@ -3312,6 +3312,27 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Determines if a file is likely to contain a form of unicode text.
+' ========================================================================================
+PRIVATE FUNCTION AfxIsFileUnicode (BYREF wszFileName AS WSTRING) AS BOOLEAN
+   DIM hFile AS HANDLE = CreateFileW(@wszFileName, GENERIC_READ, FILE_SHARE_READ, NULL, _
+                         OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL)
+   IF hFile = INVALID_HANDLE_VALUE THEN RETURN FALSE
+   DIM dwFileSize AS DWORD, dwHighSize AS DWORD
+   dwFileSize = GetFileSize(hFile, @dwHighSize)
+   DIM dwBytesToRead AS DWORD = 1024
+   IF dwFileSize < dwBytesToRead THEN dwBytesToRead = dwFileSize
+   DIM pBuffer AS UBYTE PTR = CAllocate(1, dwBytesToRead)
+   DIM bRes AS BOOLEAN, dwBytesRead AS DWORD
+   bRes = ReadFile(hFile, pBuffer, dwBytesToRead, @dwBytesRead, NULL)
+   IF bRes THEN bRes = IsTextUnicode(pBuffer, dwBytesRead, NULL)
+   IF pBuffer THEN DeAllocate(pBuffer)
+   IF hFile THEN CloseHandle(hFile)
+   RETURN bRes
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Scans a text file ans returns the number of occurrences of the specified delimiter.
 ' Default value is CHR(13, 10), which returns the number of lines.
 ' ========================================================================================
