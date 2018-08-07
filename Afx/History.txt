@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+7 Ago 2018 - Version 1.0.03
+- AfxPrinter.inc: Added AfxGetPrinterPPIX and AfxGetPrinterPPIY functions.
+
 5 Ago 2018 - Version 1.0.03
 - AfxWin.inc: Added the AfxIsFileUnicode function.
 - AfxFile.inc: Includes all the WinFBX related file functions and classes.

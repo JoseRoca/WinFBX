@@ -66,6 +66,31 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Retrieves the number of pixels per inch of the specified host printer page (horizontal resolution).
+' Example: DIM ppix AS LONG = AfxGetPrinterPPIX("OKI DATA CORP B410")
+' ========================================================================================
+PRIVATE FUNCTION AfxGetPrinterPPIX (BYREF wszPrinterName AS WSTRING) AS LONG
+   DIM hdc AS HDC = CreateICW(NULL, wszPrinterName, NULL, NULL)
+   IF hdc = NULL THEN EXIT FUNCTION
+   DIM nResult AS LONG = GetDeviceCaps(hdc, LOGPIXELSX)
+   DeleteDC hdc
+   RETURN nResult
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Retrieves the number of pixels per inch of the specified host printer page (vertical resolution).
+' Example: DIM ppiy AS LONG = AfxGetPrinterPPIY("OKI DATA CORP B410")
+' ========================================================================================
+PRIVATE FUNCTION AfxGetPrinterPPIY (BYREF wszPrinterName AS WSTRING) AS LONG
+   DIM hdc AS HDC = CreateICW(NULL, wszPrinterName, NULL, NULL)
+   IF hdc = NULL THEN EXIT FUNCTION
+   DIM nResult AS LONG = GetDeviceCaps(hdc, LOGPIXELSY)
+   DeleteDC hdc
+   RETURN nResult
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Displays the printer dialog. Returns TRUE or FALSE.
 ' The caller is resposible of deleting the returned HDC handle with DeleteDC.
 ' DIM flags AS DWORD = PD_RETURNDC, hdc AS HDC, nCopies AS WORD
