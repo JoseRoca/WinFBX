@@ -105,7 +105,7 @@ PRIVATE FUNCTION AfxPrinterDialog (BYVAL hwndOwner AS HWND, BYREF flags AS DWORD
    DIM pd AS PRINTDLGW
    pd.lStructSize = SIZEOF(pd)
    pd.hwndOwner = hwndOwner
-   pd.flags = flags OR PD_SHOWHELP
+   pd.flags = flags OR PD_RETURNDC OR PD_SHOWHELP
    pd.nCopies = nCopies
    pd.nFromPage = MAX(nFromPage, nMinPage)
    pd.nToPage = MAX(MIN(nToPage, nMaxPage), nMaxPage)
