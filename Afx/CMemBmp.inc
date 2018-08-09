@@ -1,6 +1,6 @@
 ' ########################################################################################
 ' Microsoft Windows
-' File: CCMemBmp.inc
+' File: CMemBmp.inc
 ' Contents: Memory bitmap class.
 ' Compiler: FreeBasic 32 & 64-bit
 ' Copyright (c) 2017 José Roca. Freeware. Use at your own risk.
@@ -111,6 +111,14 @@ PRIVATE CONSTRUCTOR CMemBmp (BYREF wszFileName AS WSTRING, BYVAL dimPercent AS L
       IF m_hMemDc THEN m_hOldBmp = SelectObject(m_hMemDc, m_hBmp)
       DeleteDC hdcScreen
    END IF
+   ' // Paint the background of the bitmap
+   DIM coord AS RECT
+   SetRect(@coord, 0, 0, nWidth, nHeight)
+   DIM hBrush AS HBRUSH = CreateSolidBrush(clrBkg)
+   IF hBRush THEN
+      FillRect(m_hMemDc, @coord, hBrush)
+      DeleteObject hBrush
+   END IF
    ' // Draw the bitmap
    IF hbmp THEN
       this.DrawBitmap(hbmp)
@@ -140,6 +148,14 @@ PRIVATE CONSTRUCTOR CMemBmp (BYVAL hInst AS HINSTANCE, BYREF wszImageName AS WST
       ' // Select the bitmap into the compatible device context
       IF m_hMemDc THEN m_hOldBmp = SelectObject(m_hMemDc, m_hBmp)
       DeleteDC hdcScreen
+   END IF
+   ' // Paint the background of the bitmap
+   DIM coord AS RECT
+   SetRect(@coord, 0, 0, nWidth, nHeight)
+   DIM hBrush AS HBRUSH = CreateSolidBrush(clrBkg)
+   IF hBRush THEN
+      FillRect(m_hMemDc, @coord, hBrush)
+      DeleteObject hBrush
    END IF
    ' // Draw the bitmap
    IF hbmp THEN
