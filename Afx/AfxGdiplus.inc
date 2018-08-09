@@ -887,6 +887,7 @@ PRIVATE FUNCTION AfxGdipPrintHBITMAP (BYVAL hbmp AS HBITMAP, BYVAL bStretch AS B
    DIM hPrinter AS HANDLE
    DIM pbufferDoc AS UBYTE PTR
    DIM pBitmap AS GpBitmap PTR
+   DIM pGraphics AS GpGraphics PTR
 
    ' // Note: Using a DO... LOOP, with an EXIT DO before LOOP, to avoid the use of GOTO.
    DO
@@ -910,7 +911,6 @@ PRIVATE FUNCTION AfxGdipPrintHBITMAP (BYVAL hbmp AS HBITMAP, BYVAL bStretch AS B
       DIM hDC AS .HDC = CreateDCW(wszPrinterName, wszPrinterName, NULL, pDevMode)
       IF hDC = NULL THEN EXIT DO
       ' // Create a graphics object from the printer DC
-      DIM pGraphics AS GpGraphics PTR
       GdipCreateFromHDC(hDC, @pGraphics)
       IF pGraphics = NULL THEN EXIT DO
       ' // Create a Bitmap object from an HBITMAP
@@ -951,6 +951,7 @@ PRIVATE FUNCTION AfxGdipPrintHBITMAP (BYVAL hbmp AS HBITMAP, BYVAL bStretch AS B
    LOOP
 
    IF pBitmap THEN GdipDisposeImage(cast(GpImage PTR, pBitmap))
+   IF pGraphics THEN GdipDeleteGraphics(pGraphics)
    ' // Finished with the printer
    IF hPrinter THEN ClosePrinter(hPrinter)
    ' // Cleanup
