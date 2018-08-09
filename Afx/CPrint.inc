@@ -34,7 +34,7 @@ Public:
    DECLARE FUNCTION ChoosePrinter (BYVAL hwndOwner AS HWND = NULL) AS BOOLEAN
    DECLARE FUNCTION AttachPrinter (BYREF wszPrinterName AS WSTRING) AS BOOLEAN
    DECLARE FUNCTION PageSetup (BYVAL hwndOwner AS HWND = NULL) AS BOOLEAN
-   DECLARE FUNCTION GetDC () AS .HDC
+   DECLARE FUNCTION GetDC () AS HDC
    DECLARE FUNCTION GetPrinterName () AS CWSTR
    DECLARE FUNCTION GetPPIX () AS LONG
    DECLARE FUNCTION GetPPIY () AS LONG
@@ -148,7 +148,7 @@ END FUNCTION
 ' ========================================================================================
 ' Returns the handle of the device context of the attached printer
 ' ========================================================================================
-PRIVATE FUNCTION CPrint.GetDC () AS .HDC
+PRIVATE FUNCTION CPrint.GetDC () AS HDC
    RETURN m_hDC
 END FUNCTION
 ' ========================================================================================
@@ -604,11 +604,11 @@ PRIVATE FUNCTION CPrint.PrintBitmap ( _
    DIM token AS ULONG_PTR = AfxGdipInit
    IF token = NULL THEN EXIT FUNCTION
 
+   DIM pGraphics AS GpGraphics PTR
    DIM pBitmap AS GpBitmap PTR
 
    ' // Note: Using a DO... LOOP, with an EXIT DO before LOOP, to avoid the use of GOTO.
    DO
-      DIM pGraphics AS GpGraphics PTR
       GdipCreateFromHDC(m_hDC, @pGraphics)
       IF pGraphics = NULL THEN EXIT DO
       ' // Create a Bitmap object from an HBITMAP
@@ -649,6 +649,7 @@ PRIVATE FUNCTION CPrint.PrintBitmap ( _
    LOOP
 
    IF pBitmap THEN GdipDisposeImage(cast(GpImage PTR, pBitmap))
+   IF pGraphics THEN GdipDeleteGraphics(pGraphics)
    ' // Shutdown Gdiplus
    GdiplusShutdown token
 
