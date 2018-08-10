@@ -140,7 +140,7 @@ END FUNCTION
 ' - bstrFileName: String expression that identifies the file to create.
 ' - bOverwrite: Boolean value that indicates whether you can overwrite an existing file.
 '   The value is true if the file can be overwritten, false if it can't be overwritten.
-'   If omitted, existing files are not overwritten.
+'   If omitted, existing files are overwritten.
 ' - bUnicode: Boolean value that indicates whether the file is created as a Unicode or
 '   ASCII file. The value is true if the file is created as a Unicode file, false if it's
 '   created as an ASCII file. If omitted, an ASCII file is assumed.

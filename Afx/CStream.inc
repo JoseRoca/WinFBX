@@ -21,14 +21,19 @@ NAMESPACE Afx
 ' ========================================================================================
 PRIVATE FUNCTION AfxSHCreateStreamOnFileEx (BYVAL pwszFile AS WSTRING PTR, BYVAL grfMode AS DWORD, _
 BYVAL dwAttributes AS DWORD, BYVAL fCreate AS WINBOOL, BYVAL ppStream AS IStream PTR PTR) AS HRESULT
-   DIM AS ANY PTR pLib = DyLibLoad("shlwapi.dll")
-   IF pLib = NULL THEN EXIT FUNCTION
+   ' // See if the library is already loaded in the address space
+   DIM AS ANY PTR pLib = GetModuleHandleW("shlwapi.dll")
+   ' // If it is not loaded, load it
+   IF pLib = NULL THEN pLib = DyLibLoad("shlwapi.dll")
+   IF pLib = NULL THEN RETURN E_POINTER
    DIM pShCreateStreamOnFileEx AS FUNCTION (BYVAL pwszFile AS WSTRING PTR, BYVAL grfMode AS DWORD, BYVAL dwAttributes AS DWORD, _
        BYVAL fCreate AS WINBOOL, BYVAL pstmTemplate AS IStream PTR, BYVAL ppStream AS IStream PTR PTR) AS HRESULT
    pShCreateStreamOnFileEx = DyLibSymbol(pLib, "SHCreateStreamOnFileEx")
-   IF pShCreateStreamOnFileEx = NULL THEN EXIT FUNCTION
+   IF pShCreateStreamOnFileEx = NULL THEN RETURN E_POINTER
    DIM hr AS HRESULT = pShCreateStreamOnFileEx(pwszFile, grfMode, dwAttributes, fCreate, NULL, ppStream)
-   DyLibFree(pLib)
+   ' For some reason, if we free the library, calling the methods that use the returned
+   ' IStream pointer will GPF if compiled with the -O switch.
+'   DyLibFree(pLib)
    RETURN hr
 END FUNCTION
 ' ========================================================================================
@@ -235,6 +240,7 @@ END FUNCTION
 PRIVATE SUB CFileStream.Close
    ' // Release the IStrean interface
    IF m_pStream THEN m_pStream->lpvtbl->Release(m_pStream)
+   m_pStream = NULL
    m_Result = 0
 END SUB
 ' ========================================================================================

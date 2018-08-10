@@ -252,7 +252,7 @@ END FUNCTION
 
 ' ========================================================================================
 ' If the printer supports color printing, the return value is TRUE; otherwise, the return value is FALSE.
-' CSome color printers have the capability to print using true black instead of a combination
+' Some color printers have the capability to print using true black instead of a combination
 ' of cyan, magenta, and yellow (CMY). This usually creates darker and sharper text for
 ' documents. This option is only useful for color printers that support true black printing.
 ' ========================================================================================
@@ -273,7 +273,7 @@ END FUNCTION
 ' ========================================================================================
 ' If the printer supports duplex printing, the return value is TRUE; otherwise, the return value is FALSE.
 ' ========================================================================================
-PRIVATE FUNCTION AfxGetPrinterDuplexMode (BYREF wszPrinterName AS WSTRING) AS BOOLEAN
+PRIVATE FUNCTION AfxGetPrinterDuplex (BYREF wszPrinterName AS WSTRING) AS BOOLEAN
    RETURN DeviceCapabilitiesW(wszPrinterName, NULL, DC_DUPLEX, NULL, NULL)
 END FUNCTION
 ' ========================================================================================
@@ -506,8 +506,21 @@ PRIVATE FUNCTION AfxGetDocumentProperties (BYREF wszPrinterName AS WSTRING, BYVA
          CASE DM_DEFAULTSOURCE : RETURN pDevMode->dmDefaultSource
          CASE DM_PAPERLENGTH   : RETURN pDevMode->dmPaperLength
          CASE DM_PAPERWIDTH    : RETURN pDevMode->dmPaperWidth
+         CASE DM_DUPLEX        : RETURN pDevMode->dmDuplex
       END SELECT
    END IF
+   RETURN nRet
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' If the printer supports duplex printing, returns the current duplex mode
+' DMDUP_SIMPLEX = 1 (Single sided printing)
+' DMDUP_VERTICAL = 2 (Page flipped on the vertical edge)
+' DMDUP_HORIZONTAL = 3 (Page flipped on the horizontal edge)
+' ========================================================================================
+PRIVATE FUNCTION AfxGetPrinterDuplexMode (BYREF wszPrinterName AS WSTRING) AS LONG
+   RETURN AfxGetDocumentProperties(wszPrinterName, DM_DUPLEX)
 END FUNCTION
 ' ========================================================================================
 
@@ -580,11 +593,13 @@ END FUNCTION
 
 ' ========================================================================================
 ' Returns the printer print quality mode.
-' The return value can be one of the following:
+' There are four predefined device-independent values:
 ' - DMRES_DRAFT  = Draft
 ' - DMRES_LOW    = Low
 ' - DMRES_MEDIUM = Medium
 ' - DMRES_HIGH   = High
+' If a positive value is returned, it specifies the number of dots per inch (DPI) and is
+' therefore device dependent.
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetPrinterQuality (BYREF wszPrinterName AS WSTRING) AS LONG
    RETURN AfxGetDocumentProperties(wszPrinterName, DM_PRINTQUALITY)
@@ -891,7 +906,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Specifies the printer resolution.
+' Specifies the print quality mode.
 ' Example: AfxSetPrinterQuality(AfxGetDefaultPrinter, DMRES_HIGH)
 ' ========================================================================================
 PRIVATE FUNCTION AfxSetPrinterQuality (BYREF wszPrinterName AS WSTRING, BYVAL nMode AS LONG) AS BOOLEAN

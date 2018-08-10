@@ -65,6 +65,8 @@ Public:
    DECLARE PROPERTY Tray (BYVAL nTray AS LONG)
    DECLARE FUNCTION PrintBitmap (BYREF wszDocName AS WSTRING, BYVAL hbmp AS HBITMAP, BYVAL bStretch AS BOOLEAN = FALSE, _
                     BYVAL nStretchMode AS LONG = InterpolationModeHighQualityBicubic) AS BOOLEAN
+   DECLARE FUNCTION PrintBitmapToFile (BYREF wszOutputFileName AS WSTRING, BYVAL hbmp AS HBITMAP, BYVAL bStretch AS BOOLEAN = FALSE, _
+                    BYVAL nStretchMode AS LONG = InterpolationModeHighQualityBicubic) AS BOOLEAN
 
 END TYPE
 ' ========================================================================================
@@ -628,6 +630,89 @@ PRIVATE FUNCTION CPrint.PrintBitmap ( _
       DIM di AS DOCINFOW
       di.cbSize = SIZEOF(DOCINFOW)
       di.lpszDocName = @_wszDocName
+      DIM hr AS LONG = StartDocW(m_hDC, @di)
+      IF hr <= 0 THEN EXIT DO
+      DIM nCopies AS LONG = this.Copies
+      IF nCopies < 1 THEN nCopies = 1
+      FOR i AS LONG = 1 TO nCopies
+         IF StartPage(m_hDC) THEN
+            ' // Draw the image
+            IF bStretch THEN
+               GdipDrawImageRect(pGraphics, CAST(GpImage PTR, pBitmap), 0, 0, cx, cy)
+            ELSE
+               GdipDrawImage(pGraphics, CAST(GpImage PTR, pBitmap), 0, 0)
+            END IF
+            EndPage(m_hDC)
+         END IF
+      NEXT
+      EndDoc(m_hDC)
+      FUNCTION = TRUE
+      EXIT DO
+   LOOP
+
+   IF pBitmap THEN GdipDisposeImage(cast(GpImage PTR, pBitmap))
+   IF pGraphics THEN GdipDeleteGraphics(pGraphics)
+   ' // Shutdown Gdiplus
+   GdiplusShutdown token
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Prints a Windows bitmap in the selected printer.
+' Parameters:
+' - wszOutputFileName = Output file name.
+' - hbmp = Handle to the bitmap.
+' - bStretch = Stretch the image.
+' - nStretchMode = Stretching mode. Default value = InterpolationModeHighQualityBicubic.
+'   InterpolationModeLowQuality = 1
+'   InterpolationModeHighQuality = 2
+'   InterpolationModeBilinear = 3
+'   InterpolationModeBicubic = 4
+'   InterpolationModeNearestNeighbor = 5
+'   InterpolationModeHighQualityBilinear = 6
+'   InterpolationModeHighQualityBicubic = 7
+' Return value: Returns TRUE if the bitmap has been printed successfully, or FALSE otherwise.
+' ========================================================================================
+PRIVATE FUNCTION CPrint.PrintBitmapToFile ( _
+   BYREF wszOutputFileName AS WSTRING, _
+   BYVAL hbmp AS HBITMAP, _
+   BYVAL bStretch AS BOOLEAN = FALSE, _
+   BYVAL nStretchMode AS LONG = InterpolationModeHighQualityBicubic _
+   ) AS BOOLEAN
+
+   IF m_hDC = NULL THEN RETURN FALSE
+   DIM _wszOutputFileName AS WSTRING * MAX_PATH = wszOutputFileName
+
+   ' // Initialize Gdiplus
+   DIM token AS ULONG_PTR = AfxGdipInit
+   IF token = NULL THEN EXIT FUNCTION
+
+   DIM pGraphics AS GpGraphics PTR
+   DIM pBitmap AS GpBitmap PTR
+
+   ' // Note: Using a DO... LOOP, with an EXIT DO before LOOP, to avoid the use of GOTO.
+   DO
+      GdipCreateFromHDC(m_hDC, @pGraphics)
+      IF pGraphics = NULL THEN EXIT DO
+      ' // Create a Bitmap object from an HBITMAP
+      GdipCreateBitmapFromHBITMAP(hbmp, NULL, @pBitmap)
+      IF pBitmap = NULL THEN EXIT DO
+      ' // Stretching
+      DIM cx AS SINGLE, cy AS SINGLE
+      IF bStretch THEN GdipSetInterpolationMode(pGraphics, nStretchMode)
+      ' // Get the DPIs of the printer
+      DIM dpiX AS SINGLE, dpiY AS SINGLE
+      GdipGetDpiX(pGraphics, @dpiX)
+      GdipGetDpiY(pGraphics, @dpiY)
+      ' // Calculate the width and height according to the DPIs of the printer
+      cx = GetDeviceCaps(m_hDC, HORZRES) / (dpiX / 100)
+      cy = GetDeviceCaps(m_hDC, VERTRES) / (dpiY / 100)
+      ' // Print the bitmap
+      DIM di AS DOCINFOW
+      di.cbSize = SIZEOF(DOCINFOW)
+      di.lpszDocName = NULL
+      di.lpszOutput = @_wszOutputFileName
       DIM hr AS LONG = StartDocW(m_hDC, @di)
       IF hr <= 0 THEN EXIT DO
       DIM nCopies AS LONG = this.Copies
