@@ -950,9 +950,13 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
          END IF
       END IF
       IF (bIsPressed = CTRUE OR m_bToggled = TRUE) AND m_hBkBrushDown <> NULL THEN
-         FillRect hDc, @rcContent, m_hBkBrushDown
+         DIM rc2 AS RECT = rcContent
+         .InflateRect @rc2, -1, -1   ' // To no overwrite the border
+         FillRect hDc, @rc2, m_hBkBrushDown
       ELSE
-         IF m_hBkBrush THEN.FillRect hDc, @rcContent, m_hBkBrush
+         DIM rc2 AS RECT = rcContent
+         .InflateRect @rc2, -1, -1   ' // To no overwrite the border
+         IF m_hBkBrush THEN.FillRect hDc, @rc2, m_hBkBrush
       END IF
    END IF
 
