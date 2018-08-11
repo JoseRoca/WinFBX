@@ -956,7 +956,11 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
       ELSE
          DIM rc2 AS RECT = rcContent
          .InflateRect @rc2, -1, -1   ' // To no overwrite the border
-         IF m_hBkBrush THEN.FillRect hDc, @rc2, m_hBkBrush
+         IF iStateId = PBS_HOT AND m_hBkBrushDown <> NULL THEN
+            .FillRect hDc, @rc2, m_hBkBrushDown
+         ELSE
+            IF m_hBkBrush THEN .FillRect hDc, @rc2, m_hBkBrush
+         END IF
       END IF
    END IF
 
