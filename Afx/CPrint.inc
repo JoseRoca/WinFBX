@@ -38,8 +38,14 @@ Public:
    DECLARE FUNCTION GetPrinterName () AS CWSTR
    DECLARE FUNCTION GetPPIX () AS LONG
    DECLARE FUNCTION GetPPIY () AS LONG
+   DECLARE FUNCTION GetHorizontalUnits () AS LONG
+   DECLARE FUNCTION GetVerticalUnits () AS LONG
    DECLARE FUNCTION GetHorizontalResolution () AS LONG
    DECLARE FUNCTION GetVerticalResolution () AS LONG
+   DECLARE FUNCTION PixelsToPointsX (BYVAL pix AS LONG) AS LONG
+   DECLARE FUNCTION PixelsToPointsY (BYVAL pix AS LONG) AS LONG
+   DECLARE FUNCTION PointsToPixelsX (BYVAL pts AS LONG) AS LONG
+   DECLARE FUNCTION PointsToPixelsY (BYVAL pts AS LONG) AS LONG
    DECLARE FUNCTION GetDocumentProperties (BYVAL dmField AS DWORD) AS LONG
    DECLARE FUNCTION SetPrinterInfo (BYVAL dmField AS DWORD, BYVAL nValue AS LONG) AS BOOLEAN
    DECLARE PROPERTY Collate () AS BOOLEAN
@@ -65,7 +71,7 @@ Public:
    DECLARE PROPERTY Tray (BYVAL nTray AS LONG)
    DECLARE FUNCTION PrintBitmap (BYREF wszDocName AS WSTRING, BYVAL hbmp AS HBITMAP, BYVAL bStretch AS BOOLEAN = FALSE, _
                     BYVAL nStretchMode AS LONG = InterpolationModeHighQualityBicubic) AS BOOLEAN
-   DECLARE FUNCTION PrintBitmapToFile (BYREF wszOutputFileName AS WSTRING, BYVAL hbmp AS HBITMAP, BYVAL bStretch AS BOOLEAN = FALSE, _
+   DECLARE FUNCTION PrintBitmapToFile (BYREF wszDocName AS WSTRING, BYREF wszOutputFileName AS WSTRING, BYVAL hbmp AS HBITMAP, BYVAL bStretch AS BOOLEAN = FALSE, _
                     BYVAL nStretchMode AS LONG = InterpolationModeHighQualityBicubic) AS BOOLEAN
 
 END TYPE
@@ -179,6 +185,28 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Width, in world units, of the printable area of the page.
+' ========================================================================================
+PRIVATE FUNCTION CPrint.GetHorizontalUnits () AS LONG
+   ' // Get the horizontal PPI of the printer
+   DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
+   ' // Calculate the width according to the PPI of the printer
+   RETURN GetDeviceCaps(m_hDC, HORZRES) / (ppix / 100)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Height, in world units, of the printable area of the page.
+' ========================================================================================
+PRIVATE FUNCTION CPrint.GetVerticalUnits () AS LONG
+   ' // Get the horizontal PPI of the printer
+   DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
+   ' // Calculate the width according to the PPI of the printer
+   RETURN GetDeviceCaps(m_hDC, VERTRES) / (ppiy / 100)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Width, in pixels, of the printable area of the page.
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.GetHorizontalResolution () AS LONG
@@ -186,10 +214,52 @@ PRIVATE FUNCTION CPrint.GetHorizontalResolution () AS LONG
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' Width, in pixels, of the printable area of the page.
+' Height, in pixels, of the printable area of the page.
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.GetVerticalResolution () AS LONG
    IF m_hDC THEN RETURN GetDeviceCaps(m_hDC, VERTRES)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Converts pixels to point size (1/72 of an inch).
+' ========================================================================================
+' Horizontal resolution
+PRIVATE FUNCTION CPrint.PixelsToPointsX (BYVAL pix AS LONG) AS LONG
+   ' // Get the horizontal PPI of the printer
+   DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
+   ' // Calculate the size according to the PPI of the printer
+   RETURN pix * 72 / ppix
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Vertical resolution
+PRIVATE FUNCTION CPrint.PixelsToPointsY (BYVAL pix AS LONG) AS LONG
+   ' // Get the vertical PPI of the printer
+   DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
+   ' // Calculate the size according to the PPI of the printer
+   RETURN pix * 72 / ppiy
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Converts a point size (1/72 of an inch) to pixels.
+' ========================================================================================
+' Horizontal resolution
+PRIVATE FUNCTION CPrint.PointsToPixelsX (BYVAL pts AS LONG) AS LONG
+   ' // Get the horizontal PPI of the printer
+   DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
+   ' // Calculate the size according to the PPI of the printer
+   RETURN MulDiv(pts, ppix, 72)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Vertical resolution
+PRIVATE FUNCTION CPrint.PointsToPixelsY (BYVAL pts AS LONG) AS LONG
+   ' // Get the vertical PPI of the printer
+   DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
+   ' // Calculate the size according to the PPI of the printer
+   RETURN MulDiv(pts, ppiy, 72)
 END FUNCTION
 ' ========================================================================================
 
@@ -661,6 +731,7 @@ END FUNCTION
 ' ========================================================================================
 ' Prints a Windows bitmap in the selected printer.
 ' Parameters:
+' - wszDocName = Document name.
 ' - wszOutputFileName = Output file name.
 ' - hbmp = Handle to the bitmap.
 ' - bStretch = Stretch the image.
@@ -675,6 +746,7 @@ END FUNCTION
 ' Return value: Returns TRUE if the bitmap has been printed successfully, or FALSE otherwise.
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.PrintBitmapToFile ( _
+   BYREF wszDocName AS WSTRING, _
    BYREF wszOutputFileName AS WSTRING, _
    BYVAL hbmp AS HBITMAP, _
    BYVAL bStretch AS BOOLEAN = FALSE, _
@@ -682,6 +754,7 @@ PRIVATE FUNCTION CPrint.PrintBitmapToFile ( _
    ) AS BOOLEAN
 
    IF m_hDC = NULL THEN RETURN FALSE
+   DIM _wszDocName AS WSTRING * 260 = wszDocName
    DIM _wszOutputFileName AS WSTRING * MAX_PATH = wszOutputFileName
 
    ' // Initialize Gdiplus
@@ -711,7 +784,7 @@ PRIVATE FUNCTION CPrint.PrintBitmapToFile ( _
       ' // Print the bitmap
       DIM di AS DOCINFOW
       di.cbSize = SIZEOF(DOCINFOW)
-      di.lpszDocName = NULL
+      di.lpszDocName = @_wszDocName
       di.lpszOutput = @_wszOutputFileName
       DIM hr AS LONG = StartDocW(m_hDC, @di)
       IF hr <= 0 THEN EXIT DO
