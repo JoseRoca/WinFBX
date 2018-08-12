@@ -1,5 +1,3 @@
-
-
 # CPrint Class
 
 Allows to attach/choose a printer and get/set its setting values.
