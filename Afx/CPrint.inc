@@ -54,7 +54,7 @@ Public:
    DECLARE PROPERTY ColorMode (BYVAL nMode AS LONG)
    DECLARE PROPERTY Copies () AS LONG
    DECLARE PROPERTY Copies (BYVAL nCopies AS LONG)
-   DECLARE FUNCTION Duplex () AS BOOLEAN
+   DECLARE PROPERTY Duplex () AS BOOLEAN
    DECLARE PROPERTY DuplexMode () AS LONG
    DECLARE PROPERTY DuplexMode (BYVAL nDuplexMode AS LONG)
    DECLARE PROPERTY Orientation () AS LONG
@@ -140,7 +140,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Creates a Page Setup dialog box that enables the user to specify the attributes of a
+' Displays a Page Setup dialog box that enables the user to specify the attributes of a
 ' printed page. These attributes include the paper size and source, the page orientation
 ' (portrait or landscape), and the width of the page margins.
 ' ========================================================================================
@@ -177,7 +177,7 @@ PRIVATE FUNCTION CPrint.GetPPIX () AS LONG
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' Retuens the number of pixels per inch of the specified host printer page (vertical resolution).
+' Returns the number of pixels per inch of the specified host printer page (vertical resolution).
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.GetPPIY () AS LONG
    IF m_hDC THEN RETURN GetDeviceCaps(m_hDC, LOGPIXELSY)
@@ -185,9 +185,10 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Width, in world units, of the printable area of the page.
+' Returns the width, in world units, of the printable area of the page.
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.GetHorizontalUnits () AS LONG
+   IF m_hDC THEN RETURN 0
    ' // Get the horizontal PPI of the printer
    DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
    ' // Calculate the width according to the PPI of the printer
@@ -196,9 +197,10 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Height, in world units, of the printable area of the page.
+' Returns the height, in world units, of the printable area of the page.
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.GetVerticalUnits () AS LONG
+   IF m_hDC THEN RETURN 0
    ' // Get the horizontal PPI of the printer
    DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
    ' // Calculate the width according to the PPI of the printer
@@ -226,6 +228,7 @@ END FUNCTION
 ' ========================================================================================
 ' Horizontal resolution
 PRIVATE FUNCTION CPrint.PixelsToPointsX (BYVAL pix AS LONG) AS LONG
+   IF m_hDC THEN RETURN 0
    ' // Get the horizontal PPI of the printer
    DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
    ' // Calculate the size according to the PPI of the printer
@@ -235,6 +238,7 @@ END FUNCTION
 ' ========================================================================================
 ' Vertical resolution
 PRIVATE FUNCTION CPrint.PixelsToPointsY (BYVAL pix AS LONG) AS LONG
+   IF m_hDC THEN RETURN 0
    ' // Get the vertical PPI of the printer
    DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
    ' // Calculate the size according to the PPI of the printer
@@ -247,6 +251,7 @@ END FUNCTION
 ' ========================================================================================
 ' Horizontal resolution
 PRIVATE FUNCTION CPrint.PointsToPixelsX (BYVAL pts AS LONG) AS LONG
+   IF m_hDC THEN RETURN 0
    ' // Get the horizontal PPI of the printer
    DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
    ' // Calculate the size according to the PPI of the printer
@@ -256,6 +261,7 @@ END FUNCTION
 ' ========================================================================================
 ' Vertical resolution
 PRIVATE FUNCTION CPrint.PointsToPixelsY (BYVAL pts AS LONG) AS LONG
+   IF m_hDC THEN RETURN 0
    ' // Get the vertical PPI of the printer
    DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
    ' // Calculate the size according to the PPI of the printer
@@ -313,7 +319,7 @@ PRIVATE FUNCTION CPrint.SetPrinterInfo (BYVAL dmField AS DWORD, BYVAL nValue AS 
    pd.DesiredAccess = PRINTER_ALL_ACCESS
    IF OpenPrinterW(m_wszPrinterName, @hPrinter, @pd) = FALSE THEN RETURN FALSE
 
-   ' // The first GetPrinterW cll tells you how big the buffer should be in
+   ' // The first GetPrinterW call tells you how big the buffer should be in
    ' // order to hold all of PRINTER_INFO_2. Note that this should fail with
    ' // ERROR_INSUFFICIENT_BUFFER. If GetPrinterW fails for any other reason
    ' // or cbNeeded isn't set for some reason, then there is a problem...
@@ -385,7 +391,7 @@ PRIVATE FUNCTION CPrint.SetPrinterInfo (BYVAL dmField AS DWORD, BYVAL nValue AS 
    IF nRet = 0 THEN
       ' // The driver doesn't support, or it is unable to make the change...
       ClosePrinter(hPrinter)
-      EXIT FUNCTION
+      RETURN FALSE
    END IF
 
    ' // Finished with the printer
@@ -420,7 +426,7 @@ END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
-' If the printer supports color printing, the return value is TRUE; otherwise, the return value is FALSE.
+' Returns the printer color mode: DMCOLOR_MONOCHROME or DMCOLOR_COLOR.
 ' Some color printers have the capability to print using true black instead of a combination
 ' of cyan, magenta, and yellow (CMY). This usually creates darker and sharper text for
 ' documents. This option is only useful for color printers that support true black printing.
@@ -458,9 +464,9 @@ END PROPERTY
 ' ========================================================================================
 ' If the printer supports duplex printing, the return value is TRUE; otherwise, the return value is FALSE.
 ' ========================================================================================
-PRIVATE FUNCTION CPrint.Duplex () AS BOOLEAN
+PRIVATE PROPERTY CPrint.Duplex () AS BOOLEAN
    RETURN DeviceCapabilitiesW(m_wszPrinterName, NULL, DC_DUPLEX, NULL, NULL)
-END FUNCTION
+END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
@@ -506,38 +512,9 @@ END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
-' Specifies the paper size for which the printer is currently configured.
-' DMPAPER_LETTER = 1; DMPAPER_FIRST = DMPAPER_LETTER; DMPAPER_LETTERSMALL = 2; DMPAPER_TABLOID = 3;
-' DMPAPER_LEDGER = 4; DMPAPER_LEGAL = 5; DMPAPER_STATEMENT = 6; DMPAPER_EXECUTIVE = 7; DMPAPER_A3 = 8;
-' DMPAPER_A4 = 9; DMPAPER_A4SMALL = 10; DMPAPER_A5 = 11; DMPAPER_B4 = 12; DMPAPER_B5 = 13;
-' DMPAPER_FOLIO = 14; DMPAPER_QUARTO = 15; DMPAPER_10X14 = 16; DMPAPER_11X17 = 17; DMPAPER_NOTE = 18;
-' DMPAPER_ENV_9 = 19; DMPAPER_ENV_10 = 20; DMPAPER_ENV_11 = 21; DMPAPER_ENV_12 = 22; DMPAPER_ENV_14 = 23;
-' DMPAPER_CSHEET = 24; DMPAPER_DSHEET = 25; DMPAPER_ESHEET = 26; DMPAPER_ENV_DL = 27; DMPAPER_ENV_C5 = 28;
-' DMPAPER_ENV_C3 = 29; DMPAPER_ENV_C4 = 30; DMPAPER_ENV_C6 = 31; DMPAPER_ENV_C65 = 32; DMPAPER_ENV_B4 = 33;
-' DMPAPER_ENV_B5 = 34; DMPAPER_ENV_B6 = 35; DMPAPER_ENV_ITALY = 36; DMPAPER_ENV_MONARCH = 37;
-' DMPAPER_ENV_PERSONAL = 38; DMPAPER_FANFOLD_US = 39; DMPAPER_FANFOLD_STD_GERMAN = 40;
-' DMPAPER_FANFOLD_LGL_GERMAN = 41; DMPAPER_ISO_B4 = 42; DMPAPER_JAPANESE_POSTCARD = 43; DMPAPER_9X11 = 44;
-' DMPAPER_10X11 = 45; DMPAPER_15X11 = 46; DMPAPER_ENV_INVITE = 47; DMPAPER_RESERVED_48 = 48;
-' DMPAPER_RESERVED_49 = 49; DMPAPER_LETTER_EXTRA = 50; DMPAPER_LEGAL_EXTRA = 51; DMPAPER_TABLOID_EXTRA = 52;
-' DMPAPER_A4_EXTRA = 53; DMPAPER_LETTER_TRANSVERSE = 54; DMPAPER_A4_TRANSVERSE = 55;
-' DMPAPER_LETTER_EXTRA_TRANSVERSE = 56; DMPAPER_A_PLUS = 57; DMPAPER_B_PLUS = 58; DMPAPER_LETTER_PLUS = 59;
-' DMPAPER_A4_PLUS = 60; DMPAPER_A5_TRANSVERSE = 61; DMPAPER_B5_TRANSVERSE = 62; DMPAPER_A3_EXTRA = 63;
-' DMPAPER_A5_EXTRA = 64; DMPAPER_B5_EXTRA = 65; DMPAPER_A2 = 66; DMPAPER_A3_TRANSVERSE = 67;
-' DMPAPER_A3_EXTRA_TRANSVERSE = 68; DMPAPER_DBL_JAPANESE_POSTCARD = 69; DMPAPER_A6 = 70;
-' DMPAPER_JENV_KAKU2 = 71; DMPAPER_JENV_KAKU3 = 72; DMPAPER_JENV_CHOU3 = 73; DMPAPER_JENV_CHOU4 = 74;
-' DMPAPER_LETTER_ROTATED = 75; DMPAPER_A3_ROTATED = 76; DMPAPER_A4_ROTATED = 77; DMPAPER_A5_ROTATED = 78;
-' DMPAPER_B4_JIS_ROTATED = 79; DMPAPER_B5_JIS_ROTATED = 80; DMPAPER_JAPANESE_POSTCARD_ROTATED = 81;
-' DMPAPER_DBL_JAPANESE_POSTCARD_ROTATED = 82; DMPAPER_A6_ROTATED = 83; DMPAPER_JENV_KAKU2_ROTATED = 84;
-' DMPAPER_JENV_KAKU3_ROTATED = 85; DMPAPER_JENV_CHOU3_ROTATED = 86; DMPAPER_JENV_CHOU4_ROTATED = 87;
-' DMPAPER_B6_JIS = 88; DMPAPER_B6_JIS_ROTATED = 89; DMPAPER_12X11 = 90; DMPAPER_JENV_YOU4 = 91;
-' DMPAPER_JENV_YOU4_ROTATED = 92; DMPAPER_P16K = 93; DMPAPER_P32K = 94; DMPAPER_P32KBIG = 95;
-' DMPAPER_PENV_1 = 96; DMPAPER_PENV_2 = 97; DMPAPER_PENV_3 = 98; DMPAPER_PENV_4 = 99; DMPAPER_PENV_5 = 100;
-' DMPAPER_PENV_6 = 101; DMPAPER_PENV_7 = 102; DMPAPER_PENV_8 = 103; DMPAPER_PENV_9 = 104;
-' DMPAPER_PENV_10 = 105; DMPAPER_P16K_ROTATED = 106; DMPAPER_P32K_ROTATED = 107; DMPAPER_P32KBIG_ROTATED = 108;
-' DMPAPER_PENV_1_ROTATED = 109; DMPAPER_PENV_2_ROTATED = 110; DMPAPER_PENV_3_ROTATED = 111;
-' DMPAPER_PENV_4_ROTATED = 112; DMPAPER_PENV_5_ROTATED = 113; DMPAPER_PENV_6_ROTATED = 114;
-' DMPAPER_PENV_7_ROTATED = 115; DMPAPER_PENV_8_ROTATED = 116; DMPAPER_PENV_9_ROTATED = 117;
-' DMPAPER_PENV_10_ROTATED = 118; DMPAPER_LAST = DMPAPER_PENV_10_ROTATED; DMPAPER_USER = 256
+' Specifies the printer paper size, with DMPAPER_LETTER, DMPAPER_LEGAL, DMPAPER_A3, and
+' DMPAPER_A4 being the most typical. Note that the paper size types cannot be combined with
+' one another. For a list of paper sizes see https://docs.microsoft.com/en-us/windows/desktop/intl/paper-sizes.
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.PaperSize () AS LONG
    RETURN this.GetDocumentProperties(DM_PAPERSIZE)
@@ -613,8 +590,8 @@ END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 ' Specifies the factor by which the printed output is to be scaled. The apparent page size
-' is scaled from the physical page size by a factor of dmScale /100. For example, a
-' letter-sized page with a dmScale value of 50 would contain as much data as a page of
+' is scaled from the physical page size by a factor of nScale / 100. For example, a
+' letter-sized page with a nScale value of 50 would contain as much data as a page of
 ' 17- by 22-inches because the output text and graphics would be half their original
 ' height and width.
 ' ========================================================================================
@@ -636,7 +613,7 @@ END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 ' Sets the paper source. Can be one of the following values, or it can be a device-specific
-' value greater than or equal to DMBIN_USER.
+' value greater than or equal to DMBIN_USER (256).
 ' DMBIN_UPPER = 1; DMBIN_LOWER = 2; DMBIN_MIDDLE = 3; DMBIN_MANUAL = 4; DMBIN_ENVELOPE = 5;
 ' DMBIN_ENVMANUAL = 6; DMBIN_AUTO = 7;  DMBIN_TRACTOR = 8; DMBIN_SMALLFMT = 9;
 ' DMBIN_LARGEFMT = 10; DMBIN_LARGECAPACITY = 11; DMBIN_CASSETTE = 14; DMBIN_FORMSOURCE = 15
@@ -647,7 +624,7 @@ END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
-' Prints a Windows bitmap in the selected printer.
+' Prints a Windows bitmap to the selected printer.
 ' Parameters:
 ' - wszDocName = Document name.
 ' - hbmp = Handle to the bitmap.
@@ -729,7 +706,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Prints a Windows bitmap in the selected printer.
+' Prints a Windows bitmap to the specified file.
 ' Parameters:
 ' - wszDocName = Document name.
 ' - wszOutputFileName = Output file name.

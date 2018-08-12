@@ -1,6 +1,12 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+12 Ago 2018 - Version 1.0.03
+- Added the CPrint class.
+
+10 Ago 2018 - Version 1.0.03
+- Added the CStream class.
+
 7 Ago 2018 - Version 1.0.03
 - AfxPrinter.inc: Added AfxGetPrinterPPIX and AfxGetPrinterPPIY functions.
 
