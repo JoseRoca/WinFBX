@@ -307,7 +307,7 @@ FUNCTION PrintBitmap ( _
 
 BOOLEAN. Returns TRUE if the bitmap has been printed successfully, or FALSE otherwise.
 
-####Example
+#### Example
 
 The following console example creates an instance of the CPrint class to attach the "Microsoft Print to PDF" driver, retrieves an handle to its device context and uses the WinFBX GDI+ classes to draw the contents of the page.
 
