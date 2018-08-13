@@ -149,16 +149,34 @@ END SUB
 '   601 Windows 7
 '   602 Windows 8
 '   603 Windows 8.1
+'  1000 Windows 10
 ' Note: As Windows 95 and Windows NT return the same version number, we also need to call
 ' GetWindowsPlatform to differentiate them.
 ' ========================================================================================
+'PRIVATE FUNCTION AfxWindowsVersion () AS LONG
+'   DIM dwVersion AS DWORD
+'   DIM AS LONG nMajorVer, nMinorVer
+'   dwVersion = GetVersion
+'   nMajorVer = LOBYTE(LOWORD(dwVersion))
+'   nMinorVer = HIBYTE(LOWORD(dwVersion))
+'   FUNCTION = (nMajorVer + nMinorVer / 100) * 100
+'END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' GetVersion returns version 6.02 (Windows 8) in Windows 10 if the application has not a
+' manifest.
+' ========================================================================================
 PRIVATE FUNCTION AfxWindowsVersion () AS LONG
-   DIM dwVersion AS DWORD
-   DIM AS LONG nMajorVer, nMinorVer
-   dwVersion = GetVersion
-   nMajorVer = LOBYTE(LOWORD(dwVersion))
-   nMinorVer = HIBYTE(LOWORD(dwVersion))
-   FUNCTION = (nMajorVer + nMinorVer / 100) * 100
+   DIM hLib AS HMODULE = LoadLibraryW("NtDll.dll")
+   IF hLib = NULL THEN EXIT FUNCTION
+   DIM pfnRtlGetVersion AS FUNCTION (BYVAL lpVersionInformation AS OSVERSIONINFOEXW PTR) AS LONG
+   pfnRtlGetVersion = CAST(ANY PTR, GetProcAddress(hLib, "RtlGetVersion"))
+   IF pfnRtlGetVersion = NULL THEN EXIT FUNCTION
+   DIM osverinfo AS OSVERSIONINFOEXW
+   IF pfnRtlGetVersion(@osverinfo) = 0 THEN   ' STATUS_SUCCESS
+      FUNCTION = (osverinfo.dwMajorVersion + osverinfo.dwMinorVersion / 100) * 100
+   END IF
+   FreeLibrary hLib
 END FUNCTION
 ' ========================================================================================
 
@@ -177,10 +195,24 @@ END FUNCTION
 ' ========================================================================================
 ' Returns the Windows build
 ' ========================================================================================
+'PRIVATE FUNCTION AfxWindowsBuild () AS LONG
+'   DIM dwVersion AS DWORD
+'   dwVersion = GetVersion
+'   IF dwVersion < &H80000000 THEN FUNCTION = HIWORD(dwVersion)
+'END FUNCTION
+' ========================================================================================
+' ========================================================================================
 PRIVATE FUNCTION AfxWindowsBuild () AS LONG
-   DIM dwVersion AS DWORD
-   dwVersion = GetVersion
-   IF dwVersion < &H80000000 THEN FUNCTION = HIWORD(dwVersion)
+   DIM hLib AS HMODULE = LoadLibraryW("NtDll.dll")
+   IF hLib = NULL THEN EXIT FUNCTION
+   DIM pfnRtlGetVersion AS FUNCTION (BYVAL lpVersionInformation AS OSVERSIONINFOEXW PTR) AS LONG
+   pfnRtlGetVersion = CAST(ANY PTR, GetProcAddress(hLib, "RtlGetVersion"))
+   IF pfnRtlGetVersion = NULL THEN EXIT FUNCTION
+   DIM osverinfo AS OSVERSIONINFOEXW
+   IF pfnRtlGetVersion(@osverinfo) = 0 THEN   ' STATUS_SUCCESS
+      FUNCTION = osverinfo.dwBuildNumber
+   END IF
+   FreeLibrary hLib
 END FUNCTION
 ' ========================================================================================
 
@@ -375,10 +407,98 @@ END FUNCTION
 ' ========================================================================================
 ' Retrieves the current directory for the current process.
 ' ========================================================================================
+PRIVATE FUNCTION AfxGetCurrentDirectory () AS CWSTR
+   DIM wszCurDir AS WSTRING * MAX_PATH
+   GetCurrentDirectoryW(MAX_PATH, wszCurDir)
+   RETURN wszCurDir
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
 PRIVATE FUNCTION AfxGetCurDir () AS CWSTR
    DIM wszCurDir AS WSTRING * MAX_PATH
    GetCurrentDirectoryW(MAX_PATH, wszCurDir)
    RETURN wszCurDir
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Changes the current directory for the current process.
+' - lpPathName : The path to the new current directory. This parameter may specify a relative
+'     path or a full path. In either case, the full path of the specified directory
+'     is calculated and stored as the current directory.
+' Return value:
+'   If the function succeeds, the return value is TRUE.
+'   If the function fails, the return value is FALSE.
+'   To get extended error information, call GetLastError.
+' ========================================================================================
+PRIVATE FUNCTION AfxSetCurrentDirectory (BYVAL pwszPathName AS LPCWSTR) AS BOOLEAN
+   RETURN SetCurrentDirectory(pwszPathName)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION AfxSetCurDir (BYVAL pwszPathName AS LPCWSTR) AS BOOLEAN
+   RETURN SetCurrentDirectory(pwszPathName)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Unicode replacement for Free Basic's ChDir.
+' Return value: Returns 0 on success or -1 on failure.
+' ========================================================================================
+PRIVATE FUNCTION AfxChDir (BYVAL pwszPathName AS LPCWSTR) AS BOOLEAN
+   RETURN NOT SetCurrentDirectory(pwszPathName)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the contents of the specified variable from the environment block of the
+' calling process.
+' - pwszName : The name of the environment variable.
+' Return value: The contents of the specified environment variable.
+' Example: DIM cws AS CWSTR = AfxEnviron("path")
+' ========================================================================================
+PRIVATE FUNCTION AfxEnviron (BYVAL pwszName AS LPCWSTR) AS CWSTR
+   DIM wszBuffer AS WSTRING * 32767
+   DIM cb AS DWORD = GetEnvironmentVariable(pwszName, @wszBuffer, 32767)
+   RETURN LEFT(wszBuffer, cb)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the contents of the specified environment variable for the current process.
+' - pwszName : The name of the environment variable.
+'              The name of the environment variable.
+'              The operating system creates the environment variable if it does not exist
+'              and pwszValue is not NULL.
+' - pszValue : The contents of the environment variable.
+'              The maximum size of a user-defined environment variable is 32,767 characters.
+' Return value:
+'   If the function succeeds, the return value is TRUE.
+'   If the function fails, the return value is FALSE.
+'   To get extended error information, call GetLastError.
+' Example: AfxSetEnviron("path", "c:")
+' ========================================================================================
+PRIVATE FUNCTION AfxSetEnviron OVERLOAD (BYVAL pwszName AS LPCWSTR, BYVAL pwszValue AS LPCWSTR) AS BOOLEAN
+   RETURN SetEnvironmentVariable(pwszName, pwszValue)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the contents of the specified environment variable for the current process.
+' - varexpr = Name and setting of an environment variable in the following (or equivalent)
+'   form: varname=varstring. (varname being the name of the environment variable, and
+'   varstring being its text value to set).
+' Returns 0 on success, or -1 on failure.
+' Example: AfxSetEnviron "path=c:"
+' ========================================================================================
+PRIVATE FUNCTION AfxSetEnviron OVERLOAD (BYREF varexp AS WSTRING) AS BOOLEAN
+   DIM cwsName AS CWSTR = AfxStrExtract(1, varexp, "=")
+   IF LEN(cwsName) = 0 THEN RETURN TRUE
+   cwsName = TRIM(**cwsName)
+   DIM cwsValue AS CWSTR
+   DIM p AS LONG = INSTR(varexp, "=")
+   IF p = 0 THEN RETURN TRUE
+   cwsValue = MID(varexp, p + 1)
+   cwsValue = TRIM(**cwsValue)
+   IF LEN(cwsValue) = 0 THEN RETURN TRUE
+   RETURN NOT SetEnvironmentVariable(cwsName, cwsValue)
 END FUNCTION
 ' ========================================================================================
 
@@ -581,6 +701,19 @@ PRIVATE FUNCTION AfxSaveTempFile (BYVAL pwszBuffer AS WSTRING PTR, BYREF wszExte
       END IF
    END IF
    RETURN ""
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Determines whether a disk drive is a removable, fixed, CD-ROM, RAM disk, or network drive.
+' - lpRootPathName : The root directory for the drive.
+'   A trailing backslash is required. If this parameter is NULL, the function uses the
+'   root of the current directory.
+' Return value: DRIVE_UNKNOWN (0), DRIVE_NO_ROOT_DIR (1), DRIVE_REMOVABLE (2), DRIVE_FIXED(3),
+'   DRIVE_REMOTE (4), DRIVE_CDROM (5), DRIVE_RAMDISK (6).
+' ========================================================================================
+PRIVATE FUNCTION AfxGetDriveType (BYVAL lpRootPathName AS LPCWSTR) as UINT
+   RETURN GetDriveTypeW(lpRootPathName)
 END FUNCTION
 ' ========================================================================================
 
@@ -3037,6 +3170,128 @@ PRIVATE FUNCTION AfxDeleteFile (BYVAL pwszFileSpec AS WSTRING PTR) AS LONG
    FUNCTION = DeleteFileW(pwszFileSpec)
 END FUNCTION
 ' ========================================================================================
+#define AfxKill AfxDeleteFile
+
+' ========================================================================================
+' Creates a new directory.
+' - lpPathName : The path of the directory to be created.
+'   To extend the limit to 32,767 wide characters, prepend "\?" to the path.
+' Return value:
+'   If the function succeeds, the return value is TRUE.
+'   If the function fails, the return value is FALSE.
+'   To get extended error information, call GetLastError.
+'   Possible errors include the following.
+'   - ERROR_ALREADY_EXISTS
+'     The specified directory already exists.
+'   - ERROR_PATH_NOT_FOUND
+'     One or more intermediate directories do not exist; this function will only create
+'     the final directory in the path.
+' ========================================================================================
+PRIVATE FUNCTION AfxCreateDirectory (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
+   RETURN CreateDirectory(lpPathName, NULL)
+END FUNCTION
+' ========================================================================================
+PRIVATE FUNCTION AfxMakeDir (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
+   RETURN CreateDirectory(lpPathName, NULL)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Returns 0 on success, or -1 on failure.
+' ========================================================================================
+PRIVATE FUNCTION AfxMkDir (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
+   RETURN NOT CreateDirectory(lpPathName, NULL)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Deletes an existing empty directory.
+' - lpPathName : The path of the directory to be removed. This path must specify an empty
+'   directory, and the calling process must have delete access to the directory.
+' To extend the MAX_PATH limit to 32,767 wide characters prepend "\?" to the path.
+' If the function succeeds, the return value is TRUE.
+' If the function fails, the return value is FALSE.
+' To get extended error information, call GetLastError.
+' The RemoveDirectory function marks a directory for deletion on close. Therefore, the
+' directory is not removed until the last handle to the directory is closed.
+' To recursively delete the files in a directory, use the SHFileOperation function.
+' RemoveDirectory removes a directory junction, even if the contents of the target are not
+' empty; the function removes directory junctions regardless of the state of the target object. 
+' ========================================================================================
+PRIVATE FUNCTION AfxRemoveDirectory (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
+   RETURN RemoveDirectoryW(lpPathName)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION AfxRemoveDir (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
+   RETURN RemoveDirectoryW(lpPathName)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Unicode replacement for Free Basic's RmDir.
+' Returns 0 on success and -1 on failure.
+' ========================================================================================
+PRIVATE FUNCTION AfxRmDir (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
+   RETURN NOT RemoveDirectoryW(lpPathName)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Copies an existing file to a new file.
+' - lpExistingFileName : The name of an existing file.
+'   To extend the limit of MAX_PATH characters to 32,767 wide characters prepend "\?" to the path.
+'   If lpExistingFileName does not exist, CopyFile fails, and GetLastError returns ERROR_FILE_NOT_FOUND.
+' - lpNewFileName : The name of the new file.
+'   To extend the limit of MAX_PATH characters to 32,767 wide characters prepend "\?" to the path.
+' - bFailIfExists
+'   If this parameter is TRUE and the new file specified by lpNewFileName already exists, the
+'   function fails. If this parameter is FALSE and the new file already exists, the function
+'   overwrites the existing file and succeeds.
+' Return value:
+'   If the function succeeds, the return value is nonzero.
+'   If the function fails, the return value is FALSE. To get extended error information, call GetLastError.
+' ========================================================================================
+PRIVATE FUNCTION AfxCopyFile (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR, BYVAL bFailIfExists AS BOOLEAN = FALSE) AS BOOLEAN
+   RETURN CopyFile(lpExistingFileName, lpNewFileName, bFailIfExists)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Unicode replacement for Free Basic's FileCopy.
+' Returns 0 on success, or 1 if an error occurred.
+' ========================================================================================
+PRIVATE FUNCTION AfxFilecopy (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR) AS LONG
+   DIM nRet AS LONG = IIF(CopyFile(lpExistingFileName, lpNewFileName, FALSE) = 0, 1, 0)
+   RETURN nRet
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Moves an existing file or a directory, including its children.
+' - lpExistingFileName : The name of an existing file.
+'   To extend the limit of MAX_PATH characters to 32,767 wide characters prepend "\?" to the path.
+'   If lpExistingFileName does not exist, CopyFile fails, and GetLastError returns ERROR_FILE_NOT_FOUND.
+' - lpNewFileName : The name of the new file.
+'   To extend the limit of MAX_PATH characters to 32,767 wide characters prepend "\?" to the path.
+' Return value:
+'   If the function succeeds, the return value is nonzero.
+'   If the function fails, the return value is FALSE. To get extended error information, call GetLastError.
+' ========================================================================================
+PRIVATE FUNCTION AfxMoveFile (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR) AS BOOLEAN
+   RETURN MoveFile(lpExistingFileName, lpNewFileName)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION AfxRenameFile (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR) AS BOOLEAN
+   RETURN MoveFile(lpExistingFileName, lpNewFileName)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Unicode replacement for Free Basic's Name function.
+' Returns 0 on success, or non-zero on failure.
+' ========================================================================================
+PRIVATE FUNCTION AfxName (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR) AS LONG
+   RETURN NOT AfxMoveFile(lpExistingFileName, lpNewFileName)
+END FUNCTION
+' ========================================================================================
 
 ' ========================================================================================
 ' Searches a directory for a file or subdirectory with a name that matches a specific name
@@ -3223,6 +3478,35 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' * Unicode replacement for Free Basic's FileDateTime.
+' Returns the file's last modified date and time as Date Serial.
+' wszFileName : Filename to retrieve date and time for.
+' Return Value : Returns a Date Serial.
+' Example:
+' #include "windows.bi"
+' #include "vbcompat.bi"
+' #include "win/ole2.bi"
+' DIM wszFileName AS WSTRING * MAX_PATH = ExePath & "\c2.bas"
+' DIM dt AS DOUBLE = AfxFileDateTime(wszFileName)
+' PRINT Format(dt, "yyyy-mm-dd hh:mm AM/PM")
+' ========================================================================================
+PRIVATE FUNCTION AfxFileDateTime (BYREF wszFileName AS WSTRING) AS DOUBLE
+   DIM fd AS WIN32_FIND_DATAW
+   DIM hFind AS HANDLE = FindFirstFileW(wszFileName, @fd)
+   IF hFind = INVALID_HANDLE_VALUE THEN RETURN 0
+   FindClose hFind
+   DIM ft AS FILETIME
+   FileTimeToLocalFileTime(@fd.ftLastWriteTime, @ft)
+   DIM st AS SYSTEMTIME
+   FileTimeToSystemTime(@ft, @st)
+   DIM dt AS DOUBLE
+   SystemTimeToVariantTime @st, @dt
+   RETURN dt
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Unicode replacement for Free Basic's FileLen.
 ' Returns the size in bytes of the specified file. Don't use it with folders.
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetFileSize (BYREF wszFileSpec AS WSTRING) AS ULONGLONG
@@ -3237,6 +3521,7 @@ PRIVATE FUNCTION AfxGetFileSize (BYREF wszFileSpec AS WSTRING) AS ULONGLONG
    END IF
 END FUNCTION
 ' ========================================================================================
+#define AfxFileLen AfxGetFileSize
 
 ' ========================================================================================
 ' Returns the time the file was created.
