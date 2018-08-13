@@ -556,12 +556,12 @@ PRIVATE FUNCTION CFileStream.GetErrorInfo () AS CWSTR
    DIM s AS CWSTR = "Error &h" & HEX(m_Result, 8)
    SELECT CASE m_Result
       CASE E_POINTER : s += ": Null pointer"
-      CASE E_INVALIDARG : s += ": Null pointer"
+      CASE E_INVALIDARG : s += ": Invalid argument"
       CASE STG_E_INVALIDFUNCTION : s += ": Unable to perform requested operation"
       CASE STG_E_FILENOTFOUND : s += ": File not found"
       CASE STG_E_PATHNOTFOUND : s += ": Path not found"
       CASE STG_E_TOOMANYOPENFILES : s += ": Too many open files"
-      CASE STG_E_ACCESSDENIED : s += ": Access denid"
+      CASE STG_E_ACCESSDENIED : s += ": Access denied"
       CASE STG_E_INVALIDHANDLE : s += ": Invalid handle"
       CASE STG_E_INSUFFICIENTMEMORY : s += ": Insufficient memory"
       CASE STG_E_INVALIDPOINTER : s += ": Invalid pointer"
