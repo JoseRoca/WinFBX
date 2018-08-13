@@ -209,14 +209,15 @@ using Afx
 ' // Create an instance of the CTextStream class
 DIM pTxtStm AS CTextStream
 ' // ' // Open file for input as a text stream
-pTxtStm.OpenForInputA(ExePath & "\Test.txt")
-' // Read the file sequentially
-DIM s AS STRING
-DO UNTIL pTxtStm.EOS
-   s = pTxtStm.ReadLine
-   PRINT s
-LOOP
-pTxtStm.Close
+IF pTxtStm.OpenForInputA(ExePath & "\Test.txt") = S_OK THEN
+   ' // Read the file sequentially
+   DIM s AS STRING
+   DO UNTIL pTxtStm.EOS
+      s = pTxtStm.ReadLine
+      PRINT s
+   LOOP
+   pTxtStm.Close
+END IF
 
 PRINT "Press any key to end..."
 SLEEP
@@ -249,14 +250,15 @@ using Afx
 ' // Create an instance of the CTextStream class
 DIM pTxtStm AS CTextStream
 ' // ' // Open file for input as a text stream
-pTxtStm.OpenForInputW(ExePath & "\Test.txt")
-' // Read the file sequentially
-DIM cbs AS CBSTRING
-DO UNTIL pTxtStm.EOS
-   cbs = pTxtStm.ReadLine
-   PRINT cbs
-LOOP
-pTxtStm.Close
+IF pTxtStm.OpenForInputW(ExePath & "\TestW.txt") = S_OK THEN
+   ' // Read the file sequentially
+   DIM cbs AS CBSTR
+   DO UNTIL pTxtStm.EOS
+      cbs = pTxtStm.ReadLine
+      PRINT cbs
+   LOOP
+   pTxtStm.Close
+END IF
 
 PRINT "Press any key to end..."
 SLEEP
@@ -289,11 +291,12 @@ using Afx
 ' // Create an instance of the CTextStream class
 DIM pTxtStm AS CTextStream
 ' // Open file for output as a text stream
-pTxtStm.OpenForOutputA(ExePath & "\Test.txt")
-' // Write a string and an end of line to the stream
-pTxtStm.WriteLine "This is a test."
-'// Close the file
-pTxtStm.Close
+IF pTxtStm.OpenForOutputA(ExePath & "\Test.txt") = S_OK THEN
+   ' // Write a string and an end of line to the stream
+   pTxtStm.WriteLine "This is a test."
+   '// Close the file
+   pTxtStm.Close
+END IF
 
 PRINT "Press any key to end..."
 SLEEP
@@ -326,11 +329,12 @@ using Afx
 ' // Create an instance of the CTextStream class
 DIM pTxtStm AS CTextStream
 ' // Open file for output as a text stream
-pTxtStm.OpenForOutputW(ExePath & "\Test.txt")
-' // Write a string and an end of line to the stream
-pTxtStm.WriteLine "This is a test."
-'// Close the file
-pTxtStm.Close
+IF pTxtStm.OpenForOutputW(ExePath & "\TestW.txt") = S_OK THEN
+   ' // Write a string and an end of line to the stream
+   pTxtStm.WriteLine "This is a test."
+   '// Close the file
+   pTxtStm.Close
+END IF
 
 PRINT "Press any key to end..."
 SLEEP
@@ -364,11 +368,12 @@ using Afx
 ' // Create an instance of the CTextStream class
 DIM pTxtStm AS CTextStream
 ' // Open file for output as a text stream
-pTxtStm.OpenForAppendA(ExePath & "\Test.txt")
-' // Write a string and an end of line to the stream
-pTxtStm.WriteLine "This is a test."
-'// Close the file
-pTxtStm.Close
+IF pTxtStm.OpenForAppendA(ExePath & "\Test.txt") = S_OK THEN
+   ' // Write a string and an end of line to the stream
+   pTxtStm.WriteLine "This is a test."
+   '// Close the file
+   pTxtStm.Close
+END IF
 
 PRINT "Press any key to end..."
 SLEEP
@@ -399,11 +404,12 @@ using Afx
 ' // Create an instance of the CTextStream class
 DIM pTxtStm AS CTextStream
 ' // Open file for output as a text stream
-pTxtStm.OpenForAppendW(ExePath & "\Test.txt")
-' // Write a string and an end of line to the stream
-pTxtStm.WriteLine "This is a test."
-'// Close the file
-pTxtStm.Close
+IF pTxtStm.OpenForAppendW(ExePath & "\TestW.txt") = S_OK THEN
+   ' // Write a string and an end of line to the stream
+   pTxtStm.WriteLine "This is a test."
+   '// Close the file
+   pTxtStm.Close
+END IF
 
 PRINT "Press any key to end..."
 SLEEP
@@ -484,14 +490,17 @@ using Afx
 DIM pTxtStm AS CTextStream
 ' // Open file as a text stream
 DIM cbsFile AS CBSTR = ExePath & "\Test.txt"
-pTxtStm.Open(cbsFile, IOMode_ForReading)
-' // Read the file sequentially
-DO
-  IF pTxtStm.EOS THEN EXIT DO
-  DIM curLine AS LONG = pTxtStm.Line
-  DIM cbsText AS CBSTR = pTxtStm.ReadLine
-  PRINT "Line " & STR(curLine) & ": " & cbsText
-LOOP
+IF pTxtStm.Open(cbsFile, IOMode_ForReading) = S_OK THEN
+   ' // Read the file sequentially
+   DO
+     IF pTxtStm.EOS THEN EXIT DO
+     DIM curLine AS LONG = pTxtStm.Line
+     DIM cbsText AS CBSTR = pTxtStm.ReadLine
+     PRINT "Line " & STR(curLine) & ": " & cbsText
+   LOOP
+   '// Close the file
+   pTxtStm.Close
+END IF
 
 PRINT "Press any key to end..."
 SLEEP
@@ -519,10 +528,13 @@ using Afx
 DIM pTxtStm AS CTextStream
 ' // Open file as a text stream
 DIM cbsFile AS CBSTR = ExePath & "\Test.txt"
-pTxtStm.Open(cbsFile, IOMode_ForReading)
-' // Read all the contents of the file
-DIM cbsText AS CBSTR = pTxtStm.ReadAll
-PRINT cbsText
+IF pTxtStm.Open(cbsFile, IOMode_ForReading) = S_OK THEN
+   ' // Read all the contents of the file
+   DIM cbsText AS CBSTR = pTxtStm.ReadAll
+   PRINT cbsText
+   '// Close the file
+   pTxtStm.Close
+END IF
 
 PRINT "Press any key to end..."
 SLEEP
@@ -554,10 +566,13 @@ using Afx
 DIM pTxtStm AS CTextStream
 ' // Create a text stream
 DIM cbsFile AS CBSTR = ExePath & "\Test.txt"
-pTxtStm.Create(cbsFile, TRUE)
-' // Write strings
-pTxtStm.Write "This is a string."
-pTxtStm.Write "This is a second string."
+IF pTxtStm.Create(cbsFile, TRUE) = S_OK THEN
+   ' // Write strings
+   pTxtStm.Write "This is a string."
+   pTxtStm.Write "This is a second string."
+   '// Close the file
+   pTxtStm.Close
+END IF
 
 PRINT "Press any key to end..."
 SLEEP
@@ -589,10 +604,13 @@ using Afx
 DIM pTxtStm AS CTextStream
 ' // Create a text stream
 DIM cbsFile AS CBSTR = ExePath & "\Test.txt"
-pTxtStm.Create(cbsFile, TRUE)
-' // Write strings
-pTxtStm.WriteLine "This is a string."
-pTxtStm.WriteLine "This is a second string."
+IF pTxtStm.Create(cbsFile, TRUE) = S_OK THEN
+   ' // Write strings
+   pTxtStm.WriteLine "This is a string."
+   pTxtStm.WriteLine "This is a second string."
+   '// Close the file
+   pTxtStm.Close
+END IF
 
 PRINT "Press any key to end..."
 SLEEP
@@ -624,15 +642,18 @@ using Afx
 DIM pTxtStm AS CTextStream
 ' // Create a text stream
 DIM cbsFile AS CBSTR = ExePath & "\Test.txt"
-pTxtStm.Create(cbsFile, TRUE)
-' // Write a string and an end of line to the stream
-pTxtStm.WriteLine "This is a test."
-' // Write more strings
-pTxtStm.Write "This is a string."
-pTxtStm.Write "This is a second string."
-' // Write two blank lines (the first will serve as an end of line for the previous write instructions)
-pTxtStm.WriteBlankLines 2
-pTxtStm.WriteLine "This is the end line."
+IF pTxtStm.Create(cbsFile, TRUE) = S_OK THEN
+   ' // Write a string and an end of line to the stream
+   pTxtStm.WriteLine "This is a test."
+   ' // Write more strings
+   pTxtStm.Write "This is a string."
+   pTxtStm.Write "This is a second string."
+   ' // Write two blank lines (the first will serve as an end of line for the previous write instructions)
+   pTxtStm.WriteBlankLines 2
+   pTxtStm.WriteLine "This is the end line."
+   '// Close the file
+   pTxtStm.Close
+END IF
 
 PRINT "Press any key to end..."
 SLEEP
@@ -664,28 +685,31 @@ using Afx
 DIM pTxtStm AS CTextStream
 ' // Open file as a text stream
 DIM cbsFile AS CBSTR = ExePath & "\Test.txt"
-pTxtStm.Open(cbsFile, IOMode_ForReading)
-' // Read the file sequentially
-DO
-  ' // Ext if we are at the end of the stream
-  IF pTxtStm.EOS THEN EXIT DO
-  ' // Current line
-  DIM curLine AS LONG = pTxtStm.Line
-  ' // Skip the 3rd line
-  IF curLine = 3 THEN
+IF pTxtStm.Open(cbsFile, IOMode_ForReading) = S_OK THEN
+   ' // Read the file sequentially
+   DO
+     ' // Ext if we are at the end of the stream
+     IF pTxtStm.EOS THEN EXIT DO
+     ' // Current line
+     DIM curLine AS LONG = pTxtStm.Line
+     ' // Skip the 3rd line
+     IF curLine = 3 THEN
+        pTxtStm.SkipLine
+        curLine + = 1
+     END IF
+     ' // Skip 10 characters
+     pTxtStm.Skip 10
+     ' // Current column
+     DIM curColumn AS LONG = pTxtStm.Column
+     ' // Read 5 characters
+     DIM cbsText AS CBSTR = pTxtStm.Read(5)
+     ' // Skip the rest of the line
      pTxtStm.SkipLine
-     curLine + = 1
-  END IF
-  ' // Skip 10 characters
-  pTxtStm.Skip 10
-  ' // Current column
-  DIM curColumn AS LONG = pTxtStm.Column
-  ' // Read 5 characters
-  DIM cbsText AS CBSTR = pTxtStm.Read(5)
-  ' // Skip the rest of the line
-  pTxtStm.SkipLine
-  PRINT "Line " + WSTR(curLine) + ", Column " +  WSTR(curColumn) & ": " + cbsText
-LOOP
+     PRINT "Line " + WSTR(curLine) + ", Column " +  WSTR(curColumn) & ": " + cbsText
+   LOOP
+   '// Close the file
+   pTxtStm.Close
+END IF
 
 PRINT "Press any key to end..."
 SLEEP
