@@ -77,19 +77,18 @@ Public:
    DECLARE FUNCTION GetSeekPosition () AS ULONGINT
    DECLARE FUNCTION ResetSeekPosition () AS ULONGINT
    DECLARE FUNCTION SeekAtEndOfFile () AS ULONGINT
+   DECLARE FUNCTION SeekAtEndOfStream () AS ULONGINT
    DECLARE FUNCTION SetSize (BYVAL libNewSize AS ULONGINT) AS HRESULT
    DECLARE FUNCTION GetSize () AS ULONGINT
    DECLARE FUNCTION CopyTo (BYVAL pstm AS IStream PTR, BYVAL cb AS ULONGINT, _
            BYVAL pcbRead AS ULONGINT PTR = NULL, BYVAL pcbWritten AS ULONGINT PTR = NULL) AS HRESULT
-   DECLARE FUNCTION Commit (BYVAL grfCommitFlags AS DWORD) AS HRESULT
-   DECLARE FUNCTION Revert () AS HRESULT
    DECLARE FUNCTION LockRegion (BYVAL libOffset AS ULONGINT, BYVAL cb AS ULONGINT, BYVAL dwLockType AS DWORD) AS HRESULT
    DECLARE FUNCTION UnlockRegion (BYVAL libOffset AS ULONGINT, BYVAL cb AS ULONGINT, BYVAL dwLockType AS DWORD) AS HRESULT
    DECLARE FUNCTION Stat (BYVAL pstatstg AS STATSTG PTR, BYVAL grfStatFlag AS DWORD) AS HRESULT
    DECLARE FUNCTION Stat (BYVAL grfStatFlag AS DWORD) AS STATSTG
    DECLARE FUNCTION Clone (BYVAL ppstm AS IStream PTR PTR) AS HRESULT
    DECLARE FUNCTION Clone () AS IStream PTR
-   DECLARE FUNCTION GetErrorInfo () AS STRING
+   DECLARE FUNCTION GetErrorInfo () AS CWSTR
 
 END TYPE
 ' ========================================================================================
@@ -195,9 +194,10 @@ PRIVATE FUNCTION CFileStream.Attach (BYVAL pstm AS IStream PTR) AS HRESULT
    m_Result = 0
    IF pstm = NULL THEN m_Result = E_INVALIDARG : RETURN m_Result
    ' // Release the stream object
-   IF m_pStream THEN m_pStream->lpvtbl->Release(m_pStream)
+   IF m_pStream THEN m_Result = m_pStream->lpvtbl->Release(m_pStream)
    ' // Attach the passed stream object to the class
    m_pStream = pstm
+   RETURN m_Result
 END FUNCTION
 ' ========================================================================================
 
@@ -246,12 +246,12 @@ END SUB
 ' ========================================================================================
 
 ' ========================================================================================
-' Reads a specified number of bytes from the stream object into memory, starting at the
+' Reads a specified number of bytes from the stream into memory, starting at the
 ' current seek pointer.
 ' - pv : A pointer to the buffer which the stream data is read into.
-' - cb : The number of bytes of data to read from the stream object.
+' - cb : The number of bytes of data to read from the stream.
 ' - pcbRead: A pointer to a ULONG variable that receives the actual number of bytes read
-'   from the stream object. Note: The number of bytes read may be zero.
+'   from the stream. Note: The number of bytes read may be zero.
 ' ========================================================================================
 PRIVATE FUNCTION CFileStream.Read (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG, BYVAL pcbRead AS ULONG PTR) AS HRESULT
    IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
@@ -268,9 +268,9 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Reads a specified number of characters from the stream object into memory, starting at the
+' Reads a specified number of characters from the stream into memory, starting at the
 ' current seek pointer.
-' - numChars : The number of characters to read from the stream object.
+' - numChars : The number of characters to read from the stream.
 '   Pass -1 to read all the characters from the current seek position.
 ' ========================================================================================
 PRIVATE FUNCTION CFileStream.ReadTextA (BYVAL numChars AS LONG) AS STRING
@@ -296,12 +296,12 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Writes a specified number of bytes into the stream object starting at the current seek pointer.
+' Writes a specified number of bytes into the stream starting at the current seek pointer.
 ' - pv: A pointer to the buffer that contains the data that is to be written to the stream.
 '   A valid pointer must be provided for this parameter even when cb is zero.
 ' - cb : The number of bytes of data to attempt to write into the stream. This value can be zero.
 ' - pcbWritten : A pointer to a ULONG variable where this method writes the actual number
-'   of bytes written to the stream object. The caller can set this pointer to NULL, in which
+'   of bytes written to the stream. The caller can set this pointer to NULL, in which
 '   case this method does not provide the actual number of bytes written.
 ' ========================================================================================
 PRIVATE FUNCTION CFileStream.Write (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG, BYVAL pcbWritten AS ULONG PTR) AS HRESULT
@@ -362,7 +362,7 @@ PRIVATE FUNCTION CFileStream.Seek (BYVAL dlibMove AS ULONGINT, BYVAL dwOrigin AS
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' Retrieves the seek position.
+' Returns the current seek position.
 ' ========================================================================================
 PRIVATE FUNCTION CFileStream.GetSeekPosition () AS ULONGINT
    IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN 0
@@ -394,9 +394,20 @@ PRIVATE FUNCTION CFileStream.SeekAtEndOfFile () AS ULONGINT
    RETURN libNewPosition.QuadPart
 END FUNCTION
 ' ========================================================================================
+' ========================================================================================
+' Sets the seek position at the end of the stream.
+' ========================================================================================
+PRIVATE FUNCTION CFileStream.SeekAtEndOfStream () AS ULONGINT
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN 0
+   DIM dlibMove AS LARGE_INTEGER : dlibMove.QuadPart = 0
+   DIM libNewPosition AS ULARGE_INTEGER
+   this.SetResult(m_pStream->lpvtbl->Seek(m_pStream, dlibMove, STREAM_SEEK_END, @libNewPosition))
+   RETURN libNewPosition.QuadPart
+END FUNCTION
+' ========================================================================================
 
 ' ========================================================================================
-' Changes the size of the stream object.
+' Changes the size of the stream.
 ' libNewSize : Specifies the new size, in bytes, of the stream.
 ' ========================================================================================
 PRIVATE FUNCTION CFileStream.SetSize (BYVAL libNewSize AS ULONGINT) AS HRESULT
@@ -406,7 +417,7 @@ PRIVATE FUNCTION CFileStream.SetSize (BYVAL libNewSize AS ULONGINT) AS HRESULT
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' Retrieves the size of the stream.
+' Returns the size of the stream in bytes.
 ' ========================================================================================
 PRIVATE FUNCTION CFileStream.GetSize () AS ULONGINT
    IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN 0
@@ -421,6 +432,7 @@ END FUNCTION
 ' current seek pointer in another stream.
 ' - pstm : A pointer to the destination stream. The stream pointed to by pstm can be a new
 '   stream or a clone of the source stream.
+' - cb : The number of bytes of data to attempt to copy into the stream.
 ' - pcbRead : A pointer to the location where this method writes the actual number of bytes
 '   read from the source. You can set this pointer to NULL. In this case, this method does
 '   not provide the actual number of bytes read.
@@ -437,28 +449,6 @@ BYVAL pcbRead AS ULONGINT PTR = NULL, BYVAL pcbWritten AS ULONGINT PTR = NULL) A
    IF pcbRead THEN *pcbRead = ulicbRead.QuadPart
    IF pcbWritten THEN *pcbWritten = ulicbWritten.QuadPart
    RETURN m_Result
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' The Commit method ensures that any changes made to a stream object open in transacted
-' mode are reflected in the parent storage.
-' - grfCommitFlags : Controls how the changes for the stream object are committed.
-'   See the STGC enumeration for a definition of these values.
-' ========================================================================================
-PRIVATE FUNCTION CFileStream.Commit (BYVAL grfCommitFlags AS DWORD) AS HRESULT
-   IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
-   RETURN this.SetResult(m_pStream->lpvtbl->Commit(m_pStream, grfCommitFlags))
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' The Revert method discards all changes that have been made to a transacted stream since
-' the last IStream.Commit call. On streams open in direct mode this method has no effect.
-' ========================================================================================
-PRIVATE FUNCTION CFileStream.Revert () AS HRESULT
-   IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
-   RETURN this.SetResult(m_pStream->lpvtbl->Revert(m_pStream))
 END FUNCTION
 ' ========================================================================================
 
@@ -507,17 +497,14 @@ END FUNCTION
 ' ========================================================================================
 ' Retrieves the STATSTG structure for this stream.
 ' - pstatstg : Pointer to a STATSTG structure where this method places information about
-'   this stream object.
+'   this stream.
 ' - grfStatFlag : Specifies that this method does not return some of the members in the
 '   STATSTG structure, thus saving a memory allocation operation. Values are taken from
 '   the STATFLAG enumeration.
 '   - STATFLAG_DEFAULT : Requests that the statistics include the pwcsName member of the
 '     STATSTG structure.
 '   - STATFLAG_NONAME : Requests that the statistics not include the pwcsName member of
-'     the STATSTG structure. If the name is omitted, there is no need for the ILockBytes.Stat,
-'     IStorage.Stat, and IStream.Stat methods methods to allocate and free memory for the
-'     string value of the name, therefore the method reduces time and resources used in an
-'     allocation and free operation.
+'     the STATSTG structure.
 ' ========================================================================================
 PRIVATE FUNCTION CFileStream.Stat (BYVAL pstatstg AS STATSTG PTR, BYVAL grfStatFlag AS DWORD) AS HRESULT
    IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
@@ -534,15 +521,15 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Creates a new stream object with its own seek pointer that references the same bytes as
+' Creates a new stream with its own seek pointer that references the same bytes as
 ' the original stream.
-' - ppstm : When successful, pointer to the location of an IStream pointer to the new stream
-'   object. If an error occurs, this parameter is NULL.
+' - ppstm : When successful, pointer to the location of an IStream pointer to the new stream.
+'   If an error occurs, this parameter is NULL.
 ' Remarks:
-'    The Clone method creates a new stream object for accessing the same bytes but using a
-'    separate seek pointer. The new stream object sees the same data as the source-stream
-'    object. Changes written to one object are immediately visible in the other. Range
-'    locking is shared between the stream objects.
+'    The Clone method creates a new stream for accessing the same bytes but using a
+'    separate seek pointer. The new stream sees the same data as the source-stream.
+'    Changes written to one stream are immediately visible in the other. Range
+'    locking is shared between the streams.
 '    The initial setting of the seek pointer in the cloned stream instance is the same as
 '    the current setting of the seek pointer in the original stream at the time of the
 '    clone operation.
@@ -562,11 +549,11 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Returns a description of the last status code.
+' Returns a description of the last result code.
 ' ========================================================================================
-PRIVATE FUNCTION CFileStream.GetErrorInfo () AS STRING
-   IF SUCCEEDED(m_Result) THEN RETURN ""
-   DIM s AS STRING = "Error &h" & HEX(m_Result, 8)
+PRIVATE FUNCTION CFileStream.GetErrorInfo () AS CWSTR
+   IF SUCCEEDED(m_Result) THEN RETURN "Success"
+   DIM s AS CWSTR = "Error &h" & HEX(m_Result, 8)
    SELECT CASE m_Result
       CASE E_POINTER : s += ": Null pointer"
       CASE E_INVALIDARG : s += ": Null pointer"
@@ -624,6 +611,8 @@ PRIVATE FUNCTION CFileStream.GetErrorInfo () AS STRING
       CASE STG_E_CSS_SCRAMBLED_SECTOR : s += ": Copy Protection Error - The read failed because the sector is encrypted"
       CASE STG_E_CSS_REGION_MISMATCH : s += ": Copy Protection Error - The current DVD's region does not correspond to the region setting of the drive"
       CASE STG_E_RESETS_EXHAUSTED : s += ": Copy Protection Error - The drive's region setting may be permanent or the number of user resets has been exhausted"
+      CASE ELSE
+         s += "Unknown error"
    END SELECT
    RETURN s
 END FUNCTION
