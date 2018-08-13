@@ -167,15 +167,16 @@ using Afx
 ' // Create an instance of the CTextStream class
 DIM pTxtStm AS CTextStream
 ' // Open file as a text stream
-DIM cbsFile AS CBSTR = ExePath & "\Test.txt"
-pTxtStm.OpenUnicode(cbsFile, IOMode_ForReading)
-' // Read the file sequentially
-DIM cbs AS CBSTRING
-DO UNTIL pTxtStm.EOS
-   cbs = pTxtStm.ReadLine
-   PRINT cbs
-LOOP
-pTxtStm.Close
+DIM cbsFile AS CBSTR = ExePath & "\TestW.txt"
+IF pTxtStm.OpenUnicode(cbsFile, IOMode_ForReading) = S_OK THEN
+   ' // Read the file sequentially
+   DIM cbs AS CBSTR
+   DO UNTIL pTxtStm.EOS
+      cbs = pTxtStm.ReadLine
+      PRINT cbs
+   LOOP
+   pTxtStm.Close
+END IF
 
 PRINT "Press any key..."
 SLEEP
