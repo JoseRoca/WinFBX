@@ -546,4 +546,4 @@ FUNCTION GetErrorInfo () AS CWSTR
 
 #### Return value
 
-CWSTR. A description the last result code.
+CWSTR. A description the last result code. If the result code is S_OK (0), it returns "Success"; otherwise, it returns the hexadecimal value of the error code and a description such "File not found", "Seek error", "Write fault", "Read fault" or "Share violation".
