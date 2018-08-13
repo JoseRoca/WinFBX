@@ -58,9 +58,35 @@ BOOLEAN. True of false.
 
 #### Example
 
+The following console example creates an instance of the CPrint class to attach the "Microsoft Print to PDF" driver, retrieves an handle to its device context and uses the WinFBX GDI+ classes to draw the contents of the page.
+
 ```
+'#CONSOLE ON
+#define UNICODE
+#INCLUDE ONCE "Afx/CPrint.inc"
+#INCLUDE ONCE "Afx/CGdiplus/CGdiplus.inc"
+USING Afx
+
 DIM pPrint AS CPrint
-pPrint.AttachPrinter("OKI DATA CORP B410")
+pPrint.AttachPrinter("Microsoft Print to PDF")
+DIM hdcPrint AS HDC = pPrint.GetDC
+DIM docInfo AS DOCINFOW
+docInfo.cbSize = SIZEOF(DOCINFOW)
+docInfo.lpszDocName = CAST(LPCWSTR, @"GdiplusPrint")
+StartDocW(hdcPrint, @docInfo)
+StartPage(hdcPrint)
+SCOPE
+   DIM graphics AS CGpGraphics = hdcPrint
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+   graphics.DrawLine(@pen, 50, 50, 350, 550)
+   graphics.DrawRectangle(@pen, 50, 50, 300, 500)
+   graphics.DrawEllipse(@pen, 50, 50, 300, 500)
+END SCOPE
+EndPage(hdcPrint)
+EndDoc(hdcPrint)
+
+PRINT "Press any key to end..."
+SLEEP
 ```
 
 # <a name="ChoosePrinter"></a>ChoosePrinter
@@ -304,39 +330,6 @@ FUNCTION PrintBitmap ( _
 #### Return value
 
 BOOLEAN. Returns TRUE if the bitmap has been printed successfully, or FALSE otherwise.
-
-#### Example
-
-The following console example creates an instance of the CPrint class to attach the "Microsoft Print to PDF" driver, retrieves an handle to its device context and uses the WinFBX GDI+ classes to draw the contents of the page.
-
-```
-'#CONSOLE ON
-#define UNICODE
-#INCLUDE ONCE "Afx/CPrint.inc"
-#INCLUDE ONCE "Afx/CGdiplus/CGdiplus.inc"
-USING Afx
-
-DIM pPrint AS CPrint
-pPrint.AttachPrinter("Microsoft Print to PDF")
-DIM hdcPrint AS HDC = pPrint.GetDC
-DIM docInfo AS DOCINFOW
-docInfo.cbSize = SIZEOF(DOCINFOW)
-docInfo.lpszDocName = CAST(LPCWSTR, @"GdiplusPrint")
-StartDocW(hdcPrint, @docInfo)
-StartPage(hdcPrint)
-SCOPE
-   DIM graphics AS CGpGraphics = hdcPrint
-   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
-   graphics.DrawLine(@pen, 50, 50, 350, 550)
-   graphics.DrawRectangle(@pen, 50, 50, 300, 500)
-   graphics.DrawEllipse(@pen, 50, 50, 300, 500)
-END SCOPE
-EndPage(hdcPrint)
-EndDoc(hdcPrint)
-
-PRINT "Press any key to end..."
-SLEEP
-```
 
 # <a name="PrintBitmapToFile"></a>PrintBitmapToFile
 
