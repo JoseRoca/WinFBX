@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+15 Ago 2018 - Version 1.0.03
+- Added the PaperLength and PaperWidth properties, and the SetPageSize function.
+
 12 Ago 2018 - Version 1.0.03
 - Added the CPrint class.
 

@@ -61,6 +61,11 @@ Public:
    DECLARE PROPERTY Orientation (BYVAL nOrientation AS LONG)
    DECLARE PROPERTY PaperSize () AS LONG
    DECLARE PROPERTY PaperSize (BYVAL nSize AS LONG)
+   DECLARE FUNCTION SetPaperSize (BYVAL nLength AS LONG, BYVAL nWidth AS LONG) AS BOOLEAN
+   DECLARE PROPERTY PaperLength () AS LONG
+   DECLARE PROPERTY PaperLength (BYVAL nLength AS LONG)
+   DECLARE PROPERTY PaperWidth () AS LONG
+   DECLARE PROPERTY PaperWidth (BYVAL nWidth AS LONG)
    DECLARE FUNCTION GetPaperNames () AS CWSTR
    DECLARE PROPERTY Quality () AS LONG
    DECLARE PROPERTY Quality (BYVAL nMode AS LONG)
@@ -373,6 +378,8 @@ PRIVATE FUNCTION CPrint.SetPrinterInfo (BYVAL dmField AS DWORD, BYVAL nValue AS 
       CASE DM_PRINTQUALITY  : pi2->pDevMode->dmPrintQuality = nValue
       CASE DM_DEFAULTSOURCE : pi2->pDevMode->dmDefaultSource = nValue
       CASE DM_SCALE         : pi2->pDevMode->dmScale = nValue
+      CASE DM_PAPERLENGTH   : pi2->pDevMode->dmPaperLength = nValue
+      CASE DM_PAPERWIDTH    : pi2->pDevMode->dmPaperWidth = nValue
    END SELECT
 
    ' // Do not attempt to set security descriptor...
@@ -528,6 +535,51 @@ PRIVATE PROPERTY CPrint.PaperSize (BYVAL nSize AS LONG)
 END PROPERTY
 ' ========================================================================================
 
+' ========================================================================================
+' Sets the printer paper length and width in units of 1/10 of a millimeter.
+' These values override the length and width of the paper specified by PaperSize, and is
+' used if the paper is of a custom size, or if the device is a dot matrix printer, which
+' can print a page of arbitrary length.
+' ========================================================================================
+PRIVATE FUNCTION CPrint.SetPaperSize (BYVAL nLength AS LONG, BYVAL nWidth AS LONG) AS BOOLEAN
+   DIM bRes AS BOOLEAN = this.SetPrinterInfo(DM_PAPERLENGTH, nLength)
+   IF bRes = FALSE THEN RETURN FALSE
+   bRes = this.SetPrinterInfo(DM_PAPERWIDTH, nWidth)
+   IF bRes = FALSE THEN RETURN FALSE
+   RETURN TRUE
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Returns the printer paper length in units of 1/10 of a millimeter.
+' ========================================================================================
+PRIVATE PROPERTY CPrint.PaperLength () AS LONG
+   RETURN this.GetDocumentProperties(DM_PAPERLENGTH)
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Sets the printer paper length in units of 1/10 of a millimeter. This value overrides the 
+' length of the paper specified by PaperSize, and is used if the paper is of a custom size,
+' or if the device is a dot matrix printer, which can print a page of arbitrary length.
+' ========================================================================================
+PRIVATE PROPERTY CPrint.PaperLength (BYVAL nLength AS LONG)
+   this.SetPrinterInfo(DM_PAPERLENGTH, nLength)
+END PROPERTY
+' ========================================================================================
+' ========================================================================================' ========================================================================================
+' Returns the printer paper width in units of 1/10 of a millimeter.
+' ========================================================================================
+PRIVATE PROPERTY CPrint.PaperWidth () AS LONG
+   RETURN this.GetDocumentProperties(DM_PAPERWIDTH)
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Sets the printer paper width in units of 1/10 of a millimeter. This value overrides the 
+' width of the paper specified by PaperSize. This MUST be used if PaperLength is used.
+' ========================================================================================
+PRIVATE PROPERTY CPrint.PaperWidth (BYVAL nWidth AS LONG)
+   this.SetPrinterInfo(DM_PAPERWIDTH, nWidth)
+END PROPERTY
+' ========================================================================================
 ' ========================================================================================
 ' Returns a list of supported paper names (for example, Letter or Legal).
 ' The names are separated by a carriage return and a line feed characters.
