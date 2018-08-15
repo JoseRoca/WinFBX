@@ -9,7 +9,7 @@ The following list identifies some other search characteristics:
 * The search is performed strictly on the name of the file, not on any attributes such as a date or a file type.
 * The search includes the long and short file names.
 * An attempt to open a search with a trailing backslash always fails.
-* Passing an invalid string, NULL, or empty string for the lpFileName parameter is not a valid use of this function. Results in this case are undefined.
+* Passing an invalid string, NULL, or empty string for the *wszFileSpec* parameter is not a valid use of this function. Results in this case are undefined.
 
 You cannot use a trailing backslash \ in the *wszFileSpec* parameter for **FindFile**, therefore it may not be obvious how to search root directories.
 
