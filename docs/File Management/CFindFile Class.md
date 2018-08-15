@@ -17,7 +17,7 @@ You cannot use a trailing backslash \ in the *wszFileSpec* parameter for **FindF
 * On network shares, you can use an *wszFileSpec* in the form of the following: "\\Server\Share\*". However, you cannot use an *wszFileSpec* that points to the share itself; for example, "\\Server\Share" is not valid.
 * To examine a directory that is not a root directory, use the path to that directory, without a trailing backslash. For example, an argument of "C:\Windows" returns information about the directory "C:\Windows", not about a directory or file in "C:\Windows". To examine the files and directories in "C:\Windows", use an *wszFileSpec* of "C:\Windows*".
 
-#### Methods
+### Methods
 
 | Name       | Description |
 | ---------- | ----------- |
