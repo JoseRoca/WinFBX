@@ -487,10 +487,26 @@ PROPERTY PaperSize (BYVAL nSize AS LONG)
 | ---------- | ----------- |
 | *nSize* | LONG. Specifies the printer paper size, with DMPAPER_LETTER, DMPAPER_LEGAL, DMPAPER_A3, and DMPAPER_A4 being the most typical. Note that the paper size types cannot be combined with one another.<br>For a list of paper sizes see [Paper Sizes](https://docs.microsoft.com/en-us/windows/desktop/intl/paper-sizes). |
 
-
 #### Return value
 
 LONG. The printer paper size.
+
+# <a name="SetPaperSize"></a>SetPaperSize
+
+Sets the printer paper length and width.
+
+```
+FUNCTION SetPaperSize (BYVAL nLength AS LONG, BYVAL nWidth AS LONG) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nLength* | LONG. The length of the printer paper size. |
+| *nWidth* | LONG. The width of the printer paper size. |
+
+#### Return value
+
+BOOLEAN. Returns True on success or False on failure.
 
 # <a name="PaperWidth"></a>PaperWidth
 
