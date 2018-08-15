@@ -459,7 +459,7 @@ LONG. The printer orientation.
 
 # <a name="PaperLength"></a>PaperLength
 
-Gets/sets the printer paper length in units of 1/10 of a millimeter. This value overrides the length of the paper specified by the **PaperSize** property, and is used if the paper is of a custom size, or if the device is a dot matrix printer, which can print a page of arbitrary length. If you use this property, you must also use the **PaperWidth** property to set the print paper width. Alternatively, you can use the **SetPageSize** function to set both the length and width with one call.
+Gets/sets the printer paper length in units of 1/10 of a millimeter. This value overrides the length of the paper specified by the **PaperSize** property, and is used if the paper is of a custom size, or if the device is a dot matrix printer, which can print a page of arbitrary length. If you use this property, you must also use the **PaperWidth** property to set the print paper width. Alternatively, you can use the **SetPageSize** function to set both the length and width with only one call.
 
 ```
 PROPERTY PaperLength () AS LONG
@@ -510,7 +510,7 @@ BOOLEAN. Returns True on success or False on failure.
 
 # <a name="PaperWidth"></a>PaperWidth
 
-Gets/sets the printer paper width in units of 1/10 of a millimeter. This value overrides the length of the paper specified by the *PaperSize* property, and is used if the paper is of a custom size, or if the device is a dot matrix printer, which can print a page of arbitrary length. It must be used if the **PaperLength** is also used.
+Gets/sets the printer paper width in units of 1/10 of a millimeter. This value overrides the length of the paper specified by the *PaperSize* property, and is used if the paper is of a custom size, or if the device is a dot matrix printer, which can print a page of arbitrary length. It must be used if the **PaperLength** is also used. Alternatively, you can use the **SetPageSize** function to set both the length and width with only one call.
 
 ```
 PROPERTY PaperWidth () AS LONG
