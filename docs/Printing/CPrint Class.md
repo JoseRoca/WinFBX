@@ -145,7 +145,7 @@ FUNCTION GetPrinterName () AS CWSTR
 
 #### Return value
 
-CWSTR. The name of the attached printer. If there is not a printer attached, it returns an empty string.
+CWSTR. The handle of the attached printer. If there is not a printer attached, it returns an empty string.
 
 # <a name="GetDC"></a>GetDC
 
