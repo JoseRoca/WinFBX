@@ -297,7 +297,7 @@ PRIVATE CONSTRUCTOR CWstr (BYREF cbs AS CBStr_)
    CWSTR_DP("+++BEGIN- CWSTR CONSTRUCTOR CBSTR")
    this.ResizeBuffer(m_GrowSize)   ' Create the initial buffer
    ' Copy the string into the buffer and update the length
-   this.AppendBuffer(cast(ANY PTR, cbs), SysStringLen(cbs) * 2)
+   this.AppendBuffer(cast(ANY PTR, cbs.m_bstr), SysStringLen(cbs) * 2)
    CWSTR_DP("-END- CWSTR CONSTRUCTOR CBSTR - " & .WSTR(m_pBuffer))
 END CONSTRUCTOR
 ' ========================================================================================
@@ -444,7 +444,7 @@ PRIVATE OPERATOR CWstr.Let (BYREF cbs AS CBStr_)
    DIM AS LONG nLenString = SysStringLen(cbs)
    this.ResizeBuffer(nLenString)
    ' Copy the string into the buffer and update the length
-   this.AppendBuffer(cast(ANY PTR, cbs), nLenString * 2)
+   this.AppendBuffer(cast(ANY PTR, cbs.m_bstr), nLenString * 2)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
@@ -524,7 +524,7 @@ PRIVATE SUB CWstr.Add (BYREF cws AS CWSTR)
    DIM nLenString AS UINT = cws.m_BufferLen   ' // Length in bytes
    IF nLenString = 0 THEN RETURN
    ' Copy the string into the buffer and update the length
-   this.AppendBuffer(cast(ANY PTR, cws), nLenString)
+   this.AppendBuffer(cast(ANY PTR, cws.m_pBuffer), nLenString)
 END SUB
 ' ========================================================================================
 ' ========================================================================================
@@ -534,7 +534,7 @@ PRIVATE SUB CWstr.Add (BYREF cbs AS CBSTR_)
    DIM AS LONG nLenString = SysStringLen(cbs)
    IF nLenString = 0 THEN RETURN
    ' Copy the string into the buffer and update the length
-   this.AppendBuffer(cast(ANY PTR, cbs), nLenString * 2)
+   this.AppendBuffer(cast(ANY PTR, cbs.m_bstr), nLenString * 2)
 END SUB
 ' ========================================================================================
 ' ========================================================================================
@@ -892,7 +892,7 @@ PRIVATE FUNCTION CWstr.Insert (BYREF cbs AS CBSTR_, BYVAL nIndex AS LONG) AS BOO
    IF (nIndex < 1) OR nIndex > m_BufferLen \ 2 THEN RETURN 0
    DIM AS LONG nLenString = SysStringLen(cbs)
    IF nLenString = 0 THEN RETURN 0
-   RETURN this.InsertBuffer(cast(ANY PTR, cbs), nIndex, nLenString * 2)
+   RETURN this.InsertBuffer(cast(ANY PTR, cbs.m_bstr), nIndex, nLenString * 2)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================

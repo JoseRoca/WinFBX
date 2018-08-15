@@ -49,9 +49,9 @@ TYPE CRegExp
       DECLARE PROPERTY Multiline () AS BOOLEAN
       DECLARE PROPERTY Multiline (BYVAL bMultiline AS BOOLEAN)
       DECLARE FUNCTION Execute (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
-              BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = FALSE) AS CRegExp
+              BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = FALSE) AS BOOLEAN
       DECLARE FUNCTION Execute (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
-              BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = FALSE) AS CRegExp
+              BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = FALSE) AS BOOLEAN
       DECLARE FUNCTION MatchesCount () AS LONG
       DECLARE FUNCTION MatchValue (BYVAL index AS LONG = 0) AS CBSTR
       DECLARE FUNCTION MatchPos (BYVAL index AS LONG = 0) AS LONG
@@ -257,14 +257,14 @@ END PROPERTY
 ' * Executes a regular expression search against a specified string.
 ' ========================================================================================
 PRIVATE FUNCTION CRegExp.Execute (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
-   BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = FALSE) AS CRegExp
+   BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = FALSE) AS BOOLEAN
    IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN FALSE
    IF m_pMatches THEN AfxSafeRelease(m_pMatches)
    m_pRegExp->put_IgnoreCase(bIgnoreCase)
    m_pRegExp->put_Global(bGlobal)
    m_pRegExp->put_Multiline(bMultiline)
    this.SetResult(m_pRegExp->Execute(cbsSourceString, cast(Afx_IDispatch PTR PTR, @m_pMatches)))
-   IF m_Result = S_OK THEN RETURN this
+   IF m_Result = S_OK THEN RETURN TRUE
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -276,7 +276,7 @@ END FUNCTION
 ' - bMultiline : TRUE = Match at the start and the end of multiple lines separated by line breaks.
 ' ========================================================================================
 PRIVATE FUNCTION CRegExp.Execute (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
-   BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = FALSE) AS CRegExp
+   BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = FALSE) AS BOOLEAN
    IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN FALSE
    IF m_pMatches THEN AfxSafeRelease(m_pMatches)
    m_pRegExp->put_IgnoreCase(bIgnoreCase)
@@ -284,7 +284,7 @@ PRIVATE FUNCTION CRegExp.Execute (BYREF cbsSourceString AS CBSTR, BYREF cbsPatte
    m_pRegExp->put_Pattern(cbsPattern)
    m_pRegExp->put_Multiline(bMultiline)
    this.SetResult(m_pRegExp->Execute(cbsSourceString, cast(Afx_IDispatch PTR PTR, @m_pMatches)))
-   IF m_Result = S_OK THEN RETURN this
+   IF m_Result = S_OK THEN RETURN TRUE
 END FUNCTION
 ' ========================================================================================
 
