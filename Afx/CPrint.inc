@@ -188,7 +188,7 @@ END FUNCTION
 ' Returns the width, in world units, of the printable area of the page.
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.GetHorizontalUnits () AS LONG
-   IF m_hDC THEN RETURN 0
+   IF m_hDC = NULL THEN RETURN 0
    ' // Get the horizontal PPI of the printer
    DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
    ' // Calculate the width according to the PPI of the printer
@@ -200,7 +200,7 @@ END FUNCTION
 ' Returns the height, in world units, of the printable area of the page.
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.GetVerticalUnits () AS LONG
-   IF m_hDC THEN RETURN 0
+   IF m_hDC = NULL THEN RETURN 0
    ' // Get the horizontal PPI of the printer
    DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
    ' // Calculate the width according to the PPI of the printer
@@ -228,7 +228,7 @@ END FUNCTION
 ' ========================================================================================
 ' Horizontal resolution
 PRIVATE FUNCTION CPrint.PixelsToPointsX (BYVAL pix AS LONG) AS LONG
-   IF m_hDC THEN RETURN 0
+   IF m_hDC = NULL THEN RETURN 0
    ' // Get the horizontal PPI of the printer
    DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
    ' // Calculate the size according to the PPI of the printer
@@ -238,7 +238,7 @@ END FUNCTION
 ' ========================================================================================
 ' Vertical resolution
 PRIVATE FUNCTION CPrint.PixelsToPointsY (BYVAL pix AS LONG) AS LONG
-   IF m_hDC THEN RETURN 0
+   IF m_hDC = NULL THEN RETURN 0
    ' // Get the vertical PPI of the printer
    DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
    ' // Calculate the size according to the PPI of the printer
@@ -251,7 +251,7 @@ END FUNCTION
 ' ========================================================================================
 ' Horizontal resolution
 PRIVATE FUNCTION CPrint.PointsToPixelsX (BYVAL pts AS LONG) AS LONG
-   IF m_hDC THEN RETURN 0
+   IF m_hDC = NULL THEN RETURN 0
    ' // Get the horizontal PPI of the printer
    DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
    ' // Calculate the size according to the PPI of the printer
@@ -261,7 +261,7 @@ END FUNCTION
 ' ========================================================================================
 ' Vertical resolution
 PRIVATE FUNCTION CPrint.PointsToPixelsY (BYVAL pts AS LONG) AS LONG
-   IF m_hDC THEN RETURN 0
+   IF m_hDC = NULL THEN RETURN 0
    ' // Get the vertical PPI of the printer
    DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
    ' // Calculate the size according to the PPI of the printer
