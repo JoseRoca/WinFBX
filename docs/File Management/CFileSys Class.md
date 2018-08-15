@@ -53,6 +53,9 @@ The **CFileSys** class wraps the Microsoft File System Object and provides metho
 | [GetParentFolderName](#GetParentFolderName) | Returns the folder name for the parent of the specified folder. |
 | [GetSerialNumber](#GetSerialNumber) | Returns the decimal serial number used to uniquely identify a disk volume. |
 | [GetStandardStream](#GetStandardStream) | Returns a TextStream object corresponding to the standard input, output, or error stream. |
+| [GetStdErrStream](#GetStdErrStream) | Returns a TextStream object corresponding to the standard error stream. |
+| [GetStdInStream](#GetStdInStream) | Returns a TextStream object corresponding to the standard input stream. |
+| [GetStdOutStream](#GetStdOutStream) | Returns a TextStream object corresponding to the standard output stream. |
 | [GetTempName](#GetTempName) | Returns a randomly generated temporary file or folder name that is useful for performing operations that require a temporary file or folder. |
 | [GetVolumeName](#GetVolumeName) | Returns the volume name of the specified drive. |
 | [IsDriveReady](#IsDriveReady) | Returns True if the specified drive is ready; False if it is not. |
@@ -1318,6 +1321,78 @@ The nStreamType argument can have any of the following settings:
 #INCLUDE ONCE "Afx/CFileSys.inc"
 DIM pFileSys AS CFileSys
 DIM pStm AS Afx_ITextStream PTR = pFileSys.GetStandardStream(StandardStreamTypes_StdOut)
+```
+
+# <a name="GetStdErrStream"></a>GetStdErrStream
+
+Returns a TextStream object corresponding to the standard error stream.
+
+```
+FUNCTION GetStdErrStream (BYVAL bUnicode AS VARIANT_BOOL = FALSE) AS Afx_ITextStream PTR
+```
+
+| Name       | Description |
+| ---------- | ----------- |
+| *bUnicode* | Boolean value that indicates whether the file is created as a Unicode or ASCII file. The value is true if the file is created as a Unicode file, false if it is created as an ASCII file. If omitted, an ASCII file is assumed. |
+
+#### Return value
+
+A pointer to the *ITextStream* interface of the standard error stream.
+
+#### Usage example
+
+```
+#INCLUDE ONCE "Afx/CFileSys.inc"
+DIM pFileSys AS CFileSys
+DIM pStm AS Afx_ITextStream PTR = pFileSys.GetStdErrStream
+```
+
+# <a name="GetStdInStream"></a>GetStdInStream
+
+Returns a TextStream object corresponding to the standard input stream.
+
+```
+FUNCTION GetStdInStream (BYVAL bUnicode AS VARIANT_BOOL = FALSE) AS Afx_ITextStream PTR
+```
+
+| Name       | Description |
+| ---------- | ----------- |
+| *bUnicode* | Boolean value that indicates whether the file is created as a Unicode or ASCII file. The value is true if the file is created as a Unicode file, false if it is created as an ASCII file. If omitted, an ASCII file is assumed. |
+
+#### Return value
+
+A pointer to the *ITextStream* interface of the standard input stream.
+
+#### Usage example
+
+```
+#INCLUDE ONCE "Afx/CFileSys.inc"
+DIM pFileSys AS CFileSys
+DIM pStm AS Afx_ITextStream PTR = pFileSys.GetStdInStream
+```
+
+# <a name="GetStdOutStream"></a>GetStdOutStream
+
+Returns a TextStream object corresponding to the standard output stream.
+
+```
+FUNCTION GetStdOutStream (BYVAL bUnicode AS VARIANT_BOOL = FALSE) AS Afx_ITextStream PTR
+```
+
+| Name       | Description |
+| ---------- | ----------- |
+| *bUnicode* | Boolean value that indicates whether the file is created as a Unicode or ASCII file. The value is true if the file is created as a Unicode file, false if it is created as an ASCII file. If omitted, an ASCII file is assumed. |
+
+#### Return value
+
+A pointer to the *ITextStream* interface of the standard output stream.
+
+#### Usage example
+
+```
+#INCLUDE ONCE "Afx/CFileSys.inc"
+DIM pFileSys AS CFileSys
+DIM pStm AS Afx_ITextStream PTR = pFileSys.GetStdOutStream
 ```
 
 # <a name="GetTempName"></a>GetTempName
