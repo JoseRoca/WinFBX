@@ -1,6 +1,6 @@
 # CFindFile Class
 
-Wraps the **FindFirstFileW**, **FindNext** and **FindCLose** API functions to perform file searches and retrieve information about the files found, ofering an alternative to Free Basic's **DIR** function that does not work with unicode.
+Wraps the **FindFirstFileW**, **FindNext** and **FindCLose** API functions to perform file searches and retrieve information about the files found, offering an alternative to Free Basic's **DIR** function that does not work with unicode.
 
 The **FindFile** method opens a search handle and returns information about the first file that the file system finds with a name that matches the specified pattern. This may or may not be the first file or directory that appears in a directory-listing application (such as the dir command) when given the same file name string pattern. This is because **FindFirstFileW** does no sorting of the search results. When the search is finished, call the **FindClose** method.
 
