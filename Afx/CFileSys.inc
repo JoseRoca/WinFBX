@@ -65,6 +65,9 @@ Public:
    DECLARE FUNCTION GetNumFiles (BYREF cbsFolder AS CBSTR) AS LONG
    DECLARE FUNCTION IsRootFolder (BYREF cbsFolder AS CBSTR) AS BOOLEAN
    DECLARE FUNCTION GetStandardStream (BYVAL StandardStreamType AS STANDARDSTREAMTYPES, BYVAL bUnicode AS VARIANT_BOOL = FALSE) AS Afx_ITextStream PTR
+   DECLARE FUNCTION GetStdErrStream (BYVAL bUnicode AS VARIANT_BOOL = FALSE) AS Afx_ITextStream PTR
+   DECLARE FUNCTION GetStdInStream (BYVAL bUnicode AS VARIANT_BOOL = FALSE) AS Afx_ITextStream PTR
+   DECLARE FUNCTION GetStdOutStream (BYVAL bUnicode AS VARIANT_BOOL = FALSE) AS Afx_ITextStream PTR
    DECLARE FUNCTION GetFileSize (BYREF cbsFile AS CBSTR) AS LONG
    DECLARE FUNCTION SetFileName (BYREF cbsFile AS CBSTR, BYREF cbsName AS CBSTR) AS HRESULT
    DECLARE FUNCTION GetFileShortPath (BYREF cbsFile AS CBSTR) AS CBSTR
@@ -764,6 +767,27 @@ END FUNCTION
 PRIVATE FUNCTION CFileSys.GetStandardStream (BYVAL StandardStreamType AS STANDARDSTREAMTYPES, BYVAL bUnicode AS VARIANT_BOOL = FALSE) AS Afx_ITextStream PTR
    DIM pStm AS Afx_ITextStream PTR
    SetResult(m_pFileSys->GetStandardStream(StandardStreamType, bUnicode, @pStm))
+   RETURN pStm
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CFileSys.GetStdErrStream (BYVAL bUnicode AS VARIANT_BOOL = FALSE) AS Afx_ITextStream PTR
+   DIM pStm AS Afx_ITextStream PTR
+   SetResult(m_pFileSys->GetStandardStream(StandardStreamTypes_StdErr, bUnicode, @pStm))
+   RETURN pStm
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CFileSys.GetStdInStream (BYVAL bUnicode AS VARIANT_BOOL = FALSE) AS Afx_ITextStream PTR
+   DIM pStm AS Afx_ITextStream PTR
+   SetResult(m_pFileSys->GetStandardStream(StandardStreamTypes_StdIn, bUnicode, @pStm))
+   RETURN pStm
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CFileSys.GetStdOutStream (BYVAL bUnicode AS VARIANT_BOOL = FALSE) AS Afx_ITextStream PTR
+   DIM pStm AS Afx_ITextStream PTR
+   SetResult(m_pFileSys->GetStandardStream(StandardStreamTypes_StdOut, bUnicode, @pStm))
    RETURN pStm
 END FUNCTION
 ' ========================================================================================

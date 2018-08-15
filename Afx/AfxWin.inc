@@ -432,12 +432,12 @@ END FUNCTION
 '   To get extended error information, call GetLastError.
 ' ========================================================================================
 PRIVATE FUNCTION AfxSetCurrentDirectory (BYVAL pwszPathName AS LPCWSTR) AS BOOLEAN
-   RETURN SetCurrentDirectory(pwszPathName)
+   RETURN SetCurrentDirectoryW(pwszPathName)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION AfxSetCurDir (BYVAL pwszPathName AS LPCWSTR) AS BOOLEAN
-   RETURN SetCurrentDirectory(pwszPathName)
+   RETURN SetCurrentDirectoryW(pwszPathName)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -445,7 +445,7 @@ END FUNCTION
 ' Return value: Returns 0 on success or -1 on failure.
 ' ========================================================================================
 PRIVATE FUNCTION AfxChDir (BYVAL pwszPathName AS LPCWSTR) AS BOOLEAN
-   RETURN NOT SetCurrentDirectory(pwszPathName)
+   RETURN NOT SetCurrentDirectoryW(pwszPathName)
 END FUNCTION
 ' ========================================================================================
 
@@ -458,7 +458,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION AfxEnviron (BYVAL pwszName AS LPCWSTR) AS CWSTR
    DIM wszBuffer AS WSTRING * 32767
-   DIM cb AS DWORD = GetEnvironmentVariable(pwszName, @wszBuffer, 32767)
+   DIM cb AS DWORD = GetEnvironmentVariableW(pwszName, @wszBuffer, 32767)
    RETURN LEFT(wszBuffer, cb)
 END FUNCTION
 ' ========================================================================================
@@ -477,7 +477,7 @@ END FUNCTION
 ' Example: AfxSetEnviron("path", "c:")
 ' ========================================================================================
 PRIVATE FUNCTION AfxSetEnviron OVERLOAD (BYVAL pwszName AS LPCWSTR, BYVAL pwszValue AS LPCWSTR) AS BOOLEAN
-   RETURN SetEnvironmentVariable(pwszName, pwszValue)
+   RETURN SetEnvironmentVariableW(pwszName, pwszValue)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -3188,18 +3188,18 @@ END FUNCTION
 '     the final directory in the path.
 ' ========================================================================================
 PRIVATE FUNCTION AfxCreateDirectory (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
-   RETURN CreateDirectory(lpPathName, NULL)
+   RETURN CreateDirectoryW(lpPathName, NULL)
 END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION AfxMakeDir (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
-   RETURN CreateDirectory(lpPathName, NULL)
+   RETURN CreateDirectoryW(lpPathName, NULL)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 ' Returns 0 on success, or -1 on failure.
 ' ========================================================================================
 PRIVATE FUNCTION AfxMkDir (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
-   RETURN NOT CreateDirectory(lpPathName, NULL)
+   RETURN NOT CreateDirectoryW(lpPathName, NULL)
 END FUNCTION
 ' ========================================================================================
 
@@ -3251,7 +3251,7 @@ END FUNCTION
 '   If the function fails, the return value is FALSE. To get extended error information, call GetLastError.
 ' ========================================================================================
 PRIVATE FUNCTION AfxCopyFile (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR, BYVAL bFailIfExists AS BOOLEAN = FALSE) AS BOOLEAN
-   RETURN CopyFile(lpExistingFileName, lpNewFileName, bFailIfExists)
+   RETURN CopyFileW(lpExistingFileName, lpNewFileName, bFailIfExists)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -3259,7 +3259,7 @@ END FUNCTION
 ' Returns 0 on success, or 1 if an error occurred.
 ' ========================================================================================
 PRIVATE FUNCTION AfxFilecopy (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR) AS LONG
-   DIM nRet AS LONG = IIF(CopyFile(lpExistingFileName, lpNewFileName, FALSE) = 0, 1, 0)
+   DIM nRet AS LONG = IIF(CopyFileW(lpExistingFileName, lpNewFileName, FALSE) = 0, 1, 0)
    RETURN nRet
 END FUNCTION
 ' ========================================================================================
@@ -3276,12 +3276,12 @@ END FUNCTION
 '   If the function fails, the return value is FALSE. To get extended error information, call GetLastError.
 ' ========================================================================================
 PRIVATE FUNCTION AfxMoveFile (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR) AS BOOLEAN
-   RETURN MoveFile(lpExistingFileName, lpNewFileName)
+   RETURN MoveFileW(lpExistingFileName, lpNewFileName)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION AfxRenameFile (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR) AS BOOLEAN
-   RETURN MoveFile(lpExistingFileName, lpNewFileName)
+   RETURN MoveFileW(lpExistingFileName, lpNewFileName)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
