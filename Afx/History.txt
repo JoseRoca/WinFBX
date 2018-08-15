@@ -2,6 +2,12 @@ WinFBX
 Windows Framework for FreeBASIC.
 
 15 Ago 2018 - Version 1.0.03
+- CFileSys.inc: Added the GetStdErrStream, GetStdInStream and GetStdOutStream methods.
+- CTextStream.inc: Added a new constructor and the LET and CAST operators. The new constructor
+and the LET operator allow to initialize the class by passing a pointer to an existing
+TextStream interface.
+
+15 Ago 2018 - Version 1.0.03
 - Added the PaperLength and PaperWidth properties, and the SetPageSize function.
 
 12 Ago 2018 - Version 1.0.03

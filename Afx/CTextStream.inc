@@ -31,7 +31,10 @@ Private:
 
 Public:
    DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pstm AS Afx_ITextStream PTR)
    DECLARE DESTRUCTOR
+   DECLARE OPERATOR CAST () AS Afx_ITextStream PTR
+   DECLARE OPERATOR LET (BYVAL pstm AS Afx_ITextStream PTR)
    DECLARE FUNCTION GetLastResult () AS HRESULT
    DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
    DECLARE FUNCTION Create (BYREF cbsFileName AS CBSTR, BYVAL bOverwrite AS BOOLEAN = TRUE, BYVAL bUnicode AS BOOLEAN = FALSE) AS HRESULT
@@ -62,7 +65,7 @@ END TYPE
 ' ########################################################################################
 
 ' ========================================================================================
-' Constructor
+' Constructors
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTextStream
    ' // Initialize the COM library
@@ -72,6 +75,22 @@ PRIVATE CONSTRUCTOR CTextStream
    DIM CLSID_FileSystemObject_ AS GUID = (&h0D43FE01, &hF093, &h11CF, {&h89, &h40, &h00, &hA0, &hC9, &h05, &h42, &h28})
    DIM IID_IFileSystem AS GUID = (&h0AB5A3D0, &hE5B6, &h11D0, {&hAB, &hF5, &h00, &hA0, &hC9, &h0F, &hFF, &hC0})
    SetResult(CoCreateInstance(@CLSID_FileSystemObject_, NULL, CLSCTX_INPROC_SERVER, @IID_IFileSystem, @m_pFileSys))
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+' Initializes the class with a pointer to an instance of the Afx_ITextStream interface.
+' Example:
+' // Create an instance of the CTextStream class initialized
+' // with a pointer to the standard StdOut stream
+' DIM pTxtStm AS CTextStream = CFileSys().GetStdOutStream(TRUE)
+' // Write a string and an end of line to the stream
+' pTxtStm.WriteLine "This is a test."
+' ========================================================================================
+PRIVATE CONSTRUCTOR CTextStream (BYVAL pstm AS Afx_ITextStream PTR)
+   ' // Initialize the COM library
+   DIM hr AS HRESULT = CoInitialize(NULL)
+   IF hr = S_OK OR hr = S_FALSE THEN m_bUninitCOM = TRUE
+   m_pTxtStm = pstm
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -87,6 +106,27 @@ PRIVATE DESTRUCTOR CTextStream
    ' // Free the COM library
    IF m_bUninitCOM THEN CoUninitialize
 END DESTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' Cast operator.
+' ========================================================================================
+PRIVATE OPERATOR CTextStream.CAST () AS Afx_ITextStream PTR
+   OPERATOR = m_pTxtStm
+END OPERATOR
+' ========================================================================================
+' ========================================================================================
+' Assignment operator.
+' ========================================================================================
+PRIVATE OPERATOR CTextStream.LET (BYVAL pstm AS Afx_ITextStream PTR)
+   IF pstm = NULL THEN m_Result = E_POINTER : EXIT OPERATOR
+   IF m_pTxtStm THEN
+      m_pTxtStm->Close
+      m_pTxtStm->Release
+   END IF
+   m_pTxtStm = pstm
+   m_Result = 0
+END OPERATOR
 ' ========================================================================================
 
 ' ========================================================================================
