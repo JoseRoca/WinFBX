@@ -1,5 +1,22 @@
 # CFindFile Class
 
+Wraps the **FindFirstFileW**, **FindNext** and **FindCLose** API functions to perform file searches and retrieve information about the files found, ofering an alternative to Free Basic's **DIR** function that does not work with unicode.
+
+The **FindFile** method opens a search handle and returns information about the first file that the file system finds with a name that matches the specified pattern. This may or may not be the first file or directory that appears in a directory-listing application (such as the dir command) when given the same file name string pattern. This is because **FindFirstFileW** does no sorting of the search results. When the search is finished, call the **FindClose** method.
+
+The following list identifies some other search characteristics:
+
+* The search is performed strictly on the name of the file, not on any attributes such as a date or a file type.
+* The search includes the long and short file names.
+* An attempt to open a search with a trailing backslash always fails.
+* Passing an invalid string, NULL, or empty string for the lpFileName parameter is not a valid use of this function. Results in this case are undefined.
+
+You cannot use a trailing backslash \ in the *wszFileSpec* parameter for **FindFile**, therefore it may not be obvious how to search root directories.
+
+* To examine files in a root directory, you can use "C:\*". Note: Prepending the string "\\?\" does not allow access to the root directory.
+* On network shares, you can use an *wszFileSpec* in the form of the following: "\\Server\Share\*". However, you cannot use an *wszFileSpec* that points to the share itself; for example, "\\Server\Share" is not valid.
+* To examine a directory that is not a root directory, use the path to that directory, without a trailing backslash. For example, an argument of "C:\Windows" returns information about the directory "C:\Windows", not about a directory or file in "C:\Windows". To examine the files and directories in "C:\Windows", use an *wszFileSpec* of "C:\Windows*".
+
 #### Methods
 
 | Name       | Description |
