@@ -720,7 +720,7 @@ END FUNCTION
 ' If nStart evaluates to a position outside of the string, or if nStart is zero, then the
 ' function returns zero.
 ' Example: DIM nCount AS LONG = AfxStrVerify(5, "123.65,22.5", "0123456789")   ' -> 7
-' Rreturns 7 since 5 starts it past the first non-digit ("." at position 4)
+' Returns 7 since 5 starts it past the first non-digit "." at position 4.
 ' ========================================================================================
 PRIVATE FUNCTION AfxStrVerify (BYVAL nStart AS LONG, BYREF wszMainStr AS CONST WSTRING, BYREF wszMatchStr AS CONST WSTRING) AS LONG
    IF nStart <= 0 OR nStart > LEN(wszMainStr) THEN RETURN 0
