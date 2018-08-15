@@ -35,9 +35,12 @@ Allows to attach/choose a printer and get/set its setting values.
 | [Duplex](#Duplex) | Checks if the printer supports duplex printing. |
 | [DuplexMode](#DuplexMode)  | Gets/sets the current duplex mode. |
 | [Orientation](#Orientation) | Gets/sets the printer orientation. |
+| [PaperLength](#PaperLength) | Gets/sets the paper length in units of 1/10 of a millimeter. |
 | [PaperSize](#PaperSize) | Gets/sets the printer paper size. |
+| [PaperWidth](#PaperWidth) | Gets/sets the paper width in units of 1/10 of a millimeter. |
 | [Quality](#Quality) | Gets/sets the printer print quality mode. |
 | [Scale](#Scale) | Gets/sets the factor by which the printed output is to be scaled. |
+| [SetPaperSize](#SetPaperSize) | Sets the paper length and width in units of 1/10 of a millimeter. |
 | [Tray](#Tray) | Specifies the paper source. |
 
 # <a name="AttachPrinter"></a>AttachPrinter
@@ -454,6 +457,23 @@ PROPERTY Orientation (BYVAL nOrientation AS LONG)
 
 LONG. The printer orientation.
 
+# <a name="PaperLength"></a>PaperLength
+
+Gets/sets the printer paper length in units of 1/10 of a millimeter. This value overrides the length of the paper specified by the **PaperSize** property, and is used if the paper is of a custom size, or if the device is a dot matrix printer, which can print a page of arbitrary length. If you use this property, you must also use the **PaperWidth** property to set the print paper width. Alternatively, you can use the **SetPageSize** function to set both the length and width with one call.
+
+```
+PROPERTY PaperLength () AS LONG
+PROPERTY PaperLength (BYVAL nLength AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nLength* | LONG. The printer paper length. |
+
+#### Return value
+
+LONG. The printer paper length.
+
 # <a name="PaperSize"></a>PaperSize
 
 Gets/sets the printer paper size.
@@ -467,9 +487,27 @@ PROPERTY PaperSize (BYVAL nSize AS LONG)
 | ---------- | ----------- |
 | *nSize* | LONG. Specifies the printer paper size, with DMPAPER_LETTER, DMPAPER_LEGAL, DMPAPER_A3, and DMPAPER_A4 being the most typical. Note that the paper size types cannot be combined with one another.<br>For a list of paper sizes see [Paper Sizes](https://docs.microsoft.com/en-us/windows/desktop/intl/paper-sizes). |
 
+
 #### Return value
 
 LONG. The printer paper size.
+
+# <a name="PaperWidth"></a>PaperWidth
+
+Gets/sets the printer paper width in units of 1/10 of a millimeter. This value overrides the length of the paper specified by the *PaperSize* property, and is used if the paper is of a custom size, or if the device is a dot matrix printer, which can print a page of arbitrary length. It must be used if the **PaperLength** is also used.
+
+```
+PROPERTY PaperWidth () AS LONG
+PROPERTY PaperWidth (BYVAL nWidth AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nWidth* | LONG. The printer paper length. |
+
+#### Return value
+
+LONG. The printer paper width.
 
 # <a name="Quality"></a>Quality
 
