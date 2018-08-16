@@ -683,30 +683,3 @@ PROPERTY SubMatchesCount (BYVAL index AS LONG = 0) AS LONG
 | Parameter  | Description |
 | ---------- | ----------- |
 | *index* | 0-based index of the match to retrieve. |
-
-#### Example
-
-```
-'#CONSOLE ON
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
-DIM pRegExp AS CRegExp
-pRegExp.Pattern = "(\w+)@(\w+)\.(\w+)"
-pRegExp.IgnoreCase = TRUE
-DIM cbsText AS CBSTR = "Please send mail to dragon@xyzzy.com. Thanks!"
-IF pRegExp.Execute(cbsText) = FALSE THEN
-   print "No match found"
-ELSE
-   ' Get the number of submatches
-   DIM nCount AS LONG = pRegExp.SubMatchesCount(0)
-   print "Sub matches: ", nCount
-   FOR i AS LONG = 0 TO nCount - 1
-      print pRegExp.SubMatchValue(0, i)
-   NEXT
-END IF
-
-PRINT
-PRINT "Press any key..."
-SLEEP
-```
