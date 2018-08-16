@@ -19,6 +19,10 @@ Allows to attach/choose a printer and get/set its setting values.
 | [GetVerticalResolution](#GetVerticalResolution) | Returns the height, in pixels, of the printable area of the page. |
 | [GetMarginUnits](#GetMarginUnits) | Retrieves the margins (the non-printable area) of the printer page, in world units. |
 | [GetMarginPixels](#GetMarginPixels) | Retrieves the margins (the non-printable area) of the printer page, in pixels. |
+| [PixelsToUnitsX](#PixelsToUnitsX) | Converts pixels to world units. (horizontal resolution). |
+| [PixelsToUnitsY](#PixelsToUnitsYX) | Converts pixels to world units. (vertical resolution). |
+| [UnitsToPixelsX](#UnitsToPixelsX) | Converts word units to pixels (horizontal resolution). |
+| [UnitsToPixelsY](#UnitsToPixelsY) | Converts word units to pixels (vertical resolution). |
 | [PixelsToPointsX](#PixelsToPointsX) | Converts pixels to point size (1/72 of an inch) (horizontal resolution). |
 | [PixelsToPointsY](#PixelsToPointsY) | Converts pixels to point size (1/72 of an inch) (vertical resolution). |
 | [PointsToPixelsX](#PointsToPixelsX) | Converts a point size (1/72 of an inch) to pixels (horizontal resolution). |
@@ -261,6 +265,54 @@ SUB GetMarginPixels (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LO
 #### Return value
 
 LONG. The height, in pixels, of the printable area of the page. If there is not a printer attached, it returns 0.
+
+# <a name="PixelsToUnitsX"></a>PixelsToUnitsX
+
+Converts pixels to world units (horizontal resolution).
+
+```
+FUNCTION PixelsToUnitsX (BYVAL pix AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pix* | The number of pixels to convert. |
+
+# <a name="PixelsToUnitsY"></a>PixelsToUnitsY
+
+Converts pixels to world units (vertical resolution).
+
+```
+FUNCTION PixelsToUnitsY (BYVAL pix AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pix* | The number of pixels to convert. |
+
+# <a name="UnitsToPixelsX"></a>UnitsToPixelsX
+
+Converts world units to pixels (horizontal resolution).
+
+```
+FUNCTION PixelsToUnitsX (BYVAL units AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *units* | The number of world units to convert. |
+
+# <a name="UnitsToPixelsY"></a>UnitsToPixelsY
+
+Converts world units to pixels (vertical resolution).
+
+```
+FUNCTION UnitsToPixelsY (BYVAL units AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *units* | The number of world units to convert. |
 
 # <a name="PixelsToPointsX"></a>PixelsToPointsX
 
