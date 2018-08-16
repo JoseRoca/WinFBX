@@ -17,6 +17,8 @@ Allows to attach/choose a printer and get/set its setting values.
 | [GetVerticalUnits](#GetVerticalUnits) | Returns the height, in world units, of the printable area of the page. |
 | [GetHorizontalResolution](#GetHorizontalResolution) | Returns the width, in pixels, of the printable area of the page. |
 | [GetVerticalResolution](#GetVerticalResolution) | Returns the height, in pixels, of the printable area of the page. |
+| [GetMarginUnits](#GetMarginUnits) | Retrieves the margins (the non-printable area) of the printer page, in world units. |
+| [GetMarginPixels](#GetMarginPixels) | Retrieves the margins (the non-printable area) of the printer page, in pixels. |
 | [PixelsToPointsX](#PixelsToPointsX) | Converts pixels to point size (1/72 of an inch) (horizontal resolution). |
 | [PixelsToPointsY](#PixelsToPointsY) | Converts pixels to point size (1/72 of an inch) (vertical resolution). |
 | [PointsToPixelsX](#PointsToPixelsX) | Converts a point size (1/72 of an inch) to pixels (horizontal resolution). |
@@ -218,10 +220,6 @@ Returns the width, in pixels, of the printable area of the page.
 FUNCTION GetHorizontalResolution () AS LONG
 ```
 
-#### Return value
-
-LONG. The width, in pixels, of the printable area of the page. If there is not a printer attached, it returns 0.
-
 # <a name="GetVerticalResolution"></a>GetVerticalResolution
 
 Returns the height, in pixels, of the printable area of the page.
@@ -229,6 +227,36 @@ Returns the height, in pixels, of the printable area of the page.
 ```
 FUNCTION GetVerticalResolution () AS LONG
 ```
+
+# <a name="GetMarginUnits"></a>GetMarginUnits
+
+Retrieves the margins (the non-printable area) of the printer page, in world units.
+
+```
+SUB GetMarginUnits (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nLeft* | Left margin. |
+| *nTop* | Top margin. |
+| *nRight* | Right margin. |
+| *nBottom* | Bottom margin. |
+
+# <a name="GetMarginPixels"></a>GetMarginPixels
+
+Retrieves the margins (the non-printable area) of the printer page, in pixels.
+
+```
+SUB GetMarginPixels (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nLeft* | Left margin. |
+| *nTop* | Top margin. |
+| *nRight* | Right margin. |
+| *nBottom* | Bottom margin. |
 
 #### Return value
 
