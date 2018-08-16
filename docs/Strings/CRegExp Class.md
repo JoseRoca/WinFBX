@@ -458,33 +458,6 @@ FUNCTION SubMatchValue (BYVAL MatchIndex AS LONG = 0, BYVAL SubMatchIndex AS LON
 | *MatchIndex* | 0-based index of the match to retrieve. |
 | *SubMatchIndex* | 0-based index of the submatch to retrieve. |
 
-#### Example
-
-```
-'#CONSOLE ON
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
-DIM pRegExp AS CRegExp
-pRegExp.Pattern = "(\w+)@(\w+)\.(\w+)"
-pRegExp.IgnoreCase = TRUE
-DIM cbsText AS CBSTR = "Please send mail to dragon@xyzzy.com. Thanks!"
-IF pRegExp.Execute(cbsText) = FALSE THEN
-   print "No match found"
-ELSE
-   ' Get the number of submatches
-   DIM nCount AS LONG = pRegExp.SubMatchesCount(0)
-   print "Sub matches: ", nCount
-   FOR i AS LONG = 0 TO nCount - 1
-      print pRegExp.SubMatchValue(0, i)
-   NEXT
-END IF
-
-PRINT
-PRINT "Press any key..."
-SLEEP
-```
-
 # <a name="Test"></a>Test
 
 Executes a regular expression search against a specified string and returns a boolean value that indicates if a pattern match was found.
