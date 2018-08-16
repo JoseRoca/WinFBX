@@ -526,34 +526,6 @@ PROPERTY Global (BYVAL bGlobal AS BOOLEAN)
 | ---------- | ----------- |
 | *bGlobal* | True if the search applies to the entire string, False if it does not. Default is False. |
 
-#### Example
-
-```
-'#CONSOLE ON
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
-DIM pRegExp AS CRegExp
-pRegExp.Pattern = "is."
-pRegExp.IgnoreCase = TRUE
-pRegExp.Global = TRUE
-IF pRegExp.Execute("IS1 is2 IS3 is4") = FALSE THEN
-   print "No match found"
-ELSE
-   DIM nCount AS LONG = pRegExp.MatchesCount
-   FOR i AS LONG = 0 TO nCount - 1
-      print "Value: ", pRegExp.MatchValue(i)
-      print "Position: ", pRegExp.MatchPos(i)
-      print "Length: ", pRegExp.MatchLen(i)
-      print
-   NEXT
-END IF
-
-PRINT
-PRINT "Press any key..."
-SLEEP
-```
-
 # <a name="IgnoreCase"></a>IgnoreCase
 
 Sets or returns a boolean value that indicates if a pattern search is case-sensitive or not.
