@@ -181,6 +181,7 @@ END FUNCTION
 ' Returns a pointer to the Afx_IRegExp2 interface
 ' ========================================================================================
 PRIVATE PROPERTY CRegExp.RegExpPtr () AS Afx_IRegExp2 PTR
+   m_Result = 0
    PROPERTY = m_pRegExp
 END PROPERTY
 ' ========================================================================================
