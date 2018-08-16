@@ -42,6 +42,10 @@ Public:
    DECLARE FUNCTION GetVerticalUnits () AS LONG
    DECLARE FUNCTION GetHorizontalResolution () AS LONG
    DECLARE FUNCTION GetVerticalResolution () AS LONG
+   DECLARE FUNCTION PixelsToUnitsX (BYVAL pix AS LONG) AS LONG
+   DECLARE FUNCTION PixelsToUnitsY (BYVAL pix AS LONG) AS LONG
+   DECLARE FUNCTION UnitsToPixelsX (BYVAL units AS LONG) AS LONG
+   DECLARE FUNCTION UnitsToPixelsY (BYVAL units AS LONG) AS LONG
    DECLARE FUNCTION PixelsToPointsX (BYVAL pix AS LONG) AS LONG
    DECLARE FUNCTION PixelsToPointsY (BYVAL pix AS LONG) AS LONG
    DECLARE FUNCTION PointsToPixelsX (BYVAL pts AS LONG) AS LONG
@@ -74,6 +78,8 @@ Public:
    DECLARE PROPERTY Scale (BYVAL nScale AS LONG)
    DECLARE PROPERTY Tray () AS LONG
    DECLARE PROPERTY Tray (BYVAL nTray AS LONG)
+   DECLARE SUB GetMarginPixels (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
+   DECLARE SUB GetMarginUnits (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
    DECLARE FUNCTION PrintBitmap (BYREF wszDocName AS WSTRING, BYVAL hbmp AS HBITMAP, BYVAL bStretch AS BOOLEAN = FALSE, _
                     BYVAL nStretchMode AS LONG = InterpolationModeHighQualityBicubic) AS BOOLEAN
    DECLARE FUNCTION PrintBitmapToFile (BYREF wszDocName AS WSTRING, BYREF wszOutputFileName AS WSTRING, BYVAL hbmp AS HBITMAP, BYVAL bStretch AS BOOLEAN = FALSE, _
@@ -225,6 +231,52 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.GetVerticalResolution () AS LONG
    IF m_hDC THEN RETURN GetDeviceCaps(m_hDC, VERTRES)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Converts pixels to world units.
+' ========================================================================================
+' Horizontal resolution
+PRIVATE FUNCTION CPrint.PixelsToUnitsX (BYVAL pix AS LONG) AS LONG
+   IF m_hDC = NULL THEN RETURN 0
+   ' // Get the horizontal PPI of the printer
+   DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
+   ' // Calculate the size according to the PPI of the printer
+   RETURN pix / (ppix / 100)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Vertical resolution
+PRIVATE FUNCTION CPrint.PixelsToUnitsY (BYVAL pix AS LONG) AS LONG
+   IF m_hDC = NULL THEN RETURN 0
+   ' // Get the vertical PPI of the printer
+   DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
+   ' // Calculate the size according to the PPI of the printer
+   RETURN pix / (ppiy / 100)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Converts world units to pixels.
+' ========================================================================================
+' Horizontal resolution
+PRIVATE FUNCTION CPrint.UnitsToPixelsX (BYVAL units AS LONG) AS LONG
+   IF m_hDC = NULL THEN RETURN 0
+   ' // Get the horizontal PPI of the printer
+   DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
+   ' // Calculate the size according to the PPI of the printer
+   RETURN MulDiv(units, ppix, 100)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Vertical resolution
+PRIVATE FUNCTION CPrint.UnitsToPixelsY (BYVAL units AS LONG) AS LONG
+   IF m_hDC = NULL THEN RETURN 0
+   ' // Get the vertical PPI of the printer
+   DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
+   ' // Calculate the size according to the PPI of the printer
+   RETURN MulDiv(units, ppiy, 100)
 END FUNCTION
 ' ========================================================================================
 
@@ -501,8 +553,8 @@ END PROPERTY
 ' ========================================================================================
 ' Returns the printer orientation.
 ' The return value can be one of the following:
-' - DMORIENT_PORTRAIT = Portrait
-' - DMORIENT_LANDSCAPE = Landscape
+' DMORIENT_PORTRAIT (1) = Portrait
+' DMORIENT_LANDSCAPE (2) = Landscape
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.Orientation () AS LONG
    RETURN this.GetDocumentProperties(DM_ORIENTATION)
@@ -510,8 +562,8 @@ END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 ' Sets the printer orientation.
-' DMORIENT_PORTRAIT = Portrait
-' DMORIENT_LANDSCAPE = Landscape
+' DMORIENT_PORTRAIT (1) = Portrait
+' DMORIENT_LANDSCAPE (2) = Landscape
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.Orientation (BYVAL nOrientation AS LONG)
    this.SetPrinterInfo(DM_ORIENTATION, nOrientation)
@@ -537,9 +589,6 @@ END PROPERTY
 
 ' ========================================================================================
 ' Sets the printer paper length and width in units of 1/10 of a millimeter.
-' These values override the length and width of the paper specified by PaperSize, and is
-' used if the paper is of a custom size, or if the device is a dot matrix printer, which
-' can print a page of arbitrary length.
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.SetPaperSize (BYVAL nLength AS LONG, BYVAL nWidth AS LONG) AS BOOLEAN
    DIM bRes AS BOOLEAN = this.SetPrinterInfo(DM_PAPERLENGTH, nLength)
@@ -565,7 +614,7 @@ PRIVATE PROPERTY CPrint.PaperLength (BYVAL nLength AS LONG)
    this.SetPrinterInfo(DM_PAPERLENGTH, nLength)
 END PROPERTY
 ' ========================================================================================
-' ========================================================================================' ========================================================================================
+' ========================================================================================
 ' Returns the printer paper width in units of 1/10 of a millimeter.
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.PaperWidth () AS LONG
@@ -673,6 +722,50 @@ END PROPERTY
 PRIVATE PROPERTY CPrint.Tray (BYVAL nTray AS LONG)
    this.SetPrinterInfo(DM_DEFAULTSOURCE, nTray)
 END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the margins (the non-printable area) of the printer page, in pixels.
+' ========================================================================================
+PRIVATE SUB CPrint.GetMarginPixels (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
+   IF m_hDC = NULL THEN RETURN
+   DIM totalWidth AS LONG = GetDeviceCaps(m_hdc, PHYSICALWIDTH)
+   DIM printWidth AS LONG = GetDeviceCaps(m_hdc, HORZRES)
+   DIM leftMargin AS LONG = GetDeviceCaps(m_hdc, PHYSICALOFFSETX)
+   DIM rightMargin AS LONG = totalWidth - printWidth - leftMargin
+   DIM totalHeight AS LONG = GetDeviceCaps(m_hdc, PHYSICALHEIGHT)
+   DIM printHeight AS LONG = GetDeviceCaps(m_hdc, VERTRES)
+   DIM topMargin AS LONG = GetDeviceCaps(m_hdc, PHYSICALOFFSETY)
+   DIM bottomMargin AS LONG = totalHeight - printHeight - topMargin
+   IF VARPTR(nLeft) THEN nLeft = leftMargin
+   IF VARPTR(nTop) THEN nTop = topMargin
+   IF VARPTR(nRight) THEN nRight = rightMargin
+   IF VARPTR(nBottom) THEN nBottom = bottomMargin
+END SUB
+' ========================================================================================
+' ========================================================================================
+' Retrieves the margins (the non-printable area) of the printer page, in world units.
+' ========================================================================================
+PRIVATE SUB CPrint.GetMarginUnits (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
+   IF m_hDC = NULL THEN RETURN
+   ' // Get the horizontal PPI of the printer
+   DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
+   ' // Get the vertical PPI of the printer
+   DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
+   ' // Calculate the margins according to the PPI of the printer
+   DIM totalWidth AS LONG = GetDeviceCaps(m_hdc, PHYSICALWIDTH) / (ppix / 100)
+   DIM printWidth AS LONG = GetDeviceCaps(m_hdc, HORZRES) / (ppix / 100)
+   DIM leftMargin AS LONG = GetDeviceCaps(m_hdc, PHYSICALOFFSETX) / (ppix / 100)
+   DIM rightMargin AS LONG = totalWidth - printWidth - leftMargin
+   DIM totalHeight AS LONG = GetDeviceCaps(m_hdc, PHYSICALHEIGHT) / (ppiy / 100)
+   DIM printHeight AS LONG = GetDeviceCaps(m_hdc, VERTRES) / (ppiy / 100)
+   DIM topMargin AS LONG = GetDeviceCaps(m_hdc, PHYSICALOFFSETY) / (ppiy / 100)
+   DIM bottomMargin AS LONG = totalHeight - printHeight - topMargin
+   IF VARPTR(nLeft) THEN nLeft = leftMargin
+   IF VARPTR(nTop) THEN nTop = topMargin
+   IF VARPTR(nRight) THEN nRight = rightMargin
+   IF VARPTR(nBottom) THEN nBottom = bottomMargin
+END SUB
 ' ========================================================================================
 
 ' ========================================================================================
