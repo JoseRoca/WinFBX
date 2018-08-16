@@ -159,7 +159,11 @@ PRIVATE FUNCTION CPrint.PageSetup (BYVAL hwndOwner AS HWND = NULL) AS BOOLEAN
    DIM psd AS PAGESETUPDLGW
    psd.lStructSize = SIZEOF(PAGESETUPDLGW)
    psd.hwndOwner = hwndOwner
-   IF PageSetupDlgW(@psd) THEN RETURN TRUE
+   IF PageSetupDlgW(@psd) THEN
+      IF psd.hDevMode THEN GlobalFree(psd.hDevMode)
+      IF psd.hDevNames THEN GlobalFree(psd.hDevNames)
+      RETURN TRUE
+   END IF
    RETURN FALSE
 END FUNCTION
 ' ========================================================================================
