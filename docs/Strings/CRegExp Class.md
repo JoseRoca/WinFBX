@@ -16,6 +16,8 @@ With regular expressions, you can:
 
 **Tutorial**: [Introduction to Regular Expressions](#Introduction)
 
+**Recipes**: [Recipes](#Recipes)
+
 ### Constructors
 
 ```
@@ -999,7 +1001,7 @@ For example, suppose you have a document containing references to Windows 3.1, W
 
 Once the match is found, the search for the next match begins immediately following the matched text, not including the characters included in the look-ahead. For example, if the expressions shown above matched 'Windows 98', the search resumes after 'Windows' not after '98'.
 
-### Recipes
+# <a name="Recipes"></a>Recipes
 
 #### Finding similar words
 
