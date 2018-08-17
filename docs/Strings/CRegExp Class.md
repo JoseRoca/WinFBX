@@ -881,4 +881,93 @@ A typical use of a bracket expression is to specify matches of any upper- or low
 
 "\[A-Za-z0-9]"
 
+#### Quantifiers
 
+Sometimes, you do not know how many characters there are to match. In order to accommodate that kind of uncertainty, regular expressions support the concept of quantifiers. These quantifiers let you specify how many times a given component of your regular expression must occur for your match to be true.
+
+| Character  | Meaning     |
+| ---------- | ----------- |
+| \* | Matches the preceding character or subexpression zero or more times. For example, 'zo*' matches "z" and "zoo". * is equivalent to {0,}. |
+| + | Matches the preceding character or subexpression one or more times. For example, 'zo+' matches "zo" and "zoo", but not "z". + is equivalent to {1,}. |
+| ? | Matches the preceding character or subexpression zero or one time. For example, 'do(es)?' matches the "do" in "do" or "does". ? is equivalent to {0,1}. |
+| {n} | n is a nonnegative integer. Matches exactly n times. For example, 'o{2}' does not match the 'o' in "Bob," but matches the two o's in "food". |
+| {n,} | n is a nonnegative integer. Matches at least n times. For example, 'o{2,}' does not match the 'o' in "Bob" and matches all the o's in "foooood". 'o{1,}' is equivalent to 'o+'. 'o{0,}' is equivalent to 'o*'. |
+| {n,m} | m and n are nonnegative integers, where n <= m. Matches at least n and at most m times. For example, 'o{1,3}' matches the first three o's in "fooooood". 'o{0,1}' is equivalent to 'o?'. Note that you cannot put a space between the comma and the numbers. |
+
+With a large input document, chapter numbers could easily exceed nine, so you need a way to handle two or three digit chapter numbers. Quantifiers give you that capability. The following regular expression matches chapter headings with any number of digits:
+
+"Chapter \[1-9][0-9]*"
+
+Notice that the quantifier appears after the range expression. Therefore, it applies to the entire range expression which, in this case, specifies only digits from 0 through 9, inclusive.
+
+The '+' quantifier is not used here because there does not necessarily need to be a digit in the second or subsequent position. The '?' character also is not used because it limits the chapter numbers to only two digits. You want to match at least one digit following 'Chapter' and a space character.
+
+If you know that your chapter numbers are limited to only 99 chapters, you can use the following expression to specify at least one, but not more than 2 digits.
+
+"Chapter \[0-9]{1,2}"
+
+The disadvantage to the expression shown above is that if there is a chapter number greater than 99, it will still only match the first two digits. Another disadvantage is that somebody could create a Chapter 0 and it would match. A better expression for matching only two digits are the following:
+ 
+"Chapter \[1-9][0-9]?"
+
+-or-
+ 	
+"Chapter \[1-9]\[0-9]{0,1}"
+
+The '\*', '+', and '?' quantifiers are all what are referred to as greedy, that is, they match as much text as possible. Sometimes that is not at all what you want to happen. Sometimes, you just want a minimal match. 
+
+Say, for example, you are searching an HTML document for an occurrence of a chapter title enclosed in an H1 tag. That text appears in your document as:
+
+\<H1>Chapter 1 – Introduction to Regular Expressions\</H1>
+
+The following expression matches everything from the opening less than symbol (<) to the greater than symbol (>) at the end of the closing H1 tag.
+
+"\<\.\*>"
+
+If all you really wanted to match was the opening H1 tag, the following, non-greedy expression matches only \<H1>.
+
+"\<\.\*?>"
+
+By placing the '?' after a '\*', '+', or '?' quantifier, the expression is transformed from a greedy to a non-greedy, or minimal, match.
+
+#### Anchors
+
+So far, the examples you've seen have been concerned only with finding chapter headings wherever they occur. Any occurrence of the string 'Chapter' followed by a space, followed by a number, could be an actual chapter heading, or it could also be a cross-reference to another chapter. Since true chapter headings always appear at the beginning of a line, you'll need to devise a way to find only the headings and not find the cross-references.
+
+Anchors provide that capability. Anchors allow you to fix a regular expression to either the beginning or end of a line. They also allow you to create regular expressions that occur either within a word or at the beginning or end of a word. The following table contains the list of regular expression anchors and their meanings:
+
+| Character  | Meaning     |
+| ---------- | ----------- |
+| ^ | Matches the position at the beginning of the input string. If the RegExp object's Multiline property is set, ^ also matches the position following '\\n' or '\\r'. |
+| $ | Matches the position at the end of the input string. If the RegExp object's Multiline property is set, $ also matches the position preceding '\\n' or '\\r'. |
+| \\b | Matches a word boundary, that is, the position between a word and a space. |
+| \\B | Matches a nonword boundary. |
+
+You cannot use a quantifier with an anchor. Since you cannot have more than one position immediately before or after a newline or word boundary, expressions such as '^\*' are not permitted.
+
+To match text at the beginning of a line of text, use the '^' character at the beginning of the regular expression. Do not confuse this use of the '^' with the use within a bracket expression. 
+
+To match text at the end of a line of text, use the '$' character at the end of the regular expression.
+
+To use anchors when searching for chapter headings, the following regular expression matches a chapter heading with up to two following digits that occurs at the beginning of a line:
+ 
+"^Chapter \[1-9]\[0-9]{0,1}"
+
+Not only does a true chapter heading occur at the beginning of a line, it is also the only text on the line, so it also must be at the end of a line as well. The following expression ensures that the match specified only matches chapters and not cross-references. It does so by creating a regular expression that matches only at the beginning and end of a line of text.
+ 
+"^Chapter \[1-9]\[0-9]{0,1}$"
+
+Matching word boundaries is a little different but adds a very important capability to regular expressions. A word boundary is the position between a word and a space. A nonword boundary is any other position. The following expression matches the first three characters of the word 'Chapter' because they appear following a word boundary:
+ 
+"\\bCha"
+
+The position of the '\\b' operator is critical. If it is positioned at the beginning of a string to be matched, it looks for the match at the beginning of the word; if it is positioned at the end of the string, it looks for the match at the end of the word. For example, the following expression matches 'ter' in the word 'Chapter' because it appears before a word boundary:
+ 
+"ter\\b"
+
+The following expression matches 'apt' as it occurs in 'Chapter', but not as it occurs in 'aptitude':
+ 
+"\\Bapt"
+
+The string 'apt' occurs on a nonword boundary in the word 'Chapter' but on a word boundary in the word 'aptitude'. For the \\B nonword boundary operator, position is not important because the match is not relative to the beginning or end of a word.
+ 
