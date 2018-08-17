@@ -971,3 +971,32 @@ The following expression matches 'apt' as it occurs in 'Chapter', but not as it 
 
 The string 'apt' occurs on a nonword boundary in the word 'Chapter' but on a word boundary in the word 'aptitude'. For the \\B nonword boundary operator, position is not important because the match is not relative to the beginning or end of a word.
  
+#### Alternation and Grouping
+
+Alternation allows use of the '\|' character to allow a choice between two or more alternatives. Expanding the chapter heading regular expression, you can expand it to cover more than just chapter headings. However, it is not as straightforward as you might think. When alternation is used, the largest possible expression on either side of the '\|' character is matched. You might think that the following expressions for JScript and VBScript match either 'Chapter' or 'Section' followed by one or two digits occurring at the beginning and ending of a line:
+
+Example
+
+"^Chapter|Section [1-9][0-9]{0,1}$"
+
+Unfortunately, the regular expression shown above matches either the word 'Chapter' at the beginning of a line, or 'Section' and whatever numbers follow that, at the end of the line. If the input string is 'Chapter 22', the expression shown above only matches the word 'Chapter'. If the input string is 'Section 22', the expression matches 'Section 22'. But that is not the intent here so there must be a way to make that regular expression more responsive to what you're trying to do and there is.
+
+You can use parentheses to limit the scope of the alternation, that is, make sure that it applies only to the two words, 'Chapter' and 'Section'. However, parentheses are also used to create subexpressions and possibly capture them for later use, something that is covered in the section on backreferences. By taking the regular expressions shown above and adding parentheses in the appropriate places, you can make the regular expression match either 'Chapter 1' or 'Section 3'. 
+
+The following regular expression uses parentheses to group 'Chapter' and 'Section' so the expression works properly.
+
+"^(Chapter|Section) \[1-9]\[0-9]{0,1}$"
+
+Although these expressions work properly, the parentheses around 'Chapter\|Section' also cause either of the two matching words to be captured for future use. Since there is only one set of parentheses in the expression shown above, there is only one captured submatch. This submatch can be referred to using the Submatches collection.
+
+In the above example, you merely want to use the parentheses to group a choice between the words 'Chapter' and 'Section'. To prevent the match from being saved for possible later use, place '?:' before the regular expression pattern inside the parentheses. The following modification provides the same capability without saving the submatch:
+
+"^(?:Chapter|Section) \[1-9]\[0-9]{0,1}$"
+
+In addition to the '?:' metacharacters, there are two other non-capturing metacharacters used for something called lookahead matches. A positive lookahead, specified using ?=, matches the search string at any point where a matching regular expression pattern in parentheses begins. A negative lookahead, specified using '?!', matches the search string at any point where a string not matching the regular expression pattern begins.
+
+For example, suppose you have a document containing references to Windows 3.1, Windows 95, Windows 98, and Windows NT. Suppose further that you need to update the document by finding all the references to Windows 95, Windows 98, and Windows NT and changing those reference to Windows 2000. You can use the following regular expression, which is an example of a positive lookahead, to match Windows 95, Windows 98, and Windows NT:
+
+"Windows(?=95 |98 |NT )"
+
+Once the match is found, the search for the next match begins immediately following the matched text, not including the characters included in the look-ahead. For example, if the expressions shown above matched 'Windows 98', the search resumes after 'Windows' not after '98'.
