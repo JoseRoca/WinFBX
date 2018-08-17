@@ -12,11 +12,9 @@ With regular expressions, you can:
 
 * Extract a substring from a string based upon a pattern match. You can find specific text within a document or input field.
 
-#### Include file
+**Include file**: CRegExp.inc
 
-CRegExp.inc
-
-[Introduction to Regular Expressions](#Introduction)
+**Tutorial**: [Introduction to Regular Expressions](#Introduction)
 
 ### Constructors
 
