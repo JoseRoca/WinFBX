@@ -1255,3 +1255,443 @@ PRINT pRegExp.ReplaceStr(cbsText, cbsPattern, "|")
 Output:
 This is a | test string
 ```
+
+#### Searching words and substrings
+
+Searches for the first occurence of a word that stars with a letter ans is followed by three numbers. If found, it returns its position.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
+DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
+DIM nPos AS LONG = pRegExp.Find(cbsText, cbsPattern)
+PRINT nPos
+```
+
+```
+Output: 11
+```
+
+Searches all the occurences of a word that stars with a letter ans is followed by three numbers. Returns a list of comma separated "index, length" value pairs. The pairs are separated by a semicolon.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
+DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
+DIM cbsOut AS CBSTR
+cbsOut = pRegExp.FindEx(cbsText, cbsPattern)
+print cbsOut
+```
+
+```
+Output: 11,4; 26,4
+```
+
+#### Extracting words and substrings
+
+Searches for the first occurrence of a word. Case-sensitive and not global.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "This is a test string"
+DIM cbsPattern AS CBSTR = "test"
+IF pRegExp.Execute(cbsText, cbsPattern, FALSE, FALSE) THEN PRINT pRegExp.MatchValue
+```
+
+```
+Output:
+test
+```
+
+Searches for the first occurrence of a word. Case-insensitive and not global.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "This is a test string"
+DIM cbsPattern AS CBSTR = "Test"
+IF pRegExp.Execute(cbsText, cbsPattern, TRUE, FALSE) THEN PRINT pRegExp.MatchValue
+```
+
+```
+Output:
+test
+```
+
+Searches for the first occurrence of a substring. Case-sensitive and not global.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "This is a test string"
+DIM cbsPattern AS CBSTR = "is a test"
+IF pRegExp.Execute(cbsText, cbsPattern, FALSE) THEN PRINT pRegExp.MatchValue
+```
+
+```
+Output:
+is a test
+```
+
+Searches for the first occurrence of a substring. Case-insensitive and not global.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "This is a test string"
+DIM cbsPattern AS CBSTR = "is a test"
+IF pRegExp.Execute(cbsText, cbsPattern, TRUE, FALSE) THEN PRINT pRegExp.MatchValue
+```
+
+```
+Output:
+is a test
+```
+
+Searches for the all the occurrences of a word. Case-sensitive and global.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "This is a test testx string"
+DIM cbsPattern AS CBSTR = "test"
+IF pRegExp.Execute(cbsText, cbsPattern, FALSE) THEN
+   FOR i AS LONG = 0 TO pRegExp.MatchesCount
+      PRINT pRegExp.MatchValue(i)
+   NEXT
+END IF
+```
+
+```
+Output:
+test
+test
+```
+
+Searches for the all the occurrences of a word. Case-insensitive and global.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "This is a test testx string"
+DIM cbsPattern AS CBSTR = "Test"
+IF pRegExp.Execute(cbsText, cbsPattern, TRUE) THEN
+   FOR i AS LONG = 0 TO pRegExp.MatchesCount
+      PRINT pRegExp.MatchValue(i)
+   NEXT
+END IF
+```
+
+```
+Output:
+test
+test
+```
+
+Searches for the all the occurrences of a whole word. Case-insensitive and global.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "This is a test testx string"
+DIM cbsPattern AS CBSTR = $"\bTest\b"
+IF pRegExp.Execute(cbsText, cbsPattern, TRUE) THEN
+   FOR i AS LONG = 0 TO pRegExp.MatchesCount
+      PRINT pRegExp.MatchValue(i)
+   NEXT
+END IF
+```
+
+```
+Output:
+test
+```
+
+Case sensitive, double search (c.t and d.g), whole words. Retrieves cut, cat, i.e. whole words with three letters that begin with c and end with t.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+#INCLUDE ONCE "Afx/CWSTR.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "I have a cat and a dog, because I love cats and dogs"
+DIM cbsPattern AS CBSTR = "c.t|d.g"
+pRegExp.Execute(cbsText, cbsPattern, FALSE)
+FOR i AS LONG = 0 TO pRegExp.MatchesCount - 1
+   PRINT pRegExp.MatchValue(i)
+NEXT
+```
+
+```
+Output:
+cat
+dog
+cat
+dog
+```
+
+Case insensitive, double search (c.t and d.g), whole words. Retrieves cut, cat, i.e. whole words with three letters that begin with c and end with t.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+#include once "afx/cwstr.inc"
+USING Afx
+
+' // With this constructor we set the pattern, ignore case and global
+DIM pRegExp AS CRegExp = CRegExp($"\bc.t\b|\bd.g\b", TRUE, TRUE)
+pRegExp.Execute("I have cut a cat tail")
+FOR i AS LONG = 0 TO pRegExp.MatchCount - 1
+   PRINT pRegExp.MatchValue(i)
+NEXT
+```
+
+```
+Output:
+cut
+cat
+```
+
+We can search for more than a word at the same time.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+#INCLUDE ONCE "Afx/CWSTR.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "The contests will be in January, July and November"
+DIm cbsPattern AS CBSTR = $"\b(january|february|march|april|may|june|july|" & _
+    $"august|september|october|november|december)\b"
+PRINT pRegExp.Execute(cbsText, cbsPattern, TRUE)
+For i AS LONG = 0 TO pRegExp.MatchesCount - 1
+   PRINT pRegExp.MatchValue(i)
+NEXT
+```
+
+```
+Output:
+January
+July
+September
+```
+
+Extracts a quoted string.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "29:Sep:2017 ""This is an Example!"""
+DIM cbsPattern AS CBSTR = """.*?"""
+PRINT pRegExp.Execute(cbsText, cbsPattern)
+PRINT pRegExp.MatchValue
+```
+
+```
+Output:
+"This is an Example!"
+```
+
+Extracts all the alphabetic words.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "29:Sep:2017 ""This is an Example!"""
+DIM cbsPattern AS CBSTR = "(?:[a-z][a-z]+)"
+pRegExp.Execute(cbsText, cbsPattern, TRUE)
+FOR i AS LONG = 0 TO pRegExp.MatchesCount - 1
+   PRINT pRegExp.MatchValue(i)
+NEXT
+```
+
+```
+Output:
+Sep
+This
+is
+an
+Example
+```
+
+Extracts the year.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "29:Sep:2017 ""This is an Example!"""
+DIM cbsPattern AS CBSTR = $"((?:(?:[1]{1}\d{1}\d{1}\d{1})|(?:[2]{1}\d{3})))(?![\d])"
+pRegExp.Execute(cbsText, cbsPattern)
+PRINT pRegExp.MatchValue
+```
+
+```
+Output:
+2017
+```
+
+Extracts integers.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "29:Sep:2017 ""This is an Example!"""
+DIM cbsPattern AS CBSTR = $"(\d+)"
+pRegExp.Execute(cbsText, cbsPattern)
+FOR i AS LONG = 0 TO pRegExp.MatchesCount
+   PRINT pRegExp.MatchValue(i)
+NEXT
+```
+
+```
+Output:
+29
+2017
+```
+
+Extract text between parentheses.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+
+' // extract the first match
+DIM cbsText AS CBSTR = "blah blah (text beween parentheses) blah blah"
+DIM cbs AS CBSTR = pRegExp.Extract(cbsText, "([^(]*?)(?=\))")
+PRINT cbs
+
+' // extract the first match after the 11th position
+cbsText = "blah (xxx) blah (text beween parentheses) blah blah"
+cbs = pRegExp.Extract(11, cbsText, "([^(]*?)(?=\))")
+PRINT cbs
+```
+
+```
+Output:
+"text between parentheses"
+```
+
+Extract text between curly braces.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+
+' // extract the first match
+DIM cbsText AS CBSTR = "blah blah {text beween curly braces} blah blah"
+DIM cbs AS CBSTR = pRegExp.Extract(cbsText, "([^{]*?)(?=\})")
+PRINT cbs
+
+' // extract the first match after the 11th position
+cbsText = "blah (xxx) blah (text beween parentheses) blah blah"
+cbs = pRegExp.Extract(11, cbsText, "([^{]*?)(?=\})")
+PRINT cbs
+```
+
+```
+Output:
+"text between curly braces"
+```
+
+#### Checking if a string is numeric
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "1.2345678901234567e+029"
+DIM cbsPattern AS CBSTR = "^[\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?$"
+PRINT pRegExp.Test(cbsText, cbsPattern)
+```
+
+```
+Output:
+True
+```
+
+```
+Pattern: "^[\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?$"
+```
+
+The initial "^" and the final "$" match the start and the end of the string, to ensure the check spans the whole string.
+
+The "\[\\+\\-]?" part is the inital plus or minus sign with the "?" multiplier that allows zero or one instance of it.
+
+The "\\d*" is a digit, zero or more times.
+
+"\\\.?" is the decimal point, zero or one time.
+
+The "\\d+" part matches a digit one or more times.
+
+The "(?:\[Ee]\[\\+\\-]?\\d+)?" matches "e+", "e-", "E+" or "E-" followed by one or more digits, with the "?" multiplier that allows zero or one instance of it.
+
+####Checking if an url is valid
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "https://www.google.es/search?q=msdn+jscript+check+if+an+url+is+valid&client=firefox-b&dcr=0&ei=hM_OWfb2BMzSU-mhr7AG&start=20&sa=N&biw=947&bih=394"
+DIM cbsPattern AS CBSTR = "(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?"
+PRINT pRegExp.Test(cbsText, cbsPattern)
+```
+
+#### Breaking down an URI in its parts
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+' // Breaks down a URI down to the protocol (ftp, http, and so on), the domain
+' // address, and the page/path
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "http://msdn.microsoft.com:80/scripting/default.htm"
+DIM cbsPattern AS CBSTR = $"(\w+):\/\/([^/:]+)(:\d*)?([^# ]*)"
+pRegExp.Execute(cbsText, cbsPattern)
+FOR i AS LONG = 0 TO pRegExp.SubMatchesCount - 1
+   PRINT pRegExp.SubMatchValue(0, i)
+NEXT
+```
+
+```
+Output:
+http
+msdn.microsoft.com
+:80
+/scripting/default.htm
+```
