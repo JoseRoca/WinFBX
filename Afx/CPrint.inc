@@ -130,7 +130,6 @@ END FUNCTION
 
 ' ========================================================================================
 ' Retrieves the name of the default printer port.
-' Use GetPrinterPort to retrieve the port name for a named printer.
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.GetDefaultPrinterPort () AS CWSTR
    DIM buffer AS WSTRING * MAX_PATH
