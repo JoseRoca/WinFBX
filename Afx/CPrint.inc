@@ -16,6 +16,7 @@
 #INCLUDE ONCE "win/commdlg.bi"
 #INCLUDE ONCE "Afx/AfxGdiplus.inc"
 #INCLUDE ONCE "Afx/CWSTR.inc"
+#INCLUDE ONCE "Afx/AfxStr.inc"
 
 NAMESPACE Afx
 
@@ -31,8 +32,12 @@ Public:
 Public:
    DECLARE CONSTRUCTOR
    DECLARE DESTRUCTOR
+   DECLARE FUNCTION GetDefaultPrinter () AS CWSTR
+   DECLARE FUNCTION GetDefaultPrinterDriver () AS CWSTR
+   DECLARE FUNCTION GetDefaultPrinterPort () AS CWSTR
    DECLARE FUNCTION ChoosePrinter (BYVAL hwndOwner AS HWND = NULL) AS BOOLEAN
-   DECLARE FUNCTION AttachPrinter (BYREF wszPrinterName AS WSTRING) AS BOOLEAN
+   DECLARE FUNCTION EnumPrinterNames () AS CWSTR
+   DECLARE FUNCTION AttachPrinter (BYREF wszPrinterName AS WSTRING = "") AS BOOLEAN
    DECLARE FUNCTION PageSetup (BYVAL hwndOwner AS HWND = NULL) AS BOOLEAN
    DECLARE FUNCTION GetDC () AS HDC
    DECLARE FUNCTION GetPrinterName () AS CWSTR
@@ -104,6 +109,58 @@ END DESTRUCTOR
 ' ========================================================================================
 
 ' ========================================================================================
+' Retrieves the name of the default printer.
+' ========================================================================================
+PRIVATE FUNCTION CPrint.GetDefaultPrinter () AS CWSTR
+   DIM buffer AS WSTRING * MAX_PATH
+   GetProfileStringW "WINDOWS", "DEVICE", "", buffer, SIZEOF(buffer)
+   RETURN AfxStrParse(buffer, 1, ",")
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the name of the default printer driver.
+' ========================================================================================
+PRIVATE FUNCTION CPrint.GetDefaultPrinterDriver () AS CWSTR
+   DIM buffer AS WSTRING * MAX_PATH
+   GetProfileStringW "WINDOWS", "DEVICE", "", buffer, SIZEOF(buffer)
+   RETURN AfxStrParse(buffer, 2, ",")
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the name of the default printer port.
+' Use GetPrinterPort to retrieve the port name for a named printer.
+' ========================================================================================
+PRIVATE FUNCTION CPrint.GetDefaultPrinterPort () AS CWSTR
+   DIM buffer AS WSTRING * MAX_PATH
+   GetProfileStringW "WINDOWS", "DEVICE", "", buffer, SIZEOF(buffer)
+   RETURN AfxStrParse(buffer, 3, ",")
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a list with the available printers, print servers, domains, or print providers.
+' Names are separated with a carriage return and a line feed characters.
+' ========================================================================================
+PRIVATE FUNCTION CPrint.EnumPrinterNames () AS CWSTR
+   DIM i AS LONG, cbNeeded AS DWORD, cbReturned AS DWORD
+   DIM Pi5(ANY) AS PRINTER_INFO_5W
+   DIM wstrNames AS CWSTR
+   DIM dwLevel AS DWORD = 5
+   EnumPrintersW PRINTER_ENUM_LOCAL, NULL, dwLevel, NULL, 0, @cbNeeded, @cbReturned
+   REDIM Pi5(0 TO cbNeeded \ SIZEOF(PRINTER_INFO_5W))
+   EnumPrintersW PRINTER_ENUM_LOCAL, "", dwLevel, cast(BYTE PTR, VARPTR(Pi5(0))), _
+         SIZEOF(PRINTER_INFO_5W) * (UBOUND(Pi5) + 1), @cbNeeded, @cbReturned
+   FOR i = 0 TO cbReturned - 1
+      wstrNames += *Pi5(i).pPrinterName
+      IF i < cbReturned - 1 THEN wstrNames += CHR(13, 10)
+   NEXT
+   RETURN wstrNames
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Displays the printer dialog to select a printer.
 ' If the user clicks the OK button, the return value is true.
 ' If the user canceled or closed the Print dialog box or an error occurred, the return value is false.
@@ -137,11 +194,12 @@ END FUNCTION
 ' DIM pPrint AS CPrint
 ' pPrint.AttachPrinter("OKI DATA CORP B410")
 ' ========================================================================================
-PRIVATE FUNCTION CPrint.AttachPrinter (BYREF wszPrinterName AS WSTRING) AS BOOLEAN
+PRIVATE FUNCTION CPrint.AttachPrinter (BYREF wszPrinterName AS WSTRING = "") AS BOOLEAN
+   m_wszPrinterName = wszPrinterName
+   IF LEN(m_wszPrinterName) = 0 THEN m_wszPrinterName = this.GetDefaultPrinter
    ' // Create a device context for the printer
-   DIM _hDC AS .HDC = CreateDCW(NULL, wszPrinterName, NULL, NULL)
+   DIM _hDC AS .HDC = CreateDCW(NULL, m_wszPrinterName, NULL, NULL)
    IF _hDC THEN
-      m_wszPrinterName = wszPrinterName
       IF m_hDC THEN DeleteDC m_hDC
       m_hDC = _hDC
       RETURN TRUE
