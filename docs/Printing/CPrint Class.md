@@ -85,7 +85,8 @@ pPrint.AttachPrinter("Microsoft Print to PDF")
 DIM hdcPrint AS HDC = pPrint.GetDC
 DIM docInfo AS DOCINFOW
 docInfo.cbSize = SIZEOF(DOCINFOW)
-docInfo.lpszDocName = CAST(LPCWSTR, @"GdiplusPrint")
+DIM wszDocName AS WSTRING * 260 = "GdiplusPrint" 
+docInfo.lpszDocName = VARPTR(wszDocName)
 StartDocW(hdcPrint, @docInfo)
 StartPage(hdcPrint)
 SCOPE
