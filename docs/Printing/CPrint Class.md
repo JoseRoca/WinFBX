@@ -10,6 +10,10 @@ Allows to attach/choose a printer and get/set its setting values.
 | [ChoosePrinter](#ChoosePrinter) | Displays the printer dialog to select a printer. |
 | [PageSetup](#PageSetup) | Displays a Page Setup dialog box that enables the user to specify the attributes of a printed page. |
 | [GetPrinterName](#GetPrinterName) | Returns the name of the attached printer. |
+| [GetDefaultPrinter](#GetDefaultPrinter) | Returns the name of the default printer. |
+| [GetDefaultPrinterDriver](#GetDefaultPrinterDriver) | Returns the name of the default printer driver. |
+| [GetDefaultPrinterPort](#GetDefaultPrinterPort) | Returns the name of the default printer port. |
+| [EnumPrinterNames](#EnumPrinterNames) | Returns a list with the available printers, print servers, domains, or print providers. |
 | [GetDC](#GetDC) | Returns the handle of the device context of the attached printer. |
 | [GetPPIX](#GetPPIX) | Returns the number of pixels per inch of the page (horizontal resolution). |
 | [GetPPIY](#GetPPIY) | Returns the number of pixels per inch of the page (vertical resolution). |
@@ -154,11 +158,44 @@ FUNCTION GetPrinterName () AS CWSTR
 
 #### Return value
 
-CWSTR. The handle of the attached printer. If there is not a printer attached, it returns an empty string.
+CWSTR. The name of the attached printer. If there is not a printer attached, it returns an empty string.
+
+# <a name="GetDefaultPrinter"></a>GetDefaultPrinter
+
+Returns the name of the default printer.
+
+```
+FUNCTION GetDefaultPrinter () AS CWSTR
+```
+
+# <a name="GetDefaultPrinterDriver"></a>GetDefaultPrinterDriver
+
+Returns the name of the default printer driver.
+
+```
+FUNCTION GetDefaultPrinterDriver () AS CWSTR
+```
+
+# <a name="GetDefaultPrinterPort"></a>GetDefaultPrinterPort
+
+Returns the name of the default printer port.
+
+```
+FUNCTION GetDefaultPrinterPort () AS CWSTR
+```
+
+# <a name="EnumPrinterNames"></a>EnumPrinterNames
+
+Returns a list with the available printers, print servers, domains, or print providers.
+Names are separated with a carriage return and a line feed characters.
+
+```
+FUNCTION EnumPrinterNames () AS CWSTR
+```
 
 # <a name="GetDC"></a>GetDC
 
-Returns the name of the attached printer.
+Returns the handle of the attached printer.
 
 ```
 FUNCTION GetDC () AS HDC
