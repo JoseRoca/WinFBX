@@ -697,8 +697,6 @@ With regular expressions, you can:
 
 For example, if you need to search an entire web site to remove some outdated material and replace some HTML formatting tags, you can use a regular expression to test each file to see if the material or the HTML formatting tags you are looking for exists in that file. That way, you can narrow down the affected files to only those that contain the material that has to be removed or changed. You can then use a regular expression to remove the outdated material, and finally, you can use regular expressions to search for and replace the tags that need replacing.
 
-Another example of where a regular expression is useful occurs in a language that is not known for its string-handling ability. VBScript, a subset of Visual Basic, has a rich set of string-handling functions. JScript, like C, does not. Regular expressions provide a significant improvement in string-handling for JScript. However, regular expressions may also be more efficient to use in VBScript as well, allowing you do perform multiple string manipulations in a single expression.
-
 ### Regular Expression Syntax
 
 A regular expression is a pattern of text that consists of ordinary characters (for example, letters a through z) and special characters, known as metacharacters. The pattern describes one or more strings to match when searching a body of text. The regular expression serves as a template for matching a character pattern to the string being searched.
@@ -779,7 +777,7 @@ The simplest form of a regular expression is a single, ordinary character that m
 "7"<br>
 "M"
 
-You can combine a number of single characters to form a larger expression. For example, the following JScript regular expression is nothing more than an expression created by combining the single-character expressions 'a', '7', and 'M'. 
+You can combine a number of single characters to form a larger expression. For example, the following regular expression is nothing more than an expression created by combining the single-character expressions 'a', '7', and 'M'. 
 
 "a7M"
 
@@ -877,7 +875,7 @@ The same expressions above can be represented using the hyphen character (-):
 
 "Chapter \[^1-5]"
 
-A typical use of a bracket expression is to specify matches of any upper- or lowercase alphabetic characters or any digits. The following JScript expression specifies such a match:
+A typical use of a bracket expression is to specify matches of any upper- or lowercase alphabetic characters or any digits. The following expression specifies such a match:
 
 "\[A-Za-z0-9]"
 
@@ -973,7 +971,7 @@ The string 'apt' occurs on a nonword boundary in the word 'Chapter' but on a wor
  
 #### Alternation and Grouping
 
-Alternation allows use of the '\|' character to allow a choice between two or more alternatives. Expanding the chapter heading regular expression, you can expand it to cover more than just chapter headings. However, it is not as straightforward as you might think. When alternation is used, the largest possible expression on either side of the '\|' character is matched. You might think that the following expressions for JScript and VBScript match either 'Chapter' or 'Section' followed by one or two digits occurring at the beginning and ending of a line:
+Alternation allows use of the '\|' character to allow a choice between two or more alternatives. Expanding the chapter heading regular expression, you can expand it to cover more than just chapter headings. However, it is not as straightforward as you might think. When alternation is used, the largest possible expression on either side of the '\|' character is matched. You might think that the following expression match either 'Chapter' or 'Section' followed by one or two digits occurring at the beginning and ending of a line:
 
 Example
 
@@ -1000,3 +998,260 @@ For example, suppose you have a document containing references to Windows 3.1, W
 "Windows(?=95 |98 |NT )"
 
 Once the match is found, the search for the next match begins immediately following the matched text, not including the characters included in the look-ahead. For example, if the expressions shown above matched 'Windows 98', the search resumes after 'Windows' not after '98'.
+
+### Recipes
+
+#### Finding similar words
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "My cat found a dead bat over the mat"
+DIM cbsPattern AS CBSTR = $"\b[bcm]at\b"
+'-or- DIM cbsPattern AS CBSTR = $"\b(b|c|m)at\b"
+pRegExp.Execute(cbsText, cbsPattern)
+FOR i AS LONG = 0 TO pRegExp.MatchesCount - 1
+   print pRegExp.MatchValue(i)
+NEXT
+```
+
+As an alternative, we can use the operator "\|":
+
+```
+DIM cbsPattern AS CBSTR = $"\b(b|c|m)at\b"
+```
+
+\\b is a word boundary, \[bcm] one of b, c, or m, followed by at and finally another word boundary (\\b),
+
+```
+Output:
+cat
+bat
+mat
+```
+
+#### Finding variations on words
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "Hello, my name is John Doe, what's your name?"
+DIM cbsPattern AS CBSTR = $"\bJoh?n(athan)? Doe\b"
+pRegExp.Execute(cbsText, cbsPattern)
+IF pRegExp.MatchesCount THEN print pRegExp.MatchValue
+```
+
+\\b is a word boundary (matches whole words only), Jo is the common part of John, Jon and Jonathan, h? is optional (it is followed by the metacharacter ?), n is a letter common in the three names, (anathan)? is an optional group of characters that will match Jonathan, a space followed by Doe, and another word boundary (\\b).
+
+```
+Output:
+John Doe
+```
+
+#### Removing characters
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbs AS CBSTR
+cbs = pRegExp.RemoveStr("abacadabra", "[abc]", TRUE) ' - prints "dr"
+print cbs
+```
+
+Removes any of the characters, a, b or c, found in the string.
+
+```
+Output:
+dr
+```
+
+#### Removing words
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbs AS CBSTR
+cbs = pRegExp.RemoveStr("abacadabra", "ab")
+print cbs
+```
+```
+Output:
+acadra
+```
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbs AS CBSTR
+cbs = pRegExp.RemoveStr("World, worldx, world", $"\bworld\b", TRUE)
+print cbs
+```
+
+\\b is word boundary. TRUE in the third parameter indicates that it must ignore the case.
+
+```
+Output:
+, worldx,
+```
+
+#### Replacing characters
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbs AS CBSTR
+cbs = pRegExp.ReplaceStr("abacadabra", "[bac]", "*")
+print cbs
+```
+
+Replaces any of the characters, a, b or c, found in the string with an asterisk.
+
+```
+Output:
+*****d**r*
+```
+
+#### Replacing words
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbs AS CBSTR
+cbs = pRegExp.ReplaceStr("Hello World", "World", "Earth")
+print cbs
+```
+
+```
+Output:
+Hello, Earth
+```
+
+Replaces any occurrence of two consecutive identical words in a string of text with a single occurrence of the same word. The TRUE in the fourth parameter indicates that the operation is not case sensitive.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "Is is the cost of of gasoline going up up?"
+DIM cbsPattern AS CBSTR = $"\b([a-z]+) \1\b"
+DIM cbs AS CBSTR = pRegExp.ReplaceStr(cbsText, cbsPattern, "$1", TRUE)
+print cbs
+```
+
+```
+Output:
+Is the cost of gasoline going up?
+```
+
+Adds an space after the dots that are immediately followed by a word.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "This is a text.With some dots.Between words. This one not."
+DIM cbsPattern AS CBSTR = "(\.)(\w)"
+DIM cbs AS CBSTR = pRegExp.ReplaceStr(cbsText, cbsPattern, "$1 $2")
+print cbs
+```
+
+```
+Output:
+This is a text. With some dots. Between words. This one not."
+```
+
+Changes the format of a telephone number.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+PRINT pRegExp.ReplaceStr("555-123-4567", "(\d{3})-(\d{3})-(\d{4})", "($1) $2-$3")
+```
+
+```
+Output:
+(555) 123-4567
+```
+
+Swaps to words and remover the comma.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+PRINT pRegExp.ReplaceStr("0000.34500044", $"\b0{1,}\.", ".")
+```
+
+```
+Output:
+Paul Squires
+```
+
+Removes leading zeroes.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+PRINT pRegExp.ReplaceStr("0000.34500044", $"\b0{1,}\.", ".")
+```
+
+```
+Output:
+.34500044
+```
+
+Replaces everything between quotes with three asterisks.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "This is a ""quoted"" string"
+DIm cbsPattern AS CBSTR = """[^""]*"""
+PRINT pRegExp.ReplaceStr(cbsText, cbsPattern, "***")
+```
+
+```
+Output:
+This is a "***"" string
+```
+
+Replaces a tab with a pipe character.
+
+```
+#INCLUDE ONCE "Afx/CRegExp.inc"
+USING Afx
+
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "This is a " & CHR(9) & " test string"
+'DIM cbsText AS CBSTR = !"This is a \t test string" ' alternative way
+DIm cbsPattern AS CBSTR = $"\t"
+PRINT pRegExp.ReplaceStr(cbsText, cbsPattern, "|")
+```
+
+```
+Output:
+This is a | test string
+```
