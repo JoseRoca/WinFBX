@@ -16,6 +16,8 @@ With regular expressions, you can:
 
 CRegExp.inc
 
+[Introduction to Regular Expressions](#Introduction)
+
 ### Constructors
 
 ```
@@ -657,7 +659,7 @@ PROPERTY SubMatchesCount (BYVAL index AS LONG = 0) AS LONG
 | ---------- | ----------- |
 | *index* | 0-based index of the match to retrieve. |
 
-# Introduction to Regular Expressions
+# <a name="Introduction"></a>Introduction to Regular Expressions
 
 Unless you have worked with regular expressions before, the term and the concept may be unfamiliar to you. However, they may not be as unfamiliar as you think.
 
