@@ -329,7 +329,7 @@ Since it is a direct pointer, you don't have to release it calling the **Release
 
 # <a name="Remove"></a>Remove
 
-Returns a copy of a string with text removed using a regular expression as the search string
+Returns a copy of a string with text removed using a regular expression as the search string.
 
 ```
 FUNCTION Remove (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
