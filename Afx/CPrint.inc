@@ -27,10 +27,12 @@ TYPE CPrint
 
 Public:
    m_hDC AS HDC
+   m_pDevMode AS DEVMODEW PTR
+   m_bGlobal AS BOOLEAN
    m_wszPrinterName AS WSTRING * 260
 
 Public:
-   DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL bGlobal AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
    DECLARE FUNCTION GetDefaultPrinter () AS CWSTR
    DECLARE FUNCTION GetDefaultPrinterDriver () AS CWSTR
@@ -56,9 +58,12 @@ Public:
    DECLARE FUNCTION PointsToPixelsX (BYVAL pts AS LONG) AS LONG
    DECLARE FUNCTION PointsToPixelsY (BYVAL pts AS LONG) AS LONG
    DECLARE FUNCTION GetDocumentProperties (BYVAL dmField AS DWORD) AS LONG
+   DECLARE FUNCTION SetDocumentProperties (BYVAL dmField AS DWORD, BYVAL nValue AS LONG) AS LONG
    DECLARE FUNCTION SetPrinterInfo (BYVAL dmField AS DWORD, BYVAL nValue AS LONG) AS BOOLEAN
    DECLARE PROPERTY Collate () AS BOOLEAN
-   DECLARE PROPERTY Collate (BYVAL nMode AS LONG)
+   DECLARE PROPERTY CollateMode () AS LONG
+   DECLARE PROPERTY CollateMode (BYVAL nMode AS LONG)
+   DECLARE PROPERTY Color () AS BOOLEAN
    DECLARE PROPERTY ColorMode () AS LONG
    DECLARE PROPERTY ColorMode (BYVAL nMode AS LONG)
    DECLARE PROPERTY Copies () AS LONG
@@ -96,7 +101,8 @@ END TYPE
 ' ========================================================================================
 ' CPrint constructor
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CPrint
+PRIVATE CONSTRUCTOR CPrint (BYVAL bGlobal AS BOOLEAN = FALSE)
+   m_bGlobal = bGlobal
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -105,6 +111,7 @@ END CONSTRUCTOR
 ' ========================================================================================
 PRIVATE DESTRUCTOR CPrint
    IF m_hDC then DeleteDC m_hDC
+   IF m_pDevMode THEN Deallocate(m_pDevMode)
 END DESTRUCTOR
 ' ========================================================================================
 
@@ -389,35 +396,123 @@ END FUNCTION
 
 ' ========================================================================================
 ' Retrieves printer initialization information.
+' If the function is successful, the return value is IDOK (1).
+' If the function fails, the return value is 0 or less than zero.
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.GetDocumentProperties (BYVAL dmField AS DWORD) AS LONG
-   ' // Start by opening the printer
-   DIM hPrinter AS HANDLE
-   IF OpenPrinterW(m_wszPrinterName, @hPrinter, NULL) = FALSE THEN RETURN 0
-   ' // Allocate a buffer of the correct size
-   DIM cbNeeded AS DWORD = DocumentPropertiesW(NULL, hPrinter, m_wszPrinterName, NULL, NULL, 0)
-   DIM bufferDoc AS STRING = SPACE(cbNeeded)
-   ' // Retrieve the printer configuration data
-   DIM nRet AS LONG = DocumentPropertiesW(NULL, hPrinter, m_wszPrinterName, _
-      cast(DEVMODEW PTR, STRPTR(bufferDoc)), NULL, DM_OUT_BUFFER)
-   IF nRet = IDOK THEN
-      ' // Cast it to a DEVMODEW structure
-      DIM pDevMode AS DEVMODEW PTR = cast(DEVMODEW PTR, STRPTR(bufferDoc))
-      ' // Finished with the printer
-      ClosePrinter(hPrinter)
-      ' // Return the requested value
+   DIM nRet AS LONG
+   IF m_bGlobal = FALSE AND m_pDevMode <> NULL THEN
+      ' // Set the passed value
       SELECT CASE dmField
-         CASE DM_COLLATE       : RETURN pDevMode->dmCollate
-         CASE DM_COPIES        : RETURN pDevMode->dmCopies
-         CASE DM_ORIENTATION   : RETURN pDevMode->dmOrientation
-         CASE DM_PAPERSIZE     : RETURN pDevMode->dmPaperSize
-         CASE DM_PRINTQUALITY  : RETURN pDevMode->dmPrintQuality
-         CASE DM_SCALE         : RETURN pDevMode->dmScale
-         CASE DM_DEFAULTSOURCE : RETURN pDevMode->dmDefaultSource
-         CASE DM_PAPERLENGTH   : RETURN pDevMode->dmPaperLength
-         CASE DM_PAPERWIDTH    : RETURN pDevMode->dmPaperWidth
-         CASE DM_DUPLEX        : RETURN pDevMode->dmDuplex
+         CASE DM_COLLATE       : RETURN m_pDevMode->dmCollate
+         CASE DM_COLOR         : RETURN m_pDevMode->dmColor
+         CASE DM_COPIES        : RETURN m_pDevMode->dmCopies
+         CASE DM_DUPLEX        : RETURN m_pDevMode->dmDuplex
+         CASE DM_ORIENTATION   : RETURN m_pDevMode->dmOrientation
+         CASE DM_PAPERSIZE     : RETURN m_pDevMode->dmPaperSize
+         CASE DM_PRINTQUALITY  : RETURN m_pDevMode->dmPrintQuality
+         CASE DM_DEFAULTSOURCE : RETURN m_pDevMode->dmDefaultSource
+         CASE DM_SCALE         : RETURN m_pDevMode->dmScale
+         CASE DM_PAPERLENGTH   : RETURN m_pDevMode->dmPaperLength
+         CASE DM_PAPERWIDTH    : RETURN m_pDevMode->dmPaperWidth
       END SELECT
+   ELSE
+      ' // Start by opening the printer
+      DIM hPrinter AS HANDLE
+      IF OpenPrinterW(m_wszPrinterName, @hPrinter, NULL) = FALSE THEN RETURN 0
+      ' // Allocate a buffer of the correct size
+      DIM cbNeeded AS DWORD = DocumentPropertiesW(NULL, hPrinter, m_wszPrinterName, NULL, NULL, 0)
+      DIM bufferDoc AS STRING = SPACE(cbNeeded)
+      ' // Retrieve the printer configuration data
+      nRet = DocumentPropertiesW(NULL, hPrinter, m_wszPrinterName, _
+         cast(DEVMODEW PTR, STRPTR(bufferDoc)), NULL, DM_OUT_BUFFER)
+      IF nRet = IDOK THEN
+         ' // Cast it to a DEVMODEW structure
+         DIM pDevMode AS DEVMODEW PTR = cast(DEVMODEW PTR, STRPTR(bufferDoc))
+         ' // Finished with the printer
+         ClosePrinter(hPrinter)
+         ' // Return the requested value
+         SELECT CASE dmField
+            CASE DM_COLLATE       : RETURN pDevMode->dmCollate
+            CASE DM_COLOR         : RETURN pDevMode->dmColor
+            CASE DM_COPIES        : RETURN pDevMode->dmCopies
+            CASE DM_DUPLEX        : RETURN pDevMode->dmDuplex
+            CASE DM_ORIENTATION   : RETURN pDevMode->dmOrientation
+            CASE DM_PAPERSIZE     : RETURN pDevMode->dmPaperSize
+            CASE DM_PRINTQUALITY  : RETURN pDevMode->dmPrintQuality
+            CASE DM_DEFAULTSOURCE : RETURN pDevMode->dmDefaultSource
+            CASE DM_SCALE         : RETURN pDevMode->dmScale
+            CASE DM_PAPERLENGTH   : RETURN pDevMode->dmPaperLength
+            CASE DM_PAPERWIDTH    : RETURN pDevMode->dmPaperWidth
+         END SELECT
+      END IF
+   END IF
+   RETURN nRet
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Modifies printer initialization information.
+' If the function is successful, the return value is IDOK (1).
+' If the function fails, the return value is 0 or less than zero.
+' ========================================================================================
+PRIVATE FUNCTION CPrint.SetDocumentProperties (BYVAL dmField AS DWORD, BYVAL nValue AS LONG) AS LONG
+   DIM nRet AS LONG
+   IF m_bGlobal = FALSE AND m_pDevMode <> NULL THEN
+      ' // If the document supports the specified field, set the passed value
+      SELECT CASE dmField
+         CASE DM_COLLATE       : IF (m_pDevMode->dmFields AND DM_COLLATE) THEN m_pDevMode->dmCollate = nValue
+         CASE DM_COLOR         : IF (m_pDevMode->dmFields AND DM_COLOR) THEN m_pDevMode->dmColor = nValue
+         CASE DM_COPIES        : IF (m_pDevMode->dmFields AND DM_COPIES) THEN m_pDevMode->dmCopies = nValue
+         CASE DM_DUPLEX        : IF (m_pDevMode->dmFields AND DM_DUPLEX) THEN m_pDevMode->dmDuplex = nValue
+         CASE DM_ORIENTATION   : IF (m_pDevMode->dmFields AND DM_ORIENTATION) THEN m_pDevMode->dmOrientation = nValue
+         CASE DM_PAPERSIZE     : IF (m_pDevMode->dmFields AND DM_PAPERSIZE) THEN m_pDevMode->dmPaperSize = nValue
+         CASE DM_PRINTQUALITY  : IF (m_pDevMode->dmFields AND DM_PRINTQUALITY) THEN m_pDevMode->dmPrintQuality = nValue
+         CASE DM_DEFAULTSOURCE : IF (m_pDevMode->dmFields AND DM_DEFAULTSOURCE) THEN m_pDevMode->dmDefaultSource = nValue
+         CASE DM_SCALE         : IF (m_pDevMode->dmFields AND DM_SCALE) THEN m_pDevMode->dmScale = nValue
+         CASE DM_PAPERLENGTH   : IF (m_pDevMode->dmFields AND DM_PAPERLENGTH) THEN m_pDevMode->dmPaperLength = nValue
+         CASE DM_PAPERWIDTH    : IF (m_pDevMode->dmFields AND DM_PAPERWIDTH) THEN m_pDevMode->dmPaperWidth = nValue
+      END SELECT
+   ELSE
+      ' // Start by opening the printer
+      DIM hPrinter AS HANDLE
+      DIM pd AS PRINTER_DEFAULTSW
+      pd.DesiredAccess = PRINTER_ALL_ACCESS
+      IF OpenPrinterW(m_wszPrinterName, @hPrinter, @pd) = FALSE THEN RETURN 0
+      ' // Allocate a buffer of the correct size
+      DIM cbNeeded AS DWORD = DocumentPropertiesW(NULL, hPrinter, m_wszPrinterName, NULL, NULL, 0)
+      DIM bufferDoc AS STRING = SPACE(cbNeeded)
+      ' // Retrieve the printer configuration data
+      nRet = DocumentPropertiesW(NULL, hPrinter, m_wszPrinterName, _
+         cast(DEVMODEW PTR, STRPTR(bufferDoc)), NULL, DM_OUT_BUFFER)
+      IF nRet = IDOK THEN
+         ' // Cast it to a DEVMODEW structure
+         DIM pDevMode AS DEVMODEW PTR = cast(DEVMODEW PTR, STRPTR(bufferDoc))
+         ' // Set the passed value
+         SELECT CASE dmField
+            CASE DM_COLLATE       : pDevMode->dmCollate = nValue
+            CASE DM_COLOR         : pDevMode->dmColor = nValue
+            CASE DM_COPIES        : pDevMode->dmCopies = nValue
+            CASE DM_DUPLEX        : pDevMode->dmDuplex = nValue
+            CASE DM_ORIENTATION   : pDevMode->dmOrientation = nValue
+            CASE DM_PAPERSIZE     : pDevMode->dmPaperSize = nValue
+            CASE DM_PRINTQUALITY  : pDevMode->dmPrintQuality = nValue
+            CASE DM_DEFAULTSOURCE : pDevMode->dmDefaultSource = nValue
+            CASE DM_SCALE         : pDevMode->dmScale = nValue
+            CASE DM_PAPERLENGTH   : pDevMode->dmPaperLength = nValue
+            CASE DM_PAPERWIDTH    : pDevMode->dmPaperWidth = nValue
+         END SELECT
+         ' // Update the document properties
+         nRet = DocumentPropertiesW(NULL, hPrinter, m_wszPrinterName, _
+                pDevMode, pDevMode, DM_IN_BUFFER OR DM_OUT_BUFFER)
+         ' // Finished with the printer
+         ClosePrinter(hPrinter)
+         ' // Store the document properties
+         IF m_bGlobal = FALSE THEN
+            m_pDevMode = CAllocate(LEN(bufferDoc), 1)
+            memcpy(m_pDevMode, STRPTR(bufferDoc), LEN(bufferDoc))
+         END IF
+      END IF
    END IF
    RETURN nRet
 END FUNCTION
@@ -540,11 +635,24 @@ END PROPERTY
 '   DMCOLLATE_FALSE = 0
 ' Remarks: Not all printers can collate.
 ' ========================================================================================
-PRIVATE PROPERTY CPrint.Collate (BYVAL nMode AS LONG)
-   this.SetPrinterInfo(DM_COLLATE, nMode)
+PRIVATE PROPERTY CPrint.CollateMode () AS LONG
+   RETURN this.GetDocumentProperties(DM_COLLATE)
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CPrint.CollateMode (BYVAL nMode AS LONG)
+   IF m_bGlobal THEN this.SetPrinterInfo(DM_COLLATE, nMode) ELSE this.SetDocumentProperties(DM_COLLATE, nMode)
 END PROPERTY
 ' ========================================================================================
 
+' ========================================================================================
+' If the printer supports color mode, the return value is TRUE; otherwise, the return value is FALSE.
+' ========================================================================================
+PRIVATE PROPERTY CPrint.Color () AS BOOLEAN
+   RETURN DeviceCapabilitiesW(m_wszPrinterName, NULL, DC_COLORDEVICE, NULL, NULL)
+   RETURN this.GetDocumentProperties(DM_COLOR)
+END PROPERTY
+' ========================================================================================
 ' ========================================================================================
 ' Returns the printer color mode: DMCOLOR_MONOCHROME or DMCOLOR_COLOR.
 ' Some color printers have the capability to print using true black instead of a combination
@@ -552,7 +660,7 @@ END PROPERTY
 ' documents. This option is only useful for color printers that support true black printing.
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.ColorMode () AS LONG
-   RETURN DeviceCapabilitiesW(m_wszPrinterName, NULL, DC_COLORDEVICE, NULL, NULL)
+   RETURN this.GetDocumentProperties(DM_COLOR)
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
@@ -562,7 +670,7 @@ END PROPERTY
 '   DMCOLOR_COLOR = 2
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.ColorMode (BYVAL nMode AS LONG)
-   this.SetPrinterInfo(DM_COLOR, nMode)
+   IF m_bGlobal THEN this.SetPrinterInfo(DM_COLOR, nMode) ELSE this.SetDocumentProperties(DM_COLOR, nMode)
 END PROPERTY
 ' ========================================================================================
 
@@ -577,7 +685,7 @@ END PROPERTY
 ' Selects the number of copies to print if the device supports multiple-page copies.
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.Copies (BYVAL nCopies AS LONG)
-   this.SetPrinterInfo(DM_COPIES, nCopies)
+   IF m_bGlobal THEN this.SetPrinterInfo(DM_COPIES, nCopies) ELSE this.SetDocumentProperties(DM_COPIES, nCopies)
 END PROPERTY
 ' ========================================================================================
 
@@ -585,7 +693,8 @@ END PROPERTY
 ' If the printer supports duplex printing, the return value is TRUE; otherwise, the return value is FALSE.
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.Duplex () AS BOOLEAN
-   RETURN DeviceCapabilitiesW(m_wszPrinterName, NULL, DC_DUPLEX, NULL, NULL)
+   IF m_bGlobal THEN RETURN DeviceCapabilitiesW(m_wszPrinterName, NULL, DC_DUPLEX, NULL, NULL)
+   RETURN this.GetDocumentProperties(DM_DUPLEX)
 END PROPERTY
 ' ========================================================================================
 
@@ -596,7 +705,7 @@ END PROPERTY
 ' DMDUP_HORIZONTAL = 3 (Page flipped on the horizontal edge)
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.DuplexMode () AS LONG
-'   RETURN DeviceCapabilitiesW(m_wszPrinterName, NULL, DC_DUPLEX, NULL, NULL)
+   IF m_bGlobal THEN RETURN DeviceCapabilitiesW(m_wszPrinterName, NULL, DC_DUPLEX, NULL, NULL)
    RETURN this.GetDocumentProperties(DM_DUPLEX)
 END PROPERTY
 ' ========================================================================================
@@ -607,7 +716,7 @@ END PROPERTY
 ' DMDUP_HORIZONTAL = 3 (Page flipped on the horizontal edge)
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.DuplexMode (BYVAL nDuplexMode AS LONG)
-   this.SetPrinterInfo(DM_DUPLEX, nDuplexMode)
+   IF m_bGlobal THEN this.SetPrinterInfo(DM_DUPLEX, nDuplexMode) ELSE this.SetDocumentProperties(DM_DUPLEX, nDuplexMode)
 END PROPERTY
 ' ========================================================================================
 
@@ -627,7 +736,7 @@ END PROPERTY
 ' DMORIENT_LANDSCAPE (2) = Landscape
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.Orientation (BYVAL nOrientation AS LONG)
-   this.SetPrinterInfo(DM_ORIENTATION, nOrientation)
+   IF m_bGlobal THEN this.SetPrinterInfo(DM_ORIENTATION, nOrientation) ELSE this.SetDocumentProperties(DM_ORIENTATION, nOrientation)
 END PROPERTY
 ' ========================================================================================
 
@@ -644,7 +753,7 @@ END PROPERTY
 ' Sets the printer paper size.
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.PaperSize (BYVAL nSize AS LONG)
-   this.SetPrinterInfo(DM_PAPERSIZE, nSize)
+   IF m_bGlobal THEN this.SetPrinterInfo(DM_PAPERSIZE, nSize) ELSE this.SetDocumentProperties(DM_PAPERSIZE, nSize)
 END PROPERTY
 ' ========================================================================================
 
@@ -652,11 +761,19 @@ END PROPERTY
 ' Sets the printer paper length and width in units of 1/10 of a millimeter.
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.SetPaperSize (BYVAL nLength AS LONG, BYVAL nWidth AS LONG) AS BOOLEAN
-   DIM bRes AS BOOLEAN = this.SetPrinterInfo(DM_PAPERLENGTH, nLength)
-   IF bRes = FALSE THEN RETURN FALSE
-   bRes = this.SetPrinterInfo(DM_PAPERWIDTH, nWidth)
-   IF bRes = FALSE THEN RETURN FALSE
-   RETURN TRUE
+   IF m_bGlobal THEN
+      DIM bRes AS BOOLEAN = this.SetPrinterInfo(DM_PAPERLENGTH, nLength)
+      IF bRes = FALSE THEN RETURN FALSE
+      bRes = this.SetPrinterInfo(DM_PAPERWIDTH, nWidth)
+      IF bRes = FALSE THEN RETURN FALSE
+      RETURN TRUE
+   ELSE
+      DIM nRet AS LONG = this.SetDocumentProperties(DM_PAPERLENGTH, nLength)
+      IF nRet <> IDOK THEN RETURN FALSE
+      nRet = this.SetDocumentProperties(DM_PAPERWIDTH, nWidth)
+      IF nRet <> IDOK THEN RETURN FALSE
+      RETURN TRUE
+   END IF
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -672,7 +789,7 @@ END PROPERTY
 ' or if the device is a dot matrix printer, which can print a page of arbitrary length.
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.PaperLength (BYVAL nLength AS LONG)
-   this.SetPrinterInfo(DM_PAPERLENGTH, nLength)
+   IF m_bGlobal THEN this.SetPrinterInfo(DM_PAPERLENGTH, nLength) ELSE this.SetDocumentProperties(DM_PAPERLENGTH, nLength)
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
@@ -687,7 +804,7 @@ END PROPERTY
 ' width of the paper specified by PaperSize. This MUST be used if PaperLength is used.
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.PaperWidth (BYVAL nWidth AS LONG)
-   this.SetPrinterInfo(DM_PAPERWIDTH, nWidth)
+   IF m_bGlobal THEN this.SetPrinterInfo(DM_PAPERWIDTH, nWidth) ELSE this.SetDocumentProperties(DM_PAPERWIDTH, nWidth)
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
@@ -735,7 +852,7 @@ END PROPERTY
 ' the x resolution.
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.Quality (BYVAL nMode AS LONG)
-   this.SetPrinterInfo(DM_PRINTQUALITY, nMode)
+   IF m_bGlobal THEN this.SetPrinterInfo(DM_PRINTQUALITY, nMode) ELSE this.SetDocumentProperties(DM_PRINTQUALITY, nMode)
 END PROPERTY
 ' ========================================================================================
 
@@ -758,7 +875,7 @@ END PROPERTY
 ' height and width.
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.Scale (BYVAL nScale AS LONG)
-   this.SetPrinterInfo(DM_SCALE, nScale)
+   IF m_bGlobal THEN this.SetPrinterInfo(DM_SCALE, nScale) ELSE this.SetDocumentProperties(DM_SCALE, nScale)
 END PROPERTY
 ' ========================================================================================
 
@@ -781,7 +898,7 @@ END PROPERTY
 ' DMBIN_LARGEFMT = 10; DMBIN_LARGECAPACITY = 11; DMBIN_CASSETTE = 14; DMBIN_FORMSOURCE = 15
 ' ========================================================================================
 PRIVATE PROPERTY CPrint.Tray (BYVAL nTray AS LONG)
-   this.SetPrinterInfo(DM_DEFAULTSOURCE, nTray)
+   IF m_bGlobal THEN this.SetPrinterInfo(DM_DEFAULTSOURCE, nTray) ELSE this.SetDocumentProperties(DM_DEFAULTSOURCE, nTray)
 END PROPERTY
 ' ========================================================================================
 
