@@ -39,7 +39,9 @@ Allows to attach/choose a printer and get/set its setting values.
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Collate](#Collate) | Gets/sets the collate setting value. |
+| [Collate](#Collate) | Returns true if the printer supports collating mode; False, otherwise. |
+| [CollateMode](#CollateMode) | Gets/sets the collate setting value. |
+| [Color](#Color) | Returns true if the printer supports color mode; False, otherwise. |
 | [ColorMode](#ColorMode) | Switches between color and monochrome on color printers. |
 | [Copies](#Copies) | Gets/sets the number of copies to print if the device supports multiple-page copies. |
 | [Duplex](#Duplex) | Checks if the printer supports duplex printing. |
@@ -480,11 +482,19 @@ BOOLEAN. Returns TRUE if the bitmap has been printed successfully, or FALSE othe
 
 # <a name="Collate"></a>Collate
 
-Gets/sets the printer collating mode.
+If the printer supports collating, the return value is TRUE; otherwise, the return value is FALSE.
 
 ```
 PROPERTY Collate () AS BOOLEAN
-PROPERTY Collate (BYVAL nMode AS LONG)
+```
+
+# <a name="CollateMode"></a>CollateMode
+
+Gets/sets the printer collating mode.
+
+```
+PROPERTY CollateMode () AS LONG
+PROPERTY CollateMode (BYVAL nMode AS LONG)
 ```
 
 | Parameter  | Description |
@@ -494,6 +504,14 @@ PROPERTY Collate (BYVAL nMode AS LONG)
 #### Return value
 
 BOOLEAN. If the printer supports collating, the return value is TRUE; otherwise, the return value is FALSE. If TRUE, the pages that are printed should be collated. To collate is to print out the entire document before printing the next copy, as opposed to printing out each page of the document the required number of times.
+
+# <a name="Color"></a>Color
+
+If the printer supports color mode, the return value is TRUE; otherwise, the return value is FALSE.
+
+```
+PROPERTY Color () AS BOOLEAN
+```
 
 # <a name="ColorMode"></a>ColorMode
 
