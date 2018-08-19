@@ -207,33 +207,71 @@ Notice that, contrarily to CreateFileW, FreeBasic's OPEN statemente doesn't allo
 
 Deferences the CWSTR.<br>One * returns the address of the CWSTR buffer.<br>Two ** returns the address of the start of the string data.
 
+```
+OPERATOR * (BYREF cws AS CWSTR) AS WSTRING PTR
+```
+
 #### <a name="sptr"></a>sptr
 
 Returns the address of the string data. Same as *.
+
+```
+FUNCTION sptr () AS WSTRING PTR
+```
 
 #### <a name="vptr"></a>vptr
 
 Returns the address of the string buffer. Same as *.
 
+```
+FUNCTION vptr () AS WSTRING PTR
+```
+
 #### <a name="wstr"></a>wstr
 
 Returns the string data. Same as **.
+
+```
+FUNCTION wstr () BYREF AS WSTRING
+```
 
 #### <a name="Operator&"></a>Operator &
 
 Concatenates strings.
 
+```
+OPERATOR & (BYREF cws1 AS CWSTR, BYREF cws2 AS CWSTR) AS CWSTR
+```
+
 #### <a name="Operator+="></a>Operator +=
 
 Appends a string to the CWSTR.
+
+```
+OPERATOR += (BYREF wszStr AS CONST WSTRING)
+OPERATOR += (BYREF cws AS CWStr)
+OPERATOR += (BYREF cbs AS CBStr)
+OPERATOR += (BYREF ansiStr AS STRING)
+```
 
 #### <a name="Operator&="></a>Operator &=
 
 Appends a string to the CWSTR.
 
+```
+OPERATOR &= (BYREF wszStr AS CONST WSTRING)
+OPERATOR &= (BYREF cws AS CWStr)
+OPERATOR &= (BYREF cbs AS CBStr)
+OPERATOR &= (BYREF ansiStr AS STRING)
+```
+
 #### <a name="Operator[]"></a>Operator []
 
 Appends a string to the CWSTR.
+
+```
+OPERATOR [] (BYVAL nIndex AS LONG) AS USHORT
+```
 
 #### <a name="OperatorLet"></a>Operator Let
 
@@ -270,13 +308,26 @@ Returns a pointer to the CWSTR buffer or the string data. These operators aren't
 
 Returns the contents of the CWSTR as a BSTR.
 
+```
+FUNCTION bstr () AS AFX_BSTR
+```
+
 #### <a name="cbstr"></a>cbstr
 
 Returns the contents of the CWSTR as a CBSTR.
 
+```
+FUNCTION cbstr () AS CBStr
+```
+
 #### <a name="wchar"></a>wchar
 
 Returns the string data as a new unicode string allocated with CoTaskMemAlloc.
+
+```
+FUNCTION wchar () AS WSTRING PTR
+```
+
 Useful when we need to pass a pointer to a null terminated wide string to a function or method that will release it. If we pass a WSTRING it will GPF. If the length of the input string is 0, CoTaskMemAlloc allocates a zero-length item and returns a valid pointer to that item. If there is insufficient memory available, CoTaskMemAlloc returns NULL.
 
 #### <a name="Utf8"></a>Utf8
