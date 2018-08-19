@@ -1474,6 +1474,8 @@ END FUNCTION
 ' They can be very useful to do string formatting.
 ' ========================================================================================
 
+' The below procedures are placed here because AfxSetEnviron uses the AfxStrExtract procedure.
+
 ' ========================================================================================
 ' Retrieves the contents of the specified variable from the environment block of the
 ' calling process.
