@@ -559,7 +559,8 @@ PRIVATE SUB CWstr.Add (BYREF ansiStr AS STRING, BYVAL nCodePage AS UINT = 0)
       pbuffer = Allocate(dwLen)
       MultiByteToWideChar(CP_UTF8, 0, STRPTR(ansiStr), LEN(ansiStr), pbuffer, dwLen)
    ELSE
-      dwLen = .LEN(ansiStr)
+      dwLen = MultiByteToWideChar(nCodePage,MB_PRECOMPOSED, STRPTR(ansiStr), .LEN(ansiStr),NULL, 0)
+      IF dwLen = 0 THEN RETURN
       dwLen *= 2
       pbuffer = Allocate(dwLen)
       MultiByteToWideChar(nCodePage, MB_PRECOMPOSED, STRPTR(ansiStr), .LEN(ansiStr), pbuffer, dwLen)
@@ -915,7 +916,8 @@ PRIVATE FUNCTION CWstr.Insert (BYREF ansiStr AS STRING, BYVAL nIndex AS UINT, BY
       pbuffer = Allocate(dwLen)
       MultiByteToWideChar(CP_UTF8, 0, STRPTR(ansiStr), LEN(ansiStr), pbuffer, dwLen)
    ELSE
-      dwLen = .LEN(ansiStr)
+      dwLen = MultiByteToWideChar(nCodePage,MB_PRECOMPOSED, STRPTR(ansiStr), .LEN(ansiStr),NULL, 0)
+      IF dwLen = 0 THEN RETURN FALSE
       dwLen *= 2
       pbuffer = Allocate(dwLen)
       MultiByteToWideChar(nCodePage, MB_PRECOMPOSED, STRPTR(ansiStr), .LEN(ansiStr), pbuffer, dwLen)
