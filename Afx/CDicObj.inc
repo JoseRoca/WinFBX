@@ -61,7 +61,7 @@ Public:
    DECLARE FUNCTION Count () AS LONG
    DECLARE FUNCTION Exists (BYREF cvKey AS CVAR) AS BOOLEAN
    DECLARE FUNCTION Items () AS CVAR
-   DECLARE PROPERTY Key (BYREF cvKey AS CVAR, BYREF cbsNewKey AS CVAR)
+   DECLARE PROPERTY Key (BYREF cvKey AS CVAR, BYREF cvNewKey AS CVAR)
    DECLARE FUNCTION Keys () AS CVAR
    DECLARE FUNCTION Remove (BYREF cvKey AS CVAR) AS HRESULT
    DECLARE FUNCTION RemoveAll() AS HRESULT
@@ -167,14 +167,12 @@ END FUNCTION
 
 ' ========================================================================================
 ' Item property
-' Sets or returns an item for a specified cbsKey in the associative array.
+' Sets or returns an item for a specified cvKey in the associative array.
 ' Arguments:
-' - cbsKey     : Key associated with the item being retrieved or added.
-' - cbsNewItem : The new value associated with the specified key.
+' - cvKey     : Key associated with the item being retrieved or added.
+' - cvNewItem : The new value associated with the specified key.
 ' Remarks:
-' If key is not found when changing an item, a new key is created with the specified cbsNewItem.
-' If key is not found when attempting to return an existing item, a new key is created and
-' its corresponding item is left empty.
+' If key is not found when changing an item, a new key is created with the specified cvNewItem.
 ' ========================================================================================
 PRIVATE PROPERTY CDicObj.Item (BYREF cvKey AS CVAR, BYREF cvNewItem AS CVAR)
    CDICOBJ_DP("CDICOBJ PutItem")
@@ -185,8 +183,9 @@ END PROPERTY
 PRIVATE PROPERTY CDicObj.Item (BYREF cvKey AS CVAR) AS CVAR
    CDICOBJ_DP("CDICOBJ GettItem")
    DIM cvItem AS CVAR
+   IF this.Exists(cvKey) = FALSE THEN RETURN cvItem
    SetResult(m_pDictionary->get_Item(cvKey, cvItem))
-   PROPERTY = cvItem
+   RETURN cvItem
 END PROPERTY
 ' ========================================================================================
 
@@ -194,8 +193,8 @@ END PROPERTY
 ' Add method
 ' Adds a key and item pair to the associative array.
 ' Arguments:
-' - cbsKey  : The key associated with the item being added.
-' - cbsItem : The item associated with the key being added.
+' - cvKey  : The key associated with the item being added.
+' - cvItem : The item associated with the key being added.
 ' Remarks:
 ' An error occurs if the key already exists.
 ' ========================================================================================
@@ -221,7 +220,7 @@ END FUNCTION
 ' Exists method
 ' Returns TRUE if a specified key exists in the associative array, FALSE if it does not.
 ' Argument:
-' - cbsKey : Key value being searched for the associative array.
+' - cvKey : Key value being searched for the associative array.
 ' ========================================================================================
 PRIVATE FUNCTION CDicObj.Exists (BYREF cvKey AS CVAR) AS BOOLEAN
    CDICOBJ_DP("CDICOBJ Exists")
@@ -245,14 +244,13 @@ END FUNCTION
 ' ========================================================================================
 ' Key property
 ' Arguments:
-' - cbsKey  : Key value being changed.
-' - cbsItem : New value that replaces the specified key.
-' Remarks:
-' If key is not found when changing a key, a new key is created and its associated item is left empty.
+' - cvKey  : Key value being changed.
+' - cvItem : New value that replaces the specified key.
 ' Usage example: pDic.Key("a") = "m"
 ' ========================================================================================
 PRIVATE PROPERTY CDicObj.Key (BYREF cvKey AS CVAR, BYREF cvNewKey AS CVAR)
    CDICOBJ_DP("CDICOBJ PutKey")
+   IF this.Exists(cvKey) = FALSE THEN SetResult(E_INVALIDARG) : EXIT PROPERTY
    SetResult(m_pDictionary->put_Key(cvKey, cvNewKey))
 END PROPERTY
 ' ========================================================================================
@@ -273,7 +271,7 @@ END FUNCTION
 ' Remove method
 ' Removes a key, item pair from the associative array.
 ' Argument:
-' - cbsKey : Key associated with the key, item pair you want to remove from the associative array.
+' - cvKey : Key associated with the key, item pair you want to remove from the associative array.
 ' Remarks:
 ' An error occurs if the specified key, item pair does not exist.
 ' ========================================================================================
