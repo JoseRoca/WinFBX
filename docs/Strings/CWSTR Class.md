@@ -34,8 +34,8 @@ Quirks:
 | [Clear](#Clear) | Erases all the data in the class object. |
 | [DelChars](#DelChars) | Deletes the specified number of characters starting at the specified position. |
 | [Insert](#Insert) | The passed string parameter is inserted in the string starting at the specified position. |
-| [Left](#Left) | Returns the leftmost substring of the string. Same as LEFT. |
-| [Right](#Right) | Returns the rightmost substring of the string. Same as RIGHT. |
+| [Left](#Left) | Returns the leftmost substring of the string. |
+| [Right](#Right) | Returns the rightmost substring of the string. |
 | [LeftChars](#LeftChars) | Returns the leftmost substring of the string. Same as Left. |
 | [MidChars](#MidChars) | Returns a substring of the string. Same as Mid. |
 | [RightChars](#RightChars) | Returns the rightmost substring of the string. Same as Right. |
