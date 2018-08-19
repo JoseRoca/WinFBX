@@ -1797,7 +1797,7 @@ PRIVATE FUNCTION AfxCWStrArrayReverseCompare CDECL (BYVAL a AS CWSTR PTR, BYVAL 
 END FUNCTION
 
 ' qsort CWstr sort function
-PRIVATE SUB AfxCWstrSort (BYREF rgwstr AS ANY PTR, BYVAL numElm AS LONG, BYVAL bAscend AS BOOLEAN = TRUE)
+PRIVATE SUB AfxCWstrSort (BYVAL rgwstr AS ANY PTR, BYVAL numElm AS LONG, BYVAL bAscend AS BOOLEAN = TRUE)
    IF rgwstr = NULL OR numElm < 2 THEN EXIT SUB
    IF bAscend THEN
       qsort rgwstr, numElm, SIZEOF(CWSTR), CPTR(ANY PTR, @AfxCWstrArrayCompare)
@@ -1880,7 +1880,7 @@ PRIVATE FUNCTION AfxCWStrArrayReverseLogicalCompare CDECL (BYVAL a AS CWSTR PTR,
 END FUNCTION
 
 ' qsort CWstr logical sort function
-PRIVATE SUB AfxCWstrLogicalSort (BYREF rgwstr AS ANY PTR, BYVAL numElm AS LONG, BYVAL bAscend AS BOOLEAN = TRUE)
+PRIVATE SUB AfxCWstrLogicalSort (BYVAL rgwstr AS ANY PTR, BYVAL numElm AS LONG, BYVAL bAscend AS BOOLEAN = TRUE)
    IF rgwstr = NULL OR numElm < 2 THEN EXIT SUB
    IF bAscend THEN
       qsort rgwstr, numElm, SIZEOF(CWSTR), CPTR(ANY PTR, @AfxCWstrArrayLogicalCompare)
