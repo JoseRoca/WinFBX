@@ -446,7 +446,7 @@ MidChars (BYVAL nStart AS LONG, BYVAL nChars AS LONG = 0) AS CWSTR
 | Parameter  | Description |
 | ---------- | ----------- |
 | *nStart* | The start position in CWSTR of the substring. The first character starts at position 1. |
-| *nChars* | The substring length, in characters. If nChard < 0 or nChars >= length of the CWSTR then all of the remaining characters are returned. |
+| *nChars* | The substring length, in characters. If nChars < 0 or nChars >= length of the CWSTR then all of the remaining characters are returned. |
 
 If CWSTR is empty then the null string ("") is returned. If *nStart* <= 0 then the null string ("") is returned.
 
