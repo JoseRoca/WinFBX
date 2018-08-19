@@ -65,7 +65,7 @@ Public:
    DECLARE FUNCTION Keys () AS CVAR
    DECLARE FUNCTION Remove (BYREF cvKey AS CVAR) AS HRESULT
    DECLARE FUNCTION RemoveAll() AS HRESULT
-   DECLARE FUNCTION NewEnum () AS IUnknown PTR
+   DECLARE FUNCTION NewEnum () AS IEnumVARIANT PTR
    DECLARE FUNCTION HashVal (BYREF cvKey AS CVAR) AS CVAR
 
 END TYPE
@@ -183,7 +183,7 @@ END PROPERTY
 PRIVATE PROPERTY CDicObj.Item (BYREF cvKey AS CVAR) AS CVAR
    CDICOBJ_DP("CDICOBJ GettItem")
    DIM cvItem AS CVAR
-   IF this.Exists(cvKey) = FALSE THEN RETURN cvItem
+   IF this.Exists(cvKey) = FALSE THEN SetResult(E_INVALIDARG) : RETURN cvItem
    SetResult(m_pDictionary->get_Item(cvKey, cvItem))
    RETURN cvItem
 END PROPERTY
@@ -295,11 +295,11 @@ END FUNCTION
 ' NewEnum method
 ' Returns a reference to the standard IEnumVARIANT interface.
 ' ========================================================================================
-PRIVATE FUNCTION CDicObj.NewEnum () AS IUnknown PTR
+PRIVATE FUNCTION CDicObj.NewEnum () AS IEnumVARIANT PTR
    CDICOBJ_DP("CDICOBJ NewEnum")
    DIM ppUnk AS IUnknown PTR
    SetResult(m_pDictionary->get__NewEnum(cast(ANY PTR, @ppunk)))
-   RETURN ppunk
+   RETURN CAST(IEnumVARIANT PTR, ppunk)
 END FUNCTION
 ' ========================================================================================
 
