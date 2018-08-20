@@ -4,6 +4,8 @@ Allows to read and write sequential text files (sometimes referred to as a text 
 Works with ASCII and Unicode.
 Works with Windows CRLF files and with Linux LF files.
 
+**Include file**: CTextStream.inc
+
 ### Constructors
 
 Besides the default constructor, that initializes the COM library and creates an instance of the ITextStream interface, this additional constructor allows to create an instance of the class by passing a pointer to an existing ITextStream interface that becomes attached to the class (therefore, don't release the passed pointer, it will be released by the CTextStream class).
