@@ -45,6 +45,12 @@ Quirks:
 | [ValULong](#ValULong) | Converts the string to a 32-bit unsigned integer (ULONG). |
 | [ValULongInt](#ValULongInt) | Converts the string to a 64-bit unsigned integer (ULONGINT). |
 
+# Helper procedure
+
+| Name       | Description |
+| ---------- | ----------- |
+| [AfxIsBstr](#AfxIsBstr) | Checks if the passed pointer is a BSTR. |
+
 # <a name="Constructors"></a>Constructors
 
 Initialize the class with the specified value.
@@ -392,3 +398,21 @@ Converts the string to a 64-bit unsigned integer (ULONGINT).
 ```
 FUNCTION ValULongInt () AS ULONGINT
 ```
+
+# <a name="AfxIsBstr"></a>AfxIsBstr
+
+Checks if the passed pointer is a BSTR.
+
+```
+FUNCTION AfxIsBstr (BYVAL pv AS ANY PTR) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pv* | Pointer to the string. |
+
+#### Remarks
+
+Will return FALSE if it is a null pointer.
+If it is an OLE string it must have a descriptor; otherwise, don't.
+Gets the length in bytes looking at the descriptor and divides by 2 to get the number of unicode characters, that is the value returned by the FreeBASIC LEN operator. If the retrieved length if the same that the returned by LEN, then it must be an OLE string.
