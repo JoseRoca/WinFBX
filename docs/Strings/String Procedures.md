@@ -3,32 +3,21 @@
 | Name       | Description |
 | ---------- | ----------- |
 | [AfxAcode](#AfxAcode) | Translates unicode bytes to ansi bytes. |
-| [AfxBase64Decode](#AfxBase64Decode) | Converts the contents of a Base64 mime encoded string to an ascii string. |
-| [AfxBase64Encode](#AfxBase64Encode) | Converts the contents of a string to Base64 mime encoding. |
-| [AfxCryptBinaryToString](#AfxCryptBinaryToString) | Converts an array of bytes into a formatted string. |
-| [AfxCryptStringToBinary](#AfxCryptStringToBinary) | Converts a formatted string into an array of bytes. |
+| [AfxUcode](#AfxUcode) | Translates ansi bytes to unicode bytes. |
 | [AfxIsBstr](#AfxIsBstr) | Checks if the passed pointer is a BSTR. |
-| [AfxStrClipLeft](#AfxStrClipLeft) | Returns a string with the specified number of characters removed from the left side of the string. |
-| [AfxStrClipMid](#AfxStrClipMid) | Returns a string with the specified number of characters removed starting at the specified position. |
-| [AfxStrClipRight](#AfxStrClipRight) | Returns a string with the specified number of characters removed from the right side of the string. |
-| [AfxStrCSet](#AfxStrCSet) | Returns a string containing a centered string. |
+| [AfxStrLCase](#AfxStrLCase) | Returns a lowercased version of a string. |
+| [AfxStrUCase](#AfxStrUCase) | Returns an uppercased version of a string. |
 | [AfxStrDelete](#AfxStrDelete) | Deletes a specified number of characters from a string expression. |
 | [AfxStrExtract](#AfxStrExtract) | Extracts characters from a string up to (but not including) the specified matching. Case sensitive. |
 | [AfxStrExtractI](#AfxStrExtractI) | Extracts characters from a string up to (but not including) the specified matching string. Case insensitive. |
 | [AfxStrExtractAny](#AfxStrExtractAny) | Extracts characters from a string up to (but not including) any character in the matching string. Case sensitive. |
 | [AfxStrExtractAnyI](#AfxStrExtractAnyI) | Extracts characters from a string up to (but not including) any character in the matching string. Case insensitive. |
-| [AfxStrFormatByteSize](#AfxStrFormatByteSize) | Converts a numeric value into a string that represents the number expressed as a size value in bytes, kilobytes, megabytes, or gigabytes, depending on the size. |
-| [AfxStrFormatKBSize](#AfxStrFormatKBSize) | Converts a numeric value into a string that represents the number expressed as a size value in kilobytes. |
-| [AfxStrFromTimeInterval](#AfxStrFromTimeInterval) | Converts a time interval, specified in milliseconds, to a string. |
 | [AfxStrInsert](#AfxStrInsert) | Inserts a string at a specified position within another string expression. |
 | [AfxStrJoin](#AfxStrJoin) | Returns a string consisting of all of the strings in an array, each separated by a delimiter. |
-| [AfxStrLCase](#AfxStrLCase) | Returns a lowercased version of a string. |
-| [AfxStrLSet](#AfxStrLSet) | Returns a string containing a left justified string. |
 | [AfxStrParse](#AfxStrParse) | Returns a delimited field from a string expression. |
 | [AfxStrParseAny](#AfxStrParseAny) | Returns a delimited field from a string expression. Supports more than one character for the delimiter. |
 | [AfxStrParseCount](#AfxStrParseCount) | Returns the count of delimited fields from a string expression. |
 | [AfxStrParseCountAny](#AfxStrParseCountAny) | Returns the count of delimited fields from a string expression. Supports more than one character for the delimiter. |
-| [AfxStrPathName](#AfxStrPathName) | Parses a path to extract component parts. |
 | [AfxStrRemain](#AfxStrRemain) | Returns the portion of a string following the first occurrence of a string. Case sensitive. |
 | [AfxStrRemainI](#AfxStrRemainI) | Returns the portion of a string following the first occurrence of a string. Case insensitive. |
 | [AfxStrRemainAny](#AfxStrRemainAny) | Returns the portion of a string following the first occurrence of a group of characters. Case sensitive. |
@@ -47,7 +36,6 @@
 | [AfxStrRetainAny](#AfxStrRetainAny) | Returns a string containing only the characters contained in a specified group of characters. Case sensitive. |
 | [AfxStrRetainAnyI](#AfxStrRetainAnyI) | Returns a string containing only the characters contained in a specified group of characters. Case insensitive. |
 | [AfxStrReverse](#AfxStrReverse) | Reverses the contents of a string expression. |
-| [AfxStrRSet](#AfxStrRSet) | Returns a string containing a right justified string. |
 | [AfxStrShrink](#AfxStrShrink) | Shrinks a string to use a consistent single character delimiter. |
 | [AfxStrSplit](#AfxStrSplit) | Splits a string into tokens, which are sequences of contiguous characters separated by any of the characters that are part of delimiters. |
 | [AfxStrSpn](#AfxStrSpn) | Returns the length of the initial portion of a string which consists only of characters that are part of a specified set of characters. |
@@ -55,14 +43,26 @@
 | [AfxStrTallyI](#AfxStrTallyI) | Count the number of occurrences of a string within a string. Case insensitive. |
 | [AfxStrTallyAny](#AfxStrTallyAny) | Count the number of occurrences of a list of characters within a string. Case sensitive. |
 | [AfxStrTallyAnyI](#AfxStrTallyAnyI) | Count the number of occurrences of a list of characters within a string. Case insensitive. |
-| [AfxStrUCase](#AfxStrUCase) | Returns an uppercased version of a string. |
-| [AfxStrUnWrap](#AfxStrUnWrap) | Removes paired characters to the beginning and end of a string. |
 | [AfxStrVerify](#AfxStrVerify) | Determine whether each character of a string is present in another string. Case sensitive. |
 | [AfxStrVerifyI](#AfxStrVerifyI) | Determine whether each character of a string is present in another string. Case insensitive. |
 | [AfxStrWrap](#AfxStrWrap) | Adds paired characters to the beginning and end of a string. |
-| [AfxUcode](#AfxUcode) | Translates ansi bytes to unicode bytes. |
+| [AfxStrUnWrap](#AfxStrUnWrap) | Removes paired characters to the beginning and end of a string. |
+| [AfxStrCSet](#AfxStrCSet) | Returns a string containing a centered string. |
+| [AfxStrLSet](#AfxStrLSet) | Returns a string containing a left justified string. |
+| [AfxStrRSet](#AfxStrRSet) | Returns a string containing a right justified string. |
+| [AfxStrClipLeft](#AfxStrClipLeft) | Returns a string with the specified number of characters removed from the left side of the string. |
+| [AfxStrClipMid](#AfxStrClipMid) | Returns a string with the specified number of characters removed starting at the specified position. |
+| [AfxStrClipRight](#AfxStrClipRight) | Returns a string with the specified number of characters removed from the right side of the string. |
+| [AfxStrPathName](#AfxStrPathName) | Parses a path to extract component parts. |
+| [AfxStrFormatByteSize](#AfxStrFormatByteSize) | Converts a numeric value into a string that represents the number expressed as a size value in bytes, kilobytes, megabytes, or gigabytes, depending on the size. |
+| [AfxStrFormatKBSize](#AfxStrFormatKBSize) | Converts a numeric value into a string that represents the number expressed as a size value in kilobytes. |
+| [AfxStrFromTimeInterval](#AfxStrFromTimeInterval) | Converts a time interval, specified in milliseconds, to a string. |
+| [AfxBase64Decode](#AfxBase64Decode) | Converts the contents of a Base64 mime encoded string to an ascii string. |
+| [AfxBase64Encode](#AfxBase64Encode) | Converts the contents of a string to Base64 mime encoding. |
 | [AfxXmlBase64Decode](#AfxXmlBase64Decode) | Converts the contents of a Base64 mime encoded string to an ascii string. |
 | [AfxXmlBase64Encode](#AfxXmlBase64Encode) | Converts the contents of a string to Base64 mime encoding. |
+| [AfxCryptBinaryToString](#AfxCryptBinaryToString) | Converts an array of bytes into a formatted string. |
+| [AfxCryptStringToBinary](#AfxCryptStringToBinary) | Converts a formatted string into an array of bytes. |
 
 #### Include file
 
