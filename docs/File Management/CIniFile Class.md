@@ -11,9 +11,7 @@ Pass the path and name of the .ini file to read or write to when you create an i
 
 Other useful methods are **GetKeyNames**, that returns a safe array with the names of all the keys of the specified section, **GetSectionNames**, that returns a safe array with the names of all the sections in the .ini file, and **GetSectionValues**, that returns a **Dictionary** object with the names and values of all the keys of the specified section.
 
-#### Include file
-
-CIniFile.inc
+**Include file**: CIniFile.inc
 
 ### Constructors
 
