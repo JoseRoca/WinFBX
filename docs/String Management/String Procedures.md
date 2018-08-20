@@ -4,8 +4,6 @@
 
 | Name       | Description |
 | ---------- | ----------- |
-| [AfxAcode](#AfxAcode) | Translates unicode bytes to ansi bytes. |
-| [AfxUcode](#AfxUcode) | Translates ansi bytes to unicode bytes. |
 | [AfxStrLCase](#AfxStrLCase) | Returns a lowercased version of a string. |
 | [AfxStrUCase](#AfxStrUCase) | Returns an uppercased version of a string. |
 | [AfxStrDelete](#AfxStrDelete) | Deletes a specified number of characters from a string expression. |
@@ -65,35 +63,6 @@
 | [AfxCryptBinaryToString](#AfxCryptBinaryToString) | Converts an array of bytes into a formatted string. |
 | [AfxCryptStringToBinary](#AfxCryptStringToBinary) | Converts a formatted string into an array of bytes. |
 
-# <a name="AfxAcode"></a>AfxAcode
-
-Translates unicode bytes to ansi bytes.
-
-```
-FUNCTION AfxAcode (BYVAL pwszStr AS WSTRING PTR, BYVAL nCodePage AS LONG = 0) AS STRING
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pwszStr* | The WSTRING or CWSTR to convert. |
-| *nCodePage* | Optional. The code page used in the conversion, e.g. 1251 for Russian. If you specify CP_UTF8, the returned string will be UTF8 encoded. If you don't pass an unicode page, the function will use CP_ACP (0), which is the system default Windows ANSI code page. |
-
-#### Return value
-
-An ansi or UTF8 encoded string.
-
-#### Usage example
-(Russian bytes to unicode string:
-
-```
-DIM cws AS CWSTR
-cws = AfxUcode(CHR(209, 229, 236, 229, 237), 1251)
-MessageBoxW 0, cws, "", MB_OK
-DIM s AS STRING
-s = AfxAcode(cws, 1251)
-MessageBoxW 0, s, "", MB_OK
-
-```
 # <a name="AfxBase64Decode"></a>AfxBase64Decode
 
 Converts the contents of a Base64 mime encoded string to an ascii string.
@@ -1483,34 +1452,6 @@ If only one wrap character/string is specified then that character or string is 
 AfxStrWrap("Paul", "<", ">") results in <Paul>
 AfxStrWrap("Paul", "'") results in 'Paul'
 AfxStrWrap("Paul") results in "Paul"
-```
-
-# <a name="AfxUcode"></a>AfxUcode
-
-Translates ansi bytes to unicode bytes. This function works like the intrinsic Free Basic WSTR function, but accepting an optional code page.
-
-```
-FUNCTION AfxUcode (BYREF ansiStr AS CONST STRING, BYVAL nCodePage AS LONG = 0) AS CWSTR
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *ansiStr* | Ansi or UTF8 string to convert. |
-| *nCodePage* | Optional. The code page used in the conversion, e.g. 1251 for Russian. If you specify CP_UTF8, it is assumed that ansiStr contains an UTF8 encoded string. If you don't pass an unicode page, the function will use CP_ACP (0), which is the system default Windows ANSI code page. |
-
-#### Return value
-
-The ansi or utf-8 string converted to utf-16.
-
-#### Usage example
-(Russian bytes to unicode string and then to ansi):
-
-```
-DIM cws AS CWSTR
-cws = AfxUcode(CHR(209, 229, 236, 229, 237), 1251)
-MessageBoxW 0, cws, "", MB_OK
-DIM s AS STRING
-s = AfxAcode(cws, 1251)
-MessageBoxW 0, s, "", MB_OK```
 ```
 
 # <a name="AfxXmlBase64Decode"></a>AfxXmlBase64Decode
