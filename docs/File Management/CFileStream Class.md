@@ -2,6 +2,8 @@
 
 Allows to work with binary file streams. A binary stream consists of one or more bytes of arbitrary information. **CFileStream** provides a stream for a file, allowing read, write and seek operations.
 
+**Include file**: CStream.inc
+
 ### Constructors
 
 | Name       | Description |
