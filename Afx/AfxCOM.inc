@@ -72,6 +72,21 @@ TYPE AFX_LPDISPATCH AS Afx_IDispatch PTR
 ' ########################################################################################
 
 ' ========================================================================================
+' // Checks if the passed pointer is a BSTR.
+' // Will return FALSE if it is a null pointer.
+' // If it is an OLE string it must have a descriptor; otherwise, don't.
+' // Get the length in bytes looking at the descriptor and divide by 2 to get the number of
+' // unicode characters, that is the value returned by the FreeBASIC LEN operator.
+' // If the retrieved length if the same that the returned by LEN, then it must be an OLE string.
+' ========================================================================================
+FUNCTION AfxIsBstr (BYVAL pv aS ANY PTR) AS BOOLEAN
+   IF pv = NULL THEN RETURN FALSE
+   DIM res AS DWORD = PEEK(DWORD, pv - 4) \ 2
+   IF res = LEN(*cast(WSTRING PTR, pv)) THEN RETURN TRUE
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Takes a null terminated wide string as input, and returns a pointer to a new wide string
 ' allocated with CoTaskMemAlloc (SHStrDupW allocates memory using CoTaskMemAlloc).
 ' Free the returned string with CoTaskMemFree.

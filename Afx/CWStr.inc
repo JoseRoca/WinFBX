@@ -69,7 +69,7 @@ TYPE CBSTR_ AS CBSTR
 ' // unicode characters, that is the value returned by the FreeBASIC LEN operator.
 ' // If the retrieved length if the same that the returned by LEN, then it must be an OLE string.
 ' ========================================================================================
-FUNCTION AfxIsBstr (BYVAL pv aS ANY PTR) AS BOOLEAN
+FUNCTION CBSTR_IsBstr (BYVAL pv aS ANY PTR) AS BOOLEAN
    IF pv = NULL THEN RETURN FALSE
    DIM res AS DWORD = PEEK(DWORD, pv - 4) \ 2
    IF res = LEN(*cast(WSTRING PTR, pv)) THEN RETURN TRUE
@@ -1390,7 +1390,7 @@ END SUB
 ' ========================================================================================
 PRIVATE SUB CBstr.Attach (BYVAL pbstrSrc AS AFX_BSTR)
    IF m_bstr THEN SysFreeString(m_bstr)
-   IF AfxIsBstr(pbstrSrc) THEN m_bstr = pbstrSrc
+   IF CBSTR_IsBstr(pbstrSrc) THEN m_bstr = pbstrSrc
 END SUB
 ' ========================================================================================
 
