@@ -132,7 +132,6 @@ PRINT "Press any key..."
 SLEEP
 ```
 
-
 # <a name="Extract"></a>Extract
 
 Extracts a substring using VBScript regular expressions search patterns.

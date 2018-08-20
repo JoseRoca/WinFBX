@@ -7,7 +7,7 @@ The **CWSTR** class implements a dynamic unicode null terminated string. Free Ba
 Quirks:
 
 * MID as a statement: Something like MID(cws, 2, 1) = "x" compiles but does not change the contents of the dynamic unicode string. MID(cws.wstr, 2, 1) = "x" or MID(**cws, 2, 1) = "x" works.
-* SELECT CASE: Something like SELECT CASE LEFT(dws, 2) does not compile; we have to use SELECT CASE LEFT(**dws, 2). Same problem with RIGHT, but not with MID.
+* SELECT CASE: Something like SELECT CASE LEFT(cws, 2) does not compile; we have to use SELECT CASE LEFT(**cws, 2). Same problem with RIGHT, but not with MID.
 * Operator []: cwsText[0] = ASC("x") does not compile; we have to use (*cwsText)[0] = ASC("x").
 
 | Name       | Description |
@@ -34,8 +34,8 @@ Quirks:
 | [Clear](#Clear) | Erases all the data in the class object. |
 | [DelChars](#DelChars) | Deletes the specified number of characters starting at the specified position. |
 | [Insert](#Insert) | The passed string parameter is inserted in the string starting at the specified position. |
-| [Left](#Left) | Returns the leftmost substring of the string. Same as LEFT. |
-| [Right](#Right) | Returns the rightmost substring of the string. Same as RIGHT. |
+| [Left](#Left) | Returns the leftmost substring of the string. |
+| [Right](#Right) | Returns the rightmost substring of the string. |
 | [LeftChars](#LeftChars) | Returns the leftmost substring of the string. Same as Left. |
 | [MidChars](#MidChars) | Returns a substring of the string. Same as Mid. |
 | [RightChars](#RightChars) | Returns the rightmost substring of the string. Same as Right. |
@@ -207,33 +207,71 @@ Notice that, contrarily to CreateFileW, FreeBasic's OPEN statemente doesn't allo
 
 Deferences the CWSTR.<br>One * returns the address of the CWSTR buffer.<br>Two ** returns the address of the start of the string data.
 
+```
+OPERATOR * (BYREF cws AS CWSTR) AS WSTRING PTR
+```
+
 #### <a name="sptr"></a>sptr
 
 Returns the address of the string data. Same as *.
+
+```
+FUNCTION sptr () AS WSTRING PTR
+```
 
 #### <a name="vptr"></a>vptr
 
 Returns the address of the string buffer. Same as *.
 
+```
+FUNCTION vptr () AS WSTRING PTR
+```
+
 #### <a name="wstr"></a>wstr
 
 Returns the string data. Same as **.
+
+```
+FUNCTION wstr () BYREF AS WSTRING
+```
 
 #### <a name="Operator&"></a>Operator &
 
 Concatenates strings.
 
+```
+OPERATOR & (BYREF cws1 AS CWSTR, BYREF cws2 AS CWSTR) AS CWSTR
+```
+
 #### <a name="Operator+="></a>Operator +=
 
 Appends a string to the CWSTR.
+
+```
+OPERATOR += (BYREF wszStr AS CONST WSTRING)
+OPERATOR += (BYREF cws AS CWStr)
+OPERATOR += (BYREF cbs AS CBStr)
+OPERATOR += (BYREF ansiStr AS STRING)
+```
 
 #### <a name="Operator&="></a>Operator &=
 
 Appends a string to the CWSTR.
 
+```
+OPERATOR &= (BYREF wszStr AS CONST WSTRING)
+OPERATOR &= (BYREF cws AS CWStr)
+OPERATOR &= (BYREF cbs AS CBStr)
+OPERATOR &= (BYREF ansiStr AS STRING)
+```
+
 #### <a name="Operator[]"></a>Operator []
 
 Appends a string to the CWSTR.
+
+```
+OPERATOR [] (BYVAL nIndex AS LONG) AS USHORT
+```
 
 #### <a name="OperatorLet"></a>Operator Let
 
@@ -260,7 +298,7 @@ OPERATOR LET (BYREF ansiStr AS STRING)
 #### <a name="OperatorCast"></a>Operator Cast
 
 ```
-OPERATOR CAST () BYREF AS WSTRING
+OPERATOR CAST () BYREF AS CONST WSTRING
 OPERATOR CAST () AS ANY PTR
 ```
 
@@ -270,13 +308,26 @@ Returns a pointer to the CWSTR buffer or the string data. These operators aren't
 
 Returns the contents of the CWSTR as a BSTR.
 
+```
+FUNCTION bstr () AS AFX_BSTR
+```
+
 #### <a name="cbstr"></a>cbstr
 
 Returns the contents of the CWSTR as a CBSTR.
 
+```
+FUNCTION cbstr () AS CBStr
+```
+
 #### <a name="wchar"></a>wchar
 
 Returns the string data as a new unicode string allocated with CoTaskMemAlloc.
+
+```
+FUNCTION wchar () AS WSTRING PTR
+```
+
 Useful when we need to pass a pointer to a null terminated wide string to a function or method that will release it. If we pass a WSTRING it will GPF. If the length of the input string is 0, CoTaskMemAlloc allocates a zero-length item and returns a valid pointer to that item. If there is insufficient memory available, CoTaskMemAlloc returns NULL.
 
 #### <a name="Utf8"></a>Utf8
@@ -446,7 +497,7 @@ MidChars (BYVAL nStart AS LONG, BYVAL nChars AS LONG = 0) AS CWSTR
 | Parameter  | Description |
 | ---------- | ----------- |
 | *nStart* | The start position in CWSTR of the substring. The first character starts at position 1. |
-| *nChars* | The substring length, in characters. If nChard < 0 or nChars >= length of the CWSTR then all of the remaining characters are returned. |
+| *nChars* | The substring length, in characters. If nChars < 0 or nChars >= length of the CWSTR then all of the remaining characters are returned. |
 
 If CWSTR is empty then the null string ("") is returned. If *nStart* <= 0 then the null string ("") is returned.
 

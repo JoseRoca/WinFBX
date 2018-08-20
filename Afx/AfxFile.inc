@@ -17,3 +17,4 @@
 #include once "Afx/CFindFile.inc"
 #include once "Afx/CFileSys.inc"
 #include once "Afx/CFileTime.inc"
+USING Afx
