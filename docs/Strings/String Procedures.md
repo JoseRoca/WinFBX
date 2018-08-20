@@ -1,5 +1,7 @@
 # String Procedures
 
+**Include file**: AfxStr.inc
+
 | Name       | Description |
 | ---------- | ----------- |
 | [AfxAcode](#AfxAcode) | Translates unicode bytes to ansi bytes. |
@@ -63,8 +65,6 @@
 | [AfxXmlBase64Encode](#AfxXmlBase64Encode) | Converts the contents of a string to Base64 mime encoding. |
 | [AfxCryptBinaryToString](#AfxCryptBinaryToString) | Converts an array of bytes into a formatted string. |
 | [AfxCryptStringToBinary](#AfxCryptStringToBinary) | Converts a formatted string into an array of bytes. |
-
-**Include file**: AfxStr.inc
 
 # <a name="AfxAcode"></a>AfxAcode
 
