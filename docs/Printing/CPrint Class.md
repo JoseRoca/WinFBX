@@ -2,6 +2,8 @@
 
 Allows to attach/choose a printer and get/set its setting values.
 
+**Include file**: CPrint.inc
+
 ### Methods
 
 | Name       | Description |
