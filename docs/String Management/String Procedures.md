@@ -1538,9 +1538,7 @@ Base64 encoding schemes are commonly used when there is a need to encode binary 
 
 Because it uses COM, you must initialize the COM library before calling this function.
 
-#### Include file
-
-CSafeArray.inc
+**Include file**: CSafeArray.inc
 
 # <a name="AfxXmlBase64Encode"></a>AfxXmlBase64Encode
 
@@ -1567,6 +1565,4 @@ Base64 encoding schemes are commonly used when there is a need to encode binary 
 
 Because it uses COM, you must initialize the COM library before calling this function.
 
-#### Include file
-
-CSafeArray.inc
+**Include file**: CSafeArray.inc
