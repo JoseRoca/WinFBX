@@ -304,7 +304,7 @@ FUNCTION AfxStrClipLeft (BYREF wszMainStr AS CONST WSTRING, BYVAL nCount AS LONG
 | *wszMainStr* | The main string. |
 | *nCount* | The number of characters to be removed. |
 
-# <a name="AfxStrClipLeft"></a>AfxStrClipLeft
+# <a name="AfxStrClipMid"></a>AfxStrClipMid
 
 Returns a string with *nCount* characters removed from the left side of the string.
 
