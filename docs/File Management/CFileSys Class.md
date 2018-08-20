@@ -2,6 +2,8 @@
 
 The **CFileSys** class wraps the Microsoft File System Object and provides methods to work with files and folders, giving your application the ability to create, copy, alter, move, and delete files and folders, or to determine if and where particular files or folders exist. It also enables you to get information about files and folders, such as their names and the date they were created or last modified.
 
+**Include file**: CFileSys.inc
+
 ### Methods
 
 | Name       | Description |
@@ -67,10 +69,6 @@ The **CFileSys** class wraps the Microsoft File System Object and provides metho
 | [SetFolderAttributes](#SetFolderAttributes) | Sets the attributes of folders. |
 | [SetFolderName](#SetFolderName) | Sets the name of a specified folder. |
 | [SetVolumeName](#SetVolumeName) | Sets the volume name of the specified drive. |
-
-#### Include File:
-
-CFileSys.inc
 
 # <a name="BuildPath"></a>BuildPath
 
