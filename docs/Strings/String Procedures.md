@@ -6,7 +6,6 @@
 | ---------- | ----------- |
 | [AfxAcode](#AfxAcode) | Translates unicode bytes to ansi bytes. |
 | [AfxUcode](#AfxUcode) | Translates ansi bytes to unicode bytes. |
-| [AfxIsBstr](#AfxIsBstr) | Checks if the passed pointer is a BSTR. |
 | [AfxStrLCase](#AfxStrLCase) | Returns a lowercased version of a string. |
 | [AfxStrUCase](#AfxStrUCase) | Returns an uppercased version of a string. |
 | [AfxStrDelete](#AfxStrDelete) | Deletes a specified number of characters from a string expression. |
@@ -270,24 +269,6 @@ Values available for the *pdwFlags* parameter:
 | CRYPT_STRING_ANY | This variable will receive one of the following values. Each value indicates the actual format of the string. CRYPT_STRING_BASE64HEADER, CRYPT_STRING_BASE64, CRYPT_STRING_BINARY. |
 | CRYPT_STRING_BASE64_ANY | This variable will receive one of the following values. Each value indicates the actual format of the string. CRYPT_STRING_BASE64HEADER, CRYPT_STRING_BASE64. |
 | CRYPT_STRING_HEX_ANY | This variable will receive one of the following values. Each value indicates the actual format of the string. CRYPT_STRING_HEXADDR, CRYPT_STRING_HEXASCIIADDR, CRYPT_STRING_HEX, CRYPT_STRING_HEXRAW, CRYPT_STRING_HEXASCII. |
-
-# <a name="AfxIsBstr"></a>AfxIsBstr
-
-Checks if the passed pointer is a BSTR.
-
-```
-FUNCTION AfxIsBstr (BYVAL pv AS ANY PTR) AS BOOLEAN
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pv* | Pointer to the string. |
-
-#### Remarks
-
-Will return FALSE if it is a null pointer.
-If it is an OLE string it must have a descriptor; otherwise, don't.
-Gets the length in bytes looking at the descriptor and divides by 2 to get the number of unicode characters, that is the value returned by the FreeBASIC LEN operator. If the retrieved length if the same that the returned by LEN, then it must be an OLE string.
 
 # <a name="AfxStrClipLeft"></a>AfxStrClipLeft
 
