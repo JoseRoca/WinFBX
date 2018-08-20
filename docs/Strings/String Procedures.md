@@ -64,9 +64,7 @@
 | [AfxCryptBinaryToString](#AfxCryptBinaryToString) | Converts an array of bytes into a formatted string. |
 | [AfxCryptStringToBinary](#AfxCryptStringToBinary) | Converts a formatted string into an array of bytes. |
 
-#### Include file
-
-AfxStr.inc
+**Include file**: AfxStr.inc
 
 # <a name="AfxAcode"></a>AfxAcode
 
