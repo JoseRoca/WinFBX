@@ -69,7 +69,7 @@ TYPE CBSTR_ AS CBSTR
 ' // unicode characters, that is the value returned by the FreeBASIC LEN operator.
 ' // If the retrieved length if the same that the returned by LEN, then it must be an OLE string.
 ' ========================================================================================
-FUNCTION AfxIsBstr (BYVAL pv aS ANY PTR) AS BOOLEAN
+FUNCTION CBSTR_IsBstr (BYVAL pv aS ANY PTR) AS BOOLEAN
    IF pv = NULL THEN RETURN FALSE
    DIM res AS DWORD = PEEK(DWORD, pv - 4) \ 2
    IF res = LEN(*cast(WSTRING PTR, pv)) THEN RETURN TRUE
@@ -173,8 +173,6 @@ TYPE CWSTR
       DECLARE PROPERTY Capacity (BYVAL nValue AS UINT)
       DECLARE PROPERTY SizeAlloc (BYVAL nChars AS UINT)
       DECLARE PROPERTY SizeOf () AS UINT
-      DECLARE PROPERTY CodePage () AS UINT
-      DECLARE PROPERTY CodePage (BYVAL nCodePage AS UINT)
       DECLARE SUB Clear
       DECLARE SUB Resize (BYVAL nSize AS UINT, BYREF ch AS WSTRING = "")
       DECLARE SUB Add (BYREF cws AS CWSTR)
@@ -1392,7 +1390,7 @@ END SUB
 ' ========================================================================================
 PRIVATE SUB CBstr.Attach (BYVAL pbstrSrc AS AFX_BSTR)
    IF m_bstr THEN SysFreeString(m_bstr)
-   IF AfxIsBstr(pbstrSrc) THEN m_bstr = pbstrSrc
+   IF CBSTR_IsBstr(pbstrSrc) THEN m_bstr = pbstrSrc
 END SUB
 ' ========================================================================================
 
@@ -1799,7 +1797,7 @@ PRIVATE FUNCTION AfxCWStrArrayReverseCompare CDECL (BYVAL a AS CWSTR PTR, BYVAL 
 END FUNCTION
 
 ' qsort CWstr sort function
-PRIVATE SUB AfxCWstrSort (BYREF rgwstr AS ANY PTR, BYVAL numElm AS LONG, BYVAL bAscend AS BOOLEAN = TRUE)
+PRIVATE SUB AfxCWstrSort (BYVAL rgwstr AS ANY PTR, BYVAL numElm AS LONG, BYVAL bAscend AS BOOLEAN = TRUE)
    IF rgwstr = NULL OR numElm < 2 THEN EXIT SUB
    IF bAscend THEN
       qsort rgwstr, numElm, SIZEOF(CWSTR), CPTR(ANY PTR, @AfxCWstrArrayCompare)
@@ -1882,7 +1880,7 @@ PRIVATE FUNCTION AfxCWStrArrayReverseLogicalCompare CDECL (BYVAL a AS CWSTR PTR,
 END FUNCTION
 
 ' qsort CWstr logical sort function
-PRIVATE SUB AfxCWstrLogicalSort (BYREF rgwstr AS ANY PTR, BYVAL numElm AS LONG, BYVAL bAscend AS BOOLEAN = TRUE)
+PRIVATE SUB AfxCWstrLogicalSort (BYVAL rgwstr AS ANY PTR, BYVAL numElm AS LONG, BYVAL bAscend AS BOOLEAN = TRUE)
    IF rgwstr = NULL OR numElm < 2 THEN EXIT SUB
    IF bAscend THEN
       qsort rgwstr, numElm, SIZEOF(CWSTR), CPTR(ANY PTR, @AfxCWstrArrayLogicalCompare)
