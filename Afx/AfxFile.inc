@@ -12,6 +12,7 @@
 #pragma once
 
 #include once "Afx/AfxWin.inc"
+#include once "Afx/AfxPath.inc"
 #include once "Afx/CStream.inc"
 #include once "Afx/CTextStream.inc"
 #include once "Afx/CFindFile.inc"
