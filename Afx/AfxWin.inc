@@ -786,8 +786,7 @@ END FUNCTION
 '                     combination of the values listed under the ulFlags member of the BROWSEINFO structure.
 '                     See: http://msdn.microsoft.com/en-us/library/windows/desktop/bb773205%28v=vs.85%29.aspx
 '                     Default value = BIF_RETURNONLYFSDIRS OR BIF_DONTGOBELOWDOMAIN OR BIF_USENEWUI OR BIF_RETURNFSANCESTORS
-' Note: To display the old style dialog, pass -1 in the dwFlags parameter.
-' Don't forget to call CoInitialize before using this function.
+' Note: To display the old style dialog, pass -1 in the dwFlags parameter. (Crashes in Windows 10).
 ' ========================================================================================
 ' // Browse for folder dialog procedure
 PRIVATE FUNCTION AfxBrowseForFolderProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
@@ -815,9 +814,13 @@ END FUNCTION
 PRIVATE FUNCTION AfxBrowseForFolder (BYVAL hwnd AS HWND, BYVAL pwszTitle AS WSTRING PTR = NULL, _
    BYVAL pwszStartFolder AS WSTRING PTR = NULL, BYVAL nFlags AS LONG = 0) AS CWSTR
 
+   ' // Initialize the COM library
+   CoInitialize NULL
+
    DIM wszBuffer AS WSTRING * MAX_PATH, bi AS BROWSEINFOW, pidl AS ITEMIDLIST PTR
    IF nFlags = 0 THEN nFlags = BIF_RETURNONLYFSDIRS OR BIF_DONTGOBELOWDOMAIN OR BIF_USENEWUI OR BIF_RETURNFSANCESTORS
-   IF nFlags = -1 THEN nFlags = BIF_RETURNONLYFSDIRS OR BIF_DONTGOBELOWDOMAIN OR BIF_RETURNFSANCESTORS
+   ' // Crashes in Windows 10
+'   IF nFlags = -1 THEN nFlags = BIF_RETURNONLYFSDIRS OR BIF_DONTGOBELOWDOMAIN OR BIF_RETURNFSANCESTORS
 
    bi.hWndOwner = hwnd
    bi.lpszTitle = pwszTitle
@@ -831,6 +834,9 @@ PRIVATE FUNCTION AfxBrowseForFolder (BYVAL hwnd AS HWND, BYVAL pwszTitle AS WSTR
       CoTaskMemFree pidl
    END IF
    RETURN wszBuffer
+
+   ' // Uninitialize the COM library
+   CoUninitialize
 
 END FUNCTION
 ' ========================================================================================
