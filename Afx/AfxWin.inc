@@ -300,6 +300,17 @@ PRIVATE FUNCTION AfxGetExePath () AS CWSTR
    RETURN buffer
 END FUNCTION
 ' ========================================================================================
+' ========================================================================================
+' Unicode replacement for FreeBasic's ExePath function.
+' ========================================================================================
+PRIVATE FUNCTION AfxExePath () AS CWSTR
+   DIM buffer AS WSTRING * MAX_PATH, p AS LONG
+   GetModuleFileNameW NULL, buffer, SIZEOF(buffer)
+   p = INSTRREV(buffer, ANY ":/\")
+   IF p THEN buffer = AfxPathRemoveBackslash(LEFT(buffer, p))
+   RETURN buffer
+END FUNCTION
+' ========================================================================================
 
 ' ========================================================================================
 ' Returns the path of the program which is currently executing.
@@ -415,6 +426,13 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetCurDir () AS CWSTR
+   DIM wszCurDir AS WSTRING * MAX_PATH
+   GetCurrentDirectoryW(MAX_PATH, wszCurDir)
+   RETURN wszCurDir
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION AfxCurDir () AS CWSTR
    DIM wszCurDir AS WSTRING * MAX_PATH
    GetCurrentDirectoryW(MAX_PATH, wszCurDir)
    RETURN wszCurDir
@@ -3108,6 +3126,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Deletes the specified file.
 ' Parameter:
 ' - pwszFileSpec: The full path and name of the file to delete.
 ' Return value:
@@ -3118,12 +3137,19 @@ END FUNCTION
 '   with ERROR_FILE_NOT_FOUND. If the file is a read-only file, the function fails with
 '   ERROR_ACCESS_DENIED.
 ' ========================================================================================
-PRIVATE FUNCTION AfxDeleteFile (BYVAL pwszFileSpec AS WSTRING PTR) AS LONG
+PRIVATE FUNCTION AfxDeleteFile (BYVAL pwszFileSpec AS WSTRING PTR) AS BOOLEAN
    IF pwszFileSpec = NULL THEN EXIT FUNCTION
    FUNCTION = DeleteFileW(pwszFileSpec)
 END FUNCTION
 ' ========================================================================================
-#define AfxKill AfxDeleteFile
+' ========================================================================================
+' Replacemet for Free Basic's Kill. Returns zero (0) on success, or non-zero on error.
+' ========================================================================================
+PRIVATE FUNCTION AfxKill (BYVAL pwszFileSpec AS WSTRING PTR) AS BOOLEAN
+   IF pwszFileSpec = NULL THEN EXIT FUNCTION
+   FUNCTION = NOT DeleteFileW(pwszFileSpec)
+END FUNCTION
+' ========================================================================================
 
 ' ========================================================================================
 ' Creates a new directory.
@@ -3164,10 +3190,10 @@ END FUNCTION
 ' If the function succeeds, the return value is TRUE.
 ' If the function fails, the return value is FALSE.
 ' To get extended error information, call GetLastError.
-' The RemoveDirectory function marks a directory for deletion on close. Therefore, the
+' The AfxRemoveDirectory function marks a directory for deletion on close. Therefore, the
 ' directory is not removed until the last handle to the directory is closed.
 ' To recursively delete the files in a directory, use the SHFileOperation function.
-' RemoveDirectory removes a directory junction, even if the contents of the target are not
+' AfxRemoveDirectory removes a directory junction, even if the contents of the target are not
 ' empty; the function removes directory junctions regardless of the state of the target object. 
 ' ========================================================================================
 PRIVATE FUNCTION AfxRemoveDirectory (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
@@ -3200,7 +3226,7 @@ END FUNCTION
 '   function fails. If this parameter is FALSE and the new file already exists, the function
 '   overwrites the existing file and succeeds.
 ' Return value:
-'   If the function succeeds, the return value is nonzero.
+'   If the function succeeds, the return value is TRUE.
 '   If the function fails, the return value is FALSE. To get extended error information, call GetLastError.
 ' ========================================================================================
 PRIVATE FUNCTION AfxCopyFile (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR, BYVAL bFailIfExists AS BOOLEAN = FALSE) AS BOOLEAN
@@ -3221,11 +3247,11 @@ END FUNCTION
 ' Moves an existing file or a directory, including its children.
 ' - lpExistingFileName : The name of an existing file.
 '   To extend the limit of MAX_PATH characters to 32,767 wide characters prepend "\?" to the path.
-'   If lpExistingFileName does not exist, CopyFile fails, and GetLastError returns ERROR_FILE_NOT_FOUND.
+'   If lpExistingFileName does not exist, AfxMoveFile fails, and GetLastError returns ERROR_FILE_NOT_FOUND.
 ' - lpNewFileName : The name of the new file.
 '   To extend the limit of MAX_PATH characters to 32,767 wide characters prepend "\?" to the path.
 ' Return value:
-'   If the function succeeds, the return value is nonzero.
+'   If the function succeeds, the return value is TRUE.
 '   If the function fails, the return value is FALSE. To get extended error information, call GetLastError.
 ' ========================================================================================
 PRIVATE FUNCTION AfxMoveFile (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR) AS BOOLEAN
@@ -3438,7 +3464,7 @@ END FUNCTION
 ' Example:
 ' #include "windows.bi"
 ' #include "vbcompat.bi"
-' #include "win/ole2.bi"
+' #include "Afx/AfxWin.bi"
 ' DIM wszFileName AS WSTRING * MAX_PATH = ExePath & "\c2.bas"
 ' DIM dt AS DOUBLE = AfxFileDateTime(wszFileName)
 ' PRINT Format(dt, "yyyy-mm-dd hh:mm AM/PM")
