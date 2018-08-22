@@ -540,7 +540,7 @@ HRESULT. S_OK (0) on success, or an error code on failure.
 
 # <a name="GetErrorInfo"></a>GetErrorInfo
 
-Returns a description the last result code.
+Returns a description of the last result code.
 
 ```
 FUNCTION GetErrorInfo () AS CWSTR
