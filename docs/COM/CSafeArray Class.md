@@ -1479,6 +1479,12 @@ csa.Get(2, cbsVal)
 print cbsVal
 csa.Get(3, cbsVal)
 print cbsVal
+
+--- or ---
+
+print csa.GetStr(1)
+print csa.GetStr(2)
+print csa.GetStr(3)
 ```
 
 # <a name="UnaccessData"></a>UnaccessData
