@@ -544,9 +544,7 @@ csa.PutStr(3, "Three")
 DIM cws AS CWSTR = AfxStrJoin(csa, ",")
 PRINT cws   ' ouput: One,Two,Three
 ```
-#### Include file
-
-CSafeArray.inc
+**Include file**: CSafeArray.inc
 
 # <a name="AfxStrLCase"></a>AfxStrLCase
 
@@ -1181,9 +1179,7 @@ FOR i AS LONG = cwsa.LBound TO cwsa.UBound
   PRINT cwsa.GetStr(i)
 NEXT
 ```
-#### Include file
-
-CSafeArray.inc
+**Include file**: CSafeArray.inc
 
 # <a name="AfxStrSpn"></a>AfxStrSpn
 
@@ -1501,9 +1497,5 @@ Remaks
 Base64 is a group of similar encoding schemes that represent binary data in an ASCII string format by translating it into a radix-64 representation. The Base64 term originates from a specific MIME content transfer encoding.
 
 Base64 encoding schemes are commonly used when there is a need to encode binary data that needs be stored and transferred over media that are designed to deal with textual data. This is to ensure that the data remains intact without modification during transport. Base64 is used commonly in a number of applications including email via MIME, and storing complex data in XML.
-
-#### Important note
-
-Because it uses COM, you must initialize the COM library before calling this function.
 
 **Include file**: CSafeArray.inc
