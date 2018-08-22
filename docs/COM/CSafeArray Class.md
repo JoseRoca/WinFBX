@@ -1458,6 +1458,29 @@ S_OK (0) on success or an HRESULT code on failure.
 | E_FAIL | The array descriptor is null or the safe array is not of of the type VT_BSTR. |
 | E_UNEXPECTED | The array could not be locked. |
 
+#### Usage example
+
+```
+' // Create a one-dimensional array of BSTR
+DIM csa AS CSafeArray = CSafeArray(VT_BSTR, 3, 1)
+
+DIM cbsVal AS CBSTR = "bcde"
+csa.Put(1, cbsVal)
+cbsVal = "abc"
+csa.Put(2, cbsVal)
+cbsVal = "abcfg"
+csa.Put(3, cbsVal)
+' // Sort the safe array
+csa.Sort
+
+csa.Get(1, cbsVal)
+print cbsVal
+csa.Get(2, cbsVal)
+print cbsVal
+csa.Get(3, cbsVal)
+print cbsVal
+```
+
 # <a name="UnaccessData"></a>UnaccessData
 
 Decrements the lock count of an array, and invalidates the pointer retrieved by **AccessData**.
