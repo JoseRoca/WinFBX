@@ -1,8 +1,8 @@
 # CSafeArray Class
 
-**CSafeArray** is a class that provides wrapper methods for the SAFEARRAY structure, making it easy to create and manage single- and multidimensional arrays of almost any of the VARIANT-supported types. The lower bound of a CSafeArray can start at any user-defined value.
+**CSafeArray** is a class that provides wrapper methods for the SAFEARRAY structure, making it easy to create and manage single- and multidimensional arrays of almost any of the VARIANT-supported types. The lower bound of a CSafeArray can start at any user-defined value. Additional overloaded methods are provided for one and two-dimensional safe arrays, that are the ones most often used in COM programming.
 
-Additional overloaded methods are provided for one and two-dimensional safe arrays, that are the ones most often used in COM programming.
+When the class is destroyed, the array descriptor and all of the data in the array is destroyed. If objects are stored in the array, Release is called on each object in the array. Safe arrays of variant will have VariantClear called on each member and safe arrays of BSTR will have SysFreeString called on each element. IRecordInfo.RecordClear will be called to release object references and other values of a record without deallocating the record.
 
 **Include file**: CSafeArray.INC.
 
@@ -454,6 +454,46 @@ FUNCTION AppendStr (BYVAL pwszData AS WSTRING PTR) AS HRESULT
 | *cvData* | The CVAR to insert, if the safe array is of type VT_VARIANT. |
 | *vData* | The VARIANT to insert, if the safe array is of type VT_VARIANT. |
 
+#### Usage examples
+
+```
+' // Create a one-dimensional array of doubles
+'DIM csa AS CSafeArray = CSafeArray(VT_R8, 2, 1)
+DIM csa AS CSafeArray = CSafeArray("DOUBLE", 2, 1)
+
+DIM dblVal AS DOUBLE = 12345.12
+csa.Put(1, @dblVal)
+dblVal = 74447.34
+csa.Put(2, @dblVal)
+dblVal = 63535.567
+csa.Append(@dblVal)
+
+csa.Get(1, @dblVal)
+print dblVal
+csa.Get(2, @dblVal)
+print dblVal
+csa.Get(3, @dblVal)
+print dblVal
+```
+
+```
+' // Create a one-dimensional array of variants
+'DIM csa AS CSafeArray = CSafeArray(VT_VARIANT, 2, 1)
+DIM csa AS CSafeArray = CSafeArray("VARIANT", 2, 1)
+
+csa.Put(1, CVAR("Test string"))
+csa.Put(2, CVAR(12345))
+csa.Append(CVAR("Test string appended"))
+
+DIM cvOut AS CVAR
+csa.Get(1, cvOut)
+print cvOut
+csa.Get(2, cvOut)
+print cvOut
+csa.Get(3, cvOut)
+print cvOut
+```
+
 #### Return value
 
 S_OK (0) on success or an HREUSLT code on failure.
@@ -855,6 +895,75 @@ FUNCTION GetVar (BYVAL cElem AS LONG, BYVAL cDim AS LONG) AS CVAR
 
 First element, then dimension, e.g. 2, 1 (element 2, first dimension), 1, 2 (element 1, 2nd dimension).
 
+#### Usage example
+
+```
+' // One-dimensional array of VT_BSTR
+DIM csa AS CSafeArray = CSafeArray(VT_BSTR, 2, 1)
+csa.PutStr(1, "Test string 1")
+print csa.GetStr(1)
+csa.PutStr(2, "Test string 2")
+print csa.GetStr(2)
+```
+
+```
+' // One-dimensional array of VT_VARIANT
+DIM csa AS CSafeArray = CSafeArray(VT_VARIANT, 5, 1)
+DIM cv1 AS CVAR = "Test variant 1"
+csa.Put(1, cv1)
+DIM cvOut AS CVAR
+csa.Get(1, cvOut)
+print cvOut
+DIM cv2 AS CVAR = "Test variant 2"
+csa.Put(1, cv2)
+csa.Get(1, cvOut)
+print cvOut
+```
+
+```
+' // Two-dimensional array of BSTR
+' // 2D: elements = 5, lower bound = 1
+' // 2D: elements = 3, lower bound = 1
+DIM rgsabounds(0 TO 1) AS SAFEARRAYBOUND = {(5, 1), (3, 1)}
+DIM csa AS CSafeArray = CSafeArray(VT_BSTR, 2, @rgsabounds(0))
+
+' // array index: first element, first dimension
+DIM rgidx(0 TO 1) AS LONG = {1, 1}
+DIM cbs1 AS CBSTR = "Test string 1"
+' // Put the value
+csa.Put(@rgidx(0), cbs1)
+' // Get the value
+DIM cbsOut AS CBSTR
+csa.Get(@rgidx(0), cbsOut)
+print cbsOut
+' // array index: second element, first dimension
+rgidx(0) = 2 : rgidx(1) = 1
+' // Put the value
+DIM cbs2 AS CBSTR = "Test string 2"
+csa.Put(@rgidx(0), cbs2)
+' // Get the value
+csa.Get(@rgidx(0), cbsOut)
+print cbsOut
+
+' // array index: first element, second dimension
+rgidx(0) = 1 : rgidx(1) = 2
+' // Put the value
+DIM cbs3 AS CBSTR = "Test string 3"
+csa.Put(@rgidx(0), cbs3)
+' // Get the value
+csa.Get(@rgidx(0), cbsOut)
+print cbsOut
+
+' // array index: second element, second dimension
+rgidx(0) = 2 : rgidx(1) = 2
+' // Put the value
+DIM cbs4 AS CBSTR = "Test string 4"
+csa.Put(@rgidx(0), cbs4)
+' // Get the value
+csa.Get(@rgidx(0), cbsOut)
+print cbsOut
+```
+
 #### Return value (Get)
 
 S_OK (0) on success or an HRESULT code on failure.
@@ -945,7 +1054,27 @@ S_OK (0) on success or an HRESULT code on failure.
 | E_INVALIDARG | One of the arguments is invalid. |
 | E_OUTOFMEMORY | Memory could not be allocated for the element. |
 | E_FAIL | Failure. The array descriptor is null. |
- 
+
+#### Usage example
+
+```
+' // Create a one-dimensional array of variants
+'DIM csa AS CSafeArray = CSafeArray(VT_VARIANT, 2, 1)
+DIM csa AS CSafeArray = CSafeArray("VARIANT", 2, 1)
+
+csa.Put(1, CVAR("Test string 1"))
+csa.Put(2, CVAR("Test string 2"))
+csa.Insert(2, CVAR(12345.67, "DOUBLE"))
+
+DIM cvOut AS CVAR
+csa.Get(1, cvOut)
+print cvOut
+csa.Get(2, cvOut)
+print cvOut
+csa.Get(3, cvOut)
+print cvOut
+```
+
 # <a name="IsResizable"></a>IsResizable
 
 Tests if the safe array can be resized.
@@ -1029,6 +1158,25 @@ FUNCTION MoveToVariant (BYVAL pvar AS VARIANT PTR) AS HRESULT
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pvar* | Pointer to the variant where the safe array will be moved. |
+
+#### Usage example
+
+```
+' // One-dimensional array of VT_BSTR
+DIM csa AS CSafeArray = CSafeArray(VT_BSTR, 2, 1)
+csa.Put(1, CBSTR("Test string 1"))
+DIM cbsOut AS CBSTR
+csa.Get(1, cbsOut.vptr)
+print cbsOut
+csa.Put(2, CBSTR("Test string 2"))
+csa.Get(2, cbsOut)
+print cbsOut
+
+DIM v AS VARIANT
+csa.MoveToVariant(@v)
+print AfxVarToStr(@v)
+VariantClear @v
+```
 
 #### Return value
 
@@ -1186,6 +1334,32 @@ FUNCTION Redim (BYVAL cElements1 AS ULONG, BYVAL lLBound1 AS LONG, _
 | *lLBound1* | The lower bound of the first dimension of the array. |
 | *cElements2* | Number of elements in the second dimension of the array |
 | *lLBound2* | The lower bound of the second dimension of the array. |
+
+#### Usage example
+
+```
+' // One-dimensional array of VT_VARIANT
+' // Two elements, lower-bound 1
+'DIM csa AS CSafeArray = CSafeArray(VT_VARIANT, 2, 1)
+DIM csa AS CSafeArray = CSafeArray("VARIANT", 2, 1)
+DIM cv1 AS CVAR = "Test variant 1"
+csa.Put(1, cv1)
+DIM cvOut AS CVAR
+csa.Get(1, cvOut)
+print cvOut
+
+DIM cv2 AS CVAR = "Test variant 2"
+csa.Put(1, cv2)
+csa.Get(1, cvOut)
+print cvOut
+
+' // Redim (preserve) the safe array
+csa.Redim(1, 3)
+DIM cv3 AS CVAR = "Test variant 3"
+csa.Put(3, cv3)
+csa.Get(3, cvOut)
+print cvOut
+```
 
 #### Return value
 
