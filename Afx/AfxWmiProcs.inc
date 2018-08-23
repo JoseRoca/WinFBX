@@ -524,3 +524,16 @@ PRIVATE FUNCTION AfxGetNetworkAdapterMACAddress (BYREF wszServerName AS WSTRING 
    RETURN pServices.PropValue("MACAddress").ToStr
 END FUNCTION
 ' ========================================================================================
+
+' ========================================================================================
+' Returns the address width ofthe operating system.
+' On a 32-bit operating system, the value is 32 and on a 64-bit operating system it is 64.
+' ========================================================================================
+PRIVATE FUNCTION AfxGetWindowsBitness (BYREF wszServerName AS WSTRING = ".") AS LONG
+   DIM pServices AS CWmiServices = $"winmgmts:{impersonationLevel=impersonate}!\\" & wszServerName & $"\root\cimv2"
+   IF pServices.ServicesPtr = NULL THEN RETURN 0
+   pServices.ExecQuery("SELECT AddressWidth FROM Win32_Processor")
+   pServices.GetNamedProperties
+   RETURN pServices.PropValue("AddressWidth").ValLong
+END FUNCTION
+' ========================================================================================
