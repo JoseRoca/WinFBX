@@ -6,7 +6,7 @@ Windows Management Instrumentation (WMI) is the infrastructure for management da
 
 **CWmiServices** supports three ways of retrieving information.
 
-* The first one uses an enumerator (the standard IEnumVARIANT interface).
+* The first one uses an enumerator (the standard **IEnumVARIANT** interface).
 * The second way is to call the **GetNamedProperties** method after executing the query. **GetNamedProperties** generates a named collection of properties. This has the advantage of not having to use **CDispInvoke**.
 * The third way is to use the **Get** method. It retrieves an object, that is either a class definition or an instance, based on the specified object path. Using this object, it generates a named collection of properties. The disadvantage over **EcexuteQuery** is that you can't choose the properties to return: it returns all the properties of the specified WMI class.
 
