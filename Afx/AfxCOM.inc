@@ -466,9 +466,9 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Releases the events connection identified with the cookie returned by the Advise method.
+' Releases the events connection identified with the cookie returned by the AfxAdvise method.
 ' Parameters
-' pUnk [in] A pointer to the IUnknown of the object the client wants to connect with.
+' pUnk [in] A pointer to the IUnknown of the object the client wants to disconnect with.
 ' riid: [in] The GUID of the connection point. Typically, this is the same as the outgoing
 ' interface managed by the connection point.
 ' dwCookie: [in] The cookie that uniquely identifies the connection.
@@ -866,8 +866,9 @@ END FUNCTION
 ' Extracts the variant value of a variant structure to a string.
 ' Parameters:
 ' - pvarIn  : [in] Reference to a source variant structure.
-' - pwszBuf : [out] Pointer to the extracted property value if one exists; otherwise, empty.
-' - cchBuf  : [in] Specifies string length, in characters.
+' - pwszBuf : [in] Pointer to a buffer of length *cchBuf* bytes. When this function returns,
+'             contains the first *cchBuf* bytes of the extracted buffer value.
+' - cchBuf  : [in] The size of the *pwszBuf* buffer, in bytes.
 ' Return value:
 ' If this function succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.
 ' ========================================================================================
@@ -900,7 +901,7 @@ END FUNCTION
 ' Extracts the variant value of a variant structure to a string.
 ' Parameters:
 ' - pvarIn   : [in] Reference to a source variant structure.
-' - ppwszBuf : [out] Pointer to the extracted property value if one exists; otherwise, empty.
+' - ppwszBuf : [out] Pointer to a buffer that contains the extracted string exists.
 ' Return value:
 ' If this function succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.
 ' ========================================================================================
