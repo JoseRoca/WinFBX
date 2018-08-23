@@ -17,7 +17,7 @@ Windows Management Instrumentation (WMI) is the infrastructure for management da
 | Name       | Description |
 | ---------- | ----------- |
 | [Constructor(Moniker)](#Constructor1) | Connects to WMI using a moniker. |
-| [Constructor(Server)](#Constructor2) | Connects to the namespace that is specified on the cbsNamespace parameter on the computer that is specified in the cbsServer parameter.  The target computer can be either local or remote, but it must have WMI installed. |
+| [Constructor(Server)](#Constructor2) | Connects to the namespace that is specified on the *cbsNamespace* parameter on the computer that is specified in the *cbsServer* parameter. The target computer can be either local or remote, but it must have WMI installed. |
 
 # Methods
 
