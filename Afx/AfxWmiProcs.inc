@@ -526,7 +526,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Returns the address width ofthe operating system.
+' Returns the address width of the operating system.
 ' On a 32-bit operating system, the value is 32 and on a 64-bit operating system it is 64.
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetWindowsBitness (BYREF wszServerName AS WSTRING = ".") AS LONG
