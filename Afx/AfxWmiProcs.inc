@@ -529,7 +529,7 @@ END FUNCTION
 ' Returns the address width of the operating system.
 ' On a 32-bit operating system, the value is 32 and on a 64-bit operating system it is 64.
 ' ========================================================================================
-PRIVATE FUNCTION AfxGetWindowsBitness (BYREF wszServerName AS WSTRING = ".") AS LONG
+PRIVATE FUNCTION AfxGetProcessorAddressWidth (BYREF wszServerName AS WSTRING = ".") AS LONG
    DIM pServices AS CWmiServices = $"winmgmts:{impersonationLevel=impersonate}!\\" & wszServerName & $"\root\cimv2"
    IF pServices.ServicesPtr = NULL THEN RETURN 0
    pServices.ExecQuery("SELECT AddressWidth FROM Win32_Processor")

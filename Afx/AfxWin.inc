@@ -228,6 +228,17 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Returns the bitness of the operating system.
+' On a 32-bit operating system, the value is 32 and on a 64-bit operating system it is 64.
+' ========================================================================================
+PRIVATE FUNCTION AfxWindowsBitness () AS LONG
+   DIM SysInfo AS SYSTEM_INFO
+   GetNativeSystemInfo(@SysInfo)
+   RETURN IIF(SysInfo.wProcessorArchitecture = PROCESSOR_ARCHITECTURE_AMD64, 64, 32)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Returns the version of specified file multiplied by 100, e.g. 601 for version 6.01.
 ' Example: DIM ver AS LONG = AfxGetFileVersion("COMCTL32.DLL")
 ' ========================================================================================
