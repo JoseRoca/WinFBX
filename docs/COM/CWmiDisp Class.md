@@ -141,7 +141,7 @@ Returns S_OK (0) on success, or an HRESULT code on failure.
 
 #### Examples
 
-Using an enumerator (the standard IEnumVARIANT interface) to retrieve the information:
+Using an enumerator (the standard **IEnumVARIANT** interface) to retrieve the information:
 
 ```
 #include "windows.bi"
@@ -206,7 +206,7 @@ PRINT "Press any key..."
 SLEEP
 ```
 
-To improve enumeration performance set the iFlags parameter if the ExecQuery method to WbemFlagReturnImmediately and WbemFlagForwardOnly (the combined value of these flags is 48) to allow semisynchronous return of the data with an enumerator that discards each item from WMI as it is delivered. In this case don't call the ObjectsCount method because it will return 0, since the operation has not been completed.
+To improve enumeration performance set the *iFlags* parameter if the **ExecQuery** method to *WbemFlagReturnImmediately* and *WbemFlagForwardOnly* (the combined value of these flags is 48) to allow semisynchronous return of the data with an enumerator that discards each item from WMI as it is delivered. In this case don't call the **ObjectsCount** method because it will return 0, since the operation has not been completed.
 
 ```
 #include "windows.bi"
@@ -266,7 +266,7 @@ PRINT "Press any key..."
 SLEEP
 ```
 
-Calling the GetNamedProperties method after executing the query. GetNamedProperties generates a named collection of properties. This has the advantage of not having to use CDispInvoke.
+Calling the **GetNamedProperties** method after executing the query. **GetNamedProperties** generates a named collection of properties. This has the advantage of not having to use **CDispInvoke**.
 
 ```
 #include "windows.bi"
