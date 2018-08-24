@@ -1405,7 +1405,7 @@ PRIVATE FUNCTION AfxBase64Encode (BYREF strData AS STRING) AS STRING
    FUNCTION = strOut
 END FUNCTION
 ' ========================================================================================
-   
+
 ' ========================================================================================
 ' Converts a formatted string into an array of bytes.
 ' ========================================================================================
@@ -1492,7 +1492,6 @@ END FUNCTION
 ' ========================================================================================
 ' Sets the contents of the specified environment variable for the current process.
 ' - pwszName : The name of the environment variable.
-'              The name of the environment variable.
 '              The operating system creates the environment variable if it does not exist
 '              and pwszValue is not NULL.
 ' - pszValue : The contents of the environment variable.
