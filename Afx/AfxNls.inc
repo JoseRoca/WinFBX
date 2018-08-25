@@ -352,7 +352,7 @@ PRIVATE FUNCTION AfxGetLocaleNanString (BYVAL nLocale AS LONG = LOCALE_USER_DEFA
    nLen = GetLocaleInfoW(nLocale, LOCALE_SNAN, BYVAL NULL, 0)
    IF nLen = 0 THEN RETURN ""
    wstrBuf = SPACE(nLen)
-   nLen = GetLocaleInfoW(nLocale, LOCALE_SNAN, @wstrBuf, nLen)
+   nLen = GetLocaleInfoW(nLocale, LOCALE_SNAN, *wstrBuf, nLen)
    RETURN TRIM(wstrBuf)
 END FUNCTION
 ' ========================================================================================
@@ -426,7 +426,7 @@ PRIVATE FUNCTION AfxGetLocaleNegativeInfinityString (BYVAL nLocale AS LONG = LOC
    nLen = GetLocaleInfoW(nLocale, LOCALE_SNEGINFINITY, NULL, 0)
    IF nLen = 0 THEN RETURN ""
    wstrBuf = SPACE(nLen)
-   nLen = GetLocaleInfoW(nLocale, LOCALE_SNEGINFINITY, @wstrBuf, nLen)
+   nLen = GetLocaleInfoW(nLocale, LOCALE_SNEGINFINITY, *wstrBuf, nLen)
    RETURN TRIM(wstrBuf)
 END FUNCTION
 ' ========================================================================================
@@ -480,7 +480,7 @@ PRIVATE FUNCTION AfxGetLocalePositiveInfinityString (BYVAL nLocale AS LONG = LOC
    nLen = GetLocaleInfoW(nLocale, LOCALE_SPOSINFINITY, BYVAL NULL, 0)
    IF nLen = 0 THEN RETURN ""
    wstrBuf = SPACE(nLen)
-   nLen = GetLocaleInfoW(nLocale, LOCALE_SPOSINFINITY, @wstrBuf, nLen)
+   nLen = GetLocaleInfoW(nLocale, LOCALE_SPOSINFINITY, *wstrBuf, nLen)
    RETURN TRIM(wstrBuf)
 END FUNCTION
 ' ========================================================================================
@@ -510,7 +510,7 @@ PRIVATE FUNCTION AfxGetLocaleScriptsList (BYVAL nLocale AS LONG = LOCALE_USER_DE
    nLen = GetLocaleInfoW(nLocale, LOCALE_SSCRIPTS, BYVAL NULL, 0)
    IF nLen = 0 THEN RETURN ""
    wstrBuf = SPACE(nLen)
-   nLen = GetLocaleInfoW(nLocale, LOCALE_SSCRIPTS, @wstrBuf, nLen)
+   nLen = GetLocaleInfoW(nLocale, LOCALE_SSCRIPTS, *wstrBuf, nLen)
    RETURN TRIM(wstrBuf)
 END FUNCTION
 ' ========================================================================================
