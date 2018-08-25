@@ -832,8 +832,8 @@ PRIVATE FUNCTION AfxStrPathName (BYREF wszOption AS CONST WSTRING, BYREF wszFile
          DIM nPos AS LONG = InstrRev(wszFileSpec, ANY ":/\")
          IF nPos THEN cws = MID(wszFileSpec, nPos + 1)
          ' // Retrieve the filename
-         nPos = InstrRev(cws, ".")
-         IF nPos THEN cws = MID(cws, 1, nPos - 1)
+         nPos = InstrRev(**cws, ".")
+         IF nPos THEN cws = MID(**cws, 1, nPos - 1)
       CASE "NAMEX"
          ' // Retrieve the name and extension combined
          DIM nPos AS LONG = InStrRev(wszFileSpec, ANY ":/\")
@@ -843,8 +843,8 @@ PRIVATE FUNCTION AfxStrPathName (BYREF wszOption AS CONST WSTRING, BYREF wszFile
          DIM nPos AS LONG = InstrRev(wszFileSpec, ANY ":/\")
          IF nPos THEN cws = MID(wszFileSpec, nPos + 1) ELSE cws = wszFileSpec
          ' // Retrieve the extension
-         nPos = InStrRev(cws, ".")
-         IF nPos THEN cws = MID(cws, nPos) ELSE cws = ""
+         nPos = InStrRev(**cws, ".")
+         IF nPos THEN cws = MID(**cws, nPos) ELSE cws = ""
    END SELECT
    RETURN cws
 END FUNCTION

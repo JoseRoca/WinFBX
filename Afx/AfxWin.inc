@@ -390,9 +390,9 @@ END FUNCTION
 PRIVATE FUNCTION AfxGetFileName (BYREF wszPath AS WSTRING) AS CWSTR
    DIM cwsPath AS CWSTR = wszPath
    DIM p AS LONG
-   p = INSTRREV(cwsPath, ANY ":/\")
-   IF p THEN cwsPath = MID(cwsPath, p + 1)
-   p = INSTRREV(cwsPath, ".")
+   p = INSTRREV(**cwsPath, ANY ":/\")
+   IF p THEN cwsPath = MID(**cwsPath, p + 1)
+   p = INSTRREV(**cwsPath, ".")
    IF p THEN
       cwsPath = LEFT(**cwsPath, p - 1)
    ELSE
@@ -409,8 +409,8 @@ END FUNCTION
 PRIVATE FUNCTION AfxGetFileNameX (BYREF wszPath AS WSTRING) AS CWSTR
    DIM cwsPath AS CWSTR = wszPath
    DIM p AS LONG
-   p = INSTRREV(cwsPath, ANY ":/\")
-   IF p THEN RETURN MID(cwsPath, p + 1) ELSE RETURN cwsPath
+   p = INSTRREV(**cwsPath, ANY ":/\")
+   IF p THEN RETURN MID(**cwsPath, p + 1) ELSE RETURN cwsPath
 END FUNCTION
 ' ========================================================================================
 
@@ -421,8 +421,8 @@ END FUNCTION
 PRIVATE FUNCTION AfxGetFileExt (BYREF wszPath AS WSTRING) AS CWSTR
    DIM cwsPath AS CWSTR = wszPath
    DIM p AS LONG
-   p = INSTRREV(cwsPath, ".")
-   IF p THEN RETURN MID(cwsPath, p) ELSE RETURN cwsPath
+   p = INSTRREV(**cwsPath, ".")
+   IF p THEN RETURN MID(**cwsPath, p) ELSE RETURN cwsPath
 END FUNCTION
 ' ========================================================================================
 
@@ -505,7 +505,7 @@ END FUNCTION
 PRIVATE FUNCTION AfxGetPathName (BYREF wszPath AS WSTRING) AS CWSTR
    DIM cwsPath AS CWSTR = wszPath
    DIM p AS LONG
-   p = INSTRREV(cwsPath, ANY ":\/")
+   p = INSTRREV(**cwsPath, ANY ":\/")
    IF p THEN RETURN LEFT(**cwsPath, p)
    RETURN ""
 END FUNCTION
@@ -518,11 +518,11 @@ END FUNCTION
 PRIVATE FUNCTION AfxGetFolderName (BYREF wszPath AS WSTRING) AS CWSTR
    DIM cwsPath AS CWSTR = wszPath
    DIM p AS LONG
-   IF INSTRREV(cwsPath, ".") = 0 THEN
+   IF INSTRREV(**cwsPath, ".") = 0 THEN
       IF RIGHT(**cwsPath, 1) = "\" THEN cwsPath = LEFT(**cwsPath, LEN(cwsPath) - 1)
       RETURN cwsPath
    END IF
-   p = INSTRREV(cwsPath, ANY "\/")
+   p = INSTRREV(**cwsPath, ANY "\/")
    IF p THEN RETURN LEFT(**cwsPath, p - 1)
    RETURN cwsPath
 END FUNCTION
@@ -3205,7 +3205,7 @@ END FUNCTION
 ' directory is not removed until the last handle to the directory is closed.
 ' To recursively delete the files in a directory, use the SHFileOperation function.
 ' AfxRemoveDirectory removes a directory junction, even if the contents of the target are not
-' empty; the function removes directory junctions regardless of the state of the target object. 
+' empty; the function removes directory junctions regardless of the state of the target object.
 ' ========================================================================================
 PRIVATE FUNCTION AfxRemoveDirectory (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
    RETURN RemoveDirectoryW(lpPathName)
