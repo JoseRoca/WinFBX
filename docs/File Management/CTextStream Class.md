@@ -16,7 +16,17 @@ CONSTRUCTOR CTextStream (BYVAL pstm AS Afx_ITextStream PTR)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| pstm | Pointer to an instance of the Afx_ITextStream interface. |
+| *pstm* | Pointer to an instance of the Afx_ITextStream interface. |
+
+This allows to work with the standard StdIn, StdErr and StdOut streams using the methods of the **CTextStream** class.
+
+```
+#include "Afx/AfxFile.inc"
+' // Create an instance of the CTextStream class initialized with a pointer to the standard StdOut stream
+DIM pTxtStm AS CTextStream = CFileSys().GetStdOutStream(TRUE)   ' or FALSE to work with ansi
+' // Write a string and an end of line to the stream
+pTxtStm.WriteLine "This is a test."
+```
 
 ### Operators
 
