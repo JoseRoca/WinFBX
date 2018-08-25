@@ -58,7 +58,7 @@ Public:
    DECLARE FUNCTION GetResponseHeader (BYREF cbsHeader AS CBSTR) AS CBSTR
    DECLARE FUNCTION GetAllResponseHeaders () AS CBSTR
    DECLARE FUNCTION GetResponseBody () AS STRING
-   DECLARE FUNCTION GetResponseStream () AS STRING
+   DECLARE FUNCTION GetResponseStream () AS IStream PTR
    DECLARE FUNCTION GetResponseText () AS CBSTR
    DECLARE FUNCTION SetProxy (BYVAL ProxySetting AS HTTPREQUEST_PROXY_SETTING, BYREF cvProxyServer AS CVAR = "", BYVAL cvBypassList AS CVAR = "") AS HRESULT
    DECLARE FUNCTION SetCredentials (BYREF cbsUserName AS CBSTR, BYREF cbsPassword AS CBSTR, BYVAL Flags AS HTTPREQUEST_SETCREDENTIALS_FLAGS) AS HRESULT
@@ -242,29 +242,16 @@ END FUNCTION
 ' The result value is S_OK on success or an error value otherwise.
 ' It will be E_PENDING if the previous Send operation is not complete.
 ' ========================================================================================
-PRIVATE FUNCTION CWinHttpRequest.GetResponseStream () AS STRING
-   DIM vResponse AS VARIANT, pStream AS IStream PTR, tstatstg AS STATSTG, strBuffer AS STRING
+PRIVATE FUNCTION CWinHttpRequest.GetResponseStream () AS IStream PTR
+   DIM vResponse AS VARIANT, pStream AS IStream PTR
    IF m_pWinHttp THEN SetResult(m_pWinHttp->get_ResponseStream(@vResponse))
    IF m_Result = S_OK THEN
       IF vResponse.punkVal THEN
          vResponse.punkVal->lpvtbl->QueryInterface(vResponse.punkVal, @IID_IStream, @pStream)
-         IF pStream THEN
-            ' // Get the size of the stream
-            pStream->lpvtbl->Stat(pStream, @tstatstg, STATFLAG_NONAME)
-            DIM nSize AS ULONGLONG = tstatstg.cbSize.QuadPart
-            ' // Read the stream
-            IF nSize THEN
-               DIM cbRead AS ULONG
-               strBuffer = SPACE(nSize)
-               pStream->lpvtbl->Read(pStream, STRPTR(strBuffer), LEN(strBuffer), @cbRead)
-               IF cbRead < nSize THEN strBuffer = LEFT(strBuffer, cbRead)
-            END IF
-            IUnknown_Release(pStream)
-         END IF
       END IF
    END IF
    VariantClear(@vResponse)
-   RETURN strBuffer
+   RETURN pStream
 END FUNCTION
 ' ========================================================================================
 
