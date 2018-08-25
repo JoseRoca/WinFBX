@@ -956,7 +956,7 @@ END PROPERTY
 ' Returns the leftmost substring of the string.
 ' ========================================================================================
 PRIVATE FUNCTION CWStr.LeftChars (BYVAL nChars AS LONG) AS CWSTR
-   CWSTR_DP("CWSTR LeftChars")
+   CWSTR_DP("CWSTR LeftChars - buffer: " & .WSTR(m_pBuffer))
    RETURN LEFT(*cast(WSTRING PTR, m_pBuffer), nChars)
 END FUNCTION
 ' ========================================================================================
@@ -965,7 +965,7 @@ END FUNCTION
 ' Returns the rightmost substring of the string.
 ' ========================================================================================
 PRIVATE FUNCTION CWStr.RightChars (BYVAL nChars AS LONG) AS CWSTR
-   CWSTR_DP("CWSTR LeftChars")
+   CWSTR_DP("CWSTR RightChars - buffer: " & .WSTR(m_pBuffer))
    RETURN RIGHT(*cast(WSTRING PTR, m_pBuffer), nChars)
 END FUNCTION
 ' ========================================================================================
@@ -974,7 +974,7 @@ END FUNCTION
 ' Returns a substring of the string.
 ' ========================================================================================
 PRIVATE FUNCTION CWStr.MidChars (BYVAL nStart AS LONG, BYVAL nChars AS LONG = 0) AS CWSTR
-   CWSTR_DP("CWSTR MidChars")
+   CWSTR_DP("CWSTR MidChars - buffer: " & .WSTR(m_pBuffer))
    IF nChars = 0 THEN RETURN MID(*cast(WSTRING PTR, m_pBuffer), nStart)
    RETURN MID(*cast(WSTRING PTR, m_pBuffer), nStart, nChars)
 END FUNCTION
