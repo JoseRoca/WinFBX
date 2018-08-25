@@ -296,7 +296,7 @@ END FUNCTION
 ' everything up to that point including the backslash, and returns the rest of the path.
 ' Therefore, if a path begins with a backslash (such as \path1\path2), the function simply
 ' removes the initial backslash and returns the rest (path1\path2).
-' Usage example: DIM cws AS CWSTR = PathFindNextComponentW("C:\TEST\file.txt")
+' Usage example: DIM cws AS CWSTR = AfxPathFindNextComponent("C:\TEST\file.txt")
 ' ========================================================================================
 PRIVATE FUNCTION AfxPathFindNextComponent (BYREF wszPath AS WSTRING) AS CWSTR
    DIM _wszPath AS WSTRING * MAX_PATH = wszPath
