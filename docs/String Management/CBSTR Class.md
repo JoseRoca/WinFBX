@@ -6,8 +6,9 @@ The **CBSTR** class implements a dynamic unicode null terminated string. Free Ba
 
 Quirks:
 
-* MID as a statement: Something like MID(cbs, 2, 1) = "x" compiles but does not change the contents of the dynamic unicode string. MID(**cbs, 2, 1) = "x" works.
-* SELECT CASE: Something like SELECT CASE LEFT(cbs, 2) does not compile; we have to use SELECT CASE LEFT(**cbs, 2). Same problem with RIGHT, but not with MID.
+* MID as a function: Something like MID(cbs, 2) doesn't work with languages such Russian and Chinese. Using MID(\*\*cbs, 2), MID(cbs.wstr, 2) or cbs.MidChars(2) works.
+* MID as a statement: Something like MID(cbs, 2, 1) = "x" compiles but does not change the contents of the dynamic unicode string. MID(\*\*cbs, 2, 1) = "x" works.
+* SELECT CASE: Something like SELECT CASE LEFT(cbs, 2) does not compile; we have to use SELECT CASE LEFT(\*\*cbs, 2).
 
 | Name       | Description |
 | ---------- | ----------- |
