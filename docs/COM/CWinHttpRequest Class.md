@@ -693,12 +693,11 @@ SSL certificate errors.
 
 | Constant   | Description |
 | ---------- | ----------- |
-| **SslErrorFlag_UnknownCA** | Unknown certificate. |
-| **SslErrorFlag_CertWrongUsage** | Certificate wrong usage. |
-| **SslErrorFlag_CertCNInvalid** | Invalid certificate common name. |
-| **SslErrorFlag_CertDateInvalid** | Invalid certificate date. |
+| **SslErrorFlag_UnknownCA** | Unknown certification authority (CA) or untrusted root. |
+| **SslErrorFlag_CertWrongUsage** | Wrong usage. |
+| **SslErrorFlag_CertCNInvalid** | Invalid common name (CN). |
+| **SslErrorFlag_CertDateInvalid** | Invalid date or certificate expired. |
 | **SslErrorFlag_Ignore_All** | Ignore all. |
-
 
 # <a name="HTTPStatusCodes"></a>HTTP Status Codes
 
