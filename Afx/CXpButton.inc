@@ -69,6 +69,7 @@ TYPE CXpButton
       m_bClkDown          AS LONG          ' // Button received the button down message
       m_hBkBrush          AS HBRUSH        ' // Background color brush
       m_hBkBrushDown      AS HBRUSH        ' // Background color brush down
+      m_hBkBrushHot       AS HBRUSH        ' // Background color brush hot
       m_TextForeColor     AS COLORREF      ' // Text foreground color
       m_TextBkColor       AS COLORREF      ' // Text background color
       m_TextForeColorDown AS LONG = -1     ' // Text foreground down color
@@ -118,6 +119,8 @@ TYPE CXpButton
       DECLARE SUB SetBitmapFromFile (BYVAL pwszPath AS WSTRING PTR, BYVAL ImageState AS LONG, BYVAL fRedraw AS LONG = FALSE)
       DECLARE SUB SetImageFromFile (BYREF wszPath AS WSTRING, BYVAL ImageState AS LONG = XPBI_NORMAL, BYVAL fRedraw AS LONG = FALSE, BYVAL dimPercent AS LONG = 0, BYVAL bGrayScale AS LONG = FALSE)
       DECLARE SUB SetImageFromRes (BYVAL hInstance AS HINSTANCE, BYREF wszImageName AS WSTRING, BYVAL ImageState AS LONG = XPBI_NORMAL, BYVAL fRedraw AS LONG = FALSE, BYVAL dimPercent AS LONG = 0, BYVAL bGrayScale AS LONG = FALSE)
+      DECLARE SUB SetButtonBkColorHot (BYVAL bkgColorHot AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
+      DECLARE FUNCTION GetButtonBkColorHot () AS COLORREF
       DECLARE SUB SetButtonBkColor (BYVAL bkgColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
       DECLARE FUNCTION GetButtonBkColor () AS COLORREF
       DECLARE SUB SetButtonBkColorDown (BYVAL bkColorDown AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
@@ -156,6 +159,8 @@ TYPE CXpButton
       DECLARE PROPERTY ButtonBkColor (BYVAL bkColor AS COLORREF)
       DECLARE PROPERTY ButtonBkColorDown () AS COLORREF
       DECLARE PROPERTY ButtonBkColorDown (BYVAL bkColorDown AS COLORREF)
+      DECLARE PROPERTY ButtonBkColorHot () AS COLORREF
+      DECLARE PROPERTY ButtonBkColorHot (BYVAL bkColorHot AS COLORREF)
       DECLARE PROPERTY TextForeColor () AS COLORREF
       DECLARE PROPERTY TextForeColor (BYVAL textColor AS COLORREF)
       DECLARE PROPERTY TextBkColor () AS COLORREF
@@ -169,6 +174,7 @@ TYPE CXpButton
       DECLARE PROPERTY DisabledImageHandle () AS HANDLE
       DECLARE PROPERTY BkBrush () AS HBRUSH
       DECLARE PROPERTY BkBrushDown () AS HBRUSH
+      DECLARE PROPERTY BkBrushHot () AS HBRUSH
 
       ' // Callback function
       DECLARE STATIC FUNCTION CXPButtonProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
@@ -249,6 +255,7 @@ PRIVATE DESTRUCTOR CXpButton
    ' // Deletes the brushes
    IF m_hBkBrush THEN .DeleteObject m_hBkBrush
    IF m_hBkBrushDown THEN .DeleteObject m_hBkBrushDown
+   IF m_hBkBrushHot THEN .DeleteObject m_hBkBrushHot
    ' // Deletes the font
    IF m_hFont THEN .DeleteObject m_hFont
 END DESTRUCTOR
@@ -939,7 +946,7 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
             END IF
          END IF
       ELSE
-         IF m_hBkBrush = NULL THEN .FillRect hDc, @rcContent, GetSysColorBrush(COLOR_BTNFACE)
+         If m_hBkBrush = Null Then .FillRect hDc, @rcContent, GetSysColorBrush(COLOR_BTNFACE)
          IF bIsPressed THEN
             .FrameRect hDc, @rcContent, GetSysColorBrush(COLOR_BTNSHADOW)
          ELSE
@@ -956,11 +963,11 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
       ELSE
          DIM rc2 AS RECT = rcContent
          .InflateRect @rc2, -1, -1   ' // To no overwrite the border
-         IF iStateId = PBS_HOT AND m_hBkBrushDown <> NULL THEN
-            .FillRect hDc, @rc2, m_hBkBrushDown
-         ELSE
-            IF m_hBkBrush THEN .FillRect hDc, @rc2, m_hBkBrush
-         END IF
+         If m_hBkBrush Then .FillRect hDc, @rc2, m_hBkBrush
+         If iStateId = PBS_HOT Andalso m_hBkBrushHot <> Null Then
+            .FillRect hDc, @rc2, m_hBkBrushHot
+         Else
+         End If
       END IF
    END IF
 
@@ -1256,7 +1263,7 @@ END SUB
 ' ========================================================================================
 PRIVATE FUNCTION CXpButton.GetButtonBkColor () AS COLORREF
    IF m_hBkBrush = NULL THEN RETURN 0
-   DIM lb AS LOGBRUSH
+   Dim lb As LOGBRUSH
    GetObject(m_hBkBrush, SIZEOF(LOGBRUSH), @lb)
    RETURN lb.lbColor
 END FUNCTION
@@ -1273,6 +1280,20 @@ PRIVATE FUNCTION CXpButton.GetButtonBkColorDown () AS COLORREF
    IF m_hBkBrushDown = NULL THEN RETURN 0
    DIM lb AS LOGBRUSH
    GetObject(m_hBkBrushDown, SIZEOF(LOGBRUSH), @lb)
+   RETURN lb.lbColor
+END FUNCTION
+' ========================================================================================
+PRIVATE SUB CXpButton.SetButtonBkColorHot (BYVAL bkColorHot AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
+   IF m_hBkBrushHot THEN .DeleteObject m_hBkBrushHot
+   m_hBkBrushHot = CreateSolidBrush(bkColorHot)
+   IF fRedraw THEN this.Redraw
+END SUB
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CXpButton.GetButtonBkColorHot () AS COLORREF
+   IF m_hBkBrushHot = NULL THEN RETURN 0
+   DIM lb AS LOGBRUSH
+   GetObject(m_hBkBrushHot, SIZEOF(LOGBRUSH), @lb)
    RETURN lb.lbColor
 END FUNCTION
 ' ========================================================================================
@@ -1523,6 +1544,21 @@ PRIVATE PROPERTY CXpButton.ButtonBkColorDown (BYVAL bkColorDown AS COLORREF)
    this.Redraw
 END PROPERTY
 ' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ButtonBkColorHot () AS COLORREF
+   IF m_hBkBrushHot = NULL THEN RETURN 0
+   DIM lb AS LOGBRUSH
+   GetObject(m_hBkBrushHot, SIZEOF(LOGBRUSH), @lb)
+   PROPERTY = lb.lbColor
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.ButtonBkColorHot (BYVAL bkColorHot AS COLORREF)
+   IF m_hBkBrushHot THEN .DeleteObject m_hBkBrushHot
+   m_hBkBrushHot = CreateSolidBrush(bkColorHot)
+   this.Redraw
+END PROPERTY
+' ========================================================================================
 
 ' ========================================================================================
 ' Gets/sets the text foreground color of the button.
@@ -1610,6 +1646,13 @@ END PROPERTY
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.BkBrushDown () AS HBRUSH
    PROPERTY = m_hBkBrushDown
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Gets the background color brush hot
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.BkBrushHot () AS HBRUSH
+   PROPERTY = m_hBkBrushHot
 END PROPERTY
 ' ========================================================================================
 
