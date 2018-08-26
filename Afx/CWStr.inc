@@ -422,8 +422,8 @@ END OPERATOR
 ' ========================================================================================
 PRIVATE OPERATOR CWstr.Let (BYREF pwszStr AS WSTRING PTR)
    CWSTR_DP("CWSTR LET WSTRING PTR = " & .WSTR(pwszStr))
-   IF pwszStr = NULL THEN EXIT OPERATOR
    this.Clear
+   IF pwszStr = NULL THEN EXIT OPERATOR
    this.Add(*pwszStr)
 END OPERATOR
 ' ========================================================================================
