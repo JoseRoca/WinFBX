@@ -118,6 +118,23 @@ CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, _
 | *dwExStyle* | The extended style of the window being created. |
 | *pAmbientDisp* | Pointer to a **CAXHOST_AMBIENTDISP** structure. |
 
+The following code fragmen embeds an instance of the WebBrowser control and navigates to a site:
+
+```
+CONST IDC_WEBBROWSER = 1001
+
+DIM pAxHost AS CAxHost PTR = NEW CAxHost(@pWindow, IDC_WEBBROWSER, "Shell.Explorer", _
+    0, 0, pWindow.ClientWidth, pWindow.ClientHeight - 20)
+
+DIM pWb AS IWebBrowser2 PTR = cast(IWebBrowser2 PTR, pAxHost->OcxDispPtr)
+IF pWb THEN
+   DIM vUrl AS VARIANT
+   vUrl.vt = VT_BSTR
+   vUrl.bstrVal = SysAllocString("http://www.planetsquires.com/protect/forum/index.php")
+   DIM hr AS HRESULT = pWb->lpvtbl->Navigate2(pWb, @vUrl, NULL, NULL, NULL, NULL)
+   VariantClear @vurl
+END IF
+```
 
 # <a name="Constructor2"></a>Constructor(ClsId)
 
