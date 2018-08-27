@@ -120,125 +120,10 @@ CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS INTEGER, _
 
 The following example embeds an instance of the WebBrowser control and navigates to a site:
 
-```
-' ########################################################################################
-' Microsoft Windows
-' Compiler: FreeBasic 32 & 64 bit
-' Copyright (c) 2017 José Roca. Freeware. Use at your own risk.
-' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
-' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
-' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-' ########################################################################################
+| Name       | Description |
+| ---------- | ----------- |
+| [Example1](#Example1) | Embedding the WebBroser control. |
 
-#define UNICODE
-#include once "Afx/CAxHost/CAxHost.inc"
-USING Afx
-
-CONST IDC_WEBBROWSER = 1000
-
-DECLARE FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
-                          BYVAL hPrevInstance AS HINSTANCE, _
-                          BYVAL szCmdLine AS ZSTRING PTR, _
-                          BYVAL nCmdShow AS LONG) AS LONG
-
-   END WinMain(GetModuleHandleW(NULL), NULL, COMMAND(), SW_NORMAL)
-
-' // Forward declaration
-DECLARE FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
-
-' ========================================================================================
-' Main
-' ========================================================================================
-FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
-                  BYVAL hPrevInstance AS HINSTANCE, _
-                  BYVAL szCmdLine AS ZSTRING PTR, _
-                  BYVAL nCmdShow AS LONG) AS LONG
-
-   ' // Set process DPI aware
-   ' // The recommended way is to use a manifest file
-   AfxSetProcessDPIAware
-
-   ' // Creates the main window
-   DIM pWindow AS CWindow
-   ' -or- DIM pWindow AS CWindow = "MyClassName" (use the name that you wish)
-   DIM hwndMain AS HWND = pWindow.Create(NULL, "CAxHost test", @WndProc)
-   ' // Sizes it by setting the wanted width and height of its client area
-   pWindow.SetClientSize(900, 450)
-   ' // Centers the window
-   pWindow.Center
-
-   ' // Create an instance of the WebBrowser control
-   DIM pHost AS CAxHost = CAxHost(@pWindow, IDC_WEBBROWSER, "Shell.Explorer", 0, 0, pWindow.ClientWidth, pWindow.ClientHeight)
-   ' // Get a direct pointer to the Afx_IWebBrowser2 interface
-   DIM hWb AS HWND = GetDlgItem(pWindow.hWindow, IDC_WEBBROWSER)
-   DIM pWb AS Afx_IWebBrowser2 PTR = CAST(ANY PTR, AfxCAxHostDispPtr(hWb))
-   IF pWb THEN
-      ' // Navigate to a web page
-      DIM wszUrl AS WSTRING * 260 = "http://www.planetsquires.com/protect/forum/index.php"
-      DIM vUrl AS VARIANT : vUrl.vt = VT_BSTR : vUrl.bstrVal = SysAllocString(wszUrl)
-      DIM hr AS HRESULT = pWb->Navigate2(@vUrl, NULL, NULL, NULL, NULL)
-      VariantClear @vurl
-   END IF
-
-   ' // Display the window
-   ShowWindow(hWndMain, nCmdShow)
-   UpdateWindow(hWndMain)
-
-   ' // Dispatch Windows messages
-   DIM uMsg AS MSG
-   WHILE (GetMessageW(@uMsg, NULL, 0, 0) <> FALSE)
-      IF AfxCAxHostForwardMessage(GetFocus, @uMsg) = FALSE THEN
-         IF IsDialogMessageW(hWndMain, @uMsg) = 0 THEN
-            TranslateMessage(@uMsg)
-            DispatchMessageW(@uMsg)
-         END IF
-      END IF
-   WEND
-   FUNCTION = uMsg.wParam
-
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Main window procedure
-' ========================================================================================
-FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
-
-   SELECT CASE uMsg
-
-      CASE WM_COMMAND
-         SELECT CASE GET_WM_COMMAND_ID(wParam, lParam)
-            CASE IDCANCEL
-               ' // If ESC key pressed, close the application by sending an WM_CLOSE message
-               IF GET_WM_COMMAND_CMD(wParam, lParam) = BN_CLICKED THEN
-                  SendMessageW hwnd, WM_CLOSE, 0, 0
-                  EXIT FUNCTION
-               END IF
-
-         END SELECT
-
-      CASE WM_SIZE
-         ' // Optional resizing code
-         IF wParam <> SIZE_MINIMIZED THEN
-            ' // Retrieve a pointer to the CWindow class
-            DIM pWindow AS CWindow PTR = AfxCWindowPtr(hwnd)
-            ' // Move the position of the control
-            IF pWindow THEN pWindow->MoveWindow GetDlgItem(hwnd, IDC_WEBBROWSER), 0, 0, pWindow->ClientWidth, pWindow->ClientHeight, CTRUE
-         END IF
-
-    	CASE WM_DESTROY
-         ' // Ends the application by sending a WM_QUIT message
-         PostQuitMessage(0)
-         EXIT FUNCTION
-
-   END SELECT
-
-   ' // Default processing of Windows messages
-   FUNCTION = DefWindowProcW(hwnd, uMsg, wParam, lParam)
-
-END FUNCTION
-' ========================================================================================
-```
 
 # <a name="Constructor2"></a>Constructor(ClsId)
 
@@ -586,4 +471,128 @@ WHILE (GetMessageW(@uMsg, NULL, 0, 0) <> FALSE)
       END IF
    END IF
 WEND
+```
+
+The following example embeds an instance of the WebBrowser control and navigates to a site:
+
+# <a name="Example1"></a>Embedding the WebBrowser control
+
+```
+' ########################################################################################
+' Microsoft Windows
+' Compiler: FreeBasic 32 & 64 bit
+' Copyright (c) 2017 José Roca. Freeware. Use at your own risk.
+' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+' ########################################################################################
+
+#define UNICODE
+#include once "Afx/CAxHost/CAxHost.inc"
+USING Afx
+
+CONST IDC_WEBBROWSER = 1000
+
+DECLARE FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
+                          BYVAL hPrevInstance AS HINSTANCE, _
+                          BYVAL szCmdLine AS ZSTRING PTR, _
+                          BYVAL nCmdShow AS LONG) AS LONG
+
+   END WinMain(GetModuleHandleW(NULL), NULL, COMMAND(), SW_NORMAL)
+
+' // Forward declaration
+DECLARE FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
+
+' ========================================================================================
+' Main
+' ========================================================================================
+FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
+                  BYVAL hPrevInstance AS HINSTANCE, _
+                  BYVAL szCmdLine AS ZSTRING PTR, _
+                  BYVAL nCmdShow AS LONG) AS LONG
+
+   ' // Set process DPI aware
+   ' // The recommended way is to use a manifest file
+   AfxSetProcessDPIAware
+
+   ' // Creates the main window
+   DIM pWindow AS CWindow
+   ' -or- DIM pWindow AS CWindow = "MyClassName" (use the name that you wish)
+   DIM hwndMain AS HWND = pWindow.Create(NULL, "CAxHost test", @WndProc)
+   ' // Sizes it by setting the wanted width and height of its client area
+   pWindow.SetClientSize(900, 450)
+   ' // Centers the window
+   pWindow.Center
+
+   ' // Create an instance of the WebBrowser control
+   DIM pHost AS CAxHost = CAxHost(@pWindow, IDC_WEBBROWSER, "Shell.Explorer", 0, 0, pWindow.ClientWidth, pWindow.ClientHeight)
+   ' // Get a direct pointer to the Afx_IWebBrowser2 interface
+   DIM hWb AS HWND = GetDlgItem(pWindow.hWindow, IDC_WEBBROWSER)
+   DIM pWb AS Afx_IWebBrowser2 PTR = CAST(ANY PTR, AfxCAxHostDispPtr(hWb))
+   IF pWb THEN
+      ' // Navigate to a web page
+      DIM wszUrl AS WSTRING * 260 = "http://www.planetsquires.com/protect/forum/index.php"
+      DIM vUrl AS VARIANT : vUrl.vt = VT_BSTR : vUrl.bstrVal = SysAllocString(wszUrl)
+      DIM hr AS HRESULT = pWb->Navigate2(@vUrl, NULL, NULL, NULL, NULL)
+      VariantClear @vurl
+   END IF
+
+   ' // Display the window
+   ShowWindow(hWndMain, nCmdShow)
+   UpdateWindow(hWndMain)
+
+   ' // Dispatch Windows messages
+   DIM uMsg AS MSG
+   WHILE (GetMessageW(@uMsg, NULL, 0, 0) <> FALSE)
+      IF AfxCAxHostForwardMessage(GetFocus, @uMsg) = FALSE THEN
+         IF IsDialogMessageW(hWndMain, @uMsg) = 0 THEN
+            TranslateMessage(@uMsg)
+            DispatchMessageW(@uMsg)
+         END IF
+      END IF
+   WEND
+   FUNCTION = uMsg.wParam
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Main window procedure
+' ========================================================================================
+FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
+
+   SELECT CASE uMsg
+
+      CASE WM_COMMAND
+         SELECT CASE GET_WM_COMMAND_ID(wParam, lParam)
+            CASE IDCANCEL
+               ' // If ESC key pressed, close the application by sending an WM_CLOSE message
+               IF GET_WM_COMMAND_CMD(wParam, lParam) = BN_CLICKED THEN
+                  SendMessageW hwnd, WM_CLOSE, 0, 0
+                  EXIT FUNCTION
+               END IF
+
+         END SELECT
+
+      CASE WM_SIZE
+         ' // Optional resizing code
+         IF wParam <> SIZE_MINIMIZED THEN
+            ' // Retrieve a pointer to the CWindow class
+            DIM pWindow AS CWindow PTR = AfxCWindowPtr(hwnd)
+            ' // Move the position of the control
+            IF pWindow THEN pWindow->MoveWindow GetDlgItem(hwnd, IDC_WEBBROWSER), 0, 0, pWindow->ClientWidth, pWindow->ClientHeight, CTRUE
+         END IF
+
+    	CASE WM_DESTROY
+         ' // Ends the application by sending a WM_QUIT message
+         PostQuitMessage(0)
+         EXIT FUNCTION
+
+   END SELECT
+
+   ' // Default processing of Windows messages
+   FUNCTION = DefWindowProcW(hwnd, uMsg, wParam, lParam)
+
+END FUNCTION
+' ========================================================================================
 ```
