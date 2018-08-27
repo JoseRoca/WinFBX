@@ -169,6 +169,8 @@ TYPE CXpButton
       DECLARE PROPERTY TextForeColorDown (BYVAL textColor AS COLORREF)
       DECLARE PROPERTY TextBkColorDown () AS COLORREF
       DECLARE PROPERTY TextBkColorDown (BYVAL textColor AS COLORREF)
+      DECLARE PROPERTY TextMargin () AS LONG
+      DECLARE PROPERTY TextMargin (BYVAL nMargin AS LONG)
       DECLARE PROPERTY NormalImageHandle () AS HANDLE
       DECLARE PROPERTY HotImageHandle () AS HANDLE
       DECLARE PROPERTY DisabledImageHandle () AS HANDLE
@@ -1657,3 +1659,4 @@ END PROPERTY
 ' ========================================================================================
 
 END NAMESPACE
+

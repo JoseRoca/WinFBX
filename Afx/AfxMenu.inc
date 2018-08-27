@@ -478,7 +478,7 @@ END FUNCTION
 ' If the function succeeds, the return value is 0.
 ' If the function fails, the return value is a system error code.
 ' ========================================================================================
-PRIVATE FUNCTION AfxGetMenuRect (BYVAL hwnd AS HWND, BYVAL hmenu AS HMENU, BYVAL prcmenu AS RECT PTR) AS LONG
+PRIVATE FUNCTION AfxGetMenuRect OVERLOAD (BYVAL hwnd AS HWND, BYVAL hmenu AS HMENU, BYVAL prcmenu AS RECT PTR) AS LONG
    DIM i AS LONG, nRes AS LONG, rc AS RECT
    FOR i = 1 TO GetMenuItemCount(hmenu)
       nRes = GetMenuItemRect(hwnd, hmenu, i, @rc)
@@ -486,6 +486,17 @@ PRIVATE FUNCTION AfxGetMenuRect (BYVAL hwnd AS HWND, BYVAL hmenu AS HMENU, BYVAL
       UnionRect prcmenu, prcmenu, @rc
    NEXT
    RETURN nRes
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION AfxGetMenuRect OVERLOAD (BYVAL hwnd AS HWND, BYVAL hmenu AS HMENU) AS RECT
+   DIM i AS LONG, nRes AS LONG, rc AS RECT, rcMenu AS RECT
+   FOR i = 1 TO GetMenuItemCount(hmenu)
+      nRes = GetMenuItemRect(hwnd, hmenu, i, @rc)
+      IF nRes = -1 THEN nRes = GetLastError : EXIT FOR
+      UnionRect @rcMenu, @rcMenu, @rc
+   NEXT
+   RETURN rcMenu
 END FUNCTION
 ' ========================================================================================
 
@@ -698,7 +709,7 @@ END FUNCTION
 '                  menu item identifier. Otherwise, it is a menu item position.
 ' - hIcon        = Handle of the icon to add to the menu.
 ' - fAutoDestroy = TRUE (the default) or FALSE.
-'                  If TRUE, AddIconToMenuItem destroys the icon before returning.
+'                  If TRUE, AfxAddIconToMenuItem destroys the icon before returning.
 ' - phbmp        = Location where the bitmap representation of the icon is stored. Can be NULL.
 ' ========================================================================================
 PRIVATE FUNCTION AfxAddIconToMenuItem (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, BYVAL fByPosition AS BOOLEAN, BYVAL hIcon AS HICON, BYVAL fAutoDestroy AS BOOLEAN = TRUE, BYVAL phbmp AS HBITMAP PTR = NULL) AS BOOLEAN
