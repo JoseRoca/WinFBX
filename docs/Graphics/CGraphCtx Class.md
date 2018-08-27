@@ -34,7 +34,8 @@ CONSTRUCTOR CGraphCtx (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, _
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Example](#Skeleton) | CWindow Graphic Control Skeleton. |
+| [Example 1](#Skeleton) | CWindow Graphic Control Skeleton. |
+| [Example 2](#OpenGLSkeleton) | CWindow OpenGL Graphic Control Skeleton. |
 
 ### Helper Procedure: AfxCGraphPtr
 
@@ -621,9 +622,13 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
 
 END FUNCTION
 ' ========================================================================================
+```
+
+# <a name="OpenGLSkeleton"></a>CWindow OpenGL Graphic Control Skeleton
 
 The following example demonstrates the use of OpenGL and GDI+ together.
 
+```
 ' ########################################################################################
 ' Microsoft Windows
 ' Contents: CWindow OpenGL Graphic Control Skeleton
