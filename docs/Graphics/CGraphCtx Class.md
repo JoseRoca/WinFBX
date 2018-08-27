@@ -28,7 +28,7 @@ CONSTRUCTOR CGraphCtx (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, _
 | *y* | The initial y-coordinate of the upper-left corner of the window relative to the upper-left corner of the parent window's client area. |
 | *nWidth* | The width of the control. |
 | *nHeight* | The height of the control. |
-| *dwStyle* | The style of the window being created. Pass -1 to use the default styles. |
+| *dwStyle* | The style of the window being created. Pass -1 to use the default styles.<br>Default styles: WS_VISIBLE OR WS_CHILD OR WS_TABSTOP. |
 | *dwExStyle* | The extended window style of the control being created. Pass -1 to use the default styles. |
 | *lpParam* | Pointer to custom data. |
 
