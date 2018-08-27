@@ -123,6 +123,7 @@ The following example embeds an instance of the WebBrowser control and navigates
 | Name       | Description |
 | ---------- | ----------- |
 | [Example1](#Example1) | Embedding the WebBroser control. |
+| [Example2](#Example2) | Goofle Map. |
 
 
 # <a name="Constructor2"></a>Constructor(ClsId)
@@ -473,9 +474,10 @@ WHILE (GetMessageW(@uMsg, NULL, 0, 0) <> FALSE)
 WEND
 ```
 
-The following example embeds an instance of the WebBrowser control and navigates to a site:
 
 # <a name="Example1"></a>Embedding the WebBrowser control
+
+The following example embeds an instance of the WebBrowser control and navigates to a site:
 
 ```
 ' ########################################################################################
@@ -595,4 +597,172 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
 
 END FUNCTION
 ' ========================================================================================
+```
+
+# <a name="Example2"></a>Google Map
+
+The following example embeds an instance of the WebBrowser control and uses an script to gost Google Map:
+
+```
+' ########################################################################################
+' Microsoft Windows
+' Contents: WebBrowser - Google Map
+' Compiler: FreeBasic 32 & 64 bit
+' Copyright (c) 2016 José Roca. Freeware. Use at your own risk.
+' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+' ########################################################################################
+
+#define UNICODE
+#define _CAXH_DEBUG_ 1
+#include once "Afx/CAxHost/CAxHost.inc"
+USING Afx
+
+CONST IDC_WEBBROWSER = 1001
+
+DECLARE FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
+                          BYVAL hPrevInstance AS HINSTANCE, _
+                          BYVAL szCmdLine AS ZSTRING PTR, _
+                          BYVAL nCmdShow AS LONG) AS LONG
+
+   END WinMain(GetModuleHandleW(NULL), NULL, COMMAND(), SW_NORMAL)
+
+' // Forward declaration
+DECLARE FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
+
+' ========================================================================================
+' Build the script
+' Added ".infomsg {display:none;}" to the style to avoid this message:
+' "You are using a browser that is not supported by the Google Maps JavaScript API.
+' Consider changing your browser".
+' ========================================================================================
+FUNCTION BuildScript () AS STRING
+   DIM s AS STRING
+   s  = "<!DOCTYPE html>"
+   s += "<html>"
+   s += "   <head>"
+   s += "      <meta http-equiv='X-UA-Compatible' content='IE=edge'>"
+   s += "      <meta http-equiv='MSThemeCompatible' content='yes'>"
+   s += "      <style>"
+   s += "         .infomsg {display:none;}"
+   s += "         html, body, #map-canvas"
+   s += "         {"
+   s += "            height: 100%;"
+   s += "            margin: 0px;"
+   s += "            padding: 0px"
+   s += "         }"
+   s += "      </style>"
+   s += "      <script src='https://maps.googleapis.com/maps/api/js?v=3'></script>"
+   s += "      <script>"
+   s += "         var globalLatLng = '';"
+   s += "         function initialize()"
+   s += "         {"
+   s += "            var mapOptions ="
+   s += "            {"
+   s += "               zoom: 8,"
+   s += "               center: new google.maps.LatLng(51.5, -0.2),"
+   s += "               mapTypeId: google.maps.MapTypeId.ROADMAP"
+   s += "            };"
+   s += "            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);"
+   s += "         }"
+   s += "         google.maps.event.addDomListener(window, 'load', initialize);"
+   s += "      </script>"
+   s += "   </head>"
+   s += "   <body>"
+   s += "      <div id='map-canvas'></div>"
+   s += "   </body>"
+   s += "</html>"
+   FUNCTION = s
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Main
+' ========================================================================================
+FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
+                  BYVAL hPrevInstance AS HINSTANCE, _
+                  BYVAL szCmdLine AS ZSTRING PTR, _
+                  BYVAL nCmdShow AS LONG) AS LONG
+
+   ' // Set process DPI aware
+   ' // The recommended way is to use a manifest file
+   AfxSetProcessDPIAware
+
+   ' // Creates the main window
+   DIM pWindow AS CWindow
+   ' -or- DIM pWindow AS CWindow = "MyClassName" (use the name that you wish)
+   DIM hwndMain AS HWND = pWindow.Create(NULL, "WebBrowser - Google Map", @WndProc)
+   ' // Sizes it by setting the wanted width and height of its client area
+   pWindow.SetClientSize(750, 450)
+   ' // Centers the window
+   pWindow.Center
+
+   ' // Create an instance of the WebBrowser control
+   DIM pHost AS CAxHost = CAxHost(@pWindow, IDC_WEBBROWSER, "Shell.Explorer", 0, 0, pWindow.ClientWidth, pWindow.ClientHeight)
+   ' // Get a direct pointer to the Afx_IWebBrowser2 interface
+   DIM hWb AS HWND = GetDlgItem(pWindow.hWindow, IDC_WEBBROWSER)
+   DIM pWb AS Afx_IWebBrowser2 PTR = CAST(ANY PTR, AfxCAxHostDispPtr(hWb))
+   IF pWb THEN
+      ' // Build the script
+      DIM s AS STRING = BuildScript
+      ' // Save the script as a temporary file
+      DIM wszPath AS WSTRING * MAX_PATH = AfxSaveTempFile(s, "html")
+      ' // Navigate to a web page
+      DIM vUrl AS VARIANT : vUrl.vt = VT_BSTR : vUrl.bstrVal = SysAllocString(wszPath)
+      DIM hr AS HRESULT = pWb->Navigate2(@vUrl, NULL, NULL, NULL, NULL)
+      VariantClear @vurl
+      ' // Processes pending Windows messages to allow the page to load
+      ' // Needed if the message pump isn't running
+      AfxPumpMessages
+      ' // Kill the temporary file
+      KILL wszPath
+   END IF
+
+   ' // Displays the window and dispatches the Windows messages
+   FUNCTION = pWindow.DoEvents(nCmdShow)
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Main window procedure
+' ========================================================================================
+FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
+
+   SELECT CASE uMsg
+
+      CASE WM_COMMAND
+         SELECT CASE GET_WM_COMMAND_ID(wParam, lParam)
+            CASE IDCANCEL
+               ' // If ESC key pressed, close the application by sending an WM_CLOSE message
+               IF GET_WM_COMMAND_CMD(wParam, lParam) = BN_CLICKED THEN
+                  SendMessageW hwnd, WM_CLOSE, 0, 0
+                  EXIT FUNCTION
+               END IF
+         END SELECT
+
+      CASE WM_SIZE
+         ' // Optional resizing code
+         IF wParam <> SIZE_MINIMIZED THEN
+            ' // Retrieve a pointer to the CWindow class
+            DIM pWindow AS CWindow PTR = AfxCWindowPtr(hwnd)
+            ' // Move the position of the control
+            IF pWindow THEN pWindow->MoveWindow GetDlgItem(hwnd, IDC_WEBBROWSER), _
+               0, 0, pWindow->ClientWidth, pWindow->ClientHeight, CTRUE
+         END IF
+
+    	CASE WM_DESTROY
+         ' // Ends the application by sending a WM_QUIT message
+         PostQuitMessage(0)
+         EXIT FUNCTION
+
+   END SELECT
+
+   ' // Default processing of Windows messages
+   FUNCTION = DefWindowProcW(hwnd, uMsg, wParam, lParam)
+
+END FUNCTION
+' ========================================================================================
+
 ```
