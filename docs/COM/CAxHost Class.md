@@ -123,7 +123,7 @@ The following example embeds an instance of the WebBrowser control and navigates
 | Name       | Description |
 | ---------- | ----------- |
 | [Example1](#Example1) | Embedding the WebBroser control. |
-| [Example2](#Example2) | Goofle Map. |
+| [Example2](#Example2) | Google Map. |
 
 
 # <a name="Constructor2"></a>Constructor(ClsId)
