@@ -112,7 +112,7 @@ SLEEP
 | Name       | Description |
 | ---------- | ----------- |
 | [Operator LET](#Operator1) | Assigns a value to a **CCUR** variable. |
-| [CAST operators](#Operator2) | Converts a CCUR into another data type. |
+| [CAST operators](#Operator2) | Converts a **CCUR** into another data type. |
 | [Operator \*](#Operator3) | Returns the address of the underlying **CURRENCY** structure. |
 | [Comparison operators](#Operator4) | Compares currency numbers. |
 | [Math operators](#Operator5) | Add, subtract, multiply or divide currency numbers. |
