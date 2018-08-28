@@ -141,9 +141,7 @@ Returns the address of the underlying **CURRENCY** structure.
 OPERATOR * (BYREF cur AS CCUR) AS CURRENCY PTR
 ```
 
-```
 # <a name="Operator4"></a>Comparison operators
-```
 
 ```
 OPERATOR = (BYREF cur1 AS CCUR, BYREF cur2 AS CCUR) AS BOOLEAN
