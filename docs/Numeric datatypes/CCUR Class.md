@@ -137,7 +137,9 @@ cv = cast(VARIANT, c)
 
 Returns the address of the underlying **CURRENCY** structure.
 
+```
 OPERATOR * (BYREF cur AS CCUR) AS CURRENCY PTR
+```
 
 ```
 # <a name="Operator4"></a>Comparison operators
