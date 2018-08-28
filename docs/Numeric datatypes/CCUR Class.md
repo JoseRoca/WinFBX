@@ -46,11 +46,72 @@ The constructor that accepts a DOUBLE value is particulary useful, because it al
 DIM c AS CCUR = 12345.1234
 ```
 
+#### Testing code:
+
+```
+'#CONSOLE ON
+#INCLUDE ONCE "Afx/CCur.inc"
+using Afx
+
+DIM c AS CCUR = 12345.1234
+print c
+c = c + 111.11
+print c
+c = c - 111.11
+print c
+c = c * 2
+print c
+c = c / 2
+print c
+c += 123
+print c
+c -= 123
+print c
+c *= 2.3
+print c
+c /= 2.3
+print c
+c = c ^ 2
+print c
+c = SQR(c)
+print c
+DIM c2 AS CCUR = c
+print c2
+DIM c3 AS CCUR = c * 2
+print c3
+DIM c4 AS CCUR = c3 / 2
+print c4
+DIM c5 AS CCUR = "1234.789"
+print c5
+DIM c6 AS CCUR
+c6 = "77777.999"
+print c6
+DIM c7 AS CCUR
+c7 = c6
+print c7
+DIM cl AS CCUR = 3
+cl = LOG(cl)
+print cl
+DIM v AS VARIANT = cl
+dim cv AS CCUR = v
+print cv
+print "--------------"
+DIM cx AS CCUR
+FOR i AS LONG = 1 TO 1000000
+   cx += 0.0001
+NEXT
+PRINT "0.0001 added 1,000,000 times = "; cx
+
+PRINT
+PRINT "Press any key..."
+SLEEP
+```
+
 ### Operators
 
 | Name       | Description |
 | ---------- | ----------- |
-| [OPerator LET](#Operator1) | Assigns a value to a **CCUR** variable. |
+| [Operator LET](#Operator1) | Assigns a value to a **CCUR** variable. |
 | [CAST operators](#Operator2) | Converts a CCUR into another data type. |
 | [Operator \*](#Operator3) | Returns the address of the underlying **CURRENCY** structure. |
 | [Comparison operators](#Operator4) | Compares currency numbers. |
