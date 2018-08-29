@@ -460,9 +460,8 @@ END FUNCTION
 ' This form formats the value by using the format string which contains special formatting
 ' codes that are preceded by a percent sign (%), as in printf.
 ' For more information about the formatting codes, see strftime, wcsftime in the Run-Time
-' Library Reference: https://msdn.microsoft.com/en-us/library/38wh24td.aspx#coledatetime__format
+' Library Reference: https://msdn.microsoft.com/en-us/library/fe06s4ak.aspx
 ' Example: print ct.Format("%A, %B %d, %Y %H:%M:%S")
-' Example: print ct.FormatGmt("%A, %B %d, %Y %H:%M:%S")
 ' ========================================================================================
 PRIVATE FUNCTION CFileTime.Format (BYREF wszFmt AS WSTRING) AS CWSTR
    DIM cwsOut AS CWSTR
