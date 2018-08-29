@@ -310,8 +310,6 @@ The # flag may prefix any formatting code. In that case, the meaning of the form
 
 Formats the value by using the format string which contains special formatting codes that are preceded by a percent sign (%).
 
-**Format** uses the local time and **FormatGmt** the **Gmt** time.
-
 #### Examples
 
 ```
