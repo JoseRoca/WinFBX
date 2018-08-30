@@ -1,7 +1,6 @@
 ' ########################################################################################
 ' Microsoft Windows
-' File: COleCon.inc
-' Contents: OLE Container
+' Contents: Interface declarations used by ACAxHost (OLE container)
 ' Compiler: FreeBasic 32 & 64-bit
 ' Copyright (c) 2017 José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER

@@ -356,7 +356,7 @@ END SUB
 ' ========================================================================================
 
 ' ========================================================================================
-' COleCon class constructors
+' CAxHost class constructors
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CAxHost (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszLibName AS WSTRING, _
 BYREF rclsid AS const CLSID, BYREF riid AS const IID, BYREF wszLicKey AS WSTRING, _
@@ -1292,7 +1292,7 @@ END FUNCTION
 ' Parameters:
 ' - hwnd = Reference window handle.
 ' - Control identifier, e.g. IDC_WEBBROWSER.
-' Returns a pointer to the COleCon class or NULL.
+' Returns a pointer to the CAxHost class or NULL.
 ' ========================================================================================
 PRIVATE FUNCTION AfxCAxHostPtr OVERLOAD (BYVAL hwnd AS HWND, BYVAL cID AS WORD) AS CAxHost PTR
    DIM wszClassName AS WSTRING * 260
