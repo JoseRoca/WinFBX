@@ -151,7 +151,7 @@ TYPE CWindow
       DECLARE FUNCTION AddControl (BYREF wszClassName AS WSTRING, BYVAL hParent AS HWND = NULL, BYVAL cID AS LONG_PTR = 0, _
               BYREF wszTitle AS WSTRING = "", BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, _
               BYVAL nHeight AS LONG = 0, BYVAL dwStyle AS LONG = -1, BYVAL dwExStyle AS LONG = -1, BYVAL lpParam AS LONG_PTR = 0, _
-              BYVAL pWndProc AS WNDPROC = NULL, BYVAL uIdSubclass AS UINT_PTR = &HFFFFFFFF, BYVAL dwRefData AS DWORD_PTR = NULL) AS HWND
+              BYVAL pWndProc AS SUBCLASSPROC = NULL, BYVAL uIdSubclass AS UINT_PTR = &HFFFFFFFF, BYVAL dwRefData AS DWORD_PTR = NULL) AS HWND
       DECLARE PROPERTY AccelHandle () AS HACCEL
       DECLARE PROPERTY AccelHandle (BYVAL hAccel AS HACCEL)
       DECLARE SUB AddAccelerator OVERLOAD (BYVAL fvirt AS UBYTE, BYVAL wKey AS WORD, BYVAL cmd AS WORD)
@@ -1440,7 +1440,7 @@ PRIVATE FUNCTION CWindow.AddControl ( _
    BYVAL dwStyle AS LONG = -1, _                          ' // Control style
    BYVAL dwExStyle AS LONG = -1, _                        ' // Extended style
    BYVAL lpParam AS LONG_PTR = 0, _                       ' // Pointer to custom data
-   BYVAL pWndProc AS WNDPROC = NULL, _                    ' // Address of the window callback procedure
+   BYVAL pWndProc AS SUBCLASSPROC = NULL, _               ' // Address of the window callback procedure
    BYVAL uIdSubclass AS UINT_PTR = &HFFFFFFFF, _          ' // The subclass ID
    BYVAL dwRefData as DWORD_PTR = NULL _                  ' // Pointer to reference data
    ) AS HWND                                              ' // Control handle
@@ -1770,7 +1770,8 @@ PRIVATE FUNCTION CWindow.AddControl ( _
       IF uIdSubclass = &HFFFFFFFF THEN
          .SetPropW(hCtl, "OLDWNDPROC", CAST(HANDLE, .SetWindowLongPtrW(hCtl, GWLP_WNDPROC, CAST(LONG_PTR, pWndProc))))
       ELSE
-         .SetWindowSubclass hCtl, CAST(SUBCLASSPROC, pWndProc), uIdSubclass, dwRefData
+'         .SetWindowSubclass hCtl, CAST(SUBCLASSPROC, pWndProc), uIdSubclass, dwRefData
+         .SetWindowSubclass hCtl, pWndProc, uIdSubclass, dwRefData
       END IF
    END IF
    FUNCTION = hCtl
