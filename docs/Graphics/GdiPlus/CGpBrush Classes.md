@@ -70,7 +70,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [ResetTransform](#ResetTransformLGBrush) | Resets the transformation matrix to the identity matrix. |
 | [RotateTransform](#RotateTransformLGBrush) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
 | [ScaleTransform](#ScaleTransformLGBrush) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
-| [SetBlend](#SetBlend) | Sets the blend factors and the blend positions to create a custom blend. |
+| [SetBlend](#SetBlendLGBrush) | Sets the blend factors and the blend positions to create a custom blend. |
 | [SetBlendBellShape](#SetBlendBellShape) | Sets the blend bell shape. |
 | [SetBlendTriangularShape](#SetBlendTriangularShape) | Sets the blend triangular shape. |
 | [SetGammaCorrection](#SetBlendTriangularShape) | Specifies whether gamma correction is enabled. |
@@ -110,7 +110,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [ResetTransform](#ResetTransformPGBrush) | Resets the transformation matrix to the identity matrix. |
 | [RotateTransform](#RotateTransformPGBrush) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
 | [ScaleTransform](#ScaleTransformPGBrush) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
-| [SetBlend](#SetBlend) | Sets the blend factors and the blend positions to create a custom blend. |
+| [SetBlend](#SetBlendPGBrush) | Sets the blend factors and the blend positions to create a custom blend. |
 | [SetBlendBellShape](#SetBlendBellShape) | Sets the blend bell shape. |
 | [SetBlendTriangularShape](#SetBlendTriangularShape) | Sets the blend triangular shape. |
 | [SetCenterColor](#SetCenterColor) | Sets the center color of this brush. |
@@ -2554,7 +2554,7 @@ FUNCTION ScaleTransform (BYVAL sx AS SINGLE, BYVAL sy AS SINGLE, _
 | ---------- | ----------- |
 | *sx* | Simple precision number that specifies the amount to scale in the x direction. |
 | *sy* | Simple precision number that specifies the amount to scale in the y direction. |
-| *order* | Optional.  Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
 
 #### Return value
 
@@ -2591,6 +2591,134 @@ SUB Example_ScaleTransform (BYVAL hdc AS HDC)
    textureBrush.RotateTransform(30)
    textureBrush.ScaleTransform(3, 1, MatrixOrderAppend)
    graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetBlendLGBrush"></a>SetBlend (CGpLinearGradientBrush)
+
+Sets the blend factors and the blend positions of this linear gradient brush to create a custom blend.
+
+```
+FUNCTION SetBlend (BYVAL blendFactors AS SINGLE PTR, BYVAL blendPositions AS SINGLE PTR, _
+   BYVAL count AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *blendFactors* | Pointer to an array of simple precision numbers that specify blend factors. Each number in the array specifies a percentage of the ending color and should be in the range from 0.0 through 1.0. |
+| *blendPositions* | Pointer to an array of simple precision numbers that specify blend positions. Each number in the array indicates a percentage of the distance between the starting boundary and the ending boundary and is in the range from 0.0 through 1.0, where 0.0 indicates the starting boundary of the gradient and 1.0 indicates the ending boundary. There must be at least two positions specified: the first position, which is always 0.0f, and the last position, which is always 1.0f. Otherwise, the behavior is undefined. A blend position between 0.0 and 1.0 indicates a line, parallel to the boundary lines, that is a certain fraction of the distance from the starting boundary to the ending boundary. For example, a blend position of 0.7 indicates the line that is 70 percent of the distance from the starting boundary to the ending boundary. The color is constant on lines that are parallel to the boundary lines. |
+| *count* | Optional. Integer that specifies the number of elements in the blendFactors array. This is the same as the number of elements in the *blendPositions* array. The blend factor at a given array index corresponds to the blend position at that same array index. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **LinearGradientBrush** object has two boundaries. When you fill an area with a linear gradient brush, the color changes gradually as you move from the starting boundary to the ending boundary. By default, the color is linearly related to the distance, but you can customize the relationship between color and distance by calling the **SetBlend** method.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush, sets a custom blend, and uses the
+' brush to fill a rectangle.
+' ========================================================================================
+SUB Example_SetBlend (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM factors(0 TO 3) AS SINGLE = {0.0, 0.4, 0.6, 1.0}
+   DIM positions(0 TO 3) AS SINGLE = {0.0, 0.2, 0.8, 1.0}
+   DIM rcf AS GpRectF = GDIP_RECTF(0, 0, 100, 50)
+
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rcf, GDIP_ARGB(255, 255, 0, 0), _
+       GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   linGrBrush.SetBlend(@factors(0), @positions(0), 4)
+   graphics.FillRectangle(@linGrBrush, @rcf)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetBlendPGBrush"></a>SetBlend (CGpPathGradientBrush)
+
+Sets the blend factors and the blend positions of this path gradient brush.
+
+```
+FUNCTION SetBlend (BYVAL blendFactors AS SINGLE PTR, BYVAL blendPositions AS SINGLE PTR, _
+   BYVAL count AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *blendFactors* | Pointer to an array of blend factors. Each number in the array should be in the range 0 through 1. |
+| *blendPositions* | Pointer to an array of blend positions. Each number in the array should be in the range 0 through 1. |
+| *count* | Optional. Integer that specifies the number of elements in the blendFactors array. This is the same as the number of elements in the *blendPositions* array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **PathGradientBrush** object has a boundary path and a center point. When you fill an area with a path gradient brush, the color changes gradually as you move from the boundary path to the center point. By default, the color is linearly related to the distance, but you can customize the relationship between color and distance by calling the **SetBlend** method.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on an ellipse. The code
+' calls the PathGradientBrush::SetBlend method of the PathGradientBrush object to establish
+' a set of blend factors and blend positions for the brush. Then the code uses the path
+' gradient brush to fill the ellipse.
+' ========================================================================================
+SUB Example_SetBlend (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a path that consists of a single ellipse.
+   DIM path AS CGpGraphicsPath
+   path.AddEllipse(0, 0, 200, 100)
+
+   ' // Use the path to construct a brush.
+   DIM pthGrBrush AS CGpPathGradientBrush = @path
+
+   ' // Set the color at the center of the path to blue.
+   pthGrBrush.SetCenterColor(GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Set the color along the entire boundary of the path to aqua.
+   DIM colors(0) AS ARGB = {GDIP_ARGB(255, 0, 255, 255)}
+   DIM count AS LONG = 1
+   pthGrBrush.SetSurroundColors(@colors(0), @count)
+
+   ' // Set blend factors and positions for the path gradient brush.
+   DIM factors(0 TO 3) AS SINGLE = {0.0, 0.4, 0.8, 1.0}
+   DIM positions(0 TO 3) AS SINGLE = {0.0, 0.3, 0.7, 1.0}
+
+   pthGrBrush.SetBlend(@factors(0), @positions(0), 4)
+
+   ' // Fill the ellipse with the path gradient brush.
+   graphics.FillEllipse(@pthGrBrush, 0, 0, 200, 100)
 
 END SUB
 ' ========================================================================================
