@@ -1954,7 +1954,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="MultiplyTransformGBrush"></a>MultiplyTransform (CGpPathGradientBrush)
+# <a name="MultiplyTransformPGBrush"></a>MultiplyTransform (CGpPathGradientBrush)
 
 Updates the brush's transformation matrix with the product of itself and another matrix.
 
