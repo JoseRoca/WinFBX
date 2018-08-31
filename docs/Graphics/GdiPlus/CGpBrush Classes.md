@@ -59,7 +59,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [Constructors](#ConstructorLGBrush) | Creates a **LinearGradientBrush** object. |
 | [GetBlend](#GetBlendLGBrush) | Gets the blend factors and their corresponding blend positions. |
 | [GetBlendCount](#GetBlendCountLGBrush) | Gets the number of blend factors currently set. |
-| [GetGammaCorrection](#GetGammaCorrectionLGBush) | Determines whether gamma correction is enabled for this brush. |
+| [GetGammaCorrection](#GetGammaCorrectionLGBrush) | Determines whether gamma correction is enabled for this brush. |
 | [GetInterpolationColorCount](#GetInterpolationColorCount) | Gets the number of colors currently set to be interpolated. |
 | [GetInterpolationColors](#GetInterpolationColors) | Gets the blend factors and their corresponding blend positions. |
 | [GetLinearColors](#GetLinearColors) | Gets the starting color and ending color. |
