@@ -59,7 +59,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [Constructors](#ConstructorLGBrush) | Creates a **LinearGradientBrush** object. |
 | [GetBlend](#GetBlendLGBrush) | Gets the blend factors and their corresponding blend positions. |
 | [GetBlendCount](#GetBlendCountLGBrush) | Gets the number of blend factors currently set. |
-| [GetGammaCorrection](#GetGammaCorrection) | Determines whether gamma correction is enabled for this brush. |
+| [GetGammaCorrection](#GetGammaCorrectionLGBush) | Determines whether gamma correction is enabled for this brush. |
 | [GetInterpolationColorCount](#GetInterpolationColorCount) | Gets the number of colors currently set to be interpolated. |
 | [GetInterpolationColors](#GetInterpolationColors) | Gets the blend factors and their corresponding blend positions. |
 | [GetLinearColors](#GetLinearColors) | Gets the starting color and ending color. |
@@ -97,7 +97,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [GetCenterColor](#GetCenterColor) | Gets center cpñpr of the brush. |
 | [GetCenterPoint](#GetCenterPoint) | Gets the center point of the brush. |
 | [GetFocusScales](#GetFocusScales) | Gets the focus scales of the brush. |
-| [GetGammaCorrection](#GetGammaCorrection) | Determines whether gamma correction is enabled for this brush. |
+| [GetGammaCorrection](#GetGammaCorrectionPGBrush) | Determines whether gamma correction is enabled for this brush. |
 | [GetInterpolationColorCount](#GetInterpolationColorCount) | Gets the number of preset colors currently specified for this brush. |
 | [GetInterpolationColors](#GetInterpolationColors) | Gets preset colors and blend positions currently specified for this brush. |
 | [GetPointCount](#GetPointCount) | Gets the number of points in the array of points that defines this brush's boundary path. |
@@ -1080,3 +1080,27 @@ SUB Example_GetFocusScales (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetGammaCorrection"></a>GetGammaCorrection (CGpLinearGradientBrush)
+
+Gets the focus scales of this path gradient brush.
+
+```
+FUNCTION GetGammaCorrection () AS BOOL
+```
+
+#### Return value
+
+If gamma correction is enabled, this method returns TRUE; otherwise, it returns FALSE.
+
+# <a name="GetGammaCorrection"></a>GetGammaCorrection (CGpLinearGradientBrush)
+
+Determines whether gamma correction is enabled for this path gradient brush.
+
+```
+FUNCTION GetGammaCorrection () AS BOOL
+```
+
+#### Return value
+
+If gamma correction is enabled, this method returns TRUE; otherwise, it returns FALSE.
