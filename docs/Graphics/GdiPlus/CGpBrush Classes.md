@@ -2541,7 +2541,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ScaleTransformYBrush"></a>ScaleTransform (CGpTextureBrush)
+# <a name="ScaleTransformTBrush"></a>ScaleTransform (CGpTextureBrush)
 
 Updates this texture brush's current transformation matrix with the product of itself and a scaling matrix.
 
