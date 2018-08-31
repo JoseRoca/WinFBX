@@ -25,9 +25,9 @@ The **SolidBrush** object defines a solid color Brush object. A **Brush** object
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#ConstructorSBrush) | Create a **SolidBrush** object based on a color. |
-| [GetColor](#GetColor) | Gets the color of this brush. |
-| [SetColor](#SetColor) | Sets the color of this brush. |
+| [Constructor](#ConstructorSolidBrush) | Create a **SolidBrush** object based on a color. |
+| [GetColor](#GetColorSolidBrush) | Gets the color of this brush. |
+| [SetColor](#SetColorSolidBrush) | Sets the color of this brush. |
 
 # CGpHatchBrush Class
 
@@ -236,3 +236,16 @@ SUB Example_GetType (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="ConstructorSolidBrush"></a>Constructor (CGpSolidBrush)
+
+Create a **SolidBrush** object based on a color.
+
+```
+CONSTRUCTOR CGpSolidBrush (BYVAL colour AS ARGB = &hFF000000)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colour* | An ARGB color that specifies the initial color of this solid brush.  |
+
