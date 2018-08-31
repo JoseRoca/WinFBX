@@ -779,3 +779,80 @@ SUB Example_GetBlend (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetBlendCountPGBrush"></a>GetBlendCount (CGpPathGradientBrush)
+
+Gets the number of blend factors currently set for this path gradient brush.
+
+```
+FUNCTION GetBlendCount () AS INT_
+```
+
+#### Return value
+
+Before you call the **GetBlend** method of a **PathGradientBrush** object, you must allocate two buffers: one to receive an array of blend factors and one to receive an array of blend positions. To determine the size of the required buffers, call the **GetBlendCount** method of the **PathGradientBrush** object. The size (in bytes) of each buffer should be the return value of **GetBlendCount** multiplied by 4 (the size of a simple precision number).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example demonstrates several methods of the PathGradientBrush class including
+' PathGradientBrush.SetBlend, PathGradientBrush.GetBlendCount, and PathGradientBrush.GetBlend.
+' The code creates a PathGradientBrush object and calls the PathGradientBrush.SetBlend method
+' to establish a set of blend factors and blend positions for the brush. Then the code calls
+' the PathGradientBrush.GetBlendCount method to retrieve the number of blend factors. After
+' the number of blend factors is retrieved, the code allocates two buffers: one to receive
+' the array of blend factors and one to receive the array of blend positions. Then the code
+' calls the PathGradientBrush.GetBlend method to retrieve the blend factors and the blend
+' positions.
+' ========================================================================================
+SUB Example_GetBlend (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a path that consists of a single ellipse.
+   DIM path AS CGpGraphicsPath
+   path.AddEllipse(0, 0, 200, 100)
+
+   ' // Use the path to construct a brush.
+   DIM pthGrBrush AS CGpPathGradientBrush = @path
+
+   ' // Set the color at the center of the path to blue.
+   pthGrBrush.SetCenterColor(GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Set the color along the entire boundary of the path to aqua.
+   DIM colors(0) AS ARGB = {GDIP_ARGB(255, 0, 255, 255)}
+   DIM count AS LONG = 1
+   pthGrBrush.SetSurroundColors(@colors(0), @count)
+
+   ' // Set blend factors and positions for the path gradient brush.
+   DIM factors(0 TO 3) AS SINGLE = {0.0, 0.4, 0.8, 1.0}
+   DIM positions(0 TO 3) AS SINGLE = {0.0, 0.3, 0.7, 1.0}
+
+   pthGrBrush.SetBlend(@factors(0), @positions(0), 4)
+
+   ' // Fill the ellipse with the path gradient brush.
+   graphics.FillEllipse(@pthGrBrush, 0, 0, 200, 100)
+
+   ' // Obtain information about the path gradient brush.
+   DIM blendCount AS LONG = pthGrBrush.GetBlendCount
+   DIM rgFactors(blendCount - 1) AS SINGLE
+   DIM rgPositions(blendCount - 1) AS SINGLE
+
+   pthGrBrush.GetBlend(@rgFactors(0), @rgPositions(0), blendCount)
+
+   FOR j AS LONG = 0 TO blendCount - 1
+'      // Inspect or use the value in rgFactors(j)
+'      // Inspect or use the value in rgPositions(j)
+      OutputDebugString STR(rgFactors(j)) & STR(rgPositions(j))
+   NEXT
+
+END SUB
+' ========================================================================================
+```
