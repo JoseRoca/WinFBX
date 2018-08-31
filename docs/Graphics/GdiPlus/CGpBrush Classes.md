@@ -63,7 +63,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [GetInterpolationColorCount](#GetInterpolationColorCountLGBrush) | Gets the number of colors currently set to be interpolated. |
 | [GetInterpolationColors](#GetInterpolationColorsLGBrush) | Gets the blend factors and their corresponding blend positions. |
 | [GetLinearColors](#GetLinearColors) | Gets the starting color and ending color. |
-| [GetRectangle](#GetRectangle) | Gets the rectangle that defines the boundaries of the gradient. |
+| [GetRectangle](#GetRectangleLGBrush) | Gets the rectangle that defines the boundaries of the gradient. |
 | [GetTransform](#GetTransform) | Gets the transformation matrix. |
 | [GetWrapMode](#GetWrapMode) | Gets the wrap mode currently set for this brush. |
 | [MultiplyTransform](#MultiplyTransform) | Updates this brush's transformation matrix with the product of itself and another matrix. |
@@ -101,7 +101,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [GetInterpolationColorCount](#GetInterpolationColorCountPGBrush) | Gets the number of preset colors currently specified for this brush. |
 | [GetInterpolationColors](#GetInterpolationColorsPGBrush) | Gets preset colors and blend positions currently specified for this brush. |
 | [GetPointCount](#GetPointCount) | Gets the number of points in the array of points that defines this brush's boundary path. |
-| [GetRectangle](#GetRectangle) | Gets the smallest rectangle that encloses the boundary path of this brush. |
+| [GetRectangle](#GetRectanglePGBrush) | Gets the smallest rectangle that encloses the boundary path of this brush. |
 | [GetSurroundColorCount](#GetSurroundColorCount) | Gets the number of colors that have been specified for the boundary path of this brush. |
 | [GetSurroundColors](#GetSurroundColors) | Gets the surround colors currently specified for this brush. |
 | [GetTransform](#GetTransform) | Gets the transformation matrix. |
@@ -1402,6 +1402,63 @@ SUB Example_GetLinearColors (BYVAL hdc AS HDC)
    DIM solidBrush1 AS CGpSolidBrush = colors(1)
    graphics.FillRectangle(@solidBrush0, 0, 0, 20, 20)
    graphics.FillRectangle(@solidBrush1, 25, 0, 20, 20)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetRectangleLGBrush"></a>GetRectangle (CGpLinearGradientBrush)
+
+Gets the rectangle that defines the boundaries of the gradient.
+
+```
+FUNCTION GetRectangle (BYVAL rc AS GpRectF PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *rc* | Pointer to a RectF structure that receives the rectangle that defines the boundaries of the gradient. For example, if a linear gradient brush is constructed with a starting point at (20.2, 50.8) and an ending point at (60.5, 110.0), then the defining rectangle has its upper-left point at (20.2, 50.8), a width of 40.3, and a height of 59.2. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The rectangle defines the boundaries of the gradient in the following ways: the right and left sides of the rectangle form the boundaries of a horizontal gradient; the top and bottom sides form the boundaries of a vertical gradient; two of the diagonally opposing corners lie on the boundaries of a diagonal gradient. In each of these cases, either side/corner may be on the starting boundary, depending on how the starting and ending points are passed to the constructor.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush. Then the code gets the brush's
+' rectangle and draws it.
+' ========================================================================================
+SUB Example_GetRectangle (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush.
+   DIM pt1 AS GpPoint = GDIP_POINT(20, 10)
+   DIM pt2 AS GpPoint = GDIP_POINT(60, 110)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
+      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Obtain information about the linear gradient brush.
+   DIM rc AS GpRect
+   linGrBrush.GetRectangle(@rc)
+
+   ' // Draw the retrieved rectangle.
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+   graphics.DrawRectangle(@pen, @rc)
 
 END SUB
 ' ========================================================================================
