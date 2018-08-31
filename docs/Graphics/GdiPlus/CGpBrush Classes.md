@@ -140,7 +140,7 @@ Defines a **Brush** object that contains an **Image** object that is used for th
 | [GetWrapMode](#GetWrapModeTBrush) | Gets the wrap mode currently set for this brush. |
 | [MultiplyTransform](#MultiplyTransformTBrush) | Updates this brush's transformation matrix with the product of itself and another matrix. |
 | [ResetTransform](#ResetTransformTBrush) | Resets the transformation matrix to the identity matrix. |
-| [RotateTransform](#RotateTransform) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
+| [RotateTransform](#RotateTransformTBrush) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
 | [ScaleTransform](#ScaleTransformTBrush) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
 | [SetTransform](#SetTransform) | Sets the transformation matrix. |
 | [SetWrapMode](#SetWrapMode) | Sets the wrap mode. |
