@@ -458,3 +458,64 @@ SUB Example_HatchBrushGetForegroundColor (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetHatchStyle"></a>GetHatchStyle (CGpHatchBrush)
+
+Gets the hatch style of this hatch brush.
+
+```
+FUNCTION GetHatchStyle () AS HatchStyle
+```
+
+#### Return value
+
+This method returns the hatch style, which is one of the elements of the **HatchStyle** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets up two hatch styles: horiz and current (initialized to
+' HatchStyleDiagonalCross). A rectangle that uses horiz as the hatch style is painted.
+' Then the HatchBrush.GetHatchStyle method is used to get the current hatch style of the
+' brush (which at the time is HatchStyleHorizontal). The address of the current HatchStyle
+' object (initialized to HatchStyleDiagonalCross) is passed as the return point for the
+' call to GetHatchStyle. When the rectangle is painted again, notice that the hatch style
+' is again HatchStyleHorizontal (not HatchStyleDiagonalCross). This shows that the call to
+' HatchBrush.GetHatchStyle was successful. 
+' ========================================================================================
+SUB Example_HatchBrushGetHatchStyle (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Set colors
+   DIM blue AS ARGB = GDIP_ARGB(255, 0, 0, 255)          ' // foreground
+   DIM turquoise AS ARGB = GDIP_ARGB(255, 0, 255, 255)   ' // background
+
+   ' // Set hatch styles
+   DIM horiz AS HatchStyle = HatchStyleHorizontal
+   DIM current AS HatchStyle = HatchStyleDiagonalCross
+
+   ' // Set and then draw the first hatch style.
+   DIM brush AS CGpHatchBrush = CGpHatchBrush(horiz, blue, turquoise)
+   graphics.FillRectangle(@brush, 20, 20, 100, 50)
+
+   ' // Get the current hatch style of the brush.
+   current = brush.GetHatchStyle
+   
+   ' // Get the current background color of the brush.
+   brush.GetBackgroundColor(@current)
+
+   ' // Draw the rectangle again using the current hatch style.
+   DIM brush2 AS CGpHatchBrush = CGpHatchBrush(current, blue, turquoise)
+   graphics.FillRectangle(@brush2, 130, 20, 100, 50)
+
+END SUB
+' ========================================================================================
+```
