@@ -1351,3 +1351,58 @@ SUB Example_GetInterpolationColors (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetLinearColors"></a>GetLinearColors (CGpLinearGradientBrush)
+
+Gets the starting color and ending color of this linear gradient brush.
+
+```
+FUNCTION GetLinearColors (BYVAL colors AS ARGB PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colors* | Pointer to an array that receives the starting color and the ending color. The first color in the colors array is the color at the starting boundary line of the gradient; the second color in the colors array is the color at the ending boundary line. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and gets the boundary colors. Next,
+' the code uses each of the two colors to create a solid brush. Then, the code fills a
+' rectangle with each solid brush.
+' ========================================================================================
+SUB Example_GetLinearColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush.
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 100, 50)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   ' // Obtain information about the linear gradient brush.
+   DIM colors(0 TO 1) AS ARGB
+   linGrBrush.GetLinearColors(@colors(0))
+
+   ' // Fill a small rectangle with each of the two colors.
+   DIM solidBrush0 AS CGpSolidBrush = colors(0)
+   DIM solidBrush1 AS CGpSolidBrush = colors(1)
+   graphics.FillRectangle(@solidBrush0, 0, 0, 20, 20)
+   graphics.FillRectangle(@solidBrush1, 25, 0, 20, 20)
+
+END SUB
+' ========================================================================================
+```
