@@ -2072,3 +2072,169 @@ SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="ResetTransformLGBrush"></a>ResetTransform (CGpLinearGradientBrush)
+
+Resets the transformation matrix of this linear gradient brush to the identity matrix. This means that no transformation takes place.
+
+```
+FUNCTION ResetTransform () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+ ========================================================================================
+' The following example creates a linear gradient brush and uses it to fill a rectangle.
+' Next, the code sets the brush's transformation matrix, fills a rectangle with the
+' transformed brush, resets the brush's transformation matrix, and fills a rectangle with
+' the untransformed brush.
+' ========================================================================================
+SUB Example_ResetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM S AS CGpMatrix = CGpMatrix(2, 0, 0, 1, 0, 0)    ' // horizontal doubling
+
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 200, 100)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   ' // Fill a large area with the gradient brush (no transformation).
+   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 100)
+
+   ' // Apply the scaling transformation.
+   linGrBrush.SetTransform(@S)
+
+   ' // Fill a large area with the scaled gradient brush.
+   graphics.FillRectangle(@linGrBrush, 0, 150, 800, 100)
+
+   ' // Reset the transformation
+   linGrBrush.ResetTransform
+
+   ' // Fill a large area with the gradient brush (no transformation)
+   graphics.FillRectangle(@linGrBrush, 0, 300, 800, 100)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="ResetTransformPGBrush"></a>ResetTransform (CGpPathGradientBrush)
+
+Resets the transformation matrix of this path gradient brush to the identity matrix. This means that no transformation will take place.
+
+```
+FUNCTION ResetTransform () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on a triangular path. The
+' code calls the PathGradientBrush.ScaleTransform method of the PathGradientBrush object
+' to fill the brush's transformation matrix with the elements that represent a horizontal
+' scaling by a factor of 3. Then the code calls the PathGradientBrush.MultiplyTransform
+' method of that same PathGradientBrush object to multiply the brush's existing transformation
+' matrix by a matrix that represents a translation (10 right, 30 down). The MatrixOrderAppend
+' argument indicates that the multiplication is performed with the translation matrix on the right.
+' After the multiplication, the brush's transformation matrix represents a composite
+' transformation: first scale, then translate. That composite transformation is applied to
+' the brush's boundary path during the call to FillRectangle, so it is the area inside the
+' transformed path that gets painted.
+' ========================================================================================
+SUB Example_ResetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(0, 0), GDIP_POINT(50, 0), GDIP_POINT(50, 50)}
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+
+   pthGrBrush.ScaleTransform(3.0, 1.0)
+   pthGrBrush.TranslateTransform(100.0, 50.0, MatrixOrderAppend)
+
+   ' // Fill an area with the transformed path gradient brush.
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 500, 500)
+
+   pthGrBrush.ResetTransform
+
+   ' // Fill the same area with the path gradient brush (no transformation).
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 500, 500)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="ResetTransformTBrush"></a>ResetTransform (CGpTextureBrush)
+
+Resets the transformation matrix of this texture brush to the identity matrix. This means that no transformation takes place.
+
+```
+FUNCTION ResetTransform () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' Next, the code uses the transformed brush to fill a rectangle. Then, the code resets the
+' transformation of the brush and uses the untransformed brush to fill a rectangle.
+' ========================================================================================
+SUB Example_ResetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.RotateTransform(30)
+
+   ' // Fill a rectangle with the transformed texture brush.
+   graphics.FillEllipse(@textureBrush, 0, 0, 200, 100)
+
+   ' // Reset the transformation
+   textureBrush.ResetTransform
+
+   ' // Fill a rectangle with the texture brush (no transformation).
+   graphics.FillEllipse(@textureBrush, 210, 0, 200, 100)
+
+END SUB
+' ========================================================================================
+```
