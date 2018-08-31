@@ -66,7 +66,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [GetRectangle](#GetRectangleLGBrush) | Gets the rectangle that defines the boundaries of the gradient. |
 | [GetTransform](#GetTransformLGBrush) | Gets the transformation matrix. |
 | [GetWrapMode](#GetWrapModeLGBrush) | Gets the wrap mode currently set for this brush. |
-| [MultiplyTransform](#MultiplyTransform) | Updates this brush's transformation matrix with the product of itself and another matrix. |
+| [MultiplyTransform](#MultiplyTransformLGBrush) | Updates this brush's transformation matrix with the product of itself and another matrix. |
 | [ResetTransform](#ResetTransform) | Resets the transformation matrix to the identity matrix. |
 | [RotateTransform](#RotateTransform) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
 | [ScaleTransform](#ScaleTransform) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
@@ -106,7 +106,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [GetSurroundColors](#GetSurroundColors) | Gets the surround colors currently specified for this brush. |
 | [GetTransform](#GetTransformPGBrush) | Gets the transformation matrix. |
 | [GetWrapMode](#GetWrapModePGBrush) | Gets the wrap mode currently set for this brush. |
-| [MultiplyTransform](#MultiplyTransform) | Updates this brush's transformation matrix with the product of itself and another matrix. |
+| [MultiplyTransform](#MultiplyTransformPGBrush) | Updates this brush's transformation matrix with the product of itself and another matrix. |
 | [ResetTransform](#ResetTransform) | Resets the transformation matrix to the identity matrix. |
 | [RotateTransform](#RotateTransform) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
 | [ScaleTransform](#ScaleTransform) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
@@ -138,7 +138,7 @@ Defines a **Brush** object that contains an **Image** object that is used for th
 | [GetImage](#GetImage) | Gets a pointer to the **Image** object that is defined by this brush. |
 | [GetTransform](#GetTransformTBrush) | Gets the transformation matrix. |
 | [GetWrapMode](#GetWrapModeTBrush) | Gets the wrap mode currently set for this brush. |
-| [MultiplyTransform](#MultiplyTransform) | Updates this brush's transformation matrix with the product of itself and another matrix. |
+| [MultiplyTransform](#MultiplyTransformTBrush) | Updates this brush's transformation matrix with the product of itself and another matrix. |
 | [ResetTransform](#ResetTransform) | Resets the transformation matrix to the identity matrix. |
 | [RotateTransform](#RotateTransform) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
 | [ScaleTransform](#ScaleTransform) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
