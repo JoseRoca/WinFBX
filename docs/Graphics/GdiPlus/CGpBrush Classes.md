@@ -560,7 +560,7 @@ CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRect PTR, BYVAL color1 AS ARGB
 | *angle* | Real number that, if *isAngleScalable* is TRUE, specifies the base angle from which the angle of the directional line is calculated, or that, if *isAngleScalable* is FALSE, specifies the angle of the directional line. The angle is measured from the top of the rectangle that is specified by rect and must be in degrees. The gradient follows the directional line. |
 | *isAngleScalable* | BOOL value that specifies whether the angle is scalable. If isAngleScalable is TRUE, the angle of the directional line is scalable; otherwise, the angle is not scalable. |
 
-# <a name="GetBlendÑGBrush"></a>GetBlend (CGpLinearGradientBrush)
+# <a name="GetBlendLGBrush"></a>GetBlend (CGpLinearGradientBrush)
 
 Gets the blend factors and their corresponding blend positions from a **LinearGradientBrush** object.
 
