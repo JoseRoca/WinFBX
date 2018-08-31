@@ -192,3 +192,47 @@ SUB Example_CloneBrush (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetTypeBrush"></a>GetType (CGpBrush)
+
+Gets the type of this brush.
+
+```
+FUNCTION GetType () AS GpBrushType
+```
+
+#### Return value
+
+This method returns the type of this brush. The value returned is one of the elements of the **BrushType** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a SolidBrush object, checks the type of the object, and
+' then, if the type is BrushTypeSolidColor, uses the brush to fill a rectangle.
+' ========================================================================================
+SUB Example_GetType (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a SolidBrush object
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 255)
+
+   ' // Get the type of solidBrush
+   DIM nType AS BrushType = solidBrush.GetType
+
+   ' // If the type of solidBrush is BrushTypeSolidColor, use it to fill a rectangle
+   IF nType = BrushTypeSolidColor THEN
+      graphics.FillRectangle(@solidBrush, 0, 0, 100, 100)
+   END IF
+
+END SUB
+' ========================================================================================
+```
