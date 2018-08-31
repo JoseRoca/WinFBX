@@ -99,7 +99,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [GetFocusScales](#GetFocusScales) | Gets the focus scales of the brush. |
 | [GetGammaCorrection](#GetGammaCorrectionPGBrush) | Determines whether gamma correction is enabled for this brush. |
 | [GetInterpolationColorCount](#GetInterpolationColorCountPGBrush) | Gets the number of preset colors currently specified for this brush. |
-| [GetInterpolationColors](#GetInterpolationColors^GBrush) | Gets preset colors and blend positions currently specified for this brush. |
+| [GetInterpolationColors](#GetInterpolationColorsPGBrush) | Gets preset colors and blend positions currently specified for this brush. |
 | [GetPointCount](#GetPointCount) | Gets the number of points in the array of points that defines this brush's boundary path. |
 | [GetRectangle](#GetRectangle) | Gets the smallest rectangle that encloses the boundary path of this brush. |
 | [GetSurroundColorCount](#GetSurroundColorCount) | Gets the number of colors that have been specified for the boundary path of this brush. |
