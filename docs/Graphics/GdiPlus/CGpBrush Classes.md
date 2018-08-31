@@ -116,7 +116,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [SetCenterColor](#SetCenterColor) | Sets the center color of this brush. |
 | [SetCenterPoint](#SetCenterPoint) | Sets the center point of this brush. |
 | [SetFocusScales](#SetFocusScales) | Sets the focus scales of this brush. |
-| [SetGammaCorrection](#SetBlendTriangularShape) | Specifies whether gamma correction is enabled. |
+| [SetGammaCorrection](#SetGammaCorrectionPGBrush) | Specifies whether gamma correction is enabled. |
 | [SetInterpolationColors](#SetInterpolationColors) | Sets the colors to be interpolated and their corresponding blend positions. |
 | [SetSurroundColors](#SetSurroundColors) | Sets the surround colors of this brush. |
 | [SetTransform](#SetTransform) | Sets the transformation matrix. |
