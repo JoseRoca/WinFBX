@@ -1275,3 +1275,79 @@ SUB Example_GetInterpolationColors (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetInterpolationColorsPGBrush"></a>GetInterpolationColors (CGpPathGradientBrush)
+
+Gets preset colors and blend positions currently specified for this path gradient brush.
+
+```
+FUNCTION GetInterpolationColors (BYVAL presetColors AS ARGB PTR, _
+   BYVAL blendPositions AS SINGLE PTR, BYVAL count AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *presetColors* | Pointer to an array that receives the colors. A color of a given index in the presetColors array corresponds to the blend position of that same index in the *blendPositions* array. |
+| *blendPositions* | Pointer to an array that receives the blend positions. Each blend position is a number from 0 through 1, where 0 indicates the boundary of the gradient and 1 indicates the center point. A blend position between 0 and 1 indicates the set of all points that are a certain fraction of the distance from the boundary to the center point. For example, a blend position of 0.7 indicates the set of all points that are 70 percent of the way from the boundary to the center point. |
+| *count* | Integer that specifies the number of elements in the *presetColorsarray*. This is the same as the number of elements in the *blendPositions* array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A simple path gradient brush has two colors: a boundary color and a center color. When you paint with such a brush, the color changes gradually from the boundary color to the center color as you move from the boundary path to the center point. You can create a more complex gradient by specifying an array of preset colors and an array of blend positions.
+
+Before you call the GetInterpolationColors method, you must allocate two buffers: one to hold the array of preset colors and one to hold the array of blend positions. You can call the **GetInterpolationColorCount** method of the **PathGradientBrush** object to determine the required size of those buffers. The size of the color buffer is the return value of **GetInterpolationColorCount** multiplied by 4. The size of the position buffer is the value of **GetInterpolationColorCount** multiplied by 4 (the size of a simple precision number).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object from a triangular path. The code
+' sets the preset colors to red, blue, and aqua and sets the blend positions to 0, 0.6, and 1.
+' The code calls the PathGradientBrush.GetInterpolationColorCount method of the PathGradientBrush
+' object to obtain the number of preset colors currently set for the brush. Next, the code
+' allocates two buffers: one to hold the array of preset colors, and one to hold the array
+' of blend positions. The call to the PathGradientBrush.GetInterpolationColors method of
+' the PathGradientBrush object fills the buffers with the preset colors and the blend positions.
+' Finally the code fills a small square with each of the preset colors.
+' ========================================================================================
+SUB Example_GetInterpolationColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(100, 0), GDIP_POINT(200, 200), GDIP_POINT(0, 200)}
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 255)}
+   DIM positions(0 TO 2) AS SINGLE = {0.0, 0.6, 1.0}
+
+   pthGrBrush.SetInterpolationColors(@colors(0), @positions(0), 3)
+
+   ' // Obtain information about the path gradient brush.
+   DIM colorCount AS LONG = pthGrBrush.GetInterpolationColorCount
+   DIM rgColors(colorCount - 1) AS ARGB
+   DIM rgPositions(colorCount - 1) AS SINGLE
+   pthGrBrush.GetInterpolationColors(@rgColors(0), @rgPositions(0), colorCount)
+
+   ' // Fill a small square with each of the interpolation colors.
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 255, 255)
+
+   FOR j AS LONG = 0 TO colorCount - 1
+      solidBrush.SetColor(rgColors(j))
+      graphics.FillRectangle(@solidBrush, 15 * j, 0, 10, 10)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
