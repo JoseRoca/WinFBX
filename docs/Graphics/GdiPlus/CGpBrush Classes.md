@@ -1003,3 +1003,80 @@ SUB Example_GetCenterPoint (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetFocusScales"></a>GetFocusScales (CGpPathGradientBrush)
+
+Gets the focus scales of this path gradient brush.
+
+```
+FUNCTION GetFocusScales (BYVAL xScale AS SINGLE PTR, BYVAL yScale AS SINGLE PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *xScale* | Pointer to a simple precision that receives the x focus scale value. |
+| *yScale* | Pointer to a simple precision that receives the y focus scale value. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+By default, the center color of a path gradient is at the center point. By calling **SetFocusScales**, you can specify that the center color should appear along a path that surrounds the center point. For example, suppose the boundary path is a triangle and the center point is at the centroid of that triangle. Also assume that the boundary color is red and the center color is blue. If you set the focus scales to (0.2, 0.2), the color is blue along the boundary of a small triangle that surrounds the center point. That small triangle is the main boundary path scaled by a factor of 0.2 in the x direction and 0.2 in the y direction. When you paint with the path gradient brush, the color will change gradually from red to blue as you move from the boundary of the large triangle to the boundary of the small triangle. The area inside the small triangle will be filled with blue.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on a triangular path.
+' The code sets the focus scales of the path gradient brush to (0.2, 0.2) and then uses
+' the path gradient brush to fill an area that contains the triangular path. Finally, the
+' code calls the PathGradientBrush.GetFocusScales method of the PathGradientBrush object
+' to obtain the values of the x focus scale and the y focus scale.
+' ========================================================================================
+SUB Example_GetFocusScales (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(100, 0), GDIP_POINT(200, 200), GDIP_POINT(0, 200)}
+
+   ' // No GraphicsPath object is created. The PathGradientBrush
+   ' // object is constructed directly from the array of points.
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+
+   DIM colors(0 TO 1) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255)}
+
+   ' // red at the boundary of the outer triangle
+   ' // blue at the boundary of the inner triangle
+   DIM relativePositions(0 TO 1) AS SINGLE = {0.0, 1.0}
+   pthGrBrush.SetInterpolationColors(@colors(0), @relativePositions(0), 2)
+
+   ' // The inner triangle is formed by scaling the outer triangle
+   ' // about its centroid. The scaling factor is 0.2 in both the x and y directions.
+   pthGrBrush.SetFocusScales(0.2, 0.2)
+
+   ' // Fill a rectangle that is larger than the triangle
+   ' // specified in the Point array. The portion of the
+   ' // rectangle outside the triangle will not be painted.
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 200, 200)
+
+   ' // Obtain information about the path gradient brush.
+   DIM xScale AS SINGLE = 0.0
+   DIM yScale AS SINGLE = 0.0
+   pthGrBrush.GetFocusScales(@xScale, @yScale)
+
+   ' // The value of xScale is now 0.2.
+   ' // The value of yScale is now 0.2. 
+
+END SUB
+' ========================================================================================
+```
