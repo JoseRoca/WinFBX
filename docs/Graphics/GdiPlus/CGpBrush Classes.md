@@ -268,6 +268,52 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
-The second overloades function returns the ARGB color as the result of the function.
+The second overloaded function returns the ARGB color as the result of the function.
 
+# <a name="SetColorSolidBrush"></a>SetColor (CGpSolidBrush)
+
+Sets the color of this solid brush.
+
+```
+FUNCTION SetColor (BYVAL colour AS ARGB) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colour* | The color to be set in this solid brush. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a solid brush and uses it to fill a rectangle. The code
+' uses GdipSetSolidFillColor to change the color of the solid brush and then paints a
+' second rectangle the new color.
+' ========================================================================================
+SUB Example_SetColor (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Create a solid brush, and use it to fill a rectangle
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 255)
+   graphics.FillRectangle(@solidBrush, 10, 10, 200, 100)
+
+   ' // Change the color of the brush to red, and fill another rectangle
+   solidBrush.SetColor(GDIP_ARGB(255, 255, 0, 0))
+   graphics.FillRectangle(@solidBrush, 220, 10, 200, 100)
+
+END SUB
+' ========================================================================================
+```
 
