@@ -880,7 +880,7 @@ The second overloaded function returns the ARGB color as the result of the funct
 
 #### Remarks
 
-By default, the center point of a **PathGradientBrush** object is the centroid of the brush's boundary path, but you can set the center point to any location, inside or outside the path, by calling the SetCenterPoint Methods method of the **PathGradientBrush** object.
+By default, the center point of a **PathGradientBrush** object is the centroid of the brush's boundary path, but you can set the center point to any location, inside or outside the path, by calling the **SetCenterPoint** method of the **PathGradientBrush** object.
 
 #### Example
 
