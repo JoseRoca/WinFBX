@@ -929,3 +929,77 @@ SUB Example_GetCenterColor (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetCenterPoint"></a>GetCenterPoint (CGpPathGradientBrush)
+
+Gets the center point of this path gradient brush.
+
+```
+FUNCTION GetCenterPoint (BYVAL pt AS PointF PTR) AS GpStatus
+FUNCTION GetCenterPoint (BYVAL pt AS Point PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pt* | Pointer to a **PointF** or **Point** structure that receives the center point. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+By default, the center point of a **PathGradientBrush** object is at the centroid of the brush's boundary path, but you can set the center point to any location, inside or outside the path, by calling the **SetCenterPoint** method of the **PathGradientBrush** object.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example demonstrates several methods of the PathGradientBrush class including
+' PathGradientBrush.GetCenterPoint and PathGradientBrush.SetCenterColor. The code creates
+' a PathGradientBrush object and then sets the brush's center color and boundary color.
+' The code calls the PathGradientBrush.GetCenterPoint method to determine the center point
+' of the path gradient and then draws a line from the origin to that center point.
+' ========================================================================================
+SUB Example_GetCenterPoint (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a path that consists of a single ellipse.
+   DIM path AS CGpGraphicsPath
+   path.AddEllipse(0, 0, 200, 100)
+
+   ' // Use the path to construct a brush.
+   DIM pthGrBrush AS CGpPathGradientBrush = @path
+
+   ' // Set the color at the center of the path to blue.
+   pthGrBrush.SetCenterColor(GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Set the color along the entire boundary of the path to aqua.
+   DIM colors(0) AS ARGB = {GDIP_ARGB(255, 0, 255, 255)}
+   DIM count AS LONG = 1
+   pthGrBrush.SetSurroundColors(@colors(0), @count)
+
+   ' // Fill the ellipse with the path gradient brush.
+   graphics.FillEllipse(@pthGrBrush, 0, 0, 200, 100)
+
+   ' // Obtain information about the path gradient brush.
+   DIM centerPoint AS GpPointF
+   pthGrBrush.GetCenterPoint(@centerPoint)
+
+   ' // Draw a line from the origin to the center of the ellipse.
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 255, 0)
+   DIM pt AS GpPointF = GDIP_POINTF(0, 0)
+   graphics.DrawLine(@pen, @pt, @centerPoint)
+   
+END SUB
+' ========================================================================================
+```
