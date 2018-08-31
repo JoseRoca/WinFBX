@@ -2788,7 +2788,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="SetBlendBellShapePGBRush"></a>SetBlendBellShape (CGpPathGradientBrush)
+# <a name="SetBlendBellShapePGBrush"></a>SetBlendBellShape (CGpPathGradientBrush)
 
 Sets the blend shape of this path gradient brush.
 
