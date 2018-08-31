@@ -1081,7 +1081,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="GetGammaCorrection"></a>GetGammaCorrection (CGpLinearGradientBrush)
+# <a name="GetGammaCorrectionLGBrush"></a>GetGammaCorrection (CGpLinearGradientBrush)
 
 Gets the focus scales of this path gradient brush.
 
@@ -1093,7 +1093,7 @@ FUNCTION GetGammaCorrection () AS BOOL
 
 If gamma correction is enabled, this method returns TRUE; otherwise, it returns FALSE.
 
-# <a name="GetGammaCorrection"></a>GetGammaCorrection (CGpLinearGradientBrush)
+# <a name="GetGammaCorrectionPGBrush"></a>GetGammaCorrection (CGpLinearGradientBrush)
 
 Determines whether gamma correction is enabled for this path gradient brush.
 
