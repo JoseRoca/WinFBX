@@ -1953,3 +1953,70 @@ SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="MultiplyTransformGBrush"></a>MultiplyTransform (CGpPathGradientBrush)
+
+Updates the brush's transformation matrix with the product of itself and another matrix.
+
+```
+FUNCTION MultiplyTransform (BYVAL pMatrix AS CGpMatrix PTR, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a matrix to be multiplied by the brush's current transformation matrix. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A single 3 ×3 matrix can store any sequence of affine transformations. If you have several 3 ×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3 ×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix R represents a rotation and matrix T represents a translation. If matrix M is the product RT, then matrix M represents a composite transformation: first rotate, then translate.
+
+The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on a triangular path. The
+' code calls the PathGradientBrush.ScaleTransform method of the PathGradientBrush object
+' to fill the brush's transformation matrix with the elements that represent a horizontal
+' scaling by a factor of 3. Then the code calls the PathGradientBrush.MultiplyTransform
+' method of that same PathGradientBrush object to multiply the brush's existing transformation
+' matrix by a matrix that represents a translation (10 right, 30 down). The MatrixOrderAppend
+' argument indicates that the multiplication is performed with the translation matrix on the right.
+' After the multiplication, the brush's transformation matrix represents a composite
+' transformation: first scale, then translate. That composite transformation is applied to
+' the brush's boundary path during the call to FillRectangle, so it is the area inside the
+' transformed path that gets painted.
+' ========================================================================================
+SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(0, 0), GDIP_POINT(50, 0), GDIP_POINT(50, 50)}
+
+   ' // Translate 10 right, 30 down.
+   DIM Matrix AS CGpMatrix = CGpMatrix(1.0, 0.0, 0.0, 1.0, 10.0, 30.0)
+
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+   pthGrBrush.ScaleTransform(3.0, 1.0)
+   pthGrBrush.MultiplyTransform(@matrix, MatrixOrderAppend)
+
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 200, 200)
+
+END SUB
+' ========================================================================================
+```
