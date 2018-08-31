@@ -1842,7 +1842,6 @@ FUNCTION GetWrapMode () AS WrapMode
 
 #### Return value
 
-
 This method returns the wrap mode currently set for this texture brush. The value returned is one of the elements of the **WrapMode** enumeration.
 
 #### Example
@@ -1879,6 +1878,77 @@ SUB Example_WrapMode (BYVAL hdc AS HDC)
    DIM textureBrush2 AS CGpTextureBrush = @pImage2
    textureBrush2.SetWrapMode(nWrapMode)
    graphics.FillRectangle(@textureBrush2, 210, 0, 200, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="MultiplyTransformLGBrush"></a>MultiplyTransform (CGpLinearGradientBrush)
+
+Updates this brush's transformation matrix with the product of itself and another matrix.
+
+```
+FUNCTION MultiplyTransform (BYVAL pMatrix AS CGpMatrix PTR, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a matrix to be multiplied by the brush's current transformation matrix. |
+| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A single 3 ×3 matrix can store any sequence of affine transformations. If you have several 3 ×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3 ×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix R represents a rotation, and matrix T represents a translation. If matrix M is the product RT, then matrix M represents a composite transformation: first rotate, then translate.
+
+The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and uses it to fill a rectangle.
+' Next, the code sets the brush's transformation matrix, fills a rectangle with the
+' transformed brush, modifies the brush's transformation matrix, and again fills a rectangle
+' with the transformed brush.
+' ========================================================================================
+SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM S AS CGpMatrix = CGpMatrix(2, 0, 0, 1, 0, 0)    ' // horizontal doubling
+   DIM T AS CGpMatrix = CGpMatrix(1, 0, 0, 1, 50, 0)   '  // horizontal translation of 50 units
+
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 200, 100)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   ' // Fill a large area with the gradient brush (no transformation).
+   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 100)
+
+   ' // Apply the scaling transformation.
+   linGrBrush.SetTransform(@S)
+
+   ' // Fill a large area with the scaled gradient brush.
+   graphics.FillRectangle(@linGrBrush, 0, 150, 800, 100)
+
+   ' // Form a composite transformation: first scale, then translate.
+   linGrBrush.MultiplyTransform(@T, MatrixOrderAppend)
+
+   ' // Fill a large area with the scaled and translated gradient brush.
+   graphics.FillRectangle(@linGrBrush, 0, 300, 800, 100)
 
 END SUB
 ' ========================================================================================
