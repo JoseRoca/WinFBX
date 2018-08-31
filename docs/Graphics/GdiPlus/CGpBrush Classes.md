@@ -73,7 +73,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [SetBlend](#SetBlendLGBrush) | Sets the blend factors and the blend positions to create a custom blend. |
 | [SetBlendBellShape](#SetBlendBellShapeLGBrush) | Sets the blend bell shape. |
 | [SetBlendTriangularShape](#SetBlendTriangularShape) | Sets the blend triangular shape. |
-| [SetGammaCorrection](#SetBlendTriangularShape) | Specifies whether gamma correction is enabled. |
+| [SetGammaCorrection](#SetGammaCorrectionLGBrush) | Specifies whether gamma correction is enabled. |
 | [SetInterpolationColors](#SetInterpolationColors) | Sets the colors to be interpolated and their corresponding blend positions. |
 | [SetLinearColors](#SetLinearColors) | Sets the starting color and ending color. |
 | [SetTransform](#SetTransform) | Sets the transformation matrix. |
@@ -112,7 +112,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [ScaleTransform](#ScaleTransformPGBrush) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
 | [SetBlend](#SetBlendPGBrush) | Sets the blend factors and the blend positions to create a custom blend. |
 | [SetBlendBellShape](#SetBlendBellShapePGBrush) | Sets the blend bell shape. |
-| [SetBlendTriangularShape](#SetBlendTriangularShape) | Sets the blend triangular shape. |
+| [SetBlendTriangularShape](#SetBlendTriangularShapePGBrush) | Sets the blend triangular shape. |
 | [SetCenterColor](#SetCenterColor) | Sets the center color of this brush. |
 | [SetCenterPoint](#SetCenterPoint) | Sets the center point of this brush. |
 | [SetFocusScales](#SetFocusScales) | Sets the focus scales of this brush. |
@@ -2856,3 +2856,47 @@ SUB Example_SetBlendBellShape (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetGammaCorrectionLGBrush"></a>SetGammaCorrection (CGpLinearGradientBrush)
+
+Specifies whether gamma correction is enabled for this linear gradient brush.
+
+```
+FUNCTION SetGammaCorrection (BYVAL useGammaCorrection AS BOOL) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *useGammaCorrection* | Boolean value that specifies whether gamma correction occurs during rendering. TRUE specifies that gamma correction is enabled, and FALSE specifies that gamma correction is not enabled. By default, gamma correction is disabled during construction of a **LinearGradientBrush** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Gamma correction is often done to match the intensity contrast of the gradient to the ability of the human eye to perceive intensity changes.
+
+# <a name="SetGammaCorrectionPGBrush"></a>SetGammaCorrection (CGpPathGradientBrush)
+
+Specifies specifies whether gamma correction is enabled for this path gradient brush.
+
+```
+FUNCTION SetGammaCorrection (BYVAL useGammaCorrection AS BOOL) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *useGammaCorrection* | Boolean value that specifies whether gamma correction is enabled. TRUE specifies that gamma correction is enabled, and FALSE specifies that gamma correction is not enabled. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Gamma correction is often done to match the intensity contrast of the gradient to the ability of the human eye to perceive intensity changes.
