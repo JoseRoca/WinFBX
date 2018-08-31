@@ -58,7 +58,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | ---------- | ----------- |
 | [Constructors](#ConstructorLGBrush) | Creates a **LinearGradientBrush** object. |
 | [GetBlend](#GetBlendLGBrush) | Gets the blend factors and their corresponding blend positions. |
-| [GetBlendCount](#GetBlendCount) | Gets the number of blend factors currently set. |
+| [GetBlendCount](#GetBlendCountLGBrush) | Gets the number of blend factors currently set. |
 | [GetGammaCorrection](#GetGammaCorrection) | Determines whether gamma correction is enabled for this brush. |
 | [GetInterpolationColorCount](#GetInterpolationColorCount) | Gets the number of colors currently set to be interpolated. |
 | [GetInterpolationColors](#GetInterpolationColors) | Gets the blend factors and their corresponding blend positions. |
@@ -93,7 +93,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | ---------- | ----------- |
 | [Constructors](#ConstructorPGBrush) | Creates a PathGradientBrush object based on an array of points. Initializes the wrap mode of the path gradient brush. |
 | [GetBlend](#GetBlendPGBrush) | Gets the blend factors and their corresponding blend positions. |
-| [GetBlendCount](#GetBlendCount) | Gets the number of blend factors currently set. |
+| [GetBlendCount](#GetBlendCountPGBrush) | Gets the number of blend factors currently set. |
 | [GetCenterColor](#GetCenterColor) | Gets center cpñpr of the brush. |
 | [GetCenterPoint](#GetCenterPoint) | Gets the center point of the brush. |
 | [GetFocusScales](#GetFocusScales) | Gets the focus scales of the brush. |
@@ -710,6 +710,65 @@ SUB Example_GetBlend (BYVAL hdc AS HDC)
    DIM rgPositions(blendCount - 1) AS SINGLE
 
    pthGrBrush.GetBlend(@rgFactors(0), @rgPositions(0), blendCount)
+
+   FOR j AS LONG = 0 TO blendCount - 1
+'      // Inspect or use the value in rgFactors(j)
+'      // Inspect or use the value in rgPositions(j)
+      OutputDebugString STR(rgFactors(j)) & STR(rgPositions(j))
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetBlendCountLGBrush"></a>GetBlendCount (CGpLinearGradientBrush)
+
+Gets the number of blend factors currently set for this **LinearGradientBrush** object.
+
+```
+FUNCTION GetBlendCount () AS INT_
+```
+
+#### Return value
+
+This method returns the number of blend factors currently set for this **LinearGradientBrush** object. If no custom blend has been set by using **SetBlend**, or if invalid positions were passed to **SetBlend**, then **GetBlend** returns 1.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush, sets its blend, and uses the brush
+' to fill a rectangle. The code then gets the blend. The blend factors and positions can
+' then be inspected or used in some way.
+' ========================================================================================
+SUB Example_GetBlend (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM factors(0 TO 3) AS SINGLE = {0.0, 0.4, 0.6, 1.0}
+   DIM positions(0 TO 3) AS SINGLE = {0.0, 0.2, 0.8, 1.0}
+
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(100, 0)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
+      GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+   linGrBrush.SetBlend(@factors(0), @positions(0), 4)
+
+   ' // Use the linear gradient brush to fill a rectangle.
+   graphics.FillRectangle(@linGrBrush, 0, 0, 100, 50)
+
+   ' // Obtain information about the linear gradient brush.
+   DIM blendCount AS LONG = linGrBrush.GetBlendCount
+   DIM rgFactors(blendCount - 1) AS SINGLE
+   DIM rgPositions(blendCount - 1) AS SINGLE
+
+   linGrBrush.GetBlend(@rgFactors(0), @rgPositions(0), blendCount)
 
    FOR j AS LONG = 0 TO blendCount - 1
 '      // Inspect or use the value in rgFactors(j)
