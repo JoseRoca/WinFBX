@@ -74,7 +74,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [SetBlendBellShape](#SetBlendBellShapeLGBrush) | Sets the blend bell shape. |
 | [SetBlendTriangularShape](#SetBlendTriangularShape) | Sets the blend triangular shape. |
 | [SetGammaCorrection](#SetGammaCorrectionLGBrush) | Specifies whether gamma correction is enabled. |
-| [SetInterpolationColors](#SetInterpolationColors) | Sets the colors to be interpolated and their corresponding blend positions. |
+| [SetInterpolationColors](#SetInterpolationColorsLGBrush) | Sets the colors to be interpolated and their corresponding blend positions. |
 | [SetLinearColors](#SetLinearColors) | Sets the starting color and ending color. |
 | [SetTransform](#SetTransform) | Sets the transformation matrix. |
 | [SetWrapMode](#SetWrapMode) | Sets the wrap mode. |
@@ -117,7 +117,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [SetCenterPoint](#SetCenterPoint) | Sets the center point of this brush. |
 | [SetFocusScales](#SetFocusScales) | Sets the focus scales of this brush. |
 | [SetGammaCorrection](#SetGammaCorrectionPGBrush) | Specifies whether gamma correction is enabled. |
-| [SetInterpolationColors](#SetInterpolationColors) | Sets the colors to be interpolated and their corresponding blend positions. |
+| [SetInterpolationColors](#SetInterpolationColorsPGBrush) | Sets the colors to be interpolated and their corresponding blend positions. |
 | [SetSurroundColors](#SetSurroundColors) | Sets the surround colors of this brush. |
 | [SetTransform](#SetTransform) | Sets the transformation matrix. |
 | [SetWrapMode](#SetWrapMode) | Sets the wrap mode. |
