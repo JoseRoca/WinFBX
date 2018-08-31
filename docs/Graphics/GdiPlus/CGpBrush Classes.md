@@ -247,5 +247,27 @@ CONSTRUCTOR CGpSolidBrush (BYVAL colour AS ARGB = &hFF000000)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *colour* | An ARGB color that specifies the initial color of this solid brush.  |
+| *colour* | An ARGB color that specifies the initial color of this solid brush. |
+
+# <a name="GetColorSolidBrush"></a>GetColor (CGpSolidBrush)
+
+Gets the color of this solid brush.
+
+```
+FUNCTION GetColor (BYVAL colour AS ARGB PTR) AS GpStatus
+FUNCTION GetColor () AS ARGB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colour* | Pointer to a variable that receives the color of this solid brush. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+The second overloades function returns the ARGB color as the result of the function.
+
 
