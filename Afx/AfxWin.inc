@@ -818,7 +818,7 @@ END FUNCTION
 ' Note: To display the old style dialog, pass -1 in the dwFlags parameter. (Crashes in Windows 10).
 ' ========================================================================================
 ' // Browse for folder dialog procedure
-PRIVATE FUNCTION AfxBrowseForFolderProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
+PRIVATE FUNCTION AfxBrowseForFolderProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LONG
 
    DIM wszBuffer AS WSTRING * MAX_PATH
 
