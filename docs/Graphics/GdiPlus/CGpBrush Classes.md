@@ -71,7 +71,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [RotateTransform](#RotateTransformLGBrush) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
 | [ScaleTransform](#ScaleTransformLGBrush) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
 | [SetBlend](#SetBlendLGBrush) | Sets the blend factors and the blend positions to create a custom blend. |
-| [SetBlendBellShape](#SetBlendBellShape) | Sets the blend bell shape. |
+| [SetBlendBellShape](#SetBlendBellShapeLGBrush) | Sets the blend bell shape. |
 | [SetBlendTriangularShape](#SetBlendTriangularShape) | Sets the blend triangular shape. |
 | [SetGammaCorrection](#SetBlendTriangularShape) | Specifies whether gamma correction is enabled. |
 | [SetInterpolationColors](#SetInterpolationColors) | Sets the colors to be interpolated and their corresponding blend positions. |
@@ -111,7 +111,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [RotateTransform](#RotateTransformPGBrush) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
 | [ScaleTransform](#ScaleTransformPGBrush) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
 | [SetBlend](#SetBlendPGBrush) | Sets the blend factors and the blend positions to create a custom blend. |
-| [SetBlendBellShape](#SetBlendBellShape) | Sets the blend bell shape. |
+| [SetBlendBellShape](#SetBlendBellShapePGBrush) | Sets the blend bell shape. |
 | [SetBlendTriangularShape](#SetBlendTriangularShape) | Sets the blend triangular shape. |
 | [SetCenterColor](#SetCenterColor) | Sets the center color of this brush. |
 | [SetCenterPoint](#SetCenterPoint) | Sets the center point of this brush. |
@@ -2719,6 +2719,139 @@ SUB Example_SetBlend (BYVAL hdc AS HDC)
 
    ' // Fill the ellipse with the path gradient brush.
    graphics.FillEllipse(@pthGrBrush, 0, 0, 200, 100)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetBlendBellShapeLGBRush"></a>SetBlendBellShape (CGpLinearGradientBrush)
+
+Sets the blend shape of this path gradient brush.
+
+```
+FUNCTION SetBlendBellShape (BYVAL focus AS SINGLE, BYVAL scale AS SINGLE = 1.0) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *focus* | Simple precision number that specifies where the center color will be at its highest intensity. This number must be in the range 0 through 1. |
+| *scale* | Simple precision number that specifies the maximum intensity of center color that gets blended with the boundary color. This number must be in the range 0 through 1. The default value is 1. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+By default, the color changes gradually from the starting color (color at the starting boundary of the linear gradient brush) to the ending color (color at the ending boundary of the linear gradient brush) as you move from the starting boundary to the ending boundary. You can customize the positioning and blending of the starting and ending colors by using the SetBlendBellShape method.
+
+The **SetBlendBellShape** method customizes the blend so that it follows a bell-shaped curve with the extremes of the bell's base at the gradient's boundaries. The starting color, which, in a default blend, is at the starting boundary of a linear gradient brush, appears at the starting and ending boundaries of the linear gradient brush when a bell-shaped blend is applied. The position of the ending color, which, in a default blend, is at the ending boundary, is somewhere between the boundaries and is determined by the value of the focus. In other words, the focus specifies the position of the peak of the bell. For example, a focus value of 0.7 places the peak at 70 percent of the distance between the starting and ending boundaries. The ending color appears at this peak.
+
+The ending color in a bell-shaped blend is a percentage of the gamut between the gradient's default-blend starting color and default-blend ending color. For example, suppose a linear gradient brush is constructed with red as the starting color and blue as the ending color. If **SetBlendBellShape** is called with a scale value of 0.8, the ending color in the bell shaped blend is a hue that is 80 percent between red and blue (20 percent red, 80 percent blue). A scale value of 1.0 produces an ending color that is 100 percent blue.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush, sets a bell-shaped blend, and uses
+' the brush to fill a rectangle. Twice more, the code sets a bell-shaped blend with different
+' values and, each time, uses the brush to fill a rectangle.
+' ========================================================================================
+SUB Example_SetBlendBellShape (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(500, 0)
+
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
+      GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+
+   linGrBrush.SetBlendBellShape(0.5, 0.6)
+   graphics.FillRectangle(@linGrBrush, 0, 0, 500, 50)
+
+   linGrBrush.SetBlendBellShape(0.5, 0.8)
+   graphics.FillRectangle(@linGrBrush, 0, 75, 500, 50)
+
+   linGrBrush.SetBlendBellShape(0.5, 1.0)
+   graphics.FillRectangle(@linGrBrush, 0, 150, 500, 50)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetBlendBellShapePGBRush"></a>SetBlendBellShape (CGpPathGradientBrush)
+
+Sets the blend shape of this path gradient brush.
+
+```
+FUNCTION SetBlendBellShape (BYVAL focus AS SINGLE, BYVAL scale AS SINGLE = 1.0) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *focus* | Simple precision number that specifies where the center color will be at its highest intensity. This number must be in the range 0 through 1. |
+| *scale* | Simple precision number that specifies the maximum intensity of center color that gets blended with the boundary color. This number must be in the range 0 through 1. The default value is 1. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+By default, as you move from the boundary of a path gradient to the center point, the color changes gradually from the boundary color to the center color. You can customize the positioning and blending of the boundary and center colors by calling the **SetBlendBellShape** method.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on an ellipse. The code
+' calls the PathGradientBrush.SetBlendBellShape method of the PathGradientBrush object,
+' passing a focus of 0.2 and a scale of 0.7. Then the code uses the path gradient brush to
+' paint a rectangle that contains the ellipse.
+' ========================================================================================
+SUB Example_SetBlendBellShape (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a path that consists of a single ellipse.
+   DIM path AS CGpGraphicsPath
+   path.AddEllipse(0, 0, 200, 100)
+
+   ' // Use the path to construct a brush.
+   DIM pthGrBrush AS CGpPathGradientBrush = @path
+
+   ' // Set the color at the center of the path to blue.
+   pthGrBrush.SetCenterColor(GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Set the color along the entire boundary of the path to aqua.
+   DIM colors(0) AS ARGB = {GDIP_ARGB(255, 0, 255, 255)}
+   DIM count AS LONG = 1
+   pthGrBrush.SetSurroundColors(@colors(0), @count)
+
+   pthGrBrush.SetBlendBellShape(0.2, 0.7)
+
+   ' // The color is blue on the boundary and at the center.
+   ' // At points that are 20 percent of the way from the boundary to the
+   ' // center, the color is 70 percent red and 30 percent blue.
+
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 300, 300)
 
 END SUB
 ' ========================================================================================
