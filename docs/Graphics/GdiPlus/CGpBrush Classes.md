@@ -1591,3 +1591,71 @@ END SUB
 ' ========================================================================================
 ```
 
+# <a name="GetTransformPGBrush"></a>GetTransform (CGpPathGradientBrush)
+
+Gets the transformation matrix of this path gradient brush.
+
+```
+FUNCTION GetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that receives the transformation matrix. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **PathGradientBrush** object maintains a transformation matrix that can store any affine transformation. When you use a path gradient brush to fill an area, GDI+ transforms the brush's boundary path according to the brush's transformation matrix and then fills the interior of the transformed path. The transformed path exists only during rendering; the boundary path stored in **PathGradientBrush** object is not transformed.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on an array of three points.
+' The PathGradientBrush.ScaleTransform and PathGradientBrush.TranslateTransform methods set
+' the elements of the brush's transformation matrix so that the matrix represents a composite
+' transformation (first scale, then translate). That composite transformation applies to
+' the brush's boundary path, so the call to FillRectangle fills the interior of a triangle
+' that is the result of scaling and translating the boundary path. The code calls the
+' PathGradientBrush.GetTransform method of the PathGradientBrush object to obtain the brush's
+' transformation matrix and then calls the GetElements method of the retrieved Matrix object
+' to fill an array with the matrix elements.
+' ========================================================================================
+SUB Example_GetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(0, 0), GDIP_POINT(50, 0), GDIP_POINT(50, 50)}
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+
+   pthGrBrush.ScaleTransform(3.0, 1.0)
+   pthGrBrush.TranslateTransform(10.0, 30.0, MatrixOrderAppend)
+
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 200, 200)
+
+   ' // Obtain information about the path gradient brush.
+   DIM matrix AS CGpMatrix
+   DIM elements(0 TO 5) AS SINGLE
+
+   pthGrBrush.GetTransform(@matrix)
+   matrix.GetElements(@elements(0))
+
+   FOR j AS LONG = 0 TO 5
+      ' // Inspect or use the value in elements(j)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
