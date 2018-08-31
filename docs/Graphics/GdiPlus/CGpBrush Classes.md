@@ -64,7 +64,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [GetInterpolationColors](#GetInterpolationColorsLGBrush) | Gets the blend factors and their corresponding blend positions. |
 | [GetLinearColors](#GetLinearColors) | Gets the starting color and ending color. |
 | [GetRectangle](#GetRectangleLGBrush) | Gets the rectangle that defines the boundaries of the gradient. |
-| [GetTransform](#GetTransform) | Gets the transformation matrix. |
+| [GetTransform](#GetTransformLGBrush) | Gets the transformation matrix. |
 | [GetWrapMode](#GetWrapMode) | Gets the wrap mode currently set for this brush. |
 | [MultiplyTransform](#MultiplyTransform) | Updates this brush's transformation matrix with the product of itself and another matrix. |
 | [ResetTransform](#ResetTransform) | Resets the transformation matrix to the identity matrix. |
@@ -104,7 +104,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [GetRectangle](#GetRectanglePGBrush) | Gets the smallest rectangle that encloses the boundary path of this brush. |
 | [GetSurroundColorCount](#GetSurroundColorCount) | Gets the number of colors that have been specified for the boundary path of this brush. |
 | [GetSurroundColors](#GetSurroundColors) | Gets the surround colors currently specified for this brush. |
-| [GetTransform](#GetTransform) | Gets the transformation matrix. |
+| [GetTransform](#GetTransformPGBrush) | Gets the transformation matrix. |
 | [GetWrapMode](#GetWrapMode) | Gets the wrap mode currently set for this brush. |
 | [MultiplyTransform](#MultiplyTransform) | Updates this brush's transformation matrix with the product of itself and another matrix. |
 | [ResetTransform](#ResetTransform) | Resets the transformation matrix to the identity matrix. |
@@ -1522,3 +1522,72 @@ SUB Example_GetRectangle (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetTransformLGBrush"></a>GetTransform (CGpLinearGradientBrush)
+
+Gets the transformation matrix of this linear gradient brush. 
+
+```
+FUNCTION GetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that receives the transformation matrix. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **LinearGradientBrush** object maintains a transformation matrix that can store any affine transformation. When you use a linear gradient brush to fill an area, GDI+ transforms the brush's boundary lines according to the brush's transformation matrix and then fills the area. The transformed boundaries exist only during rendering; the boundaries stored in the **LinearGradientBrush** object are not transformed
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and sets its transformation matrix.
+' Next, the code gets the brush's transformation matrix and proceeds to inspect or use the
+' matrix elements.
+' ========================================================================================
+SUB Example_GetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush.
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(200, 0)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
+      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+
+   DIM matrixSet AS CGpMatrix = CGpMatrix(0, 1, -1, 0, 0, 0)
+
+   linGrBrush.SetTransform(@matrixSet)
+
+   ' // Obtain information about the linear gradient brush.
+   DIM matrixGet AS CGpMatrix
+   DIM elements(0 TO 5) AS SINGLE
+
+   linGrBrush.GetTransform(@matrixGet)
+   matrixGet.GetElements(@elements(0))
+
+   graphics.FillRectangle(@CGpSolidBrush(GDIP_ARGB(255, 0, 0, 0)), 0, 0, 20, 20)
+
+   FOR j AS LONG = 0 TO 5
+      ' // Inspect or use the value in elements[j].
+      PRINT STR(elements(j))
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
