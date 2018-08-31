@@ -61,7 +61,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [GetBlendCount](#GetBlendCountLGBrush) | Gets the number of blend factors currently set. |
 | [GetGammaCorrection](#GetGammaCorrectionLGBrush) | Determines whether gamma correction is enabled for this brush. |
 | [GetInterpolationColorCount](#GetInterpolationColorCountLGBrush) | Gets the number of colors currently set to be interpolated. |
-| [GetInterpolationColors](#GetInterpolationColors) | Gets the blend factors and their corresponding blend positions. |
+| [GetInterpolationColors](#GetInterpolationColorsLGBrush) | Gets the blend factors and their corresponding blend positions. |
 | [GetLinearColors](#GetLinearColors) | Gets the starting color and ending color. |
 | [GetRectangle](#GetRectangle) | Gets the rectangle that defines the boundaries of the gradient. |
 | [GetTransform](#GetTransform) | Gets the transformation matrix. |
@@ -99,7 +99,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [GetFocusScales](#GetFocusScales) | Gets the focus scales of the brush. |
 | [GetGammaCorrection](#GetGammaCorrectionPGBrush) | Determines whether gamma correction is enabled for this brush. |
 | [GetInterpolationColorCount](#GetInterpolationColorCountPGBrush) | Gets the number of preset colors currently specified for this brush. |
-| [GetInterpolationColors](#GetInterpolationColors) | Gets preset colors and blend positions currently specified for this brush. |
+| [GetInterpolationColors](#GetInterpolationColors^GBrush) | Gets preset colors and blend positions currently specified for this brush. |
 | [GetPointCount](#GetPointCount) | Gets the number of points in the array of points that defines this brush's boundary path. |
 | [GetRectangle](#GetRectangle) | Gets the smallest rectangle that encloses the boundary path of this brush. |
 | [GetSurroundColorCount](#GetSurroundColorCount) | Gets the number of colors that have been specified for the boundary path of this brush. |
@@ -1198,3 +1198,80 @@ Remarks
 A simple path gradient brush has two colors: a boundary color and a center color. When you paint with such a brush, the color changes gradually from the boundary color to the center color as you move from the boundary path to the center point. You can create a more complex gradient by specifying an array of preset colors and an array of blend positions.
 
 You can obtain the interpolation colors and interpolation positions currently set for a **PathGradientBrush** object by calling the **GetInterpolationColors** method of that **PathGradientBrush** object. Before you call the **GetInterpolationColors** method, you must allocate two buffers: one to hold the array of interpolation colors and one to hold the array of interpolation positions. You can call the **GetInterpolationColorCount** method of the **PathGradientBrush** object to determine the required size of those buffers. The size of the color buffer is the return value of **GetInterpolationColorCount** multiplied by 4. The size of the position buffer is the value of **GetInterpolationColorCount** multiplied by 4 (the size of a simple precision number).
+
+# <a name="GetInterpolationColorColorsLGBrush"></a>GetInterpolationColors (CGpLinearGradientBrush)
+
+Gets the blend factors and their corresponding blend positions from a **LinearGradientBrush** object.
+
+```
+FUNCTION GetInterpolationColors (BYVAL presetColors AS ARGB PTR, _
+   BYVAL blendPositions AS SINGLE PTR, BYVAL count AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *presetColors* | Pointer to an array that receives the colors. A color of a given index in the presetColors array corresponds to the blend position of that same index in the *blendPositions* array. |
+| *blendPositions* | Pointer to an array that receives the blend positions. Each number in the array indicates a percentage of the distance between the starting boundary and the ending boundary and is in the range from 0.0 through 1.0, where 0.0 indicates the starting boundary of the gradient and 1.0 indicates the ending boundary. A blend position between 0.0 and 1.0 indicates a line, parallel to the boundary lines, that is a certain fraction of the distance from the starting boundary to the ending boundary. For example, a blend position of 0.7 indicates the line that is 70 percent of the distance from the starting boundary to the ending boundary. The color is constant on lines that are parallel to the boundary lines. |
+| *count* | Integer that specifies the number of elements in the presetColors array. This is the same as the number of elements in the blendPositions array. Before calling the **GetInterpolationColors** method of a **LinearGradientBrush** object, call the **GetInterpolationColorCount** method of that same **LinearGradientBrush** object to determine the current number of colors. The number of blend positions retrieved is the same as the number of colors retrieved. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets the colors that are interpolated for this linear gradient
+' brush to red, blue, and green and sets the blend positions to 0, 0.3, and 1. The code
+' calls the LinearGradientBrush::GetInterpolationColorCount method of a LinearGradientBrush
+' object to obtain the number of colors currently set to be interpolated for the brush.
+' Next, the code gets the colors and their positions. Then, the code fills a small
+' rectangle with each color.
+' ========================================================================================
+SUB Example_GetInterpolationColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush, and set the colors to be interpolated.
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0)}
+   DIM positions(0 TO 2) AS SINGLE = {0.0, 0.3, 1.0}
+
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(100, 0)
+
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 255, 255, 255))
+   linGrBrush.SetInterpolationColors(@colors(0), @positions(0), 3)
+
+   ' // Obtain information about the linear gradient brush.
+   ' // How many colors have been specified to be interpolated for this brush?
+   DIM colorCount AS LONG = linGrBrush.GetInterpolationColorCount
+
+   ' // Allocate a buffer large enough to hold the set of colors.
+   DIM rgcolors(0 TO colorCount - 1) AS ARGB
+
+   ' // Allocate a buffer to hold the relative positions of the colors.
+   DIM rgPositions(0 TO colorCount - 1) AS SINGLE
+
+   ' // Get the colors and their relative positions.
+   linGrBrush.GetInterpolationColors(@rgcolors(0), @rgPositions(0), colorCount)
+
+   ' // Fill a small rectangle with each of the colors.
+   DIM pSolidBrush AS CGpSolidBrush PTR
+   FOR j AS LONG = 0 TO colorCount - 1
+      pSolidBrush = NEW CGpSolidBrush(rgcolors(j))
+      graphics.FillRectangle(pSolidBrush, 15 * j, 0, 10, 10)
+      Delete pSolidBrush
+   NEXT
+
+END SUB
+' ========================================================================================
+```
