@@ -1784,7 +1784,7 @@ FUNCTION GetWrapMode () AS WrapMode
 
 #### Return value
 
-This method returns an element of the WrapMode enumeration that indicates the wrap mode currently set for this path gradient brush.
+This method returns an element of the **WrapMode** enumeration that indicates the wrap mode currently set for this path gradient brush.
 
 #### Remarks
 
@@ -1827,6 +1827,58 @@ SUB Example_GetWrapMode (BYVAL hdc AS HDC)
    IF nWrapMode = WrapModeTileFlipX THEN
       graphics.FillRectangle(@pthGrBrush, 0, 0, 800, 800)
    END IF
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetWrapModeTBrush"></a>GetWrapMode (CGpTexturetBrush)
+
+Gets the wrap mode currently set for this texture brush.
+
+```
+FUNCTION GetWrapMode () AS WrapMode
+```
+
+#### Return value
+
+
+This method returns the wrap mode currently set for this texture brush. The value returned is one of the elements of the **WrapMode** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush, sets the wrap mode of the brush, and uses
+' the brush to fill a rectangle. Next, the code gets the wrap mode of the brush and stores
+' the value. The code creates a second texture brush and uses the stored wrap mode to set
+' the wrap mode of the second texture brush. Then, the code uses the second texture brush
+' to fill a rectangle.
+' ========================================================================================
+SUB Example_WrapMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.SetWrapMode(WrapModeTileFlipX)
+   graphics.FillRectangle(@textureBrush, 0, 0, 200, 200)
+
+   ' // Get the brush's wrap mode.
+   DIM nWrapMode AS WrapMode = textureBrush.GetWrapMode
+
+   ' // Create a second texture brush with the same wrap mode.
+   DIM pImage2 AS CGpImage = "MyTexture.png"
+   DIM textureBrush2 AS CGpTextureBrush = @pImage2
+   textureBrush2.SetWrapMode(nWrapMode)
+   graphics.FillRectangle(@textureBrush2, 210, 0, 200, 200)
 
 END SUB
 ' ========================================================================================
