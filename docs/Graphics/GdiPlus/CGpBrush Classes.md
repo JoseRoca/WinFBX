@@ -1413,11 +1413,12 @@ Gets the rectangle that defines the boundaries of the gradient.
 
 ```
 FUNCTION GetRectangle (BYVAL rc AS GpRectF PTR) AS GpStatus
+FUNCTION GetRectangle (BYVAL rc AS GpRect PTR) AS GpStatus
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *rc* | Pointer to a RectF structure that receives the rectangle that defines the boundaries of the gradient. For example, if a linear gradient brush is constructed with a starting point at (20.2, 50.8) and an ending point at (60.5, 110.0), then the defining rectangle has its upper-left point at (20.2, 50.8), a width of 40.3, and a height of 59.2. |
+| *rc* | Pointer to a **GpRectF** or **GpRect** structure that receives the rectangle that defines the boundaries of the gradient. For example, if a linear gradient brush is constructed with a starting point at (20.2, 50.8) and an ending point at (60.5, 110.0), then the defining rectangle has its upper-left point at (20.2, 50.8), a width of 40.3, and a height of 59.2. |
 
 #### Return value
 
@@ -1458,6 +1459,64 @@ SUB Example_GetRectangle (BYVAL hdc AS HDC)
 
    ' // Draw the retrieved rectangle.
    DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+   graphics.DrawRectangle(@pen, @rc)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetRectanglePGBrush"></a>GetRectangle (CGpPathGradientBrush)
+
+Gets the smallest rectangle that encloses the boundary path of this path gradient brush.
+
+```
+FUNCTION GetRectangle (BYVAL rc AS GpRectF PTR) AS GpStatus
+FUNCTION GetRectangle (BYVAL rc AS GpRect PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *rc* | Pointer to a **GpRectF** or **GpRect** structure that receives the bounding rectangle. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on a polygon that is defined
+' by four points. The code calls the PathGradientBrush::GetRectangle method of the
+' PathGradientBrush object to obtain the smallest rectangle that encloses the brush's
+' boundary path. The code calls the Graphics.FillRectangle method of a Graphics object,
+' passing the address of the PathGradientBrush object and a reference to the brush's bounding
+' rectangle. That call fills only the portion of the bounding rectangle that is inside the
+' brush's boundary path. Finally the code draws the outline of the bounding rectangle.
+' ========================================================================================
+SUB Example_GetRectangle (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+
+   ' // Create a path gradient brush based on an array of points.
+   DIM points(0 TO 3) AS GpPoint = {GDIP_POINT(30, 20), GDIP_POINT(150, 40), GDIP_POINT(100, 100), GDIP_POINT(60, 200)}
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 4)
+
+   ' // Obtain information about the path gradient brush.
+   DIM rc AS GpRectF
+   pthGrBrush.GetRectangle(@rc)
+
+   graphics.FillRectangle(@pthGrBrush, @rc)
    graphics.DrawRectangle(@pen, @rc)
 
 END SUB
