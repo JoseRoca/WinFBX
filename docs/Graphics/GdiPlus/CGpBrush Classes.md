@@ -69,7 +69,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [MultiplyTransform](#MultiplyTransformLGBrush) | Updates this brush's transformation matrix with the product of itself and another matrix. |
 | [ResetTransform](#ResetTransformLGBrush) | Resets the transformation matrix to the identity matrix. |
 | [RotateTransform](#RotateTransformLGBrush) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
-| [ScaleTransform](#ScaleTransform) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
+| [ScaleTransform](#ScaleTransformLGBrush) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
 | [SetBlend](#SetBlend) | Sets the blend factors and the blend positions to create a custom blend. |
 | [SetBlendBellShape](#SetBlendBellShape) | Sets the blend bell shape. |
 | [SetBlendTriangularShape](#SetBlendTriangularShape) | Sets the blend triangular shape. |
@@ -109,7 +109,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [MultiplyTransform](#MultiplyTransformPGBrush) | Updates this brush's transformation matrix with the product of itself and another matrix. |
 | [ResetTransform](#ResetTransformPGBrush) | Resets the transformation matrix to the identity matrix. |
 | [RotateTransform](#RotateTransformPGBrush) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
-| [ScaleTransform](#ScaleTransform) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
+| [ScaleTransform](#ScaleTransformPGBrush) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
 | [SetBlend](#SetBlend) | Sets the blend factors and the blend positions to create a custom blend. |
 | [SetBlendBellShape](#SetBlendBellShape) | Sets the blend bell shape. |
 | [SetBlendTriangularShape](#SetBlendTriangularShape) | Sets the blend triangular shape. |
