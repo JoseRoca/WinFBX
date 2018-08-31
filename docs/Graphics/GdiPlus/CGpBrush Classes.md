@@ -11,8 +11,8 @@ A closed shape, such as a rectangle or an ellipse, consists of an outline and an
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Clone](#Clone) | Copies the contents of the existing **Brush** object into a new **Brush** object. |
-| [GetType](#GetType) | Gets the type of this brush. |
+| [Clone](#CloneBrush) | Copies the contents of the existing **Brush** object into a new **Brush** object. |
+| [GetType](#GetTypeBrush) | Gets the type of this brush. |
 
 # CGpSolidBrush Class
 
@@ -144,3 +144,51 @@ Defines a **Brush** object that contains an **Image** object that is used for th
 | [SetTransform](#SetTransform) | Sets the transformation matrix. |
 | [SetWrapMode](#SetWrapMode) | Sets the wrap mode. |
 | [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
+
+# <a name="CloneBrush"></a>Clone (CGpBrush)
+
+Copies the contents of the existing **Brush** object into a new **Brush** object.
+
+```
+FUNCTION Clone (BYVAL pBrush AS CGpBrush PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pBrush* | Pointer to a variable that will receive a pointer to the cloned **Brush** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a SolidBrush object, clones it, and then uses the clone
+' to fill a rectangle.
+' ========================================================================================
+SUB Example_CloneBrush (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Create a SolidBrush object
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+
+   ' // Create a clone of solidBrush
+   DIM cloneBrush AS CGpSolidBrush
+   solidBrush.Clone(@cloneBrush)
+
+   ' // Use cloneBrush to fill a rectangle
+   graphics.FillRectangle(@cloneBrush, 0, 0, 100, 100)
+
+END SUB
+' ========================================================================================
+```
