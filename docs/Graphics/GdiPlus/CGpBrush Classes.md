@@ -25,7 +25,7 @@ The **SolidBrush** object defines a solid color Brush object. A **Brush** object
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#ConstructorSolidBrush) | Create a **SolidBrush** object based on a color. |
+| [Constructor](#ConstructorSolidBrush) | Creates a **SolidBrush** object based on a color. |
 | [GetColor](#GetColorSolidBrush) | Gets the color of this brush. |
 | [SetColor](#SetColorSolidBrush) | Sets the color of this brush. |
 
@@ -40,6 +40,7 @@ Creates a **HatchBrush** object based on a hatch style, a foreground color, and 
 
 | Name       | Description |
 | ---------- | ----------- |
+| [Constructor](#ConstructorHatchBrush) | Creates a **HatchBrush** object based on a hatch style, a foreground color, and a background color. |
 | [GetBackgroundColor](#GetBackgroundColor) | Gets the background color of this hatch brush. |
 | [GetForegroundColor](#GetForegroundColor) | Gets the foreground color of this hatch brush. |
 | [GetHatchStyle](#GetHatchStyle) | Gets the hatch style of this hatch brush. |
@@ -317,3 +318,17 @@ END SUB
 ' ========================================================================================
 ```
 
+# <a name="ConstructorHatchBrush"></a>Constructor (CGpHatchBrush)
+
+Creates a **HatchBrush** object based on a hatch style, a foreground color, and a background color.
+
+```
+FUNCTION HatchBrush (BYVAL hatchStyle AS HatchStyle, BYVAL foreColor AS ARGB, _
+   BYVAL backColor AS ARGB = &HFF000000)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hatchStyle* | Element of the **HatchStyle** enumeration that specifies the pattern of hatch lines that will be used. |
+| *foreColor* | Reference to a color to use for the hatch lines. |
+| *backColor* | Optional. Reference to a color to use for the background. |
