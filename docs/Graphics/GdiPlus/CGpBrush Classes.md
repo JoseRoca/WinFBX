@@ -65,7 +65,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [GetLinearColors](#GetLinearColors) | Gets the starting color and ending color. |
 | [GetRectangle](#GetRectangleLGBrush) | Gets the rectangle that defines the boundaries of the gradient. |
 | [GetTransform](#GetTransformLGBrush) | Gets the transformation matrix. |
-| [GetWrapMode](#GetWrapMode) | Gets the wrap mode currently set for this brush. |
+| [GetWrapMode](#GetWrapModeLGBrush) | Gets the wrap mode currently set for this brush. |
 | [MultiplyTransform](#MultiplyTransform) | Updates this brush's transformation matrix with the product of itself and another matrix. |
 | [ResetTransform](#ResetTransform) | Resets the transformation matrix to the identity matrix. |
 | [RotateTransform](#RotateTransform) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
@@ -105,7 +105,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [GetSurroundColorCount](#GetSurroundColorCount) | Gets the number of colors that have been specified for the boundary path of this brush. |
 | [GetSurroundColors](#GetSurroundColors) | Gets the surround colors currently specified for this brush. |
 | [GetTransform](#GetTransformPGBrush) | Gets the transformation matrix. |
-| [GetWrapMode](#GetWrapMode) | Gets the wrap mode currently set for this brush. |
+| [GetWrapMode](#GetWrapModePGBrush) | Gets the wrap mode currently set for this brush. |
 | [MultiplyTransform](#MultiplyTransform) | Updates this brush's transformation matrix with the product of itself and another matrix. |
 | [ResetTransform](#ResetTransform) | Resets the transformation matrix to the identity matrix. |
 | [RotateTransform](#RotateTransform) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
@@ -137,7 +137,7 @@ Defines a **Brush** object that contains an **Image** object that is used for th
 | [Constructors](#ConstructorTBrush) | Creates a texture brush. |
 | [GetImage](#GetImage) | Gets a pointer to the **Image** object that is defined by this brush. |
 | [GetTransform](#GetTransformTBrush) | Gets the transformation matrix. |
-| [GetWrapMode](#GetWrapMode) | Gets the wrap mode currently set for this brush. |
+| [GetWrapMode](#GetWrapModeTBrush) | Gets the wrap mode currently set for this brush. |
 | [MultiplyTransform](#MultiplyTransform) | Updates this brush's transformation matrix with the product of itself and another matrix. |
 | [ResetTransform](#ResetTransform) | Resets the transformation matrix to the identity matrix. |
 | [RotateTransform](#RotateTransform) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
@@ -1714,6 +1714,61 @@ SUB Example_GetTransform (BYVAL hdc AS HDC)
       ' // Inspect or use the value in elements[j].
       PRINT elements(j)
    NEXT
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetWrapModeLGBrush"></a>GetWrapMode (CGpLinearBrush)
+
+Gets the wrap mode for this brush. The wrap mode determines how an area is tiled when it is painted with a brush.
+
+```
+FUNCTION GetWrapMode () AS WrapMode
+```
+
+#### Return value
+
+This method returns one of the following elements of the **WrapMode** enumeration:
+
+* WrapModeTile
+* WrapModeTileFlipX
+* WrapModeTileFlipY
+* WrapModeTileFlipXY
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and sets its wrap mode. Next, the
+' code gets the brush's wrap mode and performs tasks based on the brush's current wrap mode.
+' ========================================================================================
+SUB Example_GetWrapMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush.
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 100, 50)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   linGrBrush.SetWrapMode(WrapModeTileFlipX)
+
+   ' // Obtain information about the linear gradient brush.
+   DIM nWrapMode AS WrapMode
+   nWrapMode = linGrBrush.GetWrapMode
+
+   IF nWrapMode = WrapModeTileFlipX THEN
+      ' // Do some task
+   ELSEIF nWrapMode = WrapModeTileFlipY THEN
+      ' // Do a different task
+   END IF
 
 END SUB
 ' ========================================================================================
