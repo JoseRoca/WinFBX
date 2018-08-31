@@ -1105,7 +1105,7 @@ FUNCTION GetGammaCorrection () AS BOOL
 
 If gamma correction is enabled, this method returns TRUE; otherwise, it returns FALSE.
 
-# <a name="GetInterpolationColorCount"></a>GetInterpolationColorCount (CGpLinearGradientBrush)
+# <a name="GetInterpolationColorCountLGBrush"></a>GetInterpolationColorCount (CGpLinearGradientBrush)
 
 Gets the number of colors currently set to be interpolated for this linear gradient brush.
 
