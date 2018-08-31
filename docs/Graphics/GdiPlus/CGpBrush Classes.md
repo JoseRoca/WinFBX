@@ -1773,3 +1773,61 @@ SUB Example_GetWrapMode (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetWrapModePGBrush"></a>GetWrapMode (CGpPathGradientBrush)
+
+Gets the wrap mode currently set for this path gradient brush.
+
+```
+FUNCTION GetWrapMode () AS WrapMode
+```
+
+#### Return value
+
+This method returns an element of the WrapMode enumeration that indicates the wrap mode currently set for this path gradient brush.
+
+#### Remarks
+
+The bounding rectangle of a path gradient brush is the smallest rectangle that encloses the brush's boundary path. When you paint the bounding rectangle with the path gradient brush, only the area inside the boundary path gets filled. The area inside the bounding rectangle but outside the boundary path does not get filled.
+
+The default wrap mode for a path gradient brush is **WrapModeClamp**, which indicates that no painting occurs outside of the brush's bounding rectangle. All of the other wrap modes indicate that areas outside the brush's bounding rectangle will be tiled. Each tile is a copy (possibly flipped) of the filled path inside its bounding rectangle.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on a triangular path. The
+' code calls the PathGradientBrush.SetWrapMode method of the PathGradientBrush object to
+' set the wrap mode to WrapModeTileFlipX. Next, the code calls the PathGradientBrush.GetWrapMode
+' method of the PathGradientBrush object to obtain the brush's wrap mode. If the obtained
+' wrap mode is WrapModeTileFlipX, the code calls FillRectangle to tile a large area with
+' the path gradient brush. 
+' ========================================================================================
+SUB Example_GetWrapMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(0, 0), GDIP_POINT(100, 0), GDIP_POINT(100, 100)}
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0)}
+
+   DIM nCount AS LONG = 3
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+   pthGrBrush.SetSurroundColors(@colors(0), @nCount)
+   pthGrBrush.SetWrapMode(WrapModeTileFlipX)
+
+   ' // Obtain information about the path gradient brush.
+   DIM nWrapMode AS WrapMode = pthGrBrush.GetWrapMode
+
+   IF nWrapMode = WrapModeTileFlipX THEN
+      graphics.FillRectangle(@pthGrBrush, 0, 0, 800, 800)
+   END IF
+
+END SUB
+' ========================================================================================
+```
