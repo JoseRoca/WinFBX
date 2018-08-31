@@ -57,7 +57,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | Name       | Description |
 | ---------- | ----------- |
 | [Constructors](#ConstructorLGBrush) | Creates a **LinearGradientBrush** object. |
-| [GetBlend](#GetBlend) | Gets the blend factors and their corresponding blend positions. |
+| [GetBlend](#GetBlendLGBrush) | Gets the blend factors and their corresponding blend positions. |
 | [GetBlendCount](#GetBlendCount) | Gets the number of blend factors currently set. |
 | [GetGammaCorrection](#GetGammaCorrection) | Determines whether gamma correction is enabled for this brush. |
 | [GetInterpolationColorCount](#GetInterpolationColorCount) | Gets the number of colors currently set to be interpolated. |
@@ -520,7 +520,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ConstructorLGBrush"></a>Constructors (LinearGradientBrush)
+# <a name="ConstructorLGBrush"></a>Constructors (CGpLinearGradientBrush)
 
 Creates a **LinearGradientBrush** object from a set of boundary points and boundary colors.
 
@@ -560,3 +560,73 @@ CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRect PTR, BYVAL color1 AS ARGB
 | *angle* | Real number that, if *isAngleScalable* is TRUE, specifies the base angle from which the angle of the directional line is calculated, or that, if *isAngleScalable* is FALSE, specifies the angle of the directional line. The angle is measured from the top of the rectangle that is specified by rect and must be in degrees. The gradient follows the directional line. |
 | *isAngleScalable* | BOOL value that specifies whether the angle is scalable. If isAngleScalable is TRUE, the angle of the directional line is scalable; otherwise, the angle is not scalable. |
 
+# <a name="GetBlendÑGBrush"></a>GetBlend (CGpLinearGradientBrush)
+
+Gets the blend factors and their corresponding blend positions from a **LinearGradientBrush** object.
+
+```
+FUNCTION GetBlend (BYVAL blendFactors AS SINGLE PTR, BYVAL blendPositions AS SINGLE PTR, _
+   BYVAL count AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *blendFactors* | Pointer to an array that receives the blend factors. Each number in the array indicates a percentage of the ending color and is in the range from 0.0 through 1.0. |
+| *blendPositions* | Pointer to an array that receives the blend positions. Each number in the array indicates a percentage of the distance between the starting boundary and the ending boundary and is in the range from 0.0 through 1.0, where 0.0 indicates the starting boundary of the gradient and 1.0 indicates the ending boundary. A blend position between 0.0 and 1.0 indicates a line, parallel to the boundary lines, that is a certain fraction of the distance from the starting boundary to the ending boundary. For example, a blend position of 0.7 indicates the line that is 70 percent of the distance from the starting boundary to the ending boundary. The color is constant on lines that are parallel to the boundary lines. |
+| *count* | Integer that specifies the number of blend factors to retrieve. Before calling the **GetBlend** method of a **LinearGradientBrush** object, call the **GetBlendCount** method of that same **LinearGradientBrush** object to determine the current number of blend factors. The number of blend positions retrieved is the same as the number of blend factors retrieved. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **LinearGradientBrush** object has two parallel boundaries: a starting boundary and an ending boundary. A color is associated with each of these two boundaries. Each boundary is a straight line that passes through a specified point — the starting boundary passes through the starting point; the ending boundary passes through the ending point — and is perpendicular to the direction of the linear gradient brush. The direction of the linear gradient brush follows the line that is defined by the starting and ending points. This line, the "directional line," may be horizontal, vertical, or diagonal. All points that lie on a line that is parallel to the boundaries are the same color. When you fill an area with a linear gradient brush, the color changes gradually from one line to the next as you move along the directional line from the starting boundary to the ending boundary. By default, the change in color is proportional to the change in distance; that is, a line 30 percent of the distance between the starting boundary and the ending boundary has a color that is 30 percent of the distance between the starting boundary color and the ending boundary color. The color pattern is repeated outside of the starting and ending boundaries.
+
+You can call the **SetBlend** method of a LinearGradientBrush object to customize the relationship between color and distance. For example, suppose you set the blend positions to {0, 0.5, 1} and you set the blend factors to {0, 0.3, 1}. Then a line 50 percent of the distance between the starting boundary and the ending boundary will have a color that is 30 percent of the distance between the starting boundary color and the ending boundary color.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush, sets its blend, and uses the brush
+' to fill a rectangle. The code then gets the blend. The blend factors and positions can
+' then be inspected or used in some way.
+' ========================================================================================
+SUB Example_GetBlend (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM factors(0 TO 3) AS SINGLE = {0.0, 0.4, 0.6, 1.0}
+   DIM positions(0 TO 3) AS SINGLE = {0.0, 0.2, 0.8, 1.0}
+   DIM rcf AS GpRectF = GDIP_RECTF(0, 0, 100, 50)
+
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rcf, GDIP_ARGB(255, 255, 0, 0), _
+       GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   linGrBrush.SetBlend(@factors(0), @positions(0), 4)
+   graphics.FillRectangle(@linGrBrush, @rcf)
+
+   DIM blendCount AS LONG = linGrBrush.GetBlendCount
+   DIM rgFactors(blendCount - 1) AS SINGLE
+   DIM rgPositions(blendCount - 1) AS SINGLE
+
+   linGrBrush.GetBlend(@rgFactors(0), @rgPositions(0), blendCount)
+
+   FOR j AS LONG = 0 TO blendCount - 1
+'      // Inspect or use the value in rgFactors(j)
+'      // Inspect or use the value in rgPositions(j)
+      OutputDebugString STR(rgFactors(j)) & STR(rgPositions(j))
+   NEXT
+
+END SUB
+' ========================================================================================
+```
