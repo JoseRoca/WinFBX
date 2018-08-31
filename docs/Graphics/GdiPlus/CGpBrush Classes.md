@@ -1199,7 +1199,7 @@ A simple path gradient brush has two colors: a boundary color and a center color
 
 You can obtain the interpolation colors and interpolation positions currently set for a **PathGradientBrush** object by calling the **GetInterpolationColors** method of that **PathGradientBrush** object. Before you call the **GetInterpolationColors** method, you must allocate two buffers: one to hold the array of interpolation colors and one to hold the array of interpolation positions. You can call the **GetInterpolationColorCount** method of the **PathGradientBrush** object to determine the required size of those buffers. The size of the color buffer is the return value of **GetInterpolationColorCount** multiplied by 4. The size of the position buffer is the value of **GetInterpolationColorCount** multiplied by 4 (the size of a simple precision number).
 
-# <a name="GetInterpolationColorColorsLGBrush"></a>GetInterpolationColors (CGpLinearGradientBrush)
+# <a name="GetInterpolationColorsLGBrush"></a>GetInterpolationColors (CGpLinearGradientBrush)
 
 Gets the blend factors and their corresponding blend positions from a **LinearGradientBrush** object.
 
