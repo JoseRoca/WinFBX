@@ -2724,7 +2724,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="SetBlendBellShapeLGBRush"></a>SetBlendBellShape (CGpLinearGradientBrush)
+# <a name="SetBlendBellShapeLGBrush"></a>SetBlendBellShape (CGpLinearGradientBrush)
 
 Sets the blend shape of this path gradient brush.
 
