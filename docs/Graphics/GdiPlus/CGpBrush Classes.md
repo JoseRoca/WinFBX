@@ -1093,7 +1093,7 @@ FUNCTION GetGammaCorrection () AS BOOL
 
 If gamma correction is enabled, this method returns TRUE; otherwise, it returns FALSE.
 
-# <a name="GetGammaCorrectionPGBrush"></a>GetGammaCorrection (CGpLinearGradientBrush)
+# <a name="GetGammaCorrectionPGBrush"></a>GetGammaCorrection (CGpPathGradientBrush)
 
 Determines whether gamma correction is enabled for this path gradient brush.
 
