@@ -56,7 +56,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorLGBrush) | Create a **LinearGradientBrush** object from a set of boundary points and boundary colors. |
+| [Constructors](#ConstructorLGBrush) | Creates a **LinearGradientBrush** object. |
 | [GetBlend](#GetBlend) | Gets the blend factors and their corresponding blend positions. |
 | [GetBlendCount](#GetBlendCount) | Gets the number of blend factors currently set. |
 | [GetGammaCorrection](#GetGammaCorrection) | Determines whether gamma correction is enabled for this brush. |
@@ -91,7 +91,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorPGBrush) | Create a PathGradientBrush object based on an array of points. Initializes the wrap mode of the path gradient brush. |
+| [Constructors](#ConstructorPGBrush) | Creates a PathGradientBrush object based on an array of points. Initializes the wrap mode of the path gradient brush. |
 | [GetBlend](#GetBlend) | Gets the blend factors and their corresponding blend positions. |
 | [GetBlendCount](#GetBlendCount) | Gets the number of blend factors currently set. |
 | [GetCenterColor](#GetCenterColor) | Gets center cpñpr of the brush. |
@@ -134,7 +134,7 @@ Defines a **Brush** object that contains an **Image** object that is used for th
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorTBrush) | Create a texture brush. |
+| [Constructors](#ConstructorTBrush) | Creates a texture brush. |
 | [GetImage](#GetImage) | Gets a pointer to the **Image** object that is defined by this brush. |
 | [GetTransform](#GetTransform) | Gets the transformation matrix. |
 | [GetWrapMode](#GetWrapMode) | Gets the wrap mode currently set for this brush. |
@@ -519,3 +519,44 @@ SUB Example_HatchBrushGetHatchStyle (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="ConstructorLGBrush"></a>Constructors (LinearGradientBrush)
+
+Creates a **LinearGradientBrush** object from a set of boundary points and boundary colors.
+
+```
+CONSTRUCTOR CGpLinearGradientBrush (BYVAL point1 AS GpPointF PTR, BYVAL point2 AS GpPointF PTR, _
+   BYVAL color1 AS ARGB, BYVAL color2 AS ARGB)
+CONSTRUCTOR CGpLinearGradientBrush (BYVAL point1 AS GpPoint PTR, BYVAL point2 AS GpPoint PTR, _
+   BYVAL color1 AS ARGB, BYVAL color2 AS ARGB)
+```
+
+Creates a **LinearGradientBrush** object based on a rectangle and mode of direction.
+
+```
+CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRectF PTR, BYVAL color1 AS ARGB, _
+   BYVAL color2 AS ARGB, BYVAL mode AS LinearGradientMode)
+CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRect PTR, BYVAL color1 AS ARGB, _
+   BYVAL color2 AS ARGB, BYVAL mode AS LinearGradientMode)
+```
+
+Creates a **LinearGradientBrush** object from a rectangle and angle of direction.
+
+```
+CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRectF PTR, BYVAL color1 AS ARGB, _
+   BYVAL color2 AS ARGB, BYVAL angle AS SINGLE, BYVAL isAngleScalable AS BOOL)
+CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRect PTR, BYVAL color1 AS ARGB, _
+   BYVAL color2 AS ARGB, BYVAL angle AS SINGLE, BYVAL isAngleScalable AS BOOL)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *point1* | Reference to a **GpPoint** structure that specifies the starting point of the gradient. The starting boundary line passes through the starting point. |
+| *point2* | Reference to a **GpPoint** structure that specifies the ending point of the gradient. The ending boundary line passes through the ending point. |
+| *color1* | An ARGB value that specifies the color at the starting boundary line of this linear gradient brush. |
+| *color2* | An ARGB value that specifies the color at the ending boundary line of this linear gradient brush. |
+| *rc* | Reference to a rectangle that specifies the starting and ending points of the gradient. The upper-left corner of the rectangle is the starting point. The lower-right corner is the ending point. |
+| *mode* | Element of the **LinearGradientMode** enumeration that specifies the direction of the gradient. |
+| *angle* | Real number that, if *isAngleScalable* is TRUE, specifies the base angle from which the angle of the directional line is calculated, or that, if *isAngleScalable* is FALSE, specifies the angle of the directional line. The angle is measured from the top of the rectangle that is specified by rect and must be in degrees. The gradient follows the directional line. |
+| *isAngleScalable* | BOOL value that specifies whether the angle is scalable. If isAngleScalable is TRUE, the angle of the directional line is scalable; otherwise, the angle is not scalable. |
+
