@@ -332,3 +332,129 @@ FUNCTION HatchBrush (BYVAL hatchStyle AS HatchStyle, BYVAL foreColor AS ARGB, _
 | *hatchStyle* | Element of the **HatchStyle** enumeration that specifies the pattern of hatch lines that will be used. |
 | *foreColor* | Reference to a color to use for the hatch lines. |
 | *backColor* | Optional. Reference to a color to use for the background. |
+
+# <a name="GetBackgroundColor"></a>GetBackgroundColor (CGpHatchBrush)
+
+Gets the background color of this hatch brush.
+
+```
+FUNCTION GetBackgroundColor (BYVAL colour AS ARGB PTR) AS GpStatus
+FUNCTION GetBackgroundColor () AS ARGB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colour* | Pointer to a variable that receives the background color. The background color defines the color over which the hatch lines are drawn. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+The second overloaded function returns the ARGB color as the result of the function.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets up three Color objects: black, turquoise, and current
+' (initialized to black). A rectangle is painted by using turquoise as the background
+' color and black as the foreground color. Then the HatchBrush.GetBackgroundColor method
+' is used to get the current color of the brush (which at the time is turquoise). The
+' address of the current Color object (initialized to black) is passed as the return point
+' for the call to HatchBrush,GetBackgroundColor. When the rectangle is painted again,
+' note that the background color is again turquoise (not black). This shows that the call
+' to HatchBrush.GetBackgroundColor was successful.
+' ========================================================================================
+SUB Example_HatchBrushGetBackgroundColor (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Set colors
+   DIM black AS ARGB = GDIP_ARGB(255, 0, 0, 0)           ' // foreground
+   DIM turquoise AS ARGB = GDIP_ARGB(255, 0, 255, 255)   ' // background
+   DIM current AS ARGB = GDIP_ARGB(255, 0, 0, 0)         ' // new foreground
+
+   ' // Set and then draw the first hatch style.
+   DIM brush AS CGpHatchBrush = CGpHatchBrush(HatchStyleHorizontal, black, turquoise)
+   graphics.FillRectangle(@brush, 20, 20, 100, 50)
+
+   ' // Get the current background color of the brush.
+   brush.GetBackgroundColor(@current)
+
+   ' // Draw the rectangle again using the current color.
+   DIM brush2 AS CGpHatchBrush = CGpHatchBrush(HatchStyleDiagonalCross, black, current)
+   graphics.FillRectangle(@brush2, 130, 20, 100, 50)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetForegroundColor"></a>GetForegroundColor (CGpHatchBrush)
+
+Gets the foreground color of this hatch brush.
+
+```
+FUNCTION GetForegroundColor (BYVAL colour AS ARGB PTR) AS GpStatus
+FUNCTION GetForegroundColor () AS ARGB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colour* | Pointer to a variable that receives the foreground color. The foreground color defines the color of the hatch lines. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+The second overloaded function returns the ARGB color as the result of the function.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets up three Color objects: black, turquoise, and current
+' (initialized to black). A rectangle is painted by using turquoise as the background
+' color and black as the foreground color. Then the HatchBrush.GetBackgroundColor method
+' is used to get the current color of the brush (which at the time is turquoise). The
+' address of the current Color object (initialized to black) is passed as the return point
+' for the call to HatchBrush,GetBackgroundColor. When the rectangle is painted again,
+' note that the background color is again turquoise (not black). This shows that the call
+' to HatchBrush.GetBackgroundColor was successful.
+' ========================================================================================
+SUB Example_HatchBrushGetForegroundColor (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Set colors
+   DIM blue AS ARGB = GDIP_ARGB(255, 0, 0, 255)          ' // foreground
+   DIM turquoise AS ARGB = GDIP_ARGB(255, 0, 255, 255)   ' // background
+   DIM current AS ARGB = GDIP_ARGB(255, 0, 0, 0)         ' // new foreground
+
+   ' // Set and then draw the first hatch style.
+   DIM brush AS CGpHatchBrush = CGpHatchBrush(HatchStyleHorizontal, blue, turquoise)
+   graphics.FillRectangle(@brush, 20, 20, 100, 50)
+
+   ' // Get the current foreground color of the brush.
+   brush.GetForegroundColor(@current)
+
+   ' // Draw the rectangle again using the current color.
+   DIM brush2 AS CGpHatchBrush = CGpHatchBrush(HatchStyleDiagonalCross, current, turquoise)
+   graphics.FillRectangle(@brush2, 130, 20, 100, 50)
+
+END SUB
+' ========================================================================================
+```
