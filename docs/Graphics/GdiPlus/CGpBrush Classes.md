@@ -2900,3 +2900,114 @@ If the function fails, it returns one of the other elements of the **Status** en
 #### Remarks
 
 Gamma correction is often done to match the intensity contrast of the gradient to the ability of the human eye to perceive intensity changes.
+
+# <a name="SetInterpolationColorsLGBrush"></a>SetInterpolationColors (CGpLinearGradientBrush)
+
+Specifies whether gamma correction is enabled for this linear gradient brush.
+
+```
+FUNCTION SetInterpolationColors (BYVAL presetColors AS ARGB PTR, _
+   BYVAL blendPositions AS SINGLE PTR, BYVAL count AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *presetColors* | Pointer to an array of ARGB colors that specify the colors to be interpolated for this linear gradient brush. A color of a given index in the *presetColors* array corresponds to the blend position of that same index in the *blendPositions* array. |
+| *blendPositions* | Pointer to an array of simple precision numbers that specify the blend positions. Each number in the array specifies a percentage of the distance between the starting boundary and the ending boundary and is in the range from 0.0 through 1.0, where 0.0 indicates the starting boundary of the gradient and 1.0 indicates the ending boundary. There must be at least two positions specified: the first position, which is always 0.0f, and the last position, which is always 1.0f. Otherwise, the behavior is undefined. A blend position between 0.0 and 1.0 indicates the line, parallel to the boundary lines, that is a certain fraction of the distance from the starting boundary to the ending boundary. For example, a blend position of 0.7 indicates the line that is 70 percent of the distance from the starting boundary to the ending boundary. The color is constant on lines that are parallel to the boundary lines. |
+| *count* | Integer that specifies the number of elements in the *presetColors* array. This is the same as the number of elements in the *blendPositions* array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush, sets the colors to be interpolated
+' for the linear gradient brush, and fills a rectangle.
+' ========================================================================================
+SUB Example_SetInterpolationColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush, and set the colors to be interpolated.
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0)}
+   DIM positions(0 TO 2) AS SINGLE = {0.0, 0.3, 1.0}
+
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(100, 0)
+
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 255, 255, 255))
+   linGrBrush.SetInterpolationColors(@colors(0), @positions(0), 3)
+
+   graphics.FillRectangle(@linGrBrush, 0, 0, 100, 50)
+   
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetInterpolationColorsPGBrush"></a>SetInterpolationColors (CGpPathGradientBrush)
+
+Sets the preset colors and the blend positions of this path gradient brush.
+
+```
+FUNCTION SetInterpolationColors (BYVAL presetColors AS ARGB PTR, _
+   BYVAL blendPositions AS SINGLE PTR, BYVAL count AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *presetColors* | Pointer to an array of colors that specifies the interpolation colors for the gradient. A color of a given index in the presetColors array corresponds to the blend position of that same index in the *blendPositions* array. |
+| *blendPositions* | Pointer to an array that specifies the blend positions. Each blend position is a number from 0 through 1, where 0 indicates the boundary of the gradient and 1 indicates the center point. A blend position between 0 and 1 specifies the set of all points that are a certain fraction of the distance from the boundary to the center point. For example, a blend position of 0.7 specifies the set of all points that are 70 percent of the way from the boundary to the center point. |
+| *count* | Integer that specifies the number of elements in the *presetColors* array. This is the same as the number of elements in the blendPositions array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+A simple path gradient brush has two colors: a boundary color and a center color. When you paint with such a brush, the color changes gradually from the boundary color to the center color as you move from the boundary path to the center point. You can create a more complex gradient by specifying an array of preset colors and an array of blend positions.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on a triangular path. The
+' PathGradientBrush.SetInterpolationColors method sets the brush's preset colors to red,
+' blue, and aqua and sets the blend positions to 0, 0, 4, and 1. The Graphics.FillRectangle
+' method uses the path gradient brush to paint a rectangle that contains the triangular path.
+' ========================================================================================
+SUB Example_SetInterpolationColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(100, 0), GDIP_POINT(200, 200), GDIP_POINT(0, 200)}
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 255)}
+   DIM positions(0 TO 2) AS SINGLE = {0.0, 0.4, 1.0}
+
+   pthGrBrush.SetInterpolationColors(@colors(0), @positions(0), 3)
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 300, 300)
+
+END SUB
+' ========================================================================================
+```
