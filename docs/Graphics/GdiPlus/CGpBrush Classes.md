@@ -60,7 +60,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [GetBlend](#GetBlendLGBrush) | Gets the blend factors and their corresponding blend positions. |
 | [GetBlendCount](#GetBlendCountLGBrush) | Gets the number of blend factors currently set. |
 | [GetGammaCorrection](#GetGammaCorrectionLGBrush) | Determines whether gamma correction is enabled for this brush. |
-| [GetInterpolationColorCount](#GetInterpolationColorCount) | Gets the number of colors currently set to be interpolated. |
+| [GetInterpolationColorCount](#GetInterpolationColorCountLGBrush) | Gets the number of colors currently set to be interpolated. |
 | [GetInterpolationColors](#GetInterpolationColors) | Gets the blend factors and their corresponding blend positions. |
 | [GetLinearColors](#GetLinearColors) | Gets the starting color and ending color. |
 | [GetRectangle](#GetRectangle) | Gets the rectangle that defines the boundaries of the gradient. |
@@ -98,7 +98,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [GetCenterPoint](#GetCenterPoint) | Gets the center point of the brush. |
 | [GetFocusScales](#GetFocusScales) | Gets the focus scales of the brush. |
 | [GetGammaCorrection](#GetGammaCorrectionPGBrush) | Determines whether gamma correction is enabled for this brush. |
-| [GetInterpolationColorCount](#GetInterpolationColorCount) | Gets the number of preset colors currently specified for this brush. |
+| [GetInterpolationColorCount](#GetInterpolationColorCountPGBrush) | Gets the number of preset colors currently specified for this brush. |
 | [GetInterpolationColors](#GetInterpolationColors) | Gets preset colors and blend positions currently specified for this brush. |
 | [GetPointCount](#GetPointCount) | Gets the number of points in the array of points that defines this brush's boundary path. |
 | [GetRectangle](#GetRectangle) | Gets the smallest rectangle that encloses the boundary path of this brush. |
@@ -1104,3 +1104,77 @@ FUNCTION GetGammaCorrection () AS BOOL
 #### Return value
 
 If gamma correction is enabled, this method returns TRUE; otherwise, it returns FALSE.
+
+# <a name="GetInterpolationColorCount"></a>GetInterpolationColorCount (CGpLinearGradientBrush)
+
+Gets the number of colors currently set to be interpolated for this linear gradient brush.
+
+```
+FUNCTION GetInterpolationColorCount () AS INT_
+```
+
+#### Return value
+
+This method returns the number of colors to be interpolated for this linear gradient brush. If no colors have been set by using **SetInterpolationColors**, or if invalid positions were passed to **SetInterpolationColors**, then **GetInterpolationColorCount** returns 0.
+
+#### Remarks
+
+A simple linear gradient brush has two colors: a color at the starting boundary and a color at the ending boundary. When you paint with such a brush, the color changes gradually from the starting color to the ending color as you move from the starting boundary to the ending boundary. You can create a more complex gradient by using the **SetInterpolationColors** method to specify an array of colors and their corresponding blend positions to be interpolated for this linear gradient brush.
+
+You can obtain the colors and blend positions currently set for a linear gradient brush by calling its **GetInterpolationColors** method. Before you call the **GetInterpolationColors** method, you must allocate two buffers: one to hold the array of colors and one to hold the array of blend positions. You can call the **GetInterpolationColorCount** method to determine the required size of those buffers. The size of the colors buffer is the return value of **GetInterpolationColorCount** multiplied by **sizeof(Color)**. The size of the blend positions buffer is the value of **GetInterpolationColorCount** multiplied by **sizeof(REAL)**.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets the colors that are interpolated for this linear gradient
+' brush to red, blue, and green and sets the blend positions to 0, 0.3, and 1. The code
+' calls the LinearGradientBrush::GetInterpolationColorCount method of a LinearGradientBrush
+' object to obtain the number of colors currently set to be interpolated for the brush.
+' Next, the code gets the colors and their positions. Then, the code fills a small
+' rectangle with each color.
+' ========================================================================================
+SUB Example_GetInterpolationColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush, and set the colors to be interpolated.
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0)}
+   DIM positions(0 TO 2) AS SINGLE = {0.0, 0.3, 1.0}
+
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(100, 0)
+
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 255, 255, 255))
+   linGrBrush.SetInterpolationColors(@colors(0), @positions(0), 3)
+
+   ' // Obtain information about the linear gradient brush.
+   ' // How many colors have been specified to be interpolated for this brush?
+   DIM colorCount AS LONG = linGrBrush.GetInterpolationColorCount
+
+   ' // Allocate a buffer large enough to hold the set of colors.
+   DIM rgcolors(0 TO colorCount - 1) AS ARGB
+
+   ' // Allocate a buffer to hold the relative positions of the colors.
+   DIM rgPositions(0 TO colorCount - 1) AS SINGLE
+
+   ' // Get the colors and their relative positions.
+   linGrBrush.GetInterpolationColors(@rgcolors(0), @rgPositions(0), colorCount)
+
+   ' // Fill a small rectangle with each of the colors.
+   DIM pSolidBrush AS CGpSolidBrush PTR
+   FOR j AS LONG = 0 TO colorCount - 1
+      pSolidBrush = NEW CGpSolidBrush(rgcolors(j))
+      graphics.FillRectangle(pSolidBrush, 15 * j, 0, 10, 10)
+      Delete pSolidBrush
+   NEXT
+
+END SUB
+' ========================================================================================
+```
