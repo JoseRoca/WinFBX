@@ -2416,7 +2416,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ScaleTransformLGBrush"></a>RotateTransform (CGpLinearGradientBrush)
+# <a name="ScaleTransformLGBrush"></a>ScaleTransform (CGpLinearGradientBrush)
 
 Updates this brush's current transformation matrix with the product of itself and a scaling matrix.
 
