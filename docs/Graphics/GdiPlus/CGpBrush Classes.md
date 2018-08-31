@@ -136,7 +136,7 @@ Defines a **Brush** object that contains an **Image** object that is used for th
 | ---------- | ----------- |
 | [Constructors](#ConstructorTBrush) | Creates a texture brush. |
 | [GetImage](#GetImage) | Gets a pointer to the **Image** object that is defined by this brush. |
-| [GetTransform](#GetTransform) | Gets the transformation matrix. |
+| [GetTransform](#GetTransformTBrush) | Gets the transformation matrix. |
 | [GetWrapMode](#GetWrapMode) | Gets the wrap mode currently set for this brush. |
 | [MultiplyTransform](#MultiplyTransform) | Updates this brush's transformation matrix with the product of itself and another matrix. |
 | [ResetTransform](#ResetTransform) | Resets the transformation matrix to the identity matrix. |
@@ -1654,6 +1654,65 @@ SUB Example_GetTransform (BYVAL hdc AS HDC)
 
    FOR j AS LONG = 0 TO 5
       ' // Inspect or use the value in elements(j)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetTransformTBrush"></a>GetTransform (CGpTextureBrush)
+
+Gets the transformation matrix of this texture brush.
+
+```
+FUNCTION GetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that receives the transformation matrix. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **TextureBrush** object maintains a transformation matrix that can store any affine transformation. When you use a texture brush to fill an area, GDI+ transforms the brush's image according to the brush's transformation matrix and then fills the area. The transformed image exists only during rendering; the image stored in the **TextureBrush** object is not transformed. For example, suppose you call *someTextureBrush.ScaleTransform(3)* and then paint an area with *someTextureBrush*. The width of the brush's image triples when the area is painted, but the image stored in *someTextureBrush* remains unchanged.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' The code then gets the brush's transformation matrix and proceeds to inspect or use the elements.
+' ========================================================================================
+SUB Example_GetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.ScaleTransform(3, 2)
+
+   DIM matrix AS CGpMatrix
+   DIM elements(5) AS SINGLE
+
+   textureBrush.GetTransform(@matrix)
+   matrix.GetElements(@elements(0))
+
+   FOR j AS LONG = 0 TO 5
+      ' // Inspect or use the value in elements[j].
+      PRINT elements(j)
    NEXT
 
 END SUB
