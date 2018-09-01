@@ -7,8 +7,8 @@ Encapsulates a 3-by-3 affine matrix that represents a geometric transform. A **M
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#Constructors) | Creates and initializes a Matrix object that represents the identity matrix. |
-| [Clone](#Clone) | Copies the contents of the existing Matrix object into a new Matrix object. |
+| [Constructors](#Constructors) | Creates and initializes a **Matrix** object that represents the identity matrix. |
+| [Clone](#Clone) | Copies the contents of the existing **Matrix** object into a new **Matrix** object. |
 | [Equals](#Equals) | Determines whether the elements of this matrix are equal to the elements of another matrix. |
 | [GetElements](#GetElements) | Gets the elements of this matrix. |
 | [Invert](#Invert) | If this matrix is invertible, the Invert method replaces the elements of this matrix with the elements of its inverse. |
@@ -152,4 +152,76 @@ END IF
 ' // Must be deleted before the call to AfxGdipShutdown
 Delete pMat1
 Delete pMat2
+```
+
+# <a name="GetElements"></a>GetElements
+
+Gets the elements of this matrix. The elements are placed in an array in the order m11, m12, m21, m22, m31, m32, where mij denotes the element in row i, column j.
+
+```
+FUNCTION GetElements (BYVAL m AS SINGLE PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *m* | Out. Pointer to an array that receives the matrix elements. The size of the array should be 6 × 4 (the size of a simple precision number). |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="Invert"></a>Invert
+
+If this matrix is invertible, the **Invert** method replaces the elements of this matrix with the elements of its inverse.
+
+```
+FUNCTION Invert () AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *m* | Out. Pointer to an array that receives the matrix elements. The size of the array should be 6 × 4 (the size of a simple precision number). |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+If this matrix is not invertible, the method fails and returns **InvalidParameter**.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example passes the address of a Matrix object to the SetTransform method
+' of a Graphics object and then draws a rectangle. The rectangle is translated 30 units
+' right and 20 units down by the world transformation of the Graphics object. The code
+' calls the Matrix.Invert method of the Matrix object and sets the world transformation
+' of the Graphics object to the inverted matrix. The code draws a second rectangle that is
+' translated 30 units left and 20 units up.
+' ========================================================================================
+SUB Example_Invert (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   DIM matrix AS CGpMatrix = CGpMatrix(1.0, 0.0, 0.0, 1.0, 30.0 * rxRatio, 20.0 * ryRatio)
+   DIM myPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), rxRatio)
+
+   graphics.SetTransform(@matrix)
+   graphics.DrawRectangle(@myPen, 0, 0, 200 * rxRatio, 100 * ryRatio)
+   matrix.Invert
+   graphics.SetTransform(@matrix)
+   graphics.DrawRectangle(@myPen, 0, 0, 200 * rxRatio, 100 * ryRatio)
+
+END SUB
+' ========================================================================================
 ```
