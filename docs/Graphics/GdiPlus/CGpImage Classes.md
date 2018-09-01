@@ -414,3 +414,21 @@ Gets the horizontal resolution, in dots per inch, of this image.
 ```
 FUNCTION GetHorizontalResolution () AS SINGLE
 ```
+
+# <a name="GetItemData"></a>GetItemData (CGpImage)
+
+Gets one piece of metadata from this **Image** object.
+
+```
+FUNCTION GetItemData (BYVAL pitem AS ImageItemData PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pitem* | Pointer to an **ImageItemData** object that specifies the item to be retrieved. The **Data** member of the **ImageItemData** object points to a buffer that receives the custom metadata. If the **Data** member is set to NULL, this method returns the size of the required buffer in the DataSize member of the **ImageItemData** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
