@@ -397,7 +397,7 @@ END SUB
 
 # <a name="GetSize"></a>GetSize (CGpFont)
 
-Returns the font size (commonly called the em size) of this Font object. The size is in the units of this Font object.
+Returns the font size (commonly called the em size) of this Font object. The size is in the units of this **Font** object.
 
 ```
 FUNCTION GetSize () AS SINGLE
@@ -406,3 +406,51 @@ FUNCTION GetSize () AS SINGLE
 #### Return value
 
 The method returns the font size. The size is in the units of this **Font** object.
+
+# <a name="GetStyle"></a>GetStyle (CGpFont)
+
+Returns the font size (commonly called the em size) of this **Font** object. The size is in the units of this **Font** object.
+
+```
+FUNCTION GetStyle () AS INT_
+```
+
+#### Return value
+
+The method returns the font size. The size is in the units of this **Font** object.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Font object, gets the FontStyle associated with the font,
+' and creates a second Font object by using the same style. The second Font object is then
+' used to draw text.
+' ========================================================================================
+SUB Example_GetStyle (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Font object according to the DPI setting
+   DIM font AS CGpFont = CGpFont("Arial", AfxPointsToPixelsX(16) / rxRatio, FontStyleItalic)
+
+   ' // Get the style of font
+   DIM style AS SINGLE = font.GetStyle
+
+   ' // Create a second Font object with the same emSize as myFont.
+   DIM styleFont AS CGpFont = CGpFont("Arial", AfxPointsToPixelsX(20) / rxRatio, style)
+
+   ' // Draw text using sizeFont
+   DIM solidbrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+   DIM wszText AS WSTRING * 260 = "Font with an acquired style"
+   graphics.DrawString(@wszText, -1, @styleFont, 0, 0, @solidbrush)
+
+END SUB
+' ========================================================================================
+```
