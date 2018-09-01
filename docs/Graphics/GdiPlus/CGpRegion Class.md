@@ -1256,3 +1256,62 @@ SUB Example_IsEmpty (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="IsInfinite"></a>IsInfinite
+
+Determines whether this region is infinite.
+
+```
+FUNCTION IsInfinite (BYVAL pGraphics AS CGpGraphics PTR) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pGraphics* | Pointer to a **Graphics** object that contains the world and page transformations required to calculate the device coordinates of this region. |
+
+#### Return value
+
+If this region is infinite, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example uses the default constructor to create an infinite region. Then the
+' code tests the region to determine if it is infinite and performs a task based on the result.
+' ========================================================================================
+SUB Example_IsInfinite (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   graphics.SetPageUnit(UnitInch)
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 100, 50)
+'#ifdef __FB_64BIT__
+'   DIM rc AS GpRect = (0, 0, 100, 50)
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpRect is defined as Rect in 64 bit and as Rect_ in 32 bit.
+'   DIM rc AS GpRect : rc.Width = 100 : rc.Height = 50
+'#endif
+
+   ' // The default constructor creates an infinite region.
+   DIM region AS CGpRegion
+
+   IF region.IsInfinite(@graphics) THEN
+      ' // The region is infinite. Perform some task.
+      PRINT "Region is infinite"
+   ELSE
+      ' // Perform a different task.
+   END IF
+
+   graphics.FillRegion(@solidBrush, @region)
+
+END SUB
+' ========================================================================================
+```
