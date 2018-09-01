@@ -158,6 +158,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 #### Example
 
+```
 ' ========================================================================================
 ' The following example creates a Font object, clones it, and then uses the clone to draw text.
 ' ========================================================================================
