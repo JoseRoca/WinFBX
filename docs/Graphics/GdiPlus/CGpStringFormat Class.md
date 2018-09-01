@@ -2,8 +2,8 @@
 
 The **CGpStringFormat** class encapsulates text layout information (such as alignment, orientation, tab stops, and clipping) and display manipulations (such as trimming, font substitution for characters that are not supported by the requested font, and digit substitution for languages that do not use Western European digits). A StringFormat object can be passed to the **DrawString** methods to format a string.
 
-**Inherits from**: CGpBase.
-**Imclude file**: CGpStringFormat.inc.
+**Inherits from**: CGpBase.<br>
+**Include file**: CGpStringFormat.inc.
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -29,3 +29,22 @@ The **CGpStringFormat** class encapsulates text layout information (such as alig
 | [SetMeasurableCharacterRanges](#SetMeasurableCharacterRanges) | Sets a series of character ranges for this StringFormat object that, when in a string, can be measured by the MeasureCharacterRanges method. |
 | [SetTabStops](#SetTabStops) | Sets the offsets for tab stops in this StringFormat object. |
 | [SetTrimming](#SetTrimming) | Sets the trimming style for this StringFormat object. |
+
+# <a name="Constructor"></a>Constructor
+
+Creates a **StringFormat** object based on string format flags and a language.
+
+```
+CONSTRUCTOR CGpStringFormat (BYVAL formatFlags AS INT_ = 0, BYVAL language AS LANGID = LANG_NEUTRAL)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *formatFlags* | Value that specifies the format flags that control most of the characteristics of the **StringFormat** object. The flags are set by applying a bitwise OR to elements of the **StringFormatFlags** enumeration. The default value is 0 (no flags set). |
+| *language* | Sixteen-bit value that specifies the language to use. The default value is LANG_NEUTRAL, which is the user's default language. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
