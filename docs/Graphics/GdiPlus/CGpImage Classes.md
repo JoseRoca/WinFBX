@@ -776,4 +776,24 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 #### Remarks
 
-GDI+ does not allow you to save an image to the same file that you used to construct the image. The following code creates an **Image** object by passing the file name MyImage.jpg to an **Image** constructor. That same file name is passed to the **Save** method of the **Image** object, so the Image.Save method fails.
+GDI+ does not allow you to save an image to the same file that you used to construct the image. The following code creates an **Image** object by passing the file name MyImage.jpg to an **Image** constructor. That same file name is passed to the **Save** method of the **Image** object, so the **Save** method fails.
+
+# <a name="SaveAdd"></a>Save (CGpImage)
+
+Adds a frame to a file or stream specified in a previous call to the **Save** method.
+
+```
+FUNCTION SaveAdd (BYVAL encoderParams AS EncoderParameters PTR) AS GpStatus
+FUNCTION SaveAdd (BYVAL pNewImage AS CGpImage PTR, BYVAL encoderParams AS EncoderParameters PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *encoderParams* | Pointer to an **Image** object that holds the frame to be added. |
+| *pNewImage* | Pointer to an **EncoderParameters** structure that holds parameters required by the image encoder used by the save-add operation.  |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
