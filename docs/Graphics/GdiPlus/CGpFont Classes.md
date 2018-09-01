@@ -145,7 +145,6 @@ Copies the contents of the existing **Font** object into a new **Font** object.
 FUNCTION Clone (BYVAL pCloneFont AS CGpFont PTR) AS GpStatus
 ```
 
-```
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pCloneFont* | Pointer to the **Font** object where to copy the contents of the existing object. |
