@@ -339,3 +339,15 @@ FUNCTION GetFlags () AS UINT
 #### Return value
 
 This method returns a value that holds a set of single-bit flags. The flags are defined in the **ImageFlags** enumeration.
+
+# <a name="GetFrameCount"></a>GetFrameCount (CGpImage)
+
+Gets the number of frames in a specified dimension of this **Image** object.
+
+```
+FUNCTION GetFrameCount (BYVAL dimensionID AS GUID PTR) AS UINT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dimensionID* | Pointer to a GUID that specifies the dimension. GUIDs that identify various dimensions are defined in Gdiplusimaging.inc. |
