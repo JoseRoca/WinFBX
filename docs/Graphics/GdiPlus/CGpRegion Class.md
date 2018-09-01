@@ -933,3 +933,59 @@ SUB Example_GetRegionScans (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetRegionScansCount"></a>GetRegionScansCount
+
+Gets the number of rectangles that approximate this region. The region is transformed by a specified matrix before the rectangles are calculated.
+
+```
+FUNCTION GetRegionScansCount (BYVAL pMatrix AS CGpMatrix PTR) AS UINT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that is used to transform the region. |
+
+#### Remarks
+
+The **GetRegionScansCount** method can be used before the GetRegionScans method to determine the number of rectangles. Then, you can allocate a buffer that is the correct size to store the rectangles that are obtained with the **GetRegionScans** method.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a region from a path and gets a set of rectangles that
+' approximate the region. The code then draws each of the rectangles.
+' ========================================================================================
+SUB Example_GetRegionScansCount (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+   DIM pPath AS CGpGraphicsPath
+   DIM matrix AS CGpMatrix
+
+   ' // Create a region from a path
+   pPath.AddEllipse(10 * rxRatio, 10 * rxRatio, 50 * rxRatio, 300 * rxRatio)
+   DIM pathRegion AS CGpRegion = @pPath
+   graphics.FillRegion(@solidBrush, @pathRegion)
+
+   ' // Get the rectangles
+   graphics.GetTransform(@matrix)
+   DIM nCount AS LONG = pathRegion.GetRegionScansCount(@matrix)
+   DIM rects(nCount - 1) AS GpRectF
+   pathRegion.GetRegionScans(@matrix, @rects(0), @nCount)
+
+   ' // Draw the rectangles.
+   FOR j AS LONG = 0 TO nCount - 1
+      graphics.DrawRectangle(@pen, @rects(j))
+   NEXT
+
+END SUB
+' ========================================================================================
+```
