@@ -104,3 +104,68 @@ SUB Example_Clone (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GenericDefault"></a>GenericDefault
+
+Creates a generic, default **StringFormat** object.
+
+```
+FUNCTION GenericDefault (BYVAL pStringFormat AS CGpStringFormat PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pStringFormat* | Pointer to the **StringFormat** object where to return the new **StringFormat** object. |
+
+#### Remarks
+
+A generic, default StringFormat object has the following characteristics:
+
+* No string format flags are set.
+* Character alignment and line alignment are set to **StringAlignmentNear**.
+* Language ID is set to neutral language, which means that the current language associated with the calling thread is used.
+* String digit substitution is set to **StringDigitSubstituteUser**.
+* Hot key prefix is set to **HotkeyPrefixNone**.
+* Number of tab stops is set to zero.
+* String trimming is set to **StringTrimmingCharacter**.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a generic, default StringFormat object and then uses it to
+' draw a formatted string. The code also draws the string's layout rectangle.
+' ========================================================================================
+SUB Example_GenericDefault (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a red solid brush
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   ' // Create a font family from name
+   DIM fontFamily AS CGpFontFamily = "Times New Roman"
+   ' // Create a font from the font family
+   ' // Points must not be scaled for a generic font, so we are unscaling them dividing by rxRatio
+   DIM pFont AS CGpFont = CGpFont(@fontFamily, AfxPointsToPixelsX(12) / rxRatio, FontStyleRegular, UnitPixel)
+
+   ' // Create a generic default string format
+   DIM stringFormat AS CGpStringFormat
+   stringFormat.GenericDefault(@stringFormat)
+
+   ' // Use the generic StringFormat object in a call to DrawString.
+   DIM wszText AS WSTRING * 260 = "This text was formatted by a generic StringFormat object."
+   graphics.DrawString(@wszText, LEN(wszText), @pFont, 30, 30, 100, 120, @stringFormat, @solidBrush)
+
+   ' // Draw the rectangle that encloses the text.
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawRectangle(@pen, 30, 30, 100, 120)
+
+END SUB
+' ========================================================================================
+```
