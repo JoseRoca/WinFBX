@@ -113,3 +113,43 @@ SUB Example_Clone (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="Equals"></a>Equals
+
+Determines whether the elements of this matrix are equal to the elements of another matrix.
+
+```
+FUNCTION Equals (BYVAL pMatrix AS CGpMatrix PTR) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that is compared with this **Matrix** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+#define UNICODE
+#INCLUDE ONCE "Afx/CGdiPlus/CGdiPlus.inc"
+USING Afx
+
+' // Must be constructed with NEW to we able to delete them before the call to AfxGdipShutdown
+DIM pMat1 AS CGpMatrix PTR = NEW CGpMatrix(1.0, 2.0, 1.0, 1.0, 2.0, 2.0)
+DIM pMat2 AS CGpMatrix PTR = NEW CGpMatrix(1.0, 2.0, 1.0, 1.0, 2.0, 2.0)
+
+IF pMat1->Equals(pMat2) THEN
+   PRINT "They are the same"
+ELSE
+   PRINT "They are the different"
+END IF
+
+' // Must be deleted before the call to AfxGdipShutdown
+Delete pMat1
+Delete pMat2
+```
