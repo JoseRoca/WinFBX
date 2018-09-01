@@ -1093,7 +1093,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="IsAvailable"></a>IsAvailable (CGpFontFamily)
+# <a name="IsAvailableFontFamily"></a>IsAvailable (CGpFontFamily)
 
 Determines whether this **Font** object was created successfully.
 
