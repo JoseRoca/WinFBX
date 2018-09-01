@@ -588,3 +588,25 @@ This method returns the number of font families contained in this font collectio
 #### Remarks
 
 A font family consists of a single font type with related styles. An example of a single font type is Arial Regular. An example of a font family is a set of fonts containing Arial Regular, Arial Italic, and Arial Bold style fonts.
+
+# <a name="AddFontFile"></a>AddFontFile (CGpPrivateFontCollection)
+
+Adds a font file to this private font collection.
+
+```
+FUNCTION AddFontFile (BYVAL pwszFileName AS WSTRING PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| *pwszFileName* | Pointer to a wide-character string that specifies the name of a font file. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+When you use the GDI+ API, you must never allow your application to download arbitrary fonts from untrusted sources. The operating system requires elevated privileges to assure that all installed fonts are trusted.
+
