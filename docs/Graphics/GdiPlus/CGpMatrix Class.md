@@ -836,3 +836,74 @@ SUB Example_TransformPoints (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="TransformPoints"></a>TransformPoints
+
+Multiplies each vector in an array by this matrix. The translation elements of this matrix (third row) are ignored. Each vector is treated as a row matrix. The multiplication is performed with the row matrix on the left and this matrix on the right.
+
+```
+FUNCTION TransformVectors (BYVAL pts AS GpPointF PTR, BYVAL nCount AS INT_ = 1) AS GpStatus
+FUNCTION TransformVectors (BYVAL pts AS GpPoint PTR, BYVAL nCount AS INT_ = 1) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pts* | Pointer to an array of **GPointF** or **GpPoint** objects that, on input, contains the vectors to be transformed and, on output, receives the transformed vectors. Each vector in the array is transformed (multiplied by this matrix) and updated with the result of the transformation. |
+| *nCount* | Optional. Integer that specifies the number of points to be transformed. The default value is 1. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a vector and a point. The tip of the vector and the point
+' are at the same location: (100, 50). The code creates a Matrix object and initializes its
+' elements so that it represents a clockwise rotation followed by a translation 100 units
+' to the right. The code calls the TransformPoints Methods method of the matrix to transform
+' the point and calls the Matrix.TransformVectors method of the matrix to transform the
+' vector. The entire transformation (rotation followed by translation) is performed on the
+' point, but only the rotation part of the transformation is performed on the vector. The
+' elements of the matrix that represent translation are ignored by the Matrix.TransformVectors method.
+' ========================================================================================
+SUB Example_TransformVectors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a pen
+   DIM myPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), rxRatio)
+   myPen.SetEndCap(LineCapArrowAnchor)
+   DIM myBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 255)
+
+   ' // A point and a vector, same representation but different behavior
+   DIM pt AS GpPointF = GDIP_POINTF(100.0, 50.0)
+   DIM vector AS GpPointF = GDIP_POINTF(100.0, 50.0)
+
+   ' // Draw the original point and vector in blue
+   graphics.FillEllipse(@myBrush, pt.X - 5.0, pt.Y - 5.0, 10.0, 10.0)
+   graphics.DrawLine(@MyPen, 0, 0, vector.x, vector.y)
+
+   ' // Transform
+   DIM matrix AS CGpMatrix = CGpMatrix(0.8, 0.6, -0.6, 0.8, 100.0, 0.0)
+   matrix.TransformPoints(@pt)
+   matrix.TransformVectors(@vector)
+
+   ' // Draw the transformed point and vector in red.
+   myPen.SetColor(GDIP_ARGB(255, 255, 0, 0))
+   myBrush.SetColor(GDIP_ARGB(255, 255, 0, 0))
+   graphics.FillEllipse(@myBrush, pt.X - 5.0, pt.Y - 5.0, 10.0, 10.0)
+   graphics.DrawLine(@MyPen, 0, 0, vector.x, vector.y)
+
+END SUB
+' ========================================================================================
+```
