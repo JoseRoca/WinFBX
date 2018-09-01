@@ -290,3 +290,28 @@ SUB Example_GetBounds (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetEncoderParameterList"></a>GetEncoderParameterList (CGpImage)
+
+Gets a list of the parameters supported by a specified image encoder.
+
+```
+FUNCTION GetEncoderParameterList (BYVAL clsidEncoder AS GUID PTR, BYVAL uSize AS UINT, _
+   BYVAL buffer AS EncoderParameters PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *clsidEncoder* | Pointer to a **CLSID** that specifies the encoder. |
+| *uSize* | Integer that specifies the size, in bytes, of the buffer array. Call the **GetEncoderParameterListSize** method to obtain the required size. |
+| *buffer* | Out. Pointer to an **EncoderParameters** object that receives the list of supported parameters. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The **GetEncoderParameterList** method returns an array of **EncoderParameter** objects. Before you call **GetEncoderParameterList**, you must allocate a buffer large enough to receive that array, which is part of an **EncoderParameters** object. You can call the **GetEncoderParameterListSize** method to get the size, in bytes, of the required **EncoderParameters** object.
