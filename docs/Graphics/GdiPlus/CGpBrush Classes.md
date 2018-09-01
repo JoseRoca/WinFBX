@@ -1604,6 +1604,133 @@ END SUB
 ' ========================================================================================
 ```
 
+# <a name="GetSurroundColorCount"></a>GetSurroundColorCount (CGpPathGradientBrush)
+
+Gets the number of colors that have been specified for the boundary path of this path gradient brush.
+
+```
+FUNCTION GetSurroundColorCount () AS INT_
+```
+
+#### Return value
+
+This method returns the number of colors that have been specified for the boundary path of this path gradient brush.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on a triangular path that
+' is defined by an array of three points. The code calls the PathGradientBrush.SetSurroundColors
+' method of the PathGradientBrush object to specify a color for each of the points that
+' define the triangle. The PathGradientBrush.GetSurroundColorCount method determines the
+' current number of surround colors (the colors specified for the brush's boundary path).
+' Next, the code allocates a buffer large enough to receive the array of surround colors
+' and calls PathGradientBrush.GetSurroundColors to fill that buffer. Finally the code fills
+' a small square with each of the brush's surround colors.
+' ========================================================================================
+SUB Example_GetSurroundColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(100, 0), GDIP_POINT(200, 200), GDIP_POINT(0, 200)}
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+
+   DIM nCount AS LONG = 3
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 255)}
+   pthGrBrush.SetSurroundColors(@colors(0), @nCount)
+
+   ' // Obtain information about the path gradient brush.
+   DIM colorCount AS LONG = pthGrBrush.GetSurroundColorCount
+   DIM rgColors(colorCount - 1) AS ARGB
+   pthGrBrush.GetSurroundColors(@rgColors(0), @colorCount)
+
+   ' // Fill a small square with each of the surround colors.
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 255, 255)
+   FOR j AS LONG = 0 TO colorCount - 1
+      solidBrush.SetColor(rgColors(j))
+      graphics.FillRectangle(@solidBrush, 15 * j, 0, 10, 10)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetSurroundColors"></a>GetSurroundColors (CGpPathGradientBrush)
+
+Gets the surround colors currently specified for this path gradient brush.
+
+```
+FUNCTION GetSurroundColors (BYVAL colors AS ARGB PTR, BYVAL count AS INT_ PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colors* | Pointer to an array that receives the surround colors. |
+| *count* | Out. Pointer to an integer that, on input, specifies the number of colors requested. If the method succeeds, this parameter, on output, receives the number of colors retrieved. If the method fails, this parameter does not receive a value. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A path gradient brush has a boundary path and a center point. The center point is set to a single color, but you can specify different colors for several points on the boundary. For example, suppose you specify red for the center color, and you specify blue, green, and yellow for distinct points on the boundary. Then as you move along the boundary, the color will change gradually from blue to green to yellow and back to blue. As you move along a straight line from any point on the boundary to the center point, the color will change from that boundary point's color to red.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on a triangular path that
+' is defined by an array of three points. The code calls the PathGradientBrush.SetSurroundColors
+' method of the PathGradientBrush object to specify a color for each of the points that
+' define the triangle. The PathGradientBrush.GetSurroundColorCount method determines the
+' current number of surround colors (the colors specified for the brush's boundary path).
+' Next, the code allocates a buffer large enough to receive the array of surround colors
+' and calls PathGradientBrush.GetSurroundColors to fill that buffer. Finally the code fills
+' a small square with each of the brush's surround colors.
+' ========================================================================================
+SUB Example_GetSurroundColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(100, 0), GDIP_POINT(200, 200), GDIP_POINT(0, 200)}
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+
+   DIM nCount AS LONG = 3
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 255)}
+   pthGrBrush.SetSurroundColors(@colors(0), @nCount)
+
+   ' // Obtain information about the path gradient brush.
+   DIM colorCount AS LONG = pthGrBrush.GetSurroundColorCount
+   DIM rgColors(colorCount - 1) AS ARGB
+   pthGrBrush.GetSurroundColors(@rgColors(0), @colorCount)
+
+   ' // Fill a small square with each of the surround colors.
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 255, 255)
+   FOR j AS LONG = 0 TO colorCount - 1
+      solidBrush.SetColor(rgColors(j))
+      graphics.FillRectangle(@solidBrush, 15 * j, 0, 10, 10)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
 # <a name="GetTransformLGBrush"></a>GetTransform (CGpLinearGradientBrush)
 
 Gets the transformation matrix of this linear gradient brush. 
