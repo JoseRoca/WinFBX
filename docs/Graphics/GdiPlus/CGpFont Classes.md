@@ -136,3 +136,53 @@ CONSTRUCTOR CGpFont (BYVAL pwszFamilyName AS WSTRING PTR, BYVAL emSize AS SINGLE
 | *nStyle* | Optional. Integer that specifies the style of the typeface. This value must be an element of the **FontStyle** enumeration or the result of a bitwise OR applied to two or more of these elements. For example, FontStyleBold OR FontStyleUnderline OR FontStyleStrikeout sets the style as a combination of the three styles. The default value is FontStyleRegular. |
 | *nUnit*  Optional.| Element of the **Unit** enumeration that specifies the unit of measurement for the font size. The default value is UnitPoint. |
 | *pFontCollection* | Optional. Pointer to a **FontCollection** object that specifies a user-defined group of fonts. If the value of this parameter is NULL, the system font collection is used. The default value is NULL. |
+
+# <a name="Clone"></a>Clone (CGpFont)
+
+Copies the contents of the existing **Font** object into a new **Font** object.
+
+```
+FUNCTION Clone (BYVAL pCloneFont AS CGpFont PTR) AS GpStatus
+```
+
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pCloneFont* | Pointer to the **Font** object where to copy the contents of the existing object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+' ========================================================================================
+' The following example creates a Font object, clones it, and then uses the clone to draw text.
+' ========================================================================================
+SUB Example_CloneFont (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Font object.
+   DIM font AS CGpFont = CGpFont("Arial", AfxPointsToPixelsX(16) / rxRatio)
+
+   ' // Create a clone of the Font object
+   DIM cloneFont AS CGpFont
+   font.Clone(@cloneFont)
+
+   ' // Draw Text with cloneFont.
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+   DIM wszText AS WSTRING * 260 = "This is a cloned Font"
+   graphics.DrawString(@wszText, -1, @cloneFont, 0, 0, @solidbrush)
+
+END SUB
+' ========================================================================================
+```
