@@ -432,3 +432,22 @@ FUNCTION GetItemData (BYVAL pitem AS ImageItemData PTR) AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="GetPalette"></a>GetPalette (CGpImage)
+
+Gets the **ColorPalette** of this Image object.
+
+```
+FUNCTION GetPalette (BYVAL pal AS ColorPalette PTR, BYVAL nSize AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pal* | Out. Pointer to a ColorPalette structure that receives the palette. |
+| *nSize* | Integer that specifies the size, in bytes, of the palette. Call the GetPaletteSize method to determine the size. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
