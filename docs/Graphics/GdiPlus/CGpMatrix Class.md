@@ -724,7 +724,7 @@ FUNCTION Shear (BYVAL shearX AS SINGLE, BYVAL shearY AS SINGLE, _
 | ---------- | ----------- |
 | *shearX* | Simple precision number that specifies the horizontal shear factor. |
 | *shearY* | Simple precision number that specifies the vertical shear factor. |
-| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of the multiplication. **MatrixOrderPrepend** specifies that the rotation matrix is on the left, and **MatrixOrderAppend** specifies that the rotation matrix is on the right. The default value is **MatrixOrderPrepend**. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of the multiplication. **MatrixOrderPrepend** specifies that the rotation matrix is on the left, and **MatrixOrderAppend** specifies that the rotation matrix is on the right. The default value is **MatrixOrderPrepend**. |
 
 #### Return value
 
