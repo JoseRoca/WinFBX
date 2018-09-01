@@ -63,7 +63,6 @@ The *fillPath* and *strokePath* parameters cannot be used at the same time. You 
 
 The **CustomLineCap** class uses the winding fill mode regardless of the fill mode that is set for the **GraphicsPath** object passed to the **CustomLineCap** constructor.
 
-
 # <a name="Clone"></a>Clone (CGpCustomLineCap)
 
 Copies the contents of the existing **CustomLineCap** object into a new **CustomLineCap** object.
@@ -812,3 +811,66 @@ SUB Example_SetWidthScale (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="ConstructorArrowCap"></a>Constructor (CGpAdjustableArrowCap)
+
+Creates an adjustable arrow line cap with the specified height and width. The arrow line cap can be filled or nonfilled. The middle inset defaults to zero.
+
+```
+CONSTRUCTOR CGpAdjustableArrowCap (BYVAL nHeight AS SINGLE, BYVAL nWidth AS SINGLE, _
+   BYVAL bIsFilled AS BOOL = CTRUE)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nHeight* | The length, in units, of the arrow from its base to its point. |
+| *nWidth* | The distance, in units, between the corners of the base of the arrow. |
+| *bIsFilled* | Optional. Boolean value that specifies whether the arrow is filled. The default value is TRUE. |
+
+#### Remarks
+
+The middle inset is the number of units that the midpoint of the base shifts towards the vertex. A middle inset of zero results in no shift — the base is a straight line, giving the arrow a triangular shape. A positive (greater than zero) middle inset results in a shift the specified number of units toward the vertex — the base is an arrow shape that points toward the vertex, giving the arrow cap a V-shape. A negative (less than zero) middle inset results in a shift the specified number of units away from the vertex — the base becomes an arrow shape that points away from the vertex, giving the arrow either a diamond shape (if the absolute value of the middle inset is equal to the height) or distorted diamond shape. If the middle inset is equal to or greater than the height of the arrow cap, the cap does not appear at all. The value of the middle inset affects the arrow cap only if the arrow cap is filled. The middle inset defaults to zero when an **AdjustableArrowCap** object is constructed.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates two AdjustableArrowCap objects, arrowCapStart and
+' arrowCapEnd, and sets the fill mode to TRUE. The code then creates a Pen object and
+' assigns arrowCapStart as the starting line cap for this Pen object and arrowCapEnd as
+' the ending line cap. Next, draws a line.
+' ========================================================================================
+SUB Example_CreateAdjustableArrowCap (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Create an AdjustableArrowCap that is filled
+   DIM arrowCapStart AS CGpAdjustableArrowCap = CGpAdjustableArrowCap(10, 10, CTRUE)
+   ' // Adjust to DPI by setting the scale width
+   arrowCapStart.SetWidthScale(rxRatio)
+
+   ' // Create an AdjustableArrowCap that is not filled
+   DIM arrowCapEnd AS CGpAdjustableArrowCap = CGpAdjustableArrowCap(15, 15, FALSE)
+   ' // Adjust to DPI by setting the scale width
+   arrowCapEnd.SetWidthScale(rxRatio)
+
+   ' // Create a Pen
+   DIM arrowPen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+
+   ' // Assign arrowStart as the start cap
+   arrowPen.SetCustomStartCap(@arrowCapStart)
+
+   ' // Assign arrowEnd as the end cap
+   arrowPen.SetCustomEndCap(@arrowCapEnd)
+
+   ' // Draw a line using arrowPen
+   graphics.DrawLine(@arrowPen, 0, 0, 100, 100)
+
+END SUB
+' ========================================================================================
+ ```
