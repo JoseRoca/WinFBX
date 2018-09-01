@@ -337,3 +337,86 @@ SUB Example_ComplementRegion (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="Equals"></a>Equals
+
+Determines whether this region is equal to a specified region.
+
+```
+FUNCTION Equals (BYVAL pRegion AS CGpRegion PTR, BYVAL pGraphics AS CGpGraphics PTR) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pRegion* | Pointer to a **Region** object to test against this Region object. |
+| *pGraphics* | Pointer to a **Graphics** object that contains the world and page transformations required to calculate the device coordinates of this region and the region that is specified by the region parameter. |
+
+#### Return value
+
+If this region is identical to the specified region, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates two regions, one from a rectangle and the other from a path.
+' The code then tests to determine whether the two regions are the same and performs a task
+' based on the result of the test.
+' ========================================================================================
+SUB Example_Equals (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create solid brushes
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   DIM alphaBrush AS CGpSolidBrush = GDIP_ARGB(128, 0, 0, 255)
+
+   DIM pts(0 TO 3) AS GpPoint = {GDIP_POINT(20, 20), GDIP_POINT(120, 20), GDIP_POINT(120, 70), GDIP_POINT(20, 70)}
+'#ifdef __FB_64BIT__
+'   DIM pts(0 TO 5) AS GpPoint = {(20, 20), (120, 20), (120, 70), (20, 70)}
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpPoint is defined as Point in 64 bit and as Point_ in 32 bit.
+'   DIM pts(0 TO 3) AS GpPoint
+'   pts(0).x = 20 : pts(0).y = 20 : pts(1).x = 120 : pts(1).y = 20 : pts(2).x = 120 : pts(2).y = 70 : pts(3).x = 20 : pts(3).y = 70
+'#endif
+
+   DIM rc AS GpRect = GDIP_RECT(20, 20, 100, 50)
+'#ifdef __FB_64BIT__
+'   DIM rc AS GpRect = (20, 20, 100, 50)
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpRect is defined as Rect in 64 bit and as Rect_ in 32 bit.
+'   DIM rc AS GpRect : rc.x = 20 : rc.y = 20 : rc.Width = 100 : rc.Height = 50
+'#endif
+
+   DIM path AS CGpGraphicsPath
+   path.AddPolygon(@pts(0), 4)
+
+   ' // Create a region from a rectangle.
+   DIM rectRegion AS CGpRegion = @rc
+   graphics.FillRegion(@solidBrush, @rectRegion)
+
+   ' // Create a region from a path.
+   DIM pathRegion AS CGpRegion = @path
+   graphics.FillRegion(@alphaBrush, @pathRegion)
+
+   IF pathRegion.Equals(@rectRegion, @graphics) THEN
+      ' // The two regions are the same.
+      ' // Perform some task.
+      PRINT "Equal"
+   ELSE
+      ' // The two regions are not the same.
+      ' // Perform a different task.
+      PRINT "Not equal"
+   END IF
+
+END SUB
+' ========================================================================================
+```
