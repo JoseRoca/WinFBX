@@ -166,7 +166,7 @@ FUNCTION FindFirstItem (BYVAL pitem AS ImageItemData PTR) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pitem* | In, Out. Pointer to an **ImageItemData** structure. On input, the **Desc** member points to a buffer (allocated by the caller) large enough to hold the metadata description (1 byte for JPEG, 4 bytes for PNG, 11 bytes for GIF), and the **DescSize** member specifies the size (1, 4, or 6) of the buffer pointed to by *Desc*. On output, the buffer pointed to by **Desc** receives the metadata description, and the **DataSize** member receives the size, in bytes, of the metadata itself. |
+| *pitem* | In, Out. Pointer to an **ImageItemData** structure. On input, the **Desc** member points to a buffer (allocated by the caller) large enough to hold the metadata description (1 byte for JPEG, 4 bytes for PNG, 11 bytes for GIF), and the **DescSize** member specifies the size (1, 4, or 6) of the buffer pointed to by **Desc**. On output, the buffer pointed to by **Desc** receives the metadata description, and the **DataSize** member receives the size, in bytes, of the metadata itself. |
 
 #### Return value
 
