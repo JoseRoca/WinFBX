@@ -77,7 +77,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [SetInterpolationColors](#SetInterpolationColorsLGBrush) | Sets the colors to be interpolated and their corresponding blend positions. |
 | [SetLinearColors](#SetLinearColors) | Sets the starting color and ending color. |
 | [SetTransform](#SetTransformLGBrush) | Sets the transformation matrix. |
-| [SetWrapMode](#SetWrapMode) | Sets the wrap mode. |
+| [SetWrapMode](#SetWrapModeLGBrush) | Sets the wrap mode. |
 | [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
 
 # CGpPathGradientBrush Class
@@ -120,7 +120,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [SetInterpolationColors](#SetInterpolationColorsPGBrush) | Sets the colors to be interpolated and their corresponding blend positions. |
 | [SetSurroundColors](#SetSurroundColors) | Sets the surround colors of this brush. |
 | [SetTransform](#SetTransformPGBrush) | Sets the transformation matrix. |
-| [SetWrapMode](#SetWrapMode) | Sets the wrap mode. |
+| [SetWrapMode](#SetWrapModePGBrush) | Sets the wrap mode. |
 | [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
 
 # CGpTextureBrush Class
@@ -143,7 +143,7 @@ Defines a **Brush** object that contains an **Image** object that is used for th
 | [RotateTransform](#RotateTransformTBrush) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
 | [ScaleTransform](#ScaleTransformTBrush) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
 | [SetTransform](#SetTransformTBrush) | Sets the transformation matrix. |
-| [SetWrapMode](#SetWrapMode) | Sets the wrap mode. |
+| [SetWrapMode](#SetWrapModeTBrush) | Sets the wrap mode. |
 | [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
 
 # <a name="CloneBrush"></a>Clone (CGpBrush)
@@ -3233,6 +3233,184 @@ SUB Example_SetTransform (BYVAL hdc AS HDC)
    DIM textureBrush AS CGpTextureBrush = @pImage
    textureBrush.SetTransform(@matrix)
    graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetWrapModeLGBrush"></a>SetWrapMode (CGpLinearGradientBrush)
+
+Sets the wrap mode of this linear gradient brush.
+
+```
+FUNCTION SetWrapMode (BYVAL wrapMode AS WrapMode) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wrapMode* | Element of the WrapMode enumeration that specifies how areas painted with this linear gradient brush will be tiled. The value of this parameter must be one of the following elements:<br>* WrapModeTile<br>* WrapModeTileFlipX<br>* WrapModeTileFlipY<br>* WrapModeTileFlipXY |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The boundary lines of a linear gradient brush form a tile. When you paint an area with a linear gradient brush, the tile repeats. A linear gradient brush may have alternate tiles flipped in a certain direction, as specified by the wrap mode. Flipping has the effect of reversing the order of the colors.
+
+The wrap mode defaults to **WrapModeTile** when a **LinearGradientBrush** object is constructed.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and uses it to fill a rectangle.
+' Next, the code modifies the brush's wrap mode and uses the modified brush to fill another
+' rectangle.
+' ========================================================================================
+SUB Example_SetWrapMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush.
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 100, 50)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+      GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   ' // Fill a large area using the gradient brush with the default wrap mode.
+   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 50)
+
+   linGrBrush.SetWrapMode(WrapModeTileFlipX)
+
+   ' // Fill a large area using the gradient brush with the new wrap mode.
+   graphics.FillRectangle(@linGrBrush, 0, 75, 800, 50)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetWrapModePGBrush"></a>SetWrapMode (CGpPathGradientBrush)
+
+Sets the wrap mode of this path gradient brush.
+
+```
+FUNCTION SetWrapMode (BYVAL wrapMode AS WrapMode) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wrapMode* | Element of the WrapMode enumeration that specifies how areas painted with the path gradient brush will be tiled. The default value is **WrapModeClamp**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The bounding rectangle of a path gradient brush is the smallest rectangle that encloses the brush's boundary path. When you paint the bounding rectangle with the path gradient brush, only the area inside the boundary path gets filled. The area inside the bounding rectangle but outside the boundary path does not get filled.
+
+**WrapModeClamp** (the default wrap mode) indicates that no painting occurs outside of the brush's bounding rectangle. All of the other wrap modes indicate that areas outside the brush's bounding rectangle will be tiled. Each tile is a copy (possibly flipped) of the filled path inside its bounding rectangle.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on a triangular path. The
+' code calls the PathGradientBrush::SetWrapMode method of the PathGradientBrush object to
+' set the brush's wrap mode to WrapModeTileFlipX. The Graphics::FillRectangle method uses
+' the path gradient brush to tile a large area.
+' The output of the code is a grid of tiles. As you move from one tile to the next in a
+' given row, the image (filled boundary path inside the bounding rectangle) is flipped
+' horizontally.
+' ========================================================================================
+SUB Example_SetWrapMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(0, 0), GDIP_POINT(100, 0), GDIP_POINT(100, 100)}
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0)}
+
+   DIM nCount AS LONG = 3
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+   pthGrBrush.SetSurroundColors(@colors(0), @nCount)
+   pthGrBrush.SetWrapMode(WrapModeTileFlipX)
+
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 800, 800)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetWrapModeTBrush"></a>SetWrapMode (CGpTextureBrush)
+
+Sets the wrap mode of this texture brush.
+
+```
+FUNCTION SetWrapMode (BYVAL wrapMode AS WrapMode) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wrapMode* | Element of the **WrapMode** enumeration that specifies how repeated copies of an image are used to tile an area when it is painted with this texture brush. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+An area that extends beyond the boundaries of the brush is tiled with repeated copies of the brush. A texture brush may have alternate tiles flipped in a certain direction, as specified by the wrap mode. Flipping has the effect of reversing the brush's image. For example, if the wrap mode is specified as **WrapModeTileFlipX**, the brush is flipped about a line that is parallel to the y-axis.
+
+The texture brush is always oriented at (0, 0). If the wrap mode is specified as **WrapModeClamp**, no area outside of the brush is tiled. For example, suppose you create a texture brush, specifying **WrapModeClamp** as the wrap mode:
+
+```
+TextureBrush(SomeImage, WrapModeClamp)
+```
+
+Then you paint an area with the brush. If the size of the brush has a height of 50 and the painted area is a rectangle with its upper-left corner at (0, 50), you will see no repeated copies of the brush (no tiling).
+
+The default wrap mode for a texture brush is **WrapModeTile**, which specifies no flipping of the tile and no clamping.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush, sets the wrap mode of the brush, and uses
+' the brush to fill a rectangle.
+' ========================================================================================
+SUB Example_SetWrapMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.SetWrapMode(WrapModeTileFlipX)
+   graphics.FillRectangle(@textureBrush, 0, 0, 400, 200)
 
 END SUB
 ' ========================================================================================
