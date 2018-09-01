@@ -1534,6 +1534,18 @@ END SUB
 ' ========================================================================================
 ```
 
+# <a name="GetPointCount"></a>GetPointCount (CGpPathGradientBrush)
+
+Gets the number of points in the array of points that defines this brush's boundary path.
+
+```
+FUNCTION GetPointCount () AS INT_
+```
+
+#### Return value
+
+This method returns the number of points in the array of points that defines this brush's boundary path.
+
 # <a name="GetRectanglePGBrush"></a>GetRectangle (CGpPathGradientBrush)
 
 Gets the smallest rectangle that encloses the boundary path of this path gradient brush.
