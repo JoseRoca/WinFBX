@@ -3198,6 +3198,201 @@ END SUB
 ' ========================================================================================
 ```
 
+# <a name="SetCenterColor"></a>SetCenterColor (CGpPathGradientBrush)
+
+Sets the center color of this path gradient brush. The center color is the color that appears at the brush's center point.
+
+```
+FUNCTION SetCenterColor (BYVAL colour AS ARGB) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colour* | ARGB color that specifies the center color. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+By default the center point is the centroid of the brush's boundary path, but you can set the center point to any location inside or outside the path.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on an ellipse. The code
+' calls the PathGradientBrush.SetCenterColor method of the PathGradientBrush object to set
+' the center color to blue. The PathGradientBrush.SetSurroundColors method sets the color
+' along the entire boundary to aqua. The FillRectangle Methods method uses the path gradient
+' brush to paint a rectangle that contains the ellipse.
+' ========================================================================================
+SUB Example_SetCenterColor (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a path that consists of a single ellipse.
+   DIM path AS CGpGraphicsPath
+   path.AddEllipse(0, 0, 200, 100)
+
+   ' // Use the path to construct a brush.
+   DIM pthGrBrush AS CGpPathGradientBrush = @path
+
+   ' // Set the color at the center of the path to blue.
+   pthGrBrush.SetCenterColor(GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Set the color along the entire boundary of the path to aqua.
+   DIM colors(0) AS ARGB = {GDIP_ARGB(255, 0, 255, 255)}
+   DIM count AS LONG = 1
+   pthGrBrush.SetSurroundColors(@colors(0), @count)
+
+   ' // Fill the ellipse with the path gradient brush.
+   graphics.FillEllipse(@pthGrBrush, 0, 0, 200, 100)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetCenterPoint"></a>SetCenterPoint (CGpPathGradientBrush)
+
+Sets the center point of this path gradient brush. By default, the center point is at the centroid of the brush's boundary path, but you can set the center point to any location inside or outside the path.
+
+```
+FUNCTION SetCenterPoint (BYVAL pt AS PointF PTR) AS GpStatus
+FUNCTION SetCenterPoint (BYVAL pt AS Point PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pt* | Reference to a **PointF** or **Point** structure that specifies the center point. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on an ellipse. The code
+' sets the center color to blue and sets the color along the boundary to aqua. By default,
+' the center point would be at the center of the ellipse (100, 50), but the call to the
+' PathGradientBrush.SetCenterPoint method sets the center point to (180.5, 50.0).
+' ========================================================================================
+SUB Example_SetCenterPoint (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a path that consists of a single ellipse.
+   DIM path AS CGpGraphicsPath
+   path.AddEllipse(0, 0, 200, 100)
+
+   ' // Use the path to construct a brush.
+   DIM pthGrBrush AS CGpPathGradientBrush = @path
+
+   ' // Set the color at the center of the path to blue.
+   pthGrBrush.SetCenterColor(GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Set the center point.
+   DIM pt AS GpPointF = GDIP_POINTF(180.5, 50.0)
+   pthGrBrush.SetCenterPoint(@pt)
+
+   ' // Set the color along the entire boundary of the path to aqua.
+   DIM colors(0) AS ARGB = {GDIP_ARGB(255, 0, 255, 255)}
+   DIM count AS LONG = 1
+   pthGrBrush.SetSurroundColors(@colors(0), @count)
+
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 300, 300)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetFocusScales"></a>SetFocusScales (CGpPathGradientBrush)
+
+Sets the focus scales of this path gradient brush.
+
+```
+FUNCTION SetFocusScales (BYVAL xScale AS SINGLE, BYVAL yScale AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *xScale* | Simple precision number that specifies the x focus scale. |
+| *yScale* | Simple precision number that specifies the y focus scale. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+By default, the center color of a path gradient is at the center point. By calling **SetFocusScales**, you can specify that the center color should appear along a path that surrounds the center point. That path is the boundary path scaled by a factor of *xScale* in the x direction and by a factor of *yScale* in the y direction. The area inside the scaled path is filled with the center color.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on a triangular path. The
+' code calls the PathGradientBrush::SetFocusScales method of the PathGradientBrush object
+' to set the brush's focus scales to (0.2, 0.2). Then the code uses the path gradient brush
+' to paint a rectangle that includes the triangular path.
+' ========================================================================================
+SUB Example_SetFocusScales (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(100, 0), GDIP_POINT(200, 200), GDIP_POINT(0, 200)}
+
+   ' // No GraphicsPath object is created. The PathGradientBrush
+   ' // object is constructed directly from the array of points.
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+
+   DIM colors(0 TO 1) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255)}
+
+   ' // red at the boundary of the outer triangle
+   ' // blue at the boundary of the inner triangle
+   DIM relativePositions(0 TO 1) AS SINGLE = {0.0, 1.0}
+   pthGrBrush.SetInterpolationColors(@colors(0), @relativePositions(0), 2)
+
+   ' // The inner triangle is formed by scaling the outer triangle
+   ' // about its centroid. The scaling factor is 0.2 in both the x and y directions.
+   pthGrBrush.SetFocusScales(0.2, 0.2)
+
+   ' // Fill a rectangle that is larger than the triangle
+   ' // specified in the Point array. The portion of the
+   ' // rectangle outside the triangle will not be painted.
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 200, 200)
+
+END SUB
+' ========================================================================================
+```
+
 # <a name="SetGammaCorrectionLGBrush"></a>SetGammaCorrection (CGpLinearGradientBrush)
 
 Specifies whether gamma correction is enabled for this linear gradient brush.
