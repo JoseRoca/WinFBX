@@ -1192,3 +1192,56 @@ SUB Example_SetHeight (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetMiddleInset"></a>SetMiddleInset (CGpAdjustableArrowCap)
+
+Sets the number of units that the midpoint of the base shifts towards the vertex.
+
+```
+FUNCTION SetMiddleInset (BYVAL middleInset AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *middleInset* | Simple precision number that specifies the number of units that the midpoint of the base shifts towards the vertex. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates an AdjustableArrowCap object, myArrow, and sets the middle
+' inset of the cap to 5 pixels. The code then creates a Pen object and assigns myArrow as
+' the ending line cap for this Pen object. Next, the code draws a capped line.
+' ========================================================================================
+SUB Example_SetMiddleInset (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Create an AdjustableArrowCap with a height of 10 pixels
+   DIM myArrow AS CGpAdjustableArrowCap = CGpAdjustableArrowCap(10, 10, CTRUE)
+   ' // Adjust to DPI by setting the scale width
+   myArrow.SetWidthScale(rxRatio)
+   ' // Set the middle inset to 5
+   myArrow.SetMiddleInset(5)
+
+   ' // Create a Pen, and assign myArrow as the end cap
+   DIM arrowPen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+   arrowPen.SetCustomEndCap(@myArrow)
+
+   ' // Draw a line using arrowPen
+   graphics.DrawLine(@arrowPen, 0, 0, 100, 100)
+
+END SUB
+' ========================================================================================
+```
