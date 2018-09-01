@@ -351,3 +351,22 @@ FUNCTION GetFrameCount (BYVAL dimensionID AS GUID PTR) AS UINT
 | Parameter  | Description |
 | ---------- | ----------- |
 | *dimensionID* | Pointer to a GUID that specifies the dimension. GUIDs that identify various dimensions are defined in Gdiplusimaging.inc. |
+
+# <a name="GetFrameDimensionsCount"></a>GetFrameDimensionsCount (CGpImage)
+
+Gets the number of frame dimensions in this **Image** object.
+
+```
+FUNCTION GetFrameDimensionsCount () AS UINT
+```
+
+#### Remarks
+
+This method returns information about multiple-frame images, which come in two styles: multiple page and multiple resolution.
+
+A multiple-page image is an image that contains more than one image. Each page contains a single image (or frame). These pages (or images, or frames) are typically displayed in succession to produce an animated sequence, such as in an animated GIF file.
+
+A multiple-resolution image is an image that contains more than one copy of an image at different resolutions.
+
+Windows GDI+ can support an arbitrary number of pages (or images, or frames), as well as an arbitrary number of resolutions.
+
