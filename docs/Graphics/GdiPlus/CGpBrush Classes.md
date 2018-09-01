@@ -3558,7 +3558,7 @@ FUNCTION SetLinearColors (BYVAL color1 AS ARGB, BYVAL color2 AS ARGB) AS GpStatu
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *color1* | The coolor at the starting boundary line of this linear gradient brush. |
+| *color1* | The color at the starting boundary line of this linear gradient brush. |
 | *color2* | The color that specifies the color at the ending boundary line of this linear gradient brush. |
 
 #### Return value
@@ -3591,6 +3591,68 @@ SUB Example_SetLinearColors (BYVAL hdc AS HDC)
 
    linGrBrush.SetLinearColors(GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0))
    graphics.FillRectangle(@linGrBrush, 0, 75, 100, 50)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetSurroundColors"></a>SetSurroundColors (CGpPathGradientBrush)
+
+Sets the surround colors of this path gradient brush. The surround colors are colors specified for discrete points on the brush's boundary path.
+
+```
+FUNCTION SetSurroundColors (BYVAL colors AS ARGB PTR, BYVAL count AS INT_ PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colors* | Pointer to an array of colors that specify the surround colors.  |
+| *count* | Out. Pointer to an integer that, on input, specifies the number of colors in the colors array. If the method succeeds, this parameter, on output, receives the number of surround colors set. If the method fails, this parameter does not receive a value. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A path gradient brush has a boundary path and a center point. The center point is set to a single color, but you can specify different colors for several points on the boundary. For example, suppose you specify red for the center color, and you specify blue, green, and yellow for distinct points on the boundary. Then as you move along the boundary, the color will change gradually from blue to green to yellow and back to blue. As you move along a straight line from any point on the boundary to the center point, the color will change from that boundary point's color to red.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on an array of three points
+' that defines a triangular path. The code also initializes an array of three Color objects.
+' The call to the PathGradientBrush::SetSurroundColors method associates each color in the
+' color array with the corresponding (same index) point in the point array. After the surround
+' colors of the path gradient brush have been set, the Graphics.FillRectangle method uses
+' the path gradient brush to paint a rectangle that includes the triangular path.
+' One edge of the rendered triangle changes gradually from red to green. The next edge
+' changes gradually from green to black, and the third edge changes gradually from black
+' to red. The code does not set the center color, so the center color has the default value
+' of black. As you move along a straight line from any point on the boundary path (triangle)
+' to the center point, the color changes gradually from that boundary point's color to black.
+' ========================================================================================
+SUB Example_SetSurroundColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(20, 20), GDIP_POINT(100, 20), GDIP_POINT(100, 100)}
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+
+   DIM nCount AS LONG = 3
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 255)}
+   pthGrBrush.SetSurroundColors(@colors(0), @nCount)
+
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 200, 200)
 
 END SUB
 ' ========================================================================================
