@@ -11,6 +11,7 @@ The **CGpFont** class allows the creation of **Font** objects. The Font object e
 | [Clone](#Clone) | Copies the contents of the existing Font object into a new Font object. |
 | [GetFamily](#GetFamily) | Gets the font family on which this font is based. |
 | [GetHeight](#GetHeight) | Gets the line spacing of this font in the current unit of a specified Graphics object. |
+| [GetHeight(DPI)](#GetHeightDPI) | Gets the line spacing of this font in pixels. |
 | [GetLogFontA](#GetLogFontA) | Uses a LOGFONTA structure to get the attributes of this Font object. |
 | [GetLogFontW](#GetLogFontW) | Uses a LOGFONTW structure to get the attributes of this Font object. |
 | [GetSize](#GetSize) | Returns the font size (commonly called the em size) of this Font object. |
@@ -256,9 +257,7 @@ FUNCTION GetHeight (BYVAL pGraphics AS CGpGraphics PTR) AS SINGLE
 
 #### Return value
 
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
+This method returns the line spacing of this font.
 
 #### Remarks
 
@@ -274,4 +273,26 @@ Continuing with the same example, suppose the unit of the **Graphics** object is
 2355*(0.3/2048)25.4 = 8.762256
 ```
 
+# <a name="GetHeightDPI"></a>GetHeight (DPI) (CGpFont)
 
+Gets the line spacing, in pixels, of this font. The line spacing is the vertical distance between the base lines of two consecutive lines of text. Thus, the line spacing includes the blank space between lines along with the height of the character itself.
+
+```
+FUNCTION GetHeight (BYVAL dpi AS SINGLE) AS SINGLE
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dpi* | Simple precision number that specifies the vertical resolution, in dots per inch, of the device that displays the font. |
+
+#### Return value
+
+This method returns the line spacing of the font in pixels.
+
+#### Remarks
+
+If the font unit is set to anything other than **UnitPixel**, the height, in pixels, is calculated using the specified vertical resolution. For example, suppose the font unit is inches and the font size is 0.3. Also suppose that for the corresponding font family, the em height is 2048 and the line spacing is 2355. If the specified vertical resolution is 96 dots per inch, the height is calculated as follows:
+
+```
+2355*(0.3/2048)*96 = 33.1171875
+```
