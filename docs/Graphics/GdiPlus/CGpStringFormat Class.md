@@ -319,7 +319,7 @@ The digit substitution method replaces, in a string, Western European digits wit
 
 # <a name="GetFormatFlags"></a>GetFormatFlags
 
-Gets the string format flags for this StringFormat object.
+Gets the string format flags for this **StringFormat** object.
 
 ```
 FUNCTION GetFormatFlags () AS INT_
@@ -375,6 +375,77 @@ SUB Example_GetFormatFlags (BYVAL hdc AS HDC)
    ' // Draw the rectangle that encloses the text
    DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
    graphics.DrawRectangle(@pen, 30, 30, 150, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetHotkeyPrefix"></a>GetHotkeyPrefix
+
+Gets an element of the **HotkeyPrefix** enumeration that indicates the type of processing that is performed on a string when a hot key prefix, an ampersand (&), is encountered.
+
+```
+FUNCTION GetHotkeyPrefix () AS HotkeyPrefix
+```
+
+#### Return value
+
+This method returns an element of the **HotkeyPrefix** enumeration that indicates the type of hot key prefix processing that is performed on a string.
+
+####Remarks
+
+Hot keys, also called access keys, are keys that are programmed to provide an end user with keyboard shortcuts to functionality and are activated by pressing the ALT key. The keys are application dependent and are identified by an underscored letter, typically in a menu name or menu item; for example, when you press ALT, the letter F of the File menu is underscored. The F key is a shortcut to display the **File** menu.
+
+A client programmer designates a hot key in an application by using the hot key prefix, an ampersand (&), in a string that typically is displayed as the name of a menu or an item in a menu and by using the **SetHotkeyPrefix** method to set the appropriate type of processing. When a character in a string is preceded with an ampersand, the key that corresponds to the character becomes a hot key during the processing that occurs when the string is drawn on the display device. The ampersand is called a hot key prefix because it precedes the character to be activated. If **HotkeyPrefixNone** is passed to **SetHotkeyPrefix**, no processing of hot key prefixes occurs.
+
+**Note**: The term hot key is used synonymously here with the term access key. The term hot key may have a different meaning in other Windows APIs.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a StringFormat object, sets the type of hot key prefix
+' processing to be performed on the string, and then gets the type of processing and stores
+' it in a variable. The code then creates a second StringFormat object and uses the stored
+' value to set the type of hot key prefix processing for the second StringFormat object.
+' The code uses the second StringFormat object to draw a string that contains the hot key
+' prefix character. The code also draws the string's layout rectangle.
+' ========================================================================================
+SUB Example_GetHotKeyPrefix (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a red solid brush
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   ' // Create a font family from name
+   DIM fontFamily AS CGpFontFamily = "Times New Roman"
+   ' // Create a font from the font family
+   DIM pFont AS CGpFont = CGpFont(@fontFamily, 24, FontStyleRegular, UnitPixel)
+
+   ' // Create a string format object and set its hot key prefix
+   DIM stringFormat AS CGpStringFormat
+   stringFormat.SetHotkeyPrefix(HotkeyPrefixShow)
+
+   ' // Get the hot key prefix from the StringFormat object.
+   DIM nHotkeyPrefix AS HotkeyPrefix = stringFormat.GetHotkeyPrefix
+
+   ' // Create a second StringFormat object with the same hot key prefix.
+   DIM stringFormat2 AS CGpStringFormat
+   stringFormat2.SetHotkeyPrefix(nHotkeyPrefix)
+
+   ' // Use the seconds StringFormat object in a call to DrawString
+   DIM wszText AS WSTRING * 260 = "This &text has some &underlined characters."
+   graphics.DrawString(@wszText, LEN(wszText), @pFont, 30, 30, 160, 200, @stringFormat2, @solidBrush)
+
+   ' // Draw the rectangle that encloses the text
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawRectangle(@pen, 30, 30, 160, 200)
 
 END SUB
 ' ========================================================================================
