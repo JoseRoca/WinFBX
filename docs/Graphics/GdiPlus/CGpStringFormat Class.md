@@ -184,15 +184,15 @@ FUNCTION GenericTypographic (BYVAL pStringFormat AS CGpStringFormat PTR) AS GpSt
 
 #### Remarks
 
-A generic, typographic StringFormat object has the following characteristics:
+A generic, typographic **StringFormat** object has the following characteristics:
 
-* String format flags StringFormatFlagsLineLimit, StringFormatFlagsNoClip, and StringFormatFlagsNoFitBlackBox are set.
-* Character alignment and line alignment are set to StringAlignmentNear.
+* String format flags **StringFormatFlagsLineLimit**, **StringFormatFlagsNoClip**, and **StringFormatFlagsNoFitBlackBox** are set.
+* Character alignment and line alignment are set to **StringAlignmentNear**.
 * Language ID is set to neutral language, which means that the current language associated with the calling thread is used.
-* String digit substitution is set to StringDigitSubstituteUser.
-* Hot key prefix is set to HotkeyPrefixNone.
+* String digit substitution is set to **StringDigitSubstituteUser**.
+* Hot key prefix is set to **HotkeyPrefixNone**.
 * Number of tab stops is set to zero.
-* String trimming is set to StringTrimmingNone.
+* String trimming is set to **StringTrimmingNone**.
 
 #### Example
 
