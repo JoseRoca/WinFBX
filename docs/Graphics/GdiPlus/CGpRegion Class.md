@@ -1013,7 +1013,7 @@ FUNCTION Intersect (BYVAL pRegion AS CGpRegion PTR) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *rc* | Reference to a rectangle to use to update this Region object. |
+| *rc* | Reference to a rectangle to use to update this **Region* object. |
 | *pPath* | Pointer to a **GraphicsPath** object that specifies the path to use to update this **Region** object. |
 | *pRegion* | Pointer to a **Region** object to use to update this **Region** object. |
 
