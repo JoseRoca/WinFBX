@@ -770,3 +770,69 @@ SUB Example_Shear (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="Shear"></a>Shear
+
+Multiplies each point in an array by this matrix. Each point is treated as a row matrix. The multiplication is performed with the row matrix on the left and this matrix on the right.
+
+```
+FUNCTION TransformPoints (BYVAL pts AS GpPointF PTR, BYVAL nCount AS INT_ = 1) AS GpStatus
+FUNCTION TransformPoints (BYVAL pts AS GpPoint PTR, BYVAL nCount AS INT_ = 1) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pts* | Pointer to an array of **GpPointF** or **GpPoint** objects that, on input, contains the points to be transformed and, on output, receives the transformed points. Each point in the array is transformed (multiplied by this matrix) and updated with the result of the transformation. |
+| *nCount* | Optional. Integer that specifies the number of points to be transformed. The default value is 1. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates an array of five points and then transforms those points
+' by calling the Matrix.TransformPoints method of a Matrix object. The code passes the
+' array of points to the DrawCurve Methods method before the transformation and again
+' after the transformation.
+' ========================================================================================
+SUB Example_TransformPoints (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create a pen
+   DIM myPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), rxRatio)
+
+   DIM rgPoints(0 TO 4) AS GpPointF = {GDIP_POINTF(50 * rxRatio, 100 * ryRatio), GDIP_POINTF(100 * rxRatio, 50 * ryRatio), _
+       GDIP_POINTF(160 * rxRatio, 125 * rxRatio), GDIP_POINTF(200 * rxRatio, 100 * ryRatio), GDIP_POINTF(250 * rxRatio, 150 * ryRatio)}
+
+'#ifdef __FB_64BIT__
+'   DIM rgPoints(0 TO 4) AS GpPointF = {(50 * rxRatio, 100 * ryRatio), (100 * rxRatio, 50 * ryRatio), _
+'       (160 * rxRatio, 125 * rxRatio), (200 * rxRatio, 100 * ryRatio), (250 * rxRatio, 150 * ryRatio)}
+'#else
+'      ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpPoint is defined as Point in 64 bit and as Point_ in 32 bit.
+'   DIM rgPoints(0 TO 4) AS GpPointF
+'   rgPoints(0).x = 50 * rxRatio : rgPoints(0).y = 100 * ryRatio : rgPoints(1).x = 100 * rxRatio
+'   rgPoints(1). y = 50 * ryRatio : rgPoints(2).x = 160 * rxRatio : rgPoints(2).y = 125 * ryRatio
+'   rgPoints(3).x = 200 * rxRatio : rgPoints(3).y = 100 * ryRatio rgPoints(4).x = 250 * rxRatio
+'   rgPoints(4).y = 150 * ryRatio
+'#endif
+
+   DIM matrix AS CGpMatrix = CGpMatrix(1.0, 0.0, 0.0, 2.0, 0.0, 0.0)
+
+   graphics.DrawCurve(@myPen, @rgPoints(0), 5)
+   matrix.TransformPoints(@rgPoints(0), 5)
+   graphics.DrawCurve(@myPen, @rgPoints(0), 5)
+
+END SUB
+' ========================================================================================
+```
