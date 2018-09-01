@@ -573,3 +573,18 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 A font family consists of a single font type with related styles. An example of a single font type is Arial Regular. An example of a font family is a set of fonts containing Arial Regular, Arial Italic, and Arial Bold style fonts.
 
+# <a name="GetFamilyCount"></a>GetFamilyCount (CGpFontCollection)
+
+Gets the number of font families contained in this font collection.
+
+```
+FUNCTION GetFamilyCount () AS LONG
+```
+
+#### Return value
+
+This method returns the number of font families contained in this font collection.
+
+#### Remarks
+
+A font family consists of a single font type with related styles. An example of a single font type is Arial Regular. An example of a font family is a set of fonts containing Arial Regular, Arial Italic, and Arial Bold style fonts.
