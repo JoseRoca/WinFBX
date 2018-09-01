@@ -63,3 +63,63 @@ The *fillPath* and *strokePath* parameters cannot be used at the same time. You 
 
 The **CustomLineCap** class uses the winding fill mode regardless of the fill mode that is set for the **GraphicsPath** object passed to the **CustomLineCap** constructor.
 
+
+# <a name="Clone"></a>Clone (CGpCustomLineCap)
+
+Copies the contents of the existing **CustomLineCap** object into a new **CustomLineCap** object.
+
+```
+FUNCTION Clone (BYVAL pCustomLineCap AS CGpCustomLineCap PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pCustomLineCap* | Pointer to the **CustomLineCap** object where to copy the contents of the existing object. |
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a CustomLineCap object with a stroke path, creates a second
+' CustomLineCap object by cloning the first, and then assigns the cloned cap to a Pen object.
+' It then draws a line by using the Pen object.
+' ========================================================================================
+SUB Example_Clone (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Path object, and add two lines to it
+   DIM pts(0 TO 2) AS GpPoint = {GDIP_POINT(-15, -15), GDIP_POINT(0, 0), GDIP_POINT(15, -15)}
+'#ifdef __FB_64BIT__
+'   DIM pts(0 TO 2) AS GpPoint = {(-15, -15), (0, 0), (15, -15)}
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpPoint is defined as Point in 64 bit and as Point_ in 32 bit.
+'   DIM pts(0 TO 2) AS GpPoint
+'   pts(0).x = -15 : pts(0).y = -15 : pts(2).x = 15: pts(2).y = -15
+'#endif
+
+   DIM capPath AS CGpGraphicsPath = FillModeAlternate
+   capPath.AddLines(@pts(0), 3)
+
+   ' // Create a CustomLineCap object
+   DIM firstCap AS CGpCustomLineCap = CGpCustomLineCap(NULL, @capPath)
+
+  ' // Create a copy of firstCap
+   DIM secondCap AS CGpCustomLineCap
+   firstCap.Clone(@secondCap)
+
+  ' // Create a Pen object, assign second cap as the custom end cap, and draw a line
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 1)
+   pen.SetCustomEndCap(@secondCap)
+   graphics.DrawLine(@pen, 0, 0, 100, 100)
+
+END SUB
+' ========================================================================================
+```
