@@ -2857,6 +2857,70 @@ END SUB
 ' ========================================================================================
 ```
 
+# <a name="SetBlendTriangularShape"></a>SetBlendTriangularShape (CGpLinearGradientBrush)
+
+Sets the blend shape of this path gradient brush.
+
+```
+FUNCTION SetBlendTriangularShape (BYVAL focus AS SINGLE, BYVAL scale AS SINGLE = 1.0) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *focus* | Simple precision number that specifies where the center color will be at its highest intensity. This number must be in the range 0 through 1. |
+| *scale* | Simple precision number that specifies the maximum intensity of center color that gets blended with the boundary color. This number must be in the range 0 through 1. The default value is 1. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+By default, the color changes gradually from the starting color (color at the starting boundary of the linear gradient brush) to the ending color (color at the ending boundary of the linear gradient brush) as you move from the starting boundary to the ending boundary. You can customize the positioning and blending of the starting and ending colors by using the **SetBlendTriangularShape** method.
+
+The **SetBlendTriangularShape** method customizes the blend so that it follows a triangular shape with the extremes of the triangle's base at the gradient's boundaries. The starting color, which, in a default blend, is at the starting boundary of a linear gradient brush, appears at the starting and ending boundaries of the linear gradient brush when a triangular-shaped blend is applied. The position of the ending color, which, in a default blend, is at the ending boundary, is somewhere between the boundaries and is determined by the value of the focus. In other words, the focus specifies the position of the peak of the triangle. For example, a focus value of 0.5 places the peak half way between the starting and ending boundaries. The ending color appears at this peak.
+
+The ending color in a triangular-shaped blend is a percentage of the gamut between the gradient's default-blend starting color and default-blend ending color. For example, suppose a linear gradient brush is constructed with red as the starting color and blue as the ending color. If **SetBlendTriangularShape** is called with a scale value of 0.3, the ending color in the triangular-shaped blend is a hue that is 30 percent between red and blue (70 percent red, 30 percent blue). A scale value of 1.0 produces an ending color that is 100 percent blue.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush, sets a triangular-shaped blend,
+' and uses the brush to fill a rectangle. Twice more, the code sets a triangular-shaped
+' blend with different values and, each time, uses the brush to fill a rectangle.
+' ========================================================================================
+SUB Example_SetBlendTriangularShape (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(500, 0)
+
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
+      GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+
+   linGrBrush.SetBlendTriangularShape(0.5, 0.6)
+   graphics.FillRectangle(@linGrBrush, 0, 0, 500, 50)
+
+   linGrBrush.SetBlendTriangularShape(0.5, 0.8)
+   graphics.FillRectangle(@linGrBrush, 0, 75, 500, 50)
+
+   linGrBrush.SetBlendTriangularShape(0.5, 1.0)
+   graphics.FillRectangle(@linGrBrush, 0, 150, 500, 50)
+
+END SUB
+' ========================================================================================
+```
+
 # <a name="SetGammaCorrectionLGBrush"></a>SetGammaCorrection (CGpLinearGradientBrush)
 
 Specifies whether gamma correction is enabled for this linear gradient brush.
