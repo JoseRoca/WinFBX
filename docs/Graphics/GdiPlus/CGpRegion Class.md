@@ -999,9 +999,23 @@ FUNCTION Intersect (BYVAL rc AS GpRectF PTR) AS GpStatus
 FUNCTION Intersect (BYVAL rc AS GpRect PTR) AS GpStatus
 ```
 
+Updates this region to the portion of itself that intersects the specified path's interior.
+
+```
+FUNCTION Intersect (BYVAL pPath AS CGpGraphicsPath PTR) AS GpStatus
+```
+
+Updates this region to the portion of itself that intersects another region.
+
+```
+FUNCTION Intersect (BYVAL pRegion AS CGpRegion PTR) AS GpStatus
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *rc* | Reference to a rectangle to use to update this Region object. |
+| *pPath* | Pointer to a **GraphicsPath** object that specifies the path to use to update this **Region** object. |
+| *pRegion* | Pointer to a **Region** object to use to update this **Region** object. |
 
 #### Return value
 
@@ -1055,6 +1069,112 @@ SUB Example_IntersectRegion (BYVAL hdc AS HDC)
    ' // Update the region to the portion that intersects with the rectangle
    pRegion.Intersect(@rcf)
    graphics.FillRegion(@solidBrush, @pRegion)
+
+END SUB
+' ========================================================================================
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a region from a rectangle and then uses a path to update the region.
+' ========================================================================================
+SUB Example_IntersectRegion (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+
+   DIM pts(0 TO 5) AS GpPoint = {GDIP_POINT(110, 20), GDIP_POINT(120, 30), GDIP_POINT(100, 60), GDIP_POINT(120, 70), GDIP_POINT(150, 60), GDIP_POINT(140, 10)}
+'#ifdef __FB_64BIT__
+'   DIM pts(0 TO 5) AS GpPoint = {(110, 20), (120, 30), (100, 60), (120, 70), (150, 60), (140, 10)}
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpPoint is defined as Point in 64 bit and as Point_ in 32 bit.
+'   DIM pts(0 TO 5) AS GpPoint
+'   pts(0).x = 110 : pts(0).y = 20 : pts(1).x = 120 : pts(1).y = 30 : pts(2).x = 100 : pts(2).y = 60
+'   pts(3).x = 120 : pts(3).y = 70 : pts(4).x = 150 : pts(4).y = 60 : pts(5).x = 140 : pts(5).y = 10
+'#endif
+   DIM pPath AS CGpGraphicsPath
+   pPath.AddClosedCurve(@pts(0), 6)
+
+   DIM rcf AS GpRectF = GDIP_RECTF(65.2, 15.0, 70.9, 45.0)
+'#ifdef __FB_64BIT__
+'   DIM rcf AS GpRectF = (65.2, 15.0, 70.9, 45.0)
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpRect is defined as Rect in 64 bit and as Rect_ in 32 bit.
+'   DIM rcf AS GpRectF : rcf.x = 65.2 : rcf.y = 15.0 : rcf.Width = 70.9 : rcf.Height = 45.0
+'#endif
+
+   ' // Create a region from a rectangle
+   DIM pRegion AS CGpRegion = @rcf
+
+   ' // Update the region to the portion that intersects with the rectangle
+   pRegion.Intersect(@pPath)
+   graphics.FillRegion(@solidBrush, @pRegion)
+
+END SUB
+' ========================================================================================
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates two regions, one from a path and the other from a rectangle.
+' The code then uses the rectangular region to update the path region.
+' ========================================================================================
+SUB Example_IntersectRegion (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+
+   DIM pts(0 TO 5) AS GpPoint = {GDIP_POINT(110, 20), GDIP_POINT(120, 30), GDIP_POINT(100, 60), GDIP_POINT(120, 70), GDIP_POINT(150, 60), GDIP_POINT(140, 10)}
+'#ifdef __FB_64BIT__
+'   DIM pts(0 TO 5) AS GpPoint = {(110, 20), (120, 30), (100, 60), (120, 70), (150, 60), (140, 10)}
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpPoint is defined as Point in 64 bit and as Point_ in 32 bit.
+'   DIM pts(0 TO 5) AS GpPoint
+'   pts(0).x = 110 : pts(0).y = 20 : pts(1).x = 120 : pts(1).y = 30 : pts(2).x = 100 : pts(2).y = 60
+'   pts(3).x = 120 : pts(3).y = 70 : pts(4).x = 150 : pts(4).y = 60 : pts(5).x = 140 : pts(5).y = 10
+'#endif
+   DIM pPath AS CGpGraphicsPath
+   pPath.AddClosedCurve(@pts(0), 6)
+
+   DIM rcf AS GpRectF = GDIP_RECTF(65.2, 15.0, 70.9, 45.0)
+'#ifdef __FB_64BIT__
+'   DIM rcf AS GpRectF = (65.2, 15.0, 70.9, 45.0)
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpRect is defined as Rect in 64 bit and as Rect_ in 32 bit.
+'   DIM rcf AS GpRectF : rcf.x = 65.2 : rcf.y = 15.0 : rcf.Width = 70.9 : rcf.Height = 45.0
+'#endif
+
+   ' // Create a region from a rectangle
+   DIM rectRegion AS CGpRegion = @rcf
+
+   ' // Create a region from a path
+   DIM pathRegion AS CGpRegion = @pPath
+
+   ' // Update the region to the portion that intersects with another region
+   pathRegion.Intersect(@rectRegion)
+   graphics.FillRegion(@solidBrush, @pathRegion)
 
 END SUB
 ' ========================================================================================
