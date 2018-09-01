@@ -657,3 +657,56 @@ SUB Example_Scale (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetElements"></a>SetElements
+
+Sets the elements of this matrix.
+
+```
+FUNCTION SetElements (BYVAL m11 AS SINGLE, BYVAL m12 AS SINGLE, BYVAL m21 AS SINGLE, _
+   BYVAL m22 AS SINGLE, BYVAL dx AS SINGLE, BYVAL dy AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *m11* | Simple precision number that specifies the element in the first row, first column. |
+| *m12* | Simple precision number that specifies the element in the first row, second column. |
+| *m21* | Simple precision number that specifies the element in the second row, first column.  |
+| *m22* | Simple precision number that specifies the element in the second row, second column. |
+| *dx* | Simple precision number that specifies the element in the third row, first column.  |
+| *dy* | Simple precision number that specifies the element in the third row, second column.  |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example calls the Matrix.SetElements method of a Matrix object. The code
+' uses the matrix to set the world transformation of a Graphics object and then draws a
+' rectangle that is transformed by that world transformation.
+' ========================================================================================
+SUB Example_MatrixSetElements (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create a pen
+   DIM myPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), rxRatio)
+
+   DIM matrix AS CGpMatrix
+   matrix.SetElements(1.0, 0.0, 0.0, 1.0, 30.0 * rxRatio, 50.0 * ryRatio)
+
+   graphics.SetTransform(@matrix)
+   graphics.DrawRectangle(@myPen, 0, 0, 80 * rxRatio, 40 * ryRatio)
+
+END SUB
+' ========================================================================================
+```
