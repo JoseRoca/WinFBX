@@ -213,7 +213,7 @@ FUNCTION GetAllPropertyItems (BYVAL totalBufferSize AS UINT, BYVAL numProperties
 | ---------- | ----------- |
 | *totalBufferSize* | Integer that specifies the size, in bytes, of the allItems buffer. Call the **GetPropertySize** method to obtain the required size.  |
 | *numProperties* | Integer that specifies the number of properties in the image. Call the **GetPropertySize** method to obtain this number. |
-| *allItems* | Out. Pointer to an array of **PropertyItem** structures that receives the property items. |
+| *allItems* | Pointer to an array of **PropertyItem** structures that receives the property items. |
 
 #### Return value
 
@@ -234,13 +234,13 @@ Several enumerations and constants related to image metadata are defined in Gdip
 Gets the bounding rectangle for this image.
 
 ```
-FUNCTION GetBounds (BYVAL srcRect AS RGpectF PTR, BYVAL srcUnit AS GpUnit PTR) AS GpStatus
+FUNCTION GetBounds (BYVAL srcRect AS GpRectF PTR, BYVAL srcUnit AS GpUnit PTR) AS GpStatus
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *srcRect* | Out. Pointer to a **GpRectF** object that receives the bounding rectangle. |
-| *srcUnit* | Out. Pointer to a variable that receives an element of the **Unit** enumeration that indicates the unit of measure for the bounding rectangle. |
+| *srcRect* | Pointer to a **GpRectF** object that receives the bounding rectangle. |
+| *srcUnit* | Pointer to a variable that receives an element of the **GpUnit** enumeration that indicates the unit of measure for the bounding rectangle. |
 
 #### Return value
 
@@ -304,7 +304,7 @@ FUNCTION GetEncoderParameterList (BYVAL clsidEncoder AS GUID PTR, BYVAL uSize AS
 | ---------- | ----------- |
 | *clsidEncoder* | Pointer to a **CLSID** that specifies the encoder. |
 | *uSize* | Integer that specifies the size, in bytes, of the buffer array. Call the **GetEncoderParameterListSize** method to obtain the required size. |
-| *buffer* | Out. Pointer to an **EncoderParameters** object that receives the list of supported parameters. |
+| *buffer* | Pointer to an **EncoderParameters** object that receives the list of supported parameters. |
 
 #### Return value
 
@@ -380,7 +380,7 @@ FUNCTION GetFrameDimensionsList (BYVAL dimensionIDs AS GUID PTR, BYVAL count AS 
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *dimensionIDs* | Out. Pointer to an array that receives the identifiers. GUIDs that identify various dimensions are defined in Gdiplusimaging.inc. |
+| *dimensionIDs* | Pointer to an array that receives the identifiers. GUIDs that identify various dimensions are defined in Gdiplusimaging.inc. |
 | *count* | Integer that specifies the number of elements in the dimensionIDs array. Call the **GetFrameDimensionsCount** method to determine this number. |
 
 #### Return value
@@ -443,7 +443,7 @@ FUNCTION GetPalette (BYVAL pal AS ColorPalette PTR, BYVAL nSize AS INT_) AS GpSt
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pal* | Out. Pointer to a **ColorPalette** structure that receives the palette. |
+| *pal* | Pointer to a **ColorPalette** structure that receives the palette. |
 | *nSize* | Integer that specifies the size, in bytes, of the palette. Call the **GetPaletteSize** method to determine the size. |
 
 #### Return value
@@ -451,3 +451,41 @@ FUNCTION GetPalette (BYVAL pal AS ColorPalette PTR, BYVAL nSize AS INT_) AS GpSt
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="GetPaletteSize"></a>GetPaletteSize (CGpImage)
+
+Gets the size, in bytes, of the color palette of this **Image** object.
+
+```
+FUNCTION GetPaletteSize () AS INT_
+```
+
+# <a name="GetPhysicalDimension"></a>GetPhysicalDimension (CGpImage)
+
+Gets the width and height of this image.
+
+```
+FUNCTION GetPhysicalDimension (BYVAL psize AS SizeF PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *psize* | Pointer to a **GpSizeF** object that receives the width and height of this image. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="GetPixelFormat"></a>GetPixelFormat (CGpImage)
+
+Gets the pixel format of this **Image** object.
+
+```
+FUNCTION GetPixelFormat () AS PixelFormat
+```
+
+#### Return value
+
+This method returns an integer that indicates the pixel format of this **Image** object. The **PixelFormat** data type and constants that represent various pixel formats are defined in Gdipluspixelformats.inc.
