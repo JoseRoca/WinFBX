@@ -12,8 +12,8 @@ The **CGpFont** class allows the creation of **Font** objects. The Font object e
 | [GetFamily](#GetFamily) | Gets the font family on which this font is based. |
 | [GetHeight](#GetHeight) | Gets the line spacing of this font in the current unit of a specified Graphics object. |
 | [GetHeight(DPI)](#GetHeightDPI) | Gets the line spacing of this font in pixels. |
-| [GetLogFontA](#GetLogFontA) | Uses a LOGFONTA structure to get the attributes of this Font object. |
-| [GetLogFontW](#GetLogFontW) | Uses a LOGFONTW structure to get the attributes of this Font object. |
+| [GetLogFontA](#GetLogFont) | Uses a LOGFONTA structure to get the attributes of this Font object. |
+| [GetLogFontW](#GetLogFont) | Uses a LOGFONTW structure to get the attributes of this Font object. |
 | [GetSize](#GetSize) | Returns the font size (commonly called the em size) of this Font object. |
 | [GetStyle](#GetStyle) | Returns the font size (commonly called the em size) of this Font object. |
 | [GetUnit](#GetUnit) | Returns the unit of measure of this Font object. |
@@ -297,7 +297,7 @@ If the font unit is set to anything other than **UnitPixel**, the height, in pix
 2355*(0.3/2048)*96 = 33.1171875
 ```
 
-# <a name="GetLogFontA"></a>GetLogFontA (CGpFont)
+# <a name="GetLogFont"></a>GetLogFontA (CGpFont)
 
 Uses a **LOGFONT** structure to get the attributes of this Font object.
 
