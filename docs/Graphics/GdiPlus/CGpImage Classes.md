@@ -398,3 +398,11 @@ A multiple-page image is an image that contains more than one image. Each page c
 A multiple-resolution image is an image that contains more than one copy of an image at different resolutions.
 
 Windows GDI+ can support an arbitrary number of pages (or images, or frames), as well as an arbitrary number of resolutions.
+
+# <a name="GetHeight"></a>GetHeight (CGpImage)
+
+Gets the image height, in pixels, of this image.
+
+```
+FUNCTION GetHeight () AS UINT
+```
