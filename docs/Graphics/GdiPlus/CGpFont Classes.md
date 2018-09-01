@@ -633,3 +633,16 @@ If the function fails, it returns one of the other elements of the **Status** en
 #### Remarks
 
 When you use the GDI+ API, you must never allow your application to download arbitrary fonts from untrusted sources. The operating system requires elevated privileges to assure that all installed fonts are trusted. 
+
+# <a name="ConstructorFontFamily"></a>Constructor (CGpFontFamily)
+
+Creates a **FontFamily** object based on a specified font collection.
+
+```
+CONSTRUCTOR CGpFontFamily (BYVAL pwszName AS WSTRING PTR, pFontCollection AS CGpFontCollection PTR = NULL)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pwszName* | Name of the font family. For example, Arial.ttf is the name of the Arial font family. |
+| *pFontCollection* | Optional. Pointer to a **FontCollection** object that specifies the collection that the font family belongs to. If **FontCollection** is NULL, this font family is not part of a collection. The default value is NULL. |
