@@ -312,7 +312,7 @@ The **CustomLineCap** object uses a path and a stroke to define the end cap. The
 
 #### Example
 
-'''
+```
 ' ========================================================================================
 ' The following example creates a CustomLineCap object with a stroke join. It then gets the
 ' stroke join and assigns it as the line join of a Pen object that it then uses to draw a line.
@@ -361,4 +361,4 @@ SUB Example_GetStrokeJoin (BYVAL hdc AS HDC)
 
 END SUB
 ' ========================================================================================
-'''
+```
