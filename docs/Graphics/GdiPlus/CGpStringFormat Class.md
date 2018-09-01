@@ -1143,3 +1143,69 @@ SUB Example_SetMeasurableCharacterRanges (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetTabStops"></a>SetTabStops
+
+Sets the offsets for tab stops in this **StringFormat** object.
+
+```
+FUNCTION SetTabStops (BYVAL firstTabOffset AS SINGLE, BYVAL nCount AS INT_, _
+   BYVAL tabStops AS SINGLE PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *firstTabOffset* | Simple precision number that specifies the initial offset position. This initial offset position is relative to the string's origin and the offset of the first tab stop is relative to the initial offset position.  |
+| *nCount* | Integer that specifies the number of tab-stop offsets in the *tabStops* array. |
+| *tabStops* | Pointer to an array of real numbers that specify the tab-stop offsets. The offset of the first tab stop is the first value in the array, the offset of the second tab stop, the second value in the array, and so on. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Each tab-stop offset in the tabStops array, except the first one, is relative to the previous one. The first tab-stop offset is relative to the initial offset position specified by *firstTabOffset*. For example, if the initial offset position is 8 and the first tab-stop offset is 50, then the first tab stop is at position 58. If the initial offset position is zero, then the first tab-stop offset is relative to position 0, the string origin.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a StringFormat object, sets tab stops, and uses the
+' StringFormat object to draw a string that contains tab characters (\t). The code also
+' draws the string's layout rectangle.
+' ========================================================================================
+SUB Example_SetTabStops (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Create a red solid brush
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 255)
+   ' // Create a font family from name
+   DIM fontFamily AS CGpFontFamily = "Times New Roman"
+   ' // Create a font from the font family
+   DIM pFont AS CGpFont = CGpFont(@fontFamily, 16, FontStyleRegular, UnitPixel)
+
+   ' // Create a string format object and set the tab stops
+   DIM tabs(0 TO 2) AS SINGLE = {150, 100, 100}
+   DIM stringFormat AS CGpStringFormat
+   stringFormat.SetTabStops(0, 3, @tabs(0))
+
+   ' // Use the StringFormat object in a call to DrawString
+   DIM wszText AS WSTRING * 260 = "Name" & CHR(9) &"Test 1" & CHR(9) & "Test 2" & CHR(9) & "Test 3"
+   graphics.DrawString(@wszText, LEN(wszText), @pFont, 20, 20, 500, 100, @stringFormat, @solidBrush)
+
+   ' // Draw the rectangle that encloses the text
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawRectangle(@pen, 20, 20, 500, 100)
+
+END SUB
+' ========================================================================================
+```
