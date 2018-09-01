@@ -579,7 +579,7 @@ Windows GDI+ stores an individual piece of metadata in a **PropertyItem** struct
 
 # <a name="GetRawFormat"></a>GetRawFormat (CGpImage)
 
-Gets a globally unique identifier ( GUID) that identifies the format of this Image object.
+Gets a globally unique identifier ( GUID) that identifies the format of this **Image** object.
 
 ```
 FUNCTION GetRawFormat (BYVAL guidformat AS GUID PTR) AS GpStatus
@@ -594,3 +594,63 @@ FUNCTION GetRawFormat (BYVAL guidformat AS GUID PTR) AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="GetThumbnailImage"></a>GetThumbnailImage (CGpImage)
+
+Gets a thumbnail image from this **Image** object.
+
+```
+FUNCTION GetThumbnailImage (BYVAL thumbWidth AS UINT, BYVAL thumbHeight AS UINT, _
+   BYVAL pThumbnail AS CGpImage PTR, BYVAL pCallback AS ANY PTR = NULL, _
+   BYVAL callbackData AS ANY PTR = NULL) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *thumbWidth* | Width, in pixels, of the requested thumbnail image. |
+| *thumbHeight* | Height, in pixels, of the requested thumbnail image. |
+| *pThumbnail* | Pointer to an **Image** object that will receive the requested thumbnail image. |
+| *pCallback* | Optional. Callback function that you provide. During the process of creating or retrieving the thumbnail image, GDI+ calls this function to give you the opportunity to abort the process. The default value is NULL. |
+| *callbackData* | Optional. Pointer to a block of memory that contains data to be used by the callback function. The default value is NULL. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A thumbnail image is a small copy of an image. Some image files have a thumbnail image embedded in the file. In such cases, this method retrieves the embedded thumbnail image. If there is no embedded thumbnail image, this method creates a thumbnail image by scaling the main image to the size specified in the thumbWidth and thumbHeight parameters. If both of those parameters are 0, a system-defined size is used.
+
+#### Example
+
+'''
+' ========================================================================================
+' The following example creates an Image object based on a metafile and then draws the image.
+' Next, the code calls the Image.GetBounds method to get the bounding rectangle for the image.
+' The code makes two attempts to display 75 percent of the image. The first attempt fails
+' because it specifies (0, 0) for the upper-left corner of the source rectangle. The second
+' attempt succeeds because it uses the X and Y data members returned by Image.GetBounds to
+' specify the upper-left corner of the source rectangle.
+' ========================================================================================
+SUB Example_GetThumbnailImage (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM pImage AS CGpImage = "climber.jpg"
+   DIM pThumbnail AS CGpImage
+   pImage.GetThumbnailImage(40, 40, @pThumbnail)
+
+   graphics.DrawImage(@pImage, 10, 10, pImage.GetWidth, pImage.GetHeight)
+   graphics.DrawImage(@pThumbnail, 220, 10, pThumbnail.GetWidth, pThumbnail.GetHeight)
+
+END SUB
+' ========================================================================================
+'''
