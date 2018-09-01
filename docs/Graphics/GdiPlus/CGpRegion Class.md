@@ -1341,7 +1341,7 @@ FUNCTION IsVisible (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, _
 | *x* | y-coordinate of the upper-left corner of the rectangle to test. |
 | *nWidth* | The width of the rectangle to test |
 | *nHeight* | The height of the rectangle to test |
-| *pGraphics* | Optional. Pointer to a Graphics object that contains the world and page transformations required to calculate the device coordinates of this region and the point. The default value is NULL. |
+| *pGraphics* | Optional. Pointer to a **Graphics** object that contains the world and page transformations required to calculate the device coordinates of this region and the point. The default value is NULL. |
 
 #### Return value
 
