@@ -199,3 +199,32 @@ If the function fails, it returns one of the other elements of the **Status** en
 #### Remarks
 
 **FindFirstItem** and **FindNextItem** do not enumerate the metadata items stored by the **SetPropertyItem** method.
+
+# <a name="GetAllPropertyItems"></a>GetAllPropertyItems (CGpImage)
+
+Gets all the property items (metadata) stored in this **Image** object.
+
+```
+FUNCTION GetAllPropertyItems (BYVAL totalBufferSize AS UINT, BYVAL numProperties AS UINT, _
+   BYVAL allItems AS PropertyItem PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *totalBufferSize* | Integer that specifies the size, in bytes, of the allItems buffer. Call the **GetPropertySize** method to obtain the required size.  |
+| *numProperties* | Integer that specifies the number of properties in the image. Call the **GetPropertySize** method to obtain this number. |
+| *allItems* | Out. Pointer to an array of **PropertyItem** structures that receives the property items. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Some image files contain metadata that you can read to determine features of the image. For example, a digital photograph might contain metadata that you can read to determine the make and model of the camera used to capture the image.
+
+GDI+ stores an individual piece of metadata in a PropertyItem object. The **GetAllPropertyItems** method returns an array of PropertyItem objects. Before you call **GetAllPropertyItems**, you must allocate a buffer large enough to receive that array. You can call the **GetPropertySize** method of an **Image** object to get the size, in bytes, of the required buffer. The **GetPropertySize** method also gives you the number of properties (pieces of metadata) in the image.
+
+Several enumerations and constants related to image metadata are defined in Gdiplusimaging.inc.
