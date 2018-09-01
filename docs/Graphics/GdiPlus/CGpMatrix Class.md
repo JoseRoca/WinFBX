@@ -385,3 +385,50 @@ SUB Example_Offset (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="OffsetY"></a>OffsetY
+
+Gets the vertical translation value of this matrix, which is the element in row 3, column 1.
+
+```
+FUNCTION OffsetY () AS SINGLE
+```
+
+#### Return value
+
+This method returns the vertical translation value of this matrix, which is the element in row 3, column 2.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Matrix object with a horizontal translation value of 50
+' and a vertical translation value of 30. The code calls the Matrix::OffsetX and Matrix.OffsetY
+' methods of the Matrix object to obtain those translation values. The code draws a line
+' from (0, 0) to the point whose coordinates are the retrieved translation values. The code
+' also uses the matrix to set the world transformation of a Graphics object and then draws
+' a rectangle that is transformed according to that world transformation.
+' ========================================================================================
+SUB Example_Offset (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create a pen
+   DIM myPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), rxRatio)
+
+   DIM matrix AS CGpMatrix = CGpMatrix(1.0, 0.0, 0.0, 1.0, 50.0 * rxRatio, 30.0 * ryRatio)
+   DIM AS SINGLE xTranslation, yTranslation
+   xTranslation = matrix.OffsetX
+   yTranslation = matrix.OffsetY
+
+   graphics.DrawLine(@myPen, 0.0, 0.0, xTranslation, yTranslation)
+   graphics.SetTransform(@matrix)
+   graphics.DrawRectangle(@myPen, 0, 0, 20 * rxRatio, 20 * ryRatio)
+
+END SUB
+' ========================================================================================
+```
