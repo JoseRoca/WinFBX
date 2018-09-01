@@ -78,7 +78,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [SetLinearColors](#SetLinearColors) | Sets the starting color and ending color. |
 | [SetTransform](#SetTransformLGBrush) | Sets the transformation matrix. |
 | [SetWrapMode](#SetWrapModeLGBrush) | Sets the wrap mode. |
-| [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
+| [TranslateTransform](#TranslateTransformLGBrush) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
 
 # CGpPathGradientBrush Class
 
@@ -121,7 +121,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [SetSurroundColors](#SetSurroundColors) | Sets the surround colors of this brush. |
 | [SetTransform](#SetTransformPGBrush) | Sets the transformation matrix. |
 | [SetWrapMode](#SetWrapModePGBrush) | Sets the wrap mode. |
-| [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
+| [TranslateTransform](#TranslateTransformPGBrush) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
 
 # CGpTextureBrush Class
 
@@ -144,7 +144,7 @@ Defines a **Brush** object that contains an **Image** object that is used for th
 | [ScaleTransform](#ScaleTransformTBrush) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
 | [SetTransform](#SetTransformTBrush) | Sets the transformation matrix. |
 | [SetWrapMode](#SetWrapModeTBrush) | Sets the wrap mode. |
-| [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
+| [TranslateTransform](#TranslateTransformTBrush) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
 
 # <a name="CloneBrush"></a>Clone (CGpBrush)
 
@@ -3411,6 +3411,179 @@ SUB Example_SetWrapMode (BYVAL hdc AS HDC)
    DIM textureBrush AS CGpTextureBrush = @pImage
    textureBrush.SetWrapMode(WrapModeTileFlipX)
    graphics.FillRectangle(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="TranslateTransformLGBrush"></a>TranslateTransform (CGpLinearGradientBrush)
+
+Updates this brush's current transformation matrix with the product of itself and a translation matrix.
+
+```
+FUNCTION TranslateTransform (BYVAL dx AS SINGLE, BYVAL dy AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dx* | Simple precision number that specifies the horizontal component of the translation. |
+| *dy* | Simple precision number that specifies the vertical component of the translation. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A single 3×3 matrix can store any sequence of affine transformations. If you have several 3×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix *S* represents a scaling, and matrix *T* represents a translation. If matrix M is the product *ST*, then matrix *M* represents a composite transformation: first scale, then translate.
+
+The order of matrix multiplication is important. In general, the matrix product *RT* is not the same as the matrix product *TR*. In the example given in the previous paragraph, the composite transformation represented by *RT* (first rotate, then translate) is not the same as the composite transformation represented by *TR* (first translate, then rotate).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and uses it to fill a rectangle.
+' Next, the code modifies the brush's transformation matrix, applying a composite transformation,
+' and then fills a rectangle with the transformed brush.
+' ========================================================================================
+SUB Example_TranslateTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 80, 40)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   ' // Fill a large area with the gradient brush (no transformation).
+   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 150)
+
+   ' // Apply a composite transformation: first scale, then translate.
+   linGrBrush.ScaleTransform(2, 1)                           ' // horizontal doubling
+   linGrBrush.TranslateTransform(30, 0, MatrixOrderAppend)   ' // translation
+
+   ' // Fill a large area with the transformed linear gradient brush.
+   graphics.FillRectangle(@linGrBrush, 0, 200, 800, 150)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="TranslateTransformPGBrush"></a>TranslateTransform (CGpPathGradientBrush)
+
+Updates this brush's current transformation matrix with the product of itself and a translation matrix.
+
+```
+FUNCTION TranslateTransform (BYVAL dx AS SINGLE, BYVAL dy AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dx* | Simple precision number that specifies the horizontal component of the translation. |
+| *dy* | Simple precision number that specifies the vertical component of the translation. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A single 3×3 matrix can store any sequence of affine transformations. If you have several 3×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix *S* represents a scaling and matrix *T* represents a translation. If matrix *M* is the product *ST*, then matrix *M* represents a composite transformation: first scale, then translate.
+
+#### Example
+
+````
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on a triangular path. The
+' calls to the PathGradientBrush.ScaleTransform and PathGradientBrush.TranslateTransform
+' methods of the PathGradientBrush object set the elements of the brush's transformation
+' matrix so that it represents a composite transformation: first scale, then translate.
+' The code uses the path gradient brush twice to paint a rectangle: once before the
+' transformation is set and once after the transformation is set.
+' ========================================================================================
+SUB Example_TranslateTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(0, 0), GDIP_POINT(50, 0), GDIP_POINT(50, 50)}
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+
+   ' // Fill an area with the path gradient brush (no transformation).
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 500, 500)
+
+   pthGrBrush.ScaleTransform(3.0, 1.0)
+   pthGrBrush.TranslateTransform(100.0, 50.0, MatrixOrderAppend)
+
+   ' // Fill the same area with the transformed path gradient brush.
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 500, 500)
+
+END SUB
+' ========================================================================================
+````
+
+# <a name="TranslateTransformTBrush"></a>TranslateTransform (CGpTextureBrush)
+
+Updates this brush's current transformation matrix with the product of itself and a translation matrix.
+
+```
+FUNCTION TranslateTransform (BYVAL dx AS SINGLE, BYVAL dy AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dx* | Simple precision number that specifies the horizontal component of the translation. |
+| *dy* | Simple precision number that specifies the vertical component of the translation. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' The code then uses the transformed brush to fill a rectangle.
+' ========================================================================================
+SUB Example_TranslateTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.TranslateTransform(30, 0, MatrixOrderAppend)
+   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
 
 END SUB
 ' ========================================================================================
