@@ -704,6 +704,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 #### Example
 
+```
 ' ========================================================================================
 ' The following example creates a CustomLineCap object with a stroke join. It then gets the
 ' stroke join and assigns it as the line join of a Pen object that it then uses to draw a line.
