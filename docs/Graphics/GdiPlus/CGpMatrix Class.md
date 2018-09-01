@@ -284,3 +284,57 @@ END IF
 ' // Must be deleted before the call to AfxGdipShutdown
 Delete pMatrix
 ```
+
+# <a name="Multiply"></a>Multiply
+
+Updates this matrix with the product of itself and another matrix.
+
+```
+FUNCTION Multiply (BYVAL pMatrix AS CGpMatrix PTR, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a matrix that will be multiplied by this matrix. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of the multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates two Matrix objects: matrix1 and matrix2. The call to the
+' Matrix.Multiply method updates matrix1 with the product ( matrix1)( matrix2). At that
+' point, matrix1 represents a composite transformation: first scale, then translate. The
+' code uses matrix1 to set the world transformation of a Graphics object and then draws a
+' rectangle that is transformed according to that world transformation.
+' ========================================================================================
+SUB Example_Multiply (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create a pen
+   DIM myPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Horizontal scale
+   DIM matrix1 AS CGpMatrix = CGpMatrix(3.0, 0.0, 0.0, 1.0, 0.0, 0.0)
+   ' // Translation
+   DIM matrix2 AS CGpMatrix = CGpMatrix(1.0, 0.0, 0.0, 1.0, 20.0 * rxRatio, 40.0 * ryRatio)
+
+   matrix1.Multiply(@matrix2, MatrixOrderAppend)
+   graphics.SetTransform(@matrix1)
+   graphics.DrawRectangle(@myPen, 0, 0, 100 * rxRatio, 100 * ryRatio)
+
+END SUB
+' ========================================================================================
+```
