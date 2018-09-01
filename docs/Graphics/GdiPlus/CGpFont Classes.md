@@ -73,7 +73,7 @@ The **CGpFontFamily** class encapsulates a set of fonts that make up a font fami
 | [IsAvailable](#IsAvailable) | Determines whether this Font object was created successfully. |
 | [IsStyleAvailable](#IsStyleAvailable) | Determines whether the specified style is available for this font family. |
 
-# <a name="ConstructorFont"></a>Constructors (CGpFont)
+# <a name="ConstructorsFont"></a>Constructors (CGpFont)
 
 Creates a **Font** object based on the Windows Graphics Device Interface (GDI) font object that is currently selected into a specified device context. This constructor is provided for compatibility with GDI.
 
