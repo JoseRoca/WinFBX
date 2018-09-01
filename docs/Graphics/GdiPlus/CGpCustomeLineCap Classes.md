@@ -749,14 +749,32 @@ END SUB
 ' ========================================================================================
 ```
 
+# <a name="SetWidthScale"></a>SetWidthScale (CGpCustomLineCap)
+
+Sets the value of the scale width. This is the amount to scale the custom line cap relative to the width of the Pen used to draw lines. The default value of 1.0 does not scale the line cap.
+
+```
+FUNCTION SetWidthScale (BYVAL widthScale AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *widthScale* | Simple precision number that specifies the scaling factor that will be used to scale the line width. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
 #### Example
 
 ```
 ' ========================================================================================
-' The following example creates a CustomLineCap object with a stroke join. It then gets the
-' stroke join and assigns it as the line join of a Pen object that it then uses to draw a line.
+' The following example creates a CustomLineCap object and sets the width scale. It then
+' gets the width scale, assigns the custom cap to a Pen object, and draws a line.
 ' ========================================================================================
-SUB Example_SetStrokeJoin (BYVAL hdc AS HDC)
+SUB Example_SetWidthScale (BYVAL hdc AS HDC)
 
    ' // Create a graphics object from the window device context
    DIM graphics AS CGpGraphics = hdc
@@ -783,14 +801,13 @@ SUB Example_SetStrokeJoin (BYVAL hdc AS HDC)
    ' // Create a CustomLineCap object, and set its base cap to LineCapRound
    DIM custCap AS CGpCustomLineCap = CGpCustomLineCap(NULL, @capPath)
 
-  ' // Set the start and end caps for custCap
-   custCap.SetStrokeJoin(LineJoinBevel)
+   ' // Set the width scale for custCap.
+   custCap.SetWidthScale(3)
 
-  ' // Create a Pen object, assign strokeJoin as the line join,
-  ' // and draw two joined lines in a path.
-   DIM strokeJoinPen AS CGpPen = CGpPen(GDIP_ARGB(255, 200, 150, 0), 5.0)
-   strokeJoinPen.SetCustomEndCap(@custCap)
-   graphics.DrawLine(@strokeJoinPen, 0, 0, 200, 200)
+   ' // Assign custCap to a Pen object and draw a line.
+   DIM widthScalePen AS CGpPen = CGpPen(GDIP_ARGB(255, 180, 0, 180), 1.7)
+   widthScalePen.SetCustomEndCap(@custCap)
+   graphics.DrawLine(@widthScalePen, 0, 0, 200, 200)
 
 END SUB
 ' ========================================================================================
