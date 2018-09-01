@@ -313,8 +313,6 @@ FUNCTION GetLogFontW (BYVAL pGraphics AS CGpGraphics PTR, BYVAL pLogFont AS LOGF
 
 #### Return value
 
-#### Return value
-
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
@@ -396,3 +394,15 @@ SUB Example_GetLogFontW (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetSize"></a>GetSize (CGpFont)
+
+Returns the font size (commonly called the em size) of this Font object. The size is in the units of this Font object.
+
+```
+FUNCTION GetSize () AS SINGLE
+```
+
+#### Return value
+
+The method returns the font size. The size is in the units of this **Font** object.
