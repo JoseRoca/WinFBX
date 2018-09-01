@@ -198,6 +198,4 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 #### Remarks
 
-#### Remarks
-
 **FindFirstItem** and **FindNextItem** do not enumerate the metadata items stored by the **SetPropertyItem** method.
