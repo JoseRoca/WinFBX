@@ -406,3 +406,11 @@ Gets the image height, in pixels, of this image.
 ```
 FUNCTION GetHeight () AS UINT
 ```
+
+# <a name="GetHorizontalResolution"></a>GetHorizontalResolution (CGpImage)
+
+Gets the horizontal resolution, in dots per inch, of this image.
+
+```
+FUNCTION GetHorizontalResolution () AS SINGLE
+```
