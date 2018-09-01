@@ -1139,3 +1139,58 @@ SUB Example_IsAvailable (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="IsStyleAvailable"></a>IsStyleAvailable (CGpFontFamily)
+
+Determines whether the specified style is available for this font family.
+
+```
+FUNCTION IsStyleAvailable (BYVAL nStyle AS INT_) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nStyle* | Integer that specifies the style of the typeface. This value must be an element of the FontStyle enumeration or the result of a bitwise OR applied to two or more of these elements. For example, FontStyleBold OR FontStyleUnderline OR FontStyleStrikeout specifies a combination of the three styles. |
+
+#### Return value
+
+If the style or combination of styles is available, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Remarks
+
+This method returns a misleading result on some third-party fonts. For example, IsStyleAvailable(FontStyleUnderline) may return FALSE because it is really testing for a regular style font that also is an underlined font: (FontStyleRegular OR FontStyleUnderline). If the font does not have a regular style, the IsStyleAvailable method returns FALSE.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a FontFamily object. If the font family has a regular style
+' available, the example draws text.
+' ========================================================================================
+SUB Example_IsStyleAvailable (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a FontFamily object
+   DIM myFontFamily AS CGpFontFamily = "arial"
+
+   ' // Check to see if the regular style is available.
+   DIM isStyleAvailable AS BOOLEAN = myFontFamily.IsStyleAvailable(FontStyleRegular)
+   
+   ' // If regular style is available, draw text.
+   IF isStyleAvailable THEN
+      DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+      DIM font AS CGpFont = CGpFont(@myFontFamily, AfxPointsToPixelsX(16) / rxRatio)
+      DIM wszText AS WSTRING * 260 = "myFontFamily is available in regular style"
+      graphics.DrawString(@wszText, -1, @font, 0, 0, @solidbrush)
+   END IF
+
+END SUB
+' ========================================================================================
+```
