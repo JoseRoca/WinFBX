@@ -3846,7 +3846,7 @@ FUNCTION SetWrapMode (BYVAL wrapMode AS WrapMode) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *wrapMode* | Element of the WrapMode enumeration that specifies how areas painted with this linear gradient brush will be tiled. The value of this parameter must be one of the following elements: **WrapModeTile**, **WrapModeTileFlipX**, **WrapModeTileFlipY**, **WrapModeTileFlipXY**. |
+| *wrapMode* | Element of the **WrapMode** enumeration that specifies how areas painted with this linear gradient brush will be tiled. The value of this parameter must be one of the following elements: **WrapModeTile**, **WrapModeTileFlipX**, **WrapModeTileFlipY**, **WrapModeTileFlipXY**. |
 
 #### Return value
 
@@ -3905,7 +3905,7 @@ FUNCTION SetWrapMode (BYVAL wrapMode AS WrapMode) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *wrapMode* | Element of the WrapMode enumeration that specifies how areas painted with the path gradient brush will be tiled. The default value is **WrapModeClamp**. |
+| *wrapMode* | Element of the **WrapMode** enumeration that specifies how areas painted with the path gradient brush will be tiled. The default value is **WrapModeClamp**. |
 
 #### Return value
 
