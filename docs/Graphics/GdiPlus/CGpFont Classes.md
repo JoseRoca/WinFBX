@@ -1043,3 +1043,52 @@ SUB Example_GetFamilyName (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetLineSpacing"></a>GetLineSpacing (CGpFontFamily)
+
+Gets the line spacing, in design units, of this font family for the specified style or style combination. The line spacing is the vertical distance between the base lines of two consecutive lines of text.
+
+```
+FUNCTION GetLineSpacing (BYVAL nStyle AS INT_) AS UINT16
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nStyle* | Integer that specifies the style of the typeface. This value must be an element of the **FontStyle** enumeration or the result of a bitwise OR applied to two or more of these elements. For example, FontStyleBold OR FontStyleUnderline OR FontStyleStrikeout specifies a combination of the three styles. |
+
+#### Return value
+
+This method returns the line spacing of this font family.
+
+##### Example
+
+```
+' ========================================================================================
+' The following example creates a FontFamily object, gets the line spacing in design units,
+' and outputs the value as text.
+' ========================================================================================
+SUB Example_GetLineSpacing (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a FontFamily object
+   DIM lineSpacingFontFamily AS CGpFontFamily = "arial"
+
+   ' // Get the cell ascent of the font family in design units.
+   DIM lineSpacing AS LONG = lineSpacingFontFamily.GetLineSpacing(FontStyleRegular)
+
+   ' // Copy the line spacing into a string and draw the string.
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+   DIM font AS CGpFont = CGpFont(@lineSpacingFontFamily, AfxPointsToPixelsX(16) / rxRatio)
+   DIM wszText AS WSTRING * 260 = "lineSpacingFontFamily.GetLineSpacing() returns " & STR(lineSpacing)
+   graphics.DrawString(@wszText, -1, @font, 0, 0, @solidbrush)
+
+END SUB
+' ========================================================================================
+```
