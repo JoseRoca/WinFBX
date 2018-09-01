@@ -598,6 +598,7 @@ FUNCTION AddFontFile (BYVAL pwszFileName AS WSTRING PTR) AS GpStatus
 ```
 
 | Parameter  | Description |
+| ---------- | ----------- |
 | *pwszFileName* | Pointer to a wide-character string that specifies the name of a font file. |
 
 #### Return value
@@ -610,3 +611,25 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 When you use the GDI+ API, you must never allow your application to download arbitrary fonts from untrusted sources. The operating system requires elevated privileges to assure that all installed fonts are trusted.
 
+# <a name="AddMemoryFont"></a>AddMemoryFont (CGpPrivateFontCollection)
+
+Adds a font that is contained in system memory to a Windows GDI+ font collection.
+
+```
+FUNCTION AddMemoryFont (BYVAL pMemory AS ANY PTR, BYVAL length AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMemory* | Pointer to a font that is contained in memory. |
+| *length* | Integer that specifies the number of bytes of data in the font. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+When you use the GDI+ API, you must never allow your application to download arbitrary fonts from untrusted sources. The operating system requires elevated privileges to assure that all installed fonts are trusted. 
