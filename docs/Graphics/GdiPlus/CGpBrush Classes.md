@@ -91,7 +91,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorsPGBrush) | Creates a PathGradientBrush object based on an array of points. Initializes the wrap mode of the path gradient brush. |
+| [Constructors](#ConstructorsPGBrush) | Creates a **PathGradientBrush** object. |
 | [GetBlend](#GetBlendPGBrush) | Gets the blend factors and their corresponding blend positions. |
 | [GetBlendCount](#GetBlendCountPGBrush) | Gets the number of blend factors currently set. |
 | [GetCenterColor](#GetCenterColor) | Gets center color of the brush. |
