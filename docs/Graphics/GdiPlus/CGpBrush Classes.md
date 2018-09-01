@@ -4,8 +4,8 @@ The **CGpBrush** class is a base interface that defines a **Brush** object. A **
 
 A closed shape, such as a rectangle or an ellipse, consists of an outline and an interior. The outline is drawn with a pen and the interior is filled with a brush. GDI+ provides several brush classes for filling the interiors of closed shapes: **CGpSolidBrush**, **CGpHatchBrush**, **CGpTextureBrush**, **CGpLinearGradientBrush**, and **CGpPathGradientBrush**. All of these classes inherit from the **CGpBrush** class.
 
-**Inherits from**: CGpBase.
-**Imclude file**: CGpBrush.inc.
+**Inherits from**: CGpBase.<br>
+**Include file**: CGpBrush.inc.
 
 ### Methods
 
@@ -18,8 +18,8 @@ A closed shape, such as a rectangle or an ellipse, consists of an outline and an
 
 The **SolidBrush** object defines a solid color Brush object. A **Brush** object is used to fill in shapes similar to the way a paint brush can paint the inside of a shape.
 
-**Inherits from**: CGpBrush.
-**Imclude file**: CGpBrush.inc.
+**Inherits from**: CGpBrush.<br>
+**Include file**: CGpBrush.inc.
 
 ### Methods
 
@@ -33,8 +33,8 @@ The **SolidBrush** object defines a solid color Brush object. A **Brush** object
 
 Creates a **HatchBrush** object based on a hatch style, a foreground color, and a background color.
 
-**Inherits from**: CGpBrush.
-**Imclude file**: CGpBrush.inc.
+**Inherits from**: CGpBrush.<br>
+**Include file**: CGpBrush.inc.
 
 ### Methods
 
@@ -49,8 +49,8 @@ Creates a **HatchBrush** object based on a hatch style, a foreground color, and 
 
 Defines a brush that paints a color gradient in which the color changes evenly from the starting boundary line of the linear gradient brush to the ending boundary line of the linear gradient brush. The boundary lines of a linear gradient brush are two parallel straight lines. The color gradient is perpendicular to the boundary lines of the linear gradient brush, changing gradually across the stroke from the starting boundary line to the ending boundary line. The color gradient has one color at the starting boundary line and another color at the ending boundary line.
 
-**Inherits from**: CGpBrush.
-**Imclude file**: CGpBrush.inc.
+**Inherits from**: CGpBrush.<br>
+**Include file**: CGpBrush.inc.
 
 ### Constructors and Methods
 
@@ -84,8 +84,8 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 
 A **PathGradientBrush** object stores the attributes of a color gradient that you can use to fill the interior of a path with a gradually changing color. A path gradient brush has a boundary path, a boundary color, a center point, and a center color. When you paint an area with a path gradient brush, the color changes gradually from the boundary color to the center color as you move from the boundary path to the center point.
 
-**Inherits from**: CGpBrush.
-**Imclude file**: CGpBrush.inc.
+**Inherits from**: CGpBrush.<br>
+**Include file**: CGpBrush.inc.
 
 ### Constructors and Methods
 
@@ -127,8 +127,8 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 
 Defines a **Brush** object that contains an **Image** object that is used for the fill. The fill image can be transformed by using the local **Matrix** object contained in the **Brush** object.
 
-**Inherits from**: CGpBrush.
-**Imclude file**: CGpBrush.inc.
+**Inherits from**: CGpBrush.<br>
+**Include file**: CGpBrush.inc.
 
 ### Constructors and Methods
 
