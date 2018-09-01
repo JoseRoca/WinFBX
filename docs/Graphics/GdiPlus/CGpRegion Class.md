@@ -1405,3 +1405,61 @@ SUB Example_IsVisibleRect (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="MakeEmpty"></a>MakeEmpty
+
+Updates this region to an empty region. In other words, the region occupies no space on the display device.
+
+```
+FUNCTION MakeEmpty () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a region from a rectangle and paints it with a brush. Then
+' the code makes the region empty and paints the region with a different color to show that
+' the region occupies no space on the display device.
+' ========================================================================================
+SUB Example_MakeEmptyRegion (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM rc AS GpRect = GDIP_RECT(65, 15, 70, 45)
+'#ifdef __FB_64BIT__
+'   DIM rc AS GpRect = (65, 15, 70, 45)
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpRect is defined as Rect in 64 bit and as Rect_ in 32 bit.
+'   DIM rc AS GpRect : rc.x = 65 : rc.y = 15 : rc.Width = 70 : rc.Height = 45
+'#endif
+
+   ' // Create red and blue solid brushes
+   DIM redBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   DIM blueBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 255)
+
+   ' // Create a region, and fill it with a red brush.
+   DIM rectRegion AS CGpRegion = @rc
+   graphics.FillRegion(@redBrush, @rectRegion)
+
+   ' // Make the region empty, and then fill it with a blue brush.
+   ' // The color won't change because it is empty and can't be filled with FillRegion.
+   rectRegion.MakeEmpty
+   graphics.FillRegion(@blueBrush, @rectRegion)
+
+END SUB
+' ========================================================================================
+```
