@@ -666,3 +666,11 @@ FUNCTION GetType () AS ImageType
 #### Return value
 
 This method returns an element of the ImageType enumeration that indicates the image type.
+
+# <a name="GetVerticalResolution"></a>GetVerticalResolution (CGpImage)
+
+Gets the vertical resolution, in dots per inch, of this image.
+
+```
+FUNCTION GetVerticalResolution () AS SINGLE
+```
