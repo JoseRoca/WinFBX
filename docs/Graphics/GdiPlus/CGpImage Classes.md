@@ -654,3 +654,15 @@ SUB Example_GetThumbnailImage (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetType"></a>GetType (CGpImage)
+
+Gets the type (bitmap or metafile) of this **Image** object.
+
+```
+FUNCTION GetType () AS ImageType
+```
+
+#### Return value
+
+This method returns an element of the ImageType enumeration that indicates the image type.
