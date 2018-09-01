@@ -297,3 +297,68 @@ SUB Example_GetStrokeCaps (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetStrokeJoin"></a>GetStrokeJoin (CGpCustomLineCap)
+
+Returns the style of **LineJoin** used to join multiple lines in the same **GraphicsPath** object.
+
+```
+FUNCTION GetStrokeJoin () AS LineJoin
+```
+
+#### Return value
+
+The **CustomLineCap** object uses a path and a stroke to define the end cap. The stroke is contained in a **GraphicsPath** object, which can contain more than one figure. If there is more than one figure in the **GraphicsPath** object, the stroke join determines how their joint is graphically displayed.
+
+#### Example
+
+'''
+' ========================================================================================
+' The following example creates a CustomLineCap object with a stroke join. It then gets the
+' stroke join and assigns it as the line join of a Pen object that it then uses to draw a line.
+' ========================================================================================
+SUB Example_GetStrokeJoin (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Path object, and add two lines to it
+   DIM pts(0 TO 2) AS GpPoint = {GDIP_POINT(-15, -15), GDIP_POINT(0, 0), GDIP_POINT(15, -15)}
+'#ifdef __FB_64BIT__
+'   DIM pts(0 TO 2) AS GpPoint = {(-15, -15), (0, 0), (15, -15)}
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpPoint is defined as Point in 64 bit and as Point_ in 32 bit.
+'   DIM pts(0 TO 2) AS GpPoint
+'   pts(0).x = -15 : pts(0).y = -15 : pts(2).x = 15: pts(2).y = -15
+'#endif
+
+   DIM capPath AS CGpGraphicsPath = FillModeAlternate
+   capPath.AddLines(@pts(0), 3)
+
+   ' // Create a CustomLineCap object, and set its base cap to LineCapRound
+   DIM custCap AS CGpCustomLineCap = CGpCustomLineCap(NULL, @capPath)
+
+  ' // Set the start and end caps for custCap
+   custCap.SetStrokeJoin(LineJoinBevel)
+
+   ' // Get the stroke join from custCap
+   DIM strokeJoin AS LineJoin = custCap.GetStrokeJoin
+
+  ' // Create a Pen object, assign strokeJoin as the line join,
+  ' // and draw two joined lines in a path.
+   DIM strokeJoinPen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 0, 0), 15.1)
+   strokeJoinPen.SetLineJoin(strokeJoin)
+   DIM joinPath AS CGpGraphicsPath
+   joinPath.AddLine(10, 10, 10, 200)
+   joinPath.AddLine(10, 200, 200, 200)
+   graphics.DrawPath(@strokeJoinPen, @joinPath)
+
+END SUB
+' ========================================================================================
+'''
