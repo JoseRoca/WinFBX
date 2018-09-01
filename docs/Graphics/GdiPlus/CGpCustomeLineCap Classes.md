@@ -1245,3 +1245,62 @@ SUB Example_SetMiddleInset (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetWidth"></a>SetWidth (CGpAdjustableArrowCap)
+
+Sets the width of the arrow cap. The width is the distance between the endpoints of the base of the arrow.
+
+```
+FUNCTION SetWidth (BYVAL nWidth AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nWidth* | Simple precision number that specifies the width, in units, for the arrow cap. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates an AdjustableArrowCap, myArrow, and sets the width of
+' the cap to 10 pixels. The code then creates a Pen, assigns myArrow as the ending
+' line cap for this Pen, and draws a capped line. Next, the code sets the width to 15
+' pixels, reassigns the arrow cap to the pen, and draws a new capped line.
+' ========================================================================================
+SUB Example_SetWidth (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Create an AdjustableArrowCap with a height of 10 pixels
+   DIM myArrow AS CGpAdjustableArrowCap = CGpAdjustableArrowCap(10, 10, CTRUE)
+   ' // Adjust to DPI by setting the scale width
+   myArrow.SetWidthScale(rxRatio)
+
+   ' // Create a Pen, and assign myArrow as the end cap
+   DIM arrowPen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+   arrowPen.SetCustomEndCap(@myArrow)
+
+   ' // Draw a line using arrowPen
+   graphics.DrawLine(@arrowPen, 0, 0, 100, 100)
+
+   ' // Set the cap to the new width, and reassign the arrow cap to the pen object.
+   myArrow.SetWidth(15.7)
+   arrowPen.SetCustomEndCap(@myArrow)
+
+   ' // Draw a line with new cap
+   graphics.DrawLine(@arrowPen, 0, 40, 100, 140)
+
+END SUB
+' ========================================================================================
+```
