@@ -714,3 +714,61 @@ SUB Example_GetTabStops (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetTrimming"></a>GetTrimming
+
+Gets an element of the **StringTrimming** enumeration that indicates the trimming style of this **StringFormat** object. The trimming style determines how to trim characters from a string that is too large to fit in the layout rectangle. 
+
+```
+FUNCTION GetTrimming () AS StringTrimming
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a StringFormat object, sets the string's trimming style,
+' and then gets the trimming style and stores it in a variable. The code then creates a
+' second StringFormat object and uses the stored trimming style to set the trimming style
+' of the second StringFormat object. Next, the code uses the second StringFormat object to
+' draw a formatted string. The code also draws the string's layout rectangle.
+' ========================================================================================
+SUB Example_GetTrimming (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a red solid brush
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   ' // Create a font family from name
+   DIM fontFamily AS CGpFontFamily = "Times New Roman"
+   ' // Create a font from the font family
+   DIM pFont AS CGpFont = CGpFont(@fontFamily, 24, FontStyleRegular, UnitPixel)
+
+   ' // Create a string format object and set its trimming style
+   DIM stringFormat AS CGpStringFormat
+   stringFormat.SetTrimming(StringTrimmingEllipsisWord)
+
+   ' // Get the trimming style from the StringFormat object.
+   DIM nStringTrimming AS StringTrimming = stringFormat.GetTrimming
+
+   ' // Create a second StringFormat object with the same trimming style.
+   DIM stringFormat2 AS CGpStringFormat
+   stringFormat2.SetTrimming(nStringTrimming)
+
+   ' // Use the second StringFormat object in a call to DrawString.
+   DIM wszText AS WSTRING * 260 = "One two three four five six seven eight nine ten"
+   graphics.DrawString(@wszText, LEN(wszText), @pFont, 30, 30, 160, 60, @stringFormat, @solidBrush)
+
+   ' // Draw the rectangle that encloses the text
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawRectangle(@pen, 30, 30, 160, 60)
+
+END SUB
+' ========================================================================================
+```
