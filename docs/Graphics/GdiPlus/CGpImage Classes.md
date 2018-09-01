@@ -685,7 +685,7 @@ FUNCTION GetWidth () AS UINT
 
 # <a name="RemovePropertyItem"></a>RemovePropertyItem (CGpImage)
 
-Removes a property item (piece of metadata) from this Image object.
+Removes a property item (piece of metadata) from this **Image** object.
 
 ```
 FUNCTION RemovePropertyItem (BYVAL propId AS PROPID) AS GpStatus
@@ -704,3 +704,48 @@ If the function fails, it returns one of the other elements of the **Status** en
 #### Remarks
 
 The **RemovePropertyItem** method removes a specified property from an **Image** object, but that property item is not removed from the file or stream that was used to construct the Image object. To save the image (with the property item removed) to a new JPEG file or stream, call the **Save** method of the **Image** object.
+
+# <a name="RotateFlip"></a>RotateFlip (CGpImage)
+
+Rotates and flips this image.
+
+```
+FUNCTION RotateFlip (BYVAL rotateFlipType AS RotateFlipType) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *rotateFlipType* | Element of the **RotateFlipType** enumeration that specifies the type of rotation and the type of flip. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates an Image object based on a JPEG file. The code creates a
+' second Image object by cloning the first. Then the code calls the DrawImage method twice
+' to draw the two images.
+' ========================================================================================
+SUB Example_RotateFlip (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM pImage AS CGpImage = "climber.jpg"
+   graphics.DrawImage(@pImage, 10, 10, pImage.GetWidth, pImage.GetHeight)
+   pImage.RotateFlip(Rotate90FlipY)
+   graphics.DrawImage(@pImage, 220, 10, pImage.GetWidth, pImage.GetHeight)
+
+END SUB
+' ========================================================================================
+```
