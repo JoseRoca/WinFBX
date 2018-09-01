@@ -228,3 +228,65 @@ Some image files contain metadata that you can read to determine features of the
 GDI+ stores an individual piece of metadata in a PropertyItem object. The **GetAllPropertyItems** method returns an array of PropertyItem objects. Before you call **GetAllPropertyItems**, you must allocate a buffer large enough to receive that array. You can call the **GetPropertySize** method of an **Image** object to get the size, in bytes, of the required buffer. The **GetPropertySize** method also gives you the number of properties (pieces of metadata) in the image.
 
 Several enumerations and constants related to image metadata are defined in Gdiplusimaging.inc.
+
+# <a name="GetBounds"></a>GetBounds (CGpImage)
+
+Gets the bounding rectangle for this image.
+
+```
+FUNCTION GetBounds (BYVAL srcRect AS RGpectF PTR, BYVAL srcUnit AS GpUnit PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *srcRect* | Out. Pointer to a **GpRectF** object that receives the bounding rectangle. |
+| *srcUnit* | Out. Pointer to a variable that receives an element of the **Unit** enumeration that indicates the unit of measure for the bounding rectangle. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The bounding rectangle for a metafile does not necessarily have (0, 0) as its upper-left corner. The coordinates of the upper-left corner can be negative or positive, depending on the drawing commands that were issued during the recording of the metafile. For example, suppose a metafile consists of a single ellipse that was recorded with the following statement:
+
+```
+DrawEllipse(pen, 200, 100, 80, 40)
+```
+
+Then the bounding rectangle for the metafile will enclose that one ellipse. The upper-left corner of the bounding rectangle will not be (0, 0); rather, it will be a point near (200, 100).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates an Image object based on a metafile and then draws the image.
+' Next, the code calls the Image.GetBounds method to get the bounding rectangle for the image
+' and redraws the a 75 per cent of the image.
+' ========================================================================================
+SUB Example_GetBounds (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM pImage AS CGpImage = "climber.emf"
+   graphics.DrawImage(@pImage, 0, 0)
+
+   ' // Get the bounding rectangle for the image (metafile).
+   DIM boundsRect AS RectF
+   DIM nUnit AS GpUnit
+   pImage.GetBounds(@boundsRect, @nUnit)
+
+   ' // Draw 75 percent of the image.
+   graphics.DrawImage(@pImage, 230.0, 0.0, boundsRect.X, boundsRect.Y, 0.75 * boundsRect.Width, boundsRect.Height, UnitPixel)
+
+END SUB
+' ========================================================================================
+```
