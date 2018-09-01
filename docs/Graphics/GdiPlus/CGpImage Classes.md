@@ -370,3 +370,31 @@ A multiple-resolution image is an image that contains more than one copy of an i
 
 Windows GDI+ can support an arbitrary number of pages (or images, or frames), as well as an arbitrary number of resolutions.
 
+# <a name="GetFrameDimensionsList"></a>GetFrameDimensionsList (CGpImage)
+
+Gets the identifiers for the frame dimensions of this Image object.
+
+```
+FUNCTION GetFrameDimensionsList (BYVAL dimensionIDs AS GUID PTR, BYVAL count AS UINT) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dimensionIDs* | Out. Pointer to an array that receives the identifiers. GUIDs that identify various dimensions are defined in Gdiplusimaging.inc. |
+| *count* | Integer that specifies the number of elements in the dimensionIDs array. Call the Image.GetFrameDimensionsCount method to determine this number. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+This method returns information about multiple-frame images, which come in two styles: multiple page and multiple resolution.
+
+A multiple-page image is an image that contains more than one image. Each page contains a single image (or frame). These pages (or images, or frames) are typically displayed in succession to produce an animated sequence, such as in an animated GIF file.
+
+A multiple-resolution image is an image that contains more than one copy of an image at different resolutions.
+
+Windows GDI+ can support an arbitrary number of pages (or images, or frames), as well as an arbitrary number of resolutions.
