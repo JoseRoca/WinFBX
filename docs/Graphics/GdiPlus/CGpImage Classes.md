@@ -625,7 +625,7 @@ A thumbnail image is a small copy of an image. Some image files have a thumbnail
 
 #### Example
 
-'''
+```
 ' ========================================================================================
 ' The following example creates an Image object based on a metafile and then draws the image.
 ' Next, the code calls the Image.GetBounds method to get the bounding rectangle for the image.
@@ -653,4 +653,4 @@ SUB Example_GetThumbnailImage (BYVAL hdc AS HDC)
 
 END SUB
 ' ========================================================================================
-'''
+```
