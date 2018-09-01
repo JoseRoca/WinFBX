@@ -126,7 +126,7 @@ END SUB
 
 # <a name="GetBaseCap"></a>GetBaseCap (CGpCustomLineCap)
 
-Gets the style of the base cap. The base cap is used as a cap at the end of a line along with this CustomLineCap object.
+Gets the style of the base cap. The base cap is used as a cap at the end of a line along with this **CustomLineCap** object.
 
 ```
 FUNCTION GetBaseCap () AS LineCap
@@ -167,6 +167,67 @@ SUB Example_GetBaseCap (BYVAL hdc AS HDC)
    DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), 10)
    pen.SetEndCap(baseCap)
    graphics.DrawLine(@pen, 0, 0, 100, 100)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetBaseInset"></a>GetBaseInset (CGpCustomLineCap)
+
+Gets the distance between the base cap to the start of the line.
+
+```
+FUNCTION GetBaseInset () AS SINGLE
+```
+
+#### Return value
+
+The base inset is used to separate the base cap from the start of the line. A value of 0 makes the base cap and the line touch. A value greater than 0 inserts a space (in units) between the line cap and the start of the line.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a CustomLineCap object, gets the base inset of the cap,
+' and then creates a second CustomLineCap object that uses the same base inset.
+' ========================================================================================
+SUB Example_GetBaseInset (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Path object, and add two lines to it
+   DIM pts(0 TO 2) AS GpPoint = {GDIP_POINT(-15, -15), GDIP_POINT(0, 0), GDIP_POINT(15, -15)}
+'#ifdef __FB_64BIT__
+'   DIM pts(0 TO 2) AS GpPoint = {(-15, -15), (0, 0), (15, -15)}
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpPoint is defined as Point in 64 bit and as Point_ in 32 bit.
+'   DIM pts(0 TO 2) AS GpPoint
+'   pts(0).x = -15 : pts(0).y = -15 : pts(2).x = 15: pts(2).y = -15
+'#endif
+
+   DIM capPath AS CGpGraphicsPath = FillModeAlternate
+   capPath.AddLines(@pts(0), 3)
+
+   ' // Create a CustomLineCap object, and set its base cap to LineCapRound
+   DIM custCap AS CGpCustomLineCap = CGpCustomLineCap(NULL, @capPath, LineCapRound, 5)
+
+  ' // Get the base inset of custCap
+   DIM baseInset AS SINGLE = custCap.GetBaseInset
+
+  ' // Create a second CustomLineCap object with the same base inset as the first.
+   DIM insetCap AS CGpCustomLineCap = CGpCustomLineCap(NULL, @capPath, LineCapRound, baseInset)
+
+  ' // Create a Pen object and assign insetCap as the custom end cap. Then draw a line.
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 5)
+   pen.SetCustomEndCap(@insetCap)
+   graphics.DrawLine(@pen, 10, 10, 200, 200)
 
 END SUB
 ' ========================================================================================
