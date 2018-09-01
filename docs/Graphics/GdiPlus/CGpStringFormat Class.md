@@ -317,4 +317,65 @@ FUNCTION GetDigitSubstitutionMethod () AS StringDigitSubstitute
 
 The digit substitution method replaces, in a string, Western European digits with digits that correspond to a user's locale or language.
 
+# <a name="GetFormatFlags"></a>GetFormatFlags
 
+Gets the string format flags for this StringFormat object.
+
+```
+FUNCTION GetFormatFlags () AS INT_
+```
+
+#### Return value
+
+This method returns a value that indicates which string format flags are set for this **StringFormat** object. This value can be any combination (the result of a bitwise OR applied to two or more elements) of elements of the **StringFormatFlag**s enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a StringFormat object, sets the string's format flags, and
+' then gets the 32-bit value that contains the format flags and stores it in a variable.
+' The code then creates another StringFormat object and uses the stored format flags value
+' to set the format flags of the second StringFormat object. Next, the code uses the second
+' StringFormat object to draw a formatted string . The code also draws the string's layout
+' rectangle.
+' ========================================================================================
+SUB Example_GetFormatFlags (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a red solid brush
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   ' // Create a font family from name
+   DIM fontFamily AS CGpFontFamily = "Times New Roman"
+   ' // Create a font from the font family
+   DIM pFont AS CGpFont = CGpFont(@fontFamily, 24, FontStyleRegular, UnitPixel)
+
+   ' // Create a string format object and set its format flags
+   DIM stringFormat AS CGpStringFormat
+   stringFormat.SetFormatFlags(StringFormatFlagsDirectionVertical OR StringFormatFlagsNoFitBlackBox)
+
+   ' // Get the format flags from the StringFormat object.
+   DIM flags AS LONG = stringFormat.GetFormatFlags
+
+   ' // Create a second StringFormat object with the same flags.
+   DIM stringFormat2 AS CGpStringFormat
+   stringFormat2.SetFormatFlags(flags)
+
+      ' // Use the second StringFormat object in a call to DrawString
+   DIM wszText AS WSTRING * 260 = "This text is vertical because of a format flag."
+   graphics.DrawString(@wszText, LEN(wszText), @pFont, 30, 30, 150, 200, @stringFormat2, @solidBrush)
+
+   ' // Draw the rectangle that encloses the text
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawRectangle(@pen, 30, 30, 150, 200)
+
+END SUB
+' ========================================================================================
+```
