@@ -508,7 +508,7 @@ FUNCTION GetPropertyIdList (BYVAL numOfProperty AS UINT, BYVAL list AS PROPID PT
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *numOfProperty* | Integer that specifies the number of elements in the list array. Call the Image.GetPropertyCount method to determine this number. |
+| *numOfProperty* | Integer that specifies the number of elements in the list array. Call the **GetPropertyCount** method to determine this number. |
 | *list* | Pointer to an array that receives the property identifiers. |
 
 #### Return value
@@ -521,3 +521,58 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 The **GetPropertyIdList** method returns an array of **PROPIDs**. Before you call **GetPropertyIdList**, you must allocate a buffer large enough to receive that array. You can call the **GetPropertyCount** method of an **Image** object to determine the size of the required buffer. The size of the buffer should be the return value of **GetPropertyCount** multiplied by **SIZEOF(PROPID)**.
 
+# <a name="GetPropertyItem"></a>GetPropertyItem (CGpImage)
+
+Gets a specified property item (piece of metadata) from this Image object.
+
+```
+FUNCTION GetPropertyItem (BYVAL propId AS PROPID, BYVAL propSize AS UINT, _
+   BYVAL buffer AS PropertyItem PTR= AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *propId* | Integer that identifies the property item to be retrieved. |
+| *propSize* | Integer that specifies the size, in bytes, of the property item to be retrieved. Call the **GetPropertyItemSize** method to determine the size. |
+| *buffer* | Pointer to a **PropertyItem** structure that receives the property item. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="GetPropertyItemSize"></a>GetPropertyItemSize (CGpImage)
+
+Gets the size, in bytes, of a specified property item of this **Image** object.
+
+```
+FUNCTION GetPropertyItemSize (BYVAL propId AS PROPID) AS UINT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *propId* | Integer that identifies the property item. |
+
+# <a name="GetPropertySize"></a>GetPropertySize (CGpImage)
+
+Gets the total size, in bytes, of all the property items stored in this **Image** object. The **GetPropertySize** method also gets the number of property items stored in this Image object.
+
+```
+FUNCTION GetPropertySize (BYVAL totalBufferSize AS UINT PTR, BYVAL numProperties AS UINT PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *totalBufferSize* | Pointer to a UINT that receives the total size, in bytes, of all the property items. |
+| *numProperties* | Pointer to a UINT that receives the number of property items. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Windows GDI+ stores an individual piece of metadata in a **PropertyItem** structure. The **GetAllPropertyItems** method returns an array of **PropertyItem** structures. Before you call **GetAllPropertyItems**, you must allocate a buffer large enough to receive that array. You can call the **GetPropertySize** method of an **Image** object to get the size, in bytes, of the required buffer. The **GetPropertySize** method also gives you the number of properties (pieces of metadata) in the image.
