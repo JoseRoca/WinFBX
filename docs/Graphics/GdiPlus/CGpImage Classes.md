@@ -674,3 +674,11 @@ Gets the vertical resolution, in dots per inch, of this image.
 ```
 FUNCTION GetVerticalResolution () AS SINGLE
 ```
+
+# <a name="GetWidth"></a>GetWidth (CGpImage)
+
+Gets the width, in pixels, of this image
+
+```
+FUNCTION GetWidth () AS UINT
+```
