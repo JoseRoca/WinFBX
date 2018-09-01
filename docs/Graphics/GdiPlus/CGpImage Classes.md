@@ -315,3 +315,21 @@ If the function fails, it returns one of the other elements of the **Status** en
 #### Remarks
 
 The **GetEncoderParameterList** method returns an array of **EncoderParameter** objects. Before you call **GetEncoderParameterList**, you must allocate a buffer large enough to receive that array, which is part of an **EncoderParameters** object. You can call the **GetEncoderParameterListSize** method to get the size, in bytes, of the required **EncoderParameters** object.
+
+# <a name="GetEncoderParameterList"></a>GetEncoderParameterList (CGpImage)
+
+Gets the size, in bytes, of the parameter list for a specified image encoder.
+
+```
+FUNCTION GetEncoderParameterListSize (BYVAL clsidEncoder AS GUID PTR) AS UINT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *clsidEncoder* | Pointer to a **CLSID** that specifies the encoder. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
