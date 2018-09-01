@@ -599,3 +599,61 @@ SUB Example_RotateAt (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="Scale"></a>Scale
+
+Scales this matrix with the product of itself and a scaling matrix.
+
+```
+FUNCTION Scale (BYVAL scaleX AS SINGLE, BYVAL scaleY AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *scaleX* | Simple precision that specifies the horizontal scale factor. |
+| *scaleY* | Simple precision that specifies the vertical scale factor. |
+| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of the multiplication. M**atrixOrderPrepend** specifies that the rotation matrix is on the left, and **MatrixOrderAppend** specifies that the rotation matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Matrix object and calls the Matrix.Rotate method to set
+' the elements of that matrix to a rotation. Then the code calls the Matrix.Scale method
+' to update the matrix with the product of itself and a scaling matrix. At that point, the
+' matrix represents a composite transformation: first rotate, then scale. The code uses
+' the matrix to set the world transformation of a Graphics object and then draws an ellipse
+' that is transformed according to the composite transformation.
+' ========================================================================================
+SUB Example_Scale (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create a pen
+   DIM myPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), rxRatio)
+
+   DIM matrix AS CGpMatrix
+   matrix.Rotate(30.0)
+   matrix.Scale(3.0, 2.0, MatrixOrderAppend)
+
+   graphics.SetTransform(@matrix)
+
+   ' // Draw a transformed ellipse. The composite transformation
+   ' // is rotate 30 degrees and then scale by a factor of 3
+   ' // in the horizontal direction and 2 in the vertical direction.
+   graphics.DrawEllipse(@myPen, 0, 0, 80 * rxRatio, 40 * ryRatio)
+
+END SUB
+' ========================================================================================
+```
