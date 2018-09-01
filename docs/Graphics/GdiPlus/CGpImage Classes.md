@@ -443,8 +443,8 @@ FUNCTION GetPalette (BYVAL pal AS ColorPalette PTR, BYVAL nSize AS INT_) AS GpSt
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pal* | Out. Pointer to a ColorPalette structure that receives the palette. |
-| *nSize* | Integer that specifies the size, in bytes, of the palette. Call the GetPaletteSize method to determine the size. |
+| *pal* | Out. Pointer to a **ColorPalette** structure that receives the palette. |
+| *nSize* | Integer that specifies the size, in bytes, of the palette. Call the **GetPaletteSize** method to determine the size. |
 
 #### Return value
 
