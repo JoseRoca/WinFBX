@@ -1078,3 +1078,58 @@ SUB Example_IsFilled (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetFillState"></a>SetFillState (CGpAdjustableArrowCap)
+
+Creates an adjustable arrow line cap with the specified height and width. The arrow line cap can be filled or nonfilled. The middle inset defaults to zero.
+
+```
+FUNCTION SetFillState (BYVAL bIsFilled AS BOOL) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *bIsFilled* | Boolean value that specifies whether the arrow cap is filled. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates an AdjustableArrowCap object, myArrow, and sets the fill
+' mode to FALSE. The code then creates a Pen object and assigns myArrow as the ending
+' line cap for this Pen object. Next, the code draws a line.
+' ========================================================================================
+SUB Example_SetFillState (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Create an AdjustableArrowCap with a height of 10 pixels
+   ' // Fill state defaults to TRUE when arrow cap is constructed
+   DIM myArrow AS CGpAdjustableArrowCap = CGpAdjustableArrowCap(10, 10)
+   ' // Adjust to DPI by setting the scale width
+   myArrow.SetWidthScale(rxRatio)
+
+   ' // Set fill state to FALSE
+   myArrow.SetFillState(FALSE)
+
+   ' // Create a Pen, and assign myArrow as the end cap
+   DIM arrowPen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+   arrowPen.SetCustomEndCap(@myArrow)
+
+   ' // Draw a line using arrowPen
+   graphics.DrawLine(@arrowPen, 0, 0, 100, 100)
+
+END SUB
+' ========================================================================================
+```
