@@ -1039,3 +1039,107 @@ SUB Example_SetLineAlignment (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetMeasurableCharacterRanges"></a>SetMeasurableCharacterRanges
+
+Sets a series of character ranges for this **StringFormat** object that, when in a string, can be measured by the **MeasureCharacterRanges** method.
+
+```
+FUNCTION SetMeasurableCharacterRanges (BYVAL rangeCount AS INT_, _
+   BYVAL ranges AS CharacterRange PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *rangeCount* | Integer that specifies the number of character ranges in the *ranges* array. |
+| *ranges* | Pointer to an array of **CharacterRange** objects that specify the character ranges to be measured. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a StringFormat object, sets tab stops, and uses the
+' StringFormat object to draw a string that contains tab characters (\t). The code also
+' draws the string's layout rectangle.
+' Remarks: It doesn't work with the 64-bit headers because they lack a declare for the
+' GdipMeasureCharacterRanges function.
+' ========================================================================================
+SUB Example_SetMeasurableCharacterRanges (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Brushes and pens used for drawing and painting
+   DIM blueBrush AS CGpSOlidBrush = GDIP_ARGB(255, 0, 0, 255)
+   DIM redBrush AS CGpSOlidBrush = GDIP_ARGB(255, 255, 0, 0)
+   DIM blackPen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+
+   ' // Layout rectangles used for drawing strings
+   DIM layoutRect_A AS GpRectF = TYPE<GpRectF>(20.0, 20.0, 130.0, 130.0)
+   DIM layoutRect_B AS GpRectF = TYPE<GpRectF>(160.0, 20.0, 165.0, 130.0)
+   DIM layoutRect_C AS GpRectF = TYPE<GpRectF>(335.0, 20.0, 165.0, 130.0)
+
+   ' // Three ranges of character positions within the string
+   DIM charRanges(2) AS CharacterRange
+   charRanges(0).First = 3  : charRanges(0).Length = 5
+   charRanges(1).First = 15 : charRanges(1).Length = 2
+   charRanges(2).First = 30 : charRanges(2).Length = 15
+
+   ' // Font and string format used to apply to string when drawing
+   DIM myFont AS CGpFont = CGpFont("Times New Roman", AfxPointsToPixelsX(16) / rxRatio, FontStyleRegular, UnitPixel)
+   DIM strFormat AS CGpStringFormat
+
+   DIM wszText AS WSTRING * 260
+   wszText = "The quick, brown fox easily jumps over the lazy dog."
+
+   ' // Set three ranges of character positions.
+   strFormat.SetMeasurableCharacterRanges(3, @charRanges(0))
+
+   ' // Get the number of ranges that have been set, and allocate memory to
+   ' // store the regions that correspond to the ranges.
+   DIM nCount AS LONG = strFormat.GetMeasurableCharacterRangeCount
+   DIM rgCharRangeRegions(nCount - 1) AS CGpRegion
+
+   ' // Get the regions that correspond to the ranges within the string when
+   ' // layout rectangle A is used. Then draw the string, and show the regions.
+   graphics.MeasureCharacterRanges(@wszText, -1, @myFont, @layoutRect_A, @strFormat, nCount, @rgCharRangeRegions(0))
+   graphics.DrawString(@wszText, -1, @myFont, @layoutRect_A, @strFormat, @blueBrush)
+   graphics.DrawRectangle(@blackPen, @layoutRect_A)
+   FOR i AS LONG = 0 TO nCount - 1
+      graphics.FillRegion(@redBrush, @rgCharRangeRegions(i))
+   NEXT
+
+   ' // Get the regions that correspond to the ranges within the string when
+   ' // layout rectangle B is used. Then draw the string, and show the regions.
+   graphics.MeasureCharacterRanges(@wszText, -1, @myFont, @layoutRect_B, @strFormat, nCount, @rgCharRangeRegions(0))
+   graphics.DrawString(@wszText, -1, @myFont, @layoutRect_B, @strFormat, @blueBrush)
+   graphics.DrawRectangle(@blackPen, @layoutRect_B)
+   FOR i AS LONG = 0 TO nCount - 1
+      graphics.FillRegion(@redBrush, @rgCharRangeRegions(i))
+   NEXT
+
+   ' // Get the regions that correspond to the ranges within the string when
+   ' // layout rectangle C is used. Set trailing spaces to be included in the
+   ' // regions. Then draw the string, and show the regions.
+   strFormat.SetFormatFlags(StringFormatFlagsMeasureTrailingSpaces)
+   graphics.MeasureCharacterRanges(@wszText, -1, @myFont, @layoutRect_C, @strFormat, nCount, @rgCharRangeRegions(0))
+   graphics.DrawString(@wszText, -1, @myFont, @layoutRect_C, @strFormat, @blueBrush)
+   graphics.DrawRectangle(@blackPen, @layoutRect_C)
+   FOR i AS LONG = 0 TO nCount - 1
+      graphics.FillRegion(@redBrush, @rgCharRangeRegions(i))
+   NEXT
+
+END SUB
+' ========================================================================================
+```
