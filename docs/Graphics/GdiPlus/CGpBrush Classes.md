@@ -72,7 +72,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [ScaleTransform](#ScaleTransformLGBrush) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
 | [SetBlend](#SetBlendLGBrush) | Sets the blend factors and the blend positions to create a custom blend. |
 | [SetBlendBellShape](#SetBlendBellShapeLGBrush) | Sets the blend bell shape. |
-| [SetBlendTriangularShape](#SetBlendTriangularShape) | Sets the blend triangular shape. |
+| [SetBlendTriangularShape](#SetBlendTriangularShapeLGBrush) | Sets the blend triangular shape. |
 | [SetGammaCorrection](#SetGammaCorrectionLGBrush) | Specifies whether gamma correction is enabled. |
 | [SetInterpolationColors](#SetInterpolationColorsLGBrush) | Sets the colors to be interpolated and their corresponding blend positions. |
 | [SetLinearColors](#SetLinearColors) | Sets the starting color and ending color. |
@@ -3065,7 +3065,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="SetBlendTriangularShape"></a>SetBlendTriangularShape (CGpLinearGradientBrush)
+# <a name="SetBlendTriangularShapeLGBrush"></a>SetBlendTriangularShape (CGpLinearGradientBrush)
 
 Sets the blend shape of this path gradient brush.
 
@@ -3124,6 +3124,75 @@ SUB Example_SetBlendTriangularShape (BYVAL hdc AS HDC)
 
    linGrBrush.SetBlendTriangularShape(0.5, 1.0)
    graphics.FillRectangle(@linGrBrush, 0, 150, 500, 50)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetBlendTriangularShapePGBrush"></a>SetBlendTriangularShape (CGpPathGradientBrush)
+
+Sets the blend shape of this path gradient brush.
+
+```
+FUNCTION SetBlendTriangularShape (BYVAL focus AS SINGLE, BYVAL scale AS SINGLE = 1.0) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *focus* | Simple precision number that specifies where the center color will be at its highest intensity. This number must be in the range 0 through 1. |
+| *scale* | Simple precision number that specifies the maximum intensity of center color that gets blended with the boundary color. This number must be in the range 0 through 1. The default value is 1. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+By default, as you move from the boundary of a path gradient to the center point, the color changes gradually from the boundary color to the center color. You can customize the positioning and blending of the boundary and center colors by calling the **SetBlendTriangularShape** method.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on an ellipse. The code
+' calls the PathGradientBrush.SetBlendTriangularShape method of the PathGradientBrush object,
+' passing a focus of 0.2 and a scale of 0.7. Then the code uses the path gradient brush to
+' paint a rectangle that contains the ellipse.
+' ========================================================================================
+SUB Example_SetBlendTriangularShape (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a path that consists of a single ellipse.
+   DIM path AS CGpGraphicsPath
+   path.AddEllipse(0, 0, 200, 100)
+
+   ' // Use the path to construct a brush.
+   DIM pthGrBrush AS CGpPathGradientBrush = @path
+
+   ' // Set the color at the center of the path to blue.
+   pthGrBrush.SetCenterColor(GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Set the color along the entire boundary of the path to aqua.
+   DIM colors(0) AS ARGB = {GDIP_ARGB(255, 0, 255, 255)}
+   DIM count AS LONG = 1
+   pthGrBrush.SetSurroundColors(@colors(0), @count)
+
+   pthGrBrush.SetBlendTriangularShape(0.2, 0.7)
+
+   ' // The color is blue on the boundary and at the center.
+   ' // At points that are 20 percent of the way from the boundary to the
+   ' // center, the color is 70 percent red and 30 percent blue.
+
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 300, 300)
 
 END SUB
 ' ========================================================================================
