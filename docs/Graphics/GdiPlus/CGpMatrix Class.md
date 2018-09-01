@@ -671,10 +671,10 @@ FUNCTION SetElements (BYVAL m11 AS SINGLE, BYVAL m12 AS SINGLE, BYVAL m21 AS SIN
 | ---------- | ----------- |
 | *m11* | Simple precision number that specifies the element in the first row, first column. |
 | *m12* | Simple precision number that specifies the element in the first row, second column. |
-| *m21* | Simple precision number that specifies the element in the second row, first column.  |
+| *m21* | Simple precision number that specifies the element in the second row, first column. |
 | *m22* | Simple precision number that specifies the element in the second row, second column. |
-| *dx* | Simple precision number that specifies the element in the third row, first column.  |
-| *dy* | Simple precision number that specifies the element in the third row, second column.  |
+| *dx* | Simple precision number that specifies the element in the third row, first column. |
+| *dy* | Simple precision number that specifies the element in the third row, second column. |
 
 #### Return value
 
@@ -706,6 +706,66 @@ SUB Example_MatrixSetElements (BYVAL hdc AS HDC)
 
    graphics.SetTransform(@matrix)
    graphics.DrawRectangle(@myPen, 0, 0, 80 * rxRatio, 40 * ryRatio)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="Shear"></a>Shear
+
+Updates this matrix with the product of itself and a shearing matrix.
+
+```
+FUNCTION Shear (BYVAL shearX AS SINGLE, BYVAL shearY AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *shearX* | Simple precision number that specifies the horizontal shear factor. |
+| *shearY* | Simple precision number that specifies the vertical shear factor. |
+| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of the multiplication. **MatrixOrderPrepend** specifies that the rotation matrix is on the left, and **MatrixOrderAppend** specifies that the rotation matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Matrix object and calls the Matrix::Scale method to set
+' the elements of that matrix to a scaling transformation. Then the code calls the Matrix.Shear
+' method to update the matrix with the product of itself and a shearing matrix. At that point,
+' the matrix represents a composite transformation: first scale, then shear. The code uses
+' the matrix to set the world transformation of a Graphics object and then draws a rectangle
+' that is transformed according to the composite transformation.
+' In the call to Matrix::Shear, the shearX parameter is 3 and the shearY parameter is 0.
+' That particular shearing transformation slides the bottom edge of the rectangle to the
+' right. The distance that the bottom edge slides is shearX multiplied by the height of
+' the rectangle after it is stretched by the scaling transformation.
+' ========================================================================================
+SUB Example_Shear (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create a pen
+   DIM myPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255))
+
+   DIM matrix AS CGpMatrix
+   ' // First a scaling
+   matrix.Scale(2.0, 2.0)
+   ' // Then a shear
+   matrix.Shear(3.0, 0.0, MatrixOrderAppend)
+
+   graphics.SetTransform(@matrix)
+   graphics.DrawRectangle(@myPen, 0, 0, 100 * rxRatio, 50 * ryRatio)
 
 END SUB
 ' ========================================================================================
