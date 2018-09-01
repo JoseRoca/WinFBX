@@ -772,3 +772,61 @@ SUB Example_GetTrimming (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetAlignment"></a>SetAlignment
+
+Sets the character alignment of this **StringFormat** object in relation to the origin of the layout rectangle. A layout rectangle is used to position the displayed string.
+
+```
+FUNCTION SetAlignment (BYVAL nAlign AS StringAlignment) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nAlign* | Element of the **StringAlignment** enumeration that specifies how a string is aligned in reference to the bounding rectangle. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a StringFormat object, sets the character alignment, and
+' draws the string using that alignment. The code also draws the string's layout rectangle.
+' ========================================================================================
+SUB Example_SetAlignment (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a red solid brush
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   ' // Create a font family from name
+   DIM fontFamily AS CGpFontFamily = "Times New Roman"
+   ' // Create a font from the font family
+   DIM pFont AS CGpFont = CGpFont(@fontFamily, 24, FontStyleRegular, UnitPixel)
+
+   ' // Create a string format object and set the alignment
+   DIM stringFormat AS CGpStringFormat
+   stringFormat.SetAlignment(StringAlignmentFar)
+
+   ' // Use the StringFormat object in a call to DrawString
+   DIM wszText AS WSTRING * 260 = "This text was formatted by a StringFormat object."
+   graphics.DrawString(@wszText, LEN(wszText), @pFont, 30, 30, 150, 200, @stringFormat, @solidBrush)
+
+   ' // Draw the rectangle that encloses the text
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawRectangle(@pen, 30, 30, 150, 200)
+
+END SUB
+' ========================================================================================
+```
