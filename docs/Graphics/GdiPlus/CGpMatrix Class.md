@@ -771,7 +771,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="Shear"></a>Shear
+# <a name="TransformPoints"></a>TransformPoints
 
 Multiplies each point in an array by this matrix. Each point is treated as a row matrix. The multiplication is performed with the row matrix on the left and this matrix on the right.
 
