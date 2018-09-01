@@ -71,7 +71,7 @@ The **CGpFontFamily** class encapsulates a set of fonts that make up a font fami
 | [GetEmHeight](#GetEmHeight) | Gets the size (commonly called em size or em height), in design units, of this font family. |
 | [GetFamilyName](#GetFamilyName) | Gets the name of this font family. |
 | [GetLineSpacing](#GetLineSpacing) | Gets the line spacing, in design units, of this font family for the specified style or style combination. |
-| [IsAvailable](#IsAvailable) | Determines whether this Font object was created successfully. |
+| [IsAvailable](#IsAvailableFontFamily) | Determines whether this Font object was created successfully. |
 | [IsStyleAvailable](#IsStyleAvailable) | Determines whether the specified style is available for this font family. |
 
 # <a name="ConstructorsFont"></a>Constructors (CGpFont)
@@ -1088,6 +1088,53 @@ SUB Example_GetLineSpacing (BYVAL hdc AS HDC)
    DIM font AS CGpFont = CGpFont(@lineSpacingFontFamily, AfxPointsToPixelsX(16) / rxRatio)
    DIM wszText AS WSTRING * 260 = "lineSpacingFontFamily.GetLineSpacing() returns " & STR(lineSpacing)
    graphics.DrawString(@wszText, -1, @font, 0, 0, @solidbrush)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="IsAvailable"></a>IsAvailable (CGpFontFamily)
+
+Determines whether this **Font** object was created successfully.
+
+```
+FUNCTION IsAvailable () AS BOOLEAN
+```
+
+#### Return value
+
+If the font was constructed successfully, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a FontFamily object. If the FontFamily object is created
+' successfully, the example draws text.
+' ========================================================================================
+SUB Example_IsAvailable (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a FontFamily object
+   DIM myFontFamily AS CGpFontFamily = "arial"
+
+   ' // Check to see if myFontFamily is available.
+   DIM isAvailable AS BOOLEAN = myFontFamily.IsAvailable
+
+   ' // If myFontFamily is available, draw text.
+   IF isAvailable THEN
+      DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+      DIM font AS CGpFont = CGpFont(@myFontFamily, AfxPointsToPixelsX(16) / rxRatio)
+      DIM wszText AS WSTRING * 260 = "myFontFamily is available"
+      graphics.DrawString(@wszText, -1, @font, 0, 0, @solidbrush)
+   END IF
 
 END SUB
 ' ========================================================================================
