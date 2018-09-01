@@ -584,7 +584,7 @@ END SUB
 
 # <a name="GetTabStopCount"></a>GetTabStopCount
 
-Gets the number of tab-stop offsets in this StringFormat object.
+Gets the number of tab-stop offsets in this **StringFormat** object.
 
 ```
 FUNCTION GetTabStopCount () AS INT_
@@ -623,6 +623,81 @@ SUB Example_GetTabStopCount (BYVAL hdc AS HDC)
    ' // Use the StringFormat object in a call to DrawString
    DIM wszText AS WSTRING * 260 = "Name" & CHR(9) &"Test 1" & CHR(9) & "Test 2" & CHR(9) & "Test 3"
    graphics.DrawString(@wszText, LEN(wszText), @pFont, 20, 20, 500, 100, @stringFormat, @solidBrush)
+
+   ' // Get the tab stops
+   DIM tabStopCount AS LONG, firstTabOffset AS SINGLE
+   DIM tabStops(ANY) AS SINGLE
+   tabStopCount = stringFormat.GetTabStopCount
+   REDIM tabStops(tabStopCount - 1)
+   stringFormat.GetTabStops(tabStopCount, @firstTabOffset, @tabStops(0))
+
+   FOR j AS LONG = 0 TO tabStopCount - 1
+      ' // Inspect or use the value in tabStops(j)
+      PRINT tabStops(j)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetTabStops"></a>GetTabStops
+
+Gets the offsets of the tab stops in this **StringFormat** object.
+
+```
+FUNCTION GetTabStops (BYVAL count AS INT_, BYVAL firstTabOffset AS SINGLE PTR, _
+   BYVAL tabStops AS SINGLE PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *count* | Integer that specifies the number of tab-stop offsets in the *tabStops* array. |
+| *firstTabOffset* | Out. Pointer to a simple precision variable that receives the initial offset position. This initial offset position is relative to the string's origin and the offset of the first tab stop is relative to the initial offset position. |
+| *tabStops* | Out. Pointer to an array of simple precision variables that receives the tab-stop offsets. The offset of the first tab stop is the first value in the array, the offset of the second tab stop, the second value in the array, and so on. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a StringFormat object, sets tab stops, and uses the
+' StringFormat object to draw a string that contains tab characters. The code also draws
+' the string's layout rectangle. Then, the code gets the tab stops and proceeds to use or
+' inspect the tab stops in some way.
+' ========================================================================================
+SUB Example_GetTabStops (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Create a red solid brush
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 255)
+   ' // Create a font family from name
+   DIM fontFamily AS CGpFontFamily = "Times New Roman"
+   ' // Create a font from the font family
+   DIM pFont AS CGpFont = CGpFont(@fontFamily, 16, FontStyleRegular, UnitPixel)
+
+   ' // Create a string format object and set the tab stops
+   DIM tabs(0 TO 2) AS SINGLE = {150, 100, 100}
+   DIM stringFormat AS CGpStringFormat
+   stringFormat.SetTabStops(0, 3, @tabs(0))
+
+   ' // Use the StringFormat object in a call to DrawString
+   DIM wszText AS WSTRING * 260 = "Name" & CHR(9) &"Test 1" & CHR(9) & "Test 2" & CHR(9) & "Test 3"
+   graphics.DrawString(@wszText, LEN(wszText), @pFont, 20, 20, 500, 100, @stringFormat, @solidBrush)
+
+   ' // Draw the rectangle that encloses the text.
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 0, 0))
+   graphics.DrawRectangle(@pen, 20, 20, 500, 100)
 
    ' // Get the tab stops
    DIM tabStopCount AS LONG, firstTabOffset AS SINGLE
