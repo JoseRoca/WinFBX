@@ -381,7 +381,7 @@ FUNCTION GetFrameDimensionsList (BYVAL dimensionIDs AS GUID PTR, BYVAL count AS 
 | Parameter  | Description |
 | ---------- | ----------- |
 | *dimensionIDs* | Out. Pointer to an array that receives the identifiers. GUIDs that identify various dimensions are defined in Gdiplusimaging.inc. |
-| *count* | Integer that specifies the number of elements in the dimensionIDs array. Call the Image.GetFrameDimensionsCount method to determine this number. |
+| *count* | Integer that specifies the number of elements in the dimensionIDs array. Call the **GetFrameDimensionsCount** method to determine this number. |
 
 #### Return value
 
