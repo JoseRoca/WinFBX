@@ -123,3 +123,51 @@ SUB Example_Clone (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetBaseCap"></a>GetBaseCap (CGpCustomLineCap)
+
+Gets the style of the base cap. The base cap is used as a cap at the end of a line along with this CustomLineCap object.
+
+```
+FUNCTION GetBaseCap () AS LineCap
+```
+
+#### Return value
+
+This method returns the value of the line cap used at the base of the line.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a CustomLineCap object, sets its base cap, and then gets
+' the base cap and assigns it to a Pen object. It then uses the Pen object to draw a line.
+' ========================================================================================
+SUB Example_GetBaseCap (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' //Create a Path object
+   DIM capPath AS CGpGraphicsPath
+
+   ' // Create a CustomLineCap object, and set its base cap to LineCapRound
+   DIM custCap AS CGpCustomLineCap = CGpCustomLineCap(NULL, @capPath)
+   custCap.SetBaseCap(LineCapRound)
+
+   ' // Get the base cap of custCap
+   DIM baseCap AS LineCap = custCap.GetBaseCap
+
+   ' // Create a Pen object, assign baseCap as the end cap, and draw a line
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), 10)
+   pen.SetEndCap(baseCap)
+   graphics.DrawLine(@pen, 0, 0, 100, 100)
+
+END SUB
+' ========================================================================================
+```
