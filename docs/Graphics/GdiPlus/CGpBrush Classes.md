@@ -186,6 +186,35 @@ CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRect PTR, BYVAL color1 AS ARGB
 | *angle* | Real number that, if *isAngleScalable* is TRUE, specifies the base angle from which the angle of the directional line is calculated, or that, if *isAngleScalable* is FALSE, specifies the angle of the directional line. The angle is measured from the top of the rectangle that is specified by rect and must be in degrees. The gradient follows the directional line. |
 | *isAngleScalable* | BOOL value that specifies whether the angle is scalable. If *isAngleScalable* is TRUE, the angle of the directional line is scalable; otherwise, the angle is not scalable. |
 
+# <a name="ConstructorsPGBrush"></a>Constructors (CGpPathGradientBrush)
+
+Creates a **PathGradientBrush** object based on an array of points. Initializes the wrap mode of the path gradient brush
+
+```
+CONSTRUCTOR CGpPathGradientBrush (BYVAL pts AS GpPointF PTR, BYVAL nCount AS LONG, _
+   BYVAL nWrapMode AS WrapMode = WrapModeClamp)
+```
+
+Creates a **PathGradientBrush** object based on an array of points. Initializes the wrap mode of the path gradient brush.
+
+```
+CONSTRUCTOR CGpPathGradientBrush (BYVAL pts AS GpPoint PTR, BYVAL nCount AS LONG, _
+   BYVAL nWrapMode AS WrapMode = WrapModeClamp)
+```
+
+Creates a **PathGradientBrush** object based on a GraphicsPath object.
+
+```
+CONSTRUCTOR CGpPathGradientBrush (BYVAL pGraphPath AS CGpGraphicsPath PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pts* | Pointer to an array of points that specifies the boundary path of the path gradient brush. |
+| *nCount* | Integer that specifies the number of elements in the *pts* array.  |
+| *nWrapMode* | Optional. Element of the **WrapMode** enumeration that specifies how areas painted with the path gradient brush will be tiled. The default value is **WrapModeClamp**. |
+| *pGraphPath* | Pointer to a **GraphicsPath** object that specifies the boundary path of the path gradient brush. |
+
 # <a name="CloneBrush"></a>Clone (CGpBrush)
 
 Copies the contents of the existing **Brush** object into a new **Brush** object.
