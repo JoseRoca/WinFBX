@@ -646,3 +646,54 @@ CONSTRUCTOR CGpFontFamily (BYVAL pwszName AS WSTRING PTR, pFontCollection AS CGp
 | ---------- | ----------- |
 | *pwszName* | Name of the font family. For example, Arial.ttf is the name of the Arial font family. |
 | *pFontCollection* | Optional. Pointer to a **FontCollection** object that specifies the collection that the font family belongs to. If **FontCollection** is NULL, this font family is not part of a collection. The default value is NULL. |
+
+# <a name="Clone"></a>Clone (CGpFontFamily)
+
+Copies the contents of the existing **FontFamily** object into a new **FontFamily** object.
+
+```
+FUNCTION Clone (BYVAL pFontFamily AS CGpBrush PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pFontFamily* | Pointer to a variable that will receive a pointer to the cloned **FontFamily** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a FontFamily object, clones that object, and then creates
+' a Font object from the clone. It then uses the Font object to draw text.
+' ========================================================================================
+SUB Example_CloneFontFamily (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a FontFamily object
+   DIM arialFontFamily AS CGpFontFamily = "arial"
+
+   ' // Clone the FontFamily object and use it to create a Font object
+   DIM cloneFontFamily AS CGpFontFamily
+   arialFontFamily.Clone(@cloneFontFamily)
+   DIM arialFont AS CGpFont = CGpFont(@cloneFontFamily, AfxPointsToPixelsX(16) / rxRatio)
+
+   ' // Draw text using the new font
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+   graphics.DrawString("This is an Arial font", -1, @arialFont, 0, 0, @solidbrush)
+
+END SUB
+' ========================================================================================
+```
