@@ -501,3 +501,50 @@ SUB Example_GetUnit (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="IsAvailable"></a>IsAvailable (CGpFont)
+
+Determines whether this **Font** object was created successfully.
+
+```
+FUNCTION IsAvailable () AS BOOLEAN
+```
+
+#### Return value
+
+If the font was constructed successfully, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Font object and then tests whether the Font object is
+' available. If the Font object is available, it is used to draw text.
+' ========================================================================================
+SUB Example_IsAvailable (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Font object according to the DPI setting
+   DIM font AS CGpFont = CGpFont("Arial", AfxPointsToPixelsX(18) / rxRatio)
+
+   ' // Check whether font is available
+   DIM available AS BOOLEAN = font.IsAvailable
+
+   ' // Draw text using font, if it is availiable
+   IF available THEN
+      DIM solidbrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+      DIM wszText AS WSTRING * 260 = "Here is some text"
+      graphics.DrawString(@wszText, -1, @font, 0, 0, @solidbrush)
+   END IF
+   
+END SUB
+' ========================================================================================
+```
+
