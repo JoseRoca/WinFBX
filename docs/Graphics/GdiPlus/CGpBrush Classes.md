@@ -1297,6 +1297,59 @@ END SUB
 ' ========================================================================================
 ```
 
+# <a name="GetImage"></a>GetImage (CGpTextureBrush)
+
+Gets a pointer to the Image object that is defined by this texture brush.
+
+```
+FUNCTION GetImage (BYVAL pImage AS CGpImage PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pImage* | Pointer to a variable that will receive a pointer to the Image object that is defined by this texture brush. |
+
+#### Return value
+
+This method returns the number of preset colors currently specified for this path gradient brush.
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and uses it to fill an ellipse. The code
+' then gets the brush's image and draws it.
+' ========================================================================================
+SUB Example_GetImage (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and use it to fill an ellipse.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   graphics.FillEllipse(@textureBrush, 0, 0, 200, 200)
+
+   ' // Get the brush's image, and draw that image
+   DIM pImage2 AS CGpImage
+   textureBrush.GetImage(@pImage2)
+   graphics.DrawImage(@pImage2, 10, 150)
+
+END SUB
+' ========================================================================================
+```
+
 # <a name="GetInterpolationColorCountPGBrush"></a>GetInterpolationColorCount (CGpPathGradientBrush)
 
 Gets the number of preset colors currently specified for this path gradient brush.
