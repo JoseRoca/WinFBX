@@ -981,3 +981,54 @@ SUB Example_GetMiddleInset (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetWidth"></a>GetWidth (CGpAdjustableArrowCap)
+
+Gets the width of the arrow cap. The width is the distance between the endpoints of the base of the arrow.
+
+```
+FUNCTION GetWidth () AS SINGLE
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates an AdjustableArrowCap object, myArrow, and sets the width
+' of the cap to 5 pixels. Next, the code creates a Pen object, assigns myArrow as the
+' ending line cap for this Pen object, and draws a capped line. The code obtains the width
+' using IGdipAdjustableArrowCap.GetWidth and sets the height equal to the width. The code then
+' draws another capped line with the new cap.
+' ========================================================================================
+SUB Example_GetWidth (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Create an AdjustableArrowCap with a height of 10 pixels.
+   DIM myArrow AS CGpAdjustableArrowCap = CGpAdjustableArrowCap(10, 5, CTRUE)
+   ' // Adjust to DPI by setting the scale width
+   myArrow.SetWidthScale(rxRatio)
+
+   ' // Create a Pen, and assign myArrow as the end cap
+   DIM arrowPen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+   arrowPen.SetCustomEndCap(@myArrow)
+
+   ' // Get the width of the arrow
+   DIM nWidth AS SINGLE = myArrow.GetWidth
+
+   ' // Draw a line using arrowPen
+   graphics.DrawLine(@arrowPen, 0, 0, 100, 100)
+
+   ' // Set height equal to width and draw another line
+   myArrow.SetHeight(nWidth)
+   arrowPen.SetCustomEndCap(@myArrow)
+   graphics.DrawLine(@arrowPen, 0, 40, 100, 140)
+
+END SUB
+' ========================================================================================
+```
