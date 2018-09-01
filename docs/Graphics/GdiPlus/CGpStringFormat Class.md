@@ -48,3 +48,59 @@ CONSTRUCTOR CGpStringFormat (BYVAL formatFlags AS INT_ = 0, BYVAL language AS LA
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="Clone"></a>Clone
+
+Copies the contents of the existing StringFormat object into a new StringFormat object.
+
+```
+FUNCTION Clone (BYVAL pStringFormat AS CGpStringFormat PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pStringFormat* | Pointer to the **StringFormat** object where to copy the contents of the existing object. |
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a StringFormat object, clones it, and then uses the clone
+' to draw a formatted string.
+' ========================================================================================
+SUB Example_Clone (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a red solid brush
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   ' // Create a font family from name
+   DIM fontFamily AS CGpFontFamily = "Times New Roman"
+   ' // Create a font from the font family
+   DIM pFont AS CGpFont = CGpFont(@fontFamily, 24, FontStyleRegular, UnitPixel)
+
+   ' // Create a string format object and set the alignment
+   DIM stringFormat AS CGpStringFormat
+   stringFormat.SetAlignment(StringAlignmentCenter)
+
+   ' // Clone the StringFormat object
+   DIM pStringFormat AS CGpStringFormat
+   stringFormat.Clone(@pStringFormat)
+
+   ' // Use the cloned StringFormat object in a call to DrawString
+   DIM wszText AS WSTRING * 260 = "This text was formatted by a StringFormat object."
+   graphics.DrawString(@wszText, LEN(wszText), @pFont, 30, 30, 200, 200, @pStringFormat, @solidBrush)
+
+   ' // Draw the rectangle that encloses the text
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawRectangle(@pen, 30, 30, 200, 200)
+
+END SUB
+' ========================================================================================
+```
