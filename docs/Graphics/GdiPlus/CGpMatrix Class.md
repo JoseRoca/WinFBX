@@ -535,3 +535,67 @@ SUB Example_Rotate (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="RotateAt"></a>RotateAt
+
+Updates this matrix with the product of itself and a matrix that represents rotation about a specified point.
+
+```
+FUNCTION RotateAt (BYVAL angle AS SINGLE, BYVAL center AS GpPointF PTR, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *angle* | Simple precision number that specifies the angle of rotation in degrees. Positive values specify clockwise rotation. |
+| *center* | Reference to a **GpPointF** object that specifies the center of the rotation. This is the point about which the rotation takes place. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of the multiplication. **MatrixOrderPrepend** specifies that the rotation matrix is on the left, and **MatrixOrderAppend** specifies that the rotation matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Matrix object and calls the Matrix.Translate method to
+' set the elements of that matrix to a translation (150 right, 100 down). Then the code
+' calls the Matrix.RotateAt method to update the matrix with the product of itself and a
+' matrix that represents a 30-degree rotation about the point (150, 100). The matrix then
+' represents a composite transformation: first translate (150 right, 100 down), then rotate
+' about the point (150, 100). The code uses the matrix to set the world transformation of
+' a Graphics object and then draws an ellipse that is transformed according to the
+' composite transformation.
+' ========================================================================================
+SUB Example_RotateAt (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create a pen
+   DIM myPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), rxRatio)
+
+   DIM matrix AS CGpMatrix
+   matrix.Translate(150.0 * rxRatio, 100.0 * ryRatio)
+   matrix.RotateAt(30.0, @TYPE<GpPointF>(150.0 * rxRatio, 100.0 * ryRatio), MatrixOrderAppend)
+
+   graphics.SetTransform(@matrix)
+
+   ' // Draw a tramsformed ellipse. The composite transformation
+   ' // is translate right 150, translate down 100, and then
+   ' // rotate 30 degrees about the point (150, 100).
+   graphics.DrawEllipse(@myPen, -40 * rxRatio, -20 * ryRatio, 80 * rxRatio, 40 * ryRatio)
+
+   ' // Draw rotated axes with the origin at the center of the ellipse.
+   graphics.DrawLine(@myPen, -50 * rxRatio, 0, 50 * ryRatio, 0)
+   graphics.DrawLine(@myPen, 0, -50 * rxRatio, 0, 50 * ryRatio)
+
+END SUB
+' ========================================================================================
+```
