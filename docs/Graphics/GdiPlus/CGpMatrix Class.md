@@ -837,7 +837,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="TransformPoints"></a>TransformPoints
+# <a name="TransformVectors"></a>TransformVectors
 
 Multiplies each vector in an array by this matrix. The translation elements of this matrix (third row) are ignored. Each vector is treated as a row matrix. The multiplication is performed with the row matrix on the left and this matrix on the right.
 
@@ -903,6 +903,69 @@ SUB Example_TransformVectors (BYVAL hdc AS HDC)
    myBrush.SetColor(GDIP_ARGB(255, 255, 0, 0))
    graphics.FillEllipse(@myBrush, pt.X - 5.0, pt.Y - 5.0, 10.0, 10.0)
    graphics.DrawLine(@MyPen, 0, 0, vector.x, vector.y)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="Translate"></a>Translate
+
+Updates this matrix with the product of itself and a translation matrix.
+
+```
+FUNCTION Translate (BYVAL nOffsetX AS SINGLE, BYVAL nOffsetY AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nOffsetX* | Simple precision number that specifies the horizontal component of the translation. |
+| *nOffsetY* | Simple precision number that specifies the vertical component of the translation. |
+| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of the multiplication. **MatrixOrderPrepend** specifies that the rotation matrix is on the left, and **MatrixOrderAppend** specifies that the rotation matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Matrix object and calls the Matrix.Rotate method to set
+' the elements of that matrix to a rotation. Then the code calls the Matrix.Translate method
+' to update the matrix with the product of itself and a translation matrix. At that point,
+' the matrix represents a composite transformation: first rotate, then translate. The code
+' uses the matrix to set the world transformation of a Graphics object and then draws an
+' ellipse that is transformed according to the composite transformation.
+' ========================================================================================
+SUB Example_Translate (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create a pen
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), rxRatio)
+
+   DIM matrix AS CGpMatrix
+   ' // First a rotation
+   matrix.Rotate(30.0, MatrixOrderAppend)
+   ' // Then a translation
+   matrix.Translate(150.0 * rxRatio, 100.0 * ryRatio, MatrixOrderAppend)
+
+   graphics.SetTransform(@matrix)
+
+   ' // Draw a tramsformed ellipse. The composite transformation
+   ' // is rotate 30 degrees, then translate 150 right and 100 down.
+   graphics.DrawEllipse(@pen, -40 * rxRatio, -20 * ryRatio, 80 * rxRatio, 40 * ryRatio)
+
+   ' // Draw rotated axes with the origin at the center of the ellipse.
+   graphics.DrawLine(@pen, -50 * rxRatio, 0, 50 * ryRatio, 0)
+   graphics.DrawLine(@pen, 0, -50 * rxRatio, 0, 50 * ryRatio)
 
 END SUB
 ' ========================================================================================
