@@ -316,7 +316,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 The **GetEncoderParameterList** method returns an array of **EncoderParameter** objects. Before you call **GetEncoderParameterList**, you must allocate a buffer large enough to receive that array, which is part of an **EncoderParameters** object. You can call the **GetEncoderParameterListSize** method to get the size, in bytes, of the required **EncoderParameters** object.
 
-# <a name="GetEncoderParameterList"></a>GetEncoderParameterList (CGpImage)
+# <a name="GetEncoderParameterListSize"></a>GetEncoderParameterListSize (CGpImage)
 
 Gets the size, in bytes, of the parameter list for a specified image encoder.
 
