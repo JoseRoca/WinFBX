@@ -576,3 +576,21 @@ If the function fails, it returns one of the other elements of the **Status** en
 #### Remarks
 
 Windows GDI+ stores an individual piece of metadata in a **PropertyItem** structure. The **GetAllPropertyItems** method returns an array of **PropertyItem** structures. Before you call **GetAllPropertyItems**, you must allocate a buffer large enough to receive that array. You can call the **GetPropertySize** method of an **Image** object to get the size, in bytes, of the required buffer. The **GetPropertySize** method also gives you the number of properties (pieces of metadata) in the image.
+
+# <a name="GetRawFormat"></a>GetRawFormat (CGpImage)
+
+Gets a globally unique identifier ( GUID) that identifies the format of this Image object.
+
+```
+FUNCTION GetRawFormat (BYVAL guidformat AS GUID PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *guidformat* | Pointer to a GUID that receives the format identifier. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
