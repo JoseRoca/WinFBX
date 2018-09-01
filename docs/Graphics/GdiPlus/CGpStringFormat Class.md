@@ -864,3 +864,60 @@ language = MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL)
 
 For a list of the available languages and sublanguages, see Winnt.inc.
 
+# <a name="SetFormatFlags"></a>SetFormatFlags
+
+Sets the format flags for this **StringFormat** object. The format flags determine most of the characteristics of a **StringFormat** object.
+
+```
+FUNCTION SetFormatFlags (BYVAL flags AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *flags* | Thirty-two bit value that specifies the format flags that control most of the characteristics of the **StringFormat** object. The flags are set by applying a bitwise OR to elements of the **StringFormatFlags** enumeration. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a StringFormat object, sets the format flags, and draws
+' the formatted string. The code also draws the string's layout rectangle.
+' ========================================================================================
+SUB Example_SetFormatFlags (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a red solid brush
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   ' // Create a font family from name
+   DIM fontFamily AS CGpFontFamily = "Times New Roman"
+   ' // Create a font from the font family
+   DIM pFont AS CGpFont = CGpFont(@fontFamily, 24, FontStyleRegular, UnitPixel)
+
+   ' // Create a string format object and set its format flags
+   DIM stringFormat AS CGpStringFormat
+   stringFormat.SetFormatFlags(StringFormatFlagsDirectionVertical OR StringFormatFlagsNoFitBlackBox)
+
+   ' // Use the StringFormat object in a call to DrawString
+   DIM wszText AS WSTRING * 260 = "This text is vertical because of a format flag."
+   graphics.DrawString(@wszText, LEN(wszText), @pFont, 30, 30, 150, 200, @stringFormat, @solidBrush)
+
+   ' // Draw the rectangle that encloses the text
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawRectangle(@pen, 30, 30, 150, 200)
+
+END SUB
+' ========================================================================================
+```
