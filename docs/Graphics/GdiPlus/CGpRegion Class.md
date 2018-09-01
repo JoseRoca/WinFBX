@@ -742,3 +742,61 @@ SUB Example_GetData (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetDataSize"></a>GetDataSize
+
+Gets the number of bytes of data that describes this region.
+
+```
+FUNCTION GetDataSize () AS UINT
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a region from a path and then gets the data that describes
+' the region.
+' ========================================================================================
+SUB Example_GetDataSize (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM pts(0 TO 5) AS GpPoint = {GDIP_POINT(110, 20), GDIP_POINT(120, 30), GDIP_POINT(100, 60), GDIP_POINT(120, 70), GDIP_POINT(150, 60), GDIP_POINT(140, 10)}
+'#ifdef __FB_64BIT__
+'   DIM pts(0 TO 5) AS GpPoint = {(110, 20), (120, 30), (100, 60), (120, 70), (150, 60), (140, 10)}
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpPoint is defined as Point in 64 bit and as Point_ in 32 bit.
+'   DIM pts(0 TO 5) AS GpPoint
+'   pts(0).x = 110 : pts(0).y = 20 : pts(1).x = 120 : pts(1).y = 30 : pts(2).x = 100 : pts(2).y = 60
+'   pts(3).x = 120 : pts(3).y = 70 : pts(4).x = 150 : pts(4).y = 60 : pts(5).x = 140 : pts(5).y = 10
+'#endif
+   DIM path AS CGpGraphicsPath
+   path.AddClosedCurve(@pts(0), 6)
+
+   ' // Create a region from a path
+   DIM pathRegion AS CGpRegion = @path
+
+   ' // Get the region data.
+   DIM bufferSize AS UINT
+   DIM sizeFilled AS UINT
+   DIM pData AS BYTE PTR
+   
+   bufferSize = pathRegion.GetDataSize
+   pData = Allocate(bufferSize)
+   pathRegion.GetData(pData, bufferSize, @sizeFilled)
+   
+   ' // Inspect or use the region data.
+   ' ...
+   Delete pData
+
+END SUB
+' ========================================================================================
+```
