@@ -362,3 +362,66 @@ SUB Example_GetStrokeJoin (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetWidthScale"></a>GetWidthScale (CGpCustomLineCap)
+
+Gets the value of the scale width. This is the amount to scale the custom line cap relative to the width of the Pen object used to draw a line. The default value of 1.0 does not scale the line cap.
+
+```
+FUNCTION GetWidthScale () AS SINGLE
+```
+
+#### Return value
+
+This method returns the value of the width-scaling factor.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a CustomLineCap object and sets the width scale. It then
+' gets the width scale, assigns the custom cap to a Pen object, and draws a line.
+' ========================================================================================
+SUB Example_GetWidthScale (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Path object, and add two lines to it
+   DIM pts(0 TO 2) AS GpPoint = {GDIP_POINT(-15, -15), GDIP_POINT(0, 0), GDIP_POINT(15, -15)}
+'#ifdef __FB_64BIT__
+'   DIM pts(0 TO 2) AS GpPoint = {(-15, -15), (0, 0), (15, -15)}
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpPoint is defined as Point in 64 bit and as Point_ in 32 bit.
+'   DIM pts(0 TO 2) AS GpPoint
+'   pts(0).x = -15 : pts(0).y = -15 : pts(2).x = 15: pts(2).y = -15
+'#endif
+
+   DIM capPath AS CGpGraphicsPath = FillModeAlternate
+   capPath.AddLines(@pts(0), 3)
+
+   ' // Create a CustomLineCap object, and set its base cap to LineCapRound
+   DIM custCap AS CGpCustomLineCap = CGpCustomLineCap(NULL, @capPath)
+
+   ' // Set the width scale for custCap.
+   custCap.SetWidthScale(3)
+
+   ' // Get the width scale from custCap.
+   DIM widthScale AS SINGLE = custCap.GetWidthScale
+
+   ' // If the width scale is 3, assign custCap as the end cap of a Pen object and draw a line.
+   IF widthScale = 3 THEN
+      DIM widthScalePen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), 1.0)
+      widthScalePen.SetCustomEndCap(@custCap)
+      graphics.DrawLine(@widthScalePen, 0, 0, 200, 200)
+   END IF
+
+END SUB
+' ========================================================================================
+```
