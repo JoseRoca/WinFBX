@@ -155,3 +155,49 @@ SUB Example_Clone (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="FindFirstItem"></a>FindFirstItem (CGpImage)
+
+Retrieves the description and the data size of the first metadata item in this Image object.
+
+```
+FUNCTION FindFirstItem (BYVAL pitem AS ImageItemData PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pitem* | In, Out. Pointer to an **ImageItemData** structure. On input, the **Desc** member points to a buffer (allocated by the caller) large enough to hold the metadata description (1 byte for JPEG, 4 bytes for PNG, 11 bytes for GIF), and the **DescSize** member specifies the size (1, 4, or 6) of the buffer pointed to by *Desc*. On output, the buffer pointed to by **Desc** receives the metadata description, and the **DataSize** member receives the size, in bytes, of the metadata itself. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Use **FindFirstItem** along with **FindNextItem** to enumerate the metadata items, including custom metadata, stored in an image. **FindFirstItem** and **FindNextItem** do not enumerate the metadata items stored by the **SetPropertyItem** method.
+
+# <a name="FindNextItem"></a>FindNextItem (CGpImage)
+
+The **FindNextItem** method is used along with the **FindFirstItem** method to enumerate the metadata items stored in this **Image** object. The **FindNextItem** method retrieves the description and the data size of the next metadata item in this **Image** object. 
+
+```
+FUNCTION FindNextItem (BYVAL pitem AS ImageItemData PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pitem* | In, Out. Pointer to an **ImageItemData** structure. On input, the **Desc** member points to a buffer (allocated by the caller) large enough to hold the metadata description (1 byte for JPEG, 4 bytes for PNG, 11 bytes for GIF), and the **DescSize** member specifies the size (1, 4, or 6) of the buffer pointed to by **Desc**. On output, the buffer pointed to by Desc receives the metadata description, and the **DataSize* member receives the size, in bytes, of the metadata itself. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+#### Remarks
+
+**FindFirstItem** and **FindNextItem** do not enumerate the metadata items stored by the **SetPropertyItem** method.
