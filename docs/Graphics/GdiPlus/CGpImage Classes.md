@@ -682,3 +682,25 @@ Gets the width, in pixels, of this image
 ```
 FUNCTION GetWidth () AS UINT
 ```
+
+# <a name="RemovePropertyItem"></a>RemovePropertyItem (CGpImage)
+
+Removes a property item (piece of metadata) from this Image object.
+
+```
+FUNCTION RemovePropertyItem (BYVAL propId AS PROPID) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *propId* | Integer that identifies the property item. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The **RemovePropertyItem** method removes a specified property from an **Image** object, but that property item is not removed from the file or stream that was used to construct the Image object. To save the image (with the property item removed) to a new JPEG file or stream, call the **Save** method of the **Image** object.
