@@ -3119,3 +3119,69 @@ SUB Example_SetTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetTransformPGBrush"></a>SetTransform (CGpPathGradientBrush)
+
+Sets the transformation matrix of this path gradient brush.
+
+```
+FUNCTION SetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that specifies the transformation matrix to use. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **PathGradientBrush** object has a **GraphicsPath** object that serves as the boundary path for the brush. When you paint with a path gradient brush, only the area inside the boundary path is filled. If the brush's transformation matrix is set to represent any transformation other than the identity, then the boundary path is transformed according to that matrix during rendering, and only the area inside the transformed path is filled.
+
+The transformation applies only during rendering. The boundary path stored by the **PathGradientBrush** object is not altered by the **SetTransform** method.
+
+Example
+
+```
+' ========================================================================================
+' The following example creates a PathGradientBrush object based on a triangular path. The
+' Graphics.FillRectangle method uses the path gradient brush to paint a rectangle that
+' contains the triangular path. Next, the code creates a Matrix object that represents a
+' composite transformation (rotate, then translate) and passes the address of that Matrix
+' object to the PathGradientBrush.SetTransform method of the PathGradientBrush object. The
+' code calls FillRectangle a second time to paint the same rectangle using the transformed
+' path gradient brush.
+' ========================================================================================
+SUB Example_SetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(0, 0), GDIP_POINT(100, 0), GDIP_POINT(100, 100)}
+   DIM pthGrBrush AS CGpPathGradientBrush = CGpPathGradientBrush(@points(0), 3)
+
+   DIM nCount AS LONG = 3
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 255, 0), GDIP_ARGB(255, 0, 0, 0)}
+   pthGrBrush.SetSurroundColors(@colors(0), @nCount)
+
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 200, 200)
+
+   ' // Set the transformation for the brush (rotate, then translate).
+   DIM matrix AS CGpMatrix = CGpMatrix(0.0, 1.0, -1.0, 0.0, 150.0, 60.0)
+   pthGrBrush.SetTransform(@matrix)
+   
+   ' // Fill the same area with the transformed path gradient brush.
+   graphics.FillRectangle(@pthGrBrush, 0, 0, 200, 200)
+
+END SUB
+' ========================================================================================
+```
