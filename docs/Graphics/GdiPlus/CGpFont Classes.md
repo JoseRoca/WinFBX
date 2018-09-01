@@ -2,12 +2,12 @@
 
 The **CGpFont** class allows the creation of **Font** objects. The Font object encapsulates the characteristics, such as family, height, size, and style (or combination of styles), of a specific font. A **Font** object is used when drawing strings.
 
-**Inherits from**: CGpBase.
-**Imclude file**: CGpFont.inc.
+**Inherits from**: CGpBase.<br>
+**Include file**: CGpFont.inc.
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorsImage) | Creates a Font object. |
+| [Constructors](#ConstructorsFont) | Creates a Font object. |
 | [Clone](#Clone) | Copies the contents of the existing Font object into a new Font object. |
 | [GetFamily](#GetFamily) | Gets the font family on which this font is based. |
 | [GetHeight](#GetHeight) | Gets the line spacing of this font in the current unit of a specified Graphics object. |
@@ -22,8 +22,8 @@ The **CGpFont** class allows the creation of **Font** objects. The Font object e
 
 The **CGpFontCollection** class contains methods for enumerating the font families in a collection of fonts. Objects built from this class include the **InstalledFontCollection** and **PrivateFontCollection**.
 
-**Inherits from**: CGpBase.
-**Imclude file**: CGpFont.inc.
+**Inherits from**: CGpBase.<br>
+**Include file**: CGpFont.inc.
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -36,15 +36,15 @@ Extends **CGpFontCollection**. Does not implement new additional methods.
 
 The **InstalledFontCollection** object represents the fonts installed on the system.
 
-**Inherits from**: CGpFontCollection.
-**Imclude file**: CGpFont.inc.
+**Inherits from**: CGpFontCollection.<br>
+**Include file**: CGpFont.inc.
 
 # CGpPrivateFontCollection Class
 
 Extends **CGpFontCollection**. The **PrivateFontCollection** object is a collection for fonts. This object keeps a collection of fonts specifically for an application. The fonts in the collection can include installed fonts as well as fonts that have not been installed on the system.
 
-**Inherits from**: CGpFontCollection.
-**Imclude file**: CGpFont.inc.
+**Inherits from**: CGpFontCollection.<br>
+**Include file**: CGpFont.inc.
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -72,3 +72,67 @@ The **CGpFontFamily** class encapsulates a set of fonts that make up a font fami
 | [GetLineSpacing](#GetLineSpacing) | Gets the line spacing, in design units, of this font family for the specified style or style combination. |
 | [IsAvailable](#IsAvailable) | Determines whether this Font object was created successfully. |
 | [IsStyleAvailable](#IsStyleAvailable) | Determines whether the specified style is available for this font family. |
+
+# <a name="ConstructorFont"></a>Constructors (CGpFont)
+
+Creates a **Font** object based on the Windows Graphics Device Interface (GDI) font object that is currently selected into a specified device context. This constructor is provided for compatibility with GDI.
+
+```
+CONSTRUCTOR CGpFont (BYVAL hdc AS HDC)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hdc* | Handle to a Windows device context that has a font selected. A handle is a number that Windows uses internally to reference an object. |
+
+Creates a **Font** object indirectly from a Windows Graphics Device Interface (GDI) logical font by using a handle to a GDI LOGFONT structure.
+
+```
+CONSTRUCTOR CGpFont (BYVAL hdc AS HDC, BYVAL hFont AS HFONT)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hdc* | Handle to a Windows device context. A handle is a number that Windows uses internally to reference an object. |
+| *hFont* | Handle to a logical font. |
+
+Creates a **Font** object directly from a Windows Graphics Device Interface (GDI) logical font. This constructor is provided for compatibility with GDI.
+
+```
+CONSTRUCTOR CGpFont (BYVAL hdc AS HDC, BYVAL plogfont AS LOGFONTA PTR)
+CONSTRUCTOR CGpFont (BYVAL hdc AS HDC, BYVAL plogfont AS LOGFONTW PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hdc* | Handle to a Windows device context. A handle is a number that Windows uses internally to reference an object. |
+| *plogfont* | Pointer to a LOGFONT structure variable that contains attributes of the font. |
+
+Creates a **Font** object based on a **FontFamily** object, a size, a font style, and a unit of measurement.
+
+```
+CONSTRUCTOR CGpFont (BYVAL pFamily AS CGpFontFamily PTR, BYVAL emSize AS SINGLE, _
+   BYVAL nStyle AS INT_ = 0, BYVAL nUnit AS GpUnit = 0)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pFamily* | Pointer to a **FontFamily** object that specifies information such as the string that identifies the font family and the font family's text metrics measured in design units. |
+| *emSize* | The *em* size of the font measured in the units specified in the unit parameter. |
+| *nStyle* | Optional. Integer that specifies the style of the typeface. This value must be an element of the **FontStyle** enumeration or the result of a bitwise OR applied to two or more of these elements. For example, FontStyleBold OR FontStyleUnderline OR FontStyleStrikeout sets the style as a combination of the three styles. The default value is FontStyleRegular. |
+| *nUnit* | Optional. Element of the **Unit** enumeration that specifies the unit of measurement for the font size. The default value is UnitPoint. |
+
+Creates a **Font** object based on a font family, a size, a font style, and a unit of measurement.
+
+```
+CONSTRUCTOR CGpFont (BYVAL pwszFamilyName AS WSTRING PTR, BYVAL emSize AS SINGLE, _
+   BYVAL nStyle AS INT_ = 0, BYVAL nUnit AS GpUnit = 0, BYVAL pFontCollection AS CGpFontCollection PTR = NULL)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pwszFamilyName* | Name of the font family. |
+| *emSize* | The *em* size of the font measured in the units specified in the unit parameter. |
+| *nStyle* | Optional. Integer that specifies the style of the typeface. This value must be an element of the **FontStyle** enumeration or the result of a bitwise OR applied to two or more of these elements. For example, FontStyleBold OR FontStyleUnderline OR FontStyleStrikeout sets the style as a combination of the three styles. The default value is FontStyleRegular. |
+| *nUnit*  Optional.| Element of the **Unit** enumeration that specifies the unit of measurement for the font size. The default value is UnitPoint. |
+| *pFontCollection* | Optional. Pointer to a **FontCollection** object that specifies a user-defined group of fonts. If the value of this parameter is NULL, the system font collection is used. The default value is NULL. |
