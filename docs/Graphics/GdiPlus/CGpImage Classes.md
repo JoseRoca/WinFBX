@@ -749,3 +749,31 @@ SUB Example_RotateFlip (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="RotateFlip"></a>RotateFlip (CGpImage)
+
+Rotates and flips this image.
+
+```
+FUNCTION Save (BYVAL pwszFileName AS WSTRING PTR, BYVAL clsidEncoder AS GUID PTR, _
+   BYVAL encoderParams AS EncoderParameters PTR) AS GpStatus
+FUNCTION Save (BYVAL pStream AS IStream PTR, BYVAL clsidEncoder AS GUID PTR, _
+   BYVAL encoderParams AS EncoderParameters PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pwszFileName* | Pointer to a null-terminated string that specifies the path name for the saved image. |
+| *pStream* | Pointer to an **IStream** interface. The implementation of **IStream** must include the **Seek**, **Read**, **Write**, and **Stat** methods. |
+| *clsidEncoder* | Pointer to a **CLSID** that specifies the encoder to use to save the image. |
+| *encoderParams* | Optional. Pointer to an **EncoderParameters** structure that holds parameters used by the encoder. The default value is NULL. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+GDI+ does not allow you to save an image to the same file that you used to construct the image. The following code creates an **Image** object by passing the file name MyImage.jpg to an **Image** constructor. That same file name is passed to the **Save** method of the **Image** object, so the Image.Save method fails.
