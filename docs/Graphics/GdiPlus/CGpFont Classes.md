@@ -1150,7 +1150,7 @@ FUNCTION IsStyleAvailable (BYVAL nStyle AS INT_) AS BOOLEAN
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nStyle* | Integer that specifies the style of the typeface. This value must be an element of the FontStyle enumeration or the result of a bitwise OR applied to two or more of these elements. For example, FontStyleBold OR FontStyleUnderline OR FontStyleStrikeout specifies a combination of the three styles. |
+| *nStyle* | Integer that specifies the style of the typeface. This value must be an element of the **FontStyle** enumeration or the result of a bitwise OR applied to two or more of these elements. For example, FontStyleBold OR FontStyleUnderline OR FontStyleStrikeout specifies a combination of the three styles. |
 
 #### Return value
 
