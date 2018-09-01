@@ -76,7 +76,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [SetGammaCorrection](#SetGammaCorrectionLGBrush) | Specifies whether gamma correction is enabled. |
 | [SetInterpolationColors](#SetInterpolationColorsLGBrush) | Sets the colors to be interpolated and their corresponding blend positions. |
 | [SetLinearColors](#SetLinearColors) | Sets the starting color and ending color. |
-| [SetTransform](#SetTransformLGBRush) | Sets the transformation matrix. |
+| [SetTransform](#SetTransformLGBrush) | Sets the transformation matrix. |
 | [SetWrapMode](#SetWrapMode) | Sets the wrap mode. |
 | [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
 
