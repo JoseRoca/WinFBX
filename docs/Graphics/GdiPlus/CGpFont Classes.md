@@ -197,7 +197,7 @@ FUNCTION GetFamily (BYVAL pFamily AS CGpFontFamily PTR) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pFamily* | Pointer to a FontFamily object that receives the font family. |
+| *pFamily* | Pointer to a **FontFamily** object that receives the font family. |
 
 #### Return value
 
@@ -241,3 +241,37 @@ SUB Example_GetFamily (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetHeight"></a>GetHeight (CGpFont)
+
+Gets the line spacing of this font in the current unit of a specified **Graphics** object. The line spacing is the vertical distance between the base lines of two consecutive lines of text. Thus, the line spacing includes the blank space between lines along with the height of the character itself.
+
+```
+FUNCTION GetHeight (BYVAL pGraphics AS CGpGraphics PTR) AS SINGLE
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pGraphics* | Pointer to a **Graphics** object whose unit and vertical resolution are used in the height calculation. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+If the font unit is set to anything other than **UnitPixel**, the height, in pixels, is calculated using the vertical resolution of the specified **Graphics** object. For example, suppose the font unit is inches and the font size is 0.3. Also suppose that for the corresponding font family, the em height is 2048 and the line spacing is 2355. If the unit of the **Graphics** object is **UnitPixel** and the vertical resolution of the **Graphics** object is 96 dots per inch, the height is calculated as follows:
+
+```
+2355*(0.3/2048)*96 = 33.1171875
+```
+
+Continuing with the same example, suppose the unit of the **Graphics** object is something other than **UnitPixel**, say **UnitMillimeter**. Then (using 1 inch = 25.4 millimeters) the height, in millimeters, is calculated as follows:
+
+```
+2355*(0.3/2048)25.4 = 8.762256
+```
+
+
