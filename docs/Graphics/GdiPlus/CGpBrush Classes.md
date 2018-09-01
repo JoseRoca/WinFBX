@@ -3185,3 +3185,55 @@ SUB Example_SetTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetTransformTBrush"></a>SetTransform (CGpTextureBrush)
+
+Sets the transformation matrix of this texture brush.
+
+```
+FUNCTION SetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that specifies the transformation matrix to use. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **TextureBrush** object maintains a transformation matrix that can store any affine transformation. When you use a texture brush to fill an area, Windows GDI+ transforms the brush's image according to the brush's transformation matrix and then fills the area. The transformed image exists only during rendering; the image stored in the TextureBrush object is not transformed. For example, suppose you call and then paint an area with *someTextureBrush.ScaleTransform(3)* and then paint an area with *someTextureBrush*. The width of the brush's image triples when the area is painted, but the image stored in someTextureBrush remains unchanged.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' The code then uses the transformed brush to fill an ellipse.
+' ========================================================================================
+SUB Example_SetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Horizontal stretch
+   DIM matrix AS CGpMatrix = CGpMatrix(2, 0, 0, 1, 0, 0)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.SetTransform(@matrix)
+   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
