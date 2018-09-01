@@ -17,7 +17,7 @@ The **CGpCustomLineCap** class encapsulates a custom line cap. A line cap define
 | [SetBaseCap](#SetBaseCap) | Sets the **LineCap** that appears as part of this **CustomLineCap** at the end of a line. |
 | [SetBaseInset](#SetBaseInset) | Sets the base inset value of this custom line cap. |
 | [SetStrokeCap](#SetStrokeCap) | Sets the **LineCap** object used to start and end lines within the **GraphicsPath** object that defines this CustomLineCap object. |
-| [SetStrokeCaps](#SetStrokeCaps) | Sets the LineCap objects used to start and end lines within the **GraphicsPath** object that defines this CustomLineCap object. |
+| [SetStrokeCaps](#SetStrokeCaps) | Sets the **LineCap** objects used to start and end lines within the **GraphicsPath** object that defines this **CustomLineCap** object. |
 | [SetStrokeJoin](#SetStrokeJoin) | Sets the style of line join for the stroke. |
 | [SetWidthScale](#SetWidthScale) | Sets the value of the scale width.  |
 
