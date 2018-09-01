@@ -1315,3 +1315,93 @@ SUB Example_IsInfinite (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="IsVisible"></a>IsVisible
+
+Determines whether a point is inside this region.
+
+```
+FUNCTION IsVisible (BYVAL pt AS GpPointF PTR, BYVAL pGraphics AS CGpGraphics PTR) AS GpStatus
+FUNCTION IsVisible (BYVAL pt AS GpPoint PTR, BYVAL pGraphics AS CGpGraphics PTR) AS GpStatus
+FUNCTION IsVisible (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL pGraphics AS CGpGraphics PTR) AS GpStatus
+FUNCTION IsVisible (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL pGraphics AS CGpGraphics PTR) AS GpStatus
+FUNCTION IsVisible (BYVAL pt AS GpRectF PTR, BYVAL pGraphics AS CGpGraphics PTR) AS GpStatus
+FUNCTION IsVisible (BYVAL pt AS GpRect PTR, BYVAL pGraphics AS CGpGraphics PTR) AS GpStatus
+FUNCTION IsVisible (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL nWidth AS SINGLE, _
+   BYVAL nHeight AS SINGLE, BYVAL pGraphics AS CGpGraphics PTR) AS GpStatus
+FUNCTION IsVisible (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, _
+   BYVAL nHeight AS INT_, BYVAL pGraphics AS CGpGraphics PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pt* | Reference to a point to test. |
+| *rc* | Reference to a rectangle to test. |
+| *x* | x-coordinate of the upper-left corner of the rectangle to test. |
+| *x* | y-coordinate of the upper-left corner of the rectangle to test. |
+| *nWidth* | The width of the rectangle to test |
+| *nHeight* | The height of the rectangle to test |
+| *pGraphics* | Optional. Pointer to a Graphics object that contains the world and page transformations required to calculate the device coordinates of this region and the point. The default value is NULL. |
+
+#### Return value
+
+If the point is inside this region, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a region from a path and then tests to determine whether a
+' rectangle intersects the region.
+' ========================================================================================
+SUB Example_IsVisibleRect (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM pts(0 TO 5) AS GpPoint = {GDIP_POINT(110, 20), GDIP_POINT(120, 30), GDIP_POINT(100, 60), GDIP_POINT(120, 70), GDIP_POINT(150, 60), GDIP_POINT(140, 10)}
+'#ifdef __FB_64BIT__
+'   DIM pts(0 TO 5) AS GpPoint = {(110, 20), (120, 30), (100, 60), (120, 70), (150, 60), (140, 10)}
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpPoint is defined as Point in 64 bit and as Point_ in 32 bit.
+'   DIM pts(0 TO 5) AS GpPoint
+'   pts(0).x = 110 : pts(0).y = 20 : pts(1).x = 120 : pts(1).y = 30 : pts(2).x = 100 : pts(2).y = 60
+'   pts(3).x = 120 : pts(3).y = 70 : pts(4).x = 150 : pts(4).y = 60 : pts(5).x = 140 : pts(5).y = 10
+'#endif
+
+   DIM path AS CGpGraphicsPath
+   path.AddClosedCurve(@pts(0), 6)
+
+   ' // Create a region from a path
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   DIM pathRegion AS CGpRegion = @path
+   graphics.FillRegion(@solidBrush, @pathRegion)
+
+   ' // Check to see whether a rectangle intersects the region.
+   DIM rc AS GpRect = GDIP_RECT(55, 25, 70, 30)
+'#ifdef __FB_64BIT__
+'   DIM rc AS GpRect = (65, 25, 70, 30)
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpRect is defined as Rect in 64 bit and as Rect_ in 32 bit.
+'   DIM rc AS GpRect : rc.x = 65 : rc.y = 25 : rc.Width = 70 : rc.Height = 30
+'#endif
+
+   IF pathRegion.IsVisible(@rc, @graphics) THEN
+      ' // All or part of the rectangle is in the region.
+      PRINT "Is visible"
+   END IF
+
+   ' // Draw the test rectangle.
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+   graphics.DrawRectangle(@pen, @rc)
+
+END SUB
+' ========================================================================================
+```
