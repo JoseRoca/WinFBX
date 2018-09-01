@@ -135,7 +135,6 @@ If the function fails, it returns one of the other elements of the **Status** en
 #### Example
 
 ```
-#define UNICODE
 #INCLUDE ONCE "Afx/CGdiPlus/CGdiPlus.inc"
 USING Afx
 
@@ -224,4 +223,64 @@ SUB Example_Invert (BYVAL hdc AS HDC)
 
 END SUB
 ' ========================================================================================
+```
+
+# <a name="IsIdentity"></a>IsIdentity
+
+Determines whether this matrix is the identity matrix.
+
+```
+FUNCTION IsIdentity () AS BOOLEAN
+```
+
+#### Return value
+
+If this matrix is the identity matrix, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Example
+
+#INCLUDE ONCE "Afx/CGdiPlus/CGdiPlus.inc"
+USING Afx
+
+' // Must be constructed with NEW to we able to delete it before the call to AfxGdipShutdown
+DIM pMatrix AS CGpMatrix PTR = NEW CGpMatrix(1.0, 0.0, 0.0, 1.0, 0.0, 2.0)
+
+IF pMatrix->IsIdentity THEN
+   PRINT "The matrix is the identity matrix"
+ELSE
+   PRINT "The matrix is not the identity matrix"
+END IF
+
+' // Must be deleted before the call to AfxGdipShutdown
+Delete pMatrix
+
+# <a name="IsInvertible"></a>IsInvertible
+
+Determines whether this matrix is invertible.
+
+```
+FUNCTION IsInvertible () AS BOOLEAN
+```
+
+#### Return value
+
+If this matrix is the invertible, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Example
+
+```
+#INCLUDE ONCE "Afx/CGdiPlus/CGdiPlus.inc"
+USING Afx
+
+' // Must be constructed with NEW to we able to delete it before the call to AfxGdipShutdown
+DIM pMatrix AS CGpMatrix PTR = NEW CGpMatrix(3.0, 0.0, 0.0, 2.0, 20.0, 10.0)
+
+IF pMatrix->IsInvertible THEN
+   PRINT "The matrix is invertible"
+ELSE
+   PRINT "The matrix is not invertible"
+END IF
+
+' // Must be deleted before the call to AfxGdipShutdown
+Delete pMatrix
 ```
