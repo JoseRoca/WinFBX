@@ -388,11 +388,7 @@ Gets an element of the **HotkeyPrefix** enumeration that indicates the type of p
 FUNCTION GetHotkeyPrefix () AS HotkeyPrefix
 ```
 
-#### Return value
-
-This method returns an element of the **HotkeyPrefix** enumeration that indicates the type of hot key prefix processing that is performed on a string.
-
-####Remarks
+#### Remarks
 
 Hot keys, also called access keys, are keys that are programmed to provide an end user with keyboard shortcuts to functionality and are activated by pressing the ALT key. The keys are application dependent and are identified by an underscored letter, typically in a menu name or menu item; for example, when you press ALT, the letter F of the File menu is underscored. The F key is a shortcut to display the **File** menu.
 
@@ -446,6 +442,64 @@ SUB Example_GetHotKeyPrefix (BYVAL hdc AS HDC)
    ' // Draw the rectangle that encloses the text
    DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
    graphics.DrawRectangle(@pen, 30, 30, 160, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetLineAlignment"></a>GetLineAlignment
+
+Gets an element of the **StringAlignment** enumeration that indicates the line alignment of this **StringFormat** object in relation to the origin of the layout rectangle. The line alignment setting specifies how to align the string vertically in the layout rectangle. The layout rectangle is used to position the displayed string.
+
+```
+FUNCTION GetLineAlignment () AS StringAlignment
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a StringFormat object, sets the string's line alignment,
+' and then gets the line alignment setting and stores it in a variable. The code then
+' creates a second StringFormat object and uses the stored alignment value to set the line
+' alignment of the second StringFormat object. Next, the code uses the second StringFormat
+' object to draw a formatted string. The code also draws the string's layout rectangle.
+' ========================================================================================
+SUB Example_GetLineAlignment (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a red solid brush
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   ' // Create a font family from name
+   DIM fontFamily AS CGpFontFamily = "Times New Roman"
+   ' // Create a font from the font family
+   DIM pFont AS CGpFont = CGpFont(@fontFamily, 24, FontStyleRegular, UnitPixel)
+
+   ' // Create a string format object and set the alignment
+   DIM stringFormat AS CGpStringFormat
+   stringFormat.SetLineAlignment(StringAlignmentCenter)
+
+   ' // Get the line alignment setting from the StringFormat object.
+   DIM nStringAlignment AS StringAlignment = stringFormat.GetLineAlignment
+
+   ' // Create a second StringFormat object with the same line alignment.
+   DIM stringFormat2 AS CGpStringFormat
+   stringFormat2.SetLineAlignment(nStringAlignment)
+
+   ' // Use the second StringFormat object in a call to DrawString
+   DIM wszText AS WSTRING * 260 = "This text was formatted by a second StringFormat object."
+   graphics.DrawString(@wszText, LEN(wszText), @pFont, 30, 30, 150, 200, @stringFormat2, @solidBrush)
+
+   ' // Draw the rectangle that encloses the text
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawRectangle(@pen, 30, 30, 150, 200)
 
 END SUB
 ' ========================================================================================
