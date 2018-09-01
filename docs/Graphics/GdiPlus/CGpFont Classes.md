@@ -708,7 +708,7 @@ FUNCTION GenericMonospace (BYVAL pFontFamily AS CGpFontFamily PTR) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pFontFamily* | Pointer to a variable that will receive a pointer to the cloned **FontFamily** object. |
+| *pFontFamily* | Pointer to a variable that will receive a pointer to the **FontFamily** object. |
 
 #### Return value
 
@@ -741,6 +741,102 @@ SUB Example_GenericMonospace (BYVAL hdc AS HDC)
    ' // Draw text using the new font
    DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
    graphics.DrawString("This is a generic monospace font", -1, @genericMonoFont, 0, 0, @solidbrush)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GenericSansSerif"></a>GenericSansSerif (CGpFontFamily)
+
+Gets a **FontFamily** object that a specifies a generic sans serif typeface.
+
+```
+FUNCTION GenericSansSerif (BYVAL pFontFamily AS CGpFontFamily PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pFontFamily* | Pointer to a variable that will receive a pointer to the **FontFamily** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Font object by using a generic sans serif FontFamily
+' object and then uses that Font object to draw text.
+' ========================================================================================
+SUB Example_GenericSansSerif (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Use a generic sans serif FontFamily object to create a Font object.
+   DIM fontFamily AS CGpFontFamily
+   fontFamily.GenericSansSerif(@fontFamily)
+   DIM genericSansSerifFont AS CGpFont = CGpFont(@fontFamily, AfxPointsToPixelsX(16) / rxRatio)
+
+   ' // Draw text using the new font
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+   graphics.DrawString("This is a generic sans serif font", -1, @genericSansSerifFont, 0, 0, @solidbrush)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GenericSerif"></a>GenericSerif (CGpFontFamily)
+
+Gets a **FontFamily** object that a specifies a generic serif typeface.
+
+```
+FUNCTION GenericSansSerif (BYVAL pFontFamily AS CGpFontFamily PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pFontFamily* | Pointer to a variable that will receive a pointer to the **FontFamily** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Font object by using a generic serif FontFamily
+' object and then uses that Font object to draw text.
+' ========================================================================================
+SUB Example_GenericSerif (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Use a generic serif FontFamily object to create a Font object.
+   DIM fontFamily AS CGpFontFamily
+   fontFamily.GenericSerif(@fontFamily)
+   DIM genericSerifFont AS CGpFont = CGpFont(@fontFamily, AfxPointsToPixelsX(16) / rxRatio)
+
+   ' // Draw text using the new font
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+   graphics.DrawString("This is a generic serif font", -1, @genericSerifFont, 0, 0, @solidbrush)
 
 END SUB
 ' ========================================================================================
