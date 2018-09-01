@@ -2,7 +2,7 @@
 
 The **CGpImage** class provides methods for loading and saving raster images (bitmaps) and vector images (metafiles). An Image object encapsulates a bitmap or a metafile and stores attributes that you can retrieve by calling various Get methods. You can construct **Image** objects from a variety of file types including BMP, ICON, GIF, JPEG, Exif, PNG, TIFF, WMF, and EMF.
 
-**Inherits from**: CGpBase.
+**Inherits from**: CGpBase.<br>
 **Include file**: CGpBitmap.inc.
 
 | Name       | Description |
@@ -94,3 +94,64 @@ Creates a **CachedBitmap** object based on a **Bitmap** object and a **Graphics*
 | Name       | Description |
 | ---------- | ----------- |
 | [Constructors](#ConstructorCachedBitmap) | Creates a CachedBitmap object based on a Bitmap object and a Graphics object. |
+
+# <a name="ConstructorsImage"></a>Constructors (CGpImage)
+
+Creates an **Image** object based on a file.
+
+```
+CONSTRUCTOR CGpImage (BYVAL pwszFileName AS WSTRING PTR,  BYVAL useicm AS BOOLEAN = FALSE)
+```
+
+Create a **Image** object based on an **IStream** interface.
+
+```
+CONSTRUCTOR CGpImage (BYVAL pStream AS IStream PTR, BYVAL useicm AS BOOLEAN = FALSE)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pwszFileName* | Pointer to a null-terminated string that specifies the path name of the image file. The graphics file formats supported by GDI+ are BMP, GIF, JPEG, PNG, TIFF, Exif, WMF, and EMF. |
+| *pStream* | Pointer to an **IStream** interface. |
+| *useicm* | Optional. Boolean value that specifies whether the new Image object applies color correction according to color management information that is embedded in the image file. Embedded information can include International Color Consortium (ICC) profiles, gamma values, and chromaticity information. TRUE specifies that color correction is enabled, and FALSE specifies that color correction is not enabled. The default value is FALSE. |
+
+# <a name="Clone"></a>Clone (CGpImage)
+
+Creates an **Image** object based on a file.
+
+```
+FUNCTION Clone (BYVAL pCloneImage AS CGpImage PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pCloneImage* | Pointer to the **Image** object where to copy the contents of the existing object. |
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates an Image object based on a JPEG file. The code creates a
+' second Image object by cloning the first. Then the code calls the DrawImage method twice
+' to draw the two images.
+' ========================================================================================
+SUB Example_Clone (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create an Image object, and then clone it.
+   DIM image1 AS CGpImage = "climber.jpg"
+   DIM pImage2 AS CGpImage
+   image1.Clone(@pImage2)
+
+   ' // Draw the original image and the cloned image.
+   graphics.DrawImage(@image1, 20 * rxRatio, 20 * ryRatio)
+   graphics.DrawImage(@pImage2, 230 * rxRatio, 20 * ryRatio)
+
+END SUB
+' ========================================================================================
+```
