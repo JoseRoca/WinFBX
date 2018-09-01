@@ -481,3 +481,57 @@ SUB Example_Reset (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="Rotate"></a>Rotate
+
+Updates this matrix with the product of itself and a rotation matrix.
+
+```
+FUNCTION Rotate (BYVAL angle AS SINGLE, BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *angle* | Simple precision number that specifies the angle of rotation in degrees. Positive values specify clockwise rotation. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of the multiplication. **MatrixOrderPrepend** specifies that the rotation matrix is on the left, and **MatrixOrderAppend** specifies that the rotation matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Matrix object and calls the Matrix::Translate method to
+' set the elements of that matrix to a translation. Then the code calls the Matrix.Rotate
+' method to update the matrix with the product of itself and a rotation matrix. At that
+' point, the matrix represents a composite transformation: first translate, then rotate.
+' The code uses the matrix to set the world transformation of a Graphics object and then
+' draws an ellipse that is transformed according to the composite transformation.
+' ========================================================================================
+SUB Example_Rotate (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create a pen
+   DIM myPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), rxRatio)
+
+   DIM matrix AS CGpMatrix
+   ' // First a translation
+   matrix.Translate(40.0 * rxRatio, 0.0)
+   ' // Then a rotation
+   matrix.Rotate(30.0, MatrixOrderAppend)
+
+   graphics.SetTransform(@matrix)
+   graphics.DrawEllipse(@myPen, 0, 0, 100 * rxRatio, 50 * ryRatio)
+
+END SUB
+' ========================================================================================
+```
