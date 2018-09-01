@@ -751,7 +751,7 @@ END SUB
 
 # <a name="SetWidthScale"></a>SetWidthScale (CGpCustomLineCap)
 
-Sets the value of the scale width. This is the amount to scale the custom line cap relative to the width of the Pen used to draw lines. The default value of 1.0 does not scale the line cap.
+Sets the value of the scale width. This is the amount to scale the custom line cap relative to the width of the **Pen** used to draw lines. The default value of 1.0 does not scale the line cap.
 
 ```
 FUNCTION SetWidthScale (BYVAL widthScale AS SINGLE) AS GpStatus
