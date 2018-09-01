@@ -432,3 +432,52 @@ SUB Example_Offset (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="Reset"></a>Reset
+
+Updates this matrix with the elements of the identity matrix.
+
+```
+FUNCTION Reset () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Matrix object that represents a horizontal scaling by a
+' factor of 5 and a vertical scaling by a factor of 3. The code calls the Matrix.Reset
+' method to replace the elements of that matrix with the elements of the identity matrix.
+' Then the code calls the Matrix::Translate method to update the matrix with the product
+' of itself (the identity) and a translation matrix. The result is that the matrix
+' represents only the translation, not the scaling. The code uses the matrix to set the
+' world transformation of a Graphics object and then draws a rectangle that is transformed
+' according to that world transformation.
+' ========================================================================================
+SUB Example_Reset (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create a pen
+   DIM myPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), rxRatio)
+
+   DIM matrix AS CGpMatrix = CGpMatrix(5.0, 0.0, 0.0, 3.0, 0.0, 0.0)
+   matrix.Reset
+   matrix.Translate(50.0 * rxRatio, 40.0 * ryRatio)
+
+   graphics.SetTransform(@matrix)
+   graphics.DrawRectangle(@myPen, 0, 0, 100 * rxRatio, 100 * ryRatio)
+
+END SUB
+' ========================================================================================
+```
