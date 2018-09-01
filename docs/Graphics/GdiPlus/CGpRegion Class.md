@@ -9,8 +9,8 @@ The **Region** object describes an area of the display surface. The area can be 
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#Constructors) | Create a Region object. |
-| [Clone](#Clone) | Copies the contents of the existing Region object into a new Region object. |
+| [Constructors](#Constructors) | Create a **Region** object. |
+| [Clone](#Clone) | Copies the contents of the existing **Region** object into a new **Region** object. |
 | [Complement](#Complement) | Updates this region to the portion of the specified rectangle's interior that does not intersect this region. |
 | [Equals](#Equals) | Determines whether this region is equal to a specified region. |
 | [Exclude](#Exclude) | Updates this region to the portion of itself that does not intersect the specified rectangle's interior. |
@@ -69,3 +69,80 @@ CONSTRUCTOR CGpRegion (BYVAL hRgn AS HRGN)
 | *nSize* | Integer that specifies the number of bytes in the *regionData* array. |
 | *hRgn* | Handle to an existing GDI region.  |
 
+
+# <a name="Clone"></a>Clone
+
+Copies the contents of the existing **Region** object into a new **Region** object.
+
+```
+FUNCTION Clone (BYVAL pCloneRegion AS CGpRegion PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pCloneRegion* | Pointer to the **Region** object where to copy the contents of the existing object. |
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates two regions, one from a rectangle and the other from a path.
+' Next, the code clones the region that was created from a path and uses a solid brush to
+' fill the cloned region. Then, it forms the union of the two regions and fills it.
+' ========================================================================================
+SUB Example_CloneRegion (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   DIM alphaBrush AS CGpSolidBrush = GDIP_ARGB(128, 0, 0, 255)
+
+   DIM pts(0 TO 5) AS GpPoint = {GDIP_POINT(110, 20), GDIP_POINT(120, 30), GDIP_POINT(100, 60), GDIP_POINT(120, 70), GDIP_POINT(150, 60), GDIP_POINT(140, 10)}
+'#ifdef __FB_64BIT__
+'   DIM pts(0 TO 5) AS GpPoint = {(110, 20), (120, 30), (100, 60), (120, 70), (150, 60), (140, 10)}
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpPoint is defined as Point in 64 bit and as Point_ in 32 bit.
+'   DIM pts(0 TO 5) AS GpPoint
+'   pts(0).x = 110 : pts(0).y = 20 : pts(1).x = 120 : pts(1).y = 30 : pts(2).x = 100 : pts(2).y = 60
+'   pts(3).x = 120 : pts(3).y = 70 : pts(4).x = 150 : pts(4).y = 60 : pts(5).x = 140 : pts(5).y = 10
+'#endif
+   DIM pPath AS CGpGraphicsPath
+   pPath.AddClosedCurve(@pts(0), 6)
+
+   ' // Create a region from a rectangle.
+   DIM rc AS GpRect = GDIP_RECT(65, 15, 70, 45)
+'#ifdef __FB_64BIT__
+'   DIM rc AS GpRect = (65, 15, 70, 45)
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpRect is defined as Rect in 64 bit and as Rect_ in 32 bit.
+'   DIM rc AS GpRect : rc.x = 65 : rc.y = 15 : rc.Width = 70 : rc.Height = 45
+'#endif
+   DIM rectRegion AS CGpRegion = @rc
+
+   ' // Create a region from a curved path.
+   DIM pathRegion AS CGpRegion = @pPath
+
+   ' // Make a copy (clone) of the curved region.
+   DIM pClonedRegion AS CGpRegion
+   pathRegion.Clone(@pClonedRegion)
+
+   ' // Fill the cloned region with a red brush.
+   graphics.FillRegion(@solidBrush, @pClonedRegion)
+
+   ' // Form the union of the cloned region and the rectangular region.
+   pClonedRegion.Union_(@rectRegion)
+
+   ' // Fill the union of the two regions with a semitransparent blue brush.
+   graphics.FillRegion(@alphaBrush, @pClonedRegion)
+
+END SUB
+' ========================================================================================
+```
