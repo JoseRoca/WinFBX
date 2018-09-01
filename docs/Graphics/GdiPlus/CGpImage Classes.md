@@ -621,7 +621,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 #### Remarks
 
-A thumbnail image is a small copy of an image. Some image files have a thumbnail image embedded in the file. In such cases, this method retrieves the embedded thumbnail image. If there is no embedded thumbnail image, this method creates a thumbnail image by scaling the main image to the size specified in the thumbWidth and thumbHeight parameters. If both of those parameters are 0, a system-defined size is used.
+A thumbnail image is a small copy of an image. Some image files have a thumbnail image embedded in the file. In such cases, this method retrieves the embedded thumbnail image. If there is no embedded thumbnail image, this method creates a thumbnail image by scaling the main image to the size specified in the *thumbWidth* and *thumbHeight* parameters. If both of those parameters are 0, a system-defined size is used.
 
 #### Example
 
