@@ -991,3 +991,55 @@ SUB Example_GetEmHeight (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetFamilyName"></a>GetFamilyName (CGpFontFamily)
+
+Gets the name of this font family.
+
+```
+FUNCTION GetFamilyName (BYVAL pwszName AS WSTRING PTR, BYVAL language AS LANGID = LANG_NEUTRAL) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pwszName* | Out. Name of this font family. |
+| *language* | In, optional. Sixteen-bit value that specifies the language to use. The default value is LANG_NEUTRAL, which is the user's default language. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a FontFamily object, gets the family name, and outputs the
+' name as text.
+' ========================================================================================
+SUB Example_GetFamilyName (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a FontFamily object
+   DIM nameFontFamily AS CGpFontFamily = "arial"
+
+   ' // Get the cell ascent of the font family in design units.
+   DIM familyName AS WSTRING * LF_FACESIZE
+   nameFontFamily.GetFamilyName(@familyName)
+
+   ' // Draw the family name
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+   DIM font AS CGpFont = CGpFont(@nameFontFamily, AfxPointsToPixelsX(16) / rxRatio)
+   graphics.DrawString(@familyName, -1, @font, 0, 0, @solidbrush)
+
+END SUB
+' ========================================================================================
+```
