@@ -1354,7 +1354,7 @@ If the point is inside this region, this method returns TRUE; otherwise, it retu
 ' The following example creates a region from a path and then tests to determine whether a
 ' rectangle intersects the region.
 ' ========================================================================================
-SUB Example_IsVisibleRect (BYVAL hdc AS HDC)
+SUB Example_IsVisible (BYVAL hdc AS HDC)
 
    ' // Create a graphics object from the window device context
    DIM graphics AS CGpGraphics = hdc
@@ -1405,6 +1405,33 @@ SUB Example_IsVisibleRect (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+Example
+
+' ========================================================================================
+' The following example creates a RectF structure and determines whether the rectangle is
+' visible or partially visible on the display device. If it is, it fills the rectangle.
+' ========================================================================================
+SUB Example_IsVisibleRect (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a RectF structure
+   DIM visibleRect AS GpRectF = GDIP_RECTF(0.0, 0.0, 100.2, 100.2)
+
+   ' // Determine whether the rectangle is visible and, if it is, fill it.
+   IF graphics.IsVisible(@visibleRect) THEN
+       graphics.FillRectangle(@CGpSolidBrush(GDIP_ARGB(255, 0, 0, 0)), @visibleRect)
+   END IF
+
+END SUB
+' ========================================================================================
 
 # <a name="MakeEmpty"></a>MakeEmpty
 
@@ -1458,6 +1485,62 @@ SUB Example_MakeEmptyRegion (BYVAL hdc AS HDC)
    ' // Make the region empty, and then fill it with a blue brush.
    ' // The color won't change because it is empty and can't be filled with FillRegion.
    rectRegion.MakeEmpty
+   graphics.FillRegion(@blueBrush, @rectRegion)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="MakeInfinite"></a>MakeInfinite
+
+Updates this region to an infinite region.
+
+```
+FUNCTION MakeInfinite () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a region from a rectangle, makes the region infinite, and
+' fills the region to show the infinite region.
+' ========================================================================================
+SUB Example_MakeInfiniteRegion (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM rc AS GpRect = GDIP_RECT(65, 15, 70, 45)
+'#ifdef __FB_64BIT__
+'   DIM rc AS GpRect = (65, 15, 70, 45)
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpRect is defined as Rect in 64 bit and as Rect_ in 32 bit.
+'   DIM rc AS GpRect : rc.x = 65 : rc.y = 15 : rc.Width = 70 : rc.Height = 45
+'#endif
+
+   ' // Create red and blue solid brushes
+   DIM redBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   DIM blueBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 255)
+
+   ' // Create a region, and fill it with a red brush
+   DIM rectRegion AS CGpRegion = @rc
+   graphics.FillRegion(@redBrush, @rectRegion)
+
+   ' // Make the region infinite, and then fill it with a blue brush
+   rectRegion.MakeInfinite
    graphics.FillRegion(@blueBrush, @rectRegion)
 
 END SUB
