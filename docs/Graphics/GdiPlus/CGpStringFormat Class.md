@@ -830,3 +830,37 @@ SUB Example_SetAlignment (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetDigitSubstitution"></a>SetDigitSubstitution
+
+Sets the digit substitution method and the language that corresponds to the digit substitutes.
+
+```
+FUNCTION SetDigitSubstitution (BYVAL language AS LANGID, BYVAL substitute AS StringDigitSubstitute) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *language* | Sixteen-bit value that forms a NLS language identifier. The identifier specifies the language associated with the substitute digits. For example, if this **StringFormat** object uses Arabic substitution digits, then this method will return a value that indicates an Arabic language. An NLS language identifier is constructed by the **MAKELANGID** macro, declared in Winnt.inc. |
+| *substitute* | Element of the **StringDigitSubstitute** enumeration that specifies the digit substitution method to be used. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The digit substitution method, specified by an element of the **StringDigitSubstitute** enumeration, replaces, in a string, Western European digits with digits that correspond to a user's locale or language.
+
+When specifying LANG_NEUTRAL as the language ID, it is common practice to pass just LANG_NEUTRAL as in the following example:
+
+stat = FontFamily.GetFamilyName(name, LANG_NEUTRAL)
+
+If you are specifying a language other than LANG_NEUTRAL, use MAKELANGID to create the language and sublanguage combination as in the following example:
+
+language = MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL)
+
+For a list of the available languages and sublanguages, see Winnt.inc.
+
