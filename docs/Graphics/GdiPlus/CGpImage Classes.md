@@ -750,7 +750,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="RotateFlip"></a>RotateFlip (CGpImage)
+# <a name="Save"></a>Save (CGpImage)
 
 Rotates and flips this image.
 
