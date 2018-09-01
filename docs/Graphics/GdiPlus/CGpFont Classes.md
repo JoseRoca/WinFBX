@@ -548,3 +548,28 @@ END SUB
 ' ========================================================================================
 ```
 
+# <a name="GetFamilies"></a>GetFamilies (CGpFontCollection)
+
+Gets the font families contained in this font collection.
+
+```
+FUNCTION GetFamilies (BYVAL numSought AS INT_, BYVAL gpfamilies AS CGpFontFamily PTR, _
+   BYVAL numFound AS INT_ PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *numSought* | Integer that specifies the number of font families in this font collection. |
+| *gpfamilies* | Out. Pointer to an array that receives the **FontFamily** objects. |
+| *numFound* | Out. Pointer to an LONG that receives the number of font families found in this collection. This number should be the same as the *numSought* value. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A font family consists of a single font type with related styles. An example of a single font type is Arial Regular. An example of a font family is a set of fonts containing Arial Regular, Arial Italic, and Arial Bold style fonts.
+
