@@ -454,3 +454,50 @@ SUB Example_GetStyle (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetUnit"></a>GetUnit (CGpFont)
+
+Returns the unit of measure of this **Font** object.
+
+```
+FUNCTION GetUnit () AS GpUnit
+```
+
+#### Return value
+
+This method returns one of the elements of the **Unit** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Font object, gets the unit of measure of the font, and
+' then sets the page units of the Graphics object to the returned unit. It then uses the
+' Font object to draw text.
+' ========================================================================================
+SUB Example_GetUnit (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Font object according to the DPI setting
+   DIM font AS CGpFont = CGpFont("Arial", AfxPointsToPixelsX(12) / rxRatio)
+
+   ' // Get the unit of measure for font
+   DIM unit AS GpUnit = font.GetUnit
+   ' // Set the Graphics units of graphics to the retrieved unit value.
+   graphics.SetPageUnit(unit)
+
+   ' // Draw text using font
+   DIM solidbrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+   DIM wszText AS WSTRING * 260 = "Here is some text"
+   graphics.DrawString(@wszText, -1, @font, 0, 0, @solidbrush)
+
+END SUB
+' ========================================================================================
+```
