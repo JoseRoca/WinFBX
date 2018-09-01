@@ -891,3 +891,53 @@ SUB Example_GetCellAscent (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetCellDescent"></a>GetCellDescent (CGpFontFamily)
+
+Gets the cell descent, in design units, of this font family for the specified style or style combination.
+
+```
+FUNCTION GetCellDescent (BYVAL nStyle AS INT_) AS UINT16
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nStyle* | Integer that specifies the style of the typeface. This value must be an element of the **FontStyle** enumeration or the result of a bitwise OR applied to two or more of these elements. For example, FontStyleBold OR FontStyleUnderline OR FontStyleStrikeout specifies a combination of the three styles. |
+
+#### Return value
+
+This method returns the cell ascent, in design units, of this font family for the specified style or style combination.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a FontFamily object, gets the cell descent in design units,
+' and outputs the value as text.
+' ========================================================================================
+SUB Example_GetCellDescent (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a FontFamily object
+   DIM descentFontFamily AS CGpFontFamily = "arial"
+
+   ' // Get the cell ascent of the font family in design units
+   DIM cellDescent AS LONG = descentFontFamily.GetCellDescent(FontStyleRegular)
+
+   ' // Copy the cell descent into a string and draw the string
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+   DIM font AS CGpFont = CGpFont(@descentFontFamily, AfxPointsToPixelsX(16) / rxRatio)
+   DIM wszText AS WSTRING * 260
+   wszText = "ascentFontFamily.GetCellAscent() returns " & STR(cellDescent)
+   graphics.DrawString(@wszText, -1, @font, 0, 0, @solidbrush)
+
+END SUB
+' ========================================================================================
+```
