@@ -76,7 +76,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 | [SetGammaCorrection](#SetGammaCorrectionLGBrush) | Specifies whether gamma correction is enabled. |
 | [SetInterpolationColors](#SetInterpolationColorsLGBrush) | Sets the colors to be interpolated and their corresponding blend positions. |
 | [SetLinearColors](#SetLinearColors) | Sets the starting color and ending color. |
-| [SetTransform](#SetTransform) | Sets the transformation matrix. |
+| [SetTransform](#SetTransformLGBRush) | Sets the transformation matrix. |
 | [SetWrapMode](#SetWrapMode) | Sets the wrap mode. |
 | [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
 
@@ -119,7 +119,7 @@ A **PathGradientBrush** object stores the attributes of a color gradient that yo
 | [SetGammaCorrection](#SetGammaCorrectionPGBrush) | Specifies whether gamma correction is enabled. |
 | [SetInterpolationColors](#SetInterpolationColorsPGBrush) | Sets the colors to be interpolated and their corresponding blend positions. |
 | [SetSurroundColors](#SetSurroundColors) | Sets the surround colors of this brush. |
-| [SetTransform](#SetTransform) | Sets the transformation matrix. |
+| [SetTransform](#SetTransformPGBrush) | Sets the transformation matrix. |
 | [SetWrapMode](#SetWrapMode) | Sets the wrap mode. |
 | [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
 
@@ -142,7 +142,7 @@ Defines a **Brush** object that contains an **Image** object that is used for th
 | [ResetTransform](#ResetTransformTBrush) | Resets the transformation matrix to the identity matrix. |
 | [RotateTransform](#RotateTransformTBrush) | Updates this brush's current transformation matrix with the product of itself and a rotation matrix. |
 | [ScaleTransform](#ScaleTransformTBrush) | Updates this brush's current transformation matrix with the product of itself and a scaling matrix. |
-| [SetTransform](#SetTransform) | Sets the transformation matrix. |
+| [SetTransform](#SetTransformTBrush) | Sets the transformation matrix. |
 | [SetWrapMode](#SetWrapMode) | Sets the wrap mode. |
 | [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
 
@@ -3055,6 +3055,66 @@ SUB Example_SetLinearColors (BYVAL hdc AS HDC)
 
    linGrBrush.SetLinearColors(GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0))
    graphics.FillRectangle(@linGrBrush, 0, 75, 100, 50)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetTransformLGBrush"></a>SetTransform (CGpLinearGradientBrush)
+
+Sets the transformation matrix of this linear gradient brush.
+
+```
+FUNCTION SetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that specifies the transformation matrix to use. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **LinearGradientBrush** object has a rectangle that specifies the starting and ending boundaries of the gradient and a mode or angle that affects the direction. If the brush's transformation matrix is set to represent any transformation other than the identity, then the boundaries and direction are transformed according to that matrix during rendering.
+
+The transformation applies only during rendering. The boundaries stored by the **LinearGradientBrush** object are not altered by the **SetTransform** method.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and uses it to fill a rectangle.
+' Next, the code modifies the brush's transformation matrix and fills a rectangle with the
+' transformed brush.
+' ========================================================================================
+SUB Example_SetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 80, 40)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   DIM matrix AS CGpMatrix = CGpMatrix(2.0, 0, 0, 1, 0, 0)   ' // horizontal doubling
+
+   ' // Fill a large area with the gradient brush (no transformation).
+   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 50)
+
+   linGrBrush.SetTransform(@matrix)
+
+   ' // Fill a large area with the transformed linear gradient brush.
+   graphics.FillRectangle(@linGrBrush, 0, 75, 800, 50)
 
 END SUB
 ' ========================================================================================
