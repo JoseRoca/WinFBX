@@ -328,8 +328,14 @@ FUNCTION GetEncoderParameterListSize (BYVAL clsidEncoder AS GUID PTR) AS UINT
 | ---------- | ----------- |
 | *clsidEncoder* | Pointer to a **CLSID** that specifies the encoder. |
 
+# <a name="GetFlags"></a>GetFlags (CGpImage)
+
+Gets a set of flags that indicate certain attributes of this **Image** object.
+
+```
+FUNCTION GetFlags () AS UINT
+```
+
 #### Return value
 
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
+This method returns a value that holds a set of single-bit flags. The flags are defined in the **ImageFlags** enumeration.
