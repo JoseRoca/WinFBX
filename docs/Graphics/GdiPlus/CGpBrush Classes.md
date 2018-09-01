@@ -148,8 +148,6 @@ Defines a **Brush** object that contains an **Image** object that is used for th
 
 # <a name="ConstructorsLGBrush"></a>Constructors (CGpLinearGradientBrush)
 
-Creates a **LinearGradientBrush** object.
-
 Creates a **LinearGradientBrush** object from a set of boundary points and boundary colors.
 
 ```
