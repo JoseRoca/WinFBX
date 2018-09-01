@@ -303,5 +303,18 @@ FUNCTION GetDigitSubstitutionLanguage () AS LANGID
 
 #### Return value
 
-This method returns a 16-bit value that forms a National Language Support (NLS) language identifier. This identifier indicates the language that corresponds with the substitution digits. For example, if this StringFormat object uses Arabic substitution digits, then this method will return a value that indicates an Arabic language. An NLS language identifier is constructed by the MAKELANGID macro declared in Winnt.bi.
+This method returns a 16-bit value that forms a National Language Support (NLS) language identifier. This identifier indicates the language that corresponds with the substitution digits. For example, if this **StringFormat** object uses Arabic substitution digits, then this method will return a value that indicates an Arabic language. An NLS language identifier is constructed by the MAKELANGID macro declared in Winnt.bi.
+
+# <a name="GetDigitSubstitutionMethod"></a>GetDigitSubstitutionMethod
+
+Gets an element of the **StringDigitSubstitute** enumeration that indicates the digit substitution method that is used by this **StringFormat** object.
+
+```
+FUNCTION GetDigitSubstitutionMethod () AS StringDigitSubstitute
+```
+
+#### Return value
+
+The digit substitution method replaces, in a string, Western European digits with digits that correspond to a user's locale or language.
+
 
