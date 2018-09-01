@@ -1,6 +1,6 @@
 # CGpStringFormat Class
 
-The **CGpStringFormat** class encapsulates text layout information (such as alignment, orientation, tab stops, and clipping) and display manipulations (such as trimming, font substitution for characters that are not supported by the requested font, and digit substitution for languages that do not use Western European digits). A StringFormat object can be passed to the **DrawString** methods to format a string.
+The **CGpStringFormat** class encapsulates text layout information (such as alignment, orientation, tab stops, and clipping) and display manipulations (such as trimming, font substitution for characters that are not supported by the requested font, and digit substitution for languages that do not use Western European digits). A **StringFormat** object can be passed to the **DrawString** methods to format a string.
 
 **Inherits from**: CGpBase.<br>
 **Include file**: CGpStringFormat.inc.
@@ -51,7 +51,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 # <a name="Clone"></a>Clone
 
-Copies the contents of the existing StringFormat object into a new StringFormat object.
+Copies the contents of the existing **StringFormat** object into a new **StringFormat** object.
 
 ```
 FUNCTION Clone (BYVAL pStringFormat AS CGpStringFormat PTR) AS GpStatus
