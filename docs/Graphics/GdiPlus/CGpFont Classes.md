@@ -296,3 +296,103 @@ If the font unit is set to anything other than **UnitPixel**, the height, in pix
 ```
 2355*(0.3/2048)*96 = 33.1171875
 ```
+
+# <a name="GetLogFontA"></a>GetLogFontA (CGpFont)
+
+Uses a **LOGFONT** structure to get the attributes of this Font object.
+
+```
+FUNCTION GetLogFontA (BYVAL pGraphics AS CGpGraphics PTR, BYVAL pLogFont AS LOGFONTA PTR) AS GpStatus
+FUNCTION GetLogFontW (BYVAL pGraphics AS CGpGraphics PTR, BYVAL pLogFont AS LOGFONTW PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pGraphics* | Pointer to a Graphics object that contains attributes of the display device. |
+| *pLogFont* | Pointer to a **LOGFONT** structure variable that receives the font attributes. |
+
+#### Return value
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Font object, gets the font attributes from the Font object,
+' and uses these attributes (contained in the LOGFONTA structure) to create a second Font
+' object. The second Font object is then used to draw text.
+' ========================================================================================
+SUB Example_GetLogFontA (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Font object according to the DPI setting
+   DIM font AS CGpFont = CGpFont("Arial", AfxPointsToPixelsX(16) / rxRatio)
+
+   ' // Get attributes of font
+   DIM logFont AS LOGFONTA
+   font.GetLogFontA(@graphics, @logFont)
+   ' // Adjust for DPI
+   logFont.lfHeight /= rxRatio
+
+   ' // Create a second Font object from logFont
+   DIM logfontFont AS CGpFont = CGpFont(hdc, @logFont)
+
+   ' // Draw text using logfontFont.
+   DIM solidbrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+   DIM wszText AS WSTRING * 260 = "Font from a LOGFONTA"
+   graphics.DrawString(@wszText, -1, @logfontFont, 0, 0, @solidbrush)
+
+END SUB
+' ========================================================================================
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Font object, gets the font attributes from the Font object,
+' and uses these attributes (contained in the LOGFONTW structure) to create a second Font
+' object. The second Font object is then used to draw text.
+' ========================================================================================
+SUB Example_GetLogFontW (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Font object according to the DPI setting
+   DIM font AS CGpFont = CGpFont("Arial", AfxPointsToPixelsX(16) / rxRatio)
+
+   ' // Get attributes of font
+   DIM logFont AS LOGFONTW
+   font.GetLogFontW(@graphics, @logFont)
+   ' // Adjust for DPI
+   logFont.lfHeight /= rxRatio
+
+   ' // Create a second Font object from logFont
+   DIM logfontFont AS CGpFont = CGpFont(hdc, @logFont)
+
+   ' // Draw text using logfontFont.
+   DIM solidbrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+   DIM wszText AS WSTRING * 260 = "Font from a LOGFONTW"
+   graphics.DrawString(@wszText, -1, @logfontFont, 0, 0, @solidbrush)
+
+END SUB
+' ========================================================================================
+```
