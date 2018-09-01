@@ -186,3 +186,58 @@ SUB Example_CloneFont (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetFamily"></a>GetFamily (CGpFont)
+
+Gets the font family on which this font is based.
+
+```
+FUNCTION GetFamily (BYVAL pFamily AS CGpFontFamily PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pFamily* | Pointer to a FontFamily object that receives the font family. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Font object, retrieves the information about the font
+' family on which it is based, and then uses the FontFamily object to create a second Font
+' object. The example then uses the second Font object to draw text.
+' ========================================================================================
+SUB Example_GetFamily (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Font object.
+   DIM font AS CGpFont = CGpFont("Arial", AfxPointsToPixelsX(16) / rxRatio)
+
+   ' // Get the FontFamily of myFont.
+   DIM fontFamily AS CGpFontFamily
+   font.GetFamily(@fontFamily)
+
+   ' // Create a new Font object from fontFamily.
+   DIM familyFont AS CGpFont = CGpFont(@fontFamily, AfxPointsToPixelsX(16) / rxRatio)
+
+   ' // Draw Text with familyFont
+   DIM solidBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+   DIM wszText AS WSTRING * 260 = "This is a Font created from a FontFamily"
+   graphics.DrawString(@wszText, -1, @familyFont, 0, 0, @solidbrush)
+
+END SUB
+' ========================================================================================
+```
