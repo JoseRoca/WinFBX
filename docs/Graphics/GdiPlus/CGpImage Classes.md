@@ -497,3 +497,27 @@ Gets the number of properties (pieces of metadata) stored in this **Image** obje
 ```
 FUNCTION GetPropertyCount () AS UINT
 ```
+
+# <a name="GetPropertyIdList"></a>GetPropertyIdList (CGpImage)
+
+Gets a list of the property identifiers used in the metadata of this **Image** object.
+
+```
+FUNCTION GetPropertyIdList (BYVAL numOfProperty AS UINT, BYVAL list AS PROPID PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *numOfProperty* | Integer that specifies the number of elements in the list array. Call the Image.GetPropertyCount method to determine this number. |
+| *list* | Pointer to an array that receives the property identifiers. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The **GetPropertyIdList** method returns an array of **PROPIDs**. Before you call **GetPropertyIdList**, you must allocate a buffer large enough to receive that array. You can call the **GetPropertyCount** method of an **Image** object to determine the size of the required buffer. The size of the buffer should be the return value of **GetPropertyCount** multiplied by **SIZEOF(PROPID)**.
+
