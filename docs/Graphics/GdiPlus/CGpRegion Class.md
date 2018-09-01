@@ -800,3 +800,71 @@ SUB Example_GetDataSize (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetHRGN"></a>GetHRGN
+
+Creates a Windows Graphics Device Interface (GDI) region from this region.
+
+```
+FUNCTION GetHRGN (BYVAL pGraphics AS CGpGraphics PTR) AS HRGN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pGraphics* | Pointer to a Graphics object that contains the world and page transformations required to calculate the device coordinates of this region. |
+
+#### Return value
+
+This method returns a Windows handle to a GDI region that is created from this region.
+
+#### Remarks
+
+It is the caller's responsibility to call the GDI function **DeleteObject** to free the GDI region when it is no longer needed.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GDI+ region from a path and then uses the GDI+ region to
+' create a GDI region. The code then uses a GDI function to display the GDI region.
+' ========================================================================================
+SUB Example_GetHRGN (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM pts(0 TO 5) AS GpPoint = {GDIP_POINT(110, 20), GDIP_POINT(120, 30), GDIP_POINT(100, 60), GDIP_POINT(120, 70), GDIP_POINT(150, 60), GDIP_POINT(140, 10)}
+'#ifdef __FB_64BIT__
+'   DIM pts(0 TO 5) AS GpPoint = {(110, 20), (120, 30), (100, 60), (120, 70), (150, 60), (140, 10)}
+'#else
+'   ' // With the 32-bit compiler, the above syntax can't be used because a mess in the
+'   ' // FB headers for GdiPlus: GpPoint is defined as Point in 64 bit and as Point_ in 32 bit.
+'   DIM pts(0 TO 5) AS GpPoint
+'   pts(0).x = 110 : pts(0).y = 20 : pts(1).x = 120 : pts(1).y = 30 : pts(2).x = 100 : pts(2).y = 60
+'   pts(3).x = 120 : pts(3).y = 70 : pts(4).x = 150 : pts(4).y = 60 : pts(5).x = 140 : pts(5).y = 10
+'#endif
+
+   DIM pPath AS CGpGraphicsPath
+   pPath.AddClosedCurve(@pts(0), 6)
+
+   ' // Create a region from a path
+   DIM pathRegion AS CGpRegion = @pPath
+
+   ' // Get a handle to a GDI region.
+   DIM hRegion AS HRGN = pathRegion.GetHRGN(@graphics)
+
+   ' // Use GDI to display the region.
+   DIM hBrush AS HBRUSH = CreateSolidBrush(BGR(255, 0, 0))
+   FillRgn(hdc, hRegion, hBrush)
+
+   IF hBrush THEN DeleteObject(hBrush)
+   IF hRegion THEN DeleteObject(hRegion)
+
+END SUB
+' ========================================================================================
+```
