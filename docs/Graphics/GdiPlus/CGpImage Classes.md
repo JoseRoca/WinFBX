@@ -425,7 +425,7 @@ FUNCTION GetItemData (BYVAL pitem AS ImageItemData PTR) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pitem* | Pointer to an **ImageItemData** object that specifies the item to be retrieved. The **Data** member of the **ImageItemData** object points to a buffer that receives the custom metadata. If the **Data** member is set to NULL, this method returns the size of the required buffer in the DataSize member of the **ImageItemData** object. |
+| *pitem* | Pointer to an **ImageItemData** object that specifies the item to be retrieved. The **Data** member of the **ImageItemData** object points to a buffer that receives the custom metadata. If the **Data** member is set to NULL, this method returns the size of the required buffer in the **DataSize** member of the **ImageItemData** object. |
 
 #### Return value
 
