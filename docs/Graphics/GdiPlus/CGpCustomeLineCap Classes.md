@@ -1032,3 +1032,49 @@ SUB Example_GetWidth (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="IsFilled"></a>IsFilled (CGpAdjustableArrowCap)
+
+Determines whether the arrow cap is filled.
+
+```
+FUNCTION IsFilled () AS BOOLEAN
+```
+
+#### Return value
+
+If the arrow cap is filled, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates an AdjustableArrowCap object, myArrow, and sets the fill
+' mode to TRUE. The code then creates a Pen object and assigns myArrow as the ending line
+' cap for this Pen object. Next, the code tests whether myArrow is filled and, if it is,
+' draws a line.
+' ========================================================================================
+SUB Example_IsFilled (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Create an AdjustableArrowCap with a height of 10 pixels
+   DIM myArrow AS CGpAdjustableArrowCap = CGpAdjustableArrowCap(10, 10, CTRUE)
+   ' // Adjust to DPI by setting the scale width
+   myArrow.SetWidthScale(rxRatio)
+
+   ' // Create a Pen, and assign myArrow as the end cap
+   DIM arrowPen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+   arrowPen.SetCustomEndCap(@myArrow)
+
+   ' // If the cap is filled, draw a line using arrowPen
+   IF myArrow.IsFilled THEN graphics.DrawLine(@arrowPen, 0, 0, 100, 100)
+
+END SUB
+' ========================================================================================
+```
