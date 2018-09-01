@@ -39,3 +39,27 @@ The **CGpAdjustableArrowCap** object extends **CGpCustomLineCap**. This object b
 | [SetHeight](#SetHeight) | Sets the height of the arrow cap. |
 | [SetMiddleInset](#SetMiddleInset) | Sets the number of units that the midpoint of the base shifts towards the vertex. |
 | [SetWidth](#SetWidth) | Sets the width of the arrow cap. |
+
+# <a name="ConstructorCustomLineCap"></a>Constructor (CGpCustomLineCap)
+
+Creates a **CustomLineCap** object.
+
+```
+CONSTRUCTOR CGpCustomLineCap (BYVAL pFillPath AS CGpGraphicsPath PTR, _
+   BYVAL pStrokePath AS CGpGraphicsPath PTR, BYVAL baseCap AS LineCap = LinecapFLat, _
+   BYVAL baseInset AS SINGLE = 0.0)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pFillPath* | Pointer to a path. |
+| *pStrokePath* | Pointer to a path. |
+| *baseCap* | Optional. Element of the **LineCap** enumeration that specifies the line cap that will be used. The default value is **LineCapFlat**.  |
+| *baseInset* | Optional. The default value is 0.0. |
+
+#### Remarks
+
+The *fillPath* and *strokePath* parameters cannot be used at the same time. You should pass NULL to one of those two parameters. If you pass nonnull values to both parameters, then *fillPath* is ignored.
+
+The **CustomLineCap** class uses the winding fill mode regardless of the fill mode that is set for the **GraphicsPath** object passed to the **CustomLineCap** constructor.
+
