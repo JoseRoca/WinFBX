@@ -41,10 +41,10 @@ The **CGpGraphics** class provides methods for drawing lines, curves, figures, i
 | [FillRectangles](#FillRectangles) | Uses a brush to fill the interior of a sequence of rectangles. |
 | [FillRegion](#FillRegion) | Uses a brush to fill a specified region. |
 | [Flush](#Flush) | Flushes all pending graphics operations. |
-| [FromHDC](#FromHDC) | Creates a Graphics object that is associated with a specified device context. |
-| [FromHWND](#FromHWND) | Creates a Graphics object that is associated with a specified window. |
-| [FromImage](#FromImage) | Creates a Graphics object that is associated with a specified device context. |
-| [GetClip](#GetClip) | Gets the clipping region of this Graphics object. |
+| [FromHDC](#FromHDC) | Creates a **Graphics** object that is associated with a specified device context. |
+| [FromHWND](#FromHWND) | Creates a **Graphics** object that is associated with a specified window. |
+| [FromImage](#FromImage) | Creates a **Graphics** object that is associated with a specified device context. |
+| [GetClip](#GetClip) | Gets the clipping region of this **Graphics** object. |
 | [GetClipBounds](#GetClipBounds) | Gets a rectangle that encloses the clipping region of this **Graphics** object. |
 | [GetCompositingMode](#GetCompositingMode) | Gets the compositing mode currently set for this **Graphics** object. |
 | [GetCompositingQuality](#GetCompositingQuality) | Gets the compositing quality currently set for this **Graphics** object. |
