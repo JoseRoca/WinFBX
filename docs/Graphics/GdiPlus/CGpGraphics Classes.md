@@ -404,3 +404,81 @@ SUB Example_DrawBezier (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="DrawBeziers"></a>DrawBeziers (CGpGraphics)
+
+Draws a sequence of connected Bézier splines.
+
+```
+FUNCTION DrawBeziers (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPointF PTR, BYVAL count AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a pen that is used to draw the Bézier spline. |
+| *pts* | Pointer to an array of GpPointF objects that specify the starting, ending, and control points of the Bézier splines. |
+| *count* | Integer that specifies the number of elements in the points array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A Bézier spline does not pass through its control points. The control points act as magnets, pulling the curve in certain directions to influence the way a Bézier spline bends. Each Bézier spline requires a starting point and an ending point. Each ending point is the starting point for the next Bézier spline.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a pair of Bézier curves.
+' ========================================================================================
+SUB Example_DrawBeziers (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Define a Pen object and an array of PointF objects.
+   DIM greenPen AS CGpPen = GDIP_ARGB(255, 0, 255, 0)
+   DIM startPoint AS GpPointF : startPoint.x = 100.0 : startPoint.y = 100.0
+   DIM ctrlPoint1 AS GpPointF : ctrlPoint1.x = 200.0 : ctrlPoint1.y = 50.0
+   DIM ctrlPoint2 AS GpPointF : ctrlPoint2.x = 400.0 : ctrlPoint2.y = 10.0
+   DIM endPoint1  AS GpPointF : endPoint1.x  = 500.0 : endPoint1.y  = 100.0
+   DIM ctrlPoint3 AS GpPointF : ctrlPoint3.x = 600.0 : ctrlPoint3.y = 200.0
+   DIM ctrlPoint4 AS GpPointF : ctrlPoint4.x = 700.0 : ctrlPoint4.y = 400.0
+   DIM endPoint2  AS GpPointF : endPoint2.x  = 500.0 : endPoint2.y  = 500.0
+
+   DIM curvePoints(6) AS GpPointF
+   curvePoints(0) = startPoint
+   curvePoints(1) = ctrlPoint1
+   curvePoints(2) = ctrlPoint2
+   curvePoints(3) = endPoint1
+   curvePoints(4) = ctrlPoint3
+   curvePoints(5) = ctrlPoint4
+   curvePoints(6) = endPoint2
+
+   ' // Draw the Bezier curves.
+   graphics.DrawBeziers(@greenPen, @curvePoints(0), 7)
+
+   ' // Draw the control and end points.
+   DIM redBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   graphics.FillEllipse(@redBrush, 100 - 5, 100 - 5, 10, 10)
+   graphics.FillEllipse(@redBrush, 500 - 5, 100 - 5, 10, 10)
+   graphics.FillEllipse(@redBrush, 500 - 5, 500 - 5, 10, 10)
+   DIM blueBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 255)
+   graphics.FillEllipse(@blueBrush, 200 - 5, 50 - 5, 10, 10)
+   graphics.FillEllipse(@blueBrush, 400 - 5, 10 - 5, 10, 10)
+   graphics.FillEllipse(@blueBrush, 600 - 5, 200 - 5, 10, 10)
+   graphics.FillEllipse(@blueBrush, 700 - 5, 400 - 5, 10, 10)
+
+END SUB
+' ========================================================================================
+```
