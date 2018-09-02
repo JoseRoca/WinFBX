@@ -1567,7 +1567,7 @@ FUNCTION EnumerateMetafileSrcRectDestRect (BYVAL pMetafile AS CGpMetafile PTR, B
 | *nCount* | Integer that specifies the number of points in the *destPoints* array. |
 | *destRect* | Reference to a **GpRectF** object that specifies the rectangle in which the metafile is displayed. |
 | *srcRect* | Reference to a rectangle that specifies the portion of the metafile that is displayed. |
-| *srcUnit* | Element of the GpUnit enumeration that specifies the unit of measure for the source rectangle. |
+| *srcUnit* | Element of the **GpUnit** enumeration that specifies the unit of measure for the source rectangle. |
 
 #### Return value
 
