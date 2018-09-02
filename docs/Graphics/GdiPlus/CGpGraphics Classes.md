@@ -367,13 +367,6 @@ FUNCTION DrawBezier (BYVAL pPen AS CGpPen PTR, BYVAL pt1 AS GpPoint) AS GpStatus
 | *x4* | The x-coordinate of the ending point of the Bézier spline. |
 | *y4* | The y-coordinate of the ending point of the Bézier spline. |
 
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
 #### Return value
 
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
