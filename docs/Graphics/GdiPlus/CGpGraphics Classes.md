@@ -1426,3 +1426,71 @@ SUB Example_DrawRectangles (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="DrawRectangles"></a>DrawRectangles (CGpGraphics)
+
+Draws a string based on a font and an origin for the string.
+
+```
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, BYVAL pFont AS CGpFont PTR, _
+   BYVAL rc AS GpRectF PTR, BYVAL pBrush AS CGpBrush PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
+   BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE, BYVAL pBrush AS CGpBrush PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL rc AS GpRect PTR, BYVAL pBrush AS CGpBrush PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, _
+   BYVAL nHeight AS INT_, BYVAL pBrush AS CGpBrush PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL rc AS GpPointF PTR, BYVAL pBrush AS CGpBrush PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
+   BYVAL pBrush AS CGpBrush PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL rc AS GpPoint PTR, BYVAL pBrush AS CGpBrush PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL x AS INT_, BYVAL y AS INT_, BYVAL pBrush AS CGpBrush PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL rc AS GpRectF PTR, BYVAL pBrush AS CGpBrush PTR; _
+   BYVAL pStringFormat AS CGpStringFormat PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL nWidth AS SINGLE, _
+   BYVAL nHeight AS SINGLE, BYVAL pBrush AS CGpBrush PTR, _
+   BYVAL pStringFormat AS CGpStringFormat PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL rc AS GpRect PTR, BYVAL pBrush AS CGpBrush PTR; _
+   BYVAL pStringFormat AS CGpStringFormat PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, _
+   BYVAL nHeight AS INT_, BYVAL pBrush AS CGpBrush PTR, _
+   BYVAL pStringFormat AS CGpStringFormat PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL rc AS GpPointF PTR, BYVAL pBrush AS CGpBrush PTR; _
+   BYVAL pStringFormat AS CGpStringFormat PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL pBrush AS CGpBrush PTR, _
+   BYVAL pStringFormat AS CGpStringFormat PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL rc AS GpPoint PTR, BYVAL pBrush AS CGpBrush PTR; _
+   BYVAL pStringFormat AS CGpStringFormat PTR) AS GpStatus
+FUNCTION DrawString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL x AS INT_, BYVAL y AS INT_, _
+   BYVAL pBrush AS CGpBrush PTR, BYVAL pStringFormat AS CGpStringFormat PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pwszString* | Pointer to a wide-character string to be drawn. |
+| *pFont* | Pointer to a Font object that specifies the font attributes (the family name, the size, and the style of the font) to use. |
+| *x* | The x-coordinate of the upper-left corner of the destination position at which to draw the string. |
+| *y* | The y-coordinate of the upper-left corner of the destination position at which to draw the string. |
+| *pStringFormat* | Pointer to a **StringFormat** object that specifies text layout information and display manipulations to be applied to the string. |
+| *pBrush* | Pointer to a **Brush** object that is used to fill the string. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
