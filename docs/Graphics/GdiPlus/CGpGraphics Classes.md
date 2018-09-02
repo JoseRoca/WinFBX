@@ -1576,7 +1576,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="ExcludeClipRect"></a>ExcludeClipRect (CGpGraphics)
+# <a name="ExcludeClip"></a>ExcludeClip (CGpGraphics)
 
 Updates the clipping region to the portion of itself that does not intersect the specified rectangle.
 
