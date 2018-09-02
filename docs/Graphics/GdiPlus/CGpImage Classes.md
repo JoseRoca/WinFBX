@@ -983,7 +983,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 # <a name="GetHICON"></a>GetHICON (CGpBitmap)
 
-Creates an icon from this Bitmap object.
+Creates an icon from this **Bitmap** object.
 
 ```
 FUNCTION GetHICON (BYVAL hiconReturn AS HICON PTR) AS GpStatus
@@ -998,3 +998,32 @@ FUNCTION GetHICON (BYVAL hiconReturn AS HICON PTR) AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="GetHistogram"></a>GetHistogram (CGpBitmap)
+
+Returns one or more histograms for specified color channels of this **Bitmap** object.
+
+```
+FUNCTION GetHistogram (BYVAL nFormat AS HistogramFormat, BYVAL NumberOfEntries AS UINT, _
+   BYVAL channel0 AS UINT PTR, BYVAL channel1 AS UINT PTR, BYVAL channel2 AS UINT PTR, _
+   BYVAL channel3 AS UINT PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nFormat* | Element of the **HistogramFormat** enumeration that specifies the channels for which histograms will be created. |
+| *NumberOfEntries* | Integer that specifies the number of elements (of type UINT) in each of the arrays pointed to by *channel0*, *channel1*, *channel2*, and *channel3*. You must allocate memory for those arrays before you call **GetHistogram**. To determine the required number of elements, call **GetHistogramSize**. |
+| *channel0* | Pointer to an array of DWORDs that receives the first histogram. |
+| *channel1* | Pointer to an array of DWORDs that receives the second histogram if there is a second histogram. Pass NULL if there is no second histogram. |
+| *channel2* | Pointer to an array of DWORDs that receives the third histogram if there is a third histogram. Pass NULL if there is no third histogram. |
+| *channel3* | Pointer to an array of DWORDs that receives the fourth histogram if there is a fourth histogram. Pass NULL if there is no fourth histogram. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The number of histograms returned depends on the HistogramFormat enumeration element passed to the format parameter. For example, if format is equal to **HistogramFormatRGB**, then three histograms are returned: one each for the red, green, and blue channels. In that case, *channel0* points to the array that receives the red-channel histogram, *channel1* points to the array that receives the green-channel histogram, and *channel2* points to the array that receives the blue-channel histogram. For **HistogramFormatRGB**, *channel3* must be set to NULL because there is no fourth histogram. For more details, see the **HistogramFormat** enumeration.
