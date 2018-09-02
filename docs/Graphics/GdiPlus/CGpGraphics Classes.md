@@ -2165,3 +2165,34 @@ FUNCTION FromHWND (BYVAL hwnd AS HWND, BYVAL icm AS BOOLEAN = FALSE) AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="FromImage"></a>FromImage (CGpGraphics)
+
+Creates a **Graphics** object that is associated with a specified device context.
+
+```
+FUNCTION FromImage (BYVAL pImage AS CGpImage PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pImage* | Pointer to an Image object that will be associated with the new **Graphics** object. |
+
+This constructor fails if the **Image** object is based on a metafile that was opened for reading. The Image(file) and Metafile(file) constructors open a metafile for reading. To open a metafile for recording, use a **Metafile** constructor that receives a device context handle.
+
+This method also fails if the image uses one of the following pixel formats:
+
+PixelFormatUndefined<br>
+PixelFormatDontCare<br>
+PixelFormat1bppIndexed<br>
+PixelFormat4bppIndexed<br>
+PixelFormat8bppIndexed<br>
+PixelFormat16bppGrayScale<br>
+PixelFormat16bppARGB1555
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
