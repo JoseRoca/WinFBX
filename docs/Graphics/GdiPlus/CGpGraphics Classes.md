@@ -1101,7 +1101,7 @@ FUNCTION DrawLines (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPoint PTR, BYVAL co
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pPen* | Pointer to a pen that is used to draw the lines. |
-| *pts* | Pointer to an array of GpPointF structures that specify the starting and ending points of the lines. |
+| *pts* | Pointer to an array of **GpPointF** structures that specify the starting and ending points of the lines. |
 | *nCount* | Integer that specifies the number of elements in the points array. |
 
 #### Return value
