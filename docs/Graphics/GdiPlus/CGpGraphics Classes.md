@@ -2746,3 +2746,50 @@ SUB Example_GetPageScale (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="GetPageUnit"></a>GetPageUnit (CGpGraphics)
+
+Gets the unit of measure currently set for this **Graphics** object.
+
+```
+FUNCTION GetPageUnit () AS GpUnit
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Graphics object and sets its unit of measure to UnitPixel.
+' Then the code draws a square that is 100 pixels on each side. The call to Graphics.GetPageUnit
+' demonstrates how to obtain the unit of measure (which is already known in this case) for
+' the Graphics object. The code determines whether the unit of measure is UnitPixel and if
+' so, changes the unit of measure to UnitInch. Then the code draws a square that is 1 inch
+' on each side.
+' ========================================================================================
+SUB Example_GetPageUnit (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 0)
+   DIM redPen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 0, 0), 0)
+
+   graphics.SetPageUnit(UnitPixel)
+   graphics.DrawRectangle(@blackPen, 0, 0, 100 * rxRatio, 100 * rxRatio)
+
+   ' // Get the page unit.
+   DIM pageUnit AS GpUnit
+   pageUnit = graphics.GetPageUnit
+
+   IF pageUnit = UnitPixel THEN
+      graphics.SetPageUnit(UnitInch)
+   END IF
+
+   graphics.DrawRectangle(@redPen, 2, 0, 1, 1)
+
+END SUB
+' ========================================================================================
+```
