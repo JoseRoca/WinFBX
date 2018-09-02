@@ -1658,7 +1658,7 @@ FUNCTION ClearThreshold (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault
 
 The threshold is a value from 0 through 1 that specifies a cutoff point for each color component. For example, suppose the threshold is set to 0.7, and suppose you are rendering a color whose red, green, and blue components are 230, 50, and 220. The red component, 230, is greater than 0.7×255, so the red component will be changed to 255 (full intensity). The green component, 50, is less than 0.7×255, so the green component will be changed to 0. The blue component, 220, is greater than 0.7×255, so the blue component will be changed to 255.
 
-An ImageAttributes object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify a threshold for the default category, a different threshold for the bitmap category, and still a different threshold for the pen category.
+An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify a threshold for the default category, a different threshold for the bitmap category, and still a different threshold for the pen category.
 
 The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the pen category, then the default settings apply to the pen category.
 
@@ -1666,7 +1666,7 @@ As soon as you specify a color- or grayscale-adjustment setting for a certain ca
 
 # <a name="Clone"></a>Clone (CGpImageAttributes)
 
-Copies the contents of the existing ImageAttributes object into a new ImageAttributes object.
+Copies the contents of the existing ImageAttributes object into a new **ImageAttributes** object.
 
 ```
 FUNCTION Clone (BYVAL pCloneImgAttr AS CGpImageAttributes PTR) AS GpStatus
@@ -1675,3 +1675,22 @@ FUNCTION Clone (BYVAL pCloneImgAttr AS CGpImageAttributes PTR) AS GpStatus
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pCloneImgAttr* | Pointer to the **ImageAttributes** object where to copy the contents of the existing object. |
+
+# <a name="GetAdjustedPalette"></a>GetAdjustedPalette (CGpImageAttributes)
+
+Adjusts the colors in a palette according to the adjustment settings of a specified category.
+
+```
+FUNCTION GetAdjustedPalette (BYVAL pColorPalette AS ColorPalette PTR, BYVAL colorAdjustType AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pColorPalette* | Pointer to a **ColorPalette** structure that on input, contains the palette to be adjusted and, on output, receives the adjusted palette. |
+| *colorAdjustType* | Element of the **ColorAdjustType** enumeration that specifies the category whose adjustment settings will be applied to the palette. |
+
+#### Remarks
+
+An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify a color-remap table for the default category, a different color-remap table for the bitmap category, and still a different color-remap table for the pen category.
+
+When you call **GetAdjustedPalette**, you can specify the adjustment category that is used to adjust the palette colors. For example, if you pass **ColorAdjustTypeBitmap** to the **GetAdjustedPalette** method, then the adjustment settings of the bitmap category are used to adjust the palette colors.
