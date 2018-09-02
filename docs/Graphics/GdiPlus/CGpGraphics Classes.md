@@ -759,3 +759,253 @@ SUB Example_DrawEllipse (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="DrawImage"></a>DrawImage (CGpGraphics)
+
+Draws an image.
+
+```
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL rc AS GpRectF PTR) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL rc AS GpRect PTR) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
+   BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL x AS INT_, BYVAL y AS INT_ _
+   BYVAL nWidth AS INT_, BYVAL nHeight AS INT_) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL pt AS GpPointF PTR) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL pt AS GpPoint PTR) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL x AS INT_, BYVAL y AS INT_) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destPoints AS GpPointF, BYVAL count AS INT_) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destPoints AS GpPoint, BYVAL count AS INT_) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
+   BYVAL srcx AS SINGLE, BYVAL srcy AS SINGLE, BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE, _
+   BYVAL srcUnit AS GpUnit) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL x AS INT_, BYVAL y AS INT_, BYVAL srcx AS INT_, _
+   BYVAL srcy AS INT_, BYVAL nWidth AS INT_, BYVAL nHeight AS INT_, BYVAL srcUnit AS GpUnit) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destRect AS GpRectF PTR, _
+   BYVAL sourceRect AS GpRectF PTR, BYVAL srcUnit AS GpUnit, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destRect AS GpRect PTR, _
+   BYVAL sourceRect AS GpRect PTR, BYVAL srcUnit AS GpUnit, _
+    BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destx AS SINGLE, BYVAL desty AS SINGLE, _
+   BYVAL destWidth AS SINGLE, BYVAL destHeight AS SINGLE, BYVAL sourcex AS SINGLE, _
+   BYVAL sourcey AS SINGLE, BYVAL sourceWidth AS SINGLE, BYVAL sourceHeight AS SINGLE, _
+   BYVAL srcUnit AS GpUnit, BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destx AS INT_, BYVAL desty AS INT_, _
+   BYVAL destWidth AS INT_, BYVAL destHeight AS INT_, BYVAL sourcex AS INT_, BYVAL sourcey AS INT_, _
+   BYVAL sourceWidth AS INT_, BYVAL sourceHeight AS INT_, BYVAL srcUnit AS GpUnit, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destRect AS GpRectF PTR, _
+   BYVAL srcx AS SINGLE, BYVAL srcy AS SINGLE, BYVAL srcwidth AS SINGLE, _
+   BYVAL srcheight AS SINGLE, BYVAL srcUnit AS GpUnit, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL, _
+   BYVAL pcallback AS DrawImageAbort = NULL, BYVAL pcallbackData AS ANY PTR = NULL) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destRect AS GpRect PTR, _
+   BYVAL srcx AS INT_, BYVAL srcy AS INT_, BYVAL srcwidth AS INT_, BYVAL srcheight AS INT_, _
+   BYVAL srcUnit AS GpUnit, BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL, _
+   BYVAL pcallback AS DrawImageAbort = NULL, BYVAL pcallbackData AS ANY PTR = NULL) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destx AS SINGLE, BYVAL desty AS SINGLE, _
+   BYVAL destWidth AS SINGLE, BYVAL destHeigh AS SINGLE, BYVAL srcx AS SINGLE, _
+   BYVAL srcy AS SINGLE, BYVAL srcwidth AS SINGLE, BYVAL srcheight AS SINGLE, _
+   BYVAL srcUnit AS GpUnit, BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL, _
+   BYVAL pcallback AS DrawImageAbort = NULL, BYVAL pcallbackData AS ANY PTR = NULL) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destx AS INT_, BYVAL desty AS INT_, _
+   BYVAL destWidth AS INT_, BYVAL destHeigh AS INT_, BYVAL srcx AS INT_, BYVAL srcy AS INT_, _
+   BYVAL srcwidth AS INT_, BYVAL srcheight AS INT_, BYVAL srcUnit AS GpUnit, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL, _
+   BYVAL pcallback AS DrawImageAbort = NULL, BYVAL pcallbackData AS ANY PTR = NULL) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destPoints AS GpPointF PTR, _
+   BYVAL nCount AS INT_, BYVAL srcx AS SINGLE, BYVAL srcy AS SINGLE, BYVAL srcwidth AS SINGLE, _
+   BYVAL srcheight AS SINGLE, BYVAL srcUnit AS GpUnit, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL, _
+   BYVAL pcallback AS DrawImageAbort = NULL, BYVAL pcallbackData AS ANY PTR = NULL) AS GpStatus
+FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destPoints AS GpPoint PTR, _
+   BYVAL nCount AS INT_, BYVAL srcx AS INT_, BYVAL srcy AS INT_, BYVAL srcwidth AS INT_, _
+   BYVAL srcheight AS INT_, BYVAL srcUnit AS GpUnit, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL, _
+   BYVAL pcallback AS DrawImageAbort = NULL, BYVAL pcallbackData AS ANY PTR = NULL) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pImage* | Pointer to an Image object that specifies the source image. |
+| *x* | The x-coordinate of the upper-left corner of the destination rectangle at which to draw the image. |
+| *y* | The y-coordinate of the upper-left corner of the destination rectangle at which to draw the image. |
+| *nWidth* | Optional. The width of the destination rectangle at which to draw the image. |
+| *nHeight* | Optional. The height of the destination rectangle at which to draw the image. |
+| *pt* | Reference to a **GpPointF** object that specifies the coordinates of the upper-left corner of the destination position at which to draw the image. |
+| *srcx* | Simple precision number that specifies the x-coordinate of the upper-left corner of the portion of the source image to be drawn. |
+| *srcy* | Simple precision number that specifies the y-coordinate of the upper-left corner of the portion of the source image to be drawn. |
+| *srcwidth* | Simple precision number that specifies the width of the portion of the source image to be drawn. |
+| *srcheight* | Simple precision number that specifies the height of the portion of the source image to be drawn. |
+| *srcUnit* | Element of the Unit enumeration that specifies the unit of measure for the image. The default value is **UnitPixel**. |
+| *destPoints* | Pointer to an array of **GpPointF** objects that specify the area, in a parallelogram, in which to draw the image. |
+| *nCount* | Integer that specifies the number of elements in the *destPoints* array. |
+| *pImageAttributes* | Pointer to an ImageAttributes object that specifies the color and size attributes of the image to be drawn. The default value is NULL. |
+| *pCallback* | Callback method used to cancel the drawing in progress. The default value is NULL. |
+| *pCallbackData* | Pointer to additional data used by the method specified by the pCallback parameter. The default value is NULL. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws an image.
+' ========================================================================================
+SUB Example_DrawImage (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set scaling
+   graphics.SetPageUnit(UnitPixel)
+   graphics.SetPageScale(rxRatio)
+
+   ' // Create an Image object.
+   DIM pImage AS CGpImage = "climber.jpg"
+
+   ' // Draw the original source image.
+   graphics.DrawImage(@pImage, 10, 10)
+
+   ' // Draw the scaled image.
+   graphics.DrawImage(@pImage, 200, 50, 150, 75)
+
+END SUB
+' ========================================================================================
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a portion of an image. The portion of the source image to be
+' drawn is scaled to fit a specified parallelogram.
+' ========================================================================================
+SUB Example_DrawImage (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set scaling
+   graphics.SetPageUnit(UnitPixel)
+   graphics.SetPageScale(rxRatio)
+
+   ' // Create an Image object.
+   DIM pImage AS CGpImage = "climber.jpg"
+
+   ' // Draw the original source image.
+   graphics.DrawImage(@pImage, 10, 10)
+
+   ' // Draw the scaled image.
+   graphics.DrawImage(@pImage, 200.0, 30.0, 70.0, 20.0, 100.0, 200.0, UnitPixel)
+
+END SUB
+' ========================================================================================
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws an image.
+' ========================================================================================
+SUB Example_DrawImage (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set scaling
+   graphics.SetPageUnit(UnitPixel)
+   graphics.SetPageScale(rxRatio)
+
+   ' // Create an Image object.
+   DIM pImage AS CGpImage = "climber.jpg"
+
+   ' // Create an array of PointF objects that specify the destination of the image.
+   DIM destPoints(0 TO 2) AS GpPointF
+   destPoints(0).x =  30 : destPoints(0).y =  30
+   destPoints(1).x = 250 : destPoints(1).y =  50
+   destPoints(2).x = 175 : destPoints(2).y = 120
+
+   ' // Draw the image.
+   graphics.DrawImage(@pImage, @destPoints(0), 3)
+
+END SUB
+' ========================================================================================
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws the original source image and then draws a portion of the
+' image in a specified parallelogram.
+' ========================================================================================
+SUB Example_DrawImageRectRect (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set scaling
+   graphics.SetPageUnit(UnitPixel)
+   graphics.SetPageScale(rxRatio)
+
+   ' // Create an Image object.
+   DIM pImage AS CGpImage = "pattern.png"
+
+   ' // Draw the original source image.
+   graphics.DrawImage(@pImage, 10, 10)
+
+   ' // Define the portion of the image to draw.
+   DIM srcX AS SINGLE = 70.0
+   DIM srcY AS SINGLE = 20.0
+   DIM srcWidth AS SINGLE = 100.0
+   DIM srcHeight AS SINGLE = 100.0
+
+   ' // Create an array of Point objects that specify the destination of the cropped image.
+   DIM destPoints(0 TO 2) AS GpPointF
+   destPoints(0).x = 230 : destPoints(0).y = 30
+   destPoints(1).x = 350 : destPoints(1).y = 50
+   destPoints(2).x = 275 : destPoints(2).y = 120
+
+   ' Yet another mess of the FB GdiPlus declares.
+'#ifdef __FB_64BIT__
+'   DIM redToBlue AS ColorMap_
+'   redToBlue.oldColor.value = GDIP_ARGB(255, 255, 0, 0)
+'   redToBlue.newColor.value = GDIP_ARGB(255, 0, 0, 255)
+'#else
+'   DIM redToBlue AS ColorMap
+'   redToBlue.from = GDIP_ARGB(255, 255, 0, 0)
+'   redToBlue.to = GDIP_ARGB(255, 0, 0, 255)
+'#endif
+
+   ' // GDIP_COLORMAP is an union that solves the 32/64-bit incompatibility
+   DIM redToBlue AS GDIP_COLORMAP = (GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Create an ImageAttributes object that specifies a recoloring from red to blue.
+   DIM remapAttributes AS CGpImageAttributes
+   RemapAttributes.SetRemapTable(1, @redToBlue)
+
+   ' // Draw the cropped image
+   graphics.DrawImage(@pImage, @destPoints(0), 3, srcX, srcY, srcWidth, srcHeight, _
+                     UnitPixel, @remapAttributes, NULL, NULL)
+
+
+END SUB
+' ========================================================================================
+```
