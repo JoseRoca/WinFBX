@@ -2592,3 +2592,57 @@ SUB Example_GetHalfTonePalette (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetHDC"></a>GetHDC (CGpGraphics)
+
+Gets a handle to the device context associated with this **Graphics** object.
+
+```
+FUNCTION GetHDC () AS HDC
+```
+
+#### Remarks
+
+Each call to the **GetHDC** method of a **Graphics** object should be paired with a call to the **ReleaseHDC** method of that same Graphics object. Do not call any methods of the **Graphics** object between the calls to GetHDC and **ReleaseHDC**. If you attempt to call a method of the **Graphics** object between **GetHDC** and **ReleaseHDC**, the method will fail and will return **ObjectBusy**.
+
+Any state changes you make to the device context between **GetHDC** and **ReleaseHDC** will be ignored by GDI+ and will not be reflected in rendering done by GDI+.
+
+#### Example
+
+```
+' ========================================================================================
+' The following function uses GDI+ to draw an ellipse, then uses GDI to draw a rectangle,
+' and finally uses GDI+ to draw a line. The function's one parameter is a pointer to a GDI+
+' Graphics object. The code calls the Graphics.DrawEllipse method of that Graphics object
+' to draw an ellipse. Next, the code calls the Graphics.GetHDC method to obtain a handle
+' to the device context associated with the Graphics object. The code draws a rectangle by
+' passing the device context handle to the GDI Rectangle function. The code calls the
+' Graphics.ReleaseHDC method of the Graphics object and then uses the Graphics object to
+' draw a line.
+' ========================================================================================
+SUB Example_GetHDC (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM bluePen AS CGpPen = GDIP_ARGB(255, 0, 0, 255)
+   graphics.DrawEllipse(@bluepen, 10, 10, 100, 50)   ' // GDI+
+
+   DIM hdc2 AS HDC = graphics.GetHDC
+
+  ' // Make GDI calls, but don't call any methods
+  ' // on graphics until after the call to ReleaseHDC.
+   Rectangle(hdc2, 120 * rxRatio, 10 * rxRatio, 220 * rxRatio, 60 * rxRatio)   ' // GDI
+   graphics.ReleaseHDC(hdc)
+
+   ' // Ok to call methods on g again.
+   graphics.DrawLine(@bluePen, 240, 10, 340, 60)
+
+END SUB
+' ========================================================================================
+```
