@@ -2145,3 +2145,23 @@ SUB Example_FromHDC (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="FromHWND"></a>FromHWND (CGpGraphics)
+
+Creates a **Graphics** object that is associated with a specified window.
+
+```
+FUNCTION FromHWND (BYVAL hwnd AS HWND, BYVAL icm AS BOOLEAN = FALSE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hwnd* | Handle to a window that will be associated with the new **Graphics** object. |
+| *icm* | Optional. Boolean value that specifies whether the new **Graphics** object applies color adjustment according to the ICC profile associated with the display device. TRUE specifies that color adjustment is applied, and FALSE specifies that color adjustment is not applied. The default value is FALSE. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
