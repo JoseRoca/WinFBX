@@ -1142,7 +1142,7 @@ Depending on the format of the bitmap, **GetPixel** might not return the same va
 
 # <a name="SetResolution"></a>SetResolution (CGpBitmap)
 
-Sets the resolution of this Bitmap object.
+Sets the resolution of this **Bitmap** object.
 
 ```
 FUNCTION SetResolution (BYVAL xdpi AS SINGLE, BYVAL ydpi AS SINGLE) AS GpStatus
