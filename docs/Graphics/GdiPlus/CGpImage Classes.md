@@ -1515,3 +1515,24 @@ As soon as you specify a color- or grayscale-adjustment setting for a certain ca
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="ClearColorMatrix"></a>ClearColorMatrix (CGpImageAttributes)
+
+Clears the color-adjustment matrix for a specified category.
+
+```
+FUNCTION ClearColorMatrix (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
+
+#### Remarks
+
+An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify a color-adjustment matrix for the default category, a different color-adjustment matrix for the bitmap category, and still a different color-adjustment matrix for the pen category.
+
+The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the pen category, then the default settings apply to the pen category.
+
+As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. For example, suppose you specify a color-adjustment matrix and a gamma value for the default category. If you set a color-adjustment matrix for the pen category by calling **SetColorMatrix**, then the default color-adjustment matrix will not apply to pens. If you later clear the pen color-adjustment matrix by calling **ClearColorMatrix*, the pen category will not revert to the default adjustment matrix; rather, the pen category will have no adjustment matrix. Similarly, the pen category will not revert to the default gamma value; rather, the pen category will have no gamma value.
+
