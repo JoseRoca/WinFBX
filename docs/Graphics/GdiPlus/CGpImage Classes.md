@@ -1796,7 +1796,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 #### Remarks
 
-A color-remap table is an array of **ColorMap** structures. Each ColorMap structure has two colors: one that specifies an old color and one that specifies a corresponding new color. During rendering, any color that matches one of the old colors in the remap table is changed to the corresponding new color.
+A color-remap table is an array of **ColorMap** structures. Each **ColorMap** structure has two colors: one that specifies an old color and one that specifies a corresponding new color. During rendering, any color that matches one of the old colors in the remap table is changed to the corresponding new color.
 
 Calling the **SetBrushRemapTable** method has the same effect as passing **ColorAdjustTypeBrush** to the **SetRemapTable**. The specified remap table applies to items in metafiles that are filled with a brush.
 
