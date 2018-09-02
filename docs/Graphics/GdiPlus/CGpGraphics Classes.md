@@ -830,7 +830,7 @@ FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destPoints AS GpPoint PT
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pImage* | Pointer to an Image object that specifies the source image. |
+| *pImage* | Pointer to an **Image** object that specifies the source image. |
 | *x* | The x-coordinate of the upper-left corner of the destination rectangle at which to draw the image. |
 | *y* | The y-coordinate of the upper-left corner of the destination rectangle at which to draw the image. |
 | *nWidth* | Optional. The width of the destination rectangle at which to draw the image. |
@@ -1009,3 +1009,23 @@ SUB Example_DrawImageRectRect (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="DrawImageFX"></a>DrawIDrawImageFXmage (CGpGraphics)
+
+Draws a portion of an image after applying a specified effect.
+
+```
+FUNCTION DrawImageFX (BYVAL pImage AS CGpImage PTR, BYREF sourceRect AS GpRectF, _
+   BYVAL pMatrix AS CGpMatrix PTR, BYREF gpEffect AS CGpEffect, _
+   BYREF gpImageAttributes AS CGpImageAttributes, BYVAL srcUnit AS GpUnit) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pImage* | Pointer to an **Image** object that specifies the image to be drawn. |
+| *sourceRect* | Pointer to a **GpRectF** structure that specifies the portion of the image to be drawn. |
+| *pMatrix* | Pointer to a **Matrix** object that specifies the parallelogram in which the image portion is rendered. The destination parallelogram is calculated by applying the affine transformation stored in the matrix to the source rectangle. |
+| *pEffect* | Pointer to a instance of a descendant of the **CGpEffect** class. The descendant specifies an effect or adjustment (for example, a change in contrast) that is applied to the image before rendering. The image is not permanently altered by the effect. |
+| *imageAttributes* | Pointer to an **ImageAttributes** object that specifies color adjustments to be applied when the image is rendered. Can be NULL. |
+| *srcUnit* | Element of the **GpUnit** enumeration that specifies the unit of measure for the source rectangle. |
