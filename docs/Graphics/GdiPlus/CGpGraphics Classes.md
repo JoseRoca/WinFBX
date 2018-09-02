@@ -2537,3 +2537,58 @@ SUB Example_GetDpiY (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="GetHalftonePalette"></a>GetHalftonePalette (CGpGraphics)
+
+Gets a Windows halftone palette.
+
+```
+FUNCTION GetHalftonePalette () AS HPALETTE
+```
+
+#### Remarks
+
+The purpose of the **GetHalftonePalette** method is to enable GDI+ to produce a better quality halftone when the display uses 8 bits per pixel. To display an image using the halftone palette, use the following procedure:
+
+1. Call GetHalftonePalette to get a GDI+ halftone palette.
+2. Select the halftone palette into a device context.
+3. Realize the palette by calling the RealizePalette function.
+4. Construct a Graphics object from a handle to the device context.
+5. Call the DrawImage method of the Graphics object.
+
+Be sure to delete the palette when you have finished using it. If you do not follow the preceding procedure, then on an 8-bits-per-pixel-display device, the default, 16-color process is used, which results in a lesser quality halftone.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws the same image twice. Before the image is drawn the second
+' time, the code gets a halftone palette, selects the palette into a device context, and
+' realizes the palette.
+' ========================================================================================
+SUB Example_GetHalfTonePalette (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create an Image object.
+   DIM pImage AS CGpImage = "climber.jpg"
+
+   DIM graphics1 AS CGpGraphics = hdc
+   graphics1.DrawImage(@pImage, 10 * rxRatio, 10 * rxRatio)
+
+   DIM hPalette AS HPALETTE
+   hPalette = graphics1.GetHalfTonePalette
+   SelectPalette(hdc, hPalette, FALSE)
+   RealizePalette(hdc)
+   DIM graphics2 AS CGpGraphics = hdc
+   graphics2.DrawImage(@pImage, 210 *rxRatio, 10 * rxRatio)
+   DeleteObject(hPalette)
+
+END SUB
+' ========================================================================================
+```
