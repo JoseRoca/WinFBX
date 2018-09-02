@@ -205,3 +205,22 @@ CONSTRUCTOR CGpGraphics (BYVAL pImage AS CGpImage PTR)
 | *icm* | Optional. Boolean value that specifies whether the new **Graphics** object applies color adjustment according to the ICC profile associated with the display device. TRUE specifies that color adjustment is applied, and FALSE specifies that color adjustment is not applied. The default value is FALSE. |
 | *pImage* | Pointer to an **Image** object that will be associated with the new **Graphics** object. |
 
+
+# <a name="AddMetafileComment"></a>AddMetafileComment (CGpGraphics)
+
+Creates a **Graphics** object that is associated with a specified device context. When you use this method to create a **Graphics** object, make sure that the **Graphics** object is deleted before the device context is released.
+
+```
+FUNCTION AddMetafileComment (BYVAL pdata AS BYTE PTR, BYVAL sizeData AS UINT) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *rgData* | Pointer to a buffer that contains the comment. |
+| *sizeData* | Integer that specifies the number of bytes in the value of the *data* parameter.  |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
