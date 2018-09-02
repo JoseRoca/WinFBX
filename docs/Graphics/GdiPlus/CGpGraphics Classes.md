@@ -1738,3 +1738,48 @@ SUB Example_FillEllipse (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="FillEllipse"></a>FillEllipse (CGpGraphics)
+
+Uses a brush to fill the interior of a path. If a figure in the path is not closed, this method treats the nonclosed figure as if it were closed by a straight line that connects the figure's starting and ending points.
+
+```
+FUNCTION FillPath (BYVAL pBrush AS CGpBrush PTR, BYVAL pPath AS CGpGraphicsPath PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pBrush* | Pointer to a brush that is used to paint the interior of the path. |
+| *pPath* | Pointer to a **GraphicsPath** object that specifies the path. |
+
+#### Example
+
+```
+' ========================================================================================
+' The following example fills a path.
+' ========================================================================================
+SUB Example_FillPath (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a GraphicsPath and add an ellipse
+   DIM ellipsePath AS CGpGraphicsPath
+   ellipsePath.AddEllipse(0, 0, 200, 100)
+
+   ' // Create a SolidBrush object
+   DIM blackBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+
+   ' // Draw ellipsePath
+   graphics.FillPath(@blackBrush, @ellipsePath)
+
+END SUB
+' ========================================================================================
+
+```
