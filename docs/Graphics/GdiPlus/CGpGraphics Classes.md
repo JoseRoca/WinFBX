@@ -2793,3 +2793,12 @@ SUB Example_GetPageUnit (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="GetPixelOffsetMode"></a>GetPixelOffsetMode (CGpGraphics)
+
+Gets the pixel offset mode currently set for this **Graphics** object.
+
+```
+FUNCTION GetPixelOffsetMode () AS PixelOffsetMode
+```
