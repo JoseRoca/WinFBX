@@ -980,3 +980,21 @@ FUNCTION GetHBITMAP (BYVAL colorBackground AS ARGB, BYVAL hbmReturn AS HBITMAP P
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="GetHICON"></a>GetHICON (CGpBitmap)
+
+Creates an icon from this Bitmap object.
+
+```
+FUNCTION GetHICON (BYVAL hiconReturn AS HICON PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hIconReturn* | Pointer to an HICON that receives a handle to the icon. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
