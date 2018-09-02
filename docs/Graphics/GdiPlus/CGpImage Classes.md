@@ -1920,3 +1920,51 @@ The default color- and grayscale-adjustment settings apply to all categories tha
 
 As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. For example, suppose you specify a collection of adjustment settings for the default category. If you set the gamma value for the pen category by passing **ColorAdjustTypePen** to the **SetGamma** method, then none of the default adjustment settings will apply to pens.
 
+# <a name="SetNoOp"></a>SetNoOp (CGpImageAttributes)
+
+Turns off color adjustment for a specified category. You can call **ClearNoOp** to reinstate the color-adjustment settings that were in place before the call to **SetNoOp**.
+
+```
+FUNCTION SetNoOp (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *gamma* | The gamma value. |
+| *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="SetOutputChannel"></a>SetOutputChannel (CGpImageAttributes)
+
+Sets the CMYK output channel for a specified category.
+
+```
+FUNCTION SetOutputChannel (BYVAL channelFlags AS LONG, _
+   BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *channelFlags* | Element of the **ColorChannelFlags** enumeration that specifies the output channel. |
+| *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+You can use the **SetOutputChannel** method to convert an image to a cyan-magenta-yellow-black (CMYK) color space and examine the intensities of one of the CMYK color channels. For example, suppose you create an **ImageAttributes** object and set its bitmap output channel to ColorChannelFlagsC. If you pass the address of that **ImageAttributes** object to the **DrawImage** method, the cyan component of each pixel is calculated, and each pixel in the rendered image is a shade of gray that indicates the intensity of its cyan channel. Similarly, you can render images that indicate the intensities of the magenta, yellow, and black channels.
+
+An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify an output channel for the default category and a different output channel for the bitmap category.
+
+The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the bitmap category, then the default settings apply to the bitmap category.
+
+As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. For example, suppose you specify a collection of adjustment settings for the default category. If you set the output channel for the bitmap category by passing **ColorAdjustTypeBitmap** to the **SetOutputChannel** method, then none of the default adjustment settings will apply to bitmaps.
