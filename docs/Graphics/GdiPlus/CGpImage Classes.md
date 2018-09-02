@@ -1314,3 +1314,32 @@ FUNCTION GetHENHMETAFILE () AS HENHMETAFILE
 
 This method sets the **Metafile** object to an invalid state. The user is responsible for calling **DeleteEnhMetafile**, to delete the Windows handle.
 
+# <a name="GetMetafileHeader"></a>GetMetafileHeader (CGpMetafile)
+
+Gets the metafile header of this metafile.
+
+```
+FUNCTION GetMetafileHeader (BYVAL mh AS MetafileHeader PTR) AS GpStatus
+FUNCTION GetMetafileHeader (BYVAL hEmf AS HENHMETAFILE, BYVAL mh AS MetafileHeader PTR) AS GpStatus
+FUNCTION GetMetafileHeader (BYVAL hWmf AS HMETAFILE, BYVAL mh AS MetafileHeader PTR) AS GpStatus
+FUNCTION GetMetafileHeader (BYVAL pwsFileName AS WSTRING PTR, BYVAL mh AS MetafileHeader PTR) AS GpStatus
+FUNCTION GetMetafileHeader (BYVAL pStream AS IStream PTR, BYVAL mh AS MetafileHeader PTR) AS GpStatus
+```
+#### Return value
+
+This method sets the **Metafile** object to an invalid state. The user is responsible for calling **DeleteEnhMetafile**, to delete the Windows handle.
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *mf* | Pointer to a MetafileHeader structure that receives the header, which contains the attributes of the metafile. |
+| *hEmf* | Windows handle to an enhanced-format metafile. |
+| *hWmf* | Windows handle to an windows metafile format. |
+| *wmfPFH* | Pointer to a placeable metafile header. |
+| *pwszFileName* | Pointer to a wide-character string that specifies the name of an existing **Metafile** object that contains the header. |
+| *pStream* | Pointer to a **IStream** interface that points to a data stream in a file. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
