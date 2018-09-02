@@ -2332,7 +2332,7 @@ This method returns an element of the **CompositingMode** enumeration that indic
 
 #### Remarks
 
-Suppose you create a **SolidBrush** object based on a color that has an alpha component of 192, which is about 75 percent of 255. If your Graphics object has its compositing mode set to **CompositingModeSourceOver**, then areas filled with the solid brush are a blend that is 75 percent brush color and 25 percent background color. If your **Graphics** object has its compositing mode set to **CompositingModeSourceCopy**, then the background color is not blended with the brush color. However, the color rendered by the brush has an intensity that is 75 percent of what it would be if the alpha component were 255.
+Suppose you create a **SolidBrush** object based on a color that has an alpha component of 192, which is about 75 percent of 255. If your **Graphics** object has its compositing mode set to **CompositingModeSourceOver**, then areas filled with the solid brush are a blend that is 75 percent brush color and 25 percent background color. If your **Graphics** object has its compositing mode set to **CompositingModeSourceCopy**, then the background color is not blended with the brush color. However, the color rendered by the brush has an intensity that is 75 percent of what it would be if the alpha component were 255.
 
 #### Example
 
