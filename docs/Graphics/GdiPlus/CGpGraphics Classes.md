@@ -339,3 +339,75 @@ SUB Example_DrawArc (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="DrawBezier"></a>DrawBezier (CGpGraphics)
+
+Draws a Bézier spline.
+
+```
+FUNCTION DrawBezier (BYVAL pPen AS CGpPen PTR, BYVAL x1 AS SINGLE, BYVAL y1 AS SINGLE, _
+   BYVAL x2 AS SINGLE, BYVAL y2 AS SINGLE, BYVAL x3 AS SINGLE, BYVAL y3 AS SINGLE, _
+   BYVAL x4 AS SINGLE, BYVAL y4 AS SINGLE) AS GpStatus
+FUNCTION DrawBezier (BYVAL pPen AS CGpPen PTR, BYVAL x1 AS INT_, BYVAL y1 AS INT_, _
+   BYVAL x2 AS INT_, BYVAL y2 AS INT_, BYVAL x3 AS INT_, BYVAL y3 AS INT_, _
+   BYVAL x4 AS INT_, BYVAL y4 AS INT_) AS GpStatus
+FUNCTION DrawBezier (BYVAL pPen AS CGpPen PTR, BYVAL pt1 AS GpPointF) AS GpStatus
+FUNCTION DrawBezier (BYVAL pPen AS CGpPen PTR, BYVAL pt1 AS GpPoint) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a pen that is used to draw the Bézier spline. |
+| *x1* | The x-coordinate of the starting point of the Bézier spline. |
+| *y1* | The y-coordinate of the starting point of the Bézier spline. |
+| *x2* | The x-coordinate of the first control point of the Bézier spline. |
+| *y2* | The y-coordinate of the first control point of the Bézier spline. |
+| *x3* | The x-coordinate of the second control point of the Bézier spline. |
+| *y3* | The y-coordinate of the second control point of the Bézier spline. |
+| *x4* | The x-coordinate of the ending point of the Bézier spline. |
+| *y4* | The y-coordinate of the ending point of the Bézier spline. |
+
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a Bézier curve.
+' ========================================================================================
+SUB Example_DrawBezier (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Draw the curve.
+   DIM greenPen AS CGpPen = GDIP_ARGB(255, 0, 255, 0)
+   graphics.DrawBezier(@greenPen, 100.0, 100.0, 200.0, 10.0, 350.0, 50.0, 500.0, 100.0)
+
+   ' // Draw the end points and control points.
+   DIM redBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   DIM blueBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 255)
+   graphics.FillEllipse(@redBrush, 100 - 5, 100 - 5, 10, 10)
+   graphics.FillEllipse(@redBrush, 500 - 5, 100 - 5, 10, 10)
+   graphics.FillEllipse(@blueBrush, 200 - 5, 10 - 5, 10, 10)
+   graphics.FillEllipse(@blueBrush, 350 - 5, 50 - 5, 10, 10)
+
+END SUB
+' ========================================================================================
+```
