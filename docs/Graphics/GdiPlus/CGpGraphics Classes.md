@@ -1316,3 +1316,56 @@ SUB Example_DrawPolygons (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="DrawRectangle"></a>DrawRectangle (CGpGraphics)
+
+Draws a rectangle.
+
+```
+FUNCTION DrawRectangle (BYVAL pPen AS CGpPen PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
+   BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE) AS GpStatus
+FUNCTION DrawRectangle (BYVAL pPen AS CGpPen PTR, BYVAL x AS INT_, BYVAL y AS INT_, _
+   BYVAL nWidth AS INT_, BYVAL nHeight AS INT_) AS GpStatus
+FUNCTION DrawRectangle (BYVAL pPen AS CGpPen PTR, BYVAL rc AS GpRectF PTR) AS GpStatus
+FUNCTION DrawRectangle (BYVAL pPen AS CGpPen PTR, BYVAL rc AS GpRect PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a pen that is used to draw the rectangle. |
+| *x* | The x-coordinate of the upper-left corner of the rectangle. |
+| *y* | The y-coordinate of the upper-left corner of the rectangle. |
+| *nWidth* | The width of the rectangle. |
+| *nHeight* | The height of the rectangle. |
+| *nHeight* | The x, y, width and height of the rectangle as a **GpRect** or **GpRectF** structure. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a rectangle.
+' ========================================================================================
+SUB Example_DrawRectangle (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Draw the rectangle
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 3)
+   graphics.DrawRectangle(@blackPen, 0, 0, 200, 200)
+
+END SUB
+' ========================================================================================
+```
