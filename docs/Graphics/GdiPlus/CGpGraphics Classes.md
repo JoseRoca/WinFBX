@@ -2657,7 +2657,7 @@ FUNCTION GetInterpolationMode () AS InterpolationMode
 ```
 
 
-# <a name="GetInterpolationMode"></a>GetInterpolationMode (CGpGraphics)
+# <a name="GetNearestColor"></a>GetNearestColor (CGpGraphics)
 
 Gets the nearest color to the color that is passed in. This method works on 8-bits per pixel or lower display devices for which there is an 8-bit color palette.
 
