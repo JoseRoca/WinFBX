@@ -1011,7 +1011,7 @@ END SUB
 ```
 
 
-# <a name="DrawImageFX"></a>DrawIDrawImageFXmage (CGpGraphics)
+# <a name="DrawImageFX"></a>DrawImageFX (CGpGraphics)
 
 Draws a portion of an image after applying a specified effect.
 
@@ -1035,3 +1035,55 @@ FUNCTION DrawImageFX (BYVAL pImage AS CGpImage PTR, BYREF sourceRect AS GpRectF,
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="DrawLine"></a>DrawLine (CGpGraphics)
+
+Draws a line that connects two points.
+
+```
+FUNCTION DrawLine (BYVAL pPen AS CGpPen PTR, BYVAL x1 AS SINGLE, BYVAL y1 AS SINGLE, _
+   BYVAL x2 AS SINGLE, BYVAL y2 AS SINGLE) AS GpStatus
+FUNCTION DrawLine (BYVAL pPen AS CGpPen PTR, BYVAL x1 AS INT_, BYVAL y1 AS INT_, _
+   BYVAL x2 AS INT_, BYVAL y2 AS INT_) AS GpStatus
+FUNCTION DrawLine (BYVAL pPen AS CGpPen PTR, BYVAL pt1 AS GpPointF PTR, BYVAL pt2 AS GpPointF PTR) AS GpStatus
+FUNCTION DrawLine (BYVAL pPen AS CGpPen PTR, BYVAL pt1 AS GpPoint PTR, BYVAL pt2 AS GpPoint PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a pen that is used to draw the line. |
+| *x1* | The x-coordinate of the starting point of the line. |
+| *y1* | The y-coordinate of the starting point of the line. |
+| *x2* | The x-coordinate of the ending point of the line. |
+| *y2* | The y-coordinate of the ending point of the line. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a line.
+' ========================================================================================
+SUB Example_DrawLine (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Draw the line
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 3)
+   graphics.DrawLine(@blackPen, 100.0, 100.0, 500.0, 100.0)
+
+END SUB
+' ========================================================================================
+```
