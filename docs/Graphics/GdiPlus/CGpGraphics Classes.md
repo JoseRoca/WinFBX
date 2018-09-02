@@ -240,8 +240,8 @@ FUNCTION BeginContainer (BYVAL destrect AS GpRect PTR, BYVAL srcrect AS GpRect P
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *destrect* | Reference to a rectangle that, together with srcrect, specifies a transformation for the container. |
-| *srcrect* | Reference to a rectangle that, together with dstrect, specifies a transformation for the container. |
+| *destrect* | Reference to a rectangle that, together with *srcrect*, specifies a transformation for the container. |
+| *srcrect* | Reference to a rectangle that, together with *dstrect*, specifies a transformation for the container. |
 
 #### Return value
 
