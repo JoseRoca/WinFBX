@@ -1204,7 +1204,7 @@ CONSTRUCTOR CGpMetafile (BYVAL hEmf AS HMETAFILE, BYVAL wmfPFH AS WmfPlaceableFi
    BYVAL deleteEmf AS BOOL = FALSE)
 ```
 
-Creates a **Merafile** object for recording.
+Creates a **Metafile** object for recording.
 
 ```
 CONSTRUCTOR CGpMetafile (BYVAL referenceHdc AS HDC, BYVAL nType AS EmfType = EmfTypeEmfPlusDual, _
