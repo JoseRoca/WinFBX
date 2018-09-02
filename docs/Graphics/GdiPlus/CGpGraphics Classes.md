@@ -506,8 +506,6 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 #### Remarks
 
-Remarks
-
 A **CachedBitmap** object stores an image in a format that is optimized for a particular display screen. You cannot draw a cached bitmap to a printer or to a metafile.
 
 Cached bitmaps will not work with any transformations other than translation.
