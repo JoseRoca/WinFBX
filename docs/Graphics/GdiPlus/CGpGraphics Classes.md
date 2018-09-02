@@ -1254,3 +1254,65 @@ SUB Example_DrawPie (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="DrawPolygon"></a>DrawPolygon (CGpGraphics)
+
+Draws a polygon.
+
+```
+FUNCTION DrawPolygon (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPointF PTR, BYVAL count AS LONG) AS GpStatus
+FUNCTION DrawPolygon (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPoint PTR, BYVAL count AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a pen that is used to draw the polygon. |
+| *pts* | Pointer to an array of GpPointF objects that specify the vertices of the polygon. |
+| *nCount* | Integer that specifies the number of elements in the points array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a sequence of connected lines.
+' ========================================================================================
+SUB Example_DrawPolygons (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 3)
+
+   ' // Create an array of GpPoint objects that define the lines to draw
+   DIM point1 AS GpPoint : point1.x = 100 : point1.y = 100
+   DIM point2 AS GpPoint : point2.x = 200 : point2.y = 130
+   DIM point3 AS GpPoint : point3.x = 150 : point3.y = 200
+   DIM point4 AS GpPoint : point4.x =  50 : point4.y = 200
+   DIM point5 AS GpPoint : point5.x =   0 : point5.y = 130
+
+   DIM pts(0 TO 4) AS GpPoint
+   pts(0) = point1
+   pts(1) = point2
+   pts(2) = point3
+   pts(3) = point4
+   pts(4) = point5
+
+   ' // Draw the polygon
+   graphics.DrawPolygon(@blackPen, @pts(0), 5)
+
+END SUB
+' ========================================================================================
+```
