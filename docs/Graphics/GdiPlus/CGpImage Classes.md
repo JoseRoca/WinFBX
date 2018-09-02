@@ -1057,8 +1057,8 @@ FUNCTION GetPixel (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL colour AS ARGB PTR) A
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *x* | Integer that specifies the x-coordinate (column) of the pixel.  |
-| *y* | Integer that specifies the y-coordinate (row) of the pixel.  |
+| *x* | Integer that specifies the x-coordinate (column) of the pixel. |
+| *y* | Integer that specifies the y-coordinate (row) of the pixel. |
 | *colour* | Pointer to a DWORD that receives the color of the specified pixel. |
 
 #### Return value
@@ -1070,3 +1070,26 @@ If the function fails, it returns one of the other elements of the **Status** en
 #### Remarks
 
 Depending on the format of the bitmap, **GetPixel** might not return the same value as was set by **SetPixel**. For example, if you call **SetPixel** on a **Bitmap** object whose pixel format is 32bppPARGB, the pixel's RGB components are premultiplied. A subsequent call to **GetPixel** might return a different value because of rounding. Also, if you call **SetPixel** on a **Bitmap** object whose color depth is 16 bits per pixel, information could be lost during the conversion from 32 to 16 bits, and a subsequent call to **GetPixel** might return a different value.
+
+# <a name="InitializePalette"></a>InitializePalette (CGpBitmap)
+
+Initializes a standard, optimal, or custom color palette.
+
+```
+FUNCTION InitializePalette (BYVAL colourPalette AS ColorPalette PTR, BYVAL nPaletteType AS PaletteType, _
+   BYVAL optimalColors AS INT_, BYVAL useTransparentColor AS BOOL, BYVAL pBitmap AS CGpBitmap PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colourPalette* | Pointer to a buffer that contains a **ColorPalette** structure followed by an array of ARGB values. The Entries member of a **ColorPalette** structure is an array of one ARGB value. You must allocate memory for the **ColorPalette** structure and for the additional ARGB values in the palette. For example, if the palette has 36 ARGB values, allocate a buffer as follows: HeapAlloc(SIZEOF(ColorPalette) + 35\*4). |
+| *palettetype* | Element of the **PaletteType** enumeration that specifies the palette type. The palette can have one of several standard types, or it can be a custom palette that you define. Also, the **InitializePalette** method can create an optimal palette based on a specified bitmap. |
+| *optimalColors* | Integer that specifies the number of colors you want to have in an optimal palette based on a specified bitmap. If this parameter is greater than 0, the *palettetype* parameter must be set to **PaletteTypeOptimal**, and the bitmap parameter must point to a **Bitmap** object. If you are creating a standard or custom palette rather than an optimal palette, set this parameter to 0. |
+| *useTransparentColor* | Boolean value that specifies whether to include the transparent color in the palette. Set to TRUE to include the transparent color; otherwise FALSE. |
+| *pBitmap* | Pointer to a **Bitmap** object for which an optimal palette will be created. If palettetype is set to **PaletteTypeOptimal** and optimalColors is set to a positive integer, set this parameter to the address of a **Bitmap** object. Otherwise, set this parameter to NULL. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
