@@ -1362,3 +1362,29 @@ FUNCTION PlayRecord (BYVAL recordType AS EmfPlusRecordType, BYVAL flags AS UINT,
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="SetDownLevelRasterizationLimit"></a>SetDownLevelRasterizationLimit (CGpMetafile)
+
+Sets the resolution for certain brush bitmaps that are stored in this metafile.
+
+```
+FUNCTION SetDownLevelRasterizationLimit (BYVAL metafileRasterizationLimitDpi AS UINT) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *metafileRasterizationLimitDpi* | Non-negative integer that specifies the resolution in dpi. If you set this parameter equal to 0, the resolution is set to match the resolution of the device context handle that was passed to the **Metafile** constructor. If you set this parameter to a value greater than 0 but less than 10, the resolution is left unchanged. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The purpose of this method is to prevent metafiles from becoming too large as a result of texture and gradient brushes being stored at high resolution. Suppose you construct a **Metafile** object (for recording an **EmfTypeEmfOnly** metafile) based on the device context of a printer that has a resolution of 600 dpi. Also suppose you create a path gradient brush or a texture brush based on a **Bitmap** object that has a resolution of 96 dpi. If the bitmap that represents that brush is stored in the metafile with a resolution of 96 dpi, it will require much less space than if it is stored with a resolution of 600 dpi.
+
+The default rasterization limit for metafiles is 96 dpi. So if you do not call this method at all, path gradient brush and texture brush bitmaps are stored with a resolution of 96 dpi.
+
+The rasterization limit has an effect on metafiles of type **EmfTypeEmfOnly** and **EmfTypeEmfPlusDual**, but it has no effect on metafiles of type **EmfTypeEmfPlusOnly**.
