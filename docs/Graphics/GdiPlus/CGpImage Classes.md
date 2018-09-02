@@ -1096,7 +1096,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 # <a name="LockBits"></a>LockBits (CGpBitmap)
 
-Locks a rectangular portion of this bitmap and provides a temporary buffer that you can use to read or write pixel data in a specified format. Any pixel data that you write to the buffer is copied to the Bitmap object when you call **UnlockBits**.
+Locks a rectangular portion of this bitmap and provides a temporary buffer that you can use to read or write pixel data in a specified format. Any pixel data that you write to the buffer is copied to the **Bitmap** object when you call **UnlockBits**.
 
 ```
 FUNCTION LockBits (BYVAL rc AS GpRect PTR, BYVAL flags AS UINT, BYVAL pxFormat AS PixelFormat, _
