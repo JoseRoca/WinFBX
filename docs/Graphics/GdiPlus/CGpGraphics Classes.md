@@ -2342,7 +2342,7 @@ Suppose you create a **SolidBrush** object based on a color that has an alpha co
 ' CompositingModeSourceCopy. The code creates a SolidBrush object based on a color with an
 ' alpha component of 128. The code passes the address of that brush to the Graphics.FillRectangle
 ' method of the Graphics object to fill a rectangle with a color that is not blended with
-' the background color. The call to the Graphics::CompositingMode method of the Graphics
+' the background color. The call to the Graphics.CompositingMode method of the Graphics
 ' object demonstrates how to obtain the compositing mode (which is already known in this
 ' case). The code determines whether the compositing mode is CompositingModeSourceCopy and
 ' if so, changes it to CompositingModeSourceOver. Then the code calls Graphics.FillRectangle
