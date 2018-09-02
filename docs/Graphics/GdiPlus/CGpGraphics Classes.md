@@ -836,10 +836,10 @@ FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destPoints AS GpPoint PT
 | *nWidth* | Optional. The width of the destination rectangle at which to draw the image. |
 | *nHeight* | Optional. The height of the destination rectangle at which to draw the image. |
 | *pt* | Reference to a **GpPointF** object that specifies the coordinates of the upper-left corner of the destination position at which to draw the image. |
-| *srcx* | Simple precision number that specifies the x-coordinate of the upper-left corner of the portion of the source image to be drawn. |
-| *srcy* | Simple precision number that specifies the y-coordinate of the upper-left corner of the portion of the source image to be drawn. |
-| *srcwidth* | Simple precision number that specifies the width of the portion of the source image to be drawn. |
-| *srcheight* | Simple precision number that specifies the height of the portion of the source image to be drawn. |
+| *srcx* | The x-coordinate of the upper-left corner of the portion of the source image to be drawn. |
+| *srcy* | The y-coordinate of the upper-left corner of the portion of the source image to be drawn. |
+| *srcwidth* | The width of the portion of the source image to be drawn. |
+| *srcheight* | The height of the portion of the source image to be drawn. |
 | *srcUnit* | Element of the Unit enumeration that specifies the unit of measure for the image. The default value is **UnitPixel**. |
 | *destPoints* | Pointer to an array of **GpPointF** objects that specify the area, in a parallelogram, in which to draw the image. |
 | *nCount* | Integer that specifies the number of elements in the *destPoints* array. |
