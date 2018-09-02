@@ -1158,3 +1158,25 @@ FUNCTION SetResolution (BYVAL xdpi AS SINGLE, BYVAL ydpi AS SINGLE) AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="UnlockBits"></a>UnlockBits (CGpBitmap)
+
+Unlocks a portion of this bitmap that was previously locked by a call to **LockBits**.
+
+```
+FUNCTION UnlockBits (BYVAL lockedBitmapData AS BitmapData PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lockedBitmapData* | Pointer to a **BitmapData** object that was previously passed to **LockBits**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+LockBits and **UnlockBits** must be used as a pair. A call to the **LockBits** method of a **Bitmap** object establishes a temporary buffer that you can use to read or write pixel data in a specified format. After you write to the temporary buffer, a call to **UnlockBits** copies the pixel data in the buffer to the **Bitmap** object. If the pixel format of the temporary buffer is different from the pixel format of the **Bitmap** object, the pixel data is converted appropriately.
