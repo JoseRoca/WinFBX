@@ -1800,3 +1800,33 @@ A color-remap table is an array of **ColorMap** structures. Each **ColorMap** st
 
 Calling the **SetBrushRemapTable** method has the same effect as passing **ColorAdjustTypeBrush** to the **SetRemapTable**. The specified remap table applies to items in metafiles that are filled with a brush.
 
+# <a name="SetColorKey"></a>SetColorKey (CGpImageAttributes)
+
+Sets the color key (transparency range) for a specified category.
+
+```
+FUNCTION SetColorKey (BYVAL colorLow AS ARGB, BYVAL colorHigh AS ARGB, _
+   BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colorLow* | ARGB color that specifies the low color-key value.  |
+| *colorHigh* | ARGB color that specifies the high color-key value. |
+| *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+This method sets the high and low color-key values so that arange of colors can be made transparent. Any color that has each of its three components (red, green, blue) between the corresponding components of the high and low color keys is made transparent.
+
+An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify a color key for the default category, a different color key for the bitmap category, and still a different color key for the pen category.
+
+The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the pen category, then the default settings apply to the pen category.
+
+As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. For example, suppose you specify a collection of adjustment settings for the default category. If you set the color key for the pen category by passing **ColorAdjustTypePen** to the **SetColorKey** method, then none of the default adjustment settings will apply to pens.
