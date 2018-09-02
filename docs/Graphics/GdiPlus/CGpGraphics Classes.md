@@ -2,7 +2,7 @@
 
 The **CGpGraphics** class provides methods for drawing lines, curves, figures, images, and text. A **Graphics** object stores attributes of the display device and attributes of the items to be drawn.
 
-**Inherits from**: CGpBase.
+**Inherits from**: CGpBase.<br>
 **Imclude file**: CGpGraphics.inc.
 
 | Name       | Description |
@@ -98,7 +98,7 @@ The **CGpGraphics** class provides methods for drawing lines, curves, figures, i
 
 The **CGpGraphicsPath** allows the creation of **GraphicPath** objects. A **GraphicsPath** object stores a sequence of lines, curves, and shapes. You can draw the entire sequence by calling the **DrawPath** method of a **Graphics** object. You can partition the sequence of lines, curves, and shapes into figures, and with the help of a **GraphicsPathIterator** object, you can draw selected figures. You can also place markers in the sequence, so that you can draw selected portions of the path.
 
-**Inherits from**: CGpBase.
+**Inherits from**: CGpBase.<br>
 **Imclude file**: CGpPath.inc.
 
 | Name       | Description |
@@ -146,7 +146,7 @@ The **CGpGraphicsPath** allows the creation of **GraphicPath** objects. A **Grap
 
 The **CGpGraphicsPathIterator** class provides methods for isolating selected subsets of the path stored in a **GraphicsPath** object. A path consists of one or more figures. You can use a **GraphicsPathIterator** to isolate one or more of those figures. A path can also have markers that divide the path into sections. You can use a **GraphicsPathIterator** object to isolate one or more of those sections.
 
-**Inherits from**: CGpBase.
+**Inherits from**: CGpBase.<br>
 **Imclude file**: CGpPath.inc.
 
 | Name       | Description |
@@ -161,3 +161,46 @@ The **CGpGraphicsPathIterator** class provides methods for isolating selected su
 | [NextPathType](#NextPathType) | Gets the starting index and the ending index of the next group of data points that all have the same type. |
 | [NextSubpath](#NextSubpath) | Gets the starting index and the ending index of the next subpath (figure) in this iterator's associated path. |
 | [Rewind](#Rewind) | Rewinds this iterator to the beginning of its associated path. |
+
+# <a name="ConstructorsGraphics"></a>Constructors (CGpGraphics)
+
+Creates a **Graphics** object that is associated with a specified device context. When you use this method to create a **Graphics** object, make sure that the **Graphics** object is deleted before the device context is released.
+
+```
+CONSTRUCTOR CGpGraphics (BYVAL hdc AS HDC)
+```
+Creates a **Graphics** object that is associated with a specified device context and a specified device. When you use this constructor to create a **Graphics** object, make sure that the Graphics object is deleted or goes out of scope before the device context is released.
+
+```
+CONSTRUCTOR CGpGraphics (BYVAL hdc AS HDC, BYVAL hDevice AS HANDLE)
+```
+
+Creates a **Graphics** object that is associated with a specified window.
+
+```
+CONSTRUCTOR CGpGraphics (BYVAL pImage AS CGpImage PTR)
+```
+
+Creates a **Graphics** object that is associated with an **Image** object. This constructor fails if the **Image** object is based on a metafile that was opened for reading. The Image(file) and Metafile(file) constructors open a metafile for reading. To open a metafile for recording, use a **Metafile** constructor that receives a device context handle.
+
+This constructor also fails if the image uses one of the following pixel formats:
+PixelFormatUndefined<br>
+PixelFormatDontCare<br>
+PixelFormat1bppIndexed<br>
+PixelFormat4bppIndexed<br>
+PixelFormat8bppIndexed<br>
+PixelFormat16bppGrayScale<br>
+PixelFormat16bppARGB1555
+
+```
+CONSTRUCTOR CGpGraphics (BYVAL pImage AS CGpImage PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hdc* | Handle to the device context that will be associated with the new **Graphics** object. |
+| *hDevice* | Handle to a device that will be associated with the new **Graphics** object. |
+| *hwnd* | Handle to a window that will be associated with the new Graphics object. |
+| *icm* | Optional. Boolean value that specifies whether the new Graphics object applies color adjustment according to the ICC profile associated with the display device. TRUE specifies that color adjustment is applied, and FALSE specifies that color adjustment is not applied. The default value is FALSE. |
+| *pImage* | Pointer to an **Image** object that will be associated with the new **Graphics** object. |
+
