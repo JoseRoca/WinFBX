@@ -676,3 +676,34 @@ SUB Example_DrawCurve (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="DrawDriverString"></a>DrawDriverString (CGpGraphics)
+
+Draws characters at the specified positions. The method gives the client complete control over the appearance of text. The method assumes that the client has already set up the format and layout to be applied.
+
+```
+FUNCTION DrawDriverString (BYVAL pText AS UINT16 PTR, BYVAL length AS INT_, BYVAL pFont AS CGpFont PTR, _
+   BYVAL pBrush AS CGpBrush PTR, BYVAL positions AS ANY PTR, BYVAL flags AS INT_, _
+   BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pText* | Pointer to an array of 16-bit values. If the **DriverStringOptionsCmapLookup** flag is set, each value specifies a Unicode character to be displayed. Otherwise, each value specifies an index to a font glyph that defines a character to be displayed. |
+| *length* | Integer that specifies the number of values in the text array. The length parameter can be set to –1 if the string is null terminated. |
+| *pFont* | Pointer to a **Font** object that specifies the family name, size, and style of the font that is to be applied to the string. |
+| *pBrush* | Pointer to a **Brush** object that is used to fill the string. |
+| *positions* | If the **DriverStringOptionsRealizedAdvance** flag is set, positions is a pointer to a PointF object that specifies the position of the first glyph. Otherwise, positions is an array of PointF objects, each of which specifies the origin of an individual glyph. |
+| *flags* | Integer that specifies the options for the appearance of the string. This value must be an element of the **DriverStringOptions** enumeration or the result of a bitwise OR applied to two or more of these elements. |
+| *pMatrix* | Pointer to a **Matrix** object that specifies the transformation matrix to apply to each value in the text array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A segment is defined as a curve that connects two consecutive points in the cardinal spline. The ending point of each segment is the starting point for the next. The numberOfSegments parameter must not be greater than the count parameter minus the offset parameter plus one.
