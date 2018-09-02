@@ -70,15 +70,15 @@ The **CGpGraphics** class provides methods for drawing lines, curves, figures, i
 | [MeasureCharacterRanges](#MeasureCharacterRanges) | Gets a set of regions each of which bounds a range of character positions within a string. |
 | [MeasureDriverString](#MeasureDriverString) | Measures the bounding box for the specified characters and their corresponding positions. |
 | [MeasureString](#MeasureString) | Measures the extent of the string in the specified font, format, and layout rectangle. |
-| [MultiplyTransform](#MultiplyTransform) | Updates this Graphics object's world transformation matrix with the product of itself and another matrix. |
-| [ReleaseHDC](#ReleaseHDC) | Releases a device context handle obtained by a previous call to the GetHDC method of this **Graphics** object. |
-| [ResetClip](#ResetClip) | Sets the clipping region of this Graphics object to an infinite region. |
+| [MultiplyTransform](#MultiplyTransform) | Updates this **Graphics** object's world transformation matrix with the product of itself and another matrix. |
+| [ReleaseHDC](#ReleaseHDC) | Releases a device context handle obtained by a previous call to the **GetHDC** method of this **Graphics** object. |
+| [ResetClip](#ResetClip) | Sets the clipping region of this **Graphics** object to an infinite region. |
 | [ResetTransform](#ResetTransform) | Sets the world transformation matrix of this Graphics object to the identity matrix. |
-| [Restore](#Restore) | Sets the state of this Graphics object to the state stored by a previous call to the **Save** method of this Graphics object. |
-| [RotateTransform](#RotateTransform) | Updates the world transformation matrix of this Graphics object with the product of itself and a rotation matrix. |
+| [Restore](#Restore) | Sets the state of this **Graphics** object to the state stored by a previous call to the **Save** method of this Graphics object. |
+| [RotateTransform](#RotateTransform) | Updates the world transformation matrix of this **Graphics** object with the product of itself and a rotation matrix. |
 | [Save](#Save) | Saves the current state (transformations, clipping region, and quality settings) of this **Graphics** object. |
-| [ScaleTransform](#ScaleTransform) | Updates this Graphics object's world transformation matrix with the product of itself and a scaling matrix. |
-| [SetClip](#SetClip) | Updates the clipping region of this Graphics object to a region that is the combination of itself and the clipping region of another Graphics object. |
+| [ScaleTransform](#ScaleTransform) | Updates this **Graphics** object's world transformation matrix with the product of itself and a scaling matrix. |
+| [SetClip](#SetClip) | Updates the clipping region of this **Graphics** object to a region that is the combination of itself and the clipping region of another Graphics object. |
 | [SetCompositingMode](#SetCompositingMode) | Sets the compositing mode of this **Graphics** object. |
 | [SetCompositingQuality](#SetCompositingQuality) | Sets the compositing quality of this **Graphics** object. |
 | [SetInterpolationMode](#SetInterpolationMode) | Sets the interpolation mode of this **Graphics** object. |
@@ -92,7 +92,7 @@ The **CGpGraphics** class provides methods for drawing lines, curves, figures, i
 | [SetTransform](#SetTransform) | Sets the world transformation of this **Graphics** object. |
 | [TransformPoints](#TransformPoints) | Converts an array of points from one coordinate space to another. |
 | [TranslateClip](#TranslateClip) | Translates the clipping region of this **Graphics** object. |
-| [TranslateTransform](#TranslateTransform) | Updates this Graphics object's world transformation matrix with the product of itself and a translation matrix. |
+| [TranslateTransform](#TranslateTransform) | Updates this **Graphics** object's world transformation matrix with the product of itself and a translation matrix. |
 
 # CGpGraphicsPath Class
 
