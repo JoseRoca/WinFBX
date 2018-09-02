@@ -2006,3 +2006,34 @@ An ImageAttributes object maintains color and grayscale settings for five adjust
 The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the bitmap category, then the default settings apply to the bitmap category.
 
 As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. For example, suppose you specify a collection of adjustment settings for the default category. If you set the output channel color-profile file for the bitmap category by passing **ColorAdjustTypeBitmap** to the **SetOutputChannelColorProfile** method, then none of the default adjustment settings will apply to bitmaps.
+
+# <a name="SetRemapTable"></a>SetRemapTable (CGpImageAttributes)
+
+Sets the color-remap table for a specified category.
+
+```
+FUNCTION SetRemapTable (BYVAL mapSize AS UINT, BYVAL map AS ANY PTR, _
+   BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *mapSize* | The number of elements in the map array. |
+| *map* | Pointer to an array of **ColorMap** structures that defines the color map. |
+| *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A color-remap table is an array of **ColorMap** structures. Each **ColorMap** structure has two colors: one that specifies an old color and one that specifies a corresponding new color. During rendering, any color that matches one of the old colors in the remap table is changed to the corresponding new color.
+
+An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify a color remap for the default category, a color-remap table for the bitmap category, and still a different color-remap table for the pen category.
+
+The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the pen category, then the default settings apply to the pen category.
+
+As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. For example, suppose you specify a collection of adjustment settings for the default category. If you set the color-remap table for the pen category by passing **ColorAdjustTypePen** to the **SetRemapTable** method, then none of the default adjustment settings will apply to pens.
