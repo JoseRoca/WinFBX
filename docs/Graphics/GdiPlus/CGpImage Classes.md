@@ -1312,5 +1312,5 @@ FUNCTION GetHENHMETAFILE () AS HENHMETAFILE
 ```
 #### Return value
 
-This method sets the Metafile object to an invalid state. The user is responsible for calling **DeleteEnhMetafile**, to delete the Windows handle.
+This method sets the **Metafile** object to an invalid state. The user is responsible for calling **DeleteEnhMetafile**, to delete the Windows handle.
 
