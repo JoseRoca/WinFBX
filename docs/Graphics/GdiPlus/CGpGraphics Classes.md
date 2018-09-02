@@ -1369,3 +1369,60 @@ SUB Example_DrawRectangle (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="DrawRectangles"></a>DrawRectangles (CGpGraphics)
+
+Draws a sequence of rectangles.
+
+```
+FUNCTION DrawRectangles (BYVAL pPen AS CGpPen PTR, BYVAL rects AS GpRectF PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION DrawRectangles (BYVAL pPen AS CGpPen PTR, BYVAL rects AS GpRect PTR, BYVAL count AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a pen that is used to draw the rectangles. |
+| *rects* | Pointer to an array of **GpRectF** or **GpRect** objects that specify the coordinates of the rectangles to be drawn. |
+| *count* | Integer that specifies the number of elements in the rects array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a group of rectangles.
+' ========================================================================================
+SUB Example_DrawRectangles (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a pen object
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 3)
+
+   ' // Create an array of GpRect objects
+   DIM rect1 AS GpRect : rect1.x =   0 : rect1.y =   0 : rect1.Width = 100 : rect1.Height = 200
+   DIM rect2 AS GpRect : rect2.x = 100 : rect2.y = 200 : rect2.Width = 250 : rect2.Height = 50
+   DIM rect3 AS GpRect : rect3.x = 300 : rect3.y =   0 : rect3.Width =   50 : rect3.Height = 100
+   DIM rects(2) AS GpRect
+   rects(0) = rect1
+   rects(1) = rect2
+   rects(2) = rect3
+
+   ' // Draw the rectangles
+   graphics.DrawRectangles(@blackPen, @rects(0), 3)
+
+END SUB
+' ========================================================================================
+```
