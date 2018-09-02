@@ -1961,7 +1961,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 #### Remarks
 
-You can use the **SetOutputChannel** method to convert an image to a cyan-magenta-yellow-black (CMYK) color space and examine the intensities of one of the CMYK color channels. For example, suppose you create an **ImageAttributes** object and set its bitmap output channel to ColorChannelFlagsC. If you pass the address of that **ImageAttributes** object to the **DrawImage** method, the cyan component of each pixel is calculated, and each pixel in the rendered image is a shade of gray that indicates the intensity of its cyan channel. Similarly, you can render images that indicate the intensities of the magenta, yellow, and black channels.
+You can use the **SetOutputChannel** method to convert an image to a cyan-magenta-yellow-black (CMYK) color space and examine the intensities of one of the CMYK color channels. For example, suppose you create an **ImageAttributes** object and set its bitmap output channel to **ColorChannelFlagsC**. If you pass the address of that **ImageAttributes** object to the **DrawImage** method, the cyan component of each pixel is calculated, and each pixel in the rendered image is a shade of gray that indicates the intensity of its cyan channel. Similarly, you can render images that indicate the intensities of the magenta, yellow, and black channels.
 
 An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify an output channel for the default category and a different output channel for the bitmap category.
 
