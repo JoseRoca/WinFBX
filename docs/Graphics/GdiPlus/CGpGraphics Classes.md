@@ -1863,3 +1863,63 @@ SUB Example_FillPie (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="FillPolygon"></a>FillPolygon (CGpGraphics)
+
+Uses a brush to fill the interior of a polygon.
+
+```
+FUNCTION FillPolygon (BYVAL pBrush AS CGpBrush PTR, BYVAL pts AS GpPointF PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION FillPolygon (BYVAL pBrush AS CGpBrush PTR, BYVAL pts AS GpPoint PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION FillPolygon (BYVAL pBrush AS CGpBrush PTR, BYVAL pts AS GpPointF PTR, _
+   BYVAL count AS INT_, BYVAL nFillMode AS FillMode) AS GpStatus
+FUNCTION FillPolygon (BYVAL pBrush AS CGpBrush PTR, BYVAL pts AS GpPoint PTR, _
+   BYVAL count AS INT_, BYVAL nFillMode AS FillMode) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pBrush* | Pointer to a brush that is used to paint the interior of the polygon. |
+| *pts* | Pointer to an array of points that make up the vertices of the polygon. The first two points in the array specify the first side of the polygon. Each additional point specifies a new side, the vertices of which include the point and the previous point. If the last point and the first point do not coincide, they specify the last side of the polygon. |
+| *nCount* | Integer that specifies the number of points in the points array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example uses a brush to fill the interior of a polygon.
+' ========================================================================================
+SUB Example_FillPolygon (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a SolidBrush object
+   DIM blackBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+
+   ' // Create an array of GpPointF objects that define the polygon
+   DIM rgPoints(4) AS GpPointF
+   rgPoints(0).x = 100.0 : rgPoints(0).y = 200.0
+   rgPoints(1).x = 200.0 : rgPoints(1).y = 130.0
+   rgPoints(2).x = 150.0 : rgPoints(2).y = 200.0
+   rgPoints(3).x =  50.0 : rgPoints(3).y = 200.0
+   rgPoints(4).x =   0.0 : rgPoints(4).y = 130.0
+
+   ' // Fill the polygon
+   graphics.FillPolygon(@blackBrush, @rgPoints(0), 5)
+
+END SUB
+' ========================================================================================
+```
