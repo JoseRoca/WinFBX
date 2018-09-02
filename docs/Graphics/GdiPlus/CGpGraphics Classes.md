@@ -1740,7 +1740,7 @@ END SUB
 ```
 
 
-# <a name="FillEllipse"></a>FillEllipse (CGpGraphics)
+# <a name="FillPath"></a>FillPath (CGpGraphics)
 
 Uses a brush to fill the interior of a path. If a figure in the path is not closed, this method treats the nonclosed figure as if it were closed by a straight line that connects the figure's starting and ending points.
 
