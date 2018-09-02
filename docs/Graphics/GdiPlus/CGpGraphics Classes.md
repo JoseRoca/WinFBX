@@ -1523,3 +1523,28 @@ Containers can be nested; that is, you can call the **BeginContainer** method se
 Calls to the **Save** method place information blocks on the same stack as calls to the **BeginContainer** method. Just as an **EndContainer** call is paired with a **BeginContainer** call, a **Restore** call is paired with a **Save** call.
 
 Caution  When you call **EndContainer**, all information blocks placed on the stack (by **Save** or by **BeginContainer**) after the corresponding call to **BeginContainer** are removed from the stack. Likewise, when you call **Restore**, all information blocks placed on the stack (by **Save** or by **BeginContainer**) after the corresponding call to **Save** are removed from the stack.
+
+
+# <a name="EnumerateMetafileDestPoint"></a>EnumerateMetafileDestPoint (CGpGraphics)
+
+Calls an application-defined callback function for each record in a specified metafile. You can use this method to display a metafile by calling PlayRecord in the callback function.
+
+```
+FUNCTION EnumerateMetafileDestPoint (BYVAL pMetafile AS CGpMetafile, BYVAL destPoint AS GpPointF PTR, _
+   BYVAL pCallback AS EnumerateMetafileProc, BYVAL pCallbackData AS ANU PTR = NULL, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMetafile* | Pointer to a metafile to be enumerated. |
+| *destPoint* | Reference to a point that specifies the upper-left corner of the displayed metafile. |
+| *pCallback* | Optional. Pointer to an application-defined callback function. The prototype for the callback function is given in Gdiplustypes.inc. |
+| *pCallbackData* | Optional. Pointer to a block of data that is passed to the callback function. The default value is NULL. |
+| *pImageAttributes* | Optional. Pointer to an **ImageAttributes** object that specifies color adjustments for the displayed metafile. The default value is NULLL. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
