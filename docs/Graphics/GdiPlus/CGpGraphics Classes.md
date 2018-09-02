@@ -2381,7 +2381,7 @@ END SUB
 
 # <a name="GetCompositingQuality"></a>GetCompositingQuality (CGpGraphics)
 
-Gets the compositing quality currently set for this Graphics object.
+Gets the compositing quality currently set for this **Graphics** object.
 
 ```
 FUNCTION GetCompositingQuality () AS CompositingQuality
@@ -2391,11 +2391,9 @@ FUNCTION GetCompositingQuality () AS CompositingQuality
 
 This method returns an element of the **CompositingQuality** enumeration that indicates the compositing quality currently set for this **Graphics** object.
 
-#### Remarks
-
-The following example creates a Graphics object and sets its compositing quality to **CompositingQualityHighQuality**. The code creates a **SolidBrush** object based on a color with an alpha component of 128. The code passes the address of that brush to the FillRectangle method of the **Graphics** object. The call to the **GetCompositingQuality** method of the **Graphics** object demonstrates how to obtain the compositing quality (which is already known in this case). The code determines whether the compositing quality is **CompositingQualityHighQuality** and if so, changes it to **CompositingQualityHighSpeed**. Then the code calls the **FillRectangle** method a second time. The second rectangle is filled with the same brush that was used to fill the first rectangle, but the result is different because of the compositing quality setting.
-
 #### Example
+
+The following example creates a **Graphics** object and sets its compositing quality to **CompositingQualityHighQuality**. The code creates a **SolidBrush** object based on a color with an alpha component of 128. The code passes the address of that brush to the FillRectangle method of the **Graphics** object. The call to the **GetCompositingQuality** method of the **Graphics** object demonstrates how to obtain the compositing quality (which is already known in this case). The code determines whether the compositing quality is **CompositingQualityHighQuality** and if so, changes it to **CompositingQualityHighSpeed**. Then the code calls the **FillRectangle** method a second time. The second rectangle is filled with the same brush that was used to fill the first rectangle, but the result is different because of the compositing quality setting.
 
 ```
 ' ========================================================================================
