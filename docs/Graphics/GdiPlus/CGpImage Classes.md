@@ -1811,7 +1811,7 @@ FUNCTION SetColorKey (BYVAL colorLow AS ARGB, BYVAL colorHigh AS ARGB, _
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *colorLow* | ARGB color that specifies the low color-key value.  |
+| *colorLow* | ARGB color that specifies the low color-key value. |
 | *colorHigh* | ARGB color that specifies the high color-key value. |
 | *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
 
@@ -1830,3 +1830,35 @@ An **ImageAttributes** object maintains color and grayscale settings for five ad
 The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the pen category, then the default settings apply to the pen category.
 
 As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. For example, suppose you specify a collection of adjustment settings for the default category. If you set the color key for the pen category by passing **ColorAdjustTypePen** to the **SetColorKey** method, then none of the default adjustment settings will apply to pens.
+
+# <a name="SetColorMatrices"></a>SetColorMatrices (CGpImageAttributes)
+
+Sets the color-adjustment matrix and the grayscale-adjustment matrix for a specified category.
+
+```
+FUNCTION SetColorMatrices (BYVAL pColorMatrix AS ColorMatrix PTR, _
+   BYVAL pGrayMatrix AS ColorMatrix PTR, _
+   BYVAL nMode AS ColorAdjustType = ColorMatrixFlagsDefault, _
+   BYVAL nType AS LONG = ColorAdjustTypeDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pColorMatrix* | Pointer to a 5×5 color-adjustment matrix. |
+| *pGrayMatrix* | Pointer to a 5×5 grayscale-adjustment matrix. |
+| *nMode* | Optional. Element of the **ColorMatrixFlags** enumeration that specifies the type of image and color that will be affected by the color-adjustment and grayscale-adjustment matrices. The default value is **ColorMatrixFlagsDefault**. |
+| *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify adjustment matrices for the default category, different adjustment matrices for the bitmap category, and still different adjustment matrices for the pen category.
+
+The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the pen category, then the default settings apply to the pen category.
+
+As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. For example, suppose you specify a collection of adjustment settings for the default category. If you set the color-adjustment and grayscale-adjustment matrices for the pen category by passing **ColorAdjustTypePen** to the **SetColorMatrices** method, then none of the default adjustment settings will apply to pens.
