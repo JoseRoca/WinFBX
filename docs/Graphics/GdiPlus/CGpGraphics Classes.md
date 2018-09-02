@@ -511,3 +511,86 @@ A **CachedBitmap** object stores an image in a format that is optimized for a pa
 Cached bitmaps will not work with any transformations other than translation.
 
 When you construct a **CachedBitmap** object, you must pass the address of a **Graphics** object to the constructor. If the screen associated with that Graphics object has its bit depth changed after the cached bitmap is constructed, then the **DrawCachedBitmap** method will fail, and you should reconstruct the cached bitmap. Alternatively, you can hook the display change notification message and reconstruct the cached bitmap at that time.
+
+
+# <a name="DrawClosedCurve"></a>DrawClosedCurve (CGpGraphics)
+
+Draws a closed cardinal spline.
+
+```
+FUNCTION DrawClosedCurve (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPointF PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION DrawClosedCurve (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPoint PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION DrawClosedCurve (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPointF PTR, BYVAL count AS INT_, _
+   BYVAL tension AS SINGLE) AS GpStatus
+FUNCTION DrawClosedCurve (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPoint PTR, BYVAL count AS INT_, _
+   BYVAL tension AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a pen that is used to draw the closed cardinal spline. |
+| *pts* | Pointer to an array of **GpPointF** objects that specify the coordinates of the closed cardinal spline. The array of **GpPointF** objects must contain a minimum of three elements. |
+| *count* | Integer that specifies the number of elements in the points array. |
+| *tension* | Simple precision number that specifies how tightly the curve bends through the coordinates of the closed cardinal spline. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Each ending point is the starting point for the next cardinal spline. In a closed cardinal spline, the curve continues through the last point in the points array and connects with the first point in the array.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a closed cardinal spline.
+' ========================================================================================
+SUB Example_DrawClosedCurve (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Define a Pen object and an array of PointF objects.
+   DIM greenPen AS CGpPen = GDIP_ARGB(255, 0, 255, 0)
+   DIM point1 AS GpPointF : point1.x = 100.0 : point1.y = 100.0
+   DIM point2 AS GpPointF : point2.x = 200.0 : point2.y = 50.0
+   DIM point3 AS GpPointF : point3.x = 400.0 : point3.y = 10.0
+   DIM point4 AS GpPointF : point4.x = 500.0 : point4.y = 100.0
+   DIM point5 AS GpPointF : point5.x = 600.0 : point5.y = 200.0
+   DIM point6 AS GpPointF : point6.x = 700.0 : point6.y = 400.0
+   DIM point7 AS GpPointF : point7.x = 500.0 : point7.y = 500.0
+
+   DIM curvePoints(6) AS GpPointF
+   curvePoints(0) = point1
+   curvePoints(1) = point2
+   curvePoints(2) = point3
+   curvePoints(3) = point4
+   curvePoints(4) = point5
+   curvePoints(5) = point6
+   curvePoints(6) = point7
+
+   ' // Draw the closed curve.
+   graphics.DrawClosedCurve(@greenPen, @curvePoints(0), 7, 1.0)
+
+   ' // Draw the points in the curve.
+   DIM redBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   graphics.FillEllipse(@redBrush, 95, 95, 10, 10)
+   graphics.FillEllipse(@redBrush, 495, 95, 10, 10)
+   graphics.FillEllipse(@redBrush, 495, 495, 10, 10)
+   graphics.FillEllipse(@redBrush, 195, 45, 10, 10)
+   graphics.FillEllipse(@redBrush, 395, 5, 10, 10)
+   graphics.FillEllipse(@redBrush, 595, 195, 10, 10)
+   graphics.FillEllipse(@redBrush, 695, 395, 10, 10)
+
+END SUB
+' ========================================================================================
+```
