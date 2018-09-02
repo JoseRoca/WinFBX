@@ -78,7 +78,7 @@ The **CGpGraphics** class provides methods for drawing lines, curves, figures, i
 | [RotateTransform](#RotateTransform) | Updates the world transformation matrix of this **Graphics** object with the product of itself and a rotation matrix. |
 | [Save](#Save) | Saves the current state (transformations, clipping region, and quality settings) of this **Graphics** object. |
 | [ScaleTransform](#ScaleTransform) | Updates this **Graphics** object's world transformation matrix with the product of itself and a scaling matrix. |
-| [SetClip](#SetClip) | Updates the clipping region of this **Graphics** object to a region that is the combination of itself and the clipping region of another Graphics object. |
+| [SetClip](#SetClip) | Updates the clipping region of this **Graphics** object to a region that is the combination of itself and the clipping region of another **Graphics** object. |
 | [SetCompositingMode](#SetCompositingMode) | Sets the compositing mode of this **Graphics** object. |
 | [SetCompositingQuality](#SetCompositingQuality) | Sets the compositing quality of this **Graphics** object. |
 | [SetInterpolationMode](#SetInterpolationMode) | Sets the interpolation mode of this **Graphics** object. |
