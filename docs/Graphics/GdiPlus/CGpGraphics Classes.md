@@ -184,6 +184,7 @@ CONSTRUCTOR CGpGraphics (BYVAL pImage AS CGpImage PTR)
 Creates a **Graphics** object that is associated with an **Image** object. This constructor fails if the **Image** object is based on a metafile that was opened for reading. The Image(file) and Metafile(file) constructors open a metafile for reading. To open a metafile for recording, use a **Metafile** constructor that receives a device context handle.
 
 This constructor also fails if the image uses one of the following pixel formats:
+
 PixelFormatUndefined<br>
 PixelFormatDontCare<br>
 PixelFormat1bppIndexed<br>
