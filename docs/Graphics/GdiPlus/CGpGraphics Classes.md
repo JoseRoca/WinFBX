@@ -2179,7 +2179,7 @@ FUNCTION FromImage (BYVAL pImage AS CGpImage PTR) AS GpStatus
 | ---------- | ----------- |
 | *pImage* | Pointer to an Image object that will be associated with the new **Graphics** object. |
 
-This constructor fails if the **Image** object is based on a metafile that was opened for reading. The Image(file) and Metafile(file) constructors open a metafile for reading. To open a metafile for recording, use a **Metafile** constructor that receives a device context handle.
+This method fails if the **Image** object is based on a metafile that was opened for reading. The Image(file) and Metafile(file) constructors open a metafile for reading. To open a metafile for recording, use a **Metafile** constructor that receives a device context handle.
 
 This method also fails if the image uses one of the following pixel formats:
 
@@ -2196,3 +2196,53 @@ PixelFormat16bppARGB1555
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="GetClip"></a>GetClip (CGpGraphics)
+
+Gets the clipping region of this **Graphics** object.
+
+```
+FUNCTION GetClip (BYVAL pRegion AS CGpRegion PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pRegion* | Pointer to a **Region** object that receives the clipping region. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets a clipping region. Next, the code gets the clipping region,
+' stores it in a Region object, and then uses the stored object to fill the region.
+' ========================================================================================
+SUB Example_GetClip (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Set a clipping region.
+   graphics.SetClip(0, 0, 200, 100)
+
+   ' // Get the clipping region.
+   DIM clipRegion AS CGpRegion
+   graphics.GetClip(@clipRegion)
+
+   ' // Fill the clipping region of the graphics object.
+   graphics.FillRegion(@CGpSolidBrush(GDIP_ARGB(255, 0, 0, 255)), @clipRegion)
+
+END SUB
+' ========================================================================================
+```
