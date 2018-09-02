@@ -1655,6 +1655,12 @@ FUNCTION FillClosedCurve (BYVAL pBrush AS CGpBrush PTR, BYVAL pts AS GpPoint PTR
 | *fillMode* | Element of the **FillMode** enumeration that specifies how to fill a closed area that is created when the curve passes over itself. |
 | *tension* | Optional. Nonnegative real number that specifies how tightly the spline bends as it passes through the points. A value of 0 specifies that the spline is a sequence of straight lines. As the value increases, the curve becomes fuller. The default value is 0.5!. |
 
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
 #### Example
 
 ```
@@ -1713,6 +1719,12 @@ FUNCTION FillEllipse (BYVAL pBrush AS CGpBrush PTR, BYVAL rcAS GpRect) AS GpStat
 | *nWidth* | The width of the rectangle that specifies the boundaries of the ellipse. |
 | *nHeight* | The height of the rectangle that specifies the boundaries of the ellipse. |
 
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
 #### Example
 
 ```
@@ -1753,6 +1765,12 @@ FUNCTION FillPath (BYVAL pBrush AS CGpBrush PTR, BYVAL pPath AS CGpGraphicsPath 
 | *pBrush* | Pointer to a brush that is used to paint the interior of the path. |
 | *pPath* | Pointer to a **GraphicsPath** object that specifies the path. |
 
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
 #### Example
 
 ```
@@ -1782,4 +1800,66 @@ SUB Example_FillPath (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 
+```
+
+
+# <a name="FillPie"></a>FillPie (CGpGraphics)
+
+Uses a brush to fill the interior of a pie.
+
+```
+FUNCTION FillPie (BYVAL pBrush AS CGpBrush PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
+   BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE, BYVAL startAngle AS SINGLE, _
+   BYVAL sweepAngle AS SINGLE) AS GpStatus
+FUNCTION FillPie (BYVAL pBrush AS CGpBrush PTR, BYVAL x AS INT_, BYVAL y AS INT_, _
+   BYVAL nWidth AS INT_, BYVAL nHeight AS INT_, BYVAL startAngle AS SINGLE, _
+   BYVAL sweepAngle AS SINGLE) AS GpStatus
+FUNCTION FillPie (BYVAL pBrush AS CGpBrush PTR, BYVAL rc AS GpRectF PTR) AS GpStatus
+FUNCTION FillPie (BYVAL pBrush AS CGpBrush PTR, BYVAL rc AS GpRect PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pBrush* | Pointer to a brush that is used to paint the interior of the pie. |
+| *x* | The x-coordinate of the upper-left corner of the rectangle that bounds the ellipse. A curved portion of the ellipse is the arc of the pie. |
+| *y* | The y-coordinate of the upper-left corner of the rectangle that bounds the ellipse. |
+| *nWidth* | The width of the rectangle that bounds the ellipse. |
+| *nHeight* | The height of the rectangle that bounds the ellipse. |
+| *startAngle* | The angle, in degrees, between the x-axis and the starting point of the pie's arc. |
+| *swepAngle* | The angle, in degrees, between the starting and ending points of the pie's arc. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example defines a pie and then fills it.
+' ========================================================================================
+SUB Example_FillPie (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a GraphicsPath and add an ellipse
+   DIM ellipsePath AS CGpGraphicsPath
+   ellipsePath.AddEllipse(0, 0, 200, 100)
+
+   ' // Create a SolidBrush object
+   DIM blackBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+
+   ' // Fill the pie.
+   graphics.FillPie(@blackBrush, 0, 0, 200, 100, 0, 45)
+
+END SUB
+' ========================================================================================
 ```
