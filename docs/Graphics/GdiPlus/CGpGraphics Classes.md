@@ -1196,3 +1196,61 @@ SUB Example_DrawPath (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="DrawPie"></a>DrawPie (CGpGraphics)
+
+Draws a pie.
+
+```
+FUNCTION DrawPie (BYVAL pPen AS CGpPen PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
+   BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE, BYVAL startAngle AS SINGLE, _
+   BYVAL sweepAngle AS SINGLE) AS GpStatus
+FUNCTION DrawPie (BYVAL pPen AS CGpPen PTR, BYVAL x AS INT_, BYVAL y AS INT_, _
+   BYVAL nWidth AS INT_, BYVAL nHeight AS INT_, BYVAL startAngle AS INT_, _
+   BYVAL sweepAngle AS INT_) AS GpStatus
+FUNCTION DrawPie (BYVAL pPen AS CGpPen PTR, BYVAL rc AS GpRectF, _
+   BYVAL startAngle AS SINGLE, BYVAL sweepAngle AS SINGLE) AS GpStatus
+FUNCTION DrawPie (BYVAL pPen AS CGpPen PTR, BYVAL rc AS GpRect, _
+   BYVAL startAngle AS INT_, BYVAL sweepAngle AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a pen that is used to draw the pie. |
+| *x* | The x-coordinate of the upper-left corner of the rectangle that bounds the ellipse in which to draw the pie. |
+| *y* | The y-coordinate of the upper-left corner of the rectangle that bounds the ellipse in which to draw the pie. |
+| *nWidth* | The width of the rectangle that bounds the ellipse in which to draw the pie. |
+| *nHeight* | The height of the rectangle that bounds the ellipse in which to draw the pie. |
+| *startAngle* | The angle, in degrees, between the x-axis and the starting point of the arc that defines the pie. A positive value specifies clockwise rotation. |
+| *sweepAngle* | The angle, in degrees, between the starting and ending points of the arc that defines the pie. A positive value specifies clockwise rotation. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a pie.
+' ========================================================================================
+SUB Example_DrawPie (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Draw the pie
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 3)
+   graphics.DrawPie(@blackPen, 0.0, 0.0, 200.0, 100.0, 0.0, 45.0)
+
+END SUB
+' ========================================================================================
+```
