@@ -843,9 +843,9 @@ FUNCTION DrawImage (BYVAL pImage AS CGpImage PTR, BYVAL destPoints AS GpPoint PT
 | *srcUnit* | Element of the Unit enumeration that specifies the unit of measure for the image. The default value is **UnitPixel**. |
 | *destPoints* | Pointer to an array of **GpPointF** objects that specify the area, in a parallelogram, in which to draw the image. |
 | *nCount* | Integer that specifies the number of elements in the *destPoints* array. |
-| *pImageAttributes* | Pointer to an ImageAttributes object that specifies the color and size attributes of the image to be drawn. The default value is NULL. |
+| *pImageAttributes* | Pointer to an **ImageAttributes** object that specifies the color and size attributes of the image to be drawn. The default value is NULL. |
 | *pCallback* | Callback method used to cancel the drawing in progress. The default value is NULL. |
-| *pCallbackData* | Pointer to additional data used by the method specified by the pCallback parameter. The default value is NULL. |
+| *pCallbackData* | Pointer to additional data used by the method specified by the *pCallback* parameter. The default value is NULL. |
 
 #### Return value
 
