@@ -263,3 +263,21 @@ Calls to the **Save** method place information blocks on the same stack as calls
 
 For more information about graphics containers, see [Nested Graphics Containers](https://docs.microsoft.com/en-us/windows/desktop/gdiplus/-gdiplus-nested-graphics-containers-use)
 
+
+# <a name="Clear"></a>Clear (CGpGraphics)
+
+Clears a **Graphics** object to a specified color.
+
+```
+FUNCTION Clear (BYVAL colour AS ARGB) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Colour* | The color to paint the background.  |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
