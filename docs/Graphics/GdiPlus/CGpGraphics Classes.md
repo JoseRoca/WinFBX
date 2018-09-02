@@ -224,3 +224,42 @@ FUNCTION AddMetafileComment (BYVAL pdata AS BYTE PTR, BYVAL sizeData AS UINT) AS
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="BeginContainer"></a>BeginContainer (CGpGraphics)
+
+Begins a new graphics container.
+
+```
+FUNCTION BeginContainer () AS GraphicsContainer
+FUNCTION BeginContainer (BYVAL destrect AS GpRectF PTR, BYVAL srcrect AS GpRectF PTR, _
+   BYVAL nUnit AS GpUnit) AS GraphicsContainer
+FUNCTION BeginContainer (BYVAL destrect AS GpRect PTR, BYVAL srcrect AS GpRect PTR, _
+   BYVAL nUnit AS GpUnit) AS GraphicsContainer
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *destrect* | Reference to a rectangle that, together with srcrect, specifies a transformation for the container. |
+| *srcrect* | Reference to a rectangle that, together with dstrect, specifies a transformation for the container. |
+
+#### Return value
+
+This method returns a value that identifies the container.
+
+#### Remarks
+
+Use this method to create nested graphics containers. Graphics containers are used to retain graphics state, such as transformations, clipping regions, and various rendering properties.
+
+The **BeginContainer** method returns a value of type **GraphicsContainer**. When you have finished using a container, pass that value to the **EndContainer** method. The **GraphicsContainer** data type is defined in Gdiplusenums.inc.
+
+When you call the **BeginContainer** method of a **Graphics** object, an information block that holds the state of the **Graphics** object is put on a stack. The **BeginContainer** method returns a value that identifies that information block. When you pass the identifying value to the EndContainer method, the information block is removed from the stack and is used to restore the **Graphics** object to the state it was in at the time of the **BeginContainer** call.
+
+Containers can be nested; that is, you can call the **BeginContainer** method several times before you call the **EndContainer** method. Each time you call the **BeginContainer** method, an information block is put on the stack, and you receive an identifier for the information block. When you pass one of those identifiers to the **EndContainer** method, the **Graphics** object is returned to the state it was in at the time of the **BeginContainer** call that returned that particular identifier. The information block placed on the stack by that **BeginContainer** call is removed from the stack, and all information blocks placed on that stack after that **BeginContainer** call are also removed.
+
+Calls to the **Save** method place information blocks on the same stack as calls to the **BeginContainer** method. Just as an **EndContainer** call is paired with a **BeginContainer** call, a **Restore** call is paired with a **Save** call.
+
+**Caution**: When you call **EndContainer**, all information blocks placed on the stack (by **Save** or by **BeginContainer**) after the corresponding call to **BeginContainer** are removed from the stack. Likewise, when you call **Restore**, all information blocks placed on the stack (by Save or by **BeginContainer**) after the corresponding call to Save are removed from the stack.
+
+For more information about graphics containers, see [Nested Graphics Containers](https://docs.microsoft.com/en-us/windows/desktop/gdiplus/-gdiplus-nested-graphics-containers-use)
+
