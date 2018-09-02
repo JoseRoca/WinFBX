@@ -1968,3 +1968,41 @@ An **ImageAttributes** object maintains color and grayscale settings for five ad
 The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the bitmap category, then the default settings apply to the bitmap category.
 
 As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. For example, suppose you specify a collection of adjustment settings for the default category. If you set the output channel for the bitmap category by passing **ColorAdjustTypeBitmap** to the **SetOutputChannel** method, then none of the default adjustment settings will apply to bitmaps.
+
+# <a name="SetOutputChannelColorProfile"></a>SetOutputChannelColorProfile (CGpImageAttributes)
+
+Sets the output channel color-profile file for a specified category.
+
+```
+FUNCTION SetOutputChannelColorProfile ( BYVAL pwszColorProfileFilename AS WSTRING PTR, _
+   BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pwszColorProfileFilename* | Path name of a color-profile file. If the color-profile file is in the %SystemRoot%\System32\Spool\Drivers\Color directory, then this parameter can be the file name. Otherwise, this parameter must be the fully-qualified path name. |
+| *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+You can use the **SetOutputChannel** and **SetOutputChannelColorProfile** methods to convert an image to a cyan-magenta-yellow-black (CMYK) color space and examine the intensities of one of the CMYK color channels. For example, suppose you write code that performs the following steps:
+
+* Create an **Image** object.
+* Create an **ImageAttributes** object.
+* Pass **ColorChannelFlagsC** to the **SetOutputChannel** method of the **ImageAttributes** object.
+* Pass the path name of a color profile file to the **SetOutputChannelColorProfile** method of the **ImageAttributes** object.
+* Pass the addresses of the Image and **ImageAttributes** objects to the **DrawImage** method.
+
+Windows GDI+ will use the color-profile file to calculate the cyan component of each pixel in the image, and each pixel in the rendered image will be a shade of gray that indicates the intensity of its cyan channel.
+
+An ImageAttributes object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify an output channel color-profile file for the default category and a different output channel color-profile file for the bitmap category.
+
+The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the bitmap category, then the default settings apply to the bitmap category.
+
+As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. For example, suppose you specify a collection of adjustment settings for the default category. If you set the output channel color-profile file for the bitmap category by passing **ColorAdjustTypeBitmap** to the **SetOutputChannelColorProfile** method, then none of the default adjustment settings will apply to bitmaps.
