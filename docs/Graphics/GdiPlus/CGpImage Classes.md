@@ -7,7 +7,7 @@ The **CGpImage** class provides methods for loading and saving raster images (bi
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorsImage) | Create an **Image** object based on a file or stream. |
+| [Constructors](#ConstructorsImage) | Creates an **Image** object based on a file or stream. |
 | [Clone](#Clone) | Copies the contents of the existing **Image** object into a new Image object. |
 | [FindFirstItem](#FindFirstItem) | Retrieves the description and the data size of the first metadata item in this Image object. |
 | [FindNextItem](#FindNextItem) | Retrieves the description and the data size of the next metadata item in this Image object. |
@@ -53,12 +53,12 @@ Extends the **CGpImage** class. The **Bitmap** object expands on the capabilitie
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorsBitmap) | Create a Bitmap object based on an icon or resource file. |
+| [Constructors](#ConstructorsBitmap) | Creates a **Bitmap** object based on an icon or resource file. |
 | [Clone](#Clone) | Creates a new Bitmap object by copying a portion of this bitmap. |
 | [ConvertFormat](#ConvertFormat) | Converts a bitmap to a specified pixel format. |
 | [GetHBITMAP](#GetHBITMAP) | Creates a Windows Graphics Device Interface (GDI) bitmap from this Bitmap object. |
-| [GetHICON](#GetHICON) | Creates an icon from this Bitmap object. |
-| [GetHistogram](#GetHistogram) | Returns one or more histograms for specified color channels of this Bitmap object. |
+| [GetHICON](#GetHICON) | Creates an icon from this **Bitmap** object. |
+| [GetHistogram](#GetHistogram) | Returns one or more histograms for specified color channels of this **Bitmap** object. |
 | [GetHistogramSize](#GetHistogramSize) | Returns the number of elements (in an array of DWORDs) that you must allocate before you call the GetHistogram method of a Bitmap object. |
 | [GetPixel](#GetPixel) | Gets the color of a specified pixel in this bitmap. |
 | [InitializePalette](#InitializePalette) | Initializes a standard, optimal, or custom color palette. |
@@ -858,3 +858,23 @@ FUNCTION SetPropertyItem (BYVAL pitem AS PropertyItem PTR) AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="ConstructorsBitmap"></a>Constructors (CGpBitmap)
+
+Creates a Bitmap object based on an icon.
+
+```
+CONSTRUCTOR CGpBitmap (BYVAL hicon AS HICON)
+```
+
+Creates a **Bitmap** object based on an application or DLL instance handle and the name of a bitmap resource.
+
+```
+CONSTRUCTOR CGpBitmap (BYVAL hInstance AS HINSTANCE, BYVAL pwszBitmapName AS WSTRING PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hIcon* | Handle to a GDI icon. |
+| *hInstance* | Handle to an instance of a module whose executable file contains a bitmap resource. |
+| *pwszBitmapName* | Pointer to a null-terminated string that specifies the path name of the bitmap resource to be loaded. Alternatively, this parameter can consist of the resource identifier in the low-order word and zero in the high-order word. You can use the MAKEINTRESOURCE macro to create this value. |
