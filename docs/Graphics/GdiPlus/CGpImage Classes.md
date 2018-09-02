@@ -8,7 +8,7 @@ The **CGpImage** class provides methods for loading and saving raster images (bi
 | Name       | Description |
 | ---------- | ----------- |
 | [Constructors](#ConstructorsImage) | Creates an **Image** object based on a file or stream. |
-| [Clone](#Clone) | Copies the contents of the existing **Image** object into a new Image object. |
+| [Clone](#CloneImage) | Copies the contents of the existing **Image** object into a new Image object. |
 | [FindFirstItem](#FindFirstItem) | Retrieves the description and the data size of the first metadata item in this Image object. |
 | [FindNextItem](#FindNextItem) | Retrieves the description and the data size of the next metadata item in this Image object. |
 | [GetAllPropertyItems](#GetAllPropertyItems) | Gets all the property items (metadata) stored in this Image object. |
@@ -54,7 +54,7 @@ Extends the **CGpImage** class. The **Bitmap** object expands on the capabilitie
 | Name       | Description |
 | ---------- | ----------- |
 | [Constructors](#ConstructorsBitmap) | Creates a **Bitmap** object based on an icon or resource file. |
-| [Clone](#Clone) | Creates a new Bitmap object by copying a portion of this bitmap. |
+| [Clone](#CloneBitmap) | Creates a new Bitmap object by copying a portion of this bitmap. |
 | [ConvertFormat](#ConvertFormat) | Converts a bitmap to a specified pixel format. |
 | [GetHBITMAP](#GetHBITMAP) | Creates a Windows Graphics Device Interface (GDI) bitmap from this Bitmap object. |
 | [GetHICON](#GetHICON) | Creates an icon from this **Bitmap** object. |
@@ -115,7 +115,7 @@ CONSTRUCTOR CGpImage (BYVAL pStream AS IStream PTR, BYVAL useicm AS BOOLEAN = FA
 | *pStream* | Pointer to an **IStream** interface. |
 | *useicm* | Optional. Boolean value that specifies whether the new Image object applies color correction according to color management information that is embedded in the image file. Embedded information can include International Color Consortium (ICC) profiles, gamma values, and chromaticity information. TRUE specifies that color correction is enabled, and FALSE specifies that color correction is not enabled. The default value is FALSE. |
 
-# <a name="Clone"></a>Clone (CGpImage)
+# <a name="CloneImage"></a>Clone (CGpImage)
 
 Creates an **Image** object based on a file.
 
@@ -879,7 +879,7 @@ CONSTRUCTOR CGpBitmap (BYVAL hInstance AS HINSTANCE, BYVAL pwszBitmapName AS WST
 | *hInstance* | Handle to an instance of a module whose executable file contains a bitmap resource. |
 | *pwszBitmapName* | Pointer to a null-terminated string that specifies the path name of the bitmap resource to be loaded. Alternatively, this parameter can consist of the resource identifier in the low-order word and zero in the high-order word. You can use the MAKEINTRESOURCE macro to create this value. |
 
-# <a name="Clone"></a>Clone (CGpBitmap)
+# <a name="CloneBitmap"></a>Clone (CGpBitmap)
 
 Creates a new **Bitmap** object by copying a portion of this bitmap.
 
