@@ -1649,7 +1649,7 @@ FUNCTION FillClosedCurve (BYVAL pBrush AS CGpBrush PTR, BYVAL pts AS GpPoint PTR
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pBrush* | Pointer to a Brush object that is used to paint the interior of the spline. |
+| *pBrush* | Pointer to a **Brush** object that is used to paint the interior of the spline. |
 | *pts* | Pointer to an array of points that this method uses to create a closed cardinal spline. Each point in the array is a point on the spline. |
 | *count* | Integer that specifies the number of points in the points array. |
 | *fillMode* | Element of the **FillMode** enumeration that specifies how to fill a closed area that is created when the curve passes over itself. |
@@ -1686,6 +1686,54 @@ SUB Example_FillClosedCurve (BYVAL hdc AS HDC)
 
    ' //Fill the curve.
    graphics.FillClosedCurve(@blackBrush, @pts(0), 4)
+
+END SUB
+' ========================================================================================
+```
+
+
+# <a name="FillEllipse"></a>FillEllipse (CGpGraphics)
+
+Uses a brush to fill the interior of an ellipse that is specified by coordinates and dimensions.
+
+```
+FUNCTION FillEllipse (BYVAL pBrush AS CGpBrush PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
+   BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE) AS GpStatus
+FUNCTION FillEllipse (BYVAL pBrush AS CGpBrush PTR, BYVAL x AS INT_, BYVAL y AS INT_, _
+   BYVAL nWidth AS INT_, BYVAL nHeight AS INT_) AS GpStatus
+FUNCTION FillEllipse (BYVAL pBrush AS CGpBrush PTR, BYVAL rcAS GpRectF) AS GpStatus
+FUNCTION FillEllipse (BYVAL pBrush AS CGpBrush PTR, BYVAL rcAS GpRect) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pBrush* | Pointer to a **Brush** object that is used to paint the interior of the ellipse. |
+| *x* | The x-coordinate of the upper-left corner of the rectangle that specifies the boundaries of the ellipse. |
+| *y* | The y-coordinate of the upper-left corner of the rectangle that specifies the boundaries of the ellipse. |
+| *nWidth* | The width of the rectangle that specifies the boundaries of the ellipse. |
+| *nHeight* | The height of the rectangle that specifies the boundaries of the ellipse. |
+
+#### Example
+
+```
+' ========================================================================================
+' The following example fills an ellipse that is defined by coordinates and dimensions.
+' ========================================================================================
+SUB Example_FillEllipse (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a SolidBrush object
+   DIM blackBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+
+   ' // Fill the ellipse.
+   graphics.FillEllipse(@blackBrush, 0, 0, 200.1, 100.4)
 
 END SUB
 ' ========================================================================================
