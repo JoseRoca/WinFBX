@@ -2246,3 +2246,73 @@ SUB Example_GetClip (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="GetClipBounds"></a>GetClipBounds (CGpGraphics)
+
+Gets a rectangle that encloses the clipping region of this **Graphics** object.
+
+```
+FUNCTION GetClipBounds (BYVAL rc AS GpRectF PTR) AS GpStatus
+FUNCTION GetClipBounds (BYVAL rc AS GpRect PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *rc* | Pointer to a **GpRectF** or **GpRect** object that receives the rectangle that encloses the clipping region. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The world transformation is applied to the clipping region and then the enclosing rectangle is calculated.
+
+If you do not explicitly set the clipping region of a **Graphics** object, its clipping region is infinite. When the clipping region is infinite, **GetClipBounds** returns a large rectangle. The **X** and **Y** data members of that rectangle are large negative numbers, and the **Width** and **Height** data members are large positive numbers.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets a clipping region, gets the rectangle that encloses the
+' clipping region, and then fills the rectangle.
+' ========================================================================================
+SUB Example_GetClipBounds (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a region using a rectangle
+   DIM myRegion AS CGpRegion = CGpRegion(25, 25, 100, 50)
+
+   ' // Modify the region by using a rectangle
+   DIM rcf AS GpRectF : rcf.x = 40 : rcf.y = 50 : rcf.Width = 100 : rcf.Height = 50
+   myRegion.Union_(@rcf)
+
+   ' // Set the clipping region of the graphics object
+   graphics.SetClip(@myRegion)
+
+   ' // Now, get the clipping region, and fill it
+   DIM gRegion AS CGpRegion
+   graphics.GetClip(@gRegion)
+   DIM blueBrush AS CGpSolidBrush = GDIP_ARGB(100, 0, 0, 255)
+   graphics.FillRegion(@blueBrush, @gRegion)
+
+   ' // Get a rectangle that encloses the clipping region, and draw the enclosing rectangle
+   DIM enclosingRect AS GpRectF
+   graphics.GetClipBounds(@enclosingRect)
+   graphics.ResetClip
+   DIM greenPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), 1.5)
+   graphics.DrawRectangle(@greenPen, @enclosingRect)
+
+END SUB
+' ========================================================================================
+```
