@@ -1632,3 +1632,61 @@ SUB Example_ExcludeClip (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="FillClosedCurve"></a>FillClosedCurve (CGpGraphics)
+
+Creates a closed cardinal spline from an array of points and uses a brush to fill the interior of the spline.
+
+```
+FUNCTION FillClosedCurve (BYVAL pBrush AS CGpBrush PTR, BYVAL pts AS GpPointF PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION FillClosedCurve (BYVAL pBrush AS CGpBrush PTR, BYVAL pts AS GpPoint PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION FillClosedCurve (BYVAL pBrush AS CGpBrush PTR, BYVAL pts AS GpPointF PTR, BYVAL count AS INT_, _
+   BYVAL nFillMode AS FillMode, BYVAL tension AS SINGLE = 0.5) AS GpStatus
+FUNCTION FillClosedCurve (BYVAL pBrush AS CGpBrush PTR, BYVAL pts AS GpPoint PTR, BYVAL count AS INT_, _
+   BYVAL nFillMode AS FillMode, BYVAL tension AS SINGLE = 0.5) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pBrush* | Pointer to a Brush object that is used to paint the interior of the spline. |
+| *pts* | Pointer to an array of points that this method uses to create a closed cardinal spline. Each point in the array is a point on the spline. |
+| *count* | Integer that specifies the number of points in the points array. |
+| *fillMode* | Element of the **FillMode** enumeration that specifies how to fill a closed area that is created when the curve passes over itself. |
+| *tension* | Optional. Nonnegative real number that specifies how tightly the spline bends as it passes through the points. A value of 0 specifies that the spline is a sequence of straight lines. As the value increases, the curve becomes fuller. The default value is 0.5!. |
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a closed cardinal spline.
+' ========================================================================================
+SUB Example_FillClosedCurve (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Define a Brush object and an array of Point objects.
+   DIM blackBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+   DIM point1 AS GpPoint : point1.x = 100 : point1.y = 100
+   DIM point2 AS GpPoint : point2.x = 200 : point2.y = 50
+   DIM point3 AS GpPoint : point3.x = 250 : point3.y = 200
+   DIM point4 AS GpPoint : point4.x =  50 : point4.y = 150
+
+   DIM pts(3) AS GpPoint
+   pts(0) = point1
+   pts(1) = point2
+   pts(2) = point3
+   pts(3) = point4
+
+   ' //Fill the curve.
+   graphics.FillClosedCurve(@blackBrush, @pts(0), 4)
+
+END SUB
+' ========================================================================================
+```
