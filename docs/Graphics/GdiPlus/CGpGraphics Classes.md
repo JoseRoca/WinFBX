@@ -2055,7 +2055,6 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 Because a region describes a set of pixels, a pixel is considered either fully inside, or fully outside the region. Consequently, FillRegion does not antialias the edges of the region.
 
-
 #### Example
 
 ```
@@ -2084,3 +2083,16 @@ SUB Example_FillRegion (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="Flush"></a>Flush (CGpGraphics)
+
+Flushes all pending graphics operations.
+
+```
+SUB Flush (BYVAL intention AS FlushIntention = FlushIntentionFlush)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *intention* | Element of the **FlushIntention** enumeration that specifies whether pending operations are flushed immediately (not executed) or executed as soon as possible. |
