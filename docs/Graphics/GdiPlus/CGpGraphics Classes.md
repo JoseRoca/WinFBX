@@ -2328,7 +2328,7 @@ FUNCTION GetCompositingMode () AS CompositingMode
 
 #### Return value
 
-This method returns an element of the **CompositingMode** enumeration that indicates the compositing mode currently set for this Graphics object.
+This method returns an element of the **CompositingMode** enumeration that indicates the compositing mode currently set for this **Graphics** object.
 
 #### Remarks
 
