@@ -851,7 +851,7 @@ FUNCTION SetPropertyItem (BYVAL pitem AS PropertyItem PTR) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pitem* | Pointer to a PropertyItem object that specifies the property item to be set. |
+| *pitem* | Pointer to a **PropertyItem** object that specifies the property item to be set. |
 
 #### Return value
 
