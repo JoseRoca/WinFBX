@@ -594,3 +594,85 @@ SUB Example_DrawClosedCurve (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="DrawCurve"></a>DrawCurve (CGpGraphics)
+
+Draws a cardinal spline.
+
+```
+FUNCTION DrawCurve (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPointF PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION DrawCurve (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPoint PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION DrawCurve (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPointF PTR, _
+   BYVAL count AS INT_, BYVAL tension AS SINGLE) AS GpStatus
+FUNCTION DrawCurve (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPoint PTR, _
+   BYVAL count AS INT_, BYVAL tension AS SINGLE) AS GpStatus
+FUNCTION DrawCurve (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPointF PTR, _
+   BYVAL count AS INT_, BYVAL tension AS SINGLE) AS GpStatus
+FUNCTION DrawCurve (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPointF PTR, BYVAL count AS INT_, _
+   BYVAL offset AS INT_, BYVAL numberOfSegments AS INT_, BYVAL tension AS SINGLE) AS GpStatus
+FUNCTION DrawCurve (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPoint PTR, BYVAL count AS INT_, _
+   BYVAL offset AS INT_, BYVAL numberOfSegments AS INT_, BYVAL tension AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a pen that is used to draw the cardinal spline. |
+| *pts* | Pointer to an array of GpPointF objects that specify the coordinates that the cardinal spline passes through. |
+| *count* | Integer that specifies the number of elements in the points array. |
+| *offset* | Integer that specifies the element in the points array that specifies the point at which the cardinal spline begins. |
+| *numberOfSegments* | Integer that specifies the number of segments in the cardinal spline. |
+| *tension* | Simple precision number that specifies how tightly the curve bends through the coordinates of the cardinal spline. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A segment is defined as a curve that connects two consecutive points in the cardinal spline. The ending point of each segment is the starting point for the next.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a cardinal spline.
+' ========================================================================================
+SUB Example_DrawCurve (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM greenPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), 3)
+
+   DIM point1 AS GpPointF : point1.x = 100.0 : point1.y = 100.0
+   DIM point2 AS GpPointF : point2.x = 200.0 : point2.y = 50.0
+   DIM point3 AS GpPointF : point3.x = 400.0 : point3.y = 10.0
+   DIM point4 AS GpPointF : point4.x = 500.0 : point4.y = 100.0
+
+   DIM curvePoints(3) AS GpPointF
+   curvePoints(0) = point1
+   curvePoints(1) = point2
+   curvePoints(2) = point3
+   curvePoints(3) = point4
+
+   ' // Draw the curve.
+   graphics.DrawCurve(@greenPen, @curvePoints(0), 4)
+
+   ' // Draw the points in the curve.
+   DIM redBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   graphics.FillEllipse(@redBrush, 95, 95, 10, 10)
+   graphics.FillEllipse(@redBrush, 195, 45, 10, 10)
+   graphics.FillEllipse(@redBrush, 395, 5, 10, 10)
+   graphics.FillEllipse(@redBrush, 495, 95, 10, 10)
+
+END SUB
+' ========================================================================================
+```
