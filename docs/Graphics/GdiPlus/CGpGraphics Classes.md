@@ -1506,7 +1506,7 @@ FUNCTION EndContainer (BYVAL state AS GraphicsContainer) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *state* | Value (previously returned by BeginContainer) that identifies the container to be closed. |
+| *state* | Value (previously returned by **BeginContainer**) that identifies the container to be closed. |
 
 #### Return value
 
@@ -1516,7 +1516,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 #### Remarks
 
-When you call the **BeginContainer** method of a **Graphics** object, an information block that holds the state of the **Graphics** object is put on a stack. The **BeginContainer** method returns a value that identifies that information block. When you pass the identifying value to the **EndContainer** method, the information block is removed from the stack and is used to restore the Graphics object to the state it was in at the time of the **BeginContainer** call.
+When you call the **BeginContainer** method of a **Graphics** object, an information block that holds the state of the **Graphics** object is put on a stack. The **BeginContainer** method returns a value that identifies that information block. When you pass the identifying value to the **EndContainer** method, the information block is removed from the stack and is used to restore the **Graphics** object to the state it was in at the time of the **BeginContainer** call.
 
 Containers can be nested; that is, you can call the **BeginContainer** method several times before you call the **EndContainer** method. Each time you call the **BeginContainer** method, an information block is put on the stack, and you receive an identifier for the information block. When you pass one of those identifiers to the **EndContainer** method, the **Graphics** object is returned to the state it was in at the time of the **BeginContainer** call that returned that particular identifier. The information block placed on the stack by that BeginContainer call is removed from the stack, and all information blocks placed on that stack after that **BeginContainer** call are also removed.
 
