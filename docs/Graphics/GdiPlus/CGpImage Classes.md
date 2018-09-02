@@ -861,7 +861,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 # <a name="ConstructorsBitmap"></a>Constructors (CGpBitmap)
 
-Creates a Bitmap object based on an icon.
+Creates a **Bitmap** object based on an icon.
 
 ```
 CONSTRUCTOR CGpBitmap (BYVAL hicon AS HICON)
@@ -878,3 +878,62 @@ CONSTRUCTOR CGpBitmap (BYVAL hInstance AS HINSTANCE, BYVAL pwszBitmapName AS WST
 | *hIcon* | Handle to a GDI icon. |
 | *hInstance* | Handle to an instance of a module whose executable file contains a bitmap resource. |
 | *pwszBitmapName* | Pointer to a null-terminated string that specifies the path name of the bitmap resource to be loaded. Alternatively, this parameter can consist of the resource identifier in the low-order word and zero in the high-order word. You can use the MAKEINTRESOURCE macro to create this value. |
+
+# <a name="Clone"></a>Clone (CGpBitmap)
+
+Creates a new **Bitmap** object by copying a portion of this bitmap.
+
+```
+FUNCTION Clone (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL nWidth AS SINGLE, _
+   BYVAL nHeight AS SINGLE, BYVAL pxFormat AS PixelFormat, BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
+FUNCTION Clone (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, BYVAL nHeight AS INT_, _
+   BYVAL pxFormat AS PixelFormat, BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
+FUNCTION Clone (BYVAL rc AS GpRectF PTR, BYVAL pxFormat AS PixelFormat, _
+   BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
+FUNCTION Clone (BYVAL rc AS GpRect PTR, BYVAL pxFormat AS PixelFormat, _
+   BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x* | The x-coordinate of the upper-left corner of the rectangle that specifies the portion of this bitmap to copy. |
+| *y* | The width of the rectangle that specifies the portion of this bitmap to copy. |
+| *nWidth* | The y-coordinate of the upper-left corner of the rectangle that specifies the portion of this bitmap to copy. |
+| *nHeight* | The height of the rectangle that specifies the portion of this image to copy. |
+| *pxFormat* | Integer that specifies the pixel format of the new bitmap. The **PixelFormat** data type and constants that represent various pixel formats are defined in Gdipluspixelformats.inc. |
+| *pCloneBitmap* | Pointer to the **Bitmap** object where to copy the contents of the existing object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Bitmap from an image file, clones the upper-left
+' portion of the image, and then draws the cloned image.
+' ========================================================================================
+SUB Example_CloneArea (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create a Bitmap object from a JPEG file.
+   DIM myBitmap AS CGpBitmap = "climber.jpg"
+
+   ' // Clone a portion of the bitmap.
+   DIM cloneBitmap AS CGpBitmap
+   myBitmap.Clone(0, 0, 100, 100, PixelFormatDontCare, @cloneBitmap)
+
+   ' // Draw the clone.
+   graphics.DrawImage(@cloneBitmap, 0, 0)
+
+END SUB
+' ========================================================================================
+```
