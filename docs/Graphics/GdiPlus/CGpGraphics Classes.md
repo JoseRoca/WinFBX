@@ -2030,3 +2030,57 @@ SUB Example_FillRectangles (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="FillRegion"></a>FillRegion (CGpGraphics)
+
+Uses a brush to fill a specified region.
+
+```
+FUNCTION FillRegion (BYVAL pBrush AS CGpBrush PTR, BYVAL pRegion AS CGpRegion PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pBrush* | Pointer to a brush that is used to paint the region. |
+| *pRegion* | Pointer to a region to be filled. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Because a region describes a set of pixels, a pixel is considered either fully inside, or fully outside the region. Consequently, FillRegion does not antialias the edges of the region.
+
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a region from a rectangle and then fills the region.
+' ========================================================================================
+SUB Example_FillRegion (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a SolidBrush object
+   DIM blackBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+
+   ' // Create a Region object from a rectangle.
+   DIM ellipseRegion AS CGpRegion = CGpRegion(0, 0, 200, 100)
+
+   ' // Fill the region.
+   graphics.FillRegion(@blackBrush, @ellipseRegion)
+
+END SUB
+' ========================================================================================
+```
