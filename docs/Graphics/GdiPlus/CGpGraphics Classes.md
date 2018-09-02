@@ -1015,6 +1015,8 @@ END SUB
 
 Draws a portion of an image after applying a specified effect.
 
+**Note**: Not yet implemented.
+
 ```
 FUNCTION DrawImageFX (BYVAL pImage AS CGpImage PTR, BYREF sourceRect AS GpRectF, _
    BYVAL pMatrix AS CGpMatrix PTR, BYREF gpEffect AS CGpEffect, _
@@ -1525,14 +1527,33 @@ Calls to the **Save** method place information blocks on the same stack as calls
 Caution  When you call **EndContainer**, all information blocks placed on the stack (by **Save** or by **BeginContainer**) after the corresponding call to **BeginContainer** are removed from the stack. Likewise, when you call **Restore**, all information blocks placed on the stack (by **Save** or by **BeginContainer**) after the corresponding call to **Save** are removed from the stack.
 
 
-# <a name="EnumerateMetafileDestPoint"></a>EnumerateMetafileDestPoint (CGpGraphics)
+# <a name="EnumerateMetafile"></a>EnumerateMetafileDestPoint (CGpGraphics)
 
-Calls an application-defined callback function for each record in a specified metafile. You can use this method to display a metafile by calling PlayRecord in the callback function.
+Calls an application-defined callback function for each record in a specified metafile. You can use this method to display a metafile by calling **PlayRecord** in the callback function.
+
+**Note**: Not yet implemented.
 
 ```
-FUNCTION EnumerateMetafileDestPoint (BYVAL pMetafile AS CGpMetafile, BYVAL destPoint AS GpPointF PTR, _
+FUNCTION EnumerateMetafileDestPoint (BYVAL pMetafile AS CGpMetafile PTR, BYVAL destPoint AS GpPointF PTR, _
    BYVAL pCallback AS EnumerateMetafileProc, BYVAL pCallbackData AS ANU PTR = NULL, _
    BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL) AS GpStatus
+FUNCTION EnumerateMetafileDestPoints (BYVAL pMetafile AS CGdipMetafile PTR, BYVAL destPoints AS PointF PTR, _
+   BYVAL nCount AS INT_, BYVAL pCallback AS EnumerateMetafileProc, BYVAL pCallbackData AS ANY PTR = NULL, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL) AS GpStatus
+FUNCTION EnumerateMetafileDestRect (BYVAL pMetafile AS CGdMetafile PTR, BYVAL destRect AS RectF PTR, _
+   BYVAL pCallback AS EnumerateMetafileProc, BYVAL pCallbackData AS ANY PTR = NULL, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL) AS GpStatus
+FUNCTION EnumerateMetafileSrcRectDestPoint (BYVAL pMetafile AS CGpMetafile PTR, BYVAL destPoint AS PointF PTR, _
+   BYVAL srcRect AS RectF PTR, BYVAL srcUnit AS GpUnit, BYVAL pCallback AS EnumerateMetafileProc, _
+   BYVAL pCallbackData AS ANY PTR = NULL, BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL) AS GpStatus
+FUNCTION EnumerateMetafileSrcRectDestPoint (BYVAL pMetafile AS IGdipMetafile PTR, BYVAL destPoints AS PointF PTR, _
+   BYVAL nCount AS INT_, BYVAL srcRect AS RectF PTR, BYVAL srcUnit AS GpUnit, _
+   BYVAL pCallback AS EnumerateMetafileProc, BYVAL pCallbackData AS ANY PTR = NULL, _
+   BYVAL pImageAttributes AS IGdipImageAttributes PTR = NULL) AS LONG
+FUNCTION EnumerateMetafileSrcRectDestRect (BYVAL pMetafile AS CGpMetafile PTR, BYVAL destRect AS RectF PTR, _
+   BYVAL nCount AS INT_, BYVAL srcRect AS RectF PTR, BYVAL srcUnit AS GpUnit, _
+   BYVAL pCallback AS EnumerateMetafileProc, BYVAL pCallbackData AS ANY PTR = NULL, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL) AS LONG
 ```
 
 | Parameter  | Description |
@@ -1542,6 +1563,11 @@ FUNCTION EnumerateMetafileDestPoint (BYVAL pMetafile AS CGpMetafile, BYVAL destP
 | *pCallback* | Optional. Pointer to an application-defined callback function. The prototype for the callback function is given in Gdiplustypes.inc. |
 | *pCallbackData* | Optional. Pointer to a block of data that is passed to the callback function. The default value is NULL. |
 | *pImageAttributes* | Optional. Pointer to an **ImageAttributes** object that specifies color adjustments for the displayed metafile. The default value is NULLL. |
+| *destPoints* | Pointer to an array of destination points. This is an array of three points that defines the destination parallelogram for the displayed metafile. |
+| *nCount* | Integer that specifies the number of points in the *destPoints* array. |
+| *destRect* | Reference to a **GpRectF** object that specifies the rectangle in which the metafile is displayed. |
+| *srcRect* | Reference to a rectangle that specifies the portion of the metafile that is displayed. |
+| *srcUnit* | Element of the GpUnit enumeration that specifies the unit of measure for the source rectangle. |
 
 #### Return value
 
