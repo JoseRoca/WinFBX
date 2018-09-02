@@ -1268,7 +1268,7 @@ FUNCTION DrawPolygon (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPoint PTR, BYVAL 
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pPen* | Pointer to a pen that is used to draw the polygon. |
-| *pts* | Pointer to an array of GpPointF objects that specify the vertices of the polygon. |
+| *pts* | Pointer to an array of **GpPointF** objects that specify the vertices of the polygon. |
 | *nCount* | Integer that specifies the number of elements in the points array. |
 
 #### Return value
