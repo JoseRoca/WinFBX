@@ -2551,11 +2551,11 @@ FUNCTION GetHalftonePalette () AS HPALETTE
 
 The purpose of the **GetHalftonePalette** method is to enable GDI+ to produce a better quality halftone when the display uses 8 bits per pixel. To display an image using the halftone palette, use the following procedure:
 
-1. Call GetHalftonePalette to get a GDI+ halftone palette.
+1. Call **GetHalftonePalette** to get a GDI+ halftone palette.
 2. Select the halftone palette into a device context.
-3. Realize the palette by calling the RealizePalette function.
-4. Construct a Graphics object from a handle to the device context.
-5. Call the DrawImage method of the Graphics object.
+3. Realize the palette by calling the **RealizePalette** function.
+4. Construct a **Graphics** object from a handle to the device context.
+5. Call the **DrawImage** method of the **Graphics** object.
 
 Be sure to delete the palette when you have finished using it. If you do not follow the preceding procedure, then on an 8-bits-per-pixel-display device, the default, 16-color process is used, which results in a lesser quality halftone.
 
