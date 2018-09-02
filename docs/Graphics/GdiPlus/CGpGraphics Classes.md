@@ -2646,3 +2646,12 @@ SUB Example_GetHDC (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="GetInterpolationMode"></a>GetInterpolationMode (CGpGraphics)
+
+Gets the interpolation mode currently set for this Graphics object. The interpolation mode determines the algorithm that is used when images are scaled or rotated.
+
+```
+FUNCTION GetInterpolationMode () AS InterpolationMode
+```
