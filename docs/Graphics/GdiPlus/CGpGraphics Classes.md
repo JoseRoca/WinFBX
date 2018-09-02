@@ -2316,3 +2316,64 @@ SUB Example_GetClipBounds (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="GetCompositingMode"></a>GetCompositingMode (CGpGraphics)
+
+Gets the compositing mode currently set for this **Graphics** object.
+
+```
+FUNCTION GetCompositingMode () AS CompositingMode
+```
+
+#### Return value
+
+This method returns an element of the **CompositingMode** enumeration that indicates the compositing mode currently set for this Graphics object.
+
+#### Remarks
+
+Suppose you create a **SolidBrush** object based on a color that has an alpha component of 192, which is about 75 percent of 255. If your Graphics object has its compositing mode set to **CompositingModeSourceOver**, then areas filled with the solid brush are a blend that is 75 percent brush color and 25 percent background color. If your **Graphics** object has its compositing mode set to **CompositingModeSourceCopy**, then the background color is not blended with the brush color. However, the color rendered by the brush has an intensity that is 75 percent of what it would be if the alpha component were 255.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Graphics object and sets its compositing mode to
+' CompositingModeSourceCopy. The code creates a SolidBrush object based on a color with an
+' alpha component of 128. The code passes the address of that brush to the Graphics.FillRectangle
+' method of the Graphics object to fill a rectangle with a color that is not blended with
+' the background color. The call to the Graphics::CompositingMode method of the Graphics
+' object demonstrates how to obtain the compositing mode (which is already known in this
+' case). The code determines whether the compositing mode is CompositingModeSourceCopy and
+' if so, changes it to CompositingModeSourceOver. Then the code calls Graphics.FillRectangle
+' a second time to fill a rectangle with a color that is a half-and-half blend of the brush
+' color and the background color.
+' ========================================================================================
+SUB Example_CompositingMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   graphics.SetCompositingMode(CompositingModeSourceCopy)
+   DIM alphaBrush AS CGpSolidBrush = GDIP_ARGB(128, 255, 0, 0)
+   graphics.FillRectangle(@alphaBrush, 0, 0, 100, 100)
+
+   ' // Get the compositing mode.
+   DIM compMode AS CompositingMode
+   compMode = graphics.GetCompositingMode
+
+   ' // Change the compositing mode if it is CompositingModeSourceCopy.
+   IF compMode = CompositingModeSourceCopy THEN
+      graphics.SetCompositingMode(CompositingModeSourceOver)
+   END IF
+
+   graphics.FillRectangle(@alphaBrush, 0, 100, 100, 100)
+
+END SUB
+' ========================================================================================
+```
