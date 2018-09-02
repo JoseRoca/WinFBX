@@ -482,3 +482,34 @@ SUB Example_DrawBeziers (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="DrawCachedBitmap"></a>DrawCachedBitmap (CGpGraphics)
+
+Draws the image stored in a **CachedBitmap** object.
+
+```
+FUNCTION DrawCachedBitmap (BYVAL pCachedBitmap AS CGpCachedBitmap PTR, _
+   BYVAL x AS LONG, BYVAL y AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pCachedBitmap* | Pointer to a CachedBitmap object that contains the image to be drawn. |
+| *x* | The x-coordinate of the upper-left corner of the image. |
+| *y* | The y-coordinate of the upper-left corner of the image. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Remarks
+
+A **CachedBitmap** object stores an image in a format that is optimized for a particular display screen. You cannot draw a cached bitmap to a printer or to a metafile.
+
+Cached bitmaps will not work with any transformations other than translation.
+
+When you construct a **CachedBitmap** object, you must pass the address of a **Graphics** object to the constructor. If the screen associated with that Graphics object has its bit depth changed after the cached bitmap is constructed, then the **DrawCachedBitmap** method will fail, and you should reconstruct the cached bitmap. Alternatively, you can hook the display change notification message and reconstruct the cached bitmap at that time.
