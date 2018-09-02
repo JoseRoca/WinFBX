@@ -1087,3 +1087,63 @@ SUB Example_DrawLine (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="DrawLines"></a>DrawLines (CGpGraphics)
+
+Draws a sequence of connected lines.
+
+```
+FUNCTION DrawLines (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPointF PTR, BYVAL count AS LONG) AS GpStatus
+FUNCTION DrawLines (BYVAL pPen AS CGpPen PTR, BYVAL pts AS GpPoint PTR, BYVAL count AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a pen that is used to draw the lines. |
+| *pts* | Pointer to an array of GpPointF structures that specify the starting and ending points of the lines. |
+| *nCount* | Integer that specifies the number of elements in the points array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a sequence of connected lines.
+' ========================================================================================
+SUB Example_DrawLines (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 3)
+
+   ' // Create an array of PointF objects that define the lines to draw
+   DIM point1 AS GpPointF : point1.x =  10 : point1.y = 10
+   DIM point2 AS GpPointF : point2.x =  10 : point2.y = 100
+   DIM point3 AS GpPointF : point3.x = 200 : point3.y = 50
+   DIM point4 AS GpPointF : point4.x = 250 : point4.y = 300
+
+   DIM pts(0 TO 3) AS GpPointF
+   pts(0) = point1
+   pts(1) = point2
+   pts(2) = point3
+   pts(3) = point4
+
+   ' // Draw the lines
+   graphics.DrawLines(@blackPen, @pts(0), 4)
+
+END SUB
+' ========================================================================================
+```
