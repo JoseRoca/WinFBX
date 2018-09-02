@@ -2655,3 +2655,51 @@ Gets the interpolation mode currently set for this Graphics object. The interpol
 ```
 FUNCTION GetInterpolationMode () AS InterpolationMode
 ```
+
+
+# <a name="GetInterpolationMode"></a>GetInterpolationMode (CGpGraphics)
+
+Gets the nearest color to the color that is passed in. This method works on 8-bits per pixel or lower display devices for which there is an 8-bit color palette.
+
+```
+FUNCTION GetNearestColor (BYVAL colour AS ARGB PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colour* | Pointer to a DWORD variable that, on input, specifies the color to be tested and, on output, receives the nearest color found in the color palette. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Color object and fills a rectangle with that color. It
+' then gets the nearest 8-bit color and fills a second rectangle with that color.
+' ========================================================================================
+SUB Example_GetNearestColor (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Color object, and fill a rectangle with that color.
+   DIM colour AS ARGB = &hFFA53F88
+   graphics.FillRectangle(@CGpSolidBrush(colour), 0, 0, 100, 100)
+
+   ' // Get the nearest 8-bit color, and fill a second rectangle with that color.
+   graphics.GetNearestColor(@colour)
+   graphics.FillRectangle(@CGpSolidBrush(colour), 100, 0, 100, 100)
+
+END SUB
+' ========================================================================================
+```
