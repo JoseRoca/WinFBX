@@ -1180,3 +1180,82 @@ If the function fails, it returns one of the other elements of the **Status** en
 #### Remarks
 
 **LockBits** and **UnlockBits** must be used as a pair. A call to the **LockBits** method of a **Bitmap** object establishes a temporary buffer that you can use to read or write pixel data in a specified format. After you write to the temporary buffer, a call to **UnlockBits** copies the pixel data in the buffer to the **Bitmap** object. If the pixel format of the temporary buffer is different from the pixel format of the **Bitmap** object, the pixel data is converted appropriately.
+
+# <a name="ConstructorsMetafile"></a>Constructors (CGpMetafile)
+
+Creates a Windows GDI+ Metafile object for playback based on a Windows Graphics Device Interface (GDI) Enhanced Metafile (EMF) file.
+
+```
+CONSTRUCTOR CGpMetafile (BYVAL hEmf AS HENHMETAFILE, BYVAL deleteEmf AS BOOL = FALSE)
+```
+
+Creates a **Metafile** object from an IStream interface for playback.
+
+```
+CONSTRUCTOR CGpMetafile (BYVAL pStream AS IStream PTR)
+```
+
+Creates a **Metafile** object for playback.
+
+```
+CONSTRUCTOR CGpMetafile (BYVAL pwszFileName AS WSTRING PTR)
+CONSTRUCTOR CGpMetafile (BYVAL pwszFileName AS WSTRING PTR, BYVAL wmfPFH AS WmfPlaceableFileHeader PTR)
+CONSTRUCTOR CGpMetafile (BYVAL hEmf AS HMETAFILE, BYVAL wmfPFH AS WmfPlaceableFileHeader PTR, _
+   BYVAL deleteEmf AS BOOL = FALSE)
+```
+
+Creates a **Merafile** object for recording.
+
+```
+CONSTRUCTOR CGpMetafile (BYVAL referenceHdc AS HDC, BYVAL nType AS EmfType = EmfTypeEmfPlusDual, _
+   BYVAL description AS WSTRING PTR = NULL)
+CONSTRUCTOR CGpMetafile (BYVAL referenceHdc AS HDC, BYVAL frmRect AS GpRectF PTR, _
+   BYVAL frameUnit AS MetafileFrameUnit = MetafileFrameUnitGdi, _
+   BYVAL nType AS EmfType = EmfTypeEmfPlusDual, BYVAL description AS WSTRING PTR = NULL)
+CONSTRUCTOR CGpMetafile (BYVAL referenceHdc AS HDC, BYVAL frmRect AS GpRect PTR, _
+   BYVAL frameUnit AS MetafileFrameUnit = MetafileFrameUnitGdi, _
+   BYVAL nType AS EmfType = EmfTypeEmfPlusDual, BYVAL description AS WSTRING PTR = NULL)
+```
+
+Creates a **Merafile** object for recording.
+
+```
+CONSTRUCTOR CGpMetafile (BYVAL pwszFileName AS WSTRING PTR, BYVAL referenceHdc AS HDC, _
+   BYVAL nType AS EmfType = EmfTypeEmfPlusDual, BYVAL description AS WSTRING PTR = NULL)
+CONSTRUCTOR CGpMetafile (BYVAL pwszFileName AS WSTRING PTR, BYVAL referenceHdc AS HDC, _
+   BYVAL frmRect AS GpRectF PTR, BYVAL frameUnit AS MetafileFrameUnit = MetafileFrameUnitGdi, _
+   BYVAL nType AS EmfType = EmfTypeEmfPlusDual, BYVAL description AS WSTRING PTR = NULL)
+CONSTRUCTOR CGpMetafile (BYVAL pwszFileName AS WSTRING PTR, BYVAL referenceHdc AS HDC, _
+   BYVAL frmRect AS GpRect PTR, BYVAL frameUnit AS MetafileFrameUnit = MetafileFrameUnitGdi, _
+   BYVAL nType AS EmfType = EmfTypeEmfPlusDual, BYVAL description AS WSTRING PTR = NULL)
+```
+
+Creates a Metafile object from an IStream interface for recording.
+
+```
+CONSTRUCTOR CGpMetafile (BYVAL pStream AS IStream PTR, BYVAL referenceHdc AS HDC, _
+   BYVAL nType AS EmfType, BYVAL description AS WSTRING PTR)
+CONSTRUCTOR CGpMetafile (BYVAL pStream AS IStream PTR, BYVAL referenceHdc AS HDC, _
+   BYVAL frmRect AS GpRectF PTR, BYVAL frameUnit AS MetafileFrameUnit = MetafileFrameUnitGdi, _
+   BYVAL nType AS EmfType, BYVAL description AS WSTRING PTR)
+CONSTRUCTOR CGpMetafile (BYVAL pStream AS IStream PTR, BYVAL referenceHdc AS HDC, _
+   BYVAL frmRect AS GpRect PTR, BYVAL frameUnit AS MetafileFrameUnit = MetafileFrameUnitGdi, _
+   BYVAL nType AS EmfType, BYVAL description AS WSTRING PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hEmf* | Windows handle to a metafile. |
+| *pStream* | Pointer to a **IStream** interface that points to a data stream in a file. When the commands are recorded, they will be saved to this stream. |
+| *pwszFileName* | Pointer to a wide-character string that specifies the name of an existing disk file used to create the **Metafile** object for playback.  |
+| *wmfPFH* | Pointer to a **WmfPlaceableFileHeader** structure that specifies a preheader preceding the metafile header. |
+| *deleteEmf* | Optional. Boolean value that specifies whether the Windows handle to a metafile is deleted when the **Metafile** object is deleted. TRUE specifies that the *hEmf* Windows handle is deleted, and FALSE specifies that the *hEmf* Windows handle is not deleted. The default value is FALSE. |
+| *referenceHdc* | Windows handle to a metafile. |
+| *frameRect* | Reference to a rectangle that bounds the metafile display. |
+| *frameUnit* | Optional. Element of the **MetafileFrameUnit** enumeration that specifies the unit of measure for **frameRect**. The default value is **MetafileFrameUnitGdi**. |
+| *nType* | Optional. Element of the **EmfType** enumeration that specifies the type of metafile that will be recorded. The default value is **EmfTypeEmfPlusDual**. |
+| *description* | Optional. Pointer to a wide-character string that specifies the descriptive name of the metafile. The default value is NULL. |
+
+#### Remarks
+
+When recording to a file, the file must be writable, and Windows GDI+ must be able to obtain an exclusive lock on the file.
