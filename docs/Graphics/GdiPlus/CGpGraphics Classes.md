@@ -1923,3 +1923,56 @@ SUB Example_FillPolygon (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="FillRectangle"></a>FillRectangle (CGpGraphics)
+
+Uses a brush to fill the interior of a rectangle.
+
+```
+FUNCTION FillRectangle (BYVAL pBrush AS CGpBrush PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
+   BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE) AS GpStatus
+FUNCTION FillRectangle (BYVAL pBrush AS CGpBrush PTR,  BYVAL x AS INT_, BYVAL y AS INT_, _
+   BYVAL nWidth AS INT_, BYVAL nHeight AS INT_) AS GpStatus
+FUNCTION FillRectangle (BYVAL pBrush AS CGpBrush PTR, BYVAL rc AS GpRectF PTR) AS GpStatus
+FUNCTION FillRectangle (BYVAL pBrush AS CGpBrush PTR, BYVAL rc AS GpRect PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pBrush* | Pointer to a brush that is used to paint the interior of the rectangle. |
+| *x* | The x-coordinate of the upper-left corner of the rectangle to be filled. |
+| *y* | The y-coordinate of the upper-left corner of the rectangle to be filled. |
+| *nWidth* | The width of the rectangle to be filled. |
+| *nHeight* | The height of the rectangle to be filled. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example uses a brush to fill the interior of a rectangle.
+' ========================================================================================
+SUB Example_FillRectangle (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a SolidBrush object
+   DIM blackBrush AS CGpSolidBrush = GDIP_ARGB(255, 0, 0, 0)
+
+   ' // Fill the rectangle
+   graphics.FillRectangle(@blackBrush, 0, 0, 100, 100)
+
+END SUB
+' ========================================================================================
+```
