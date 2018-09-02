@@ -1774,3 +1774,29 @@ An **ImageAttributes** object maintains color and grayscale settings for five ad
 The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the pen category, then the default settings apply to the pen category.
 
 As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. You can reinstate the default settings for that category by calling **Reset**. For example, suppose you specify a gamma value for the default category. If you set the gamma value for the pen category by calling **SetGamma**, then the default gamma value will not apply to pens. If you later pass **ColorAdjustTypePen** to the **Reset** method, the pen category will revert to the default gamma value.
+
+# <a name="SetBrushRemapTable"></a>SetBrushRemapTable (CGpImageAttributes)
+
+Sets the color remap table for the brush category.
+
+```
+FUNCTION SetBrushRemapTable (BYVAL mapSize AS UINT, BYVAL map AS ANY PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *mapSize* | The number of elements in the map array. |
+| *map* | Pointer to an array of **ColorMap** structures. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A color-remap table is an array of **ColorMap** structures. Each ColorMap structure has two colors: one that specifies an old color and one that specifies a corresponding new color. During rendering, any color that matches one of the old colors in the remap table is changed to the corresponding new color.
+
+Calling the **SetBrushRemapTable** method has the same effect as passing **ColorAdjustTypeBrush** to the **SetRemapTable**. The specified remap table applies to items in metafiles that are filled with a brush.
+
