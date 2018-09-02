@@ -274,10 +274,68 @@ FUNCTION Clear (BYVAL colour AS ARGB) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *Colour* | The color to paint the background.  |
+| *Colour* | The color to paint the background. |
 
 #### Return value
 
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="DrawArc"></a>DrawArc (CGpGraphics)
+
+Draws an arc. The arc is part of an ellipse.
+
+```
+FUNCTION DrawArc (BYVAL pPen AS CGpPen PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
+   BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE, BYVAL startAngle AS SINGLE, _
+   BYVAL sweepAngle AS SINGLE) AS LONG
+FUNCTION DrawArc (BYVAL pPen AS CGpPen PTR, BYVAL x AS INT_, BYVAL y AS INT_, _
+   BYVAL nWidth AS INT_, BYVAL nHeight AS INT_, BYVAL startAngle AS SINGLE, _
+   BYVAL sweepAngle AS SINGLE) AS LONG
+FUNCTION DrawArc (BYVAL pPen AS CGpPen PTR, BYVAL rc AS GpRectF PTR, _
+   BYVAL startAngle AS SINGLE, BYVAL sweepAngle AS SINGLE) AS LONG
+FUNCTION DrawArc (BYVAL pPen AS CGpPen PTR, BYVAL rc AS GpRect PTR, _
+   BYVAL startAngle AS SINGLE, BYVAL sweepAngle AS SINGLE) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a pen that is used to draw the arc. |
+| *x* | The x-coordinate of the upper-left corner of the bounding rectangle for the ellipse that contains the arc. |
+| *y* | The y-coordinate of the upper-left corner of the bounding rectangle for the ellipse that contains the arc. |
+| *nWidth* | The width of the ellipse that contains the arc. |
+| *nHeight* | The height of the ellipse that contains the arc. |
+| *startAngle* | The angle between the x-axis and the starting point of the arc.  |
+| *sweepAngle* | The angle between the starting and ending points of the arc. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a 90-degree arc.
+' ========================================================================================
+SUB Example_DrawArc (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Draw the arc
+   DIM redPen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 0, 0), 3)
+   graphics.DrawArc(@redPen, 0, 0, 200, 100, 0.0, 90.0)
+
+END SUB
+' ========================================================================================
+```
