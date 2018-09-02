@@ -1338,7 +1338,7 @@ FUNCTION DrawRectangle (BYVAL pPen AS CGpPen PTR, BYVAL rc AS GpRect PTR) AS GpS
 | *y* | The y-coordinate of the upper-left corner of the rectangle. |
 | *nWidth* | The width of the rectangle. |
 | *nHeight* | The height of the rectangle. |
-| *nHeight* | The x, y, width and height of the rectangle as a **GpRect** or **GpRectF** structure. |
+| *rc* | The x, y, width and height of the rectangle as a **GpRect** or **GpRectF** structure. |
 
 #### Return value
 
