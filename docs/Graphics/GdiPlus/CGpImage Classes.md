@@ -1291,3 +1291,26 @@ This method replaces the records originally in the Metafile object with the conv
 If you set the *emfType* parameter to **EmfTypeEmfPlusDual**, the converted metafile contains an Enhanced Metafile (EMF) representation and an EMF+ representation. The EMF representation is the original set of EMF records rather than EMF records converted back from the newly created EMF+ records.
 
 It is possible for the return value to be **Ok** and the value returned in *conversionSuccess* to be FALSE. Sometimes the overall conversion is considered to be successful even if a few individual records failed to convert with complete accuracy. For example, the original metafile might have records or operations that are not supported by Windows GDI+ (or EMF+), in which case those records or operations are emulated.
+
+# <a name="GetDownLevelRasterizationLimit"></a>GetDownLevelRasterizationLimit (CGpMetafile)
+
+Gets the rasterization limit currently set for this metafile. The rasterization limit is the resolution used for certain brush bitmaps that are stored in the metafile. For a detailed explanation of the rasterization limit, see **SetDownLevelRasterizationLimit**.
+
+```
+FUNCTION GetDownLevelRasterizationLimit () AS UINT
+```
+#### Return value
+
+This method returns the rasterization limit in dpi.
+
+# <a name="GetHENHMETAFILE"></a>GetHENHMETAFILE (CGpMetafile)
+
+Gets a Windows handle to an Enhanced Metafile (EMF) file.
+
+```
+FUNCTION GetHENHMETAFILE () AS HENHMETAFILE
+```
+#### Return value
+
+This method sets the Metafile object to an invalid state. The user is responsible for calling **DeleteEnhMetafile**, to delete the Windows handle.
+
