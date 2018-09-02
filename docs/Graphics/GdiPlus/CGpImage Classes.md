@@ -93,7 +93,7 @@ Creates a **CachedBitmap** object based on a **Bitmap** object and a **Graphics*
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorCachedBitmap) | Creates a CachedBitmap object based on a Bitmap object and a Graphics object. |
+| [Constructors](#ConstructorCachedBitmap) | Creates a **CachedBitmap** object based on a **Bitmap** object and a **Graphics** object. |
 
 # <a name="ConstructorsImage"></a>Constructors (CGpImage)
 
@@ -1391,7 +1391,7 @@ The rasterization limit has an effect on metafiles of type **EmfTypeEmfOnly** an
 
 # <a name="ConstructorCachedBitmap"></a>Constructor (CGpCachedBitmap)
 
-Creates a **CachedBitmap** object based on a **Bitmap** object and a Graphics object. The cached bitmap takes the pixel data from the **Bitmap** object and stores it in a format that is optimized for the display device associated with the **Graphics** object.
+Creates a **CachedBitmap** object based on a **Bitmap** object and a **Graphics** object. The cached bitmap takes the pixel data from the **Bitmap** object and stores it in a format that is optimized for the display device associated with the **Graphics** object.
 
 ```
 CONSTRUCTOR CGpCachedBitmap (BYVAL pBitmap AS CGpBitmap PTR, BYVAL pGraphics AS CGpGraphics PTR)
