@@ -1527,7 +1527,7 @@ Calls to the **Save** method place information blocks on the same stack as calls
 Caution  When you call **EndContainer**, all information blocks placed on the stack (by **Save** or by **BeginContainer**) after the corresponding call to **BeginContainer** are removed from the stack. Likewise, when you call **Restore**, all information blocks placed on the stack (by **Save** or by **BeginContainer**) after the corresponding call to **Save** are removed from the stack.
 
 
-# <a name="EnumerateMetafile"></a>EnumerateMetafileDestPoint (CGpGraphics)
+# <a name="EnumerateMetafile"></a>EnumerateMetafile (CGpGraphics)
 
 Calls an application-defined callback function for each record in a specified metafile. You can use this method to display a metafile by calling **PlayRecord** in the callback function.
 
@@ -1574,3 +1574,61 @@ FUNCTION EnumerateMetafileSrcRectDestRect (BYVAL pMetafile AS CGpMetafile PTR, B
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="ExcludeClipRect"></a>ExcludeClipRect (CGpGraphics)
+
+Updates the clipping region to the portion of itself that does not intersect the specified rectangle.
+
+```
+FUNCTION ExcludeClipRect (BYVAL rc AS GpRectF PTR) AS GpStatus
+FUNCTION ExcludeClipRect (BYVAL rc AS GpRect PTR) AS GpStatus
+FUNCTION ExcludeClipRect (BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
+   BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE) AS GpStatus
+FUNCTION ExcludeClipRect (BYVAL x AS INT_, BYVAL y AS INT_, _
+   BYVAL nWidth AS INT_, BYVAL nHeight AS INT_) AS GpStatus
+```
+
+Updates the clipping region with the portion of itself that does not overlap the specified region.
+
+```
+FUNCTION ExcludeClipRect (BYVAL pRegion AS CGpRegion PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *rc* | Reference to a rectangle to use to update the clipping region. |
+| *x* | The x-coordinate of the upper-left corner of the rectangle. |
+| *y* | The y-coordinate of the upper-left corner of the rectangle. |
+| *nWidth* | The width of the rectangle. |
+| *nHeight* | The height of the rectangle. |
+| *pRegion* | Pointer to a **Region** object. |
+
+#### Example
+
+```
+' ========================================================================================
+' The following example uses a rectangle to update a clipping region and then draws a
+' rectangle that demonstrates the updated clipping region.
+' ========================================================================================
+SUB Example_ExcludeClip (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a GpRect object, and set the clipping region to its exclusion.
+   DIM excludeRect AS GpRect
+   excludeRect.x = 125 : excludeRect.y = 50 : excludeRect.Width = 150 : excludeRect.Height = 150
+   graphics.ExcludeClip(@excludeRect)
+
+   ' // Fill a rectangle to demonstrate the clipping region.
+   graphics.FillRectangle(@CGpSolidBrush(GDIP_ARGB(255, 0, 0, 255)), 0, 0, 400, 250)
+
+END SUB
+' ========================================================================================
+```
