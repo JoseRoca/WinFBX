@@ -1189,7 +1189,7 @@ Creates a Windows GDI+ Metafile object for playback based on a Windows Graphics 
 CONSTRUCTOR CGpMetafile (BYVAL hEmf AS HENHMETAFILE, BYVAL deleteEmf AS BOOL = FALSE)
 ```
 
-Creates a **Metafile** object from an IStream interface for playback.
+Creates a **Metafile** object from an **IStream** interface for playback.
 
 ```
 CONSTRUCTOR CGpMetafile (BYVAL pStream AS IStream PTR)
@@ -1217,7 +1217,7 @@ CONSTRUCTOR CGpMetafile (BYVAL referenceHdc AS HDC, BYVAL frmRect AS GpRect PTR,
    BYVAL nType AS EmfType = EmfTypeEmfPlusDual, BYVAL description AS WSTRING PTR = NULL)
 ```
 
-Creates a **Merafile** object for recording.
+Creates a **Metafile** object for recording.
 
 ```
 CONSTRUCTOR CGpMetafile (BYVAL pwszFileName AS WSTRING PTR, BYVAL referenceHdc AS HDC, _
@@ -1230,7 +1230,7 @@ CONSTRUCTOR CGpMetafile (BYVAL pwszFileName AS WSTRING PTR, BYVAL referenceHdc A
    BYVAL nType AS EmfType = EmfTypeEmfPlusDual, BYVAL description AS WSTRING PTR = NULL)
 ```
 
-Creates a Metafile object from an IStream interface for recording.
+Creates a **Metafile** object from an **IStream** interface for recording.
 
 ```
 CONSTRUCTOR CGpMetafile (BYVAL pStream AS IStream PTR, BYVAL referenceHdc AS HDC, _
@@ -1246,7 +1246,7 @@ CONSTRUCTOR CGpMetafile (BYVAL pStream AS IStream PTR, BYVAL referenceHdc AS HDC
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hEmf* | Windows handle to a metafile. |
-| *pStream* | Pointer to a **IStream** interface that points to a data stream in a file. When the commands are recorded, they will be saved to this stream. |
+| *pStream* | Pointer to a **IStream** interface that points to a data stream in a file. If the **Metafile** has been created for recording, when the commands are recorded, they will be saved to this stream. |
 | *pwszFileName* | Pointer to a wide-character string that specifies the name of an existing disk file used to create the **Metafile** object for playback.  |
 | *wmfPFH* | Pointer to a **WmfPlaceableFileHeader** structure that specifies a preheader preceding the metafile header. |
 | *deleteEmf* | Optional. Boolean value that specifies whether the Windows handle to a metafile is deleted when the **Metafile** object is deleted. TRUE specifies that the *hEmf* Windows handle is deleted, and FALSE specifies that the *hEmf* Windows handle is not deleted. The default value is FALSE. |
