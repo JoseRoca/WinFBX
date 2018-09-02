@@ -2806,7 +2806,7 @@ FUNCTION GetPixelOffsetMode () AS PixelOffsetMode
 
 # <a name="GetRenderingOrigin"></a>GetRenderingOrigin (CGpGraphics)
 
-Gets the rendering origin currently set for this Graphics object. The rendering origin is used to set the dither origin for 8-bits per pixel and 16-bits per pixel dithering and is also used to set the origin for hatch brushes.
+Gets the rendering origin currently set for this **Graphics** object. The rendering origin is used to set the dither origin for 8-bits per pixel and 16-bits per pixel dithering and is also used to set the origin for hatch brushes.
 
 ```
 FUNCTION GetRenderingOrigin (BYVAL x AS LONG PTR, BYVAL y AS LONG PTR) AS GpStatus
