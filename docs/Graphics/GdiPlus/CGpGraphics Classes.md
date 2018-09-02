@@ -1428,7 +1428,7 @@ END SUB
 ```
 
 
-# <a name="DrawRectangles"></a>DrawRectangles (CGpGraphics)
+# <a name="DrawString"></a>DrawString (CGpGraphics)
 
 Draws a string based on a font and an origin for the string.
 
