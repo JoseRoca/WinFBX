@@ -1502,6 +1502,12 @@ FUNCTION ClearColorMatrices (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDef
 | ---------- | ----------- |
 | *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
 
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
 #### Remarks
 
 An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify a pair (color and grayscale) of adjustment matrices for the default category, a different pair of adjustment matrices for the bitmap category, and still a different pair of adjustment matrices for the pen category.
@@ -1509,12 +1515,6 @@ An **ImageAttributes** object maintains color and grayscale settings for five ad
 The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the pen category, then the default settings apply to the pen category.
 
 As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. For example, suppose you specify a pair (color and grayscale) of adjustment matrices and a gamma value for the default category. If you set a pair of adjustment matrices for the pen category by calling **SetColorMatrices**, then the default adjustment matrices will not apply to pens. If you later clear the pen adjustment matrices by calling **ClearColorMatrices**, the pen category will not revert to the default adjustment matrices; rather, the pen category will have no adjustment matrices. Similarly, the pen category will not revert to the default gamma value; rather, the pen category will have no gamma value.
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 # <a name="ClearColorMatrix"></a>ClearColorMatrix (CGpImageAttributes)
 
@@ -1527,6 +1527,12 @@ FUNCTION ClearColorMatrix (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefau
 | Parameter  | Description |
 | ---------- | ----------- |
 | *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 #### Remarks
 
@@ -1548,6 +1554,12 @@ FUNCTION ClearGamma (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault) AS
 | ---------- | ----------- |
 | *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
 
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
 #### Remarks
 
 An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify a gamma value for the default category, a different gamma value for the bitmap category, and still a different gamma value for the pen category.
@@ -1567,6 +1579,12 @@ FUNCTION ClearNoOp (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault) AS 
 | Parameter  | Description |
 | ---------- | ----------- |
 | *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 #### Remarks
 
@@ -1594,6 +1612,12 @@ FUNCTION ClearOutputChannel (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDef
 | ---------- | ----------- |
 | *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
 
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
 #### Remarks
 
 An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify an output channel for the default category and a different output channel for the bitmap category.
@@ -1613,6 +1637,12 @@ FUNCTION ClearOutputChannelColorProfile (BYVAL nType AS ColorAdjustType = ColorA
 | Parameter  | Description |
 | ---------- | ----------- |
 | *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 #### Remarks
 
@@ -1634,6 +1664,12 @@ FUNCTION ClearRemapTable (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefaul
 | ---------- | ----------- |
 | *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
 
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
 #### Remarks
 
 An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify a remap table for the default category, a different remap table for the bitmap category, and still a different remap table for the pen category.
@@ -1653,6 +1689,12 @@ FUNCTION ClearThreshold (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault
 | Parameter  | Description |
 | ---------- | ----------- |
 | *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 #### Remarks
 
@@ -1676,6 +1718,12 @@ FUNCTION Clone (BYVAL pCloneImgAttr AS CGpImageAttributes PTR) AS GpStatus
 | ---------- | ----------- |
 | *pCloneImgAttr* | Pointer to the **ImageAttributes** object where to copy the contents of the existing object. |
 
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
 # <a name="GetAdjustedPalette"></a>GetAdjustedPalette (CGpImageAttributes)
 
 Adjusts the colors in a palette according to the adjustment settings of a specified category.
@@ -1689,8 +1737,40 @@ FUNCTION GetAdjustedPalette (BYVAL pColorPalette AS ColorPalette PTR, BYVAL colo
 | *pColorPalette* | Pointer to a **ColorPalette** structure that on input, contains the palette to be adjusted and, on output, receives the adjusted palette. |
 | *colorAdjustType* | Element of the **ColorAdjustType** enumeration that specifies the category whose adjustment settings will be applied to the palette. |
 
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
 #### Remarks
 
 An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify a color-remap table for the default category, a different color-remap table for the bitmap category, and still a different color-remap table for the pen category.
 
 When you call **GetAdjustedPalette**, you can specify the adjustment category that is used to adjust the palette colors. For example, if you pass **ColorAdjustTypeBitmap** to the **GetAdjustedPalette** method, then the adjustment settings of the bitmap category are used to adjust the palette colors.
+
+# <a name="Reset"></a>Reset (CGpImageAttributes)
+
+Clears all color- and grayscale-adjustment settings for a specified category.
+
+```
+FUNCTION Reset (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify a gamma value for the default category, a different gamma value for the bitmap category, and still a different gamma value for the pen category.
+
+The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the pen category, then the default settings apply to the pen category.
+
+As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. You can reinstate the default settings for that category by calling **Reset**. For example, suppose you specify a gamma value for the default category. If you set the gamma value for the pen category by calling **SetGamma**, then the default gamma value will not apply to pens. If you later pass **ColorAdjustTypePen** to the **Reset** method, the pen category will revert to the default gamma value.
