@@ -821,4 +821,22 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 When you call the **SelectActiveFrame** method, all changes that you made to the previously active frame are discarded. If you want to retain changes that you make to a frame, call the Save method before you switch to a different frame.
 
-Among all the image formats currently supported by GDI+, the only formats that support multiple-frame images are GIF and TIFF. When you call the **SelectActiveFrame** method on a GIF image, you should use FrameDimensionTime. When you call the SelectActiveFrame method on a TIFF image, you should use **FrameDimensionPage**.
+Among all the image formats currently supported by GDI+, the only formats that support multiple-frame images are GIF and TIFF. When you call the **SelectActiveFrame** method on a GIF image, you should use **FrameDimensionTime**. When you call the SelectActiveFrame method on a TIFF image, you should use **FrameDimensionPage**.
+
+# <a name="SetPalette"></a>SetPalette (CGpImage)
+
+Sets the color palette of this Image object.
+
+```
+FUNCTION SetPalette (BYVAL pal AS ColorPalette PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *palette* | Pointer to a **ColorPalette** structure that specifies the palette. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
