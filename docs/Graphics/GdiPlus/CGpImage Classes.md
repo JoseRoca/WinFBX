@@ -937,3 +937,22 @@ SUB Example_CloneArea (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetHBITMAP"></a>GetHBITMAP (CGpBitmap)
+
+Creates a Windows Graphics Device Interface (GDI) bitmap from this **Bitmap** object.
+
+```
+FUNCTION GetHBITMAP (BYVAL colorBackground AS ARGB, BYVAL hbmReturn AS HBITMAP PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colorBackground* | ARGB color that specifies the background color. This parameter is ignored if the bitmap is totally opaque. |
+| *hbmReturn* | Pointer to an HBITMAP that receives a handle to the GDI bitmap. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
