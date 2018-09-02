@@ -1976,3 +1976,57 @@ SUB Example_FillRectangle (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="FillRectangles"></a>FillRectangles (CGpGraphics)
+
+Uses a brush to fill the interior of a sequence of rectangles.
+
+```
+FUNCTION FillRectangles (BYVAL pBrush AS CGpBrush PTR, BYVAL rects AS GpRectF PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION FillRectangles (BYVAL pBrush AS CGpBrush PTR, BYVAL rects AS GpRect PTR, BYVAL count AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pBrush* | Pointer to a brush that is used to paint the interior of each rectangle. |
+| *rects* | Pointer to an array of rectangles to be filled. |
+| *count* | Integer that specifies the number of rectangles in the rects array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example fills a sequence of rectangles.
+' ========================================================================================
+SUB Example_FillRectangles (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a pen object
+   DIM blackBrush AS CGpSolidBrush = CGpSolidBrush(GDIP_ARGB(255, 0, 0, 0))
+
+   ' // Create an array of RectF objects.
+   DIM rects(0 TO 2) AS GpRectF
+   rects(0).x =   0.0 : rects(0).y =   0.0 : rects(0).Width = 100.0 : rects(0).Height = 200.0
+   rects(1).x = 100.5 : rects(1).y = 200.5 : rects(1).Width = 200.5 : rects(1).Height = 50.5
+   rects(2).x = 300.8 : rects(2).y =   0.8 : rects(2).Width =  50.8 : rects(2).Height = 150.8
+
+   ' // Draw the rectangles
+   graphics.FillRectangles(@blackBrush, @rects(0), 3)
+
+END SUB
+' ========================================================================================
+```
