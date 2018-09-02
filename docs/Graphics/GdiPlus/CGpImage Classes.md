@@ -1663,3 +1663,15 @@ An ImageAttributes object maintains color and grayscale settings for five adjust
 The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the pen category, then the default settings apply to the pen category.
 
 As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. For example, suppose you specify a threshold and a gamma value for the default category. If you set the threshold for the pen category by calling **SetThreshold**, then the default threshold will not apply to pens. If you later clear the pen threshold by calling **ClearThreshold**, the pen category will not revert to the default threshold; rather, the pen category will have no threshold. Similarly, the pen category will not revert to the default gamma value; rather, the pen category will have no gamma value.
+
+# <a name="Clone"></a>Clone (CGpImageAttributes)
+
+Copies the contents of the existing ImageAttributes object into a new ImageAttributes object.
+
+```
+FUNCTION Clone (BYVAL pCloneImgAttr AS CGpImageAttributes PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pCloneImgAttr* | Pointer to the **ImageAttributes** object where to copy the contents of the existing object. |
