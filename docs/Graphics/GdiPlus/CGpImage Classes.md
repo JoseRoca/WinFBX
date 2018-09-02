@@ -1570,15 +1570,34 @@ FUNCTION ClearNoOp (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault) AS 
 
 #### Remarks
 
-You can disable color adjustment for a certain object type by calling the SetNoOp method. Later, you can reinstate color adjustment for that object type by calling the ClearNoOp method. For example, the following statement disables color adjustment for brushes:
+You can disable color adjustment for a certain object type by calling the **SetNoOp** method. Later, you can reinstate color adjustment for that object type by calling the **ClearNoOp** method. For example, the following statement disables color adjustment for brushes:
 
 ```
 myImageAttributes.SetNoOp(ColorAdjustTypeBrush)
 ```
 
-The following statement reinstates the brush color adjustment that was in place before the call to SetNoOp:
+The following statement reinstates the brush color adjustment that was in place before the call to **SetNoOp**:
 
 ```
 myImageAttributes.ClearNoOp(ColorAdjustTypeBrush)
 ```
 
+# <a name="ClearOutputChannel"></a>ClearOutputChannel (CGpImageAttributes)
+
+Clears the cyan-magenta-yellow-black (CMYK) output channel setting for a specified category.
+
+```
+FUNCTION ClearOutputChannel (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nType* | Optional. Element of the **ColorAdjustType** enumeration that specifies the category for which the color key is cleared. The default value is **ColorAdjustTypeDefault**. |
+
+#### Remarks
+
+An **ImageAttributes** object maintains color and grayscale settings for five adjustment categories: default, bitmap, brush, pen, and text. For example, you can specify an output channel for the default category and a different output channel for the bitmap category.
+
+The default color- and grayscale-adjustment settings apply to all categories that don't have adjustment settings of their own. For example, if you never specify any adjustment settings for the bitmap category, then the default settings apply to the bitmap category.
+
+As soon as you specify a color- or grayscale-adjustment setting for a certain category, the default adjustment settings no longer apply to that category. For example, suppose you specify an output channel and an adjustment matrix for the default category. If you set the output channel for the bitmap category by calling **SetOutputChannel**, then the default output channel will not apply to bitmaps. If you later clear the bitmap output channel by calling **ClearOutputChannel**, the bitmap category will not revert to the default output channel; rather, the bitmap category will have no output channel setting. Similarly, the bitmap category will not revert to the default color-adjustment matrix; rather, the bitmap category will have no color-adjustment matrix.
