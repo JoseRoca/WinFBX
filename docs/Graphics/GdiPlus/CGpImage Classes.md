@@ -1200,8 +1200,8 @@ Creates a **Metafile** object for playback.
 ```
 CONSTRUCTOR CGpMetafile (BYVAL pwszFileName AS WSTRING PTR)
 CONSTRUCTOR CGpMetafile (BYVAL pwszFileName AS WSTRING PTR, BYVAL wmfPFH AS WmfPlaceableFileHeader PTR)
-CONSTRUCTOR CGpMetafile (BYVAL hEmf AS HMETAFILE, BYVAL wmfPFH AS WmfPlaceableFileHeader PTR, _
-   BYVAL deleteEmf AS BOOL = FALSE)
+CONSTRUCTOR CGpMetafile (BYVAL hWmf AS HMETAFILE, BYVAL wmfPFH AS WmfPlaceableFileHeader PTR, _
+   BYVAL deleteWmf AS BOOL = FALSE)
 ```
 
 Creates a **Metafile** object for recording.
@@ -1245,12 +1245,13 @@ CONSTRUCTOR CGpMetafile (BYVAL pStream AS IStream PTR, BYVAL referenceHdc AS HDC
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *hEmf* | Windows handle to a metafile. |
-| *pStream* | Pointer to a **IStream** interface that points to a data stream in a file. If the **Metafile** has been created for recording, when the commands are recorded, they will be saved to this stream. |
+| *hEmf* | Windows handle to an enhanced-format metafile. |
+| *deleteEmf* | Optional. Boolean value that specifies whether the Windows handle to a metafile is deleted when the **Metafile** object is deleted. TRUE specifies that the *hEmf* Windows handle is deleted, and FALSE specifies that the *hEmf* Windows handle is not | *pStream* | Pointer to a **IStream** interface that points to a data stream in a file. If the **Metafile** has been created for recording, when the commands are recorded, they will be saved to this stream. |
 | *pwszFileName* | Pointer to a wide-character string that specifies the name of an existing disk file used to create the **Metafile** object for playback.  |
+| *hWmf* | Windows handle to an windows metafile format. |
 | *wmfPFH* | Pointer to a **WmfPlaceableFileHeader** structure that specifies a preheader preceding the metafile header. |
-| *deleteEmf* | Optional. Boolean value that specifies whether the Windows handle to a metafile is deleted when the **Metafile** object is deleted. TRUE specifies that the *hEmf* Windows handle is deleted, and FALSE specifies that the *hEmf* Windows handle is not deleted. The default value is FALSE. |
-| *referenceHdc* | Windows handle to a metafile. |
+deleted. The default value is FALSE. |
+| *deleteWmf* | Optional. Boolean value that specifies whether the Windows handle to a metafile is deleted when the **Metafile** object is deleted. TRUE specifies that the *hWmf* Windows handle is deleted, and FALSE specifies that the *hWmf* Windows handle is not | *referenceHdc* | Windows handle to a metafile. |
 | *frameRect* | Reference to a rectangle that bounds the metafile display. |
 | *frameUnit* | Optional. Element of the **MetafileFrameUnit** enumeration that specifies the unit of measure for **frameRect**. The default value is **MetafileFrameUnitGdi**. |
 | *nType* | Optional. Element of the **EmfType** enumeration that specifies the type of metafile that will be recorded. The default value is **EmfTypeEmfPlusDual**. |
@@ -1259,3 +1260,34 @@ CONSTRUCTOR CGpMetafile (BYVAL pStream AS IStream PTR, BYVAL referenceHdc AS HDC
 #### Remarks
 
 When recording to a file, the file must be writable, and Windows GDI+ must be able to obtain an exclusive lock on the file.
+
+# <a name="EmfToWmfBits"></a>EmfToWmfBits (CGpMetafile)
+
+Converts an enhanced-format metafile to a Windows Metafile Format (WMF) metafile and stores the converted records in a specified buffer.
+
+```
+FUNCTION EmfToWmfBits (BYVAL hEmf AS HENHMETAFILE, BYVAL cbData16 AS UINT, BYVAL pData16 AS BYTE PTR, _
+   BYVAL iMapMode AS INT_ = MM_ANISOTROPIC, BYVAL eFlags AS INT_ = EmfToWmfBitsFlagsDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hEmf* | Windows handle to an enhanced-format metafile. |
+| *cbData16* | Unsigned integer that specifies the number of bytes in the buffer pointed to by the *pData16* parameter. |
+| *pData16* | Pointer to a buffer that receives the converted records. If *pData16* is NULL, **EmfToWmfBits** returns the number of bytes required to store the converted metafile records. |
+| *iMapMode* | Optional. Specifies the mapping mode to use in the converted metafile. For a list of possible mapping modes, see **SetMapMode**. The default value is MM_ANISOTROPIC. |
+| *eFlags* | Optional. Element of the **EmfToWmfBitsFlags** enumeration that specifies options for the conversion. The default value is **EmfToWmfBitsFlagsDefault**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+This method replaces the records originally in the Metafile object with the converted records. To retain a copy of the original **Metafile** object, call the **Clone** method.
+
+If you set the *emfType* parameter to **EmfTypeEmfPlusDual**, the converted metafile contains an Enhanced Metafile (EMF) representation and an EMF+ representation. The EMF representation is the original set of EMF records rather than EMF records converted back from the newly created EMF+ records.
+
+It is possible for the return value to be Ok and the value returned in conversionSuccess to be FALSE. Sometimes the overall conversion is considered to be successful even if a few individual records failed to convert with complete accuracy. For example, the original metafile might have records or operations that are not supported by Windows GDI+ (or EMF+), in which case those records or operations are emulated.
