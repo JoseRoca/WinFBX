@@ -825,7 +825,7 @@ Among all the image formats currently supported by GDI+, the only formats that s
 
 # <a name="SetPalette"></a>SetPalette (CGpImage)
 
-Sets the color palette of this Image object.
+Sets the color palette of this **Image** object.
 
 ```
 FUNCTION SetPalette (BYVAL pal AS ColorPalette PTR) AS GpStatus
@@ -834,6 +834,24 @@ FUNCTION SetPalette (BYVAL pal AS ColorPalette PTR) AS GpStatus
 | Parameter  | Description |
 | ---------- | ----------- |
 | *palette* | Pointer to a **ColorPalette** structure that specifies the palette. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="SetPropertyItem"></a>SetPropertyItem (CGpImage)
+
+Sets a property item (piece of metadata) for this Image object. If the item already exists, then its contents are updated; otherwise, a new item is added.
+
+```
+FUNCTION SetPropertyItem (BYVAL pitem AS PropertyItem PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pitem* | Pointer to a PropertyItem object that specifies the property item to be set. |
 
 #### Return value
 
