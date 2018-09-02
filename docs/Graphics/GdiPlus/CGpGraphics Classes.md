@@ -2436,3 +2436,53 @@ SUB Example_CompositingQuality (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="GetDpiX"></a>GetDpiX (CGpGraphics)
+
+Gets the horizontal resolution, in dots per inch, of the display device associated with this **Graphics** object.
+
+```
+FUNCTION GetDpiX () AS SINGLE
+```
+
+#### Return value
+
+This method returns the horizontal resolution, in dots per inch, of the display device associated with this **Graphics** object.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example gets the horizontal resolution, in dots per inch, of the display
+' device and uses that value to convert pixels to inches. Then the code draws two rectangles
+' that have the same width: one measured in inches and one measured in pixels.
+' ========================================================================================
+SUB Example_GetDpiX (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+
+   ' // Get the vertical resolution, in dots per inch, of the display device
+   DIM dpiX AS SINGLE = graphics.GetDpiX
+
+   ' // Set the unit of measure for graphics to inches
+   graphics.SetPageUnit(UnitInch)
+   graphics.SetPageScale(dpiX / 96)
+
+   ' // Use dpiX to convert pixels to inches, and draw a
+   DIM side AS SINGLE = 100.0 / dpiX
+   DIM bluePen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 0)
+   graphics.DrawRectangle(@bluePen, 0.0, 0.0, side, side)
+
+   ' // Set the unit of measure for graphics to pixels
+   graphics.SetPageUnit(UnitPixel)
+   graphics.SetPageScale(dpiX / 96)
+
+   ' // Draw a 100-pixel square.
+   DIM redPen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 0, 0), 1)
+   graphics.DrawRectangle(@redPen, 120, 0, 100, 100)
+
+END SUB
+' ========================================================================================
+```
