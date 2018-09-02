@@ -778,7 +778,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 GDI+ does not allow you to save an image to the same file that you used to construct the image. The following code creates an **Image** object by passing the file name MyImage.jpg to an **Image** constructor. That same file name is passed to the **Save** method of the **Image** object, so the **Save** method fails.
 
-# <a name="SaveAdd"></a>Save (CGpImage)
+# <a name="SaveAdd"></a>SaveAdd (CGpImage)
 
 Adds a frame to a file or stream specified in a previous call to the **Save** method.
 
@@ -797,3 +797,28 @@ FUNCTION SaveAdd (BYVAL pNewImage AS CGpImage PTR, BYVAL encoderParams AS Encode
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="SelectActiveFrame"></a>SelectActiveFrame (CGpImage)
+
+Selects the frame in this **Image** object specified by a dimension and an index.
+
+```
+FUNCTION SelectActiveFrame (BYVAL dimensionID AS GUID PTR, BYVAL frameIndex AS UINT) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dimensionID* | Pointer to a GUID that specifies the frame dimension. GUIDs that identify various frame dimensions are defined in Gdiplusimaging.inc. |
+| *frameIndex* | Integer that specifies the index of the frame within the specified frame dimension. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+When you call the **SelectActiveFrame** method, all changes that you made to the previously active frame are discarded. If you want to retain changes that you make to a frame, call the Save method before you switch to a different frame.
+
+Among all the image formats currently supported by GDI+, the only formats that support multiple-frame images are GIF and TIFF. When you call the **SelectActiveFrame** method on a GIF image, you should use FrameDimensionTime. When you call the SelectActiveFrame method on a TIFF image, you should use **FrameDimensionPage**.
