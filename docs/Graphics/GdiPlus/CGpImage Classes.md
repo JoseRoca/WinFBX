@@ -1441,3 +1441,25 @@ CONSTRUCTOR CGpCachedBitmap (BYVAL pBitmap AS CGpBitmap PTR, BYVAL pGraphics AS 
 #### Remarks
 
 You can display a cached bitmap by passing the address of a **CachedBitmap** object to the **DrawCachedBitmap** method of a Graphics object. Use the **Graphics** object that was passed to the **CachedBitmap** constructor or another **Graphics** object that represents the same device.
+
+# <a name="ConstructorImageAttributes"></a>Constructor (CGpImageAttributes)
+
+Creates a new **ImageAttributes** object. This constructor is the default constructor and has no parameters.
+
+```
+CONSTRUCTOR CGpImageAttributes
+```
+
+# <a name="ClearBrushRemapTable"></a>ClearBrushRemapTable (CGpImageAttributes)
+
+Clears the brush color-remap table of this **ImageAttributes** object.
+
+```
+FUNCTION ClearBrushRemapTable () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
