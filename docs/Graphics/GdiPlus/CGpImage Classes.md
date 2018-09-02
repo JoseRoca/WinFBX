@@ -1325,9 +1325,6 @@ FUNCTION GetMetafileHeader (BYVAL hWmf AS HMETAFILE, BYVAL mh AS MetafileHeader 
 FUNCTION GetMetafileHeader (BYVAL pwsFileName AS WSTRING PTR, BYVAL mh AS MetafileHeader PTR) AS GpStatus
 FUNCTION GetMetafileHeader (BYVAL pStream AS IStream PTR, BYVAL mh AS MetafileHeader PTR) AS GpStatus
 ```
-#### Return value
-
-This method sets the **Metafile** object to an invalid state. The user is responsible for calling **DeleteEnhMetafile**, to delete the Windows handle.
 
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -1337,6 +1334,28 @@ This method sets the **Metafile** object to an invalid state. The user is respon
 | *wmfPFH* | Pointer to a placeable metafile header. |
 | *pwszFileName* | Pointer to a wide-character string that specifies the name of an existing **Metafile** object that contains the header. |
 | *pStream* | Pointer to a **IStream** interface that points to a data stream in a file. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="PlayRecord"></a>PlayRecord (CGpMetafile)
+
+Plays a metafile record.
+
+```
+FUNCTION PlayRecord (BYVAL recordType AS EmfPlusRecordType, BYVAL flags AS UINT, _
+   BYVAL dataSize AS UINT, BYVAL pData AS BYTE PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *recordType* | Element of the **EmfPlusRecordType** enumeration that specifies the type of metafile record to be played. |
+| *flags* | Set of flags that specify attributes of the record to be played. |
+| *dataSize* | Integer that specifies the number of bytes contained in the record data. |
+| *pData* | Pointer to an array of bytes that contains the record data. |
 
 #### Return value
 
