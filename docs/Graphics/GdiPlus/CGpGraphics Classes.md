@@ -2096,3 +2096,52 @@ SUB Flush (BYVAL intention AS FlushIntention = FlushIntentionFlush)
 | Parameter  | Description |
 | ---------- | ----------- |
 | *intention* | Element of the **FlushIntention** enumeration that specifies whether pending operations are flushed immediately (not executed) or executed as soon as possible. |
+
+
+# <a name="FromHDC"></a>FromHDC (CGpGraphics)
+
+Creates a **Graphics** object that is associated with a specified device context.
+
+```
+FUNCTION FromHDC (BYVAL hdc AS HDC) AS GpStatus
+FUNCTION FromHDC (BYVAL hdc AS HDC, BYVAL hDevice AS HANDLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hdc* | Handle to the device context that will be associated with the new **Graphics** object. |
+| *hDevice* | Handle to a device that will be associated with the new **Graphics** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+When you use these methods to create a Graphics object, make sure that the Graphics object is deleted before the device context is released.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a rectangle.
+' ========================================================================================
+SUB Example_FromHDC (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Draw the rectangle
+   DIM redPen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 0, 0), 1)
+   graphics.DrawRectangle(@redPen, 10, 10, 200, 100)
+
+END SUB
+' ========================================================================================
+```
