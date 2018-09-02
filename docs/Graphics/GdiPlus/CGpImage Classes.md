@@ -1126,9 +1126,9 @@ FUNCTION SetPixel (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL colour AS ARGB) AS Gp
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *x* | Integer that specifies the x-coordinate (column) of the pixel.  |
-| *y* | Integer that specifies the y-coordinate (row) of the pixel.  |
-| *colour* | Pointer to a variable that receives the color to set. |
+| *x* | Integer that specifies the x-coordinate (column) of the pixel. |
+| *y* | Integer that specifies the y-coordinate (row) of the pixel. |
+| *colour* | Pointer to a variable that receives the color to set.|
 
 #### Return value
 
@@ -1139,3 +1139,22 @@ If the function fails, it returns one of the other elements of the **Status** en
 #### Remarks
 
 Depending on the format of the bitmap, **GetPixel** might not return the same value as was set by **SetPixel**. For example, if you call SetPixel on a Bitmap object whose pixel format is 32bppPARGB, the RGB components are premultiplied. A subsequent call to **GetPixel** might return a different value because of rounding. Also, if you call **SetPixel** on a **Bitmap** whose color depth is 16 bits per pixel, information could be lost in the conversion from 32 to 16 bits, and a subsequent call to **GetPixel** return a different value.
+
+# <a name="SetResolution"></a>SetResolution (CGpBitmap)
+
+Sets the resolution of this Bitmap object.
+
+```
+FUNCTION SetResolution (BYVAL xdpi AS SINGLE, BYVAL ydpi AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *xdpi* | The horizontal resolution in dots per inch. |
+| *ydpi* | The vertical resolution in dots per inch. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
