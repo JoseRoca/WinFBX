@@ -707,3 +707,55 @@ If the function fails, it returns one of the other elements of the **Status** en
 #### Remarks
 
 A segment is defined as a curve that connects two consecutive points in the cardinal spline. The ending point of each segment is the starting point for the next. The numberOfSegments parameter must not be greater than the count parameter minus the offset parameter plus one.
+
+
+# <a name="DrawEllipse"></a>DrawEllipse (CGpGraphics)
+
+Draws an ellipse.
+
+```
+FUNCTION DrawEllipse (BYVAL pPen AS CGpPen PTR, BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
+   BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE) AS GpStatus
+FUNCTION DrawEllipse (BYVAL pPen AS CGpPen PTR, BYVAL x AS INT_, BYVAL y AS INT_, _
+   BYVAL nWidth AS INT_, BYVAL nHeight AS INT_) AS GpStatus
+FUNCTION DrawEllipse (BYVAL pPen AS CGpPen PTR, BYVAL rc AS GpRectF) AS GpStatus
+FUNCTION DrawEllipse (BYVAL pPen AS CGpPen PTR, BYVAL rc AS GpRect) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a pen that is used to draw the ellipse. |
+| *x* | The x-coordinate of the upper-left corner of the rectangle that bounds the ellipse. |
+| *y* | The y-coordinate of the upper-left corner of the rectangle that bounds the ellipse. |
+| *nWidth* | The width of the rectangle that bounds the ellipse. |
+| *nHeight* | The height of the rectangle that bounds the ellipse. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws an ellipse.
+' ========================================================================================
+SUB Example_DrawEllipse (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Draw the ellipse
+   DIM bluePen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 3)
+   graphics.DrawEllipse(@bluePen, 100.0, 70.0, 200.0, 100.0)
+
+END SUB
+' ========================================================================================
+```
