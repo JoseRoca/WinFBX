@@ -2823,3 +2823,16 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
+
+
+# <a name="GetSmoothingMode"></a>GetSmoothingMode (CGpGraphics)
+
+Determines whether smoothing (antialiasing) is applied to the **Graphics** object.
+
+```
+FUNCTION GetSmoothingMode () AS SmoothingMode
+```
+
+#### Return value
+
+If smoothing (antialiasing) is applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias**. If smoothing (antialiasing) is not applied to this Graphics object, this method returns **SmoothingModeAntiAlias** and **SmoothingModeNone** are elements of the SmoothingMode enumeration.
