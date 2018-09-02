@@ -494,7 +494,7 @@ FUNCTION DrawCachedBitmap (BYVAL pCachedBitmap AS CGpCachedBitmap PTR, _
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pCachedBitmap* | Pointer to a CachedBitmap object that contains the image to be drawn. |
+| *pCachedBitmap* | Pointer to a **CachedBitmap** object that contains the image to be drawn. |
 | *x* | The x-coordinate of the upper-left corner of the image. |
 | *y* | The y-coordinate of the upper-left corner of the image. |
 
