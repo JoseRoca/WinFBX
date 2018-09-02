@@ -2703,3 +2703,46 @@ SUB Example_GetNearestColor (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="GetPageScale"></a>GetPageScale (CGpGraphics)
+
+Gets the scaling factor currently set for the page transformation of this **Graphics** object. The page transformation converts page coordinates to device coordinates.
+
+```
+FUNCTION GetPageScale () AS SINGLE
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets the world and page transformations of a Graphics object. The
+' page scale and page unit both belong to the page transformation. The code demonstrates
+' how to obtain the page scale (which is already known in this case). The code determines
+' whether the page scale is greater than 1 and, if so, sets the page unit to UnitMillimeter.
+' The call to Graphics.DrawRectangle draws a rectangle that has a width of 3 centimeters
+' (UnitMillimeter along with a scaling factor of 10) and a height of 2 centimeters.
+' ========================================================================================
+SUB Example_GetPageScale (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 0)
+
+   '// Set the world transformation of the Graphics object.
+   graphics.TranslateTransform(4, 1)
+
+   ' // Set the page transformation of the Graphics object.
+   graphics.SetPageUnit(UnitInch)
+   graphics.SetPageScale(10)
+
+   DIM pageScale AS SINGLE = graphics.GetPageScale
+   IF pageScale > 1 THEN graphics.SetPageUnit(UnitMillimeter)
+
+   graphics.DrawRectangle(@blackPen, 0, 0, 3, 2)
+
+END SUB
+' ========================================================================================
+```
