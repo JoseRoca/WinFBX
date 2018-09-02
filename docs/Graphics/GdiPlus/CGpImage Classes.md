@@ -48,7 +48,7 @@ The **CGpImage** class provides methods for loading and saving raster images (bi
 
 Extends the **CGpImage** class. The **Bitmap** object expands on the capabilities of the **Image** object by providing additional methods for creating and manipulating raster images.
 
-**Inherits from**: CGpImage.
+**Inherits from**: CGpImage.<br>
 **Include file**: CGpBitmap.inc.
 
 | Name       | Description |
@@ -71,7 +71,7 @@ Extends the **CGpImage** class. The **Bitmap** object expands on the capabilitie
 
 Extends the **CGpImage** class. The **Metafile** object defines a graphic metafile. A metafile contains records that describe a sequence of graphics API calls. Metafiles can be recorded (constructed) and played back (displayed).
 
-**Inherits from**: CGpImage.
+**Inherits from**: CGpImage.<br>
 **Include file**: CGpBitmap.inc.
 
 | Name       | Description |
@@ -88,7 +88,7 @@ Extends the **CGpImage** class. The **Metafile** object defines a graphic metafi
 
 Creates a **CachedBitmap** object based on a **Bitmap** object and a **Graphics** object. The cached bitmap takes the pixel data from the **Bitmap** object and stores it in a format that is optimized for the display device associated with the **Graphics** object.
 
-**Inherits from**: CGpBase.
+**Inherits from**: CGpBase.<br>
 **Include file**: CGpBitmap.inc.
 
 | Name       | Description |
@@ -1388,3 +1388,20 @@ The purpose of this method is to prevent metafiles from becoming too large as a 
 The default rasterization limit for metafiles is 96 dpi. So if you do not call this method at all, path gradient brush and texture brush bitmaps are stored with a resolution of 96 dpi.
 
 The rasterization limit has an effect on metafiles of type **EmfTypeEmfOnly** and **EmfTypeEmfPlusDual**, but it has no effect on metafiles of type **EmfTypeEmfPlusOnly**.
+
+# <a name="ConstructorCachedBitmap"></a>Constructor (CGpCachedBitmap)
+
+Creates a **CachedBitmap** object based on a **Bitmap** object and a Graphics object. The cached bitmap takes the pixel data from the **Bitmap** object and stores it in a format that is optimized for the display device associated with the **Graphics** object.
+
+```
+CONSTRUCTOR CGpCachedBitmap (BYVAL pBitmap AS CGpBitmap PTR, BYVAL pGraphics AS CGpGraphics PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pBitmap* | Pointer to a **Bitmap** object that contains the pixel data to be optimized.  |
+| *pGraphics* | Pointer to a **Graphics** object that is associated with a display device for which the image will be optimized. |
+
+#### Remarks
+
+You can display a cached bitmap by passing the address of a **CachedBitmap** object to the **DrawCachedBitmap** method of a Graphics object. Use the **Graphics** object that was passed to the **CachedBitmap** constructor or another **Graphics** object that represents the same device.
