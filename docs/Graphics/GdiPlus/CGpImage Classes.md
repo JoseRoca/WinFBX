@@ -1027,3 +1027,23 @@ If the function fails, it returns one of the other elements of the **Status** en
 #### Remarks
 
 The number of histograms returned depends on the HistogramFormat enumeration element passed to the format parameter. For example, if format is equal to **HistogramFormatRGB**, then three histograms are returned: one each for the red, green, and blue channels. In that case, *channel0* points to the array that receives the red-channel histogram, *channel1* points to the array that receives the green-channel histogram, and *channel2* points to the array that receives the blue-channel histogram. For **HistogramFormatRGB**, *channel3* must be set to NULL because there is no fourth histogram. For more details, see the **HistogramFormat** enumeration.
+
+# <a name="GetHistogramSize"></a>GetHistogramSize (CGpBitmap)
+
+Returns the number of elements (in an array of DWORDs) that you must allocate before you call the **GetHistogram** method of a **Bitmap** object.
+
+```
+FUNCTION GetHistogramSize (BYVAL nFormat AS HistogramFormat, BYVAL NumberOfEntries AS UINT PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nFormat* | Element of the **HistogramFormat** enumeration that specifies the pixel format of the bitmap. |
+| *NumberOfEntries* | Pointer to a DWORD that receives the number of entries. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
