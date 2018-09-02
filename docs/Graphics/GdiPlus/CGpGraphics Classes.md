@@ -1147,3 +1147,52 @@ SUB Example_DrawLines (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="DrawPath"></a>DrawPath (CGpGraphics)
+
+Draws a sequence of lines and curves defined by a **GraphicsPath** object.
+
+```
+FUNCTION DrawPath (BYVAL pPen AS CGpPen PTR, BYVAL pPath AS CGpGraphicsPath PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a pen that is used to draw the path. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws a GraphicsPath object.
+' ========================================================================================
+SUB Example_DrawPath (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a GraphicsPath, and add an ellipse
+   DIM ellipsePath AS CGpGraphicsPath
+   ellipsePath.AddEllipse(100, 70, 200, 100)
+
+   ' // Create a Pen object
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 3)
+
+   ' // Draw ellipsePath.
+   graphics.DrawPath(@blackPen, @ellipsePath)
+
+END SUB
+' ========================================================================================
+```
