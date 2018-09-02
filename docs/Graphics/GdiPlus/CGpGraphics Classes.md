@@ -1029,3 +1029,9 @@ FUNCTION DrawImageFX (BYVAL pImage AS CGpImage PTR, BYREF sourceRect AS GpRectF,
 | *pEffect* | Pointer to a instance of a descendant of the **CGpEffect** class. The descendant specifies an effect or adjustment (for example, a change in contrast) that is applied to the image before rendering. The image is not permanently altered by the effect. |
 | *imageAttributes* | Pointer to an **ImageAttributes** object that specifies color adjustments to be applied when the image is rendered. Can be NULL. |
 | *srcUnit* | Element of the **GpUnit** enumeration that specifies the unit of measure for the source rectangle. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
