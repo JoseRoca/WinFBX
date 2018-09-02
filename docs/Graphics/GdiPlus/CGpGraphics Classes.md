@@ -694,7 +694,7 @@ FUNCTION DrawDriverString (BYVAL pText AS UINT16 PTR, BYVAL length AS INT_, BYVA
 | *length* | Integer that specifies the number of values in the text array. The length parameter can be set to –1 if the string is null terminated. |
 | *pFont* | Pointer to a **Font** object that specifies the family name, size, and style of the font that is to be applied to the string. |
 | *pBrush* | Pointer to a **Brush** object that is used to fill the string. |
-| *positions* | If the **DriverStringOptionsRealizedAdvance** flag is set, positions is a pointer to a PointF object that specifies the position of the first glyph. Otherwise, positions is an array of PointF objects, each of which specifies the origin of an individual glyph. |
+| *positions* | If the **DriverStringOptionsRealizedAdvance** flag is set, positions is a pointer to a **GpPointF** structure that specifies the position of the first glyph. Otherwise, positions is an array of **GpPointF** structures, each of which specifies the origin of an individual glyph. |
 | *flags* | Integer that specifies the options for the appearance of the string. This value must be an element of the **DriverStringOptions** enumeration or the result of a bitwise OR applied to two or more of these elements. |
 | *pMatrix* | Pointer to a **Matrix** object that specifies the transformation matrix to apply to each value in the text array. |
 
