@@ -3316,3 +3316,24 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
+
+
+# <a name="ResetTransform"></a>ResetTransform (CGpGraphics)
+
+Sets the world transformation matrix of this Graphics object to the identity matrix.
+
+```
+FUNCTION ResetTransform () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The identity matrix represents a transformation that does nothing. If the world transformation matrix of a **Graphics** object is the identity matrix, then no world transformation is applied to items drawn by that **Graphics** object.
+
+
