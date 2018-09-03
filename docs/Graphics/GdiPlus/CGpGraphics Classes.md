@@ -3291,7 +3291,7 @@ END SUB
 
 # <a name="ReleaseHDC"></a>ReleaseHDC (CGpGraphics)
 
-Releases a device context handle obtained by a previous call to the GetHDC method of this **Graphics** object.
+Releases a device context handle obtained by a previous call to the **GetHDC** method of this **Graphics** object.
 
 ```
 SUB ReleaseHDC (BYVAL hdc AS HDC)
@@ -3300,3 +3300,19 @@ SUB ReleaseHDC (BYVAL hdc AS HDC)
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hdc* | Handle to a device context obtained by a previous call to the **GetHDC** method of this **Graphics** object. |
+
+
+# <a name="ResetClip"></a>ResetClip (CGpGraphics)
+
+Sets the clipping region of this Graphics object to an infinite region.
+
+```
+FUNCTION ResetClip () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
