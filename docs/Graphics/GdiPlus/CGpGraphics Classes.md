@@ -3479,7 +3479,7 @@ END SUB
 
 # <a name="SetCompositingMode"></a>SetCompositingMode (CGpGraphics)
 
-Sets the compositing mode of this Graphics object.
+Sets the compositing mode of this **Graphics** object.
 
 ```
 FUNCTION SetCompositingMode (BYVAL nCompositingMode AS CompositingMode) AS GpStatus
