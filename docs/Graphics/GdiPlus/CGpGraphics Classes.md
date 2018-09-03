@@ -3736,3 +3736,50 @@ FUNCTION SetPixelOffsetMode (BYVAL nMode AS PixelOffsetMode) AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="SetRenderingOrigin"></a>SetRenderingOrigin (CGpGraphics)
+
+Sets the rendering origin of this **Graphics** object. The rendering origin is used to set the dither origin for 8-bits-per-pixel and 16-bits-per-pixel dithering and is also used to set the origin for hatch brushes.
+
+```
+FUNCTION SetRenderingOrigin (BYVAL x AS INT_, BYVAL y AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x* | Integer that specifies the x-coordinate of the rendering origin. |
+| *y* | Integer that specifies the y-coordinate of the rendering origin. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets the text-rendering hint to low quality and draws text. It then
+' gets the text-rendering hint, changes it to high quality, and draws more text to
+' demonstrate the difference.
+' ========================================================================================
+SUB Example_SetRenderingOrigin (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM hatchBrush AS CGpHatchBrush = CGpHatchBrush(HatchStyleDiagonalCross, GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 255, 255))
+   graphics.FillRectangle(@hatchBrush, 0, 0, 100, 50)
+   graphics.SetRenderingOrigin(3, 0)
+   graphics.FillRectangle(@hatchBrush, 0, 50, 100, 50)
+
+END SUB
+' ========================================================================================
+```
