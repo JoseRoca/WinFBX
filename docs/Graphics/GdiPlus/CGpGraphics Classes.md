@@ -4758,7 +4758,7 @@ END SUB
 ```
 
 
-# <a name="AddPolygon"></a>AddPolygon (CGpGraphicsPath)
+# <a name="AddRectangle"></a>AddRectangle (CGpGraphicsPath)
 
 Adds a rectangle to this path.
 
