@@ -3287,3 +3287,16 @@ SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="ReleaseHDC"></a>ReleaseHDC (CGpGraphics)
+
+Releases a device context handle obtained by a previous call to the GetHDC method of this **Graphics** object.
+
+```
+SUB ReleaseHDC (BYVAL hdc AS HDC)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hdc* | Handle to a device context obtained by a previous call to the **GetHDC** method of this **Graphics** object. |
