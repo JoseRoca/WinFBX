@@ -5432,7 +5432,7 @@ END SUB
 
 # <a name="IsOutlineVisible"></a>IsOutlineVisible (CGpGraphicsPath)
 
-Determines whether a specified point touches the outline of this path when the path is drawn by a specified Graphics object and a specified pen.
+Determines whether a specified point touches the outline of this path when the path is drawn by a specified **Graphics** object and a specified pen.
 
 ```
 FUNCTION IsOutlineVisible (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL pPen AS CGpPen PTR, _
