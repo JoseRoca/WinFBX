@@ -2926,3 +2926,70 @@ SUB Example_GetVisibleClipBounds (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="IntersectClip"></a>IntersectClip (CGpGraphics)
+
+Updates the clipping region of this **Graphics** object to the portion of the specified rectangle that intersects with the current clipping region of this **Graphics** object.
+
+```
+FUNCTION IntersectClip (BYVAL rc AS GpRectF PTR) AS GpStatus
+FUNCTION IntersectClip (BYVAL rc AS GpRect PTR) AS GpStatus
+FUNCTION IntersectClip (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL nWidth AS SINGLE, _
+   BYVAL nHeight AS SINGLE) AS GpStatus
+FUNCTION IntersectClip (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, BYVAL nHeight AS INT_) AS GpStatus
+FUNCTION IntersectClip (BYVAL pRegion AS CGpRegion PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *rc* | Reference to a rectangle that is used to update the clipping region. |
+| *pRegion* | Pointer to a region that is used to update the clipping region of this **Graphics** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets a clipping region and updates the clipping region. It then
+' draws rectangles to demonstrate the effective clipping region.
+' ========================================================================================
+SUB Example_IntersectClip (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Set the clipping region.
+   DIM clipRect AS GpRectF
+   clipRect.x = 0.5 : clipRect.y = 0.5 : clipRect.Width = 200.5 : clipRect.Height = 200.5
+   graphics.SetClip(@clipRect)
+
+   ' // Update the clipping region to the portion of the rectangle that
+   ' // intersects with the current clipping region.
+   DIM rcIntersect AS GpRectF
+   rcIntersect.x = 100.5 : rcIntersect.y = 100.5 : rcIntersect.Width = 200.5 : rcIntersect.Height = 200.5
+   graphics.IntersectClip(@rcIntersect)
+
+   ' // Fill a rectangle to demonstrate the effective clipping region.
+   graphics.FillRectangle(@CGpSolidBrush(GDIP_ARGB(255, 0, 0, 255)), 0, 0, 500, 500)
+
+   ' // Reset the clipping region to infinite.
+   graphics.ResetClip
+
+   ' // Draw clipRect and intersectRect.
+   graphics.DrawRectangle(@CGpPen(GDIP_ARGB(255, 0, 0, 0)), @clipRect)
+   graphics.DrawRectangle(@CGpPen(GDIP_ARGB(255, 255, 0, 0)), @rcIntersect)
+
+END SUB
+' ========================================================================================
+```
