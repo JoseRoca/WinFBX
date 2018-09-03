@@ -3670,3 +3670,50 @@ SUB Example_PageScale (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="SetPageUnit"></a>SetPageUnit (CGpGraphics)
+
+Sets the unit of measure for this Graphics object. The page unit belongs to the page transformation, which converts page coordinates to device coordinates.
+
+```
+FUNCTION SetPageUnit (BYVAL unit AS GpUnit) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *unit* | Element of the **GpUnit** enumeration that specifies the unit of measure for this **Graphics** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example draws two rectangles: one measured in pixels and one measured in inches.
+' ========================================================================================
+SUB Example_SetPageUnit (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Set the page units to pixels, and draw a rectangle.
+   graphics.SetPageUnit(UnitPixel)
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 0.0)
+   graphics.DrawRectangle(@blackPen, 0, 0, 100 * rxRatio, 100 * rxRatio)
+
+   ' // Set the page units to inches, and draw a rectangle.
+   graphics.SetPageUnit(UnitInch)
+   DIM bluePen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 0.0)
+   graphics.DrawRectangle(@bluePen, 2, 0, 1, 1)
+
+END SUB
+' ========================================================================================
+```
