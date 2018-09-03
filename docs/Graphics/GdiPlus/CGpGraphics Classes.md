@@ -5218,3 +5218,65 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
+
+# <a name="GetPathData"></a>GetPathData (CGpGraphicsPath)
+
+Gets an array of points and an array of point types from this path. Together, these two arrays define the lines, curves, figures, and markers of this path.
+
+```
+FUNCTION GetPathData (BYVAL pPathData AS GpPathData PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPathData* | Pointer to a **PathData** structure that receives the path data. The Points data member of the **PathData** structure receives a pointer to an array of **GpPointF** objects that contains the path points. The Types data member of the **PathData** structure receives a pointer to an array of bytes that contains the point types. The Count data member of the **PathData** structure receives an integer that indicates the number of elements in the Points array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates and draws a path that has a line, a rectangle, an ellipse,
+' and a curve. The code gets the path's points and types by passing the address of a PathData
+' structure to the GraphicsPath.GetPathData method. Then the code draws each of the path's data points.
+' ========================================================================================
+SUB Example_GetPathData (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM points(0 TO 4) AS GpPoint = {GDIP_POINT(200, 200), GDIP_POINT(250, 240), _
+      GDIP_POINT(200, 300), GDIP_POINT(300, 310), GDIP_POINT(250, 350)}
+   DIM path AS CGpGraphicsPath
+   path.AddLine(20, 100, 150, 200)
+   path.AddRectangle(40, 30, 80, 60)
+   path.AddEllipse(200, 30, 200, 100)
+   path.AddCurve(@points(0), 5)
+
+    ' // Draw the path
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 255)
+   graphics.DrawPath(@pen, @path)
+
+   ' // Get the path data
+   DIM pathData AS GDIP_PATHDATA
+   path.GetPathData(@pathData)
+
+   ' // Draw the path's data points
+   DIM brush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   FOR j AS LONG = 0 TO pathData.Count - 1
+      graphics.FillEllipse(@brush, pathData.Points[j].x - 3.0, _
+         pathData.Points[j].y - 3.0, 6.0, 6.0)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
