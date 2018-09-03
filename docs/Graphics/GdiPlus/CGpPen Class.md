@@ -48,7 +48,6 @@ Encapsulates a **Pen** object. A **Pen** object is a Windows GDI+ object used to
 | [SetMiterLimit](#SetMiterLimit) | Sets the miter limit of this **Pen** object. |
 | [SetStartCap](#SetStartCap) | Sets the start cap for this **Pen** object. |
 | [SetTransform](#SetTransform) | Sets the world transformation of this **Pen** object. |
-| [SetTransform](#SetTransform) | Sets the world transformation of this **Pen** object. |
 | [SetWidth](#SetWidth) | Sets the width for this **Pen** object. |
 | [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
 
@@ -2016,6 +2015,57 @@ SUB Example_SetStartCap (BYVAL hdc AS HDC)
    ' // Reset the start cap, and draw a third line.
    pen.SetStartCap(LineCapRound)
    graphics.DrawLine(@pen, 50, 110, 400, 210)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetTransform"></a>SetTransform
+
+Sets the world transformation of this **Pen** object.
+
+```
+FUNCTION SetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that specifies the world transformation. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a scale matrix and a Pen object, and then draws a rectangle.
+' The code then scales the pen by the matrix and draws a second rectangle.
+' ========================================================================================
+SUB Example_SetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a pen, and use it to draw a rectangle
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 2)
+   graphics.DrawRectangle(@pen, 10, 50, 150, 100)
+
+   ' // Scale the pen width by a factor of 20 in the horizontal
+   ' // direction and a factor of 10 in the vertical direction.
+   DIM matrix AS CGpMatrix = CGpMatrix(20, 0, 0, 10, 0, 0)
+   pen.SetTransform(@matrix)
+
+   ' // Draw a rectangle with the transformed pen.
+   graphics.DrawRectangle(@pen, 200, 50, 150, 100)
 
 END SUB
 ' ========================================================================================
