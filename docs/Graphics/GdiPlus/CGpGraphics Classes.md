@@ -3105,7 +3105,7 @@ If the visible clipping region of this Graphics object is empty, this method ret
 
 #### Remarks
 
-If the visible clipping region of a Graphics object is empty, there is no area left in which to draw. Consequently, nothing will be drawn when the visible clipping region is empty.
+If the visible clipping region of a **Graphics** object is empty, there is no area left in which to draw. Consequently, nothing will be drawn when the visible clipping region is empty.
 
 #### Example
 
