@@ -3385,4 +3385,4 @@ FUNCTION Save () AS GraphicsState
 
 #### Return value
 
-This method returns a value that identifies the saved state. Pass this value to the Restore method when you want to restore the state. The GraphicsState data type is defined in Gdiplusenums.inc.
+This method returns a value that identifies the saved state. Pass this value to the **Restore** method when you want to restore the state. The **GraphicsState** data type is defined in Gdiplusenums.inc.
