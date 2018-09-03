@@ -167,3 +167,52 @@ SUB Example_GetAlignment (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetBrush"></a>GetBrush (CGpPen)
+
+Gets the the **Brush** object that is currently set for this **Pen** object.
+
+```
+FUNCTION GetBrush (BYVAL pBrush AS CGpBrush PTR) AS GpStatus
+```
+
+#### Return value
+
+This method returns a pointer to a Brush object that is currently used to fill a line.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Brush object, creates a Pen object based on the Brush
+' object, draws a line with the pen, gets the Brush from the pen, and then uses the Brush
+' to fill a rectangle.
+' ========================================================================================
+SUB Example_GetBrush (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a HatchBrush object
+   DIM hatchBrush AS CGpHatchBrush = CGpHatchBrush(HatchStyleVertical, GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Create a pen, and set the brush for the pen
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 0, 0), 10)
+   pen.SetBrush(@hatchBrush)
+
+   ' // Draw a line with the pen
+   graphics.DrawLine(@pen, 0, 0, 200, 100)
+
+   ' // Get the pen's brush, and use that brush to fill a rectangle.
+   DIM pBrush AS CGpBrush
+   pen.GetBrush(@pBrush)
+   graphics.FillRectangle(@pBrush, 0, 100, 200, 100)
+
+END SUB
+' ========================================================================================
+```
