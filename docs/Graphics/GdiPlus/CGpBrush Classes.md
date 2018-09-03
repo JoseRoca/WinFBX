@@ -11,6 +11,7 @@ A closed shape, such as a rectangle or an ellipse, consists of an outline and an
 
 | Name       | Description |
 | ---------- | ----------- |
+| [Constructor](#ConstructorBrush) | Creates a **Brush** object from another **Brush** object. |
 | [Clone](#CloneBrush) | Copies the contents of the existing **Brush** object into a new **Brush** object. |
 | [GetType](#GetTypeBrush) | Gets the type of this brush. |
 
