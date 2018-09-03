@@ -3674,7 +3674,7 @@ END SUB
 
 # <a name="SetPageUnit"></a>SetPageUnit (CGpGraphics)
 
-Sets the unit of measure for this Graphics object. The page unit belongs to the page transformation, which converts page coordinates to device coordinates.
+Sets the unit of measure for this **Graphics** object. The page unit belongs to the page transformation, which converts page coordinates to device coordinates.
 
 ```
 FUNCTION SetPageUnit (BYVAL unit AS GpUnit) AS GpStatus
