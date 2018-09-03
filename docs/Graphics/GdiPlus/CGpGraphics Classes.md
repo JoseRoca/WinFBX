@@ -151,9 +151,9 @@ The **CGpGraphicsPathIterator** class provides methods for isolating selected su
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorsGraphicsPathIterator) | Creates a new **GraphicsPathIterator** object and associates it with a GraphicsPath object. |
-| [CopyData](#CopyData) | Copies a subset of the path's data points to a PointF array and copies a subset of the path's point types to a BYTE array. |
-| [Enumerate](#Enumerate) | Copies the path's data points to a PointF array and copies the path's point types to a BYTE array. |
+| [Constructors](#ConstructorGraphicsPathIterator) | Creates a new **GraphicsPathIterator** object and associates it with a **GraphicsPath** object. |
+| [CopyData](#CopyData) | Copies a subset of the path's data points to a **GpPointF** array and copies a subset of the path's point types to a byte array. |
+| [Enumerate](#Enumerate) | Copies the path's data points to a **GpPointF** array and copies the path's point types to a byte array. |
 | [GetCount](#GetCount) | Returns the number of data points in the path. |
 | [GetSubpathCount](#GetSubpathCount) | Returns the number of subpaths (also called figures) in the path. |
 | [HasCurve](#HasCurve) | Determines whether the path has any curves. |
@@ -5929,3 +5929,36 @@ SUB Example_Widen (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="ConstructorsGraphicsPathIterator"></a>Constructor (CGpGraphicsPathIterator)
+
+Creates a **Graphics** object that is associated with a specified device context. When you use this method to create a **Graphics** object, make sure that the **Graphics** object is deleted before the device context is released.
+
+```
+CONSTRUCTOR CGpGraphicsPathIterator (BYVAL pPath AS CGpGraphicsPath PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPath* | Pointer to a **GraphicsPath** object that will be associated with this **GraphicsPathIterator** object. |
+
+
+# <a name="CopyData"></a>CopyData (CGpGraphicsPathIterator)
+
+Copies a subset of the path's data points to a PointF array and copies a subset of the path's point types to a BYTE array.
+
+```
+FUNCTION CopyData (BYVAL pts AS GpPointF PTR, BYVAL types AS BYTE PTR, _
+   BYVAL startIndex AS INT_, BYVAL endIndex AS INT_) AS INT_
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pts* | Pointer to an array that receives a subset of the path's data points. |
+| *types* | Pointer to an array that receives a subset of the path's point types. |
+| *startIndex* | Integer that specifies the starting index of the points and types to be copied. |
+| *endIndex* | Integer that specifies the ending index of the points and types to be copied. |
+
+#### Return value
+
+This method returns the number of points copied. This is the same as the number of types copied.
