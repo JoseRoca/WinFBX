@@ -4539,3 +4539,53 @@ SUB Example_AddLine (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="AddLines"></a>AddLines (CGpGraphicsPath)
+
+Adds a sequence of connected lines to the current figure of this path.
+
+```
+FUNCTION AddLines (BYVAL pts AS GpPointF PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION AddLines (BYVAL pts AS GpPoint PTR, BYVAL count AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pts* | Pointer to an array of points that specify the starting and ending points of the lines. The first point in the array is the starting point of the first line, and the last point in the array is the ending point of the last line. Each of the other points serves as ending point for one line and starting point for the next line. |
+| *count* | Integer that specifies the number of elements in the *pts* array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object path, adds a sequence of four
+' connected lines to path, and then draws path.
+' ========================================================================================
+SUB Example_AddLines (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM pts(0 TO 4) AS GpPoint = {GDIP_POINT(20, 20), GDIP_POINT(30, 30), GDIP_POINT(40, 24), _
+      GDIP_POINT(50, 30), GDIP_POINT(60, 20)}
+   DIM path AS CGpGraphicsPath
+   path.AddLines(@pts(0), 5)
+
+   ' // Draw the path
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawPath(@pen, @path)
+
+END SUB
+' ========================================================================================
+```
