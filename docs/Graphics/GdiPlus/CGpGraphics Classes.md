@@ -3162,7 +3162,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 
 
-# <a name="MeasureCharacterRanges"></a>MeasureCharacterRanges (CGpGraphics)
+# <a name="MeasureDriverString"></a>MeasureDriverString (CGpGraphics)
 
 Measures the bounding box for the specified characters and their corresponding positions.
 
