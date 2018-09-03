@@ -3232,3 +3232,58 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
+
+# <a name="MultiplyTransform"></a>MultiplyTransform (CGpGraphics)
+
+Updates this **Graphics** object's world transformation matrix with the product of itself and another matrix.
+
+```
+FUNCTION MultiplyTransform (BYVAL pMatrix AS CGpMatrix PTR, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a matrix that will be multiplied by the world transformation matrix of this **Graphics** object. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example calls the Graphics.RotateTransform method of a Graphics object to
+' fill its world transformation matrix with the elements that represent a 30-degree rotation.
+' Then the code calls the MultiplyTransform method to replace the world transformation matrix
+' (which represents the 30-degree rotation) of the Graphics object with the product of itself
+' and a translation matrix. At that point, the world transformation matrix of the Graphics
+' object represents a composite transformation: first rotate, then translate. Finally, the
+' code calls the DrawEllipse method to draw an ellipse that is rotated and translated.
+' ========================================================================================
+SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM matrix AS CGpMatrix
+   matrix.Translate(150 * rxRatio, 100 * rxRatio)
+
+   graphics.RotateTransform(30)   ' // first rotate
+   graphics.MultiplyTransform(@matrix, MatrixOrderAppend)   ' // then translate
+
+   DIM bluePen AS CGpPen = GDIP_ARGB(255, 0, 0, 255)
+   graphics.DrawEllipse(@bluePen, -80, -40, 160, 80)
+
+END SUB
+' ========================================================================================
+```
