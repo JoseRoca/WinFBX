@@ -5052,3 +5052,72 @@ SUB Example_CloseFigure (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="Flatten"></a>Flatten (CGpGraphicsPath)
+
+Applies a transformation to this path and converts each curve in the path to a sequence of connected lines.
+
+```
+FUNCTION Flatten (BYVAL pMatrix AS CGpMatrix PTR = NULL, BYVAL flatness AS SINGLE = FlatnessDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Optional. Pointer to a Matrix object that specifies the transformation to be applied to the path's data points. The default value is NULL, which specifies that no transformation is to be applied. |
+| *flatness* | Optional. The maximum error between the path and its flattened approximation. Reducing the flatness increases the number of line segments in the approximation. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object and then adds a curve (cardinal spline),
+' an ellipse, and a Bézier spline to the path. The code draws the path in blue, flattens
+' the path, and then draws the flattened path in green. The call to GraphicsPath.GetPathData
+' gets the data points stored by the flattened path. The code draws each of those points by
+' filling a small ellipse with red.
+' ========================================================================================
+SUB Example_Flatten (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM pts(0 TO 3) AS GpPoint = {GDIP_POINT(20, 50), GDIP_POINT(40, 70), GDIP_POINT(60, 10), GDIP_POINT(80, 50)}
+   DIM path AS CGpGraphicsPath
+   path.AddCurve(@pts(0), 4)
+   path.AddEllipse(20, 100, 150, 80)
+   path.AddBezier(20, 200, 20, 250, 50, 210, 100, 260)
+
+   ' // Draw the path before flattening
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 255)
+   graphics.DrawPath(@pen, @path)
+
+   path.Flatten(NULL, 8.0)
+
+   ' // Draw the flattened path
+   pen.SetColor(GDIP_ARGB(255, 0, 255, 0))
+   graphics.DrawPath(@pen, @path)
+
+   ' // Get the path data from the flattened path.
+   DIM pathData AS GDIP_PATHDATA
+   path.GetPathData(@pathData)
+
+   ' // Draw the data points of the flattened path
+   DIM brush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   FOR j AS LONG = 0 TO pathData.Count - 1
+      graphics.FillEllipse(@brush, pathData.Points[j].x - 3.0, _
+         pathData.Points[j].y - 3.0, 6.0, 6.0)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
