@@ -3344,12 +3344,32 @@ Sets the state of this **Graphics** object to the state stored by a previous cal
 FUNCTION Restore (BYVAL gstate AS GraphicsState) AS GpStatus
 ```
 
+| Parameter  | Description |
+| ---------- | ----------- |
+| *gstate* | 32-bit value (returned by a previous call to the **Save** method of this Graphics object) that identifies a block of saved state. |
+
 #### Return value
 
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
+
+# <a name="RotateTransform"></a>RotateTransform (CGpGraphics)
+
+Updates the world transformation matrix of this **Graphics** object with the product of itself and a rotation matrix.
+
+```
+FUNCTION RotateTransform ( BYVAL angle AS SINGLE, BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
-| *gstate* | 32-bit value (returned by a previous call to the **Save** method of this Graphics object) that identifies a block of saved state. |
+| *angle* | The angle, in degrees, of rotation. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
