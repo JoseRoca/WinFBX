@@ -909,3 +909,55 @@ SUB Example_GetPenType (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetStartCap"></a>GetStartCap
+
+Gets the start cap currently set for this **Pen** object.
+
+```
+FUNCTION GetStartCap () AS LineCap
+```
+
+#### Return value
+
+This method returns an element of the **LineCap** enumeration that specifies the start cap for this **Pen** object.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the start cap, and draws a line. The
+' code then gets the start cap, creates a second pen based on the first pen, and draws a
+' second line.
+' ========================================================================================
+SUB Example_GetStartCap (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 15)
+
+   ' // Set the start cap of the pen, and draw a line.
+   pen.SetStartCap(LineCapArrowAnchor)
+   graphics.DrawLine(@pen, 20, 20, 200, 100)
+
+   ' // Obtain the end cap for the pen.
+   DIM nLineCap AS LineCap
+   nLineCap = pen.GetStartCap
+
+   ' // Create another pen, and use the same end cap.
+   DIM pen2 AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 15)
+   pen2.SetStartCap(nLineCap)
+
+   ' // Draw a second line.
+   graphics.DrawLine(@pen2, 20, 60, 200, 140)
+
+END SUB
+' ========================================================================================
+```
