@@ -2,8 +2,8 @@
 
 An **ImageAttributes** object contains information about how bitmap and metafile colors are manipulated during rendering. An ImageAttributes object maintains several color-adjustment settings, including color-adjustment matrices, grayscale-adjustment matrices, gamma-correction values, color-map tables, and color-threshold values.
 
-**Inherits from**: CGpBase.
-**Imclude file**: CGpImageAttributes.inc.
+**Inherits from**: CGpBase.<br>
+**Include file**: CGpImageAttributes.inc.
 
 | Name       | Description |
 | ---------- | ----------- |
