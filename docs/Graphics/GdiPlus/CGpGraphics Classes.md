@@ -131,7 +131,7 @@ The **CGpGraphicsPath** allows the creation of **GraphicPath** objects. A **Grap
 | [GetPathTypes](#GetPathTypes) | Gets this path's array of point types. |
 | [GetPointCount](#GetPointCount) | Gets the number of points in this path's array of data points. |
 | [IsOutlineVisible](#IsOutlineVisible) | Determines whether a specified point touches the outline of this path when the path is drawn by a specified Graphics object and a specified pen. |
-| [IsVisible](#IsVisible) | Determines whether a specified point lies in the area that is filled when this path is filled by a specified Graphics object. |
+| [IsVisible](#IsVisible) | Determines whether a specified point lies in the area that is filled when this path is filled by a specified **Graphics** object. |
 | [Outline](#Outline) | Transforms and flattens this path, and then converts this path's data points so that they represent only the outline of the path. |
 | [Reset](#Reset) | Empties the path and sets the fill mode to **FillModeAlternate**. |
 | [Reverse](#Reverse) | Reverses the order of the points that define this path's lines and curves. |
@@ -5423,6 +5423,77 @@ SUB Example_GetPointCount (BYVAL hdc AS HDC)
 
    FOR j AS LONG = 0 TO nCount - 1
       graphics.FillEllipse(@redBrush, points(j).x - 3.0, points(j).y - 3.0, 6.0, 6.0)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
+
+# <a name="IsOutlineVisible"></a>IsOutlineVisible (CGpGraphicsPath)
+
+Determines whether a specified point touches the outline of this path when the path is drawn by a specified Graphics object and a specified pen.
+
+```
+FUNCTION IsOutlineVisible (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL pPen AS CGpPen PTR, _
+   BYVAL pGraphics AS CGpGraphics PTR = NULL) AS BOOLEAN
+FUNCTION IsOutlineVisible (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL pPen AS CGpPen PTR, _
+   BYVAL pGraphics AS CGpGraphics PTR = NULL) AS BOOLEAN
+FUNCTION IsOutlineVisible (BYVAL pt AS GpPointF PTR, BYVAL pPen AS CGpPen PTR, _
+   BYVAL pGraphics AS CGpGraphics PTR = NULL) AS BOOLEAN
+FUNCTION IsOutlineVisible (BYVAL pt AS GpPoint PTR, BYVAL pPen AS CGpPen PTR, _
+   BYVAL pGraphics AS CGpGraphics PTR = NULL) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x* | The x-coordinate of the point to be tested. |
+| *y* | The x-coordinate of the point to be tested. |
+| *pPen* | Pointer to a Pen object. This method determines whether the test point touches the path outline that would be drawn by this pen. More points will touch an outline drawn by a wide pen than will touch an outline drawn by a narrow pen. |
+| *pGraphics* | Optional. Pointer to a **Graphics** object that specifies a world-to-device transformation. If the value of this parameter is NULL, the test is done in world coordinates; otherwise, the test is done in device coordinates. The default value is NULL.  |
+
+#### Return value
+
+If the test point touches the outline of this path, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates an elliptical path and draws that path with a wide yellow
+' pen. Then the code tests each point in an array to see whether the point touches the
+' outline (as it would be drawn by the wide yellow pen) of the path. Points that touch the
+' outline are painted green, and points that don't touch the outline are painted red.
+' ========================================================================================
+SUB Example_IsOutlineVisible (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM yellowPen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 255, 0), 20)
+   DIM brush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0,  0)
+
+   ' // Create and draw a path
+   DIM path AS CGpGraphicsPath
+   path.AddEllipse(50, 50, 200, 100)
+   graphics.DrawPath(@yellowPen, @path)
+   
+   ' // Create an array of three points, and determine whether each
+   ' // point in the array touches the outline of the path.
+   ' // If a point touches the outline, paint it green.
+   ' // If a point does not touch the outline, paint it red.
+   DIM points(0 TO 2) AS GpPoint = {GDIP_POINT(230, 138), GDIP_POINT(100, 120), GDIP_POINT(150, 170)}
+   FOR j AS LONG = 0 TO 2
+      IF path.IsOutlineVisible(points(j).x, points(j).y, @yellowPen, NULL) THEN
+         brush.SetColor(GDIP_ARGB(255, 0, 255,  0))
+      ELSE
+         brush.SetColor(GDIP_ARGB(255, 255, 0,  0))
+      END IF
+      graphics.FillEllipse(@brush, points(j).x - 3, points(j).y - 3, 6, 6)
    NEXT
 
 END SUB
