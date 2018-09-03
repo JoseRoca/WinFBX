@@ -2836,3 +2836,42 @@ FUNCTION GetSmoothingMode () AS SmoothingMode
 #### Return value
 
 If smoothing (antialiasing) is applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias**. If smoothing (antialiasing) is not applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias** and **SmoothingModeNone** are elements of the **SmoothingMode** enumeration.
+
+
+# <a name="GetTextContrast"></a>GetTextContrast (CGpGraphics)
+
+Gets the contrast value currently set for this **Graphics** object. The contrast value is used for antialiasing text.
+
+```
+FUNCTION GetTextContrast () AS UINT
+```
+
+
+# <a name="GetTextRenderingHint"></a>GetTextRenderingHint (CGpGraphics)
+
+Returns the text rendering mode currently set for this **Graphics** object.
+
+```
+FUNCTION GetTextRenderingHint () AS TextRenderingHint
+```
+
+
+# <a name="GetTransform"></a>GetTransform (CGpGraphics)
+
+Gets the world transformation matrix of this **Graphics** object.
+
+```
+FUNCTION GetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that receives the transformation matrix. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
