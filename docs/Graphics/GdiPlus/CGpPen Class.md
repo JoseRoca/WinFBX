@@ -55,7 +55,7 @@ Encapsulates a **Pen** object. A **Pen** object is a Windows GDI+ object used to
 
 # <a name="Constructors"></a>Constructors (CGpPen)
 
-Creates a Pen object that uses a specified color and width.
+Creates a **Pen** object that uses a specified color and width.
 
 ```
 CONSTRUCTOR CGpPen (BYVAL pBrush AS CGpBrush PTR, BYVAL nWidth AS SINGLE = 1.0)
@@ -65,8 +65,20 @@ CONSTRUCTOR CGpPen (BYVAL colour AS ARGB, BYVAL nWidth AS SINGLE = 1.0)
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pBrush* | Pointer to a brush to base this pen on. |
-| *colour* | An ARGB color that specifies the color for this Pen object. |
+| *colour* | An ARGB color that specifies the color for this **Pen** object. |
 | *nWidth* | The width of this pen's stroke. The default value is 1.0. |
+
+#### Remarks
+
+If you pass the address of a pen to one of the draw methods of a **Graphics** object, the width of the pen's stroke is dependent on the unit of measure specified in the **Graphics** object. The default unit of measure is **UnitPixel**, which is an element of the **GpUnit** enumeration.
+
+# <a name="Clone"></a>Clone (CGpPen)
+
+Copies the contents of the existing **Pen** object into a new **Pen** object.
+
+```
+FUNCTION Clone (BYVAL pClonePen AS CGpPen PTR) AS GpStatus
+```
 
 #### Return value
 
@@ -74,6 +86,35 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
-#### Remarks
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pClonePen* | Pointer to the **Pen** object where to copy the contents of the existing object. |
 
-If you pass the address of a pen to one of the draw methods of a **Graphics** object, the width of the pen's stroke is dependent on the unit of measure specified in the **Graphics** object. The default unit of measure is **UnitPixel**, which is an element of the **GpUnit** enumeration.
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, creates a copy of the Pen object, and then
+' draws an ellipse using the copied Pen object.
+' ========================================================================================
+SUB Example_ClonePen (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create and clone a Pen object.
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 4)
+   DIM clonedPen AS CGpPen
+   pen.Clone(@clonedPen)
+
+   ' // Draw a rectangle using the cloned Pen object.
+   graphics.DrawRectangle(@clonedPen, 10, 10, 100, 50)
+
+END SUB
+' ========================================================================================
+```
