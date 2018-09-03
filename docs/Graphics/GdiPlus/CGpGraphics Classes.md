@@ -5986,3 +5986,16 @@ This method returns the number of points retrieved.
 This **GraphicsPathIterator** object is associated with a **GraphicsPath** object. That **GraphicsPath** object has an array of points and an array of types. Each element in the array of types is a byte that specifies the point type and a set of flags for the corresponding element in the array of points. Possible point types and flags are listed in the **PathPointType** enumeration.
 
 You can call the **GetCount** method to determine the number of data points in the path. The points parameter points to a buffer that receives the data points, and the types parameter points to a buffer that receives the types. Before you call the **Enumerate** method, you must allocate memory for those buffers. The size of the points buffer should be the return value of **GetCount** multiplied by **SIZEOF(GpPointF)**. The size of the types buffer should be the  return value of **GetCount**.
+
+# <a name="GetCount"></a>GetCount (CGpGraphicsPathIterator)
+
+Returns the number of data points in the path.
+
+```
+FUNCTION GetCount () AS INT_
+```
+
+#### Remarks
+
+This **GraphicsPathIterator** object is associated with a **GraphicsPath** object. That **GraphicsPath** object has an array of points and an array of types. Each element in the array of types is a byte that specifies the point type and a set of flags for the corresponding element in the array of points. Possible point types and flags are listed in the **PathPointType** enumeration.
+
