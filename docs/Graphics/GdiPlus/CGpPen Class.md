@@ -22,7 +22,6 @@ Encapsulates a **Pen** object. A **Pen** object is a Windows GDI+ object used to
 | [GetDashPatternCount](#GetDashPatternCount) | Gets the number of elements in a dash pattern array. |
 | [GetDashStyle](#GetDashStyle) | Gets the dash style currently set for this **Pen** object. |
 | [GetEndCap](#GetEndCap) | Gets the end cap currently set for this **Pen** object. |
-| [GetEndCap](#GetEndCap) | Gets the end cap currently set for this **Pen** object. |
 | [GetLineJoin](#GetLineJoin) | Gets the line join style currently set for this **Pen** object. |
 | [GetMiterLimit](#GetMiterLimit) | Gets the miter length currently set for this **Pen** object. |
 | [GetPenType](#GetPenType) | Gets the type currently set for this **Pen** object. |
@@ -689,6 +688,58 @@ SUB Example_GetDashPattern (BYVAL hdc AS HDC)
    FOR j AS LONG = 0 TO nCount - 1
       OutputDebugStringW WSTR(dashValues(j))
    NEXT
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetDashStyle"></a>GetDashStyle
+
+Gets the dash style currently set for this **Pen** object.
+
+```
+FUNCTION GetDashStyle () AS DashStyle
+```
+
+#### Return value
+
+This method returns an element of the DashStyle enumeration that indicates the dash style for this **Pen** object.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the dash style, and draws a dashed line.
+' The code then gets the dash style, creates a second pen with the dash style of the first
+' pen, and draws a second dashed line.
+' ========================================================================================
+SUB Example_GetDashStyle (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 0, 0), 9)
+
+   ' // Set the dash style for the pen
+   pen.SetDashStyle(DashStyleDashDot)
+   graphics.DrawLine(@pen, 20, 20, 200, 100)
+
+   ' // Obtain the dash style for the pen.
+   DIM nDashStyle AS DashStyle
+   nDashStyle = pen.GetDashStyle
+
+   ' // Create another pen, and use the same dash style.
+   DIM pen2 AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), 9)
+   pen2.SetDashStyle(nDashStyle)
+
+   ' // Draw a second dashed line.
+   graphics.DrawLine(@pen2, 20, 60, 200, 140)
 
 END SUB
 ' ========================================================================================
