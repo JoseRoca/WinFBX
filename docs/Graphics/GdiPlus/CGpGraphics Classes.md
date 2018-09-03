@@ -3931,3 +3931,81 @@ SUB Example_SetTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="TransformPoints"></a>TransformPoints (CGpGraphics)
+
+Converts an array of points from one coordinate space to another. The conversion is based on the current world and page transformations of this **Graphics** object.
+
+```
+FUNCTION TransformPoints (BYVAL destSpace AS CoordinateSpace, BYVAL srcSpace AS CoordinateSpace, _
+   BYVAL pts AS GpPointF PTR, BYVAL count AS LONG) AS GpStatus
+FUNCTION TransformPoints (BYVAL destSpace AS CoordinateSpace, BYVAL srcSpace AS CoordinateSpace, _
+   BYVAL pts AS GpPoint PTR, BYVAL count AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *destSpace* | Element of the **CoordinateSpace** enumeration that specifies the destination coordinate space. |
+| *srcSpace* | Element of the **CoordinateSpace** enumeration that specifies the source coordinate space. |
+| *pts* | Pointer to an array that, on input, holds the points to be converted and, on output, holds the converted points. |
+| *count* | Integer that specifies the number of elements in the *pts* array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Graphics object and sets its world transformation to a
+' translation 40 units right and 30 units down. Then the code creates an array of points
+' and passes the address of that array to the Graphics::TransformPoints method of the same
+' Graphics object. The points in the array are transformed by the world transformation of
+' the Graphics object. The code calls the Graphics.DrawLine method twice: once to connect
+' the two points before the transformation and once to connect the two points after the
+' transformation.
+' ========================================================================================
+SUB Example_TransformPoints (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+'   Pen pen(Color(255, 0, 0, 255));
+   DIM bluePen AS CGpPen = GDIP_ARGB(255, 0, 0, 255)
+
+   ' // Create an array of two Point objects.
+   DIM rgPoints(0 TO 1) AS GpPoint
+   rgPoints(1).x = 100 : rgPoints(1).y = 50
+
+   ' // Draw a line that connects the two points.
+   ' // No transformation has been performed yet.
+   graphics.DrawLine(@bluePen, @rgPoints(0), @rgPoints(1))
+
+   ' // Set the world transformation of the Graphics object.
+   graphics.TranslateTransform(40, 30)
+
+   ' // Transform the points in the array from world to page coordinates.
+   graphics.TransformPoints(CoordinateSpacePage, CoordinateSpaceWorld, @rgPoints(0), 2)
+
+   ' // It is the world transformation that takes points from world
+   ' // space to page space. Because the world transformation is a
+   ' // translation 40 to the right and 30 down, the
+   ' // points in the array are now (40, 30) and (140, 80).
+
+   ' // Draw a line that connects the transformed points.
+   graphics.ResetTransform
+   DIM bluePen2 AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), rxRatio)
+   graphics.DrawLine(@bluePen2, @rgPoints(0), @rgPoints(1))
+
+END SUB
+' ========================================================================================
+```
