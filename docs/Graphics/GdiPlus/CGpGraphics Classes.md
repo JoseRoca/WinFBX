@@ -5651,3 +5651,21 @@ FUNCTION Reverse () AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="SetFillMode"></a>SetFillMode (CGpGraphicsPath)
+
+Sets the fill mode of this path.
+
+```
+FUNCTION SetFillMode (BYVAL nFillmode AS FillMode) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nFillmode* | Element of the **FillMode** enumeration that specifies how to fill areas when the path intersects itself. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
