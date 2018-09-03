@@ -4203,7 +4203,7 @@ END SUB
 ```
 
 
-# <a name="AddArc"></a>AddArc (CGpGraphicsPath)
+# <a name="AddBezier"></a>AddBezier (CGpGraphicsPath)
 
 Adds a Bézier spline to the current figure of this path.
 
