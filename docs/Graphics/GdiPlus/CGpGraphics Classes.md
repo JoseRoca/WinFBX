@@ -4137,7 +4137,7 @@ CONSTRUCTOR CGpGraphicsPath (BYVAL pts AS GpPoint PTR, _
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pts* | Pointer to an array of points that specifies the endpoints and control points of the lines and Bezier splines that are used to draw the path. |
+| *pts* | Pointer to an array of points that specifies the endpoints and control points of the lines and Bézier splines that are used to draw the path. |
 | *types* | Pointer to an array of bytes that holds the point type and a set of flags for each point in the points array. The point type is stored in the three least significant bits, and the flags are stored in the four most significant bits. Possible point types and flags are listed in the PathPointType enumeration. |
 | *nCount* | Integer that specifies the number of elements in the points array. This is the same as the number of elements in the types array. |
 | *nCount* | Optional. Element of the **FillMode** enumeration that specifies how areas are filled if the path intersects itself. The default value is **FillModeAlternate**. |
