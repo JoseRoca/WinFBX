@@ -5999,3 +5999,10 @@ FUNCTION GetCount () AS INT_
 
 This **GraphicsPathIterator** object is associated with a **GraphicsPath** object. That **GraphicsPath** object has an array of points and an array of types. Each element in the array of types is a byte that specifies the point type and a set of flags for the corresponding element in the array of points. Possible point types and flags are listed in the **PathPointType** enumeration.
 
+# <a name="GetSubpathCount"></a>GetSubpathCount (CGpGraphicsPathIterator)
+
+Returns the number of subpaths (also called figures) in the path.
+
+```
+FUNCTION GetSubpathCount () AS INT_
+```
