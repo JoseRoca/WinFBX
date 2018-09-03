@@ -2875,3 +2875,54 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
+
+# <a name="GetVisibleClipBounds"></a>GetVisibleClipBounds (CGpGraphics)
+
+Gets a rectangle that encloses the visible clipping region of this **Graphics** object. The visible clipping region is the intersection of the clipping region of this **Graphics** object and the clipping region of the window.
+
+```
+FUNCTION GetVisibleClipBounds (BYVAL rc AS GpRectF PTR) AS GpStatus
+FUNCTION GetVisibleClipBounds (BYVAL rc AS GpRect PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *rc* | Pointer to a **GpRectF** or **GpRect** object that receives the rectangle that encloses the visible clipping region. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets the clipping region for the Graphics object. It then gets a
+' rectangle that encloses the visible clipping region and fills that rectangle.
+' ========================================================================================
+SUB Example_GetVisibleClipBounds (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   '// Set the clipping region.
+   DIM rc AS GpRect : rc.x = 100 : rc.y = 100 : rc.Width = 200 : rc.Height = 100
+   graphics.SetClip(@rc)
+
+   ' // Get a bounding rectangle for the clipping region.
+   DIM boundRect AS GpRect
+   graphics.GetVisibleClipBounds(@boundRect)
+
+   ' // Fill the bounding rectangle.
+   graphics.FillRectangle(@CGpSolidBrush(GDIP_ARGB(255, 0, 0, 0)), @boundRect)
+
+END SUB
+' ========================================================================================
+```
