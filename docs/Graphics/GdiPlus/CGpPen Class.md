@@ -53,7 +53,7 @@ Encapsulates a **Pen** object. A **Pen** object is a Windows GDI+ object used to
 | [SetWidth](#SetWidth) | Sets the width for this **Pen** object. |
 | [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
 
-# <a name="Constructors"></a>Constructors (CGpPen)
+# <a name="Constructors"></a>Constructors
 
 Creates a **Pen** object that uses a specified color and width.
 
@@ -72,7 +72,7 @@ CONSTRUCTOR CGpPen (BYVAL colour AS ARGB, BYVAL nWidth AS SINGLE = 1.0)
 
 If you pass the address of a pen to one of the draw methods of a **Graphics** object, the width of the pen's stroke is dependent on the unit of measure specified in the **Graphics** object. The default unit of measure is **UnitPixel**, which is an element of the **GpUnit** enumeration.
 
-# <a name="Clone"></a>Clone (CGpPen)
+# <a name="Clone"></a>Clone
 
 Copies the contents of the existing **Pen** object into a new **Pen** object.
 
@@ -119,7 +119,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="GetAlignment"></a>GetAlignment (CGpPen)
+# <a name="GetAlignment"></a>GetAlignment
 
 Gets the alignment currently set for this **Pen** object.
 
@@ -168,7 +168,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="GetBrush"></a>GetBrush (CGpPen)
+# <a name="GetBrush"></a>GetBrush
 
 Gets the the **Brush** object that is currently set for this **Pen** object.
 
@@ -217,7 +217,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="GetColor"></a>GetColor (CGpPen)
+# <a name="GetColor"></a>GetColor
 
 Gets the color currently set for this **Pen** object.
 
@@ -227,7 +227,7 @@ FUNCTION GetColor (BYVAL colour AS ARGB PTR) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *colour* | Pointer to a variable that receives the color of this **Pen** object.  |
+| *colour* | Pointer to a variable that receives the color of this **Pen** object. |
 
 #### Return value
 
@@ -264,6 +264,67 @@ SUB Example_GetColor (BYVAL hdc AS HDC)
 
    ' // Use the brush to fill a rectangle.
    graphics.FillRectangle(@solidBrush, 0, 100, 200, 100)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetCompoundArray"></a>GetCompoundArray
+
+Gets the the compound array currently set for this Pen object.
+
+```
+FUNCTION GetCompoundArray (BYVAL compoundArray AS SINGLE PTR, BYVAL count AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *compoundArray* | Pointer to an array that receives the compound array. |
+| *count* | Integer that specifies the number of elements in the *compoundArray* array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example declares an array, sets the compound array, draws a line, and gets
+' the number of elements in the compound array.
+' ========================================================================================
+SUB Example_GetCompoundArray (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create an array of real numbers and a Pen object.
+   DIM compVals(0 TO 5) AS SINGLE = {0.0, 0.2, 0.5, 0.7, 0.9, 1.0}
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 30)
+
+   ' // Set the compound array of the pen.
+   pen.SetCompoundArray(@compVals(0), 6)
+
+   ' // Draw a line with the pen.
+   graphics.DrawLine(@pen, 5, 20, 405, 200)
+
+   ' // Obtain information about the pen
+   DIM compValues(ANY) AS SINGLE
+   DIM nCount AS LONG = pen.GetCompoundArrayCount
+   REDIM compValues(nCount -1)
+   pen.GetCompoundArray(@compValues(0), nCount)
+
+   FOR j AS LONG = 0 TO nCount - 1
+      ' // Inspect or use the value in compValues(j)
+      PRINT compValues(j)
+   NEXT
 
 END SUB
 ' ========================================================================================
