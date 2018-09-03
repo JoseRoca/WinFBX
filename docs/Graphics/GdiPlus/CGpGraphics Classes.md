@@ -5965,7 +5965,7 @@ This method returns the number of points copied. This is the same as the number 
 
 # <a name="Enumerate"></a>Enumerate (CGpGraphicsPathIterator)
 
-Copies the path's data points to a GpPointF array and copies the path's point types to a byte array.
+Copies the path's data points to a **GpPointF** array and copies the path's point types to a byte array.
 
 ```
 FUNCTION Enumerate (BYVAL pts AS GpPointF PTR, BYVAL types AS BYTE PTR, BYVAL count AS INT_) AS INT_
