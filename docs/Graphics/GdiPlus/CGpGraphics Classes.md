@@ -4299,7 +4299,7 @@ FUNCTION AddClosedCurve (BYVAL pts AS GpPoint PTR, BYVAL count AS INT_, BYVAL te
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pts* | Pointer to an array of points that define the cardinal spline. The cardinal spline is a curve that passes through each point in the array. |
-| *count* | Integer that specifies the number of elements in the pts array. |
+| *count* | Integer that specifies the number of elements in the *pts* array. |
 | *tension* | Nonnegative real number that controls the length of the curve and how the curve bends. A value of 0 specifies that the spline is a sequence of straight line segments. As the value increases, the curve becomes fuller. |
 
 #### Return value
