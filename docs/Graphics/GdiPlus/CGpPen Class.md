@@ -390,7 +390,7 @@ FUNCTION GetCustomEndCap (BYVAL pCustomLineCap AS CGpCustomLineCap PTR) AS GpSta
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pCustomLineCap* | Pointer to a CustomLineCap object that receives the custom end cap of this **Pen** object. |
+| *pCustomLineCap* | Pointer to a **CustomLineCap** object that receives the custom end cap of this **Pen** object. |
 
 #### Return value
 
@@ -439,6 +439,70 @@ SUB Example_GetCustomEndCap (BYVAL hdc AS HDC)
 
    ' // Draw a line using the second pen.
    graphics.DrawLine(@pen2, 0, 100, 200, 150)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetCustomStartCap"></a>GetCustomStartCap
+
+Gets the custom end cap currently set for this **Pen** object.
+
+```
+FUNCTION GetCustomStartCap (BYVAL pCustomLineCap AS CGpCustomLineCap PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pCustomLineCap* | Pointer to a **CustomLineCap** object that receives the custom start cap of this **Pen** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object and adds a rectangle to it. The code
+' then creates a Pen object, sets the custom start cap using the GraphicsPath object, and
+' draws a line. Finally, the code gets the custom start cap of the pen and creates another
+' Pen object using the same custom end cap. It then draws a second line.
+' ========================================================================================
+SUB Example_GetCustomStartCap (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a GraphicsPath object, and add a rectangle to it.
+   DIM pStrokePath AS CGpGraphicsPath
+   pStrokePath.AddRectangle(-10, -5, 20, 10)
+
+   ' // Create a pen, and set the custom start cap based on the GraphicsPath object.
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255))
+   DIM custCap AS CGpCustomLineCap = CGpCustomLineCap(NULL, @pStrokePath)
+   pen.SetCustomStartCap(@custCap)
+
+   ' // Draw a line with the custom start cap.
+   graphics.DrawLine(@pen, 20, 20, 200, 100)
+
+   ' // Obtain the custom start cap for the pen.
+   DIM customLineCap AS CGpCustomLineCap = CGpCustomLineCap(NULL, NULL)
+   pen.GetCustomStartCap(@customLineCap)
+
+   ' // Create another pen, and use the same custom end cap.
+   DIM pen2 AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), 3)
+   pen2.SetCustomStartCap(@customLineCap)
+
+   ' // Draw a line using the second pen.
+   graphics.DrawLine(@pen2, 50, 100, 200, 150)
 
 END SUB
 ' ========================================================================================
