@@ -255,6 +255,8 @@ SUB Example_CloneBrush (BYVAL hdc AS HDC)
    ' // Create a clone of solidBrush
    DIM cloneBrush AS CGpSolidBrush
    solidBrush.Clone(@cloneBrush)
+   ' // You can also use:
+   ' DIM cloneBrush AS CGpSolidBrush = @solidBrush
 
    ' // Use cloneBrush to fill a rectangle
    graphics.FillRectangle(@cloneBrush, 0, 0, 100, 100)
