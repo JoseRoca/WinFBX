@@ -961,3 +961,58 @@ SUB Example_GetStartCap (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetTransform"></a>GetTransform
+
+Gets the world transformation matrix currently set for this Pen object.
+
+```
+FUNCTION GetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a Matrix object that receives the transformation matrix. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object and sets its transformation. The code then
+' gets the transformation of the pen.
+' ========================================================================================
+SUB Example_GetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a pen and set its transformation.
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   pen.RotateTransform(45)
+
+   ' // Obtain information about the pen.
+   DIM matrix AS CGpMatrix
+   DIM elements(0 TO 5) AS SINGLE
+
+   pen.GetTransform(@matrix)
+   matrix.GetElements(@elements(0))
+
+   FOR j AS LONG = 0 TO 5
+      ' // Inspect or use the value in elements(js)
+      PRINT elements(j)
+   NEXT
+   
+END SUB
+' ========================================================================================
+```
