@@ -564,3 +564,81 @@ SUB Example_GetDashCap (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetDashOffset"></a>GetDashOffset
+
+Gets the distance from the start of the line to the start of the first space in a dashed line.
+
+```
+FUNCTION GetDashOffset () AS SINGLE
+```
+
+#### Return value
+
+This method returns a real number that indicates the distance from the start of the line to the start of the dashes.
+
+# <a name="GetDashPattern"></a>GetDashPattern
+
+Gets an array of custom dashes and spaces currently set for this **Pen** object.
+
+```
+FUNCTION GetDashPattern (BYVAL dashArray AS SINGLE PTR, BYVAL nCount AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dashArray* | Pointer to an array that receives the length of the dashes and spaces in a custom dashed line. |
+| *nCount* | Integer that specifies the number of elements in the *dashArray* array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Return value
+
+This method returns a real number that indicates the distance from the start of the line to the start of the dashes.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the dash pattern array, and draws a
+' custom dashed line. The code then gets the number of elements in the custom dashed array.
+' ========================================================================================
+SUB Example_GetDashPattern (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create and set an array of real numbers.
+   DIM dashVals(0 TO 3) AS SINGLE = {5.0, 2.0, 15.0, 4.0}
+
+   ' // Create a Pen
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 5)
+
+   ' // Set the dash pattern for the custom dashed line.
+   pen.SetDashPattern(@dashVals(0), 4)
+
+   ' // Draw a line using the pen.
+   graphics.DrawLine(@pen, 5, 20, 405, 200)
+
+   ' // Obtain information about the pen.
+   DIM nCount AS INT_
+   nCount = pen.GetDashPatternCount
+   DIM dashValues(nCount - 1) AS SINGLE
+   pen.GetDashPattern(@dashValues(0), nCount)
+
+   FOR j AS LONG = 0 TO nCount - 1
+      OutputDebugStringW WSTR(dashValues(j))
+   NEXT
+
+END SUB
+' ========================================================================================
+```
