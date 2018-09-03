@@ -4589,3 +4589,63 @@ SUB Example_AddLines (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="AddPath"></a>AddPath (CGpGraphicsPath)
+
+Adds a path to this path.
+
+```
+FUNCTION AddPath (BYVAL pAddingPath AS CGpGraphicsPath PTR, BYVAL bConnect AS BOOL) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pAddingPath* | Pointer to the path to be added. |
+| *bConnect* | BOOL value that specifies whether the first figure in the added path is part of the last figure in this path.<br>**CTRUE**: Specifies that (if possible) the first figure in the added path is part of the last figure in this path.<br>**FALSE**: Specifies that the first figure in the added path is separate from the last figure in this path. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Even if the value of the connect parameter is CTRUE, this method might not be able to make the first figure of the added path part of the last figure of this path. If either of those figures is closed, then they must remain separate figures.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates two GraphicsPath objects: path1 and path2. The code adds
+' an open figure consisting of an arc and a Bézier spline to each path. The code calls the
+' GraphicsPath.AddPath method of path1 to add path2 to path1. The second argument is TRUE,
+' which specifies that all four items (two arcs and two Bézier splines) belong to the same
+' figure.
+' ========================================================================================
+SUB Example_AddPath (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM path1 AS CGpGraphicsPath
+   path1.AddArc(10, 10, 50, 20, 0.0, 150.0)
+   path1.AddBezier(10, 50, 60, 50, 10, 80, 60, 80)
+   
+   DIM path2 AS CGpGraphicsPath
+   path2.AddArc(10, 110, 50, 20, 0.0, 150.0)
+   path2.AddBezier(10, 150, 60, 150, 10, 180, 60, 180)
+
+   path1.AddPath(@path2, TRUE)
+
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 255)
+   graphics.DrawPath(@pen, @path1)
+
+END SUB
+' ========================================================================================
+```
