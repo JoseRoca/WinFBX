@@ -3860,3 +3860,22 @@ FUNCTION SetTextContrast (BYVAL contrast AS UINT) AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="SetTextRenderingHint"></a>SetTextRenderingHint (CGpGraphics)
+
+Sets the text rendering mode of this **Graphics** object.
+
+```
+FUNCTION SetTextRenderingHint (BYVAL newMode AS TextRenderingHint) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *newMode* | Element of the **TextRenderingHint** enumeration that specifies the process currently used by this **Graphics** object to render text. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
