@@ -744,3 +744,54 @@ SUB Example_GetDashStyle (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetEndCap"></a>GetEndCap
+
+Gets the end cap currently set for this **Pen** object.
+
+```
+FUNCTION GetEndCap () AS LineCap
+```
+
+#### Return value
+
+This method returns an element of the **LineCap** enumeration that indicates the end cap for this **Pen** object.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the end cap, and draws a line. The code
+' then resets the end cap, draws a second line, resets the end cap again, and draws a third line.
+' ========================================================================================
+SUB Example_GetEndCap (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 15)
+
+   ' // Set the end cap of the pen, and draw a line.
+   pen.SetEndCap(LineCapArrowAnchor)
+   graphics.DrawLine(@pen, 20, 20, 200, 100)
+
+   ' // Obtain the end cap for the pen.
+   DIM nLineCap AS LineCap
+   nLineCap = pen.GetEndCap
+
+   ' // Create another pen, and use the same end cap.
+   DIM pen2 AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 0, 0), 9)
+   pen2.SetEndCap(nLineCap)
+
+   ' // Draw a second line.
+   graphics.DrawLine(@pen2, 20, 60, 200, 140)
+
+END SUB
+' ========================================================================================
+```
