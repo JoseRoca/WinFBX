@@ -6026,3 +6026,34 @@ All curves in a path are stored as sequences of Bézier splines. For example, wh
 A path stores an array of data points, each of which belongs to a line or a Bézier spline. If some of the points in the array belong to Bézier splines, then **HasCurve** returns TRUE. If all points in the array belong to lines, then **HasCurve** returns FALSE.
 
 Certain methods flatten a path, which means that all the curves in the path are converted to sequences of lines. After a path has been flattened, **HasCurve** will always return FALSE. Flattening happens when you call the **Flatten**, **Widen**, or **Warp** method of the **GraphicsPath** class.
+
+
+# <a name="NextMarker"></a>NextMarker (CGpGraphicsPathIterator)
+
+Gets the starting index and the ending index of the next marker-delimited section in this iterator's associated path.
+
+```
+FUNCTION NextMarker (BYVAL startIndex AS INT_ PTR, BYVAL endIndex AS INT_ PTR) AS INT_
+```
+
+Gets the next marker-delimited section of this iterator's associated path.
+
+```
+FUNCTION NextMarker (BYVAL pPath AS CGpGraphicsPath PTR) AS INT_
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *startIndex* | Pointer to an LONG that receives the starting index. |
+| *endIndex* | Pointer to an LONG that receives the ending index. |
+| *pPath* | Pointer to a **GraphicsPath** object. This method sets the data points of this **GraphicsPath** object to match the data points of the retrieved section. |
+
+#### Return value
+
+This method returns the number of data points in the retrieved section. If there are no more marker-delimited sections to retrieve, this method returns 0.
+
+#### Remarks
+
+A path has an array of data points that define its lines and curves. You can call a path's **SetMarker** method to designate certain points in the array as markers. Those marker points divide the path into sections.
+
+The first time you call the NextMarker method of an iterator, it gets the first marker-delimited section of that iterator's associated path. The second time, it gets the second section, and so on. Each time you call **NextSubpath**, it returns the number of data points in the retrieved section. When there are no sections remaining, it returns 0.
