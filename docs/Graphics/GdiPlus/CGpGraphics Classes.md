@@ -4009,3 +4009,59 @@ SUB Example_TransformPoints (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="TranslateClip"></a>TranslateClip (CGpGraphics)
+
+Translates the clipping region of this **Graphics** object.
+
+```
+FUNCTION TranslateClip (BYVAL dx AS SINGLE, BYVAL dy AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dx* | The horizontal component of the translation. |
+| *dy* | The vertical component of the translation. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Graphics object and sets its clipping region. The code
+' translates the clipping region 100 units to the right and then fills a large rectangle
+' that is clipped by the translated region.
+' ========================================================================================
+SUB Example_TranslateClip (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Set the clipping region.
+   graphics.SetClip(0, 0, 100, 50)
+
+   ' // Translate the clipping region.
+   graphics.TranslateClip(40, 30)
+
+   ' // Fill an ellipse that is clipped by the translated clipping region.
+   DIM redBrush AS CGpSolidBrush = CGpSolidBrush(GDIP_ARGB(255, 255, 0, 0))
+   graphics.FillEllipse(@redBrush, 20, 40, 100, 80)
+
+   ' // Draw the outline of the clipping region (rectangle).
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 2)
+   graphics.DrawRectangle(@blackPen, 40, 30, 100, 50)
+
+END SUB
+' ========================================================================================
+```
