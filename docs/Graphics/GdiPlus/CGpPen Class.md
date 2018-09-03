@@ -1267,3 +1267,57 @@ SUB Example_ScaleTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetAlignment"></a>SetAlignment
+
+Sets the alignment for this Pen object relative to the line.
+
+```
+FUNCTION SetAlignment (BYVAL nPenAlignment AS PenAlignment) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nPenAlignment* | Element of the **PenAlignment** enumeration that specifies the alignment setting of the pen relative to the line that is drawn. The default value is **PenAlignmentCenter**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+If you set the alignment of a **Pen** object to **PenAlignmentInset**, you cannot use that pen to draw compound lines or triangular dash caps.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates two Pen objects and sets the alignment for one of the pens.
+' The code then draws two lines using each of the pens.
+' ========================================================================================
+SUB Example_SetAlignment (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a black and a green pen.
+   DIM blackPen AS CgpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 1)
+   DIM greenPen AS CgpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), 15)
+
+   ' // Set the alignment of the green pen.
+   greenPen.SetAlignment(PenAlignmentInset)
+
+   ' // Draw two lines using each pen.
+   graphics.DrawEllipse(@greenPen, 0, 0, 100, 200)
+   graphics.DrawEllipse(@blackPen, 0, 0, 100, 200)
+
+END SUB
+' ========================================================================================
+```
