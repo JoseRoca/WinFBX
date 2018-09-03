@@ -52,3 +52,28 @@ Encapsulates a **Pen** object. A **Pen** object is a Windows GDI+ object used to
 | [SetTransform](#SetTransform) | Sets the world transformation of this **Pen** object. |
 | [SetWidth](#SetWidth) | Sets the width for this **Pen** object. |
 | [TranslateTransform](#TranslateTransform) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
+
+# <a name="Constructors"></a>Constructors (CGpPen)
+
+Creates a Pen object that uses a specified color and width.
+
+```
+CONSTRUCTOR CGpPen (BYVAL pBrush AS CGpBrush PTR, BYVAL nWidth AS SINGLE = 1.0)
+CONSTRUCTOR CGpPen (BYVAL colour AS ARGB, BYVAL nWidth AS SINGLE = 1.0)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pBrush* | Pointer to a brush to base this pen on. |
+| *colour* | An ARGB color that specifies the color for this Pen object. |
+| *nWidth* | The width of this pen's stroke. The default value is 1.0. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+If you pass the address of a pen to one of the draw methods of a **Graphics** object, the width of the pen's stroke is dependent on the unit of measure specified in the **Graphics** object. The default unit of measure is **UnitPixel**, which is an element of the **GpUnit** enumeration.
