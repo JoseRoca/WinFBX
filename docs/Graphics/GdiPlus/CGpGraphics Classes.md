@@ -3060,7 +3060,6 @@ FUNCTION IsVisible (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, BYVA
 | *rc* | Reference to a rectangle to be tested to see whether it intersects the visible clipping region. |
 | *x, y, nWidth, nHeight* | Reference to a rectangle to be tested to see whether it intersects the visible clipping region. |
 
-
 #### Return value
 
 If the specified point is inside the visible clipping region, this method returns TRUE; otherwise, it returns FALSE.
@@ -3085,6 +3084,49 @@ SUB Example_IsVisible (BYVAL hdc AS HDC)
    ' // Determine whether the point is visible and, if it is, draw an ellipse.
    IF graphics.IsVisible(100, 100) THEN
       graphics.FillEllipse(@CGpSolidBrush(GDIP_ARGB(255, 0, 0, 0)), 100, 100, 5, 5)
+   END IF
+
+END SUB
+' ========================================================================================
+```
+
+
+# <a name="IsVisibleClipEmpty"></a>IsVisibleClipEmpty (CGpGraphics)
+
+Determines whether the visible clipping region of this **Graphics** object is empty. The visible clipping region is the intersection of the clipping region of this **Graphics** object and the clipping region of the window.
+
+```
+FUNCTION IsVisibleClipEmpty () AS BOOLEAN
+```
+
+#### Return value
+
+If the visible clipping region of this Graphics object is empty, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Remarks
+
+If the visible clipping region of a Graphics object is empty, there is no area left in which to draw. Consequently, nothing will be drawn when the visible clipping region is empty.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example determines whether the clipping region is empty and, if it isn't,
+' draws a rectangle.
+' ========================================================================================
+SUB Example_IsVisibleClipEmpty (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // If the clipping region is not empty, draw a rectangle
+   IF graphics.IsVisibleClipEmpty = FALSE THEN
+      graphics.DrawRectangle(@CGpPen(GDIP_ARGB(255, 0, 0, 0), 3), 0, 0, 100, 100)
    END IF
 
 END SUB
