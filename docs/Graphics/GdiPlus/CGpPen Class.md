@@ -1418,3 +1418,53 @@ SUB Example_SetColor (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetCompoundArray"></a>SetCompoundArray
+
+Sets the compound array for this **Pen** object.
+
+```
+FUNCTION SetCompoundArray (BYVAL compoundArray AS SINGLE PTR, BYVAL count AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *compoundArray* | Pointer to an array of real numbers that specifies the compound array. The elements in the array must be in increasing order, not less than 0, and not greater than 1. |
+| *count* | Positive even integer that specifies the number of elements in the compoundArray array. The integer must not be greater than the number of elements in the compound array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object and sets the compound array for the pen. The
+' code then draws a line using the Pen object.
+' ========================================================================================
+SUB Example_SetCompoundArray (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create an array of real numbers and a Pen object.
+   DIM compVals(0 TO 5) AS SINGLE = {0.0, 0.2, 0.5, 0.7, 0.9, 1.0}
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 30)
+
+   ' // Set the compound array of the pen.
+   pen.SetCompoundArray(@compVals(0), 6)
+
+   ' // Draw a line with the pen.
+   graphics.DrawLine(@pen, 5, 20, 405, 200)
+
+END SUB
+' ========================================================================================
+```
