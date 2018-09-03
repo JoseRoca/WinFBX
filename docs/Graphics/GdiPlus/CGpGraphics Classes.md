@@ -4756,3 +4756,57 @@ SUB Example_AddPolygon (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="AddPolygon"></a>AddPolygon (CGpGraphicsPath)
+
+Adds a rectangle to this path.
+
+```
+FUNCTION AddRectangle (BYVAL x AS SINGLE, BYVAL y AS SINGLE, _
+   BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE) AS GpStatus
+FUNCTION AddRectangle (BYVAL x AS INT_, BYVAL y AS INT_, _
+   BYVAL nWidth AS INT_, BYVAL nHeight AS INT_) AS GpStatus
+FUNCTION AddRectangle (BYVAL rc AS GpRectF PTR) AS GpStatus
+FUNCTION AddRectangle (BYVAL rc AS GpRect PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x* | The x-coordinate of the upper-left corner of the rectangle. |
+| *y* | The y-coordinate of the upper-left corner of the rectangle. |
+| *nWidth* | The width of the rectangle. |
+| *nWidth* | The height of the rectangle. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object path, adds a rectangle to path, and then draws path.
+' ========================================================================================
+SUB Example_AddRectangle (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM rc AS GpRect = GDIP_RECT(20, 20, 100, 50)
+   DIM path AS CGpGraphicsPath
+   path.AddRectangle(@rc)
+
+   ' // Draw the path
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawPath(@pen, @path)
+
+END SUB
+' ========================================================================================
+```
