@@ -5623,3 +5623,31 @@ SUB Example_Outline (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="Reset"></a>Reset (CGpGraphicsPath)
+
+Empties the path and sets the fill mode to **FillModeAlternate**.
+
+```
+FUNCTION Reset () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="Reverse"></a>Reverse (CGpGraphicsPath)
+
+Reverses the order of the points that define this path's lines and curves.
+
+```
+FUNCTION Reverse () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
