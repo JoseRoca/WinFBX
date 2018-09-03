@@ -7,8 +7,8 @@ An **ImageAttributes** object contains information about how bitmap and metafile
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#Constructor) | Creates a new ImageAttributes object.  |
-| [ClearBrushRemapTable](#ClearBrushRemapTable) | Clears the brush color-remap table of this ImageAttributes object. |
+| [Constructor](#Constructor) | Creates a new **ImageAttributes** object.  |
+| [ClearBrushRemapTable](#ClearBrushRemapTable) | Clears the brush color-remap table of this **ImageAttributes** object. |
 | [ClearColorKey](#ClearColorKey) | Clears the color key (transparency range) for a specified category. |
 | [ClearColorMatrices](#ClearColorMatrices) | Clears the color-adjustment matrix and the grayscale-adjustment matrix for a specified category. |
 | [ClearColorMatrix](#ClearColorMatrix) | Clears the color-adjustment matrix for a specified category. |
@@ -18,7 +18,7 @@ An **ImageAttributes** object contains information about how bitmap and metafile
 | [ClearOutputChannelColorProfile](#ClearOutputChannelColorProfile) | Clears the output channel color profile setting for a specified category. |
 | [ClearRemapTable](#ClearRemapTable) | Clears the color-remap table for a specified category. |
 | [ClearThreshold](#ClearThreshold) | Clears the threshold value for a specified category. |
-| [Clone](#Clone) | Copies the contents of the existing ImageAttributes object into a new ImageAttributes object. |
+| [Clone](#Clone) | Copies the contents of the existing **ImageAttributes** object into a new **ImageAttributes** object. |
 | [GetAdjustedPalette](#GetAdjustedPalette) | Adjusts the colors in a palette according to the adjustment settings of a specified category. |
 | [Reset](#Reset) | Clears all color- and grayscale-adjustment settings for a specified category. |
 | [SetBrushRemapTable](#SetBrushRemapTable) | Sets the color remap table for the brush category. |
@@ -32,4 +32,4 @@ An **ImageAttributes** object contains information about how bitmap and metafile
 | [SetRemapTable](#SetRemapTable) | Sets the color-remap table for a specified category. |
 | [SetThreshold](#SetThreshold) | Sets the threshold (transparency range) for a specified category. |
 | [SetToIdentity](#SetToIdentity) | Sets the color-adjustment matrix of a specified category to identity matrix. |
-| [SetWrapMode](#SetWrapMode) | Sets the the wrap mode of this ImageAttributes object. |
+| [SetWrapMode](#SetWrapMode) | Sets the the wrap mode of this **ImageAttributes** object. |
