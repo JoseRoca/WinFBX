@@ -1788,3 +1788,111 @@ SUB Example_SetDashStyle (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetEndCap"></a>SetEndCap
+
+Sets the end cap for this **Pen** object.
+
+```
+FUNCTION SetEndCap (BYVAL endCap AS LineCap) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *endCap* | Element of the **LineCap** enumeration that specifies the end cap of a line. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the end cap, and draws a line. The code
+' then resets the end cap, draws a second line, resets the end cap again, and draws a third line.
+' ========================================================================================
+SUB Example_SetEndCap (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 15)
+
+   ' // Set the end cap of the pen, and draw a line.
+   pen.SetEndCap(LineCapArrowAnchor)
+   graphics.DrawLine(@pen, 0, 50, 400, 150)
+
+  ' // Reset the end cap, and draw a second line.
+   pen.SetEndCap(LineCapTriangle)
+   graphics.DrawLine(@pen, 0, 80, 400, 180)
+
+   ' // Reset the end cap, and draw a third line.
+   pen.SetEndCap(LineCapRound)
+   graphics.DrawLine(@pen, 0, 110, 400, 210)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetLineCap"></a>SetLineCap
+
+Sets the cap styles for the start, end, and dashes in a line drawn with this pen.
+
+```
+FUNCTION SetLineCap (BYVAL startCap AS LineCap, BYVAL endCap AS LineCap, _
+   BYVAL nDashCap AS DashCap) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *startCap* | Element of the **LineCap** enumeration that specifies the start cap of a line. |
+| *endCap* | Element of the **LineCap** enumeration that specifies the end cap of a line. |
+| *nDashCap* | Element of the **DashCap** enumeration that specifies the start and end caps of the dashes in a dashed line. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object and sets the line caps. The code then sets
+' the dash style for the pen and draws a line.
+' ========================================================================================
+SUB Example_SetLineCap (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 15)
+
+   ' // Set line caps for the pen.
+   pen.SetLineCap(LineCapArrowAnchor, LineCapTriangle, DashCapRound)
+
+   ' // Set the dash style for the pen.
+   pen.SetDashStyle(DashStyleDash)
+
+   ' // Draw a line.
+   graphics.DrawLine(@pen, 50, 50, 420, 200)
+
+END SUB
+' ========================================================================================
+```
