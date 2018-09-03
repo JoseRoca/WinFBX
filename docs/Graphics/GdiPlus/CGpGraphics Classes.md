@@ -6057,3 +6057,53 @@ This method returns the number of data points in the retrieved section. If there
 A path has an array of data points that define its lines and curves. You can call a path's **SetMarker** method to designate certain points in the array as markers. Those marker points divide the path into sections.
 
 The first time you call the NextMarker method of an iterator, it gets the first marker-delimited section of that iterator's associated path. The second time, it gets the second section, and so on. Each time you call **NextSubpath**, it returns the number of data points in the retrieved section. When there are no sections remaining, it returns 0.
+
+# <a name="NextPathType"></a>NextPathType (CGpGraphicsPathIterator)
+
+Gets the starting index and the ending index of the next group of data points that all have the same type.
+
+```
+FUNCTION NextPathType (BYVAL pathType AS BYTE PTR, BYVAL startIndex AS INT_ PTR, _
+   BYVAL endIndex AS INT_ PTR) AS INT_
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pathType* | Pointer to a BYTE that receives the point type shared by all points in the group. Possible values are ++PathPointTypeLine** and **PathPointTypeBezier**, which are elements of the **PathPointType** enumeration. |
+| *startIndex* | Pointer to an LONG that receives the starting index of the group of points. |
+| *endIndex* | Pointer to an LONG that receives the ending index of the group of points. |
+
+#### Return value
+
+This method returns the number of data points in the group. If there are no more groups in the path, this method returns 0.
+
+#### Remarks
+
+A path has an array of data points that define its lines and curves. All curves in the path are represented as Bézier splines, so a given point in the array has one of two types: **PathPointTypeLine** or **PathPointTypeBezier**.
+
+The first time you call the **NextSubpath** method of an iterator, it gets the starting and ending indices of the first group of points that all have the same type. The second time, it gets the second group, and so on. Each time you call **NextSubpath**, it returns the number of data points in the obtained group. When there are no groups remaining, it returns 0.
+
+# <a name="NextSubpath"></a>NextSubpath (CGpGraphicsPathIterator)
+
+Gets the starting index and the ending index of the next subpath (figure) in this iterator's associated path.
+
+```
+FUNCTION NextSubpath (BYVAL startIndex AS INT_ PTR, BYVAL endIndex AS INT_ PTR, _
+   BYVAL isClosed AS BOOL PTR) AS INT_
+FUNCTION NextSubpath (BYVAL startIndex AS INT_ PTR, BYVAL endIndex AS INT_ PTR, _
+   BYVAL isClosed AS BOOL PTR) AS INT_
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *startIndex* | Pointer to an LONG that receives the starting index of the group of points. |
+| *endIndex* | Pointer to an LONG that receives the ending index of the group of points. |
+| *isClosed* | Pointer to a BOOL that receives a value that indicates whether the obtained figure is closed. If the figure is closed, the received value is TRUE; otherwise, the received value is FALSE. |
+
+#### Return value
+
+This method returns the number of data points in the next figure. If there are no more figures in the path, this method returns 0.
+
+#### Remarks
+
+The first time you call the **NextSubpath** method of an iterator, it gets the starting and ending indices of the first group of points that all have the same type. The second time, it gets the second group, and so on. Each time you call **NextSubpath**, it returns the number of data points in the obtained group. When there are no groups remaining, it returns 0.
