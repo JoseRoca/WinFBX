@@ -642,3 +642,54 @@ SUB Example_GetDashPattern (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetDashPatternCount"></a>GetDashPatternCount
+
+Gets the number of elements in a dash pattern array.
+
+```
+FUNCTION GetDashPatternCount () AS INT_
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the dash pattern array, and draws a
+' custom dashed line. The code then gets the number of elements in the custom dashed array.
+' ========================================================================================
+SUB Example_GetDashPattern (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create and set an array of real numbers.
+   DIM dashVals(0 TO 3) AS SINGLE = {5.0, 2.0, 15.0, 4.0}
+
+   ' // Create a Pen
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 5)
+
+   ' // Set the dash pattern for the custom dashed line.
+   pen.SetDashPattern(@dashVals(0), 4)
+
+   ' // Draw a line using the pen.
+   graphics.DrawLine(@pen, 5, 20, 405, 200)
+
+   ' // Obtain information about the pen.
+   DIM nCount AS INT_
+   nCount = pen.GetDashPatternCount
+   DIM dashValues(nCount - 1) AS SINGLE
+   pen.GetDashPattern(@dashValues(0), nCount)
+
+   FOR j AS LONG = 0 TO nCount - 1
+      OutputDebugStringW WSTR(dashValues(j))
+   NEXT
+
+END SUB
+' ========================================================================================
+```
