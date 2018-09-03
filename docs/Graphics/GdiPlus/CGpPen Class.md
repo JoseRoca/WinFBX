@@ -507,3 +507,60 @@ SUB Example_GetCustomStartCap (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetDashCap"></a>GetDashCap
+
+Gets the dash cap style currently set for this **Pen** object.
+
+```
+FUNCTION GetDashCap () AS DashCap
+```
+
+#### Return value
+
+This method returns an element of the **DashCap** enumeration that indicates the dash cap style currently set for this Pen object.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the dash cap style, and draws a line.
+' The code then gets the dash cap style of the pen and creates a second Pen object with
+' the same dash cap style. Finally, the code draws a second line using the second pen.
+' ========================================================================================
+SUB Example_GetDashCap (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 20)
+
+   ' // Set the dash style for the pen
+   pen.SetDashStyle(DashStyleDash)
+
+   ' // Set a rounded dash cap for the pen
+   pen.SetDashCap(DashCapRound)
+
+   ' // Draw a line using the pen
+   graphics.DrawLine(@pen, 50, 50, 400, 200)
+
+   ' // Obtain the dash cap for the pen
+   DIM nDashCap AS DashCap = pen.GetDashCap
+
+   ' // Create another pen, and use the same dash cap.
+   DIM pen2 AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), 15)
+   pen2.SetDashStyle(DashStyleDash)
+   pen2.SetDashCap(nDashCap)
+
+   ' // Draw a second line.
+   graphics.DrawLine(@pen2, 50, 100, 400, 300)
+
+END SUB
+' ========================================================================================
+```
