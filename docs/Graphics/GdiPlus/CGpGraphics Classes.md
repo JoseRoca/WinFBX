@@ -4201,3 +4201,34 @@ SUB Example_AddArc (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="AddArc"></a>AddArc (CGpGraphicsPath)
+
+Adds a Bézier spline to the current figure of this path.
+
+```
+FUNCTION AddBezier (BYVAL x1 AS SINGLE, BYVAL y1 AS SINGLE, BYVAL x2 AS SINGLE, BYVAL y2 AS SINGLE, _
+   BYVAL x3 AS SINGLE, BYVAL y3 AS SINGLE, BYVAL x4 AS SINGLE, BYVAL y4 AS SINGLE) AS GpStatus
+FUNCTION AddBezier (BYVAL x1 AS INT_, BYVAL y1 AS INT_, BYVAL x2 AS INT_, BYVAL y2 AS INT_, _
+   BYVAL x3 AS INT_, BYVAL y3 AS INT_, BYVAL x4 AS INT_, BYVAL y4 AS INT_) AS GpStatus
+FUNCTION AddBezier (BYVAL pt1 AS GpPointF, BYVAL pt2 AS GpPointF) AS GpStatus
+FUNCTION AddBezier (BYVAL pt1 AS GpPoint, BYVAL pt2 AS GpPoint) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x* | The x-coordinate of the starting point of the Bézier spline. |
+| *y* | The y-coordinate of the starting point of the Bézier spline. |
+| *x2* | The x-coordinate of the first control point of the Bézier spline. |
+| *y2* | The y-coordinate of the first control point of the Bézier spline. |
+| *x3* | The x-coordinate of the second control point of the Bézier spline. |
+| *y3* | The y-coordinate of the second control point of the Bézier spline. |
+| *x4* | The x-coordinate of the ending point of the Bézier spline. |
+| *y4* | The y-coordinate of the ending point of the Bézier spline. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
