@@ -1675,3 +1675,55 @@ SUB Example_SetDashOffset (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetDashPattern"></a>SetDashPattern
+
+Sets an array of custom dashes and spaces for this Pen object.
+
+```
+FUNCTION SetDashPattern (BYVAL dashArray AS SINGLE PTR, BYVAL nCount AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dashArray* | Pointer to an array of real numbers that specifies the length of the custom dashes and spaces. All elements in the array must be positive real numbers. |
+| *nCount* | Integer that specifies the number of elements in the dashArray array. The integer must be greater than 0 and not greater than the total number of elements in the array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates an array of real numbers. The code then creates a Pen
+' object, sets the dash pattern based on the array, and then draws the custom dashed line.
+' ========================================================================================
+SUB Example_SetDashPattern (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create and set an array of real numbers.
+   DIM dashVals(0 TO 3) AS SINGLE = {5.0, 2.0, 15.0, 4.0}
+
+   ' // Create a Pen
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 5)
+
+   ' // Set the dash pattern for the custom dashed line.
+   pen.SetDashPattern(@dashVals(0), 4)
+
+   ' // Draw a line using the pen.
+   graphics.DrawLine(@pen, 5, 20, 405, 200)
+
+END SUB
+' ========================================================================================
+```
