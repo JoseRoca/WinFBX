@@ -858,3 +858,54 @@ FUNCTION GetMiterLimit () AS SINGLE
 #### Remarks
 
 The miter length is the distance from the intersection of the line walls on the inside of the join to the intersection of the line walls outside of the join. The miter length can be large when the angle between two lines is small. The miter limit is the maximum allowed ratio of miter length to line width. The default value is 10.
+
+# <a name="GetPenType"></a>GetPenType
+
+Gets the type currently set for this **Pen** object.
+
+```
+FUNCTION GetPenType () AS PenType
+```
+
+#### Return value
+
+This method returns an element of the **PenType** enumeration that indicates the style of pen currently set for this **Pen** object.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a HatchBrush object and then passes the address of that
+' HatchBrush object to a Pen constructor. The code uses the pen, which has a width of 15,
+' to draw a line. The code calls the Pen::GetPenType method to determine the pen's type,
+' and then checks to see whether the type is PenTypeHatchFill.
+' ========================================================================================
+SUB Example_GetPenType (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a HatchBrush object.
+   DIM hatchBrush AS CGpHatchBrush = CGpHatchBrush(HatchStyleVertical, _
+      GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Create a pen based on a hatch brush, and use that pen to draw a line.
+   DIM pen AS CgpPen = CgpPen(@hatchBrush, 15)
+   graphics.DrawLine(@pen, 20, 20, 200, 100)
+   
+   ' // Obtain information about the pen.
+   DIM nPenType AS PenType = pen.GetPenType
+
+   IF nPenType = PenTypeHatchFill THEN
+      ' // The pen will draw with a hatch pattern.
+      PRINT "Pen type", nPenType
+   END IF
+
+END SUB
+' ========================================================================================
+```
