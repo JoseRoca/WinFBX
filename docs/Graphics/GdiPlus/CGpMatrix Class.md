@@ -44,6 +44,7 @@ CONSTRUCTOR CGpMatrix (BYVAL rc AS GpRect PTR, BYVAL dstplg AS GpPoint PTR)
 
 | Parameter  | Description |
 | ---------- | ----------- |
+| *pMatrix* | A pointer to another **Matrix** object to be cloned. |
 | *m11* | The element in the first row, first column. |
 | *m12* | The element in the first row, second column. |
 | *m21* | The element in in the second row, first column.  |
