@@ -1120,7 +1120,7 @@ END SUB
 
 # <a name="ResetTransform"></a>ResetTransform
 
-Sets the world transformation matrix of this Pen object to the identity matrix.
+Sets the world transformation matrix of this **Pen** object to the identity matrix.
 
 ```
 FUNCTION ResetTransform () AS GpStatus
@@ -1166,6 +1166,51 @@ SUB Example_ResetTransform (BYVAL hdc AS HDC)
 
    ' // Draw a rectangle with no pen transformation
    graphics.DrawRectangle(@pen, 250, 50, 150, 100)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="RotateTransform"></a>RotateTransform
+
+Updates the world transformation matrix of this **Pen** object with the product of itself and a rotation matrix.
+
+```
+FUNCTION RotateTransform (BYVAL angle AS SINGLE, BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *angle* | The angle, in degrees, of rotation. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets a scaling matrix to the pen, and draws
+' a rectangle. The code then resets the transformation of the pen and draws a second rectangle.
+' ========================================================================================
+SUB Example_RotateTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM pen AS CGpPen = CGpPen(&hFF0000FF, 5)   ' // Blue
+   pen.ScaleTransform(1, 4)   ' // first stretch
+   pen.RotateTransform(30, MatrixOrderAppend)   ' // then rotate
+   graphics.DrawEllipse(@pen, 50, 30, 200, 200)
 
 END SUB
 ' ========================================================================================
