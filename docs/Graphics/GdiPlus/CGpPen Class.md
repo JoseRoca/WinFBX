@@ -1727,3 +1727,64 @@ SUB Example_SetDashPattern (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetDashStyle"></a>SetDashStyle
+
+Sets the dash style for this **Pen** object.
+
+```
+FUNCTION SetDashStyle (BYVAL nDashStyle AS DashStyle) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nDashStyle* | Element of the **DashStyle** enumeration that specifies the dash style for this Pen object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the dash style, and draws a dashed line.
+' The code then gets the dash style, creates a second pen with the dash style of the first
+' pen, and draws a second dashed line.
+' ========================================================================================
+SUB Example_SetDashStyle (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 20)
+
+   ' // Set the dash style for the pen
+   pen.SetDashStyle(DashStyleDashDot)
+
+   ' // Set a triangular dash cap for the pen
+   pen.SetDashCap(DashCapTriangle)
+
+   ' // Draw a line using the pen
+   graphics.DrawLine(@pen, 20, 20, 200, 100)
+
+   ' // Obtain the dash style for the pen.
+   DIM nDashStyle AS DashStyle
+
+   ' // Create another pen, and use the same dash style.
+   DIM pen2 AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), 9)
+
+   ' // Draw a second dashed line.
+   graphics.DrawLine(@pen2, 20, 60, 200, 140)
+
+END SUB
+' ========================================================================================
+```
