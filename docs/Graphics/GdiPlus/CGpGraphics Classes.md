@@ -5292,7 +5292,7 @@ FUNCTION GetPathPoints (BYREF pts AS GpPointF PTR, BYVAL count AS INT_) AS GpSta
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pts* | Pointer to an array of GpPointF objects that receives the data points. You must allocate memory for this array. You can call the **GetPointCount** method to determine the required size of the array. The size, in bytes, should be the return value of **GetPointCount** multiplied by **SIZEOF(GpPointF)**. |
+| *pts* | Pointer to an array of **GpPointF** objects that receives the data points. You must allocate memory for this array. You can call the **GetPointCount** method to determine the required size of the array. The size, in bytes, should be the return value of **GetPointCount** multiplied by **SIZEOF(GpPointF)**. |
 
 #### Remarks
 
@@ -5347,6 +5347,82 @@ SUB Example_GetPathPoints (BYVAL hdc AS HDC)
    FOR j AS LONG = 0 TO nCount - 1
       graphics.FillEllipse(@brush, dataPoints(j).x - 3.0, _
          dataPoints(j).y - 3.0, 6.0, 6.0)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
+
+# <a name="GetPathTypes"></a>GetPathTypes (CGpGraphicsPath)
+
+Gets this path's array of point types.
+
+```
+FUNCTION GetPathTypes (BYVAL types AS BYTE PTR, BYVAL count AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *types* | Pointer to an array that receives the point types. You must allocate memory for this array. You can call the GetPointCount method to determine the required size of the array. |
+| *count* | Integer that specifies the number of elements in the types array. Set this parameter equal to the return value of the GetPointCount method. |
+
+#### Remarks
+
+A **GraphicsPath** object has an array of points and an array of types. Each element in the array of types is a byte that specifies the point type and a set of flags for the corresponding element in the array of points. Possible point types and flags are listed in the **PathPointType** enumeration.
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="GetPointCount"></a>GetPointCount (CGpGraphicsPath)
+
+Gets the number of points in this path's array of data points. This is the same as the number of types in the path's array of point types.
+
+```
+FUNCTION GetPointCount () AS INT_
+```
+
+#### Remarks
+
+A **GraphicsPath** object has an array of points and an array of types. Each element in the array of types is a byte that specifies the point type and a set of flags for the corresponding element in the array of points. Possible point types and flags are listed in the **PathPointType** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a path that has one ellipse and one line. The code calls
+' the GraphicsPath.GetPointCount method to determine the number of data points stored in
+' the path. Then the code calls the GraphicsPath::GetPathPoints method to retrieve those
+' data points. Finally, the code fills a small ellipse at each of the data points.
+' ========================================================================================
+SUB Example_GetPointCount (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Create a path that has one ellipse and one line.
+   DIM path AS CGpGraphicsPath
+   path.AddEllipse(10, 10, 200, 100)
+   path.AddLine(220, 120, 300, 160)
+
+   ' // Find out how many data points are stored in the path.
+   DIM nCount AS LONG = path.GetPointCount
+
+   ' // Draw the path points
+   DIM RedBrush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   DIM points(nCount - 1) AS GpPointF
+   path.GetPathPoints(@points(0), nCount)
+
+   FOR j AS LONG = 0 TO nCount - 1
+      graphics.FillEllipse(@redBrush, points(j).x - 3.0, points(j).y - 3.0, 6.0, 6.0)
    NEXT
 
 END SUB
