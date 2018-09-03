@@ -80,15 +80,15 @@ Copies the contents of the existing **Pen** object into a new **Pen** object.
 FUNCTION Clone (BYVAL pClonePen AS CGpPen PTR) AS GpStatus
 ```
 
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pClonePen* | Pointer to the **Pen** object where to copy the contents of the existing object. |
+
 #### Return value
 
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pClonePen* | Pointer to the **Pen** object where to copy the contents of the existing object. |
 
 #### Example
 
@@ -178,7 +178,7 @@ FUNCTION GetBrush (BYVAL pBrush AS CGpBrush PTR) AS GpStatus
 
 #### Return value
 
-This method returns a pointer to a Brush object that is currently used to fill a line.
+This method returns a pointer to a **Brush** object that is currently used to fill a line.
 
 #### Example
 
@@ -212,6 +212,58 @@ SUB Example_GetBrush (BYVAL hdc AS HDC)
    DIM pBrush AS CGpBrush
    pen.GetBrush(@pBrush)
    graphics.FillRectangle(@pBrush, 0, 100, 200, 100)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetColor"></a>GetColor (CGpPen)
+
+Gets the color currently set for this **Pen** object.
+
+```
+FUNCTION GetColor (BYVAL colour AS ARGB PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colour* | Pointer to a variable that receives the color of this **Pen** object.  |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object and draws a line. The code then gets the color
+' of the pen and creates a Brush object based on that color. Finally, the code uses the
+' Brush object to fill a rectangle.
+' ========================================================================================
+SUB Example_GetColor (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a pen, and use it to draw a line.
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 200, 150, 100), 5)
+   graphics.DrawLine(@pen, 0, 0, 200, 100)
+
+   ' // Get the pen's color, and use that color to create a brush.
+   DIM colour AS ARGB
+   pen.GetColor(@colour)
+   DIM solidBrush AS CGpSolidBrush = colour
+
+   ' // Use the brush to fill a rectangle.
+   graphics.FillRectangle(@solidBrush, 0, 100, 200, 100)
 
 END SUB
 ' ========================================================================================
