@@ -4488,3 +4488,54 @@ SUB Example_AddEllipse (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="AddLine"></a>AddLine (CGpGraphicsPath)
+
+Adds a line to the current figure of this path.
+
+```
+FUNCTION AddLine (BYVAL x1 AS SINGLE, BYVAL y1 AS SINGLE, BYVAL x2 AS SINGLE, BYVAL y2 AS SINGLE) AS GpStatus
+FUNCTION AddLine (BYVAL x1 AS INT_, BYVAL y1 AS INT_, BYVAL x2 AS INT_, BYVAL y2 AS INT_) AS GpStatus
+FUNCTION AddLine (BYVAL pt1 AS GpPointF PTR, BYVAL pt2 AS GpPointF PTR) AS GpStatus
+FUNCTION AddLine (BYVAL pt1 AS GpPoint PTR, BYVAL pt2 AS GpPoint PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x1* | The x-coordinate of the starting point of the line. |
+| *y1* | The y-coordinate of the starting point of the line. |
+| *x2* | The x-coordinate of the ending point of the line. |
+| *y2* | The y-coordinate of the ending point of the line. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object path, adds a line to path, and then draws path.
+' ========================================================================================
+SUB Example_AddLine (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM path AS CGpGraphicsPath
+   path.AddLine(20, 20, 200, 100)
+
+   ' // Draw the path
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawPath(@pen, @path)
+
+END SUB
+' ========================================================================================
+```
