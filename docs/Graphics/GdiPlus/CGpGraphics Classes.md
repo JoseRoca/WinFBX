@@ -5566,3 +5566,60 @@ SUB Example_IsVisible (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="Outline"></a>Outline (CGpGraphicsPath)
+
+Transforms and flattens this path, and then converts this path's data points so that they represent only the outline of the path.
+
+```
+FUNCTION Outline (pMatrix AS CGpMatrix PTR = NULL, BYVAL flatness AS SINGLE = FlatnessDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Optional. Pointer to a **Matrix** object that specifies the transformation. If this parameter is NULL, no transformation is applied. The default value is NULL. |
+| *flatness* | Optional. Simple precision number that specifies the maximum error between the path and its flattened approximation. Reducing the flatness increases the number of line segments in the approximation. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
+
+#### Return value
+
+If the test point touches the outline of this path, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object and calls the GraphicsPath.AddClosedCurve
+' method to add a closed cardinal spline to the path. The code calls the GraphicsPath.Widen
+' method to widen the path and then draws the path. Next, the code calls the path's Outline
+' method. The code calls the TranslateTransform method of a Graphics object so that the
+' outlined path drawn by the subsequent call to DrawPath sits to the right of the first path.
+' ========================================================================================
+SUB Example_Outline (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM bluePen AS CGpPen = GDIP_ARGB(255, 0, 0, 255)
+   DIM greenPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), 10)
+
+   DIM points(0 TO 3) AS GpPoint = {GDIP_POINT(20, 20), GDIP_POINT(160, 100), _
+       GDIP_POINT(140, 60), GDIP_POINT(60, 100)}
+  
+   DIM path AS CGpGraphicsPath
+   path.AddClosedCurve(@points(0), 4)
+
+   path.Widen(@greenPen)
+   graphics.DrawPath(@bluePen, @path)
+
+   path.Outline
+
+   graphics.TranslateTransform(180, 0)
+   graphics.DrawPath(@bluePen, @path)
+
+END SUB
+' ========================================================================================
+```
