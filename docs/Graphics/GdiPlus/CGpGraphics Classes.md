@@ -3783,3 +3783,61 @@ SUB Example_SetRenderingOrigin (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="SetSmoothingMode"></a>SetSmoothingMode (CGpGraphics)
+
+Sets the rendering quality of the **Graphics** object.
+
+```
+FUNCTION SetSmoothingMode (BYVAL smoothingMode AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *smoothingMode* | Element of the **SmoothingMode** enumeration that specifies whether smoothing (antialiasing) is applied to lines and curves. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets the smoothing mode to high speed and draws an ellipse. It then
+' gets the smoothing mode, changes it to high quality, and draws a second ellipse to
+' demonstrate the difference.
+' ========================================================================================
+SUB Example_SmoothingMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Set the smoothing mode to SmoothingModeHighSpeed.
+   graphics.SetSmoothingMode(SmoothingModeHighSpeed)
+
+   ' // Draw an ellipse.
+   graphics.DrawEllipse(@CGpPen(GDIP_ARGB(255, 0, 0, 0), 3), 10, 50, 200, 100)
+
+   ' // Get the smoothing mode.
+   DIM nMode AS SmoothingMode = graphics.GetSmoothingMode
+
+   ' // Test mode to see whether smoothing has been set for the Graphics object.
+   IF nMode <> SmoothingModeHighQuality THEN
+      graphics.SetSmoothingMode(SmoothingModeHighQuality)
+   END IF
+
+   ' // Draw an ellipse to demonstrate the difference.
+   graphics.DrawEllipse(@CGpPen(GDIP_ARGB(255, 255, 0, 0), 3), 220, 50, 200, 100)
+
+END SUB
+' ========================================================================================
+```
