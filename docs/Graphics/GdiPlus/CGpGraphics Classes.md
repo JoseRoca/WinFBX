@@ -5930,7 +5930,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ConstructorsGraphicsPathIterator"></a>Constructor (CGpGraphicsPathIterator)
+# <a name="ConstructorGraphicsPathIterator"></a>Constructor (CGpGraphicsPathIterator)
 
 Creates a **Graphics** object that is associated with a specified device context. When you use this method to create a **Graphics** object, make sure that the **Graphics** object is deleted before the device context is released.
 
