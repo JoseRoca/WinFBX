@@ -4858,3 +4858,70 @@ SUB Example_AddRectangles (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="AddString"></a>AddString (CGpGraphicsPath)
+
+Adds the outline of a string to this path.
+
+```
+FUNCTION AddString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFamily AS CGpFontFamily PTR, BYVAL style AS INT_, BYVAL emSize AS SINGLE, _
+   BYVAL layoutRect AS GpRectF PTR, BYVAL pFormat AS CGpStringFormat PTR) AS GpStatus
+FUNCTION AddString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFamily AS CGpFontFamily PTR, BYVAL style AS INT_, BYVAL emSize AS SINGLE, _
+   BYVAL layoutRect AS GpRect PTR, BYVAL pFormat AS CGpStringFormat PTR) AS GpStatus
+FUNCTION AddString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFamily AS CGpFontFamily PTR, BYVAL style AS INT_, BYVAL emSize AS SINGLE, _
+   BYVAL layoutRect AS GpPointF PTR, BYVAL pFormat AS CGpStringFormat PTR) AS GpStatus
+FUNCTION AddString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFamily AS CGpFontFamily PTR, BYVAL style AS INT_, BYVAL emSize AS SINGLE, _
+   BYVAL layoutRect AS GpPoint PTR, BYVAL pFormat AS CGpStringFormat PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pwszString* | Pointer to a wide-character string. |
+| *pFamily* | Pointer to a **FontFamily** object that specifies the font family for the string. |
+| *style* | Integer that specifies the style of the typeface. This value must be an element of the **FontStyle** enumeration or the result of a bitwise OR applied to two or more of these elements. For example, **FontStyleBold OR FontStyleUnderline OR FontStyleStrikeout** sets the style as a combination of the three styles. |
+| *emSize* | The em size, in world units, of the string characters. |
+| *layoutRect* | Reference to a **GpRectF** or **GpRect** object that specifies, in world units, the bounding rectangle for the string. |
+| *pFormat* | Pointer to a **StringFormat** object that specifies layout information (alignment, trimming, tab stops, and the like) for the string. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Note that GDI+ does not support PostScript fonts or OpenType fonts which do not have TrueType outlines. 
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object path, adds a NULL-terminated string
+' to path, and then draws path.
+' ========================================================================================
+SUB Example_AddString (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM fontFamily AS CGpFontFamily = "Times New Roman"
+   DIM path AS CGpGraphicsPath
+   DIM rc AS GpRect = GDIP_RECT(50, 50, 150, 100)
+   path.AddString("Hello World", -1, @fontFamily, FontStyleRegular, 48, @rc, NULL)
+
+   ' // Draw the path
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawPath(@pen, @path)
+
+END SUB
+' ========================================================================================
+```
