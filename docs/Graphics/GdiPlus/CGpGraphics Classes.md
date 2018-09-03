@@ -5136,7 +5136,7 @@ FUNCTION GetBounds (BYVAL bounds AS GpRect PTR, BYVAL pMatrix AS CGpMatrix PTR, 
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *bounds* | Pointer to a GpRectF or GpRect structures that receives the bounding rectangle. |
+| *bounds* | Pointer to a **GpRectF** or **GpRect** structures that receives the bounding rectangle. |
 | *pMatrix* | Optional. Pointer to a Matrix object that specifies a transformation to be applied to this path before the bounding rectangle is calculated. This path is not permanently transformed; the transformation is used only during the process of calculating the bounding rectangle. The default value is NULL. |
 | *pPen* | Optional. Pointer to a **Pen** object that influences the size of the bounding rectangle. The bounding rectangle received in bounds will be large enough to enclose this path when the path is drawn with the pen specified by this parameter. This ensures that the path is enclosed by the bounding rectangle even if the path is drawn with a wide pen. The default value is NULL. |
 
