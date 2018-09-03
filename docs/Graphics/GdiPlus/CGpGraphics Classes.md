@@ -2997,7 +2997,7 @@ END SUB
 
 # <a name="IsClipEmpty"></a>IsClipEmpty (CGpGraphics)
 
-Determines whether the clipping region of this Graphics object is empty.
+Determines whether the clipping region of this **Graphics** object is empty.
 
 ```
 FUNCTION IsClipEmpty () AS BOOLEAN
@@ -3005,11 +3005,11 @@ FUNCTION IsClipEmpty () AS BOOLEAN
 
 ####Return value
 
-If the clipping region of a Graphics object is empty, this method returns TRUE; otherwise, it returns FALSE.
+If the clipping region of a **Graphics** object is empty, this method returns TRUE; otherwise, it returns FALSE.
 
 #### Remarks
 
-If the clipping region of a Graphics object is empty, there is no area left in which to draw. Consequently, nothing will be drawn when the clipping region is empty.
+If the clipping region of a **Graphics** object is empty, there is no area left in which to draw. Consequently, nothing will be drawn when the clipping region is empty.
 
 #### Example
 
