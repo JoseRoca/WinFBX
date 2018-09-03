@@ -133,6 +133,8 @@ SUB Example_CloneRegion (BYVAL hdc AS HDC)
    ' // Make a copy (clone) of the curved region.
    DIM pClonedRegion AS CGpRegion
    pathRegion.Clone(@pClonedRegion)
+   ' // You can also use:
+   ' IM pClonedRegion AS CGpRegion = @pathRegion
 
    ' // Fill the cloned region with a red brush.
    graphics.FillRegion(@solidBrush, @pClonedRegion)
