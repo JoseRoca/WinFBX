@@ -109,6 +109,8 @@ SUB Example_ClonePen (BYVAL hdc AS HDC)
    DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 4)
    DIM clonedPen AS CGpPen
    pen.Clone(@clonedPen)
+   ' // You can also use:
+   ' DIM clonedPen AS CGpPen = @pen
 
    ' // Draw a rectangle using the cloned Pen object.
    graphics.DrawRectangle(@clonedPen, 10, 10, 100, 50)
