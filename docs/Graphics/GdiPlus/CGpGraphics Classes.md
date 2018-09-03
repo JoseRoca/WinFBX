@@ -2835,4 +2835,4 @@ FUNCTION GetSmoothingMode () AS SmoothingMode
 
 #### Return value
 
-If smoothing (antialiasing) is applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias**. If smoothing (antialiasing) is not applied to this Graphics object, this method returns **SmoothingModeAntiAlias** and **SmoothingModeNone** are elements of the SmoothingMode enumeration.
+If smoothing (antialiasing) is applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias**. If smoothing (antialiasing) is not applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias** and **SmoothingModeNone** are elements of the **SmoothingMode** enumeration.
