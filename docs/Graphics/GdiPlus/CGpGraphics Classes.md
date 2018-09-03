@@ -4142,3 +4142,62 @@ CONSTRUCTOR CGpGraphicsPath (BYVAL pts AS GpPoint PTR, _
 | *nCount* | Integer that specifies the number of elements in the points array. This is the same as the number of elements in the types array. |
 | *nCount* | Optional. Element of the **FillMode** enumeration that specifies how areas are filled if the path intersects itself. The default value is **FillModeAlternate**. |
 | *fillMode* | Optional. Element of the **FillMode** enumeration that specifies how areas are filled if the path intersects itself. The default value is **FillModeAlternate**. |
+
+
+# <a name="AddArc"></a>AddArc (CGpGraphicsPath)
+
+Adds an elliptical arc to the current figure of this path.
+
+```
+FUNCTION AddArc (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE, _
+   BYVAL startAngle AS SINGLE, BYVAL sweepAngle AS SINGLE) AS GpStatus
+FUNCTION AddArc (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, BYVAL nHeight AS INT_, _
+   BYVAL startAngle AS SINGLE, BYVAL sweepAngle AS SINGLE) AS GpStatus
+FUNCTION AddArc (BYVAL rc AS GpRectF, BYVAL startAngle AS SINGLE, BYVAL sweepAngle AS SINGLE) AS GpStatus
+FUNCTION AddArc (BYVAL rc AS GpRect, BYVAL startAngle AS SINGLE, BYVAL sweepAngle AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x* | The x-coordinate of the upper-left corner of the bounding rectangle for the ellipse that contains the arc. |
+| *y* | The y-coordinate of the upper-left corner of the bounding rectangle for the ellipse that contains the arc. |
+| *nWidth* | The width of the bounding rectangle for the ellipse that contains the arc. |
+| *nHeight* | The height of the bounding rectangle for the ellipse that contains the arc. |
+| *startAngle* | The clockwise angle, in degrees, between the horizontal axis of the ellipse and the starting point of the arc. |
+| *sweepAngle* | The clockwise angle, in degrees, between the starting point (startAngle) and the ending point of the arc. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object path, adds an arc to path, closes
+' the arc, and then draws path.
+' ========================================================================================
+SUB Example_AddArc (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM rc AS GpRect = GDIP_RECT(20, 20, 50, 100)
+
+   DIM path AS CGpGraphicsPath
+   path.AddArc(@rc, 0.0, 180.0)
+   path.CloseFigure
+   
+   ' // Draw the path.
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawPath(@pen, @path)
+
+END SUB
+' ========================================================================================
+```
