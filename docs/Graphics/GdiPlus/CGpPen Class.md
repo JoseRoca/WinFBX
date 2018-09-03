@@ -2070,3 +2070,21 @@ SUB Example_SetTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetWidth"></a>SetWidth
+
+Sets the width for this **Pen** object.
+
+```
+FUNCTION SetWidth ((BYVAL nWidth AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nWidth* | Real number that specifies the width of the pen. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
