@@ -1946,3 +1946,22 @@ SUB Example_SetLineJoin (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetMiterLimit"></a>SetMiterLimit
+
+Sets the miter limit of this **Pen** object.
+
+```
+FUNCTION SetMiterLimit (BYVAL miterLimit AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *miterLimit* | Simple precision number that specifies the miter limit of this **Pen** object. A Simple precision number value that is less than 1.0! will be replaced with 1.0!. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
