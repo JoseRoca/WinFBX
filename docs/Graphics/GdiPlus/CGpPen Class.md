@@ -1270,7 +1270,7 @@ END SUB
 
 # <a name="SetAlignment"></a>SetAlignment
 
-Sets the alignment for this Pen object relative to the line.
+Sets the alignment for this **Pen** object relative to the line.
 
 ```
 FUNCTION SetAlignment (BYVAL nPenAlignment AS PenAlignment) AS GpStatus
@@ -1317,6 +1317,56 @@ SUB Example_SetAlignment (BYVAL hdc AS HDC)
    ' // Draw two lines using each pen.
    graphics.DrawEllipse(@greenPen, 0, 0, 100, 200)
    graphics.DrawEllipse(@blackPen, 0, 0, 100, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetBrush"></a>SetBrush
+
+Sets the **Brush** object that a pen uses to fill a line.
+
+```
+FUNCTION SetBrush (BYVAL pBrush AS CGpBrush PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pBrush* | Pointer to a **Brush** object for the pen to use to fill a line. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a HatchBrush object and then passes the address of that
+' HatchBrush object to a Pen constructor. The code then sets the brush for the pen and
+' draws a line.
+' ========================================================================================
+SUB Example_SetBrush (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a HatchBrush object
+   DIM hatchBrush AS CGpHatchBrush = CGpHatchBrush(HatchStyleVertical, GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Create a pen, and set the brush for the pen
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 0, 0), 10)
+   pen.SetBrush(@hatchBrush)
+
+   ' // Draw a line with the pen
+   graphics.DrawLine(@pen, 0, 0, 200, 100)
 
 END SUB
 ' ========================================================================================
