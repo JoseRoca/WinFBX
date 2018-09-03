@@ -4339,3 +4339,96 @@ SUB Example_AddClosedCurve (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="AddCurve"></a>AddCurve (CGpGraphicsPath)
+
+Adds a cardinal spline to this path.
+
+```
+FUNCTION AddCurve (BYVAL pts AS GpPointF PTR, BYVAL nCount AS INT_) AS GpStatus
+FUNCTION AddCurve (BYVAL pts AS GpPoint PTR, BYVAL nCount AS INT_) AS GpStatus
+FUNCTION AddCurve (BYVAL pts AS GpPointF PTR, BYVAL nCount AS INT_, BYVAL tension AS SINGLE) AS GpStatus
+FUNCTION AddCurve (BYVAL pts AS GpPoint PTR, BYVAL nCount AS INT_, BYVAL tension AS SINGLE) AS GpStatus
+FUNCTION AddCurve (BYVAL pts AS GpPointF PTR, BYVAL nCount AS INT_, BYVAL offset AS INT_, _
+   BYVAL numberOfSegments AS INT_, BYVAL tension AS SINGLE) AS GpStatus
+FUNCTION AddCurve (BYVAL pts AS GpPoint PTR, BYVAL nCount AS INT_, BYVAL offset AS INT_, _
+   BYVAL numberOfSegments AS INT_, BYVAL tension AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pts* | Pointer to an array of points that define the cardinal spline. The cardinal spline is a curve that passes through each point in the array. |
+| *count* | Integer that specifies the number of elements in the *pts* array. |
+| *offset* | Integer that specifies the index of the array element that is used as the first point of the cardinal spline. |
+| *numberOfSegments* | Integer that specifies the number of segments in the cardinal spline. Segments are the curves that connect consecutive points in the array. |
+| *tension* | Nonnegative simple precision number that controls the length of the curve and how the curve bends. A value of 0 specifies that the spline is a sequence of straight line segments. As the value increases, the curve becomes fuller. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object path, adds a cardinal spline to path,
+' and then draws path.
+' ========================================================================================
+SUB Example_AddCurve (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM pts(0 TO 3) AS GpPoint = {GDIP_POINT(50, 50), GDIP_POINT(60, 20), GDIP_POINT(70, 100), GDIP_POINT(80, 50)}
+   DIM path AS CGpGraphicsPath
+   path.AddCurve(@pts(0), 4)
+
+   ' // Draw the path
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawPath(@pen, @path)
+
+END SUB
+' ========================================================================================
+```
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object path, adds a cardinal spline to path,
+' and then draws path.
+' ========================================================================================
+SUB Example_AddCurve (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM path AS CGpGraphicsPath
+   DIM pts(0 TO 7) AS GpPoint = {GDIP_POINT(50, 50), GDIP_POINT(70, 80), GDIP_POINT(100, 100), _
+      GDIP_POINT(130, 40), GDIP_POINT(150, 90), GDIP_POINT(180, 30), GDIP_POINT(210, 120), GDIP_POINT(240, 80)}
+   path.AddCurve(@pts(0), 8, 2, 4, 1.0)
+   
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 255)
+   graphics.DrawPath(@pen, @path)
+
+   ' // Draw all eight points in the array.
+   DIM brush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0, 0)
+   
+   FOR j AS LONG = 0 TO 7
+      graphics.FillEllipse(@brush, pts(j).x - 3, pts(j).y - 3, 6, 6)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
