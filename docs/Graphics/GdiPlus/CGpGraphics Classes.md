@@ -6107,3 +6107,21 @@ This method returns the number of data points in the next figure. If there are n
 #### Remarks
 
 The first time you call the **NextSubpath** method of an iterator, it gets the starting and ending indices of the first group of points that all have the same type. The second time, it gets the second group, and so on. Each time you call **NextSubpath**, it returns the number of data points in the obtained group. When there are no groups remaining, it returns 0.
+
+# <a name="Rewind"></a>Rewind (CGpGraphicsPathIterator)
+
+Rewinds this iterator to the beginning of its associated path.
+
+```
+SUB Rewind
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The first time you call the **NextSubpath** method of an iterator, it gets the first figure (subpath) of that iterator's associated path. The second time, it gets the second figure, and so on. When you call **Rewind**, the sequence starts over; that is, after you call **Rewind**, the next call to **NextSubpath** gets the first figure in the path. The **NextMarker** and **NextPathType** methods behave similarly.
