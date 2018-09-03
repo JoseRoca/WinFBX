@@ -3386,3 +3386,25 @@ FUNCTION Save () AS GraphicsState
 #### Return value
 
 This method returns a value that identifies the saved state. Pass this value to the **Restore** method when you want to restore the state. The **GraphicsState** data type is defined in Gdiplusenums.inc.
+
+
+# <a name="ScaleTransform"></a>ScaleTransform (CGpGraphics)
+
+Updates this **Graphics** object's world transformation matrix with the product of itself and a scaling matrix.
+
+```
+FUNCTION ScaleTransform (BYVAL sx AS SINGLE, BYVAL sy AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *sx* | The horizontal scaling factor in the scaling matrix. |
+| *sy* | The vertical scaling factor in the scaling matrix. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
