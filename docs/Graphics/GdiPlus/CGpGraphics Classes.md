@@ -5686,7 +5686,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 #### Remarks
 
-A **GraphicsPath** object has an array of points and an array of types. Each element in the array of types is a byte that specifies the point type and a set of flags for the corresponding element in the array of points. Possible point types and flags are listed in the PathPointType enumeration.
+A **GraphicsPath** object has an array of points and an array of types. Each element in the array of types is a byte that specifies the point type and a set of flags for the corresponding element in the array of points. Possible point types and flags are listed in the **PathPointType** enumeration.
 
 Each time you add a line, curve, or shape to a path, the point array and the type array are expanded. When you call **SetMarker**, a marker flag is placed in the last byte of the type array. That flag designates the last point of the point array as a marker point.
 
