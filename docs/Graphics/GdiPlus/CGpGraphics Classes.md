@@ -3288,7 +3288,6 @@ END SUB
 ' ========================================================================================
 ```
 
-
 # <a name="ReleaseHDC"></a>ReleaseHDC (CGpGraphics)
 
 Releases a device context handle obtained by a previous call to the **GetHDC** method of this **Graphics** object.
@@ -3337,3 +3336,20 @@ If the function fails, it returns one of the other elements of the **Status** en
 The identity matrix represents a transformation that does nothing. If the world transformation matrix of a **Graphics** object is the identity matrix, then no world transformation is applied to items drawn by that **Graphics** object.
 
 
+# <a name="Restore"></a>Restore (CGpGraphics)
+
+Sets the state of this **Graphics** object to the state stored by a previous call to the **Save** method of this **Graphics** object.
+
+```
+FUNCTION Restore (BYVAL gstate AS GraphicsState) AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *gstate* | 32-bit value (returned by a previous call to the **Save** method of this Graphics object) that identifies a block of saved state. |
