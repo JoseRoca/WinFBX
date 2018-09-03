@@ -2,8 +2,8 @@
 
 Encapsulates a **Pen** object. A **Pen** object is a Windows GDI+ object used to draw lines and curves.
 
-**Inherits from**: CGpBase.
-**Imclude file**: CGpPen.inc.
+**Inherits from**: CGpBase.<br>
+**Include file**: CGpPen.inc.
 
 | Name       | Description |
 | ---------- | ----------- |
