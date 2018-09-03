@@ -3132,3 +3132,34 @@ SUB Example_IsVisibleClipEmpty (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="MeasureCharacterRanges"></a>MeasureCharacterRanges (CGpGraphics)
+
+Gets a set of regions each of which bounds a range of character positions within a string.
+
+```
+FUNCTION MeasureCharacterRanges (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL layoutRect AS GpRectF PTR, _
+   BYVAL pStringFormat AS CGpStringFormat PTR, BYVAL regionCount AS INT_, _
+   BYVAL regions AS CGpRegion PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pwszString* | Pointer to a wide-character string. Important  For bidirectional: languages, such as Arabic, the string length must not exceed 2046 characters. |
+| *pFont* | Pointer to a **Font** object that specifies the font characteristics (the family name, size, and style of the font) to be applied to the string. |
+| *layoutRect* | Reference to a rectangle that bounds the string. |
+| *stringFormat* | Pointer to a **StringFormat** object that specifies the character ranges and layout information, such as alignment, trimming, tab stops, and so forth. |
+| *regionCount* | Integer that specifies the number of regions that are expected to be received into the regions array. This number should be equal to the number of character ranges currently in the **StringFormat** object. |
+| *regions* | Pointer to an array of **Region** objects that receives the regions, each of which bounds a range of text. |
+
+#### Return value
+
+If the specified point is inside the visible clipping region, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
