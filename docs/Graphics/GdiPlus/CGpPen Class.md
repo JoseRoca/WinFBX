@@ -972,7 +972,7 @@ FUNCTION GetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pMatrix* | Pointer to a Matrix object that receives the transformation matrix. |
+| *pMatrix* | Pointer to a **Matrix** object that receives the transformation matrix. |
 
 #### Return value
 
