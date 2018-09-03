@@ -3036,3 +3036,57 @@ SUB Example_IsClipEmpty (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="IsVisible"></a>IsVisible (CGpGraphics)
+
+Determines whether the specified point is inside the visible clipping region of this **Graphics** object. The visible clipping region is the intersection of the clipping region of this **Graphics** object and the clipping region of the window.
+
+```
+FUNCTION IsVisible (BYVAL pt AS GpPointF PTR) AS BOOLEAN
+FUNCTION IsVisible (BYVAL pt AS GpPoint PTR) AS BOOLEAN
+FUNCTION IsVisible (BYVAL x AS SINGLE, BYVAL y AS SINGLE) AS BOOLEAN
+FUNCTION IsVisible (BYVAL x AS INT_, BYVAL y AS INT_) AS BOOLEAN
+FUNCTION IsVisible (BYVAL rc AS GpRectF PTR) AS BOOLEAN
+FUNCTION IsVisible (BYVAL rc AS GpRect PTR) AS BOOLEAN
+FUNCTION IsVisible (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE) AS BOOLEAN
+FUNCTION IsVisible (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, BYVAL nHeight AS INT_) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pt* | Reference to a point to be tested to see whether it is inside the visible clipping region. |
+| *x, y* | Reference to a point to be tested to see whether it is inside the visible clipping region. |
+| *rc* | Reference to a rectangle to be tested to see whether it intersects the visible clipping region. |
+| *x, y, nWidth, nHeight* | Reference to a rectangle to be tested to see whether it intersects the visible clipping region. |
+
+
+#### Return value
+
+If the specified point is inside the visible clipping region, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example determines whether the clipping region is empty and, if it isn't,
+' draws a rectangle.
+' ========================================================================================
+SUB Example_IsVisible (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Determine whether the point is visible and, if it is, draw an ellipse.
+   IF graphics.IsVisible(100, 100) THEN
+      graphics.FillEllipse(@CGpSolidBrush(GDIP_ARGB(255, 0, 0, 0)), 100, 100, 5, 5)
+   END IF
+
+END SUB
+' ========================================================================================
+```
