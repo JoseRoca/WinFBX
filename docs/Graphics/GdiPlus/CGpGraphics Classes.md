@@ -4232,3 +4232,54 @@ FUNCTION AddBezier (BYVAL pt1 AS GpPoint, BYVAL pt2 AS GpPoint) AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="AddBeziers"></a>AddBeziers (CGpGraphicsPath)
+
+Adds a sequence of connected Bézier splines to the current figure of this path.
+
+```
+FUNCTION AddBeziers (BYVAL pts AS GpPointF PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION AddBeziers (BYVAL pts AS GpPoint PTR, BYVAL count AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pts* | Pointer to an array of starting points, ending points, and control points for the connected splines. The first spline is constructed from the first point through the fourth point in the array and uses the second and third points as control points. Each subsequent spline in the sequence needs exactly three more points: the ending point of the previous spline is used as the starting point, the next two points in the sequence are control points, and the third point is the ending point. |
+| *count* | Integer that specifies the number of elements in the *pts* array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object path, adds a sequence of two connected
+' Bézier splines to path, closes the current figure (the only figure in this case), and
+' then draws path.
+' ========================================================================================
+SUB Example_AddBeziers (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM pts(0 TO 6) AS GpPoint = {GDIP_POINT(50, 50), GDIP_POINT(60, 20), GDIP_POINT(70, 100), GDIP_POINT(80, 50), GDIP_POINT(120, 40), GDIP_POINT(150, 80), GDIP_POINT(170, 30)}
+   DIM path AS CGpGraphicsPath
+   path.AddBeziers(@pts(0), 7)
+   path.CloseFigure
+   
+   ' // Draw the path
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawPath(@pen, @path)
+   
+END SUB
+' ========================================================================================
+```
