@@ -1896,3 +1896,53 @@ SUB Example_SetLineCap (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetLineJoin"></a>SetLineJoin
+
+Sets the line join for this **Pen** object.
+
+```
+FUNCTION SetLineJoin (BYVAL nLineJoin AS LineJoin) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nLineJoin* | Element of the **LineJoin** enumeration that specifies the join style used at the end of a line segment that meets another line segment. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the line join style, and draws a rectangle.
+' The code then resets the line join style and draws a second rectangle.
+' ========================================================================================
+SUB Example_SetLineJoin (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 15)
+
+   ' // Set the join style, and draw a rectangle.
+   pen.SetLineJoin(LineJoinRound)
+   graphics.DrawRectangle(@pen, 20, 20, 150, 100)
+
+   ' // Reset the join style, and draw a second rectangle.
+   pen.SetLineJoin(LineJoinBevel)
+   graphics.DrawRectangle(@pen, 200, 20, 150, 100)
+
+END SUB
+' ========================================================================================
+```
