@@ -3538,3 +3538,66 @@ SUB Example_CompositingMode (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="SetCompositingQuality"></a>SetCompositingQuality (CGpGraphics)
+
+Sets the compositing quality of this **Graphics** object.
+
+```
+FUNCTION SetCompositingQuality (BYVAL nQuality AS CompositingQuality) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nQuality* | Element of the **CompositingQuality** enumeration that specifies the compositing quality. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Graphics object and sets its compositing quality to
+' CompositingQualityHighQuality. The code creates a SolidBrush object based on a color
+' with an alpha component of 128. The code passes the address of that brush to the
+' Graphics.FillRectangle method of the Graphics object. The call to the Graphics.CompositingQuality
+' method of the Graphics object demonstrates how to obtain the compositing quality (which
+' is already known in this case). The code determines whether the compositing quality is
+' CompositingQualityHighQuality and if so, changes it to CompositingQualityHighSpeed.
+' Then the code calls the Graphics.FillRectangle method a second time. The second rectangle
+' is filled with the same brush that was used to fill the first rectangle, but the result
+' is different because of the compositing quality setting.
+' ========================================================================================
+SUB Example_CompositingQuality (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   graphics.SetCompositingQuality(CompositingQualityHighQuality)
+   DIM alphaBrush AS CGpSolidBrush = GDIP_ARGB(128, 255, 0, 0)
+   graphics.FillRectangle(@alphaBrush, 0, 0, 100, 100)
+
+   ' // Get the compositing mode.
+   DIM compQuality AS CompositingMode
+   compQuality = graphics.GetCompositingQuality
+
+   ' // Change the compositing quality if it is CompositingQualityHighQuality
+   IF compQuality = CompositingQualityHighQuality THEN
+      graphics.SetCompositingQuality(CompositingQualityHighSpeed)
+   END IF
+
+   graphics.FillRectangle(@alphaBrush, 0, 100, 100, 100)
+
+END SUB
+' ========================================================================================
+```
