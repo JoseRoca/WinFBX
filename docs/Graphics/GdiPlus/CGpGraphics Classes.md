@@ -3620,3 +3620,53 @@ FUNCTION SetInterpolationMode (BYVAL interpolationMode AS LONG) AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="SetPageScale"></a>SetPageScale (CGpGraphics)
+
+Sets the scaling factor for the page transformation of this **Graphics** object. The page transformation converts page coordinates to device coordinates.
+
+```
+FUNCTION SetPageScale (BYVAL nScale AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nScale* | The scaling factor. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets the world transformation and the page transformation of a
+' Graphics object. The page unit and the page scale both belong to the page transformation.
+' The code sets the page unit to millimeters and sets the page scale to 10. The call to the
+' Graphics.DrawRectangle method draws a rectangle that has a width of 3 centimeters
+' (UnitMillimeter along with a scaling factor of 10) and a height of 2 centimeters. The 
+' rectangle is translated 4 centimeters to the right and 1 centimeter down by the world
+' transformation.
+' ========================================================================================
+SUB Example_PageScale (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+
+   '// Set the world transformation of the Graphics object.
+   graphics.TranslateTransform(4, 1)
+
+   ' // Set the page transformation of the Graphics object.
+   graphics.SetPageUnit(UnitMillimeter)
+   graphics.SetPageScale(10)
+
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 0)
+   graphics.DrawRectangle(@blackPen, 0, 0, 3, 2)
+
+END SUB
+' ========================================================================================
+```
