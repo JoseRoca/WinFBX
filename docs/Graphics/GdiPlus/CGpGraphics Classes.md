@@ -5891,7 +5891,7 @@ FUNCTION Widen (BYVAL pPen AS CGpPen PTR, BYVAL pMatrix AS CGpMatrix PTR = NULL,
 | ---------- | ----------- |
 | *pPen* | Pointer to a **Pen** object. The path is made as wide as it would be when drawn by this pen. |
 | *pMatrix* | Optional. Pointer to a **Matrix** object that specifies a transformation to be applied along with the widening. If this parameter is NULL, no transformation is applied. The default value is NULL. |
-| *flatness* | Optional. Real number that influences the number of line segments that are used to approximate the original path. Small values specify that many line segments are used, and large values specify that few line segments are used. The default value is FlatnessDefault, which is a constant defined in Gdiplusenums.inc. |
+| *flatness* | Optional. Real number that influences the number of line segments that are used to approximate the original path. Small values specify that many line segments are used, and large values specify that few line segments are used. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
 
 #### Return value
 
