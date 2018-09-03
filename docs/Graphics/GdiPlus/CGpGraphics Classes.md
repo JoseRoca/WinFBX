@@ -3304,7 +3304,7 @@ SUB ReleaseHDC (BYVAL hdc AS HDC)
 
 # <a name="ResetClip"></a>ResetClip (CGpGraphics)
 
-Sets the clipping region of this Graphics object to an infinite region.
+Sets the clipping region of this **Graphics** object to an infinite region.
 
 ```
 FUNCTION ResetClip () AS GpStatus
