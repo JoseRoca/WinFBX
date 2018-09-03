@@ -5006,3 +5006,49 @@ SUB Example_CloseAllFigures (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="CloseFigure"></a>CloseFigure (CGpGraphicsPath)
+
+Clears the current figure of this path.
+
+```
+FUNCTION CloseFigure () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object path and adds two figures to path.
+' The code closes the first figure, but leaves the second figure open.
+' ========================================================================================
+SUB Example_CloseFigure (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM rect1 AS GpRect = GDIP_RECT(20, 20, 50, 100)
+   DIM rect2 AS GpRect = GDIP_RECT(40, 40, 50, 100)
+
+   DIM path AS CGpGraphicsPath
+   path.AddArc(@rect1, 0, 180)   ' // first figure
+   path.CloseFigure              ' // first figure closed
+   path.AddArc(@rect2, 0, 180)   ' // second figure
+
+   ' // Draw the path
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawPath(@pen, @path)
+
+END SUB
+' ========================================================================================
+```
