@@ -183,6 +183,8 @@ SUB Example_Clone (BYVAL hdc AS HDC)
    DIM image1 AS CGpImage = "climber.jpg"
    DIM pImage2 AS CGpImage
    image1.Clone(@pImage2)
+   ' // You can also use:
+   ' DIM pImage2 AS CGpImage = @image1
 
    ' // Draw the original image and the cloned image.
    graphics.DrawImage(@image1, 20 * rxRatio, 20 * ryRatio)
