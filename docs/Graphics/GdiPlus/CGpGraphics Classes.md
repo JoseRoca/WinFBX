@@ -4810,3 +4810,51 @@ SUB Example_AddRectangle (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="AddRectangles"></a>AddRectangles (CGpGraphicsPath)
+
+Adds a sequence of rectangles to this path.
+
+```
+FUNCTION AddRectangles (BYVAL rects AS GpRectF PTR, BYVAL nCount AS INT_) AS GpStatus
+FUNCTION AddRectangles (BYVAL rects AS GpRect PTR, BYVAL nCount AS INT_) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *rects* | Pointer to an array of rectangles that will be added to the path. |
+| *nCount* | Integer that specifies the number of elements in the rects array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object path, adds two rectangles to path, and then draws path.
+' ========================================================================================
+SUB Example_AddRectangles (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM rects(0 TO 1) AS GpRect = {GDIP_RECT(20, 20, 100, 50), GDIP_RECT(30, 30, 50, 100)}
+   DIM path AS CGpGraphicsPath
+   path.AddRectangles(@rects(0), 2)
+
+   ' // Draw the path
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawPath(@pen, @path)
+
+END SUB
+' ========================================================================================
+```
