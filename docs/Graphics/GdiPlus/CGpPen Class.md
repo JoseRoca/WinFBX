@@ -129,7 +129,7 @@ FUNCTION GetAlignment () AS PenAlignment
 
 #### Return value
 
-This method returns an element of the PenAlignment enumeration that indicates the current alignment setting for this **Pen** object. The default value of **PenAlignment** is **PenAlignmentCenter**.
+This method returns an element of the **PenAlignment** enumeration that indicates the current alignment setting for this **Pen** object. The default value of **PenAlignment** is **PenAlignmentCenter**.
 
 #### Example
 
