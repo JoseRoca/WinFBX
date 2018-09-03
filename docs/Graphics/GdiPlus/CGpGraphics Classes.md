@@ -3879,3 +3879,55 @@ FUNCTION SetTextRenderingHint (BYVAL newMode AS TextRenderingHint) AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="SetTransform"></a>SetTransform (CGpGraphics)
+
+Sets the world transformation of this **Graphics** object.
+
+```
+FUNCTION SetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that specifies the world transformation. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a rotation matrix and passes the address of that matrix to
+' the Graphics.SetTransform method of a Graphics object. The code calls the Graphics.DrawRectangle
+' method of the Graphics object to draw a rotated rectangle.
+' ========================================================================================
+SUB Example_SetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+
+   ' // Create a rotation matrix.
+   DIM transformMatrix AS CGpMatrix
+   transformMatrix.Rotate(45.0!)
+   ' // Adjust to DPI
+   transformMatrix.Scale(rxRatio, rxRatio)
+
+   ' // Set the transformation matrix of the Graphics object.
+   graphics.SetTransform(@transformMatrix)
+
+   ' // Draw a rotated rectangle.
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0))
+   graphics.DrawRectangle(@blackPen, 120, 0, 100, 50)
+
+END SUB
+' ========================================================================================
+```
