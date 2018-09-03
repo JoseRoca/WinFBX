@@ -1458,6 +1458,12 @@ Creates a new **ImageAttributes** object. This constructor is the default constr
 CONSTRUCTOR CGpImageAttributes
 ```
 
+Creates and initializes an **ImageAttributes** object from another **ImageAttributes** object.
+
+```
+CONSTRUCTOR CGpImageAttributes (BYVAL pImgAttr AS CGpImageAttributes PTR)
+```
+
 # <a name="ClearBrushRemapTable"></a>ClearBrushRemapTable (CGpImageAttributes)
 
 Clears the brush color-remap table of this **ImageAttributes** object.
