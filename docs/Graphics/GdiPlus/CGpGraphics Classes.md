@@ -3373,3 +3373,16 @@ FUNCTION RotateTransform ( BYVAL angle AS SINGLE, BYVAL order AS MatrixOrder = M
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="Save"></a>Save (CGpGraphics)
+
+Saves the current state (transformations, clipping region, and quality settings) of this **Graphics** object. You can restore the state later by calling the **Restore** method.
+
+```
+FUNCTION Save () AS GraphicsState
+```
+
+#### Return value
+
+This method returns a value that identifies the saved state. Pass this value to the Restore method when you want to restore the state. The GraphicsState data type is defined in Gdiplusenums.inc.
