@@ -3156,10 +3156,35 @@ FUNCTION MeasureCharacterRanges (BYVAL pwszString AS WSTRING PTR, BYVAL length A
 
 #### Return value
 
-If the specified point is inside the visible clipping region, this method returns TRUE; otherwise, it returns FALSE.
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+
+# <a name="MeasureCharacterRanges"></a>MeasureCharacterRanges (CGpGraphics)
+
+Measures the bounding box for the specified characters and their corresponding positions.
+
+```
+FUNCTION MeasureDriverString (BYVAL pText AS UINT16 PTR, BYVAL length AS LONG, _
+   BYVAL pFont AS CGpFont PTR, BYVAL positions AS ANY PTR, BYVAL flags AS LONG, _
+   BYVAL pMatrix AS CGpMatrix PTR, BYVAL boundingBox AS GpRectF PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pText* | Pointer to an array of 16-bit values. If the **DriverStringOptionsCmapLookup** flag is set, each value specifies a Unicode character to be displayed. Otherwise, each value specifies an index to a font glyph that defines a character to be displayed. |
+| *length* | Integer that specifies the number of values in the text array. The length parameter can be set to –1 if the string is null terminated. |
+| *pFont* | Pointer to a **Font** object that specifies the family name, size, and style of the font to be applied to the string. |
+| *positions* | If the **DriverStringOptionsRealizedAdvance** flag is set, positions is a pointer to a **GpPointF** object that specifies the position of the first glyph. Otherwise, positions is an array of **GpPointF** objects, each of which specifies the origin of an individual glyph. |
+| *flags* | Integer that specifies the options for the appearance of the string. This value must be an element of the **DriverStringOptions** enumeration or the result of a bitwise **OR** applied to two or more of these elements. |
+| *matrix* | Pointer to a **Matrix** object that specifies the transformation matrix to apply to each value in the text array. |
+| *boundingBox* | Pointer to a **GpRectF** or **GpRect** object that receives the rectangle that bounds the string. |
 
 #### Return value
 
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
