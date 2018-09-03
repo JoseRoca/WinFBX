@@ -4882,7 +4882,7 @@ FUNCTION AddString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
 | ---------- | ----------- |
 | *pwszString* | Pointer to a wide-character string. |
 | *pFamily* | Pointer to a **FontFamily** object that specifies the font family for the string. |
-| *style* | Integer that specifies the style of the typeface. This value must be an element of the **FontStyle** enumeration or the result of a bitwise OR applied to two or more of these elements. For example, **FontStyleBold OR FontStyleUnderline OR FontStyleStrikeout** sets the style as a combination of the three styles. |
+| *style* | Integer that specifies the style of the typeface. This value must be an element of the **FontStyle** enumeration or the result of a bitwise **OR** applied to two or more of these elements. For example, **FontStyleBold OR FontStyleUnderline OR FontStyleStrikeout** sets the style as a combination of the three styles. |
 | *emSize* | The em size, in world units, of the string characters. |
 | *layoutRect* | Reference to a **GpRectF** or **GpRect** object that specifies, in world units, the bounding rectangle for the string. |
 | *pFormat* | Pointer to a **StringFormat** object that specifies layout information (alignment, trimming, tab stops, and the like) for the string. |
@@ -4925,3 +4925,18 @@ SUB Example_AddString (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="ClearMarkers"></a>AddString (ClearMarkers)
+
+Adds the outline of a string to this path.
+
+```
+FUNCTION ClearMarkers () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
