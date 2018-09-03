@@ -3320,7 +3320,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 # <a name="ResetTransform"></a>ResetTransform (CGpGraphics)
 
-Sets the world transformation matrix of this Graphics object to the identity matrix.
+Sets the world transformation matrix of this **Graphics** object to the identity matrix.
 
 ```
 FUNCTION ResetTransform () AS GpStatus
