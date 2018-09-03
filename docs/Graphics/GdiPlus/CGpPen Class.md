@@ -1572,3 +1572,54 @@ SUB Example_SetCustomStartCap (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetDashCap"></a>SetDashCap
+
+Sets the dash cap style for this **Pen** object.
+
+```
+FUNCTION SetDashCap (BYVAL nDashCap AS DashCap) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nDashCap* | Element of the DashCap enumeration that specifies the dash cap for this **Pen** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the dash style and the dash cap, and
+' draws a dashed line.
+' ========================================================================================
+SUB Example_SetDashCap (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 20)
+
+   ' // Set the dash style for the pen
+   pen.SetDashStyle(DashStyleDash)
+
+   ' // Set a triangular dash cap for the pen
+   pen.SetDashCap(DashCapTriangle)
+
+   ' // Draw a line using the pen
+   graphics.DrawLine(@pen, 20, 20, 200, 100)
+
+END SUB
+' ========================================================================================
+```
