@@ -1965,3 +1965,58 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
+
+# <a name="SetStartCap"></a>SetStartCap
+
+Sets the start cap for this **Pen** object.
+
+```
+FUNCTION SetStartCap (BYVAL startCap AS LineCap) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *startCap* | Element of the **LineCap** enumeration that specifies the start cap of a line. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the start cap, and draws a line. The
+' code then resets the start cap, draws a second line, resets the start cap again, and
+' draws a third line.
+' ========================================================================================
+SUB Example_SetStartCap (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 15)
+
+   ' // Set the start cap of the pen, and draw a line.
+   pen.SetStartCap(LineCapArrowAnchor)
+   graphics.DrawLine(@pen, 50, 50, 400, 150)
+
+  ' // Reset the start cap, and draw a second line.
+   pen.SetStartCap(LineCapTriangle)
+   graphics.DrawLine(@pen, 50, 80, 400, 180)
+
+   ' // Reset the start cap, and draw a third line.
+   pen.SetStartCap(LineCapRound)
+   graphics.DrawLine(@pen, 50, 110, 400, 210)
+
+END SUB
+' ========================================================================================
+```
