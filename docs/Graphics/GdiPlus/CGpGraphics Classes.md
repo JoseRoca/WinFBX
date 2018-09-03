@@ -5122,7 +5122,6 @@ END SUB
 ' ========================================================================================
 ```
 
-
 # <a name="GetBounds"></a>GetBounds (CGpGraphicsPath)
 
 Gets a bounding rectangle for this path.
@@ -5187,3 +5186,35 @@ SUB Example_GetBounds (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetFillMode"></a>GetFillMode (CGpGraphicsPath)
+
+Gets the fill mode of this path.
+
+```
+FUNCTION GetFillMode () AS FillMode
+```
+
+#### Return value
+
+This method returns an element of the **FillMode** enumeration.
+
+
+# <a name="GetLastPoint"></a>GetLastPoint (CGpGraphicsPath)
+
+Gets the ending point of the last figure in this path.
+
+```
+FUNCTION GetLastPoint (BYVAL lastPoint AS GpPointF PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lastPoint* | Pointer to a **GpPointF** sreucture that receives the last point. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
