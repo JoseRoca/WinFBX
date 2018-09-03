@@ -33,6 +33,7 @@ Encapsulates a 3-by-3 affine matrix that represents a geometric transform. A **M
 
 ```
 CONSTRUCTOR CGpMatrix
+CONSTRUCTOR CGpMatrix (BYVAL pMatrix AS CGpMatrix PTR)
 CONSTRUCTOR CGpMatrix (BYVAL m11 AS SINGLE, BYVAL m12 AS SINGLE,  BYVAL m21 AS SINGLE, _
    BYVAL m22 AS SINGLE, BYVAL dx AS SINGLE, BYVAL dy AS SINGLE)
 CONSTRUCTOR CGpMatrix (BYVAL m11 AS INT_, BYVAL m12 AS INT_, BYVAL m21 AS INT_, _
@@ -97,6 +98,8 @@ SUB Example_Clone (BYVAL hdc AS HDC)
    ' // Clone the matrix
    DIM clonedMatrix AS CGpMatrix
    matrix.Clone(@clonedMatrix)
+   ' // You can also use:
+   ' DIM clonedMatrix AS CGpMatrix = @matrix)
 
    ' // Translate the cloned matrix
    clonedMatrix.Translate(40.0 * rxRatio, 25.0 * ryRatio, MatrixOrderAppend)
