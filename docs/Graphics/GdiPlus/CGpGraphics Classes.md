@@ -5877,3 +5877,55 @@ SUB Example_Warp (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="Widen"></a>Widen (CGpGraphicsPath)
+
+Replaces this path with curves that enclose the area that is filled when this path is drawn by a specified pen. The Widen method also flattens the path.
+
+```
+FUNCTION Widen (BYVAL pPen AS CGpPen PTR, BYVAL pMatrix AS CGpMatrix PTR = NULL, _
+   BYVAL flatness AS SINGLE = FlatnessDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pPen* | Pointer to a **Pen** object. The path is made as wide as it would be when drawn by this pen. |
+| *pMatrix* | Optional. Pointer to a **Matrix** object that specifies a transformation to be applied along with the widening. If this parameter is NULL, no transformation is applied. The default value is NULL. |
+| *flatness* | Optional. Real number that influences the number of line segments that are used to approximate the original path. Small values specify that many line segments are used, and large values specify that few line segments are used. The default value is FlatnessDefault, which is a constant defined in Gdiplusenums.inc. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object and adds a closed curve to the path.
+' The code creates a green pen that has a width of 10 and passes the address of that pen
+' to the GraphicsPath.Widen method. Then the code draws the path with a blue pen of width 1.
+' ========================================================================================
+SUB Example_Widen (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM bluePen AS CGpPen = GDIP_ARGB(255, 0, 0, 255)
+   DIM greenPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255,  0), 10)
+   DIM points(0 TO 3) AS GpPoint = {GDIP_POINT(20, 20), GDIP_POINT(160, 100), _
+       GDIP_POINT(140, 60), GDIP_POINT(60, 100)}
+
+   DIM path AS CGpGraphicsPath
+   path.AddClosedCurve(@points(0), 4)
+   path.Widen(@greenPen)
+   graphics.DrawPath(@bluePen, @path)
+
+END SUB
+' ========================================================================================
+```
