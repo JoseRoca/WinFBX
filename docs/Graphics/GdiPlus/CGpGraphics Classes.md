@@ -3601,3 +3601,22 @@ SUB Example_CompositingQuality (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="SetInterpolationMode"></a>SetInterpolationMode (CGpGraphics)
+
+Sets the interpolation mode of this **Graphics** object. The interpolation mode determines the algorithm that is used when images are scaled or rotated.
+
+```
+FUNCTION SetInterpolationMode (BYVAL interpolationMode AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *interpolationMode* | Element of the **InterpolationMode** enumeration that specifies the interpolation mode. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
