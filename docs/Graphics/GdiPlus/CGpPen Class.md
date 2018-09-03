@@ -9,7 +9,7 @@ Encapsulates a **Pen** object. A **Pen** object is a Windows GDI+ object used to
 | ---------- | ----------- |
 | [Constructors](#Constructors) | Creates a **Pen** object. |
 | [Clone](#Clone) | Copies the contents of the existing **Pen** object into a new **Pen** object. |
-| [GetAlignment](#GetAlignment) | Gets the alignment currently set for this **Pen* object. |
+| [GetAlignment](#GetAlignment) | Gets the alignment currently set for this **Pen** object. |
 | [GetBrush](#GetBrush) | Gets the the **Brush** object that is currently set for this **Pen** object. |
 | [GetColor](#GetColor) | Gets the color currently set for this **Pen** object. |
 | [GetCompoundArray](#GetCompoundArray) | Gets the the compound array currently set for this **Pen** object. |
