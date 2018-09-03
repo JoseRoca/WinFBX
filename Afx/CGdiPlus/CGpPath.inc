@@ -23,6 +23,14 @@ PRIVATE CONSTRUCTOR CGpGraphicsPath (BYVAL nFillMode AS FillMode = FillModeAlter
 END CONSTRUCTOR
 ' ========================================================================================
 
+' ========================================================================================
+' Creates and initializes a GraphicsPath object from another GraphicsPath object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpGraphicsPath (BYVAL pGraphicsPath AS CGpGraphicsPath PTR)
+   m_Status = GdipClonePath(pGraphicsPath->m_pPath, @m_pPath)
+END CONSTRUCTOR
+' =====================================================================================
+
 ' =====================================================================================
 ' Creates a GraphicsPath object based on an array of points, an array of types, and a fill mode.
 ' Default value for filolMode: FillModeAlternate(0).

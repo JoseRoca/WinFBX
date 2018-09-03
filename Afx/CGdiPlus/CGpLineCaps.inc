@@ -21,6 +21,13 @@
 PRIVATE CONSTRUCTOR CGpCustomLineCap
 END CONSTRUCTOR
 ' ========================================================================================
+' ========================================================================================
+' Creates and initializes a custom line cap object from another custom line cap object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpCustomLineCap (BYVAL pCustomLineCap AS CGpCustomLineCap PTR)
+   m_Status = GdipCloneCustomLineCap(pCustomLineCap->m_pCustomLineCap, @m_pCustomLineCap)
+END CONSTRUCTOR
+' =====================================================================================
 
 ' =====================================================================================
 ' * Creates a CustomLineCap object from a fill path and a stroke path.
@@ -166,6 +173,14 @@ END FUNCTION
 ' CGpAdjustableArrowCap class
 ' Inherits from CGpCustomLineCap.
 ' #####################################################################################
+
+' ========================================================================================
+' Creates and initializes a custom line cap object from another custom line cap object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpAdjustableArrowCap (BYVAL pAdjustableArrowCap AS CGpAdjustableArrowCap PTR)
+   m_Status = GdipCloneCustomLineCap(pAdjustableArrowCap->m_pCustomLineCap, @m_pCustomLineCap)
+END CONSTRUCTOR
+' =====================================================================================
 
 ' =====================================================================================
 ' * Creates an adjustable arrow line cap with the specified height and width. The arrow

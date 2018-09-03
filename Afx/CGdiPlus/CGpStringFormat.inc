@@ -15,6 +15,14 @@
 ' CGpStringFormat Class
 ' ########################################################################################
 
+' ========================================================================================
+' Creates and initializes an StringFormat object from another StringFormat object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpStringFormat (BYVAL pStringFormat AS CGpStringFormat PTR)
+   m_Status = GdipCloneMatrix(pStringFormat->m_pStringFormat, @m_pStringFormat)
+END CONSTRUCTOR
+' =====================================================================================
+
 ' =====================================================================================
 ' Creates a StringFormat object based on string format flags and a language.
 ' =====================================================================================

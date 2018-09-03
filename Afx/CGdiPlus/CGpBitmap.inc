@@ -21,6 +21,13 @@
 PRIVATE CONSTRUCTOR CGpImage
 END CONSTRUCTOR
 ' ========================================================================================
+' ========================================================================================
+' Creates and initializes an Image object from another Image object.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CGpImage (BYVAL pImage AS CGpImage PTR)
+   m_Status = GdipCloneImage(pImage->m_pImage, @m_pImage)
+END CONSTRUCTOR
+' ========================================================================================
 
 ' ========================================================================================
 ' * Creates an Image object based on a file.

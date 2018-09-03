@@ -21,6 +21,13 @@
 PRIVATE CONSTRUCTOR CGpPen
 END CONSTRUCTOR
 ' ========================================================================================
+' ========================================================================================
+' * Creates and initializes a Pen object from another Pen object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpPen (BYVAL pPen AS CGpPen PTR)
+   m_Status = GdipClonePen(pPen->m_pPen, @m_pPen)
+END CONSTRUCTOR
+' =====================================================================================
 
 ' =====================================================================================
 ' * Creates a Pen object that uses a specified color and width.

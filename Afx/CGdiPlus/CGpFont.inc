@@ -21,6 +21,13 @@
 PRIVATE CONSTRUCTOR CGpFont
 END CONSTRUCTOR
 ' ========================================================================================
+' ========================================================================================
+' Creates and initializes a Font object from another Font object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpFont (BYVAL pFont AS CGpFont PTR)
+   m_Status = GdipCloneFont(pFont->m_pFont, @m_pFont)
+END CONSTRUCTOR
+' =====================================================================================
 
 ' ========================================================================================
 ' Creates a Font object based on the GDI font object that is currently selected into a
@@ -244,6 +251,13 @@ END FUNCTION
 PRIVATE CONSTRUCTOR CGpFontFamily
 END CONSTRUCTOR
 ' ========================================================================================
+' ========================================================================================
+' Creates and initializes a FontFamily object from another FontFamily object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpFontFamily (BYVAL pFontFamily AS CGpFontFamily PTR)
+   m_Status = GdipCloneFontFamily(pFontFamily->m_pFontFamily, @m_pFontFamily)
+END CONSTRUCTOR
+' =====================================================================================
 
 ' ========================================================================================
 ' Creates a FontFamily object based on a specified font collection.
