@@ -4649,3 +4649,62 @@ SUB Example_AddPath (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="AddPie"></a>AddPie (CGpGraphicsPath)
+
+Adds a pie to this path. An arc is a portion of an ellipse, and a pie is a portion of the area enclosed by an ellipse. A pie is bounded by an arc and two lines (edges) that go from the center of the ellipse to the endpoints of the arc.
+
+```
+FUNCTION AddPie (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE, _
+   BYVAL startAngle AS SINGLE, BYVAL sweepAngle AS SINGLE) AS GpStatus
+FUNCTION AddPie (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, BYVAL nHeight AS INT_, _
+   BYVAL startAngle AS SINGLE, BYVAL sweepAngle AS SINGLE) AS GpStatus
+FUNCTION AddPie (BYVAL rc AS GpRectF PTR, BYVAL startAngle AS SINGLE, BYVAL sweepAngle AS SINGLE) AS GpStatus
+FUNCTION AddPie (BYVAL rc AS GpRect PTR, BYVAL startAngle AS SINGLE, BYVAL sweepAngle AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x* | The x-coordinate of the upper-left corner of the rectangle that bounds the ellipse that bounds the pie. |
+| *y* | The y-coordinate of the upper-left corner of the rectangle that bounds the ellipse that bounds the pie. |
+| *nWidth* | The width of the rectangle that bounds the ellipse that bounds the pie. |
+| *nHeight* | The height of the rectangle that bounds the ellipse that bounds the pie. |
+| *startAngle* | The clockwise angle, in degrees, between the horizontal axis of the ellipse and the starting point of the arc that defines the pie. |
+| *sweepAngle* | The clockwise angle, in degrees, between the starting and ending points of the arc that defines the pie. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Even if the value of the connect parameter is CTRUE, this method might not be able to make the first figure of the added path part of the last figure of this path. If either of those figures is closed, then they must remain separate figures.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object path, adds a pie to path, and then draws path.
+' ========================================================================================
+SUB Example_AddPie (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM path AS CGpGraphicsPath
+   path.AddPie(50, 50, 100, 100, 20.0, 45.0)
+
+   ' // Draw the path
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawPath(@pen, @path)
+
+END SUB
+' ========================================================================================
+```
