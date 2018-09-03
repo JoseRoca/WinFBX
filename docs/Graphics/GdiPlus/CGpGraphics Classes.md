@@ -4926,13 +4926,32 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ClearMarkers"></a>AddString (ClearMarkers)
+# <a name="ClearMarkers"></a>ClearMarkers (CGpGraphicsPath)
 
 Adds the outline of a string to this path.
 
 ```
 FUNCTION ClearMarkers () AS GpStatus
 ```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="Clone"></a>Clone (CGpGraphicsPath)
+
+Copies the contents of the existing **GraphicsPath** object into a new **GraphicsPath** object.
+
+```
+FUNCTION Clone (BYVAL pCloneGraphicsPath AS CGpGraphicsPath PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pCloneGraphicsPath* | Pointer to a variable that will receive a pointer to the cloned **GraphicsPath** object. |
 
 #### Return value
 
