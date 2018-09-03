@@ -6069,7 +6069,7 @@ FUNCTION NextPathType (BYVAL pathType AS BYTE PTR, BYVAL startIndex AS INT_ PTR,
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pathType* | Pointer to a BYTE that receives the point type shared by all points in the group. Possible values are ++PathPointTypeLine** and **PathPointTypeBezier**, which are elements of the **PathPointType** enumeration. |
+| *pathType* | Pointer to a BYTE that receives the point type shared by all points in the group. Possible values are **PathPointTypeLine** and **PathPointTypeBezier**, which are elements of the **PathPointType** enumeration. |
 | *startIndex* | Pointer to an LONG that receives the starting index of the group of points. |
 | *endIndex* | Pointer to an LONG that receives the ending index of the group of points. |
 
