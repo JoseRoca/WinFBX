@@ -3408,3 +3408,71 @@ FUNCTION ScaleTransform (BYVAL sx AS SINGLE, BYVAL sy AS SINGLE, _
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="SetClip"></a>SetClip (CGpGraphics)
+
+Updates the clipping region of this **Graphics** object to a region that is the combination of itself and the clipping region of another Graphics object.
+
+```
+FUNCTION SetClip (BYVAL pGraphics AS CGpGraphics PTR, _
+   BYVAL nCombineMode AS CombineMode = CombineModeReplace) AS GpStatus
+FUNCTION SetClip (BYVAL rc AS GpRectF PTR, _
+   BYVAL nCombineMode AS CombineMode = CombineModeReplace) AS GpStatus
+FUNCTION SetClip (BYVAL rc AS GpRect PTR, _
+   BYVAL nCombineMode AS CombineMode = CombineModeReplace) AS GpStatus
+FUNCTION SetClip (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE, _
+   BYVAL nCombineMode AS CombineMode = CombineModeReplace) AS GpStatus
+FUNCTION SetClip (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, BYVAL nHeight AS INT_, _
+   BYVAL nCombineMode AS CombineMode = CombineModeReplace) AS GpStatus
+FUNCTION SetClip (BYVAL pPath AS CGpGraphicsPath PTR, _
+   BYVAL nCombineMode AS CombineMode = CombineModeReplace) AS GpStatus
+FUNCTION SetClip (BYVAL pRegion AS CGpRegion PTR, _
+   BYVAL nCombineMode AS CombineMode = CombineModeReplace) AS GpStatus
+FUNCTION SetClip (BYVAL hRgn AS HRGN, _
+   BYVAL nCombineMode AS CombineMode = CombineModeReplace) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pGraphics* | Pointer to a **Graphics** object that contains the clipping region to be combined with the clipping region of this **Graphics** object. |
+| *combineMode* | Optional. Element of the **CombineMode** enumeration that specifies how the specified region is combined with the clipping region of this **Graphics** object. The default value is **CombineModeReplace**. |
+| *hRgn* | Handle to a GDI region to be combined with the clipping region of this **Graphics** object. This is provided for legacy code. New applications should pass a **Region** object as the first parameter. |
+| *pRegion* | Pointer to a **Region** object that specifies the region to be combined with the clipping region of this **Graphics** object. |
+| *pPath* | Pointer to a **GraphicsPath** object that specifies the region to be combined with the clipping region of this **Graphics** object. |
+| *rc* | Reference to a rectangle to be combined with the clipping region of this **Graphics** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example updates the clipping region with a Rect structure and then fills a rectangle.
+' ========================================================================================
+SUB Example_SetClip (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Rect object.
+   DIM clipRect AS GpRectF = GDIP_RECTF(0, 0, 200, 100)
+
+   ' // Set the clipping region
+   graphics.SetClip(@clipRect)
+
+   ' // Fill a rectangle to demonstrate the clipping region.
+   graphics.FillRectangle(@CGpSolidBrush(GDIP_ARGB(255, 0, 0, 0)), 0, 0, 500, 500)
+
+END SUB
+' ========================================================================================
+```
