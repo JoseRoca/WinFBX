@@ -2993,3 +2993,46 @@ SUB Example_IntersectClip (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="IsClipEmpty"></a>IsClipEmpty (CGpGraphics)
+
+Determines whether the clipping region of this Graphics object is empty.
+
+```
+FUNCTION IsClipEmpty () AS BOOLEAN
+```
+
+####Return value
+
+If the clipping region of a Graphics object is empty, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Remarks
+
+If the clipping region of a Graphics object is empty, there is no area left in which to draw. Consequently, nothing will be drawn when the clipping region is empty.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example determines whether the clipping region is empty and, if it isn't,
+' draws a rectangle.
+' ========================================================================================
+SUB Example_IsClipEmpty (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // If the clipping region is not empty, draw a rectangle.
+   IF graphics.IsClipEmpty = FALSE THEN
+      graphics.DrawRectangle(@CGpPen(GDIP_ARGB(255, 0, 0, 0), 3), 0, 0, 100, 100)
+   END IF
+
+END SUB
+' ========================================================================================
+```
