@@ -5499,3 +5499,70 @@ SUB Example_IsOutlineVisible (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="IsVisible"></a>IsVisible (CGpGraphicsPath)
+
+Determines whether a specified point lies in the area that is filled when this path is filled by a specified **Graphics** object.
+
+```
+FUNCTION IsVisible (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL pGraphics AS CGpGraphics PTR = NULL) AS BOOLEAN
+FUNCTION IsVisible (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL pGraphics AS CGpGraphics PTR = NULL) AS BOOLEAN
+FUNCTION IsVisible (BYVAL rc AS GpRectF PTR, BYVAL pGraphics AS CGpGraphics PTR = NULL) AS BOOLEAN
+FUNCTION IsVisible (BYVAL rc AS GpRect PTR, BYVAL pGraphics AS CGpGraphics PTR = NULL) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x* | The x-coordinate of the point to be tested. |
+| *y* | The y-coordinate of the point to be tested. |
+| *pGraphics* | Optional. Pointer to a **Graphics** object that specifies a world-to-device transformation. If the value of this parameter is NULL, the test is done in world coordinates; otherwise, the test is done in device coordinates. The default value is NULL.  |
+
+#### Return value
+
+If the test point touches the outline of this path, this method returns TRUE; otherwise, it returns FALSE.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates an elliptical path and draws that path with a narrow black
+' pen. Then the code tests each point in an array to see whether the point lies in the
+' interior of the path. Points that lie in the interior are painted green, and points that
+' do not lie in the interior are painted red.
+' ========================================================================================
+SUB Example_IsVisible (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 1)
+   DIM brush AS CGpSolidBrush = GDIP_ARGB(255, 255, 0,  0)
+
+   ' // Create and draw a path
+   DIM path AS CGpGraphicsPath
+   path.AddEllipse(50, 50, 200, 100)
+   graphics.DrawPath(@blackPen, @path)
+
+   ' // Create an array of four points, and determine whether each
+   ' // point in the array touches the outline of the path.
+   ' // If a point touches the outline, paint it green.
+   ' // If a point does not touch the outline, paint it red.
+   DIM points(0 TO 3) AS GpPoint = {GDIP_POINT(50, 100), GDIP_POINT(250, 100), _
+       GDIP_POINT(150, 170), GDIP_POINT(180, 60)}
+   FOR j AS LONG = 0 TO 3
+      IF path.IsVisible(points(j).x, points(j).y, @graphics) THEN
+         brush.SetColor(GDIP_ARGB(255, 0, 255,  0))
+      ELSE
+         brush.SetColor(GDIP_ARGB(255, 255, 0,  0))
+      END IF
+      graphics.FillEllipse(@brush, points(j).x - 3, points(j).y - 3, 6, 6)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
