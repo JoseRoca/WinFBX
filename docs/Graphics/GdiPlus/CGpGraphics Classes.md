@@ -3161,7 +3161,6 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-
 # <a name="MeasureDriverString"></a>MeasureDriverString (CGpGraphics)
 
 Measures the bounding box for the specified characters and their corresponding positions.
@@ -3181,6 +3180,51 @@ FUNCTION MeasureDriverString (BYVAL pText AS UINT16 PTR, BYVAL length AS LONG, _
 | *flags* | Integer that specifies the options for the appearance of the string. This value must be an element of the **DriverStringOptions** enumeration or the result of a bitwise **OR** applied to two or more of these elements. |
 | *matrix* | Pointer to a **Matrix** object that specifies the transformation matrix to apply to each value in the text array. |
 | *boundingBox* | Pointer to a **GpRectF** or **GpRect** object that receives the rectangle that bounds the string. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+
+# <a name="MeasureString"></a>MeasureString (CGpGraphics)
+
+Measures the extent of the string in the specified font, format, and layout rectangle.
+
+```
+FUNCTION MeasureString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL layoutRect AS GpRectF PTR, _
+   BYVAL boundingBox AS GpRectF PTR) AS GpStatus
+FUNCTION MeasureString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, BYVAL pFont AS CGpFont PTR, _
+   BYVAL layoutRect AS GpPointF PTR, BYVAL boundingBox AS GpRectF PTR) AS GpStatus
+FUNCTION MeasureString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL layoutRect AS GpRectF PTR, _
+   BYVAL pStringFormat AS CGpStringFormat PTR, BYVAL boundingBox AS GpRectF PTR) AS GpStatus
+FUNCTION MeasureString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL layoutRect AS GpRectF PTR, _
+   BYVAL pStringFormat AS CGpStringFormat PTR, BYVAL boundingBox AS GpPointF PTR) AS GpStatus
+FUNCTION MeasureString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL layoutRect AS GpRectF PTR, _
+   BYVAL pStringFormat AS CGpStringFormat PTR, BYVAL boundingBox AS GpRectF PTR, _
+   BYREF codepointsFitted AS INT_ = 0, BYREF linesFilled AS INT_ = 0) AS GpStatus
+FUNCTION MeasureString (BYVAL pwszString AS WSTRING PTR, BYVAL length AS INT_, _
+   BYVAL pFont AS CGpFont PTR, BYVAL layoutRect AS GpSizeF PTR, _
+   BYVAL pStringFormat AS CGpStringFormat PTR, BYVAL boundingBox AS GpSizeF PTR, _
+   BYREF codepointsFitted AS INT_ = 0, BYREF linesFilled AS INT_ = 0) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pwszString* | Pointer to a wide-character string to be measured. Important: For bidirectional languages, such as Arabic, the string length must not exceed 2046 characters. |
+| *pFont* | Pointer to a **Font** object that specifies the family name, size, and style of the font to be applied to the string. |
+| *origin* | Reference to the point at which the string starts. |
+| *layoutRect* | Reference to the rectangle that bounds the string. |
+| *stringFormat* | Pointer to a **StringFormat** object that specifies the layout information, such as alignment, trimming, tab stops, and so forth. |
+| *boundingBox* | Pointer to a **GpRectF** object that receives the rectangle that bounds the string. |
+| *size* | Pointer to a **GpSizeF** object that receives the width and height of the rectangle that bounds the string. |
+| *codepointsFitted* | Pointer to an LONG that receives the number of characters that actually fit into the layout rectangle. The default value is a NULL pointer. |
+| *linesFilled* | Pointer to an LONG that receives the number of lines that fit into the layout rectangle. The default value is a NULL pointer. |
 
 #### Return value
 
