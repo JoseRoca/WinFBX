@@ -795,3 +795,54 @@ SUB Example_GetEndCap (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetLineJoin"></a>GetLineJoin
+
+Gets the line join style currently set for this Pen object.
+
+```
+FUNCTION GetLineJoin () AS LineJoin
+```
+
+#### Return value
+
+This method returns an element of the LineJoin enumeration that indicates the style used at the point where line segments join.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the end cap, and draws a line. The code
+' then resets the end cap, draws a second line, resets the end cap again, and draws a third line.
+' ========================================================================================
+SUB Example_GetLineJoin (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 0, 0), 15)
+
+   ' // Set the join style, and draw a rectangle.
+   pen.SetLineJoin(LineJoinRound)
+   graphics.DrawRectangle(@pen, 20, 20, 200, 100)
+
+   ' // Get the line join for the pen.
+'   LineJoin lineJoin = pen.GetLineJoin();
+   DIM nLineJoin AS LineJoin = pen.GetLineJoin
+
+   ' // Create another pen, and use the same line join.
+   DIM pen2 AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), 15)
+   pen2.SetLineJoin(nLineJoin)
+
+   ' // Draw a second rectangle.
+   graphics.DrawRectangle(@pen2, 250, 20, 200, 100)
+
+END SUB
+' ========================================================================================
+```
