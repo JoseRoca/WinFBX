@@ -5746,7 +5746,7 @@ END SUB
 ```
 
 
-# <a name="Transform"></a>StartFigure (CGpGraphicsPath)
+# <a name="Transform"></a>Transform (CGpGraphicsPath)
 
 Multiplies each of this path's data points by a specified matrix.
 
@@ -5795,6 +5795,84 @@ SUB Example_Transform (BYVAL hdc AS HDC)
 
    ' // Draw the transformed path in red.
    graphics.DrawPath(@CGpPen(GDIP_ARGB(255, 255, 0,  0)), @path)
+
+END SUB
+' ========================================================================================
+```
+
+
+# <a name="Warp"></a>Warp (CGpGraphicsPath)
+
+Applies a warp transformation to this path. The **Warp** method also flattens (converts to a sequence of straight lines) the path.
+
+```
+FUNCTION Warp (BYVAL destPoints AS GpPointF PTR, BYVAL count AS INT_, BYVAL srcRect AS GpRectF PTR, _
+   BYVAL pMatrix AS CGpMatrix PTR = NULL, BYVAL nWarpMode AS WarpMode = WarpModePerspective, _
+   BYVAL flatness AS SINGLE = FlatnessDefault) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *destPoints* | Pointer to an array of points that, along with the srcRect parameter, defines the warp transformation. |
+| *count* | Integer that specifies the number of points in the destPoints array. The value of this parameter must be 3 or 4. |
+| *srcRect* | Reference to a rectangle that, along with the destPoints parameter, defines the warp transformation. |
+| *pMatrix* | Optional. Pointer to a Matrix object that represents a transformation to be applied along with the warp. If this parameter is NULL, no transformation is applied. The default value is NULL. |
+| *nWarpMode* | Optional. Element of the **WarpMode** enumeration that specifies the kind of warp to be applied. The default value is **WarpModePerspective**. |
+| *flatness* | Optional. Real number that influences the number of line segments that are used to approximate the original path. Small values specify that many line segments are used, and large values specify that few line segments are used. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object and adds a closed figure to the path.
+' The code defines a warp transformation by specifying a source rectangle and an array of
+' four destination points. The source rectangle and destination points are passed to the
+' Warp method. The code draws the path twice: once before it has been warped and once after
+' it has been warped.
+' ========================================================================================
+SUB Example_Warp (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   ' // Create a path.
+   DIM points(0 TO 7) AS GpPointF = {GDIP_POINTF(20.0, 60.0), GDIP_POINTF(30.0, 90.0), _
+      GDIP_POINTF(15.0, 110.0), GDIP_POINTF(15.0, 145.0), GDIP_POINTF(55.0, 145.0), _
+      GDIP_POINTF(55.0, 110.0), GDIP_POINTF(40.0, 90.0), GDIP_POINTF(50.0, 60.0)}
+   DIM path AS CGpGraphicsPath
+   path.AddLines(@points(0), 8)
+   path.CloseFigure
+
+   ' // Draw the path before applying a warp transformation.
+   DIM bluePen AS CGpPen = GDIP_ARGB(255, 0, 0, 255)
+   graphics.DrawPath(@bluePen, @path)
+
+   ' // Define a warp transformation, and warp the path.
+   DIM srcRect AS GpRectF = GDIP_RECTF(10.0, 50.0, 50.0, 100.0)
+   DIM destPts(0 TO 3) AS GpPointF = {GDIP_POINTF(220.0, 10.0), GDIP_POINTF(280.0, 10.0), _
+       GDIP_POINTF(100.0, 150.0), GDIP_POINTF(400.0, 150.0)}
+   path.Warp(@destPts(0), 4, @srcRect)
+
+   ' // Draw the warped path.
+   graphics.DrawPath(@bluePen, @path)
+
+   ' // Draw the source rectangle and the destination polygon.
+   DIM blackPen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+   graphics.DrawRectangle(@blackPen, @srcRect)
+   graphics.DrawLine(@blackPen, @destPts(0), @destPts(1))
+   graphics.DrawLine(@blackPen, @destPts(0), @destPts(2))
+   graphics.DrawLine(@blackPen, @destPts(1), @destPts(3))
+   graphics.DrawLine(@blackPen, @destPts(2), @destPts(3))
 
 END SUB
 ' ========================================================================================
