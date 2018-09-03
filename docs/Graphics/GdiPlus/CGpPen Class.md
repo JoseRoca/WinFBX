@@ -1016,3 +1016,104 @@ SUB Example_GetTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetWidth"></a>GetWidth
+
+Gets the width currently set for this **Pen** object.
+
+```
+FUNCTION GetWidth () AS SINGLE
+```
+
+####Remarks
+
+If you pass the address of a pen to one of the draw methods of a **Graphics** object, the width of the pen's stroke is dependent on the unit of measure specified in the **Graphics** object. The default unit of measure is **UnitPixel**, which is an element of the **GpUnit** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object with a specified width and draws a line. The
+' code then gets the width of the pen, creates a second pen based on the width of the
+' first pen, and draws a second line.
+' ========================================================================================
+SUB Example_GetWidth (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a pen and use it to draw a rectangle
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 15)
+   graphics.DrawRectangle(@pen, 20, 20, 200, 100)
+
+   ' // Get the width of the pen.
+   DIM nWidth AS SINGLE = pen.GetWidth
+
+   ' // Create another pen that has the same width
+   DIM pen2 AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), nWidth)
+
+   ' // Draw a second line.
+   graphics.DrawLine(@pen2, 20, 60, 200, 140)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="MultiplyTransform"></a>MultiplyTransform
+
+Updates the world transformation matrix of this **Pen** object with the product of itself and another matrix.
+
+```
+FUNCTION MultiplyTransform (BYVAL pMatrix AS CGpMatrix PTR, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to the matrix to be multiplied by this brush's current transformation matrix. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets a matrix and creates a Pen object. The code then sets the
+' width of the pen, applies a rotation matrix and a stretch matrix to the pen, and then
+' draws an ellipse.
+' ========================================================================================
+SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Vertical stretch
+   DIM matrix AS CGpMatrix = CGpMatrix(1, 0, 0, 4, 0, 0)
+
+   ' // Create a pen, and use it to draw a rectangle.
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 255)
+
+   pen.SetWidth(5)
+   pen.RotateTransform(30)   ' // first rorate
+   pen.MultiplyTransform(@matrix, MatrixOrderPrepend)   ' // then strecth
+
+   graphics.DrawEllipse(@pen, 90, 30, 200, 200)
+
+END SUB
+' ========================================================================================
+```
