@@ -1583,7 +1583,7 @@ FUNCTION SetDashCap (BYVAL nDashCap AS DashCap) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nDashCap* | Element of the DashCap enumeration that specifies the dash cap for this **Pen** object. |
+| *nDashCap* | Element of the **DashCap** enumeration that specifies the dash cap for this **Pen** object. |
 
 #### Return value
 
@@ -1619,6 +1619,58 @@ SUB Example_SetDashCap (BYVAL hdc AS HDC)
 
    ' // Draw a line using the pen
    graphics.DrawLine(@pen, 20, 20, 200, 100)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetDashOffset"></a>SetDashOffset
+
+Sets the distance from the start of the line to the start of the first dash in a dashed line.
+
+```
+FUNCTION SetDashOffset (BYVAL dashOffset AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dashOffset* | The number of times to shift the spaces in a dashed line. Each shift is equal to the length of a space in the dashed line. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the dash style and the dash cap, and
+' draws a dashed line.
+' ========================================================================================
+SUB Example_SetDashOffset (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 15)
+
+   ' // Set the dash style for the pen
+   pen.SetDashStyle(DashStyleDash)
+
+   ' // Draw a line using the pen
+   graphics.DrawLine(@pen, 0, 50, 400, 50)
+
+   ' // Set the dash offset value for the pen, and draw a second line.
+   pen.SetDashOffset(10)
+   graphics.DrawLine(@pen, 0, 80, 400, 80)
 
 END SUB
 ' ========================================================================================
