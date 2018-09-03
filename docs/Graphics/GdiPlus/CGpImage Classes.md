@@ -133,6 +133,12 @@ Creates an **ImageAttributes** object that contains information about how bitmap
 
 # <a name="ConstructorsImage"></a>Constructors (CGpImage)
 
+Creates an **Image** object from another **Image** object.
+
+```
+CONSTRUCTOR CGpImage (BYVAL pImage AS CGpImage PTR)
+```
+
 Creates an **Image** object based on a file.
 
 ```
