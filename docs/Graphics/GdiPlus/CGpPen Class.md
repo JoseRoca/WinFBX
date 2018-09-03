@@ -2088,3 +2088,55 @@ FUNCTION SetWidth ((BYVAL nWidth AS SINGLE) AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="TranslateTransform"></a>TranslateTransform
+
+Updates this brush's current transformation matrix with the product of itself and a translation matrix.
+
+```
+FUNCTION TranslateTransform (BYVAL dx AS SINGLE, BYVAL dy AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dx* | Simple precision number that specifies the horizontal component of the translation. |
+| *dy* | Simple precision number that specifies the vertical component of the translation. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets the world transformation of a Graphics object to a rotation.
+' The call to Graphics::TranslateTransform multiplies the Graphics object's existing world
+' transformation matrix (rotation) by a translation matrix. The MatrixOrderAppend argument
+' specifies that the multiplication is done with the translation matrix on the right. At
+' that point, the world transformation matrix of the Graphics object represents a composite
+' transformation: first rotate, then translate. The call to DrawEllipse draws a rotated and
+' translated ellipse.
+' ========================================================================================
+SUB Example_TranslateTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 255)
+   pen.RotateTransform(30.0, MatrixOrderAppend)
+   graphics.TranslateTransform(100.0, 50.0, MatrixOrderAppend)
+   graphics.DrawEllipse(@pen, 0, 0, 200, 80)
+
+END SUB
+' ========================================================================================
+```
