@@ -1215,3 +1215,55 @@ SUB Example_RotateTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="ScaleTransform"></a>ScaleTransform
+
+Sets the **Pen** object's world transformation matrix equal to the product of itself and a scaling matrix.
+
+```
+FUNCTION ScaleTransform (BYVAL sx AS SINGLE, BYVAL sy AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *sx* | The amount to scale in the x direction. |
+| *sy* | The amount to scale in the y direction. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object and draws a rectangle. The code then applies
+' a scaling transformation to the pen and draws a second rectangle.
+' ========================================================================================
+SUB Example_ScaleTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a pen, and use it to draw a rectangle
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 2)
+   graphics.DrawRectangle(@pen, 50, 50, 150, 100)
+
+   ' // Apply a scaling transformation to the pen
+   pen.ScaleTransform(8, 4)
+
+   ' // Draw a rectangle with the transformed pen.
+   graphics.DrawRectangle(@pen, 250, 50, 150, 100)
+
+END SUB
+' ========================================================================================
+```
