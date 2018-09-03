@@ -4454,7 +4454,7 @@ FUNCTION AddEllipse (BYVAL rc AS GpRect PTR) AS GpStatus
 | *y* | The width of the bounding rectangle for the ellipse. |
 | *nWidth* | The width of the bounding rectangle for the ellipse. |
 | *nHeight* | The height of the bounding rectangle for the ellipse. |
-| *nHeight* | The height of the bounding rectangle for the ellipse. |
+| *rc* | Pointer to a GpRectF or GpRect structure specifying the dimensions of the rectagle. |
 
 #### Return value
 
