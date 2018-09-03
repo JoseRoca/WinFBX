@@ -798,7 +798,7 @@ END SUB
 
 # <a name="GetLineJoin"></a>GetLineJoin
 
-Gets the line join style currently set for this Pen object.
+Gets the line join style currently set for this **Pen** object.
 
 ```
 FUNCTION GetLineJoin () AS LineJoin
@@ -846,3 +846,15 @@ SUB Example_GetLineJoin (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetMiterLimit"></a>GetMiterLimit
+
+Gets the miter length currently set for this **Pen** object.
+
+```
+FUNCTION GetMiterLimit () AS SINGLE
+```
+
+#### Remarks
+
+The miter length is the distance from the intersection of the line walls on the inside of the join to the intersection of the line walls outside of the join. The miter length can be large when the angle between two lines is small. The miter limit is the maximum allowed ratio of miter length to line width. The default value is 10.
