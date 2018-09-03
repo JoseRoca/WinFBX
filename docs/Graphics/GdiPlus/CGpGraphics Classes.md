@@ -4283,3 +4283,59 @@ SUB Example_AddBeziers (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="AddClosedCurve"></a>AddClosedCurve (CGpGraphicsPath)
+
+Adds a closed cardinal spline to this path.
+
+```
+FUNCTION AddClosedCurve (BYVAL pts AS GpPointF PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION AddClosedCurve (BYVAL pts AS GpPoint PTR, BYVAL count AS INT_) AS GpStatus
+FUNCTION AddClosedCurve (BYVAL pts AS GpPointF PTR, BYVAL count AS INT_, BYVAL tension AS SINGLE) AS GpStatus
+FUNCTION AddClosedCurve (BYVAL pts AS GpPoint PTR, BYVAL count AS INT_, BYVAL tension AS SINGLE) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pts* | Pointer to an array of points that define the cardinal spline. The cardinal spline is a curve that passes through each point in the array. |
+| *count* | Integer that specifies the number of elements in the pts array. |
+| *tension* | Nonnegative real number that controls the length of the curve and how the curve bends. A value of 0 specifies that the spline is a sequence of straight line segments. As the value increases, the curve becomes fuller. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+You should keep a copy of the points array if those points will be needed later. The **GraphicsPath** object does not store the points passed to the **AddClosedCurve** method; instead, it converts the cardinal spline to a sequence of Bézier splines and stores the points that define those Bézier splines. You cannot retrieve the original array of points from the **GraphicsPath** object.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object path, adds a closed cardinal spline
+' to path, and then draws path.
+' ========================================================================================
+SUB Example_AddClosedCurve (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM pts(0 TO 3) AS GpPoint = {GDIP_POINT(50, 50), GDIP_POINT(60, 20), GDIP_POINT(70, 100), GDIP_POINT(80, 50)}
+   DIM path AS CGpGraphicsPath
+   path.AddClosedCurve(@pts(0), 4)
+
+   ' // Draw the path
+   DIM pen AS CGpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawPath(@pen, @path)
+
+END SUB
+' ========================================================================================
+```
