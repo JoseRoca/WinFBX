@@ -118,3 +118,52 @@ SUB Example_ClonePen (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetAlignment"></a>GetAlignment (CGpPen)
+
+Gets the alignment currently set for this **Pen** object.
+
+```
+FUNCTION GetAlignment () AS PenAlignment
+```
+
+#### Return value
+
+This method returns an element of the PenAlignment enumeration that indicates the current alignment setting for this **Pen** object. The default value of **PenAlignment** is **PenAlignmentCenter**.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a Pen object, sets the alignment, draws a line, and then
+' gets the pen alignment settings.
+' ========================================================================================
+SUB Example_GetAlignment (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a Pen object and set its alignment.
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 255, 0), 15)
+   pen.SetAlignment(PenAlignmentCenter)
+   
+   ' // Draw a line.
+   graphics.DrawLine(@pen, 0, 0, 100, 50)
+
+   ' // Obtain information about the Pen object.
+   DIM nPenAlignment AS PenAlignment = pen.GetAlignment
+
+   IF nPenAlignment = PenAlignmentCenter THEN
+      ' // The pixels will be centered on the theoretical line.
+   ELSEIF nPenAlignment = PenAlignmentInset THEN
+      '  // The pixels will lie inside the filled area  of the theoretical line.
+   END IF
+
+END SUB
+' ========================================================================================
+```
