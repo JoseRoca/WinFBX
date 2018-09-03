@@ -1117,3 +1117,56 @@ SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="ResetTransform"></a>ResetTransform
+
+Sets the world transformation matrix of this Pen object to the identity matrix.
+
+```
+FUNCTION ResetTransform () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The identity matrix represents a transformation that does nothing. If the world transformation matrix of a **Pen** object is the identity matrix, then no world transformation is applied to items drawn using that Pen object.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets a matrix and creates a Pen object. The code then sets the
+' width of the pen, applies a rotation matrix and a stretch matrix to the pen, and then
+' draws an ellipse.
+' ========================================================================================
+SUB Example_ResetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a pen, and set its transformation
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 2)
+   pen.ScaleTransform(8, 4)
+
+   ' // Draw a rectangle with the transformed pen
+   graphics.DrawRectangle(@pen, 50, 50, 150, 100)
+
+   ' // Reset the transformation
+   pen.ResetTransform
+
+   ' // Draw a rectangle with no pen transformation
+   graphics.DrawRectangle(@pen, 250, 50, 150, 100)
+
+END SUB
+' ========================================================================================
+```
