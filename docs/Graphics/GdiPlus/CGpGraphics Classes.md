@@ -5063,7 +5063,7 @@ FUNCTION Flatten (BYVAL pMatrix AS CGpMatrix PTR = NULL, BYVAL flatness AS SINGL
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pMatrix* | Optional. Pointer to a Matrix object that specifies the transformation to be applied to the path's data points. The default value is NULL, which specifies that no transformation is to be applied. |
+| *pMatrix* | Optional. Pointer to a **Matrix** object that specifies the transformation to be applied to the path's data points. The default value is NULL, which specifies that no transformation is to be applied. |
 | *flatness* | Optional. The maximum error between the path and its flattened approximation. Reducing the flatness increases the number of line segments in the approximation. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
 
 #### Return value
@@ -5117,6 +5117,72 @@ SUB Example_Flatten (BYVAL hdc AS HDC)
       graphics.FillEllipse(@brush, pathData.Points[j].x - 3.0, _
          pathData.Points[j].y - 3.0, 6.0, 6.0)
    NEXT
+
+END SUB
+' ========================================================================================
+```
+
+
+# <a name="GetBounds"></a>GetBounds (CGpGraphicsPath)
+
+Gets a bounding rectangle for this path.
+
+```
+FUNCTION GetBounds (BYVAL bounds AS GpRectF PTR, BYVAL pMatrix AS CGpMatrix PTR, _
+   BYVAL pPen AS CGpPen PTR) AS GpStatus
+FUNCTION GetBounds (BYVAL bounds AS GpRect PTR, BYVAL pMatrix AS CGpMatrix PTR, _
+   BYVAL pPen AS CGpPen PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *bounds* | Pointer to a GpRectF or GpRect structures that receives the bounding rectangle. |
+| *pMatrix* | Optional. Pointer to a Matrix object that specifies a transformation to be applied to this path before the bounding rectangle is calculated. This path is not permanently transformed; the transformation is used only during the process of calculating the bounding rectangle. The default value is NULL. |
+| *pPen* | Optional. Pointer to a **Pen** object that influences the size of the bounding rectangle. The bounding rectangle received in bounds will be large enough to enclose this path when the path is drawn with the pen specified by this parameter. This ensures that the path is enclosed by the bounding rectangle even if the path is drawn with a wide pen. The default value is NULL. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a path that has one curve and one ellipse. The code draws
+' the path with a thick yellow pen and a thin black pen. The GraphicsPath.GetBounds method
+' receives the address of the thick yellow pen and calculates a bounding rectangle for the
+' path. Then the code draws the bounding rectangle.
+' ========================================================================================
+SUB Example_GetBounds (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM blackPen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 0), 1)
+   DIM yellowPen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 255, 0), 10)
+   DIM redPen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 0, 0), 1)
+
+   DIM pts(0 TO 3) AS GpPoint = {GDIP_POINT(120, 120), GDIP_POINT(200, 130), GDIP_POINT(150, 200), GDIP_POINT(130, 180)}
+
+   ' // Create a path that has one curve and one ellipse.
+   DIM path AS CGpGraphicsPath
+   path.AddClosedCurve(@pts(0), 4)
+   path.AddEllipse(120, 220, 100, 40)
+
+   ' // Draw the path with a thick yellow pen and a thin black pen.
+   graphics.DrawPath(@yellowPen, @path)
+   graphics.DrawPath(@blackPen, @path)
+ 
+   ' // Get the path's bounding rectangle.
+   DIM rc AS GpRect
+   path.GetBounds(@rc, NULL, @yellowPen)
+   graphics.DrawRectangle(@redPen, @rc)  
 
 END SUB
 ' ========================================================================================
