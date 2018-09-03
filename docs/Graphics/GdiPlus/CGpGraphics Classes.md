@@ -5744,3 +5744,58 @@ SUB Example_StartFigure (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="Transform"></a>StartFigure (CGpGraphicsPath)
+
+Multiplies each of this path's data points by a specified matrix.
+
+```
+FUNCTION Transform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that specifies the transformation. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a path and adds two figures to that path. The first figure
+' has three arcs, and the second figure has two arcs. The arcs within a figure are connected
+' by straight lines, but there is no connecting line between the last arc in the first
+' figure and the first arc in the second figure.
+' ========================================================================================
+SUB Example_Transform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM path AS CGpGraphicsPath
+   path.AddRectangle(40, 10, 200, 50)
+
+   ' // Draw the path in blue before applying a transformation
+   graphics.DrawPath(@CGpPen(GDIP_ARGB(255, 0, 0, 255)), @path)
+
+   ' // Transform the path
+   DIM matrix AS CGpMatrix
+   matrix.Rotate(30.0)
+   path.Transform(@matrix)
+
+   ' // Draw the transformed path in red.
+   graphics.DrawPath(@CGpPen(GDIP_ARGB(255, 255, 0,  0)), @path)
+
+END SUB
+' ========================================================================================
+```
