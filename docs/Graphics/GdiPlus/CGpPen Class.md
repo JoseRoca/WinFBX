@@ -964,7 +964,7 @@ END SUB
 
 # <a name="GetTransform"></a>GetTransform
 
-Gets the world transformation matrix currently set for this Pen object.
+Gets the world transformation matrix currently set for this **Pen** object.
 
 ```
 FUNCTION GetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
