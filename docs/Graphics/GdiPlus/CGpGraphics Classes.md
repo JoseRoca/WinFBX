@@ -5669,3 +5669,26 @@ FUNCTION SetFillMode (BYVAL nFillmode AS FillMode) AS GpStatus
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+# <a name="SetMarker"></a>SetMarker (CGpGraphicsPath)
+
+Designates the last point in this path as a marker point.
+
+```
+FUNCTION SetMarker () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **GraphicsPath** object has an array of points and an array of types. Each element in the array of types is a byte that specifies the point type and a set of flags for the corresponding element in the array of points. Possible point types and flags are listed in the PathPointType enumeration.
+
+Each time you add a line, curve, or shape to a path, the point array and the type array are expanded. When you call **SetMarker**, a marker flag is placed in the last byte of the type array. That flag designates the last point of the point array as a marker point.
+
+Markers divide a path into sections. You can use a **GraphicsPathIterator** object to draw selected sections of a path.
+
