@@ -271,7 +271,7 @@ END SUB
 
 # <a name="GetCompoundArray"></a>GetCompoundArray
 
-Gets the the compound array currently set for this Pen object.
+Gets the the compound array currently set for this **Pen** object.
 
 ```
 FUNCTION GetCompoundArray (BYVAL compoundArray AS SINGLE PTR, BYVAL count AS INT_) AS GpStatus
@@ -287,6 +287,56 @@ FUNCTION GetCompoundArray (BYVAL compoundArray AS SINGLE PTR, BYVAL count AS INT
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example declares an array, sets the compound array, draws a line, and gets
+' the number of elements in the compound array.
+' ========================================================================================
+SUB Example_GetCompoundArray (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create an array of real numbers and a Pen object.
+   DIM compVals(0 TO 5) AS SINGLE = {0.0, 0.2, 0.5, 0.7, 0.9, 1.0}
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255), 30)
+
+   ' // Set the compound array of the pen.
+   pen.SetCompoundArray(@compVals(0), 6)
+
+   ' // Draw a line with the pen.
+   graphics.DrawLine(@pen, 5, 20, 405, 200)
+
+   ' // Obtain information about the pen
+   DIM compValues(ANY) AS SINGLE
+   DIM nCount AS LONG = pen.GetCompoundArrayCount
+   REDIM compValues(nCount -1)
+   pen.GetCompoundArray(@compValues(0), nCount)
+
+   FOR j AS LONG = 0 TO nCount - 1
+      ' // Inspect or use the value in compValues(j)
+      PRINT compValues(j)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetCompoundArrayCount"></a>GetCompoundArrayCount
+
+Gets the number of elements in a compound array.
+
+```
+FUNCTION GetCompoundArrayCount () AS GpStatus
+```
 
 #### Example
 
