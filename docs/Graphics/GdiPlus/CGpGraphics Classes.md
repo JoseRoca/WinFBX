@@ -3717,3 +3717,22 @@ SUB Example_SetPageUnit (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="SetPixelOffsetMode"></a>SetPixelOffsetMode (CGpGraphics)
+
+Sets the pixel offset mode of this **Graphics** object.
+
+```
+FUNCTION SetPixelOffsetMode (BYVAL nMode AS PixelOffsetMode) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nMode* | Element of the **PixelOffsetMode** enumeration that specifies the pixel offset mode. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
