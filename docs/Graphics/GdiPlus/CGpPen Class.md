@@ -56,12 +56,14 @@ Encapsulates a **Pen** object. A **Pen** object is a Windows GDI+ object used to
 Creates a **Pen** object that uses a specified color and width.
 
 ```
+CONSTRUCTOR CGpPen (BYVAL pPen AS CGpPen PTR)
 CONSTRUCTOR CGpPen (BYVAL pBrush AS CGpBrush PTR, BYVAL nWidth AS SINGLE = 1.0)
 CONSTRUCTOR CGpPen (BYVAL colour AS ARGB, BYVAL nWidth AS SINGLE = 1.0)
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
+| *pPen* | Pointer to a **Pen** object to be cloned. |
 | *pBrush* | Pointer to a brush to base this pen on. |
 | *colour* | An ARGB color that specifies the color for this **Pen** object. |
 | *nWidth* | The width of this pen's stroke. The default value is 1.0. |
