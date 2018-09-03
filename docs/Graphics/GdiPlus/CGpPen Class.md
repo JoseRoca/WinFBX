@@ -1520,3 +1520,55 @@ SUB Example_SetCustomEndCap (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetCustomStartCap"></a>SetCustomStartCap
+
+Sets the custom start cap for this **Pen** object.
+
+```
+FUNCTION SetCustomStartCap (BYVAL pCustomLineCap AS CGpCustomLineCap PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pCustomLineCap* | Pointer to a **CustomLineCap** object that specifies the custom end cap for this **Pen** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object and adds a rectangle to it. The code
+' then creates a Pen object, sets the custom end cap based on the GraphicsPath object, and
+' draws a line.
+' ========================================================================================
+SUB Example_SetCustomStartCap (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a GraphicsPath object, and add a rectangle to it.
+   DIM pStrokePath AS CGpGraphicsPath
+   pStrokePath.AddRectangle(-10, -5, 20, 10)
+
+   ' // Create a pen, and set the custom start cap based on the GraphicsPath object.
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 0, 0, 255))
+   DIM custCap AS CGpCustomLineCap = CGpCustomLineCap(NULL, @pStrokePath)
+   pen.SetCustomStartCap(@custCap)
+
+   ' // Draw a line with the custom end cap.
+   graphics.DrawLine(@pen, 20, 20, 200, 100)
+
+END SUB
+' ========================================================================================
+```
