@@ -4432,3 +4432,59 @@ SUB Example_AddCurve (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="AddEllipse"></a>AddEllipse (CGpGraphicsPath)
+
+Adds an ellipse to this path.
+
+```
+FUNCTION AddEllipse (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL nWidth AS SINGLE, _
+   BYVAL nHeight AS SINGLE) AS GpStatus
+FUNCTION AddEllipse (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, _
+   BYVAL nHeight AS INT_) AS GpStatus
+FUNCTION AddEllipse (BYVAL rc AS GpRectF PTR) AS GpStatus
+FUNCTION AddEllipse (BYVAL rc AS GpRect PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x* | The x-coordinate of the upper-left corner of the bounding rectangle for the ellipse. |
+| *y* | The y-coordinate of the upper-left corner of the bounding rectangle for the ellipse. |
+| *y* | The width of the bounding rectangle for the ellipse. |
+| *nWidth* | The width of the bounding rectangle for the ellipse. |
+| *nHeight* | The height of the bounding rectangle for the ellipse. |
+| *nHeight* | The height of the bounding rectangle for the ellipse. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a GraphicsPath object path, adds an ellipse to path, and
+' then draws path.
+' ========================================================================================
+SUB Example_AddEllipse (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM path AS CGpGraphicsPath
+   path.AddEllipse(20, 20, 200, 100)
+
+   ' // Draw the path
+   DIM pen AS CgpPen = GDIP_ARGB(255, 255, 0, 0)
+   graphics.DrawPath(@pen, @path)
+
+END SUB
+' ========================================================================================
+```
