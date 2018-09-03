@@ -1371,3 +1371,50 @@ SUB Example_SetBrush (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="SetColor"></a>SetColor
+
+Sets the color for this **Pen** object.
+
+```
+FUNCTION SetColor (BYVAL colour AS ARGB) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colour* | ARGB color that specifies the color for this **Pen** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a red pen and draws a line. The code then sets the pen's
+' color to blue and draws a second line.
+' ========================================================================================
+SUB Example_SetColor (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a red pen, and use it to draw a line.
+   DIM pen AS CGpPen = CGpPen(GDIP_ARGB(255, 255, 0, 0), 5)
+   graphics.DrawLine(@pen, 0, 0, 200, 100)
+
+   ' // Change the pen's color to blue, and draw a second line.
+   pen.SetColor(GDIP_ARGB(255, 0, 0, 255))
+   graphics.DrawLine(@pen, 0, 40, 200, 140)
+
+END SUB
+' ========================================================================================
+```
