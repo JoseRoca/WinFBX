@@ -3841,3 +3841,22 @@ SUB Example_SmoothingMode (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+
+# <a name="SetTextContrast"></a>SetTextContrast (CGpGraphics)
+
+Sets the contrast value of this **Graphics** object. The contrast value is used for antialiasing text.
+
+```
+FUNCTION SetTextContrast (BYVAL contrast AS UINT) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *contrast* | The contrast value for antialiasing text. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
