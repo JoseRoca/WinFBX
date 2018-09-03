@@ -5813,9 +5813,9 @@ FUNCTION Warp (BYVAL destPoints AS GpPointF PTR, BYVAL count AS INT_, BYVAL srcR
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *destPoints* | Pointer to an array of points that, along with the srcRect parameter, defines the warp transformation. |
-| *count* | Integer that specifies the number of points in the destPoints array. The value of this parameter must be 3 or 4. |
-| *srcRect* | Reference to a rectangle that, along with the destPoints parameter, defines the warp transformation. |
+| *destPoints* | Pointer to an array of points that, along with the *srcRect* parameter, defines the warp transformation. |
+| *count* | Integer that specifies the number of points in the *destPoints* array. The value of this parameter must be 3 or 4. |
+| *srcRect* | Reference to a rectangle that, along with the *destPoints* parameter, defines the warp transformation. |
 | *pMatrix* | Optional. Pointer to a Matrix object that represents a transformation to be applied along with the warp. If this parameter is NULL, no transformation is applied. The default value is NULL. |
 | *nWarpMode* | Optional. Element of the **WarpMode** enumeration that specifies the kind of warp to be applied. The default value is **WarpModePerspective**. |
 | *flatness* | Optional. Real number that influences the number of line segments that are used to approximate the original path. Small values specify that many line segments are used, and large values specify that few line segments are used. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
