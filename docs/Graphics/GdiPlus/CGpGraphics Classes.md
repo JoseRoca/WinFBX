@@ -5692,3 +5692,55 @@ Each time you add a line, curve, or shape to a path, the point array and the typ
 
 Markers divide a path into sections. You can use a **GraphicsPathIterator** object to draw selected sections of a path.
 
+
+# <a name="StartFigure"></a>StartFigure (CGpGraphicsPath)
+
+Starts a new figure without closing the current figure. Subsequent points added to this path are added to the new figure.
+
+```
+FUNCTION StartFigure () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a path and adds two figures to that path. The first figure
+' has three arcs, and the second figure has two arcs. The arcs within a figure are connected
+' by straight lines, but there is no connecting line between the last arc in the first
+' figure and the first arc in the second figure.
+' ========================================================================================
+SUB Example_StartFigure (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, rxRatio)
+
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 255)
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 100, 50)
+   DIM path AS CGpGraphicsPath
+
+   path.AddArc(0, 0, 100, 50, 0.0, 180.0)
+   path.AddArc(0, 60, 100, 50, 0.0, 180.0)
+   path.AddArc(0, 120, 100, 50, 0.0, 180.0)
+
+   ' // Start a new figure (subpath).
+   ' // Do not close the current figure.
+   path.StartFigure
+   path.AddArc(0, 180, 100, 50, 0.0, 180.0)
+   path.AddArc(0, 240, 100, 50, 0.0, 180.0)
+
+   graphics.DrawPath(@pen, @path)
+
+END SUB
+' ========================================================================================
+```
