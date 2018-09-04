@@ -33,6 +33,7 @@ OPERATOR CAST () AS IStream PTR
 | [GetSeekPosition](#GetSeekPosition1) | Returns the seek position. |
 | [ResetSeekPosition](#ResetSeekPosition1) | Sets the seek position at the beginning of the stream. |
 | [SeekAtEndOfStream](#SeekAtEndOfStream1) | Sets the seek position at the end of the stream. |
+| [CopyTo](#CopyTo) | Copies a specified number of bytes from the current seek pointer in the stream to the current seek pointer in another stream. |
 | [GetSize](#GetSize1) | Returns the size of the stream. |
 | [SetSize](#SetSize1) | Changes the size of the stream. |
 | [Clone](#Clone1) | Creates a new stream with its own seek pointer that references the same bytes as the original stream. |
@@ -218,6 +219,28 @@ FUNCTION SetSize (BYVAL libNewSize AS ULONGINT) AS HRESULT
 | Parameter  | Description |
 | ---------- | ----------- |
 | *libNewSize* | ULONGINT. Specifies the new size, in bytes, of the stream. |
+
+#### Return value
+
+HRESULT. S_OK (0) on success, or an error code on failure.
+
+# <a name="CopyTo"></a>CopyTo
+
+Copies a specified number of bytes from the current seek pointer in the stream to the current seek pointer in another stream.
+
+```
+FUNCTION CopyTo (BYVAL pstm AS IStream PTR, _
+   BYVAL cb AS ULONGINT, _
+   BYVAL pcbRead AS ULONGINT PTR = NULL, _
+   BYVAL pcbWritten AS ULONGINT PTR = NULL) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pstm* | A pointer to the destination stream. The stream pointed to by *pstm* can be a new stream or a clone of the source stream. |
+| *cb* | The number of bytes of data to attempt to copy into the stream. |
+| *pcbRead* | A pointer to the location where this method writes the actual number of bytes read from the source. You can set this pointer to NULL. In this case, this method does not provide the actual number of bytes read. |
+| *pcbWritten* | A pointer to the location where this method writes the actual number of bytes written to the destination. You can set this pointer to NULL. In this case, this method does not provide the actual number of bytes written. |
 
 #### Return value
 
