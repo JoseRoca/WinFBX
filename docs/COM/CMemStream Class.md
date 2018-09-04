@@ -66,7 +66,7 @@ OPERATOR CAST () AS IStream PTR
 | [GetLastResult](#GetLastResult2) | Returns the last result code. |
 | [GetErrorInfo](#GetErrorInfo2) | Returns a description of the last result code. |
 
-# <a name="Read1"></a>Read
+# <a name="Read2"></a>Read
 
 Reads a specified number of characters from the stream into memory, starting at the current seek pointer.
 
