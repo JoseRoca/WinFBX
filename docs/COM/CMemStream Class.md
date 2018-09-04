@@ -13,7 +13,7 @@ CONSTRUCTOR CMemStream (BYVAL pInit AS CONST BYTE PTR, BYVAL cbInit AS UINT)
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pInit* | A pointer to a buffer of size *cbInit*. The contents of this buffer are used to set the initial contents of the memory stream. If this parameter is NULL, the returned memory stream does not have any initial content. |
-| *cbInit* | The number of bytes in the buffer pointed to by *pInit*. If *pInit* is set to NULL, cbInit must be zero. |
+| *cbInit* | The number of bytes in the buffer pointed to by *pInit*. If *pInit* is set to NULL, *cbInit* must be zero. |
 
 ### Operator CAST
 
