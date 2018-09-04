@@ -27,12 +27,13 @@ CONSTRUCTOR CFileStream ( _
 | *fCreate* | A BOOL value that helps specify, in conjunction with *grfMode*, how existing files should be treated when creating the stream. |
 
 ```
-CONSTRUCTOR CFileStream (BYVAL pstm AS IStream PTR)
+CONSTRUCTOR CFileStream (BYVAL pstm AS IStream PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pstm* | A pointer to the **IStream** interface of an existing stream that will be attached to the class. |
+| *fAddRef* | TRUE to increase the reference count of the stream; FALSE, otherwise. |
 
 ### Operators
 
@@ -84,12 +85,13 @@ OPERATOR CAST () AS IStream PTR
 Attaches the passed stream to the class.
 
 ```
-FUNCTION Attach (BYVAL pstm AS IStream PTR) AS HRESULT
+FUNCTION Attach (BYVAL pstm AS IStream PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pstm* | A pointer to the **IStream** interface of an existing stream that will be attached to the class. |
+| *fAddRef* | TRUE to increase the reference count of the stream; FALSE, otherwise. |
 
 #### Return value
 
