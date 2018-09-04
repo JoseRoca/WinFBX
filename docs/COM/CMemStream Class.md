@@ -136,7 +136,7 @@ FUNCTION Write (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG) AS ULONG
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pv* | A pointer to the buffer that contains the data that is to be written to the stream. A valid pointer must be provided for this parameter even when cb is zero. |
+| *pv* | A pointer to the buffer that contains the data that is to be written to the stream. A valid pointer must be provided for this parameter even when *cb* is zero. |
 | *cb* | The number of bytes of data to attempt to write into the stream. This value can be zero. |
 
 #### Return value
