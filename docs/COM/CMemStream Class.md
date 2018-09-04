@@ -23,7 +23,7 @@ Returns a pointer to the underlying **IStream** interface of the stream object.
 OPERATOR CAST () AS IStream PTR
 ```
 
-# CMemRexrStream Class
+# CMemTextStream Class
 
 Creates a memory text stream, allowing read, write and seek operations. The stream is thread-safe as of Windows 8. On earlier systems, the stream is not thread-safe. Cloning is supported as of Windows 8.
 
@@ -32,8 +32,8 @@ Creates a memory text stream, allowing read, write and seek operations. The stre
 ### Constructor
 
 ```
-CONSTRUCTOR CMemStream
-CONSTRUCTOR CMemStream (BYVAL pwszText AS CONST WSTRING PTR)
+CONSTRUCTOR CMemTextStream
+CONSTRUCTOR CMemTextStream (BYVAL pwszText AS CONST WSTRING PTR)
 ```
 
 | Parameter  | Description |
