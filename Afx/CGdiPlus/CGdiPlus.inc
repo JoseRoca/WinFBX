@@ -237,7 +237,7 @@ Public:
    DECLARE FUNCTION SaveAdd (BYVAL encoderParams AS EncoderParameters PTR) AS GpStatus
    DECLARE FUNCTION SaveAdd (BYVAL pNewImage AS CGpImage PTR, BYVAL encoderParams AS EncoderParameters PTR) AS GpStatus
    DECLARE FUNCTION GetType () AS ImageType
-   DECLARE FUNCTION GetPhysicalDimension (BYVAL psize AS SizeF PTR) AS GpStatus
+   DECLARE FUNCTION GetPhysicalDimension (BYVAL psize AS GpSizeF PTR) AS GpStatus
    DECLARE FUNCTION GetBounds (BYVAL srcRect AS RectF PTR, BYVAL srcUnit AS GpUnit PTR) AS GpStatus
    DECLARE FUNCTION GetWidth () AS UINT
    DECLARE FUNCTION GetHeight () AS UINT
@@ -284,6 +284,7 @@ TYPE CGpBitmap EXTENDS CGpImage
 
 Public:
    DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pBitmap AS CGpBitmap PTR)
    DECLARE CONSTRUCTOR (BYVAL pwszFileName AS WSTRING PTR, BYVAL useEmbeddedColorManagement AS BOOLEAN = FALSE)
    DECLARE CONSTRUCTOR (BYVAL pStream AS IStream PTR, BYVAL useEmbeddedColorManagement AS BOOLEAN = FALSE)
    DECLARE CONSTRUCTOR (BYVAL nWidth AS INT_, BYVAL nHeight AS INT_, BYVAL stride AS INT_, BYVAL pxFormat AS PixelFormat, BYVAL scan0 AS UBYTE PTR)
@@ -298,6 +299,7 @@ Public:
    DECLARE CONSTRUCTOR (BYVAL hInstance AS HINSTANCE, BYVAL pwszbitmapName AS WSTRING PTR)
    DECLARE FUNCTION GetHBITMAP (BYVAL colorBackground AS ARGB, BYVAL hbmReturn AS HBITMAP PTR) AS GpStatus
    DECLARE FUNCTION GetHICON (BYVAL hiconReturn AS HICON PTR) AS GpStatus
+   DECLARE FUNCTION Clone (BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
    DECLARE FUNCTION Clone (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE, BYVAL pxFormat AS PixelFormat, BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
    DECLARE FUNCTION Clone (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, BYVAL nHeight AS INT_, BYVAL pxFormat AS PixelFormat, BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
    DECLARE FUNCTION Clone (BYVAL rcf AS GpRectF PTR, BYVAL pxFormat AS PixelFormat, BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus

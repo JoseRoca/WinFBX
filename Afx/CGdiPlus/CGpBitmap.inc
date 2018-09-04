@@ -126,7 +126,7 @@ END FUNCTION
 ' ========================================================================================
 ' Gets the width and height of this image.
 ' ========================================================================================
-PRIVATE FUNCTION CGpImage.GetPhysicalDimension (BYVAL psize AS SizeF PTR) AS GpStatus
+PRIVATE FUNCTION CGpImage.GetPhysicalDimension (BYVAL psize AS GpSizeF PTR) AS GpStatus
    RETURN SetStatus(GdipGetImageDimension(m_pImage, @psize->Width, @psize->Height))
 END FUNCTION
 ' ========================================================================================
@@ -413,6 +413,13 @@ END FUNCTION
 PRIVATE CONSTRUCTOR CGpBitmap
 END CONSTRUCTOR
 ' ========================================================================================
+' ========================================================================================
+' Creates and initializes a Bitmap object from another Bitmap object.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CGpBitmap (BYVAL pBitmap AS CGpBitmap PTR)
+   m_Status = GdipCloneImage(cast(GpImage PTR, pBitmap->m_pImage), @cast(GpImage PTR, m_pImage))
+END CONSTRUCTOR
+' ========================================================================================
 
 ' ========================================================================================
 ' Creates an Bitmap object based on a file.
@@ -521,6 +528,16 @@ PRIVATE FUNCTION CGpBitmap.GetHICON (BYVAL hiconReturn AS HICON PTR) AS GpStatus
    RETURN SetStatus(GdipCreateHICONFromBitmap(cast(GpBitmap PTR, m_pImage), hiconReturn))
 END FUNCTION
 ' =====================================================================================
+
+' ========================================================================================
+' Copies the contents of the existing Bitmap object into a new Bitmap object.
+' ========================================================================================
+PRIVATE FUNCTION CGpBitmap.Clone (BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
+   IF pCloneBitmap = NULL THEN RETURN SetStatus(InvalidParameter)
+   IF pCloneBitmap->m_pImage THEN GdipDisposeImage(pCloneBitmap->m_pImage)
+   RETURN SetStatus(GdipCloneImage(cast(GpImage PTR, m_pImage), @cast(GpImage PTR, pCloneBitmap->m_pImage)))
+END FUNCTION
+' ========================================================================================
 
 ' =====================================================================================
 ' Creates a new Bitmap object by copying a portion of this bitmap.
