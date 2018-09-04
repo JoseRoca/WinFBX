@@ -340,7 +340,7 @@ FUNCTION Seek (BYVAL dlibMove AS ULONGINT, _
 | Parameter  | Description |
 | ---------- | ----------- |
 | *dlibMove* | ULONGINT. The displacement to be added to the location indicated by the dwOrigin parameter. If *dwOrigin* is **STREAM_SEEK_SET**, this is interpreted as an unsigned value rather than a signed value. |
-| *dwOrigin* | DWORD. The origin for the displacement specified in *dlibMove*. The origin can be the beginning of the file (**STREAM_SEEK_SET**), the current seek pointer (**STREAM_SEEK_CUR**), or the end of the file (**STREAM_SEEK_END**).<br>**_STREAM_SEEK_SET_** : The new seek pointer is an offset relative to the beginning of the stream. In this case, the *dlibMove* parameter is the new seek position relative to the beginning of the stream.<br>**_STREAM_SEEK_CUR_** : The new seek pointer is an offset relative to the current seek pointer location. In this case, the *dlibMove* parameter is the signed displacement from the current seek position.<br>**_STREAM_SEEK_END_** : The new seek pointer is an offset relative to the end of the stream. In this case, the *dlibMove* parameter is the new seek position relative to the end of the stream. |
+| *dwOrigin* | DWORD. The origin for the displacement specified in *dlibMove*. The origin can be the beginning of the file (**STREAM_SEEK_SET**), the current seek pointer (**STREAM_SEEK_CUR**), or the end of the file (**STREAM_SEEK_END**).<br>**STREAM_SEEK_SET** : The new seek pointer is an offset relative to the beginning of the stream. In this case, the *dlibMove* parameter is the new seek position relative to the beginning of the stream.<br>**STREAM_SEEK_CUR** : The new seek pointer is an offset relative to the current seek pointer location. In this case, the *dlibMove* parameter is the signed displacement from the current seek position.<br>**STREAM_SEEK_END** : The new seek pointer is an offset relative to the end of the stream. In this case, the *dlibMove* parameter is the new seek position relative to the end of the stream. |
 | *plibNewPosition* | ULONGINT PTR. A pointer to the location where this method writes the value of the new seek pointer from the beginning of the stream. You can set this pointer to NULL. In this case, this method does not provide the new seek pointer. |
 
 #### Return value
@@ -457,7 +457,7 @@ FUNCTION LockRegion (BYVAL libOffset AS ULONGINT, BYVAL cb AS ULONGINT, BYVAL dw
 | ---------- | ----------- |
 | *libOffset* | ULONGINT. Specifies the byte offset for the beginning of the range. |
 | *cb* | ULONGINT. Specifies the length of the range, in bytes, to be restricted. |
-| *dwLockType* | DWORD. Specifies the restrictions being requested on accessing the range.<br>- **_LOCK_WRITE_** : If this lock is granted, the specified range of bytes can be opened and read any number of times, but writing to the locked range is prohibited except for the owner that was granted this lock.<br>- **_LOCK_EXCLUSIVE_** : If this lock is granted, writing to the specified range of bytes is prohibited except by the owner that was granted this lock.<br>- **_LOCK_ONLYONCE_** : If this lock is granted, no other LOCK_ONLYONCE lock can be obtained on the range. Usually this lock type is an alias for some other lock type. Thus, specific implementations can have additional behavior associated with this lock type.|
+| *dwLockType* | DWORD. Specifies the restrictions being requested on accessing the range.<br>- **LOCK_WRITE** : If this lock is granted, the specified range of bytes can be opened and read any number of times, but writing to the locked range is prohibited except for the owner that was granted this lock.<br>- **LOCK_EXCLUSIVE** : If this lock is granted, writing to the specified range of bytes is prohibited except by the owner that was granted this lock.<br>- **LOCK_ONLYONCE** : If this lock is granted, no other LOCK_ONLYONCE lock can be obtained on the range. Usually this lock type is an alias for some other lock type. Thus, specific implementations can have additional behavior associated with this lock type.|
 
 #### Return value
 
@@ -492,7 +492,7 @@ FUNCTION Stat (BYVAL pstatstg AS STATSTG PTR, BYVAL grfStatFlag AS DWORD) AS HRE
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pstatstg* | Pointer to a **STATSTG** structure where this method places information about this stream. |
-| *grfStatFlag* | DWORD. Specifies that this method does not return some of the members in the **STATSTG** structure, thus saving a memory allocation operation. Values are taken from the **STATFLAG** enumeration.<br>- **_STATFLAG_DEFAULT_** : Requests that the statistics include the pwcsName member of the **STATSTG** structure.<br>- **_STATFLAG_NONAME_** : Requests that the statistics not include the *pwcsName* member of the **STATSTG structure**. |
+| *grfStatFlag* | DWORD. Specifies that this method does not return some of the members in the **STATSTG** structure, thus saving a memory allocation operation. Values are taken from the **STATFLAG** enumeration.<br>- **STATFLAG_DEFAULT** : Requests that the statistics include the pwcsName member of the **STATSTG** structure.<br>- **STATFLAG_NONAME** : Requests that the statistics not include the *pwcsName* member of the **STATSTG structure**. |
 
 #### Return value
 
@@ -504,7 +504,7 @@ FUNCTION Stat (BYVAL grfStatFlag AS DWORD) AS STATSTG
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *grfStatFlag* | DWORD. Specifies that this method does not return some of the members in the **STATSTG** structure, thus saving a memory allocation operation. Values are taken from the **STATFLAG** enumeration.<br>- **_STATFLAG_DEFAULT_** : Requests that the statistics include the pwcsName member of the **STATSTG** structure.<br>- **_STATFLAG_NONAME_** : Requests that the statistics not include the *pwcsName* member of the **STATSTG structure**. |
+| *grfStatFlag* | DWORD. Specifies that this method does not return some of the members in the **STATSTG** structure, thus saving a memory allocation operation. Values are taken from the **STATFLAG** enumeration.<br>- **STATFLAG_DEFAULT** : Requests that the statistics include the pwcsName member of the **STATSTG** structure.<br>- **STATFLAG_NONAME** : Requests that the statistics not include the *pwcsName* member of the **STATSTG structure**. |
 
 #### Return value
 
