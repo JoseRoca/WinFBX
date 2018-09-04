@@ -1,6 +1,6 @@
 # CMemStream Class
 
-Creates a memory streams, allowing read, write and seek operations. The stream is thread-safe as of Windows 8. On earlier systems, the stream is not thread-safe. Cloning is supported as of Windows 8.
+Creates a memory stream, allowing read, write and seek operations. The stream is thread-safe as of Windows 8. On earlier systems, the stream is not thread-safe. Cloning is supported as of Windows 8.
 
 **Include file**: CStream.inc
 
