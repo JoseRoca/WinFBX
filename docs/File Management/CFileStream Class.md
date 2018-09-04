@@ -32,14 +32,14 @@ CONSTRUCTOR CFileStream (BYVAL pstm AS IStream PTR)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pstm* | A pointer to the IStream interface of an existing stream that will be attached to the class. |
+| *pstm* | A pointer to the **IStream** interface of an existing stream that will be attached to the class. |
 
 ### Operators
 
 | Name       | Description |
 | ---------- | ----------- |
 | LET | Initializes the class from an existing stream and attaches it. |
-| CAST | Returns a pointer to the underlying IStream interface of the stream object. |
+| CAST | Returns a pointer to the underlying **IStream** interface of the stream object. |
 
 ```
 OPERATOR LET (BYVAL pstm AS IStream PTR)
@@ -48,7 +48,7 @@ OPERATOR CAST () AS IStream PTR
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pstm* | A pointer to the IStream interface of an existing stream that will be attached to the class. |
+| *pstm* | A pointer to the **IStream** interface of an existing stream that will be attached to the class. |
 
 ### Methods
 
