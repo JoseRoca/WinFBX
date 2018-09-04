@@ -89,7 +89,7 @@ FUNCTION Attach (BYVAL pstm AS IStream PTR) AS HRESULT
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pstm* | A pointer to the IStream interface of an existing stream that will be attached to the class. |
+| *pstm* | A pointer to the **IStream** interface of an existing stream that will be attached to the class. |
 
 #### Return value
 
@@ -105,7 +105,7 @@ FUNCTION Detach () AS IStream PTR
 
 #### Return value
 
-IStream PTR. A pointer to the IStream interface of the stream object.
+IStream PTR. A pointer to the **IStream** interface of the stream object.
 
 # <a name="Open"></a>Open
 
@@ -121,7 +121,7 @@ FUNCTION Open (BYVAL pwszFile AS WSTRING PTR, _
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pwszFile* | A pointer to a unicode null-terminated string that specifies the file name. |
-| *grfMode* | One or more STGM values that are used to specify the file access mode and how the stream is created and deleted. The STGM constants are flags that indicate conditions for creating and deleting the stream and access modes for the stream. These elements are often combined using an **OR** operator. They are interpreted in groups as listed in the following table. It is not valid to use more than one element from a single group. |
+| *grfMode* | One or more **STGM** values that are used to specify the file access mode and how the stream is created and deleted. The STGM constants are flags that indicate conditions for creating and deleting the stream and access modes for the stream. These elements are often combined using an **OR** operator. They are interpreted in groups as listed in the following table. It is not valid to use more than one element from a single group. |
 | *dwAttributes* | One or more flag values that specify file attributes in the case that a new file is created.<br>**_0_** = Prevents other processes from opening a file or device if they request delete, read, or write access.<br>**FILE_SHARE_DELETE** : Enables subsequent open operations on a file or device to request delete access. Otherwise, other processes cannot open the file or device if they request delete access. If this flag is not specified, but the file or device has been opened for delete access, the function fails. Delete access allows both delete and rename operations.<br>**FILE_SHARE_READ** : Enables subsequent open operations on a file or device to request read access. Otherwise, other processes cannot open the file or device if they request read access. If this flag is not specified, but the file or device has been opened for read access, the function fails.<br>**FILE_SHARE_WRITE** : Enables subsequent open operations on a file or device to request write access. Otherwise, other processes cannot open the file or device if they request write access. If this flag is not specified, but the file or device has been opened for write access or has a file mapping with write access, the function fails. |
 | *fCreate* | BOOL value that helps specify, in conjunction with *grfMode*, how existing files should be treated when creating the stream |
 
