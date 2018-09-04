@@ -618,4 +618,606 @@ PRIVATE FUNCTION CFileStream.GetErrorInfo () AS CWSTR
 END FUNCTION
 ' ========================================================================================
 
+
+' ========================================================================================
+' Creates a memory stream.
+' ========================================================================================
+PRIVATE FUNCTION AfxSHCreateMemStream  (BYVAL pInit AS CONST BYTE PTR, BYVAL cbInit AS UINT) AS IStream PTR
+   ' // See if the library is already loaded in the address space
+   DIM AS ANY PTR pLib = GetModuleHandleW("shlwapi.dll")
+   ' // If it is not loaded, load it
+   IF pLib = NULL THEN pLib = DyLibLoad("shlwapi.dll")
+   IF pLib = NULL THEN RETURN NULL
+   DIM pSHCreateMemStream AS FUNCTION (BYVAL pInit AS CONST BYTE PTR, BYVAL cbInit AS UINT) AS IStream PTR
+   pSHCreateMemStream = DyLibSymbol(pLib, "SHCreateMemStream")
+   IF pSHCreateMemStream = NULL THEN RETURN NULL
+   DIM pStream AS IStream PTR = pSHCreateMemStream(pInit, cbInit)
+   ' For some reason, if we free the library, calling the methods that use the returned
+   ' IStream pointer will GPF if compiled with the -O switch.
+'   DyLibFree(pLib)
+   RETURN pStream
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' CMemStream class - Creates a memory stream.
+' ========================================================================================
+TYPE CMemStream
+
+Public:
+   m_Result AS HRESULT
+   m_pStream AS IStream PTR
+
+Private:
+   m_bUninitCOM AS BOOLEAN
+
+Public:
+   DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pInit AS CONST BYTE PTR, BYVAL cbInit AS UINT)
+   DECLARE DESTRUCTOR
+   DECLARE FUNCTION GetLastResult () AS HRESULT
+   DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
+   DECLARE OPERATOR CAST () AS IStream PTR
+   DECLARE FUNCTION Read (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG, BYVAL pcbRead AS ULONG PTR) AS HRESULT
+   DECLARE FUNCTION Read (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG) AS ULONG
+   DECLARE FUNCTION Write (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG, BYVAL pcbWritten AS ULONG PTR) AS HRESULT
+   DECLARE FUNCTION Write (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG) AS ULONG
+   DECLARE FUNCTION Seek (BYVAL dlibMove AS ULONGINT, BYVAL dwOrigin AS DWORD, BYVAL plibNewPosition AS ULONGINT PTR = NULL) AS HRESULT
+   DECLARE FUNCTION Seek (BYVAL dlibMove AS ULONGINT) AS HRESULT
+   DECLARE FUNCTION GetSeekPosition () AS ULONGINT
+   DECLARE FUNCTION ResetSeekPosition () AS ULONGINT
+   DECLARE FUNCTION SeekAtEndOfStream () AS ULONGINT
+   DECLARE FUNCTION SetSize (BYVAL libNewSize AS ULONGINT) AS HRESULT
+   DECLARE FUNCTION GetSize () AS ULONGINT
+   DECLARE FUNCTION CopyTo (BYVAL pstm AS IStream PTR, BYVAL cb AS ULONGINT, _
+           BYVAL pcbRead AS ULONGINT PTR = NULL, BYVAL pcbWritten AS ULONGINT PTR = NULL) AS HRESULT
+   DECLARE FUNCTION Clone (BYVAL ppstm AS IStream PTR PTR) AS HRESULT
+   DECLARE FUNCTION Clone () AS IStream PTR
+   DECLARE FUNCTION GetErrorInfo () AS CWSTR
+
+END TYPE
+' ========================================================================================
+
+' ========================================================================================
+' Creates a memory stream.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CMemStream
+   ' // Initialize the COM library
+   DIM hr AS HRESULT = CoInitialize(NULL)
+   IF hr = S_OK OR hr = S_FALSE THEN m_bUninitCOM = TRUE
+   m_pStream = AfxSHCreateMemStream(NULL, 0)
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE CONSTRUCTOR CMemStream (BYVAL pInit AS CONST BYTE PTR, BYVAL cbInit AS UINT)
+   ' // Initialize the COM library
+   DIM hr AS HRESULT = CoInitialize(NULL)
+   IF hr = S_OK OR hr = S_FALSE THEN m_bUninitCOM = TRUE
+   m_pStream = AfxSHCreateMemStream(pInit, cbInit)
+END CONSTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' CMemStream destructor
+' ========================================================================================
+PRIVATE DESTRUCTOR CMemStream
+   ' // Release the IStrean interface
+   IF m_pStream THEN m_pStream->lpvtbl->Release(m_pStream)
+   ' // Free the COM library
+   IF m_bUninitCOM THEN CoUninitialize
+END DESTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' Returns the last result code.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.GetLastResult () AS HRESULT
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the last result code.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.SetResult (BYVAL Result AS HRESULT) AS HRESULT
+   m_Result = Result
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Cast operator
+' ========================================================================================
+PRIVATE OPERATOR CMemStream.CAST () AS IStream PTR
+   m_Result = 0
+   OPERATOR = m_pStream
+END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+' Reads a specified number of bytes from the stream into memory, starting at the
+' current seek pointer.
+' - pv : A pointer to the buffer which the stream data is read into.
+' - cb : The number of bytes of data to read from the stream.
+' - pcbRead: A pointer to a ULONG variable that receives the actual number of bytes read
+'   from the stream. Note: The number of bytes read may be zero.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.Read (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG, BYVAL pcbRead AS ULONG PTR) AS HRESULT
+   IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
+   RETURN this.SetResult(m_pStream->lpvtbl->Read(m_pStream, pv, cb, pcbRead))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.Read (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG) AS ULONG
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER)
+   DIM cbRead AS ULONG
+   this.SetResult(m_pStream->lpvtbl->Read(m_pStream, pv, cb, @cbRead))
+   RETURN cbRead
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Writes a specified number of bytes into the stream starting at the current seek pointer.
+' - pv: A pointer to the buffer that contains the data that is to be written to the stream.
+'   A valid pointer must be provided for this parameter even when cb is zero.
+' - cb : The number of bytes of data to attempt to write into the stream. This value can be zero.
+' - pcbWritten : A pointer to a ULONG variable where this method writes the actual number
+'   of bytes written to the stream. The caller can set this pointer to NULL, in which
+'   case this method does not provide the actual number of bytes written.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.Write (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG, BYVAL pcbWritten AS ULONG PTR) AS HRESULT
+   IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
+   IF pv = NULL THEN RETURN this.SetResult(E_INVALIDARG)
+   RETURN this.SetResult(m_pStream->lpvtbl->Write(m_pStream, pv, cb, pcbWritten))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.Write (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG) AS ULONG
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER)
+   IF pv = NULL THEN this.SetResult(E_INVALIDARG)
+   DIM cbWritten AS ULONG
+   this.SetResult(m_pStream->lpvtbl->Write(m_pStream, pv, cb, @cbWritten))
+   RETURN cbWritten
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Changes the seek pointer to a new location. The new location is relative to either the
+' beginning of the stream, the end of the stream, or the current seek pointer.
+' - dlibMove : The displacement to be added to the location indicated by the dwOrigin
+'   parameter. If dwOrigin is STREAM_SEEK_SET, this is interpreted as an unsigned value
+'   rather than a signed value.
+' - dwOrigin : The origin for the displacement specified in dlibMove. The origin can be the
+'   beginning of the file (STREAM_SEEK_SET), the current seek pointer (STREAM_SEEK_CUR), or
+'   the end of the file (STREAM_SEEK_END). For more information about values, see the
+'   STREAM_SEEK enumeration.
+' - plibNewPosition : A pointer to the location where this method writes the value of the
+'   new seek pointer from the beginning of the stream. You can set this pointer to NULL.
+'   In this case, this method does not provide the new seek pointer.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.Seek (BYVAL dlibMove AS ULONGINT, BYVAL dwOrigin AS DWORD, BYVAL plibNewPosition AS ULONGINT PTR = NULL) AS HRESULT
+   IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
+   DIM lidlibMove AS LARGE_INTEGER : lidlibMove.QuadPart = dlibMove
+   DIM libNewPosition AS ULARGE_INTEGER
+   this.SetResult(m_pStream->lpvtbl->Seek(m_pStream, lidlibMove, dwOrigin, @libNewPosition))
+   IF plibNewPosition THEN *plibNewPosition = libNewPosition.QuadPart
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Returns the current seek position.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.GetSeekPosition () AS ULONGINT
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN 0
+   DIM dlibMove AS LARGE_INTEGER : dlibMove.QuadPart = 0
+   DIM libNewPosition AS ULARGE_INTEGER
+   this.SetResult(m_pStream->lpvtbl->Seek(m_pStream, dlibMove, STREAM_SEEK_CUR, @libNewPosition))
+   RETURN libNewPosition.QuadPart
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the seek position at the beginning of the stream.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.ResetSeekPosition () AS ULONGINT
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN 0
+   DIM dlibMove AS LARGE_INTEGER : dlibMove.QuadPart = 0
+   DIM libNewPosition AS ULARGE_INTEGER
+   this.SetResult(m_pStream->lpvtbl->Seek(m_pStream, dlibMove, STREAM_SEEK_SET, @libNewPosition))
+   RETURN libNewPosition.QuadPart
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the seek position at the end of the stream.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.SeekAtEndOfStream () AS ULONGINT
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN 0
+   DIM dlibMove AS LARGE_INTEGER : dlibMove.QuadPart = 0
+   DIM libNewPosition AS ULARGE_INTEGER
+   this.SetResult(m_pStream->lpvtbl->Seek(m_pStream, dlibMove, STREAM_SEEK_END, @libNewPosition))
+   RETURN libNewPosition.QuadPart
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the seek position as an absolute position from the start of the stream.
+' nPos ranges from 1 to the end of the strream.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.Seek (BYVAL nPos AS ULONGINT) AS HRESULT
+   IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
+   DIM lidlibMove AS LARGE_INTEGER : lidlibMove.QuadPart = (nPos - 1)
+   DIM libNewPosition AS ULARGE_INTEGER
+   this.SetResult(m_pStream->lpvtbl->Seek(m_pStream, lidlibMove, STREAM_SEEK_SET, @libNewPosition))
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Changes the size of the stream.
+' libNewSize : Specifies the new size, in bytes, of the stream.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.SetSize (BYVAL libNewSize AS ULONGINT) AS HRESULT
+   IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
+   DIM ulilibNewSize AS ULARGE_INTEGER : ulilibNewSize.QuadPart = libNewSize
+   RETURN this.SetResult(m_pStream->lpvtbl->SetSize(m_pStream, ulilibNewSize))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Returns the size of the stream in bytes.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.GetSize () AS ULONGINT
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN 0
+   DIM tstatstg AS STATSTG
+   this.SetResult(m_pStream->lpvtbl->Stat(m_pStream, @tstatstg, STATFLAG_NONAME))
+   RETURN tstatstg.cbSize.QuadPart
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Copies a specified number of bytes from the current seek pointer in the stream to the
+' current seek pointer in another stream.
+' - pstm : A pointer to the destination stream. The stream pointed to by pstm can be a new
+'   stream or a clone of the source stream.
+' - cb : The number of bytes of data to attempt to copy into the stream.
+' - pcbRead : A pointer to the location where this method writes the actual number of bytes
+'   read from the source. You can set this pointer to NULL. In this case, this method does
+'   not provide the actual number of bytes read.
+' - pcbWritten : A pointer to the location where this method writes the actual number of
+'   bytes written to the destination. You can set this pointer to NULL. In this case, this
+'   method does not provide the actual number of bytes written.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.CopyTo (BYVAL pstm AS IStream PTR, BYVAL cb AS ULONGINT, _
+BYVAL pcbRead AS ULONGINT PTR = NULL, BYVAL pcbWritten AS ULONGINT PTR = NULL) AS HRESULT
+   IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
+   DIM ulicb AS ULARGE_INTEGER: ulicb.QuadPart = cb
+   DIM ulicbRead AS ULARGE_INTEGER, ulicbWritten AS ULARGE_INTEGER
+   this.SetResult(m_pStream->lpvtbl->CopyTo(m_pStream, pstm, ulicb, @ulicbRead, @ulicbWritten))
+   IF pcbRead THEN *pcbRead = ulicbRead.QuadPart
+   IF pcbWritten THEN *pcbWritten = ulicbWritten.QuadPart
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Creates a new stream with its own seek pointer that references the same bytes as
+' the original stream.
+' - ppstm : When successful, pointer to the location of an IStream pointer to the new stream.
+'   If an error occurs, this parameter is NULL.
+' Remarks:
+'    The Clone method creates a new stream for accessing the same bytes but using a
+'    separate seek pointer. The new stream sees the same data as the source-stream.
+'    Changes written to one stream are immediately visible in the other. Range
+'    locking is shared between the streams.
+'    The initial setting of the seek pointer in the cloned stream instance is the same as
+'    the current setting of the seek pointer in the original stream at the time of the
+'    clone operation.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.Clone (BYVAL ppstm AS IStream PTR PTR) AS HRESULT
+   IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
+   RETURN this.SetResult(m_pStream->lpvtbl->Clone(m_pStream, ppstm))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.Clone () AS IStream PTR
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN NULL
+   DIM ppstm AS ISTREAM PTR
+   this.SetResult(m_pStream->lpvtbl->Clone(m_pStream, @ppstm))
+   RETURN ppstm
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a description of the last result code.
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.GetErrorInfo () AS CWSTR
+   IF SUCCEEDED(m_Result) THEN RETURN "Success"
+   DIM s AS CWSTR = "Error &h" & HEX(m_Result, 8)
+   SELECT CASE m_Result
+      CASE E_POINTER : s += ": Null pointer"
+      CASE E_INVALIDARG : s += ": Invalid argument"
+      CASE STG_E_INVALIDFUNCTION : s += ": Unable to perform requested operation"
+      CASE STG_E_ACCESSDENIED : s += ": Access denied"
+      CASE STG_E_INVALIDHANDLE : s += ": Invalid handle"
+      CASE STG_E_INSUFFICIENTMEMORY : s += ": Insufficient memory"
+      CASE STG_E_INVALIDPOINTER : s += ": Invalid pointer"
+      CASE STG_E_SEEKERROR : s += ": Seek error"
+      CASE STG_E_WRITEFAULT : s += ": Write fault"
+      CASE STG_E_INVALIDPARAMETER : s += ": Invalid parameter"
+      CASE STG_E_UNKNOWN : s += ": Unknown error"
+      CASE ELSE
+         s += "Unknown error"
+   END SELECT
+   RETURN s
+END FUNCTION
+' ========================================================================================
+
+
+' ========================================================================================
+' CMemTextStream class
+' ========================================================================================
+TYPE CMemTextStream
+
+Public:
+   m_Result AS HRESULT
+   m_pStream AS IStream PTR
+
+Private:
+   m_bUninitCOM AS BOOLEAN
+
+Public:
+   DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pwszText AS CONST WSTRING PTR)
+   DECLARE DESTRUCTOR
+   DECLARE FUNCTION GetLastResult () AS HRESULT
+   DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
+   DECLARE OPERATOR CAST () AS IStream PTR
+   DECLARE FUNCTION Read (BYVAL numChars AS LONG) AS CWSTR
+   DECLARE FUNCTION Write (BYREF wszText AS CONST WSTRING) AS ULONG
+   DECLARE FUNCTION Append (BYREF wszText AS CONST WSTRING) AS ULONG
+   DECLARE FUNCTION Seek (BYVAL dlibMove AS ULONGINT) AS HRESULT
+   DECLARE FUNCTION GetSeekPosition () AS ULONGINT
+   DECLARE FUNCTION ResetSeekPosition () AS ULONGINT
+   DECLARE FUNCTION SeekAtEndOfStream () AS ULONGINT
+   DECLARE FUNCTION SetSize (BYVAL libNewSize AS ULONGINT) AS HRESULT
+   DECLARE FUNCTION GetSize () AS ULONGINT
+   DECLARE FUNCTION Clone (BYVAL ppstm AS IStream PTR PTR) AS HRESULT
+   DECLARE FUNCTION Clone () AS IStream PTR
+   DECLARE FUNCTION GetErrorInfo () AS CWSTR
+
+END TYPE
+' ========================================================================================
+
+' ========================================================================================
+' Creates a memory unicode text stream.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CMemTextStream
+   ' // Initialize the COM library
+   DIM hr AS HRESULT = CoInitialize(NULL)
+   IF hr = S_OK OR hr = S_FALSE THEN m_bUninitCOM = TRUE
+   m_pStream = AfxSHCreateMemStream(NULL, 0)
+END CONSTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' Creates a memory text streams and initializes it with the content of a string.
+' DIM pMemStm AS CMemTextStream = !"1234567890\r\l"
+' pMemStm.Append(!"Second Test string\r\l")
+' pMemStm.Append(!"Third Test string\r\l")
+' DIM cws AS CWSTR = pMemStm.Read(-1)   ' // Read all the lines
+' print cws
+' ========================================================================================
+PRIVATE CONSTRUCTOR CMemTextStream (BYVAL pwszText AS CONST WSTRING PTR)
+   ' // Initialize the COM library
+   DIM hr AS HRESULT = CoInitialize(NULL)
+   IF hr = S_OK OR hr = S_FALSE THEN m_bUninitCOM = TRUE
+   IF pwszText = NULL THEN
+      m_pStream = AfxSHCreateMemStream(NULL, 0)
+   ELSE
+      m_pStream = AfxSHCreateMemStream(CAST(BYTE PTR, pwszText), LEN(*pwszText) * 2)
+   END IF
+END CONSTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' CMemTextStream destructor
+' ========================================================================================
+PRIVATE DESTRUCTOR CMemTextStream
+   ' // Release the IStrean interface
+   IF m_pStream THEN m_pStream->lpvtbl->Release(m_pStream)
+   ' // Free the COM library
+   IF m_bUninitCOM THEN CoUninitialize
+END DESTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' Returns the last result code.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.GetLastResult () AS HRESULT
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the last result code.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.SetResult (BYVAL Result AS HRESULT) AS HRESULT
+   m_Result = Result
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Cast operator
+' ========================================================================================
+PRIVATE OPERATOR CMemTextStream.CAST () AS IStream PTR
+   m_Result = 0
+   OPERATOR = m_pStream
+END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+' Reads a specified number of characters from the stream into memory, starting at the
+' current seek pointer.
+' - numChars : The number of characters to read from the stream.
+'   Pass -1 to read all the characters from the current seek position.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.Read (BYVAL numChars AS LONG) AS CWSTR
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN ""
+   IF numChars = 0 THEN RETURN ""
+   DIM cbRead AS ULONG
+   DIM cbMaxChars AS LONG = ((this.GetSize * 2) - (this.GetSeekPosition)) \ 2
+   IF numChars < 0 OR numChars > cbMaxChars THEN numChars = cbMaxChars
+   DIM cwsText AS CWSTR = WSPACE(numChars)
+   this.SetResult(m_pStream->lpvtbl->Read(m_pStream, *cwsText, numChars * 2, @cbRead))
+   IF cbRead < LEN(cwsText) THEN cwsText = LEFT(**cwsText, cbRead)
+   RETURN cwsText
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Writes a string at the current seek position.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.Write (BYREF wszText AS CONST WSTRING) AS ULONG
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN 0
+   DIM cbWritten AS ULONG
+   this.SetResult(m_pStream->lpvtbl->Write(m_pStream, STRPTR(wszText), LEN(wszText) * 2, @cbWritten))
+   RETURN cbWritten \ 2
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Appends a string at the end of the stream.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.Append (BYREF wszText AS CONST WSTRING) AS ULONG
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN 0
+   DIM dlibMove AS LARGE_INTEGER : dlibMove.QuadPart = 0
+   DIM libNewPosition AS ULARGE_INTEGER
+   this.SetResult(m_pStream->lpvtbl->Seek(m_pStream, dlibMove, STREAM_SEEK_END, @libNewPosition))
+   IF m_Result THEN RETURN 0
+   DIM cbWritten AS ULONG
+   this.SetResult(m_pStream->lpvtbl->Write(m_pStream, STRPTR(wszText), LEN(wszText) * 2, @cbWritten))
+   RETURN cbWritten \ 2
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns the current seek position.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.GetSeekPosition () AS ULONGINT
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN 0
+   DIM dlibMove AS LARGE_INTEGER : dlibMove.QuadPart = 0
+   DIM libNewPosition AS ULARGE_INTEGER
+   this.SetResult(m_pStream->lpvtbl->Seek(m_pStream, dlibMove, STREAM_SEEK_CUR, @libNewPosition))
+   RETURN libNewPosition.QuadPart
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the seek position at the beginning of the stream.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.ResetSeekPosition () AS ULONGINT
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN 0
+   DIM dlibMove AS LARGE_INTEGER : dlibMove.QuadPart = 0
+   DIM libNewPosition AS ULARGE_INTEGER
+   this.SetResult(m_pStream->lpvtbl->Seek(m_pStream, dlibMove, STREAM_SEEK_SET, @libNewPosition))
+   RETURN libNewPosition.QuadPart
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the seek position at the end of the stream.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.SeekAtEndOfStream () AS ULONGINT
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN 0
+   DIM dlibMove AS LARGE_INTEGER : dlibMove.QuadPart = 0
+   DIM libNewPosition AS ULARGE_INTEGER
+   this.SetResult(m_pStream->lpvtbl->Seek(m_pStream, dlibMove, STREAM_SEEK_END, @libNewPosition))
+   RETURN libNewPosition.QuadPart
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the seek position as an absolute position from the start of the stream.
+' nPos ranges from 1 to the end of the string.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.Seek (BYVAL nPos AS ULONGINT) AS HRESULT
+   IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
+   DIM lidlibMove AS LARGE_INTEGER : lidlibMove.QuadPart = (nPos - 1) * 2
+   DIM libNewPosition AS ULARGE_INTEGER
+   this.SetResult(m_pStream->lpvtbl->Seek(m_pStream, lidlibMove, STREAM_SEEK_SET, @libNewPosition))
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Changes the size of the stream.
+' libNewSize : Specifies the new size, in characters, of the stream.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.SetSize (BYVAL libNewSize AS ULONGINT) AS HRESULT
+   IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
+   DIM ulilibNewSize AS ULARGE_INTEGER : ulilibNewSize.QuadPart = libNewSize * 2
+   RETURN this.SetResult(m_pStream->lpvtbl->SetSize(m_pStream, ulilibNewSize))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Returns the size of the stream in characters.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.GetSize () AS ULONGINT
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN 0
+   DIM tstatstg AS STATSTG
+   this.SetResult(m_pStream->lpvtbl->Stat(m_pStream, @tstatstg, STATFLAG_NONAME))
+   RETURN tstatstg.cbSize.QuadPart \ 2
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Creates a new stream with its own seek pointer that references the same bytes as
+' the original stream.
+' - ppstm : When successful, pointer to the location of an IStream pointer to the new stream.
+'   If an error occurs, this parameter is NULL.
+' Remarks:
+'    The Clone method creates a new stream for accessing the same bytes but using a
+'    separate seek pointer. The new stream sees the same data as the source-stream.
+'    Changes written to one stream are immediately visible in the other. Range
+'    locking is shared between the streams.
+'    The initial setting of the seek pointer in the cloned stream instance is the same as
+'    the current setting of the seek pointer in the original stream at the time of the
+'    clone operation.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.Clone (BYVAL ppstm AS IStream PTR PTR) AS HRESULT
+   IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
+   RETURN this.SetResult(m_pStream->lpvtbl->Clone(m_pStream, ppstm))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.Clone () AS IStream PTR
+   IF m_pStream = NULL THEN this.SetResult(E_POINTER) : RETURN NULL
+   DIM ppstm AS ISTREAM PTR
+   this.SetResult(m_pStream->lpvtbl->Clone(m_pStream, @ppstm))
+   RETURN ppstm
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns a description of the last result code.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.GetErrorInfo () AS CWSTR
+   IF SUCCEEDED(m_Result) THEN RETURN "Success"
+   DIM s AS CWSTR = "Error &h" & HEX(m_Result, 8)
+   SELECT CASE m_Result
+      CASE E_POINTER : s += ": Null pointer"
+      CASE E_INVALIDARG : s += ": Invalid argument"
+      CASE STG_E_INVALIDFUNCTION : s += ": Unable to perform requested operation"
+      CASE STG_E_ACCESSDENIED : s += ": Access denied"
+      CASE STG_E_INVALIDHANDLE : s += ": Invalid handle"
+      CASE STG_E_INSUFFICIENTMEMORY : s += ": Insufficient memory"
+      CASE STG_E_INVALIDPOINTER : s += ": Invalid pointer"
+      CASE STG_E_SEEKERROR : s += ": Seek error"
+      CASE STG_E_WRITEFAULT : s += ": Write fault"
+      CASE STG_E_INVALIDPARAMETER : s += ": Invalid parameter"
+      CASE STG_E_UNKNOWN : s += ": Unknown error"
+      CASE ELSE
+         s += "Unknown error"
+   END SELECT
+   RETURN s
+END FUNCTION
+' ========================================================================================
+
 END NAMESPACE
