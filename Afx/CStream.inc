@@ -54,13 +54,13 @@ Public:
    DECLARE CONSTRUCTOR
    DECLARE CONSTRUCTOR (BYVAL pwszFile AS WSTRING PTR, BYVAL grfMode AS DWORD = STGM_READ, _
            BYVAL dwAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL, BYVAL fCreate AS WINBOOL = FALSE)
-   DECLARE CONSTRUCTOR (BYVAL pstm AS IStream PTR)
+   DECLARE CONSTRUCTOR (BYVAL pstm AS IStream PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
    DECLARE FUNCTION GetLastResult () AS HRESULT
    DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
    DECLARE OPERATOR LET (BYVAL pstm AS IStream PTR)
    DECLARE OPERATOR CAST () AS IStream PTR
-   DECLARE FUNCTION Attach (BYVAL pstm AS IStream PTR) AS HRESULT
+   DECLARE FUNCTION Attach (BYVAL pstm AS IStream PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
    DECLARE FUNCTION Detach () AS IStream PTR
    DECLARE FUNCTION Open (BYVAL pwszFile AS WSTRING PTR, BYVAL grfMode AS DWORD = STGM_READ, _
            BYVAL dwAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL, BYVAL fCreate AS WINBOOL = FALSE) AS HRESULT
@@ -128,11 +128,12 @@ END CONSTRUCTOR
 ' ========================================================================================
 ' Initializes an instance of the class from an existing IStream object and attaches it.
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CFileStream (BYVAL pstm AS IStream PTR)
+PRIVATE CONSTRUCTOR CFileStream (BYVAL pstm AS IStream PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    ' // Initialize the COM library
    DIM hr AS HRESULT = CoInitialize(NULL)
    IF hr = S_OK OR hr = S_FALSE THEN m_bUninitCOM = TRUE
    IF pstm = NULL THEN EXIT CONSTRUCTOR
+   IF fAddRef THEN pstm->lpvtbl->AddRef(pstm)
    m_pStream = pstm
 END CONSTRUCTOR
 ' ========================================================================================
@@ -190,12 +191,13 @@ END OPERATOR
 ' ========================================================================================
 ' Attaches the passed stream object to the class
 ' ========================================================================================
-PRIVATE FUNCTION CFileStream.Attach (BYVAL pstm AS IStream PTR) AS HRESULT
+PRIVATE FUNCTION CFileStream.Attach (BYVAL pstm AS IStream PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
    m_Result = 0
    IF pstm = NULL THEN m_Result = E_INVALIDARG : RETURN m_Result
    ' // Release the stream object
    IF m_pStream THEN m_Result = m_pStream->lpvtbl->Release(m_pStream)
    ' // Attach the passed stream object to the class
+   IF fAddRef THEN pstm->lpvtbl->AddRef(pstm)
    m_pStream = pstm
    RETURN m_Result
 END FUNCTION
