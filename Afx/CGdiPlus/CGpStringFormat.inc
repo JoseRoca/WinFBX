@@ -19,7 +19,7 @@
 ' Creates and initializes an StringFormat object from another StringFormat object.
 ' =====================================================================================
 PRIVATE CONSTRUCTOR CGpStringFormat (BYVAL pStringFormat AS CGpStringFormat PTR)
-   m_Status = GdipCloneMatrix(pStringFormat->m_pStringFormat, @m_pStringFormat)
+   m_Status = GdipCloneStringFormat(pStringFormat->m_pStringFormat, @m_pStringFormat)
 END CONSTRUCTOR
 ' =====================================================================================
 
