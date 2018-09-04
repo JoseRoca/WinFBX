@@ -931,6 +931,12 @@ CONSTRUCTOR CGpBitmap (BYVAL hInstance AS HINSTANCE, BYVAL pwszBitmapName AS WST
 
 # <a name="CloneBitmap"></a>Clone (CGpBitmap)
 
+Creates a new **Bitmap** object from another **Bitmap** object (clones it).
+
+```
+FUNCTION Clone (BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
+```
+
 Creates a new **Bitmap** object by copying a portion of this bitmap.
 
 ```
