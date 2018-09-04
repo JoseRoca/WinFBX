@@ -155,7 +155,7 @@ FUNCTION Seek (BYVAL dlibMove AS ULONGINT, BYVAL dwOrigin AS DWORD, _
 | Parameter  | Description |
 | ---------- | ----------- |
 | *dlibMove* | The displacement to be added to the location indicated by the *dwOrigin* parameter. If *dwOrigin* is STREAM_SEEK_SET, this is interpreted as an unsigned value rather than a signed value. |
-| *dwOrigin* | The origin for the displacement specified in dlibMove. The origin can be the beginning of the file (STREAM_SEEK_SET), the current seek pointer (STREAM_SEEK_CUR), or the end of the file (STREAM_SEEK_END). For more information about values, see the STREAM_SEEK enumeration. |
+| *dwOrigin* | The origin for the displacement specified in *dlibMove*. The origin can be the beginning of the file (STREAM_SEEK_SET), the current seek pointer (STREAM_SEEK_CUR), or the end of the file (STREAM_SEEK_END). For more information about values, see the STREAM_SEEK enumeration. |
 
 #### Return value
 
