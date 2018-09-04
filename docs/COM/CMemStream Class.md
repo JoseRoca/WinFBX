@@ -148,7 +148,8 @@ The number of characters actually written.
 Changes the seek pointer to a new location. The new location is relative to either the beginning of the stream, the end of the stream, or the current seek pointer.
 
 ```
-FUNCTION Seek (BYVAL dlibMove AS ULONGINT, BYVAL dwOrigin AS DWORD, BYVAL plibNewPosition AS ULONGINT PTR = NULL) AS HRESULT
+FUNCTION Seek (BYVAL dlibMove AS ULONGINT, BYVAL dwOrigin AS DWORD, _
+   BYVAL plibNewPosition AS ULONGINT PTR = NULL) AS HRESULT
 ```
 
 | Parameter  | Description |
