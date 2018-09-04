@@ -905,6 +905,12 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 # <a name="ConstructorsBitmap"></a>Constructors (CGpBitmap)
 
+Creates a **Bitmap** object based on another **Bitmap** obejct (clones it).
+
+```
+CONSTRUCTOR CGpBitmap (BYVAL pBitmap AS CGpBitmap PTR)
+```
+
 Creates a **Bitmap** object based on an icon.
 
 ```
