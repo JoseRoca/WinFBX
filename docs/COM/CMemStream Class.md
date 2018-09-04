@@ -32,7 +32,6 @@ OPERATOR CAST () AS IStream PTR
 | [Seek](#Seek1) | Changes the seek pointer to a new location. The new location is relative to either the beginning of the stream, the end of the stream, or the current seek pointer. |
 | [GetSeekPosition](#GetSeekPosition1) | Returns the seek position. |
 | [ResetSeekPosition](#ResetSeekPosition1) | Sets the seek position at the beginning of the stream. |
-| [SeekAtEndOfFile](#SeekAtEndOfFile1) | Sets the seek position at the end of the stream. |
 | [SeekAtEndOfStream](#SeekAtEndOfStream1) | Sets the seek position at the end of the stream. |
 | [GetSize](#GetSize1) | Returns the size of the stream. |
 | [SetSize](#SetSize1) | Changes the size of the stream. |
@@ -178,18 +177,6 @@ Sets the seek position at the beginning of the stream.
 
 ```
 FUNCTION ResetSeekPosition () AS ULONGINT
-```
-
-#### Return value
-
-ULONGINT. The new seek position.
-
-# <a name="SeekAtEndOfFile1"></a>SeekAtEndOfFile
-
-Sets the seek position at the end of the stream.
-
-```
-FUNCTION SeekAtEndOfFile () AS ULONGINT
 ```
 
 #### Return value
