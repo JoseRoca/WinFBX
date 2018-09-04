@@ -22,7 +22,7 @@ CONSTRUCTOR CFileStream ( _
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pwszFile* | A pointer to a unicode null-terminated string that specifies the file name. |
-| *grfMode* | One or more STGM values that are used to specify the file access mode and how the the stream is created and deleted. |
+| *grfMode* | One or more **STGM** values that are used to specify the file access mode and how the the stream is created and deleted. |
 | *dwAttributes* | One or more flag values that specify file attributes in the case that a new file is created. |
 | *fCreate* | A BOOL value that helps specify, in conjunction with *grfMode*, how existing files should be treated when creating the stream. |
 
