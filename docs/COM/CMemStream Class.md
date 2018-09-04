@@ -55,7 +55,7 @@ CONSTRUCTOR CMemTextStream (BYVAL pwszText AS CONST WSTRING PTR)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pwszText* | Creates a memory text stream and initializes it with the content of a string. If **pwszText** is null, it creates a Memory text stream without content. |
+| *pwszText* | Creates a memory text stream and initializes it with the content of a string. If *pwszText* is null, it creates a Memory text stream without content. |
 
 ### Operator CAST
 
