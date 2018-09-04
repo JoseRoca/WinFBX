@@ -74,7 +74,7 @@ OPERATOR CAST () AS IStream PTR
 | [CopyTo](#CopyTo) | Copies a specified number of bytes from the current seek pointer in the stream to the current seek pointer in another stream. |
 | [LockRegion](#LockRegion) | Restricts access to a specified range of bytes in the stream. |
 | [UnlockRegion](#UnlockRegion) | Removes the access restriction on a range of bytes previously restricted with *LockRegion*. |
-| [Stat](#Stat) | Retrieves the STATSTG structure for this stream. |
+| [Stat](#Stat) | Retrieves the **STATSTG** structure for this stream. |
 | [Clone](#Clone) | Creates a new stream with its own seek pointer that references the same bytes as the original stream. |
 | [GetLastResult](#GetLastResult) | Returns the last result code. |
 | [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
