@@ -394,7 +394,7 @@ CVAR. The bytes read.
 
 #### Remarks
 
-If *NumBytes* is more than the number of bytes left in the Stream, only the bytes remaining are returned. The data read is not padded to match the length specified by *NumBytes*. If there are no bytes left to read, a variant with a null value is returned. Read cannot be used to read backwards.
+If *NumBytes* is more than the number of bytes left in the **Stream**, only the bytes remaining are returned. The data read is not padded to match the length specified by *NumBytes*. If there are no bytes left to read, a variant with a null value is returned. Read cannot be used to read backwards.
 
 **Note**: *NumBytes* always measures bytes. For text **Stream** objects (**Type_** is **adTypeText**), use **ReadText**.
 
@@ -520,7 +520,7 @@ PROPERTY Type_ (BYVAL nType AS StreamTypeEnum)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nType* | LONG. A **StreamTypeEnum** value that specifies the type of data contained in the **Stream** object. The default value is **adTypeText**. However, if binary data is initially written to a new, empty Stream, the **Type_** will be changed to **adTypeBinary**. |
+| *nType* | LONG. A **StreamTypeEnum** value that specifies the type of data contained in the **Stream** object. The default value is **adTypeText**. However, if binary data is initially written to a new, empty stream, the **Type_** will be changed to **adTypeBinary**. |
 
 #### Return value
 
@@ -530,7 +530,7 @@ LONG. A **StreamTypeEnum** value.
 
 The **Type_** property is read/write only when the current position is at the beginning of the **Stream** (**Position** is 0), and read-only at any other position.
 
-The **Type_** property determines which methods should be used for reading and writing the **Stream**. For text Streams, use **ReadText** and **WriteText**. For binary streams, use **Read** and **Write**.
+The **Type_** property determines which methods should be used for reading and writing the **Stream**. For text streams, use **ReadText** and **WriteText**. For binary streams, use **Read** and **Write**.
 
 # <a name="Write"></a>Write
 
