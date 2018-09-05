@@ -103,6 +103,8 @@ With the methods and properties of a **Stream** object, you can do the following
 * Specify the access mode for the **Stream** with the **Mode** property.
 * Close a **Stream** with the **Close** method.
 
+**Note**: Since ADO supports the **IErrorInfo** interface, you can get a localized description of the last error calling the **AfxGetOleErrorInfo** function.
+
 **Include file**: CAdoStream.inc (include CADODB.inc)
 
 # Constructor
