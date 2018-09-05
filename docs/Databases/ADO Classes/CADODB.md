@@ -16,6 +16,7 @@ CADODB are a collection of classes to allow to work with ADO using the FreeBasic
 
 ADO objects and their collections:
 
+```
 Connection
   |_ Errors     - Error
   |_ Properties - Property
@@ -32,6 +33,7 @@ Record
   |_ Fields - Field
 
 Stream
+```
 
 # <a name="ADOIdentifiers"></a>ADO Identifiers
 
