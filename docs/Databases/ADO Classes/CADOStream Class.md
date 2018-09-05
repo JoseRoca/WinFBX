@@ -370,9 +370,9 @@ The current position can be moved to a point after the end of the stream. If you
 
 **Notes**: **Position** always measures bytes. For text streams using multibyte character sets, multiply the position by the character size to determine the character number. For example, for a two-byte character set, the first character is at position 0, the second character at position 2, the third character at position 4, and so on.
 
-Negative values cannot be used to change the current position in a Stream. Only positive numbers can be used for **Position**.
+Negative values cannot be used to change the current position in a **Stream**. Only positive numbers can be used for **Position**.
 
-For read-only **Stream** objects, ADO will not return an error if Position is set to a value greater than the **Size** of the **Stream**. This does not change the size of the **Stream**, or alter the Stream contents in any way. However, doing this should be avoided because it results in a meaningless **Position** value.
+For read-only **Stream** objects, ADO will not return an error if **Position** is set to a value greater than the **Size** of the **Stream**. This does not change the size of the **Stream**, or alter the Stream contents in any way. However, doing this should be avoided because it results in a meaningless **Position** value.
 
 # <a name="Read"></a>Read
 
