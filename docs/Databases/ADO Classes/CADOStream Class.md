@@ -112,7 +112,7 @@ For a **Stream** object, the last asynchronous call to the **Open** method is te
 
 # <a name="Charset"></a>Charset
 
-Cancels execution of a pending, asynchronous method call.
+Indicates the character set into which the contents of a text **Stream** should be translated for storage in the **Stream** object's internal buffer.
 
 ```
 PROPERTY Charset () AS CBSTR
