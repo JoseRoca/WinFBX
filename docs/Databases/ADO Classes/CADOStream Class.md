@@ -217,6 +217,12 @@ PROPERTY LineSeparator (BYVAL LS AS LineSeparatorEnum)
 | ---------- | ----------- |
 | *LS* | A **LineSeparatorEnum** value that indicates the line separator character used in the **Stream**. The default value is *adCRLF*. |
 
+| Constant   | Value | Description |
+| ---------- | ----- | ----------- |
+| **adCR** | 13 | Indicates carriage return. |
+| **adCRLF** | -1 | Default. Indicates carriage return line feed. |
+| **adLF** | 10 | Indicates line feed. |
+
 #### Return value
 
 LONG. A **LineSeparatorEnum** value.
