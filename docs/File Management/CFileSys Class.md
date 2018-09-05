@@ -863,7 +863,7 @@ CBSTR. The type of file.
 ```
 #INCLUDE ONCE "Afx/CFileSys.inc"
 DIM pFileSys AS CFileSys
-DIM cbsFileType AS CBSTR = pFileSys.FileType("C:\MyPath\MyFile.txt")
+DIM cbsFileType AS CBSTR = pFileSys.GetFileType("C:\MyPath\MyFile.txt")
 ```
 
 # <a name="GetFileVersion"></a>GetFileVersion
