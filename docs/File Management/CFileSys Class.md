@@ -900,6 +900,10 @@ ELSE
    MSGBOX "No version information available"
 END IF
 ```
+```
+DIM pFileSys AS CFileSys
+print pFileSys.GetFileVersion("c:\windows\system32\scrrun.dll")
+```
 
 # <a name="GetFolderAttributes"></a>GetFolderAttributes
 
