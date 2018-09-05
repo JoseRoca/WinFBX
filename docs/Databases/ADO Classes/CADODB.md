@@ -4,13 +4,21 @@ Microsoft ActiveX Data Objects (ADO) enable your client applications to access a
 
 CADODB are a collection of classes to allow to work with ADO using the FreeBasic compilers.
 
+The **CAdoBase** object, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derive classes to store the result codes of ADO calls.
+
 **Folder**: Afx/CADODB<br>
 **Files**: CADODB.inc, CAdoCommand.inc, CAdoConnection.inc, CAdoErrors.inc, CAdoFields.inc, CAdoParameters.inc, CAdoProperties.inc, CAdoRecord.inc, CAdoRecordset.inc, CAdoStream.inc.
 
 | Name       | Description |
 | ---------- | ----------- |
+| [CAdoBase Class](#CAdoBase) | Base class for all the other ADO classes. |
 | [ADO Object Model](#ADOObjectModel) | ADO objects and their collections. |
 | [ADO Identifiers](#ADOIdentifiers) | PROGIDs, CLSIDs and IIDs. |
+| [ADO Enumerations](#ADOEnums) | ADO enumerations. |
+| [ADO Dynamic Properties](#ADODynProps) | ADO dynamic properties. |
+| [ADO Errors](#ADOErrors) | ADO errors. |
+| [ADO IUnknown Interfaces](#ADOIUnknownInterfaces) | ADO IUnknown interfaces. |
+| [ADO Events](#ADOEvents) | ADO events. |
 
 # <a name="ADOObjectModel"></a>ADO Object Model
 
