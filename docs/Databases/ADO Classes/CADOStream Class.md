@@ -282,7 +282,7 @@ When used on a client-side Connection object, the **Mode** property can only be 
 
 # <a name="Open"></a>Open
 
-Indicates the available permissions for modifying data in a **Stream** object.
+Opens a connection to a data source.
 
 ```
 FUNCTION Open (BYREF cvSource AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
