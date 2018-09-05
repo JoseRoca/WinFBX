@@ -115,10 +115,33 @@ Creates an instance of the ADO **Stream** interface.
 CONSTRUCTOR CAdoStream
 ```
 
-#### Usage example
+#### Example
 
 ```
-DIM pStm AS CAdoStream
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open a stream in memory
+DIM pStream AS CAdoStream
+pStream.Type_ = adTypeText
+pStream.LineSeparator = adCRLF
+pStream.Open
+
+' // Write some text to it
+pStream.WriteText "This is a test string", adWriteLine
+pStream.WriteText "This is another test string", adWriteLine
+
+' // Set the position at the beginning of the file
+pStream.Position = 0
+' // Read the lines
+DIM cbsText AS CBSTR = pStream.ReadText(adReadLine)
+print cbsText
+cbsText = pStream.ReadText(adReadLine)
+print cbsText
+
+' // Save the contents to a file
+pStream.SaveToFile "TestStream.txt", adSaveCreateOverWrite
+pStream.Close
 ```
 
 #### Methods and Properties
@@ -689,40 +712,6 @@ S_OK (0) or an HRESULT code.
 Instantiates a **Stream** object in memory without associating it with an underlying source. You can dynamically add data to the stream simply by writing binary or text data to the **Stream** with **Write** or **WriteText**, or by loading data from a file with **LoadFromFile**.
 
 While the **Stream** is not open, it is possible to read all the read-only properties of the **Stream**.
-
-#### Example
-
-```
-#define UNICODE
-#include "Afx/CADODB/CADODB.inc"
-using Afx
-
-' // Open a stream in memory
-DIM pStream AS CAdoStream
-pStream.Type_ = adTypeText
-pStream.LineSeparator = adCRLF
-pStream.Open
-
-' // Write some text to it
-pStream.WriteText "This is a test string", adWriteLine
-pStream.WriteText "This is another test string", adWriteLine
-
-' // Set the position at the beginning of the file
-pStream.Position = 0
-' // Read the lines
-DIM cbsText AS CBSTR = pStream.ReadText(adReadLine)
-print cbsText
-cbsText = pStream.ReadText(adReadLine)
-print cbsText
-
-' // Save the contents to a file
-pStream.SaveToFile "TestStream.txt", adSaveCreateOverWrite
-pStream.Close
-
-PRINT
-PRINT "Press any key..."
-SLEEP
-```
 
 # <a name="Position"></a>Position (CAdoStream)
 
