@@ -44,7 +44,7 @@ TYPE CAdoRecord EXTENDS CAdoBase
    ' // Indicates the data source or object represented by the Record.
    DECLARE PROPERTY Source () AS CVAR
    DECLARE PROPERTY Source (BYREF cbsSource AS CBSTR)
-   DECLARE PROPERTY Source (BYVAL pSource AS Afx_IDispatch PTR)
+   DECLARE PROPERTY PutRefSource (BYVAL pSource AS Afx_IDispatch PTR)
    ' // Sets or returns a ConnectModeEnum value. The default value for a Record object is adModeRead.
    DECLARE PROPERTY Mode () AS ConnectModeEnum
    DECLARE PROPERTY Mode (BYVAL Mode AS ConnectModeEnum)
@@ -244,7 +244,7 @@ PRIVATE PROPERTY CAdoRecord.Source (BYREF cbSource AS CBSTR)
 END PROPERTY
 ' ===========================================================================================
 ' ===========================================================================================
-PRIVATE PROPERTY CAdoRecord.Source (BYVAL pSource AS Afx_IDispatch PTR)
+PRIVATE PROPERTY CAdoRecord.PutRefSource (BYVAL pSource AS Afx_IDispatch PTR)
    CADODB_DP("CAdoRecord.Source")
    IF m_pRecord THEN SetResult(m_pRecord->putref_Source(pSource))
 END PROPERTY

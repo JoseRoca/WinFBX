@@ -88,7 +88,7 @@ END TYPE
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CAdoStream
    CADODB_DP("-BEGIN CAdoStream CONSTRUCTOR")
-   ' // Create an instance of the Connection object
+   ' // Create an instance of the Stream object
    m_pStream = AfxNewCom("ADODB.Stream")
    CADODB_DP("-END CAdoStream CONSTRUCTOR " & WSTR(m_pStream))
 END CONSTRUCTOR
@@ -139,7 +139,7 @@ END OPERATOR
 ' ========================================================================================
 
 ' ========================================================================================
-' Attaches an stream to the class.
+' Attaches an ADO stream to the class.
 ' Useful to attach to the class a pointer returned by a function.
 ' ========================================================================================
 PRIVATE SUB CAdoStream.Attach (BYVAL pStream AS Afx_ADOStream PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
