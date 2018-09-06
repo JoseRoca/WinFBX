@@ -373,3 +373,28 @@ DO
    IF pRecordset.MoveNext <> S_OK THEN EXIT DO
 LOOP
 ```
+
+# <a name="ConnectionTimeout"></a>ConnectionTimeout
+
+Indicates how long to wait while establishing a connection before terminating the attempt and generating an error.
+
+```
+PROPERTY ConnectionTimeout () AS LONG
+PROPERTY ConnectionTimeout (BYVAL lTimeout AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lTimeout* | Time to wait for a command to execute. |
+
+#### Return value
+
+The timeout value.
+
+#### Remarks
+
+Use the **ConnectionTimeout** property on a **Connection** object if delays from network traffic or heavy server use make it necessary to abandon a connection attempt. If the time from the **ConnectionTimeout** property setting elapses prior to the opening of the connection, an error occurs and ADO cancels the attempt. If you set the property to zero, ADO will wait indefinitely until the connection is opened. Make sure the provider to which you are writing code supports the **ConnectionTimeout** functionality.
+
+The **ConnectionTimeout** property is read/write when the connection is closed and read-only when it is open.
+
+On a **Connection** object, the **ConnectionTimeout** property remains read/write after the **Connection** is opened.
