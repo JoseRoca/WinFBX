@@ -953,3 +953,28 @@ Specifies whether the Open method of a Connection object should return after (sy
 ```
 IF pConnection.State = adStateOpen THEN pConnection.Close
 ```
+
+# <a name="Version"></a>Version
+
+Indicates the ADO version number.
+
+```
+PROPERTY Version () AS CBSTR
+```
+
+#### Return value
+
+The ADO version number.
+
+#### Remarks
+
+Use the **Version** property to return the version number of the ADO implementation.
+
+The version of the provider will be available as a dynamic property in the **Properties** collection.
+
+#### Example
+
+```
+DIM cbsVersion AS CBSTR = pConnection.Version
+```
+
