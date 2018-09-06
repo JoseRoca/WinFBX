@@ -641,3 +641,35 @@ pConnection.IsolationLevel = adXactUnspecified
 ' // Gets the isolation level
 DIM level AS LONG = pConnection.IsolationLevel
 ```
+
+# <a name="Mode"></a>Mode
+
+Indicates the available permissions for modifying data in a **Connection** object.
+
+```
+PROPERTY Mode () AS ConnectModeEnum
+PROPERTY Mode (BYVAL lMode AS ConnectModeEnum)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lMode* | ConnectionModeEnum value. The default value for a **Connection** is **adModeUnknown**. |
+
+#### Return value
+
+A **ConnectionModeEnum** value.
+
+Specifies the available permissions for modifying data in a Connection, opening a Record, or specifying values for the Mode property of the Record and Stream objects.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adModeRead** | Indicates read-only permissions. |
+| **adModeReadWrite** | Indicates read/write permissions. |
+| **adModeRecursive** | Used in conjunction with the other *ShareDeny* values (**adModeShareDenyNone**, **adModeShareDenyWrite**, or **adModeShareDenyRead**) to propagate sharing restrictions to all sub-records of the current **Record**. It has no affect if the **Record** does not have any children. A run-time error is generated if it is used with **adModeShareDenyNone** only. However, it can be used with **adModeShareDenyNone** when combined with other values. For example, you can use "**adModeRead OR adModeShareDenyNone OR adModeRecursive**". |
+| **adModeShareDenyNone** | Allows others to open a connection with any permissions. Neither read nor write access can be denied to others. |
+| **adModeShareDenyRead** | Prevents others from opening a connection with read permissions. |
+| **adModeShareDenyWrite** | Prevents others from opening a connection with write permissions. |
+| **adModeShareExclusive** | Prevents others from opening a connection. |
+| **adModeUnknown** | Default. Indicates that the permissions have not yet been set or cannot be determined. |
+| **adModeWrite** | Indicates write-only permissions. |
+
