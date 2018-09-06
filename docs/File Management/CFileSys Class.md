@@ -863,7 +863,7 @@ CBSTR. The type of file.
 ```
 #INCLUDE ONCE "Afx/CFileSys.inc"
 DIM pFileSys AS CFileSys
-DIM cbsFileType AS CBSTR = pFileSys.FileType("C:\MyPath\MyFile.txt")
+DIM cbsFileType AS CBSTR = pFileSys.GetFileType("C:\MyPath\MyFile.txt")
 ```
 
 # <a name="GetFileVersion"></a>GetFileVersion
@@ -899,6 +899,10 @@ IF LEN(cbsVersion) THEN
 ELSE
    MSGBOX "No version information available"
 END IF
+```
+```
+DIM pFileSys AS CFileSys
+print pFileSys.GetFileVersion("c:\windows\system32\scrrun.dll")
 ```
 
 # <a name="GetFolderAttributes"></a>GetFolderAttributes

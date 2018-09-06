@@ -22,6 +22,13 @@ PRIVATE CONSTRUCTOR CGpImageAttributes
    GdipCreateImageAttributes(@m_pImgAttr)
 END CONSTRUCTOR
 ' ========================================================================================
+' ========================================================================================
+' Creates and initializes an ImageAttributes object from another ImageAttributes object.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CGpImageAttributes (BYVAL pImgAttr AS CGpImageAttributes PTR)
+   m_Status = GdipCloneImageAttributes(pImgAttr->m_pImgAttr, @m_pImgAttr)
+END CONSTRUCTOR
+' ========================================================================================
 
 ' ========================================================================================
 ' Cleanup

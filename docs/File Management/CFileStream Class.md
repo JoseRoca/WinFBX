@@ -22,24 +22,25 @@ CONSTRUCTOR CFileStream ( _
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pwszFile* | A pointer to a unicode null-terminated string that specifies the file name. |
-| *grfMode* | One or more STGM values that are used to specify the file access mode and how the the stream is created and deleted. |
+| *grfMode* | One or more **STGM** values that are used to specify the file access mode and how the the stream is created and deleted. |
 | *dwAttributes* | One or more flag values that specify file attributes in the case that a new file is created. |
 | *fCreate* | A BOOL value that helps specify, in conjunction with *grfMode*, how existing files should be treated when creating the stream. |
 
 ```
-CONSTRUCTOR CFileStream (BYVAL pstm AS IStream PTR)
+CONSTRUCTOR CFileStream (BYVAL pstm AS IStream PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pstm* | A pointer to the IStream interface of an existing stream that will be attached to the class. |
+| *pstm* | A pointer to the **IStream** interface of an existing stream that will be attached to the class. |
+| *fAddRef* | TRUE to increase the reference count of the stream; FALSE, otherwise. |
 
 ### Operators
 
 | Name       | Description |
 | ---------- | ----------- |
 | LET | Initializes the class from an existing stream and attaches it. |
-| CAST | Returns a pointer to the underlying IStream interface of the stream object. |
+| CAST | Returns a pointer to the underlying **IStream** interface of the stream object. |
 
 ```
 OPERATOR LET (BYVAL pstm AS IStream PTR)
@@ -48,7 +49,7 @@ OPERATOR CAST () AS IStream PTR
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pstm* | A pointer to the IStream interface of an existing stream that will be attached to the class. |
+| *pstm* | A pointer to the **IStream** interface of an existing stream that will be attached to the class. |
 
 ### Methods
 
@@ -74,7 +75,7 @@ OPERATOR CAST () AS IStream PTR
 | [CopyTo](#CopyTo) | Copies a specified number of bytes from the current seek pointer in the stream to the current seek pointer in another stream. |
 | [LockRegion](#LockRegion) | Restricts access to a specified range of bytes in the stream. |
 | [UnlockRegion](#UnlockRegion) | Removes the access restriction on a range of bytes previously restricted with *LockRegion*. |
-| [Stat](#Stat) | Retrieves the STATSTG structure for this stream. |
+| [Stat](#Stat) | Retrieves the **STATSTG** structure for this stream. |
 | [Clone](#Clone) | Creates a new stream with its own seek pointer that references the same bytes as the original stream. |
 | [GetLastResult](#GetLastResult) | Returns the last result code. |
 | [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
@@ -84,12 +85,13 @@ OPERATOR CAST () AS IStream PTR
 Attaches the passed stream to the class.
 
 ```
-FUNCTION Attach (BYVAL pstm AS IStream PTR) AS HRESULT
+FUNCTION Attach (BYVAL pstm AS IStream PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pstm* | A pointer to the IStream interface of an existing stream that will be attached to the class. |
+| *pstm* | A pointer to the **IStream** interface of an existing stream that will be attached to the class. |
+| *fAddRef* | TRUE to increase the reference count of the stream; FALSE, otherwise. |
 
 #### Return value
 
@@ -105,7 +107,7 @@ FUNCTION Detach () AS IStream PTR
 
 #### Return value
 
-IStream PTR. A pointer to the IStream interface of the stream object.
+IStream PTR. A pointer to the **IStream** interface of the stream object.
 
 # <a name="Open"></a>Open
 
@@ -121,8 +123,8 @@ FUNCTION Open (BYVAL pwszFile AS WSTRING PTR, _
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pwszFile* | A pointer to a unicode null-terminated string that specifies the file name. |
-| *grfMode* | One or more STGM values that are used to specify the file access mode and how the stream is created and deleted. The STGM constants are flags that indicate conditions for creating and deleting the stream and access modes for the stream. These elements are often combined using an ORoperator. They are interpreted in groups as listed in the following table. It is not valid to use more than one element from a single group. |
-| *dwAttributes* | One or more flag values that specify file attributes in the case that a new file is created.<br>**_0_** = Prevents other processes from opening a file or device if they request delete, read, or write access.<br>**_FILE_SHARE_DELETE_** : Enables subsequent open operations on a file or device to request delete access. Otherwise, other processes cannot open the file or device if they request delete access. If this flag is not specified, but the file or device has been opened for delete access, the function fails. Delete access allows both delete and rename operations.<br>**_FILE_SHARE_READ_** : Enables subsequent open operations on a file or device to request read access. Otherwise, other processes cannot open the file or device if they request read access. If this flag is not specified, but the file or device has been opened for read access, the function fails.<br>**_FILE_SHARE_WRITE_** : Enables subsequent open operations on a file or device to request write access. Otherwise, other processes cannot open the file or device if they request write access. If this flag is not specified, but the file or device has been opened for write access or has a file mapping with write access, the function fails. |
+| *grfMode* | One or more **STGM** values that are used to specify the file access mode and how the stream is created and deleted. The STGM constants are flags that indicate conditions for creating and deleting the stream and access modes for the stream. These elements are often combined using an **OR** operator. They are interpreted in groups as listed in the following table. It is not valid to use more than one element from a single group. |
+| *dwAttributes* | One or more flag values that specify file attributes in the case that a new file is created.<br>**_0_** = Prevents other processes from opening a file or device if they request delete, read, or write access.<br>**FILE_SHARE_DELETE** : Enables subsequent open operations on a file or device to request delete access. Otherwise, other processes cannot open the file or device if they request delete access. If this flag is not specified, but the file or device has been opened for delete access, the function fails. Delete access allows both delete and rename operations.<br>**FILE_SHARE_READ** : Enables subsequent open operations on a file or device to request read access. Otherwise, other processes cannot open the file or device if they request read access. If this flag is not specified, but the file or device has been opened for read access, the function fails.<br>**FILE_SHARE_WRITE** : Enables subsequent open operations on a file or device to request write access. Otherwise, other processes cannot open the file or device if they request write access. If this flag is not specified, but the file or device has been opened for write access or has a file mapping with write access, the function fails. |
 | *fCreate* | BOOL value that helps specify, in conjunction with *grfMode*, how existing files should be treated when creating the stream |
 
 #### Return value
@@ -340,7 +342,7 @@ FUNCTION Seek (BYVAL dlibMove AS ULONGINT, _
 | Parameter  | Description |
 | ---------- | ----------- |
 | *dlibMove* | ULONGINT. The displacement to be added to the location indicated by the dwOrigin parameter. If *dwOrigin* is **STREAM_SEEK_SET**, this is interpreted as an unsigned value rather than a signed value. |
-| *dwOrigin* | DWORD. The origin for the displacement specified in *dlibMove*. The origin can be the beginning of the file (**STREAM_SEEK_SET**), the current seek pointer (**STREAM_SEEK_CUR**), or the end of the file (**STREAM_SEEK_END**).<br>**_STREAM_SEEK_SET_** : The new seek pointer is an offset relative to the beginning of the stream. In this case, the *dlibMove* parameter is the new seek position relative to the beginning of the stream.<br>**_STREAM_SEEK_CUR_** : The new seek pointer is an offset relative to the current seek pointer location. In this case, the *dlibMove* parameter is the signed displacement from the current seek position.<br>**_STREAM_SEEK_END_** : The new seek pointer is an offset relative to the end of the stream. In this case, the *dlibMove* parameter is the new seek position relative to the end of the stream. |
+| *dwOrigin* | DWORD. The origin for the displacement specified in *dlibMove*. The origin can be the beginning of the file (**STREAM_SEEK_SET**), the current seek pointer (**STREAM_SEEK_CUR**), or the end of the file (**STREAM_SEEK_END**).<br>**STREAM_SEEK_SET** : The new seek pointer is an offset relative to the beginning of the stream. In this case, the *dlibMove* parameter is the new seek position relative to the beginning of the stream.<br>**STREAM_SEEK_CUR** : The new seek pointer is an offset relative to the current seek pointer location. In this case, the *dlibMove* parameter is the signed displacement from the current seek position.<br>**STREAM_SEEK_END** : The new seek pointer is an offset relative to the end of the stream. In this case, the *dlibMove* parameter is the new seek position relative to the end of the stream. |
 | *plibNewPosition* | ULONGINT PTR. A pointer to the location where this method writes the value of the new seek pointer from the beginning of the stream. You can set this pointer to NULL. In this case, this method does not provide the new seek pointer. |
 
 #### Return value
@@ -457,7 +459,7 @@ FUNCTION LockRegion (BYVAL libOffset AS ULONGINT, BYVAL cb AS ULONGINT, BYVAL dw
 | ---------- | ----------- |
 | *libOffset* | ULONGINT. Specifies the byte offset for the beginning of the range. |
 | *cb* | ULONGINT. Specifies the length of the range, in bytes, to be restricted. |
-| *dwLockType* | DWORD. Specifies the restrictions being requested on accessing the range.<br>- **_LOCK_WRITE_** : If this lock is granted, the specified range of bytes can be opened and read any number of times, but writing to the locked range is prohibited except for the owner that was granted this lock.<br>- **_LOCK_EXCLUSIVE_** : If this lock is granted, writing to the specified range of bytes is prohibited except by the owner that was granted this lock.<br>- **_LOCK_ONLYONCE_** : If this lock is granted, no other LOCK_ONLYONCE lock can be obtained on the range. Usually this lock type is an alias for some other lock type. Thus, specific implementations can have additional behavior associated with this lock type.|
+| *dwLockType* | DWORD. Specifies the restrictions being requested on accessing the range.<br>- **LOCK_WRITE** : If this lock is granted, the specified range of bytes can be opened and read any number of times, but writing to the locked range is prohibited except for the owner that was granted this lock.<br>- **LOCK_EXCLUSIVE** : If this lock is granted, writing to the specified range of bytes is prohibited except by the owner that was granted this lock.<br>- **LOCK_ONLYONCE** : If this lock is granted, no other LOCK_ONLYONCE lock can be obtained on the range. Usually this lock type is an alias for some other lock type. Thus, specific implementations can have additional behavior associated with this lock type.|
 
 #### Return value
 
@@ -492,7 +494,7 @@ FUNCTION Stat (BYVAL pstatstg AS STATSTG PTR, BYVAL grfStatFlag AS DWORD) AS HRE
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pstatstg* | Pointer to a **STATSTG** structure where this method places information about this stream. |
-| *grfStatFlag* | DWORD. Specifies that this method does not return some of the members in the **STATSTG** structure, thus saving a memory allocation operation. Values are taken from the **STATFLAG** enumeration.<br>- **_STATFLAG_DEFAULT_** : Requests that the statistics include the pwcsName member of the **STATSTG** structure.<br>- **_STATFLAG_NONAME_** : Requests that the statistics not include the *pwcsName* member of the **STATSTG structure**. |
+| *grfStatFlag* | DWORD. Specifies that this method does not return some of the members in the **STATSTG** structure, thus saving a memory allocation operation. Values are taken from the **STATFLAG** enumeration.<br>- **STATFLAG_DEFAULT** : Requests that the statistics include the *pwcsName* member of the **STATSTG** structure.<br>- **STATFLAG_NONAME** : Requests that the statistics not include the *pwcsName* member of the **STATSTG structure**. |
 
 #### Return value
 
@@ -504,7 +506,7 @@ FUNCTION Stat (BYVAL grfStatFlag AS DWORD) AS STATSTG
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *grfStatFlag* | DWORD. Specifies that this method does not return some of the members in the **STATSTG** structure, thus saving a memory allocation operation. Values are taken from the **STATFLAG** enumeration.<br>- **_STATFLAG_DEFAULT_** : Requests that the statistics include the pwcsName member of the **STATSTG** structure.<br>- **_STATFLAG_NONAME_** : Requests that the statistics not include the *pwcsName* member of the **STATSTG structure**. |
+| *grfStatFlag* | DWORD. Specifies that this method does not return some of the members in the **STATSTG** structure, thus saving a memory allocation operation. Values are taken from the **STATFLAG** enumeration.<br>- **STATFLAG_DEFAULT** : Requests that the statistics include the *pwcsName* member of the **STATSTG** structure.<br>- **STATFLAG_NONAME** : Requests that the statistics not include the *pwcsName* member of the **STATSTG structure**. |
 
 #### Return value
 

@@ -36,6 +36,7 @@ The **Region** object describes an area of the display surface. The area can be 
 Creates a region that is defined by a rectangle.
 
 ```
+CONSTRUCTOR CGpRegion (BYVAL pRegion AS CGpRegion PTR)
 CONSTRUCTOR CGpRegion (BYVAL rc AS GpRectF PTR)
 CONSTRUCTOR CGpRegion (BYVAL rc AS GpRect PTR)
 CONSTRUCTOR CGpRegion (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE)
@@ -133,6 +134,8 @@ SUB Example_CloneRegion (BYVAL hdc AS HDC)
    ' // Make a copy (clone) of the curved region.
    DIM pClonedRegion AS CGpRegion
    pathRegion.Clone(@pClonedRegion)
+   ' // You can also use:
+   ' IM pClonedRegion AS CGpRegion = @pathRegion
 
    ' // Fill the cloned region with a red brush.
    graphics.FillRegion(@solidBrush, @pClonedRegion)

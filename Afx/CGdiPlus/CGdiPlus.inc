@@ -142,6 +142,7 @@ Public:
 
 Public:
    DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pMatrix AS CGpMatrix PTR)
    DECLARE CONSTRUCTOR (BYVAL m11 AS SINGLE, BYVAL m12 AS SINGLE, BYVAL m21 AS SINGLE, BYVAL m22 AS SINGLE, BYVAL dx AS SINGLE, BYVAL dy AS SINGLE)
    DECLARE CONSTRUCTOR (BYVAL rcf AS GpRectF PTR, BYVAL dstplg AS GpPointF PTR)
    DECLARE CONSTRUCTOR (BYVAL rc AS GpRect PTR, BYVAL dstplg AS GpPoint PTR)
@@ -180,6 +181,7 @@ Public:
 
 Public:
    DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pImgAttr AS CGpImageAttributes PTR)
    DECLARE DESTRUCTOR
    DECLARE FUNCTION Clone (BYVAL pCloneImgAttr AS CGpImageAttributes PTR) AS GpStatus
    DECLARE FUNCTION SetToIdentity (BYVAL nType AS ColorAdjustType = ColorAdjustTypeDefault) AS GpStatus
@@ -222,6 +224,7 @@ Public:
 
 Public:
    DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pImage AS CGpImage PTR)
    DECLARE CONSTRUCTOR (BYVAL pwszFileName AS WSTRING PTR, BYVAL useEmbeddedColorManagement AS BOOLEAN = FALSE)
    DECLARE CONSTRUCTOR (BYVAL pStream AS IStream PTR, BYVAL useEmbeddedColorManagement AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
@@ -234,7 +237,7 @@ Public:
    DECLARE FUNCTION SaveAdd (BYVAL encoderParams AS EncoderParameters PTR) AS GpStatus
    DECLARE FUNCTION SaveAdd (BYVAL pNewImage AS CGpImage PTR, BYVAL encoderParams AS EncoderParameters PTR) AS GpStatus
    DECLARE FUNCTION GetType () AS ImageType
-   DECLARE FUNCTION GetPhysicalDimension (BYVAL psize AS SizeF PTR) AS GpStatus
+   DECLARE FUNCTION GetPhysicalDimension (BYVAL psize AS GpSizeF PTR) AS GpStatus
    DECLARE FUNCTION GetBounds (BYVAL srcRect AS RectF PTR, BYVAL srcUnit AS GpUnit PTR) AS GpStatus
    DECLARE FUNCTION GetWidth () AS UINT
    DECLARE FUNCTION GetHeight () AS UINT
@@ -281,6 +284,7 @@ TYPE CGpBitmap EXTENDS CGpImage
 
 Public:
    DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pBitmap AS CGpBitmap PTR)
    DECLARE CONSTRUCTOR (BYVAL pwszFileName AS WSTRING PTR, BYVAL useEmbeddedColorManagement AS BOOLEAN = FALSE)
    DECLARE CONSTRUCTOR (BYVAL pStream AS IStream PTR, BYVAL useEmbeddedColorManagement AS BOOLEAN = FALSE)
    DECLARE CONSTRUCTOR (BYVAL nWidth AS INT_, BYVAL nHeight AS INT_, BYVAL stride AS INT_, BYVAL pxFormat AS PixelFormat, BYVAL scan0 AS UBYTE PTR)
@@ -295,6 +299,7 @@ Public:
    DECLARE CONSTRUCTOR (BYVAL hInstance AS HINSTANCE, BYVAL pwszbitmapName AS WSTRING PTR)
    DECLARE FUNCTION GetHBITMAP (BYVAL colorBackground AS ARGB, BYVAL hbmReturn AS HBITMAP PTR) AS GpStatus
    DECLARE FUNCTION GetHICON (BYVAL hiconReturn AS HICON PTR) AS GpStatus
+   DECLARE FUNCTION Clone (BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
    DECLARE FUNCTION Clone (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE, BYVAL pxFormat AS PixelFormat, BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
    DECLARE FUNCTION Clone (BYVAL x AS INT_, BYVAL y AS INT_, BYVAL nWidth AS INT_, BYVAL nHeight AS INT_, BYVAL pxFormat AS PixelFormat, BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
    DECLARE FUNCTION Clone (BYVAL rcf AS GpRectF PTR, BYVAL pxFormat AS PixelFormat, BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
@@ -379,6 +384,7 @@ Public:
 Public:
    ' // CGpBrush
    DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pBrush AS CGpBrush PTR)
    DECLARE DESTRUCTOR
    DECLARE FUNCTION Clone (BYVAL pBrush AS CGpBrush PTR) AS GpStatus
    DECLARE FUNCTION GetType () AS GpBrushType
@@ -387,6 +393,7 @@ END TYPE
 
 ' // CGpSolidBrush
 TYPE CGpSolidBrush EXTENDS CGpBrush
+   DECLARE CONSTRUCTOR (BYVAL pSolidBrush AS CGpSolidBrush PTR)
    DECLARE CONSTRUCTOR (BYVAL colour AS ARGB = &hFF000000)
    DECLARE FUNCTION GetColor (BYVAL colour AS ARGB PTR) AS GpStatus
    DECLARE FUNCTION GetColor () AS ARGB
@@ -395,6 +402,7 @@ END TYPE
 
 ' // CGpTextureBrush
 TYPE CGpTextureBrush EXTENDS CGpBrush
+   DECLARE CONSTRUCTOR (BYVAL pTextureBrush AS CGpTextureBrush PTR)
    DECLARE CONSTRUCTOR (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS wrapMode = WrapModeTile)
    DECLARE CONSTRUCTOR (BYVAL pImage AS CGpImage PTR, BYVAL dstRect AS GpRectF PTR, BYVAL pImageAttributes AS CGpImageAttributes_ PTR = NULL)
    DECLARE CONSTRUCTOR (BYVAL pImage AS CGpImage PTR, BYVAL dstRect AS GpRect PTR, BYVAL pImageAttributes AS CGpImageAttributes_ PTR = NULL)
@@ -416,6 +424,7 @@ END TYPE
 
 ' // CGpLinearGradientBrush
 TYPE CGpLinearGradientBrush EXTENDS CGpBrush
+   DECLARE CONSTRUCTOR (BYVAL pLinearGradientBrush AS CGpLinearGradientBrush PTR)
    DECLARE CONSTRUCTOR (BYVAL point1 AS GpPointF PTR, BYVAL point2 AS GpPointF PTR, BYVAL color1 AS ARGB, BYVAL color2 AS ARGB)
    DECLARE CONSTRUCTOR (BYVAL point1 AS GpPoint PTR, BYVAL point2 AS GpPoint PTR, BYVAL color1 AS ARGB, BYVAL color2 AS ARGB)
    DECLARE CONSTRUCTOR (BYVAL rc AS GpRectF PTR, BYVAL color1 AS ARGB, BYVAL color2 AS ARGB, BYVAL nMode AS LinearGradientMode)
@@ -449,10 +458,12 @@ END TYPE
 
 ' // CGpPathGradientBrush
 TYPE CGpPathGradientBrush EXTENDS CGpBrush
+   DECLARE CONSTRUCTOR (BYVAL pPathGradientBrush AS CGpPathGradientBrush PTR)
    DECLARE CONSTRUCTOR (BYVAL pts AS GpPointF PTR, BYVAL nCount AS LONG, BYVAL nWrapMode AS WrapMode = WrapModeClamp)
    DECLARE CONSTRUCTOR (BYVAL pts AS GpPoint PTR, BYVAL nCount AS LONG, BYVAL nWrapMode AS WrapMode = WrapModeClamp)
    DECLARE CONSTRUCTOR (BYVAL pGraphPath AS CGpGraphicsPath_ PTR)
    DECLARE FUNCTION GetCenterColor (BYVAL colour AS ARGB PTR) AS GpStatus
+   DECLARE FUNCTION GetCenterColor () AS ARGB
    DECLARE FUNCTION SetCenterColor (BYVAL colour AS ARGB) AS GpStatus
    DECLARE FUNCTION GetPointCount () AS INT_
    DECLARE FUNCTION GetSurroundColorCount () AS INT_
@@ -491,10 +502,13 @@ END TYPE
 
 ' // CGpHatchBrush
 TYPE CGpHatchBrush EXTENDS CGpBrush
+   DECLARE CONSTRUCTOR (BYVAL pHatchBrush AS CGpHatchBrush PTR)
    DECLARE CONSTRUCTOR (BYVAL nHatchStyle AS HatchStyle, BYVAL foreColor AS ARGB, BYVAL backColor AS ARGB = &HFF000000)
    DECLARE FUNCTION GetHatchStyle () AS HatchStyle
    DECLARE FUNCTION GetForegroundColor (BYVAL colour AS ARGB PTR) AS GpStatus
+   DECLARE FUNCTION GetForegroundColor () AS ARGB
    DECLARE FUNCTION GetBackgroundColor (BYVAL colour AS ARGB PTR) AS GpStatus
+   DECLARE FUNCTION GetBackgroundColor () AS ARGB
 END TYPE
 ' ########################################################################################
 
@@ -508,6 +522,7 @@ Public:
 
 Public:
    DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pPen AS CGpPen PTR)
    DECLARE CONSTRUCTOR (BYVAL colour AS ARGB, BYVAL nWidth AS SINGLE = 1.0)
    DECLARE CONSTRUCTOR (BYVAL pBrush AS CGpBrush PTR, BYVAL nWidth AS SINGLE = 1.0)
    DECLARE DESTRUCTOR
@@ -567,6 +582,7 @@ Public:
 
 Public:
    DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pCustomLineCap AS CGpCustomLineCap PTR)
    DECLARE CONSTRUCTOR (BYVAL pFillPath AS CGpGraphicsPath_ PTR, BYVAL pStrokePath AS CGpGraphicsPath_ PTR, BYVAL baseCap AS LineCap = LinecapFLat, BYVAL baseInset AS SINGLE = 0.0)
    DECLARE DESTRUCTOR
    DECLARE FUNCTION SetStrokeCaps (BYVAL startCap AS LineCap, BYVAL endCap AS LineCap) AS GpStatus
@@ -586,6 +602,7 @@ END TYPE
 
 TYPE CGpAdjustableArrowCap EXTENDS CGpCustomLineCap
 
+   DECLARE CONSTRUCTOR (BYVAL pAdjustableArrowCap AS CGpAdjustableArrowCap PTR)
    DECLARE CONSTRUCTOR (BYVAL nHeight AS SINGLE, BYVAL nWidth AS SINGLE, BYVAL isFilled AS BOOL = CTRUE)
    DECLARE FUNCTION SetHeight (BYVAL nHeight AS SINGLE) AS GpStatus
    DECLARE FUNCTION GetHeight () AS SINGLE
@@ -609,6 +626,7 @@ Public:
 
 Public:
    DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pRegion AS CGpRegion PTR)
    DECLARE CONSTRUCTOR (BYVAL rcf AS GpRectF PTR)
    DECLARE CONSTRUCTOR (BYVAL rc AS GpRect PTR)
    DECLARE CONSTRUCTOR (BYVAL x AS SINGLE, BYVAL y AS SINGLE, BYVAL nWidth AS SINGLE, BYVAL nHeight AS SINGLE)
@@ -675,6 +693,7 @@ Public:
 
 Public:
    DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pFont AS CGpFont PTR)
    DECLARE CONSTRUCTOR (BYVAL hdc AS HDC)
    DECLARE CONSTRUCTOR (BYVAL hdc AS HDC, BYVAL hFont AS HFONT)
 #ifdef __FB_64BIT__
@@ -710,6 +729,7 @@ Public:
 
 Public:
    DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYVAL pFontFamily AS CGpFontFamily PTR)
    DECLARE CONSTRUCTOR (BYVAL pwszName AS WSTRING PTR, BYVAL pFontCollection AS CGpFontCollection_ PTR = NULL)
    DECLARE DESTRUCTOR
    DECLARE FUNCTION Clone (BYVAL pFontFamily AS CGpFontFamily PTR) AS GpStatus
@@ -771,6 +791,7 @@ Public:
    m_pStringFormat AS GpStringFormat PTR
 
 Public:
+   DECLARE CONSTRUCTOR (BYVAL pStringFormat AS CGpStringFormat PTR)
    DECLARE CONSTRUCTOR (BYVAL formatFlags AS INT_ = 0, BYVAL language AS LANGID = LANG_NEUTRAL)
    DECLARE DESTRUCTOR
    DECLARE FUNCTION Clone (BYVAL pStringFormat AS CGpStringFormat PTR) AS GpStatus
@@ -1035,6 +1056,7 @@ Public:
    m_pPath AS GpPath PTR
 
 Public:
+   DECLARE CONSTRUCTOR (BYVAL pGraphicsPath AS CGpGraphicsPath PTR)
    DECLARE CONSTRUCTOR (BYVAL nFillMode AS FillMode = FillModeAlternate)
    DECLARE CONSTRUCTOR (BYVAL pts AS GpPointF PTR, BYVAL types AS BYTE PTR, BYVAL nCount AS LONG, BYVAL nFillMode AS FillMode = FillModeAlternate)
    DECLARE CONSTRUCTOR (BYVAL pts AS GpPoint PTR, BYVAL types AS BYTE PTR, BYVAL nCount AS LONG, BYVAL nFillMode AS FillMode = FillModeAlternate)

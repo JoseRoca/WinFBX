@@ -21,6 +21,13 @@
 PRIVATE CONSTRUCTOR CGpBrush
 END CONSTRUCTOR
 ' ========================================================================================
+' ========================================================================================
+' * Creates and initializes a Brush object from another Brush object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpBrush (BYVAL pBrush AS CGpBrush PTR)
+   m_Status = GdipCloneBrush(pBrush->m_pBrush, @m_pBrush)
+END CONSTRUCTOR
+' =====================================================================================
 
 ' ========================================================================================
 ' Cleanup
@@ -64,6 +71,13 @@ PRIVATE CONSTRUCTOR CGpSolidBrush (BYVAL colour AS ARGB = &hFF000000)
    m_pBrush = cast(GpBrush PTR, brush)
 END CONSTRUCTOR
 ' ========================================================================================
+' ========================================================================================
+' * Creates and initializes a solid brush object from another solid brush object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpSolidBrush (BYVAL pSolidBrush AS CGpSolidBrush PTR)
+   m_Status = GdipCloneBrush(pSolidBrush->m_pBrush, @m_pBrush)
+END CONSTRUCTOR
+' =====================================================================================
 
 ' =====================================================================================
 ' * Gets the color of this solid brush.
@@ -92,6 +106,14 @@ END FUNCTION
 ' CGpTextureBrush interface.
 ' Extends CGpBrush.
 ' #####################################################################################
+
+' ========================================================================================
+' * Creates and initializes a texture brush object from another texture brush object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpTextureBrush (BYVAL pTextureBrush AS CGpTextureBrush PTR)
+   m_Status = GdipCloneBrush(pTextureBrush->m_pBrush, @m_pBrush)
+END CONSTRUCTOR
+' =====================================================================================
 
 ' =====================================================================================
 ' * Creates a TextureBrush object based on an image and a wrap mode. The size of the brush
@@ -245,6 +267,14 @@ END FUNCTION
 ' CGpLinearGradientBrush interface.
 ' Extends CGpBrush.
 ' #####################################################################################
+
+' ========================================================================================
+' * Creates and initializes a texture brush object from another texture brush object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpLinearGradientBrush (BYVAL pLinearGradientBrush AS CGpLinearGradientBrush PTR)
+   m_Status = GdipCloneBrush(pLinearGradientBrush->m_pBrush, @m_pBrush)
+END CONSTRUCTOR
+' =====================================================================================
 
 ' =====================================================================================
 ' Creates a LinearGradientBrush object from a set of boundary points and boundary colors.
@@ -500,6 +530,14 @@ END FUNCTION
 ' Extends CGpBrush.
 ' #####################################################################################
 
+' ========================================================================================
+' * Creates and initializes a texture brush object from another texture brush object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpPathGradientBrush (BYVAL pPathGradientBrush AS CGpPathGradientBrush PTR)
+   m_Status = GdipCloneBrush(pPathGradientBrush->m_pBrush, @m_pBrush)
+END CONSTRUCTOR
+' =====================================================================================
+
 ' =====================================================================================
 ' Creates a PathGradient object.
 ' =====================================================================================
@@ -532,6 +570,13 @@ END CONSTRUCTOR
 ' =====================================================================================
 PRIVATE FUNCTION CGpPathGradientBrush.GetCenterColor (BYVAL colour AS ARGB PTR) AS GpStatus
    RETURN SetStatus(GdipGetPathGradientCenterColor(cast(GpPathGradient PTR, m_pBrush), colour))
+END FUNCTION
+' =====================================================================================
+' =====================================================================================
+PRIVATE FUNCTION CGpPathGradientBrush.GetCenterColor () AS ARGB
+   DIM colour AS ARGB
+   RETURN SetStatus(GdipGetPathGradientCenterColor(cast(GpPathGradient PTR, m_pBrush), @colour))
+   RETURN colour
 END FUNCTION
 ' =====================================================================================
 
@@ -838,6 +883,14 @@ END FUNCTION
 ' Inherits from CGpBrush.
 ' #####################################################################################
 
+' ========================================================================================
+' * Creates and initializes a texture brush object from another texture brush object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpHatchBrush (BYVAL pHatchBrush AS CGpHatchBrush PTR)
+   m_Status = GdipCloneBrush(pHatchBrush->m_pBrush, @m_pBrush)
+END CONSTRUCTOR
+' =====================================================================================
+
 ' =====================================================================================
 ' Creates a HatchBrush object based on a hatch style, a foreground color, and a background color.
 ' =====================================================================================
@@ -865,11 +918,25 @@ PRIVATE FUNCTION CGpHatchBrush.GetForegroundColor (BYVAL colour AS ARGB PTR) AS 
    RETURN SetStatus(GdipGetHatchForegroundColor(cast(GpHatch PTR, m_pBrush), colour))
 END FUNCTION
 ' =====================================================================================
+' =====================================================================================
+PRIVATE FUNCTION CGpHatchBrush.GetForegroundColor () AS ARGB
+   DIM colour AS ARGB
+   RETURN SetStatus(GdipGetHatchForegroundColor(cast(GpHatch PTR, m_pBrush), @colour))
+   RETURN colour
+END FUNCTION
+' =====================================================================================
 
 ' =====================================================================================
 ' Gets the background color of this hatch brush.
 ' =====================================================================================
 PRIVATE FUNCTION CGpHatchBrush.GetBackgroundColor (BYVAL colour AS ARGB PTR) AS GpStatus
    RETURN SetStatus(GdipGetHatchBackgroundColor(cast(GpHatch PTR, m_pBrush), colour))
+END FUNCTION
+' =====================================================================================
+' =====================================================================================
+PRIVATE FUNCTION CGpHatchBrush.GetBackgroundColor () AS ARGB
+   DIM colour AS ARGB
+   RETURN SetStatus(GdipGetHatchBackgroundColor(cast(GpHatch PTR, m_pBrush), @colour))
+   RETURN colour
 END FUNCTION
 ' =====================================================================================

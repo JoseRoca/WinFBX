@@ -7,7 +7,7 @@ The **CGpStringFormat** class encapsulates text layout information (such as alig
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#Constructor) | Creates a **StringFormat** object based on string format flags and a language. |
+| [Constructors](#Constructors) | Creates a **StringFormat** object based on string format flags and a language. |
 | [Clone](#Clone) | Copies the contents of the existing **StringFormat** object into a new **StringFormat** object. |
 | [GenericDefault](#GenericDefault) | Creates a generic, default **StringFormat** object. |
 | [GenericTypographic](#GenericTypographic) | Creates a generic, typographic **StringFormat** object. |
@@ -30,7 +30,13 @@ The **CGpStringFormat** class encapsulates text layout information (such as alig
 | [SetTabStops](#SetTabStops) | Sets the offsets for tab stops in this **StringFormat** object. |
 | [SetTrimming](#SetTrimming) | Sets the trimming style for this **StringFormat** object. |
 
-# <a name="Constructor"></a>Constructor
+# <a name="Constructors"></a>Constructors
+
+Creates **StringFormat** object from another **StringFormat** object.
+
+```
+CONSTRUCTOR CGpStringFormat (BYVAL pStringFormat AS CGpStringFormat PTR)
+```
 
 Creates a **StringFormat** object based on string format flags and a language.
 
@@ -92,6 +98,8 @@ SUB Example_Clone (BYVAL hdc AS HDC)
    ' // Clone the StringFormat object
    DIM pStringFormat AS CGpStringFormat
    stringFormat.Clone(@pStringFormat)
+   ' // You can also use:
+   ' DIM pStringFormat AS CGpStringFormat = @stringFormat
 
    ' // Use the cloned StringFormat object in a call to DrawString
    DIM wszText AS WSTRING * 260 = "This text was formatted by a StringFormat object."

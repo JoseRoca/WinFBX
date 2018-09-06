@@ -19,6 +19,13 @@ PRIVATE CONSTRUCTOR CGpMatrix
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
+' * Creates and initializes a Matrix object from another matrix object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpMatrix (BYVAL pMatrix AS CGpMatrix PTR)
+   m_Status = GdipCloneMatrix(pMatrix->m_pMatrix, @m_pMatrix)
+END CONSTRUCTOR
+' =====================================================================================
+' ========================================================================================
 ' * Creates and initializes a Matrix object based on six numbers that define an affine transformation.
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CGpMatrix (BYVAL m11 AS SINGLE, BYVAL m12 AS SINGLE, BYVAL m21 AS SINGLE, BYVAL m22 AS SINGLE, BYVAL dx AS SINGLE, BYVAL dy AS SINGLE)

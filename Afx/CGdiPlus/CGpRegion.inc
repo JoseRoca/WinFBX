@@ -59,6 +59,13 @@ PRIVATE CONSTRUCTOR CGpRegion (BYVAL hRgn AS HRGN)
    m_Status = GdipCreateRegionHrgn(hRgn, @m_pRegion)
 END CONSTRUCTOR
 ' =====================================================================================
+' ========================================================================================
+' Creates and initializes a Region object from another Region object.
+' =====================================================================================
+PRIVATE CONSTRUCTOR CGpRegion (BYVAL pRegion AS CGpRegion PTR)
+   m_Status = GdipCloneRegion(pRegion->m_pRegion, @m_pRegion)
+END CONSTRUCTOR
+' =====================================================================================
 
 ' ========================================================================================
 ' Cleanup

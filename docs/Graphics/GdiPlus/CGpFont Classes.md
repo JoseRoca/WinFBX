@@ -76,6 +76,12 @@ The **CGpFontFamily** class encapsulates a set of fonts that make up a font fami
 
 # <a name="ConstructorsFont"></a>Constructors (CGpFont)
 
+Creates and initializes a Font object from another Font object.
+
+```
+CONSTRUCTOR CGpFont (BYVAL pFont AS CGpFont PTR)
+```
+
 Creates a **Font** object based on the Windows Graphics Device Interface (GDI) font object that is currently selected into a specified device context. This constructor is provided for compatibility with GDI.
 
 ```

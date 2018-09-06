@@ -133,6 +133,12 @@ Creates an **ImageAttributes** object that contains information about how bitmap
 
 # <a name="ConstructorsImage"></a>Constructors (CGpImage)
 
+Creates an **Image** object from another **Image** object.
+
+```
+CONSTRUCTOR CGpImage (BYVAL pImage AS CGpImage PTR)
+```
+
 Creates an **Image** object based on a file.
 
 ```
@@ -183,6 +189,8 @@ SUB Example_Clone (BYVAL hdc AS HDC)
    DIM image1 AS CGpImage = "climber.jpg"
    DIM pImage2 AS CGpImage
    image1.Clone(@pImage2)
+   ' // You can also use:
+   ' DIM pImage2 AS CGpImage = @image1
 
    ' // Draw the original image and the cloned image.
    graphics.DrawImage(@image1, 20 * rxRatio, 20 * ryRatio)
@@ -897,6 +905,12 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 # <a name="ConstructorsBitmap"></a>Constructors (CGpBitmap)
 
+Creates a **Bitmap** object based on another **Bitmap** obejct (clones it).
+
+```
+CONSTRUCTOR CGpBitmap (BYVAL pBitmap AS CGpBitmap PTR)
+```
+
 Creates a **Bitmap** object based on an icon.
 
 ```
@@ -916,6 +930,12 @@ CONSTRUCTOR CGpBitmap (BYVAL hInstance AS HINSTANCE, BYVAL pwszBitmapName AS WST
 | *pwszBitmapName* | Pointer to a null-terminated string that specifies the path name of the bitmap resource to be loaded. Alternatively, this parameter can consist of the resource identifier in the low-order word and zero in the high-order word. You can use the MAKEINTRESOURCE macro to create this value. |
 
 # <a name="CloneBitmap"></a>Clone (CGpBitmap)
+
+Creates a new **Bitmap** object from another **Bitmap** object (clones it).
+
+```
+FUNCTION Clone (BYVAL pCloneBitmap AS CGpBitmap PTR) AS GpStatus
+```
 
 Creates a new **Bitmap** object by copying a portion of this bitmap.
 
@@ -1448,6 +1468,12 @@ Creates a new **ImageAttributes** object. This constructor is the default constr
 
 ```
 CONSTRUCTOR CGpImageAttributes
+```
+
+Creates and initializes an **ImageAttributes** object from another **ImageAttributes** object.
+
+```
+CONSTRUCTOR CGpImageAttributes (BYVAL pImgAttr AS CGpImageAttributes PTR)
 ```
 
 # <a name="ClearBrushRemapTable"></a>ClearBrushRemapTable (CGpImageAttributes)
