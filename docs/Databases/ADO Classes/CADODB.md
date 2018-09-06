@@ -79,7 +79,7 @@ Some properties and methods return warnings that appear as **Error** objects in 
 
 The **Error** object contains details about data access errors that pertain to a single operation involving the provider. Any operation involving ADO objects can generate one or more provider errors. As each error occurs, one or more **Error** objects are placed in the **Errors** collection of the **Connection** object. When another ADO operation generates an error, the **Errors** collection is cleared, and the new set of **Error** objects is placed in the **Errors** collection.
 
-**Note**: Each **Error** object represents a specific provider error, not an ADO error. ADO errors are exposed to the run-time exception-handling mechanism. For example, in Microsoft Visual Basic, the occurrence of an ADO-specific error will trigger an **On Error** event and appear in the **Error** object. For a complete list of ADO errors, see the **ErrorValueEnum** topic.
+**Note**: Each **Error** object represents a specific provider error, not an ADO error. ADO errors are exposed to the run-time exception-handling mechanism. For example, in Microsoft Visual Basic, the occurrence of an ADO-specific error will trigger an **On Error** event and appear in the **Error** object. For a complete list of ADO errors, see the **ErrorValueEnum** table below.
 
 You can read an **Error** object's properties to obtain specific details about each error, including the following:
 
