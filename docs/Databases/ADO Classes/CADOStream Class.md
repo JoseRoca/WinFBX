@@ -284,7 +284,7 @@ This property is read/write while the object is closed and read-only while the o
 
 #### Remote Data Service Usage
 
-When used on a client-side Connection object, the **Mode** property can only be set to **adModeUnknown**.
+When used on a client-side **Connection** object, the **Mode** property can only be set to **adModeUnknown**.
 
 # <a name="Open"></a>Open
 
