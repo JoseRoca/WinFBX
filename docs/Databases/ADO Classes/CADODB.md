@@ -18,29 +18,6 @@ The **CAdoBase** object, from which the other ADO classes inherit, initializes a
 | [ADO Errors](#ADOErrors) | ADO errors. |
 | [ADO Events](#ADOEvents) | ADO events. |
 
-# <a name="ADOObjectModel"></a>ADO Object Model
-
-ADO objects and their collections:
-
-```
-Connection
-  |_ Errors     - Error
-  |_ Properties - Property
-
-Command
-  |_ Parameters - Parameter
-  |_ Properties - Property
-
-Recordset
-  |_ Fields - Field
-  |_ Properties - Property
-
-Record
-  |_ Fields - Field
-
-Stream
-```
-
 # <a name="CAdoBase"></a>CAdoBse Class
 
 The **CAdoBase** class, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derived classes to store the result codes of ADO calls.
@@ -64,6 +41,29 @@ FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
 #### Return value
 
 The result code returned by the last executed method.
+
+# <a name="ADOObjectModel"></a>ADO Object Model
+
+ADO objects and their collections:
+
+```
+Connection
+  |_ Errors     - Error
+  |_ Properties - Property
+
+Command
+  |_ Parameters - Parameter
+  |_ Properties - Property
+
+Recordset
+  |_ Fields - Field
+  |_ Properties - Property
+
+Record
+  |_ Fields - Field
+
+Stream
+```
 
 # <a name="ADOErrors"></a>ADO Errors
 
