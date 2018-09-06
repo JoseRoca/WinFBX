@@ -917,3 +917,39 @@ LOOP
 ' // Rollback the transaction because this is a demo
 pConnection.RollbackTrans
 ```
+
+# <a name="State"></a>State
+
+Indicates if a **Connection** is open or closed.
+
+```
+PROPERTY State () AS LONG
+```
+
+#### Return value
+
+The current connection state.
+
+#### Remarks
+
+You can use the **State** property to determine the current state of a given object at any time.
+
+The object's **State** property can have a combination of values. For example, if a statement is executing, this property will have a combined value of **adStateOpen** and **adStateExecuting**.
+
+#### ObjectStateEnum
+
+Specifies whether the Open method of a Connection object should return after (synchronously) or before (asynchronously) the connection is established.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adStateClosed** | Indicates that the object is closed. |
+| **adStateOpen** | Indicates that the object is open. |
+| **adStateConnecting** | Indicates that the object is connecting. |
+| **adStateExecuting** | Indicates that the object is executing a command. |
+| adStateFetching | Indicates that the rows of the object are being retrieved. |
+
+#### Usage example
+
+```
+IF pConnection.State = adStateOpen THEN pConnection.Close
+```
