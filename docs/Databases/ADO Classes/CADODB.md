@@ -14,7 +14,6 @@ The **CAdoBase** object, from which the other ADO classes inherit, initializes a
 | [CAdoBase Class](#CAdoBase) | Base class for all the other ADO classes. |
 | [ADO Object Model](#ADOObjectModel) | ADO objects and their collections. |
 | [ADO Identifiers](#ADOIdentifiers) | PROGIDs, CLSIDs and IIDs. |
-| [ADO Enumerations](#ADOEnums) | ADO enumerations. |
 | [ADO Errors](#ADOErrors) | ADO errors. |
 | [ADO Properties](#ADOProperties) | Represents a dynamic characteristic of an ADO object that is defined by the provider. |
 
@@ -287,6 +286,16 @@ PROPERTY Attributes (BYVAL lAttr AS LONG)
 
 LONG. One or more **ParameterAttributesEnum** values.
 
+#### PropertyAttributesEnum
+
+| Constant   | Value       |
+| ---------- | ----------- |
+| **adPropNotSupported** | Indicates that the property is not supported by the provider. |
+| **adPropRequired** | Indicates that the user must specify a value for this property before the data source is initialized. |
+| **adPropOptional** | Indicates that the user does not need to specify a value for this property before the data source is initialized. |
+| **adPropRead** | Indicates that the user can read the property. |
+| **adPropWrite** | Indicates that the user can set the property. |
+
 #### Remarks
 
 When you set multiple attributes, you can sum the appropriate constants. If you set the property value to a sum including incompatible constants, an error occurs.
@@ -359,6 +368,50 @@ Returns a **DataTypeEnum** value that indicates the operational type or data typ
 PROPERTY Type_ () AS DataTypeEnum
 ```
 
+#### DataTypeEnum
+
+| Constant   | Value       |
+| ---------- | ----------- |
+| **AdArray* | A flag value, always combined with another data type constant, that indicates an array of that other data type. |
+| **adBigInt** | Indicates an eight-byte signed integer (DBTYPE_I8). |
+| **adBinary** | Indicates a binary value (DBTYPE_BYTES). |
+| **adBoolean** | Indicates a boolean value (DBTYPE_BOOL). |
+| **adBSTR** | Indicates a null-terminated character string (Unicode) (DBTYPE_BSTR). |
+| **adChapter** | Indicates a four-byte chapter value that identifies rows in a child rowset (DBTYPE_HCHAPTER). |
+| **adChar** | Indicates a string value (DBTYPE_STR). |
+| **adCurrency** | Indicates a currency value (DBTYPE_CY). Currency is a fixed-point number with four digits to the right of the decimal point. It is stored in an eight-byte signed integer scaled by 10,000. |
+| **adDate** | Indicates a date value (DBTYPE_DATE). A date is stored as a double, the whole part of which is the number of days since December 30, 1899, and the fractional part of which is the fraction of a day. |
+| **adDBDate** | Indicates a date value (yyyymmdd) (DBTYPE_DBDATE). |
+| **adDBTime** | Indicates a time value (hhmmss) (DBTYPE_DBTIME). |
+| **adDBTimeStamp** | Indicates a date/time stamp (yyyymmddhhmmss plus a fraction in billionths) (DBTYPE_DBTIMESTAMP). |
+| **adDecimal** | Indicates an exact numeric value with a fixed precision and scale (DBTYPE_DECIMAL). |
+| **adDouble** | Indicates a double-precision floating-point value (DBTYPE_R8). |
+| **adEmpty** | Specifies no value (DBTYPE_EMPTY). |
+| **adError** | Indicates a 32-bit error code (DBTYPE_ERROR). |
+| **adFileTime** | Indicates a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601 (DBTYPE_FILETIME). |
+| **adGUID** | Indicates a globally unique identifier (GUID) (DBTYPE_GUID). |
+| **adIDispatch** | Indicates a pointer to an IDispatch interface on a COM object (DBTYPE_IDISPATCH). This data type is currently not supported by ADO. Usage may cause unpredictable results. |
+| **adInteger** | Indicates a four-byte signed integer (DBTYPE_I4). |
+| **adIUnknown** | Indicates a pointer to an IUnknown interface on a COM object (DBTYPE_IUNKNOWN). This data type is currently not supported by ADO. Usage may cause unpredictable results. |
+| **adLongVarBinary** | Indicates a long binary value. |
+| **adLongVarChar** | Indicates a long string value. |
+| **adLongVarWChar** | Indicates a long null-terminated Unicode string value. |
+| **adNumeric** | Indicates an exact numeric value with a fixed precision and scale (DBTYPE_NUMERIC). |
+| **adPropVariant** | Indicates an Automation PROPVARIANT (DBTYPE_PROP_VARIANT). |
+| **adSingle** | Indicates a single-precision floating-point value (DBTYPE_R4). |
+| **adSmallInt** | Indicates a two-byte signed integer (DBTYPE_I2). |
+| **adTinyInt** | Indicates a one-byte signed integer (DBTYPE_I1). |
+| **adUnsignedBigInt** | Indicates an eight-byte unsigned integer (DBTYPE_UI8). |
+| **adUnsignedInt** | Indicates a four-byte unsigned integer (DBTYPE_UI4). |
+| **adUnsignedSmallInt** | Indicates a two-byte unsigned integer (DBTYPE_UI2). |
+| **adUnsignedTinyInt** | Indicates a one-byte unsigned integer (DBTYPE_UI1). |
+| **adVarBinary** | Indicates a binary value. |
+| **adVarChar** | Indicates a string value. |
+| **adVariant** | Indicates an Automation Variant (DBTYPE_VARIANT). This data type is currently not supported by ADO. Usage may cause unpredictable results. |
+| **adVarNumeric** | Indicates a numeric value. |
+| **adVarWChar** | Indicates a null-terminated Unicode character string. |
+| **adWChar** | Indicates a null-terminated Unicode character string (DBTYPE_WSTR). |
+
 #### Example
 
 ```
@@ -380,5 +433,42 @@ DIM nCount AS LONG = pProperties.Count
 FOR i AS LONG = 0 TO nCount - 1
    DIM pProperty AS CAdoProperty = pProperties.Item(i)
    PRINT "Property name: "; pProperty.Name; " - Type: "; WSTR(pProperty.Type_)
+NEXT
+```
+
+## Value (CAdoProperty Class)
+
+Sets or returns a Variant value that indicates the value of the object. Default value depends on the **Type_** property.
+
+```
+PROPERTY Value () AS CVAR
+PROPERTY Value (BYREF cvValue AS CVAR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvValue* | CVAR. The value of the **Property** object. |
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cvSource AS CVAR = "SELECT * FROM Publishers ORDER BY PubID"
+DIM hr AS HRESULT = pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Parse the Properties collection
+DIM pProperties AS CAdoProperties = pRecordset.Properties
+DIM nCount AS LONG = pProperties.Count
+FOR i AS LONG = 0 TO nCount - 1
+   DIM pProperty AS CAdoProperty = pProperties.Item(i)
+   PRINT "Property name: "; pProperty.Name; " - Value: "; WSTR(pProperty.Value)
 NEXT
 ```
