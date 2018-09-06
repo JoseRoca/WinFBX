@@ -15,7 +15,6 @@ The **CAdoBase** object, from which the other ADO classes inherit, initializes a
 | [ADO Object Model](#ADOObjectModel) | ADO objects and their collections. |
 | [ADO Identifiers](#ADOIdentifiers) | PROGIDs, CLSIDs and IIDs. |
 | [ADO Enumerations](#ADOEnums) | ADO enumerations. |
-| [ADO Dynamic Properties](#ADODynProps) | ADO dynamic properties. |
 | [ADO Errors](#ADOErrors) | ADO errors. |
 | [ADO IUnknown Interfaces](#ADOIUnknownInterfaces) | ADO IUnknown interfaces. |
 | [ADO Events](#ADOEvents) | ADO events. |
