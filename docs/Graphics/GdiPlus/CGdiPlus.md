@@ -8,7 +8,7 @@ A graphics device interface, such as GDI+, allows application programmers to dis
 
 # CGpBase class
 
-Initializes the GDI+ library and keeps a reference count of it. The destructor shutdowns the library. All the other GDI+ classes inherit frrom CGpBase.
+Initializes the GDI+ library and keeps a reference count of it. The destructor shutdowns the library. All the other GDI+ classes inherit frrom **CGpBase**.
 
 ### GetLastStatus method
 
@@ -22,7 +22,7 @@ FUNCTION GetLastStatus () AS GpStatus
 
 Returns an element of the **Status** enumeration.
 
-If no methods invoked on this object have failed since the previous call to GetLastStatus, then GetLastStatus returns **Ok** (0). If at least one method has failed since the previous call to GetLastStatus, then GetLastStatus returns a value that indicates the nature of the most recent failure.
+If no methods invoked on this object have failed since the previous call to **GetLastStatus**, then **GetLastStatus** returns **Ok** (0). If at least one method has failed since the previous call to **GetLastStatus**, then **GetLastStatus** returns a value that indicates the nature of the most recent failure.
 
 For a detailed list of status codes see the **Status** enumeration.
 
