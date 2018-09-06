@@ -157,6 +157,14 @@ Three forms of the error number are listed:
 | **adWrnSecurityDialog** | 3717<br>-2146824571<br>&H800A0E85 | For internal use only. Don't use. |
 | **adWrnSecurityDialogHeader** | 3718<br>-2146824570<br>&H800A0E86 | For internal use only. Don't use. |
 
+To retrieve information about ADO errors, call the following function:
+
+```
+FUNCTION AfxAdoGetErrorInfo (BYVAL pConnection AS AFX_ADOConnection PTR, BYVAL nError AS HRESULT = 0) AS CBSTR
+```
+
+Where *pConnection* is a reference to the ADO **Connection** object and *nError* the ADO HRESULT code.
+
 # <a name="ADOIdentifiers"></a>ADO Identifiers
 
 ```
