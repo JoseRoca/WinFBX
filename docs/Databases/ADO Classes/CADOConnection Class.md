@@ -47,3 +47,38 @@ To execute a query without using a **Command** object, pass a query string to th
 | [RollbackTrans](#RollbackTrans) | Saves any changes and ends the current transaction. It may also start a new transaction. |
 | [State](#State) | Indicates if a **Connection** is open or closed. |
 | [Version](#Version) | Indicates the ADO version number. |
+
+# <a name="Attributes"></a>Dequeue
+
+Indicates one or more characteristics of an object.
+
+```
+PROPERTY Attributes () AS LONG
+PROPERTY Attributes (BYVAL lAttr AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lAttr* | The value can be the sum of one or more **XactAttributeEnum** values. The default is zero (0). |
+
+#### Return value
+
+#### XactAttributeEnum
+
+Specifies the transaction attributes of a Connection object.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adXactAbortRetaining** | Performs retaining aborts—that is, calling **RollbackTrans** automatically starts a new transaction. Not all providers support this. |
+| **adXactCommitRetaining** | Performs retaining commits—that is, calling **CommitTrans** automatically starts a new transaction. Not all providers support this. |
+
+#### Remarks
+
+Use the **Attributes** property to set or return characteristics of **Connection** objects.
+
+When you set multiple attributes, you can sum the appropriate constants. If you set the property value to a sum including incompatible constants, an error occurs.
+
+#### Remote Data Service Usage
+
+This property is not available on a client-side **Connection** object.
+
