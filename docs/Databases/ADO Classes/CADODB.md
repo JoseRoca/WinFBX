@@ -2,7 +2,7 @@
 
 Microsoft ActiveX Data Objects (ADO) enable your client applications to access and manipulate data from a variety of sources through an OLE DB provider. Its primary benefits are ease of use, high speed, low memory overhead, and a small disk footprint. ADO supports key features for building client/server and Web-based applications. 
 
-CADODB are a collection of classes to allow to work with ADO using the FreeBasic compilers.
+**CADODB** are a collection of classes to allow to work with ADO using the FreeBasic compilers.
 
 The **CAdoBase** object, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derive classes to store the result codes of ADO calls.
 
@@ -43,7 +43,7 @@ Stream
 
 # <a name="CAdoBase"></a>CAdoBse Class
 
-The CAdoBase class, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derived classes to store the result codes of ADO calls.
+The **CAdoBase** class, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derived classes to store the result codes of ADO calls.
 
 # <a name="GetLastResult"></a>GetLastResult
 
