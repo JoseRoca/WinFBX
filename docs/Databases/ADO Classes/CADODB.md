@@ -18,7 +18,7 @@ The **CAdoBase** object, from which the other ADO classes inherit, initializes a
 | [ADO Errors](#ADOErrors) | ADO errors. |
 | [ADO Events](#ADOEvents) | ADO events. |
 
-# <a name="CAdoBase"></a>CAdoBse Class
+# <a name="CAdoBase"></a>CAdoBase Class
 
 The **CAdoBase** class, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derived classes to store the result codes of ADO calls.
 
