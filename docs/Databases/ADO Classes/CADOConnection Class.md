@@ -183,7 +183,7 @@ S_OK (0) or an HRESULT code.
 
 #### Remarks
 
-Use the **Close** method to close a **Connection** to free any associated system resources. Closing an object does not remove it from memory; you can change its property settings and open it again later. To completely eliminate an object from memory, release the connection setting the object variable to Nothing.
+Use the **Close** method to close a **Connection** to free any associated system resources. Closing an object does not remove it from memory; you can change its property settings and open it again later. To completely eliminate an object from memory, release the connection calling the **Release** method of the interface.
 
 #### Usage example
 
@@ -191,3 +191,38 @@ Use the **Close** method to close a **Connection** to free any associated system
 IF pConnection.State = adStateOpen THEN pConnection.Close
 ```
 
+# <a name="CommandTimeout"></a>CommandTimeout
+
+Sets or returns a Long value that indicates, in seconds, how long to wait for a command to execute. Default is 30.
+
+```
+PROPERTY CommandTimeout () AS LONG
+PROPERTY CommandTimeout (BYVAL lTimeout AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lTimeout* | Time to wait for a command to execute. |
+
+#### Return value
+
+The timeout value.
+
+#### Remarks
+
+Use the **CommandTimeout** property on a **Connection** object to allow the cancellation of an **Execute** method call, due to delays from network traffic or heavy server use. If the interval set in the **CommandTimeout** property elapses before the command completes execution, an error occurs and ADO cancels the command. If you set the property to zero, ADO will wait indefinitely until the execution is complete. Make sure the provider and data source to which you are writing code support the **CommandTimeout** functionality.
+
+The **CommandTimeout** setting on a **Connection** object has no effect on the **CommandTimeout** setting on a **Command** object on the same **Connection**; that is, the **Command** object's **CommandTimeout** property does not inherit the value of the **Connection** object's **CommandTimeout** value.
+
+On a **Connection** object, the **CommandTimeout** property remains read/write after the **Connection** is opened.
+
+#### Examples
+
+```
+' // Sets the timeout to 35 seconds
+pConnection.CommandTimeout = 35
+```
+```
+' // Gets the timeout value
+DIM lTimeout AS LONG = pConnection.CommandTimeout
+```
