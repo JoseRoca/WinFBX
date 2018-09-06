@@ -55,7 +55,7 @@ Returns the last result code.
 FUNCTION GetLastResult () AS HRESULT
 ```
 
-# <a name="SetResult"></a>SetLastResult
+# <a name="SetResult"></a>SetResult
 
 Sets the last result code.
 
