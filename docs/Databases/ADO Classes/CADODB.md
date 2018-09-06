@@ -16,6 +16,7 @@ The **CAdoBase** object, from which the other ADO classes inherit, initializes a
 | [ADO Identifiers](#ADOIdentifiers) | PROGIDs, CLSIDs and IIDs. |
 | [ADO Enumerations](#ADOEnums) | ADO enumerations. |
 | [ADO Errors](#ADOErrors) | ADO errors. |
+| [ADO Properties](#ADOProperties) | Represents a dynamic characteristic of an ADO object that is defined by the provider. |
 
 # <a name="CAdoBase"></a>CAdoBase Class
 
@@ -243,3 +244,27 @@ Three forms of the error number are listed:
 | **adErrWriteFile** | 3004<br>-2146825284<br>&H800A0BBC | Write to file failed. |
 | **adWrnSecurityDialog** | 3717<br>-2146824571<br>&H800A0E85 | For internal use only. Don't use. |
 | **adWrnSecurityDialogHeader** | 3718<br>-2146824570<br>&H800A0E86 | For internal use only. Don't use. |
+
+# <a name="ADOProperties"></a>ADO Properties
+
+Represents a dynamic characteristic of an ADO object that is defined by the provider.
+
+Remarks
+
+ADO objects have two types of properties: built-in and dynamic.
+
+Built-in properties are those properties implemented in ADO and immediately available to any new object, using the *MyObject.Property* syntax. They do not appear as **Property** objects in an object's **Properties** collection, so although you can change their values, you cannot modify their characteristics.
+
+Dynamic properties are defined by the underlying data provider, and appear in the **Properties** collection for the appropriate ADO object. For example, a property specific to the provider may indicate if a **Recordset** object supports transactions or updating. These additional properties will appear as **Property** objects in that **Recordset** object's **Properties** collection. Dynamic properties can be referenced only through the collection, using the *MyObject.Properties(0)* or *MyObject.Properties("Name")* syntax.
+
+You cannot delete either kind of property.
+
+A dynamic **Property** object has four built-in properties of its own:
+
+* The **Name** property is a string that identifies the property.
+* The **Type_** property is an integer that specifies the property data type.
+* The **Value** property is a variant that contains the property setting. **Value** is the default property for a **Property** object.
+* The **Attributes** property is a long value that indicates characteristics of the property specific to the provider.
+
+The **Properties** collection contains all the **Property** objects for a specific instance of an object.
+
