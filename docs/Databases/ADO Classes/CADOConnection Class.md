@@ -169,3 +169,25 @@ Use the **Cancel** method to terminate execution of an asynchronous method call 
 
 For a **Connection** object, the last asynchronous call to the **Execute** or **Open** methods is terminated.
 
+# <a name="Close"></a>Close
+
+Closes a **Connection** object and any dependent objects.
+
+```
+FUNCTION Close () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **Close** method to close a **Connection** to free any associated system resources. Closing an object does not remove it from memory; you can change its property settings and open it again later. To completely eliminate an object from memory, release the connection setting the object variable to Nothing.
+
+#### Usage example
+
+```
+IF pConnection.State = adStateOpen THEN pConnection.Close
+```
+
