@@ -807,3 +807,113 @@ Providers are not required to support all of the OLE DB standard schema queries.
 The **OpenSchema** method is not available on a client-side **Connection** object.
 
 When not using client side cursors, retrieving the "ORDINAL_POSITION" of a column schema in ADO returns a variant of type VT_R8 in MDAC 2.7 and later while the type of used in MDAC 2.6 was VT_I4. Programs written for MDAC 2.6 that only look for a variant returned of type VT_I4 would get a zero for every ordinal if run under MDAC 2.7 and later without modification. This change was made because the data type that OLE DB returns is DBTYPE_UI4, and in the signed VT_I4 type there is not enough room to contain all possible values without possibly truncation occurring and thereby causing a loss of data.
+
+# <a name="Properties"></a>Properties
+
+Returns a reference to the **Properties** collection.
+
+```
+PROPERTY Properties () AS Afx_ADOProperties PTR
+```
+
+#### Return value
+
+An Afx_ADOProperties object reference.
+
+#### Usage example
+
+```
+DIM pProperties AS Afx_ADOProperties
+pProperties = pConnection.Properties
+```
+
+# <a name="Provider"></a>Provider
+
+Indicates the name of the provider for a Connection object.
+
+```
+PROPERTY Provider () AS CBSTR
+PROPERTY Provider (BYREF cbsProvider AS CBSTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsProvider* | The provider name. |
+
+#### Return value
+
+The provider name.
+
+#### Remarks
+
+Use the **Provider** property to set or return the name of the provider for a connection. This property can also be set by the contents of the **ConnectionString** property or the **ConnectionString** argument of the Open method; however, specifying a provider in more than one place while calling the **Open** method can have unpredictable results. If no provider is specified, the property will default to MSDASQL (Microsoft OLE DB Provider for ODBC).
+
+The **Provider** property is read/write when the connection is closed and read-only when it is open. The setting does not take effect until you either open the **Connection** object or access the **Properties** collection of the **Connection** object. If the setting is not valid, an error occurs.
+
+#### Usage example
+
+```
+DIM cbsProvider AS CBSTR = pConnection.Provider
+```
+
+# <a name="RollbackTrans"></a>RollbackTrans
+
+Saves any changes and ends the current transaction. It may also start a new transaction.
+
+```
+FUNCTION RollbackTrans () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+Use **BeginTrans**, **CommitTrans** and **RollbackTrans** with a **Connection** object when you want to save or cancel a series of changes made to the source data as a single unit. For example, to transfer money between accounts, you subtract an amount from one and add the same amount to the other. If either update fails, the accounts no longer balance. Making these changes within an open transaction ensures that either all or none of the changes go through.
+
+Not all providers support transactions. Verify that the provider-defined property "Transaction DDL" appears in the **Connection** object's **Properties** collection, indicating that the provider supports transactions. If the provider does not support transactions, calling one of these methods will return an error.
+
+After you call the **BeginTrans method**, the provider will no longer instantaneously commit changes you make until you call **CommitTrans** or **RollbackTrans** to end the transaction.
+
+For providers that support nested transactions, calling the **BeginTrans** method within an open transaction starts a new, nested transaction. The return value indicates the level of nesting: a return value of "1" indicates you have opened a top-level transaction (that is, the transaction is not nested within another transaction), "2" indicates that you have opened a second-level transaction (a transaction nested within a top-level transaction), and so forth. Calling **CommitTrans** or **RollbackTrans** affects only the most recently opened transaction; you must close or roll back the current transaction before you can resolve any higher-level transactions.
+
+Calling the **CommitTrans** method saves changes made within an open transaction on the connection and ends the transaction. Calling the **RollbackTrans** method reverses any changes made within an open transaction and ends the transaction. Calling either method when there is no open transaction generates an error.
+
+Depending on the **Connection** object's **Attributes** property, calling either the **CommitTrans** or **RollbackTrans** methods may automatically start a new transaction. If the **Attributes** property is set to **adXactCommitRetaining**, the provider automatically starts a new transaction after a **CommitTrans** call. If the **Attributes** property is set to **adXactAbortRetaining**, the provider automatically starts a new transaction after a **RollbackTrans** call.
+
+#### Remote Data Service
+
+The **BeginTrans**, **CommitTrans**, and **RollbackTrans** methods are not available on a client-side **Connection** object.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cvSource AS CVAR = "SELECT * FROM Authors"
+pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Begin a transaction
+pConnection.BeginTrans
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the content of the "Author" column
+   DIM cvRes AS CVAR = pRecordset.Collect("Year Born")
+   IF cvRes.ValInt = 1947 THEN pRecordset.Collect("Year Born") = 1900
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+' // Commit the transaction
+'pConnection.CommitTrans
+' // Rollback the transaction because this is a demo
+pConnection.RollbackTrans
+```
