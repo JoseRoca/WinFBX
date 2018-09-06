@@ -48,7 +48,7 @@ To execute a query without using a **Command** object, pass a query string to th
 | [State](#State) | Indicates if a **Connection** is open or closed. |
 | [Version](#Version) | Indicates the ADO version number. |
 
-# <a name="Attributes"></a>Dequeue
+# <a name="Attributes"></a>Attributes
 
 Indicates one or more characteristics of an object.
 
@@ -82,3 +82,71 @@ When you set multiple attributes, you can sum the appropriate constants. If you 
 
 This property is not available on a client-side **Connection** object.
 
+
+# <a name="BeginTrans"></a>BeginTrans
+
+Begins a new transaction.
+
+```
+FUNCTION BeginTrans () AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lAttr* | The value can be the sum of one or more **XactAttributeEnum** values. The default is zero (0). |
+
+#### Return value
+
+The nesting level of the transaction.
+
+#### Remarks
+
+Use **BeginTrans**, **CommitTrans** and **RollbackTrans** with a **Connection** object when you want to save or cancel a series of changes made to the source data as a single unit. For example, to transfer money between accounts, you subtract an amount from one and add the same amount to the other. If either update fails, the accounts no longer balance. Making these changes within an open transaction ensures that either all or none of the changes go through.
+
+Not all providers support transactions. Verify that the provider-defined property "Transaction DDL" appears in the **Connectio** object's **Properties** collection, indicating that the provider supports transactions. If the provider does not support transactions, calling one of these methods will return an error.
+
+After you call the **BeginTrans** method, the provider will no longer instantaneously commit changes you make until you call **CommitTrans** or **RollbackTrans** to end the transaction.
+
+For providers that support nested transactions, calling the **BeginTrans** method within an open transaction starts a new, nested transaction. The return value indicates the level of nesting: a return value of "1" indicates you have opened a top-level transaction (that is, the transaction is not nested within another transaction), "2" indicates that you have opened a second-level transaction (a transaction nested within a top-level transaction), and so forth. Calling **CommitTrans** or **RollbackTrans** affects only the most recently opened transaction; you must close or roll back the current transaction before you can resolve any higher-level transactions.
+
+Calling the **CommitTrans** method saves changes made within an open transaction on the connection and ends the transaction. Calling the **RollbackTrans** method reverses any changes made within an open transaction and ends the transaction. Calling either method when there is no open transaction generates an error.
+
+Depending on the **Connection** object's **Attributes** property, calling either the **CommitTrans** or **RollbackTrans** methods may automatically start a new transaction. If the **Attributes** property is set to **adXactCommitRetaining**, the provider automatically starts a new transaction after a **CommitTrans** call. If the **Attributes** property is set to **adXactAbortRetaining**, the provider automatically starts a new transaction after a **RollbackTrans** call.
+
+#### Remote Data Service
+
+The **BeginTrans**, **CommitTrans**, and **RollbackTrans** methods are not available on a client-side **Connection** object.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cvSource AS CVAR = "SELECT * FROM Authors"
+pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Begin a transaction
+pConnection.BeginTrans
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the content of the "Author" column
+   DIM cvRes AS CVAR = pRecordset.Collect("Year Born")
+   IF cvRes.ValInt = 1947 THEN pRecordset.Collect("Year Born") = 1900
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+' // Commit the transaction
+'pConnection.CommitTrans
+' // Rollback the transaction because this is a demo
+pConnection.RollbackTrans
+```
