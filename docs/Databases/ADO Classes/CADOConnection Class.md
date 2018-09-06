@@ -472,10 +472,102 @@ The name of the database.
 
 Use the **DefaultDatabase** property to set or return the name of the default database on a specific **Connection** object.
 
-If there is a default database, SQL strings may use an unqualified syntax to access objects in that database. To access objects in a database other than the one specified in the **DefaultDatabase** property, you must qualify object names with the desired database name. Upon connection, the provider will write default database information to the DefaultDatabase property. Some providers allow only one database per connection, in which case you cannot change the **DefaultDatabase** property.
+If there is a default database, SQL strings may use an unqualified syntax to access objects in that database. To access objects in a database other than the one specified in the **DefaultDatabase** property, you must qualify object names with the desired database name. Upon connection, the provider will write default database information to the **DefaultDatabase** property. Some providers allow only one database per connection, in which case you cannot change the **DefaultDatabase** property.
 
 Some data sources and providers may not support this feature, and may return an error or an empty string.
 
 #### Remote Data Service Usage
 
 This property is not available on a client-side **Connection** object.
+
+# <a name="Execute"></a>Execute
+
+Executes the specified query, SQL statement, stored procedure, or provider-specific text.
+
+```
+FUNCTION Execute (BYREF cbsCommandText AS CBSTR, BYVAL RecordsAffected AS LONG PTR = NULL, _
+   BYVAL Options AS LONG = -1) AS Afx_ADORecordset PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsCommandText* | A string value that contains the SQL statement, stored procedure, a URL, or provider-specific text to execute. Optionally, table names can be used but only if the provider is SQL aware. For example if a table name of "Customers" is used, ADO will automatically prepend the standard SQL Select syntax to form and pass "SELECT * FROM Customers" as a T-SQL statement to the provider. |
+| *RecordsAffected* | Optional. Pointer to a LONG to which the provider returns the number of records that the operation affected. |
+| *Options* | Optional. A Long value that indicates how the provider should evaluate the **CommandText** argument. Can be a bitmask of one or more **CommandTypeENum** or **ExecuteOptionEnum** values. |
+
+Use the **ExecuteOptionEnum** value **adExecuteNoRecords** to improve performance by minimizing internal processing.
+
+Do not use **adExecuteStream** with the **Execute** method of a **Connection** object.
+
+Do not use the **CommandTypeEnum** values of **adCmdFile** or **adCmdTableDirect** with **Execute**. These values can only be used as options with the **Open** and **Requery** methods of a **Recordset**.
+
+#### CommandTypeEnum
+
+Specifies how a command argument should be interpreted.
+
+| Constant   | Value       |
+| ---------- | ----------- |
+| **adCmdUnspecified** | Does not specify the command type argument. |
+| **adCmdText** | Evaluates **CommandText** as a textual definition of a command or stored procedure call. |
+| **adCmdTable** | Evaluates **CommandText** as a table name whose columns are all returned by an internally generated SQL query. |
+| **adCmdStoredProc** | Evaluates **CommandText** as a stored procedure name. |
+| **adCmdUnknown** | Default. Indicates that the type of command in the **CommandText** property is not known. |
+| **adCmdFile** | Evaluates **CommandText** as the file name of a persistently stored **Recordset**. Used with **Recordset** **Open** or **Requery** only. |
+| **adCmdTableDirect** | Evaluates **CommandText** as a table name whose columns are all returned. Used with **Recordset** **Open** or **Requery** only. To use the **Seek** method, the **Recordset** must be opened with **adCmdTableDirect**. This value cannot be combined with the **ExecuteOptionEnum** value **adAsyncExecute**. |
+
+#### ExecuteOptionEnum
+
+Specifies how a provider should execute a command.
+
+| Constant   | Value       |
+| ---------- | ----------- |
+| **adAsyncExecute** | Indicates that the command should execute asynchronously. This value cannot be combined with the **CommandTypeEnum** value **adCmdTableDirect**. |
+| **adAsyncFetch** | Indicates that the remaining rows after the initial quantity specified in the CacheSize property should be retrieved asynchronously. |
+| **adAsyncFetchNonBlocking** | Indicates that the main thread never blocks while retrieving. If the requested row has not been retrieved, the current row automatically moves to the end of the file. If you open a **Recordset** from a **Stream** containing a persistently stored **Recordset**, **adAsyncFetchNonBlocking** will not have an effect; the operation will be synchronous and blocking. **adAsynchFetchNonBlocking** has no effect when the **adCmdTableDirect** option is used to open the **Recordset**. |
+| **adExecuteNoRecords** | Indicates that the command text is a command or stored procedure that does not return rows (for example, a command that only inserts data). If any rows are retrieved, they are discarded and not returned. **adExecuteNoRecords** can only be passed as an optional parameter to the **Command** or **Connection** **Execute** method. |
+| **adExecuteStream** | Indicates that the results of a command execution should be returned as a stream. |
+| **adExecuteStream** | Indicates that the results of a command execution should be returned as a stream. **adExecuteStream** can only be passed as an optional parameter to the **Command** **Execute** method. |
+| **adExecuteRecord** | Indicates that the **CommandText** is a command or stored procedure that returns a single row which should be returned as a **Record** object. |
+| **adOptionUnspecified** | Indicates that the command is unspecified. |
+
+#### Return value
+
+An **Afx_ADORecordset** object reference on success, or NULL on failure.
+
+#### Remarks
+
+Using the **Execute** method on a **Connection** object executes whatever query you pass to the method in the **CommandText** argument on the specified connection. If the **CommandText** argument specifies a row-returning query, any results that the execution generates are stored in a new **Recordset** object. If the command is not intended to return results (for example, an SQL UPDATE query) the provider returns Nothing as long as the option **adExecuteNoRecords** is specified; otherwise **Execute** returns a closed **Recordset**.
+
+The returned **Recordset** object is always a read-only, forward-only cursor. If you need a **Recordset** object with more functionality, first create a **Recordset** object with the desired property settings, then use the **Recordset** object's **Open** method to execute the query and return the desired cursor type.
+
+The contents of the **CommandText** argument are specific to the provider and can be standard SQL syntax or any special command format that the provider supports.
+
+An **ExecuteComplete** event will be issued when this operation concludes.
+
+**Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Create the recordset by executing a query
+DIM pRecordset AS CAdoRecordset
+pRecordset.Attach(pConnection.Execute("SELECT TOP 20 * FROM Authors ORDER BY Author"))
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the content of the "Author" column
+   DIM cvRes AS CVAR = pRecordset.Collect("Author")
+   PRINT cvRes
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+```
