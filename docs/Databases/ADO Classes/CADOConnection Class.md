@@ -398,3 +398,55 @@ Use the **ConnectionTimeout** property on a **Connection** object if delays from
 The **ConnectionTimeout** property is read/write when the connection is closed and read-only when it is open.
 
 On a **Connection** object, the **ConnectionTimeout** property remains read/write after the **Connection** is opened.
+
+# <a name="CursorLocation"></a>CursorLocation
+
+Indicates the location of the cursor service.
+
+```
+PROPERTY CursorLocation () AS CursorLocationEnum
+PROPERTY CursorLocation (BYVAL lCursorLoc AS CursorLocationEnum)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lCursorLoc* | One of the **CursorLocationEnum** values. |
+
+#### Return value
+
+One of the **CursorLocationEnum** values.
+
+#### CursorLocationEnum
+
+Specifies the location of the cursor service.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adUseClient** | Uses client-side cursors supplied by a local cursor library. Local cursor services often will allow many features that driver-supplied cursors may not, so using this setting may provide an advantage with respect to features that will be enabled. For backward compatibility, the synonym **adUseClientBatch** is also supported. |
+| **adUseNone** | Does not use cursor services. (This constant is obsolete and appears solely for the sake of backward compatibility.) |
+| **adUseServer** | Default. Uses data-provider or driver-supplied cursors. These cursors are sometimes very flexible and allow for additional sensitivity to changes others make to the data source. However, some features of the Microsoft Cursor Service for OLE DB (such as disassociated Recordset objects) cannot be simulated with server-side cursors and these features will be unavailable with this setting. |
+
+#### Remarks
+
+This property allows you to choose between various cursor libraries accessible to the provider. Usually, you can choose between using a client-side cursor library or one that is located on the server.
+
+This property setting affects connections established only after the property has been set. Changing the **CursorLocation** property has no effect on existing connections.
+
+Cursors returned by the **Execute** method inherit this setting. **Recordset** objects will automatically inherit this setting from their associated connections.
+
+This property is read/write on a **Connection** or a closed **Recordset**, and read-only on an open **Recordset**.
+
+#### Remote Data Service Usage
+
+When used on a client-side **Recordset** or **Connection** object, the **CursorLocation** property can only be set to **adUseClient**.
+
+#### Examples
+
+```
+' // Sets the cursor location
+pConnection.CursorLocation = adUseClient
+```
+```
+' // Gets the timeout value
+DIM lCursorLoc AS LONG = pConnection.CursorLocation
+```
