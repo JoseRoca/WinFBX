@@ -22,7 +22,7 @@ The **CAdoBase** object, from which the other ADO classes inherit, initializes a
 
 The **CAdoBase** class, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derived classes to store the result codes of ADO calls.
 
-# <a name="GetLastResult"></a>GetLastResult
+### <a name="GetLastResult"></a>GetLastResult
 
 Returns the last result code.
 
@@ -30,7 +30,7 @@ Returns the last result code.
 FUNCTION GetLastResult () AS HRESULT
 ```
 
-# <a name="SetResult"></a>SetResult
+### <a name="SetResult"></a>SetResult
 
 Sets the last result code.
 
