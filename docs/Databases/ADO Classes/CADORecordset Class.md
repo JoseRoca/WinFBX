@@ -46,6 +46,22 @@ Represents the entire set of records from a base table or the results of an exec
 | [MovePrevious](#MovePrevious) | Moves to the previous record in a specified **Recordset** object and makes that record the current record. |
 | [NextRecordset](#NextRecordset) | Moves to the previous record in a specified **Recordset** object and makes that record the current record. |
 | [Open](#Open) | Opens a connection to a data source. |
+| [PageCount](#PageCount) | Indicates how many pages of data the **Recordset** object contains. |
+| [PageSize](#PageSize) | Sets or returns a Long value that indicates how many records are on a page. The default is 10. |
+| [Properties](#Properties) | Returns a reference to the **Properties** collection. |
+| [RecordCount](#RecordCount) | Indicates the number of records in a Recordset object. |
+| [Requery](#Requery) | Updates the data in a **Recordset** object by re-executing the query on which the object is based. |
+| [Resync](#Resync) | Refreshes the data in the current **Recordset** object from the underlying database. |
+| [Save](#Save) | Saves the **Recordset** in a file or **Stream** object. |
+| [Seek](#Seek) | Searches the index of a **Recordset** to quickly locate the row that matches the specified values, and changes the current row position to that row. |
+| [Sort](#Sort) | Sets or returns a string value that indicates the field names in the **Recordset** on which to sort. |
+| [Source](#Source) | Indicates the data source for a **Recordset** object. |
+| [State](#State) | Indicates for whether the state of the **Recordset** object is open or closed. |
+| [Status](#Status) | Indicates for whether the state of the **Recordset** object is open or closed. |
+| [StayInSync](#StayInSync) | Indicates, in a hierarchical **Recordset** object, whether the reference to the underlying child records (that is, the chapter) changes when the parent row position changes. |
+| [Supports](#Supports) | Determines whether a specified **Recordset** object supports a particular type of functionality. |
+| [Update](#Update) | Saves any changes you make to the current row of a **Recordset** object. |
+| [UpdateBatch](#UpdateBatch) | Writes all pending batch updates to disk. |
 
 
 #### Remarks
