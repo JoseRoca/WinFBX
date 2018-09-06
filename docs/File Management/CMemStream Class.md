@@ -586,7 +586,7 @@ FUNCTION CopyTo (BYVAL pDestStream AS ADOStream PTR, BYVAL CharNumber AS LONG = 
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pDestStream* | An object variable value that contains a reference to an open **Stream** object. The current **Stream** is copied to the destination **Stream** specified by *pDestStream*. The destination Stream must already be open. If not, a run-time error occurs. **Note**: The *pDestStream* parameter may not be a proxy of **Stream** object because this requires access to a private interface on the **Stream** object that cannot be remoted to the client. |
+| *pDestStream* | An object variable value that contains a reference to an open **Stream** object. The current **Stream** is copied to the destination **Stream** specified by *pDestStream*. The destination **Stream** must already be open. If not, a run-time error occurs. **Note**: The *pDestStream* parameter may not be a proxy of **Stream** object because this requires access to a private interface on the **Stream** object that cannot be remoted to the client. |
 | *CharNumber* | Optional. An integer value that specifies the number of bytes or characters to be copied from the current position in the source **Stream** to the destination **Stream**. The default value is *adReadAll* (-1), which specifies that all characters or bytes are copied from the current position to **EOS**. |
 
 #### Return value
@@ -679,7 +679,7 @@ PROPERTY SET Mode (BYVAL nMode AS ConnectModeEnum)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nMode* | LONG. A **ConnectModeEnum** value. The default value for a Stream associated with an underlying source (opened with a URL as the source, or as the default **Stream** of a **Record**) is **adModeRead**. The default value for a **Stream** not associated with an underlying source (instantiated in memory) is **adModeUnknown**. |
+| *nMode* | LONG. A **ConnectModeEnum** value. The default value for a **Stream** associated with an underlying source (opened with a URL as the source, or as the default **Stream** of a **Record**) is **adModeRead**. The default value for a **Stream** not associated with an underlying source (instantiated in memory) is **adModeUnknown**. |
 
 | Constant   | Value | Description |
 | ---------- | ----- | ----------- |
@@ -785,7 +785,7 @@ FUNCTION ReadText (BYVAL NumChars AS LONG = adReadAll, BYREF cbsText AS CBSTR) A
 
 | Constant   | Value | Description |
 | ---------- | ----- | ----------- |
-| **adReadAll** | -1 | Default. Reads all bytes from the stream, from the current position onwards to the EOS marker. This is the only valid StreamReadEnum value with binary streams (**Type_** is **adTypeBinary**). |
+| **adReadAll** | -1 | Default. Reads all bytes from the stream, from the current position onwards to the **EOS** marker. This is the only valid StreamReadEnum value with binary streams (**Type_** is **adTypeBinary**). |
 | **adReadLine** | -2 | Reads the next line from the stream (designated by the **LineSeparator** property). |
 
 #### Return value
@@ -814,7 +814,7 @@ FUNCTION SaveToFile (BYREF cbsFileName AS CBSTR, BYVAL Options AS LONG = adSaveC
 | Constant   | Value | Description |
 | ---------- | ----- | ----------- |
 | **adSaveCreateNotExist** | 1 | Default. Creates a new file if the file specified by the *cbsFileName* parameter does not already exist. |
-| **adSaveCreateOverWrite** | -2 | Overwrites the file with the data from the currently open Stream object, if the file specified by the *cbsFileName* parameter already exists. |
+| **adSaveCreateOverWrite** | -2 | Overwrites the file with the data from the currently open **Stream** object, if the file specified by the *cbsFileName* parameter already exists. |
 
 #### Return value
 
