@@ -88,6 +88,14 @@ You can read an **Error** object's properties to obtain specific details about e
 
 When a provider error occurs, it is placed in the **Errors** collection of the **Connection** object. ADO supports the return of multiple errors by a single ADO operation to allow for error information specific to the provider. To obtain this rich error information in an error handler, use the appropriate error-trapping features of the language or environment you are working with, then use nested loops to enumerate the properties of each **Error** object in the **Errors** collection.
 
+To retrieve information about ADO errors, call the following function:
+
+```
+FUNCTION AfxAdoGetErrorInfo (BYVAL pConnection AS AFX_ADOConnection PTR, BYVAL nError AS HRESULT = 0) AS CBSTR
+```
+
+Where *pConnection* is a reference to the ADO **Connection** object and *nError* the ADO HRESULT code.
+
 ### ErrorValueEnum Enumeration
 
 Specifies the type of ADO run-time error.
@@ -156,14 +164,6 @@ Three forms of the error number are listed:
 | **adErrWriteFile** | 3004<br>-2146825284<br>&H800A0BBC | Write to file failed. |
 | **adWrnSecurityDialog** | 3717<br>-2146824571<br>&H800A0E85 | For internal use only. Don't use. |
 | **adWrnSecurityDialogHeader** | 3718<br>-2146824570<br>&H800A0E86 | For internal use only. Don't use. |
-
-To retrieve information about ADO errors, call the following function:
-
-```
-FUNCTION AfxAdoGetErrorInfo (BYVAL pConnection AS AFX_ADOConnection PTR, BYVAL nError AS HRESULT = 0) AS CBSTR
-```
-
-Where *pConnection* is a reference to the ADO **Connection** object and *nError* the ADO HRESULT code.
 
 # <a name="ADOIdentifiers"></a>ADO Identifiers
 
