@@ -249,8 +249,6 @@ Three forms of the error number are listed:
 
 Represents a dynamic characteristic of an ADO object that is defined by the provider.
 
-Remarks
-
 ADO objects have two types of properties: built-in and dynamic.
 
 Built-in properties are those properties implemented in ADO and immediately available to any new object, using the *MyObject.Property* syntax. They do not appear as **Property** objects in an object's **Properties** collection, so although you can change their values, you cannot modify their characteristics.
@@ -267,4 +265,54 @@ A dynamic **Property** object has four built-in properties of its own:
 * The **Attributes** property is a long value that indicates characteristics of the property specific to the provider.
 
 The **Properties** collection contains all the **Property** objects for a specific instance of an object.
+
+# CADOProperty Class Methods
+
+## Attributes (CAdoProperty Class)
+
+For a **Property** object, the **Attributes** property is read-only, and its value can be the sum of any one or more **PropertyAttributesEnum** values.
+
+```
+PROPERTY Attributes () AS LONG
+PROPERTY Attributes (BYVAL lAttr AS LONG)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lAttr* | Can be the sum of any one or more **ParameterAttributesEnum** values. The default is **adParamSigned**. |
+
+#### Return value
+
+LONG. One or more **ParameterAttributesEnum** values.
+
+#### Remarks
+
+When you set multiple attributes, you can sum the appropriate constants. If you set the property value to a sum including incompatible constants, an error occurs.
+
+#### Remote Data Service Usage
+
+This property is not available on a client-side **Connection** object.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cbsSource AS CBSTR = "SELECT * FROM Publishers ORDER BY PubID"
+DIM hr AS HRESULT = pRecordset.Open(cbsSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Parse the Properties collection
+DIM pProperties AS CAdoProperties = pRecordset.Properties
+DIM nCount AS LONG = pProperties.Count
+FOR i AS LONG = 0 TO nCount - 1
+   DIM pProperty AS CAdoProperty = pProperties.Item(i)
+   PRINT "Property name: "; pProperty.Name; " - Attributes: "; WSTR(pProperty.Attributes)
+NEXT
+```
 
