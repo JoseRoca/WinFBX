@@ -16,7 +16,6 @@ The **CAdoBase** object, from which the other ADO classes inherit, initializes a
 | [ADO Identifiers](#ADOIdentifiers) | PROGIDs, CLSIDs and IIDs. |
 | [ADO Enumerations](#ADOEnums) | ADO enumerations. |
 | [ADO Errors](#ADOErrors) | ADO errors. |
-| [ADO Events](#ADOEvents) | ADO events. |
 
 # <a name="CAdoBase"></a>CAdoBase Class
 
@@ -63,6 +62,86 @@ Record
   |_ Fields - Field
 
 Stream
+```
+
+# <a name="ADOIdentifiers"></a>ADO Identifiers
+
+```
+' ========================================================================================
+' ProgIDs (Program identifiers)
+' ========================================================================================
+
+' CLSID = {00000507-0000-0010-8000-00AA006D2EA4}
+CONST AFX_PROGID_Command60 = "ADODB.Command.6.0"
+' CLSID = {00000514-0000-0010-8000-00AA006D2EA4}
+CONST AFX_PROGID_Connection60 = "ADODB.Connection.6.0"
+' CLSID = {0000050B-0000-0010-8000-00AA006D2EA4}
+CONST AFX_PROGID_Parameter60 = "ADODB.Parameter.6.0"
+' CLSID = {00000560-0000-0010-8000-00AA006D2EA4}
+CONST AFX_PROGID_Record60 = "ADODB.Record.6.0"
+' CLSID = {00000535-0000-0010-8000-00AA006D2EA4}
+CONST AFX_PROGID_Recordset60 = "ADODB.Recordset.6.0"
+' CLSID = {00000566-0000-0010-8000-00AA006D2EA4}
+CONST AFX_PROGID_Stream60 = "ADODB.Stream.6.0"
+
+' ========================================================================================
+' Version independent ProgIDs
+' ========================================================================================
+
+' CLSID = {00000507-0000-0010-8000-00AA006D2EA4}
+CONST AFX_PROGID_Command = "ADODB.Command"
+' CLSID = {00000514-0000-0010-8000-00AA006D2EA4}
+CONST AFX_PROGID_Connection = "ADODB.Connection"
+' CLSID = {0000050B-0000-0010-8000-00AA006D2EA4}
+CONST AFX_PROGID_Parameter = "ADODB.Parameter"
+' CLSID = {00000560-0000-0010-8000-00AA006D2EA4}
+CONST AFX_PROGID_Record = "ADODB.Record"
+' CLSID = {00000535-0000-0010-8000-00AA006D2EA4}
+CONST AFX_PROGID_Recordset = "ADODB.Recordset"
+' CLSID = {00000566-0000-0010-8000-00AA006D2EA4}
+CONST AFX_PROGID_Stream = "ADODB.Stream"
+
+' ========================================================================================
+' ClsIDs (Class identifiers)
+' ========================================================================================
+
+CONST AFX_CLSID_Command = "{00000507-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_CLSID_Connection = "{00000514-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_CLSID_Parameter = "{0000050B-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_CLSID_Record = "{00000560-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_CLSID_Recordset = "{00000535-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_CLSID_Stream = "{00000566-0000-0010-8000-00AA006D2EA4}"
+
+' ========================================================================================
+' IIDs (Interface identifiers)
+' ========================================================================================
+
+CONST AFX_IID_ADO = "{00000534-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Collection = "{00000512-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Command = "{986761E8-7269-4890-AA65-AD7C03697A6D}"
+CONST AFX_IID_Connection = "{00001550-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_DynaCollection = "{00000513-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Parameter = "{0000150C-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Record = "{00001562-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Recordset = "{00001556-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Stream = "{00001565-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_ADOCommandConstruction = "{00000517-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_ADOConnectionConstruction = "{00000551-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_ADORecordConstruction = "{00000567-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_ADORecordsetConstruction = "{00000283-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_ADOStreamConstruction = "{00000568-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_ConnectionEvents = "{00001400-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_ConnectionEventsVt = "{00001402-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Error = "{00000500-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Errors = "{00000501-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Field = "{00001569-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Fields = "{00001564-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Fields_Deprecated = "{00000564-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Parameters = "{0000150D-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Properties = "{00000504-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_Property = "{00000503-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_RecordsetEvents = "{00001266-0000-0010-8000-00AA006D2EA4}"
+CONST AFX_IID_RecordsetEventsVt = "{00001403-0000-0010-8000-00AA006D2EA4}"
 ```
 
 # <a name="ADOErrors"></a>ADO Errors
@@ -164,83 +243,3 @@ Three forms of the error number are listed:
 | **adErrWriteFile** | 3004<br>-2146825284<br>&H800A0BBC | Write to file failed. |
 | **adWrnSecurityDialog** | 3717<br>-2146824571<br>&H800A0E85 | For internal use only. Don't use. |
 | **adWrnSecurityDialogHeader** | 3718<br>-2146824570<br>&H800A0E86 | For internal use only. Don't use. |
-
-# <a name="ADOIdentifiers"></a>ADO Identifiers
-
-```
-' ========================================================================================
-' ProgIDs (Program identifiers)
-' ========================================================================================
-
-' CLSID = {00000507-0000-0010-8000-00AA006D2EA4}
-CONST AFX_PROGID_Command60 = "ADODB.Command.6.0"
-' CLSID = {00000514-0000-0010-8000-00AA006D2EA4}
-CONST AFX_PROGID_Connection60 = "ADODB.Connection.6.0"
-' CLSID = {0000050B-0000-0010-8000-00AA006D2EA4}
-CONST AFX_PROGID_Parameter60 = "ADODB.Parameter.6.0"
-' CLSID = {00000560-0000-0010-8000-00AA006D2EA4}
-CONST AFX_PROGID_Record60 = "ADODB.Record.6.0"
-' CLSID = {00000535-0000-0010-8000-00AA006D2EA4}
-CONST AFX_PROGID_Recordset60 = "ADODB.Recordset.6.0"
-' CLSID = {00000566-0000-0010-8000-00AA006D2EA4}
-CONST AFX_PROGID_Stream60 = "ADODB.Stream.6.0"
-
-' ========================================================================================
-' Version independent ProgIDs
-' ========================================================================================
-
-' CLSID = {00000507-0000-0010-8000-00AA006D2EA4}
-CONST AFX_PROGID_Command = "ADODB.Command"
-' CLSID = {00000514-0000-0010-8000-00AA006D2EA4}
-CONST AFX_PROGID_Connection = "ADODB.Connection"
-' CLSID = {0000050B-0000-0010-8000-00AA006D2EA4}
-CONST AFX_PROGID_Parameter = "ADODB.Parameter"
-' CLSID = {00000560-0000-0010-8000-00AA006D2EA4}
-CONST AFX_PROGID_Record = "ADODB.Record"
-' CLSID = {00000535-0000-0010-8000-00AA006D2EA4}
-CONST AFX_PROGID_Recordset = "ADODB.Recordset"
-' CLSID = {00000566-0000-0010-8000-00AA006D2EA4}
-CONST AFX_PROGID_Stream = "ADODB.Stream"
-
-' ========================================================================================
-' ClsIDs (Class identifiers)
-' ========================================================================================
-
-CONST AFX_CLSID_Command = "{00000507-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_CLSID_Connection = "{00000514-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_CLSID_Parameter = "{0000050B-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_CLSID_Record = "{00000560-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_CLSID_Recordset = "{00000535-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_CLSID_Stream = "{00000566-0000-0010-8000-00AA006D2EA4}"
-
-' ========================================================================================
-' IIDs (Interface identifiers)
-' ========================================================================================
-
-CONST AFX_IID_ADO = "{00000534-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Collection = "{00000512-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Command = "{986761E8-7269-4890-AA65-AD7C03697A6D}"
-CONST AFX_IID_Connection = "{00001550-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_DynaCollection = "{00000513-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Parameter = "{0000150C-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Record = "{00001562-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Recordset = "{00001556-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Stream = "{00001565-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_ADOCommandConstruction = "{00000517-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_ADOConnectionConstruction = "{00000551-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_ADORecordConstruction = "{00000567-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_ADORecordsetConstruction = "{00000283-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_ADOStreamConstruction = "{00000568-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_ConnectionEvents = "{00001400-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_ConnectionEventsVt = "{00001402-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Error = "{00000500-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Errors = "{00000501-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Field = "{00001569-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Fields = "{00001564-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Fields_Deprecated = "{00000564-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Parameters = "{0000150D-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Properties = "{00000504-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_Property = "{00000503-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_RecordsetEvents = "{00001266-0000-0010-8000-00AA006D2EA4}"
-CONST AFX_IID_RecordsetEventsVt = "{00001403-0000-0010-8000-00AA006D2EA4}"
-```
