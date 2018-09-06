@@ -659,7 +659,7 @@ PROPERTY Mode (BYVAL lMode AS ConnectModeEnum)
 
 A **ConnectionModeEnum** value.
 
-Specifies the available permissions for modifying data in a Connection, opening a Record, or specifying values for the Mode property of the Record and Stream objects.
+Specifies the available permissions for modifying data in a **Connection**, opening a **Record**, or specifying values for the Mode property of the **Record** and **Stream** objects.
 
 | Constant   | Description |
 | ---------- | ----------- |
@@ -673,3 +673,99 @@ Specifies the available permissions for modifying data in a Connection, opening 
 | **adModeUnknown** | Default. Indicates that the permissions have not yet been set or cannot be determined. |
 | **adModeWrite** | Indicates write-only permissions. |
 
+
+# <a name="Open"></a>Open
+
+Opens a connection to a data source.
+
+```
+FUNCTION Open (BYREF cbsConStr AS CBSTR = "", BYREF cbsUserID AS CBSTR = "", _
+   BYREF cbsPassword AS CBSTR = "", BYVAL Options AS LONG = adOptionUnspecified) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsConStr* | Optional. An string value that contains connection information. |
+| *cbsUserID* | Optional. An string value that contains a user name to use when establishing the connection. |
+| *cbsPassword* | Optional. An string value that contains a password to use when establishing the connection. |
+| *Options* | Optional. A **ConnectOptionEnum** value that determines whether this method should return after (synchronously) or before (asynchronously) the connection is established. |
+
+#### ConnectOptionEnum
+
+Specifies whether the **Open** method of a **Connection** object should return after (synchronously) or before (asynchronously) the connection is established.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adAsyncConnect** | Opens the connection asynchronously. The **ConnectComplete** event may be used to determine when the connection is available. |
+| **adConnectUnspecified** | Default. Opens the connection synchronously. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Using the **Open** method on a **Connection** object establishes the physical connection to a data source. After this method successfully completes, the connection is live and you can issue commands against it and process the results.
+
+Use the optional **ConnectionString** argument to specify either a connection string containing a series of argument = value statements separated by semicolons, or a file or directory resource identified with a URL. The **ConnectionString** property automatically inherits the value used for the **ConnectionString** argument. Therefore, you can either set the **ConnectionString** property of the **Connection** object before opening it, or use the **ConnectionString** argument to set or override the current connection parameters during the **Open** method call.
+
+If you pass user and password information both in the **ConnectionString** argument and in the optional UserID and Password arguments, the UserID and **Password** arguments will override the values specified in **ConnectionString**.
+
+When you have concluded your operations over an open **Connection**, use the **Close** method to free any associated system resources. Closing an object does not remove it from memory; you can change its property settings and use the Open method to open it again later. To completely eliminate an object from memory, release the object variable.
+
+#### Remote Data Service Usage
+
+When used on a client-side **Connection** object, the Open method doesn't actually establish a connection to the server until a Recordset is opened on the **Connection** object.
+
+**Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing.
+
+#### Example
+
+```
+' // Set the connection string
+pConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+' // Open the connection
+pConnection.Open
+```
+' --> Alternate way <--
+```
+DIM cbsConStr AS CBSTR = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open cbsConStr
+```
+' --> Alternate way <--
+```
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+```
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Create a Connection object
+DIM pConnection AS CAdoConnection
+' // Create a Recordset object
+DIM pRecordset AS CAdoRecordset
+
+' // Open the connection
+DIM cbsConStr AS CBSTR = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open cbsConStr
+
+' // Open the recordset
+DIM cvSource AS CVAR = "SELECT TOP 20 * FROM Authors ORDER BY Author"
+DIM hr AS HRESULT = pRecordset.Open(cvource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the content of the "Author" column
+   SCOPE
+      DIM cvRes AS CVAR = pRecordset.Collect("Author")
+      PRINT cvRes
+   END SCOPE
+   ' // Fetch the next row
+   pRecordset.MoveNext
+LOOP
+```
