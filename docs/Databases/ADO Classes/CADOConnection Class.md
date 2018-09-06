@@ -150,3 +150,22 @@ LOOP
 ' // Rollback the transaction because this is a demo
 pConnection.RollbackTrans
 ```
+
+# <a name="Cancel"></a>Cancel
+
+Cancels execution of a pending, asynchronous method call.
+
+```
+FUNCTION Cancel () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **Cancel** method to terminate execution of an asynchronous method call (that is, a method invoked with the **adAsyncConnect**, **adAsyncExecute**, or **adAsyncFetch** option).
+
+For a **Connection** object, the last asynchronous call to the **Execute** or **Open** methods is terminated.
+
