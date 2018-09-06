@@ -290,3 +290,86 @@ LOOP
 ' // Rollback the transaction because this is a demo
 pConnection.RollbackTrans
 ```
+
+# <a name="ConnectionString"></a>ConnectionString
+
+Indicates the information used to establish a connection to a data source.
+
+```
+PROPERTY ConnectionString () AS CBSTR
+PROPERTY ConnectionString (BYREF cbsConConStr AS CBSTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsConConStr* | The connection string. |
+
+#### Return value
+
+The connection string.
+
+#### Remarks
+
+Use the **ConnectionString** property to specify a data source by passing a detailed connection string containing a series of argument = value statements separated by semicolons.
+
+ADO supports five arguments for the **ConnectionString** property; any other arguments pass directly to the provider without any processing by ADO. The arguments ADO supports are as follows.
+
+| Argument   | Description |
+| ---------- | ----------- |
+| **Provider=** | Specifies the name of a provider to use for the connection. |
+| **File Name=** | Specifies the name of a provider-specific file (for example, a persisted data source object) containing preset connection information. |
+| **Remote Provider=** | Specifies the name of a provider to use when opening a client-side connection. (Remote Data Service only.) |
+| **Remote Server==** | Specifies the path name of the server to use when opening a client-side connection. (Remote Data Service only.) |
+| **URL=** | Specifies the connection string as an absolute URL identifying a resource, such as a file or directory. |
+
+After you set the **ConnectionString** property and open the **Connection** object, the provider may alter the contents of the property, for example, by mapping the ADO-defined argument names to their provider equivalents.
+
+The **ConnectionString** property automatically inherits the value used for the **ConnectionString** argument of the Open method, so you can override the current **ConnectionString** property during the **Open** method call.
+
+Because the **File Name** argument causes ADO to load the associated provider, you cannot pass both the **Provider** and **File Name** arguments.
+
+The **ConnectionString** property is read/write when the connection is closed and read-only when it is open.
+
+Duplicates of an argument in the **ConnectionString** property are ignored. The last instance of any argument is used.
+
+#### Remote Data Service Usage
+
+When used on a client-side **Connection** object, the **ConnectionString** property can include only the **Remote Provider** and **Remote Server** parameters.
+
+#### Usage examples
+
+```
+pConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open
+```
+```
+DIM cbsConStr AS CBSTR = pConnection.ConnectionString
+```
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cbsSource AS CBSTR = "SELECT * FROM Authors"
+pRecordset.Open(cbsSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the content of the "Author" column
+   DIM cvRes AS CVAR = pRecordset.Collect("Author")
+   PRINT cvRes
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+```
