@@ -711,11 +711,11 @@ Use the optional **ConnectionString** argument to specify either a connection st
 
 If you pass user and password information both in the **ConnectionString** argument and in the optional UserID and Password arguments, the UserID and **Password** arguments will override the values specified in **ConnectionString**.
 
-When you have concluded your operations over an open **Connection**, use the **Close** method to free any associated system resources. Closing an object does not remove it from memory; you can change its property settings and use the Open method to open it again later. To completely eliminate an object from memory, release the object variable.
+When you have concluded your operations over an open **Connection**, use the **Close** method to free any associated system resources. Closing an object does not remove it from memory; you can change its property settings and use the **Open** method to open it again later. To completely eliminate an object from memory, release the object variable.
 
 #### Remote Data Service Usage
 
-When used on a client-side **Connection** object, the Open method doesn't actually establish a connection to the server until a Recordset is opened on the **Connection** object.
+When used on a client-side **Connection** object, the **Open** method doesn't actually establish a connection to the server until a Recordset is opened on the **Connection** object.
 
 **Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing.
 
@@ -769,3 +769,41 @@ DO
    pRecordset.MoveNext
 LOOP
 ```
+
+# <a name="OpenSchema"></a>OpenSchema
+
+Obtains database schema information from the provider.
+
+```
+FUNCTION OpenSchema (BYVAL Schema AS SchemaEnum, _
+   BYVAL Restrictions AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
+   BYVAL SchemaID AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND)) AS Afx_ADORecordset PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Schema* | Any **SchemaEnum** value that represents the type of schema query to run. |
+| *Restrictions* | Optional. An array of query constraints for each *QueryType* option, as listed in **SchemaEnum**. |
+| *SchemaID* | Optional. The GUID for a provider-schema query not defined by the OLE DB specification. This parameter is required if *QueryType* is set to **adSchemaProviderSpecific**; otherwise, it is not used. |
+
+#### Return value
+
+An ADO **Recordset** object reference.
+
+#### Remarks
+
+The **OpenSchema** method returns self-descriptive information about the data source, such as what tables are in the data source, the columns in the tables, and the data types supported.
+
+The *QueryType* argument is a GUID that indicates the columns (schemas) returned. The OLE DB specification has a full list of schemas.
+
+The **Criteria** argument limits the results of a schema query. **Criteria** specifies an array of values that must occur in a corresponding subset of columns, called constraint columns, in the resulting **Recordset**.
+
+The constant **adSchemaProviderSpecific** is used for the *QueryType* argument if the provider defines its own nonstandard schema queries outside those listed above. When this constant is used, the **SchemaID** argument is required to pass the GUID of the schema query to execute. If *QueryType* is set to **adSchemaProviderSpecific** but *SchemaID* is not provided, an error will result.
+
+Providers are not required to support all of the OLE DB standard schema queries. Specifically, only **adSchemaTables**, **adSchemaColumns**, and **adSchemaProviderTypes** are required by the OLE DB specification. However, the provider is not required to support the **Criteria** constraints listed above for those schema queries.
+
+#### Remote Data Service Usage
+
+The **OpenSchema** method is not available on a client-side **Connection** object.
+
+When not using client side cursors, retrieving the "ORDINAL_POSITION" of a column schema in ADO returns a variant of type VT_R8 in MDAC 2.7 and later while the type of used in MDAC 2.6 was VT_I4. Programs written for MDAC 2.6 that only look for a variant returned of type VT_I4 would get a zero for every ordinal if run under MDAC 2.7 and later without modification. This change was made because the data type that OLE DB returns is DBTYPE_UI4, and in the signed VT_I4 type there is not enough room to contain all possible values without possibly truncation occurring and thereby causing a loss of data.
