@@ -92,16 +92,19 @@ END FUNCTION
 ' - wszValue / dblValue / intValue: The value to write
 ' ========================================================================================
 PRIVATE FUNCTION CIniFile.WriteValue (BYREF wszSectionName AS WSTRING, BYREF wszKeyName AS WSTRING, BYREF wszValue AS WSTRING) AS BOOLEAN
+   IF LEN(wszSectionName) = 0 OR LEN(wszKeyName) = 0 THEN RETURN FALSE
    RETURN WritePrivateProfileStringW(wszSectionName, wszKeyName, wszValue, m_path)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CIniFile.WriteValue (BYREF wszSectionName AS WSTRING, BYREF wszKeyName AS WSTRING, BYREF dblValue AS DOUBLE) AS BOOLEAN
+   IF LEN(wszSectionName) = 0 OR LEN(wszKeyName) = 0 THEN RETURN FALSE
    RETURN WritePrivateProfileStringW(wszSectionName, wszKeyName, WSTR(dblValue), m_path)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CIniFile.WriteValue (BYREF wszSectionName AS WSTRING, BYREF wszKeyName AS WSTRING, BYREF intValue AS LONG) AS BOOLEAN
+   IF LEN(wszSectionName) = 0 OR LEN(wszKeyName) = 0 THEN RETURN FALSE
    RETURN WritePrivateProfileStringW(wszSectionName, wszKeyName, WSTR(intValue), m_path)
 END FUNCTION
 ' ========================================================================================
@@ -116,6 +119,7 @@ END FUNCTION
 '   a null character in the returned buffer to strip any trailing blanks.
 ' ========================================================================================
 PRIVATE FUNCTION CIniFile.GetString (BYREF wszSectionName AS WSTRING, BYREF wszKeyName AS WSTRING, BYREF wszDefaultValue AS WSTRING = "") AS CWSTR
+   IF LEN(wszSectionName) = 0 OR LEN(wszKeyName) = 0 THEN RETURN wszDefaultValue
    DIM wsz AS WSTRING * 32767
    DIM dwLen AS DWORD = GetPrivateProfileStringW(wszSectionName, wszKeyName, wszDefaultValue, @wsz, 32767, m_path)
    RETURN LEFT(wsz, dwLen)
@@ -123,6 +127,7 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CIniFile.GetDouble (BYREF wszSectionName AS WSTRING, BYREF wszKeyName AS WSTRING, BYVAL nDefaultValue AS DOUBLE = 0) AS DOUBLE
+   IF LEN(wszSectionName) = 0 OR LEN(wszKeyName) = 0 THEN RETURN nDefaultValue
    DIM wsz AS WSTRING * 32767
    DIM dwLen AS DWORD = GetPrivateProfileStringW(wszSectionName, wszKeyName, NULL, @wsz, 32767, m_path)
    wsz = LEFT(wsz, dwLen)
@@ -131,6 +136,7 @@ END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CIniFile.GetInt (BYREF wszSectionName AS WSTRING, BYREF wszKeyName AS WSTRING, BYVAL nDefaultValue AS LONG = 0) AS LONG
+   IF LEN(wszSectionName) = 0 OR LEN(wszKeyName) = 0 THEN RETURN nDefaultValue
    RETURN CLNG(GetPrivateProfileInt(wszSectionName, wszKeyName, nDefaultValue, m_path))
 END FUNCTION
 ' ========================================================================================
@@ -141,6 +147,7 @@ END FUNCTION
 ' - wszKeyName: Name of key
 ' ========================================================================================
 PRIVATE FUNCTION CIniFile.DeleteKey (BYREF wszSectionName AS WSTRING, BYREF wszKeyName AS WSTRING) AS BOOLEAN
+   IF LEN(wszSectionName) = 0 OR LEN(wszKeyName) = 0 THEN RETURN FALSE
    RETURN WritePrivateProfileStringW(wszSectionName, wszKeyName, NULL, m_path)
 END FUNCTION
 ' ========================================================================================
@@ -150,6 +157,7 @@ END FUNCTION
 ' - wszSectionName: Name of the section
 ' ========================================================================================
 PRIVATE FUNCTION CIniFile.DeleteSection (BYREF wszSectionName AS WSTRING) AS BOOLEAN
+   IF LEN(wszSectionName) = 0 THEN RETURN FALSE
    RETURN WritePrivateProfileStringW(wszSectionName, NULL, NULL, m_path)
 END FUNCTION
 ' ========================================================================================
@@ -191,6 +199,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CIniFile.GetKeyNames (BYREF wszSectionName AS WSTRING) AS CSafeARray
    DIM csa AS CSafeArray = CSafeArray(VT_BSTR, 0, 1)
+   IF LEN(wszSectionName) = 0 THEN RETURN csa
    DIM wsz AS WSTRING * 32767
    DIM dwLen AS DWORD = GetPrivateProfileStringW(@wszSectionName, NULL, NULL, @wsz, 32767, m_path)
    IF dwLen = 0 THEN RETURN csa
@@ -211,6 +220,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CIniFile.GetSectionValues (BYREF wszSectionName AS WSTRING, BYREF pDic AS CDicObj) AS BOOLEAN
    IF pDic.m_pDictionary = NULL THEN RETURN FALSE
+   IF LEN(wszSectionName) = 0 THEN RETURN FALSE
    DIM wsz AS WSTRING * 32767
    DIM dwLen AS DWORD = GetPrivateProfileStringW(@wszSectionName, NULL, NULL, @wsz, 32767, m_path)
    IF dwLen = 0 THEN RETURN FALSE
