@@ -378,7 +378,7 @@ The current position can be moved to a point after the end of the stream. If you
 
 Negative values cannot be used to change the current position in a **Stream**. Only positive numbers can be used for **Position**.
 
-For read-only **Stream** objects, ADO will not return an error if **Position** is set to a value greater than the **Size** of the **Stream**. This does not change the size of the **Stream**, or alter the Stream contents in any way. However, doing this should be avoided because it results in a meaningless **Position** value.
+For read-only **Stream** objects, ADO will not return an error if **Position** is set to a value greater than the **Size** of the **Stream**. This does not change the size of the **Stream**, or alter the **Stream** contents in any way. However, doing this should be avoided because it results in a meaningless **Position** value.
 
 # <a name="Read"></a>Read
 
