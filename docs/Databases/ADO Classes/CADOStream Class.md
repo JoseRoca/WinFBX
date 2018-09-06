@@ -268,7 +268,7 @@ PROPERTY SET Mode (BYVAL nMode AS ConnectModeEnum)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nMode* | LONG. A **ConnectModeEnum** value. The default value for a Stream associated with an underlying source (opened with a URL as the source, or as the default **Stream** of a **Record**) is **adModeRead**. The default value for a **Stream** not associated with an underlying source (instantiated in memory) is **adModeUnknown**. |
+| *nMode* | LONG. A **ConnectModeEnum** value. The default value for a **Stream** associated with an underlying source (opened with a URL as the source, or as the default **Stream** of a **Record**) is **adModeRead**. The default value for a **Stream** not associated with an underlying source (instantiated in memory) is **adModeUnknown**. |
 
 #### Return value
 
