@@ -43,6 +43,30 @@ Record
 Stream
 ```
 
+# <a name="CAdoBase Class"></a>CAdoBse Class
+
+The CAdoBase class, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derived classes to store the result codes of ADO calls.
+
+# <a name="GetLastResult"></a>GetLastResult
+
+Returns the last result code.
+
+```
+FUNCTION GetLastResult () AS HRESULT
+```
+
+# <a name="SetResult"></a>SetLastResult
+
+Sets the last result code.
+
+```
+FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
+```
+
+#### Return value
+
+The result code returned by the last executed method.
+
 # <a name="ADOIdentifiers"></a>ADO Identifiers
 
 ```
