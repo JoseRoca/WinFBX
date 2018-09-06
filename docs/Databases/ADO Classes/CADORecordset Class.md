@@ -23,6 +23,29 @@ Represents the entire set of records from a base table or the results of an exec
 | [Collect](#Collect) | Sets or returns a Variant value that indicates the value of the object. |
 | [CompareBookmarks](#CompareBookmarks) | Compares two bookmarks and returns an indication of their relative values. |
 | [CursorLocation](#CursorLocation) | Indicates the location of the cursor service. |
+| [CursorType](#CursorType) | Sets or returns a **CursorTypeEnum** value. The default value is **adOpenForwardOnly**. |
+| [DataMember](#DataMember) | Indicates the name of the data member that will be retrieved from the object referenced by the **DataSource** property. |
+| [DataSource](#DataSource) | Indicates an object that contains data to be represented as a **Recordset** object. |
+| [Delete_](#Delete_) | Deletes the current record or a group of records. |
+| [EditMode](#EditMode) | Indicates the editing status of the current record. |
+| [EOF](#EOF) | Indicates that the current record position is after the last record in a **Recordset** object. |
+| [Fields](#Fields) | Gets a reference to the **Fields** collection of a **Record** object. |
+| [Filter](#Filter) | Indicates a filter for data in a **Recordset**. |
+| [Find](#Find) | Searches a **Recordset** for the row that satisfies the specified criteria. |
+| [GetErrorInfo](#GetErrorInfo) | Returns information about ADO errors. |
+| [GetRows](#GetRows) | Retrieves multiple records of a **Recordset** object into an array. |
+| [GetString](#GetString) | Returns the **Recordset** as a string. |
+| [Index](#Index) | Sets or returns a string value, which is the name of the index. |
+| [LockType](#LockType) | Sets or returns the lock type, a Long value that must be greater than 0. Default is 1. |
+| [MarshalOptions](#MarshalOptions) | Indicates which records are to be marshaled back to the server. |
+| [MaxRecords](#MaxRecords) | Sets or returns a Long value that indicates the maximum number of records to return. Default is zero (no limit). |
+| [Move](#Move) | Moves the position of the current record in a **Recordset** object. |
+| [MoveFirst](#MoveFirst) | Moves to the first record in a specified **Recordset** object and makes that record the current record. |
+| [MoveLast](#MoveLast) | Moves to the last record in a specified **Recordset** object and makes that record the current record. |
+| [MoveNext](#MoveNext) | Moves to the next record in a specified **Recordset** object and makes that record the current record. |
+| [MovePrevious](#MovePrevious) | Moves to the previous record in a specified **Recordset** object and makes that record the current record. |
+| [NextRecordset](#NextRecordset) | Moves to the previous record in a specified **Recordset** object and makes that record the current record. |
+| [Open](#Open) | Opens a connection to a data source. |
 
 
 #### Remarks
