@@ -67,7 +67,7 @@ FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
 
 The result code returned by the last executed method.
 
-# <a name="AdoErrors"></a>ADO Errors
+# <a name="ADOErrors"></a>ADO Errors
 
 Any operation involving ADO objects can generate one or more provider errors. As each error occurs, one or more **Error** objects can be placed in the **Errors collection** of the **Connection object**. When another ADO operation generates an error, the **Errors** collection is cleared, and the new set of **Error** objects can be placed in the **Errors** collection.
 
