@@ -472,3 +472,57 @@ FOR i AS LONG = 0 TO nCount - 1
    PRINT "Property name: "; pProperty.Name; " - Value: "; WSTR(pProperty.Value)
 NEXT
 ```
+
+# CAdoProperties Class Methods
+
+**Include file**: CAdoProperties.inc (include CADODB.inc).
+
+### Count (CAdoProperties Class)
+
+Retrieves the number of objects of the **Properties** collection.
+
+```
+PROPERTY Count () AS LONG
+```
+
+#### Remarks
+
+Because numbering for members of a collection begins with zero, you should always code loops starting with the zero member and ending with the value of the Count property minus 1.
+
+If the **Count** property is zero, there are no objects in the collection.
+
+### Item (CAdoProperties Class)
+
+Indicates a specific member of the **Properties** collection, by name or ordinal number.
+
+```
+PROPERTY Item (BYREF cvIndex AS CVAR) AS Afx_ADOProperty PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvIndex* | A Variant expression that evaluates either to the name or to the ordinal number of an object in a collection. |
+
+#### Return value
+
+An **Afx_ADOProperty** object reference.
+
+#### Remarks
+
+If **Item** cannot find an object in the collection corresponding to the **Index** argument, an error occurs.
+
+### Refresh (CAdoProperties Class)
+
+Refreshes the contents of the **Properties** collection.
+
+```
+FUNCTION Refresh () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Using the **Refresh** method on a **Properties** collection of some objects populates the collection with the dynamic properties that the provider exposes. These properties provide information about functionality specific to the provider, beyond the built-in properties ADO supports.
