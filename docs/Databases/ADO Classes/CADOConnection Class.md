@@ -319,7 +319,7 @@ ADO supports five arguments for the **ConnectionString** property; any other arg
 | **Provider=** | Specifies the name of a provider to use for the connection. |
 | **File Name=** | Specifies the name of a provider-specific file (for example, a persisted data source object) containing preset connection information. |
 | **Remote Provider=** | Specifies the name of a provider to use when opening a client-side connection. (Remote Data Service only.) |
-| **Remote Server==** | Specifies the path name of the server to use when opening a client-side connection. (Remote Data Service only.) |
+| **Remote Server=** | Specifies the path name of the server to use when opening a client-side connection. (Remote Data Service only.) |
 | **URL=** | Specifies the connection string as an absolute URL identifying a resource, such as a file or directory. |
 
 After you set the **ConnectionString** property and open the **Connection** object, the provider may alter the contents of the property, for example, by mapping the ADO-defined argument names to their provider equivalents.
