@@ -268,6 +268,8 @@ The **Properties** collection contains all the **Property** objects for a specif
 
 # CADOProperty Class Methods
 
+**Include file**: CAdoProperties.inc (include CADODB.inc).
+
 ## Attributes (CAdoProperty Class)
 
 For a **Property** object, the **Attributes** property is read-only, and its value can be the sum of any one or more **PropertyAttributesEnum** values.
@@ -276,6 +278,7 @@ For a **Property** object, the **Attributes** property is read-only, and its val
 PROPERTY Attributes () AS LONG
 PROPERTY Attributes (BYVAL lAttr AS LONG)
 ```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *lAttr* | Can be the sum of any one or more **ParameterAttributesEnum** values. The default is **adParamSigned**. |
@@ -316,3 +319,34 @@ FOR i AS LONG = 0 TO nCount - 1
 NEXT
 ```
 
+## Name (CAdoProperty Class)
+
+Returns the name of a **Property**.
+
+```
+PROPERTY Name () AS CBSTR
+```
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cvSource AS CVAR = "SELECT * FROM Publishers ORDER BY PubID"
+DIM hr AS HRESULT = pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Parse the Properties collection
+DIM pProperties AS CAdoProperties = pRecordset.Properties
+DIM nCount AS LONG = pProperties.Count
+FOR i AS LONG = 0 TO nCount - 1
+   DIM pProperty AS CAdoProperty = pProperties.Item(i)
+   PRINT "Property name: "; pProperty.Name; " - Attributes: "; WSTR(pProperty.Attributes)
+NEXT
+```
