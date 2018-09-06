@@ -43,7 +43,7 @@ Record
 Stream
 ```
 
-# <a name="CAdoBase Class"></a>CAdoBse Class
+# <a name="CAdoBase"></a>CAdoBse Class
 
 The CAdoBase class, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derived classes to store the result codes of ADO calls.
 
