@@ -587,3 +587,57 @@ FUNCTION GetErrorInfo (BYVAL nError AS HRESULT = 0) AS CBSTR
 #### Return value
 
 A description of the error(s).
+
+# <a name="IsolationLevel"></a>IsolationLevel
+
+Indicates the level of isolation for a **Connection** object.
+
+```
+PROPERTY IsolationLevel () AS IsolationLevelEnum
+PROPERTY IsolationLevel (BYVAL Level AS IsolationLevelEnum)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nError* | Optional. The error code. |
+
+#### Return value
+
+An **IsolationLevelEnum** value.
+
+#### IsolationLevelEnum
+
+Specifies the level of transaction isolation for a Connection object.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adXactUnspecified** | Indicates that the provider is using a different isolation level than specified, but that the level cannot be determined. |
+| **adXactChaos** | Indicates that pending changes from more highly isolated transactions cannot be overwritten. |
+| **adXactBrowse** | Indicates that from one transaction you can view uncommitted changes in other transactions. |
+| **adXactReadUncommitted** | Same as **adXactBrowse**. |
+| **adXactCursorStability** | Indicates that from one transaction you can view changes in other transactions only after they have been committed. |
+| **adXactReadCommitted** | Same as **adXactCursorStability**. |
+| **adXactRepeatableRead** | Indicates that from one transaction you cannot see changes made in other transactions, but that requerying can retrieve new Recordset objects. |
+| **adXactIsolated** | Indicates that transactions are conducted in isolation of other transactions. |
+| **adXactSerializable** | Same as **adXactIsolated**. |
+
+#### Remarks
+
+Use the **IsolationLevel** property to set the isolation level of a **Connection** object. The setting does not take effect until the next time you call the **BeginTrans** method. If the level of isolation you request is unavailable, the provider may return the next greater level of isolation without updating the **IsolationLevel** property.
+
+#### Remote Data Service Usage
+
+When used on a client-side **Connection** object, the **IsolationLevel** property can be set only to **adXactUnspecified**.
+
+Because users are working with disconnected **Recordset** objects on a client-side cache, there may be multiuser issues. For instance, when two different users try to update the same record, Remote Data Service simply allows the user who updates the record first to "win." The second user's update request will fail with an error.
+
+#### Examples
+
+```
+' // Sets the isolation level
+pConnection.IsolationLevel = adXactUnspecified
+```
+```
+' // Gets the isolation level
+DIM level AS LONG = pConnection.IsolationLevel
+```
