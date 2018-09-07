@@ -973,3 +973,29 @@ This property is used to create data-bound controls with the Data Environment. T
 The **DataMember** and **DataSource** properties must be used in conjunction.
 
 The **DataMember** property determines which object specified by the **DataSource** property will be represented as a **Recordset** object. The **Recordset** object must be closed before this property is set. An error is generated if the **DataMember** property isn't set before the **DataSource** property, or if the **DataMember** name isn't recognized by the object specified in the **DataSource** property.
+
+# <a name="DataSource"></a>DataSource
+
+Indicates an object that contains data to be represented as a **Recordset** object.
+
+```
+PROPERTY DataSource () AS IUnknown PTR
+PROPERTY DataSource (BYVAL punkDataSource AS IUnknown PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *punkDataSource* | An object reference to the data source. |
+
+#### Return value
+
+An object reference to the data source.
+
+#### Remarks
+
+This property is used to create data-bound controls with the Data Environment. The Data Environment maintains collections of data (data sources) containing named objects (data members) that will be represented as a **Recordset** object.
+
+The **DataMember** and **DataSource** properties must be used in conjunction.
+
+The object referenced must implement the **IDataSource** interface and must contain an **IRowset** interface.
+
