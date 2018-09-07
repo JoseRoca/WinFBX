@@ -455,3 +455,66 @@ DO
    IF pRecordset.MoveNext <> S_OK THEN EXIT DO
 LOOP
 ```
+
+# <a name="AddNew"></a>AddNew
+
+Creates a new record for an updatable **Recordset** object.
+
+```
+FUNCTION AddNew ( _
+   BYVAL vFieldList AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
+   BYVAL vValues AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND) _
+) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *vFieldList* | Optional. A single name, or an array of names or ordinal positions of the fields in the new record. |
+| *vValues* | Optional. A single value, or an array of values for the fields in the new record. If *vFieldlist* is an array, *vValues* must also be an array with the same number of members; otherwise, an error occurs. The order of field names must match the order of field values in each array. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **AddNew** method to create and initialize a new record. Use the **Supports** method with **adAddNew** (a **CursorOptionEnum** value) to verify whether you can add records to the current **Recordset** object.
+
+After you call the **AddNew** method, the new record becomes the current record and remains current after you call the **Update** method. Since the new record is appended to the **Recordset**, a call to **MoveNext** following the **Update** will move past the end of the **Recordset**, making **EOF** True. If the **Recordset** object does not support bookmarks, you may not be able to access the new record once you move to another record. Depending on your cursor type, you may need to call the **Requery** method to make the new record accessible.
+
+If you call **AddNew** while editing the current record or while adding a new record, ADO calls the Update method to save any changes and then creates the new record.
+
+The behavior of the **AddNew** method depends on the updating mode of the **Recordset** object and whether you pass the *vFieldlist* and *vValues* arguments.
+
+In immediate update mode (in which the provider writes changes to the underlying data source once you call the **Update** method), calling the **AddNew** method without arguments sets the **EditMode** property to **adEditAdd** (an **EditModeEnum** value). The provider caches any field value changes locally. Calling the **Update** method posts the new record to the database and resets the **EditMode** property to **adEditNone** (an **EditModeEnum** value). If you pass the *vFieldlist* and *vValues* arguments, ADO immediately posts the new record to the database (no Update call is necessary); the **EditMode** property value does not change (**adEditNone**).
+
+In batch update mode (in which the provider caches multiple changes and writes them to the underlying data source only when you call the **UpdateBatch** method), calling the **AddNew** method without arguments sets the **EditMode** property to **adEditAdd**. The provider caches any field value changes locally. Calling the Update method adds the new record to the current **Recordset**, but the provider does not post the changes to the underlying database, or reset the **EditMode** to **adEditNone**, until you call the **UpdateBatch** method. If you pass the *vFieldlist* and *vValues* arguments, ADO sends the new record to the provider for storage in a cache and sets the **EditMode** to **adEditAdd**; you need to call the **UpdateBatch** method to post the new record to the underlying database.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Create a Connection object
+DIM pConnection AS CAdoConnection
+' // Create a Recordset object
+DIM pRecordset AS CAdoRecordset
+
+' // Open the connection
+DIM cvConStr AS CVAR = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open cvConStr
+
+' // Open the recordset
+DIM cvSource AS CVAR = "Publishers"
+pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdTableDirect)
+
+' // Add a new record
+pRecordset.AddNew
+   pRecordset.Collect("PubID") = CLNG(10000)
+   pRecordset.Collect("Name") = "Wile E. Coyote"
+   pRecordset.Collect("Company Name") = "Warner Brothers Studios"
+   pRecordset.Collect("Address") = "4000 Warner Boulevard"
+   pRecordset.Collect("City") = "Burbank, CA. 91522"
+pRecordset.Update
+```
