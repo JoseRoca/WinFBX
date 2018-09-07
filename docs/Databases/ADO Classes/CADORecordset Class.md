@@ -122,3 +122,71 @@ If the provider supports batch updates, resolve discrepancies in field values du
 All of the metadata properties (**Name**, **Type_**, **DefinedSize**, **Precision**, and **NumericScale**) are available before opening the **Field** object's **Recordset**. Setting them at that time is useful for dynamically constructing forms.
 
 When a **Recordset** object is passed across processes, only the rowset values are marshalled, and the properties of the **Recordset** object are ignored. During unmarshalling, the rowset is unpacked into a newly created **Recordset** object, which also sets its properties to the default values.
+
+# <a name="AbsolutePage"></a>AbsolutePage
+
+Sets or returns a Long value from 1 to the number of pages in the **Recordset** object (**PageCount**), or returns one of the **PositionEnum** values.
+
+```
+PROPERTY AbsolutePage () AS PositionEnum
+PROPERTY AbsolutePage (BYVAL Page AS PositionEnum)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Page* | A value from 1 to the number of pages in the **Recordset** object (**PageCount**) |
+
+#### Return value
+
+The page number.
+
+#### Remarks
+
+This property can be used to identify the page number on which the current record is located. It uses the **PageSize** property to logically divide the total rowset count of the **Recordset** object into a series of pages, each of which has the number of records equal to **PageSize** (except for the last page, which may have fewer records). The provider must support the appropriate functionality for this property to be available.
+
+When getting or setting the **AbsolutePage** property, ADO uses the **AbsolutePosition** property and the **PageSize** property together as follows:
+
+* To get the **AbsolutePage**, ADO first retrieves the **AbsolutePosition**, and then divides it by the **PageSize**.
+* To set the **AbsolutePage**, ADO moves the **AbsolutePosition** as follows: it multiplies the **PageSize** by the new **AbsolutePage** value and then adds 1 to the value. As a result, the current position in the **Recordset** after successfully setting **AbsolutePage** is, the first record in that page.
+
+Like the **AbsolutePosition** property, **AbsolutePage** is 1-based and equals 1 when the current record is the first record in the **Recordset**. Set this property to move to the first record of a particular page. Obtain the total number of pages from the **PageCount** property.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Set the cursor location
+DIM pRecordset AS CAdoRecordset
+pRecordset.CursorLocation = adUseClient
+
+' // Open the recordset
+DIM cvSource AS CVAR = "SELECT * FROM Publishers"
+pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Display five records at a time
+DIM nPageSize AS LONG = 5
+pRecordset.PageSize = nPageSize
+' // Retrieve the number of pages
+DIM nPageCount AS LONG = pRecordset.PageCount
+
+' // Parse the recordset
+FOR i AS LONG = 1 TO nPageCount
+   ' // Set the cursor at the beginning of the page
+   pRecordset.AbsolutePage = i
+   FOR x AS LONG = 1 TO nPageSize
+      ' // Get the content of the "Name" column
+      DIM cvRes AS CVAR = pRecordset.Collect("Name")
+      PRINT cvRes
+      ' // Fetch the next row
+      pRecordset.MoveNext
+      IF pRecordset.EOF THEN EXIT FOR
+   NEXT
+   PRINT
+NEXT
+```
