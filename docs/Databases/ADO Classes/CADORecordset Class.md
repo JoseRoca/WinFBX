@@ -2016,3 +2016,76 @@ The number of records on a page.
 Use the **PageSize** property to determine how many records make up a logical page of data. Establishing a page size allows you to use the **AbsolutePage** property to move to the first record of a particular page. This is useful in Web-server scenarios when you want to allow the user to page through data, viewing a certain number of records at a time.
 
 This property can be set at any time, and its value will be used for calculating the location of the first record of a particular page.
+
+# <a name="Properties"></a>Properties
+
+Returns a reference to the Properties collection.
+
+```
+PROPERTY Properties () AS Afx_ADOProperties PTR
+```
+
+#### Return value
+
+An **Afx_ADOProperties** object reference.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Create an instance of the CAdoProperties class
+' // with a reference to the Peoperties collection.
+DIM pProperties AS CAdoProperties = pConnection.Properties
+PRINT "Number of properties: "; pProperties.Count
+
+' // Create an instance of the CAdoProperty class
+' // with a reference to a Property object.
+DIM pProperty AS CAdoProperty = pProperties.Item("DBMS Version")
+
+' // Print the value of the property
+PRINT "DBMS version : "; pProperty.Value.ToStr
+```
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cbsSource AS CBSTR = "SELECT * FROM Publishers ORDER BY PubID"
+DIM hr AS HRESULT = pRecordset.Open(cbsSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Parse the Properties collection
+DIM pProperties AS CAdoProperties = pRecordset.Properties
+DIM nCount AS LONG = pProperties.Count
+FOR i AS LONG = 0 TO nCount - 1
+   DIM pProperty AS CAdoProperty = pProperties.Item(i)
+   PRINT "Property name: "; pProperty.Name; " - Attributes: "; WSTR(pProperty.Attributes)
+NEXT
+```
+
+Alternate version using a compound syntax:
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Retrieve the "DBMS Version" property
+PRINT CAdoProperty(CAdoProperties(pConnection.Properties).Item("DBMS Version")).Value
+```
