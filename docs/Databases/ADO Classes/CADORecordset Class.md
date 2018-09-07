@@ -755,3 +755,19 @@ The following table provided a full listing of all **Recordset** events and indi
 | **WillChangeRecord** | Yes |
 | **WillChangeRecordset** | No |
 | **WillMove** | No |
+
+# <a name="Close"></a>Close
+
+Closes a **Recordset** object and any dependent objects.
+
+```
+FUNCTION Close () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **Close** method to close a **Recordset** to free any associated system resources. Closing an object does not remove it from memory; you can change its property settings and open it again later. To completely eliminate an object from memory, release the connection calling the **Release** method.
