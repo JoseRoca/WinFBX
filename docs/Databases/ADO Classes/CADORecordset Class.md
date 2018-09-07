@@ -706,7 +706,7 @@ FUNCTION Clone (BYVAL nLockType AS LockTypeEnum = adLockUnspecified) AS Afx_AdoR
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nLockType* | Optional. A **LockTypeEnum** value that specifies either the lock type of the original Recordset, or a read-only Recordset. Valid values are **adLockUnspecified** or **adLockReadOnly**. |
+| *nLockType* | Optional. A **LockTypeEnum** value that specifies either the lock type of the original **Recordset**, or a read-only Recordset. Valid values are **adLockUnspecified** or **adLockReadOnly**. |
 
 #### LockTypeEnum
 
