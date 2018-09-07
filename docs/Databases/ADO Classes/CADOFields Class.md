@@ -416,7 +416,7 @@ One or more **FieldAttributeEnum** values.
 
 #### FieldAttributeEnum
 
-Specifies one or more attributes of a Field object.
+Specifies one or more attributes of a **Field** object.
 
 | Parameter  | Description |
 | ---------- | ----------- |
