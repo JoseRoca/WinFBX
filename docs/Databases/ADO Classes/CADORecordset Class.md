@@ -1287,3 +1287,67 @@ FUNCTION GetErrorInfo (BYVAL nError AS HRESULT = 0) AS CBSTR
 #### Return value
 
 A description of the error(s).
+
+# <a name="GetRows"></a>GetRows
+
+Retrieves multiple records of a **Recordset** object into an array.
+
+```
+FUNCTION GetRows (BYVAL Rows AS LONG = adGetRowsRest, BYREF cvStart AS CVAR = "", _
+   BYREF cvFields AS CVAR = "") AS SAFEARRAY PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Rows* | Optional. A **GetRowsOptionEnum** value that indicates the number of records to retrieve. The default is **adGetRowsRest**. |
+| *cvStart* | Optional. A string value or Variant that evaluates to the bookmark for the record from which the **GetRows** operation should begin. You can also use a **BookmarkEnum** value. |
+| *cvFields* | Optional. A Variant that represents a single field name or ordinal position, or an array of field names or ordinal position numbers. ADO returns only the data in these fields. |
+
+#### Return value
+
+SAFEARRAY. The array of records.
+
+#### Remarks
+
+Use the **GetRows** method to copy records from a **Recordset** into a two-dimensional array. The first subscript identifies the field and the second identifies the record number. The array variable is automatically dimensioned to the correct size when the **GetRows** method returns the data.
+
+If you do not specify a value for the Rows argument, the **GetRows** method automatically retrieves all the records in the **Recordset** object. If you request more records than are available, **GetRows** returns only the number of available records.
+
+If the **Recordset** object supports bookmarks, you can specify at which record the **GetRows** method should begin retrieving data by passing the value of that record's **Bookmark** property in the **Start** argument.
+
+If you want to restrict the fields that the **GetRows** call returns, you can pass either a single field name/number or an array of field names/numbers in the **Fields** argument.
+
+After you call **GetRows**, the next unread record becomes the current record, or the **EOF** property is set to True if there are no more records.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Create a Connection object
+DIM pConnection AS CAdoConnection
+' // Create a Recordset object
+DIM pRecordset AS CAdoRecordset
+' // Open the connection
+DIM cvConStr AS CVAR = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open cvConStr
+' // Open the recordset
+DIM cvSource AS CVAR = "SELECT TOP 20 * FROM Publishers ORDER BY Name"
+DIM hr AS HRESULT = pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // GetRows returns a pointer to a two-dimensional safe array
+' // that we are going to attach to an instance of the CSafeArray class
+DIM csa AS CSafeArray
+csa.Attach(pRecordset.GetRows)
+'--or--
+' DIM csa AS CSafeArray = CSafeArray(pRecordset.GetRows, TRUE)
+
+' // Print the contents of the safe array
+FOR j AS LONG = csa.LBound(2) TO csa.UBound(2)
+   FOR i AS LONG = csa.LBound(1) TO csa.UBound(1)
+      PRINT csa.GetVar(i, j)
+   NEXT
+   PRINT
+NEXT
+```
