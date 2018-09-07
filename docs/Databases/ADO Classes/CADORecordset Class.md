@@ -869,6 +869,18 @@ FUNCTION CompareBookmarks (BYREF cvBookmark1 AS CVAR, BYREF cvBookmark2 AS CVAR)
 
 A **CompareEnum** value.
 
+#### CompareEnum
+
+Specifies the relative position of two records represented by their bookmarks.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adCompareEqual** | Indicates that the bookmarks are equal. |
+| **adCompareGreaterThan** | Indicates that the first bookmark is after the second. |
+| **adCompareLessThan** | Indicates that the first bookmark is before the second. |
+| **adCompareNotComparable** | Indicates that the bookmarks cannot be compared. |
+| **adCompareNotEqual** | Indicates that the bookmarks are not equal and not ordered. |
+
 #### Remarks
 
 The bookmarks must apply to the same **Recordset** object, or a **Recordset** object and its clone. You cannot reliably compare bookmarks from different **Recordset** objects, even if they were created from the same source or command. Nor can you compare bookmarks for a **Recordset** object whose underlying provider does not support comparisons.
