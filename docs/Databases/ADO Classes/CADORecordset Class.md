@@ -337,7 +337,7 @@ ShowActiveCommand pConnection, pRecordset
 
 # <a name="ActiveConnection"></a>ActiveConnection
 
-Sets or returns an string value that contains a definition for a connection if the connection is closed, or a Variant containing the current Connection object if the connection is open. Default is a null object reference.
+Sets or returns an string value that contains a definition for a connection if the connection is closed, or a Variant containing the current **Connection** object if the connection is open. Default is a null object reference.
 
 ```
 PROPERTY ActiveConnection (BYREF vConn AS CVAR)
