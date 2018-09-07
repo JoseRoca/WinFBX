@@ -1798,3 +1798,176 @@ To pass parameters for more than one command in the compound statement by fillin
 Your OLE DB provider determines when each command command in a compound statement is executed. The Microsoft OLE DB Provider for SQL Server, for example, executes all commands in a batch upon receiving the compound statement. The resulting Recordsets are simply returned when you call **NextRecordset**.
 
 However, other providers may execute the next command in a statement only after **NextRecordset** is called. For these providers, if you explicitly close the **Recordset** object before stepping through the entire command statement, ADO never executes the remaining commands.
+
+# <a name="Open"></a>Open
+
+Opens a connection to a data source.
+
+```
+FUNCTION Open (BYREF cvSource AS CVAR, BYREF cActiveConnection AS CAdoConnection, _
+   BYVAL nCursorType AS CursorTypeEnum = adOpenUnspecified, _
+   BYVAL nLockType AS LockTypeEnum = adLockUnspecified, _
+   BYVAL nOptions AS LONG = adCmdUnspecified) AS HRESULT
+```
+```
+FUNCTION Open (BYREF cvSource AS CVAR, _
+   BYREF cActiveConnection AS CAdoConnection = TYPE(<VARIANT>VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
+   BYVAL nCursorType AS CursorTypeEnum = adOpenUnspecified, _
+   BYVAL nLockType AS LockTypeEnum = adLockUnspecified, _
+   BYVAL nOptions AS LONG = adCmdUnspecified) AS HRESULT
+```
+```
+FUNCTION Open (BYVAL nCursorType AS CursorTypeEnum = adOpenUnspecified, _
+   BYVAL nLockType AS LockTypeEnum = adLockUnspecified, _
+   BYVAL nOptions AS LONG = adCmdUnspecified) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvSource* | Optional. A Variant that evaluates to a valid **Command** object, an SQL statement, a table name, a stored procedure call, a URL, or the name of a file or **Stream** object containing a persistently stored **Recordset**. |
+| *cActiveConnection* | Optional. A valid **Connection** object. |
+| *cvActiveConnection* | Optional. Either a Variant that evaluates to a valid Connection object variable name, or a string that contains **ConnectionString** parameters. |
+| *pActiveConnection* | 
+Pointer to a valid connection object. |
+| *nCursorType* | Optional. A **CursorTypeEnum** value that determines the type of cursor that the provider should use when opening the Recordset. The default value is **adOpenForwardOnly**. |
+| *nLockType* | Optional. A LockTypeEnum value that determines what type of locking (concurrency) the provider should use when opening the Recordset. The default value is **adLockReadOnly**. |
+| *nOptions* | Optional. A Long value that indicates how the provider should evaluate the **Source** argument if it represents something other than a **Command** object, or that the **Recordset** should be restored from a file where it was previously saved. Can be one or more **CommandTypeEnum** or **ExecuteOptionEnum** values, which can be combined with a bitwise **AND** operator.<br>**Note**: If you open a **Recordset** from a **Stream** containing a persisted **Recordset**, using an **ExecuteOptionEnum** value of **adAsyncFetchNonBlocking** will not have an effect; the fetch will be synchronous and blocking.<br>The **ExecuteOptionEnum** values of **adExecuteNoRecords** or **adExecuteStream** should not be used with Open. |
+
+#### CursorTypeEnum
+
+Specifies the type of cursor used in a **Recordset** object.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adOpenDynamic** | Uses a dynamic cursor. Additions, changes, and deletions by other users are visible, and all types of movement through the **Recordset** are allowed, except for bookmarks, if the provider doesn't support them. |
+| **adOpenForwardOnly** | Default. Uses a forward-only cursor. Identical to a static cursor, except that you can only scroll forward through records. This improves performance when you need to make only one pass through a **Recordset**. |
+| **adOpenKeyset** | Uses a keyset cursor. Like a dynamic cursor, except that you can't see records that other users add, although records that other users delete are inaccessible from your Recordset. Data changes by other users are still visible. |
+| **adOpenStatic** | Uses a static cursor, which is a static copy of a set of records that you can use to find data or generate reports. Additions, changes, or deletions by other users are not visible. |
+| **adOpenUnspecified** | Does not specify the type of cursor. |
+
+#### CommandTypeEnum
+
+Specifies how a command argument should be interpreted.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adCmdUnspecified** | Does not specify the command type argument. |
+| **adCmdText** | Evaluates **CommandText** as a textual definition of a command or stored procedure call. |
+| **adCmdTable** | Evaluates **CommandText** as a table name whose columns are all returned by an internally generated SQL query. |
+| **adCmdStoredProc** | Evaluates **CommandText** as a stored procedure name. |
+| **adCmdUnknown** | Default. Indicates that the type of command in the **CommandText** property is not known. |
+| **adCmdFile** | Evaluates CommandText as the file name of a persistently stored **Recordset**. Used with **Recordset** **Open** or **Requery** only. |
+| **adCmdTableDirect** | Evaluates **CommandText** as a table name whose columns are all returned. Used with **Recordset** **Open** or **Requery** only. To use the **Seek** method, the **Recordset** must be opened with **adCmdTableDirect**. This value cannot be combined with the **ExecuteOptionEnum** value **adAsyncExecute**. |
+
+#### ExecuteOptionEnum
+
+Specifies how a command argument should be interpreted.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adAsyncExecute** | Indicates that the command should execute asynchronously. This value cannot be combined with the **CommandTypeEnum** value **adCmdTableDirect**. |
+| *adAsyncFetch* | Indicates that the remaining rows after the initial quantity specified in the **CacheSize** property should be retrieved asynchronously. |
+| *adAsyncFetchNonBlocking* | Indicates that the main thread never blocks while retrieving. If the requested row has not been retrieved, the current row automatically moves to the end of the file. If you open a **Recordset** from a **Stream** containing a persistently stored **Recordset**, **adAsyncFetchNonBlocking** will not have an effect; the operation will be synchronous and blocking. **adAsynchFetchNonBlocking** has no effect when the **CmdTableDirect** option is used to open the **Recordset**. |
+| *adExecuteNoRecords* | Indicates that the command text is a command or stored procedure that does not return rows (for example, a command that only inserts data). If any rows are retrieved, they are discarded and not returned. **adExecuteNoRecords** can only be passed as an optional parameter to the Command or **Connection** **Execute** method. |
+| *adExecuteStream* | Indicates that the results of a command execution should be returned as a stream. **adExecuteStream** can only be passed as an optional parameter to the **Command** **Execute** method. |
+| *adExecuteRecord* | Indicates that the **CommandText** is a command or stored procedure that returns a single row which should be returned as a **Record** object. |
+| *adOptionUnspecified* | Indicates that the command is unspecified. |
+
+#### Return value
+
+S_OK or an HRESULT code.
+
+#### Remarks
+
+The default cursor for an ADO **Recordset** is a forward-only, read-only cursor located on the server.
+
+Using the **Open** method on a **Recordset** object opens a cursor that represents records from a base table, the results of a query, or a previously saved **Recordset**.
+
+Use the optional **Source** argument to specify a data source using one of the following: a **Command** object variable, an SQL statement, a stored procedure, a table name, a URL, or a complete file path name. If **Source** is a file path name, it can be a full path ("c:\dir\file.rst"), a relative path ("..\file.rst"), or a URL ("http://files/file.rst").
+
+It is not a good idea to use the **Source** argument of the **Open** method to perform an action query that doesn't return records because there is no easy way to determine whether the call succeeded. The **Recordset** returned by such a query will be closed. Call the **Execute** method of a **Command** object or the **Execute** method of a **Connection** object instead to perform a query that, such as a SQL INSERT statement, that doesn't return records.
+
+The **ActiveConnection** argument corresponds to the **ActiveConnection** property and specifies in which connection to open the **Recordset** object. If you pass a connection definition for this argument, ADO opens a new connection using the specified parameters. After opening the **Recordset** with a client-side cursor (**CursorLocation = adUseClient**), you can change the value of this property to send updates to another provider. Or you can set this property to NULL to disconnect the **Recordset** from any provider. Changing **ActiveConnection** for a server-side cursor generates an error, however.
+
+For the other arguments that correspond directly to properties of a **Recordset** object (**Source**, **CursorType**, and **LockType**), the relationship of the arguments to the properties is as follows:
+
+* The property is read/write before the **Recordset** object is opened.
+
+* The property settings are used unless you pass the corresponding arguments when executing the **Open** method. If you pass an argument, it overrides the corresponding property setting, and the property setting is updated with the argument value.
+
+* After you open the **Recordset** object, these properties become read-only.
+
+**Note**: The **ActiveConnection** property is read only for **Recordset** objects whose **Source** property is set to a valid **Command** object, even if the **Recordset** object isn't open.
+
+If you pass a **Command** object in the **Source** argument and also pass an **ActiveConnection** argument, an error occurs. The **ActiveConnection** property of the **Command** object must already be set to a valid **Connection** object or connection string.
+
+If you pass something other than a **Command** object in the **Source** argument, you can use the **Options** argument to optimize evaluation of the **Source** argument. If the **Options** argument is not defined, you may experience diminished performance because ADO must make calls to the provider to determine if the argument is an SQL statement, a stored procedure, a URL, or a table name. If you know what **Source** type you're using, setting the **Options** argument instructs ADO to jump directly to the relevant code. If the **Options** argument does not match the **Source** type, an error occurs.
+
+If you pass a **Stream** object in the **Source** argument, you should not pass information into the other arguments. Doing so will generate an error. The **ActiveConnection** information is not retained when a **Recordset** is opened from a **Stream**.
+
+The default for the **Options** argument is **adCmdFile** if no connection is associated with the **Recordset**. This will typically be the case for persistently stored **Recordset** objects.
+
+If the data source returns no records, the provider sets both the **BOF** and **EOF** properties to True, and the current record position is undefined. You can still add new data to this empty **Recordset** object if the cursor type allows it.
+
+When you have concluded your operations over an open **Recordset** object, use the **Close** method to free any associated system resources. Closing an object does not remove it from memory; you can change its property settings and use the **Open** method to open it again later. To completely eliminate an object from memory, cal the **Release** method of the interface.
+
+Before the **ActiveConnection** property is set, call **Open** with no operands to create an instance of a **Recordset** created by appending fields to the **Recordset** **Fields** collection.
+
+If you have set the **CursorLocation** property to **adUseClient**, you can retrieve rows asynchronously in one of two ways. The recommended method is to set **Options** to **adAsyncFetch**. Alternatively, you can use the "Asynchronous Rowset Processing" dynamic property in the **Properties** collection, but related retrieved events can be lost if you do not set the **Options** parameter to **adAsyncFetch**.
+
+**Note**: Background fetching in the MS Remote provider is supported only through the **Open** method's **Options** parameter.
+
+**Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing.
+
+Certain combinations of **CommandTypeEnum** and **ExecuteOptionEnum** values are not valid. For information about which options cannot be combined, see the topics for the **ExecuteOptionEnum**, and **CommandTypeEnum**.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cvSource AS CVAR = "SELECT TOP 20 * FROM Authors ORDER BY Author"
+DIM hr AS HRESULT = pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the content of the "Author" column
+   DIM cvRes AS CVAR = pRecordset.Collect("Author")
+   PRINT cvRes
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+```
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cbsSource AS CBSTR = "SELECT TOP 20 * FROM Authors ORDER BY Author"
+DIM cvConStr AS CVAR = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+DIM hr AS HRESULT = pRecordset.Open(cbsSource, cvConStr, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the content of the "Author" column
+   DIM cvRes AS CVAR = pRecordset.Collect("Author")
+   PRINT cvRes
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+```
