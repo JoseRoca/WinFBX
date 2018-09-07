@@ -678,7 +678,7 @@ If the attempt to cancel the pending updates fails because of a conflict with th
 
 # <a name="CancelUpdate"></a>CancelUpdate
 
-Cancels any changes made to the current or new row of a Recordset object before calling the Update method.
+Cancels any changes made to the current or new row of a **Recordset** object before calling the **Update** method.
 
 ```
 FUNCTION CancelUpdate () AS HRESULT
@@ -695,3 +695,63 @@ Use the **CancelUpdate** method to cancel any changes made to the current row or
 If you are adding a new row when you call the **CancelUpdate** method, the current row becomes the row that was current before the **AddNew** call.
 
 If you are in edit mode and want to move off the current record (for example, with **Move**, **NextRecordset**, or **Close**), you can use **CancelUpdate** to cancel any pending changes. You may need to do this if the update cannot successfully be posted to the data source (for example, an attempted delete that fails due to referential integrity violations will leave the **Recordset** in edit mode after a call to **Delete_**).
+
+# <a name="Clone"></a>Clone
+
+Creates a duplicate **Recordset** object from an existing **Recordset object**. Optionally, specifies that the clone be read-only.
+
+```
+FUNCTION Clone (BYVAL nLockType AS LockTypeEnum = adLockUnspecified) AS Afx_AdoRecordset PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nLockType* | Optional. A **LockTypeEnum** value that specifies either the lock type of the original Recordset, or a read-only Recordset. Valid values are **adLockUnspecified** or **adLockReadOnly**. |
+
+#### LockTypeEnum
+
+Specifies the type of lock placed on records during editing.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adLockBatchOptimistic** | Indicates optimistic batch updates. Required for batch update mode. |
+| **adLockOptimistic** | Indicates optimistic locking, record by record. The provider uses optimistic locking, locking records only when you call the Update method. |
+| **adLockPessimistic** | Indicates pessimistic locking, record by record. The provider does what is necessary to ensure successful editing of the records, usually by locking records at the data source immediately after editing. |
+| **adLockReadOnly** | Indicates read-only records. You cannot alter the data. |
+| **adLockUnspecified** | Does not specify a type of lock. For clones, the clone is created with the same lock type as the original. |
+
+#### Return value
+
+An **Afx_ADORecordset** object reference.
+
+#### Remarks
+
+Use the **Clone** method to create multiple, duplicate **Recordset** objects, particularly if you want to maintain more than one current record in a given set of records. Using the **Clone** method is more efficient than creating and opening a new Recordset object with the same definition as the original.
+
+The **Filter** property of the original **Recordset**, if any, will not be applied to the clone. Set the **Filter** property of the new **Recordset** in order to filter the results. The simplest way to copy any existing **Filter** value is to assign it directly, like this: 
+
+The current record of a newly created clone is set to the first record.
+
+Changes you make to one **Recordset** object are visible in all of its clones regardless of cursor type. However, after you execute **Requery** on the original **Recordset**, the clones will no longer be synchronized to the original.
+
+Closing the original **Recordset** does not close its copies, nor does closing a copy close the original or any of the other copies.
+
+You can only clone a **Recordset** object that supports bookmarks. Bookmark values are interchangeable; that is, a bookmark reference from one **Recordset** object refers to the same record in any of its clones.
+
+Some **Recordset** events that are triggered will also fire in all **Recordset** clones. However, because the current record can differ between cloned **Recordsets**, the events may not be valid for the clone. For example, if you change a value of a field, a **WillChangeField** event will occur in the changed **Recordset** and in all clones. The **Fields** parameter of the **WillChangeField** event of a cloned **Recordset** (where the change was not made) will simply refer to the fields of the current record of the clone, which may be a different record than the current record of the original **Recordset** where the change occurred.
+
+The following table provided a full listing of all **Recordset** events and indicates whether they are valid and triggered for any recordset clones generated using the **Clone** method.
+
+| Event      | Triggered in clones? |
+| ---------- | -------------------- |
+| **EndOfRecordset** | No |
+| **FetchComplete** | No |
+| **FetchProgress** | No |
+| **FieldChangeComplete** | Yes |
+| **MoveComplete** | No |
+| **RecordChangeComplete** | Yes |
+| **RecordsetChangeComplete** | No |
+| **WillChangeField** | Yes |
+| **WillChangeRecord** | Yes |
+| **WillChangeRecordset** | No |
+| **WillMove** | No |
