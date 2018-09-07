@@ -96,7 +96,7 @@ S_OK (0) or an HESULT code.
 
 #### DataTypeEnum
 
-Specifies the data type of a Field, Parameter, or Property. The corresponding OLE DB type indicator is shown in parentheses in the description column of the following table.
+Specifies the data type of a **Field**, **Parameter**, or **Property**. The corresponding OLE DB type indicator is shown in parentheses in the description column of the following table.
 
 | Constant   | Description |
 | ---------- | ----------- |
