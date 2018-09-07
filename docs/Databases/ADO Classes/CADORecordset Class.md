@@ -2749,3 +2749,30 @@ pRecordset.AddNew
    pRecordset.Collect("City") = "Burbank, CA. 91522"
 pRecordset.Update
 ```
+
+# <a name="UpdateBatch"></a>UpdateBatch
+
+Writes all pending batch updates to disk.
+
+```
+FUNCTION UpdateBatch (BYVAL AffectRecords AS AffectEnum = adAffectAll) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *AffectRecords* | Optional. An **AffectEnum** value that indicates how many records the **UpdateBatch** method will affect. |
+
+#### AffectEnum
+
+Specifies which records are affected by an operation.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adAffectAll** | If there is not a Filter applied to the **Recordset**, affects all records. If the **Filter** property is set to a string criteria (such as "Author='Smith'"), then the operation affects visible records in the current chapter. If the **Filter** property is set to a member of the **FilterGroupEnum** or an array of Bookmarks, then the operation will affect all rows of the **Recordset**. |
+| **adAffectAllChapters** | Affects all records in all sibling chapters of the **Recordset**, including those not visible via any **Filter** that is currently applied. |
+| **adAffectCurrent** | Affects only the current record. |
+| **adAffectGroup** | Affects only records that satisfy the current **Filter** property setting. You must set the **Filter** property to a **FilterGroupEnum** value or an array of Bookmarks to use this option. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
