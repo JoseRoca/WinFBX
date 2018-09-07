@@ -715,7 +715,7 @@ Specifies the type of lock placed on records during editing.
 | Constant   | Description |
 | ---------- | ----------- |
 | **adLockBatchOptimistic** | Indicates optimistic batch updates. Required for batch update mode. |
-| **adLockOptimistic** | Indicates optimistic locking, record by record. The provider uses optimistic locking, locking records only when you call the Update method. |
+| **adLockOptimistic** | Indicates optimistic locking, record by record. The provider uses optimistic locking, locking records only when you call the **Update** method. |
 | **adLockPessimistic** | Indicates pessimistic locking, record by record. The provider does what is necessary to ensure successful editing of the records, usually by locking records at the data source immediately after editing. |
 | **adLockReadOnly** | Indicates read-only records. You cannot alter the data. |
 | **adLockUnspecified** | Does not specify a type of lock. For clones, the clone is created with the same lock type as the original. |
@@ -726,7 +726,7 @@ An **Afx_ADORecordset** object reference.
 
 #### Remarks
 
-Use the **Clone** method to create multiple, duplicate **Recordset** objects, particularly if you want to maintain more than one current record in a given set of records. Using the **Clone** method is more efficient than creating and opening a new Recordset object with the same definition as the original.
+Use the **Clone** method to create multiple, duplicate **Recordset** objects, particularly if you want to maintain more than one current record in a given set of records. Using the **Clone** method is more efficient than creating and opening a new **Recordset** object with the same definition as the original.
 
 The **Filter** property of the original **Recordset**, if any, will not be applied to the clone. Set the **Filter** property of the new **Recordset** in order to filter the results. The simplest way to copy any existing **Filter** value is to assign it directly, like this: 
 
