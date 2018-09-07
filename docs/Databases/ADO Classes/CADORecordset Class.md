@@ -2655,7 +2655,7 @@ PROPERTY StayInSync () AS BOOLEAN
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *bStayInSync* | Sets a Boolean value. The default value is True. If True, the chapter will be updated if the parent **Recordset** object changes row position; if False, the chapter will continue to refer to data in the previous chapter even though the parent Recordset object has changed row position. |
+| *bStayInSync* | Sets a Boolean value. The default value is True. If True, the chapter will be updated if the parent **Recordset** object changes row position; if False, the chapter will continue to refer to data in the previous chapter even though the parent **Recordset** object has changed row position. |
 
 #### Return value
 
@@ -2664,3 +2664,39 @@ TRUE or FALSE.
 #### Remarks
 
 This property applies to hierarchical recordsets, such as those supported by the Microsoft Data Shaping Service for OLE DB, and must be set on the parent Recordset before the child **Recordset** is retrieved. This property simplifies navigating hierarchical recordsets.
+
+# <a name="Supports"></a>Supports
+
+Determines whether a specified **Recordset** object supports a particular type of functionality.
+
+```
+FUNCTION Supports (BYVAL CursorOptions AS CursorOptionEnum) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *CursorOptions* | A **CursorOptionEnum** value. |
+
+#### CursorOptionEnum
+
+Specifies what functionality the **Supports** method should test for.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adAddNew** | Supports the **AddNew** method to add new records. |
+| **adApproxPosition** | Supports the **AbsolutePosition** and **AbsolutePage** properties. |
+| **adBookmark** | Supports the **Bookmark** property to gain access to specific records. |
+| **adDelete** | Supports the **Delete_** method to delete records. |
+| **adFind** | Supports the Find method to locate a row in a **Recordset**. |
+| **adHoldRecords** | Retrieves more records or changes the next position without committing all pending changes. |
+| **adIndex** | Supports the **Index** property to name an index. |
+| **adMovePrevious** | Supports the **MoveFirst** and **MovePrevious** methods, and **Move** or **GetRows** methods to move the current record position backward without requiring bookmarks. |
+| **adNotify** | Indicates that the underlying data provider supports notifications (which determines whether **Recordset** events are supported). |
+| **adResync** | Supports the **Resync** method to update the cursor with the data that is visible in the underlying database. |
+| **adSeek** | Supports the **Seek** method to locate a row in a **Recordset**. |
+| **adUpdate** | Supports the **Update** method to modify existing data. |
+| **adUpdateBatch** | Supports batch updating (**UpdateBatch** and **CancelBatch** methods) to transmit groups of changes to the provider. |
+
+#### Return value
+
+TRUE or FALSE.
