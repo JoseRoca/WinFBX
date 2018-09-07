@@ -396,3 +396,87 @@ SUB Attach (BYVAL pField AS Afx_ADOField PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
 | ---------- | ----------- |
 | *pField* | A reference to an ADO **Field** object. |
 | *fAddRef* | TRUE = increase the reference count; FALSE = don't increase the reference count. |
+
+# <a name="Attributes"></a>Attributes
+
+Indicates one or more characteristics of a field.
+
+```
+PROPERTY Attributes () AS LONG
+PROPERTY Attributes (BYVAL lAttr AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lAttr* | Can be the sum of one or more **FieldAttributeEnum** values. It is normally read-only, However, for new **Field** objects that have been appended to the **Fields** collection of a **Record**, **Attributes** is read/write only after the **Value** property for the **Field** has been specified and the new Field has been successfully added by the data provider by calling the **Update** method of the **Fields** collection. |
+
+#### Return value
+
+One or more **FieldAttributeEnum** values.
+
+#### FieldAttributeEnum
+
+Specifies one or more attributes of a Field object.
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| **adFldCacheDeferred** | Indicates that the provider caches field values and that subsequent reads are done from the cache. |
+| **adFldFixed** | Indicates that the field contains fixed-length data. |
+| **adFldIsChapter** | Indicates that the field contains a chapter value, which specifies a specific child recordset related to this parent field. Typically chapter fields are used with data shaping or filters. |
+| **adFldIsCollection** | Indicates that the field specifies that the resource represented by the record is a collection of other resources, such as a folder, rather than a simple resource, such as a text file. |
+| **adFldIsDefaultStream** | Indicates that the field contains the default stream for the resource represented by the record. For example, the default stream can be the HTML content of a root folder on a Web site, which is automatically served when the root URL is specified. |
+| **adFldIsNullable** | Indicates that the field accepts null values. |
+| **adFldIsRowURL** | Indicates that the field contains the URL that names the resource from the data store represented by the record.  |
+| **adFldLong** | Indicates that the field is a long binary field. Also indicates that you can use the **AppendChunk** and **GetChunk** methods. |
+| **adFldMayBeNull** | Indicates that you can read null values from the field. |
+| **adFldMayDefer** | Indicates that the field is deferred—that is, the field values are not retrieved from the data source with the whole record, but only when you explicitly access them. |
+| **adFldNegativeScale** | Indicates that the field represents a numeric value from a column that supports negative scale values. The scale is specified by the **NumericScale** property. |
+| **adFldRowID** | Indicates that the field contains a persistent row identifier that cannot be written to and has no meaningful value except to identify the row (such as a record number, unique identifier, and so forth). |
+| **adFldRowVersion** | Indicates that the field contains some kind of time or date stamp used to track updates. |
+| **adFldUnknownUpdatable** | Indicates that the provider cannot determine if you can write to the field. |
+| **adFldUnspecified** | Indicates that the provider does not specify the field attributes. |
+| **adFldUpdatable** | Indicates that you can write to the field. |
+
+#### Remarks
+
+When you set multiple attributes, you can sum the appropriate constants. If you set the property value to a sum including incompatible constants, an error occurs.
+
+#### Remote Data Service Usage
+
+This property is not available on a client-side Connection object.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cvSource AS CVAR = "SELECT * FROM Publishers ORDER BY PubID"
+DIM hr AS HRESULT = pRecordset.Open(cbsSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Get a reference to the Fields collection
+DIM pFields AS CAdoFields = pRecordset.Fields
+DIM nCount AS LONG = pFields.Count
+IF nCount THEN
+   PRINT
+   PRINT "Nullable fields:"
+   PRINT "================"
+   PRINT
+   FOR i AS LONG = 0 TO nCount - 1
+      DIM pField AS CAdoField
+      pField.Attach(pFields.Item(i))
+      ' // Get the attributes of the field
+      DIM lAttr AS LONG = pField.Attributes
+      ' // Display fields that are nullable
+      IF (lAttr AND adFldIsNullable) = adFldIsNullable THEN
+         PRINT "Field name: "; pField.Name
+      END IF
+   NEXT
+END IF
+```
