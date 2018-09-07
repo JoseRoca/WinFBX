@@ -1,4 +1,4 @@
-# CADOCoOmmand Class
+# CADOCommand Class
 
 Defines a specific command that you intend to execute against a data source.
 
