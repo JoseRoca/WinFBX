@@ -26,8 +26,8 @@ If you attempt to reference a nonexistent field by name, a new **Field** object 
 | [Count](#Count) | Retrieves the number of objects in the **Fields** collection. |
 | [Delete_](#Delete_) | Deletes an object from the **Fields** collection. |
 | [Item](#Item) | Indicates a specific member of the **Fields** collection, by name or ordinal number. |
-| [Resync](#Resync) | Resynchronizes the contents of the **Fields** collection. |
 | [Refresh](#Refresh) | Refreshes the contents of the **Fields** collection. |
+| [Resync](#Resync) | Resynchronizes the contents of the **Fields** collection. |
 | [Update](#Update) | Saves any changes you make to the current **Fields** collection of a **Record** object. |
 
 # CADOField Class
@@ -235,6 +235,21 @@ An ADO **Fields** object reference.
 
 If **Item** cannot find an object in the collection corresponding to the *Index* argument, an error occurs.
 
+# <a name="Refresh"></a>Refresh
+
+Refreshes the contents of the **Fields** collection.
+
+```
+FUNCTION Refresh () AS HRESULT
+```
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Using the **Refresh** method on the **Fields** collection has no visible effect. To retrieve changes from the underlying database structure, you must use either the **Requery** method or, if the **Recordset** object does not support bookmarks, the **MoveFirst** method.
+
 # <a name="Resync"></a>Resync
 
 Resynchronizes the contents of the **Fields** collection.
@@ -249,7 +264,7 @@ FUNCTION Resync (BYVAL ResyncValues AS ResyncEnum = adResyncAllValues) AS HRESUL
 
 #### ResyncEnum
 
-Specifies whether underlying values are overwritten by a call to Resync.
+Specifies whether underlying values are overwritten by a call to **Resync**.
 
 | Constant   | Description |
 | ---------- | ----------- |
