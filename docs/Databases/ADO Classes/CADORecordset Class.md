@@ -2516,3 +2516,72 @@ DO
    IF pRecordset.MoveNext <> S_OK THEN EXIT DO
 LOOP
 ```
+
+# <a name="Source"></a>Source
+
+Indicates the data source for a **Recordset** object.
+
+Sets a string value or **Command** object reference; returns only a string value that indicates the source of the **Recordset**.
+
+```
+PROPERTY Source (BYREF cbsConn AS CBSTR)
+PROPERTY Source (BYVAL pcmd AS Afx_ADOCommand PTR)
+PROPERTY Source () AS CVAR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsConn* | The source of the **Recordset**. |
+| *pcmd* | A **Command** object reference. |
+
+#### Return value
+
+The data source of the **Recordset**.
+
+#### Remarks
+
+Use the **Source** property to specify a data source for a **Recordset** object using one of the following: a **Command** object variable, an SQL statement, a stored procedure, or a table name.
+
+If you set the **Source** property to a **Command** object, the **ActiveConnection** property of the **Recordset** object will inherit the value of the **ActiveConnection** property for the specified **Command** object. However, reading the **Source** property does not return a **Command** object; instead, it returns the **CommandText** property of the **Command** object to which you set the Source property.
+
+If the **Source** property is an SQL statement, a stored procedure, or a table name, you can optimize performance by passing the appropriate **Options** argument with the **Open** method call.
+
+The **Source** property is read/write for closed **Recordset** objects and read-only for open **Recordset** objects.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Create a Recordset object
+DIM pRecordset AS CAdoRecordset
+' // Set the active connection
+pRecordset.ActiveConnection = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+' // Set the source
+pRecordset.Source = "SELECT TOP 20 * FROM Authors ORDER BY Author"
+' // Open the recordset
+DIM hr AS HRESULT = pRecordset.Open
+```
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Create a Connection object
+DIM pConnection AS CAdoConnection
+' // Create a Recordset object
+DIM pRecordset AS CAdoRecordset
+' // Open the connection
+DIM cvConStr AS CVAR = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open cvConStr
+' // Set the active connection
+pRecordset.ActiveConnection = pConnection
+' // Set the source
+DIM cvSource AS CVAR = "SELECT TOP 20 * FROM Authors ORDER BY Author"
+pRecordset.Source = cvSource
+' // Open the recordset
+DIM hr AS HRESULT = pRecordset.Open
+```
