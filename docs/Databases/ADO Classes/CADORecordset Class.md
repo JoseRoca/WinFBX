@@ -2365,3 +2365,85 @@ IF AfxFileExists("Publishers.dat") THEN
    END IF
 END IF
 ```
+
+# <a name="Seek"></a>Seek
+
+Searches the index of a **Recordset** to quickly locate the row that matches the specified values, and changes the current row position to that row.
+
+```
+FUNCTION Seek (BYREF KeyValues AS CVAR, BYVAL SeekOption AS SeekEnum = adSeekFirstEQ) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvKeyValues* | An array of Variant values. An index consists of one or more columns and the array contains a value to compare against each corresponding column. |
+| *SeekOption* | Optional. A **SeekEnum** value that specifies the type of comparison to be made between the columns of the index and the corresponding *KeyValues*. |
+
+#### SeekEnum
+
+Specifies the type of Seek to execute.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adSeekFirstEQ** | Seeks the first key equal to *KeyValues*. |
+| **adSeekLastEQ** | Seeks the last key equal to *KeyValues*. |
+| **adSeekAfterEQ** | Seeks either a key equal to *KeyValues* or just after where that match would have occurred. |
+| **adSeekAfter** | Seeks a key just after where a match with *KeyValues* would have occurred. |
+| **adSeekBeforeEQ** | Seeks either a key equal to *KeyValues* or just before where that match would have occurred. |
+| **adSeekBefore** | Seeks a key just before where a match with *KeyValues* would have occurred. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **Seek** method in conjunction with the **Index** property if the underlying provider supports indexes on the **Recordset** object. Use the **Supports**(*adSeek*) method to determine whether the underlying provider supports Seek, and the **Supports**(*adIndex*) method to determine whether the provider supports indexes. (For example, the OLE DB Provider for Microsoft Jet supports **Seek** and **Index**.)
+
+If **Seek** does not find the desired row, no error occurs, and the row is positioned at the end of the **Recordset**. Set the **Index** property to the desired index before executing this method.
+
+This method is supported only with server-side cursors. Seek is not supported when the **Recordset** object's **CursorLocation** property value is **adUseClient**.
+
+This method can only be used when the **Recordset** object has been opened with a **CommandTypeEnum** value of **adCmdTableDirect**.
+
+#### Note
+
+The SQL Server 6.5 or 7.0 doesn't support the **Seek** or **Index** methods of the **Recordset**. You can however, use the **Index** and **Seek** method with an Access 2000 database and the OLE DB 4.0 Provider for Jet. 
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Set the cursor location
+DIM pRecordset AS CAdoRecordset
+pRecordset.CursorLocation = adUseServer
+
+' // Open the recordset
+DIM cvSource AS CVAR = "Publishers"
+DIM hr AS HRESULT = pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdTableDirect)
+
+' // Set the index
+pRecordset.Index = "PrimaryKey"
+
+' // Seek the record 70
+pRecordset.Seek 70, 1
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the contents
+   DIM cvRes1 AS CVAR = pRecordset.Collect("PubID")
+   DIM cvRes2 AS CVAR = pRecordset.Collect("Name")
+   DIM cvRes3 AS CVAR = pRecordset.Collect("Company Name")
+   PRINT cvRes1 & " " & cvRes2 & " " & cvRes3
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+```
