@@ -49,7 +49,7 @@ Represents the entire set of records from a base table or the results of an exec
 | [PageCount](#PageCount) | Indicates how many pages of data the **Recordset** object contains. |
 | [PageSize](#PageSize) | Sets or returns a Long value that indicates how many records are on a page. The default is 10. |
 | [Properties](#Properties) | Returns a reference to the **Properties** collection. |
-| [RecordCount](#RecordCount) | Indicates the number of records in a Recordset object. |
+| [RecordCount](#RecordCount) | Indicates the number of records in a **Recordset** object. |
 | [Requery](#Requery) | Updates the data in a **Recordset** object by re-executing the query on which the object is based. |
 | [Resync](#Resync) | Refreshes the data in the current **Recordset** object from the underlying database. |
 | [Save](#Save) | Saves the **Recordset** in a file or **Stream** object. |
@@ -2089,3 +2089,36 @@ pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
 ' // Retrieve the "DBMS Version" property
 PRINT CAdoProperty(CAdoProperties(pConnection.Properties).Item("DBMS Version")).Value
 ```
+
+# <a name="RecordCount"></a>RecordCount
+
+Indicates the number of records in a **Recordset** object.
+
+```
+PROPERTY RecordCount () AS LONG
+```
+
+#### Return value
+
+The number of records in the **Recordset**.
+
+#### Remarks
+
+Use the **RecordCount** property to find out how many records are in a **Recordset** object. The property returns -1 when ADO cannot determine the number of records or if the provider or cursor type does not support **RecordCount**. Reading the **RecordCount** property on a closed **Recordset** causes an error.
+
+If the **Recordset** object supports approximate positioning or bookmarks—that is, **Supports**(*adApproxPosition*) or **Supports**(*adBookmark*), respectively, return True—this value will be the exact number of records in the **Recordset**, regardless of whether it has been fully populated. If the **Recordset** object does not support approximate positioning, this property may be a significant drain on resources because all records will have to be retrieved and counted to return an accurate **RecordCount** value.
+
+**Note**: In ADO versions 2.8 and earlier, the SQLOLEDB provider fetches all records when a server-side cursor is used despite the fact that it returns True for both **Supports**(*adApproxPosition*) and **Supports**(*adBookmark*).
+
+The cursor type of the **Recordset** object affects whether the number of records can be determined. The **RecordCount** property will return -1 for a forward-only cursor; the actual count for a static or keyset cursor; and either -1 or the actual count for a dynamic cursor, depending on the data source.
+
+#### Problem
+
+**RecordCount May Return -1**
+
+The number of records in a dynamic cursor may change. Forward only cursors do not return a **RecordCount**.
+
+Use either **adOpenKeyset** or **adOpenStatic** as the **CursorType** for server side cursors or use a client side cursor. Client side cursors use only **adOpenStatic** for **CursorTypes** regardless of which **CursorType* you select.
+
+This behavior is by design.
+
