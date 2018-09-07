@@ -2201,7 +2201,7 @@ Specifies which records are affected by an operation.
 
 #### ResyncEnum
 
-Specifies whether underlying values are overwritten by a call to Resync.
+Specifies whether underlying values are overwritten by a call to **Resync**.
 
 | Constant   | Description |
 | ---------- | ----------- |
