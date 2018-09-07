@@ -2,6 +2,8 @@
 
 Represents an open connection to a data source.
 
+**Include file**: CADOConnection.inc (include CADODB.inc)
+
 A **Connection** object represents a unique session with a data source. In the case of a client/server database system, it may be equivalent to an actual network connection to the server. Depending on the functionality supported by the provider, some collections, methods, or properties of a **Connection** object may not be available.
 
 With the collections, methods, and properties of a **Connection** object, you can do the following:
