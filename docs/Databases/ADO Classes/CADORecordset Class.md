@@ -2600,7 +2600,7 @@ The current **Recordset** state.
 
 #### ObjectStateEnum
 
-Specifies whether the Open method of a Connection object should return after (synchronously) or before (asynchronously) the connection is established.
+Specifies whether the **Open** method of a **Connection** object should return after (synchronously) or before (asynchronously) the connection is established.
 
 | Constant   | Description |
 | ---------- | ----------- |
