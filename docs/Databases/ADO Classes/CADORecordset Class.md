@@ -1621,6 +1621,16 @@ FUNCTION Move (BYVAL NumRecords AS LONG, BYREF cvStart AS CVAR) AS HRESULT
 | *start* | Optional. A **BookmarkEnum** value. |
 | *cvStart* | Optional. A Variant that evaluates to a bookmark. |
 
+#### BookmarkEnum
+
+Specifies a bookmark indicating where the operation should begin.
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| **adBookmarkCurrent** | Starts at the current record. |
+| **adBookmarkFirst** | Starts at the first record. |
+| **adBookmarkLast** | Starts at the last record. |
+
 #### Return value
 
 S_OK (0) or an HRESULT code.
