@@ -931,7 +931,7 @@ PROPERTY CursorType (BYVAL lCursorType AS CursorTypeEnum)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *lCursorType* | One of the **CursorTypeEnum** values |
+| *lCursorType* | One of the **CursorTypeEnum** values. |
 
 #### Return value
 
@@ -948,3 +948,28 @@ Specifies the type of cursor used in a **Recordset** object.
 | **adOpenKeyset** | Uses a keyset cursor. Like a dynamic cursor, except that you can't see records that other users add, although records that other users delete are inaccessible from your Recordset. Data changes by other users are still visible. |
 | **adOpenStatic** | Uses a static cursor, which is a static copy of a set of records that you can use to find data or generate reports. Additions, changes, or deletions by other users are not visible. |
 | **adOpenUnspecified** | Does not specify the type of cursor. |
+
+# <a name="DataMember"></a>DataMember
+
+Indicates the name of the data member that will be retrieved from the object referenced by the **DataSource** property.
+
+```
+PROPERTY DataMember () AS CBSTR
+PROPERTY DataMember (BYVAL cbsDataMember AS CBSTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsDataMember* | Name of the data member. Not case sensitive. |
+
+#### Return value
+
+The name of the data member.
+
+#### Remarks
+
+This property is used to create data-bound controls with the Data Environment. The Data Environment maintains collections of data (data sources) containing named objects (data members) that will be represented as a **Recordset** object.
+
+The **DataMember** and **DataSource** properties must be used in conjunction.
+
+The **DataMember** property determines which object specified by the **DataSource** property will be represented as a **Recordset** object. The **Recordset** object must be closed before this property is set. An error is generated if the **DataMember** property isn't set before the **DataSource** property, or if the **DataMember** name isn't recognized by the object specified in the **DataSource** property.
