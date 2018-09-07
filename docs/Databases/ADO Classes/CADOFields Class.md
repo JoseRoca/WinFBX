@@ -2,6 +2,8 @@
 
 Contains all the **Field** objects of a **Recordset** or **Record** object.
 
+**Include file**: CADOFields.inc (include CADODB.inc)
+
 A **Recordset** object has a **Fields** collection made up of **Field** objects. Each **Field** object corresponds to a column in the **Recordset**. You can populate the **Fields** collection before opening the **Recordset** by calling the **Refresh** method on the collection.
 
 See the **Field** object topic for a more detailed explanation of how to use **Field** objects.
@@ -31,6 +33,8 @@ If you attempt to reference a nonexistent field by name, a new **Field** object 
 # CADOField Class
 
 Represents a column of data with a common data type.
+
+**Include file**: CADOField.inc (include CADODB.inc)
 
 Each **Field** object corresponds to a column in the **Recordset**. You use the **Value** property of **Field** objects to set or return data for the current record. Depending on the functionality the provider exposes, some collections, methods, or properties of a **Field** object may not be available.
 
