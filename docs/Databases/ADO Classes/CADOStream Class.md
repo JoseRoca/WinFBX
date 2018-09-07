@@ -1,4 +1,4 @@
-# CAdoStream Class
+# CADOStream Class
 
 Represents a stream of binary data or text.
 
