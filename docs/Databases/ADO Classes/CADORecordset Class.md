@@ -2,6 +2,8 @@
 
 Represents the entire set of records from a base table or the results of an executed command. At any time, the **Recordset** object refers to only a single record within the set as the current record.
 
+**Include file**: CADORecordset.inc (include CADODB.inc)
+
 ### Methods and Properties
 
 | Name       | Description |
