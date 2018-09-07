@@ -2447,3 +2447,72 @@ DO
    IF pRecordset.MoveNext <> S_OK THEN EXIT DO
 LOOP
 ```
+
+# <a name="Seek"></a>Seek
+
+Indicates one or more field names on which the **Recordset** is sorted, and whether each field is sorted in ascending or descending order.
+
+Sets or returns a string value that indicates the field names in the **Recordset** on which to sort. Each name is separated by a comma, and is optionally followed by a blank and the keyword, ASC, which sorts the field in ascending order, or DESC, which sorts the field in descending order. By default, if no keyword is specified, the field is sorted in ascending order.
+
+```
+PROPERTY Sort() AS CBSTR
+PROPERTY Sort (BYVAL cbsCriteria AS CBSTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsCriteria* | A value that indicates the field names in the **Recordset** on which to sort. Each name is separated by a comma, and is optionally followed by a blank and the keyword, ASC, which sorts the field in ascending order, or DESC, which sorts the field in descending order. By default, if no keyword is specified, the field is sorted in ascending order. |
+
+#### Return value
+
+The sorting criteria.
+
+####Remarks
+
+This property requires the **CursorLocation** property to be set to **adUseClient**. A temporary index will be created for each field specified in the Sort property if an index does not already exist.
+
+The sort operation is efficient because data is not physically rearranged, but is simply accessed in the order specified by the index.
+
+When the value of the **Sort** property is anything other than an empty string, the **Sort** property order takes precedence over the order specified in an ORDER BY clause included in the SQL statement used to open the **Recordset**.
+
+The **Recordset** does not have to be opened before accessing the **Sort** property; it can be set at any time after the **Recordset** object is instantiated.
+
+Setting the **Sort** property to an empty string will reset the rows to their original order and delete temporary indexes. Existing indexes will not be deleted.
+
+Suppose a **Recordset** contains three fields named *firstName*, *middleInitial*, and *lastName*. Set the **Sort** property to the string, "lastName DESC, firstName ASC", which will order the Recordset by last name in descending order, then by first name in ascending order. The middle initial is ignored.
+
+No field can be named "ASC" or "DESC" because those names conflict with the keywords ASC and DESC. Give a field with a conflicting name an alias by using the AS keyword in the query that returns the Recordset.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Set the cursor location
+DIM pRecordset AS CAdoRecordset
+pRecordset.CursorLocation = adUseClient
+
+' // Open the recordset
+DIM cvSource AS CBSTR = "Publishers"
+DIM hr AS HRESULT = pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdTableDirect)
+
+' // Set the Sort property
+pRecordset.Sort = "City ASC, Name ASC"
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the contents of the "City" and "Name" columns
+   DIM cvRes1 AS CVAR = pRecordset.Collect("City")
+   DIM cvRes2 AS CVAR = pRecordset.Collect("Name")
+   PRINT cvRes1 & " " & cvRes2
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+```
