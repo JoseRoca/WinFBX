@@ -1195,3 +1195,79 @@ DO
    IF pRecordset.MoveNext <> S_OK THEN EXIT DO
 LOOP
 ```
+
+# <a name="Find"></a>Find
+
+Searches a **Recordset** for the row that satisfies the specified criteria. Optionally, the direction of the search, starting row, and offset from the starting row may be specified. If the criteria is met, the current row position is set on the found record; otherwise, the position is set to the end (or start) of the **Recordset**.
+
+**Note**: The **Find** method is a single column operation only because the OLE DB specification defines **IRowsetFind** this way.
+
+
+```
+FUNCTION Find (BYREF cbsCriteria AS CBSTR, _
+   BYREF cvStart AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
+   BYVAL SkipRecords AS LONG = 0, BYVAL SearchDirection AS SearchDirectionEnum = adSearchForward) AS HRESULT
+```
+```
+FUNCTION Find ( BYREF cbsCriteria AS CBSTR, BYVAL SkipRecords AS LONG = 0, _
+   BYVAL SearchDirection AS SearchDirectionEnum = adSearchForward) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsCriteria* | A string value that contains a statement specifying the column name, comparison operator, and value to use in the search. |
+| *cvStart* | Optional. A bookmark that functions as the starting position for the search. |
+| *SkipRecords* | Optional. A Long value, whose default value is zero, that specifies the row offset from the current row or start bookmark to begin the search. By default, the search will start on the current row. |
+| *SearchDirection* | Optional. A **SearchDirectionEnum** value that specifies whether the search should begin on the current row or the next available row in the direction of the search. An unsuccessful search stops at the end of the **Recordset** if the value is **adSearchForward**. An unsuccessful search stops at the start of the **Recordset** if the value is **adSearchBackward**. |
+
+#### SearchDirectionEnum
+
+Specifies the direction of a record search within a Recordset.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adSearchBackward** | Searches backward, stopping at the beginning of the **Recordset**. If a match is not found, the record pointer is positioned at **BOF**. |
+| **adSearchForward** | Searches forward, stopping at the end of the **Recordset**. If a match is not found, the record pointer is positioned at **EOF**. |
+
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Only a single-column name may be specified in criteria. This method does not support multi-column searches.
+
+The comparison operator in **Criteria** may be ">" (greater than), "<" (less than), "=" (equal), ">=" (greater than or equal), "<=" (less than or equal), "<>" (not equal), or "like" (pattern matching).
+
+The value in **Criteria** may be a string, floating-point number, or date. String values are delimited with single quotes or "#" (number sign) marks (for example, "state = 'WA'" or "state = #WA#"). Date values are delimited with "#" (number sign) marks (for example, "start_date > #7/22/97#"). These values can contain hours, minutes, and seconds to indicate time stamps, but should not contain milliseconds or errors will occur.
+
+If the comparison operator is "like", the string value may contain an asterisk (*) to find one or more occurrences of any character or substring. For example, "state like 'M*'" matches Maine and Massachusetts. You can also use leading and trailing asterisks to find a substring contained within the values. For example, "state like '*as*'" matches Alaska, Arkansas, and Massachusetts.
+
+Asterisks can be used only at the end of a criteria string, or together at both the beginning and end of a criteria string, as shown above. You cannot use the asterisk as a leading wildcard ('*str'), or embedded wildcard ('s*r'). This will cause an error.
+
+    **Note**: An error will occur if a current row position is not set before calling Find. Any method that sets row position, such as MoveFirst, should be called before calling Find.
+
+    **Note**: If you call the Find method on a recordset, and the current position in the recordset is at the last record or end of file (EOF), you will not find anything. You need to call the MoveFirst method to set the current position/cursor to the beginning of the recordset.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+DIM cvConStr AS CVAR = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open cvConStr
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cvSource AS CVAR = "SELECT * FROM Publishers ORDER By PubID"
+DIM hr AS HRESULT = pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+pRecordset.Find "PubID = #70#"
+DIM cvRes1 AS CVAR = pRecordset.Collect("PubID")
+DIM cvRes2 AS CVAR = pRecordset.Collect("Name")
+PRINT cvRes1 & " " & cvRes2
+```
