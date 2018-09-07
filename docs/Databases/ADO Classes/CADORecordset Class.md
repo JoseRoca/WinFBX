@@ -1713,7 +1713,7 @@ If the **Recordset** is forward only and you want to support both forward and ba
 
 # <a name="MoveNext"></a>MoveNext
 
-Moves to the next record in a specified Recordset object and makes that record the current record.
+Moves to the next record in a specified **Recordset** object and makes that record the current record.
 
 ```
 FUNCTION MoveNext () AS HRESULT
@@ -1741,7 +1741,7 @@ If the **Recordset** is forward only and you want to support both forward and ba
 
 # <a name="MovePrevious"></a>MovePrevious
 
-Moves to the previous record in a specified Recordset object and makes that record the current record.
+Moves to the previous record in a specified **Recordset** object and makes that record the current record.
 
 ```
 FUNCTION MovePrevious () AS HRESULT
