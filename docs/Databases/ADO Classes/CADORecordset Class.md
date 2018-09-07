@@ -1127,7 +1127,7 @@ The criteria string is made up of clauses in the form FieldName-Operator-Value (
 
     (LastName = 'Smith' OR LastName = 'Jones') AND FirstName = 'John'
 
-Instead, you would construct this filter as
+    Instead, you would construct this filter as
 
     (LastName = 'Smith' AND FirstName = 'John') OR (LastName = 'Jones' AND FirstName = 'John')
 
