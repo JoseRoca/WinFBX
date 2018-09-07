@@ -2019,7 +2019,7 @@ This property can be set at any time, and its value will be used for calculating
 
 # <a name="Properties"></a>Properties
 
-Returns a reference to the Properties collection.
+Returns a reference to the **Properties** collection.
 
 ```
 PROPERTY Properties () AS Afx_ADOProperties PTR
