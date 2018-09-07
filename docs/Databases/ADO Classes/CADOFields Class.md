@@ -284,3 +284,21 @@ If **ResyncValues** is set to **adResyncAllValues** (the default value), then th
 The value of the **Status** property for each **Field** object at the time of the call also affects the behavior of **Resync**. For **Field** objects with **Status** values of **adFieldPendingUnknown** or **adFieldPendingInsert**, **Resync** has no effect. For **Status** values of **adFieldPendingChange** or **adFieldPendingDelete**, **Resync** synchronizes data values for fields that still exist at the data source.
 
 **Resync** will not modify **Status** values of **Field** objects unless an error occurs when **Resync** is called. For example, if the field no longer exists, the provider will return an appropriate Status value for the **Field** object, such as **adFieldDoesNotExist**. Returned **Status** values may be logically combined within the value of the **Status** property.
+
+# <a name="Update"></a>Update
+
+Saves any changes you make to the current **Fields** collection of a **Record** object.
+
+```
+FUNCTION Update () AS HRESULT
+```
+
+#### Return value
+
+S_OK or an HRESULT code.
+
+#### Remarks
+
+The **Update** method finalizes additions, deletions, and updates to fields in the **Fields** collection of a **Record** object.
+
+For example, fields deleted with the **Delete_** method are marked for deletion immediately but remain in the collection. The **Update** method must be called to actually delete these fields from the provider's collection.
