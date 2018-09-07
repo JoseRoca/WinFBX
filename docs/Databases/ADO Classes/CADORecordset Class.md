@@ -2615,3 +2615,32 @@ Specifies whether the **Open** method of a **Connection** object should return a
 You can use the **State** property to determine the current state of a given object at any time.
 
 The object's **State** property can have a combination of values. For example, if a statement is executing, this property will have a combined value of **adStateOpen** and **adStateExecuting**.
+
+# <a name="Status"></a>Status
+
+Indicates the status of the current record with respect to batch updates or other bulk operations.
+
+```
+PROPERTY Status () AS LONG
+```
+
+#### Return value
+
+The status of the current record.
+
+#### EventStatusEnum
+
+Specifies the current status of the execution of an event.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adStatusCancel** | Requests cancellation of the operation that caused the event to occur. |
+| **adStatusCantDeny** | Indicates that the operation cannot request cancellation of the pending operation. |
+| **adStatusErrorsOccurred** | Indicates that the operation that caused the event failed due to an error or errors. |
+| **adStatusOK** | Indicates that the operation that caused the event was successful. |
+| **adStatusUnwantedEvent** | Prevents subsequent notifications before the event method has finished executing. |
+
+#### Remarks
+
+Use the **Status** property to see what changes are pending for records modified during batch updating. You can also use the **Status** property to view the status of records that fail during bulk operations, such as when you call the **Resync**, **UpdateBatch**, or **CancelBatch** methods on a **Recordset** object, or set the **Filter** property on a **Recordset** object to an array of bookmarks. With this property, you can determine how a given record failed and resolve it accordingly.
+
