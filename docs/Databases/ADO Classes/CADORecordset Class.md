@@ -535,3 +535,29 @@ FUNCTION Attach (BYVAL pRecordset AS AFX_ADORecordset PTR, BYVAL fAddRef AS BOOL
 #### Return value
 
 S_OK or an HRESULT code.
+
+# <a name="BOF"></a>BOF
+
+Indicates that the current record position is before the first record in a **Recordset** object.
+
+```
+PROPERTY BOF () AS BOOLEAN
+```
+
+#### Return value
+
+TRUE if the current record position is before the first record; FALSE, otherwise.
+
+
+# <a name="EOF"></a>BOF
+
+Indicates that the current record position is after the last record in a **Recordset** object.
+
+```
+PROPERTY EOF () AS BOOLEAN
+```
+
+#### Return value
+
+TRUE if the current record position is after the last record; FALSE, otherwise.
+
