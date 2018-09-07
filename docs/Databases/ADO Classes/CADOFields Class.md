@@ -408,7 +408,7 @@ PROPERTY Attributes (BYVAL lAttr AS LONG)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *lAttr* | Can be the sum of one or more **FieldAttributeEnum** values. It is normally read-only, However, for new **Field** objects that have been appended to the **Fields** collection of a **Record**, **Attributes** is read/write only after the **Value** property for the **Field** has been specified and the new Field has been successfully added by the data provider by calling the **Update** method of the **Fields** collection. |
+| *lAttr* | Can be the sum of one or more **FieldAttributeEnum** values. It is normally read-only, However, for new **Field** objects that have been appended to the **Fields** collection of a **Record**, **Attributes** is read/write only after the **Value** property for the **Field** has been specified and the new **Field** has been successfully added by the data provider by calling the **Update** method of the **Fields** collection. |
 
 #### Return value
 
