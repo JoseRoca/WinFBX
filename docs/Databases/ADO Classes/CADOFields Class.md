@@ -148,7 +148,7 @@ The **FieldValue** parameter is only valid when adding a **Field** object to a *
 
 **Field** objects of the following data types (**DataTypeEnum**) cannot be appended to the **Fields** collection and will cause an error to occur: **adArray**, **adChapter**, **adEmpty**, **adPropVariant**, and **adUserDefined**. Also, the following data types are not supported by ADO: **adIDispatch**, **adIUnknown**, and **adIVariant**. For these types, no error will occur when appended, but usage can produce unpredictable results including memory leaks.
 
-# <a name="Attach"></a>Attach
+# <a name="Attach1"></a>Attach
 
 Attaches a reference to an ADO **Fields** object to the class.
 
@@ -383,3 +383,16 @@ The first **AppendChunk** call on a **Field** object writes data to the field, o
 If there is no current record when you call **AppendChunk** on a **Field** object, an error occurs.
 
 **Note**: The **AppendChunk** method does not operate on Field objects of a **Record** object. It does not perform any operation and will produce a run-time error.
+
+# <a name="Attach2"></a>Attach
+
+Attaches a reference to an ADO **Field** object to the class.
+
+```
+SUB Attach (BYVAL pField AS Afx_ADOField PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pField* | A reference to an ADO **Field** object. |
+| *fAddRef* | TRUE = increase the reference count; FALSE = don't increase the reference count. |
