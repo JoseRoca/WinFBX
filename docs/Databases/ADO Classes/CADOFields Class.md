@@ -72,7 +72,7 @@ All of the metadata properties (**Name**, **Type_**, **DefinedSize**, **Precisio
 | [UnderlyingValue](#UnderlyingValue) | Indicates a field's current value in the database. |
 | [Value](#Value) | Sets or returns a Variant value that indicates the value of the object |
 
-# <a name="Append"></a>Append
+# <a name="Append"></a>Append (CADOFields)
 
 Appends an object to a collection. A new **Field** object may be created before it is appended to the collection.
 
@@ -148,7 +148,7 @@ The **FieldValue** parameter is only valid when adding a **Field** object to a *
 
 **Field** objects of the following data types (**DataTypeEnum**) cannot be appended to the **Fields** collection and will cause an error to occur: **adArray**, **adChapter**, **adEmpty**, **adPropVariant**, and **adUserDefined**. Also, the following data types are not supported by ADO: **adIDispatch**, **adIUnknown**, and **adIVariant**. For these types, no error will occur when appended, but usage can produce unpredictable results including memory leaks.
 
-# <a name="Attach1"></a>Attach
+# <a name="Attach1"></a>Attach (CADOFields)
 
 Attaches a reference to an ADO **Fields** object to the class.
 
@@ -161,7 +161,7 @@ SUB Attach (BYVAL pFields AS Afx_ADOFields PTR, BYVAL fAddRef AS BOOLEAN = FALSE
 | *pFields* | A reference to an ADO **Fields** object. |
 | *fAddRef* | TRUE = increase the reference count; FALSE = don't increase the reference count. |
 
-# <a name="CancelUpdate"></a>CancelUpdate
+# <a name="CancelUpdate"></a>CancelUpdate (CADOFields)
 
 Cancels any changes made to the **Fields** collection of a **Record** object before calling the **Update** method.
 
@@ -177,7 +177,7 @@ S_OK (0) or an HRESULT code.
 
 The **CancelUpdate** method cancels any pending insertions or deletions of Field objects, and cancels pending updates of existing fields and restores them to their original values. The **Status** property of all fields in the Fields collection is set to **adFieldOK**.
 
-# <a name="Count"></a>Count
+# <a name="Count"></a>Count (CADOFields)
 
 Retrieves the number of objects in the **Fields** collection.
 
@@ -195,7 +195,7 @@ Because numbering for members of a collection begins with zero, you should alway
 
 If the **Count** property is zero, there are no objects in the collection.
 
-# <a name="CoDelete_unt"></a>Delete_
+# <a name="CoDelete_unt"></a>Delete_ (CADOFields)
 
 Deletes an object from the **Fields** collection.
 
@@ -215,7 +215,7 @@ S_OK (0) or an HRESULT code.
 
 Calling the **Delete_** method on an open **Recordset** causes a run-time error.
 
-# <a name="Item"></a>Item
+# <a name="Item"></a>Item (CADOFields)
 
 Indicates a specific member of the **Fields** collection, by name or ordinal number.
 
@@ -235,7 +235,7 @@ An ADO **Fields** object reference.
 
 If **Item** cannot find an object in the collection corresponding to the *Index* argument, an error occurs.
 
-# <a name="Refresh"></a>Refresh
+# <a name="Refresh"></a>Refresh (CADOFields)
 
 Refreshes the contents of the **Fields** collection.
 
@@ -250,7 +250,7 @@ S_OK (0) or an HRESULT code.
 
 Using the **Refresh** method on the **Fields** collection has no visible effect. To retrieve changes from the underlying database structure, you must use either the **Requery** method or, if the **Recordset** object does not support bookmarks, the **MoveFirst** method.
 
-# <a name="Resync"></a>Resync
+# <a name="Resync"></a>Resync (CADOFields)
 
 Resynchronizes the contents of the **Fields** collection.
 
@@ -285,7 +285,7 @@ The value of the **Status** property for each **Field** object at the time of th
 
 **Resync** will not modify **Status** values of **Field** objects unless an error occurs when **Resync** is called. For example, if the field no longer exists, the provider will return an appropriate Status value for the **Field** object, such as **adFieldDoesNotExist**. Returned **Status** values may be logically combined within the value of the **Status** property.
 
-# <a name="Update"></a>Update
+# <a name="Update"></a>Update (CADOFields)
 
 Saves any changes you make to the current **Fields** collection of a **Record** object.
 
@@ -303,7 +303,7 @@ The **Update** method finalizes additions, deletions, and updates to fields in t
 
 For example, fields deleted with the **Delete_** method are marked for deletion immediately but remain in the collection. The **Update** method must be called to actually delete these fields from the provider's collection.
 
-# <a name="ActualSize"></a>ActualSize
+# <a name="ActualSize"></a>ActualSize (CADOField)
 
 Indicates the actual length of a field's value. Some providers may allow this property to be set to reserve space for BLOB data, in which case the default value is 0.
 
@@ -356,7 +356,7 @@ DO
 LOOP
 ```
 
-# <a name="AppendChunk"></a>AppendChunk
+# <a name="AppendChunk"></a>AppendChunk (CADOField)
 
 Appends data to a large text or binary data **Field*.
 
@@ -384,7 +384,7 @@ If there is no current record when you call **AppendChunk** on a **Field** objec
 
 **Note**: The **AppendChunk** method does not operate on Field objects of a **Record** object. It does not perform any operation and will produce a run-time error.
 
-# <a name="Attach2"></a>Attach
+# <a name="Attach2"></a>Attach (CADOField)
 
 Attaches a reference to an ADO **Field** object to the class.
 
@@ -397,7 +397,7 @@ SUB Attach (BYVAL pField AS Afx_ADOField PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
 | *pField* | A reference to an ADO **Field** object. |
 | *fAddRef* | TRUE = increase the reference count; FALSE = don't increase the reference count. |
 
-# <a name="Attributes"></a>Attributes
+# <a name="Attributes"></a>Attributes (CADOField)
 
 Indicates one or more characteristics of a field.
 
