@@ -2,7 +2,7 @@
 
 Represents a stream of binary data or text.
 
-**Include file**: CAdoStream.inc (include CADODB.inc)
+**Include file**: CADOStream.inc (include CADODB.inc)
 
 #### Remarks
 
