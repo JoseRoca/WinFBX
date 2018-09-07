@@ -1010,11 +1010,6 @@ FUNCTION Delete_ (BYVAL AffectRecords AS AffectEnum = adAffectCurrent) AS HRESUL
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *AffectRecords* | An object reference to the data source. |
-
-
-| Parameter  | Description |
-| ---------- | ----------- |
 | *AffectRecords* | Optional. An **AffectEnum** value that determines how many records the **Delete_** method will affect. The default value is **adAffectCurrent**. Note: **adAffectAll** and **adAffectAllChapters** are not valid arguments to Delete_. |
 
 #### AffectEnum
@@ -1032,7 +1027,7 @@ S_OK (0) or an HRESULT code.
 
 #### Remarks
 
-Using the **Delete_** method marks the current record or a group of records in a **Recordset** object for deletion. If the **Recordset** object doesn't allow record deletion, an error occurs. If you are in immediate update mode, deletions occur in the database immediately. If a record cannot be successfully deleted (due to database integrity violations, for example), the record will remain in edit mode after the call to Update. This means that you must cancel the update with CancelUpdate before moving off the current record (for example, with **Close**, **Move**, or **NextRecordset**).
+Using the **Delete_** method marks the current record or a group of records in a **Recordset** object for deletion. If the **Recordset** object doesn't allow record deletion, an error occurs. If you are in immediate update mode, deletions occur in the database immediately. If a record cannot be successfully deleted (due to database integrity violations, for example), the record will remain in edit mode after the call to **Update**. This means that you must cancel the update with **CancelUpdate** before moving off the current record (for example, with **Close**, **Move**, or **NextRecordset**).
 
 If you are in batch update mode, the records are marked for deletion from the cache and the actual deletion happens when you call the **UpdateBatch** method. (Use the **Filter** property to view the deleted records.)
 
@@ -1067,3 +1062,22 @@ ELSE
    PRINT "Record not found"
 END IF
 ```
+
+# <a name="EditMode"></a>EditMode
+
+Indicates the editing status of the current record.
+
+```
+PROPERTY EditMode () AS LONG
+```
+
+#### EditModeEnum
+
+Specifies the editing status of a record.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adEditNone** | Indicates that no editing operation is in progress. |
+| **adEditInProgress** | Indicates that data in the current record has been modified but not saved. |
+| **adEditAdd** | Indicates that the **AddNew** method has been called, and the current record in the copy buffer is a new record that has not been saved in the database. |
+| **adEditDelete** | Indicates that the current record has been deleted. |
