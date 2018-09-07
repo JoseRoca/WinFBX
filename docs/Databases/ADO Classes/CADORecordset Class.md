@@ -2467,9 +2467,9 @@ PROPERTY Sort (BYVAL cbsCriteria AS CBSTR)
 
 The sorting criteria.
 
-####Remarks
+#### Remarks
 
-This property requires the **CursorLocation** property to be set to **adUseClient**. A temporary index will be created for each field specified in the Sort property if an index does not already exist.
+This property requires the **CursorLocation** property to be set to **adUseClient**. A temporary index will be created for each field specified in the **Sort** property if an index does not already exist.
 
 The sort operation is efficient because data is not physically rearranged, but is simply accessed in the order specified by the index.
 
