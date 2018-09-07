@@ -620,3 +620,22 @@ A **CacheSize** setting of zero is not allowed and returns an error.
 Records retrieved from the cache don't reflect concurrent changes that other users made to the source data. To force an update of all the cached data, use the **Resync** method.
 
 If **CacheSize** is set to a value greater than one, the navigation methods (**Move**, **MoveFirst**, **MoveLast**, **MoveNext**, and **MovePrevious**) may result in navigation to a deleted record, if deletion occurs after the records were retrieved. After the initial fetch, subsequent deletions will not be reflected in your data cache until you attempt to access a data value from a deleted row. However, setting **CacheSize** to one eliminates this issue since deleted rows cannot be fetched.
+
+# <a name="Cancel"></a>Cancel
+
+Cancels execution of a pending, asynchronous method call.
+
+```
+FUNCTION Cancel () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **Cancel** method to terminate execution of an asynchronous method call (that is, a method invoked with the **adAsyncConnect**, **adAsyncExecute**, or **adAsyncFetch** option).
+
+For a **Recordset** object, the last asynchronous call to the **Open** method is terminated.
+
