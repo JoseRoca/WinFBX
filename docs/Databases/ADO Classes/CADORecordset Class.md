@@ -2122,3 +2122,24 @@ Use either **adOpenKeyset** or **adOpenStatic** as the **CursorType** for server
 
 This behavior is by design.
 
+# <a name="Requery"></a>Requery
+
+Updates the data in a **Recordset** object by re-executing the query on which the object is based.
+
+```
+FUNCTION Requery (BYVAL Options AS LONG = adOpenUnspecified) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Options* | Optional. A bitmask that contains **ExecuteOptionEnum** and **CommndTypeEnum** values affecting this operation. **Note**: If *Options* is set to **adAsyncExecute**, this operation will execute asynchronously and a **RecordsetChangeComplete** event will be issued when it concludes. The **ExecuteOptionEnum** values of **adExecuteNoRecords** or **adExecuteStream** should not be used with **Requery**. |
+
+#### Return value
+
+S_OK or an HRESULT code.
+
+### Remarks
+
+Use the **Requery** method to refresh the entire contents of a Recordset object from the data source by reissuing the original command and retrieving the data a second time. Calling this method is equivalent to calling the **Close** and **Open** methods in succession. If you are editing the current record or adding a new record, an error occurs.
+
+While the **Recordset** object is open, the properties that define the nature of the cursor (**CursorType**, **LockType**, **MaxRecords**, and so forth) are read-only. Thus, the **Requery** method can only refresh the current cursor. To change any of the cursor properties and view the results, you must use the **Close** method so that the properties become read/write again. You can then change the property settings and call the **Open** method to reopen the cursor.
