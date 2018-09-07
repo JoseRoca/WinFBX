@@ -305,13 +305,13 @@ For example, fields deleted with the **Delete_** method are marked for deletion 
 
 # <a name="ActualSize"></a>ActualSize
 
-Indicates the actual length of a field's value. Returns a Long value. Some providers may allow this property to be set to reserve space for BLOB data, in which case the default value is 0.
+Indicates the actual length of a field's value. Some providers may allow this property to be set to reserve space for BLOB data, in which case the default value is 0.
 
 ```
 PROPERTY ActualSize () AS ADO_LONGPTR
 ```
 
-####Return value
+#### Return value
 
 The actual length of the field's value.
 
@@ -355,3 +355,31 @@ DO
    IF pRecordset.MoveNext <> S_OK THEN EXIT DO
 LOOP
 ```
+
+# <a name="AppendChunk"></a>AppendChunk
+
+Appends data to a large text or binary data **Field*.
+
+```
+FUNCTION AppendChunk (BYREF cvData AS CVAR) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvData* | A Variant that contains the data to append to the object. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **AppendChunk** method on a Field object to fill it with long binary or character data. In situations where system memory is limited, you can use the **AppendChunk** method to manipulate long values in portions rather than in their entirety.
+
+If the **adFldLong** bit in the **Attributes** property of a **Field** object is set to true, you can use the **AppendChunk** method for that field.
+
+The first **AppendChunk** call on a **Field** object writes data to the field, overwriting any existing data. Subsequent **AppendChunk** calls add to existing data. If you are appending data to one field and then you set or read the value of another field in the current record, ADO assumes that you are finished appending data to the first field. If you call the **AppendChunk** method on the first field again, ADO interprets the call as a new **AppendChunk** operation and overwrites the existing data. Accessing fields in other **Recordset** objects that are not clones of the first **Recordset** object will not disrupt **AppendChunk** operations.
+
+If there is no current record when you call **AppendChunk** on a **Field** object, an error occurs.
+
+**Note**: The **AppendChunk** method does not operate on Field objects of a **Record** object. It does not perform any operation and will produce a run-time error.
