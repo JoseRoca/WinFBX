@@ -919,3 +919,32 @@ Specifies the location of the cursor service.
 | **adUseClient** | Uses client-side cursors supplied by a local cursor library. Local cursor services often will allow many features that driver-supplied cursors may not, so using this setting may provide an advantage with respect to features that will be enabled. For backward compatibility, the synonym **adUseClientBatch** is also supported. |
 | **adUseNone** | Does not use cursor services. (This constant is obsolete and appears solely for the sake of backward compatibility.) |
 | **adUseServer** | Default. Uses data-provider or driver-supplied cursors. These cursors are sometimes very flexible and allow for additional sensitivity to changes others make to the data source. However, some features of the Microsoft Cursor Service for OLE DB (such as disassociated Recordset objects) cannot be simulated with server-side cursors and these features will be unavailable with this setting. |
+
+# <a name="CursorType"></a>CursorType
+
+Sets or returns a **CursorTypeEnum** value. The default value is **adOpenForwardOnly**.
+
+```
+PROPERTY CursorType () AS CursorTypeEnum
+PROPERTY CursorType (BYVAL lCursorType AS CursorTypeEnum)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lCursorType* | One of the **CursorTypeEnum** values |
+
+#### Return value
+
+A **CursorTypeEnum** value.
+
+#### CursorTypeEnum
+
+Specifies the type of cursor used in a **Recordset** object.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adOpenDynamic** | Uses a dynamic cursor. Additions, changes, and deletions by other users are visible, and all types of movement through the **Recordset** are allowed, except for bookmarks, if the provider doesn't support them. |
+| **adOpenForwardOnly** | Default. Uses a forward-only cursor. Identical to a static cursor, except that you can only scroll forward through records. This improves performance when you need to make only one pass through a **Recordset**. |
+| **adOpenKeyset** | Uses a keyset cursor. Like a dynamic cursor, except that you can't see records that other users add, although records that other users delete are inaccessible from your Recordset. Data changes by other users are still visible. |
+| **adOpenStatic** | Uses a static cursor, which is a static copy of a set of records that you can use to find data or generate reports. Additions, changes, or deletions by other users are not visible. |
+| **adOpenUnspecified** | Does not specify the type of cursor. |
