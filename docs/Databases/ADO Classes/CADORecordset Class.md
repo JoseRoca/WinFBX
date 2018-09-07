@@ -639,3 +639,40 @@ Use the **Cancel** method to terminate execution of an asynchronous method call 
 
 For a **Recordset** object, the last asynchronous call to the **Open** method is terminated.
 
+# <a name="CancelBatch"></a>CancelBatch
+
+Cancels a pending batch update.
+
+```
+FUNCTION CancelBatch (BYVAL AffectRecords AS AffectEnum = adAffectAll) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *AffectRecords* | Optional. An **AffectEnum** value that indicates how many records the **CancelBatch** method will affect. |
+
+#### AffectEnum
+
+Specifies which records are affected by an operation.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adAffectAll** | If there is not a Filter applied to the **Recordset**, affects all records. If the **Filter** property is set to a string criteria (such as "Author='Smith'"), then the operation affects visible records in the current chapter. If the **Filter** property is set to a member of the **FilterGroupEnum** or an array of Bookmarks, then the operation will affect all rows of the **Recordset**. |
+| **adAffectAllChapters** | Affects all records in all sibling chapters of the **Recordset**, including those not visible via any **Filter** that is currently applied. |
+| **adAffectCurrent** | Affects only the current record. |
+| **adAffectGroup** | Affects only records that satisfy the current Filter property setting. You must set the Filter property to a **FilterGroupEnum** value or an array of **Bookmarks** to use this option. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **CancelBatch** method to cancel any pending updates in a **Recordset** in batch update mode. If the **Recordset** is in immediate update mode, calling **CancelBatch** without **adAffectCurrent** generates an error.
+
+If you are editing the current record or are adding a new record when you call **CancelBatch**, ADO first calls the **CancelUpdate** method to cancel any cached changes. After that, all pending changes in the **Recordset** are canceled.
+
+It's possible that the current record will be indeterminable after a **CancelBatch** call, especially if you were in the process of adding a new record. For this reason, it is prudent to set the current record position to a known location in the **Recordset** after the **CancelBatch** call. For example, call the **MoveFirst** method.
+
+If the attempt to cancel the pending updates fails because of a conflict with the underlying data (for example, a record has been deleted by another user), the provider returns warnings to the Errors collection but does not halt program execution. A run-time error occurs only if there are conflicts on all the requested records. Use the **Filter** property (**adFilterAffectedRecords**) and the **Status** property to locate records with conflicts.
+
