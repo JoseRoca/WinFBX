@@ -334,3 +334,124 @@ DIM pRecordset AS CAdoRecordset = pCommand.Execute
 ' // Display the results
 ShowActiveCommand pConnection, pRecordset
 ```
+
+# <a name="ActiveConnection"></a>ActiveConnection
+
+Sets or returns an string value that contains a definition for a connection if the connection is closed, or a Variant containing the current Connection object if the connection is open. Default is a null object reference.
+
+```
+PROPERTY ActiveConnection (BYREF vConn AS CVAR)
+PROPERTY ActiveConnection (BYVAL pconn AS Afx_ADOConnection PTR)
+PROPERTY ActiveConnection (BYREF pconn AS CAdoConnection)
+PROPERTY ActiveConnection () AS Afx_ADOConnection
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *vConn* | An string value that contains a definition for a connection if the connection is closed, or a Variant containing the current **Connection** object if the connection is open. |
+| *pconn* | A reference to the **Connection** object or to the **CAdoConnection** class. |
+
+#### Return value
+
+A reference to the **Afx_ADOConnection** object. You must release it calling the **Release** method when no longer needed.
+
+#### Remarks
+
+Use the **ActiveConnection** property to determine the **Connection** object over which the specified **Recordset** will be opened.
+
+For open **Recordset** objects or for **Recordset** objects whose **Source** property is set to a valid **Command** object, the **ActiveConnection** property is read-only. Otherwise, it is read/write.
+
+You can set this property to a valid **Connection** object or to a valid connection string. In this case, the provider creates a new **Connection** object using this definition and opens the connection. Additionally, the provider may set this property to the new **Connection** object to give you a way to access the **Connection** object for extended error information or to execute other commands.
+
+If you use the **ActiveConnection** argument of the **Open** method to open a **Recordset** object, the **ActiveConnection** property will inherit the value of the argument.
+
+If you set the **Source** property of the **Recordset** object to a valid **Command** object variable, the **ActiveConnection** property of the **Recordset** inherits the setting of the **Command** object's **ActiveConnection** property.
+
+#### Remote Data Service Usage
+
+When used on a client-side **Recordset** object, this property can be set only to a connection string or to NULL.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Create a Recordset object
+DIM pRecordset AS CAdoRecordset
+' // Set the active connection
+pRecordset.ActiveConnection = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+' // Open the recordset
+DIM cvSource AS CVAR = "SELECT TOP 20 * FROM Authors ORDER BY Author"
+DIM hr AS HRESULT = pRecordset.Open(cvSource)
+```
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Create a Connection object
+DIM pConnection AS CAdoConnection
+' // Create a Recordset object
+DIM pRecordset AS CAdoRecordset
+' // Open the connection
+DIM ccConStr AS CVAR = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open cvConStr
+' // Set the active connection
+pRecordset.ActiveConnection = pConnection
+' // Open the recordset
+DIM cvSource AS CVAR = "SELECT TOP 20 * FROM Authors ORDER BY Author"
+DIM hr AS HRESULT = pRecordset.Open(cvSource)
+```
+
+#### Disconnected recordset
+
+A disconnected recordset is one of the powerful features of ADO wherein the connection is removed from a populated recordset. This recordset can be manipulated and again connected to the database for updating. Remote Data Services (RDS) uses this feature to send recordsets through either HTTP or Distributed Component Object Model (DCOM) protocols to a remote computer, however, you are not limited to using Remote Data Service (RDS) to generate a disconnected recordset.
+
+We can manipulate ADO directly to disconnect a recordset without using either RDS Server or Client side components.
+
+This technique is demonstrated below and is accomplished by setting the **ActiveConnection** property.
+
+One of the primary requisites for a recordset to become a disconnected recordset is that it should use client side cursors. That is, the **CursorLocation** should be initialized to **adUseClient**.
+
+Disconnecting a recordset can be done by setting the **ActiveConnection** property to NULL.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection PTR = NEW CAdoConnection
+pConnection->Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+' // Setting the cursor location to client side is important to get a disconnected recordset
+pRecordset.CursorLocation = adUseClient
+' // Open the recordset
+DIM cvSource AS CVAR = "SELECT * FROM Authors"
+pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Disconnect the recordset by setting its active connection to null.
+' // Casting to Afx_ADOConnection PTR is needed to get the correct overloaded method called;
+' // otherwise, the CVAR version will be called and it will fail.
+pRecordset.ActiveConnection = cast(Afx_ADOConnection PTR, NULL)
+
+' // Close and release the connection
+Delete pConnection
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the content of the "Author" column
+   DIM cvRes AS CVAR = pRecordset.Collect("Author")
+   PRINT cvRes
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+```
