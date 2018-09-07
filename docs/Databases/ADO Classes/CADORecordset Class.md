@@ -1105,7 +1105,7 @@ PROPERTY Filter (BYVAL cvCriteria AS CVAR)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *cvCriteria* | CVAR. Can be one of the following values:<br><ul><li>Criteria string — a string made up of one or more individual clauses concatenated with AND or OR operators.</li><li>Array of bookmarks — an array of unique bookmark values that point to records in the **Recordset** object.</li></li><li>A **FilterGroupEnum** value.</li></ul> |
+| *cvCriteria* | Can be one of the following values:<br><ul><li>Criteria string — a string made up of one or more individual clauses concatenated with AND or OR operators.</li><li>Array of bookmarks — an array of unique bookmark values that point to records in the **Recordset** object.</li></li><li>A **FilterGroupEnum** value.</li></ul> |
 
 #### Return value
 
