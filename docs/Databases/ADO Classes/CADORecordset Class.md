@@ -1988,6 +1988,31 @@ PROPERTY PageCount () AS LONG
 
 #### Remarks
 
-Use the **PageCount** property to determine how many pages of data are in the **Recordset** object. Pages are groups of records whose size equals the **PageSize*+ property setting. Even if the last page is incomplete because there are fewer records than the **PageSize** value, it counts as an additional page in the **PageCount** value. If the **Recordset** object does not support this property, the value will be -1 to indicate that the **PageCount** is indeterminable.
+Use the **PageCount** property to determine how many pages of data are in the **Recordset** object. Pages are groups of records whose size equals the **PageSize** property setting. Even if the last page is incomplete because there are fewer records than the **PageSize** value, it counts as an additional page in the **PageCount** value. If the **Recordset** object does not support this property, the value will be -1 to indicate that the **PageCount** is indeterminable.
 
 See the **PageSize** and **AbsolutePage** properties for more on page functionality.
+
+# <a name="PageSize"></a>PageSize
+
+Indicates how many records constitute one page in the **Recordset**.
+
+Sets or returns a Long value that indicates how many records are on a page. The default is 10.
+
+```
+PROPERTY PageSize () AS LONG
+PROPERTY PageSize (BYVAL nPageSize AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nPageSize* | Number of records on a page. The default is 10. |
+
+#### Return value
+
+The number of records on a page.
+
+#### Remarks
+
+Use the **PageSize** property to determine how many records make up a logical page of data. Establishing a page size allows you to use the **AbsolutePage** property to move to the first record of a particular page. This is useful in Web-server scenarios when you want to allow the user to page through data, viewing a certain number of records at a time.
+
+This property can be set at any time, and its value will be used for calculating the location of the first record of a particular page.
