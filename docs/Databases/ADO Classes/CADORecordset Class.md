@@ -1361,3 +1361,50 @@ FOR j AS LONG = csa.LBound(2) TO csa.UBound(2)
    PRINT
 NEXT
 ```
+
+# <a name="GetString"></a>GetString
+
+Returns the **Recordset** as a string.
+
+```
+FUNCTION GetString (BYVAL StringFormat AS StringFormatEnum, BYVAL NumRows AS LONG, _
+   BYREF ColumnDelimeter AS CBSTR = "", BYREF RowDelimeter AS CBSTR = "", _
+   BYREF NullExpr AS CBSTR = "") AS CBSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *StringFormat* | Optional. A **StringFormatEnum** value that specifies how the **Recordset** should be converted to a string. The *RowDelimiter*, *ColumnDelimiter*, and *NullExpr* parameters are used only with a **StringFormat** of **adClipString**. |
+| *NumRows* | Optional. The number of rows to be converted in the **Recordset**. If *NumRows* is not specified, or if it is greater than the total number of rows in the **Recordset**, then all the rows in the **Recordset** are converted. |
+| *ColumnDelimiter* | Optional. A delimiter used between columns, if specified, otherwise the TAB character |
+| *RowDelimiter* | Optional. A delimiter used between rows, if specified, otherwise the CARRIAGE RETURN character. |
+| *NullExpr* | Optional. An expression used in place of a null value, if specified, otherwise the empty string. |
+
+#### Return value
+
+The **Recordset** as a string.
+
+#### Remarks
+
+Row data, but no schema data, is saved to the string. Therefore, a **Recordset** cannot be reopened using this string.
+
+This method is equivalent to the **RDO** **GetClipString** method.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Create a Connection object
+DIM pConnection AS CAdoConnection
+' // Create a Recordset object
+DIM pRecordset AS CAdoRecordset
+' // Open the connection
+DIM cvConStr AS CVAR = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open cvConStr
+' // Open the recordset
+DIM cvSource AS CVAR = "SELECT * FROM Publishers"
+DIM hr AS HRESULT = pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+PRINT pRecordset.GetString
+```
