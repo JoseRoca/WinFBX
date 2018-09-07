@@ -772,7 +772,7 @@ S_OK (0) or an HRESULT code.
 
 Use the **Close** method to close a **Recordset** to free any associated system resources. Closing an object does not remove it from memory; you can change its property settings and open it again later. To completely eliminate an object from memory, release the connection calling the **Release** method.
 
-# <a name="Clone"></a>Clone
+# <a name="Collect"></a>Collect
 
 Sets or returns a Variant value that indicates the value of the object
 
