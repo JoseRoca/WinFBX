@@ -1415,7 +1415,6 @@ Indicates the name of the index currently in effect for a **Recordset** object.
 
 Sets or returns a string value, which is the name of the index.
 
-
 ```
 PROPERTY Index () AS CBSTR
 PROPERTY Index (BYREF cbsIndex AS CBSTR)
@@ -1425,7 +1424,7 @@ PROPERTY Index (BYREF cbsIndex AS CBSTR)
 | ---------- | ----------- |
 | *cbsIndex* | The name of the index. |
 
-Return value
+#### Return value
 
 CBSTR. The name of the current index.
 
@@ -1488,3 +1487,44 @@ DO
    IF pRecordset.MoveNext <> S_OK THEN EXIT DO
 LOOP
 ```
+
+# <a name="LockType"></a>LockType
+
+Sets or returns the lock type, a Long value that must be greater than 0. Default is 1.
+
+```
+PROPERTY LockType () AS LockTypeEnum
+PROPERTY LockType (BYVAL lLockType AS LockTypeEnum)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lLockType* | A **LockTypeEnum** value. The default value is **adLockReadOnly**. |
+
+#### Return value
+
+A **LockTypeEnum** value.
+
+#### LockTypeENum
+
+Specifies the type of lock placed on records during editing.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adLockBatchOptimistic** | Indicates optimistic batch updates. Required for batch update mode. |
+| **adLockOptimistic** | Indicates optimistic locking, record by record. The provider uses optimistic locking, locking records only when you call the **Update** method. |
+| **adLockPessimistic** | Indicates pessimistic locking, record by record. The provider does what is necessary to ensure successful editing of the records, usually by locking records at the data source immediately after editing. |
+| **adLockReadOnly** | Indicates read-only records. You cannot alter the data. |
+| **adLockUnspecified** | Does not specify a type of lock. For clones, the clone is created with the same lock type as the original. |
+
+#### Remarks
+
+Set the **LockType** property before opening a **Recordset** to specify what type of locking the provider should use when opening it. Read the property to return the type of locking in use on an open **Recordset** object.
+
+Providers may not support all lock types. If a provider cannot support the requested **LockType** setting, it will substitute another type of locking. To determine the actual locking functionality available in a **Recordset** object, use the **Supports** method with **adUpdate** and **adUpdateBatch**.
+
+The **adLockPessimistic** setting is not supported if the **CursorLocation** property is set to **adUseClient**. If an unsupported value is set, then no error will result; the closest supported **LockType** will be used instead.
+
+The **LockType** property is read/write when the **Recordset** is closed and read-only when it is open.
+
+**Remote Data Service Usage**: When used on a client-side **Recordset** object, the **LockType** property can only be set to **adLockBatchOptimistic**.
