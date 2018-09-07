@@ -1528,3 +1528,35 @@ The **adLockPessimistic** setting is not supported if the **CursorLocation** pro
 The **LockType** property is read/write when the **Recordset** is closed and read-only when it is open.
 
 **Remote Data Service Usage**: When used on a client-side **Recordset** object, the **LockType** property can only be set to **adLockBatchOptimistic**.
+
+# <a name="MarshalOptions"></a>MarshalOptions
+
+Indicates which records are to be marshaled back to the server.
+
+```
+PROPERTY MarshalOptions () AS MarshalOptionsEnum
+PROPERTY MarshalOptions (BYVAL eMarshal AS MarshalOptionsEnum)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *eMarshal* | A **MarshalOptionEnum** value. The default value is **adMarshalAll**. |
+
+#### Return value
+
+A **MarshalOptionEnum** value.
+
+#### MarshalOptionEnum
+
+Specifies which records should be returned to the server.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adMarshalAll** | Default. Returns all rows to the server. |
+| **adMarshalModifiedOnly** | Returns only modified rows to the server. |
+
+#### Remarks
+
+When using a client-side **Recordset**, records that have been modified on the client are written back to the middle tier or Web server through a technique called marshaling, the process of packaging and sending interface method parameters across thread or process boundaries. Setting the **MarshalOptions** property can improve performance when modified remote data is marshaled for updating back to the middle tier or Web server.
+
+**Remote Data Service Usage**: This property is used only on a client-side **Recordset**.
