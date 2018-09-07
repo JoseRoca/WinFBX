@@ -1766,3 +1766,35 @@ In ADO 2.5 and later, when the **Recordset** has been filtered or sorted and the
 Use the **MovePrevious** method to move the current record position one record backward (toward the top of the **Recordset**). The **Recordset** object must support bookmarks or backward cursor movement; otherwise, the method call will generate an error. If the first record is the current record and you call the **MovePrevious** method, ADO sets the current record to the position before the first record in the Recordset (BOF is True). An attempt to move backward when the **BOF** property is already True generates an error. If the **Recordset** object does not support either bookmarks or backward cursor movement, the **MovePrevious** method will generate an error.
 
 If the **Recordset** is forward only and you want to support both forward and backward scrolling, you can use the **CacheSize** property to create a record cache that will support backward cursor movement through the **Move** method. Because cached records are loaded into memory, you should avoid caching more records than is necessary. You can call the **MoveFirst** method in a forward-only **Recordset** object; doing so may cause the provider to re-execute the command that generated the **Recordset** object.
+
+# <a name="NextRecordset"></a>NextRecordset
+
+Moves to the previous record in a specified **Recordset** object and makes that record the current record.
+
+```
+FUNCTION NextRecordset (BYVAL RecordsAffected AS LONG PTR = NULL) AS Afx_AdoRecordset PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecordsAffected* | Optional. A pointer to a Long variable to which the provider returns the number of records that the current operation affected. Note: This parameter only returns the number of records affected by an operation; it does not return a count of records from a select statement used to generate the **Recordset**. |
+
+#### Return value
+
+An **Afx_ADORecordset** object reference.
+
+#### Remarks
+
+Use the **NextRecordset** method to return the results of the next command in a compound command statement or of a stored procedure that returns multiple results. If you open a **Recordset** object based on a compound command statement (for example, "SELECT * FROM table1;SELECT * FROM table2") using the **Execute** method on a **Command** or the **Open** method on a **Recordset**, ADO executes only the first command and returns the results to recordset. To access the results of subsequent commands in the statement, call the **NextRecordset** method.
+
+As long as there are additional results and the **Recordset** containing the compound statements is not disconnected or marshaled across process boundaries, the NextRecordset method will continue to return **Recordset** objects. If a row-returning command executes successfully but returns no records, the returned **Recordset** object will be open but empty. Test for this case by verifying that the **BOF** and **EOF** properties are both True. If a non–row-returning command executes successfully, the returned Recordset object will be closed, which you can verify by testing the State property on the **Recordset**. When there are no more results, recordset will be set to NULL.
+
+The **NextRecordset** method is not available on a disconnected **Recordset** object, where **ActiveConnection** has been set to NULL.
+
+If an edit is in progress while in immediate update mode, calling the **NextRecordset** method generates an error; call the Update or **CancelUpdate** method first.
+
+To pass parameters for more than one command in the compound statement by filling the Parameters collection, or by passing an array with the original **Open** or **Execute** call, the parameters must be in the same order in the collection or array as their respective commands in the command series. You must finish reading all the results before reading output parameter values.
+
+Your OLE DB provider determines when each command command in a compound statement is executed. The Microsoft OLE DB Provider for SQL Server, for example, executes all commands in a batch upon receiving the compound statement. The resulting Recordsets are simply returned when you call **NextRecordset**.
+
+However, other providers may execute the next command in a statement only after **NextRecordset** is called. For these providers, if you explicitly close the **Recordset** object before stepping through the entire command statement, ADO never executes the remaining commands.
