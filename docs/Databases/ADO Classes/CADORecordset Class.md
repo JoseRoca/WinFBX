@@ -1431,13 +1431,13 @@ CBSTR. The name of the current index.
 
 #### Remarks
 
-The index named by the **Index** property must have previously been declared on the base table underlying the **Recordset** object. That is, the index must have been declared programmatically either as an **ADOX** **Index* object, or when the base table was created.
+The index named by the **Index** property must have previously been declared on the base table underlying the **Recordset** object. That is, the index must have been declared programmatically either as an **ADOX** **Index** object, or when the base table was created.
 
 A run-time error will occur if the index cannot be set. The **Index** property cannot be set:
 
 * Within a **WillChangeRecordset** or **RecordsetChangeComplete** event handler.
-* If the **Recordset** is still executing an operation (which can be determined by the State property).
-* If a filter has been set on the **Recordset** with the Filter property.
+* If the **Recordset** is still executing an operation (which can be determined by the **State** property).
+* If a filter has been set on the **Recordset** with the **Filter** property.
 
 The **Index** property can always be set successfully if the **Recordset** is closed, but the **Recordset** will not open successfully, or the index will not be usable, if the underlying provider does not support indexes.
 
