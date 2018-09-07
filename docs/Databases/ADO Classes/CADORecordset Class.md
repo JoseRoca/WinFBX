@@ -771,3 +771,83 @@ S_OK (0) or an HRESULT code.
 #### Remarks
 
 Use the **Close** method to close a **Recordset** to free any associated system resources. Closing an object does not remove it from memory; you can change its property settings and open it again later. To completely eliminate an object from memory, release the connection calling the **Release** method.
+
+# <a name="Clone"></a>Clone
+
+Sets or returns a Variant value that indicates the value of the object
+
+The ADO Recorset object exposes a hidden member: the **Collect** property. This property is functionally similar to the **Field**'s **Value** property, but it doesn't need a reference (explicit or implicit) to the **Field** object. You can pass either a numeric index or a field's name to this property.
+
+```
+PROPERTY Collect (BYREF cvIndex AS CVAR) AS CVAR
+PROPERTY Collect (BYREF cvIndex AS CVAR, BYREF cvValue AS CVAR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvIndex* | The zero-based ordinal number of the field or the name of the field. |
+| *cvValue* | The value to assign to the field. |
+
+#### Return value
+
+The value of the field.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Create a Connection object
+DIM pConnection AS CAdoConnection
+' // Create a Recordset object
+DIM pRecordset AS CAdoRecordset
+
+' // Open the connection
+DIM cvConStr AS CVAR = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open cvConStr
+
+' // Open the recordset
+DIM cvSource AS CVAR = "Publishers"
+pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdTableDirect)
+
+' // Add a new record
+pRecordset.AddNew
+   pRecordset.Collect("PubID") = CLNG(10000)
+   pRecordset.Collect("Name") = "Wile E. Coyote"
+   pRecordset.Collect("Company Name") = "Warner Brothers Studios"
+   pRecordset.Collect("Address") = "4000 Warner Boulevard"
+   pRecordset.Collect("City") = "Burbank, CA. 91522"
+pRecordset.Update
+```
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Set the cursor location
+DIM pRecordset AS CAdoRecordset
+pRecordset.CursorLocation = adUseClient
+
+' // Open the recordset
+DIM cvSource AS CVAR = "Publishers"
+pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdTable)
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the contents of the "City" and "Name" columns
+   DIM cvRes AS CVAR = pRecordset.Collect("Name")
+   PRINT "Position: "; pRecordset.AbsolutePosition; " "; cvRes
+
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+```
