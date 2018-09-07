@@ -999,3 +999,71 @@ The **DataMember** and **DataSource** properties must be used in conjunction.
 
 The object referenced must implement the **IDataSource** interface and must contain an **IRowset** interface.
 
+
+# <a name="Delete_"></a>Delete_
+
+Deletes the current record or a group of records.
+
+```
+FUNCTION Delete_ (BYVAL AffectRecords AS AffectEnum = adAffectCurrent) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *AffectRecords* | An object reference to the data source. |
+
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *AffectRecords* | Optional. An **AffectEnum** value that determines how many records the **Delete_** method will affect. The default value is **adAffectCurrent**. Note: **adAffectAll** and **adAffectAllChapters** are not valid arguments to Delete_. |
+
+#### AffectEnum
+
+Specifies which records are affected by a **Delete_** operation.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adAffectCurrent** | Affects only the current record. |
+| **adAffectGroup** | Affects only records that satisfy the current **Filter** property setting. You must set the **Filter** property to a **FilterGroupEnum** value or an array of Bookmarks to use this option. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Using the **Delete_** method marks the current record or a group of records in a **Recordset** object for deletion. If the **Recordset** object doesn't allow record deletion, an error occurs. If you are in immediate update mode, deletions occur in the database immediately. If a record cannot be successfully deleted (due to database integrity violations, for example), the record will remain in edit mode after the call to Update. This means that you must cancel the update with CancelUpdate before moving off the current record (for example, with **Close**, **Move**, or **NextRecordset**).
+
+If you are in batch update mode, the records are marked for deletion from the cache and the actual deletion happens when you call the **UpdateBatch** method. (Use the **Filter** property to view the deleted records.)
+
+Retrieving field values from the deleted record generates an error. After deleting the current record, the deleted record remains current until you move to a different record. Once you move away from the deleted record, it is no longer accessible.
+
+If you nest deletions in a transaction, you can recover deleted records with the RollbackTrans method. If you are in batch update mode, you can cancel a pending deletion or group of pending deletions with the **CancelBatch** method.
+
+If the attempt to delete records fails because of a conflict with the underlying data (for example, a record has already been deleted by another user), the provider returns warnings to the **Errors** collection but does not halt program execution. A run-time error occurs only if there are conflicts on all the requested records.
+
+If the Unique Table dynamic property is set, and the **Recordset** is the result of executing a JOIN operation on multiple tables, then the **Delete_** method will only delete rows from the table named in the Unique Table property.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cvSource AS CVAR = "SELECT * FROM Publishers WHERE PubID=10000"
+pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+DIM cvRes AS CVAR = pRecordset.Collect("PubID")
+IF cvRes.ValInt = 10000 THEN
+   pRecordset.Delete_ adAffectCurrent
+   PRINT "Record deleted"
+ELSE
+   PRINT "Record not found"
+END IF
+```
