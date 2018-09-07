@@ -1560,3 +1560,48 @@ Specifies which records should be returned to the server.
 When using a client-side **Recordset**, records that have been modified on the client are written back to the middle tier or Web server through a technique called marshaling, the process of packaging and sending interface method parameters across thread or process boundaries. Setting the **MarshalOptions** property can improve performance when modified remote data is marshaled for updating back to the middle tier or Web server.
 
 **Remote Data Service Usage**: This property is used only on a client-side **Recordset**.
+
+# <a name="MaxRecords"></a>MaxRecords
+
+Indicates the maximum number of records to return to a **Recordset** from a query.
+
+Sets or returns a Long value that indicates the maximum number of records to return. Default is zero (no limit).
+
+```
+PROPERTY MaxRecords () AS LONG
+PROPERTY MaxRecords (BYVAL lMaxRecords AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lMaxRecords* | A value that indicates the maximum number of records to return. Default is zero (no limit). |
+
+#### Return value
+
+The maximum number of records.
+
+#### Remarks
+
+Use the **MaxRecords** property to limit the number of records that the provider returns from the data source. The default setting of this property is zero, which means the provider returns all requested records.
+
+The **MaxRecords** property is read/write when the **Recordset** is closed and read-only when it is open.
+
+#### Problem
+
+Using the **MaxRecords** property of an ADO Recordset object does not affect the number of records returned in queries against Microsoft Access databases.
+
+The **MaxRecords** property depends on functionality exposed by the underlying OLE DB provider or ODBC driver to limit the number of rows returned by the query. This functionality is optional for ODBC drivers and OLE DB providers. The Microsoft Access ODBC driver and Jet OLEDB provider do not expose this functionality. This behavior may occur for other OLE DB providers and ODBC drivers as well.
+
+If you want to limit the number of records returned in a query against a Microsoft Access database, use the **TOP** syntax in the query string rather than the **Recordset**'s **MaxRecords** property.
+
+For example:
+
+```
+SELECT TOP 2 EmployeeID, LastName, FirstName FROM Employees ORDER BY LastName, FirstName;
+```
+
+or
+
+```
+SELECT TOP 20 PERCENT EmployeeID, LastName, FirstName FROM Employees ORDER BY LastName, FirstName;
+```
