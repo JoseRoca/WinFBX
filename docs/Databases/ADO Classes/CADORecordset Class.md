@@ -1081,3 +1081,15 @@ Specifies the editing status of a record.
 | **adEditInProgress** | Indicates that data in the current record has been modified but not saved. |
 | **adEditAdd** | Indicates that the **AddNew** method has been called, and the current record in the copy buffer is a new record that has not been saved in the database. |
 | **adEditDelete** | Indicates that the current record has been deleted. |
+
+# <a name="Fields"></a>Fields
+
+Gets a reference to the **Fields** collection of a **Record** object.
+
+```
+PROPERTY Fields () AS Afx_ADOFields PTR
+```
+
+#### Return value
+
+An **Afx_ADOFields** object reference.
