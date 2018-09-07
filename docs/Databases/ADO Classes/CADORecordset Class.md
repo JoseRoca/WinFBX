@@ -2586,7 +2586,7 @@ pRecordset.Source = cvSource
 DIM hr AS HRESULT = pRecordset.Open
 ```
 
-# <a name="Source"></a>Source
+# <a name="State"></a>State
 
 Indicates for whether the state of the **Recordset** object is open or closed.
 
