@@ -1834,8 +1834,7 @@ FUNCTION Open (BYVAL nCursorType AS CursorTypeEnum = adOpenUnspecified, _
 | *cvSource* | Optional. A Variant that evaluates to a valid **Command** object, an SQL statement, a table name, a stored procedure call, a URL, or the name of a file or **Stream** object containing a persistently stored **Recordset**. |
 | *cActiveConnection* | Optional. A valid **Connection** object. |
 | *cvActiveConnection* | Optional. Either a Variant that evaluates to a valid Connection object variable name, or a string that contains **ConnectionString** parameters. |
-| *pActiveConnection* | 
-Pointer to a valid connection object. |
+| *pActiveConnection* | Pointer to a valid connection object. |
 | *nCursorType* | Optional. A **CursorTypeEnum** value that determines the type of cursor that the provider should use when opening the Recordset. The default value is **adOpenForwardOnly**. |
 | *nLockType* | Optional. A LockTypeEnum value that determines what type of locking (concurrency) the provider should use when opening the Recordset. The default value is **adLockReadOnly**. |
 | *nOptions* | Optional. A Long value that indicates how the provider should evaluate the **Source** argument if it represents something other than a **Command** object, or that the **Recordset** should be restored from a file where it was previously saved. Can be one or more **CommandTypeEnum** or **ExecuteOptionEnum** values, which can be combined with a bitwise **AND** operator.<br>**Note**: If you open a **Recordset** from a **Stream** containing a persisted **Recordset**, using an **ExecuteOptionEnum** value of **adAsyncFetchNonBlocking** will not have an effect; the fetch will be synchronous and blocking.<br>The **ExecuteOptionEnum** values of **adExecuteNoRecords** or **adExecuteStream** should not be used with Open. |
