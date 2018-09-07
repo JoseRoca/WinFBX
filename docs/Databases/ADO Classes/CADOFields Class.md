@@ -71,3 +71,79 @@ All of the metadata properties (**Name**, **Type_**, **DefinedSize**, **Precisio
 | [Type_](#Type_) | Sets or returns a **DataTypeEnum** value. |
 | [UnderlyingValue](#UnderlyingValue) | Indicates a field's current value in the database. |
 | [Value](#Value) | Sets or returns a Variant value that indicates the value of the object |
+
+# <a name="Append"></a>Append
+
+Appends an object to a collection. A new **Field** object may be created before it is appended to the collection.
+
+```
+FUNCTION Append (BYREF cbsName AS CBSTR, BYVAL nType AS DataTypeEnum, _
+   BYVAL DefinedSize AS ADO_LONGPTR = 0, BYVAL Attrib AS FieldAttributeEnum = 0, _
+   BYREF cvFieldValue AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND)) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsName* | An string value that contains the name of the new **Field** object, and must not be the same name as any other object in fields. |
+| *nType* | A **DataTypeEnum** value, whose default value is **adEmpty**, that specifies the data type of the new field. The following data types are not supported by ADO, and should not be used when appending new fields to a Recordset: **adIDispatch**, **adIUnknown**, **adVariant**. |
+| *DefinedSize* | Optional. An ADO_LONGPTR value that represents the defined size, in characters or bytes, of the new field. The default value for this parameter is derived from Type. Fields with a **DefinedSize** greater than 255 bytes, and treated as variable length columns. (The default **DefinedSize** is unspecified.) |
+| *Attrib* | Optional. A **FieldAttributeEnum** value, whose default value is **adFldDefault**, that specifies attributes for the new field. If this value is not specified, the field will contain attributes derived from **Type_**. |
+| *FieldValue* | Optional. A Vaiant that represents the value for the new field. If not specified, then the field is appended with a null value. |
+
+#### Return value
+
+S_OK (0) or an HESULT code.
+
+#### DataTypeEnum
+
+Specifies the data type of a Field, Parameter, or Property. The corresponding OLE DB type indicator is shown in parentheses in the description column of the following table.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **AdArray** | A flag value, always combined with another data type constant, that indicates an array of that other data type. (Does not apply to ADOX.) |
+| **adBigInt** | Indicates an eight-byte signed integer (DBTYPE_I8). |
+| **adBinary** | Indicates a binary value (DBTYPE_BYTES). |
+| **adBoolean** | Indicates a boolean value (DBTYPE_BOOL). |
+| **adBSTR** | Indicates a null-terminated character string (Unicode) (DBTYPE_BSTR). |
+| **adChapter** | Indicates a four-byte chapter value that identifies rows in a child rowset (DBTYPE_HCHAPTER). |
+| **adChar** | Indicates a string value (DBTYPE_STR). |
+| **adCurrency** | Indicates a currency value (DBTYPE_CY). Currency is a fixed-point number with four digits to the right of the decimal point. It is stored in an eight-byte signed integer scaled by 10,000. |
+| **adDate** | Indicates a date value (DBTYPE_DATE). A date is stored as a double, the whole part of which is the number of days since December 30, 1899, and the fractional part of which is the fraction of a day. |
+| **adDBDate** | Indicates a date value (yyyymmdd) (DBTYPE_DBDATE). |
+| **adDBTime** | Indicates a time value (hhmmss) (DBTYPE_DBTIME). |
+| **adDBTimeStamp** | Indicates a date/time stamp (yyyymmddhhmmss plus a fraction in billionths) (DBTYPE_DBTIMESTAMP). |
+| **adDecimal** | Indicates an exact numeric value with a fixed precision and scale (DBTYPE_DECIMAL). |
+| **adDouble** | Indicates a double-precision floating-point value (DBTYPE_R8). |
+| **adEmpty** | Specifies no value (DBTYPE_EMPTY). |
+| **adError** | Indicates a 32-bit error code (DBTYPE_ERROR). |
+| **adFileTime** | Indicates a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601 (DBTYPE_FILETIME). |
+| **adGUID** | Indicates a globally unique identifier (GUID) (DBTYPE_GUID). |
+| **adIDispatch** | Indicates a pointer to an IDispatch interface on a COM object (DBTYPE_IDISPATCH). Note: This data type is currently not supported by ADO. Usage may cause unpredictable results. |
+| **adInteger** | Indicates a four-byte signed integer (DBTYPE_I4). |
+| **adIUnknown** | Indicates a pointer to an IUnknown interface on a COM object (DBTYPE_IUNKNOWN). Note: This data type is currently not supported by ADO. Usage may cause unpredictable results. |
+| **adLongVarBinary** | Indicates a long binary value. |
+| **adLongVarChar** | Indicates a long string value. |
+| **adLongVarWChar** | Indicates a long null-terminated Unicode string value. |
+| **adNumeric** | Indicates an exact numeric value with a fixed precision and scale (DBTYPE_NUMERIC). |
+| **adPropVariant** | Indicates an Automation PROPVARIANT (DBTYPE_PROP_VARIANT). |
+| **adSingle** | Indicates a single-precision floating-point value (DBTYPE_R4). |
+| **adSmallInt** | Indicates a two-byte signed integer (DBTYPE_I2). |
+| **adTinyInt** | Indicates a one-byte signed integer (DBTYPE_I1). |
+| **adUnsignedBigInt** | Indicates an eight-byte unsigned integer (DBTYPE_UI8). |
+| **adUnsignedInt** | Indicates a four-byte unsigned integer (DBTYPE_UI4). |
+| **adUnsignedSmallInt** | Indicates a two-byte unsigned integer (DBTYPE_UI2). |
+| **adUnsignedTinyInt** | Indicates a one-byte unsigned integer (DBTYPE_UI1). |
+| **adVarBinary** | Indicates a binary value. |
+| **adVarChar** | Indicates a string value. |
+| **adVariant** | Indicates an Automation Variant (DBTYPE_VARIANT). Note: This data type is currently not supported by ADO. Usage may cause unpredictable results. |
+| **adVarNumeric** | Indicates a numeric value. |
+| **adVarWChar** | Indicates a null-terminated Unicode character string. |
+| **adWChar** | Indicates a null-terminated Unicode character string (DBTYPE_WSTR). |
+
+#### Remarks
+
+The **FieldValue** parameter is only valid when adding a **Field** object to a **Record** object, not to a **Recordset** object. With a **Record** object, you may append fields and provide values at the same time. With a **Recordset** object, you must create fields while the **Recordset** is closed, then open the **Recordset** and assign values to the fields.
+
+**Notes**: For new **Field** objects that have been appended to the **Fields** collection of a **Record** object, the Value property must be set before any other **Field** properties can be specified. First, a specific value for the **Value** property must have been assigned and **Update** on the **Fields** collection called. Then, other properties such as Type or **Attributes** can be accessed.
+
+**Field** objects of the following data types (**DataTypeEnum**) cannot be appended to the **Fields** collection and will cause an error to occur: **adArray**, **adChapter**, **adEmpty**, **adPropVariant**, and **adUserDefined**. Also, the following data types are not supported by ADO: **adIDispatch**, **adIUnknown**, and **adIVariant**. For these types, no error will occur when appended, but usage can produce unpredictable results including memory leaks.
