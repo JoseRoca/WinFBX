@@ -892,3 +892,30 @@ Because the data type of a bookmark is provider specific, ADO exposes it as a Va
 When comparing bookmarks, ADO does not attempt any type of coercion. The values are simply passed to the provider where the compare occurs. If bookmarks passed to the **CompareBookmarks** method are stored in variables of differing types, it can generate the type mismatch error, "Arguments are of the wrong type, are out of the acceptable range, or are in conflict with each other."
 
 A bookmark that is not valid or incorrectly formed will cause an error.
+
+# <a name="CursorLocation"></a>CursorLocation
+
+Indicates the location of the cursor service.
+
+```
+PROPERTY CursorLocation () AS CursorLocationEnum
+PROPERTY CursorLocation (BYVAL lCursorLoc AS CursorLocationEnum)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lCursorLoc* | One of the **CursorLocationEnum** values |
+
+#### Return value
+
+A **CursorLocationEnum** value.
+
+#### CursorLocationEnum
+
+Specifies the location of the cursor service.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adUseClient** | Uses client-side cursors supplied by a local cursor library. Local cursor services often will allow many features that driver-supplied cursors may not, so using this setting may provide an advantage with respect to features that will be enabled. For backward compatibility, the synonym **adUseClientBatch** is also supported. |
+| **adUseNone** | Does not use cursor services. (This constant is obsolete and appears solely for the sake of backward compatibility.) |
+| **adUseServer** | Default. Uses data-provider or driver-supplied cursors. These cursors are sometimes very flexible and allow for additional sensitivity to changes others make to the data source. However, some features of the Microsoft Cursor Service for OLE DB (such as disassociated Recordset objects) cannot be simulated with server-side cursors and these features will be unavailable with this setting. |
