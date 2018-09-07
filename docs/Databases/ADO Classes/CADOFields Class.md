@@ -187,10 +187,50 @@ PROPERTY Count () AS LONG
 
 #### Return value
 
-The number of objects in the Fields collection.
+The number of objects in the **Fields** collection.
 
 #### Remarks
 
 Because numbering for members of a collection begins with zero, you should always code loops starting with the zero member and ending with the value of the **Count** property minus 1.
 
 If the **Count** property is zero, there are no objects in the collection.
+
+# <a name="CoDelete_unt"></a>Delete_
+
+Deletes an object from the **Fields** collection.
+
+```
+FUNCTION Delete_ (BYREF cvIndex AS CVAR) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvIndex* | A Variant that designates the **Field** object to delete. This parameter can be the name of the **Field** object or the ordinal position of the **Field** object itself. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Calling the **Delete_** method on an open **Recordset** causes a run-time error.
+
+# <a name="Item"></a>Item
+
+Indicates a specific member of the **Fields** collection, by name or ordinal number.
+
+```
+PROPERTY Item (BYREF cvIndex AS CVAR) AS Afx_ADOField PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvIndex* | A Variant expression that evaluates either to the name or to the ordinal number of an object in a collection. |
+
+#### Return value
+
+An ADO **Fields** object reference.
+
+#### Remarks
+
+If **Item** cannot find an object in the collection corresponding to the *Index* argument, an error occurs.
