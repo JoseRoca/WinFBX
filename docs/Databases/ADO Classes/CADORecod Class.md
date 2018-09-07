@@ -4,6 +4,30 @@ Represents a row from a **Recordset** or the data provider, or an object returne
 
 **Include file**: CADORecord.inc (include CADODB.inc)
 
+### Methods and Properties
+
+| Name       | Description |
+| ---------- | ----------- |
+| [ActiveConnection](#ActiveConnection) | Indicates to which **Connection** object the specified **Record** object currently belongs. |
+| [Attach](#Attach) | Attaches a reference to an ADO **Record** object to the class. |
+| [Cancel](#Cancel) | Cancels execution of a pending, asynchronous method call. |
+| [Close](#Close) | Closes a **Record** object and any dependent objects. |
+| [CopyRecord](#CopyRecord) | Copies a entity represented by a Record to another location. |
+| [DeleteRecord](#DeleteRecord) | Deletes a the entity represented by a **Record**. |
+| [Fields](#Fields) | Gets a reference to the Fields collection of a **Record** object. |
+| [GetChildren](#GetChildren) | Returns a **Recordset** whose rows represent the children of a collection **Record**. |
+| [GetErrorInfo](#GetErrorInfo) | Returns information about ADO errors. |
+| [Mode](#Mode) | Sets or returns a **ConnectModeEnum** value. |
+| [MoveRecord](#MoveRecord) | Moves a entity represented by a **Record** to another location. |
+| [Open](#Open) | Opens an existing **Record** object, or creates a new item represented by the **Record** (such as a file or directory). |
+| [ParentURL](#ParentURL) | Indicates an absolute URL string that points to the parent **Record** of the current **Record** object. |
+| [Properties](#Properties) | Returns a reference to the **Properties** collection. |
+| [RecordType](#RecordType) | Indicates the type of **Record** object. |
+| [Source](#Source) | Indicates the data source or object represented by the **Record**. |
+| [State](#State) | Indicates for all applicable objects whether the state of the object is open or closed. |
+
+#### Remarks
+
 A **Record** object represents one row of data, and has some conceptual similarities with a one-row **Recordset**. Depending upon the capabilities of your provider, **Record** objects may be returned directly from your provider instead of a one-row **Recordset**, for example when an SQL query that selects only one row is executed. Or, a **Record** object can be obtained directly from a **Recordset** object. Or, a **Record** can be returned directly from a provider to semi-structured data, such as the Microsoft Exchange OLE DB provider.
 
 You can view the fields associated with the **Record** object by way of the **Fields** collection on the **Record** object. ADO allows object-valued columns including **Recordset**, **SafeArray*, and scalar values in the **Fields** collection of **Record** objects.
