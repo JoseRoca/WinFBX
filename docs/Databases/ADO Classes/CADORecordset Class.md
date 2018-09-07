@@ -660,7 +660,7 @@ Specifies which records are affected by an operation.
 | **adAffectAll** | If there is not a Filter applied to the **Recordset**, affects all records. If the **Filter** property is set to a string criteria (such as "Author='Smith'"), then the operation affects visible records in the current chapter. If the **Filter** property is set to a member of the **FilterGroupEnum** or an array of Bookmarks, then the operation will affect all rows of the **Recordset**. |
 | **adAffectAllChapters** | Affects all records in all sibling chapters of the **Recordset**, including those not visible via any **Filter** that is currently applied. |
 | **adAffectCurrent** | Affects only the current record. |
-| **adAffectGroup** | Affects only records that satisfy the current Filter property setting. You must set the Filter property to a **FilterGroupEnum** value or an array of **Bookmarks** to use this option. |
+| **adAffectGroup** | Affects only records that satisfy the current **Filter** property setting. You must set the **Filter** property to a **FilterGroupEnum** value or an array of Bookmarks to use this option. |
 
 #### Return value
 
@@ -676,3 +676,22 @@ It's possible that the current record will be indeterminable after a **CancelBat
 
 If the attempt to cancel the pending updates fails because of a conflict with the underlying data (for example, a record has been deleted by another user), the provider returns warnings to the Errors collection but does not halt program execution. A run-time error occurs only if there are conflicts on all the requested records. Use the **Filter** property (**adFilterAffectedRecords**) and the **Status** property to locate records with conflicts.
 
+# <a name="CancelUpdate"></a>CancelUpdate
+
+Cancels any changes made to the current or new row of a Recordset object before calling the Update method.
+
+```
+FUNCTION CancelUpdate () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **CancelUpdate** method to cancel any changes made to the current row or to discard a newly added row. You cannot cancel changes to the current row or a new row after you call the Update method, unless the changes are either part of a transaction that you can roll back with the **RollbackTrans** method, or part of a batch update. In the case of a batch update, you can cancel the **Update** with the **CancelUpdate** or **CancelBatch** method.
+
+If you are adding a new row when you call the **CancelUpdate** method, the current row becomes the row that was current before the **AddNew** call.
+
+If you are in edit mode and want to move off the current record (for example, with **Move**, **NextRecordset**, or **Close**), you can use **CancelUpdate** to cancel any pending changes. You may need to do this if the update cannot successfully be posted to the data source (for example, an attempted delete that fails due to referential integrity violations will leave the **Recordset** in edit mode after a call to **Delete_**).
