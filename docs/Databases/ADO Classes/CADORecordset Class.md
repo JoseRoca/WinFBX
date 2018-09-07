@@ -1682,3 +1682,87 @@ In ADO 2.5 and later, when the **Recordset** has been filtered or sorted and the
 Use the **MovePrevious** method to move the current record position one record backward (toward the top of the **Recordset**). The **Recordset** object must support bookmarks or backward cursor movement; otherwise, the method call will generate an error. If the first record is the current record and you call the **MovePrevious** method, ADO sets the current record to the position before the first record in the Recordset (BOF is True). An attempt to move backward when the **BOF** property is already True generates an error. If the **Recordset** object does not support either bookmarks or backward cursor movement, the **MovePrevious** method will generate an error.
 
 If the **Recordset** is forward only and you want to support both forward and backward scrolling, you can use the **CacheSize** property to create a record cache that will support backward cursor movement through the **Move** method. Because cached records are loaded into memory, you should avoid caching more records than is necessary. You can call the **MoveFirst** method in a forward-only **Recordset** object; doing so may cause the provider to re-execute the command that generated the **Recordset** object.
+
+# <a name="MoveLast"></a>MoveLast
+
+Moves to the last record in a specified **Recordset** object and makes that record the current record.
+
+```
+FUNCTION MoveLast () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **MoveFirst** method to move the current record position to the first record in the **Recordset**.
+
+Use the **MoveLast** method to move the current record position to the last record in the **Recordset**. The **Recordset** object must support bookmarks or backward cursor movement; otherwise, the method call will generate an error.
+
+A call to either **MoveFirst** or **MoveLast** when the **Recordset** is empty (both BOF and EOF are True) generates an error.
+
+Use the **MoveNext** method to move the current record position one record forward (toward the bottom of the **Recordset**). If the last record is the current record and you call the **MoveNext** method, ADO sets the current record to the position after the last record in the Recordset (**EOF** is True). An attempt to move forward when the **EOF** property is already True generates an error.
+
+In ADO 2.5 and later, when the **Recordset** has been filtered or sorted and the data of the current record is changed, calling the **MoveNext** method moves the cursor two records forward from the current record. This is because when the current record is changed, the next record becomes the new current record. Calling **MoveNext** after the change moves the cursor one record forward from the new current record. This is different from the behavior in ADO 2.1 and earlier. In these earlier versions, changing the data of a current record in the sorted or filtered **Recordset** does not change the position of the current record, and **MoveNext** moves the cursor to the next record immediately after the current record.
+
+Use the **MovePrevious** method to move the current record position one record backward (toward the top of the **Recordset**). The **Recordset** object must support bookmarks or backward cursor movement; otherwise, the method call will generate an error. If the first record is the current record and you call the **MovePrevious** method, ADO sets the current record to the position before the first record in the Recordset (BOF is True). An attempt to move backward when the **BOF** property is already True generates an error. If the **Recordset** object does not support either bookmarks or backward cursor movement, the **MovePrevious** method will generate an error.
+
+If the **Recordset** is forward only and you want to support both forward and backward scrolling, you can use the **CacheSize** property to create a record cache that will support backward cursor movement through the **Move** method. Because cached records are loaded into memory, you should avoid caching more records than is necessary. You can call the **MoveFirst** method in a forward-only **Recordset** object; doing so may cause the provider to re-execute the command that generated the **Recordset** object.
+
+# <a name="MoveNext"></a>MoveNext
+
+Moves to the next record in a specified Recordset object and makes that record the current record.
+
+```
+FUNCTION MoveNext () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **MoveFirst** method to move the current record position to the first record in the **Recordset**.
+
+Use the **MoveLast** method to move the current record position to the last record in the **Recordset**. The **Recordset** object must support bookmarks or backward cursor movement; otherwise, the method call will generate an error.
+
+A call to either **MoveFirst** or **MoveLast** when the **Recordset** is empty (both BOF and EOF are True) generates an error.
+
+Use the **MoveNext** method to move the current record position one record forward (toward the bottom of the **Recordset**). If the last record is the current record and you call the **MoveNext** method, ADO sets the current record to the position after the last record in the Recordset (**EOF** is True). An attempt to move forward when the **EOF** property is already True generates an error.
+
+In ADO 2.5 and later, when the **Recordset** has been filtered or sorted and the data of the current record is changed, calling the **MoveNext** method moves the cursor two records forward from the current record. This is because when the current record is changed, the next record becomes the new current record. Calling **MoveNext** after the change moves the cursor one record forward from the new current record. This is different from the behavior in ADO 2.1 and earlier. In these earlier versions, changing the data of a current record in the sorted or filtered **Recordset** does not change the position of the current record, and **MoveNext** moves the cursor to the next record immediately after the current record.
+
+Use the **MovePrevious** method to move the current record position one record backward (toward the top of the **Recordset**). The **Recordset** object must support bookmarks or backward cursor movement; otherwise, the method call will generate an error. If the first record is the current record and you call the **MovePrevious** method, ADO sets the current record to the position before the first record in the Recordset (BOF is True). An attempt to move backward when the **BOF** property is already True generates an error. If the **Recordset** object does not support either bookmarks or backward cursor movement, the **MovePrevious** method will generate an error.
+
+If the **Recordset** is forward only and you want to support both forward and backward scrolling, you can use the **CacheSize** property to create a record cache that will support backward cursor movement through the **Move** method. Because cached records are loaded into memory, you should avoid caching more records than is necessary. You can call the **MoveFirst** method in a forward-only **Recordset** object; doing so may cause the provider to re-execute the command that generated the **Recordset** object.
+
+# <a name="MovePrevious"></a>MovePrevious
+
+Moves to the previous record in a specified Recordset object and makes that record the current record.
+
+```
+FUNCTION MovePrevious () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **MoveFirst** method to move the current record position to the first record in the **Recordset**.
+
+Use the **MoveLast** method to move the current record position to the last record in the **Recordset**. The **Recordset** object must support bookmarks or backward cursor movement; otherwise, the method call will generate an error.
+
+A call to either **MoveFirst** or **MoveLast** when the **Recordset** is empty (both BOF and EOF are True) generates an error.
+
+Use the **MoveNext** method to move the current record position one record forward (toward the bottom of the **Recordset**). If the last record is the current record and you call the **MoveNext** method, ADO sets the current record to the position after the last record in the Recordset (**EOF** is True). An attempt to move forward when the **EOF** property is already True generates an error.
+
+In ADO 2.5 and later, when the **Recordset** has been filtered or sorted and the data of the current record is changed, calling the **MoveNext** method moves the cursor two records forward from the current record. This is because when the current record is changed, the next record becomes the new current record. Calling **MoveNext** after the change moves the cursor one record forward from the new current record. This is different from the behavior in ADO 2.1 and earlier. In these earlier versions, changing the data of a current record in the sorted or filtered **Recordset** does not change the position of the current record, and **MoveNext** moves the cursor to the next record immediately after the current record.
+
+Use the **MovePrevious** method to move the current record position one record backward (toward the top of the **Recordset**). The **Recordset** object must support bookmarks or backward cursor movement; otherwise, the method call will generate an error. If the first record is the current record and you call the **MovePrevious** method, ADO sets the current record to the position before the first record in the Recordset (BOF is True). An attempt to move backward when the **BOF** property is already True generates an error. If the **Recordset** object does not support either bookmarks or backward cursor movement, the **MovePrevious** method will generate an error.
+
+If the **Recordset** is forward only and you want to support both forward and backward scrolling, you can use the **CacheSize** property to create a record cache that will support backward cursor movement through the **Move** method. Because cached records are loaded into memory, you should avoid caching more records than is necessary. You can call the **MoveFirst** method in a forward-only **Recordset** object; doing so may cause the provider to re-execute the command that generated the **Recordset** object.
