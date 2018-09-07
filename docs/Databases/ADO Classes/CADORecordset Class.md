@@ -1654,3 +1654,31 @@ If you are using the **CacheSize** property to locally cache records from the pr
 If the **Recordset** object is forward only, a user can still pass a *NumRecords* argument less than zero, provided the destination is within the current set of cached records. If the **Move** call would move the current record position to a record before the first cached record, an error will occur. Thus, you can use a record cache that supports full scrolling over a provider that supports only forward scrolling. Because cached records are loaded into memory, you should avoid caching more records than is necessary. Even if a forward-only **Recordset** object supports backward moves in this way, calling the **MovePrevious** method on any forward-only **Recordset** object will still generate an error.
 
 **Note**: Support for moving backwards in a forward-only **Recordset** is not predictable, depending upon your provider. If the current record has been postioned after the last record in the **Recordset**, Move backwards may not result in the correct current position.
+
+# <a name="MoveFirst"></a>MoveFirst
+
+Moves to the first record in a specified **Recordset** object and makes that record the current record.
+
+```
+FUNCTION MoveFirst () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **MoveFirst** method to move the current record position to the first record in the **Recordset**.
+
+Use the **MoveLast** method to move the current record position to the last record in the **Recordset**. The **Recordset** object must support bookmarks or backward cursor movement; otherwise, the method call will generate an error.
+
+A call to either **MoveFirst** or **MoveLast** when the **Recordset** is empty (both BOF and EOF are True) generates an error.
+
+Use the **MoveNext** method to move the current record position one record forward (toward the bottom of the **Recordset**). If the last record is the current record and you call the **MoveNext** method, ADO sets the current record to the position after the last record in the Recordset (**EOF** is True). An attempt to move forward when the **EOF** property is already True generates an error.
+
+In ADO 2.5 and later, when the **Recordset** has been filtered or sorted and the data of the current record is changed, calling the **MoveNext** method moves the cursor two records forward from the current record. This is because when the current record is changed, the next record becomes the new current record. Calling **MoveNext** after the change moves the cursor one record forward from the new current record. This is different from the behavior in ADO 2.1 and earlier. In these earlier versions, changing the data of a current record in the sorted or filtered **Recordset** does not change the position of the current record, and **MoveNext** moves the cursor to the next record immediately after the current record.
+
+Use the **MovePrevious** method to move the current record position one record backward (toward the top of the **Recordset**). The **Recordset** object must support bookmarks or backward cursor movement; otherwise, the method call will generate an error. If the first record is the current record and you call the **MovePrevious** method, ADO sets the current record to the position before the first record in the Recordset (BOF is True). An attempt to move backward when the **BOF** property is already True generates an error. If the **Recordset** object does not support either bookmarks or backward cursor movement, the **MovePrevious** method will generate an error.
+
+If the **Recordset** is forward only and you want to support both forward and backward scrolling, you can use the **CacheSize** property to create a record cache that will support backward cursor movement through the **Move** method. Because cached records are loaded into memory, you should avoid caching more records than is necessary. You can call the **MoveFirst** method in a forward-only **Recordset** object; doing so may cause the provider to re-execute the command that generated the **Recordset** object.
