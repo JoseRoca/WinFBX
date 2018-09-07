@@ -443,7 +443,7 @@ When you set multiple attributes, you can sum the appropriate constants. If you 
 
 #### Remote Data Service Usage
 
-This property is not available on a client-side Connection object.
+This property is not available on a client-side **Connection** object.
 
 #### Example
 
