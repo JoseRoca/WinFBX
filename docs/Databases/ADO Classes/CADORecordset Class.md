@@ -1303,6 +1303,16 @@ FUNCTION GetRows (BYVAL Rows AS LONG = adGetRowsRest, BYREF cvStart AS CVAR = ""
 | *cvStart* | Optional. A string value or Variant that evaluates to the bookmark for the record from which the **GetRows** operation should begin. You can also use a **BookmarkEnum** value. |
 | *cvFields* | Optional. A Variant that represents a single field name or ordinal position, or an array of field names or ordinal position numbers. ADO returns only the data in these fields. |
 
+#### BookmarkEnum
+
+Specifies a bookmark indicating where the operation should begin.
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| **adBookmarkCurrent** | Starts at the current record. |
+| **adBookmarkFirst** | Starts at the first record. |
+| **adBookmarkLast** | Starts at the last record. |
+
 #### Return value
 
 SAFEARRAY. The array of records.
