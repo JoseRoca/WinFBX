@@ -11,13 +11,13 @@ The **CAdoBase** object, from which the other ADO classes inherit, initializes a
 
 | Name       | Description |
 | ---------- | ----------- |
-| [CAdoBase Class](#CAdoBase) | Base class for all the other ADO classes. |
+| [CAdoBase Class](#CADOBase) | Base class for all the other ADO classes. |
 | [ADO Object Model](#ADOObjectModel) | ADO objects and their collections. |
 | [ADO Identifiers](#ADOIdentifiers) | PROGIDs, CLSIDs and IIDs. |
 | [ADO Errors](#ADOErrors) | ADO errors. |
 | [ADO Properties](#ADOProperties) | Represents a dynamic characteristic of an ADO object that is defined by the provider. |
 
-# <a name="CAdoBase"></a>CAdoBase Class
+# <a name="CADOBase"></a>CADOBase Class
 
 The **CAdoBase** class, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derived classes to store the result codes of ADO calls.
 
