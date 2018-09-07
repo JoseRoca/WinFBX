@@ -518,3 +518,20 @@ pRecordset.AddNew
    pRecordset.Collect("City") = "Burbank, CA. 91522"
 pRecordset.Update
 ```
+
+# <a name="Attach"></a>Attach
+
+Attaches a recordset to the class.
+
+```
+FUNCTION Attach (BYVAL pRecordset AS AFX_ADORecordset PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pRecordset* | A reference to an **Afx_ADORecordset** object. |
+| *fAddRef* | TRUE = increase the reference count; FALSE = don't increase the reference count. |
+
+#### Return value
+
+S_OK or an HRESULT code.
