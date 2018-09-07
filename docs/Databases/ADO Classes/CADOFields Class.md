@@ -234,3 +234,38 @@ An ADO **Fields** object reference.
 #### Remarks
 
 If **Item** cannot find an object in the collection corresponding to the *Index* argument, an error occurs.
+
+# <a name="Resync"></a>Resync
+
+Resynchronizes the contents of the **Fields** collection.
+
+```
+FUNCTION Resync (BYVAL ResyncValues AS ResyncEnum = adResyncAllValues) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ResyncValues* | Optional. A **ResyncEnum** value that specifies whether underlying values are overwritten. The default value is **adResyncAllValues**. |
+
+#### ResyncEnum
+
+Specifies whether underlying values are overwritten by a call to Resync.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adResyncAllValues** | Default. Overwrites data, and pending updates are canceled. |
+| **adResyncUnderlyingValues** | Does not overwrite data, and pending updates are not canceled. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **Resync** method to resynchronize the values of the **Fields** collection of a **Record** object with the underlying data source. The **Count** property is not affected by this method.
+
+If **ResyncValues** is set to **adResyncAllValues** (the default value), then the **UnderlyingValue**, **Value**, and **OriginalValue** properties of **Field** objects in the collection are synchronized. If **ResyncValues** is set to **adResyncUnderlyingValues**, only the **UnderlyingValue** property is synchronized.
+
+The value of the **Status** property for each **Field** object at the time of the call also affects the behavior of **Resync**. For **Field** objects with **Status** values of **adFieldPendingUnknown** or **adFieldPendingInsert**, **Resync** has no effect. For **Status** values of **adFieldPendingChange** or **adFieldPendingDelete**, **Resync** synchronizes data values for fields that still exist at the data source.
+
+**Resync** will not modify **Status** values of **Field** objects unless an error occurs when **Resync** is called. For example, if the field no longer exists, the provider will return an appropriate Status value for the **Field** object, such as **adFieldDoesNotExist**. Returned **Status** values may be logically combined within the value of the **Status** property.
