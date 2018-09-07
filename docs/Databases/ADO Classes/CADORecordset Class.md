@@ -1817,7 +1817,8 @@ FUNCTION Open (BYREF cvSource AS CVAR, _
    BYVAL nOptions AS LONG = adCmdUnspecified) AS HRESULT
 ```
 ```
-FUNCTION Open (BYREF cvSource AS CVAR, BYVAL pActiveConnection AS CAdoConnection PTR, _
+FUNCTION Open (BYREF cvSource AS CVAR, _
+   BYVAL pActiveConnection AS CAdoConnection PTR, _
    BYVAL nCursorType AS CursorTypeEnum = adOpenUnspecified, _
    BYVAL nLockType AS LockTypeEnum = adLockUnspecified, _
    BYVAL nOptions AS LONG = adCmdUnspecified) AS HRESULT
