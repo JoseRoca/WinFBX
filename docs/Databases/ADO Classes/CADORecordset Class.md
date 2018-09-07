@@ -2452,7 +2452,7 @@ LOOP
 
 Indicates one or more field names on which the **Recordset** is sorted, and whether each field is sorted in ascending or descending order.
 
-Sets or returns a string value that indicates the field names in the **Recordset** on which to sort. Each name is separated by a comma, and is optionally followed by a blank and the keyword, ASC, which sorts the field in ascending order, or DESC, which sorts the field in descending order. By default, if no keyword is specified, the field is sorted in ascending order.
+Sets or returns a string value that indicates the field names in the **Recordset** on which to sort.
 
 ```
 PROPERTY Sort() AS CBSTR
