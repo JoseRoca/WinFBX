@@ -480,3 +480,82 @@ IF nCount THEN
    NEXT
 END IF
 ```
+
+# <a name="DataFormat"></a>DataFormat (CADOField)
+
+Links the current **Field** object to a data-bound control.
+
+```
+PROPERTY DataFormat () AS IUnknown PTR
+PROPERTY DataFormat (BYVAL piDF AS IUnknown PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *piDF* | A reference to a **StdDataFormat** object. |
+
+#### Return value
+
+A reference to a **StdDataFormat** object.
+
+#### Remarks
+
+The **DataFormat** property is both read- and write-enabled. It accepts and returns a **StdDataFormat** object that is used to attach a bound object.
+
+# <a name="DefinedSize"></a>DefinedSize (CADOField)
+
+Indicates the data capacity of a field.
+
+```
+PROPERTY DefinedSize () AS LONG
+PROPERTY DefinedSize (BYVAL lSize AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lSize* | The data capacity of the field's value. |
+
+#### Return value
+
+The actual length of the field's value.
+
+#### Remarks
+
+Use the **DefinedSize** property to determine the data capacity of a field.
+
+The **DefinedSize** and **ActualSize** properties are different. For example, consider a field with a declared type of *adVarChar* and a **DefinedSize** property value of 50, containing a single character. The **ActualSize** property value it returns is the length in bytes of the single character.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Set the cursor location
+DIM pRecordset AS CAdoRecordset
+pRecordset.CursorLocation = adUseClient
+
+' // Open the recordset
+DIM cvSource AS CVAR = "SELECT * FROM Publishers"
+pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Get a reference to the Fields collection
+DIM pFields AS CAdoFields = pRecordset.Fields
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the contents of the fields
+   DIM pField AS CAdoField
+   pField.Attach(pFields.Item("Name"))
+   DIM cvRes AS CVAR = pField.Value
+   PRINT "Name: "; cvRes; " - "; WSTR(pField.ActualSize); " - "; WSTR(pField.DefinedSize)
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+```
