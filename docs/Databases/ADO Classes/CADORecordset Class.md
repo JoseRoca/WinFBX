@@ -2644,3 +2644,23 @@ Specifies the current status of the execution of an event.
 
 Use the **Status** property to see what changes are pending for records modified during batch updating. You can also use the **Status** property to view the status of records that fail during bulk operations, such as when you call the **Resync**, **UpdateBatch**, or **CancelBatch** methods on a **Recordset** object, or set the **Filter** property on a **Recordset** object to an array of bookmarks. With this property, you can determine how a given record failed and resolve it accordingly.
 
+# <a name="StayInSync"></a>StayInSync
+
+Indicates, in a hierarchical **Recordset** object, whether the reference to the underlying child records (that is, the chapter) changes when the parent row position changes.
+
+```
+PROPERTY StayInSync (BYVAL pbStayInSync AS BOOLEAN)
+PROPERTY StayInSync () AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *bStayInSync* | Sets a Boolean value. The default value is True. If True, the chapter will be updated if the parent **Recordset** object changes row position; if False, the chapter will continue to refer to data in the previous chapter even though the parent Recordset object has changed row position. |
+
+#### Return value
+
+TRUE or FALSE.
+
+#### Remarks
+
+This property applies to hierarchical recordsets, such as those supported by the Microsoft Data Shaping Service for OLE DB, and must be set on the parent Recordset before the child **Recordset** is retrieved. This property simplifies navigating hierarchical recordsets.
