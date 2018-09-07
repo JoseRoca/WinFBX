@@ -147,3 +147,50 @@ The **FieldValue** parameter is only valid when adding a **Field** object to a *
 **Notes**: For new **Field** objects that have been appended to the **Fields** collection of a **Record** object, the Value property must be set before any other **Field** properties can be specified. First, a specific value for the **Value** property must have been assigned and **Update** on the **Fields** collection called. Then, other properties such as Type or **Attributes** can be accessed.
 
 **Field** objects of the following data types (**DataTypeEnum**) cannot be appended to the **Fields** collection and will cause an error to occur: **adArray**, **adChapter**, **adEmpty**, **adPropVariant**, and **adUserDefined**. Also, the following data types are not supported by ADO: **adIDispatch**, **adIUnknown**, and **adIVariant**. For these types, no error will occur when appended, but usage can produce unpredictable results including memory leaks.
+
+# <a name="Attach"></a>Attach
+
+Attaches a reference to an ADO **Fields** object to the class.
+
+```
+SUB Attach (BYVAL pFields AS Afx_ADOFields PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pFields* | A reference to an ADO **Fields** object. |
+| *fAddRef* | TRUE = increase the reference count; FALSE = don't increase the reference count. |
+
+# <a name="CancelUpdate"></a>CancelUpdate
+
+Cancels any changes made to the **Fields** collection of a **Record** object before calling the **Update** method.
+
+```
+FUNCTION CancelUpdate () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+The **CancelUpdate** method cancels any pending insertions or deletions of Field objects, and cancels pending updates of existing fields and restores them to their original values. The **Status** property of all fields in the Fields collection is set to **adFieldOK**.
+
+# <a name="Count"></a>Count
+
+Retrieves the number of objects in the **Fields** collection.
+
+```
+PROPERTY Count () AS LONG
+```
+
+#### Return value
+
+The number of objects in the Fields collection.
+
+#### Remarks
+
+Because numbering for members of a collection begins with zero, you should always code loops starting with the zero member and ending with the value of the **Count** property minus 1.
+
+If the **Count** property is zero, there are no objects in the collection.
