@@ -1408,3 +1408,83 @@ DIM cvSource AS CVAR = "SELECT * FROM Publishers"
 DIM hr AS HRESULT = pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
 PRINT pRecordset.GetString
 ```
+
+# <a name="Index"></a>Index
+
+Indicates the name of the index currently in effect for a **Recordset** object.
+
+Sets or returns a string value, which is the name of the index.
+
+
+```
+PROPERTY Index () AS CBSTR
+PROPERTY Index (BYREF cbsIndex AS CBSTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsIndex* | The name of the index. |
+
+Return value
+
+CBSTR. The name of the current index.
+
+#### Remarks
+
+The index named by the **Index** property must have previously been declared on the base table underlying the **Recordset** object. That is, the index must have been declared programmatically either as an **ADOX** **Index* object, or when the base table was created.
+
+A run-time error will occur if the index cannot be set. The **Index** property cannot be set:
+
+* Within a **WillChangeRecordset** or **RecordsetChangeComplete** event handler.
+* If the **Recordset** is still executing an operation (which can be determined by the State property).
+* If a filter has been set on the **Recordset** with the Filter property.
+
+The **Index** property can always be set successfully if the **Recordset** is closed, but the **Recordset** will not open successfully, or the index will not be usable, if the underlying provider does not support indexes.
+
+If the index can be set, the current row position may change. This will cause an update to the **AbsolutePosition** property, and the generation of **WillChangeRecordset**, **RecordsetChangeComplete**, **WillMove**, and **MoveComplete** events.
+
+If the index can be set and the **LockType** property is **adLockPessimistic** or **adLockOptimistic**, then an implicit **UpdateBatch** operation is performed. This releases the current and affected groups. Any existing filter is released, and the current row position is changed to the first row of the reordered **Recordset**.
+
+The **Index** property is used in conjunction with the **Seek** method. If the underlying provider does not support the **Index** property, and thus the **Seek** method, consider using the **Find** method instead. Determine whether the **Recordset** object supports indexes with the **Supports**(*adIndex*) method.
+
+The built-in **Index** property is not related to the dynamic **Optimize** property, although they both deal with indexes.
+
+**Note**: The SQL Server 6.5 or 7.0 doesn't support the **Seek** or **Index** methods of the **Recordset**. You can however, use the **Index** and **Seek** method with an Access 2000 database and the OLE DB 4.0 Provider for Jet.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Set the cursor location
+DIM pRecordset AS CAdoRecordset
+pRecordset.CursorLocation = adUseServer
+
+' // Open the recordset
+DIM cvSource AS CVAR = "Publishers"
+DIM hr AS HRESULT = pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdTableDirect)
+
+' // Set the index
+pRecordset.Index = "PrimaryKey"
+
+' // Seek the record 70
+pRecordset.Seek 70, 1
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the contents
+   DIM cvRes1 AS CVAR = pRecordset.Collect("PubID")
+   DIM cvRes2 AS CVAR = pRecordset.Collect("Name")
+   DIM cvRes3 AS CVAR = pRecordset.Collect("Company Name")
+   PRINT cvRes1 & " " & cvRes2 & " " & cvRes3
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+```
