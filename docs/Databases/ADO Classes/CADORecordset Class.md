@@ -2221,3 +2221,147 @@ Unlike the **Requery** method, the **Resync** method does not re-execute the **R
 If the attempt to resynchronize fails because of a conflict with the underlying data (for example, a record has been deleted by another user), the provider returns warnings to the **Errors** collection and a run-time error occurs. Use the **Filter** property (**adFilterConflictingRecords**) and the **Status** property to locate records with conflicts.
 
 If the Unique Table and Resync Command dynamic properties are set, and the **Recordset** is the result of executing a JOIN operation on multiple tables, then the **Resync** method will execute the command given in the **Resync** **Command** property only on the table named in the Unique Table property.
+
+# <a name="Save"></a>Save
+
+Saves the **Recordset** in a file or **Stream** object.
+
+```
+FUNCTION Save (BYREF Destination AS CVAR, _
+   BYVAL PersistFormat AS PersistFormatEnum = adPersistADTG) AS HRESULT
+FUNCTON Save (BYREF pDestination AS Afx_AdoStream PTR, _
+   BYVAL PersistFormat AS PersistFormatEnum = adPersistADTG) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Destination* | Optional. The complete path name of the file where the **Recordset** is to be saved. |
+| *pDestination* | Optional. A reference to a **Stream** object. |
+| *PersistFormat* | Optional. A **PersistFormatEnum** value that specifies the format in which the **Recordset** is to be saved (XML or ADTG). The default value is **adPersistADTG**. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+The **Save** method can only be invoked on an open **Recordset**. Use the **Open** method to later restore the **Recordset** from *Destination*.
+
+If the **Filter** property is in effect for the **Recordset**, then only the rows accessible under the filter are saved. If the **Recordset** is hierarchical, then the current child **Recordset** and its children are saved, including the parent **Recordset**. If the **Save** method of a child **Recordset** is called, the child and all its children are saved, but the parent is not.
+
+The first time you save the **Recordset**, it is optional to specify *Destination*. If you omit *Destination*, a new file will be created with a name set to the value of the **Source** property of the **Recordset**.
+
+Omit *Destination* when you subsequently call **Save** after the first save, or a run-time error will occur. If you subsequently call **Save** with a new *Destination*, the **Recordset** is saved to the new destination. However, the new destination and the original destination will both be open.
+
+**Save** does not close the **Recordset** or *Destination*, so you can continue to work with the **Recordset** and save your most recent changes. *Destination* remains open until the Recordset is closed.
+
+For reasons of security, the **Save** method permits only the use of low and custom security settings from a script executed by Microsoft Internet Explorer.
+
+If the **Save** method is called while an asynchronous **Recordset** fetch, execute, or update operation is in progress, then **Save** waits until the asynchronous operation is complete.
+
+Records are saved beginning with the first row of the **Recordset**. When the **Save** method is finished, the current row position is moved to the first row of the **Recordset**.
+
+For best results, set the **CursorLocation** property to **adUseClient** with **Save**. If your provider does not support all of the functionality necessary to save **Recordset** objects, the Cursor Service will provide that functionality.
+
+When a **Recordset** is persisted with the **CursorLocation** property set to **adUseServer**, the update capability for the **Recordset** is limited. Typically, only single-table updates, insertions, and deletions are allowed (dependant upon provider functionality). The **Resync** method is also unavailable in this configuration.
+
+**Note**: Saving a **Recordset** with **Fields** of type **adVariant**, **adIDispatch**, or **adIUnknown** is not supported by ADO and can cause unpredictable results.
+
+Only Filters in the form of Criteria Strings (e.g. OrderDate > '12/31/1999') affect the contents of a persisted **Recordset**. Filters created with an Array of Bookmarks or using a value from the **FilterGroupEnum** will not affect the contents of the persisted **Recordset**. These rules apply to Recordsets created with either client-side or server-side cursors.
+
+Because the *Destination* parameter can accept any object that supports the OLE DB IStream interface, you can save a **Recordset** directly to the ASP Response object.
+
+You can also save a **Recordset** in XML format to an instance of an MSXML DOM object.
+
+**Note**: Two limitations apply when saving hierarchical Recordsets (data shapes) in XML format. You cannot save into XML if the hierarchical **Recordset** contains pending updates, and you cannot save a parameterized hierarchical **Recordset**.
+
+A **Recordset** saved in XML format is saved using UTF-8 format. When such a file is loaded into an ADO **Stream**, the **Stream** object will not attempt to open a **Recordset** from the stream unless the **Charset** property of the stream is set to the appropriate value for UTF-8 format.
+
+**Example** (save as XML)
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cvSource AS CBSTR = "SELECT * FROM Publishers"
+DIM hr AS HRESULT = pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Save the recordset as XML
+DIM wszFileName AS WSTRING * MAX_PATH = "Publishers.xml"
+IF AfxFileExists(wszFileName) THEN KILL wszFileName
+IF pRecordset.Save(wszFileName, adPersistXML) = S_OK THEN
+   PRINT "Recordset saved"
+ELSE
+   PRINT "Save failed"
+END IF
+```
+
+#### Persisting data
+
+Portable computing (for example, using laptops) has generated the need for applications that can run in both a connected and disconnected state. ADO has added support for this by giving the developer the ability to save a client cursor **Recordset** to disk and reload it later.
+
+There are several scenarios in which you could use this type of feature, including the following:
+
+Traveling: When taking the application on the road, it is vital to supply the ability to make changes and add new records that can then be reconnected to the database later and committed.
+
+Infrequently updated lookups: Often in an application, tables are used as lookups—for example, state tax tables. They are infrequently updated and are read-only. Instead of rereading this data from the server each time the application is started, the application can simply load the data from a locally persisted **Recordset**.
+
+In ADO, to save and load Recordsets, use the **Recordset.Save** and **Recordset.Open**(*,,,,adCmdFile*) methods on the ADO **Recordset** object.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Create an scoped instance of the CAdoRecordset class
+SCOPE
+   DIM pRecordset AS CAdoRecordset
+   ' // Set the cursor location
+   pRecordset.CursorLocation = adUseClient
+
+   ' // Open the recordset
+   DIM cbsSource AS CBSTR = "SELECT * FROM Publishers"
+   DIM hr AS HRESULT = pRecordset.Open(cbsSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+   ' // Save the recordset as XML
+   DIM wszFileName AS WSTRING * MAX_PATH = "Publishers.dat"
+   IF AfxFileExists(wszFileName) THEN KILL wszFileName
+   IF pRecordset.Save(wszFileName, adPersistADTG) = S_OK THEN
+      PRINT "Recordset saved"
+   ELSE
+      PRINT "Save failed"
+   END IF
+END SCOPE
+
+IF AfxFileExists("Publishers.dat") THEN
+   ' // Reopen the recordset
+   DIM pRecordset AS CAdoRecordset
+   DIM cbsSource AS CBSTR = "Publishers.dat"
+   DIM hr AS HRESULT = pRecordset.Open(cbsSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdFile)
+   IF hr = S_OK THEN
+      ' // Parse the recordset
+      DO
+         ' // While not at the end of the recordset...
+         IF pRecordset.EOF THEN EXIT DO
+         ' // Get the contents
+         DIM cvRes1 AS CVAR = pRecordset.Collect("PubID")
+         DIM cvRes2 AS CVAR = pRecordset.Collect("Name")
+         DIM cvRes3 AS CVAR = pRecordset.Collect("Company Name")
+         PRINT cvRes1 & " " & cvRes2 & " " & cvRes3
+         ' // Fetch the next row
+         IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+      LOOP
+   END IF
+END IF
+```
