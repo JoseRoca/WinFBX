@@ -548,8 +548,7 @@ PROPERTY BOF () AS BOOLEAN
 
 TRUE if the current record position is before the first record; FALSE, otherwise.
 
-
-# <a name="EOF"></a>BOF
+# <a name="EOF"></a>EOF
 
 Indicates that the current record position is after the last record in a **Recordset** object.
 
@@ -560,4 +559,31 @@ PROPERTY EOF () AS BOOLEAN
 #### Return value
 
 TRUE if the current record position is after the last record; FALSE, otherwise.
+
+# <a name="Bookmark"></a>Bookmark
+
+Sets or returns a Variant expression that evaluates to a valid bookmark.
+
+```
+PROPERTY Bookmark () AS CVAR
+PROPERTY Bookmark (BYREF cvBookmark AS CVAR)
+```
+
+#### Return value
+
+The bookmark.
+
+#### Remarks
+
+Use the **Bookmark** property to save the position of the current record and return to that record at any time. Bookmarks are available only in **Recordset** objects that support bookmark functionality.
+
+When you open a **Recordset** object, each of its records has a unique bookmark. To save the bookmark for the current record, assign the value of the **Bookmark** property to a variable. To quickly return to that record at any time after moving to a different record, set the **Recordset** object's **Bookmark** property to the value of that variable.
+
+The user may not be able to view the value of the bookmark. Also, users should not expect bookmarks to be directly comparable—two bookmarks that refer to the same record may have different values.
+
+If you use the **Clone** method to create a copy of a **Recordset** object, the **Bookmark** property settings for the original and the duplicate **Recordset** objects are identical and you can use them interchangeably. However, you cannot use bookmarks from different **Recordset** objects interchangeably, even if they were created from the same source or command.
+
+#### Remote Data Service Usage
+
+When used on a client-side Recordset object, the **Bookmark** property is always available.
 
