@@ -2171,3 +2171,53 @@ S_OK or an HRESULT code.
 Use the **Requery** method to refresh the entire contents of a Recordset object from the data source by reissuing the original command and retrieving the data a second time. Calling this method is equivalent to calling the **Close** and **Open** methods in succession. If you are editing the current record or adding a new record, an error occurs.
 
 While the **Recordset** object is open, the properties that define the nature of the cursor (**CursorType**, **LockType**, **MaxRecords**, and so forth) are read-only. Thus, the **Requery** method can only refresh the current cursor. To change any of the cursor properties and view the results, you must use the **Close** method so that the properties become read/write again. You can then change the property settings and call the **Open** method to reopen the cursor.
+
+# <a name="Resync"></a>Resync
+
+Refreshes the data in the current **Recordset** object from the underlying database.
+
+```
+FUCTION Resync (BYVAL AffectRecords AS AffectEnum = adAffectAll, _
+   BYVAL ResyncValues AS ResyncEnum = adResyncAllValues) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *AffectRecords* | Optional. An **AffectEnum** value that determines how many records the **Resync** method will affect. The default value is **adAffectAll**. This value is not available with the **Resync** method of the **Fields** collection of a **Record** object. |
+| *ResyncValues* | Optional. A **ResyncEnum** value that specifies whether underlying values are overwritten. The default value is **adResyncAllValues**. |
+
+#### AffectEnum
+
+Specifies which records are affected by an operation.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adAffectAll** | If there is not a Filter applied to the **Recordset**, affects all records. If the **Filter** property is set to a string criteria (such as "Author='Smith'"), then the operation affects visible records in the current chapter. If the **Filter** property is set to a member of the **FilterGroupEnum** or an array of Bookmarks, then the operation will affect all rows of the **Recordset**. |
+| **adAffectAllChapters** | Affects all records in all sibling chapters of the **Recordset**, including those not visible via any **Filter** that is currently applied. |
+| **adAffectCurrent** | Affects only the current record. |
+| **adAffectGroup** | Affects only records that satisfy the current **Filter** property setting. You must set the **Filter** property to a **FilterGroupEnum** value or an array of Bookmarks to use this option. |
+
+#### ResyncEnum
+
+Specifies whether underlying values are overwritten by a call to Resync.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adResyncAllValues** | Default. Overwrites data, and pending updates are canceled. |
+| **adResyncUnderlyingValues** | Does not overwrite data, and pending updates are not canceled. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **Resync** method to resynchronize records in the current **Recordset** with the underlying database. This is useful if you are using either a static or forward-only cursor, but you want to see any changes in the underlying database.
+
+If you set the **CursorLocation** property to **adUseClient**, **Resync** is only available for non-read-only **Recordset** objects.
+
+Unlike the **Requery** method, the **Resync** method does not re-execute the **Recordset** object's underlying command. New records in the underlying database will not be visible.
+
+If the attempt to resynchronize fails because of a conflict with the underlying data (for example, a record has been deleted by another user), the provider returns warnings to the **Errors** collection and a run-time error occurs. Use the **Filter** property (**adFilterConflictingRecords**) and the **Status** property to locate records with conflicts.
+
+If the Unique Table and Resync Command dynamic properties are set, and the **Recordset** is the result of executing a JOIN operation on multiple tables, then the **Resync** method will execute the command given in the **Resync** **Command** property only on the table named in the Unique Table property.
