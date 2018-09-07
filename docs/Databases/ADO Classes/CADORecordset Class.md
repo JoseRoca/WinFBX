@@ -2448,7 +2448,7 @@ DO
 LOOP
 ```
 
-# <a name="Seek"></a>Seek
+# <a name="Sort"></a>Sort
 
 Indicates one or more field names on which the **Recordset** is sorted, and whether each field is sorted in ascending or descending order.
 
