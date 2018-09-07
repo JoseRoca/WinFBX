@@ -2134,6 +2134,34 @@ FUNCTION Requery (BYVAL Options AS LONG = adOpenUnspecified) AS HRESULT
 | ---------- | ----------- |
 | *Options* | Optional. A bitmask that contains **ExecuteOptionEnum** and **CommndTypeEnum** values affecting this operation. **Note**: If *Options* is set to **adAsyncExecute**, this operation will execute asynchronously and a **RecordsetChangeComplete** event will be issued when it concludes. The **ExecuteOptionEnum** values of **adExecuteNoRecords** or **adExecuteStream** should not be used with **Requery**. |
 
+#### CommandTypeEnum
+
+Specifies how a command argument should be interpreted.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adCmdUnspecified** | Does not specify the command type argument. |
+| **adCmdText** | Evaluates **CommandText** as a textual definition of a command or stored procedure call. |
+| **adCmdTable** | Evaluates **CommandText** as a table name whose columns are all returned by an internally generated SQL query. |
+| **adCmdStoredProc** | Evaluates **CommandText** as a stored procedure name. |
+| **adCmdUnknown** | Default. Indicates that the type of command in the **CommandText** property is not known. |
+| **adCmdFile** | Evaluates CommandText as the file name of a persistently stored **Recordset**. Used with **Recordset** **Open** or **Requery** only. |
+| **adCmdTableDirect** | Evaluates **CommandText** as a table name whose columns are all returned. Used with **Recordset** **Open** or **Requery** only. To use the **Seek** method, the **Recordset** must be opened with **adCmdTableDirect**. This value cannot be combined with the **ExecuteOptionEnum** value **adAsyncExecute**. |
+
+#### ExecuteOptionEnum
+
+Specifies how a command argument should be interpreted.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adAsyncExecute** | Indicates that the command should execute asynchronously. This value cannot be combined with the **CommandTypeEnum** value **adCmdTableDirect**. |
+| *adAsyncFetch* | Indicates that the remaining rows after the initial quantity specified in the **CacheSize** property should be retrieved asynchronously. |
+| *adAsyncFetchNonBlocking* | Indicates that the main thread never blocks while retrieving. If the requested row has not been retrieved, the current row automatically moves to the end of the file. If you open a **Recordset** from a **Stream** containing a persistently stored **Recordset**, **adAsyncFetchNonBlocking** will not have an effect; the operation will be synchronous and blocking. **adAsynchFetchNonBlocking** has no effect when the **CmdTableDirect** option is used to open the **Recordset**. |
+| *adExecuteNoRecords* | Indicates that the command text is a command or stored procedure that does not return rows (for example, a command that only inserts data). If any rows are retrieved, they are discarded and not returned. **adExecuteNoRecords** can only be passed as an optional parameter to the Command or **Connection** **Execute** method. |
+| *adExecuteStream* | Indicates that the results of a command execution should be returned as a stream. **adExecuteStream** can only be passed as an optional parameter to the **Command** **Execute** method. |
+| *adExecuteRecord* | Indicates that the **CommandText** is a command or stored procedure that returns a single row which should be returned as a **Record** object. |
+| *adOptionUnspecified* | Indicates that the command is unspecified. |
+
 #### Return value
 
 S_OK or an HRESULT code.
