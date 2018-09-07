@@ -132,9 +132,15 @@ PROPERTY AbsolutePage () AS PositionEnum
 PROPERTY AbsolutePage (BYVAL Page AS PositionEnum)
 ```
 
-| Parameter  | Description |
+#### PositionEnum
+
+Specifies the current position of the record pointer within a Recordset.
+
+| Constant   | Description |
 | ---------- | ----------- |
-| *Page* | A value from 1 to the number of pages in the **Recordset** object (**PageCount**) |
+| **adPosBOF** | Indicates that the current record pointer is at **BOF** (that is, the **BOF** property is True). |
+| **adPosEOF** | Indicates that the current record pointer is at **EOF** (that is, the **EOF** property is True). |
+| **adPosUnknown** | Indicates that the **Recordset** is empty, the current position is unknown, or the provider does not support the **AbsolutePage** or **AbsolutePosition** property. |
 
 #### Return value
 
@@ -189,4 +195,74 @@ FOR i AS LONG = 1 TO nPageCount
    NEXT
    PRINT
 NEXT
+```
+
+# <a name="AbsolutePosition"></a>AbsolutePosition
+
+Sets or returns a Long value from 1 to the number of records in the **Recordset** object (**RecordCount**), or returns one of the **PositionEnum** values.
+
+```
+PROPERTY AbsolutePosition () AS PositionEnum
+PROPERTY AbsolutePosition (BYVAL Position AS PositionEnum)
+```
+
+#### PositionEnum
+
+Specifies the current position of the record pointer within a Recordset.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adPosBOF** | Indicates that the current record pointer is at **BOF** (that is, the **BOF** property is True). |
+| **adPosEOF** | Indicates that the current record pointer is at **EOF** (that is, the **EOF** property is True). |
+| **adPosUnknown** | Indicates that the **Recordset** is empty, the current position is unknown, or the provider does not support the **AbsolutePage** or **AbsolutePosition** property. |
+
+#### Return value
+
+The absolute position.
+
+#### Remarks
+
+In order to set the **AbsolutePosition** property, ADO requires that the OLE DB provider you are using implement the **IRowsetLocate** interface.
+
+Accessing the **AbsolutePosition** property of a **Recordset** that was opened with either a forward-only or dynamic cursor raises the error **adErrFeatureNotAvailable**. With other cursor types, the correct position will be returned as long as the provider supports the **IRowsetScroll** interface. If the provider does not support the **IRowsetScroll** interface, the property is set to **adPosUnknown**. See the documentation for your provider to determine whether it supports **IRowsetScroll**.
+
+Use the **AbsolutePosition** property to move to a record based on its ordinal position in the **Recordset** object, or to determine the ordinal position of the current record. The provider must support the appropriate functionality for this property to be available.
+
+Like the **AbsolutePage** property, **AbsolutePosition** is 1-based and equals 1 when the current record is the first record in the **Recordset**. You can obtain the total number of records in the **Recordset** object from the **RecordCount** property.
+
+When you set the **AbsolutePosition** property, even if it is to a record in the current cache, ADO reloads the cache with a new group of records starting with the record you specified. The **CacheSize** property determines the size of this group.
+
+**Note**: You should not use the **AbsolutePosition** property as a surrogate record number. The position of a given record changes when you delete a preceding record. There is also no assurance that a given record will have the same **AbsolutePosition** if the **Recordset** object is requeried or reopened. Bookmarks are still the recommended way of retaining and returning to a given position and are the only way of positioning across all types of **Recordset** objects.
+
+#### Example
+
+This example demonstrates how the **AbsolutePosition** property can track the progress of a loop that enumerates all the records of a **Recordset**. It uses the **CursorLocation** property to enable the **AbsolutePosition** property by setting the cursor to a client cursor.
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Set the cursor location
+DIM pRecordset AS CAdoRecordset
+pRecordset.CursorLocation = adUseClient
+
+' // Open the recordset
+DIM cvSource AS CVAR = "Publishers"
+pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdTable)
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the contents of the "City" and "Name" columns
+   DIM cvRes AS CVAR = pRecordset.Collect("Name")
+   PRINT "Position: "; pRecordset.AbsolutePosition; " "; cvRes
+
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
 ```
