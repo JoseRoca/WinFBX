@@ -2699,4 +2699,53 @@ Specifies what functionality the **Supports** method should test for.
 
 #### Return value
 
-TRUE or FALSE.
+True if the object supports the specified type of functionality; False, otherwise.
+
+# <a name="Update"></a>Update
+
+Saves any changes you make to the current row of a **Recordset** object.
+
+```
+FUNCTION Update ( _
+   BYVAL vFieldList AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
+   BYVAL vValues AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND) _
+) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *vFieldList* | Optional. A Variant that represents a single name, or a Variant array that represents names or ordinal positions of the field or fields you wish to modify. |
+| *vValues* | Optional. A Variant that represents a single value, or a Variant array that represents values for the field or fields in the new record. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Create a Connection object
+DIM pConnection AS CAdoConnection
+' // Create a Recordset object
+DIM pRecordset AS CAdoRecordset
+
+' // Open the connection
+DIM cvConStr AS CVAR = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open cvConStr
+
+' // Open the recordset
+DIM cvSource AS CVAR = "Publishers"
+DIM hr AS HRESULT = pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdTableDirect)
+
+' // Add a new record
+pRecordset.AddNew
+   pRecordset.Collect("PubID") = CLNG(10000)
+   pRecordset.Collect("Name") = "Wile E. Coyote"
+   pRecordset.Collect("Company Name") = "Warner Brothers Studios"
+   pRecordset.Collect("Address") = "4000 Warner Boulevard"
+   pRecordset.Collect("City") = "Burbank, CA. 91522"
+pRecordset.Update
+```
