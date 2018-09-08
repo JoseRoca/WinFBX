@@ -16,7 +16,7 @@ CONSTRUCTOR CSQLite (BYREF wszDllPath AS WSTRING = "sqlite3.dll")
 | ---------- | ----------- |
 | *wszDllPath* | The path of the SQLite3 DLL. |
 
-### Methods and Properties
+### Methods
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -63,7 +63,7 @@ CONSTRUCTOR CSQLiteDb (BYREF wszPath AS WSTRING)
 
 The database is opened for reading and writing, and is created if it does not already exist. If the filename is ":memory:", then a private, temporary in-memory database is created for the connection. This in-memory database will vanish when the database connection is closed. If the filename is an empty string, then a private, temporary on-disk database will be created. This private database will be automatically deleted as soon as the database connection is closed. If URI filename interpretation is enabled, and the filename argument begins with "file:", then the filename is interpreted as a URI.
 
-### Methods and Properties
+### Methods
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -86,3 +86,57 @@ The database is opened for reading and writing, and is created if it does not al
 | [Status](#Status) | Retrieves runtime status information about a single database connection. |
 | [TotalChanges](#TotalChanges) | This function returns the number of row changes caused by INSERT, UPDATE or DELETE statements since the database connection was opened. |
 | [UnlockNotify](#UnlockNotify) | Registers a callback that SQLite will invoke when the connection currently holding the required lock relinquishes it. |
+
+# CSQLiteStmt Class
+
+Wraps a sqlite3_stmt pointer returned by the Prepare method of the CSQLite class.
+
+Inherits from CSQLite.
+
+```
+CONSTRUCTOR CSQLiteStmt (BYVAL pStmt AS sqlite3_stmt PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pStmt* | The sqlite3_stmt pointer. |
+
+### Methods and Properties
+
+| Name       | Description |
+| ---------- | ----------- |
+| [BindBlob](#BindBlob) | Binds a blob with the statement. |
+| [BindDouble](#BindDouble) | Binds a double value with the statement. |
+| [BindLong](#BindLong) | Binds a long value with the statement. |
+| [BindLongInt](#BindLongInt) | Binds a longint value with the statement. |
+| [BindNull](#BindNull) | Binds a null value with the statement. |
+| [BindParameterCount](#BindParameterCount) | This method can be used to find the number of SQL parameters in a prepared statement. |
+| [BindParameterIndex](#BindParameterCount) | Returns the index of an SQL parameter given its name. |
+| [BindParameterName](#BindParameterName) | Returns the name of the N-th SQL parameter in the prepared statement P. |
+| [BindText](#BindText) | Binds a text value with the statement. |
+| [BindZeroBlob](#BindZeroBlob) | Binds a BLOB that is filled with zeroes. |
+| [Busy](#Busy) | Returns true if the prepared statement has been stepped at least once using **Step_** but has not run to completion and/or has not been reset using **Reset**. |
+| [ClearBindings](#ClearBindings) | Sets all the parameters in the compiled SQL statement to NULL. |
+| [ColumnBlob](#ColumnBlob) | Returns information about a single column of the current result row of a query. |
+| [ColumnBytes](#ColumnBytes) | Returns the number of bytes of the column value. |
+| [ColumnCount](#ColumnCount) | Returns the number of columns in the result set returned by the prepared statement. |
+| [ColumnDatabaseName](#ColumnDatabaseName) | Returns the database name that is the origin of a particular result column in SELECT statement. |
+| [ColumnDeclaredType](#ColumnDeclaredType) | Returns the declared data type of a query result. |
+| [ColumnDouble](#ColumnDouble) | Returns the column value as a double. |
+| [ColumnLong](#ColumnLong) | Returns the column value as a long. |
+| [ColumnLongInt](#ColumnLongInt) | Returns the column value as a quad. |
+| [ColumnName](#ColumnName) | Returns the name assigned to a particular column in the result set of a SELECT statement. |
+| [ColumnOriginName](#ColumnOriginName) | Returns the column name that is the origin of a particular result column in SELECT statement. |
+| [ColumnTableName](#ColumnTableName) | Returns the table name that is the origin of a particular result column in SELECT statement. |
+| [ColumnText](#ColumnText) | Returns the column value as a UTF-16 string. |
+| [ColumnType](#ColumnType) | Returns the column type. |
+| [DataCount](#DataCount) | Returns the number of columns in the result set returned by the prepared statement. |
+| [DbHandle](#DbHandle) | Returns the database connection handle to which a prepared statement belongs. |
+| [Finalize](#Finalize) | Deletes a prepared statement. |
+| [GetRow](#GetRow) | After a prepared statement has been prepared using either Prepare this method must be called one or more times to evaluate the statement. **GetRow** is an alias for **Step_**. |
+| [hStmt](#hStmt) | Gets/sets the connection handle. |
+| [IsColumnNull](#IsColumnNull) | Returns true is the column value is null or false otherwise. |
+| [ReadOnly](#ReadOnly) | Rreturns true if and only if the prepared statement makes no direct changes to the content of the database file. |
+| [Reset](#Reset) | Resets a prepared statement object back to its initial state, ready to be re-executed. |
+| [Sql](#Sql) | Retrieve a saved copy of the original SQL text used to create a prepared statement if that statement was compiled using **Prepare**. |
+| [Step_](#Step_) | After a prepared statement has been prepared using **Prepare** this method must be called one or more times to evaluate the statement. |
