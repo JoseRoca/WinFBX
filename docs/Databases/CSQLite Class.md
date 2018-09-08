@@ -706,3 +706,31 @@ An SQL operation that is interrupted will return SQLITE_INTERRUPT. If the interr
 The **Interrupt** call is in effect until all currently running SQL statements on database connection complete. Any new SQL statements that are started after the **Interrupt** call and before the running statements reaches zero are interrupted as if they had been running prior to the **Interrupt** call. New SQL statements that are started after the running statement count reaches zero are not effected by the **Interrupt**. A call to **Interrupt** that occurs when there are no running SQL statements is a no-op and has no effect on SQL statements that are started after the **Interrupt** call returns.
 
 If the database connection closes while **Interrupt** is running then bad things will likely happen.
+
+# <a name="LastInsertRowId"></a>LastInsertRowId
+
+Returns the rowid of the most recent successful INSERT into the database from the database connection in the first argument.
+
+```
+FUNCTION LastInsertRowId () AS sqlite3_int64
+```
+
+#### Return value
+
+The rowid of the most recent successful INSERT into the database from the database connection in the first argument.
+
+#### Remarks
+
+Each entry in an SQLite table has a unique 64-bit signed integer key called the "rowid". The rowid is always available as an undeclared column named ROWID, OID, or _ROWID_ as long as those names are not also used by explicitly declared columns. If the table has a column of type INTEGER PRIMARY KEY then that column is another alias for the rowid.
+
+This function returns the rowid of the most recent successful INSERT into the database from the database connection in the first argument. As of SQLite version 3.7.7, this functions records the last insert rowid of both ordinary tables and virtual tables. If no successful INSERTs have ever occurred on that database connection, zero is returned.
+
+If an INSERT occurs within a trigger or within a virtual table method, then this function will return the rowid of the inserted row as long as the trigger or virtual table method is running. But once the trigger or virtual table method ends, the value returned by this function reverts to what it was before the trigger or virtual table method began.
+
+An INSERT that fails due to a constraint violation is not a successful INSERT and does not change the value returned by this function. Thus INSERT OR FAIL, INSERT OR IGNORE, INSERT OR ROLLBACK, and INSERT OR ABORT make no changes to the return value of this function when their insertion fails. When INSERT OR REPLACE encounters a constraint violation, it does not fail. The INSERT continues to completion after deleting rows that caused the constraint problem so INSERT OR REPLACE will always change the return value of this interface.
+
+For the purposes of this function, an INSERT is considered to be successful even if it is subsequently rolled back.
+
+This function is accessible to SQL statements via the **last_insert_rowid** SQL function.
+
+If a separate thread performs a new INSERT on the same database connection while the **LastInsertRowid** function is running and thus changes the last insert rowid, then the value returned by **LastInsertRowid** is unpredictable and might not equal either the old or the new last insert rowid. 
