@@ -722,3 +722,23 @@ S_OK (0) or am HRESULT code.
 #### Remarks
 
 Using the **Delete_** method on a collection lets you remove one of the objects in the collection. This method is available only on the **Parameters** collection of a **Command** object. You must use the **Parameter** object's **Name** property or its collection index when calling the **Delete_** method—an object variable is not a valid argument.
+
+# <a name="Item"></a>Item (CADOParameters)
+
+Indicates a specific member of the **Parameters** collection, by name or ordinal number.
+
+```
+PROPERTY Item (BYREF cvIndex AS CVAR) AS Afx_ADOParameter PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvIndex* | A Variant that evaluates to the ordinal number of an object in the **Parameters** collection. |
+
+#### Return value
+
+An ADO **Parameter** object reference.
+
+#### Remarks
+
+If **Item** cannot find an object in the collection corresponding to the **Index** argument, an error occurs.
