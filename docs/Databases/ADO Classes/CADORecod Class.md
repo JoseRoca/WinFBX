@@ -369,9 +369,9 @@ FUNCTION Open (BYREF cvSource AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARA
 | *cvSource* | Optional. A Variant that may represent the URL of the entity to be represented by this **Record** object, a **Command**, an open **Recordset** or another **Record** object, a string containing a SQL SELECT statement or a table name. |
 | *cvActiveConnection* | Optional. A Variant that represents the connect string or open **Connection** object. |
 | *nMode* | Optional. A **ConnectModeEnum** value, whose default value is **adModeUnknown**, that specifies the access mode for the resultant **Record** object. |
-| *CreateOptions* | Optional. A **RecordCreateOptionsEnum** value, whose default value is **adFailIfNotExists**, that specifies whether an existing file or directory should be opened, or a new file or directory should be created. If set to the default value, the access mode is obtained from the Mode property. This parameter is ignored when the Source parameter doesn't contain a URL. |
-| *cbsUserName* | Optional. An string value that contains the user ID that, if needed, authorizes access to Source. |
-| *cbsPassword* | Optional. An string value that contains the password that, if needed, verifies UserName. |
+| *CreateOptions* | Optional. A **RecordCreateOptionsEnum** value, whose default value is **adFailIfNotExists**, that specifies whether an existing file or directory should be opened, or a new file or directory should be created. If set to the default value, the access mode is obtained from the Mode property. This parameter is ignored when the *cbsSource* parameter doesn't contain a URL. |
+| *cbsUserName* | Optional. An string value that contains the user ID that, if needed, authorizes access to *cbsSource*. |
+| *cbsPassword* | Optional. An string value that contains the password that, if needed, verifies *cbsUserName*. |
 
 #### Return value
 
