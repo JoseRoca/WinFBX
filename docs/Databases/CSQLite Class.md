@@ -323,3 +323,65 @@ FUNCTION MemorySize (BYVAL pMem AS ANY PTR) AS sqlite3_uint64
 #### Return value
 
 If *pMem* is a memory allocation previously obtained from **Malloc**, **Malloc64**, **Realloc** or **Realloc64**, then **MemorySize** returns the size of that memory allocation in bytes. The value returned by **MemorySize** might be larger than the number of bytes requested when pMem was allocated. If *pMem* is a NULL pointer then **MemorySize** returns zero. If *pMem* points to something that is not the beginning of memory allocation, or if it points to a formerly valid memory allocation that has now been freed, then the behavior of **MemorySize** is undefined and possibly harmful.
+
+# <a name="MemoryUsed"></a>MemoryUsed
+
+Returns the number of bytes of memory currently outstanding (malloced but not freed).
+
+```
+FUNCTION MemoryUsed () AS sqlite3_uint64
+```
+
+#### Return value
+
+The number of bytes of memory currently outstanding (malloced but not freed).
+
+#### Remarks
+
+The value returned by **MemoryUsed** include any overhead added by SQLite in its implementation of **Malloc**, but not overhead added by the any underlying system library functions that **Malloc** may call.
+
+# <a name="Randomness"></a>Randomness
+
+Pseudo-random number generator.
+
+```
+SUB Randomness (BYVAL nBytes AS LONG, BYVAL pbuffer AS ANY PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nBytes* | The number of bytes of randomness to return. |
+| *pbuffer* | Pointer where to store the random bytes. It can be null. |
+
+#### Remarks
+
+SQLite contains a high-quality pseudo-random number generator (PRNG) used to select random ROWIDs when inserting new records into a table that already uses the largest possible ROWID. The PRNG is also used for the build-in random() and randomblob() SQL functions. This method allows applications to access the same PRNG for other purposes.
+
+# <a name="Realloc"></a>Realloc
+
+Attempts to resize a prior memory allocation to be at least nBytes bytes. pMem is the memory allocation to be resized.
+
+```
+FUNCTION Realloc (BYVAL pMem AS ANY PTR, BYVAL nBytes AS LONG) AS ANY PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMem* | Pointer to memory allocated by **Malloc**. |
+| *nBytes* | The number of bytes to reallocate. |
+
+#### Return value
+
+Pointer to the reallocated memory.
+
+#### Remarks
+
+The memory returned by **Malloc** and **Realloc** is always aligned to at least an 8 byte boundary, or to a 4 byte boundary if the SQLITE_4_BYTE_ALIGNED_MALLOC compile-time option is used.
+
+In SQLite version 3.5.0 and 3.5.1, it was possible to define the SQLITE_OMIT_MEMORY_ALLOCATION which would cause the built-in implementation of these functions to be omitted. That capability is no longer provided. Only built-in memory allocators can be used.
+
+Prior to SQLite version 3.7.10, the Windows OS interface layer called the system **malloc** and **free** directly when converting filenames between the UTF-8 encoding used by SQLite and whatever filename encoding is used by the particular Windows installation. Memory allocation errors were detected, but they were reported back as SQLITE_CANTOPEN or SQLITE_IOERR rather than SQLITE_NOMEM.
+
+The pointer arguments to **Free** and **Realloc** must be either NULL or else pointers obtained from a prior invocation of **Malloc** or **Realloc** that have not yet been released.
+
+The application must not read or write any part of a block of memory after it has been released using **Free** or **Realloc**. 
