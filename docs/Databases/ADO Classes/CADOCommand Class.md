@@ -661,7 +661,7 @@ Specifies whether the **Open** method of a **Connection** object should return a
 | **adStateExecuting** | Indicates that the object is executing a command. |
 | **adStateFetching** | Indicates that the rows of the object are being retrieved. |
 
-# <a name="State"></a>State (CADOParameters)
+# <a name="Append"></a>Append (CADOParameters)
 
 Appends an object to the **Parameters** collection.
 
