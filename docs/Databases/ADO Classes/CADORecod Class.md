@@ -492,3 +492,33 @@ The absolute or relative URL string or a reference to an already open **Record**
 The **Source** property returns the **Source** argument of the **Record** object **Open** method. It can contain an absolute or relative URL string. An absolute URL can be used without setting the **ActiveConnection** property to directly open the **Record** object. An implicit **Connection** object is created in this case.
 
 The **Source** property can also contain a reference to an already open **Recordset**, which opens a **Record** object representing the current row in the **Recordset**.
+
+# <a name="State"></a>State
+
+Indicates for all applicable objects whether the state of the object is open or closed.
+
+```
+PROPERTY State () AS LONG
+```
+
+#### Return value
+
+The current record state.
+
+#### ObjectStateEnum
+
+Specifies whether the **Open** method of a **Connection** object should return after (synchronously) or before (asynchronously) the connection is established.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adStateClosed** | Indicates that the object is closed. |
+| **adStateOpen** | Indicates that the object is open. |
+| **adStateConnecting** | Indicates that the object is connecting. |
+| **adStateExecuting** | Indicates that the object is executing a command. |
+| **adStateFetching** | Indicates that the rows of the object are being retrieved. |
+
+#### Remarks
+
+You can use the **State** property to determine the current state of a given object at any time.
+
+The object's **State** property can have a combination of values. For example, if a statement is executing, this property will have a combined value of **adStateOpen** and **adStateExecuting**.
