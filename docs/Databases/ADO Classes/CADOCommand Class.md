@@ -872,7 +872,7 @@ Use the **Direction** property to specify how a parameter is passed to or from a
 
 Not all providers can determine the direction of parameters in their stored procedures. In these cases, you must set the **Direction** property before you execute the query.
 
-# <a name="Name"></a>Name (CADOParameter)
+# <a name="Name2"></a>Name (CADOParameter)
 
 Sets or returns an string value that indicates the name of a **Parameter** object. 
 
@@ -892,3 +892,51 @@ The name of the **Parameter" object.
 #### Remarks
 
 For **Parameter** objects not yet appended to the **Parameters** collection, the **Name** property is read/write. For appended **Parameter** objects and all other objects, the **Name** property is read-only. Names do not have to be unique within a collection.
+
+# <a name="NumericScale"></a>NumericScale (CADOParameter)
+
+Indicates the scale of numeric values in a **Parameter** object.
+
+Sets or returns a Byte value that indicates the number of decimal places to which numeric values will be resolved.
+
+```
+PROPERTY NumericScale () AS BYTE
+PROPERTY NumericScale (BYVAL bScale AS BYTE)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *bScale* | The number of decimal places to which numeric values will be resolved. |
+
+#### Return value
+
+The number of decimal places.
+
+#### Remarks
+
+Use the **umericScale** property to determine how many digits to the right of the decimal point will be used to represent values for a numeric **Parameter** object.
+
+For **Parameter** objects, the **NumericScale** property is read/write.
+
+# <a name="Precision"></a>Precision (CADOParameter)
+
+Indicates the degree of precision for numeric values in a **Parameter** object.
+
+Sets or returns a Byte value that indicates the maximum number of digits used to represent values.
+
+```
+PROPERTY Precision () AS BYTE
+PROPERTY Precision (BYVAL bPrecision AS BYTE)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *bPrecision* | The maximum number of digits used to represent values. |
+
+#### Return value
+
+The degress of precision.
+
+#### Remarks
+
+Use the **Precision** property to determine the maximum number of digits used to represent values for a numeric **Parameter** object.
