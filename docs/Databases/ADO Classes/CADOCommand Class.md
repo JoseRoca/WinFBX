@@ -329,7 +329,7 @@ FUNCTION CreateParameter (BYREF cbsName AS CBSTR = "", BYVAL nType AS DataTypeEn
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *cbsName* | Optional. The name of the Parameter object. |
+| *cbsName* | Optional. The name of the **Parameter** object. |
 | *nType* | Optional. A **DataTypeEnum** value that specifies the data type of the **Parameter** object. |
 | *Direction* | Optional. A **ParameterDirectionEnum** value that specifies the type of **Parameter** object. |
 | *Size* | Optional. The maximum length for the parameter value in characters or bytes. |
@@ -345,7 +345,7 @@ Specifies the data type of a **Field**, **Parameter**, or **Property**. The corr
 
 #### ParameterDirectionEnum
 
-Specifies whether the Parameter represents an input parameter, an output parameter, both an input and an output parameter, or the Return value from a stored procedure.
+Specifies whether the **Parameter** represents an input parameter, an output parameter, both an input and an output parameter, or the Return value from a stored procedure.
 
 | Constant   | Description |
 | ---------- | ----------- |
