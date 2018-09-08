@@ -801,3 +801,37 @@ SUB Attach (BYVAL pParameter AS Afx_ADOParameter PTR, BYVAL fAddRef AS BOOLEAN =
 | ---------- | ----------- |
 | *pParameter* | A reference to a **Parameter** object. |
 | *fAddRef* | TRUE = increase the reference count; FALSE = don't increase the reference count. |
+
+# <a name="Attributes"></a>Attributes (CADOParameter)
+
+Indicates one or more characteristics of an object.
+
+For a **Parameter** object, the **Attributes** property is read/write, and its value can be the sum of any one or more **ParameterAttributesEnum** values. The default is **adParamSigned**.
+
+
+```
+PROPERTY Attributes () AS LONG
+PROPERTY Attributes (BYVAL lAttr AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lAttr* | Can be the sum of any one or more **ParameterAttributesEnum** values. |
+
+#### Return value
+
+One or more **ParameterAttributesEnum** values.
+
+#### ParameterAttributesEnum
+
+Specifies the attributes of a Parameter object.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adParamSigned** | Indicates that the parameter accepts signed values. |
+| **adParamNullable** | Indicates that the parameter accepts null values. |
+| **adParamLong+* | Indicates that the parameter accepts long binary data. |
+
+#### Remarks
+
+For a **Parameter** object, the **Attributes** property is read/write, and its value can be the sum of any one or more **ParameterAttributesEnum** values. The default is **adParamSigned**.
