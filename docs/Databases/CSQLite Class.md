@@ -82,8 +82,8 @@ The database is opened for reading and writing, and is created if it does not al
 | [OpenDb](#OpenDb) | Opens an SQLite database file as specified by the filename argument. |
 | [Prepare](#Prepare) | Creates a new prepared statement object. |
 | [ProgressHandler](#ProgressHandler) | The **ProgressHandler** method causes a callback function to be invoked periodically during long running calls to **Step_** and **GetRow** for a database connection. |
-| [ReleaseMemory](#ReleaseMemory) | Attempts to free as much heap memory as possible from the specified database connection. |
-| [Status](#Status) | Retrieves runtime status information about a single database connection. |
+| [ReleaseMemory](#ReleaseMemory2) | Attempts to free as much heap memory as possible from the specified database connection. |
+| [Status](#Status2) | Retrieves runtime status information about a single database connection. |
 | [TotalChanges](#TotalChanges) | This function returns the number of row changes caused by INSERT, UPDATE or DELETE statements since the database connection was opened. |
 | [UnlockNotify](#UnlockNotify) | Registers a callback that SQLite will invoke when the connection currently holding the required lock relinquishes it. |
 
@@ -861,7 +861,7 @@ If the progress callback returns non-zero, the operation is interrupted. This fe
 
 The progress handler callback must not do anything that will modify the database connection that invoked the progress handler. Note that **Prepare** and **Step_** both modify their database connections for the meaning of "modify" in this paragraph.
 
-# <a name="ReleaseMemory"></a>ReleaseMemory
+# <a name="ReleaseMemory2"></a>ReleaseMemory
 
 Attempts to free as much heap memory as possible from the specified database connection. Unlike **ReleaseMemory**, this function is effect even when then SQLITE_ENABLE_MEMORY_MANAGEMENT compile-time option is omitted.
 
@@ -872,3 +872,37 @@ FUNCTION ReleaseMemory () AS LONG
 #### Return value
 
 The number of bytes freed.
+
+# <a name="Status"></a>Status
+
+Retrieves runtime status information about a single database connection.
+
+```
+FUNCTION Status (BYVAL op AS LONG, BYREF pCurrent AS LONG, BYREF pHighwater AS LONG, _
+   BYVAL resetFlag AS BOOLEAN = FALSE) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *op* | An integer constant, taken from the set of SQLITE_DBSTATUS options, that determines the parameter to interrogate. |
+| *pCurrent* | The current value of the requested parameter. |
+| *pHighwater* | The highest instantaneous value. |
+| *resetFlag* | TRUE or FALSE. If true, then the highest instantaneous value is reset back down to the current value. |
+
+#### SQLITE_DBSTATUS options
+```
+SQLITE_DBSTATUS_LOOKASIDE_USED      = 0
+SQLITE_DBSTATUS_CACHE_USED          = 1
+SQLITE_DBSTATUS_SCHEMA_USED         = 2
+SQLITE_DBSTATUS_STMT_USED           = 3
+SQLITE_DBSTATUS_LOOKASIDE_HIT       = 4
+SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE = 5
+SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL = 6
+SQLITE_DBSTATUS_CACHE_HIT           = 7
+SQLITE_DBSTATUS_CACHE_MISS          = 8
+SQLITE_DBSTATUS_CACHE_WRITE         = 9
+```
+
+#### Return value
+
+SQLITE_OK (0) on success and a non-zero error code on failure.
