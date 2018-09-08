@@ -861,4 +861,14 @@ If the progress callback returns non-zero, the operation is interrupted. This fe
 
 The progress handler callback must not do anything that will modify the database connection that invoked the progress handler. Note that **Prepare** and **Step_** both modify their database connections for the meaning of "modify" in this paragraph.
 
+# <a name="ReleaseMemory"></a>ReleaseMemory
+
+Attempts to free as much heap memory as possible from the specified database connection. Unlike **ReleaseMemory**, this function is effect even when then SQLITE_ENABLE_MEMORY_MANAGEMENT compile-time option is omitted.
+
+```
+FUNCTION ReleaseMemory () AS LONG
+```
+
 #### Return value
+
+The number of bytes freed.
