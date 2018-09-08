@@ -713,59 +713,26 @@ The adFieldPending* values indicate the operation that caused the status to be s
 | **adFieldDataOverflow** | Indicates that the data returned from the provider overflowed the data type of the field. |
 | **adFieldDefault** | Indicates that the default value for the field was used when setting data. |
 | **adFieldDoesNotExist** | Indicates that the field specified does not exist. |
+| **adFieldIgnore** | Indicates that this field was skipped when setting data values in the source. The provider set no value. |
+| **adFieldIntegrityViolation** | Indicates that the field cannot be modified because it is a calculated or derived entity. |
+| **adFieldInvalidURL** | Indicates that the data source URL contains invalid characters. |
+| **adFieldIsNull** | Indicates that the provider returned a VARIANT value of type VT_NULL and that the field is not empty. |
+| **adFieldOK** | Default. Indicates that the field was successfully added or deleted. |
+| **adFieldOutOfSpace** | Indicates that the provider is unable to obtain enough storage space to complete a move or copy operation. |
+| **adFieldPendingChange** | Indicates either that the field has been deleted and then re-added, perhaps with a different data type, or that the value of the field which previously had a status of adFieldOK has changed. The final form of the field will modify the Fields collection after the **Update** method is called. |
+| **adFieldPendingDelete** | Indicates that the **Delete_** operation caused the status to be set. The field has been marked for deletion from the **Fields** collection after the **Update** method is called. |
+| **adFieldPendingInsert** | Indicates that the **Append** operation caused the status to be set. The **Field** has been marked to be added to the Fields collection after the **Update** method is called. |
+| **adFieldPendingUnknown** | Indicates that the provider cannot determine what operation caused field status to be set. |
+| **adFieldPendingUnknownDelete** | Indicates that the provider cannot determine what operation caused field status to be set, and that the field will be deleted from the **Fields** collection after the **Update** method is called. |
+| **adFieldPermissionDenied** | Indicates that the field cannot be modified because it is defined as read-only. |
+| **adFieldReadOnly** | Indicates that the field in the data source is defined as read-only. |
+| **adFieldResourceExists** | Indicates that the provider was unable to perform the operation because an object already exists at the destination URL and it is not able to overwrite the object. |
+| **adFieldResourceLocked** | Indicates that the provider was unable to perform the operation because the data source is locked by one or more other application or process. |
+| **adFieldResourceOutOfScope** | Indicates that a source or destination URL is outside the scope of the current record. |
+| **adFieldSchemaViolation** | Indicates that the value violated the data source schema constraint for the field. |
+| ---------- | ----------- |
 
 
-adFieldIgnore
-15
-Indicates that this field was skipped when setting data values in the source. The provider set no value.
-adFieldIntegrityViolation
-10
-Indicates that the field cannot be modified because it is a calculated or derived entity.
-adFieldInvalidURL
-17
-Indicates that the data source URL contains invalid characters.
-adFieldIsNull
-3
-Indicates that the provider returned a VARIANT value of type VT_NULL and that the field is not empty.
-adFieldOK
-0
-Default. Indicates that the field was successfully added or deleted.
-adFieldOutOfSpace
-22
-Indicates that the provider is unable to obtain enough storage space to complete a move or copy operation.
-adFieldPendingChange
-&H40000
-Indicates either that the field has been deleted and then re-added, perhaps with a different data type, or that the value of the field which previously had a status of adFieldOK has changed. The final form of the field will modify the Fields collection after the Update method is called.
-adFieldPendingDelete
-&H20000
-Indicates that the Delete operation caused the status to be set. The field has been marked for deletion from the Fields collection after the Update method is called. 
-adFieldPendingInsert
-&H10000
-Indicates that the Append operation caused the status to be set. The Field has been marked to be added to the Fields collection after the Update method is called.
-adFieldPendingUnknown
-&H80000
-Indicates that the provider cannot determine what operation caused field status to be set.
-adFieldPendingUnknownDelete
-&H100000
-Indicates that the provider cannot determine what operation caused field status to be set, and that the field will be deleted from the Fields collection after the Update method is called.
-adFieldPermissionDenied
-9
-Indicates that the field cannot be modified because it is defined as read-only.
-adFieldReadOnly
-24
-Indicates that the field in the data source is defined as read-only.
-adFieldResourceExists
-19
-Indicates that the provider was unable to perform the operation because an object already exists at the destination URL and it is not able to overwrite the object.
-adFieldResourceLocked
-18
-Indicates that the provider was unable to perform the operation because the data source is locked by one or more other application or process.
-adFieldResourceOutOfScope
-25
-Indicates that a source or destination URL is outside the scope of the current record.
-adFieldSchemaViolation
-11
-Indicates that the value violated the data source schema constraint for the field.
 adFieldSignMismatch
 5
 Indicates that data value returned by the provider was signed but the data type of the ADO field value was unsigned.
