@@ -1039,3 +1039,28 @@ Specifies the data type of a **Field**, **Parameter**, or **Property**. The corr
 | **adVarNumeric** | Indicates a numeric value. |
 | **adVarWChar** | Indicates a null-terminated Unicode character string. |
 | **adWChar** | Indicates a null-terminated Unicode character string (DBTYPE_WSTR). |
+
+# <a name="Value"></a>Value (CADOParameter)
+
+Indicates the value assigned to a **Parameter** object.
+
+```
+PROPERTY Value () AS CVAR
+PROPERTY Value (BYREF cvValue AS CVAR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvValue* | The value of the **Parameter** object. |
+
+#### Return value
+
+The value of the **Parameter** object.
+
+#### Remarks
+
+Use the **Value** property to set or return parameter values with **Parameter** objects.
+
+ADO allows setting and returning long binary data with the **Value** property.
+
+For **Parameter** objects, ADO reads the **Value** property only once from the provider. If a command contains a **Paramete**r whose **Value** property is empty, and you create a **Recordset** from the command, ensure that you first close the **Recordset** before retrieving the **Value** property. Otherwise, for some providers, the **Value** property may be empty, and won't contain the correct value.
