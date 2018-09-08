@@ -1004,5 +1004,117 @@ If **BindBlob** is called with a NULL pointer for the prepared statement or with
 
 Bindings are not cleared by the **Reset** function. Unbound parameters are interpreted as NULL.
 
+# <a name="BindDouble"></a>BindDouble
+
+Binds a double value with the statement.
+
+```
+FUNCTION BindDouble (BYVAL idx AS LONG, BYVAL dblValue AS DOUBLE) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *îdx* | Index of the SQL parameter to be set. The leftmost SQL parameter has an index of 1. When the same named SQL parameter is used more than once, second and subsequent occurrences have the same index as the first occurrence. The index for named parameters can be looked up using the **BindParameterIndex** method if desired. The index for "?NNN" parameters is the value of NNN. The NNN value must be between 1 and the **Limit** parameter SQLITE_LIMIT_VARIABLE_NUMBER (default value: 999). |
+| *dblValue* | The value to bind to the parameter. |
 
 #### Return value
+
+SQLITE_OK on success or an error code if anything goes wrong. SQLITE_RANGE is returned if the parameter index is out of range. SQLITE_NOMEM is returned if **malloc** fails.
+
+#### Remarks
+
+Bindings are not cleared by the **Reset** function. Unbound parameters are interpreted as NULL.
+
+# <a name="BindLong"></a>BindLong
+
+Binds a long integer value with the statement.
+
+```
+FUNCTION BindLong (BYVAL idx AS LONG, BYVAL longValue AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *îdx* | Index of the SQL parameter to be set. The leftmost SQL parameter has an index of 1. When the same named SQL parameter is used more than once, second and subsequent occurrences have the same index as the first occurrence. The index for named parameters can be looked up using the **BindParameterIndex** method if desired. The index for "?NNN" parameters is the value of NNN. The NNN value must be between 1 and the **Limit** parameter SQLITE_LIMIT_VARIABLE_NUMBER (default value: 999). |
+| *longValue* | The value to bind to the parameter. |
+
+#### Return value
+
+SQLITE_OK on success or an error code if anything goes wrong. SQLITE_RANGE is returned if the parameter index is out of range. SQLITE_NOMEM is returned if **malloc** fails.
+
+#### Remarks
+
+Bindings are not cleared by the **Reset** function. Unbound parameters are interpreted as NULL.
+
+# <a name="BindLongInt"></a>BindLongInt
+
+Binds a longint value with the statement.
+
+```
+FUNCTION BindLongInt (BYVAL idx AS LONG, BYVAL longintValue AS sqlite3_int64) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *îdx* | Index of the SQL parameter to be set. The leftmost SQL parameter has an index of 1. When the same named SQL parameter is used more than once, second and subsequent occurrences have the same index as the first occurrence. The index for named parameters can be looked up using the **BindParameterIndex** method if desired. The index for "?NNN" parameters is the value of NNN. The NNN value must be between 1 and the **Limit** parameter SQLITE_LIMIT_VARIABLE_NUMBER (default value: 999). |
+| *longintValue* | The value to bind to the parameter. |
+
+#### Return value
+
+SQLITE_OK on success or an error code if anything goes wrong. SQLITE_RANGE is returned if the parameter index is out of range. SQLITE_NOMEM is returned if **malloc** fails.
+
+#### Remarks
+
+Bindings are not cleared by the **Reset** function. Unbound parameters are interpreted as NULL.
+
+# <a name="BindNull"></a>BindNull
+
+Binds a null value with the statement.
+
+```
+FUNCTION BindNull (BYVAL idx AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *îdx* | Index of the SQL parameter to be set. The leftmost SQL parameter has an index of 1. When the same named SQL parameter is used more than once, second and subsequent occurrences have the same index as the first occurrence. The index for named parameters can be looked up using the **BindParameterIndex** method if desired. The index for "?NNN" parameters is the value of NNN. The NNN value must be between 1 and the **Limit** parameter SQLITE_LIMIT_VARIABLE_NUMBER (default value: 999). |
+
+#### Return value
+
+SQLITE_OK on success or an error code if anything goes wrong. SQLITE_RANGE is returned if the parameter index is out of range. SQLITE_NOMEM is returned if **malloc** fails.
+
+#### Remarks
+
+Bindings are not cleared by the **Reset** function. Unbound parameters are interpreted as NULL.
+
+# <a name="BindParameterCount"></a>BindParameterCount
+
+This method can be used to find the number of SQL parameters in a prepared statement. SQL parameters are tokens of the form "?", "?NNN", ":AAA", "$AAA", or "@AAA" that serve as placeholders for values that are bound to the parameters at a later time.
+
+```
+FUNCTION BindParameterCount () AS LONG
+```
+
+#### Return value
+
+The number of SQL parameters in a prepared statement.
+
+#### Remarks
+
+This function actually returns the index of the largest (rightmost) parameter. For all forms except ?NNN, this will correspond to the number of unique parameters. If parameters of the ?NNN form are used, there may be gaps in the list.
+
+# <a name="BindParameterIndex"></a>BindParameterIndex
+
+Returns the index of an SQL parameter given its name. The index value returned is suitable for use as the second parameter to the **Bind_\*** methods. A zero is returned if no matching parameter is found.
+
+```
+FUNCTION BindParameterIndex (BYREF szName AS ZSTRING) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *szName* | The parameter name. Must be given in UTF-8 even if the original statement was prepared from UTF-16 text using **Prepare**. |
+
+#### Return value
+
+The index of the parameter.
