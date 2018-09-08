@@ -620,3 +620,23 @@ The number of decimal places. Returns -1 if it is not a numeric field.
 Use the **NumericScale** property to determine how many digits to the right of the decimal point will be used to represent values for a numeric field.
 
 For a field, **NumericScale** is normally read-only. However, for new fields that have been appended to a **Record**, **NumericScale** is read/write only after the **Value** property for the field has been specified and the data provider has successfully added the new field by calling the Update method of the **Fields** collection.
+
+# <a name="OriginalValue"></a>OriginalValue (CADOField)
+
+Indicates the value of a field that existed in the record before any changes were made.
+
+```
+PROPERTY OriginalValue () AS CVAR
+```
+
+#### Return value
+
+The original field value.
+
+#### Remarks
+
+Use the **OriginalValue** property to return the original field value for a field from the current record.
+
+In immediate update mode (in which the provider writes changes to the underlying data source after you call the **Update** method), the **OriginalValue** property returns the field value that existed prior to any changes (that is, since the last **Update** method call). This is the same value that the **CancelUpdate** method uses to replace the Value property.
+
+In batch update mode (in which the provider caches multiple changes and writes them to the underlying data source only when you call the **UpdateBatch** method), the **OriginalValue** property returns the field value that existed prior to any changes (that is, since the last **UpdateBatch** method call). This is the same value that the **CancelBatch** method uses to replace the **Value** property. When you use this property with the **UnderlyingValue** property, you can resolve conflicts that arise from batch updates.
