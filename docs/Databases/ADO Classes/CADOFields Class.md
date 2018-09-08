@@ -589,3 +589,11 @@ If the **adFldLong** bit in the **Attributes** property of a **Field** object is
 If there is no current record when you use the **GetChunk** method on a **Field** object, error 3021 (no current record) occurs.
 
 **Note**: The **GetChunk** method does not operate on **Field** objects of a Record object. It does not perform any operation and will produce a run-time error.
+
+# <a name="Name"></a>Name (CADOField)
+
+Returns the name of the field.
+
+```
+PROPERTY Name () AS CBSTR
+```
