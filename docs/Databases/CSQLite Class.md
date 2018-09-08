@@ -786,7 +786,7 @@ FUNCTION OpenBlob (BYREF szDbName AS ZSTRING, BYREF szTableName AS ZSTRING, _
 
 #### Return value
 
-On success, the new BLOB handle is returned. On failure, the returned pointer will be null. To get the error code, call GetLastResult.
+On success, the new BLOB handle is returned. On failure, the returned pointer will be null. To get the error code, call **GetLastResult**.
 
 #### Remarks
 
@@ -817,3 +817,48 @@ Returns SQLITE_OK if successful or an error code otherwise. The **ErrMsg** metho
 If the filename is ":memory:", then a private, temporary in-memory database is created for the connection. This in-memory database will vanish when the database connection is closed. Future versions of SQLite might make use of additional special filenames that begin with the ":" character. It is recommended that when a database filename actually does begin with a ":" character you should prefix the filename with a pathname such as "./" to avoid ambiguity.
 
 If the filename is an empty string, then a private, temporary on-disk database will be created. This private database will be automatically deleted as soon as the database connection is closed.
+
+# <a name="Prepare"></a>Prepare
+
+Creates a new prepared statement object.
+
+```
+FUNCTION Prepare (BYREF wszSql AS WSTRING) AS sqlite3_stmt PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszSql* | The SQL statement to be compiled. |
+
+#### Return value
+
+An sqlite3_stmt pointer.
+
+# <a name="ProgressHandler"></a>ProgressHandler
+
+The **ProgressHandler** method causes a callback function to be invoked periodically during long running calls to **Step_** and **GetRow** for a database connection. An example use for this interface is to keep a GUI updated during a large query.
+
+```
+SUB ProgressHandler (BYVAL nOps AS LONG, BYVAL pCallback AS ANY PTR, BYVAL pArg AS ANY PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nOps* | Number of virtual machine instructions that are evaluated between successive invocations of the callback. |
+| *pCallback* | Pointer to the callback function. |
+| *pArg* | Data that is passed through as the only parameter to the callback function. |
+
+Callback function prototype:
+```
+FUNCTION sqlite3_progress_handler_callback CDECL (BYVAL pArg AS ANY PTR) AS LONG
+```
+
+#### Remarks
+
+Only a single progress handler may be defined at one time per database connection; setting a new progress handler cancels the old one. Setting parameter pCallBack to NULL disables the progress handler. The progress handler is also disabled by setting pCallBack to a value less than 1.
+
+If the progress callback returns non-zero, the operation is interrupted. This feature can be used to implement a "Cancel" button on a GUI progress dialog box.
+
+The progress handler callback must not do anything that will modify the database connection that invoked the progress handler. Note that **Prepare** and **Step_** both modify their database connections for the meaning of "modify" in this paragraph.
+
+#### Return value
