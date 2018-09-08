@@ -1275,8 +1275,7 @@ Note that when type conversions occur, pointers returned by prior calls to **Col
 
 The safest and easiest to remember policy is to invoke these functions in one of the following ways:
 
-**ColumnText** followed by **ColumnBytes**
-
+**ColumnText** followed by **ColumnBytes**<br>
 **ColumnBlob** followed by **ColumnBytes**
 
 In other words, you should call **ColumnText** or **ColumnBlob** first to force the result into the desired format, then invoke **ColumnBytes** to find the size of the result.
@@ -1534,7 +1533,7 @@ If the SQL statement does not currently point to a valid row, or if the column i
 
 Strings returned by **ColumnText**, even empty strings, are always zero-terminated.
 
-ColumnText attempts to convert the value where appropriate. The following table details the conversions that are applied:
+**ColumnText** attempts to convert the value where appropriate. The following table details the conversions that are applied:
 
 | Internal Type  | Requested Type | Conversion |
 | -------------- | -------------- | ---------- |
@@ -1549,10 +1548,78 @@ The initial content is a BLOB and **ColumnText** is called. A zero-terminator mi
 
 The safest and easiest to remember policy is to invoke these functions in one of the following ways:
 
-**ColumnText** followed by **ColumnBytes**
-
+**ColumnText** followed by **ColumnBytes**<br>
 **ColumnBlob** followed by **ColumnBytes**
 
-In other words, you should call **ColumnText** or **ColumnBlob** first to force the result into the desired format, then invoke Column_Bytes to find the size of the result.
+In other words, you should call **ColumnText** or **ColumnBlob** first to force the result into the desired format, then invoke **ColumnBytes** to find the size of the result.
+
+If a memory allocation error occurs during the evaluation of any of these functions, a default value is returned. The default value is either the integer 0, the floating point number 0.0, or a NULL pointer. Subsequent calls to **ErrCode** will return SQLITE_NOMEM. 
+
+# <a name="ColumnType"></a>ColumnType
+
+Returns the column type.
+
+```
+FUNCTION ColumnType (BYVAL nCol AS LONG) AS LONG
+FUNCTION ColumnType (BYREF wszColName AS WSTRING) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nCol / wszColName* | The index or name of the column for which information should be returned. The leftmost column of the result set has the index 0. The number of columns in the result can be determined using **ColumnCcount**. |
+
+#### Return value
+
+The column type.
+
+#### Remarks
+
+If the SQL statement does not currently point to a valid row, or if the column index is out of range, the result is undefined. **ColumnType** may only be called when the most recent call to **Step_** has returned SQLITE_ROW and neither **Reset** nor **Finalize** have been called subsequently. If any of these functions are called after **Reset** or **Finalize** or after **Step_** has returned something other than SQLITE_ROW, the results are undefined. If **Step_** or **Reset** or **Finalize** are called from a different thread while ColumnBytes is pending, then the result is undefined.
+
+The **ColumnType** function returns the datatype code for the initial data type of the result column. The returned value is one of SQLITE_INTEGER, SQLITE_FLOAT, SQLITE_TEXT, SQLITE_BLOB, or SQLITE_NULL. The value returned by **ColumnType** is only meaningful if no type conversions have occurred as described below. After a type conversion, the value returned by **ColumnType** is undefined. Future versions of SQLite may change the behavior of ColumnType following a type conversion.
+
+If the result is a BLOB or UTF-8 string then the **ColumnBytes** function returns the number of bytes in that BLOB or string. If the result is a UTF-16 string, then **ColumnBytes** converts the string to UTF-8 and then returns the number of bytes. If the result is a numeric value then **ColumnBytes** uses **snprintf** to convert that value to a UTF-8 string and returns the number of bytes in that string. If the result is NULL, then **ColumnBytes** returns zero.
+
+If the result is a BLOB or UTF-16 string then the **ColumnBytes** function returns the number of bytes in that BLOB or string. If the result is a numeric value then **ColumnBytes** uses **snprintf** to convert that value to a UTF-16 string and returns the number of bytes in that string. If the result is NULL, then **ColumnBytes** returns zero.
+
+The values returned by **ColumnBytes** do not include the zero terminators at the end of the string. For clarity: the values returned by **ColumnBytes** are the number of bytes in the string, not the number of characters.
+
+Strings returned by **ColumnText**, even empty strings, are always zero-terminated. The return value from **ColumnBlob** for a zero-length BLOB is a NULL pointer.
+
+These functions attempt to convert the value where appropriate. For example, if the internal representation is FLOAT and a text result is requested, snprintf is used internally to perform the conversion automatically. The following table details the conversions that are applied:
+
+| Internal Type  | Requested Type | Conversion |
+| -------------- | -------------- | ---------- |
+| NULL | INTEGER | Result is 0 |
+| NULL | FLOAT | Result is 0.0 |
+| NULL | TEXT | Result is NULL pointer |
+| NULL | BLOB | Result is NULL pointer |
+| INTEGER | FLOAT | Convert from integer to float |
+| INTEGER | TEXT | ASCII rendering of the integer |
+| INTEGER | BLOB | Same as INTEGER->TEXT |
+| FLOAT | INTEGER | Convert from float to integer |
+| FLOAT | TEXT | ASCII rendering of the float |
+| FLOAT | BLOB | Same as FLOAT->TEXT |
+| TEXT | INTEGER | Use atoi() |
+| TEXT | FLOAT | Use atof() |
+| TEXT | BLOB | No change |
+| BLOB | INTEGER | Convert to TEXT then use atoi() |
+| BLOB | FLOAT | Convert to TEXT then use atof() |
+| BLOB | TEXT | Add a zero terminator if needed |
+
+The table above makes reference to standard C library functions **atoi**() and **atof**(). SQLite does not really use these functions. It has its own equivalent internal functions. The **atoi**() and **atof**() names are used in the table for brevity and because they are familiar to most C programmers.
+
+Note that when type conversions occur, pointers returned by prior calls to **ColumnBlob** and/or **ColumnText** may be invalidated. Type conversions and pointer invalidations might occur in the following cases:
+
+The initial content is a BLOB and **ColumnText** is called. A zero-terminator might need to be added to the string.
+
+The initial content is UTF-8 text and **ColumnBytes** or **ColumnText** is called. The content must be converted to UTF-16.
+
+The safest and easiest to remember policy is to invoke these functions in one of the following ways:
+
+**ColumnText** followed by **ColumnBytes**<br>
+**ColumnBlob** followed by **ColumnBytes**
+
+In other words, you should call **ColumnText** or **ColumnBlob** first to force the result into the desired format, then invoke **ColumnBytes** to find the size of the result.
 
 If a memory allocation error occurs during the evaluation of any of these functions, a default value is returned. The default value is either the integer 0, the floating point number 0.0, or a NULL pointer. Subsequent calls to **ErrCode** will return SQLITE_NOMEM. 
