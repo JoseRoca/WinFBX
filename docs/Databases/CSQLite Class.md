@@ -1276,6 +1276,7 @@ Note that when type conversions occur, pointers returned by prior calls to **Col
 The safest and easiest to remember policy is to invoke these functions in one of the following ways:
 
 **ColumnText** followed by **ColumnBytes**
+
 **ColumnBlob** followed by **ColumnBytes**
 
 In other words, you should call **ColumnText** or **ColumnBlob** first to force the result into the desired format, then invoke **ColumnBytes** to find the size of the result.
@@ -1549,6 +1550,7 @@ The initial content is a BLOB and **ColumnText** is called. A zero-terminator mi
 The safest and easiest to remember policy is to invoke these functions in one of the following ways:
 
 **ColumnText** followed by **ColumnBytes**
+
 **ColumnBlob** followed by **ColumnBytes**
 
 In other words, you should call **ColumnText** or **ColumnBlob** first to force the result into the desired format, then invoke Column_Bytes to find the size of the result.
