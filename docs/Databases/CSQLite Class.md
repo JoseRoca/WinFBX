@@ -906,3 +906,24 @@ SQLITE_DBSTATUS_CACHE_WRITE         = 9
 #### Return value
 
 SQLITE_OK (0) on success and a non-zero error code on failure.
+
+# <a name="TotalChanges"></a>TotalChanges
+
+This function returns the number of row changes caused by INSERT, UPDATE or DELETE statements since the database connection was opened.
+
+```
+FUNCTION TotalChanges () AS LONG
+```
+
+#### Return value
+
+The number of changes.
+
+#### Remarks
+
+The count returned by **TotalChanges** includes all changes from all trigger contexts and changes made by foreign key actions. However, the count does not include changes used to implement REPLACE constraints, do rollbacks or ABORT processing, or DROP TABLE processing. The count does not include rows of views that fire an INSTEAD OF trigger, though if the INSTEAD OF trigger makes changes of its own, those changes are counted. The **TotalChanges** function counts the changes as soon as the statement that makes them is completed (when the statement handle is passed to **Reset** or **Finalize**).
+
+See also the **Changes** interface, the **count_changes pragma**, and the **Changes** SQL function.
+
+If a separate thread makes changes on the same database connection while **Changes** is running then the value returned is unpredictable and not meaningful.
+
