@@ -941,7 +941,7 @@ The degress of precision.
 
 Use the **Precision** property to determine the maximum number of digits used to represent values for a numeric **Parameter** object.
 
-# <a name="Properties"></a>Properties (CADOParameter)
+# <a name="Properties2"></a>Properties (CADOParameter)
 
 Returns a reference to the **Properties** collection.
 
@@ -952,3 +952,32 @@ PROPERTY Properties () AS Afx_ADOProperties
 #### Return value
 
 A **Properties** object reference.
+
+# <a name="Size"></a>Size (CADOParameter)
+
+Sets or returns a Long value that indicates the maximum size in bytes or characters of a value in a **Parameter** object.
+
+```
+PROPERTY Size () AS LONG
+PROPERTY Size (BYVAL lSize AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lSize* | The maximum size in bytes or characters of a value in a **Parameter** object. |
+
+#### Return value
+
+The maximum size.
+
+#### Remarks
+
+Use the **Size** property to determine the maximum size for values written to or read from the **Value** property of a **Parameter** object.
+
+If you specify a variable-length data type for a **Parameter** object (for example, any string type, such as **adVarChar**), you must set the object's **Size** property before appending it to the **Parameters** collection; otherwise, an error occurs.
+
+If you have already appended the **Parameter** object to the **Parameters** collection of a **Command** object and you change its type to a variable-length data type, you must set the **Parameter** object's **Size** property before executing the **Command** object; otherwise, an error occurs.
+
+If you use the **Refresh** method to obtain parameter information from the provider and it returns one or more variable-length data type Parameter objects, ADO may allocate memory for the parameters based on their maximum potential size, which could cause an error during execution. To prevent an error, you should explicitly set the **Size** property for these parameters before executing the command.
+
+The **Size** property is read/write.
