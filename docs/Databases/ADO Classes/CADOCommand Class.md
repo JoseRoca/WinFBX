@@ -279,3 +279,42 @@ Use the **CommandTimeout** property on a **Connection** object or **Command** ob
 The **CommandTimeout** setting on a **Connection** object has no effect on the **CommandTimeout** setting on a **Command** object on the same **Connection**; that is, the **Command** object's **CommandTimeout** property does not inherit the value of the **Connection** object's **CommandTimeout** value.
 
 On a **Connection** object, the **CommandTimeout** property remains read/write after the **Connection** is opened.
+
+# <a name="CommandType"></a>CommandType (CADOCommand)
+
+Sets or returns one or more **CommandTypeEnum** values.
+
+**Note**: Do not use the **CommandTypeEnum** values of **adCmdFile** or **adCmdTableDirect** with **CommandType**. These values can only be used as options with the **Open** and **Requery** methods of a **Recordset**.
+
+```
+PROPERTY CommandType (BYVAL lCmdType AS CommandTypeEnum)
+PROPERTY CommandType () AS CommandTypeEnum
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lCmdType* | One of more **CommandTypeEnum** values. |
+
+#### Return value
+
+#### CommandTypeEnum
+
+Specifies how a command argument should be interpreted.
+
+#### CommandTypeEnum
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adCmdUnspecified** | Does not specify the command type argument. |
+| **adCmdText** | Evaluates **CommandText** as a textual definition of a command or stored procedure call. |
+| **adCmdTable** | Evaluates **CommandText** as a table name whose columns are all returned by an internally generated SQL query. |
+| **adCmdStoredProc** | Evaluates **CommandText** as a stored procedure name. |
+| **adCmdUnknown** | Default. Indicates that the type of command in the **CommandText** property is not known. |
+| **adCmdFile** | Evaluates CommandText as the file name of a persistently stored **Recordset**. Used with **Recordset** **Open** or **Requery** only. |
+| **adCmdTableDirect** | Evaluates **CommandText** as a table name whose columns are all returned. Used with **Recordset** **Open** or **Requery** only. To use the **Seek** method, the **Recordset** must be opened with **adCmdTableDirect**. This value cannot be combined with the **ExecuteOptionEnum** value **adAsyncExecute**. |
+
+#### Remarks
+
+Use the **CommandType** property to optimize evaluation of the **CommandText** property.
+
+If the **CommandType** property value equals **adCmdUnknown** (the default value), you may experience diminished performance because ADO must make calls to the provider to determine if the **CommandText** property is an SQL statement, a stored procedure, or a table name. If you know what type of command you're using, setting the **CommandType** property instructs ADO to go directly to the relevant code. If the **CommandType** property does not match the type of command in the **CommandText** property, an error occurs when you call the **Execute** method.
