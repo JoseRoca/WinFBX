@@ -817,3 +817,67 @@ Specifies the data type of a **Field**, **Parameter**, or **Property**. The corr
 For a new fields that have been appended to the **Fields** collection of a **Record**, **Type_** is read/write only after the Value property for the field has been specified and the data provider has successfully added the new field by calling the **Update** method of the **Fields** collection.
 
 For all other objects, the **Type_** property is read-only.
+
+# <a name="UnderlyingValue"></a>UnderlyingValue (CADOField)
+
+Returns the current field's value in the database.
+
+```
+PROPERTY UnderlyingValue () AS CVAR
+```
+
+# <a name="Value"></a>Value (CADOField)
+
+Sets or returns a Variant value that indicates the value of the object
+
+The ADO Recorset object exposes a hidden member: the **Collect** property. This property is functionally similar to the **Field**'s **Value** property, but it doesn't need a reference (explicit or implicit) to the **Field** object. You can pass either a numeric index or a field's name to this property.
+
+```
+PROPERTY Value () AS CVAR
+PROPERTY Value (BYREF cvValue AS CVAR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvValue* | The value of the field. |
+
+#### Return value
+
+The value of the field.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Open the recordset
+DIM pRecordset AS CAdoRecordset
+DIM cvSource AS CVAR = "SELECT * FROM Publishers ORDER BY PubID"
+DIM hr AS HRESULT = pRecordset.Open(cvSource, pConnection, adOpenKeyset, adLockOptimistic, adCmdText)
+
+' // Get a reference to the Fields collection
+DIM pFields AS CAdoFields = pRecordset.Fields
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the contents of the fields
+   ' // Note: Instead of pField.Attach / pField.Value, we can use pRecordset.Collect
+    DIM pField AS CAdoField
+    pField.Attach(pFields.Item("PubID"))
+    DIM cvRes1 AS CVAR = pField.Value
+    pField.Attach(pFields.Item("Name"))
+    DIM cvRes2 AS CVAR = pField.Value
+    pField.Attach(pFields.Item("Company Name"))
+    DIM cvRes3 AS CVAR = pField.Value
+    PRINT cvRes1; " "; cvRes2; " "; cvRes3
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+```
