@@ -761,3 +761,37 @@ Regardless of whether or not the limit was changed, the **Limit** interface retu
 Run-time limits are intended for use in applications that manage both their own internal database and also databases that are controlled by untrusted external sources. An example application might be a web browser that has its own databases for storing history and separate databases controlled by JavaScript applications downloaded off the Internet. The internal databases can be given the large, default limits. Databases managed by external sources can be given much smaller limits designed to prevent a denial of service attack.
 
 New run-time limit categories may be added in future releases.
+
+# <a name="OpenBlob"></a>OpenBlob
+
+This function opens a handle to the BLOB located in row *iRow*, column *szColumnName*, table *szTableName* in database *szDbName*; in other words, the same BLOB that would be selected by:
+
+```
+SELECT szColumn FROM szDb.szTable WHERE rowid = qRow;
+```
+
+```
+FUNCTION OpenBlob (BYREF szDbName AS ZSTRING, BYREF szTableName AS ZSTRING, _
+   BYREF szColumnName AS ZSTRING, BYVAL iRow AS sqlite3_int64, _
+   BYVAL flags AS LONG = 0) AS sqlite3_blob PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *szDbName* | The database name. Note that the database name is not the filename that contains the database but rather the symbolic name of the database that appears after the AS keyword when the database is connected using ATTACH. For the main database file, the database name is "main". For TEMP tables, the database name is "temp". |
+| *szTableName* | The table name. |
+| *szColumnName* | The column name. |
+| *iRow* | The row number. If the row that a BLOB handle points to is modified by an UPDATE, DELETE, or by ON CONFLICT side-effects then the BLOB handle is marked as "expired". This is true if any column of the row is changed, even a column other than the one the BLOB handle is open on. Calls to **BlobRead** and **BlobWrite** for an expired BLOB handle fail with a return code of SQLITE_ABORT. Changes written into a BLOB prior to the BLOB expiring are not rolled back by the expiration of the BLOB. Such changes will eventually commit if the transaction continues to completion. |
+| *flags* | If the flags parameter is non-zero, then the BLOB is opened for read and write access. If it is zero, the BLOB is opened for read access. It is not possible to open a column that is part of an index or primary key for writing. If foreign key constraints are enabled, it is not possible to open a column that is part of a child key for writing. |
+
+#### Return value
+
+On success, the new BLOB handle is returned. On failure, the returned pointer will be null. To get the error code, call GetLastResult.
+
+#### Remarks
+
+Use the **BlobBytes** function to determine the size of the opened blob. The size of a blob may not be changed by this function. Use the UPDATE SQL command to change the size of a blob.
+
+The **BindZeroblob** and **ResultZeroblob** functions and the built-in zeroblob SQL function can be used, if desired, to create an empty, zero-filled blob in which to read or write using this function.
+
+To avoid a resource leak, every open BLOB handle should eventually be released by a call to **CloseBlob*. 
