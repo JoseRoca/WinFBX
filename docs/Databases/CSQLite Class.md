@@ -927,3 +927,51 @@ See also the **Changes** interface, the **count_changes pragma**, and the **Chan
 
 If a separate thread makes changes on the same database connection while **Changes** is running then the value returned is unpredictable and not meaningful.
 
+# <a name="UnlockNotify"></a>UnlockNotify
+
+When running in shared-cache mode, a database operation may fail with an SQLITE_LOCKED error if the required locks on the shared-cache or individual tables within the shared-cache cannot be obtained. This API may be used to register a callback that SQLite will invoke when the connection currently holding the required lock relinquishes it. This API is only available if the library was compiled with the SQLITE_ENABLE_UNLOCK_NOTIFY C-preprocessor symbol defined.
+
+```
+FUNCTION UnlockNotify (BYVAL pNotifyCallback AS ANY PTR, BYVAL pNotifyArg AS ANY PTR) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pNotifyCallback* | Pointer to the callback function. |
+| *pNotifyArg* | Data that is passed through the second parameter to the callback function. |
+
+Return value
+
+Unless deadlock is detected (see below), UnlockNotify always returns SQLITE_OK.
+
+#### Remarks
+
+Shared-cache locks are released when a database connection concludes its current transaction, either by committing it or rolling it back.
+
+When a connection (known as the blocked connection) fails to obtain a shared-cache lock and SQLITE_LOCKED is returned to the caller, the identity of the database connection (the blocking connection) that has locked the required resource is stored internally. After an application receives an SQLITE_LOCKED error, it may call the **UnlockNotify* method with the blocked connection handle as the first argument to register for a callback that will be invoked when the blocking connections current transaction is concluded. The callback is invoked from within the **Step_** or **Close** call that concludes the blocking connections transaction.
+
+If **UnlockNotify** is called in a multi-threaded application, there is a chance that the blocking connection will have already concluded its transaction by the time **UnlockNotify** is invoked. If this happens, then the specified callback is invoked immediately, from within the call to **UnlockNotify**.
+
+If the blocked connection is attempting to obtain a write-lock on a shared-cache table, and more than one other connection currently holds a read-lock on the same table, then SQLite arbitrarily selects one of the other connections to use as the blocking connection.
+
+There may be at most one unlock-notify callback registered by a blocked connection. If **UnlockNotify** is called when the blocked connection already has a registered unlock-notify callback, then the new callback replaces the old. If **UnlockNotify** is called with a NULL pointer as its second argument, then any existing unlock-notify callback is canceled. The blocked connections unlock-notify callback may also be canceled by closing the blocked connection using **Close**.
+
+The unlock-notify callback is not reentrant. If an application invokes any **sqlite3_xxx** API functions from within an unlock-notify callback, a crash or deadlock may be the result.
+
+#### Callback Invocation Details
+
+When an unlock-notify callback is registered, the application provides a single void* pointer that is passed to the callback when it is invoked. However, the signature of the callback function allows SQLite to pass it an array of void* context pointers. The first argument passed to an unlock-notify callback is a pointer to an array of void* pointers, and the second is the number of entries in the array.
+
+When a blocking connections transaction is concluded, there may be more than one blocked connection that has registered for an unlock-notify callback. If two or more such blocked connections have specified the same callback function, then instead of invoking the callback function multiple times, it is invoked once with the set of void* context pointers specified by the blocked connections bundled together into an array. This gives the application an opportunity to prioritize any actions related to the set of unblocked database connections.
+
+#### Deadlock Detection
+
+Assuming that after registering for an unlock-notify callback a database waits for the callback to be issued before taking any further action (a reasonable assumption), then using this API may cause the application to deadlock. For example, if connection X is waiting for connection Y's transaction to be concluded, and similarly connection Y is waiting on connection X's transaction, then neither connection will proceed and the system may remain deadlocked indefinitely.
+
+To avoid this scenario, the **UnlockNotify** performs deadlock detection. If a given call to **UnlockNotify** would put the system in a deadlocked state, then SQLITE_LOCKED is returned and no unlock-notify callback is registered. The system is said to be in a deadlocked state if connection A has registered for an unlock-notify callback on the conclusion of connection B's transaction, and connection B has itself registered for an unlock-notify callback when connection A's transaction is concluded. Indirect deadlock is also detected, so the system is also considered to be deadlocked if connection B has registered for an unlock-notify callback on the conclusion of connection C's transaction, where connection C is waiting on connection A. Any number of levels of indirection are allowed.
+
+#### The "DROP TABLE" Exception
+
+When a call to **Step_** returns SQLITE_LOCKED, it is almost always appropriate to call **UnlockNotify**. There is however, one exception. When executing a "DROP TABLE" or "DROP INDEX" statement, SQLite checks if there are any currently executing SELECT statements that belong to the same connection. If there are, SQLITE_LOCKED is returned. In this case there is no "blocking connection", so invoking **UnlockNotify** results in the unlock-notify callback being invoked immediately. If the application then re-attempts the "DROP TABLE" or "DROP INDEX" query, an infinite loop might be the result.
+
+One way around this problem is to check the extended error code returned by an **Step_** call. If there is a blocking connection, then the extended error code is set to SQLITE_LOCKED_SHAREDCACHE. Otherwise, in the special "DROP TABLE/INDEX" case, the extended error code is just SQLITE_LOCKED.
