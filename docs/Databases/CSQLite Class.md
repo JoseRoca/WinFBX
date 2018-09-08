@@ -541,3 +541,33 @@ FUNCTION VersionNumber () AS LONG
 #### Return value
 
 A long integer containing the SQLite3 version number, e.g. 3007013.
+
+# <a name="Changes"></a>Changes
+
+This method returns the number of database rows that were changed or inserted or deleted by the most recently completed SQL statement on the current database connection.
+
+```
+FUNCTION Changes () AS LONG
+```
+
+#### Return value
+
+The number of changes.
+
+#### ks
+
+Only changes that are directly specified by the INSERT, UPDATE, or DELETE statement are counted. Auxiliary changes caused by triggers or foreign key actions are not counted. Use the **Changes** method to find the total number of changes including changes caused by triggers and foreign key actions.
+
+Changes to a view that are simulated by an INSTEAD OF trigger are not counted. Only real table changes are counted.
+
+A "row change" is a change to a single row of a single table caused by an INSERT, DELETE, or UPDATE statement. Rows that are changed as side effects of REPLACE constraint resolution, rollback, ABORT processing, DROP TABLE, or by any other mechanisms do not count as direct row changes.
+
+A "trigger context" is a scope of execution that begins and ends with the script of a trigger. Most SQL statements are evaluated outside of any trigger. This is the "top level" trigger context. If a trigger fires from the top level, a new trigger context is entered for the duration of that one trigger. Subtriggers create subcontexts for their duration.
+
+Calling **Exec** or **Step_** recursively does not create a new trigger context.
+
+This method returns the number of direct row changes in the most recent INSERT, UPDATE, or DELETE statement within the same trigger context.
+
+Thus, when called from the top level, this function returns the number of changes in the most recent INSERT, UPDATE, or DELETE that also occurred at the top level. Within the body of a trigger, the **Changes** method can be called to find the number of changes in the most recently completed INSERT, UPDATE, or DELETE statement within the body of the same trigger. However, the number returned does not include changes caused by subtriggers since those have their own context.
+
+If a separate thread makes changes on the same database connection while **Changes** is running then the value returned is unpredictable and not meaningful. 
