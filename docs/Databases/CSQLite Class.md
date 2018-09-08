@@ -1183,3 +1183,65 @@ SQLITE_OK on success or an error code if anything goes wrong. SQLITE_RANGE is re
 The **BindZeroblob** function binds a BLOB of length *numBytes* that is filled with zeroes. A zeroblob uses a fixed amount of memory (just an integer to hold its size) while it is being processed. Zeroblobs are intended to serve as placeholders for BLOBs whose content is later written using incremental BLOB I/O functions. A negative value for the zeroblob results in a zero-length BLOB.
 
 Bindings are not cleared by the **Reset** function. Unbound parameters are interpreted as NULL.
+
+# <a name="Busy"></a>Busy
+
+Returns true if the prepared statement has been stepped at least once using **Step_** but has not run to completion and/or has not been reset using **Reset**.
+
+```
+FUNCTION Busy () AS BOOLEAN
+```
+
+#### Return value
+
+TRUE or FALSE.
+
+# <a name="ClearBindings"></a>ClearBindings
+
+Sets all the parameters in the compiled SQL statement to NULL. Contrary to the intuition of many, **Reset** does not reset the bindings on a prepared statement. Use this function to reset all host parameters to NULL. 
+
+```
+FUNCTION ClearBindings () AS LONG
+```
+
+#### Return value
+
+SQLITE_OK on success or an error code if anything goes wrong.
+
+# <a name="ColumnBlob"></a>ColumnBlob
+
+Returns information about a single column of the current result row of a query.
+
+```
+FUNCTION ColumnBlob (BYVAL nCol AS LONG) AS ANY PTR
+FUNCTION ColumnBlob (BYREF wszColName AS WSTRING) AS ANY PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nCol / wszColName* | The index or the name of the column for which information should be returned. The leftmost column of the result set has the index 0. The number of columns in the result can be determined using **ColumnCount**. |
+
+#### Return value
+
+The column value as a pointer to a blob.
+
+#### Remarks
+
+If the SQL statement does not currently point to a valid row, or if the column index is out of range, the result is undefined. **ColumnLong** may only be called when the most recent call to Step_ has returned SQLITE_ROW and neither **Reset** nor **Finalize** have been called subsequently. If any of these functions are called after **Reset** or **Finalize** or after **Step_** has returned something other than SQLITE_ROW, the results are undefined. If **Step_** or **Reset** or **Finalize** are called from a different thread while **ColumnBlob** is pending, then the result is undefined.
+
+The return value from **ColumnBlob** for a zero-length BLOB is a NULL pointer.
+
+**ColumnBlob** attempts to convert the value where appropriate. The following table details the conversions that are applied:
+ 
+| Internal Type  | Requested Type | Conversion |
+| -------------- | -------------- | ---------- |
+| NULL | BLOB | Result is NULL pointer |
+| INTEGER | BLOB | Use atoi() |
+| FLOAT | BLOB | Use atof() |
+| TEXT | BLOB | No change |
+
+The table above makes reference to standard C library functions atoi() and atof(). SQLite does not really use these functions. It has its own equivalent internal functions. The atoi() and atof() names are used in the table for brevity and because they are familiar to most C programmers.
+
+The pointer returned is valid until **Step_** or **Reset** or **Finalize** is called. The memory space used to hold BLOBs is freed automatically. Do not pass the pointers returned by **ColumnBlob** into **Free**.
+
+If a memory allocation error occurs during the evaluation of any of these functions, a default value is returned. The default value is a NULL pointer. Subsequent calls to **ErrCode** will return SQLITE_NOMEM. 
