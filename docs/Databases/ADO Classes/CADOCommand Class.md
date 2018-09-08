@@ -684,3 +684,41 @@ You must set the **Type_** property of a **Parameter** object before appending i
 Describing parameters yourself minimizes calls to the provider and consequently improves performance when using stored procedures or parameterized queries. However, you must know the properties of the parameters associated with the stored procedure or parameterized query that you want to call.
 
 Use the **CreateParameter** method to create **Parameter** objects with the appropriate property settings and use the **Append** method to add them to the **Parameters** collection. This lets you set and return parameter values without having to call the provider for the parameter information. If you are writing to a provider that does not supply parameter information, you must use this method to manually populate the **Parameters** collection in order to use parameters at all.
+
+# <a name="Count"></a>Count (CADOParameters)
+
+Retrieves the number of objects of the **Parameters** collection.
+
+```
+PROPERTY Count () AS LONG
+```
+
+#### Return value
+
+The number of objects in the **Parameters** collection.
+
+#### Remarks
+
+Because numbering for members of a collection begins with zero, you should always code loops starting with the zero member and ending with the value of the **Count** property minus 1.
+
+If the **Count** property is zero, there are no objects in the collection.
+
+# <a name="Delete_"></a>Delete_ (CADOParameters)
+
+Deletes an object from the **Parameters** collection.
+
+```
+FUNCTION Delete_ (BYREF cvIndex AS CVAR) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvIndex* | The name of the object you want to delete, or the object’s ordinal position (index) in the collection. |
+
+#### Return value
+
+S_OK (0) or am HRESULT code.
+
+#### Remarks
+
+Using the **Delete_** method on a collection lets you remove one of the objects in the collection. This method is available only on the **Parameters** collection of a **Command** object. You must use the **Parameter** object's **Name** property or its collection index when calling the **Delete_** method—an object variable is not a valid argument.
