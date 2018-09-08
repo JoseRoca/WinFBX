@@ -1623,3 +1623,47 @@ The safest and easiest to remember policy is to invoke these functions in one of
 In other words, you should call **ColumnText** or **ColumnBlob** first to force the result into the desired format, then invoke **ColumnBytes** to find the size of the result.
 
 If a memory allocation error occurs during the evaluation of any of these functions, a default value is returned. The default value is either the integer 0, the floating point number 0.0, or a NULL pointer. Subsequent calls to **ErrCode** will return SQLITE_NOMEM. 
+
+# <a name="DataCount"></a>DataCount
+
+Returns the number of columns in the result set returned by the prepared statement. This function returns 0 if pStmt is an SQL statement that does not return data (for example an UPDATE).
+
+```
+FUNCTION DataCount () AS LONG
+```
+
+#### Return value
+
+The number of columns in the result set returned by the prepared statement.
+
+# <a name="DbHandle"></a>DbHandle
+
+Returns the database connection handle to which a prepared statement belongs. The database connection returned by **DbHandle** is the same database connection that was the first argument to the **Prepare** call that was used to create the statement in the first place. 
+
+```
+FUNCTION DbHandle () AS sqlite3 PTR
+```
+
+#### Return value
+
+The database connection handle to which a prepared statement belongs.
+
+# <a name="Finalize"></a>Finalize
+
+Deletes a prepared statement.
+
+```
+FUNCTION Finalize () AS LONG
+```
+
+#### Return value
+
+If the most recent evaluation of the statement encountered no errors or if the statement is never been evaluated, then Finalize returns SQLITE_OK. If the most recent evaluation of a statement failed, then **Finalize** returns the appropriate error code or extended error code.
+
+#### Remarks
+
+The **Finalize** method can be called at any point during the life cycle of prepared statement: before statement is ever evaluated, after one or more calls to **Reset**, or after any call to **Step_** regardless of whether or not the statement has completed execution.
+
+Invoking **Finalize** on a NULL pointer is a harmless no-op.
+
+The application must finalize every prepared statement in order to avoid resource leaks. It is a grievous error for the application to try to use a prepared statement after it has been finalized. Any use of a prepared statement after it has been finalized can result in undefined and undesirable behavior such as segfaults and heap corruption.
