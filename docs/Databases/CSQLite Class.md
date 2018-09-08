@@ -41,7 +41,7 @@ CONSTRUCTOR CSQLite (BYREF wszDllPath AS WSTRING = "sqlite3.dll")
 | [StrGlob](#StrGlob) | The **StrGlob** method returns zero if string *szStr* matches the glob pattern *szGlob*, and it returns non-zero if string *szStr* does not match the glob pattern *szGlob*. This function is case sensitive. |
 | [ThreadSafe](#ThreadSafe) | Returns zero if and only if SQLite was compiled with mutexing code omitted due to the SQLITE_THREADSAFE compile-time option being set to 0. |
 | [Version](#Version) | Returns the SQLite3 version. |
-| [VersionNumber](#Version) | Returns the SQLite3 version number. |
+| [VersionNumber](#VersionNumber) | Returns the SQLite3 version number. |
 
 # CSQLiteDb Class
 
