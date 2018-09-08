@@ -84,3 +84,33 @@ With the collections, methods, and properties of a Field object, you can do the 
 * If the provider supports batch updates, resolve discrepancies in field values during batch updating with the **OriginalValue** and **UnderlyingValue** properties.
 
 All of the metadata properties (**Name**, **Type_**, **DefinedSize**, **Precision**, and **NumericScale**) are available before opening the **Field** object's **Recordset**. Setting them at that time is useful for dynamically constructing forms.
+
+# <a name="ActiveConnection"></a>ActiveConnection
+
+Sets or returns an string value that contains a definition for a connection if the connection is closed, or a Variant containing the current **Connection** object if the connection is open. Default is a null object reference.
+
+```
+PROPERTY ActiveConnection (BYREF vConn AS CVAR)
+PROPERTY ActiveConnection (BYVAL pconn AS Afx_ADOConnection PTR)
+PROPERTY ActiveConnection (BYREF pconn AS CAdoConnection)
+PROPERTY ActiveConnection () AS Afx_ADOConnection
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *vConn* | An string value that contains a definition for a connection if the connection is closed, or a Variant containing the current **Connection** object if the connection is open. |
+| *pconn* | A reference to the **Connection** object or to the **CAdoConnection** class. |
+
+#### Return value
+
+A reference to the **Afx_ADOConnection** object. You must release it calling the **Release** method when no longer needed.
+
+#### Remarks
+
+Sets or returns a string value that contains a definition for a connection if the connection is closed, or a Variant containing the current **Connection** object if the connection is open. Default is a null object reference. See the **ConnectionString** property in the documentation for the **CADOConnection** class.
+
+This property is read/write when the **Record** object is closed, and may contain a connection string or reference to an open **Connection** object. This property is read-only when the **Record** object is open, and contains a reference to an open **Connection** object.
+
+A **Connection** object is created implicitly when the **Record** object is opened from a URL. Open the **Record** with an existing, open **Connection** object by assigning the Connection object to this property, or using the **Connection** object as a parameter in the **Open** method call. If the **Record** is opened from an existing **Record** or **Recordset**, then it is automatically associated with that **Record** or **Recordset** object's **Connection** object.
+
+**Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing.
