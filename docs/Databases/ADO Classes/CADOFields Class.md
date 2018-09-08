@@ -671,3 +671,125 @@ The degress of precision. Returns -1 if it is not a numeric field.
 Use the **Precision** property to determine the maximum number of digits used to represent values for a numeric parameter or field.
 
 For a field, **Precision** is normally read-only. However, for new fields that have been appended to a **Record**, **Precision** is read/write only after the **Value** property for the field has been specified and the data provider has successfully added the new field by calling the **Update** method of the **Fields** collection.
+
+# <a name="Properties"></a>Properties (CADOField)
+
+Returns a reference to the **Properties** collection.
+
+```
+PROPERTY Properties () AS Afx_ADOProperties
+```
+
+#### Return value
+
+An ADO **Properties** object reference.
+
+# <a name="Status"></a>Status (CADOField)
+
+Indicates the status of a field. Returns a **FieldStatusEnum** value.
+
+```
+PROPERTY Status () AS LONG
+```
+
+#### Return value
+
+A **FieldStatusEnum** value. The default value is adFieldOK.
+
+#### FieldStatusEnum
+
+Specifies the status of a Field object. 
+
+The adFieldPending* values indicate the operation that caused the status to be set, and may be combined with other status values.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adFieldAlreadyExists** | Indicates that the specified field already exists. |
+| **adFieldBadStatus** | Indicates that an invalid status value was sent from ADO to the OLE DB provider. Possible causes include an OLE DB 1.0 or 1.1 provider, or an improper combination of **Value** and **Status**. |
+| **adFieldCannotComplete** | Indicates that the server of the URL specified by Source could not complete the operation. |
+| **adFieldCannotDeleteSource** | Indicates that during a move operation, a tree or subtree was moved to a new location, but the source could not be deleted. |
+| **adFieldCantConvertValue** | Indicates that the field cannot be retrieved or stored without loss of data. |
+| **adFieldCantCreate** | Indicates that the field could not be added because the provider exceeded a limitation (such as the number of fields allowed). |
+| **adFieldDataOverflow** | Indicates that the data returned from the provider overflowed the data type of the field. |
+| **adFieldDefault** | Indicates that the default value for the field was used when setting data. |
+| **adFieldDoesNotExist** | Indicates that the field specified does not exist. |
+
+
+adFieldIgnore
+15
+Indicates that this field was skipped when setting data values in the source. The provider set no value.
+adFieldIntegrityViolation
+10
+Indicates that the field cannot be modified because it is a calculated or derived entity.
+adFieldInvalidURL
+17
+Indicates that the data source URL contains invalid characters.
+adFieldIsNull
+3
+Indicates that the provider returned a VARIANT value of type VT_NULL and that the field is not empty.
+adFieldOK
+0
+Default. Indicates that the field was successfully added or deleted.
+adFieldOutOfSpace
+22
+Indicates that the provider is unable to obtain enough storage space to complete a move or copy operation.
+adFieldPendingChange
+&H40000
+Indicates either that the field has been deleted and then re-added, perhaps with a different data type, or that the value of the field which previously had a status of adFieldOK has changed. The final form of the field will modify the Fields collection after the Update method is called.
+adFieldPendingDelete
+&H20000
+Indicates that the Delete operation caused the status to be set. The field has been marked for deletion from the Fields collection after the Update method is called. 
+adFieldPendingInsert
+&H10000
+Indicates that the Append operation caused the status to be set. The Field has been marked to be added to the Fields collection after the Update method is called.
+adFieldPendingUnknown
+&H80000
+Indicates that the provider cannot determine what operation caused field status to be set.
+adFieldPendingUnknownDelete
+&H100000
+Indicates that the provider cannot determine what operation caused field status to be set, and that the field will be deleted from the Fields collection after the Update method is called.
+adFieldPermissionDenied
+9
+Indicates that the field cannot be modified because it is defined as read-only.
+adFieldReadOnly
+24
+Indicates that the field in the data source is defined as read-only.
+adFieldResourceExists
+19
+Indicates that the provider was unable to perform the operation because an object already exists at the destination URL and it is not able to overwrite the object.
+adFieldResourceLocked
+18
+Indicates that the provider was unable to perform the operation because the data source is locked by one or more other application or process.
+adFieldResourceOutOfScope
+25
+Indicates that a source or destination URL is outside the scope of the current record.
+adFieldSchemaViolation
+11
+Indicates that the value violated the data source schema constraint for the field.
+adFieldSignMismatch
+5
+Indicates that data value returned by the provider was signed but the data type of the ADO field value was unsigned.
+adFieldTruncated
+4
+Indicates that variable-length data was truncated when reading from the data source.
+adFieldUnavailable
+8
+Indicates that the provider could not determine the value when reading from the data source. For example, the row was just created, the default value for the column was not available, and a new value had not yet been specified.
+adFieldVolumeNotFound
+21
+Indicates that the provider is unable to locate the storage volume indicated by the URL.
+
+
+#### Remarks
+
+Changes to the value of a **Field** object in the **Fields** collection of a **Record** object are cached until the object's **Update** method is called. At that point, if the change to the **Field**'s value caused an error, OLE DB raises the error DB_E_ERRORSOCCURRED (2147749409). The **Status** property of any of the **Field** objects in the **Fields** collection that caused the error will contain a value from the **FieldStatusEnum** describing the cause of the problem.
+
+To enhance performance, additions and deletions to the **Fields** collections of the **Record** object are cached until the **Update** method is called, and then the changes are made in a batch optimistic update. If the **Update** method is not called, the server is not updated. If any updates fail then an OLE DB provider error (DB_E_ERRORSOCCURRED) is returned and the **Status** property indicates the combined values of the operation and error status code. For example, **adFieldPendingInsert OR adFieldPermissionDenied**. The **Status** property for each **Field** can be used to determine why the **Field** was not added, modified, or deleted.
+
+Many types of problems encountered when adding, modifying, or deleting a **Field** are reported through the **Status** property. For example, if the user deletes a **Field**, it is marked for deletion from the **Fields** collection. If the subsequent **Update** returns an error because the user tried to delete a **Field** for which they do not have permission, the **Field** will have a **Status** of **adFieldPermissionDenied** or **adFieldPendingDelete**. Calling the **CancelUpdate** method restores original values and sets the **Status** to **adFieldOK**.
+
+Similarly, the **Update** method may return an error because a new **Field** was added and given an inappropriate value. In that case the new **Field** will be in the **Fields** collection and have a status of **adFieldPendingInsert** and perhaps **adFieldCantCreate** (depending upon your provider). You can supply an appropriate value for the new **Field** and call **Update** again.
+
+#### Recordset Field Status
+
+Changes to the value of a **Field** object in the **Fields** collection of either a **Recordset** are cached until the object's **Update** method is called. At that point, if the change to the **Field**'s value caused an error, OLE DB raises the error DB_E_ERRORSOCCURRED (2147749409). The **Status** property of any of the **Field** objects in the **Fields** collection that caused the error will contain a value from the **FieldStatusEnum** describing the cause of the problem.
