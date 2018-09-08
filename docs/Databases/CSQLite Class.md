@@ -1119,7 +1119,7 @@ FUNCTION BindParameterIndex (BYREF szName AS ZSTRING) AS LONG
 
 The index of the parameter.
 
-# <a name="BindParameterIndex"></a>BindParameterIndex
+# <a name="BindParameterName"></a>BindParameterName
 
 Returns the name of the N-th SQL parameter in the prepared statement P. SQL parameters of the form "?NNN" or ":AAA" or "@AAA" or "$AAA" have a name which is the string "?NNN" or ":AAA" or "@AAA" or "$AAA" respectively. In other words, the initial ":" or "$" or "@" or "?" is included as part of the name. Parameters of the form "?" without a following integer have no name and are referred to as "nameless" or "anonymous parameters".
 
@@ -1134,3 +1134,29 @@ FUNCTION BindParameterName (BYVAL idx AS LONG) AS STRING
 #### Return value
 
 If the value *idx* is out of range or if the idx-th parameter is nameless, then NULL is returned. The returned string is always in UTF-8 encoding even if the named parameter was originally specified as UTF-16 in Prepare.
+
+# <a name="BindText"></a>BindText
+
+Binds a text value with the statement.
+
+```
+FUNCTION BindText (BYVAL idx AS LONG, BYREF wszValue AS WSTRING, _
+   BYVAL pDestructor AS ANY PTR = NULL) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *îdx* | Index of the SQL parameter to be set. The leftmost SQL parameter has an index of 1. When the same named SQL parameter is used more than once, second and subsequent occurrences have the same index as the first occurrence. The index for named parameters can be looked up using the **BindParameterIndex** method if desired. The index for "?NNN" parameters is the value of NNN. The NNN value must be between 1 and the **Limit** parameter SQLITE_LIMIT_VARIABLE_NUMBER (default value: 999). |
+| *wszValue* | The value to bind to the parameter. |
+| *pDestructor* | A destructor used to dispose of the BLOB after SQLite has finished with it. The destructor is called to dispose of the BLOB even if the call to **BindBlob** fails. If this argument is the special value **SQLITE_STATIC**, then SQLite assumes that the information is in static, unmanaged space and does not need to be freed. If this argument has the value **SQLITE_TRANSIENT**, then SQLite makes its own private copy of the data immediately, before the **BindBlob** function returns. |
+
+#### Return value
+
+SQLITE_OK on success or an error code if anything goes wrong. SQLITE_RANGE is returned if the parameter index is out of range. SQLITE_NOMEM is returned if malloc fails.
+
+#### Remarks
+
+If **BindText** is called with a NULL pointer for the prepared statement or with a prepared statement for which **Step_** has been called more recently than **Reset**, then the call will return SQLITE_MISUSE. If **BindText** is passed a prepared statement that has been finalized, the result is undefined and probably harmful.
+
+Bindings are not cleared by the Reset function. Unbound parameters are interpreted as NULL.
+
