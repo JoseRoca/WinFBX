@@ -208,3 +208,28 @@ The behaviors of the **Command.Parameters.Refresh** and **Command.Prepare** meth
 The input stream is not available to other ADO objects that return the source of a **Command**. For example, if the **Source** property of a **Recordset** is set to a **Command** object that has a stream as its input, **Recordset.Source** continues to return the **CommandText** property, which contains an empty string (""), instead of the stream contents of the **CommandStream** property.
 
 When using a command stream (as specified by **CommandStream**), the only valid **CommandTypeEnum** values for the **CommandType** property are **adCmdText** and **adCmdUnknown**. Any other value causes an error.
+
+# <a name="CommandTimeout"></a>CommandTimeout (CADOCommand)
+
+Sets or returns a Long value that indicates, in seconds, how long to wait for a command to execute. Default is 30.
+
+```
+PROPERTY CommandTimeout () AS LONG
+PROPERTY CommandTimeout (BYVAL lTimeout AS LONG) 
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lTimeout* | Timeout value, in seconds. |
+
+#### Return value
+
+Timeout value, in seconds.
+
+#### Remarks
+
+Use the **CommandTimeout** property on a **Connection** object or **Command** object to allow the cancellation of an **Execute** method call, due to delays from network traffic or heavy server use. If the interval set in the **CommandTimeout** property elapses before the command completes execution, an error occurs and ADO cancels the command. If you set the property to zero, ADO will wait indefinitely until the execution is complete. Make sure the provider and data source to which you are writing code support the **CommandTimeout** functionality.
+
+The **CommandTimeout** setting on a **Connection** object has no effect on the **CommandTimeout** setting on a **Command** object on the same **Connection**; that is, the **Command** object's **CommandTimeout** property does not inherit the value of the **Connection** object's **CommandTimeout** value.
+
+On a **Connection** object, the **CommandTimeout** property remains read/write after the **Connection** is opened.
