@@ -830,8 +830,6 @@ PROPERTY UnderlyingValue () AS CVAR
 
 Sets or returns a Variant value that indicates the value of the object
 
-The ADO Recorset object exposes a hidden member: the **Collect** property. This property is functionally similar to the **Field**'s **Value** property, but it doesn't need a reference (explicit or implicit) to the **Field** object. You can pass either a numeric index or a field's name to this property.
-
 ```
 PROPERTY Value () AS CVAR
 PROPERTY Value (BYREF cvValue AS CVAR)
@@ -844,6 +842,10 @@ PROPERTY Value (BYREF cvValue AS CVAR)
 #### Return value
 
 The value of the field.
+
+#### Remarks
+
+The ADO Recorset object exposes a hidden member: the **Collect** property. This property is functionally similar to the **Field**'s **Value** property, but it doesn't need a reference (explicit or implicit) to the **Field** object. You can pass either a numeric index or a field's name to this property.
 
 #### Example
 
