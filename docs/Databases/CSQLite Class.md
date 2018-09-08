@@ -686,3 +686,23 @@ PROPERTY hDbc (pDbc AS sqlite3 PTR)
 #### Return value
 
 The database handle.
+
+# <a name="Interrupt"></a>Interrupt
+
+This function causes any pending database operation to abort and return at its earliest opportunity. This function is typically called in response to a user action such as pressing "Cancel" or Ctrl-C where the user wants a long query operation to halt immediately.
+
+```
+SUB Interrupt
+```
+
+#### Remarks
+
+It is safe to call this function from a thread different from the thread that is currently running the database operation. But it is not safe to call this function with a database connection that is closed or might close before **Interrupt** returns.
+
+If an SQL operation is very nearly finished at the time when **Interrupt** is called, then it might not have an opportunity to be interrupted and might continue to completion.
+
+An SQL operation that is interrupted will return SQLITE_INTERRUPT. If the interrupted SQL operation is an INSERT, UPDATE, or DELETE that is inside an explicit transaction, then the entire transaction will be rolled back automatically.
+
+The **Interrupt** call is in effect until all currently running SQL statements on database connection complete. Any new SQL statements that are started after the **Interrupt** call and before the running statements reaches zero are interrupted as if they had been running prior to the **Interrupt** call. New SQL statements that are started after the running statement count reaches zero are not effected by the **Interrupt**. A call to **Interrupt** that occurs when there are no running SQL statements is a no-op and has no effect on SQL statements that are started after the **Interrupt** call returns.
+
+If the database connection closes while **Interrupt** is running then bad things will likely happen.
