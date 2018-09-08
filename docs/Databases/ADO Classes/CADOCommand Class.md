@@ -549,3 +549,78 @@ FUNCTION GetErrorInfo (BYVAL nError AS HRESULT = 0) AS CBSTR
 #### Return value
 
 A description of the error(s).
+
+# <a name="Name"></a>Name
+
+Sets or returns an string value that indicates the name of a **Command** object. 
+
+```
+PROPERTY Name () AS CBSTR
+PROPERTY Name (BYREF cbsName AS CBSTR) 
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsName* | The name of the **Command** object. |
+
+#### Return value
+
+The name of the **Command** object.
+
+# <a name="NamedParameters"></a>NamedParameters
+
+Indicates whether parameter names should be passed to the provider.
+
+```
+PROPERTY NamedParameters () AS BOOLEAN
+PROPERTY NamedParameters (BYVAL fNamedParameters AS BOOLEAN)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fNamedParameters* | True or False. |
+
+#### Return value
+
+True or False.
+
+#### Remarks
+
+When this property is true, ADO passes the value of the **Name** property of each parameter in the **Command**'s **Parameter** collection. The provider uses a parameter name to match parameters in the **CommandText** or **CommandStream** properties. If this property is false (the default), parameter names are ignored and the provider uses the order of parameters to match values to parameters in the **CommandText** or **CommandStream** properties.
+
+# <a name="Parameters"></a>Parameters
+
+Returns a reference to the **Parameters** collection.
+
+```
+PROPERTY Parameters () AS Afx_ADOParameters
+```
+
+#### Return value
+
+A reference to the **Parameters** collection.
+
+# <a name="Prepared"></a>Prepared
+
+Sets or returns a Boolean value that, if set to True, indicates that the command should be prepared.
+
+```
+PROPERTY Prepared () AS BOOLEAN
+PROPERTY Prepared (BYVAL fPrepared AS BOOLEAN)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fPrepared* | True or False. |
+
+#### Return value
+
+True or False.
+
+#### Remarks
+
+Use the **Prepared** property to have the provider save a prepared (or compiled) version of the query specified in the **CommandText** property before a **Command** object's first execution. This may slow a command's first execution, but once the provider compiles a command, the provider will use the compiled version of the command for any subsequent executions, which will result in improved performance.
+
+If the property is False, the provider will execute the **Command** object directly without creating a compiled version.
+
+If the provider does not support command preparation, it may return an error as soon as this property is set to True. If it does not return an error, it simply ignores the request to prepare the command and sets the Prepared property to False.
