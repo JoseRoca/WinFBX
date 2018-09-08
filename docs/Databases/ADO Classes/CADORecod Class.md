@@ -413,7 +413,7 @@ Suppose "second" is a folder contained under "first". Open the **Record** object
 ```
 AdoRecord.Open "second", "http://first, Mode, CreateOptions, Options, UserName, Password
 ```
-Now, the value of the ParentURL property is "http://first", the same as **ActiveConnection**.
+Now, the value of the **ParentURL** property is "http://first", the same as **ActiveConnection**.
 
 The source may also be an absolute URL such as, "http://first/second". The **ParentURL** property is then "http://first", the level above "second".
 
@@ -431,3 +431,37 @@ This property is read-only.
 
 **Note**: If the current record contains a data record from an ADO Recordset, accessing the **ParentURL** property causes a run-time error, indicating that no URL is possible.
 
+# <a name="Properties"></a>Properties
+
+Returns a reference to the **Properties** collection.
+
+```
+PROPERTY Properties () AS Afx_ADOProperties
+```
+
+#### Return value
+
+A **Properties** object reference.
+
+# <a name="RecordType"></a>RecordType
+
+Indicates the type of **Record** object.
+
+```
+PROPERTY RecordType () AS RecordTypeEnum
+```
+
+#### Return value
+
+A **RecordTypeEnum** value.
+
+#### RecordTypeEnum
+
+Specifies the type of Record object.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adSimpleRecord** | Indicates a simple record (does not contain child nodes). |
+| **adCollectionRecord** | Indicates a collection record (contains child nodes). |
+| **adRecordUnknown** | Indicates that the type of this **Record** is unknown. |
+| **adStructDoc** | Indicates a special kind of collection record that represents COM structured documents. |
