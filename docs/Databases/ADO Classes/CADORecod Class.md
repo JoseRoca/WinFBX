@@ -241,3 +241,35 @@ Gets a reference to the **Fields** collection of a **Record** object.
 ```
 PROPERTY Fields () AS Afx_ADOFields PTR
 ```
+
+# <a name="GetChildren"></a>GetChildren
+
+Returns a **Recordset** whose rows represent the children of a collection **Record**.
+
+```
+FUNCTION GetChildren () AS Afx_ADORecordset
+```
+
+#### Return value
+
+A **Recordset** object reference.
+
+#### Remarks
+
+The provider determines what columns exist in the returned **Recordset**. For example, a document source provider always returns a resource **Recordset**.
+
+# <a name="GetErrorInfo"></a>GetErrorInfo
+
+Returns information about ADO errors.
+
+```
+FUNCTION GetErrorInfo (BYVAL nError AS HRESULT = 0) AS CBSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nError* | Optional. The error code. |
+
+#### Return value
+
+A description of the error(s).
