@@ -287,3 +287,39 @@ Prior to SQLite version 3.7.10, the Windows OS interface layer called the system
 The pointer arguments to **Free** and **Realloc** must be either NULL or else pointers obtained from a prior invocation of Malloc or **Realloc** that have not yet been released.
 
 The application must not read or write any part of a block of memory after it has been released using **Free** or **Realloc**. 
+
+# <a name="MemoryHighwater"></a>MemoryHighwater
+
+Returns the maximum value of **MemoryUsed** since the high-water mark was last reset.
+
+```
+FUNCTION MemoryHighwater (BYVAL resetFlag AS BOOLEAN) AS sqlite3_uint64
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *resetFlag* | TRUE or FALSE. Reset the high-water mark. |
+
+#### Return value
+
+The number of bytes of memory currently outstanding (malloced but not freed) since the high-water mark was last reset.
+
+#### Remarks
+
+The value returned by **MemoryHighwater** include any overhead added by SQLite in its implementation of **Malloc**, but not overhead added by the any underlying system library functions that **Malloc** may call.
+
+# <a name="MemorySize"></a>MemorySize
+
+Returns the size of that memory allocation in bytes.
+
+```
+FUNCTION MemorySize (BYVAL pMem AS ANY PTR) AS sqlite3_uint64
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMem* | Pointer to the memory allocation. |
+
+#### Return value
+
+If *pMem* is a memory allocation previously obtained from **Malloc**, **Malloc64**, **Realloc** or **Realloc64**, then **MemorySize** returns the size of that memory allocation in bytes. The value returned by **MemorySize** might be larger than the number of bytes requested when pMem was allocated. If *pMem* is a NULL pointer then **MemorySize** returns zero. If *pMem* points to something that is not the beginning of memory allocation, or if it points to a formerly valid memory allocation that has now been freed, then the behavior of **MemorySize** is undefined and possibly harmful.
