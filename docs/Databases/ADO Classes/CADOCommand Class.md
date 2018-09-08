@@ -209,6 +209,52 @@ The input stream is not available to other ADO objects that return the source of
 
 When using a command stream (as specified by **CommandStream**), the only valid **CommandTypeEnum** values for the **CommandType** property are **adCmdText** and **adCmdUnknown**. Any other value causes an error.
 
+# <a name="CommandText"></a>CommandText (CADOCommand)
+
+Sets or returns an string value that contains a provider command, such as an SQL statement, a table name, a relative URL, or a stored procedure call. Default is "" (zero-length string).
+
+```
+PROPERTY CommandText () AS CBSTR
+PROPERTY CommandText (BYVAL cbsText AS CBSTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsText* | A provider command, a table name, a relative URL, or a stored procedure call. |
+
+#### Return value
+
+A provider command, a table name, a relative URL, or a stored procedure call.
+
+#### Remarks
+
+Use the **CommandText** property to set or return the text of a command represented by a **Command** object. Usually this will be an SQL statement, but can also be any other type of command statement recognized by the provider, such as a stored procedure call. An SQL statement must be of the particular dialect or version supported by the provider's query processor.
+
+If the **Prepared** property of the **Command** object is set to True and the **Command** object is bound to an open connection when you set the **CommandText** property, ADO prepares the query (that is, a compiled form of the query that is stored by the provider) when you call the **Execute** or **Open** methods.
+
+Depending on the **CommandType** property setting, ADO may alter the **CommandText** property. You can read the **CommandText** property at any time to see the actual command text that ADO will use during execution.
+
+Use the **CommandText** property to set or return a relative URL that specifies a resource, such as a file or directory. The resource is relative to a location specified explicitly by an absolute URL, or implicitly by an open **Connection** object.
+
+**Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing. 
+
+#### Example
+
+```
+' // Create a Connection object
+DIM pConnection AS CAdoConnection
+' // Create a Command object
+DIM pCommand AS CAdoCommand
+' // Open the connection
+DIM cvConStr AS CVAR = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open cvConStr
+' // Set the active connection
+pCommand.ActiveConnection = pConnection
+' // Set the CommandText property
+DIM cbsSqlStr AS CBSTR = "SELECT TOP 20 * FROM Authors ORDER BY Author"
+pCommand.CommandText = cbsSqlStr
+```
+
 # <a name="CommandTimeout"></a>CommandTimeout (CADOCommand)
 
 Sets or returns a Long value that indicates, in seconds, how long to wait for a command to execute. Default is 30.
