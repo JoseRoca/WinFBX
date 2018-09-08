@@ -571,3 +571,39 @@ This method returns the number of direct row changes in the most recent INSERT, 
 Thus, when called from the top level, this function returns the number of changes in the most recent INSERT, UPDATE, or DELETE that also occurred at the top level. Within the body of a trigger, the **Changes** method can be called to find the number of changes in the most recently completed INSERT, UPDATE, or DELETE statement within the body of the same trigger. However, the number returned does not include changes caused by subtriggers since those have their own context.
 
 If a separate thread makes changes on the same database connection while **Changes** is running then the value returned is unpredictable and not meaningful. 
+
+# <a name="CloseDb"></a>CloseDb
+
+Closes the database.
+
+```
+FUNCTION CloseDb () AS LONG
+```
+
+#### Return value
+
+SQLITE_OK if the sqlite3 object is successfully destroyed and all associated resources are deallocated.
+
+#### Remarks
+
+Applications must finalize all prepared statements and close all BLOB handles associated with the sqlite3 object prior to attempting to close the object. If **CloseDb** is called on a database connection that still has outstanding prepared statements or BLOB handles, then it returns SQLITE_BUSY.
+
+If **CloseDb** is invoked while a transaction is open, the transaction is automatically rolled back.
+
+# <a name="ErrCode"></a>ErrCode
+
+Returns the numeric result code for the most recent failed sqlite3 call associated with a database connection. If a prior API call failed but the most recent API call succeeded, the return value from **ErrCode** is undefined.
+
+```
+FUNCTION ErrCode () AS LONG
+```
+
+#### Return value
+
+The error code.
+
+#### Remarks
+
+When the serialized threading mode is in use, it might be the case that a second error occurs on a separate thread in between the time of the first error and the call to these functions. When that happens, the second error will be reported since these functions always report the most recent result. To avoid this, each thread can obtain exclusive use of the database connection by invoking **sqlite3_mutex_enter**(*sqlite3_db_mutex(D)*) before beginning to use D and invoking **sqlite3_mutex_leave**(*sqlite3_db_mutex(D)*) after all calls to the functions listed here are completed.
+
+If a function fails with SQLITE_MISUSE, that means the function was invoked incorrectly by the application. In that case, the error code and message may or may not be set. 
