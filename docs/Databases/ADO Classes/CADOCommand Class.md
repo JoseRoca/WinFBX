@@ -765,7 +765,7 @@ If you access the **Parameters** collection before calling the **Refresh** metho
 
 **Note**: If you use the **Refresh** method to obtain parameter information from the provider and it returns one or more variable-length data type Parameter objects, ADO may allocate memory for the parameters based on their maximum potential size, which will cause an error during execution. You should explicitly set the **Size** property for these parameters before calling the **Execute** method to prevent errors.
 
-# <a name="AppendChunk"></a>AppendChunk (CADOParameters)
+# <a name="AppendChunk"></a>AppendChunk (CADOParameter)
 
 Appends data to a **Parameter** object.
 
@@ -787,4 +787,17 @@ Use the **AppendChunk** method on a **Parameter** object to fill it with long bi
 
 If the **adParamLong** bit in the **Attributes** property of a **Parameter** object is set to true, you can use the **AppendChunk** method for that parameter.
 
-The first AppendChunk call on a Parameter object writes data to the parameter, overwriting any existing data. Subsequent AppendChunk calls on a **Parameter** object add to existing parameter data. An **AppendChunk** call that passes a null value discards all of the parameter data.
+The first **AppendChunk** call on a **Parameter** object writes data to the parameter, overwriting any existing data. Subsequent AppendChunk calls on a **Parameter** object add to existing parameter data. An **AppendChunk** call that passes a null value discards all of the parameter data.
+
+# <a name="Attach"></a>Attach (CADOParameter)
+
+Attaches a reference to an **Parameter** object to the class.
+
+```
+SUB Attach (BYVAL pParameter AS Afx_ADOParameter PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pParameter* | A reference to a **Parameter** object. |
+| *fAddRef* | TRUE = increase the reference count; FALSE = don't increase the reference count. |
