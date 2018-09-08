@@ -385,3 +385,62 @@ Prior to SQLite version 3.7.10, the Windows OS interface layer called the system
 The pointer arguments to **Free** and **Realloc** must be either NULL or else pointers obtained from a prior invocation of **Malloc** or **Realloc** that have not yet been released.
 
 The application must not read or write any part of a block of memory after it has been released using **Free** or **Realloc**. 
+
+# <a name="ReleaseMemory"></a>ReleaseMemory
+
+Attempts to free the specified number of bytes of heap memory by deallocating non-essential memory allocations held by the database library. Memory used to cache database pages to improve performance is an example of non-essential memory. **ReleaseMemory** returns the number of bytes actually freed, which might be more or less than the amount requested. The **ReleaseMemory** method is a no-op returning zero if SQLite is not compiled with SQLITE_ENABLE_MEMORY_MANAGEMENT.
+
+```
+FUNCTION ReleaseMemory (BYVAL nBytes AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nBytes* | The number of bytes to free. |
+
+#### Return value
+
+The number of bytes freed.
+
+# <a name="Sleep"></a>Sleep
+
+Causes the current thread to suspend execution for at least a number of milliseconds specified in its parameter.
+
+```
+FUNCTION Sleep (BYVAL ms AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ms* | The number of milliseconds to sleep. |
+
+#### Return value
+
+The number of milliseconds of sleep actually requested from the operating system is returned.
+
+#### Remarks
+
+If the operating system does not support sleep requests with millisecond time resolution, then the time will be rounded up to the nearest second. The number of milliseconds of sleep actually requested from the operating system is returned.
+
+
+# <a name="SoftHeapLimit64"></a>SoftHeapLimit64
+
+Sets and/or queries the soft limit on the amount of heap memory that may be allocated by SQLite.
+
+```
+FUNCTION SoftHeapLimit64 (BYVAL nBytes AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nBytes* | The number of bytes. If *nBytes* is negative then no change is made to the soft heap limit. Hence, the current size of the soft heap limit can be determined by invoking **SoftHeapLimit64** with a negative argument. If *nBytes* is zero then the soft heap limit is disabled. |
+
+#### Return value
+
+The size of the soft heap limit prior to the call, or negative in the case of an error.
+
+#### Remarks
+
+SQLite strives to keep heap memory utilization below the soft heap limit by reducing the number of pages held in the page cache as heap memory usages approaches the limit. The soft heap limit is "soft" because even though SQLite strives to stay below the limit, it will exceed the limit rather than generate an SQLITE_NOMEM error. In other words, the soft heap limit is advisory only.
+
+The circumstances under which SQLite will enforce the soft heap limit may change in future releases of SQLite.
