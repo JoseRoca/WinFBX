@@ -1245,3 +1245,41 @@ The table above makes reference to standard C library functions atoi() and atof(
 The pointer returned is valid until **Step_** or **Reset** or **Finalize** is called. The memory space used to hold BLOBs is freed automatically. Do not pass the pointers returned by **ColumnBlob** into **Free**.
 
 If a memory allocation error occurs during the evaluation of any of these functions, a default value is returned. The default value is a NULL pointer. Subsequent calls to **ErrCode** will return SQLITE_NOMEM. 
+
+# <a name="ColumnBytes"></a>ColumnBytes
+
+Returns the number of bytes of the column value.
+
+```
+FUNCTION ColumnBytes (BYVAL nCol AS LONG) AS LONG
+FUNCTION ColumnBytes (BYREF wszColName AS WSTRING) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nCol / wszColName* | The index or the name of the column for which information should be returned. The leftmost column of the result set has the index 0. The number of columns in the result can be determined using **ColumnCount**. |
+
+#### Return value
+
+The number of bytes of the column value.
+
+#### Remarks
+
+If the SQL statement does not currently point to a valid row, or if the column index is out of range, the result is undefined. These functions may only be called when the most recent call to **Step_** has returned SQLITE_ROW and neither **Reset** nor **Finalize** have been called subsequently. If any of these functions are called after **Reset** or **Finalize** or after **Step_** has returned something other than SQLITE_ROW, the results are undefined. If **Step_** or **Reset** or **Finalize** are called from a different thread while **ColumnBytes** is pending, then the result is undefined.
+
+If the result is a BLOB or UTF-8 string then the **ColumnBytes** function returns the number of bytes in that BLOB or string. If the result is a UTF-16 string, then **ColumnBytes** converts the string to UTF-8 and then returns the number of bytes. If the result is a numeric value then **ColumnBytes** uses **snprintf** to convert that value to a UTF-8 string and returns the number of bytes in that string. If the result is NULL, then **ColumnBytes** returns zero.
+
+The values returned by **ColumnBytes** do not include the zero terminators at the end of the string. For clarity: the values returned by **ColumnBytes** are the number of bytes in the string, not the number of characters.
+
+Note that when type conversions occur, pointers returned by prior calls to **ColumnBlob** and/or, **ColumnText** may be invalidated.
+
+The safest and easiest to remember policy is to invoke these functions in one of the following ways:
+
+**ColumnText** followed by **ColumnBytes**
+**ColumnBlob** followed by **ColumnBytes**
+
+In other words, you should call **ColumnText** or **ColumnBlob** first to force the result into the desired format, then invoke **ColumnBytes** to find the size of the result.
+
+The pointers returned are valid until a type conversion occurs as described above, or until **Step_** or **Reset** or **Finalize** is called. The memory space used to hold strings and BLOBs is freed automatically. Do not pass the pointers returned **ColumnBlob**, **ColumnText**, etc. into **Free**.
+
+If a memory allocation error occurs during the evaluation of any of these functions, a default value is returned. The default value is 0. Subsequent calls to **ErrCode** will return SQLITE_NOMEM. 
