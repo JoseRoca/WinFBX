@@ -533,3 +533,19 @@ DO
    IF pRecordset.MoveNext <> S_OK THEN EXIT DO
 LOOP
 ```
+
+# <a name="GetErrorInfo"></a>GetErrorInfo
+
+Returns information about ADO errors.
+
+```
+FUNCTION GetErrorInfo (BYVAL nError AS HRESULT = 0) AS CBSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nError* | Optional. The error code. |
+
+#### Return value
+
+A description of the error(s).
