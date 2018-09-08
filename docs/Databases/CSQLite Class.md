@@ -140,3 +140,74 @@ CONSTRUCTOR CSQLiteStmt (BYVAL pStmt AS sqlite3_stmt PTR)
 | [Reset](#Reset) | Resets a prepared statement object back to its initial state, ready to be re-executed. |
 | [Sql](#Sql) | Retrieve a saved copy of the original SQL text used to create a prepared statement if that statement was compiled using **Prepare**. |
 | [Step_](#Step_) | After a prepared statement has been prepared using **Prepare** this method must be called one or more times to evaluate the statement. |
+
+# <a name="CompileOptionUsed"></a>CompileOptionUsed
+
+Returns FALSE or TRUE indicating whether the specified option was defined at compile time. The SQLITE_ prefix may be omitted from the option name passed to **CompileOptionUsed**.
+
+```
+FUNCTION CompileOptionUsed (BYREF szOptName AS ZSTRING) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *szOptName* | The option name. |
+
+### Usage example
+
+pSql.CompileOptionUsed("SQLITE_ENABLE_DBSTAT_VTAB")
+
+# <a name="Complete"></a>Complete
+
+Determines if the currently entered text seems to form a complete SQL statement or if additional input is needed before sending the text into SQLite for parsing. 
+
+```
+FUNCTION Complete (BYREF wszSql AS CONST WSTRING) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszSql* | The SQL string to check. |
+
+#### Return value
+
+Returns 0 if the statement is incomplete or 1 if the input string appears to be a complete SQL statement. If a memory allocation fails, then SQLITE_NOMEM is returned.
+
+#### Remarks
+
+This method is useful during command-line input to determine if the currently entered text seems to form a complete SQL statement or if additional input is needed before sending the text into SQLite for parsing. This method returns 1 if the input string appears to be a complete SQL statement. A statement is judged to be complete if it ends with a semicolon token and is not a prefix of a well-formed CREATE TRIGGER statement. Semicolons that are embedded within string literals or quoted identifier names or comments are not independent tokens (they are part of the token in which they are embedded) and thus do not count as a statement terminator. Whitespace and comments that follow the final semicolon are ignored.
+
+This method does not parse the SQL statements thus will not detect syntactically incorrect SQL.
+
+# <a name="EnableSharedCache"></a>EnableSharedCache
+
+Enables or disables the sharing of the database cache and schema data structures between connections to the same database. Sharing is enabled if the argument is true and disabled if the argument is false.. 
+
+```
+FUNCTION EnableSharedCache (BYVAL bSharing AS BOOLEAN) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *bSharing* | TRUE or FALSE. |
+
+#### Return value
+
+Returns SQLITE_OK if shared cache was enabled or disabled successfully. An error code is returned otherwise.
+
+# <a name="ErrStr"></a>ErrStr
+
+Returns English-language text that describes the result code.
+
+```
+FUNCTION ErrStr (BYVAL nErrorCode AS LONG) AS STRING
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nErrorCode* | The result code. |
+
+#### Return value
+
+A string containing a description of the error.
+
