@@ -211,7 +211,7 @@ This method fails if *Destination* identifies an existing entity (for example, a
 
 # <a name="DeleteRecord"></a>DeleteRecord
 
-Deletes a the entity represented by a Record.
+Deletes a the entity represented by a **Record**.
 
 ```
 FUNCTION DeleteRecord (BYREF cbsSource CBSTR = "", BYVAL Async BOOLEAN = FALSE) AS HRESULT
@@ -233,3 +233,11 @@ Operations on the object represented by this **Record** may fail after this meth
 If this **Record** was obtained from a **Recordset**, then the results of this operation will not be reflected immediately in the **Recordset**. Refresh the **Recordset** by closing and re-opening it, or by executing the **Recordset** **Requery**, or **Update** and **Resync** methods.
 
 **Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing.
+
+# <a name="Fields"></a>Fields
+
+Gets a reference to the **Fields** collection of a **Record** object.
+
+```
+PROPERTY Fields () AS Afx_ADOFields PTR
+```
