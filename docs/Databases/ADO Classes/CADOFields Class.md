@@ -597,3 +597,26 @@ Returns the name of the field.
 ```
 PROPERTY Name () AS CBSTR
 ```
+
+# <a name="NumericScale"></a>NumericScale (CADOField)
+
+Sets or returns a Byte value that indicates the number of decimal places to which numeric values will be resolved.
+
+```
+PROPERTY NumericScale () AS BYTE
+PROPERTY NumericScale (BYVAL bScale AS BYTE)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *bScale* | The number of decimal places. |
+
+#### Return value
+
+The number of decimal places. Returns -1 if it is not a numeric field.
+
+#### Remarks
+
+Use the **NumericScale** property to determine how many digits to the right of the decimal point will be used to represent values for a numeric field.
+
+For a field, **NumericScale** is normally read-only. However, for new fields that have been appended to a **Record**, **NumericScale** is read/write only after the **Value** property for the field has been specified and the data provider has successfully added the new field by calling the Update method of the **Fields** collection.
