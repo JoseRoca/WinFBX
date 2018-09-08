@@ -184,7 +184,7 @@ FUNCTION CopyRecord (BYREF Source AS CBSTR = "", BYREF Destination AS CBSTR = ""
 
 #### CopyRecordOptionsEnum
 
-Specifies the behavior of the CopyRecord method.
+Specifies the behavior of the **CopyRecord** method.
 
 | Constant   | Description |
 | ---------- | ----------- |
@@ -208,3 +208,28 @@ This method fails if *Destination* identifies an existing entity (for example, a
 **Important**: Use the **adCopyOverWrite** option judiciously. For example, specifying this option when copying a file to a directory will delete the directory and replace it with the file.
 
 **Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing. 
+
+# <a name="DeleteRecord"></a>DeleteRecord
+
+Deletes a the entity represented by a Record.
+
+```
+FUNCTION DeleteRecord (BYREF cbsSource CBSTR = "", BYVAL Async BOOLEAN = FALSE) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsSource* | Optional. An string value that contains a URL identifying the entity (for example, the file or directory) to be deleted. If Source is omitted or specifies an empty string, the entity represented by the current **Record** is deleted. If the **Record** is a collection record (**RecordType** of **adCollectionRecord**, such as a directory) all children (for example, subdirectories) will also be deleted. |
+| *Async* | Optional. A Boolean value that, when True, specifies that the delete operation is asychronous. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Operations on the object represented by this **Record** may fail after this method completes. After calling **DeleteRecord**, the **Record** should be closed because the behavior of the **Record** may become unpredictable depending upon when the provider updates the **Record** with the data source.
+
+If this **Record** was obtained from a **Recordset**, then the results of this operation will not be reflected immediately in the **Recordset**. Refresh the **Recordset** by closing and re-opening it, or by executing the **Recordset** **Requery**, or **Update** and **Resync** methods.
+
+**Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing.
