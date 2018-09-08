@@ -337,7 +337,7 @@ FUNCTION CreateParameter (BYREF cbsName AS CBSTR = "", BYVAL nType AS DataTypeEn
 
 #### Return value
 
-Reference to an ADO Parameter object.
+Reference to an ADO **Parameter** object.
 
 #### DataTypeEnum
 
@@ -406,3 +406,28 @@ This method does not automatically append the **Parameter** object to the **Para
 If you specify a variable-length data type in the *nType* argument, you must either pass a *nSize* argument or set the **Size** property of the **Parameter** object before appending it to the **Parameters** collection; otherwise, an error occurs.
 
 If you specify a numeric data type (**adNumeric** or **adDecimal**) in the *nType* argument, then you must also set the **NumericScale** and **Precision** properties.
+
+# <a name="Dialect"></a>Dialect (CADOCommand)
+
+Indicates the dialect of the **CommandText** or **CommandStream** properties. The dialect defines the syntax and general rules that the provider uses to parse the string or stream.
+
+The **Dialect** property contains a valid GUID that represents the dialect of the command text or stream. The default value for this property is {C8B521FB-5CF3-11CE-ADE5-00AA0044773D}, which indicates that the provider should choose how to interpret the command text or stream.
+
+```
+PROPERTY Dialect (BYREF cbsDialect AS CBSTR)
+PROPERTY Dialect () AS CBSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsDialect* | The string representation of a valid GUID that represents the dialect of the command text or stream. |
+
+#### Return value
+
+The string representation of a valid GUID that represents the dialect of the command text or stream.
+
+#### Remarks
+
+ADO does not query the provider when the user reads the value of this property; it returns a string representation of the value currently stored in the **Command** object.
+
+When the user sets the **Dialect** property, ADO validates the GUID and raises an error if the value supplied is not a valid GUID. See the documentation for your provider to determine the GUID values supported by the **Dialect** property.
