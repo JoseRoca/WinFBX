@@ -125,6 +125,127 @@ All of the metadata properties (**Name**, **Type_**, **DefinedSize**, **Precisio
 
 When a **Recordset** object is passed across processes, only the rowset values are marshalled, and the properties of the **Recordset** object are ignored. During unmarshalling, the rowset is unpacked into a newly created **Recordset** object, which also sets its properties to the default values.
 
+### Recordset Dynamic Properties
+
+The table below is a cross-index of the ADO and OLE DB names for each standard OLE DB provider dynamic property. Your providers may add more properties than listed here. For the specific information about provider-specific dynamic properties, see your provider documentation.
+
+| ADO Property Name | OLE DB Property Name |
+| ----------------- | ----------- |
+| IAccessor | DBPROP_IACCESSOR (1) 
+| IChapteredRowset (1) | |
+| ColumnsInfo | DBPROP_ICOLUMNSINFO (1) |
+| IColumnsRowset | DBPROP_ICOLUMNSROWSET (1) |
+| IConnectionPointContainer | DBPROP_ICONNECTIONPOINTCONTAINER (1) | 
+| IConvertType (1) | |
+| ILockBytes | DBPROP_ILOCKBYTES (1) |
+| IRowset | DBPROP_IROWSET (1) |
+| IDBAsynchStatus | DBPROP_IDBASYNCHSTATUS (1) |
+| IParentRowset (1) | |
+| IRowsetChange | DBPROP_IROWSETCHANGE (1) |
+| IRowsetExactScroll (1) | |
+| IRowsetFind | DBPROP_IROWSETFIND (1) |
+| IRowsetIdentity | DBPROP_IROWSETIDENTITY (1) |
+| IRowsetInfo | DBPROP_IROWSETINFO (1) |
+| IRowsetLocate | DBPROP_IROWSETLOCATE (1) |
+| IRowsetRefresh | DBPROP_IROWSETREFRESH (1) |
+| IRowsetResynch (1) | |
+| IRowsetScroll | DBPROP_IROWSETSCROLL (1) |
+| IRowsetUpdate | DBPROP_IROWSETUPDATE (1) |
+| IRowsetView | DBPROP_IROWSETVIEW (1) |
+| IRowsetIndex | DBPROP_IROWSETINDEX (1) |
+| ISequentialStream | DBPROP_ISEQUENTIALSTREAM (1) |
+| IStorage | DBPROP_ISTORAGE (1) |
+| IStream | DBPROP_ISTREAM (1) |
+| ISupportErrorInfo | DBPROP_ISUPPORTERRORINFO (1) |
+| Access Order | DBPROP_ACCESSORDER |
+| Append-Only Rowset | DBPROP_APPENDONLY |
+| Asynchronous Rowset Processing | DBPROP_ROWSET_ASYNCH |
+| Auto Recalc | DBPROP_ADC_AUTORECALC |
+| Background Fetch Size | DBPROP_ASYNCHFETCHSIZE |
+| Background Thread Priority | DBPROP_ASYNCHTHREADPRIORITY |
+| Batch Size | DBPROP_ADC_BATCHSIZE |
+| Blocking Storage Objects | DBPROP_BLOCKINGSTORAGEOBJECTS |
+| Bookmark Type | DBPROP_BOOKMARKTYPE |
+| Bookmarkable | DBPROP_IROWSETLOCATE (2) |
+| Bookmarks Ordered | DBPROP_ORDEREDBOOKMARKS |
+| Cache Child Rows | DBPROP_ADC_CACHECHILDROWS |
+| Cache Deferred Columns | DBPROP_CACHEDEFERRED |
+| Change Inserted Rows | DBPROP_CHANGEINSERTEDROWS |
+| Column Privileges | DBPROP_COLUMNRESTRICT |
+| Column Set Notification | DBPROP_NOTIFYCOLUMNSET |
+| Column Writable | DBPROP_MAYWRITECOLUMN |
+| Command Time Out | DBPROP_COMMANDTIMEOUT |
+| Cursor Engine Version | DBPROP_ADC_CEVER |
+| Defer Column | DBPROP_DEFERRED |
+| Delay Storage Object Updates | DBPROP_DELAYSTORAGEOBJECTS |
+| Fetch Backwards | DBPROP_CANFETCHBACKWARDS |
+| Filter Operations | DBPROP_FILTERCOMPAREOPS |
+| Find Operations | DBPROP_FINDCOMPAREOPS |
+| Hidden Columns (Count) | DBPROP_HIDDENCOLUMNS (3) |
+| Hold Rows | DBPROP_CANHOLDROWS |
+| Immobile Rows | DBPROP_IMMOBILEROWS |
+| Initial Fetch Size | DBPROP_ASYNCHPREFETCHSIZE |
+| Literal Bookmarks | DBPROP_LITERALBOOKMARKS |
+| Literal Row Identity | DBPROP_LITERALIDENTITY |
+| Maintain Change Status | DBPROP_ADC_MAINTAINCHANGESTATUS |
+| Maximum Open Rows | DBPROP_MAXOPENROWS |
+| Maximum Pending Rows | DBPROP_MAXPENDINGROWS |
+| Maximum Rows | DBPROP_MAXROWS (4) |
+| Memory Usage | DBPROP_MEMORYUSAGE |
+| Notification Granularity | DBPROP_NOTIFICATIONGRANULARITY |
+| Notification Phases | DBPROP_NOTIFICATIONPHASES |
+| Objects Transacted | DBPROP_TRANSACTEDOBJECT |
+| Others' Changes Visible | DBPROP_OTHERUPDATEDELETE |
+| Others' Inserts Visible | DBPROP_OTHERINSERT |
+| Own Changes Visible | DBPROP_OWNUPDATEDELETE |
+| Own Inserts Visible | DBPROP_OWNINSERT |
+| Preserve on Abort | DBPROP_ABORTPRESERVE |
+| Preserve on Commit | DBPROP_COMMITPRESERVE |
+| Private1 (5) | |
+| Quick Restart | DBPROP_QUICKRESTART |
+| Reentrant Events | DBPROP_REENTRANTEVENTS |
+| Remove Deleted Rows | DBPROP_REMOVEDELETED |
+| Report Multiple Changes | DBPROP_REPORTMULTIPLECHANGES |
+| Reshape Name | DBPROP_ADC_RESHAPENAME |
+| Resync Command | DBPROP_ADC_CUSTOMRESYNCH |
+| Return Pending Inserts | DBPROP_RETURNPENDINGINSERTS |
+| Row Delete Notification | DBPROP_NOTIFYROWDELETE |
+| Row First Change Notification | DBPROP_NOTIFYROWFIRSTCHANGE |
+| Row Insert Notification | DBPROP_NOTIFYROWINSERT |
+| Row Privileges | DBPROP_ROWRESTRICT |
+| Row Resynchronization Notification | DBPROP_NOTIFYROWRESYNCH |
+| Row Threading Model | DBPROP_ROWTHREADMODEL |
+| Row Undo Change Notification | DBPROP_NOTIFYROWUNDOCHANGE |
+| Row Undo Delete Notification | DBPROP_NOTIFYROWUNDODELETE |
+| Row Undo Insert Notification | DBPROP_NOTIFYROWUNDOINSERT |
+| Row Update Notification | DBPROP_NOTIFYROWUPDATE |
+| Rowset Fetch Position Change Notification | DBPROP_NOTIFYROWSETFETCHPOSITIONCHANGE |
+| Rowset Release Notification | DBPROP_NOTIFYROWSETRELEASE |
+| Scroll Backwards | DBPROP_CANSCROLLBACKWARDS |
+| Server Cursor | DBPROP_SERVERCURSOR |
+| Skip Deleted Bookmarks | DBPROP_BOOKMARKSKIPPED |
+| Strong Row Identity | DBPROP_STRONGIDENTITY |
+| Unique Catalog | DBPROP_ADC_UNIQUECATALOG |
+| Unique Rows | DBPROP_UNIQUEROWS |
+| Unique Schema | DBPROP_ADC_UNIQUESCHEMA |
+| Unique Table | DBPROP_ADC_UNIQUETABLE |
+| Updatability | DBPROP_UPDATABILITY |
+| Update Criteria | DBPROP_ADC_UPDATECRITERIA |
+| Update Resync | DBPROP_ADC_UPDATERESYNC |
+| Use Bookmarks | DBPROP_BOOKMARKS |
+
+Note numbers used in the cross-index:
+
+(1) This property is a Boolean flag indicating whether the named interface should be used. The equivalent OLE DB property name is listed if it exists.
+
+(2) The "Bookmarkable" ADO property is generated internally for backwards compatibility, and is mapped to the OLE DB property, DBPROP_IROWSETLOCATE. This is the same property that corresponds to the ADO property, ^^IRowsetLocate**.
+
+(3) The ADO property name, "Hidden Columns", is named differently than the OLE DB property name Description, "Hidden Columns Count".
+
+(4) For hierarchical recordsets, the "Maximum Rows" ADO property gets applied across all children. Depending on the order in which the rows are returned, you might have all, some or no children for each parent or orphaned children in the result set. Therefore, when reshaping hierarchical recordsets, the identifier for every child should be unique. In general, the Microsoft Data Shaping Service for OLE DB (MSDATASHAPE) provider does not allow for distinction between properties that can be inherited from the parent and those that cannot be inherited.
+
+(5) Does not apply.
+
 # <a name="AbsolutePage"></a>AbsolutePage
 
 Sets or returns a Long value from 1 to the number of pages in the **Recordset** object (**PageCount**), or returns one of the **PositionEnum** values.
