@@ -730,22 +730,10 @@ The adFieldPending* values indicate the operation that caused the status to be s
 | **adFieldResourceLocked** | Indicates that the provider was unable to perform the operation because the data source is locked by one or more other application or process. |
 | **adFieldResourceOutOfScope** | Indicates that a source or destination URL is outside the scope of the current record. |
 | **adFieldSchemaViolation** | Indicates that the value violated the data source schema constraint for the field. |
-| ---------- | ----------- |
-
-
-adFieldSignMismatch
-5
-Indicates that data value returned by the provider was signed but the data type of the ADO field value was unsigned.
-adFieldTruncated
-4
-Indicates that variable-length data was truncated when reading from the data source.
-adFieldUnavailable
-8
-Indicates that the provider could not determine the value when reading from the data source. For example, the row was just created, the default value for the column was not available, and a new value had not yet been specified.
-adFieldVolumeNotFound
-21
-Indicates that the provider is unable to locate the storage volume indicated by the URL.
-
+| **adFieldSignMismatch** | Indicates that data value returned by the provider was signed but the data type of the ADO field value was unsigned. |
+| **adFieldTruncated** | Indicates that variable-length data was truncated when reading from the data source. |
+| **adFieldUnavailable** | Indicates that the provider could not determine the value when reading from the data source. For example, the row was just created, the default value for the column was not available, and a new value had not yet been specified. |
+| **adFieldVolumeNotFound** | Indicates that the provider is unable to locate the storage volume indicated by the URL. |
 
 #### Remarks
 
