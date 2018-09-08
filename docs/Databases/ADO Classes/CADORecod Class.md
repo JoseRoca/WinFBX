@@ -320,7 +320,7 @@ FUNCTION MoveRecord (BYREF Source AS CBSTR = "", BYREF Destination AS CBSTR = ""
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *Source* | Optional. A CBSTR value that contains a URL identifying the **Record to be moved**. If *Source* is omitted or specifies an empty string, the object represented by this **Record** is moved. For example, if the **Record** represents a file, the contents of the file are moved to the location specified by *Destination*. |
+| *Source* | Optional. An string value that contains a URL identifying the **Record to be moved**. If *Source* is omitted or specifies an empty string, the object represented by this **Record** is moved. For example, if the **Record** represents a file, the contents of the file are moved to the location specified by *Destination*. |
 | *Destination* | Optional. An string value that contains a URL specifying the location where *Source* will be moved. |
 | *UserName* | Optional. An string value that contains the user ID that, if needed, authorizes access to *Destination*. |
 | *Password* | Optional. An string value that contains the password that, if needed, verifies *UserName*. |
@@ -349,5 +349,46 @@ For files moved using the Internet Publishing Provider, this method updates all 
 Certain attributes of the **Record** object, such as the **ParentURL** property, will not be updated after this operation completes. **Refresh** the **Record** object's properties by closing the **Record**, then re-opening it with the URL of the location where the file or directory was moved.
 
 If this **Record** was obtained from a **Recordset**, the new location of the moved file or directory will not be reflected immediately in the **Recordset**. **Refresh** the **Recordset** by closing and re-opening it.
+
+**Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing.
+
+# <a name="Open"></a>Open
+
+Opens an existing **Record** object, or creates a new item represented by the **Record** (such as a file or directory).
+
+```
+FUNCTION Open (BYREF cvSource AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
+   BYREF cvActiveConnection AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
+   BYVAL nMode AS ConnectModeEnum = adModeUnknown, _
+   BYVAL CreateOptions AS RecordCreateOptionsEnum = adFailIfNotExists, _
+   BYREF cbsUserName AS CBSTR = "", BYREF cbsPassword AS CBSTR = "") AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvSource* | Optional. A Variant that may represent the URL of the entity to be represented by this **Record** object, a **Command**, an open **Recordset** or another **Record** object, a string containing a SQL SELECT statement or a table name. |
+| *cvActiveConnection* | Optional. A Variant that represents the connect string or open **Connection** object. |
+| *nMode* | Optional. A **ConnectModeEnum** value, whose default value is **adModeUnknown**, that specifies the access mode for the resultant **Record** object. |
+| *CreateOptions* | Optional. A **RecordCreateOptionsEnum** value, whose default value is **adFailIfNotExists**, that specifies whether an existing file or directory should be opened, or a new file or directory should be created. If set to the default value, the access mode is obtained from the Mode property. This parameter is ignored when the Source parameter doesn't contain a URL. |
+| *cbsUserName* | Optional. An string value that contains the user ID that, if needed, authorizes access to Source. |
+| *cbsPassword* | Optional. An string value that contains the password that, if needed, verifies UserName. |
+
+#### Return value
+
+S_OK (0) or an HRESULT value.
+
+#### Remarks
+
+Source may be:
+
+* A URL. If the protocol for the URL is http, then the Internet Provider will be invoked by default. If the URL points to a node that contains an executable script (such as an .ASP page), then a **Record** containing the source rather than the executed contents is opened by default. Use the *Options* argument to modify this behavior.
+
+* A **Record** object. A **Record** object opened from another **Record** will clone the original **Record** object.
+
+* A **Command** object. The opened **Record** object represents the single row returned by executing the **Command**. If the results contain more than a single row, the contents of the first row are placed in the record and an error may be added to the **Errors** collection.
+
+* A SQL SELECT statement. The opened **Record** object represents the single row returned by executing the contents of the string. If the results contain more than a single row, the contents of the first row are placed in the record and an error may be added to the **Errors** collection.
+
+* A table name.<br>If the **Record** object represents an entity that cannot be accessed with a URL (for example, a row of a **Recordset** derived from a database), then the values of both the **ParentURL** property and the field accessed with the **adRecordURL** constant are null.
 
 **Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing.
