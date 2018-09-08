@@ -764,3 +764,27 @@ You should set the **ActiveConnection** property of the **Command** object to a 
 If you access the **Parameters** collection before calling the **Refresh** method, ADO will automatically call the method and populate the collection for you.
 
 **Note**: If you use the **Refresh** method to obtain parameter information from the provider and it returns one or more variable-length data type Parameter objects, ADO may allocate memory for the parameters based on their maximum potential size, which will cause an error during execution. You should explicitly set the **Size** property for these parameters before calling the **Execute** method to prevent errors.
+
+# <a name="AppendChunk"></a>AppendChunk (CADOParameters)
+
+Appends data to a **Parameter** object.
+
+```
+FUNCTION AppendChunk (BYREF cvData AS CVAR) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cvData* | A Variant that contains the data to append to the object. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **AppendChunk** method on a **Parameter** object to fill it with long binary or character data. In situations where system memory is limited, you can use the **AppendChunk** method to manipulate long values in portions rather than in their entirety.
+
+If the **adParamLong** bit in the **Attributes** property of a **Parameter** object is set to true, you can use the **AppendChunk** method for that parameter.
+
+The first AppendChunk call on a Parameter object writes data to the parameter, overwriting any existing data. Subsequent AppendChunk calls on a **Parameter** object add to existing parameter data. An **AppendChunk** call that passes a null value discards all of the parameter data.
