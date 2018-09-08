@@ -111,7 +111,7 @@ CONSTRUCTOR CSQLiteStmt (BYVAL pStmt AS sqlite3_stmt PTR)
 | [BindLongInt](#BindLongInt) | Binds a longint value with the statement. |
 | [BindNull](#BindNull) | Binds a null value with the statement. |
 | [BindParameterCount](#BindParameterCount) | This method can be used to find the number of SQL parameters in a prepared statement. |
-| [BindParameterIndex](#BindParameterCount) | Returns the index of an SQL parameter given its name. |
+| [BindParameterIndex](#BindParameterIndex) | Returns the index of an SQL parameter given its name. |
 | [BindParameterName](#BindParameterName) | Returns the name of the N-th SQL parameter in the prepared statement P. |
 | [BindText](#BindText) | Binds a text value with the statement. |
 | [BindZeroBlob](#BindZeroBlob) | Binds a BLOB that is filled with zeroes. |
@@ -1118,3 +1118,19 @@ FUNCTION BindParameterIndex (BYREF szName AS ZSTRING) AS LONG
 #### Return value
 
 The index of the parameter.
+
+# <a name="BindParameterIndex"></a>BindParameterIndex
+
+Returns the name of the N-th SQL parameter in the prepared statement P. SQL parameters of the form "?NNN" or ":AAA" or "@AAA" or "$AAA" have a name which is the string "?NNN" or ":AAA" or "@AAA" or "$AAA" respectively. In other words, the initial ":" or "$" or "@" or "?" is included as part of the name. Parameters of the form "?" without a following integer have no name and are referred to as "nameless" or "anonymous parameters".
+
+```
+FUNCTION BindParameterName (BYVAL idx AS LONG) AS STRING
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *idx* | The parameter index. The first host parameter has an index of 1, not 0. |
+
+#### Return value
+
+If the value *idx* is out of range or if the idx-th parameter is nameless, then NULL is returned. The returned string is always in UTF-8 encoding even if the named parameter was originally specified as UTF-16 in Prepare.
