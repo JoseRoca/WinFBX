@@ -734,3 +734,30 @@ For the purposes of this function, an INSERT is considered to be successful even
 This function is accessible to SQL statements via the **last_insert_rowid** SQL function.
 
 If a separate thread performs a new INSERT on the same database connection while the **LastInsertRowid** function is running and thus changes the last insert rowid, then the value returned by **LastInsertRowid** is unpredictable and might not equal either the old or the new last insert rowid. 
+
+# <a name="Limit"></a>Limit
+
+This function allows the size of various constructs to be limited on a connection by connection basis.
+
+```
+FUNCTION Limit (BYVAL id AS LONG, BYVAL newVal AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *id* | One of the limit categories that define a class of constructs to be size limited. |
+| *newVal* | The the new limit for that construct. |
+
+#### Return value
+
+The prior value of the limit.
+
+#### Remarks
+
+If the new limit is a negative number, the limit is unchanged. For each limit category SQLITE_LIMIT_NAME there is a hard upper bound set at compile-time by a C preprocessor macro called SQLITE_MAX_NAME. (The "_LIMIT_" in the name is changed to "_MAX_".) Attempts to increase a limit above its hard upper bound are silently truncated to the hard upper bound.
+
+Regardless of whether or not the limit was changed, the **Limit** interface returns the prior value of the limit. Hence, to find the current value of a limit without changing it, simply invoke this interface with the third parameter set to -1.
+
+Run-time limits are intended for use in applications that manage both their own internal database and also databases that are controlled by untrusted external sources. An example application might be a web browser that has its own databases for storing history and separate databases controlled by JavaScript applications downloaded off the Internet. The internal databases can be given the large, default limits. Databases managed by external sources can be given much smaller limits designed to prevent a denial of service attack.
+
+New run-time limit categories may be added in future releases.
