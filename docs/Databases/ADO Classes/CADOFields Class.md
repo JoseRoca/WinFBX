@@ -559,3 +559,33 @@ DO
    IF pRecordset.MoveNext <> S_OK THEN EXIT DO
 LOOP
 ```
+
+# <a name="GetChunk"></a>GetChunk (CADOField)
+
+Returns all, or a portion, of the contents of a large text or binary data field.
+
+```
+FUNCTION GetChunk (BYVAL nLen AS LONG) AS CVAR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nLen* | The number of bytes to retrieve. |
+
+#### Return value
+
+The retrieved data.
+
+#### Remarks
+
+Use the **GetChunk** method on a **Field** object to retrieve part or all of its long binary or character data. In situations where system memory is limited, you can use the **GetChunk** method to manipulate long values in portions, rather than in their entirety.
+
+The data that a **GetChunk** call returns is assigned to variable. If **Size** is greater than the remaining data, the **GetChunk** method returns only the remaining data without padding variable with empty spaces. If the field is empty, the **GetChunk** method returns a null value.
+
+Each subsequent **GetChunk** call retrieves data starting from where the previous **GetChunk** call left off. However, if you are retrieving data from one field and then you set or read the value of another field in the current record, ADO assumes you have finished retrieving data from the first field. If you call the **GetChunk** method on the first field again, ADO interprets the call as a new **GetChunk** operation and starts reading from the beginning of the data. Accessing fields in other **Recordset** objects that are not clones of the first **Recordset** object will not disrupt **GetChunk** operations.
+
+If the **adFldLong** bit in the **Attributes** property of a **Field** object is set to True, you can use the **GetChunk** method for that field.
+
+If there is no current record when you use the **GetChunk** method on a **Field** object, error 3021 (no current record) occurs.
+
+**Note**: The **GetChunk** method does not operate on **Field** objects of a Record object. It does not perform any operation and will produce a run-time error.
