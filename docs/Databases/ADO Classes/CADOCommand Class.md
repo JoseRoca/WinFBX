@@ -181,3 +181,30 @@ S_OK (0) or an HRESULT code.
 Use the **Cancel** method to terminate execution of an asynchronous method call (that is, a method invoked with the **adAsyncConnect**, **adAsyncExecute**, or **adAsyncFetch** option).
 
 For a **Command** object, the last asynchronous call to the **Execute** method is terminated.
+
+# <a name="CommandStream"></a>CommandStream (CADOCommand)
+
+Sets or returns the stream used as the input for a **Command** object. The format for this stream is provider-specific, see your provider's documentation for details. This property is similar to the **CommandText** property, used to specify a string for the input of a **Command**.
+
+```
+POPERTY CommandStream () AS Afx_AdoStream
+POPERTY CommandStream (BYVAL pStream AS Afx_AdoStream)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pStream* | Object variable containing a reference to the stream. |
+
+#### Return value
+
+An Stream object reference.
+
+#### Remarks
+
+**CommandStream** and **CommandText** are mutually exclusive. When the user sets the **CommandStream** property, the **CommandText** property will be set to the empty string (""). If the user sets the **CommandText** property, the **CommandStream** property will be set to null.
+
+The behaviors of the **Command.Parameters.Refresh** and **Command.Prepare** methods are defined by the provider. The values of parameters in a stream may not be refreshed.
+
+The input stream is not available to other ADO objects that return the source of a **Command**. For example, if the **Source** property of a **Recordset** is set to a **Command** object that has a stream as its input, **Recordset.Source** continues to return the **CommandText** property, which contains an empty string (""), instead of the stream contents of the **CommandStream** property.
+
+When using a command stream (as specified by **CommandStream**), the only valid **CommandTypeEnum** values for the **CommandType** property are **adCmdText** and **adCmdUnknown**. Any other value causes an error.
