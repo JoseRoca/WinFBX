@@ -297,9 +297,7 @@ PROPERTY CommandType () AS CommandTypeEnum
 
 #### Return value
 
-#### CommandTypeEnum
-
-Specifies how a command argument should be interpreted.
+A **CommandTypeEnum** value.
 
 #### CommandTypeEnum
 
@@ -318,3 +316,93 @@ Specifies how a command argument should be interpreted.
 Use the **CommandType** property to optimize evaluation of the **CommandText** property.
 
 If the **CommandType** property value equals **adCmdUnknown** (the default value), you may experience diminished performance because ADO must make calls to the provider to determine if the **CommandText** property is an SQL statement, a stored procedure, or a table name. If you know what type of command you're using, setting the **CommandType** property instructs ADO to go directly to the relevant code. If the **CommandType** property does not match the type of command in the **CommandText** property, an error occurs when you call the **Execute** method.
+
+# <a name="CreateParameter"></a>CreateParameter (CADOCommand)
+
+Creates a new **Parameter** object with the specified properties.
+
+```
+FUNCTION CreateParameter (BYREF cbsName AS CBSTR = "", BYVAL nType AS DataTypeEnum = 0, _
+   BYVAL Direction AS ParameterDirectionEnum = adParamInput, BYVAL Size AS LONG = 0, _
+   BYREF cvValue AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND)) AS Afx_ADOParameter PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsName* | Optional. The name of the Parameter object. |
+| *nType* | Optional. A **DataTypeEnum** value that specifies the data type of the **Parameter** object. |
+| *Direction* | Optional. A **ParameterDirectionEnum** value that specifies the type of **Parameter** object. |
+| *Size* | Optional. The maximum length for the parameter value in characters or bytes. |
+| *cvValue* | Optional. The value for the **Parameter** object. |
+
+#### Return value
+
+Reference to an ADO Parameter object.
+
+#### DataTypeEnum
+
+Specifies the data type of a **Field**, **Parameter**, or **Property**. The corresponding OLE DB type indicator is shown in parentheses in the description column of the following table.
+
+#### ParameterDirectionEnum
+
+Specifies whether the Parameter represents an input parameter, an output parameter, both an input and an output parameter, or the Return value from a stored procedure.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adParamInput** | Default. Indicates that the parameter represents an input parameter. |
+| **adParamInputOutput** | Indicates that the parameter represents both an input and output parameter. |
+| **adParamOutput** | Indicates that the parameter represents an output parameter. |
+| **adParamReturnValue** | Indicates that the parameter represents a Return value. |
+| **adParamUnknown** | Indicates that the parameter direction is unknown. |
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **AdArray** | A flag value, always combined with another data type constant, that indicates an array of that other data type. (Does not apply to ADOX.) |
+| **adBigInt** | Indicates an eight-byte signed integer (DBTYPE_I8). |
+| **adBinary** | Indicates a binary value (DBTYPE_BYTES). |
+| **adBoolean** | Indicates a boolean value (DBTYPE_BOOL). |
+| **adBSTR** | Indicates a null-terminated character string (Unicode) (DBTYPE_BSTR). |
+| **adChapter** | Indicates a four-byte chapter value that identifies rows in a child rowset (DBTYPE_HCHAPTER). |
+| **adChar** | Indicates a string value (DBTYPE_STR). |
+| **adCurrency** | Indicates a currency value (DBTYPE_CY). Currency is a fixed-point number with four digits to the right of the decimal point. It is stored in an eight-byte signed integer scaled by 10,000. |
+| **adDate** | Indicates a date value (DBTYPE_DATE). A date is stored as a double, the whole part of which is the number of days since December 30, 1899, and the fractional part of which is the fraction of a day. |
+| **adDBDate** | Indicates a date value (yyyymmdd) (DBTYPE_DBDATE). |
+| **adDBTime** | Indicates a time value (hhmmss) (DBTYPE_DBTIME). |
+| **adDBTimeStamp** | Indicates a date/time stamp (yyyymmddhhmmss plus a fraction in billionths) (DBTYPE_DBTIMESTAMP). |
+| **adDecimal** | Indicates an exact numeric value with a fixed precision and scale (DBTYPE_DECIMAL). |
+| **adDouble** | Indicates a double-precision floating-point value (DBTYPE_R8). |
+| **adEmpty** | Specifies no value (DBTYPE_EMPTY). |
+| **adError** | Indicates a 32-bit error code (DBTYPE_ERROR). |
+| **adFileTime** | Indicates a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601 (DBTYPE_FILETIME). |
+| **adGUID** | Indicates a globally unique identifier (GUID) (DBTYPE_GUID). |
+| **adIDispatch** | Indicates a pointer to an IDispatch interface on a COM object (DBTYPE_IDISPATCH). Note: This data type is currently not supported by ADO. Usage may cause unpredictable results. |
+| **adInteger** | Indicates a four-byte signed integer (DBTYPE_I4). |
+| **adIUnknown** | Indicates a pointer to an IUnknown interface on a COM object (DBTYPE_IUNKNOWN). Note: This data type is currently not supported by ADO. Usage may cause unpredictable results. |
+| **adLongVarBinary** | Indicates a long binary value. |
+| **adLongVarChar** | Indicates a long string value. |
+| **adLongVarWChar** | Indicates a long null-terminated Unicode string value. |
+| **adNumeric** | Indicates an exact numeric value with a fixed precision and scale (DBTYPE_NUMERIC). |
+| **adPropVariant** | Indicates an Automation PROPVARIANT (DBTYPE_PROP_VARIANT). |
+| **adSingle** | Indicates a single-precision floating-point value (DBTYPE_R4). |
+| **adSmallInt** | Indicates a two-byte signed integer (DBTYPE_I2). |
+| **adTinyInt** | Indicates a one-byte signed integer (DBTYPE_I1). |
+| **adUnsignedBigInt** | Indicates an eight-byte unsigned integer (DBTYPE_UI8). |
+| **adUnsignedInt** | Indicates a four-byte unsigned integer (DBTYPE_UI4). |
+| **adUnsignedSmallInt** | Indicates a two-byte unsigned integer (DBTYPE_UI2). |
+| **adUnsignedTinyInt** | Indicates a one-byte unsigned integer (DBTYPE_UI1). |
+| **adVarBinary** | Indicates a binary value. |
+| **adVarChar** | Indicates a string value. |
+| **adVariant** | Indicates an Automation Variant (DBTYPE_VARIANT). Note: This data type is currently not supported by ADO. Usage may cause unpredictable results. |
+| **adVarNumeric** | Indicates a numeric value. |
+| **adVarWChar** | Indicates a null-terminated Unicode character string. |
+| **adWChar** | Indicates a null-terminated Unicode character string (DBTYPE_WSTR). |
+
+#### Remarks
+
+Use the **CreateParameter** method to create a new **Parameter** object with a specified name, type, direction, size, and value. Any values you pass in the arguments are written to the corresponding **Parameter** properties.
+
+This method does not automatically append the **Parameter** object to the **Parameters** collection of a **Command** object. This lets you set additional properties whose values ADO will validate when you append the **Parameter** object to the collection.
+
+If you specify a variable-length data type in the *nType* argument, you must either pass a *nSize* argument or set the **Size** property of the **Parameter** object before appending it to the **Parameters** collection; otherwise, an error occurs.
+
+If you specify a numeric data type (**adNumeric** or **adDecimal**) in the *nType* argument, then you must also set the **NumericScale** and **Precision** properties.
