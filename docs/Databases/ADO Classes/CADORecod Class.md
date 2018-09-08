@@ -457,7 +457,7 @@ A **RecordTypeEnum** value.
 
 #### RecordTypeEnum
 
-Specifies the type of Record object.
+Specifies the type of **Record** object.
 
 | Constant   | Description |
 | ---------- | ----------- |
@@ -465,3 +465,30 @@ Specifies the type of Record object.
 | **adCollectionRecord** | Indicates a collection record (contains child nodes). |
 | **adRecordUnknown** | Indicates that the type of this **Record** is unknown. |
 | **adStructDoc** | Indicates a special kind of collection record that represents COM structured documents. |
+
+# <a name="Source"></a>Source
+
+Indicates the data source or object represented by the **Record**.
+
+```
+PROPERTY Source () AS CVAR
+PROPERTY Source (BYREF cbsSource AS CBSTR)
+PROPERTY PutRefSource (BYVAL pSource AS IDispatch PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsSource* | An absolute or relative URL string. |
+| *pSource* | A **Recordset** or **Command** object. |
+
+**Note**: I have used **PutRefSource**, instead of **Source**, for the overloaded property because, otherwise, the compiler fails with an ambiguous call error.
+
+#### Return value
+
+The absolute or relative URL string or a reference to an already open **Record**.
+
+#### Remarks
+
+The **Source** property returns the **Source** argument of the **Record** object **Open** method. It can contain an absolute or relative URL string. An absolute URL can be used without setting the **ActiveConnection** property to directly open the **Record** object. An implicit **Connection** object is created in this case.
+
+The **Source** property can also contain a reference to an already open **Recordset**, which opens a **Record** object representing the current row in the **Recordset**.
