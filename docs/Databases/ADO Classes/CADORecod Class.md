@@ -392,3 +392,42 @@ Source may be:
 * A table name.<br>If the **Record** object represents an entity that cannot be accessed with a URL (for example, a row of a **Recordset** derived from a database), then the values of both the **ParentURL** property and the field accessed with the **adRecordURL** constant are null.
 
 **Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing.
+
+# <a name="ParentURL"></a>ParentURL
+
+Indicates an absolute URL string that points to the parent **Record** of the current **Record** object.
+
+```
+PROPERTY ParentURL () AS CBSTR
+```
+
+#### Return value
+
+The absolute URL string that points to the parent **Record** of the current **Record** object.
+
+#### Remarks
+
+The **ParentURL** property depends upon the source used to open the **Record** object. For example, the **Record** may be opened with a source containing a relative path name of a directory referenced by the **ActiveConnection** property.
+
+Suppose "second" is a folder contained under "first". Open the **Record** object with the following:
+```
+AdoRecord.Open "second", "http://first, Mode, CreateOptions, Options, UserName, Password
+```
+Now, the value of the ParentURL property is "http://first", the same as **ActiveConnection**.
+
+The source may also be an absolute URL such as, "http://first/second". The **ParentURL** property is then "http://first", the level above "second".
+
+This property may be a null value if:
+
+* There is no parent for the current object; for example, if the **Record** object represents the root of a directory.
+
+* The **Record** object represents an entity that cannot be specified with a URL.
+
+This property is read-only.
+
+**Note**: This property is only supported by document source providers, such as the Microsoft OLE DB Provider for Internet Publishing.
+
+**Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing.
+
+**Note**: If the current record contains a data record from an ADO Recordset, accessing the **ParentURL** property causes a run-time error, indicating that no URL is possible.
+
