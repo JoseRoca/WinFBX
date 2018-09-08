@@ -1283,3 +1283,95 @@ In other words, you should call **ColumnText** or **ColumnBlob** first to force 
 The pointers returned are valid until a type conversion occurs as described above, or until **Step_** or **Reset** or **Finalize** is called. The memory space used to hold strings and BLOBs is freed automatically. Do not pass the pointers returned **ColumnBlob**, **ColumnText**, etc. into **Free**.
 
 If a memory allocation error occurs during the evaluation of any of these functions, a default value is returned. The default value is 0. Subsequent calls to **ErrCode** will return SQLITE_NOMEM. 
+
+# <a name="ColumnCount"></a>ColumnCount
+
+Returns the number of columns in the result set returned by the prepared statement. This function returns 0 if pStmt is an SQL statement that does not return data (for example an UPDATE).
+
+```
+FUNCTION ColumnCount () AS LONG
+```
+
+# <a name="ColumnDatabaseName"></a>ColumnDatabaseName
+
+Returns the database name that is the origin of a particular result column in SELECT statement.
+
+```
+FUNCTION ColumnDatabaseName (BYVAL nCol AS LONG) AS CWSTR
+FUNCTION ColumnDatabaseName (BYREF wszColName AS WSTRING) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nCol / wszColName* | The column number or name of the result set. The leftmost column of the result set has the index 0. The number of columns in the result can be determined using **ColumnCount**. |
+
+#### Return value
+
+The original un-aliased name of the database. If the column returned by the statement is an expression or subquery and is not a column value, then this functions returns an empty string.
+
+#### Remarks
+
+This function is only available if the library was compiled with the SQLITE_ENABLE_COLUMN_METADATA C-preprocessor symbol.
+
+If two or more threads call this function against the same prepared statement and column at the same time then the results are undefined.
+
+If two or more threads call one or more column metadata interfaces for the same prepared statement and result column at the same time then the results are undefined. 
+
+# <a name="ColumnDeclaredType"></a>ColumnDeclaredType
+
+Returns the declared data type of a query result.
+
+```
+FUNCTION ColumnDeclaredType (BYVAL nCol AS LONG) AS CWSTR
+FUNCTION ColumnDeclaredType (BYREF wszColName AS WSTRING) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nCol / wszColName* | The column number or name of the result set. The leftmost column of the result set has the index 0. The number of columns in the result can be determined using **ColumnCount**. |
+
+#### Return value
+
+The original un-aliased name of the database. If the column returned by the statement is an expression or subquery and is not a column value, then this functions returns an empty string.
+
+#### Remarks
+
+This function is only available if the library was compiled with the SQLITE_ENABLE_COLUMN_METADATA C-preprocessor symbol.
+
+If two or more threads call this function against the same prepared statement and column at the same time then the results are undefined.
+
+If two or more threads call one or more column metadata interfaces for the same prepared statement and result column at the same time then the results are undefined. 
+
+# <a name="ColumnDouble"></a>ColumnDouble
+
+Returns the column value as a double.
+
+```
+FUNCTION ColumnDouble (BYVAL nCol AS LONG) AS DOUBLE
+FUNCTION ColumnDouble (BYREF wszColName AS WSTRING) AS DOUBLE
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nCol / wszColName* | The index or name of the column for which information should be returned. The leftmost column of the result set has the index 0. The number of columns in the result can be determined using **ColumnCount**. |
+
+#### Return value
+
+The column value as a double.
+
+#### Remarks
+
+If the SQL statement does not currently point to a valid row, or if the column index is out of range, the result is undefined. These functions may only be called when the most recent call to **Step_** has returned SQLITE_ROW and neither **Reset** nor **Finalize** have been called subsequently. If any of these functions are called after **Reset** or **Finalize** or after **Step_** has returned something other than SQLITE_ROW, the results are undefined. If **Step_** or **Reset** or **Finalize** are called from a different thread while ColumnBytes is pending, then the result is undefined.
+
+**ColumnDouble** attempts to convert the value where appropriate. The following table details the conversions that are applied:
+
+| Internal Type  | Requested Type | Conversion |
+| -------------- | -------------- | ---------- |
+| NULL | FLOAT | Result is 0.0 |
+| INTEGER | FLOAT | Convert from integer to float |
+| TEXT | FLOAT | Use atof() |
+| BLOB | FLOAT | Convert to TEXT then use atof() |
+
+The table above makes reference to standard C library functions **atoi**() and **atof**(). SQLite does not really use these functions. It has its own equivalent internal functions. The **atoi**() and **atof**() names are used in the table for brevity and because they are familiar to most C programmers.
+
+If a memory allocation error occurs during the evaluation of any of these functions, a default value is returned. The default value is the floating point number 0.0. Subsequent calls to **ErrCode** will return SQLITE_NOMEM. 
