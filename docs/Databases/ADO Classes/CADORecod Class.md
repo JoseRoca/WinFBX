@@ -145,3 +145,66 @@ S_OK (0) or an HRESULT code.
 Use the **Cancel** method to terminate execution of an asynchronous method call (that is, a method invoked with the **adAsyncConnect**, **adAsyncExecute**, or **adAsyncFetch** option).
 
 For a **Record** object, the last asynchronous call to the **CopyRecord**, **DeleteRecord**, **MoveRecord** or **Open** methods is terminated.
+
+# <a name="Close"></a>Close
+
+Closes a **Record** object and any dependent objects.
+
+```
+FUNCTION Close () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **Close** method to close a **Record** to free any associated system resources. Closing an object does not remove it from memory; you can change its property settings and open it again later. To completely eliminate an object from memory, release the connection calling the **Release** method of the interface.
+
+# <a name="CopyRecord"></a>CopyRecord
+
+Copies a entity represented by a **Record** to another location.
+
+```
+FUNCTION CopyRecord (BYREF Source AS CBSTR = "", BYREF Destination AS CBSTR = "", _
+   BYREF UserName AS CBSTR = "", BYREF Password AS CBSTR = "", _
+   BYVAL Options AS MoveRecordOptionsEnum = adCopyUnspecified, _
+   BYVAL Async AS BOOLEAN = FALSE) AS CBSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Source* | Optional. An string value that contains a URL specifying the entity to be copied (for example, a file or directory). If *Source* is omitted or specifies an empty string, the file or directory represented by the current **Record** will be copied. |
+| *Destination* | Optional. An string value that contains a URL specifying the location where *Source* will be copied. |
+| *UserName* | Optional. An string value that contains the user ID that, if needed, authorizes access to *Destination*. |
+| *Password* | Optional. An string value that contains the password that, if needed, verifies *UserName*. |
+| *Options* | Optional. A **CopyRecordOptionsEnum** value that has a default value of **adCopyUnspecified**. Specifies the behavior of this method. |
+| *Async* | Optional. A Boolean value that, when True, specifies that this operation should be asynchronous. |
+
+#### CopyRecordOptionsEnum
+
+Specifies the behavior of the CopyRecord method.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adCopyAllowEmulation** | Indicates that the *Source* provider attempts to simulate the copy using download and upload operations if this method fails due to *Destination* being on a different server or is serviced by a different provider than Source. Note that differing provider capabilities may hamper performance or lose data. |
+| **adCopyNonRecursive** | Copies the current directory, but none of its subdirectories, to the destination. The copy operation is not recursive. |
+| **adCopyOverWrite** | Overwrites the file or directory if the *Destination* points to an existing file or directory. |
+| **adCopyUnspecified** | Default. Performs the default copy operation: The operation fails if the destination file or directory already exists, and the operation copies recursively. |
+
+#### Return value
+
+Typically returns the value of *Destination*. However, the exact value returned is provider-dependent.
+
+#### Remarks
+
+The values of *Source* and *Destination* must not be identical; otherwise, a run-time error occurs. At least one of the server, path, or resource names must differ.
+
+All children (for example, subdirectories) of *Source* are copied recursively, unless **adCopyNonRecursive** is specified. In a recursive operation, *Destination* must not be a subdirectory of Source; otherwise, the operation will not complete.
+
+This method fails if *Destination* identifies an existing entity (for example, a file or directory), unless **adCopyOverWrite** is specified.
+
+**Important**: Use the **adCopyOverWrite** option judiciously. For example, specifying this option when copying a file to a directory will delete the directory and replace it with the file.
+
+**Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing. 
