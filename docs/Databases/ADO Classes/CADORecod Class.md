@@ -114,3 +114,34 @@ This property is read/write when the **Record** object is closed, and may contai
 A **Connection** object is created implicitly when the **Record** object is opened from a URL. Open the **Record** with an existing, open **Connection** object by assigning the Connection object to this property, or using the **Connection** object as a parameter in the **Open** method call. If the **Record** is opened from an existing **Record** or **Recordset**, then it is automatically associated with that **Record** or **Recordset** object's **Connection** object.
 
 **Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing.
+
+# <a name="Attach"></a>Attach
+
+Attaches a record to the class.
+
+```
+FUNCTION Attach (BYVAL pRecordset AS Afx_ADORecord PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pRecordset* | A reference to an **Afx_ADORecord** object. |
+| *fAddRef* | TRUE = increase the reference count; FALSE = don't increase the reference count. |
+
+# <a name="Cancel"></a>Cancel
+
+Cancels execution of a pending, asynchronous method call.
+
+```
+FUNCTION Cancel () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Use the **Cancel** method to terminate execution of an asynchronous method call (that is, a method invoked with the **adAsyncConnect**, **adAsyncExecute**, or **adAsyncFetch** option).
+
+For a **Record** object, the last asynchronous call to the **CopyRecord**, **DeleteRecord**, **MoveRecord** or **Open** methods is terminated.
