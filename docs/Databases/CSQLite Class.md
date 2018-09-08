@@ -4,7 +4,7 @@ SQLite is an embedded SQL database engine. Unlike most other SQL databases, SQLi
 
 **Include file**: CSQLite.inc
 
-# Constructor
+### Constructor
 
 Creates a new instance of the **CSQlite** base class and loads the SQLite3 DLL.
 
@@ -47,7 +47,7 @@ CONSTRUCTOR CSQLite (BYREF wszDllPath AS WSTRING = "sqlite3.dll")
 
 Inherits from CSQLite.
 
-# Constructor
+### Constructor
 
 Opens an SQLite database file as specified by the filename argument.
 
