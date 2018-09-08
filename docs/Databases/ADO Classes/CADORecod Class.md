@@ -50,19 +50,19 @@ The **Record** object does not support ADO events, and therefore will not respon
 
 With the methods and properties of a **Record** object, you can do the following:
 
-* Set or return the associated Connection object with the ActiveConnection property.
-* Indicate access permissions with the Mode property.
-* Return the URL of the directory, if any, that contains the resource represented by the Record with the ParentURL property.
-* Indicate the absolute URL, relative URL, or Recordset from which the Record is derived with the Source property.
-* Indicate the current status of the Record with the State property.
-* Indicate the type of Record—simple, collection, or structured document—with the RecordType property.
-* Halt execution of an asynchronous operation with the Cancel method.
-* Disassociate the Record from a data source with the Close method.
-* Copy the file or directory represented by a Record to another location with the CopyRecord method.
-* Delete the file, or directory and subdirectories, represented by a Record with the DeleteRecord method.
-* Open a Recordset containing rows that represent the subdirectories and files of the entity represented by the Record with the GetChildren method.
-* Move (rename) the file, or directory and subdirectories, represented by a Record to another location with the MoveRecord method.
-* Associate the Record with an existing data source, or create a new file or directory with the Open method.
+* Set or return the associated **Connection** object with the **ActiveConnection** property.
+* Indicate access permissions with the **Mode** property.
+* Return the URL of the directory, if any, that contains the resource represented by the **Record** with the **ParentURL** property.
+* Indicate the absolute URL, relative URL, or **Recordset** from which the **Record** is derived with the **Source** property.
+* Indicate the current status of the **Record** with the **State** property.
+* Indicate the type of **Record**—simple, collection, or structured document—with the **RecordType** property.
+* Halt execution of an asynchronous operation with the **Cancel** method.
+* Disassociate the **Record** from a data source with the **Close** method.
+* Copy the file or directory represented by a **Record** to another location with the **CopyRecord** method.
+* Delete the file, or directory and subdirectories, represented by a **Record** with the **DeleteRecord** method.
+* Open a **Recordset** containing rows that represent the subdirectories and files of the entity represented by the **Record** with the GetChildren method.
+* Move (rename) the file, or directory and subdirectories, represented by a **Record** to another location with the **MoveRecord** method.
+* Associate the **Record** with an existing data source, or create a new file or directory with the **Open** method.
 
 #### Fields
 
@@ -293,7 +293,7 @@ A **ConnectModeEnum** value.
 
 #### ConnectModeEnum
 
-Specifies the available permissions for modifying data in a **Connection**, opening a **Record**, or specifying values for the Mode property of the **Record** and **Stream** objects.
+Specifies the available permissions for modifying data in a **Connection**, opening a **Record**, or specifying values for the **Mode** property of the **Record** and **Stream** objects.
 
 | Constant   | Description |
 | ---------- | ----------- |
@@ -369,7 +369,7 @@ FUNCTION Open (BYREF cvSource AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARA
 | *cvSource* | Optional. A Variant that may represent the URL of the entity to be represented by this **Record** object, a **Command**, an open **Recordset** or another **Record** object, a string containing a SQL SELECT statement or a table name. |
 | *cvActiveConnection* | Optional. A Variant that represents the connect string or open **Connection** object. |
 | *nMode* | Optional. A **ConnectModeEnum** value, whose default value is **adModeUnknown**, that specifies the access mode for the resultant **Record** object. |
-| *CreateOptions* | Optional. A **RecordCreateOptionsEnum** value, whose default value is **adFailIfNotExists**, that specifies whether an existing file or directory should be opened, or a new file or directory should be created. If set to the default value, the access mode is obtained from the Mode property. This parameter is ignored when the *cbsSource* parameter doesn't contain a URL. |
+| *CreateOptions* | Optional. A **RecordCreateOptionsEnum** value, whose default value is **adFailIfNotExists**, that specifies whether an existing file or directory should be opened, or a new file or directory should be created. If set to the default value, the access mode is obtained from the **Mode** property. This parameter is ignored when the *cbsSource* parameter doesn't contain a URL. |
 | *cbsUserName* | Optional. An string value that contains the user ID that, if needed, authorizes access to *cbsSource*. |
 | *cbsPassword* | Optional. An string value that contains the password that, if needed, verifies *cbsUserName*. |
 
