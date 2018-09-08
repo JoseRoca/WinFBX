@@ -642,6 +642,47 @@ FUNCTION Exec (BYREF wszSql AS WSTRING) AS LONG
 
 SQLITE_BUSY means that the database engine was unable to acquire the database locks it needs to do its job. If the statement is a COMMIT or occurs outside of an explicit transaction, then you can retry the statement. If the statement is not a COMMIT and occurs within an explicit transaction then you should rollback the transaction before continuing.
 
-SQLITE_DONE means that the statement has finished executing successfully. Step should not be called again on this virtual machine without first calling Reset to reset the virtual machine back to its initial state.
+SQLITE_DONE means that the statement has finished executing successfully. **Step_** should not be called again on this virtual machine without first calling Reset to reset the virtual machine back to its initial state.
 
 SQLITE_ERROR means that a run-time error (such as a constraint violation) has occurred. Step should not be called again on the cirtual machine. More information may be found by calling **ErrMsg**.
+
+# <a name="ExtendedErrCode"></a>ExtendedErrCode
+
+Gets the extended error code associated with this dabatase connection.
+
+```
+FUNCTION ExtendedErrCode () AS LONG
+```
+
+# <a name="ExtendedResultCodes"></a>ExtendedResultCodes
+
+Enables or disables the extended result codes feature of SQLite. The extended result codes are disabled by default for historical compatibility.
+
+```
+FUNCTION ExtendedResultCodes (BYVAL onoff AS BOOLEAN) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *onoff* | TRUE to enable; FALSE to disable. |
+
+#### Return value
+
+SQLITE_OK (0) or an error code.
+
+# <a name="hDbc"></a>hDbc
+
+Gets/sets the database handle.
+
+```
+PROPERTY hDbc () AS sqlite3 PTR
+PROPERTY hDbc (pDbc AS sqlite3 PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hDbc* | The database handle. |
+
+#### Return value
+
+The database handle.
