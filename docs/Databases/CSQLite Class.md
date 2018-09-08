@@ -625,3 +625,23 @@ A string containing a description of the error.
 When the serialized threading mode is in use, it might be the case that a second error occurs on a separate thread in between the time of the first error and the call to these functions. When that happens, the second error will be reported since these functions always report the most recent result. To avoid this, each thread can obtain exclusive use of the database connection by invoking **sqlite3_mutex_enter**(*sqlite3_db_mutex(D)*) before beginning to use D and invoking **sqlite3_mutex_leave**(*sqlite3_db_mutex(D)*) after all calls to the functions listed here are completed.
 
 If a function fails with SQLITE_MISUSE, that means the function was invoked incorrectly by the application. In that case, the error code and message may or may not be set. 
+
+# <a name="Exec"></a>Exec
+
+Convenience wrapper for **Prepare** and **Step_**. To be used with queries that don't return result sets, such CREATE, UPDATE and INSERT.
+
+```
+FUNCTION Exec (BYREF wszSql AS WSTRING) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszSql* | The SQL statement. |
+
+#### Return value
+
+SQLITE_BUSY means that the database engine was unable to acquire the database locks it needs to do its job. If the statement is a COMMIT or occurs outside of an explicit transaction, then you can retry the statement. If the statement is not a COMMIT and occurs within an explicit transaction then you should rollback the transaction before continuing.
+
+SQLITE_DONE means that the statement has finished executing successfully. Step should not be called again on this virtual machine without first calling Reset to reset the virtual machine back to its initial state.
+
+SQLITE_ERROR means that a run-time error (such as a constraint violation) has occurred. Step should not be called again on the cirtual machine. More information may be found by calling **ErrMsg**.
