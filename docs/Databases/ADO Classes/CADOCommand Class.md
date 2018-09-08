@@ -92,7 +92,7 @@ Represents a parameter or argument associated with a **Command** object based on
 | [Attach](#Attach) | Attaches a reference to an ADO **Parameter** object to the class. |
 | [Attributes](#Attributes) | Indicates one or more characteristics of an object. |
 | [Direction](#Direction) | Indicates whether the **Parameter** represents an input parameter, an output parameter, an input and an output parameter, or if the parameter is the return value from a stored procedure. |
-| [Name](#Name) | Sets or returns an string value that indicates the name of a **Parameter** object. |
+| [Name](#Name2) | Sets or returns an string value that indicates the name of a **Parameter** object. |
 | [NumericScale](#NumericScale) | Indicates the scale of numeric values in a **Parameter** object. |
 | [Precision](#Precision) | Indicates the degree of precision for numeric values in a **Parameter** object. |
 | [Properties](#Properties) | Returns a reference to the **Properties** collection. |
@@ -871,3 +871,24 @@ Specifies whether the Parameter represents an input parameter, an output paramet
 Use the **Direction** property to specify how a parameter is passed to or from a procedure. The **Direction** property is read/write; this allows you to work with providers that don't return this information or to set this information when you don't want ADO to make an extra call to the provider to retrieve parameter information.
 
 Not all providers can determine the direction of parameters in their stored procedures. In these cases, you must set the **Direction** property before you execute the query.
+
+# <a name="Name"></a>Name (CADOParameter)
+
+Sets or returns an string value that indicates the name of a **Parameter** object. 
+
+```
+PROPERTY Name () AS CBSTR
+PROPERTY Name (BYVAL cbsName AS CBSTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cbsName* | The name of the **Parameter** object. |
+
+#### Return value
+
+The name of the **Parameter" object.
+
+#### Remarks
+
+For **Parameter** objects not yet appended to the **Parameters** collection, the **Name** property is read/write. For appended **Parameter** objects and all other objects, the **Name** property is read-only. Names do not have to be unique within a collection.
