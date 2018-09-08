@@ -534,7 +534,7 @@ DO
 LOOP
 ```
 
-# <a name="GetErrorInfo"></a>GetErrorInfo
+# <a name="GetErrorInfo"></a>GetErrorInfo (CADOCommand)
 
 Returns information about ADO errors.
 
@@ -550,7 +550,7 @@ FUNCTION GetErrorInfo (BYVAL nError AS HRESULT = 0) AS CBSTR
 
 A description of the error(s).
 
-# <a name="Name"></a>Name
+# <a name="Name"></a>Name (CADOCommand)
 
 Sets or returns an string value that indicates the name of a **Command** object. 
 
@@ -567,7 +567,7 @@ PROPERTY Name (BYREF cbsName AS CBSTR)
 
 The name of the **Command** object.
 
-# <a name="NamedParameters"></a>NamedParameters
+# <a name="NamedParameters"></a>NamedParameters (CADOCommand)
 
 Indicates whether parameter names should be passed to the provider.
 
@@ -588,7 +588,7 @@ True or False.
 
 When this property is true, ADO passes the value of the **Name** property of each parameter in the **Command**'s **Parameter** collection. The provider uses a parameter name to match parameters in the **CommandText** or **CommandStream** properties. If this property is false (the default), parameter names are ignored and the provider uses the order of parameters to match values to parameters in the **CommandText** or **CommandStream** properties.
 
-# <a name="Parameters"></a>Parameters
+# <a name="Parameters"></a>Parameters (CADOCommand)
 
 Returns a reference to the **Parameters** collection.
 
@@ -600,7 +600,7 @@ PROPERTY Parameters () AS Afx_ADOParameters
 
 A reference to the **Parameters** collection.
 
-# <a name="Prepared"></a>Prepared
+# <a name="Prepared"></a>Prepared (CADOCommand)
 
 Sets or returns a Boolean value that, if set to True, indicates that the command should be prepared.
 
@@ -625,7 +625,7 @@ If the property is False, the provider will execute the **Command** object direc
 
 If the provider does not support command preparation, it may return an error as soon as this property is set to True. If it does not return an error, it simply ignores the request to prepare the command and sets the Prepared property to False.
 
-# <a name="Properties"></a>Properties
+# <a name="Properties"></a>Properties (CADOCommand)
 
 Returns a reference to the **Properties** collection.
 
@@ -637,7 +637,7 @@ PROPERTY Properties () AS Afx_ADOProperties
 
 A reference to the **Properties** collection.
 
-# <a name="State"></a>State
+# <a name="State"></a>State (CADOCommand)
 
 Indicates if the **Command** object is open or closed.
 
@@ -660,3 +660,27 @@ Specifies whether the **Open** method of a **Connection** object should return a
 | **adStateConnecting** | Indicates that the object is connecting. |
 | **adStateExecuting** | Indicates that the object is executing a command. |
 | **adStateFetching** | Indicates that the rows of the object are being retrieved. |
+
+# <a name="State"></a>State (CADOParameters)
+
+Appends an object to the **Parameters** collection.
+
+```
+FUNCTION Append (BYVAL pObject AS IDispatch PTR) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pObject* | A reference to the object to be appended. |
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+You must set the **Type_** property of a **Parameter** object before appending it to the **Parameters** collection. If you select a variable-length data type, you must also set the **Size** property to a value greater than zero.
+
+Describing parameters yourself minimizes calls to the provider and consequently improves performance when using stored procedures or parameterized queries. However, you must know the properties of the parameters associated with the stored procedure or parameterized query that you want to call.
+
+Use the **CreateParameter** method to create **Parameter** objects with the appropriate property settings and use the **Append** method to add them to the **Parameters** collection. This lets you set and return parameter values without having to call the provider for the parameter information. If you are writing to a provider that does not supply parameter information, you must use this method to manually populate the **Parameters** collection in order to use parameters at all.
