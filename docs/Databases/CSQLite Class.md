@@ -155,7 +155,9 @@ FUNCTION CompileOptionUsed (BYREF szOptName AS ZSTRING) AS BOOLEAN
 
 ### Usage example
 
+```
 pSql.CompileOptionUsed("SQLITE_ENABLE_DBSTAT_VTAB")
+```
 
 # <a name="Complete"></a>Complete
 
@@ -211,3 +213,77 @@ FUNCTION ErrStr (BYVAL nErrorCode AS LONG) AS STRING
 
 A string containing a description of the error.
 
+# <a name="Free"></a>Free
+
+Releases memory previously allocated by Malloc or Realloc.
+
+```
+SUB Free (BYVAL pMem AS ANY PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMem* | The pointer returned by Malloc or Realloc. |
+
+# <a name="GetCompileOption"></a>GetCompileOption
+
+Allows iterating over the list of options that were defined at compile time by returning the N-th compile time option string. If nOption is out of range, **GetCompileOption** returns a NULL pointer. The SQLITE_ prefix is omitted from any strings returned by **GetCompileOption**.
+
+```
+FUNCTION GetCompileOption (BYVAL nOption AS LONG) AS STRING
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nOption* | The option number. |
+
+#### Uage example
+
+```
+pSql.GetCompileOption(0)
+```
+
+# <a name="GetLastResult"></a>GetLastResult
+
+Returns the last result code.
+
+```
+FUNCTION GetLastResult () AS LONG
+```
+
+#### Return value
+
+The result code returned by the last executed method.
+
+#### Remarks
+
+The last result code is not global, but bound to each object, and its purpose is to check the failure or success of the last SQLite operation. To get descriptive information about SQLite errors call **ErrStr**.
+
+# <a name="Malloc"></a>Malloc
+
+Returns a pointer to a block of memory at least N bytes in length, where N is the parameter. If Malloc is unable to obtain sufficient free memory, it returns a NULL pointer. If the parameter nBytes to Malloc is zero or negative then returns a NULL pointer.
+
+```
+FUNCTION Malloc (BYVAL nBytes AS LONG) AS ANY PTR
+FUNCTION Malloc64 (BYVAL nBytes AS sqlite3_uint64) AS ANY PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nBytes* | The number of bytes to allocate. |
+
+#### Return value
+
+Pointer to the allocated memory.
+
+#### Remarks
+
+The memory returned by **Malloc** and **Realloc** is always aligned to at least an 8 byte boundary, or to a 4 byte boundary if the SQLITE_4_BYTE_ALIGNED_MALLOC compile-time option is used.
+
+In SQLite version 3.5.0 and 3.5.1, it was possible to define the SQLITE_OMIT_MEMORY_ALLOCATION which would cause the built-in implementation of these functions to be omitted. That capability is no longer provided. Only built-in memory allocators can be used.
+
+Prior to SQLite version 3.7.10, the Windows OS interface layer called the system **malloc** and **free** directly when converting filenames between the UTF-8 encoding used by SQLite and whatever filename encoding is used by the particular Windows installation. Memory allocation errors were detected, but they were reported back as SQLITE_CANTOPEN or SQLITE_IOERR rather than SQLITE_NOMEM.
+
+The pointer arguments to **Free** and **Realloc** must be either NULL or else pointers obtained from a prior invocation of Malloc or **Realloc** that have not yet been released.
+
+The application must not read or write any part of a block of memory after it has been released using **Free** or **Realloc**. 
