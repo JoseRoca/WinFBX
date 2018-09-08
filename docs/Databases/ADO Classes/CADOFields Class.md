@@ -748,3 +748,72 @@ Similarly, the **Update** method may return an error because a new **Field** was
 #### Recordset Field Status
 
 Changes to the value of a **Field** object in the **Fields** collection of either a **Recordset** are cached until the object's **Update** method is called. At that point, if the change to the **Field**'s value caused an error, OLE DB raises the error DB_E_ERRORSOCCURRED (2147749409). The **Status** property of any of the **Field** objects in the **Fields** collection that caused the error will contain a value from the **FieldStatusEnum** describing the cause of the problem.
+
+# <a name="Type_"></a>Type_ (CADOField)
+
+Sets or returns a **DataTypeEnum** value.
+
+```
+PROPERTY Type_ () AS DataTypeEnum
+PROPERTY Type_ (BYVAL nType AS DataTypeEnum)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nType* | A **DataTypeEnum** value. |
+
+#### Return value
+
+A **DataTypeEnum** value.
+
+#### DataTypeEnum
+
+Specifies the data type of a **Field**, **Parameter**, or **Property**. The corresponding OLE DB type indicator is shown in parentheses in the description column of the following table.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **AdArray** | A flag value, always combined with another data type constant, that indicates an array of that other data type. (Does not apply to ADOX.) |
+| **adBigInt** | Indicates an eight-byte signed integer (DBTYPE_I8). |
+| **adBinary** | Indicates a binary value (DBTYPE_BYTES). |
+| **adBoolean** | Indicates a boolean value (DBTYPE_BOOL). |
+| **adBSTR** | Indicates a null-terminated character string (Unicode) (DBTYPE_BSTR). |
+| **adChapter** | Indicates a four-byte chapter value that identifies rows in a child rowset (DBTYPE_HCHAPTER). |
+| **adChar** | Indicates a string value (DBTYPE_STR). |
+| **adCurrency** | Indicates a currency value (DBTYPE_CY). Currency is a fixed-point number with four digits to the right of the decimal point. It is stored in an eight-byte signed integer scaled by 10,000. |
+| **adDate** | Indicates a date value (DBTYPE_DATE). A date is stored as a double, the whole part of which is the number of days since December 30, 1899, and the fractional part of which is the fraction of a day. |
+| **adDBDate** | Indicates a date value (yyyymmdd) (DBTYPE_DBDATE). |
+| **adDBTime** | Indicates a time value (hhmmss) (DBTYPE_DBTIME). |
+| **adDBTimeStamp** | Indicates a date/time stamp (yyyymmddhhmmss plus a fraction in billionths) (DBTYPE_DBTIMESTAMP). |
+| **adDecimal** | Indicates an exact numeric value with a fixed precision and scale (DBTYPE_DECIMAL). |
+| **adDouble** | Indicates a double-precision floating-point value (DBTYPE_R8). |
+| **adEmpty** | Specifies no value (DBTYPE_EMPTY). |
+| **adError** | Indicates a 32-bit error code (DBTYPE_ERROR). |
+| **adFileTime** | Indicates a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601 (DBTYPE_FILETIME). |
+| **adGUID** | Indicates a globally unique identifier (GUID) (DBTYPE_GUID). |
+| **adIDispatch** | Indicates a pointer to an IDispatch interface on a COM object (DBTYPE_IDISPATCH). Note: This data type is currently not supported by ADO. Usage may cause unpredictable results. |
+| **adInteger** | Indicates a four-byte signed integer (DBTYPE_I4). |
+| **adIUnknown** | Indicates a pointer to an IUnknown interface on a COM object (DBTYPE_IUNKNOWN). Note: This data type is currently not supported by ADO. Usage may cause unpredictable results. |
+| **adLongVarBinary** | Indicates a long binary value. |
+| **adLongVarChar** | Indicates a long string value. |
+| **adLongVarWChar** | Indicates a long null-terminated Unicode string value. |
+| **adNumeric** | Indicates an exact numeric value with a fixed precision and scale (DBTYPE_NUMERIC). |
+| **adPropVariant** | Indicates an Automation PROPVARIANT (DBTYPE_PROP_VARIANT). |
+| **adSingle** | Indicates a single-precision floating-point value (DBTYPE_R4). |
+| **adSmallInt** | Indicates a two-byte signed integer (DBTYPE_I2). |
+| **adTinyInt** | Indicates a one-byte signed integer (DBTYPE_I1). |
+| **adUnsignedBigInt** | Indicates an eight-byte unsigned integer (DBTYPE_UI8). |
+| **adUnsignedInt** | Indicates a four-byte unsigned integer (DBTYPE_UI4). |
+| **adUnsignedSmallInt** | Indicates a two-byte unsigned integer (DBTYPE_UI2). |
+| **adUnsignedTinyInt** | Indicates a one-byte unsigned integer (DBTYPE_UI1). |
+| **adVarBinary** | Indicates a binary value. |
+| **adVarChar** | Indicates a string value. |
+| **adVariant** | Indicates an Automation Variant (DBTYPE_VARIANT). Note: This data type is currently not supported by ADO. Usage may cause unpredictable results. |
+| **adVarNumeric** | Indicates a numeric value. |
+| **adVarWChar** | Indicates a null-terminated Unicode character string. |
+| **adWChar** | Indicates a null-terminated Unicode character string (DBTYPE_WSTR). |
+
+#### Remarks
+
+For a new fields that have been appended to the **Fields** collection of a **Record**, **Type_** is read/write only after the Value property for the field has been specified and the data provider has successfully added the new field by calling the **Update** method of the **Fields** collection.
+
+For all other objects, the **Type_** property is read-only.
