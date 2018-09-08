@@ -624,3 +624,39 @@ Use the **Prepared** property to have the provider save a prepared (or compiled)
 If the property is False, the provider will execute the **Command** object directly without creating a compiled version.
 
 If the provider does not support command preparation, it may return an error as soon as this property is set to True. If it does not return an error, it simply ignores the request to prepare the command and sets the Prepared property to False.
+
+# <a name="Properties"></a>Properties
+
+Returns a reference to the **Properties** collection.
+
+```
+PROPERTY Properties () AS Afx_ADOProperties
+```
+
+#### Return value
+
+A reference to the **Properties** collection.
+
+# <a name="State"></a>State
+
+Indicates if the **Command** object is open or closed.
+
+```
+PROPERTY State () AS LONG
+```
+
+#### Return value
+
+Returns a Long value that can be an **ObjectStateEnum** value. The default value is **adStateClosed**.
+
+#### ObjectStateEnum
+
+Specifies whether the **Open** method of a **Connection** object should return after (synchronously) or before (asynchronously) the connection is established.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adStateClosed** | Indicates that the object is closed. |
+| **adStateOpen** | Indicates that the object is open. |
+| **adStateConnecting** | Indicates that the object is connecting. |
+| **adStateExecuting** | Indicates that the object is executing a command. |
+| **adStateFetching** | Indicates that the rows of the object are being retrieved. |
