@@ -640,3 +640,34 @@ Use the **OriginalValue** property to return the original field value for a fiel
 In immediate update mode (in which the provider writes changes to the underlying data source after you call the **Update** method), the **OriginalValue** property returns the field value that existed prior to any changes (that is, since the last **Update** method call). This is the same value that the **CancelUpdate** method uses to replace the Value property.
 
 In batch update mode (in which the provider caches multiple changes and writes them to the underlying data source only when you call the **UpdateBatch** method), the **OriginalValue** property returns the field value that existed prior to any changes (that is, since the last **UpdateBatch** method call). This is the same value that the **CancelBatch** method uses to replace the **Value** property. When you use this property with the **UnderlyingValue** property, you can resolve conflicts that arise from batch updates.
+
+# <a name="Name"></a>Name (CADOField)
+
+Returns the name of the field.
+
+```
+PROPERTY Name () AS CBSTR
+```
+
+# <a name="Precision"></a>Precision (CADOField)
+
+Sets or returns a Byte value that indicates the maximum number of digits used to represent values.
+
+```
+PROPERTY Precision () AS BYTE
+PROPERTY Precision (BYVAL bPrecision AS BYTE)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *bPrecision* | The maximum number of digits used to represent values. |
+
+#### Return value
+
+The degress of precision. Returns -1 if it is not a numeric field.
+
+#### Remarks
+
+Use the **Precision** property to determine the maximum number of digits used to represent values for a numeric parameter or field.
+
+For a field, **Precision** is normally read-only. However, for new fields that have been appended to a **Record**, **Precision** is read/write only after the **Value** property for the field has been specified and the data provider has successfully added the new field by calling the **Update** method of the **Fields** collection.
