@@ -28,7 +28,7 @@ TYPE CAdoProperty EXTENDS CAdoBase
 
    ' // Attaches a reference to an Afx_ADOProperty object to the class
    DECLARE SUB Attach (BYVAL pProperty AS Afx_ADOProperty PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
-   ' // Retrieves the name of a field
+   ' // Retrieves the name of a property
    DECLARE PROPERTY Name () AS CBSTR
    ' // Sets or returns a Variant value that indicates the value of the object
    DECLARE PROPERTY Value () AS CVAR
@@ -109,7 +109,7 @@ END SUB
 ' ===========================================================================================
 
 ' ===========================================================================================
-' Retrieves the name of a property
+' Retrieves the name of a property.
 ' ===========================================================================================
 PRIVATE PROPERTY CAdoProperty.Name () AS CBSTR
    CADODB_DP("CAdoProperty.Name")

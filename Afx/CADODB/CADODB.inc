@@ -63,7 +63,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Sets the last status code.
+' Sets the last result code.
 ' ========================================================================================
 PRIVATE FUNCTION CAdoBase.SetResult (BYVAL Result AS HRESULT) AS HRESULT
    CADODB_DP("CAdoBase.SetResult")
