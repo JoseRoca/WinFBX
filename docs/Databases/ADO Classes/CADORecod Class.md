@@ -306,3 +306,48 @@ Specifies the available permissions for modifying data in a **Connection**, open
 | **adModeShareExclusive** | Prevents others from opening a connection. |
 | **adModeUnknown** | Default. Indicates that the permissions have not yet been set or cannot be determined. |
 | **adModeWrite** | Indicates write-only permissions. |
+
+# <a name="MoveRecord"></a>MoveRecord
+
+Moves a entity represented by a **Record** to another location.
+
+```
+FUNCTION MoveRecord (BYREF Source AS CBSTR = "", BYREF Destination AS CBSTR = "", _
+   BYREF UserName AS CBSTR = "", BYREF Password AS CBSTR = "", _
+   BYVAL Options AS MoveRecordOptionsEnum = adMoveUnspecified, _
+   BYVAL Async AS BOOLEAN = FALSE) AS CBSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Source* | Optional. A CBSTR value that contains a URL identifying the **Record to be moved**. If *Source* is omitted or specifies an empty string, the object represented by this **Record** is moved. For example, if the **Record** represents a file, the contents of the file are moved to the location specified by *Destination*. |
+| *Destination* | Optional. An string value that contains a URL specifying the location where *Source* will be moved. |
+| *UserName* | Optional. An string value that contains the user ID that, if needed, authorizes access to *Destination*. |
+| *Password* | Optional. An string value that contains the password that, if needed, verifies *UserName*. |
+| *Options* | Optional. A **MoveRecordOptionsEnum** value whose default value is **adMoveUnspecified**. Specifies the behavior of this method. |
+| *Async* | Optional. A Boolean value that, when True, specifies that this operation should be asynchronous. |
+
+#### MoveRecordOptionsEnum
+
+Specifies the behavior of the **Record** object **MoveRecord** method.
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| **adMoveUnspecified** | Default. Performs the default move operation: The operation fails if the destination file or directory already exists, and the operation updates hypertext links. |
+| **adMoveOverWrite** | Overwrites the destination file or directory, even if it already exists. |
+| **adMoveDontUpdateLinks** | Modifies the default behavior of **MoveRecord** method by not updating the hypertext links of the source Record. The default behavior depends on the capabilities of the provider. Move operation updates links if the provider is capable. If the provider cannot fix links or if this value is not specified, then the move succeeds even when links have not been fixed. |
+| **adMoveAllowEmulation** | Requests that the provider attempt to simulate the move (using download, upload, and delete operations). If the attempt to move the Record fails because the destination URL is on a different server or serviced by a different provider than the source, this may cause increased latency or data loss, due to different provider capabilities when moving resources between providers. |
+
+#### Remarks
+
+The values of *Source* and *Destination* must not be identical; otherwise, a run-time error occurs. At least one of the server, path, or resource names must differ.
+
+For files moved using the Internet Publishing Provider, this method updates all hypertext links in files being moved unless otherwise specified by Options. This method fails if *Destination* identifies an existing object (for example, a file or directory), unless **adMoveOverWrite** is specified.
+
+**Note**: Use the **adMoveOverWrite** option judiciously. For example, specifying this option when moving a file to a directory will delete the directory and replace it with the file.
+
+Certain attributes of the **Record** object, such as the **ParentURL** property, will not be updated after this operation completes. **Refresh** the **Record** object's properties by closing the **Record**, then re-opening it with the URL of the location where the file or directory was moved.
+
+If this **Record** was obtained from a **Recordset**, the new location of the moved file or directory will not be reflected immediately in the **Recordset**. **Refresh** the **Recordset** by closing and re-opening it.
+
+**Note**: URLs using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing.
