@@ -1409,3 +1409,37 @@ If the SQL statement does not currently point to a valid row, or if the column i
 The table above makes reference to standard C library function **atoi**(). SQLite does not really use these functions. It has its own equivalent internal functions. The **atoi**() name are used in the table for brevity and because they are familiar to most C programmers.
 
 If a memory allocation error occurs during the evaluation of any of these functions, a default value is returned. The default value is the floating point number 0.0. Subsequent calls to **ErrCode** will return SQLITE_NOMEM. 
+
+# <a name="ColumnLongInt"></a>ColumnLongInt
+
+Returns the column value as a longint.
+
+```
+FUNCTION ColumnLongInt (BYVAL nCol AS LONG) AS LONGINT
+FUNCTION ColumnLongInt (BYREF wszColName AS WSTRING) AS LONGINT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nCol / wszColName* | The index or name of the column for which information should be returned. The leftmost column of the result set has the index 0. The number of columns in the result can be determined using **ColumnCount**. |
+
+#### Return value
+
+The column value as a longint.
+
+#### Remarks
+
+If the SQL statement does not currently point to a valid row, or if the column index is out of range, the result is undefined. **ColumnLongInt** may only be called when the most recent call to **Step_** has returned SQLITE_ROW and neither **Reset** nor **Finalize** have been called subsequently. If any of these functions are called after **Reset** or **Finalize** or after **Step_** has returned something other than SQLITE_ROW, the results are undefined. If **Step_** or **Reset** or **Finalize** are called from a different thread while ColumnBytes is pending, then the result is undefined.
+
+**ColumnLongInt** attempts to convert the value where appropriate. The following table details the conversions that are applied:
+
+| Internal Type  | Requested Type | Conversion |
+| -------------- | -------------- | ---------- |
+| NULL | INTEGER | Result is 0 |
+| FLOAT | INTEGER | Convert from float to integer |
+| TEXT | INTEGER | Use atoi() |
+| BLOB | INTEGER | Convert to TEXT then use atoi() |
+
+The table above makes reference to standard C library function **atoi**(). SQLite does not really use these functions. It has its own equivalent internal functions. The **atoi**() name are used in the table for brevity and because they are familiar to most C programmers.
+
+If a memory allocation error occurs during the evaluation of any of these functions, a default value is returned. The default value is the floating point number 0.0. Subsequent calls to **ErrCode** will return SQLITE_NOMEM. 
