@@ -655,11 +655,13 @@ PROPERTY Mode (BYVAL lMode AS ConnectModeEnum)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *lMode* | ConnectionModeEnum value. The default value for a **Connection** is **adModeUnknown**. |
+| *lMode* | ConnectModeEnum value. The default value for a **Connection** is **adModeUnknown**. |
 
 #### Return value
 
-A **ConnectionModeEnum** value.
+A **ConnectModeEnum** value.
+
+#### ConnectModeEnum
 
 Specifies the available permissions for modifying data in a **Connection**, opening a **Record**, or specifying values for the Mode property of the **Record** and **Stream** objects.
 
@@ -674,7 +676,6 @@ Specifies the available permissions for modifying data in a **Connection**, open
 | **adModeShareExclusive** | Prevents others from opening a connection. |
 | **adModeUnknown** | Default. Indicates that the permissions have not yet been set or cannot be determined. |
 | **adModeWrite** | Indicates write-only permissions. |
-
 
 # <a name="Open"></a>Open
 
