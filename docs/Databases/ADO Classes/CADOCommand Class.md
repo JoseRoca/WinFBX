@@ -808,7 +808,6 @@ Indicates one or more characteristics of an object.
 
 For a **Parameter** object, the **Attributes** property is read/write, and its value can be the sum of any one or more **ParameterAttributesEnum** values. The default is **adParamSigned**.
 
-
 ```
 PROPERTY Attributes () AS LONG
 PROPERTY Attributes (BYVAL lAttr AS LONG)
@@ -830,8 +829,45 @@ Specifies the attributes of a Parameter object.
 | ---------- | ----------- |
 | **adParamSigned** | Indicates that the parameter accepts signed values. |
 | **adParamNullable** | Indicates that the parameter accepts null values. |
-| **adParamLong+* | Indicates that the parameter accepts long binary data. |
+| **adParamLong** | Indicates that the parameter accepts long binary data. |
 
 #### Remarks
 
 For a **Parameter** object, the **Attributes** property is read/write, and its value can be the sum of any one or more **ParameterAttributesEnum** values. The default is **adParamSigned**.
+
+# <a name="Direction"></a>Direction (CADOParameter)
+
+Indicates whether the **Parameter** represents an input parameter, an output parameter, an input and an output parameter, or if the parameter is the return value from a stored procedure.
+
+Sets or returns a **ParameterDirectionEnum** value.
+
+```
+PROPERTY Direction () AS ParameterDirectionEnum
+PROPERTY Direction (BYVAL lParmDirection AS ParameterDirectionEnum)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lParmDirection* | A **ParameterDirectionEnum** value. |
+
+#### Return value
+
+One or more **ParameterDirectionEnum** values.
+
+#### ParameterDirectionEnum
+
+Specifies whether the Parameter represents an input parameter, an output parameter, both an input and an output parameter, or the return value from a stored procedure.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adParamInput** | Default. Indicates that the parameter represents an input parameter. |
+| **adParamInputOutput** | Indicates that the parameter represents both an input and output parameter. |
+| **adParamOutput** | Indicates that the parameter represents an output parameter. |
+| **adParamReturnValue** | Indicates that the parameter represents a Return value. |
+| **adParamUnknown** | Indicates that the parameter direction is unknown. |
+
+#### Remarks
+
+Use the **Direction** property to specify how a parameter is passed to or from a procedure. The **Direction** property is read/write; this allows you to work with providers that don't return this information or to set this information when you don't want ADO to make an extra call to the provider to retrieve parameter information.
+
+Not all providers can determine the direction of parameters in their stored procedures. In these cases, you must set the **Direction** property before you execute the query.
