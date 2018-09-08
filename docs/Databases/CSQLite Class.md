@@ -444,3 +444,43 @@ The size of the soft heap limit prior to the call, or negative in the case of an
 SQLite strives to keep heap memory utilization below the soft heap limit by reducing the number of pages held in the page cache as heap memory usages approaches the limit. The soft heap limit is "soft" because even though SQLite strives to stay below the limit, it will exceed the limit rather than generate an SQLITE_NOMEM error. In other words, the soft heap limit is advisory only.
 
 The circumstances under which SQLite will enforce the soft heap limit may change in future releases of SQLite.
+
+# <a name="SourceID"></a>SourceID
+
+Returns the SQLite3 source identifier.
+
+```
+FUNCTION SourceID () AS STRING
+```
+
+#### Return value
+
+A string containing the SQLite3 identifier, e.g. "2012-06-11 02:05:22 f5b5a13f7394dc143aa136f1d4faba6839eaa6dc".
+
+# <a name="Status"></a>Status
+
+Retrieves runtime status information about the performance of SQLite, and optionally to reset various highwater marks.
+
+```
+FUNCTION Status (BYVAL op AS LONG, BYREF pCurrent AS LONG, BYREF pHighwater AS LONG, _
+   BYVAL resetFlag AS BOOLEAN = FALSE) AS LONG
+FUNCTION Status64 (BYVAL op AS LONG, BYREF pCurrent AS sqlite3_int64, BYREF pHighwater AS sqlite3_int64, _
+   BYVAL resetFlag AS BOOLEAN = FALSE) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *op* | An integer code for a specific satus parameter. |
+| *pCurrent* | Pointer to a variable that receives the current value of the parameter. |
+| *pHighWater* | Pointer to a variable that receives the highest recorded value of the parameter. |
+| *resetFlag* | TRUE or FALSE. If true, then the counter is reset to zero after this interface call returns. |
+
+#### Return value
+
+Returns SQLITE_OK (0) on success and a non-zero error code on failure.
+
+#### Remarks
+
+This method is used to retrieve runtime status information about the performance of SQLite, and optionally to reset various highwater marks. The first argument is an integer code for the specific parameter to measure. Recognized integer codes are of the form SQLITE_STATUS_.... The current value of the parameter is returned into *pCurrent*. The highest recorded value is returned in *pHighwater*. If the *resetFlag* is true, then the highest record value is reset after *pHighwater* is written. Some parameters do not record the highest value. For those parameters nothing is written into *pHighwater* and the *resetFlag* is ignored. Other parameters record only the highwater mark and not the current value. For these latter parameters nothing is written into *pCurrent*.
+
+This function is threadsafe but is not atomic. This function can be called while other threads are running the same or different SQLite interfaces. However the values returned in pCurrent and pHighwater reflect the status of SQLite at different points in time and it is possible that another thread might change the parameter in between the times when *pCurrent* and *pHighwater* are written.
