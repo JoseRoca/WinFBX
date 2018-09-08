@@ -795,3 +795,25 @@ Use the **BlobBytes** function to determine the size of the opened blob. The siz
 The **BindZeroblob** and **ResultZeroblob** functions and the built-in zeroblob SQL function can be used, if desired, to create an empty, zero-filled blob in which to read or write using this function.
 
 To avoid a resource leak, every open BLOB handle should eventually be released by a call to **CloseBlob*. 
+
+# <a name="OpenDb"></a>OpenDb
+
+Opens an SQLite database file as specified by the filename argument.
+
+```
+FUNCTION OpenDb (BYREF wszFileName AS CONST WSTRING) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszFileName* | The database filename. |
+
+#### Return value
+
+Returns SQLITE_OK if successful or an error code otherwise. The **ErrMsg** methods can be used to obtain an English language description of the error following a failure of the **OpenDb** method.
+
+#### Remarks
+
+If the filename is ":memory:", then a private, temporary in-memory database is created for the connection. This in-memory database will vanish when the database connection is closed. Future versions of SQLite might make use of additional special filenames that begin with the ":" character. It is recommended that when a database filename actually does begin with a ":" character you should prefix the filename with a pathname such as "./" to avoid ambiguity.
+
+If the filename is an empty string, then a private, temporary on-disk database will be created. This private database will be automatically deleted as soon as the database connection is closed.
