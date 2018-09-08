@@ -431,3 +431,105 @@ The string representation of a valid GUID that represents the dialect of the com
 ADO does not query the provider when the user reads the value of this property; it returns a string representation of the value currently stored in the **Command** object.
 
 When the user sets the **Dialect** property, ADO validates the GUID and raises an error if the value supplied is not a valid GUID. See the documentation for your provider to determine the GUID values supported by the **Dialect** property.
+
+# <a name="Execute"></a>Execute (CADOCommand)
+
+Executes the query, SQL statement, or stored procedure specified in the **CommandText** or **CommandStream** property.
+
+```
+FUNCTION Execute (BYVAL RecordsAffected AS LONG PTR = NULL, _
+   BYREF cvParameters AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
+   BYVAL Options AS LONG = adCmdUnspecified) AS Afx_ADORecordset PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecordsAffected* | Optional. A LONG to which the provider returns the number of records that the operation affected. The **RecordsAffected** parameter applies only for action queries or stored procedures. **RecordsAffected** does not return the number of records returned by a result-returning query or stored procedure. To obtain this information, use the **RecordCount** property. The **Execute** method will not return the correct information when used with **adAsyncExecute**, simply because when a command is executed asynchronously, the number of records affected may not yet be known at the time the method returns. |
+| *cvParameters* | Optional. A Variant array of parameter values used in conjunction with the input string or stream specified in **CommandText** or **CommandStream**. (Output parameters will not return correct values when passed in this argument.) |
+| *Options* | Optional. A Long value that indicates how the provider should evaluate the **CommandText** or the **CommandStream** property of the **Command** object. Can be a bitmask value made using **CommandTypeEnum** and/or **ExecuteOptionEnum** values. For example, you could use **adCmdText** and **adExecuteNoRecords** in combination if you want to have ADO evaluate the value of the **CommandText** property as text, and indicate that the command should discard and not return any records that might be generated when the command text executes. |
+
+**Note**: Use the **ExecuteOptionEnum** value **adExecuteNoRecords** to improve performance by minimizing internal processing. If **adExecuteStream** was specified, the options **adAsyncFetch** and **adAsynchFetchNonBlocking** are ignored. Do not use the **CommandTypeEnum** values of **adCmdFile** or **adCmdTableDirect** with **Execute**. These values can only be used as options with the **Open** and **Requery** methods of a **Recordset**.
+
+#### CommandTypeEnum
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adCmdUnspecified** | Does not specify the command type argument. |
+| **adCmdText** | Evaluates **CommandText** as a textual definition of a command or stored procedure call. |
+| **adCmdTable** | Evaluates **CommandText** as a table name whose columns are all returned by an internally generated SQL query. |
+| **adCmdStoredProc** | Evaluates **CommandText** as a stored procedure name. |
+| **adCmdUnknown** | Default. Indicates that the type of command in the **CommandText** property is not known. |
+| **adCmdFile** | Evaluates CommandText as the file name of a persistently stored **Recordset**. Used with **Recordset** **Open** or **Requery** only. |
+| **adCmdTableDirect** | Evaluates **CommandText** as a table name whose columns are all returned. Used with **Recordset** **Open** or **Requery** only. To use the **Seek** method, the **Recordset** must be opened with **adCmdTableDirect**. This value cannot be combined with the **ExecuteOptionEnum** value **adAsyncExecute**. |
+
+#### ExecuteOptionEnum
+
+Specifies how a command argument should be interpreted.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **adAsyncExecute** | Indicates that the command should execute asynchronously. This value cannot be combined with the **CommandTypeEnum** value **adCmdTableDirect**. |
+| **adAsyncFetch** | Indicates that the remaining rows after the initial quantity specified in the **CacheSize** property should be retrieved asynchronously. |
+| **adAsyncFetchNonBlocking** | Indicates that the main thread never blocks while retrieving. If the requested row has not been retrieved, the current row automatically moves to the end of the file. If you open a **Recordset** from a **Stream** containing a persistently stored **Recordset**, **adAsyncFetchNonBlocking** will not have an effect; the operation will be synchronous and blocking. **adAsynchFetchNonBlocking** has no effect when the **CmdTableDirect** option is used to open the **Recordset**. |
+| **adExecuteNoRecords** | Indicates that the command text is a command or stored procedure that does not return rows (for example, a command that only inserts data). If any rows are retrieved, they are discarded and not returned. **adExecuteNoRecords** can only be passed as an optional parameter to the Command or **Connection** **Execute** method. |
+| **adExecuteStream** | Indicates that the results of a command execution should be returned as a stream. **adExecuteStream** can only be passed as an optional parameter to the **Command** **Execute** method. |
+| **adExecuteRecord** | Indicates that the **CommandText** is a command or stored procedure that returns a single row which should be returned as a **Record** object. |
+| **adOptionUnspecified** | Indicates that the command is unspecified. |
+
+#### Return value
+
+An ADO **Recordset** object reference.
+
+#### Remarks
+
+Using the **Execute** method on a **Command** object executes the query specified in the **CommandText** property or **CommandStream** property of the object.
+
+Results are returned in a **Recordset** (by default) or as a stream of binary information. To obtain a binary stream, specify **adExecuteStream** in **Options**, then supply a stream by setting the "Output Stream" property. An ADO **Stream** object can be specified to receive the results, or another stream object such as the IIS Response object can be specified. If no stream was specified before calling **Execute** with **adExecuteStream**, an error occurs. The position of the stream on return from **Execute** is provider specific.
+
+If the command is not intended to return results (for example, an SQL UPDATE query) the provider returns NULL as long as the option **adExecuteNoRecords** is specified; otherwise **Execute** returns a closed **Recordset**. Some application languages allow you to ignore this return value if no **Recordset** is desired.
+
+**Execute** raises an error if the user specifies a value for **CommandStream** when the **CommandType** is **adCmdStoredProc**, **adCmdTable**, or **adCmdTableDirect**.
+
+If the query has parameters, the current values for the **Command** object's parameters are used unless you override these with parameter values passed with the **Execute** call. You can override a subset of the parameters by omitting new values for some of the parameters when calling the **Execute method**. The order in which you specify the parameters is the same order in which the method passes them. For example, if there were four (or more) parameters and you wanted to pass new values for only the first and fourth parameters, you would pass an array of variants with the first and fourth elements holding the values and the second and third elements set to EMPTY as the **Parameters** argument.
+
+**Note**: Output parameters will not return correct values when passed in the **Parameters** argument.
+
+An **ExecuteComplete** event will be issued when this operation concludes.
+
+**Note**: When issuing commands containing URLs, those using the http scheme will automatically invoke the Microsoft OLE DB Provider for Internet Publishing. 
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+using Afx
+
+' // Open the connection
+DIM pConnection AS CAdoConnection
+pConnection.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+
+' // Create a Command object
+DIM pCommand AS CAdoCommand
+
+' // Set the active connection
+pCommand.ActiveConnection = pConnection
+
+' // Set the CommandText property
+pCommand.CommandText = "SELECT TOP 20 * FROM Authors ORDER BY Author"
+
+' // Create the recordset by executing a query and attaching
+' // the resulting recordset to an instance of the CAdoRecordset class.
+DIM pRecordset AS CAdoRecordset
+pRecordset.Attach(pCommand.Execute)
+
+' // Parse the recordset
+DO
+   ' // While not at the end of the recordset...
+   IF pRecordset.EOF THEN EXIT DO
+   ' // Get the content of the "Author" column
+   DIM cvRes AS CVAR = pRecordset.Collect("Author")
+   PRINT cvRes
+   ' // Fetch the next row
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+```
