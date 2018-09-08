@@ -1443,3 +1443,114 @@ If the SQL statement does not currently point to a valid row, or if the column i
 The table above makes reference to standard C library function **atoi**(). SQLite does not really use these functions. It has its own equivalent internal functions. The **atoi**() name are used in the table for brevity and because they are familiar to most C programmers.
 
 If a memory allocation error occurs during the evaluation of any of these functions, a default value is returned. The default value is the floating point number 0.0. Subsequent calls to **ErrCode** will return SQLITE_NOMEM. 
+
+# <a name="ColumnName"></a>ColumnName
+
+Returns the name assigned to a particular column in the result set of a SELECT statement.
+
+```
+FUNCTION ColumnName (BYVAL nCol AS LONG) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nCol* | The column number of the result set. The leftmost column of the result set has the index 0. The number of columns in the result can be determined using **ColumnCount**. |
+
+#### Return value
+
+The name assigned to the specified column. The name of a result column is the value of the "AS" clause for that column, if there is an AS clause. If there is no AS clause then the name of the column is unspecified and may change from one release of SQLite to the next.
+
+# <a name="ColumnOriginName"></a>ColumnOriginName
+
+Returns the column name that is the origin of a particular result column in SELECT statement.
+
+```
+FUNCTION ColumnOriginName (BYVAL nCol AS LONG) AS CWSTR
+FUNCTION ColumnOriginName (BYREF wszColName AS WSTRING) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nCol / wszColName* | The column number or name of the result set. The leftmost column of the result set has the index 0. The number of columns in the result can be determined using **ColumnCount**. |
+
+#### Return value
+
+The original un-aliased name of the column. If the column returned by the statement is an expression or subquery and is not a column value, then this functions returns an empty string.
+
+#### Remarks
+
+This function is only available if the library was compiled with the SQLITE_ENABLE_COLUMN_METADATA C-preprocessor symbol.
+
+If two or more threads call this function against the same prepared statement and column at the same time then the results are undefined.
+
+If two or more threads call one or more column metadata interfaces for the same prepared statement and result column at the same time then the results are undefined. 
+
+# <a name="ColumnTableName"></a>ColumnTableName
+
+Returns the table name that is the origin of a particular result column in SELECT statement.
+
+```
+FUNCTION ColumnTableName (BYVAL nCol AS LONG) AS CWSTR
+FUNCTION ColumnTableName (BYREF wszColName AS WSTRING) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nCol / wszColName* | The column number or name of the result set. The leftmost column of the result set has the index 0. The number of columns in the result can be determined using **ColumnCount**. |
+
+#### Return value
+
+The original un-aliased name of the table. If the column returned by the statement is an expression or subquery and is not a column value, then this functions returns an empty string.
+
+#### Remarks
+
+This function is only available if the library was compiled with the SQLITE_ENABLE_COLUMN_METADATA C-preprocessor symbol.
+
+If two or more threads call this function against the same prepared statement and column at the same time then the results are undefined.
+
+If two or more threads call one or more column metadata interfaces for the same prepared statement and result column at the same time then the results are undefined. 
+
+# <a name="ColumnText"></a>ColumnText
+
+Returns the column value as a UTF-16 string.
+
+```
+FUNCTION ColumnText (BYVAL nCol AS LONG) AS CWSTR
+FUNCTION ColumnText (BYREF wszColName AS WSTRING) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nCol / wszColName* | The index or name of the column for which information should be returned. The leftmost column of the result set has the index 0. The number of columns in the result can be determined using **ColumnCcount**. |
+
+#### Return value
+
+The column value.
+
+#### Remarks
+
+If the SQL statement does not currently point to a valid row, or if the column index is out of range, the result is undefined. **ColumnText** may only be called when the most recent call to **Step_** has returned SQLITE_ROW and neither **Reset** nor **Finalize** have been called subsequently. If any of these functions are called after **Reset** or **Finalize** or after **Step_** has returned something other than SQLITE_ROW, the results are undefined. If **Step_** or **Reset** or **Finalize** are called from a different thread while ColumnBytes is pending, then the result is undefined.
+
+Strings returned by **ColumnText**, even empty strings, are always zero-terminated.
+
+ColumnText attempts to convert the value where appropriate. The following table details the conversions that are applied:
+
+| Internal Type  | Requested Type | Conversion |
+| -------------- | -------------- | ---------- |
+| NULL | TEXT | Result is NULL pointer |
+| INTEGER | TEXT | ASCII rendering of the integer |
+| FLOAT | TEXT | ASCII rendering of the float |
+| BLOB | TEXT | Add a zero terminator if needed |
+
+Note that when type conversions occur, pointers returned by prior calls to **ColumnBlob** and/or **ColumnText** may be invalidated. Type conversions and pointer invalidations might occur in the following cases:
+
+The initial content is a BLOB and **ColumnText** is called. A zero-terminator might need to be added to the string.
+
+The safest and easiest to remember policy is to invoke these functions in one of the following ways:
+
+**ColumnText** followed by **ColumnBytes**
+**ColumnBlob** followed by **ColumnBytes**
+
+In other words, you should call **ColumnText** or **ColumnBlob** first to force the result into the desired format, then invoke Column_Bytes to find the size of the result.
+
+If a memory allocation error occurs during the evaluation of any of these functions, a default value is returned. The default value is either the integer 0, the floating point number 0.0, or a NULL pointer. Subsequent calls to **ErrCode** will return SQLITE_NOMEM. 
