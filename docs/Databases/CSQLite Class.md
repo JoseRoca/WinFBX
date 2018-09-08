@@ -975,3 +975,34 @@ To avoid this scenario, the **UnlockNotify** performs deadlock detection. If a g
 When a call to **Step_** returns SQLITE_LOCKED, it is almost always appropriate to call **UnlockNotify**. There is however, one exception. When executing a "DROP TABLE" or "DROP INDEX" statement, SQLite checks if there are any currently executing SELECT statements that belong to the same connection. If there are, SQLITE_LOCKED is returned. In this case there is no "blocking connection", so invoking **UnlockNotify** results in the unlock-notify callback being invoked immediately. If the application then re-attempts the "DROP TABLE" or "DROP INDEX" query, an infinite loop might be the result.
 
 One way around this problem is to check the extended error code returned by an **Step_** call. If there is a blocking connection, then the extended error code is set to SQLITE_LOCKED_SHAREDCACHE. Otherwise, in the special "DROP TABLE/INDEX" case, the extended error code is just SQLITE_LOCKED.
+
+# <a name="BindBlob"></a>BindBlob
+
+Binds a blob with the statement.
+
+```
+FUNCTION BindBlob (BYVAL idx AS LONG, BYVAL pValue AS ANY PTR, BYVAL numBytes AS LONG, _
+   BYVAL pDestructor AS ANY PTR = NULL) AS LONG
+FUNCTION BindBlob64 (BYVAL idx AS LONG, BYVAL pValue AS ANY PTR, BYVAL numBytes AS sqlite3_uint64, _
+   BYVAL pDestructor AS ANY PTR = NULL) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *idx* | Index of the SQL parameter to be set. The leftmost SQL parameter has an index of 1. When the same named SQL parameter is used more than once, second and subsequent occurrences have the same index as the first occurrence. The index for named parameters can be looked up using the **BindParameterIndex** method if desired. The index for "?NNN" parameters is the value of NNN. The NNN value must be between 1 and the **Limit** parameter SQLITE_LIMIT_VARIABLE_NUMBER (default value: 999). |
+| *pValue* | The value to bind to the parameter. |
+| *numBytes* | The number of bytes in the parameter. To be clear: the value is the number of bytes in the value, not the number of characters. |
+| *pDestructor* | A destructor used to dispose of the BLOB after SQLite has finished with it. The destructor is called to dispose of the BLOB even if the call to **BindBlob** fails. If this argument is the special value **SQLITE_STATIC**, then SQLite assumes that the information is in static, unmanaged space and does not need to be freed. If this argument has the value **SQLITE_TRANSIENT**, then SQLite makes its own private copy of the data immediately, before the **BindBlob** function returns. |
+
+#### Return value
+
+SQLITE_OK on success or an error code if anything goes wrong. SQLITE_RANGE is returned if the parameter index is out of range. SQLITE_NOMEM is returned if malloc fails.
+
+#### Remarks
+
+If **BindBlob** is called with a NULL pointer for the prepared statement or with a prepared statement for which **Step_** has been called more recently than **Reset**, then the call will return SQLITE_MISUSE. If **BindBlob** is passed a prepared statement that has been finalized, the result is undefined and probably harmful.
+
+Bindings are not cleared by the **Reset** function. Unbound parameters are interpreted as NULL.
+
+
+#### Return value
