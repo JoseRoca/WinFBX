@@ -1160,3 +1160,26 @@ If **BindText** is called with a NULL pointer for the prepared statement or with
 
 Bindings are not cleared by the Reset function. Unbound parameters are interpreted as NULL.
 
+# <a name="BindZeroBlob"></a>BindZeroBlob
+
+Binds a BLOB of length *numBytes* that is filled with zeroes.
+
+```
+FUNCTION BindZeroBlob (BYVAL idx AS LONG, BYVAL numBytes AS LONG) AS LONG
+FUNCTION BindZeroBlob64 (BYVAL idx AS LONG, BYVAL numBytes AS sqlite3_uint64) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *îdx* | Index of the SQL parameter to be set. The leftmost SQL parameter has an index of 1. When the same named SQL parameter is used more than once, second and subsequent occurrences have the same index as the first occurrence. The index for named parameters can be looked up using the **BindParameterIndex** method if desired. The index for "?NNN" parameters is the value of NNN. The NNN value must be between 1 and the **Limit** parameter SQLITE_LIMIT_VARIABLE_NUMBER (default value: 999). |
+| *numBytes* | The number of bytes. |
+
+#### Return value
+
+SQLITE_OK on success or an error code if anything goes wrong. SQLITE_RANGE is returned if the parameter index is out of range. SQLITE_NOMEM is returned if **malloc** fails.
+
+#### Remarks
+
+The **BindZeroblob** function binds a BLOB of length *numBytes* that is filled with zeroes. A zeroblob uses a fixed amount of memory (just an integer to hold its size) while it is being processed. Zeroblobs are intended to serve as placeholders for BLOBs whose content is later written using incremental BLOB I/O functions. A negative value for the zeroblob results in a zero-length BLOB.
+
+Bindings are not cleared by the **Reset** function. Unbound parameters are interpreted as NULL.
