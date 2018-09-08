@@ -873,7 +873,7 @@ FUNCTION ReleaseMemory () AS LONG
 
 The number of bytes freed.
 
-# <a name="Status"></a>Status
+# <a name="Status2"></a>Status
 
 Retrieves runtime status information about a single database connection.
 
