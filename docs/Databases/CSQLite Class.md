@@ -359,7 +359,7 @@ SQLite contains a high-quality pseudo-random number generator (PRNG) used to sel
 
 # <a name="Realloc"></a>Realloc
 
-Attempts to resize a prior memory allocation to be at least nBytes bytes. pMem is the memory allocation to be resized.
+Attempts to resize a prior memory allocation to be at least *nBytes* bytes. *pMem* is the memory allocation to be resized.
 
 ```
 FUNCTION Realloc (BYVAL pMem AS ANY PTR, BYVAL nBytes AS LONG) AS ANY PTR
