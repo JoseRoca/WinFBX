@@ -117,3 +117,49 @@ With the collections, methods, and properties of a **Parameter** object, you can
 If you know the names and properties of the parameters associated with the stored procedure or parameterized query you wish to call, you can use the **CreateParameter** method to create **Parameter** objects with the appropriate property settings and use the **Append** method to add them to the **Parameters** collection. This lets you set and return parameter values without having to call the **Refresh** method on the **Parameters** collection to retrieve the parameter information from the provider, a potentially resource-intensive operation.
 
 The **Parameter** object is not safe for scripting.
+
+# <a name="ActiveConnection"></a>ActiveConnection (CADOCommand)
+
+Determines the **Connection** object over which the specified **Command** object will execute.
+
+```
+PROPERTY ActiveConnection (BYREF vConn AS CVAR)
+PROPERTY ActiveConnection (BYVAL pconn AS Afx_ADOConnection PTR)
+PROPERTY ActiveConnection (BYREF pconn AS CAdoConnection)
+PROPERTY ActiveConnection () AS Afx_ADOCOnnection PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pconn* | A reference to the **Connection** object or to the **CADOConnection** class. |
+| vConn | An string containing a definition for a connection if the connection is closed, or a VARIANT of type VT_DISPATCH containing the current **Connection** object if the connection is open. |
+
+#### Return value
+
+An ADO **Connection** object reference. You must release it calling the **Release** method of the interface when no longer needed.
+
+#### Remarks
+
+If you attempt to call the **Execute** method on a **Command** object before setting this property to an open **Connection** object or valid connection string, an error occurs.
+
+If a **Connection** object is assigned to the **ActiveConnection** property, the object must be opened. Assigning a closed **Connection** object causes an error.
+
+Setting the **ActiveConnection** property to a null reference disassociates the **Command** object from the current **Connection** and causes the provider to release any associated resources on the data source. You can then associate the **Command** object with the same or another **Connection** object. Some providers allow you to change the property setting from one **Connection** to another, without having to first set the property to null.
+
+If the **Parameters** collection of the **Command** object contains parameters supplied by the provider, the collection is cleared if you set the **ActiveConnection** property to null or to another **Connection** object. If you manually create **Parameter** objects and use them to fill the **Parameters** collection of the **Command** object, setting the **ActiveConnection** property to null or to another **Connection** object leaves the **Parameters** collection intact.
+
+Closing the **Connection** object with which a **Command** object is associated sets the **ActiveConnection** property to null. Setting this property to a closed **Connection** object generates an error.
+
+#### Example
+
+```
+' // Create a Connection object
+DIM pConnection AS CAdoConnection
+' // Create a Command object
+DIM pCommand AS CAdoCommand
+' // Open the connection
+DIM cvConStr AS CVAR = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=biblio.mdb"
+pConnection.Open cvConStr
+' // Set the active connection
+pCommand.ActiveConnection = pConnection
+```
