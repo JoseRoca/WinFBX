@@ -484,3 +484,60 @@ Returns SQLITE_OK (0) on success and a non-zero error code on failure.
 This method is used to retrieve runtime status information about the performance of SQLite, and optionally to reset various highwater marks. The first argument is an integer code for the specific parameter to measure. Recognized integer codes are of the form SQLITE_STATUS_.... The current value of the parameter is returned into *pCurrent*. The highest recorded value is returned in *pHighwater*. If the *resetFlag* is true, then the highest record value is reset after *pHighwater* is written. Some parameters do not record the highest value. For those parameters nothing is written into *pHighwater* and the *resetFlag* is ignored. Other parameters record only the highwater mark and not the current value. For these latter parameters nothing is written into *pCurrent*.
 
 This function is threadsafe but is not atomic. This function can be called while other threads are running the same or different SQLite interfaces. However the values returned in pCurrent and pHighwater reflect the status of SQLite at different points in time and it is possible that another thread might change the parameter in between the times when *pCurrent* and *pHighwater* are written.
+
+# <a name="StrGlob"></a>StrGlob
+
+The *StrGlob* method returns zero if string *szStr* matches the glob pattern *szGlob*, and it returns non-zero if string *szStr* does not match the glob pattern *szGlob*. This function is case sensitive.
+
+```
+FUNCTION StrGlob (BYREF szGlob AS ZSTRING, BYREF szStr AS ZSTRING) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *szGlob* | The glob pattern to compare. |
+| *szStr* | The string to compare. |
+
+# <a name="ThreadSafe"></a>ThreadSafe
+
+Returns zero if and only if SQLite was compiled with mutexing code omitted due to the SQLITE_THREADSAFE compile-time option being set to 0.
+
+```
+FUNCTION ThreadSafe () AS BOOLEAN
+```
+
+#### Return value
+
+TRUE or FALSE.
+
+#### Remarks
+
+SQLite can be compiled with or without mutexes. When the SQLITE_THREADSAFE C preprocessor macro is 1 or 2, mutexes are enabled and SQLite is threadsafe. When the SQLITE_THREADSAFE macro is 0, the mutexes are omitted. Without the mutexes, it is not safe to use SQLite concurrently from more than one thread.
+
+Enabling mutexes incurs a measurable performance penalty. So if speed is of utmost importance, it makes sense to disable the mutexes. But for maximum safety, mutexes should be enabled. The default behavior is for mutexes to be enabled.
+
+This interface can be used by an application to make sure that the version of SQLite that it is linking against was compiled with the desired setting of the SQLITE_THREADSAFE macro.
+
+# <a name="Version"></a>Version
+
+Returns the SQLite3 version.
+
+```
+FUNCTION Version () AS STRING
+```
+
+#### Return value
+
+A string containing the SQLite3 version, e.g. "3.7.13".
+
+# <a name="VersionNumber"></a>VersionNumber
+
+Returns the SQLite3 version number.
+
+```
+FUNCTION VersionNumber () AS LONG
+```
+
+#### Return value
+
+A long integer containing the SQLite3 version number, e.g. 3007013.
