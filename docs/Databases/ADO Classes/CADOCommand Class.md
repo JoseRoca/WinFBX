@@ -742,3 +742,25 @@ An ADO **Parameter** object reference.
 #### Remarks
 
 If **Item** cannot find an object in the collection corresponding to the **Index** argument, an error occurs.
+
+# <a name="Refresh"></a>Refresh (CADOParameters)
+
+Refreshes the contents of the **Parameters** collection.
+
+```
+FUNCTION Refresh () AS HRESULT
+```
+
+#### Return value
+
+S_OK (0) or an HRESULT code.
+
+#### Remarks
+
+Using the **Refresh** method on a **Command** object's **Parameters** collection retrieves provider-side parameter information for the stored procedure or parameterized query specified in the **Command** object. The collection will be empty for providers that do not support stored procedure calls or parameterized queries.
+
+You should set the **ActiveConnection** property of the **Command** object to a valid **Connection** object, the **CommandText** property to a valid command, and the **CommandType** property to **adCmdStoredProc** before calling the **Refresh** method.
+
+If you access the **Parameters** collection before calling the **Refresh** method, ADO will automatically call the method and populate the collection for you.
+
+**Note**: If you use the **Refresh** method to obtain parameter information from the provider and it returns one or more variable-length data type Parameter objects, ADO may allocate memory for the parameters based on their maximum potential size, which will cause an error during execution. You should explicitly set the **Size** property for these parameters before calling the **Execute** method to prevent errors.
