@@ -50,6 +50,74 @@ To execute a query without using a **Command** object, pass a query string to th
 | [State](#State) | Indicates if a **Connection** is open or closed. |
 | [Version](#Version) | Indicates the ADO version number. |
 
+### Connection Dynamic Properties
+
+The table below is a cross-index of the ADO and OLE DB names for each standard OLE DB provider dynamic property. Your providers may add more properties than listed here. For the specific information about provider-specific dynamic properties, see your provider documentation.
+
+| ADO Property Name | OLE DB Property Name |
+| ----------------- | ------------------- |
+| Active Sessions | DBPROP_ACTIVESESSIONS |
+| Autocommit Isolation Levels | DBPROP_SESS_AUTOCOMMITISOLEVELS |
+| Catalog Location | DBPROP_CATALOGLOCATION |
+| Catalog Term | DBPROP_CATALOGTERM |
+| Column Definition | DBPROP_COLUMNDEFINITION |
+| Connect Timeout | DBPROP_INIT_TIMEOUT |
+| Current Catalog | DBPROP_CURRENTCATALOG |
+| Data Source | DBPROP_INIT_DATASOURCE |
+| Data Source Name | DBPROP_DATASOURCENAME |
+| Data Source Object Threading Model | DBPROP_DSOTHREADMODEL |
+| DBMS Name | DBPROP_DBMSNAME |
+| DBMS Version | DBPROP_DBMSVER |
+| Extended Properties | DBPROP_INIT_PROVIDERSTRING |
+| GROUP BY Support | DBPROP_GROUPBY |
+| Heterogeneous Table Support | DBPROP_HETEROGENEOUSTABLES |
+| Identifier Case Sensitivity | DBPROP_IDENTIFIERCASE |
+| Initial Catalog | DBPROP_INIT_CATALOG |
+| Isolation Levels | DBPROP_SUPPORTEDTXNISOLEVELS |
+| Isolation Retention | DBPROP_SUPPORTEDTXNISORETAIN |
+| Locale Identifier | DBPROP_INIT_LCID |
+| Location | DBPROP_INIT_LOCATION |
+| Maximum Index Size | DBPROP_MAXINDEXSIZE |
+| Maximum Row Size | DBPROP_MAXROWSIZE |
+| Maximum Row Size Includes BLOB | BPROP_MAXROWSIZEINCLUDESBLOB |
+| Maximum Tables in SELECT | DBPROP_MAXTABLESINSELECT |
+| Mode | DBPROP_INIT_MODE |
+| Multiple Parameter Sets | DBPROP_MULTIPLEPARAMSETS |
+| Multiple Results | DBPROP_MULTIPLERESULTS |
+| Multiple Storage Objects | DBPROP_MULTIPLESTORAGEOBJECTS |
+| Multi-Table Update | DBPROP_MULTITABLEUPDATE |
+| NULL Collation Order | DBPROP_NULLCOLLATION |
+| NULL Concatenation Behavior | DBPROP_CONCATNULLBEHAVIOR |
+| OLE DB Services | DBPROP_INIT_OLEDBSERVICES |
+| OLE DB Version | DBPROP_PROVIDEROLEDBVER |
+| OLE Object Support | DBPROP_OLEOBJECTS |
+| Open Rowset Support | DBPROP_OPENROWSETSUPPORT |
+| ORDER BY Columns in Select List | DBPROP_ORDERBYCOLUMNSINSELECT |
+| Output Parameter Availability | DBPROP_OUTPUTPARAMETERAVAILABILITY |
+| Pass By Ref Accessors | DBPROP_BYREFACCESSORS |
+| Password | DBPROP_AUTH_PASSWORD |
+| Persist Security Info | DBPROP_AUTH_PERSIST_SENSITIVE_AUTHINFO |
+| Persistent ID Type | DBPROP_PERSISTENTIDTYPE |
+| Prepare Abort Behavior | DBPROP_PREPAREABORTBEHAVIOR |
+| Prepare Commit Behavior | DBPROP_PREPARECOMMITBEHAVIOR |
+| Procedure Term | DBPROP_PROCEDURETERM |
+| Prompt | DBPROP_INIT_PROMPT |
+| Provider Friendly Name | DBPROP_PROVIDERFRIENDLYNAME |
+| Provider Name | DBPROP_PROVIDERFILENAME |
+| Provider Version | DBPROP_PROVIDERVER |
+| Read-Only Data Source | DBPROP_DATASOURCEREADONLY |
+| Rowset Conversions on Command | DBPROP_ROWSETCONVERSIONSONCOMMAND |
+| Schema Term | DBPROP_SCHEMATERM |
+| Schema Usage | DBPROP_SCHEMAUSAGE |
+| SQL Support | DBPROP_SQLSUPPORT |
+| Structured Storage | DBPROP_STRUCTUREDSTORAGE |
+| Subquery Support | DBPROP_SUBQUERIES |
+| Table Term | DBPROP_TABLETERM |
+| Transaction DDL | DBPROP_SUPPORTEDTXNDDL |
+| User ID | DBPROP_AUTH_USERID |
+| User Name | DBPROP_USERNAME |
+| Window Handle | DBPROP_INIT_HWND |
+
 # <a name="Attributes"></a>Attributes
 
 Indicates one or more characteristics of an object.
