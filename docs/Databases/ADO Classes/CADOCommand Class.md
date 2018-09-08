@@ -95,7 +95,7 @@ Represents a parameter or argument associated with a **Command** object based on
 | [Name](#Name2) | Sets or returns an string value that indicates the name of a **Parameter** object. |
 | [NumericScale](#NumericScale) | Indicates the scale of numeric values in a **Parameter** object. |
 | [Precision](#Precision) | Indicates the degree of precision for numeric values in a **Parameter** object. |
-| [Properties](#Properties) | Returns a reference to the **Properties** collection. |
+| [Properties](#Properties2) | Returns a reference to the **Properties** collection. |
 | [Size](#Size) | Sets or returns a Long value that indicates the maximum size in bytes or characters of a value in a **Parameter** object |
 | [Type_](#Type_) | Indicates the operational type or data type of a **Parameter** object. |
 | [Value](#Value) | Indicates the value assigned to a **Parameter** object. |
@@ -940,3 +940,15 @@ The degress of precision.
 #### Remarks
 
 Use the **Precision** property to determine the maximum number of digits used to represent values for a numeric **Parameter** object.
+
+# <a name="Properties"></a>Properties (CADOParameter)
+
+Returns a reference to the **Properties** collection.
+
+```
+PROPERTY Properties () AS Afx_ADOProperties
+```
+
+#### Return value
+
+A **Properties** object reference.
