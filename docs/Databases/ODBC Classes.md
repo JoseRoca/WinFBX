@@ -151,32 +151,32 @@ Implements methods to create and manage statement objects. Inherits from COdbcBa
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorsStmt) | Allocates an statement handle. A statement handle provides access to statement information, such as error messages, the cursor name, and status information for SQL statement processing. |
+| [Constructors](#ConstructorsStmt) | Allocates an statement handle. |
 | [AddRecord](#AddRecord) | Adds a record to the database. |
 | [BindCol](#BindCol) | Binds application data buffers to columns in the result set. |
 | [BindParameter](#BindParameter) | Binds a buffer to a parameter marker in an SQL statement. |
-| [BulkOperations](#BulkOperations) | Performs bulk insertions and bulk bookmark operations, including update, delete, and fetch by bookmark. |
+| [BulkOperations](#BulkOperations) | Performs bulk insertions and bulk bookmark operations. |
 | [Cancel](#Cancel) | Cancels the processing on a statement. |
 | [CloseCursor](#CloseCursor) | Closes a cursor that has been opened on a statement and discards pending results. |
 | [ColAttribute](#ColAttribute) | Returns descriptor information for a column in a result set. |
-| [ColAutoUniqueValue](#ColAutoUniqueValue) | Returns SQL_TRUE if the column is an autoincrementing column, SQL_FALSE if the column is not an autoincrementing column or is not numeric. |
+| [ColAutoUniqueValue](#ColAutoUniqueValue) | Checks if the column is an autoincrementing column or not. |
 | [ColBaseColumnName](#ColBaseColumnName) | Returns the base column name for the result set column. |
 | [ColBaseTableName](#ColBaseTableName) | Returns the name of the base table that contains the column. |
-| [ColCaseSensitive](#ColCaseSensitive) | Returns SQL_TRUE if the column is treated as case-sensitive for collations and comparisons. |
+| [ColCaseSensitive](#ColCaseSensitive) | Checks if the column is treated as case-sensitive for collations and comparisons. |
 | [ColCatalogName](#ColCatalogName) | Returns the catalog of the table that contains the column. |
 | [ColConciseType](#ColConciseType) | Returns the concise data type. |
 | [ColCount](#ColCount) | Returns the number of columns available in the result set. |
 | [ColDisplaySize](#ColDisplaySize) | Returns the maximum number of characters required to display data from the column. |
-| [ColFixedPrecScale](#ColFixedPrecScale) | Returns SQL_TRUE if the column has a fixed precision and nonzero scale that are data source-specific. |
+| [ColFixedPrecScale](#ColFixedPrecScale) | Checks if column has a fixed precision and nonzero scale that are data source-specific. |
 | [ColIsNull](#ColIsNull) | Checks if the column is null. |
 | [ColLabel](#ColLabel) | Returns the column label or title. |
-| [ColLength](#ColLength) | Returns a numeric value that is either the maximum or actual character length of a character string or binary data type. |
-| [ColLiteralPrefix](#ColLiteralPrefix) | This VARCHAR(128) record field contains the character or characters that the driver recognizes as a prefix for a literal of this data type. |
-| [ColLiteralSuffix](#ColLiteralSuffix) | This VARCHAR(128) record field contains the character or characters that the driver recognizes as a suffix for a literal of this data type. |
-| [ColLocalTypeName](#ColLocalTypeName) | This VARCHAR(128) record field contains any localized (native language) name for the data type that may be different from the regular name of the data type. If there is no localized name, then an empty string is returned. |
-| [ColName](#ColName) | The column alias, if it applies. |
-| [ColNullable](#ColNullable) | Returns SQL_NULLABLE if the column can have NULL values; SQL_NO_NULLS if the column does not have NULL values; or SQL_NULLABLE_UNKNOWN if it is not known whether the column accepts NULL values. |
-| [ColNumPrecRadix](#ColNumPrecRadix) | If the data type in the SQL_DESC_TYPE field is an approximate numeric data type, this SQLINTEGER field contains a value of 2 because the SQL_DESC_PRECISION field contains the number of bits. |
+| [ColLength](#ColLength) | Returns the maximum or actual character length of a character string or binary data type. |
+| [ColLiteralPrefix](#ColLiteralPrefix) | Returns the character or characters that the driver recognizes as a prefix for a literal of this data type. |
+| [ColLiteralSuffix](#ColLiteralSuffix) | Returns the character or characters that the driver recognizes as a suffix for a literal of this data type. |
+| [ColLocalTypeName](#ColLocalTypeName) | Returns the localized (native language) name for the data type that may be different from the regular name of the data type. |
+| [ColName](#ColName) | Returns the column alias, if it applies. |
+| [ColNullable](#ColNullable) | Checks if the column can have NULL values. |
+| [ColNumPrecRadix](#ColNumPrecRadix) | Returns the column numeric precision radix. |
 | [ColOctetLength](#ColOctetLength) | The length, in bytes, of a character string or binary data type. |
 | [ColPrecision](#ColPrecision) | A numeric value that for a numeric data type denotes the applicable precision. |
 | [ColScale](#ColScale) | A numeric value that is the applicable scale for a numeric data type. |
@@ -188,6 +188,58 @@ Implements methods to create and manage statement objects. Inherits from COdbcBa
 | [ColUnnamed](#ColUnnamed) | SQL_NAMED or SQL_UNNAMED. If the SQL_DESC_NAME field of the IRD contains a column alias or a column name, SQL_NAMED is returned. |
 | [ColUnsigned](#ColUnsigned) | SQL_TRUE if the column is unsigned (or not numeric). SQL_FALSE if the column is signed. |
 | [ColUpdatable](#ColUpdatable) | SQL_TRUE if the column is updatable; SQL_FALSE otherwise. |
+| [DbcHandle](#DbcHandle) | Returns the connection handle. |
+| [DeleteByBookmark](#DeleteByBookmark) | Deletes a set of rows where each row is identified by a bookmark. |
+| [DeleteRecord](#DeleteRecord) | Deletes the sepcified row of data. |
+| [DescribeCol](#DescribeCol) | Returns the result descriptor for one column in the result set. |
+| [DescribeParam](#DescribeParam) | Returns the description of a parameter marker associated with a prepared SQL statement. |
+| [ExecDirect](#ExecDirect) | Executes a preparable statement. |
+| [Execute](#Execute) | Executes a prepared statement. |
+| [ExtendedFetch](#ExtendedFetch) | Fetches the specified rowset of data from the result set and returns data for all bound columns. |
+| [Fetch](#Fetch) | Fetches the next rowset of data from the result set and returns data for all bound columns. |
+| [FetchByBookmark](#FetchByBookmark) | Fetches a set of rows where each row is identified by a bookmark. |
+| [FetchScroll](#FetchScroll) | Fetches the specified rowset of data from the result set and returns data for all bound columns. |
+| [GetColumnPrivileges](#GetColumnPrivileges) | Returns a list of columns and associated privileges for the specified table. |
+| [GetColumns](#GetColumns) | Returns the list of column names in specified tables. |
+| [GetCursorConcurrency](#GetCursorConcurrency) | Gets or sets a SQLUINTEGER value that specifies the cursor concurrency. |
+| [GetCursorKeysetSize](#GetCursorKeysetSize) | Gets a SQLUINTEGER value that specifies the number of rows in the keyset-driven cursor. |
+| [GetCursorName](#GetCursorName) | Returns the cursor name associated with a specified statement. |
+| [GetCursorScrollability](#GetCursorScrollability) | Gets a SQLUINTEGER value that specifies the scrollability type. |
+| [GetCursorSensitivity](#GetCursorSensitivity) | Gets a SQLUINTEGER value that specifies whether cursors on the statement handle made to a result set by another cursor. |
+| [GetCursorType](#GetCursorType) | Gets SQLUINTEGER value that specifies the cursor type. |
+| [GetData](#GetData) | Retrieves data for a single column in the result set. It can be called multiple times to retrieve variable-length data in parts. |
+| [GetDiagField](#GetDiagField) | Returns the current value of a field of a record of the diagnostic data structure (associated with an statement handle) that contains error, warning, and status information. |
+| [GetDiagRec](#GetDiagRec) | Returns the current values of multiple fields of a diagnostic record that contains error, warning, and status information. |
+| [GetErrorInfo](#GetErrorInfo) | Returns a verbose description of the last errors. |
+| [GetForeignKeys](#GetForeignKeys) | Returns list of foreign keys of the table. |
+| [GetImpParamDescField](#GetImpParamDescField) | Returns the current setting or value of a single field of a descriptor record. |
+| [GetImpParamDescFieldName](#GetImpParamDescFieldName) | Returns the name of a single field of a descriptor record. |
+| [GetImpParamDescFieldNullable](#GetImpParamDescFieldNullable) | Returns the nullable value (TRUE or FALSE) of a single field of a descriptor record. |
+| [GetImpParamDescFieldOctetLength](#GetImpParamDescFieldOctetLength) | Returns the octet length of a single field of a descriptor record. |
+| [GetImpParamDescFieldPrecision](#GetImpParamDescFieldPrecision) | Returns the precision value of a single field of a descriptor record. |
+| [GetImpParamDescFieldScale](#GetImpParamDescFieldScale) | Returns the scale value of a single field of a descriptor record. |
+| [GetImpParamDescFieldType](#GetImpParamDescFieldType) | Returns the type of a single field of a descriptor record. |
+| [GetImpParamDescRec](#GetImpParamDescRec) | Returns the current settings or values of multiple fields of a descriptor record. |
+| [GetStmtImpRowDesc](#GetStmtImpRowDesc) | Returns the handle to the IRD. |
+| [GetImpRowDescField](#GetImpRowDescField) | Returns the current setting or value of a single field of a descriptor record. |
+| [GetImpRowDescFieldName](#GetImpRowDescFieldName) | Returns the name of a single field of a descriptor record. |
+| [GetImpRowDescFieldNullable](#GetImpRowDescFieldNullable) | Returns the nullable value (TRUE or FALSE) of a single field of a descriptor record. |
+| [GetImpRowDescFieldOctetLength](#GetImpRowDescFieldOctetLength) | Returns the octet length of a single field of a descriptor record. |
+| [GetImpRowDescFieldPrecision](#GetImpRowDescFieldPrecision) | Returns the precision value of a single field of a descriptor record. |
+| [GetImpRowDescFieldScale](#GetImpRowDescFieldScale) | Returns the scale value of a single field of a descriptor record. |
+| [GetImpRowDescFieldType](#GetImpRowDescFieldType) | Returns the type of a single field of a descriptor record. |
+| [GetImpRowDescRec](#GetImpRowDescRec) | Returns the current settings or values of multiple fields of a descriptor record. |
+| [GetLongVarcharData](#GetLongVarcharData) | Retrieves long variable char data from the specified column of the result set. |
+| [GetPrimaryKeys](#GetPrimaryKeys) | Returns the column names that make up the primary key for a table. |
+| [GetProcedureColumns](#GetProcedureColumns) | Returns the list of input and output parameters, as well as the columns that make up the result set for the specified procedures. |
+| [GetProcedures](#GetProcedures) | Returns the list of procedure names stored in a specific data source. |
+| [GetSpecialColumns](#GetSpecialColumns) | Retrieves information about columns within a specified table. |
+| [GetSqlState](#GetSqlState) | Returns the SqlState for the statement handle. |
+| [GetStatistics](#GetStatistics) | Retrieves a list of statistics about a single table and the indexes associated with the table. |
+| [GetStmtAppParamDesc](#GetStmtAppParamDesc) | Gets the handle to the APD for subsequent calls to **Execute** and **ExecDirect** on the statement handle. |
+| [GetStmtAppRowDesc](#GetStmtAppRowDesc) | Gets the handle to the ARD for subsequent fetches on the statement handle. |
+| [GetStmtAsyncEnable](#GetStmtAsyncEnable) | Gets an SQLUINTEGER value that specifies whether a function called with the specified statement is executed asynchronously. |
+| [GetStmtAttr](#GetStmtAttr) | Returns the current setting of a statement attribute. |
 
 
 
