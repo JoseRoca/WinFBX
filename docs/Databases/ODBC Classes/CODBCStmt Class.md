@@ -654,3 +654,43 @@ TRUE or FALSE
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ColIsNull"></a>ColIsNull
+
+Checks if the column is null. Should not be used with a column that is currently binded to a variable or buffer or it will return an error. The binding functions already return an indicator in the last parameter.
+
+```
+FUNCTION ColIsNull (BYVAL ColNum AS SQLUSMALLINT) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+TRUE or FALSE
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ColLabel"></a>ColLabel
+
+Returns the column label or title. For example, a column named EmpName might be labeled Employee Name or might be labeled with an alias. If a column does not have a label, the column name is returned. If the column is unlabeled and unnamed, an empty string is returned.
+
+```
+FUNCTION ColLabel (BYVAL ColNum AS SQLUSMALLINT) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+The column label or title.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
