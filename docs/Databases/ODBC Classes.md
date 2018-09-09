@@ -772,3 +772,32 @@ FUNCTION SetEnvAttr (BYVAL Attribute AS SQLINTEGER, BYVAL ValuePtr AS SQLPOINTER
 | *Attribute* | Attribute to set. |
 | *ValuePtr* | Pointer to the value to be associated with *Attribute*. Depending on the value of *Attribute*, *ValuePtr* will be a 32-bit integer value or point to a null-terminated character string. |
 | *StringLength* | If *ValuePtr* points to a character string or a binary buffer, this argument should be the length of *ValuePtr*. If *ValuePtr* is an integer, *StringLength* is ignored. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetErrorProc"></a>SetErrorProc (CODBC)
+
+Sets the address of an application defined error callback.
+
+```
+SUB SetErrorProc (BYVAL pProc AS ANY PTR, BYVAL reportWarnings AS BOOLEAN = FALSE)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pProc* | Address of the application defined callback. |
+| *reportWarnings* | Optional. Report also warnings. |
+
+#### Example of an application defined callback:
+
+```
+SUB ODBC_ErrorCallback (BYVAL nResult AS SQLRETURN, BYREF wszSrc AS WSTRING, BYREF wszErrorMsg AS WSTRING)
+   PRINT "Error: " & STR(nResult) & " - Source: " & wszSrc
+   IF LEN(wszErrorMsg) THEN PRINT wszErrorMsg
+END SUB
+
+pDbc.SetErrorProc(@ODBC_ErrorCallback)    ' // Sets the error callback for the connection object
+pStmt.SetErrorProc(@ODBC_ErrorCallback)   ' // Sets the error callback for the statement object
+```
