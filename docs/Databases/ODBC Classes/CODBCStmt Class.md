@@ -536,3 +536,23 @@ The name of the base table that contains the column.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ColCaseSensitive"></a>ColCaseSensitive
+
+Returns SQL_TRUE if the column is treated as case-sensitive for collations and comparisons. Returns SQL_FALSE if the column is not treated as case-sensitive for collations and comparisons or is noncharacter.
+
+```
+FUNCTION ColCaseSensitive (BYVAL ColNum AS SQLUSMALLINT) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+TRUE or FALSE
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
