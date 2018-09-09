@@ -93,6 +93,8 @@ Delete pDbc
 
 Base class for all the ODBC classes. Implements some common methods that all the other interfaces inherit. You don't have to instantiate this class.
 
+**Include fole**: CODBC.inc
+
 ### Methods and Properties
 
 | Name       | Description |
@@ -117,6 +119,8 @@ Base class for all the ODBC classes. Implements some common methods that all the
 
 Implements methods to create and manage connection objects. Inherits from COdbcBase.
 
+**Include fole**: CODBCDbc.inc
+
 ### Methods and Properties
 
 | Name       | Description |
@@ -136,6 +140,56 @@ Implements methods to create and manage connection objects. Inherits from COdbcB
 | [RollbackTran](#RollbackTran) | RollbackTran requests a rollback operation for all active operations on all statements associated with an environment. |
 | [SetConnectAttr](#SetConnectAttr) | Sets attributes that govern aspects of connections. |
 | [Supports](#Supports) | Returns information about whether a driver supports a specific ODBC function. It is an alias for **Functions**. |
+
+# CODBCStmt Class
+
+Implements methods to create and manage statement objects. Inherits from COdbcBase.
+
+**Include fole**: CODBCStmt.inc
+
+### Methods and Properties
+
+| Name       | Description |
+| ---------- | ----------- |
+| [Constructors](#ConstructorsStmt) | Allocates an statement handle. A statement handle provides access to statement information, such as error messages, the cursor name, and status information for SQL statement processing. |
+| [AddRecord](#AddRecord) | Adds a record to the database. |
+| [BindCol](#BindCol) | Binds application data buffers to columns in the result set. |
+| [BindParameter](#BindParameter) | Binds a buffer to a parameter marker in an SQL statement. |
+| [BulkOperations](#BulkOperations) | Performs bulk insertions and bulk bookmark operations, including update, delete, and fetch by bookmark. |
+| [Cancel](#Cancel) | Cancels the processing on a statement. |
+| [CloseCursor](#CloseCursor) | Closes a cursor that has been opened on a statement and discards pending results. |
+| [ColAttribute](#ColAttribute) | Returns descriptor information for a column in a result set. |
+| [ColAutoUniqueValue](#ColAutoUniqueValue) | Returns SQL_TRUE if the column is an autoincrementing column, SQL_FALSE if the column is not an autoincrementing column or is not numeric. |
+| [ColBaseColumnName](#ColBaseColumnName) | Returns the base column name for the result set column. |
+| [ColBaseTableName](#ColBaseTableName) | Returns the name of the base table that contains the column. |
+| [ColCaseSensitive](#ColCaseSensitive) | Returns SQL_TRUE if the column is treated as case-sensitive for collations and comparisons. |
+| [ColCatalogName](#ColCatalogName) | Returns the catalog of the table that contains the column. |
+| [ColConciseType](#ColConciseType) | Returns the concise data type. |
+| [ColCount](#ColCount) | Returns the number of columns available in the result set. |
+| [ColDisplaySize](#ColDisplaySize) | Returns the maximum number of characters required to display data from the column. |
+| [ColFixedPrecScale](#ColFixedPrecScale) | Returns SQL_TRUE if the column has a fixed precision and nonzero scale that are data source-specific. |
+| [ColIsNull](#ColIsNull) | Checks if the column is null. |
+| [ColLabel](#ColLabel) | Returns the column label or title. |
+| [ColLength](#ColLength) | Returns a numeric value that is either the maximum or actual character length of a character string or binary data type. |
+| [ColLiteralPrefix](#ColLiteralPrefix) | This VARCHAR(128) record field contains the character or characters that the driver recognizes as a prefix for a literal of this data type. |
+| [ColLiteralSuffix](#ColLiteralSuffix) | This VARCHAR(128) record field contains the character or characters that the driver recognizes as a suffix for a literal of this data type. |
+| [ColLocalTypeName](#ColLocalTypeName) | This VARCHAR(128) record field contains any localized (native language) name for the data type that may be different from the regular name of the data type. If there is no localized name, then an empty string is returned. |
+| [ColName](#ColName) | The column alias, if it applies. |
+| [ColNullable](#ColNullable) | Returns SQL_NULLABLE if the column can have NULL values; SQL_NO_NULLS if the column does not have NULL values; or SQL_NULLABLE_UNKNOWN if it is not known whether the column accepts NULL values. |
+| [ColNumPrecRadix](#ColNumPrecRadix) | If the data type in the SQL_DESC_TYPE field is an approximate numeric data type, this SQLINTEGER field contains a value of 2 because the SQL_DESC_PRECISION field contains the number of bits. |
+| [ColOctetLength](#ColOctetLength) | The length, in bytes, of a character string or binary data type. |
+| [ColPrecision](#ColPrecision) | A numeric value that for a numeric data type denotes the applicable precision. |
+| [ColScale](#ColScale) | A numeric value that is the applicable scale for a numeric data type. |
+| [ColSchemaName](#ColSchemaName) | The schema of the table that contains the column. |
+| [ColSearchable](#ColSearchable) | Indicates if the column data type is searchable. |
+| [ColTableName](#ColTableName) | The name of the table that contains the column. |
+| [ColType](#ColType) | A numeric value that specifies the SQL data type. |
+| [ColTypeName](#ColTypeName) | Data source-dependent data type name. |
+| [ColUnnamed](#ColUnnamed) | SQL_NAMED or SQL_UNNAMED. If the SQL_DESC_NAME field of the IRD contains a column alias or a column name, SQL_NAMED is returned. |
+| [ColUnsigned](#ColUnsigned) | SQL_TRUE if the column is unsigned (or not numeric). SQL_FALSE if the column is signed. |
+| [ColUpdatable](#ColUpdatable) | SQL_TRUE if the column is updatable; SQL_FALSE otherwise. |
+
+
 
 # <a name="ConstructorsDb"></a>Constructors (CODBC)
 
