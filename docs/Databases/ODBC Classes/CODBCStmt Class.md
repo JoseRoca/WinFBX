@@ -1070,3 +1070,56 @@ Returns the connection handle.
 ```
 FUNCTION DbcHandle () AS SQLHANDLE
 ```
+
+# <a name="DeleteByBookmark"></a>DeleteByBookmark
+
+Deletes a set of rows where each row is identified by a bookmark.
+
+```
+FUNCTION DeleteByBookmark () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="DeleteRecord"></a>DeleteRecord
+
+The driver positions the cursor on the row specified by RowNumber and deletes the underlying row of data. It changes the corresponding element of the row status array to SQL_ROW_DELETED. After the row has been deleted, the following are not valid for the row: positioned update and delete statements, calls to **GetData** and calls to **SetPos** with Operation set to anything except SQL_POSITION. For drivers that support packing, the row is deleted from the cursor when new data is retrieved from the data source. Whether the row remains visible depends on the cursor type. For example, deleted rows are visible to static and keyset-driven cursors but invisible to dynamic cursors. The row operation array pointed to by the SQL_ATTR_ROW_OPERATION_PTR statement attribute can be used to indicate that a row in the current rowset should be ignored during a bulk delete.
+
+```
+FUNCTION DeleteRecord (BYVAL wRow AS SQLSETPOSIROW = 1) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RowNumber* | Row number inside the rowset. Note: *RowNumber* is the row number inside the rowset (if it is a single row rowset, RowNumber must be always 1). |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="DescribeCol"></a>DescribeCol
+
+Returns the result descriptor — column name, type, column size, decimal digits, and nullability — for one column in the result set. This information also is available in the fields of the IRD. 
+
+```
+FUNCTION DescribeCol (BYVAL ColumnNumber AS SQLUSMALLINT, BYVAL pwszColumnName AS WSTRING PTR, _
+   BYVAL BufferLength AS SQLSMALLINT, BYVAL NameLength AS SQLSMALLINT PTR, _
+   BYVAL DataType AS SQLSMALLINT PTR, BYVAL ColumnSizePtr AS SQLULEN PTR, _
+   BYVAL DecimalDigits AS SQLSMALLINT PTR, BYVAL Nullable AS SQLSMALLINT PTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNumber* | Column number of result data, ordered sequentially in increasing column order, starting at 1. The *ColNumber* argument can also be set to 0 to describe the bookmark column. |
+| *ColName* | Pointer to a null-terminated buffer in which to return the column name. This value is read from the SQL_DESC_NAME field of the IRD. If the column is unnamed or the column name cannot be determined, the driver returns an empty string. |
+| *DataType* | Pointer to a buffer in which to return the SQL data type of the column. This value is read from the SQL_DESC_CONCISE_TYPE field of the IRD. This will be one of the values in SQL Data Types, or a driver-specific SQL data type. If the data type cannot be determined, the driver returns SQL_UNKNOWN_TYPE.<br>In ODBC 3.x, SQL_TYPE_DATE, SQL_TYPE_TIME, or SQL_TYPE_TIMESTAMP is returned in DataType for date, time, or timestamp data, respectively; in ODBC 2.x, SQL_DATE, SQL_TIME, or SQL_TIMESTAMP is returned. The Driver Manager performs the required mappings when an ODBC 2.x application is working with an ODBC 3.x driver or when an ODBC 3.x application is working with an ODBC 2.x driver.<br>When ColNumber is equal to 0 (for a bookmark column), SQL_BINARY is returned in DataType for variable-length bookmarks. (SQL_INTEGER is returned if bookmarks are used by an ODBC 3.x application working with an ODBC 2.x driver or by an ODBC 2.x application working with an ODBC 3.x driver.) |
+| *ColSize* | Pointer to a buffer in which to return the size (in characters) of the column on the data source. If the column size cannot be determined, the driver returns 0. |
+| *DecimalDigits* | Pointer to a buffer in which to return the number of decimal digits of the column on the data source. If the number of decimal digits cannot be determined or is not applicable, the driver returns 0. |
+| *Nullable* | Pointer to a buffer in which to return a value that indicates whether the column allows NULL values. This value is read from the SQL_DESC_NULLABLE field of the IRD. The value is one of the following:<br>SQL_NO_NULLS: The column does not allow NULL values.<br>SQL_NULLABLE: The column allows NULL values.<br>QL_NULLABLE_UNKNOWN: The driver cannot determine if the column allows NULL values.  |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
