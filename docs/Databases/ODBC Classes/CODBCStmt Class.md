@@ -1299,7 +1299,7 @@ SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERRO
 
 Fetches the specified rowset of data from the result set and returns data for all bound columns. Rowsets can be specified at an absolute or relative position or by bookmark.
 
-Note In ODBC 3.x, **ExtendedFetch** has been replaced by FetchScroll. ODBC 3.x applications should not call **ExtendedFetch**; instead they should call **FetchScroll**. The Driver Manager maps **FetchScroll** to **ExtendedFetch** when working with an ODBC 2.x driver. 
+**Note**: In ODBC 3.x, **ExtendedFetch** has been replaced by FetchScroll. ODBC 3.x applications should not call **ExtendedFetch**; instead they should call **FetchScroll**. The Driver Manager maps **FetchScroll** to **ExtendedFetch** when working with an ODBC 2.x driver. 
 
 ```
 FUNCTION ExtendedFetch (BYVAL FetchOrientation AS SQLUSMALLINT, BYVAL FetchOffset AS SQLLEN, _
@@ -1316,3 +1316,77 @@ FUNCTION ExtendedFetch (BYVAL FetchOrientation AS SQLUSMALLINT, BYVAL FetchOffse
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="Fetch"></a>Fetch
+
+Fetches the next rowset of data from the result set and returns data for all bound columns. 
+
+```
+FUNCTION Fetch () AS BOOLEAN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="FetchByBookmark"></a>FetchByBookmark
+
+Fetches a set of rows where each row is identified by a bookmark.
+
+```
+FUNCTION FetchByBookmark () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="FetchScroll"></a>FetchScroll
+
+Fetches the specified rowset of data from the result set and returns data for all bound columns. Rowsets can be specified at an absolute or relative position or by bookmark.
+
+When working with an ODBC 2.x driver, the Driver Manager maps this function to **ExtendedFetch**. 
+
+```
+FUNCTION FetchScroll (BYVAL FetchOrientation AS SQLSMALLINT, BYVAL FetchOffset AS SQLLEN) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *FetchOrientation* | Type of fetch: SQL_FETCH_NEXT, SQL_FETCH_PRIOR, SQL_FETCH_FIRST, SQL_FETCH_LAST, SQL_FETCH_ABSOLUTE, SQL_FETCH_RELATIVE, SQL_FETCH_BOOKMARK |
+| *FetchOffset* | Number of the row to fetch. The interpretation of this argument depends on the value of the *FetchOrientation* argument. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetColumnPrivileges"></a>GetColumnPrivileges
+
+Returns a list of columns and associated privileges for the specified table. The driver returns the information as a result set on the specified statement handle.
+
+```
+FUNCTION GetColumnPrivileges (BYREF wszCatalogName AS WSTRING, BYVAL CatalogNameLength AS SQLSMALLINT, _
+   BYREF wszSchemaName AS WSTRING, BYVAL SchemaNameLength AS SQLSMALLINT, _
+   BYREF wszTableName AS WSTRING, BYVAL TableNameLength AS SQLSMALLINT, _
+   BYREF wszColumnName AS WSTRING, BYVAL ColumnNameLength AS SQLSMALLINT) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszCatalogName* | Catalog name. If a driver supports names for some catalogs but not for others,such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those catalogs that do not have names. *wszCatalogName* cannot contain a string search pattern. |
+| *CatalogNameLength* | Length of *wszCatalogName*. |
+| *wszSchemaName* | Schema name. If a driver supports schemas for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have schemas. *wszSchemaName* cannot contain a string search pattern. |
+| *SchemaNameLength* | Length of *wszSchemaName*. |
+| *wszTableName* | Table name. This argument cannot be a null pointer. *wszTableName* cannot contain a string search pattern. |
+| *TableNameLength* | Length of *wszTableName*. |
+| *wszColumnName* | String search pattern for column names. |
+| *ColumnNameLength* | Length of *wszColumnName*. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Diagnostics
+
+When **ColumnPrivileges** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value may be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
+
