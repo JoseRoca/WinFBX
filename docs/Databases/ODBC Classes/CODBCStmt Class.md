@@ -598,3 +598,19 @@ The concise data type.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ColCount"></a>ColCount
+
+Returns the number of columns available in the result set.
+
+```
+FUNCTION ColCount () AS SQLINTEGER
+```
+
+#### Return value
+
+The number of columns available in the result set. It returns 0 if there are no columns in the result set.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
