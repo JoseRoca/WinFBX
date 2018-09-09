@@ -93,7 +93,7 @@ Delete pDbc
 
 Base class for all the ODBC classes. Implements some common methods that all the other interfaces inherit. You don't have to instantiate this class.
 
-**Include fole**: CODBC.inc
+**Include file**: CODBC.inc
 
 ### Methods and Properties
 
