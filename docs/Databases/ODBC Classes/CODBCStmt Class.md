@@ -1390,3 +1390,32 @@ SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVAL
 
 When **ColumnPrivileges** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value may be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
 
+# <a name="GetColumns"></a>GetColumns
+
+Returns the list of column names in specified tables. The driver returns this information as a result set on the specified statement handle.
+
+```
+FUNCTION GetColumns (BYREF wszCatalogName AS WSTRING, BYVAL CatalogNameLength AS SQLSMALLINT, _
+   BYREF wszSchemaName AS WSTRING, BYVAL SchemaNameLength AS SQLSMALLINT, _
+   BYREF wszTableName AS WSTRING, BYVAL TableNameLength AS SQLSMALLINT, _
+   BYREF wszColumnName AS WSTRING, BYVAL ColumnNameLength AS SQLSMALLINT) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszCatalogName* | Catalog name. If a driver supports names for some catalogs but not for others,such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those catalogs that do not have names. *wszCatalogName* cannot contain a string search pattern. |
+| *CatalogNameLength* | Length of *wszCatalogName*. |
+| *wszSchemaName* | String search pattern for schema names. If a driver supports schemas for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") indicates those tables that do not have schemas. |
+| *SchemaNameLength* | Length of *wszSchemaName*. |
+| *wszTableName* | String search pattern for table names. |
+| *TableNameLength* | Length of *wszTableName*. |
+| *wszColumnName* | String search pattern for column names. |
+| *ColumnNameLength* | Length of *wszColumnName*. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Diagnostics
+
+When **Columns** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
