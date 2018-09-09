@@ -1419,3 +1419,111 @@ SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVAL
 #### Diagnostics
 
 When **Columns** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
+
+# <a name="GetCursorConcurrency"></a>GetCursorConcurrency
+
+Gets a SQLUINTEGER value that specifies the cursor concurrency.
+
+```
+FUNCTION GetCursorConcurrency () AS SQLUINTEGER
+```
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetCursorKeysetSize"></a>GetCursorKeysetSize
+
+Gets a SQLUINTEGER value that specifies the number of rows in the keyset-driven cursor.
+
+```
+FUNCTION GetCursorKeysetSize () AS SQLUINTEGER
+```
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+
+# <a name="GetCursorName"></a>GetCursorName
+
+Returns the cursor name associated with a specified statement.
+
+```
+FUNCTION GetCursorName () AS CWSTR
+```
+
+#### Remarks
+
+For efficient processing, the cursor name should not include any leading or trailing spaces in the cursor name, and if the cursor name includes a delimited identifier, the delimiter should be positioned as the first character in the cursor name.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetCursorScrollability"></a>GetCursorScrollability
+
+Gets a SQLUINTEGER value that specifies the scrollability type. Optional feature not implemented in Microsoft Access Driver.
+
+```
+FUNCTION GetCursorScrollability () AS SQLUINTEGER
+```
+
+#### Return value
+
+The scrollability type.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetCursorSensitivity"></a>GetCursorSensitivity
+
+Gets a SQLUINTEGER value that specifies whether cursors on the statement handle made to a result set by another cursor. Setting this attribute affects subsequent calls to ExecDirect and SQLExecute. An application can read back the value of this attribute to obtain its initial state or its state  as most recently set by the application.
+
+**Note**: Optional feature not implemented in Microsoft Access Driver.
+
+```
+FUNCTION GetCursorSensitivity () AS SQLUINTEGER
+```
+
+#### Return value
+
+The type of cursor sensitivity.
+
+**SQL_UNSPECIFIED** = It is unspecified what the cursor type is and whether  cursors on the statement handle make visible the changes made to a result set by another cursor. Cursors on the statement handle may make visible none, some, or all such changes. This is the default.
+
+**SQL_INSENSITIVE** = All cursors on the statement handle show the result set without reflecting any changes made to it by any other cursor, which has a concurrency that is read-only.
+
+**SQL_SENSITIVE** = All cursors on the statement handle make visible all changes made to a result set by another cursor.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetCursorType"></a>GetCursorType
+
+Gets SQLUINTEGER value that specifies the cursor type.
+
+**Note**: Microsoft Access Driver changes SQL_CURSOR_DYNAMIC to SQL_CURSOR_KEYSET_DRIVEN.
+
+```
+FUNCTION GetCursorType () AS SQLUINTEGER
+```
+
+#### Return value
+
+The type of cursor.
+
+**SQL_CURSOR_FORWARD_ONLY** = The cursor only scrolls forward.
+
+**SQL_CURSOR_STATIC** = The data in the result set is static.
+
+**SQL_CURSOR_KEYSET_DRIVEN** = The driver saves and uses only the keys for the number of rows specified in the SQL_ATTR_KEYSET_SIZE statement attribute.
+
+**SQL_CURSOR_DYNAMIC** = The driver saves and uses only the keys for the rows in the rowset.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
