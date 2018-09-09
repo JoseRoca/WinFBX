@@ -113,7 +113,6 @@ Base class for all the ODBC classes. Implements some common methods that all the
 | [SetEnvAttr](#SetEnvAttr) | Sets attributes that govern aspects of environments. |
 | [SetErrorProc](#SetErrorProc) | Sets the address of an application defined error callback. |
 | [SetOutputNTS](#SetOutputNTS) | Returns a 32-bit integer that determines how the driver returns string data. |
-| [SetOutputNTS](#SetOutputNTS) | Returns a 32-bit integer that determines how the driver returns string data. |
 
 # CODBC Class
 
@@ -730,3 +729,31 @@ To set the ODBC version, use the optional parameters of the **CODBC** class cons
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetCPMatch"></a>SetCPMatch (CODBC)
+
+Sets a 32-bit SQLUINTEGER value that determines how a connection is chosen from a connection pool.
+
+```
+FUNCTION SetCPMatch (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Value of the attribute. |
+
+#### Remarks
+
+The Driver Manager determines which connection is reused from the pool and attempts to match the connection options in the call and the connection attributes set by the application to the keywords and connection  attributes of the connections in the pool. The value of this attribute determines the level of precision of the matching criteria. The following values are used to set the value of this attribute:
+
+**SQL_CP_STRICT_MATCH**
+
+Only connections that exactly match the connection options in the call and the connection attributes set by the application are reused. This is the default.
+
+**SQL_CP_RELAXED_MATCH**
+
+Connections with matching connection string keywords can be used. Keywords must match, but not all connection attributes must  match.
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
