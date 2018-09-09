@@ -466,13 +466,33 @@ FUNCTION ColAttribute (BYVAL ColumnNumber AS SQLUSMALLINT, BYVAL FieldIdentifier
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| ColumnNumber | The number of the record in the IRD from which the field value is to be retrieved. This argument corresponds to the column number of result data, ordered sequentially in increasing column order, starting at 1. Columns can be described in any order. Column 0 can be specified in this argument, but all values except SQL_DESC_TYPE and SQL_DESC_OCTET_LENGTH will return undefined values. | 
-| FieldIdentifier | The field in row *ColumnNumber* of the IRD that is to be returned. |
-| CharacterAttribute | Pointer to a buffer in which to return the value in the *FieldIdentifier* field of the *ColumnNumber* row of the IRD, if the field is a character string. Otherwise, the field is unused. |
-| BufferLength | If *FieldIdentifier* is an ODBC-defined field and *CharacterAttribute* points to a character string or binary buffer, this argument should be the length of *CharacterAttribute*. If *FieldIdentifier* is an ODBC-defined field and *CharacterAttribute* is an integer, this field is ignored. If *FieldIdentifier* is a driver-defined field, the application indicates the nature of the field to the Driver Manager by setting the *BufferLength* argument. *BufferLength* can have the following values:<br><br><ul><li>If *CharacterAttribute* is a pointer to a pointer, *BufferLength* should have the value SQL_IS_POINTER.</li><li>If *CharacterAttribute* is a pointer to a character string, the *BufferLength* is the length of the buffer.</li><li>If *CharacterAttribute* is a pointer to a binary buffer, the application places the result of the SQL_LEN_BINARY_ATTR(length) macro in *BufferLength*. This places a negative value in *BufferLength*.</li><li>If *CharacterAttribute* is a pointer to a fixed-length data type, *BufferLength* must be one of the following: SQL_IS_INTEGER, SQL_IS_UNINTEGER, SQL_SMALLINT, or %SQLUSMALLINT.</li></ul> |
-| StringLength | Pointer to a buffer in which to return the total number of bytes (excluding the null-termination byte for character data) available to return in *CharacterAttribute*.<br>For character data, if the number of bytes available to return is greater than or equal to *BufferLength*, the descriptor information in *CharacterAttribute* is truncated to *BufferLength* minus the length of a null-termination character and is null-terminated by the driver.<br>For all other types of data, the value of *BufferLength* is ignored and the driver assumes the size of *CharacterAttribute* is 32 bits or 64 bits. |
-| NumericAttribute | Pointer to an integer buffer in which to return the value in the *FieldIdentifier* field of the *ColumnNumber* row of the IRD, if the field is a numeric descriptor type, such as SQL_DESC_COLUMN_LENGTH. Otherwise, the field is unused. |
+| *ColumnNumber* | The number of the record in the IRD from which the field value is to be retrieved. This argument corresponds to the column number of result data, ordered sequentially in increasing column order, starting at 1. Columns can be described in any order. Column 0 can be specified in this argument, but all values except SQL_DESC_TYPE and SQL_DESC_OCTET_LENGTH will return undefined values. | 
+| *FieldIdentifier* | The field in row *ColumnNumber* of the IRD that is to be returned. |
+| *CharacterAttribute* | Pointer to a buffer in which to return the value in the *FieldIdentifier* field of the *ColumnNumber* row of the IRD, if the field is a character string. Otherwise, the field is unused. |
+| *BufferLength* | If *FieldIdentifier* is an ODBC-defined field and *CharacterAttribute* points to a character string or binary buffer, this argument should be the length of *CharacterAttribute*. If *FieldIdentifier* is an ODBC-defined field and *CharacterAttribute* is an integer, this field is ignored. If *FieldIdentifier* is a driver-defined field, the application indicates the nature of the field to the Driver Manager by setting the *BufferLength* argument. *BufferLength* can have the following values:<br><br><ul><li>If *CharacterAttribute* is a pointer to a pointer, *BufferLength* should have the value SQL_IS_POINTER.</li><li>If *CharacterAttribute* is a pointer to a character string, the *BufferLength* is the length of the buffer.</li><li>If *CharacterAttribute* is a pointer to a binary buffer, the application places the result of the SQL_LEN_BINARY_ATTR(length) macro in *BufferLength*. This places a negative value in *BufferLength*.</li><li>If *CharacterAttribute* is a pointer to a fixed-length data type, *BufferLength* must be one of the following: SQL_IS_INTEGER, SQL_IS_UNINTEGER, SQL_SMALLINT, or %SQLUSMALLINT.</li></ul> |
+| *StringLength* | Pointer to a buffer in which to return the total number of bytes (excluding the null-termination byte for character data) available to return in *CharacterAttribute*.<br>For character data, if the number of bytes available to return is greater than or equal to *BufferLength*, the descriptor information in *CharacterAttribute* is truncated to *BufferLength* minus the length of a null-termination character and is null-terminated by the driver.<br>For all other types of data, the value of *BufferLength* is ignored and the driver assumes the size of *CharacterAttribute* is 32 bits or 64 bits. |
+| *NumericAttribute* | Pointer to an integer buffer in which to return the value in the *FieldIdentifier* field of the *ColumnNumber* row of the IRD, if the field is a numeric descriptor type, such as SQL_DESC_COLUMN_LENGTH. Otherwise, the field is unused. |
 
 #### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ColAutoUniqueValue"></a>ColAutoUniqueValue
+
+Returns SQL_TRUE if the column is an autoincrementing column, SQL_FALSE if the column is not an autoincrementing column or is not numeric. This field is valid for numeric data type columns only. An application can insert values into a row containing an autoincrement number, but typically cannot update values in the column. When an insert is made into an autoincrement column, a unique value is inserted into the column at insert time. The increment is not defined, but is data source-specific. An application should not assume that an autoincrement column starts at any particular point or increments by any particular value.
+
+```
+FUNCTION ColAutoUniqueValue (BYVAL ColNum AS SQLUSMALLINT) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+TRUE or FALSE.
+
+**Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
