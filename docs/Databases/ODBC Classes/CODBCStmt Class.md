@@ -477,6 +477,43 @@ FUNCTION ColAttribute (BYVAL ColumnNumber AS SQLUSMALLINT, BYVAL FieldIdentifier
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
 
+```
+#include once "Afx/COdbc/COdbc.inc"
+USING Afx
+
+' // Create a connection object and connect with the database
+DIM wszConStr AS WSTRING * 260 = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=biblio.mdb"
+DIM pDbc AS CODBC = wszConStr
+IF pDbc.Handle = NULL THEN PRINT "Unable to create the connection handle" : SLEEP : END
+
+' // Allocate an statement object
+DIM pStmt AS COdbcStmt = @pDbc
+IF pStmt.Handle = NULL THEN PRINT "Unable to create the statement handle" : SLEEP : END
+
+' // Cursor type
+pStmt.SetMultiuserKeysetCursor
+' // Generate a result set
+pStmt.ExecDirect ("SELECT * FROM Authors ORDER BY Author")
+
+' // Retrieve the number of columns
+DIM numCols AS SHORT = pStmt.NumResultCols
+PRINT "Number of columns:" & STR(numCols)
+IF numCols = 0 THEN PRINT "There are no columns": SLEEP : END
+' // Retrieve the names of the fields (columns)
+FOR idx AS LONG = 1 TO numCols
+   PRINT "Field #" & STR(idx) & " name: " & pStmt.ColName(idx)
+NEXT
+' // Parse the result set
+DO
+   ' // Fetch the record
+   IF pStmt.Fetch = FALSE THEN EXIT DO
+   ' // Get the values of the columns and display them
+   FOR idx AS LONG = 1 TO numCols
+      PRINT pStmt.GetData(idx)
+   NEXT
+LOOP
+```
+
 # <a name="ColAutoUniqueValue"></a>ColAutoUniqueValue
 
 Returns SQL_TRUE if the column is an autoincrementing column, SQL_FALSE if the column is not an autoincrementing column or is not numeric. This field is valid for numeric data type columns only. An application can insert values into a row containing an autoincrement number, but typically cannot update values in the column. When an insert is made into an autoincrement column, a unique value is inserted into the column at insert time. The increment is not defined, but is data source-specific. An application should not assume that an autoincrement column starts at any particular point or increments by any particular value.
@@ -1085,7 +1122,7 @@ SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERRO
 
 # <a name="DeleteRecord"></a>DeleteRecord
 
-The driver positions the cursor on the row specified by RowNumber and deletes the underlying row of data. It changes the corresponding element of the row status array to SQL_ROW_DELETED. After the row has been deleted, the following are not valid for the row: positioned update and delete statements, calls to **GetData** and calls to **SetPos** with Operation set to anything except SQL_POSITION. For drivers that support packing, the row is deleted from the cursor when new data is retrieved from the data source. Whether the row remains visible depends on the cursor type. For example, deleted rows are visible to static and keyset-driven cursors but invisible to dynamic cursors. The row operation array pointed to by the SQL_ATTR_ROW_OPERATION_PTR statement attribute can be used to indicate that a row in the current rowset should be ignored during a bulk delete.
+The driver positions the cursor on the row specified by RowNumber and deletes the underlying row of data. It changes the corresponding element of the row status array to SQL_ROW_DELETED. After the row has been deleted, the following are not valid for the row: positioned update and delete statements, calls to **GetData** and calls to **SetPos** with *Operation* set to anything except SQL_POSITION. For drivers that support packing, the row is deleted from the cursor when new data is retrieved from the data source. Whether the row remains visible depends on the cursor type. For example, deleted rows are visible to static and keyset-driven cursors but invisible to dynamic cursors. The row operation array pointed to by the SQL_ATTR_ROW_OPERATION_PTR statement attribute can be used to indicate that a row in the current rowset should be ignored during a bulk delete.
 
 ```
 FUNCTION DeleteRecord (BYVAL wRow AS SQLSETPOSIROW = 1) AS SQLRETURN
@@ -1098,6 +1135,49 @@ FUNCTION DeleteRecord (BYVAL wRow AS SQLSETPOSIROW = 1) AS SQLRETURN
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Example
+
+```
+#include once "Afx/COdbc/COdbc.inc"
+USING Afx
+
+' // Connect with the database
+DIM wszConStr AS WSTRING * 260 = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=biblio.mdb"
+DIM pDbc AS CODBC = wszConStr
+
+' // Allocate an statement object
+DIM pStmt AS COdbcStmt = @pDbc
+IF pStmt.Handle = NULL THEN PRINT "Failed to allocate the statement handle": SLEEP : END
+
+' // Cursor type
+pStmt.SetMultiuserKeysetCursor
+
+' // Bind the columns
+DIM AS LONG lAuId, cbAuId
+pStmt.BindCol(1, @lAuId, @cbAuId)
+DIM wszAuthor AS WSTRING * 256, cbAuthor AS LONG
+pStmt.BindCol(2, @wszAuthor, 256, @cbAuthor)
+DIM iYearBorn AS SHORT, cbYearBorn AS LONG
+pStmt.BindCol(3, @iYearBorn, @cbYearBorn)
+
+' // Generate a result set
+pStmt.ExecDirect ("SELECT * FROM Authors WHERE Au_Id=999")
+
+' // Fetch the record
+pstmt.Fetch
+
+' // Fill the values of the binded application variables and its sizes
+cbAuID = SQL_COLUMN_IGNORE
+wszAuthor = "Félix Lope de Vega Carpio"
+cbAuthor = LEN(wszAuthor) * 2   ' Unicode uses 2 bytes per character
+iYearBorn = 1562
+cbYearBorn = SIZEOF(iYearBorn)
+
+' // Delete the record
+pStmt.DeleteRecord
+IF pStmt.Error = FALSE THEN PRINT "Record deleted" ELSE PRINT pStmt.GetErrorInfo
+```
 
 # <a name="DescribeCol"></a>DescribeCol
 
@@ -1123,3 +1203,42 @@ FUNCTION DescribeCol (BYVAL ColumnNumber AS SQLUSMALLINT, BYVAL pwszColumnName A
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
 
+#### Example
+
+```
+#include once "Afx/COdbc/COdbc.inc"
+USING Afx
+
+' // Connect with the database
+DIM wszConStr AS WSTRING * 260 = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=biblio.mdb"
+DIM pDbc AS CODBC = wszConStr
+
+' // Allocate an statement object
+DIM pStmt AS COdbcStmt = @pDbc
+IF pStmt.Handle = NULL THEN PRINT "Failed to allocate the statement handle": SLEEP : END
+
+' // Cursor type
+pStmt.SetMultiuserKeysetCursor
+
+' // Generate a result set
+pStmt.ExecDirect ("SELECT TOP 20 * FROM Authors ORDER BY Author")
+
+' -------------------------------------------------------------------------------------
+' Use DescribeCol to retrieve information about column 2
+' -------------------------------------------------------------------------------------
+DIM wszColName AS WSTRING * 260
+DIM iNameLength AS SHORT
+DIM iDataType AS SHORT
+DIM dwColumnSize AS DWORD
+DIM iDecimalDigits AS SHORT
+DIM iNullable AS SHORT
+
+pStmt.DescribeCol(2, @wszColName, 260, @iNameLength, @iDataType, @dwColumnSize, @iDecimalDigits, @iNullable)
+
+? "Column name: " & wszColName
+? "Name length: " & STR(iNameLength)
+? "Data type: " & STR(iDataType)
+? "Column size: " & STR(dwColumnSize)
+? "Decimal digits: " & STR(iDecimalDigits)
+? "Nullable: " & STR(iNullable) & " - " & IIF(iNullable, "TRUE", "FALSE")
+```
