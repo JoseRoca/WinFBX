@@ -2672,3 +2672,72 @@ Returns a character string that indicates the year of publication of the X/Open 
 #### Result code
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetSqlState"></a>GetSqlState (CODBC)
+
+Lists driver descriptions and driver attribute keywords. This function is implemented only by the Driver Manager.
+
+```
+FUNCTION GetSqlState () AS CWSTR
+```
+
+# <a name="Handle"></a>Handle (CODBC)
+
+Returns the connection handle.
+
+```
+FUNCTION Handle () AS SQLHANDLE
+```
+
+# <a name="NativeSql"></a>NativeSql (CODBC)
+
+Returns the SQL string as modified by the driver. NativeSql does not execute the SQL statement.
+
+```
+FUNCTION NativeSql (BYREF wszInText AS WSTRING) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszInText* | SQL text string to be translated. |
+
+#### Return value
+
+The SQL string as modified by the driver.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="RollbackTran"></a>RollbackTran (CODBC)
+
+Requests a rollback operation for all active operations on all statements associated with an environment. 
+
+```
+FUNCTION RollbackTran () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetConnectAttr"></a>SetConnectAttr (CODBC)
+
+Sets attributes that govern aspects of connections.
+
+```
+FUNCTION SetConnectAttr (BYVAL Attribute AS SQLINTEGER, BYVAL ValuePtr AS SQLPOINTER, _
+   BYVAL StringLength AS SQLINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Attribute* | Attribute to set, listed in "Comments." |
+| *ValuePtr* | Pointer to the value to be associated with *Attribute*. Depending on the value of *Attribute*, *ValuePtr* will be a 32-bit unsigned integer value or will point to a null-terminated character string. Note that if the *Attribute* argument is a driver-specific value, the value in *ValuePtr* may be a signed integer. |
+| *StringLength* | If Attribute is an ODBC-defined attribute and ValuePtr points to a character string or a binary buffer, this argument should be the length of ValuePtr. If Attribute is an ODBC-defined attribute and ValuePtr is an integer, StringLength is ignored.
+
+If Attribute is a driver-defined attribute, the application indicates the nature of the attribute to the Driver Manager by setting the *StringLength* argument. *StringLength* can have the following values:* If *ValuePtr* is a pointer to a character string, then *StringLength* is the length of the string or SQL_NTS.<br>* If *ValuePtr* is a pointer to a binary buffer, then the application places the result of the SQL_LEN_BINARY_ATTR(length) macro in *StringLength*. This places a negative value in *StringLength*.<br>* If *ValuePtr* is a pointer to a value other than a character string or a binary string, then *StringLength* should have the value SQL_IS_POINTER.<br>* If *ValuePtr* contains a fixed-length value, then *StringLength* is either SQL_IS_INTEGER or SQL_IS_UINTEGER, as appropriate. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_INVALID_HANDLE, or SQL_STILL_EXECUTING.
