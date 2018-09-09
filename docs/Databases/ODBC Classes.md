@@ -691,3 +691,42 @@ The character string value returned for an SQLSTATE consists of a two-character 
 | IM014 | Invalid name of File DSN |
 | IM015 | Corrupt file data source |
 
+
+# <a name="ODBCVersion"></a>ODBCVersion (CODBC)
+
+Returns a 32-bit integer that determines whether certain functionality exhibits ODBC 2.x behavior or ODBC 3.x behavior.
+
+```
+FUNCTION ODBCVersion () AS SQLUINTEGER
+```
+
+#### Return value
+
+* **SQL_OV_ODBC3_80** = The Driver Manager and driver exhibit the following ODBC 3.8 behavior:
+
+   The driver returns and expects ODBC 3.x codes for date, time, and timestamp.
+   The driver returns ODBC 3.x SQLSTATE codes when Error, GetDiagField, or GetDiagRec is called.
+   The CatalogName argument in a call to SQLTables accepts a search pattern.
+   The Driver Manager supports C data type extensibility. For more information about C data type extensibility, see C Data Types in ODBC.
+
+* **SQL_OV_ODBC3** = The Driver Manager and driver exhibit the following ODBC 3.x behavior:
+
+   The driver returns and expects ODBC 3.x codes for date, time, and timestamp.
+   The driver returns ODBC 3.x SQLSTATE codes when Error,  GetDiagField, or GetDiagRec is called.
+   The CatalogName argument in a call to SqlTables accepts a search pattern.
+
+* **SQL_OV_ODBC2** = The Driver Manager and driver exhibit the following ODBC 2.x behavior. This is especially useful for an ODBC 2.x application working with an ODBC 3.x driver.
+
+   The driver returns and expects ODBC 2.x codes for date, time, and timestamp.
+   The driver returns ODBC 2.x SQLSTATE codes when Error, GetDiagField, or GetDiagRec is called.
+   The CatalogName argument in a call to SqlTables does not accept a search pattern.
+
+An application must set this environment attribute before calling any function that has an SQLHENV argument, or the call will return SQLSTATE HY010 (Function sequence error). It is driver-specific whether or not additional behaviors exist for these environmental flags.
+
+#### Remarks
+
+To set the ODBC version, use the optional parameters of the **CODBC** class constructors.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
