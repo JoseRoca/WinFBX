@@ -1244,3 +1244,25 @@ pStmt.DescribeCol(2, @wszColName, 260, @iNameLength, @iDataType, @dwColumnSize, 
 ? "Decimal digits: " & STR(iDecimalDigits)
 ? "Nullable: " & STR(iNullable) & " - " & IIF(iNullable, "TRUE", "FALSE")
 ```
+
+# <a name="DescribeParam"></a>DescribeParam
+
+Returns the description of a parameter marker associated with a prepared SQL statement. This information is also available in the fields of the IPD.
+
+```
+FUNCTION DescribeParam (BYVAL ParameterNumber AS SQLUSMALLINT, BYVAL DataType AS SQLSMALLINT PTR, _
+   BYVAL ParameterSize AS SQLULEN PTR, BYVAL DecimalDigits AS SQLSMALLINT PTR, _
+   BYVAL Nullable AS SQLSMALLINT PTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ParameterNumber* | Parameter marker number ordered sequentially in increasing parameter order, starting at 1. |
+| *DataType* | Pointer to a buffer in which to return the SQL data type of the parameter. This value is read from the SQL_DESC_CONCISE_TYPE record field of the IPD.<br>In ODBC 3.x, SQL_TYPE_DATE, SQL_TYPE_TIME, or SQL_TYPE_TIMESTAMP will be returned in DataType for date, time, or timestamp data, respectively; in ODBC 2.x, SQL_DATE, SQL_TIME, or SQL_TIMESTAMP will be returned. The Driver Manager performs the required mappings when an ODBC 2.x application is working with an ODBC 3.x driver or when an ODBC 3.x application is working with an ODBC 2.x driver.<br>When *ColumnNumber* is equal to 0 (for a bookmark column), SQL_BINARY is returned in *DataType* for variable-length bookmarks. (SQL_INTEGER is returned if bookmarks are used by an ODBC 3.x application working with an ODBC 2.x driver or by an ODBC 2.x application working with an ODBC 3.x driver.) |
+| *ParameterSize* | Pointer to a buffer in which to return the size of the column or expression of the corresponding parameter marker as defined by the data source. |
+| *DecimalDigits* | Pointer to a buffer in which to return the number of decimal digits of the column or expression of the corresponding parameter as defined by the data source. |
+| *Nullable* | Pointer to a buffer in which to return a value that indicates whether the parameter allows NULL values. This value is read from the SQL_DESC_NULLABLE field of the IPD. One of the following:<br>SQL_NO_NULLS: The parameter does not allow NULL values (this is the default value).<br>SQL_NULLABLE: The parameter allows NULL values.<br>SQL_NULLABLE_UNKNOWN: The driver cannot determine if the parameter allows NULL values. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
