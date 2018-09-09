@@ -459,8 +459,8 @@ When **GetDrivers** returns either SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associ
 
 Driver attribute keywords are added from the system information when the driver is installed.
 
-An application can call GetDrivers multiple times to retrieve all driver descriptions. The Driver Manager retrieves this information from the system information. When there are no more driver descriptions, GetDrivers returns SQL_NO_DATA. If GetDrivers is called with SQL_FETCH_NEXT immediately after it returns SQL_NO_DATA, it returns the first driver description.
+An application can call GetDrivers multiple times to retrieve all driver descriptions. The Driver Manager retrieves this information from the system information. When there are no more driver descriptions, **GetDrivers** returns SQL_NO_DATA. If **GetDrivers** is called with SQL_FETCH_NEXT immediately after it returns SQL_NO_DATA, it returns the first driver description.
 
-If SQL_FETCH_NEXT is passed to GetDrivers the very first time it is called, GetDrivers returns the first data source name.
+If SQL_FETCH_NEXT is passed to **GetDrivers** the very first time it is called, **GetDrivers** returns the first data source name.
 
-Because GetDrivers is implemented in the Driver Manager, it is supported for all drivers regardless of a particular driver's standards compliance.
+Because **GetDrivers** is implemented in the Driver Manager, it is supported for all drivers regardless of a particular driver's standards compliance.
