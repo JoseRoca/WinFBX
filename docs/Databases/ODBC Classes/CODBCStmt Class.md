@@ -614,3 +614,23 @@ The number of columns available in the result set. It returns 0 if there are no 
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ColDisplaySize"></a>ColDisplaySize
+
+Returns the maximum number of characters required to display data from the column.
+
+```
+FUNCTION ColDisplaySize (BYVAL ColNum AS SQLUSMALLINT) AS SQLINTEGER
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+The maximum number of characters required to display data from the column.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
