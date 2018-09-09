@@ -112,3 +112,62 @@ Base class for all the ODBC classes. Implements some common methods that all the
 | [SetErrorProc](#SetErrorProc) | Sets the address of an application defined error callback. |
 | [SetOutputNTS](#SetOutputNTS) | Returns a 32-bit integer that determines how the driver returns string data. |
 | [SetOutputNTS](#SetOutputNTS) | Returns a 32-bit integer that determines how the driver returns string data. |
+
+# CODBC Class
+
+Implements methods to create and manage connection objects. Inherits from COdbcBase.
+
+### Methods and Properties
+
+| Name       | Description |
+| ---------- | ----------- |
+| [Constructors](#ConstructorsDb) | Requests a commit operation for all active operations on all statements associated with an environment. |
+| [CommitTran](#CommitTran) | Requests a commit operation for all active operations on all statements associated with an environment. |
+| [EnvHandle](#EnvHandle) | Returns the environment handle. |
+| [Functions](#Functions) | Returns information about whether a driver supports a specific ODBC function. |
+| [GetConnectAttr](#GetConnectAttr) | Returns the current setting of a connection attribute. |
+| [GetDiagField](#GetDiagField) | Returns the current value of a field of a record of the diagnostic data structure (associated with an environment handle) that contains error, warning, and status information. |
+| [GetDiagRec](#GetDiagRec) | Returns the current values of multiple fields of a diagnostic record that contains error, warning, and status information. |
+| [GetErrorInfo](#GetErrorInfo) | Returns a verbose description of the last errors. |
+| [GetInfo](#GetInfo) | Returns general information about the driver and data source associated with a connection. |
+| [GetSqlState](#GetSqlState) | Returns the SqlState for the connection handle. |
+| [Handle](#Handle) | Returns the connection handle. |
+| [NativeSql](#NativeSql) | Returns the SQL string as modified by the driver. NativeSql does not execute the SQL statement. |
+| [RollbackTran](#RollbackTran) | RollbackTran requests a rollback operation for all active operations on all statements associated with an environment. |
+| [SetConnectAttr](#SetConnectAttr) | Sets attributes that govern aspects of connections. |
+| [Supports](#Supports) | Returns information about whether a driver supports a specific ODBC function. It is an alias for **Functions**. |
+
+# <a name="ConstructorsDb"></a>Constructors (CODBC)
+
+Allocates a connection handle and, if needed, an environment handle, and opens the database.
+
+```
+CONSTRUCTOR COdbc (BYREF wszConnectionString AS WSTRING, BYVAL nODbcVersion AS SQLINTEGER = SQL_OV_ODBC3, _
+   BYVAL ConnectionPoolingAttr AS SQLUINTEGER = 0)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszConnectionString* | The connection string. |
+| *nOdbcVersion* | Optional. ODBC version number: SQL_OV_ODBC2, SQL_OV_ODBC3 or SQL_OV_ODBC3_80. |
+| *ConnectionPoolingAttr* | Optional. SQL_CP_ONE_PER_DRIVER or SQL_CP_ONE_PER_HENV. |
+
+Establishes connections to a driver and a data source. The connection handle references storage of all information about the connection to the data source, including status, transaction state, and error information. 
+
+```
+CONSTRUCTOR COdbc (BYREF wszServerName AS WSTRING, BYREF wszUserName AS WSTRING, _
+   BYREF wszAuthentication AS WSTRING, BYVAL nODbcVersion AS SQLINTEGER = SQL_OV_ODBC3, _
+   BYVAL ConnectionPoolingAttr AS SQLUINTEGER = 0)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszServerName* | Data source name. The data might be located on the same computer as the program, or on another computer somewhere on a network. |
+| *wszUserName* | User identifier. |
+| *wszAuthentication* | Authentication string (typically the password). |
+| *nOdbcVersion* | Optional. ODBC version number: SQL_OV_ODBC2, SQL_OV_ODBC3 or SQL_OV_ODBC3_80. |
+| *ConnectionPoolingAttr* | Optional. SQL_CP_ONE_PER_DRIVER or SQL_CP_ONE_PER_HENV. |
+
+**Result value** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, SQL_INVALID_HANDLE.
