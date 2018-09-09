@@ -406,3 +406,26 @@ Only connections that exactly match the connection options in the call and the c
 **SQL_CP_RELAXED_MATCH**
 
 Connections with matching connection string keywords can be used. Keywords must match, but not all connection attributes must  match.
+
+# <a name="GetDataSources"></a>GetDataSources (CODBC)
+
+Lists available DSN / Drivers installed.
+
+```
+FUNCTION GetDataSources (BYVAL Direction AS SQLUSMALLINT, BYREF cwsServerName AS CWSTR, _
+   BYREF cwsDescription AS CWSTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Direction* | Determines which data source the Driver Manager returns information on. Can be:<br>SQL_FETCH_NEXT (to fetch the next data source name in the list), SQL_FETCH_FIRST (to fetch from the beginning of the list), SQL_FETCH_FIRST_USER (to fetch the first user DSN), or SQL_FETCH_FIRST_SYSTEM (to fetch the first system DSN).<br>When *Direction* is set to SQL_FETCH_FIRST, subsequent calls to **GetDataSources** with *Direction* set to SQL_FETCH_NEXT return both user and system DSNs. When *Direction* is set to SQL_FETCH_FIRST_USER, all subsequent calls to **GetDataSources** with *Direction* set to SQL_FETCH_NEXT return only user DSNs. When *Direction* is set to SQL_FETCH_FIRST_SYSTEM, all subsequent calls to **GetDataSources** with *Direction* set to SQL_FETCH_NEXT return only system DSNs. |
+| *cwsServerName* | An string variable in which to return the data source name. |
+| *cwsDescription* | An string variable in which to return the description. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Diagnostics
+
+When **GetDataSources** returns either SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling the **SqlState** property.
