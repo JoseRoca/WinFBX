@@ -801,3 +801,21 @@ END SUB
 pDbc.SetErrorProc(@ODBC_ErrorCallback)    ' // Sets the error callback for the connection object
 pStmt.SetErrorProc(@ODBC_ErrorCallback)   ' // Sets the error callback for the statement object
 ```
+
+# <a name="SetOutputNTS"></a>SetOutputNTS (CODBC)
+
+Returns a 32-bit integer that determines how the driver returns string data. If SQL_TRUE, the driver returns string data null-terminated. If SQL_FALSE, the driver does not return string data null-terminated. This attribute defaults to SQL_TRUE. A call to SetEnvAttr to set it to SQL_TRUE returns SQL_SUCCESS. A call to SetEnvAttr to set it to SQL_FALSE returns SQL_ERROR and SQLSTATE HYC00.
+
+**Note**: Optional feature not implemented in Microsoft Access Driver.
+
+```
+FUNCTION SetOutputNTS (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Value of the attribute. SQL_TRUE or SQL_FALSE. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
