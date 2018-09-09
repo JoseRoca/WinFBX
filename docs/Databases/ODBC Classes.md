@@ -429,3 +429,38 @@ SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
 #### Diagnostics
 
 When **GetDataSources** returns either SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling the **SqlState** property.
+
+# <a name="GetDrivers"></a>GetDrivers (CODBC)
+
+Lists driver descriptions and driver attribute keywords. This function is implemented only by the Driver Manager.
+
+```
+FUNCTION GetDrivers (BYVAL Direction AS SQLUSMALLINT, BYREF cwsDriverDesc AS CWSTR, _
+   BYREF cwsDriverAttributes AS CWSTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Direction* | Determines whether the Driver Manager fetches the next driver description in the list (SQL_FETCH_NEXT) or whether the search starts from the beginning of the list (SQL_FETCH_FIRST). |
+| *cwsDriverDesc* | A CWSTR variable in which to return the driver description. |
+| *cwsDriverAttributes* | A CWSTR variable in which to return the list of driver attribute value pairs (see "Comments"). |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Diagnostics
+
+When **GetDrivers** returns either SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling the **SqlState** property.
+
+#### Comments
+
+**GetDrivers** returns the driver description in the *cwsDriverDesc* variable. It returns additional information about the driver in the *cwsDriverAttributes* buffer as a list of keyword-value pairs. All keywords listed in the system information for drivers will be returned for all drivers, except for **CreateDSN**, which is used to prompt creation of data sources and therefore is optional. Each pair is terminated with a semicolon.
+
+Driver attribute keywords are added from the system information when the driver is installed.
+
+An application can call GetDrivers multiple times to retrieve all driver descriptions. The Driver Manager retrieves this information from the system information. When there are no more driver descriptions, GetDrivers returns SQL_NO_DATA. If GetDrivers is called with SQL_FETCH_NEXT immediately after it returns SQL_NO_DATA, it returns the first driver description.
+
+If SQL_FETCH_NEXT is passed to GetDrivers the very first time it is called, GetDrivers returns the first data source name.
+
+Because GetDrivers is implemented in the Driver Manager, it is supported for all drivers regardless of a particular driver's standards compliance.
