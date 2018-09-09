@@ -556,3 +556,23 @@ TRUE or FALSE
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ColCatalogName"></a>ColCatalogName
+
+Returns the catalog of the table that contains the column. The returned value is implementation-defined if the column is an expression or if the column is part of a view. If the data source does not support catalogs or the catalog name cannot be determined, an empty string is returned. This VARCHAR record field is not limited to 128 characters.
+
+```
+FUNCTION ColCatalogName (BYVAL ColNum AS SQLUSMALLINT) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+The catalog of the table that contains the column.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
