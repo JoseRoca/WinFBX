@@ -464,3 +464,23 @@ An application can call GetDrivers multiple times to retrieve all driver descrip
 If SQL_FETCH_NEXT is passed to **GetDrivers** the very first time it is called, **GetDrivers** returns the first data source name.
 
 Because **GetDrivers** is implemented in the Driver Manager, it is supported for all drivers regardless of a particular driver's standards compliance.
+
+# <a name="GetEnvAttr"></a>GetEnvAttr (CODBC)
+
+Returns the current setting of an environment attribute.
+
+```
+FUNCTION GetEnvAttr (BYVAL Attribute AS SQLINTEGER, BYVAL ValuePtr AS SQLPOINTER, _
+   BYVAL BufferLength AS SQLINTEGER, BYVAL StringLength AS SQLINTEGER PTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Attribute* | Attribute to retrieve. |
+| *ValuePtr* |  Pointer to a buffer in which to return the current value of the attribute specified by **Attribute**. |
+| *BufferLength* | If *ValuePtr* points to a character string, this argument should be the length of *ValuePtr*. If *ValuePtr* is an integer, *BufferLength* is ignored. If the attribute value is not a character string, *BufferLength* is unused. |
+| *StringLength* | A pointer to a buffer in which to return the total number of bytes (excluding the null-termination character) available to return in *ValuePtr*. If *ValuePtr* is a null pointer, no length is returned. If the attribute value is a character string and the number of bytes available to return is greater than or equal to *BufferLength*, the data in *ValuePtr* is truncated to *BufferLength* minus the length of a null-termination character and is null-terminated by the driver. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
