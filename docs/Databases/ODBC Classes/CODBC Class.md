@@ -240,6 +240,33 @@ If SQL_FETCH_NEXT is passed to **GetDrivers** the very first time it is called, 
 
 Because **GetDrivers** is implemented in the Driver Manager, it is supported for all drivers regardless of a particular driver's standards compliance.
 
+#### Example
+
+```
+#include once "Afx/COdbc/COdbc.inc"
+USING Afx
+
+' // Create a connection object and connect with the database
+' // We need to call it to create the environment handle
+DIM wszConStr AS WSTRING * 260 = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=biblio.mdb"
+DIM pDbc AS CODBC = wszConStr
+IF pDbc.Handle = NULL THEN PRINT "Unable to create the connection handle" : SLEEP : END
+
+DIM wDirection AS WORD
+DIM cwsDriverAttributes AS CWSTR
+DIM cwsDriverDesc AS CWSTR
+
+wDirection = SQL_FETCH_FIRST
+DO
+   cwsDriverDesc = ""
+   cwsDriverAttributes = ""
+   IF SQL_SUCCEEDED(pDbc.GetDrivers(wDirection, cwsDriverDesc, cwsDriverAttributes)) = 0 THEN EXIT DO
+   ? "Driver description: " & cwsDriverDesc
+   ? "Driver attributes: " & cwsDriverAttributes
+   wDirection = SQL_FETCH_NEXT
+LOOP
+```
+
 # <a name="GetEnvAttr"></a>GetEnvAttr (CODBCBase)
 
 Returns the current setting of an environment attribute.
@@ -641,6 +668,50 @@ FUNCTION CommitTran () AS SQLRETURN
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Example
+
+```
+#include once "Afx/COdbc/COdbc.inc"
+USING Afx
+
+' // Create a connection object and connect with the database
+DIM wszConStr AS WSTRING * 260 = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=biblio.mdb"
+DIM pDbc AS CODBC = wszConStr
+IF pDbc.Handle = NULL THEN PRINT "Unable to create the connection handle" : SLEEP : END
+
+' // Allocate an statement object
+DIM pStmt AS COdbcStmt = @pDbc
+IF pStmt.Handle = NULL THEN PRINT "Unable to create the statement handle" : SLEEP : END
+
+' // Cursor type
+pStmt.SetMultiuserKeysetCursor
+' // Bind the columns
+DIM AS LONG lAuId, cbAuId
+pStmt.BindCol(1, @lAuId, @cbAuId)
+DIM wszAuthor AS WSTRING * 260, cbAuthor AS LONG
+pStmt.BindCol(2, @wszAuthor, SIZEOF(wszAuthor), @cbAuthor)
+DIM iYearBorn AS SHORT, cbYearBorn AS LONG
+pStmt.BindCol(3, @iYearBorn, @cbYearBorn)
+
+' // Generate a result set
+pStmt.ExecDirect ("SELECT * FROM Authors ORDER BY Author")
+
+' // Fill the values of the bounded application variables and its sizes
+lAuId     = 998               : cbAuID     = SIZEOF(lAuId)
+wszAuthor = "Edgar Allan Poe" : cbAuthor   = LEN(wszAuthor)
+iYearBorn = 1809              : cbYearBorn = SIZEOF(iYearBorn)
+' // Add the record
+pStmt.AddRecord
+IF pStmt.Error = FALSE THEN PRINT "Record added" ELSE PRINT pStmt.GetErrorInfo
+
+' // Commit the transaction
+' pDbc.CommitTran
+' IF pDbc.Error = FALSE THEN PRINT "Commit succeeded"
+' or Rollbacks it because this is a test
+pDbc.RollbackTran 
+IF pDbc.Error = FALSE THEN PRINT "Rollback succeeded" ELSE PRINT pDbc.GetErrorInfo
+```
 
 # <a name="EnvHandle"></a>EnvHandle (CODBC)
 
@@ -2531,6 +2602,50 @@ FUNCTION RollbackTran () AS SQLRETURN
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Example
+
+```
+#include once "Afx/COdbc/COdbc.inc"
+USING Afx
+
+' // Create a connection object and connect with the database
+DIM wszConStr AS WSTRING * 260 = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=biblio.mdb"
+DIM pDbc AS CODBC = wszConStr
+IF pDbc.Handle = NULL THEN PRINT "Unable to create the connection handle" : SLEEP : END
+
+' // Allocate an statement object
+DIM pStmt AS COdbcStmt = @pDbc
+IF pStmt.Handle = NULL THEN PRINT "Unable to create the statement handle" : SLEEP : END
+
+' // Cursor type
+pStmt.SetMultiuserKeysetCursor
+' // Bind the columns
+DIM AS LONG lAuId, cbAuId
+pStmt.BindCol(1, @lAuId, @cbAuId)
+DIM wszAuthor AS WSTRING * 260, cbAuthor AS LONG
+pStmt.BindCol(2, @wszAuthor, SIZEOF(wszAuthor), @cbAuthor)
+DIM iYearBorn AS SHORT, cbYearBorn AS LONG
+pStmt.BindCol(3, @iYearBorn, @cbYearBorn)
+
+' // Generate a result set
+pStmt.ExecDirect ("SELECT * FROM Authors ORDER BY Author")
+
+' // Fill the values of the bounded application variables and its sizes
+lAuId     = 998               : cbAuID     = SIZEOF(lAuId)
+wszAuthor = "Edgar Allan Poe" : cbAuthor   = LEN(wszAuthor)
+iYearBorn = 1809              : cbYearBorn = SIZEOF(iYearBorn)
+' // Add the record
+pStmt.AddRecord
+IF pStmt.Error = FALSE THEN PRINT "Record added" ELSE PRINT pStmt.GetErrorInfo
+
+' // Commit the transaction
+' pDbc.CommitTran
+' IF pDbc.Error = FALSE THEN PRINT "Commit succeeded"
+' or Rollbacks it because this is a test
+pDbc.RollbackTran 
+IF pDbc.Error = FALSE THEN PRINT "Rollback succeeded" ELSE PRINT pDbc.GetErrorInfo
+```
 
 # <a name="SetConnectAttr"></a>SetConnectAttr (CODBC)
 
