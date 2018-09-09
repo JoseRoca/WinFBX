@@ -1306,7 +1306,7 @@ Returns an SQLUSMALLINT value indicating the position of the catalog in a qualif
 
 The position of the catalog in a qualified table name:
 
-SQL_CL_START
+SQL_CL_START<br>
 SQL_CL_END
 
 For example, an Xbase driver returns SQL_CL_START because the directory (catalog) name is at the start of the table name, as in \EMPDATA\EMP.DBF.
@@ -1722,8 +1722,8 @@ Returns an SQLUINTEGER bitmask enumerating the clauses in the DROP DOMAIN statem
 
 The following bitmasks are used to determine which clauses are supported:
 
-SQL_DD_DROP_DOMAIN
-SQL_DD_CASCADE
+SQL_DD_DROP_DOMAIN<br>
+SQL_DD_CASCADE<br>
 SQL_DD_RESTRICT
 
 An SQL-92 Intermediate level-conformant driver will always return all of these options as supported.
@@ -1734,8 +1734,8 @@ Returns an SQLUINTEGER bitmask enumerating the clauses in the DROP SCHEMA statem
 
 The following bitmasks are used to determine which clauses are supported:
 
-SQL_DS_DROP_SCHEMA
-SQL_DS_CASCADE
+SQL_DS_DROP_SCHEMA<br>
+SQL_DS_CASCADE<br>
 SQL_DS_RESTRICT
 
 An SQL-92 Intermediate level-conformant driver will always return all of these options as supported.
@@ -1826,9 +1826,9 @@ Because the identifier quote character in SQL-92 is the double quotation mark ("
 
 Returns an SQLUINTEGER bitmask that enumerates keywords in the CREATE INDEX statement that are supported by the driver.
 
-SQL_IK_NONE = None of the keywords is supported.
-SQL_IK_ASC = ASC keyword is supported.
-SQL_IK_DESC = DESC keyword is supported.
+SQL_IK_NONE = None of the keywords is supported.<br>
+SQL_IK_ASC = ASC keyword is supported.<br>
+SQL_IK_DESC = DESC keyword is supported.<br>
 SQL_IK_ALL = All keywords are supported.
 
 To see if the CREATE INDEX statement is supported, an application calls GetInfo with the SQL_DLL_INDEX information type.
@@ -1841,8 +1841,8 @@ Returns an SQLUINTEGER bitmask enumerating the views in the INFORMATION_SCHEMA t
 
 Returns an SQLUINTEGER bitmask that indicates support for INSERT statements.
 
-SQL_IS_INSERT_LITERALS
-SQL_IS_INSERT_SEARCHED
+SQL_IS_INSERT_LITERALS<br>
+SQL_IS_INSERT_SEARCHED<br>
 SQL_IS_SELECT_INTO
 
 An SQL-92 Entry level-conformant driver will always return all of these options as supported.
@@ -2219,8 +2219,8 @@ Returns an SQLUINTEGER bitmask enumerating the datetime scalar functions that ar
 
 The following bitmasks are used to determine which datetime functions are supported:
 
-SQL_SDF_CURRENT_DATE
-SQL_SDF_CURRENT_TIME
+SQL_SDF_CURRENT_DATE<br>
+SQL_SDF_CURRENT_TIME<br>
 SQL_SDF_CURRENT_TIMESTAMP
 
 **"SQL92ForeignKeyDeleteRule"**
@@ -2229,9 +2229,9 @@ Returns an SQLUINTEGER bitmask enumerating the rules supported for a foreign key
 
 The following bitmasks are used to determine which clauses are supported by the data source:
 
-SQL_SFKD_CASCADE
-SQL_SFKD_NO_ACTION
-SQL_SFKD_SET_DEFAULT
+SQL_SFKD_CASCADE<br>
+SQL_SFKD_NO_ACTION<br>
+SQL_SFKD_SET_DEFAULT<br>
 SQL_SFKD_SET_NULL
 
 An FIPS Transitional level-conformant driver will always return all of these options as supported.
@@ -2241,9 +2241,9 @@ An FIPS Transitional level-conformant driver will always return all of these opt
 Returns an SQLUINTEGER bitmask enumerating the rules supported for a foreign key in an UPDATE statement, as defined in SQL-92.
 The following bitmasks are used to determine which clauses are supported by the data source:
 
-SQL_SFKU_CASCADE
-SQL_SFKU_NO_ACTION
-SQL_SFKU_SET_DEFAULT
+SQL_SFKU_CASCADE<br><br>
+SQL_SFKU_NO_ACTION<br>
+SQL_SFKU_SET_DEFAULT<br>
 SQL_SFKU_SET_NULL
 
 An SQL-92 Full level-conformant driver will always return all of these options as supported.
@@ -2256,18 +2256,18 @@ The SQL-92 or FIPS conformance level at which this feature needs to be supported
 
 The following bitmasks are used to determine which clauses are supported by the data source:
 
-SQL_SG_DELETE_TABLE (Entry level)
-SQL_SG_INSERT_COLUMN (Intermediate level)
-SQL_SG_INSERT_TABLE (Entry level)
-SQL_SG_REFERENCES_TABLE (Entry level)
-SQL_SG_REFERENCES_COLUMN (Entry level)
-SQL_SG_SELECT_TABLE (Entry level)
-SQL_SG_UPDATE_COLUMN (Entry level)
-SQL_SG_UPDATE_TABLE (Entry level)
-SQL_SG_USAGE_ON_DOMAIN (FIPS Transitional level)
-SQL_SG_USAGE_ON_CHARACTER_SET (FIPS Transitional level)
-SQL_SG_USAGE_ON_COLLATION (FIPS Transitional level)
-SQL_SG_USAGE_ON_TRANSLATION (FIPS Transitional level)
+SQL_SG_DELETE_TABLE (Entry level)<br>
+SQL_SG_INSERT_COLUMN (Intermediate level)<br>
+SQL_SG_INSERT_TABLE (Entry level)<br>
+SQL_SG_REFERENCES_TABLE (Entry level)<br>
+SQL_SG_REFERENCES_COLUMN (Entry level)<br>
+SQL_SG_SELECT_TABLE (Entry level)<br>
+SQL_SG_UPDATE_COLUMN (Entry level)<br>
+SQL_SG_UPDATE_TABLE (Entry level)<br>
+SQL_SG_USAGE_ON_DOMAIN (FIPS Transitional level)<br>
+SQL_SG_USAGE_ON_CHARACTER_SET (FIPS Transitional level)<br>
+SQL_SG_USAGE_ON_COLLATION (FIPS Transitional level)<br>
+SQL_SG_USAGE_ON_TRANSLATION (FIPS Transitional level)<br>
 SQL_SG_WITH_GRANT_OPTION (Entry level)
 
 **"SQL92NumericValueFunctions"**
@@ -2275,11 +2275,11 @@ SQL_SG_WITH_GRANT_OPTION (Entry level)
 Returns an SQLUINTEGER bitmask enumerating the numeric value scalar functions that are supported by the driver and the associated data source, as defined in SQL-92.
 The following bitmasks are used to determine which numeric functions are supported:
 
-SQL_SNVF_BIT_LENGTH
-SQL_SNVF_CHAR_LENGTH
-SQL_SNVF_CHARACTER_LENGTH
-SQL_SNVF_EXTRACT
-SQL_SNVF_OCTET_LENGTH
+SQL_SNVF_BIT_LENGTH<br>
+SQL_SNVF_CHAR_LENGTH<br>
+SQL_SNVF_CHARACTER_LENGTH<br>
+SQL_SNVF_EXTRACT<br>
+SQL_SNVF_OCTET_LENGTH<br>
 SQL_SNVF_POSITION
 
 **"SQL92Predicates"**
@@ -2290,19 +2290,19 @@ The SQL-92 or FIPS conformance level at which this feature needs to be supported
 
 The following bitmasks are used to determine which options are supported by the data source:
 
-SQL_SP_BETWEEN (Entry level)
-SQL_SP_COMPARISON (Entry level)
-SQL_SP_EXISTS (Entry level)
-SQL_SP_IN (Entry level)
-SQL_SP_ISNOTNULL (Entry level)
-SQL_SP_ISNULL (Entry level)
-SQL_SP_LIKE (Entry level)
-SQL_SP_MATCH_FULL (Full level)
-SQL_SP_MATCH_PARTIAL(Full level)
-SQL_SP_MATCH_UNIQUE_FULL (Full level)
-SQL_SP_MATCH_UNIQUE_PARTIAL (Full level)
-SQL_SP_OVERLAPS (FIPS Transitional level)
-SQL_SP_QUANTIFIED_COMPARISON (Entry level)
+SQL_SP_BETWEEN (Entry level)<br>
+SQL_SP_COMPARISON (Entry level)<br>
+SQL_SP_EXISTS (Entry level)<br>
+SQL_SP_IN (Entry level)<br>
+SQL_SP_ISNOTNULL (Entry level)<br>
+SQL_SP_ISNULL (Entry level)<br><br>
+SQL_SP_LIKE (Entry level)<br>
+SQL_SP_MATCH_FULL (Full level)<br>
+SQL_SP_MATCH_PARTIAL(Full level)<br>
+SQL_SP_MATCH_UNIQUE_FULL (Full level)<br>
+SQL_SP_MATCH_UNIQUE_PARTIAL (Full level)<br>
+SQL_SP_OVERLAPS (FIPS Transitional level)<br><br>
+SQL_SP_QUANTIFIED_COMPARISON (Entry level)<br>
 SQL_SP_UNIQUE (Entry level)
 
 **"SQL92RelationalJoinOperators"**
@@ -2313,15 +2313,15 @@ The SQL-92 or FIPS conformance level at which this feature needs to be supported
 
 The following bitmasks are used to determine which options are supported by the data source:
 
-SQL_SRJO_CORRESPONDING_CLAUSE (Intermediate level)
-SQL_SRJO_CROSS_JOIN (Full level)
-SQL_SRJO_EXCEPT_JOIN (Intermediate level)
-SQL_SRJO_FULL_OUTER_JOIN (Intermediate level)
-SQL_SRJO_INNER_JOIN (FIPS Transitional level)
-SQL_SRJO_INTERSECT_JOIN (Intermediate level)
-SQL_SRJO_LEFT_OUTER_JOIN (FIPS Transitional level)
-SQL_SRJO_NATURAL_JOIN (FIPS Transitional level)
-SQL_SRJO_RIGHT_OUTER_JOIN (FIPS Transitional level)
+SQL_SRJO_CORRESPONDING_CLAUSE (Intermediate level)<br>
+SQL_SRJO_CROSS_JOIN (Full level)<br>
+SQL_SRJO_EXCEPT_JOIN (Intermediate level)<br>
+SQL_SRJO_FULL_OUTER_JOIN (Intermediate level)<br>
+SQL_SRJO_INNER_JOIN (FIPS Transitional level)<br>
+SQL_SRJO_INTERSECT_JOIN (Intermediate level)<br>
+SQL_SRJO_LEFT_OUTER_JOIN (FIPS Transitional level)<br>
+SQL_SRJO_NATURAL_JOIN (FIPS Transitional level)<br>
+SQL_SRJO_RIGHT_OUTER_JOIN (FIPS Transitional level)<br>
 SQL_SRJO_UNION_JOIN (Full level)
 
 SQL_SRJO_INNER_JOIN indicates support for the INNER JOIN syntax, not for the inner join capability. Support for the INNER JOIN syntax is FIPS TRANSITIONAL, while support for the inner join capability is ENTRY.
@@ -2334,20 +2334,20 @@ The SQL-92 or FIPS conformance level at which this feature needs to be supported
 
 The following bitmasks are used to determine which clauses are supported by the data source:
 
-SQL_SR_CASCADE (FIPS Transitional level)
-SQL_SR_DELETE_TABLE (Entry level)
-SQL_SR_GRANT_OPTION_FOR (Intermediate level)
-SQL_SR_INSERT_COLUMN (Intermediate level)
-SQL_SR_INSERT_TABLE (Entry level)
-SQL_SR_REFERENCES_COLUMN (Entry level)
-SQL_SR_REFERENCES_TABLE (Entry level)
-SQL_SR_RESTRICT (FIPS Transitional level)
-SQL_SR_SELECT_TABLE (Entry level)
-SQL_SR_UPDATE_COLUMN (Entry level)
-SQL_SR_UPDATE_TABLE (Entry level)
-SQL_SR_USAGE_ON_DOMAIN (FIPS Transitional level)
-SQL_SR_USAGE_ON_CHARACTER_SET (FIPS Transitional level)
-SQL_SR_USAGE_ON_COLLATION (FIPS Transitional level)
+SQL_SR_CASCADE (FIPS Transitional level)<br>
+SQL_SR_DELETE_TABLE (Entry level)<br>
+SQL_SR_GRANT_OPTION_FOR (Intermediate level)<br>
+SQL_SR_INSERT_COLUMN (Intermediate level)<br>
+SQL_SR_INSERT_TABLE (Entry level)<br>
+SQL_SR_REFERENCES_COLUMN (Entry level)<br>
+SQL_SR_REFERENCES_TABLE (Entry level)<br>
+SQL_SR_RESTRICT (FIPS Transitional level)<br>
+SQL_SR_SELECT_TABLE (Entry level)<br>
+SQL_SR_UPDATE_COLUMN (Entry level)<br>
+SQL_SR_UPDATE_TABLE (Entry level)<br>
+SQL_SR_USAGE_ON_DOMAIN (FIPS Transitional level)<br>
+SQL_SR_USAGE_ON_CHARACTER_SET (FIPS Transitional level)<br>
+SQL_SR_USAGE_ON_COLLATION (FIPS Transitional level)<br>
 SQL_SR_USAGE_ON_TRANSLATION (FIPS Transitional level)
 
 **"SQL92RowValueConstructor"**
@@ -2356,9 +2356,9 @@ Returns an SQLUINTEGER bitmask enumerating the row value constructor expressions
 
 The following bitmasks are used to determine which options are supported by the data source:
 
-SQL_SRVC_VALUE_EXPRESSION
-SQL_SRVC_NULL
-SQL_SRVC_DEFAULT
+SQL_SRVC_VALUE_EXPRESSION<br>
+SQL_SRVC_NULL<br>
+SQL_SRVC_DEFAULT<br>
 SQL_SRVC_ROW_SUBQUERY
 
 **"SQL92StringFunctions"**
@@ -2367,13 +2367,13 @@ Returns an SQLUINTEGER bitmask enumerating the string scalar functions that are 
 
 The following bitmasks are used to determine which string functions are supported:
 
-SQL_SSF_CONVERT
-SQL_SSF_LOWER
-SQL_SSF_UPPER
-SQL_SSF_SUBSTRING
-SQL_SSF_TRANSLATE
-SQL_SSF_TRIM_BOTH
-SQL_SSF_TRIM_LEADING
+SQL_SSF_CONVERT<br>
+SQL_SSF_LOWER<br>
+SQL_SSF_UPPER<br>
+SQL_SSF_SUBSTRING<br>
+SQL_SSF_TRANSLATE<br>
+SQL_SSF_TRIM_BOTH<br>
+SQL_SSF_TRIM_LEADING<br>
 SQL_SSF_TRIM_TRAILING
 
 **"SQL92ValueExpressions"**
@@ -2384,18 +2384,18 @@ The SQL-92 or FIPS conformance level at which this feature needs to be supported
 
 The following bitmasks are used to determine which options are supported by the data source:
 
-SQL_SVE_CASE (Intermediate level)
-SQL_SVE_CAST (FIPS Transitional level)
-SQL_SVE_COALESCE (Intermediate level)
+SQL_SVE_CASE (Intermediate level)<br>
+SQL_SVE_CAST (FIPS Transitional level)<br>
+SQL_SVE_COALESCE (Intermediate level)<br>
 SQL_SVE_NULLIF (Intermediate level)
 
 **"SqlConformance"**
 
 Returns an SQLUINTEGER value indicating the level of SQL-92 supported by the driver.
 
-SQL_SC_SQL92_ENTRY = Entry level SQL-92 compliant.
-SQL_SC_FIPS127_2_TRANSITIONAL = FIPS 127-2 transitional level compliant.
-SQL_SC_SQL92_FULL = Full level SQL-92 compliant.
+SQL_SC_SQL92_ENTRY = Entry level SQL-92 compliant.<br>
+SQL_SC_FIPS127_2_TRANSITIONAL = FIPS 127-2 transitional level compliant.<br>
+SQL_SC_SQL92_FULL = Full level SQL-92 compliant.<br>
 SQL_SC_ SQL92_INTERMEDIATE = Intermediate level SQL-92 compliant.
 
 **"StandardCliConformance"**
@@ -2498,28 +2498,28 @@ Returns an SQLUINTEGER bitmask enumerating the scalar string functions supported
 
 The following bitmasks are used to determine which string functions are supported:
 
-SQL_FN_STR_ASCII (ODBC 1.0)
-SQL_FN_STR_BIT_LENGTH (ODBC 3.0)
-SQL_FN_STR_CHAR (ODBC 1.0)
-SQL_FN_STR_CHAR_LENGTH (ODBC 3.0)
-SQL_FN_STR_CHARACTER_LENGTH (ODBC 3.0)
-SQL_FN_STR_CONCAT (ODBC 1.0)
-SQL_FN_STR_DIFFERENCE (ODBC 2.0)
-SQL_FN_STR_INSERT (ODBC 1.0)
-SQL_FN_STR_LCASE (ODBC 1.0)
-SQL_FN_STR_LEFT (ODBC 1.0)
-SQL_FN_STR_LENGTH (ODBC 1.0)
-SQL_FN_STR_LOCATE (ODBC 1.0)
-SQL_FN_STR_LTRIM (ODBC 1.0)
-SQL_FN_STR_OCTET_LENGTH (ODBC 3.0)
-SQL_FN_STR_POSITION (ODBC 3.0)
-SQL_FN_STR_REPEAT (ODBC 1.0)
-SQL_FN_STR_REPLACE (ODBC 1.0)
-SQL_FN_STR_RIGHT (ODBC 1.0)
-SQL_FN_STR_RTRIM (ODBC 1.0)
-SQL_FN_STR_SOUNDEX (ODBC 2.0)
-SQL_FN_STR_SPACE (ODBC 2.0)
-SQL_FN_STR_SUBSTRING (ODBC 1.0)
+SQL_FN_STR_ASCII (ODBC 1.0)<br>
+SQL_FN_STR_BIT_LENGTH (ODBC 3.0)<br>
+SQL_FN_STR_CHAR (ODBC 1.0)<br>
+SQL_FN_STR_CHAR_LENGTH (ODBC 3.0)<br>
+SQL_FN_STR_CHARACTER_LENGTH (ODBC 3.0)<br>
+SQL_FN_STR_CONCAT (ODBC 1.0)<br>
+SQL_FN_STR_DIFFERENCE (ODBC 2.0)<br>
+SQL_FN_STR_INSERT (ODBC 1.0)<br>
+SQL_FN_STR_LCASE (ODBC 1.0)<br>
+SQL_FN_STR_LEFT (ODBC 1.0)<br>
+SQL_FN_STR_LENGTH (ODBC 1.0)<br>
+SQL_FN_STR_LOCATE (ODBC 1.0)<br>
+SQL_FN_STR_LTRIM (ODBC 1.0)<br>
+SQL_FN_STR_OCTET_LENGTH (ODBC 3.0)<br>
+SQL_FN_STR_POSITION (ODBC 3.0)<br>
+SQL_FN_STR_REPEAT (ODBC 1.0)<br>
+SQL_FN_STR_REPLACE (ODBC 1.0)<br>
+SQL_FN_STR_RIGHT (ODBC 1.0)<br>
+SQL_FN_STR_RTRIM (ODBC 1.0)<br>
+SQL_FN_STR_SOUNDEX (ODBC 2.0)<br>
+SQL_FN_STR_SPACE (ODBC 2.0)<br>
+SQL_FN_STR_SUBSTRING (ODBC 1.0)<br>
 SQL_FN_STR_UCASE (ODBC 1.0)
 
 If an application can call the LOCATE scalar function with the string_exp1, string_exp2, and start arguments, the driver returns the SQL_FN_STR_LOCATE bitmask. If an application can call the LOCATE scalar function with only the string_exp1 and string_exp2 arguments, the driver returns the SQL_FN_STR_LOCATE_2 bitmask. Drivers that fully support the LOCATE scalar function return both bitmasks.
@@ -2528,10 +2528,10 @@ If an application can call the LOCATE scalar function with the string_exp1, stri
 
 Returns an SQLUINTEGER bitmask enumerating the predicates that support subqueries:
 
-SQL_SQ_CORRELATED_SUBQUERIES
-SQL_SQ_COMPARISON
-SQL_SQ_EXISTS
-SQL_SQ_IN
+SQL_SQ_CORRELATED_SUBQUERIES<br>
+SQL_SQ_COMPARISON<br>
+SQL_SQ_EXISTS<br>
+SQL_SQ_IN<br>
 SQL_SQ_QUANTIFIED
 
 The SQL_SQ_CORRELATED_SUBQUERIES bitmask indicates that all predicates that  support subqueries support correlated subqueries.
@@ -2544,9 +2544,9 @@ Returns an SQLUINTEGER bitmask enumerating the scalar system functions supported
 
 The following bitmasks are used to determine which system functions are supported:
 
-SQL_FN_SYS_DBNAME
-SQL_FN_SYS_IFNULL
-SQL_FN_SYS_USERNAME
+SQL_FN_SYS_DBNAME<br>
+SQL_FN_SYS_IFNULL<br>
+SQL_FN_SYS_USERNAME<br>
 
 **"TableTerm"**
 
@@ -2562,14 +2562,14 @@ Returns an SQLUINTEGER bitmask enumerating the timestamp intervals supported by 
 
 The following bitmasks are used to determine which intervals are supported:
 
-SQL_FN_TSI_FRAC_SECOND
-SQL_FN_TSI_SECOND
-SQL_FN_TSI_MINUTE
-SQL_FN_TSI_HOUR
-SQL_FN_TSI_DAY
-SQL_FN_TSI_WEEK
-SQL_FN_TSI_MONTH
-SQL_FN_TSI_QUARTER
+SQL_FN_TSI_FRAC_SECOND<br>
+SQL_FN_TSI_SECOND<br>
+SQL_FN_TSI_MINUTE<br>
+SQL_FN_TSI_HOUR<br>
+SQL_FN_TSI_DAY<br>
+SQL_FN_TSI_WEEK<br>
+SQL_FN_TSI_MONTH<br>
+SQL_FN_TSI_QUARTER<br>
 SQL_FN_TSI_YEAR
 
 An FIPS Transitional level-conformant driver will always return a bitmask in which all of these bits are set.
@@ -2580,14 +2580,14 @@ Returns an SQLUINTEGER bitmask enumerating the timestamp intervals supported by 
 
 The following bitmasks are used to determine which intervals are supported:
 
-SQL_FN_TSI_FRAC_SECOND
-SQL_FN_TSI_SECOND
-SQL_FN_TSI_MINUTE
-SQL_FN_TSI_HOUR
-SQL_FN_TSI_DAY
-SQL_FN_TSI_WEEK
-SQL_FN_TSI_MONTH
-SQL_FN_TSI_QUARTER
+SQL_FN_TSI_FRAC_SECOND<br>
+SQL_FN_TSI_SECOND<br>
+SQL_FN_TSI_MINUTE<br>
+SQL_FN_TSI_HOUR<br>
+SQL_FN_TSI_DAY<br>
+SQL_FN_TSI_WEEK<br>
+SQL_FN_TSI_MONTH<br>
+SQL_FN_TSI_QUARTER<br>
 SQL_FN_TSI_YEAR
 
 An FIPS Transitional level-conformant driver will always return a bitmask in which all of these bits are set.
@@ -2598,26 +2598,26 @@ Returns an SQLUINTEGER bitmask enumerating the scalar date and time functions su
 
 The following bitmasks are used to determine which date and time functions are supported:
 
-SQL_FN_TD_CURRENT_DATE ODBC 3.0)
-SQL_FN_TD_CURRENT_TIME (ODBC 3.0)
-SQL_FN_TD_CURRENT_TIMESTAMP (ODBC 3.0)
-SQL_FN_TD_CURDATE (ODBC 1.0)
-SQL_FN_TD_CURTIME (ODBC 1.0)
-SQL_FN_TD_DAYNAME (ODBC 2.0)
-SQL_FN_TD_DAYOFMONTH (ODBC 1.0)
-SQL_FN_TD_DAYOFWEEK (ODBC 1.0)
-SQL_FN_TD_DAYOFYEAR (ODBC 1.0)
-SQL_FN_TD_EXTRACT (ODBC 3.0)
-SQL_FN_TD_HOUR (ODBC 1.0)
-SQL_FN_TD_MINUTE (ODBC 1.0)
-SQL_FN_TD_MONTH (ODBC 1.0)
-SQL_FN_TD_MONTHNAME (ODBC 2.0)
-SQL_FN_TD_NOW (ODBC 1.0)
-SQL_FN_TD_QUARTER (ODBC 1.0)
-SQL_FN_TD_SECOND (ODBC 1.0)
-SQL_FN_TD_TIMESTAMPADD (ODBC 2.0)
-SQL_FN_TD_TIMESTAMPDIFF (ODBC 2.0)
-SQL_FN_TD_WEEK (ODBC 1.0)
+SQL_FN_TD_CURRENT_DATE ODBC 3.0)<br>
+SQL_FN_TD_CURRENT_TIME (ODBC 3.0)<br>
+SQL_FN_TD_CURRENT_TIMESTAMP (ODBC 3.0)<br>
+SQL_FN_TD_CURDATE (ODBC 1.0)<br>
+SQL_FN_TD_CURTIME (ODBC 1.0)<br>
+SQL_FN_TD_DAYNAME (ODBC 2.0)<br>
+SQL_FN_TD_DAYOFMONTH (ODBC 1.0)<br>
+SQL_FN_TD_DAYOFWEEK (ODBC 1.0)<br><br>
+SQL_FN_TD_DAYOFYEAR (ODBC 1.0)<br>
+SQL_FN_TD_EXTRACT (ODBC 3.0)<br>
+SQL_FN_TD_HOUR (ODBC 1.0)<br>
+SQL_FN_TD_MINUTE (ODBC 1.0)<br>
+SQL_FN_TD_MONTH (ODBC 1.0)<br>
+SQL_FN_TD_MONTHNAME (ODBC 2.0)<br>
+SQL_FN_TD_NOW (ODBC 1.0)<br>
+SQL_FN_TD_QUARTER (ODBC 1.0)<br><br>
+SQL_FN_TD_SECOND (ODBC 1.0)<br>
+SQL_FN_TD_TIMESTAMPADD (ODBC 2.0)<br>
+SQL_FN_TD_TIMESTAMPDIFF (ODBC 2.0)<br>
+SQL_FN_TD_WEEK (ODBC 1.0)<br>
 SQL_FN_TD_YEAR (ODBC 1.0)
 
 **"TxnCapable"**
@@ -2640,9 +2640,9 @@ Returns an SQLUINTEGER bitmask enumerating the transaction isolation levels avai
 
 The following bitmasks are used in conjunction with the flag to determine which options are supported:
 
-SQL_TXN_READ_UNCOMMITTED
-SQL_TXN_READ_COMMITTED
-SQL_TXN_REPEATABLE_READ
+SQL_TXN_READ_UNCOMMITTED<br><br>
+SQL_TXN_READ_COMMITTED<br>
+SQL_TXN_REPEATABLE_READ<br>
 SQL_TXN_SERIALIZABLE
 
 For descriptions of these isolation levels, see the description of SQL_DEFAULT_TXN_ISOLATION.
