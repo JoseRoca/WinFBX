@@ -961,3 +961,123 @@ FUNCTION GetConnectAttr (BYVAL Attribute AS SQLINTEGER, BYVAL ValuePtr AS SQLPOI
 #### Result code
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+```
+FUNCTION GetConnectAttr (BYVAL Attribute AS SQLINTEGER, BYVAL ValuePtr AS SQLPOINTER, _
+FUNCTION GetConnectAttrStr (BYREF wszAttribute AS WSTRING) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszAttribute* | The attribute to retrieve. |
+
+**"AccessMode"**
+
+Returns an SQLUINTEGER value. SQL_MODE_READ_ONLY is used by the driver or data source as an indicator that the connection is not required to support SQL statements that cause updates to occur. This mode can be used to optimize locking strategies, transaction management, or other areas as appropriate to the driver or data source. The driver is not required to prevent such statements from being submitted to  the data source. The behavior of the driver and data source when asked to process SQL statements that are not read-only during a read-only connection is implementation-defined. SQL_MODE_READ_WRITE is the default.
+
+**"AsyncEnable"**
+
+SQL_ASYNC_ENABLE_OFF = Off (the default)<br>
+SQL_ASYNC_ENABLE_ON = On
+
+**"AutoIPD"**
+
+Returns a read-only SQLUINTEGER value that specifies whether automatic population of the IPD after a call to Prepare is supported. Optional feature not implemented by the Microsoft Access Driver.
+
+**"AutoCommit"**
+
+SQL_AUTOCOMMIT_OFF = The driver uses manual-commit mode, and theapplication must explicitly commit or roll back transactions with OdbcEndTran.
+
+SQL_AUTOCOMMIT_ON = The driver uses autocommit mode. Each statement is committed immediately after it is executed. This is the default. Any open transactions on the connection are committed when SQL_ATTR_AUTOCOMMIT is set to SQL_AUTOCOMMIT_ON to change from manual-commit mode to autocommit mode.
+
+**"ConnectionDead"**
+
+SQL_TRUE (1) or SQL_FALSE (0).
+
+**"ConnectionTimeout"**
+
+Returns an SQLUINTEGER value corresponding to the number of seconds to wait for any request on the connection to complete before returning to the application. The driver should return SQLSTATE HYT00 (Timeout expired) anytime that it is possible to time out in a situation not associated with query execution or login. If the value is equal to 0 (the default), there is no timeout. Optional feature not implemented by the Microsoft Access Driver.
+
+**"CurrentCatalog"**
+
+Returnss a character string containing the name of the catalog to be used by the data source.
+
+**"Cursors"**
+
+An SQLULEN value specifying how the Driver Manager uses the ODBC cursor library:
+
+SQL_CUR_USE_IF_NEEDED = The Driver Manager uses the ODBC cursor library only if it is needed. If the driver supports the SQL_FETCH_PRIOR option in SQLFetchScroll, the Driver Manager uses the scrolling capabilities of the driver. Otherwise, it uses the ODBC cursor library.
+
+SQL_CUR_USE_ODBC = The Driver Manager uses the ODBC cursor library.
+
+SQL_CUR_USE_DRIVER = The Driver Manager uses the scrolling capabilities of the driver. This is the default setting.
+
+Warning: The cursor library will be removed in a future version of Windows. Avoid using this feature in new development work and plan to modify applications that currently use this feature. Microsoft recommends using the driver's cursor functionality.
+
+**"LoginTimeout"**
+
+Returns an SQLUINTEGER value corresponding to the number of seconds to wait for a login request to complete before returning to the application. The default is driver-dependent. If *ValuePtr* is 0, the timeout is disabled and a connection attempt will wait indefinitely. If the specified timeout exceeds the maximum login timeout in the data source, the driver substitutes that value and returns SQLSTATE 01S02 (Option value changed).
+
+**"MetadataID"**
+
+Returns an SQLUINTEGER value that determines how the string arguments of catalog functions are treated. Optional feature not implemented by the Microsoft Access Driver.
+
+If SQL_TRUE, the string argument of catalog functions are treated as identifiers. The case is not significant. For nondelimited strings, the driver removes any trailing spaces and the string is folded to uppercase. For delimited strings, the driver removes any leading or trailing spaces and takes literally whatever is between the delimiters. If one of these arguments is set to a null pointer, the function returns SQL_ERROR and SQLSTATE HY009 (Invalid use of null pointer). If SQL_FALSE, the string arguments of catalog functions are not treated as identifiers. The case is significant. They can either contain a string search pattern or not, depending on the argument. The default value is SQL_FALSE. The *TableType* argument of **SQLTables**, which takes a list of values, is not affected by this attribute. SQL_ATTR_METADATA_ID can also be set on the statement level. (It is the only connection attribute that is also a statement attribute.)
+
+**"PacketSize"**
+
+Returns an SQLUINTEGER value specifying the network packet size in bytes. Optional feature not implemented by the Microsoft Access Driver.
+
+Note Many data sources either do not support this option or only can return but not set the network packet size. If the specified size exceeds the maximum packet size or is smaller than the minimum packet size, the driver substitutes that value and returns SQLSTATE 01S02 (Option value changed). If the application sets packet size after a connection has already been made, the driver will return SQLSTATE HY011 (Attribute cannot be set now).
+
+**"QuietMode"**
+
+Returns a 32-bit window handle.
+
+If the window handle is a null pointer, the driver does not display any dialog boxes. If the window handle is not a null pointer, it should be the parent window handle of the application. This is the default. The driver uses this handle to display dialog boxes.
+
+Note The SQL_ATTR_QUIET_MODE connection attribute does not apply to dialog boxes displayed by **DriverConnect**.
+
+**"Trace"**
+
+Returns an SQLUINTEGER value telling the Driver Manager whether to perform tracing.
+
+SQL_OPT_TRACE_OFF = Tracing off (the default)<br>
+SQL_OPT_TRACE_ON = Tracing on
+
+When tracing is on, the Driver Manager writes each ODBC function call to the trace file. Note When tracing is on, the Driver Manager can return SQLSTATE IM013 (Trace file error) from any function.
+
+An application specifies a trace file with the **TraceFile** property. If the file already exists, the Driver Manager appends to the file. Otherwise, it creates the file. If tracing is on and no trace file has been specified, the Driver Manager writes to the file SQL.LOG in the root directory.
+
+**"TraceFile"**
+
+A string containing the name of the trace file.
+
+**"TranslateLib"**
+
+A null-terminated character string containing the name of a library containing the functions **SQLDriverToDataSource** and **SQLDataSourceToDriver** that the driver accesses to perform tasks such as character set translation. This option may be specified only if the driver has connected to the data source. The setting of this attribute will persist across connections. Optional feature not implemented by the Microsoft Access Driver.
+
+**"TxnIsolation"**
+
+An SQLUINTEGER bitmask.
+
+The following bitmasks are used in conjunction with the flag to determine which options are supported:
+
+SQL_TXN_READ_UNCOMMITTED<br>
+SQL_TXN_READ_COMMITTED<br>
+SQL_TXN_REPEATABLE_READ<br>
+SQL_TXN_SERIALIZABLE
+
+For descriptions of these isolation levels, see the description of SQL_DEFAULT_TXN_ISOLATION.
+
+To set the transaction isolation level, an application calls **SetConnectAttr** to set the SQL_ATTR_TXN_ISOLATION attribute.
+
+An SQL-92 Entry level-conformant driver will always return SQL_TXN_SERIALIZABLE as supported. A FIPS Transitional level-conformant driver will always return all of these options as supported.
+
+## Return value
+
+The current value of the attribute.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
