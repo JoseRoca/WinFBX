@@ -1294,3 +1294,25 @@ FUNCTION Execute () AS SQLRETURN
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
+
+# <a name="ExtendedFetch"></a>ExtendedFetch
+
+Fetches the specified rowset of data from the result set and returns data for all bound columns. Rowsets can be specified at an absolute or relative position or by bookmark.
+
+Note In ODBC 3.x, **ExtendedFetch** has been replaced by FetchScroll. ODBC 3.x applications should not call **ExtendedFetch**; instead they should call **FetchScroll**. The Driver Manager maps **FetchScroll** to **ExtendedFetch** when working with an ODBC 2.x driver. 
+
+```
+FUNCTION ExtendedFetch (BYVAL FetchOrientation AS SQLUSMALLINT, BYVAL FetchOffset AS SQLLEN, _
+   BYVAL RowCountPtr AS ANY PTR, BYVAL RowStatusArray AS SQLUSMALLINT PTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *FetchOrientation* | Type of fetch. This is the same as *FetchOrientation* in **FetchScroll**. |
+| *FetchOffset* | Number of the row to fetch. This is the same as *FetchOffset* in **FetchScroll**, with one exception. When *FetchOrientation* is SQL_FETCH_BOOKMARK, *FetchOffset* is a fixed-length bookmark, not an offset from a bookmark. In other words, **ExtendedFetch** retrieves the bookmark from this argument, not the SQL_ATTR_FETCH_BOOKMARK_PTR statement attribute. It does not support variable-length bookmarks and does not support fetching a rowset at an offset (other than 0) from a bookmark. |
+| *RowCountPtr* | Pointer to a buffer in which to return the number of rows actually fetched. This buffer is used in the same manner as the buffer specified by the SQL_ATTR_ROWS_FETCHED_PTR statement attribute. This buffer is used only by ExtendedFetch. It is not used by **Fetch** or **FetchScroll**. |
+| *RowStatusArray* | Pointer to an array in which to return the status of each row. This array is used in the same manner as the array specified by the SQL_ATTR_ROW_STATUS_PTR statement attribute.<br>However, the address of this array is not stored in the SQL_DESC_STATUS_ARRAY_PTR field in the IRD. Furthermore, this array is used only by **ExtendedFetch** and by **BulkOperations** with an *Operation* of SQL_ADD or **SetPos** when it is called after **ExtendedFetch**. It is not used by **Fetch** or **FetchScroll**, and it is not used by **BulkOperations** or **SetPos** when they are called after **Fetch** or **FetchScroll**. It is also not used when **BulkOperations** with an *Operation* of SQL_ADD is called before any fetch function is called. In other words, it is used only in statement state S7. It is not used in statement states S5 or S6.<br>Applications should provide a valid pointer in the **RowStatusArray* argument; if not, the behavior of **ExtendedFetch** and the behavior of calls to **BulkOperations** or **SetPos** after a cursor has been positioned by **ExtendedFetch** are undefined. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
