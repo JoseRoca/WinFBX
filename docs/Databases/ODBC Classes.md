@@ -1126,3 +1126,35 @@ FUNCTION GetDiagRec (BYVAL RecNumber AS SQLSMALLINT, BYVAL Sqlstate AS WSTRING P
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetErrorInfo"></a>GetErrorInfo (CODBC)
+
+Returns a verbose description of the last error(s).
+
+```
+FUNCTION GetErrorInfo (BYVAL iErrorCode AS SQLRETURN = 0) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *iErrorCode* | Optional. The error code returned by **GetLastResult**. |
+
+# <a name="GetInfo"></a>GetInfo (CODBC)
+
+Returns general information about the driver and data source associated with a connection.
+
+```
+FUNCTION GetInfo (BYVAL InfoType AS SQLUSMALLINT, BYVAL InfoValuePtr AS SQLPOINTER, _
+   BYVAL BufferLength AS SQLSMALLINT, BYVAL StringLength AS SQLSMALLINT PTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *InfoType* | Type of information. |
+| *InfoValuePtr* | Pointer to a buffer in which to return the information. Depending on the InfoType requested, the information returned will be one of the following: a null-terminated character string, an SQLUSMALLINT value, an SQLUINTEGER bitmask, an SQLUINTEGER flag, or a SQLUINTEGER binary value.<br>If the *InfoType* argument is SQL_DRIVER_HDESC or SQL_DRIVER_HSTMT, the *InfoValuePtr* argument is both input and output. |
+| *BufferLength* | Length of the *InfoValuePtr* buffer. If the value in *InfoValuePtr* is not a character string or if *InfoValuePtr* is a null pointer, the *BufferLength* argument is ignored. The driver assumes that the size of *InfoValuePtr* is SQLUSMALLINT or SQLUINTEGER, based on the *InfoType*. since this method works with Unicode, the *BufferLength* argument must be an even number; if not, SQLSTATE HY090 (Invalid string or buffer length) is returned. |
+| *StringLength* | Pointer to a buffer in which to return the total number of bytes (excluding the null-termination character for character data) available to return in *InfoValuePtr*. For character data, if the number of bytes available to return is greater than or equal to *BufferLength*, the information in *InfoValuePtr* is truncated to *BufferLength* bytes minus the length of a null-termination character and is null-terminated by the driver. For all other types of data, the value of *BufferLength* is ignored and the driver assumes the size of *InfoValuePtr* is SQLUSMALLINT or SQLUINTEGER, depending on the *InfoType*.<br>Important note: With the ODBC version that comes installed with Windows 7, you have to specify 2 (SQLUSMALLINT) or 4 (SQLUINTEGER) or it will fail. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
