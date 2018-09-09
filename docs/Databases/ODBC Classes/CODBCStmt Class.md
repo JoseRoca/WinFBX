@@ -1666,3 +1666,26 @@ SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVAL
 #### Diagnostics
 
 When **ForeignKeys** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
+
+# <a name="GetImpParamDescField"></a>GetImpParamDescField
+
+Returns the current setting or value of a single field of a descriptor record. The field returned describe the name, data type, and storage of column or parameter data.
+
+```
+FUNCTION GetImpParamDescField (BYVAL RecNumber AS SQLSMALLINT, BYVAL FieldIdentifier AS SQLSMALLINT, _
+   BYVAL ValuePtr AS SQLPOINTER, BYVAL BufferLength AS SQLINTEGER, _
+   BYVAL StringLength AS SQLINTEGER PTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered from 1, with record number 0 being the bookmark record. The RecNumber argument must be less or equal to the value of SQL_DESC_COUNT. If RecNumber is less that or equal to SQL_DESC_COUNT but the row does not contain data for a column or parameter, a call to **GetImpRowDesc** will return the default values of the fields. |
+| *FieldIdentifier* | Indicates the field of the descriptor whose value is to be returned: SQL_DESC_NAME, SQL_DESC_TYPE, SQL_DESC_OCTET_LENGTH, SQL_DESC_PRECISION, SQL_DESC_SCALE, SQL_DESC_NULLABLE. |
+| *ValuePtr* | Pointer to a buffer in which to return the descriptor information. The data type depends on the value of *FieldIdentifier*. |
+| *BufferLength* | If *FieldIdentifier* is an ODBC-defined field and *ValuePtr* points to a character string or a binary buffer, this argument should be the length of *ValuePtr*. If *FieldIdentifier* is an ODBC-defined field and *ValuePtr* is an integer, *BufferLength* is ignored.<br>If *FieldIdentifier* is a driver-defined field, the application indicates the nature of the field to the Driver Manager by setting the *BufferLength* argument. *BufferLength* can have the following values:<ul><li>If *ValuePtr* is a pointer to a character string, then *BufferLength* is the length of the string or SQL_NTS.</li><li>If *ValuePtr* is a pointer to a binary buffer, then the application places the result of the SQL_LEN_BINARY_ATTR(length) macro in BufferLength. This places a negative value in *BufferLength*.</li><li>If *ValuePtr* is a pointer to a value other than a character string or binary string, then *BufferLength* should have the value SQL_IS_POINTER.</li><li>If *ValuePtr* is contains a fixed-length data type, then *BufferLength* is either SQL_IS_INTEGER, SQL_IS_UINTEGER, SQL_IS_SMALLINT, or SQL_IS_USMALLINT, as appropriate.</li>/ul> |
+
+####Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
+
+SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records or the statement is in the prepared or executed state but there was no open cursor associated with it.
