@@ -15,8 +15,16 @@
 ' ========================================================================================
 PRIVATE CONSTRUCTOR COdbcStmt (BYVAL pDbc AS COdbc PTR)
    IF pDbc THEN
-      SetResult(SQLAllocHandle(SQL_HANDLE_STMT, pDbc->Handle, @m_hStmt))
       m_hDbc = pDbc->Handle
+      SetResult(SQLAllocHandle(SQL_HANDLE_STMT, pDbc->Handle, @m_hStmt))
+   END IF
+END CONSTRUCTOR
+' ========================================================================================
+' ========================================================================================
+PRIVATE CONSTRUCTOR COdbcStmt (BYREF pCDbc AS COdbc)
+   IF pCDbc.m_hDbc THEN
+      m_hDbc = pCDbc.m_hDbc
+      SetResult(SQLAllocHandle(SQL_HANDLE_STMT, pCDbc.m_hDbc, @m_hStmt))
    END IF
 END CONSTRUCTOR
 ' ========================================================================================
