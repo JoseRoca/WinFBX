@@ -8,7 +8,7 @@ Implements methods to create and manage statement objects. Inherits from CODBCBa
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorsStmt) | Allocates an statement handle. |
+| [Constructors](#Constructors) | Allocates an statement handle. |
 | [AddRecord](#AddRecord) | Adds a record to the database. |
 | [BindCol](#BindCol) | Binds application data buffers to columns in the result set. |
 | [BindParameter](#BindParameter) | Binds a buffer to a parameter marker in an SQL statement. |
@@ -189,3 +189,20 @@ Implements methods to create and manage statement objects. Inherits from CODBCBa
 | [UpdateByBookmark](#UpdateByBookmark) | Updates a set of rows where each row is identified by a bookmark. |
 | [UpdateRecord](#UpdateRecord) | Updates a record. |
 
+# <a name="Constructors"></a>Constructors
+
+Allocates an statement handle. A statement handle provides access to statement information, such as error messages, the cursor name, and status information for SQL statement processing.
+
+```
+CONSTRUCTOR COdbcStmt (BYVAL pDbc AS COdbc PTR)
+CONSTRUCTOR COdbcStmt (BYREF pCDbc AS COdbc)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pDbc* | Pointer to a connection object. |
+| *pCDbc* | Reference to an instance of the CODBC class. |
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_INVALID_HANDLE, or SQL_ERROR.
