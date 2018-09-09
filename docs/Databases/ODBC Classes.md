@@ -331,7 +331,7 @@ Implements methods to create and manage statement objects. Inherits from COdbcBa
 | [UpdateByBookmark](#UpdateByBookmark) | Updates a set of rows where each row is identified by a bookmark. |
 | [UpdateRecord](#UpdateRecord) | Updates a record. |
 
-# <a name="Error"></a>Error (CODBC)
+# <a name="Error"></a>Error (CODBCBase)
 
 Returns TRUE if there has been an error; FALSE, otherwise.
 
