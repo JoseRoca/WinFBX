@@ -336,7 +336,7 @@ Implements methods to create and manage statement objects. Inherits from COdbcBa
 Allocates a connection handle and, if needed, an environment handle, and opens the database.
 
 ```
-CONSTRUCTOR COdbc (BYREF wszConnectionString AS WSTRING, BYVAL nODbcVersion AS SQLINTEGER = SQL_OV_ODBC3, _
+CONSTRUCTOR CODBC (BYREF wszConnectionString AS WSTRING, BYVAL nODbcVersion AS SQLINTEGER = SQL_OV_ODBC3, _
    BYVAL ConnectionPoolingAttr AS SQLUINTEGER = 0)
 ```
 
@@ -349,7 +349,7 @@ CONSTRUCTOR COdbc (BYREF wszConnectionString AS WSTRING, BYVAL nODbcVersion AS S
 Establishes connections to a driver and a data source. The connection handle references storage of all information about the connection to the data source, including status, transaction state, and error information. 
 
 ```
-CONSTRUCTOR COdbc (BYREF wszServerName AS WSTRING, BYREF wszUserName AS WSTRING, _
+CONSTRUCTOR CODBC (BYREF wszServerName AS WSTRING, BYREF wszUserName AS WSTRING, _
    BYREF wszAuthentication AS WSTRING, BYVAL nODbcVersion AS SQLINTEGER = SQL_OV_ODBC3, _
    BYVAL ConnectionPoolingAttr AS SQLUINTEGER = 0)
 ```
@@ -362,7 +362,7 @@ CONSTRUCTOR COdbc (BYREF wszServerName AS WSTRING, BYREF wszUserName AS WSTRING,
 | *nOdbcVersion* | Optional. ODBC version number: SQL_OV_ODBC2, SQL_OV_ODBC3 or SQL_OV_ODBC3_80. |
 | *ConnectionPoolingAttr* | Optional. SQL_CP_ONE_PER_DRIVER or SQL_CP_ONE_PER_HENV. |
 
-**Result value** (GetLastResult)
+#### GetLastResult
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, SQL_INVALID_HANDLE.
 
@@ -820,39 +820,3 @@ FUNCTION SetOutputNTS (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
 
-
-# <a name="ConstructorsDb"></a>Constructors (CODBCDb)
-
-Allocates a connection handle and, if needed, an environment handle, and opens the database.
-
-```
-CONSTRUCTOR CODBC (BYREF wszConnectionString AS WSTRING, _
-   BYVAL nODbcVersion AS SQLINTEGER = SQL_OV_ODBC3, _
-   BYVAL ConnectionPoolingAttr AS SQLUINTEGER = 0)
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *wszConnectionString* | The connection string. |
-| *nOdbcVersion* | Optional. ODBC version number: SQL_OV_ODBC2, SQL_OV_ODBC3 or SQL_OV_ODBC3_80. |
-| *ConnectionPoolingAttr* | Optional. SQL_CP_ONE_PER_DRIVER or SQL_CP_ONE_PER_HENV. |
-
-Establishes connections to a driver and a data source. The connection handle references storage of all information about the connection to the data source, including status, transaction state, and error information. 
-
-```
-CONSTRUCTOR CODBC (BYREF wszServerName AS WSTRING, BYREF wszUserName AS WSTRING, _
-   BYREF wszAuthentication AS WSTRING, BYVAL nODbcVersion AS SQLINTEGER = SQL_OV_ODBC3, _
-   BYVAL ConnectionPoolingAttr AS SQLUINTEGER = 0)
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *wszServerName* | Data source name. The data might be located on the same computer as the program, or on another computer somewhere on a network. |
-| *wszUserName* | User identifier. |
-| *wszAuthentication* | Authentication string (typically the password). |
-| *nOdbcVersion* | Optional. ODBC version number: SQL_OV_ODBC2, SQL_OV_ODBC3 or SQL_OV_ODBC3_80. |
-| *ConnectionPoolingAttr* | Optional. SQL_CP_ONE_PER_DRIVER or SQL_CP_ONE_PER_HENV. |
-
-#### GetLastResult value
-
-SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
