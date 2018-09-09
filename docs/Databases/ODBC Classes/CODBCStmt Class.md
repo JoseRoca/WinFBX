@@ -407,8 +407,24 @@ FUNCTION BindParameter (BYVAL ParameterNumber AS SQLUSMALLINT, BYVAL InputOutput
 | *DecimalDigits* | The decimal digits of the column or expression of the corresponding parameter marker. |
 | *ParameterValuePtr* | A pointer to a buffer for the parameter's data. |
 | *BufferLength* | Length of the ParameterValuePtr buffer in bytes. |
-| StrLen_or_IndPtr | A pointer to a buffer for the parameter's length. |
+| *StrLen_or_IndPtr* | A pointer to a buffer for the parameter's length. |
 
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_INVALID_HANDLE, or SQL_ERROR.
+
+# <a name="BulkOperations"></a>BulkOperations
+
+Performs bulk insertions and bulk bookmark operations, including update, delete, and fetch by bookmark. 
+
+```
+FUNCTION BulkOperations (BYVAL Operation AS SQLSMALLINT) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Operation* |Operation to perform: SQL_ADD, SQL_UPDATE_BY_BOOKMARK, SQL_DELETE_BY_BOOKMARK, SQL_FETCH_BY_BOOKMARK |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
