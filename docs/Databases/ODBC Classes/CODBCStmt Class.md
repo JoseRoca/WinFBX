@@ -1615,3 +1615,54 @@ FUNCTION GetDiagRec (BYVAL RecNumber AS SQLSMALLINT, BYVAL Sqlstate AS WSTRING P
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetErrorInfo"></a>GetErrorInfo
+
+Returns a verbose description of the last error(s).
+
+```
+FUNCTION GetErrorInfo (BYVAL iErrorCode AS SQLRETURN = 0) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *iErrorCode* | Optional. The error code returned by **GetLastResult**. |
+
+# <a name="GetForeignKeys"></a>GetForeignKeys
+
+ForeignKeys can return:
+
+* A list of foreign keys in the specified table (columns in the specified table that refer to primary keys in other tables).
+* A list of foreign keys in other tables that refer to the primary key in the specified table.
+
+```
+FUNCTION GetForeignKeys (BYREF wszPkCatalogName AS WSTRING, BYVAL pkCatalogNameLength AS SQLSMALLINT, _
+   BYREF wszPkSchemaName AS WSTRING, BYVAL pkSchemaNameLength AS SQLSMALLINT, _
+   BYREF wszPkTableName AS WSTRING, BYVAL pkTableNameLength AS SQLSMALLINT, _
+   BYREF wszFkCatalogName AS WSTRING, BYVAL FkCatalogNameLength AS SQLSMALLINT, _
+   BYREF wszFkSchemaName AS WSTRING, BYVAL FkSchemaNameLength AS SQLSMALLINT, _
+   BYREF wszFkTableName AS WSTRING, BYVAL fkTableNameLength AS SQLSMALLINT) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszPkCatalogName* | Primary key table catalog name. If a driver supports catalogs for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have catalogs. *wszPkCatalogName* cannot contain a string search pattern. |
+| *CatalogNameLength* | Length of *wszPkCatalogName*. |
+| *wszPkSchemaName* | Primary key table schema name. If a driver supports schemas for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have schemas. *wszPKSchemaName* cannot contain a string search pattern. |
+| *PkSchemaNameLength* | Length of *wszPkSchemaName*. |
+| *wszPkTableName* | Primary key table name. *wszPkTableName* cannot contain a string search pattern. |
+| *PkTableNameLength* | Length of *wszPkTableName*. |
+| *wszFkCatalogName* | Foreign key table catalog name. If a driver supports catalogs for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have catalogs. *wszFkCatalogName* cannot contain a string search pattern. |
+| *FkCatalogNameLength* | Length of *wszFkCatalogName*. |
+| *wszFkSchemaName* | Foreign key table schema name. If a driver supports schemas for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have schemas. *wszFkSchemaName* cannot contain a string search pattern. |
+| *FkSchemaNameLength* | Length of *wszFkSchemaName*. |
+| *wszFkTableName* | Foreign key table name. *wszFkTableName* cannot contain a string search pattern. |
+| *FkTableNameLength* | Length of *wszFkTableName*. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Diagnostics
+
+When **ForeignKeys** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
