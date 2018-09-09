@@ -16,8 +16,10 @@ DIM pDbc AS CODBC = wszConStr
 
 You create an statement object creating an instance of the CODBCStmt object passing the connection object pointer as the parameter:
 
+```
 ' // Allocate an statement object
 DIM pStmt AS COdbcStmt = pDbc
+```
 
 When the class is destroyed, its Destructor method closes the cursor and the connection and frees the allocated connection handle. Therefore, it is not needed to explicitly close the database and free handles. The class keeps track of the number of active connections and frees the environment handle if there are no active connections.
 
