@@ -757,3 +757,18 @@ Connections with matching connection string keywords can be used. Keywords must 
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetEnvAttr"></a>SetEnvAttr (CODBC)
+
+Sets attributes that govern aspects of environments.
+
+```
+FUNCTION SetEnvAttr (BYVAL Attribute AS SQLINTEGER, BYVAL ValuePtr AS SQLPOINTER, _
+   BYVAL StringLength AS SQLINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Attribute* | Attribute to set. |
+| *ValuePtr* | Pointer to the value to be associated with *Attribute*. Depending on the value of *Attribute*, *ValuePtr* will be a 32-bit integer value or point to a null-terminated character string. |
+| *StringLength* | If *ValuePtr* points to a character string or a binary buffer, this argument should be the length of *ValuePtr*. If *ValuePtr* is an integer, *StringLength* is ignored. |
