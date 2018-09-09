@@ -576,3 +576,25 @@ The catalog of the table that contains the column.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ColConciseType"></a>ColConciseType
+
+Returns the concise data type.
+
+For the datetime and interval data types, this field returns the concise data type; for example, SQL_TYPE_TIME or SQL_INTERVAL_YEAR. This information is returned from the SQL_DESC_CONCISE_TYPE record field of the IRD.
+
+```
+FUNCTION ColConciseType (BYVAL ColNum AS SQLUSMALLINT) AS SQLINTEGER
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+The concise data type.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
