@@ -1741,3 +1741,25 @@ TRUE or FALSE.
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
 
 SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records or the statement is in the prepared or executed state but there was no open cursor associated with it.
+
+# <a name="GetImpParamDescFieldOctetLength"></a>GetImpParamDescFieldOctetLength
+
+Returns the octet length of a single field of a descriptor record.
+
+```
+FUNCTION GetImpParamDescFieldOctetLength (BYVAL RecNumber AS SQLSMALLINT) AS SQLSMALLINT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered from 1, with record number 0 being the bookmark record. The *RecNumber* argument must be less or equal to the value of SQL_DESC_COUNT. |
+
+#### Return value
+
+The octet length.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
+
+SQL_NO_DATA is returned if RecNumber is greater than the current number of descriptor records or the statement is in the prepared or executed state but there was no open cursor associated with it.
