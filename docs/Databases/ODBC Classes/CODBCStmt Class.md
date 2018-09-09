@@ -634,3 +634,23 @@ The maximum number of characters required to display data from the column.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ColFixedPrecScale"></a>ColFixedPrecScale
+
+Returns SQL_TRUE if the column has a fixed precision and nonzero scale that are data source-specific. Returns SQL_FALSE if the column does not have a fixed precision and nonzero scale that are data source-specific.
+
+```
+FUNCTION ColFixedPrecScale (BYVAL ColNum AS SQLUSMALLINT) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+TRUE or FALSE
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
