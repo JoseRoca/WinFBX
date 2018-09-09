@@ -294,80 +294,42 @@ Binds application data buffers to columns in the result set.
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetType AS SQLSMALLINT, _
    BYVAL TargetValue AS SQLPOINTER, BYVAL BufferLength AS SQLLEN, _
    BYVAL StrLen_or_Ind AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS BYTE PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS UBYTE PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS SHORT PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS USHORT PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS LONG PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS ULONG PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS SINGLE PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS DOUBLE PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS LONGINT PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS ULONGINT PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS ZSTRING PTR, _
    BYVAL BufferLenght AS SQLLEN, BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS WSTRING PTR, _
    BYVAL BufferLenght AS SQLLEN, BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS DATE_STRUCT PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION  BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS TIME_STRUCT PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS TIMESTAMP_STRUCT PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS ANY PTR, _
    BYVAL BufferLenght AS SQLLEN, BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindColToBit (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS SHORT PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindColToNumeric (BYVAL ColNumber AS SQLUSMALLINT, BYREF TargetValue AS ZSTRING, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
-```
-```
 FUNCTION BindColToDecimal (BYVAL ColNumber AS SQLUSMALLINT, BYREF TargetValue AS ZSTRING, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
 ```
@@ -376,7 +338,7 @@ FUNCTION BindColToDecimal (BYVAL ColNumber AS SQLUSMALLINT, BYREF TargetValue AS
 | ---------- | ----------- |
 | *ColNumber* | Number of the result set column to bind. Columns are numbered in increasing column order starting at 0, where column 0 is the bookmark column. If bookmarks are not used — that is, the SQL_ATTR_USE_BOOKMARKS statement attribute is set to SQL_UB_OFF — then column numbers start at 1. |
 | *TargetValue* | Pointer to the data buffer to bind to the column. **Fetch** and **FetchScroll** return data in this buffer. **BulkOperations** returns data in this buffer when *Operation* is SQL_FETCH_BY_BOOKMARK; it retrieves data from this buffer when *Operation* is SQL_ADD or SQL_UPDATE_BY_BOOKMARK. **SetPos** returns data in this buffer when *Operation* is SQL_REFRESH; it retrieves data from this buffer when *Operation* is SQL_UPDATE.<br>If *TargetValue* is a null pointer, the driver unbinds the data buffer for the column. An application can unbind all columns by calling **UnbindColumns** or **FreeStmt** with the SQL_UNBIND option. An application can unbind the data buffer for a column but still have a length/indicator buffer bound for the column, if the *TargetValue* argument in the call to **BindCol** is a null pointer but the *StrLen_or_IndPtr* argument is a valid value. |
-| *StrLen_or_IndPtr* | Pointer to the length/indicator buffer to bind to the column. **Fetch** and **FetchScroll** return a value in this buffer. **BulkOperations** retrieves a value from this buffer when *Operation* is SQL_ADD, SQL_UPDATE_BY_BOOKMARK, or SQL_DELETE_BY_BOOKMARK. **BulkOperations** returns a value in this buffer when *Operation* is SQL_FETCH_BY_BOOKMARK. **SetPos** returns a value in this buffer when *Operation* is SQL_REFRESH; it retrieves a value from this buffer when *Operation* is SQL_UPDATE.<br>**Fetch**, **FetchScroll**, **BulkOperations**, and **SetPos** can return the following values in the length/indicator buffer:<br><ul><li>The length of the data available to return</li><li>SQL_NO_TOTAL</li><li>SQL_NULL_DATA</li></ul>The application can place the following values in the length/indicator buffer for use with **BulkOperations** or **SetPos**:<ul><li>The length of the data being sent</li><li>SQL_NTS</li><li>SQL_NULL_DATA</li><li>SQL_DATA_AT_EXEC</li><li>The result of the SQL_LEN_DATA_AT_EXEC macro</li><li>SQL_COLUMN_IGNORE</li></ul><br>If the indicator buffer and the length buffer are separate buffers, the indicator buffer can return only SQL_NULL_DATA, while the length buffer can return all other values.<br>If *StrLen_or_IndPtr* is a null pointer, no length or indicator value is used. This is an error when fetching data and the data is NULL.  |
+| *StrLen_or_IndPtr* | Pointer to the length/indicator buffer to bind to the column. **Fetch** and **FetchScroll** return a value in this buffer. **BulkOperations** retrieves a value from this buffer when *Operation* is SQL_ADD, SQL_UPDATE_BY_BOOKMARK, or SQL_DELETE_BY_BOOKMARK. **BulkOperations** returns a value in this buffer when *Operation* is SQL_FETCH_BY_BOOKMARK. **SetPos** returns a value in this buffer when *Operation* is SQL_REFRESH; it retrieves a value from this buffer when *Operation* is SQL_UPDATE.<br>**Fetch**, **FetchScroll**, **BulkOperations**, and **SetPos** can return the following values in the length/indicator buffer:<br><ul><li>The length of the data available to return</li><li>SQL_NO_TOTAL</li><li>SQL_NULL_DATA</li></ul>The application can place the following values in the length/indicator buffer for use with **BulkOperations** or **SetPos**:<ul><li>The length of the data being sent</li><li>SQL_NTS</li><li>SQL_NULL_DATA</li><li>SQL_DATA_AT_EXEC</li><li>The result of the SQL_LEN_DATA_AT_EXEC macro</li><li>SQL_COLUMN_IGNORE</li></ul>If the indicator buffer and the length buffer are separate buffers, the indicator buffer can return only SQL_NULL_DATA, while the length buffer can return all other values.<br>If *StrLen_or_IndPtr* is a null pointer, no length or indicator value is used. This is an error when fetching data and the data is NULL.  |
 
 #### Return value
 
