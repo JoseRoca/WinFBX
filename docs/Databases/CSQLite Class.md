@@ -1682,7 +1682,7 @@ FUNCTION GetRow () AS LONG
 
 **SQLITE_DONE** means that the statement has finished executing successfully. **Step_** should not be called again on this virtual machine without first calling **Reset** to reset the virtual machine back to its initial state.
 
-If the SQL statement being executed returns any data, then SQLITE_ROW is returned each time a new row of data is ready for processing by the caller. The values may be accessed using the column access functions. **Step_** is called again to retrieve the next row of data.
+If the SQL statement being executed returns any data, then **SQLITE_ROW** is returned each time a new row of data is ready for processing by the caller. The values may be accessed using the column access functions. **Step_** is called again to retrieve the next row of data.
 
 **SQLITE_ERROR** means that a run-time error (such as a constraint violation) has occurred. **GetRow** should not be called again on the Virtual Machine. More information may be found by calling **ErrMsg**.
 
@@ -1769,7 +1769,7 @@ FUNCTION Step_ () AS LONG
 
 **SQLITE_DONE** means that the statement has finished executing successfully. **Step_** should not be called again on this virtual machine without first calling **Reset** to reset the virtual machine back to its initial state.
 
-If the SQL statement being executed returns any data, then SQLITE_ROW is returned each time a new row of data is ready for processing by the caller. The values may be accessed using the column access functions. **Step_** is called again to retrieve the next row of data.
+If the SQL statement being executed returns any data, then **SQLITE_ROW** is returned each time a new row of data is ready for processing by the caller. The values may be accessed using the column access functions. **Step_** is called again to retrieve the next row of data.
 
 **SQLITE_ERROR** means that a run-time error (such as a constraint violation) has occurred. **Step_** should not be called again on the Virtual Machine. More information may be found by calling **ErrMsg**.
 
