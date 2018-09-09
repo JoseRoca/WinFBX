@@ -1121,7 +1121,7 @@ FUNCTION GetDiagRec (BYVAL RecNumber AS SQLSMALLINT, BYVAL Sqlstate AS WSTRING P
 | *NativeError* | Pointer to a buffer in which to return the native error code, specific to the data source. This information is contained in the SQL_DIAG_NATIVE diagnostic field. |
 | *MessageText* | Pointer to a buffer in which to return the diagnostic message text string. This information is contained in the SQL_DIAG_MESSAGE_TEXT diagnostic field. |
 | *BufferLength* | Length of the *MessageText* buffer in characters. There is no maximum length of the diagnostic message text. |
-| *TextLength* |  Pointer to a buffer in which to return the total number of bytes (excluding the number of bytes required for the null-termination character) available to return in MessageText. If the number of bytes available to return is greater than BufferLength, the diagnostic message text in MessageText is truncated to BufferLength minus the length of a null-termination character. |
+| *TextLength* |  Pointer to a buffer in which to return the total number of bytes (excluding the number of bytes required for the null-termination character) available to return in *MessageText*. If the number of bytes available to return is greater than *BufferLength*, the diagnostic message text in *MessageText* is truncated to *BufferLength* minus the length of a null-termination character. |
 
 #### Return value
 
