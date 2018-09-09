@@ -983,5 +983,90 @@ A numeric value that specifies the SQL data type.
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
 
+# <a name="ColTypeName"></a>ColTypeName
 
+Data source-dependent data type name; for example, "CHAR", "VARCHAR", "MONEY", "LONG VARBINARY", or "CHAR ( ) FOR BIT DATA". If the type is unknown, an empty string is returned.
 
+```
+FUNCTION ColTypeName (BYVAL ColNum AS SQLUSMALLINT) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+Data source-dependent data type name.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ColUnnamed"></a>ColUnnamed
+
+SQL_NAMED or SQL_UNNAMED. If the SQL_DESC_NAME field of the IRD contains a column alias or a column name, SQL_NAMED is returned. If there is no column name or column alias, SQL_UNNAMED is returned. This information is returned from the SQL_DESC_UNNAMED record field of the IRD.
+
+```
+FUNCTION ColUnnamed (BYVAL ColNum AS SQLUSMALLINT) AS SQLINTEGER
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+SQL_NAMED or SQL_UNNAMED.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ColUnsigned"></a>ColUnsigned
+
+SQL_TRUE if the column is unsigned (or not numeric). SQL_FALSE if the column is signed.
+
+```
+FUNCTION ColUnsigned (BYVAL ColNum AS SQLUSMALLINT) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+TRUE or FALSE.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ColUpdatable"></a>ColUpdatable
+
+SQL_TRUE if the column is updatable; SQL_FALSE otherwise.
+
+```
+FUNCTION ColUpdatable (BYVAL ColNum AS SQLUSMALLINT) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+TRUE or FALSE.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="DbcHandle"></a>DbcHandle
+
+Returns the connection handle.
+
+```
+FUNCTION DbcHandle () AS SQLHANDLE
+```
