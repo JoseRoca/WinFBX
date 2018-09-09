@@ -1103,3 +1103,26 @@ FUNCTION GetDiagField (BYVAL RecNumber AS SQLSMALLINT, BYVAL DiagIdentifier AS S
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_INVALID_HANDLE, or SQL_NO_DATA.
+
+# <a name="GetDiagRec"></a>GetDiagRec (CODBC)
+
+Returns the current values of multiple fields of a diagnostic record that contains error, warning, and status information. Unlike **GetDiagField**, which returns one diagnostic field per call, **GetDiagRec** returns several commonly used fields of a diagnostic record, including the SQLSTATE, the native error code, and the diagnostic message text.
+
+```
+FUNCTION GetDiagRec (BYVAL RecNumber AS SQLSMALLINT, BYVAL Sqlstate AS WSTRING PTR, _
+   BYVAL NativeError AS SQLINTEGER PTR, BYVAL MessageText AS WSTRING PTR, _
+   BYVAL BufferLength AS SQLSMALLINT, BYVAL TextLength AS SQLSMALLINT PTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecNumber* | Indicates the status record from which the application seeks information. Status records are numbered from 1. |
+| *SQlState* | Pointer to a buffer in which to return a five-character SQLSTATE code pertaining to the diagnostic record *RecNumber*. The first two characters indicate the class; the next three indicate the subclass. This information is contained in the SQL_DIAG_SQLSTATE diagnostic field. |
+| *NativeError* | Pointer to a buffer in which to return the native error code, specific to the data source. This information is contained in the SQL_DIAG_NATIVE diagnostic field. |
+| *MessageText* | Pointer to a buffer in which to return the diagnostic message text string. This information is contained in the SQL_DIAG_MESSAGE_TEXT diagnostic field. |
+| *BufferLength* | Length of the *MessageText* buffer in characters. There is no maximum length of the diagnostic message text. |
+| *TextLength* |  Pointer to a buffer in which to return the total number of bytes (excluding the number of bytes required for the null-termination character) available to return in MessageText. If the number of bytes available to return is greater than BufferLength, the diagnostic message text in MessageText is truncated to BufferLength minus the length of a null-termination character. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
