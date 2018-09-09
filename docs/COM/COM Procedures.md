@@ -14,7 +14,7 @@ Assorted COM procedures.
 | [AfxNewCOM(CLSID,IID)](#AfxNewCOM3) | Creates a single uninitialized object of the class associated with the specified CLSID and IID. |
 | [AfxNewCOM(LibName)](#AfxNewCOM4) | Loads the specified library from file and creates an instance of an object. |
 | [AfxGetCOM](#AfxGetCOM) | Returns a dispatch pointer to a running out-of-process server that is registered in the ROT. |
-| [AfxAnyCOM](#AfxAnyCOM) | Returns a dispatch pointer to a running out-of-process server that is registered in the ROT or creates a new instance of the server. |
+| [AfxAnyCOM](#AfxAnyCOM) | Tries to use an existing, running application if available, or creates a new instance if not. |
 | [AfxGuid](#AfxGuid) | Converts a string into a 16-byte (128-bit) Globally Unique Identifier (GUID). |
 | [AfxGuidText](#AfxGuidText) | Returns a 38-byte human-readable guid string from a 16-byte GUID. |
 | [AfxSafeAddRef](#AfxSafeAddRef) | Increments the reference count for an interface on an object. |
