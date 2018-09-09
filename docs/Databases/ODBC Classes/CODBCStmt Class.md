@@ -516,3 +516,23 @@ The base column name for the result set column.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ColBaseTableName"></a>ColBaseTableName
+
+Returns the name of the base table that contains the column. If the base table name cannot be defined or is not applicable, then this variable contains an empty string. This information is returned from the SQL_DESC_BASE_TABLE_NAME record field of the IRD, which is a read-only field.
+
+```
+FUNCTION ColBaseTableName (BYVAL ColNum AS SQLUSMALLINT) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+The name of the base table that contains the column.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
