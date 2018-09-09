@@ -428,3 +428,28 @@ FUNCTION BulkOperations (BYVAL Operation AS SQLSMALLINT) AS SQLRETURN
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="Cancel"></a>Cancel
+
+Cancels the processing on a statement.
+
+```
+FUNCTION Cancel () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="CloseCursor"></a>CloseCursor
+
+Closes a cursor that has been opened on a statement and discards pending results. Returns SQLSTATE 24000 (Invalid cursor state) if no cursor is open in the statement.
+
+```
+FUNCTION CloseCursor () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
