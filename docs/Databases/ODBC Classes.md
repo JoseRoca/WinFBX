@@ -201,7 +201,7 @@ Implements methods to create and manage statement objects. Inherits from COdbcBa
 | [FetchScroll](#FetchScroll) | Fetches the specified rowset of data from the result set and returns data for all bound columns. |
 | [GetColumnPrivileges](#GetColumnPrivileges) | Returns a list of columns and associated privileges for the specified table. |
 | [GetColumns](#GetColumns) | Returns the list of column names in specified tables. |
-| [GetCursorConcurrency](#GetCursorConcurrency) | Gets or sets a SQLUINTEGER value that specifies the cursor concurrency. |
+| [GetCursorConcurrency](#GetCursorConcurrency) | Gets a SQLUINTEGER value that specifies the cursor concurrency. |
 | [GetCursorKeysetSize](#GetCursorKeysetSize) | Gets a SQLUINTEGER value that specifies the number of rows in the keyset-driven cursor. |
 | [GetCursorName](#GetCursorName) | Returns the cursor name associated with a specified statement. |
 | [GetCursorScrollability](#GetCursorScrollability) | Gets a SQLUINTEGER value that specifies the scrollability type. |
@@ -241,8 +241,8 @@ Implements methods to create and manage statement objects. Inherits from COdbcBa
 | [GetStmtAppRowDesc](#GetStmtAppRowDesc) | Gets the handle to the ARD for subsequent fetches on the statement handle. |
 | [GetStmtAsyncEnable](#GetStmtAsyncEnable) | Gets an SQLUINTEGER value that specifies whether a function called with the specified statement is executed asynchronously. |
 | [GetStmtAttr](#GetStmtAttr) | Returns the current setting of a statement attribute. |
-| [GetStmtFetchBookmarkPtr](#GetStmtFetchBookmarkPtr) | Gets or sets a pointer that points to a binary bookmark value. |
-| [GetStmtImpParamDesc](#GetStmtImpParamDesc) | Gets or sets the handle to the IPD. |
+| [GetStmtFetchBookmarkPtr](#GetStmtFetchBookmarkPtr) | Gets a pointer that points to a binary bookmark value. |
+| [GetStmtImpParamDesc](#GetStmtImpParamDesc) | Gets the handle to the IPD. |
 | [GetStmtMaxLength](#GetStmtMaxLength) | Gets an SQLUINTEGER value that specifies the maximum amount of data that the driver returns from a character or binary column. |
 | [GetStmtMaxRows](#GetStmtMaxRows) | Gets an SQLUINTEGER value corresponding to the maximum number of rows to return to the application for a SELECT statement. |
 | [GetStmtNoScan](#GetStmtNoScan) | Gets an SQLUINTEGER value that indicates whether the driver should scan SQL strings for escape sequences. |
@@ -267,6 +267,48 @@ Implements methods to create and manage statement objects. Inherits from COdbcBa
 | [GetTables](#GetTables) | Returns the list of table, catalog, or schema names, and table types, stored in a specific data source. |
 | [GetTypeInfo](#GetTypeInfo) | Returns information about data types supported by the data source. |
 | [Handle](#Handle) | Returns the statement handle. |
+| [LockRecord](#LockRecord) | Sets the cursor position in a rowset and locks the record. |
+| [MoreResults](#MoreResults) | Determines whether more results are available on a statement containing SELECT, UPDATE, INSERT, or DELETE statements and, if so, initializes processing for those results. |
+| [Move](#Move) | Moves the cursor forward or backward the specified number of rowsets. |
+| [MoveFirst](#MoveFirst) | Fetches the first rowset of data from the result set and returns data for all bound columns. |
+| [MoveLast](#MoveLast) | Fetches the last rowset of data from the result set and returns data for all bound columns. |
+| [MoveNext](#MoveNext) | Fetches the next rowset of data from the result set and returns data for all bound columns. |
+| [MovePrevious](#MovePrevious) | Fetches the previous rowset of data from the result set and returns data for all bound columns. |
+| [NumParams](#NumParams) | Returns the number of parameters in an SQL statement. |
+| [NumResultCols](#NumResultCols) | Returns the number of columns in a result set. |
+| [ParamData](#ParamData) | Used in conjunction with **PutData** to supply parameter data at statement execution time. |
+| [Prepare](#Prepare) | Prepares an SQL string for execution. |
+| [PutData](#PutData) | Allows an application to send data for a parameter or column to the driver at statement execution time. |
+| [RecordCount](#RecordCount) | Gets the number of records in the result set. |
+| [RefreshRecord](#RefreshRecord) | Sets the cursor position in a rowset and allows to refresh data in the rowset. |
+| [ResetParams](#ResetParams) | Releases all parameter buffers set by **BindParameter** for the given statement handle. |
+| [RowCount](#RowCount) | Returns the number of rows affected by update, insert or delete statements. |
+| [SetAbsolutePosition](#SetAbsolutePosition) | Fetches the rowset starting at the specified row. |
+| [SetCursorConcurrency](#SetCursorConcurrency) | Sets a SQLUINTEGER value that specifies the cursor concurrency. |
+| [SetCursorKeysetSize](#SetCursorKeysetSize) | Sets a SQLUINTEGER value that specifies the number of rows in the keyset-driven cursor. |
+| [SetCursorKeysetSize](#SetCursorKeysetSize) | Sets a SQLUINTEGER value that specifies the number of rows in the keyset-driven cursor. |
+| [SetCursorName](#SetCursorName) | Sets the cursor name associated with a specified statement. |
+| [SetCursorScrollability](#SetCursorScrollability) | Sets a SQLUINTEGER value that specifies the scrollability type. |
+| [SetCursorSensitivity](#SetCursorSensitivity) | Sets a SQLUINTEGER value that specifies whether cursors on the statement handle made to a result set by another cursor. |
+| [SetCursorType](#SetCursorType) | Sets a SQLUINTEGER value that specifies the cursor type. |
+| [SetDynamicCursor](#SetDynamicCursor) | Specifies a dynamic cursor. |
+| [SetKeysetDrivenCursor](#SetKeysetDrivenCursor) | Specifies a keyset driven cursor. |
+| [SetLockConcurrency](#SetLockConcurrency) | Cursor uses the lowest level of locking sufficient to ensure that the row can be updated. |
+| [SetMultiuserKeysetCursor](#SetMultiuserKeysetCursor) | Creates a multiuser keyset cursor. |
+| [SetOptimisticConcurrency](#SetOptimisticConcurrency) | Cursor uses optimistic concurrency control, comparing values. |
+| [SetPos](#SetPos) | Fetches the rowset rowset from the start of the current rowset. |
+| [SetPosition](#SetPosition) | Sets the cursor position in a rowset. |
+| [SetReadOnlyConcurrency](#SetReadOnlyConcurrency) | Cursor is read-only. No updates are allowed. |
+| [SetRelativePosition](#SetRelativePosition) | Fetches the rowset from from the start of the current rowset. |
+| [SetRowVerConcurrency](#SetRowVerConcurrency) | Cursor uses optimistic concurrency control, comparing row versions such as SQLBase ROWID or Sybase TIMESTAMP. |
+| [SetStaticCursor](#SetStaticCursor) | Specifies an static cursor. |
+| [SetStmtAppParamDesc](#SetStmtAppParamDesc) | Sets the handle to the APD for subsequent calls to **Execute** and **ExecDirect** on the statement handle. |
+| [SetStmtAppRowDesc](#SetStmtAppRowDesc) | Sets the handle to the ARD for subsequent fetches on the statement handle. |
+| [SetStmtAttr](#SetStmtAttr) | Sets attributes related to a statement. |
+| [SetStmtFetchBookmarkPtr](#SetStmtFetchBookmarkPtr) | Sets a pointer that points to a binary bookmark value. |
+| [SetStmtMaxLength](#SetStmtMaxLength) | Sets an SQLUINTEGER value that specifies the maximum amount of data that the driver returns from a character or binary column. |
+| [SetStmtMaxRows](#SetStmtMaxRows) | Sets an SQLUINTEGER value corresponding to the maximum number of rows to return to the application for a SELECT statement. |
+| [SetStmtNoScan](#SetStmtNoScan) | Sets an SQLUINTEGER value that indicates whether the driver should scan SQL strings for escape sequences. |
 
 
 
