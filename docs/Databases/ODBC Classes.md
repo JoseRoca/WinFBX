@@ -530,9 +530,47 @@ The character string value returned for an SQLSTATE consists of a two-character 
 
 **Note**: Although successful execution of a function is normally indicated by a return value of SQL_SUCCESS, the SQLSTATE 00000 also indicates success.
 
+# <a name="GetOutputNTS"></a>GetOutputNTS (CODBC)
+
+Returns a 32-bit integer that determines how the driver returns string data. If SQL_TRUE, the driver returns string data null-terminated. If SQL_FALSE, the driver does not return string data null-terminated. This attribute defaults to SQL_TRUE. A call to SetEnvAttr to set it to SQL_TRUE returns SQL_SUCCESS. A call to SetEnvAttr to set it to SQL_FALSE returns SQL_ERROR and SQLSTATE HYC00.
+
+**Note**: Optional feature not implemented in Microsoft Access Driver.
+
+```
+FUNCTION GetOutputNTS () AS SQLUINTEGER
+```
+
+#### Return value
+
+The current value of the attribute.
+
+#### Result code (GetLastStatus)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
 
 
+# <a name="GetSqlState"></a>GetSqlState (CODBC)
 
+Returns the SqlState for the specified handle.
+
+**Note**: Optional feature not implemented in Microsoft Access Driver.
+
+```
+FUNCTION GetSqlState (BYVAL HandleType AS SQLSMALLINT, BYVAL Handle AS SQLHANDLE) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *HandleType* | The handle type:<br>SQL_HANDLE_DBC (connection handle)<br>SQL_HANDLE_STMT (statement handle) |
+| *Handle* | The handle value. |
+
+#### Result code (GetLastStatus)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Return value
+
+The SqlState.
 
 | SQLSTATE | Error |
 | -------- | ----- |
