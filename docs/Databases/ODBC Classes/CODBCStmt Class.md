@@ -477,6 +477,8 @@ FUNCTION ColAttribute (BYVAL ColumnNumber AS SQLUSMALLINT, BYVAL FieldIdentifier
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
 
+#### Example
+
 ```
 #include once "Afx/COdbc/COdbc.inc"
 USING Afx
