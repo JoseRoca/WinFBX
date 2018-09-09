@@ -1266,3 +1266,31 @@ FUNCTION DescribeParam (BYVAL ParameterNumber AS SQLUSMALLINT, BYVAL DataType AS
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ExecDirect"></a>ExecDirect
+
+Executes a preparable statement, using the current values of the parameter marker variables if any parameters exist in the statement. **ExecDirect** is the fastest way to submit an SQL statement for one-time execution.
+
+```
+FUNCTION ExecDirect (BYREF wszSqlStr AS WSTRING) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszSqlStr* | SQL statement to be executed. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
+
+# <a name="Execute"></a>Execute
+
+Executes a prepared statement, using the current values of the parameter marker variables if any parameter markers exist in the statement.
+
+```
+FUNCTION Execute () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
