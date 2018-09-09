@@ -1,6 +1,6 @@
 # CODBCStmt Class
 
-Implements methods to create and manage statement objects. Inherits from COdbcBase.
+Implements methods to create and manage statement objects. Inherits from CODBCBase.
 
 **Include file**: CODBCStmt.inc
 
