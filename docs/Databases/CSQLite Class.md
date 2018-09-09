@@ -1667,3 +1667,27 @@ The **Finalize** method can be called at any point during the life cycle of prep
 Invoking **Finalize** on a NULL pointer is a harmless no-op.
 
 The application must finalize every prepared statement in order to avoid resource leaks. It is a grievous error for the application to try to use a prepared statement after it has been finalized. Any use of a prepared statement after it has been finalized can result in undefined and undesirable behavior such as segfaults and heap corruption.
+
+# <a name="GetRow"></a>GetRow
+
+After a prepared statement has been prepared using either **Prepare** this method must be called one or more times to evaluate the statement. **GetRow** is an alias for **Step_**.
+
+```
+FUNCTION GetRow () AS LONG
+```
+
+#### Return value
+
+SQLITE_BUSY means that the database engine was unable to acquire the database locks it needs to do its job. If the statement is a COMMIT or occurs outside of an explicit transaction, then you can retry the statement. If the statement is not a COMMIT and occurs within an explicit transaction then you should rollback the transaction before continuing.
+
+SQLITE_DONE means that the statement has finished executing successfully. **Step_** should not be called again on this virtual machine without first calling Reset to reset the virtual machine back to its initial state.
+
+If the SQL statement being executed returns any data, then SQLITE_ROW is returned each time a new row of data is ready for processing by the caller. The values may be accessed using the column access functions. **Step_** is called again to retrieve the next row of data.
+
+SQLITE_ERROR means that a run-time error (such as a constraint violation) has occurred. **GetRow** should not be called again on the Virtual Machine. More information may be found by calling **ErrMsg**.
+
+SQLITE_MISUSE means that the this function was called inappropriately. Perhaps it was called on a prepared statement that has already been finalized or on one that had previously returned SQLITE_ERROR or SQLITE_DONE. Or it could be the case that the same database connection is being used by two or more threads at the same moment in time.
+
+#### Remarks
+
+For all versions of SQLite up to and including 3.6.23.1, a call to **Reset** was required after **Step_** returned anything other than SQLITE_ROW before any subsequent invocation of Step_. Failure to reset the prepared statement using **Reset** would result in an SQLITE_MISUSE return from **Step_**. But after version 3.6.23.1, **Step_** began calling **Reset** automatically in this circumstance rather than returning SQLITE_MISUSE. This is not considered a compatibility break because any application that ever receives an SQLITE_MISUSE error is broken by definition. The SQLITE_OMIT_AUTORESET compile-time option can be used to restore the legacy behavior.
