@@ -819,3 +819,14 @@ CONSTRUCTOR CODBC (BYREF wszServerName AS WSTRING, BYREF wszUserName AS WSTRING,
 #### GetLastResult
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, SQL_INVALID_HANDLE.
+
+# <a name="CommitTran"></a>CommitTran (CODBC)
+
+Requests a commit operation for all active operations on all statements associated with an environment. 
+
+```
+FUNCTION CommitTran () AS SQLRETURN
+```
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
