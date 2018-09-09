@@ -1081,3 +1081,25 @@ The current value of the attribute.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetDiagField"></a>GetDiagField (CODBC)
+
+Returns the current value of a field of a record of the diagnostic data structure (associated with an environment handle) that contains error, warning, and status information.
+
+```
+FUNCTION GetDiagField (BYVAL RecNumber AS SQLSMALLINT, BYVAL DiagIdentifier AS SQLSMALLINT, _
+   BYVAL DiagInfoPtr AS SQLPOINTER, BYVAL BufferLength AS SQLSMALLINT, _
+   BYVAL StringLength AS SQLSMALLINT PTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecNumber* | Indicates the status record from which the application seeks information. Status records are numbered from 1. If the *DiagIdentifier* argument indicates any field of the diagnostics header, *RecNumber* is ignored. If not, it should be greater than 0. |
+| *DiagIdentifier* | Indicates the field of the diagnostic whose value is to be returned. |
+| *DiagInfoPtr* | Pointer to a buffer in which to return the diagnostic information. The data type depends on the value of *DiagIdentifier*. |
+| *BufferLength* | If *DiagIdentifier* is an ODBC-defined diagnostic and *DiagInfoPtr* points to a character string or a binary buffer, this argument should be the length of *DiagInfoPtr*. If *DiagIdentifier* is an ODBC-defined field and *DiagInfoPtr* is an integer, *BufferLength* is ignored.<br>If *DiagIdentifier* is a driver-defined field, the application indicates the nature of the field to the Driver Manager by setting the *BufferLength* argument. *BufferLength* can have the following values:<br>If *DiagInfoPtr* is a pointer to a character string, then *BufferLength* is the length of the string or SQL_NTS.<br>If *DiagInfoPtr* is a pointer to a binary buffer, then the application places the result of the SQL_LEN_BINARY_ATTR(length) macro in BufferLength. This places a negative value in *BufferLength*.<br>If *DiagInfoPtr* is a pointer to a value other than a character string or binary string, then *BufferLength* should have the value SQL_IS_POINTER.<br>If *DiagInfoPtr* is contains a fixed-length data type, then *BufferLength* is SQL_IS_INTEGER, SQL_IS_UINTEGER, SQL_IS_SMALLINT, or SQL_IS_USMALLINT, as appropriate. |
+| *StringLength* | Pointer to a buffer in which to return the total number of bytes (excluding the number of bytes required for the null-termination character) available to return in *DiagInfoPtr*, for character data. If the number of bytes available to return is greater than or equal to *BufferLength*, the text in *DiagInfoPtr* is truncated to *BufferLength* minus the length of a null-termination character. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_INVALID_HANDLE, or SQL_NO_DATA.
