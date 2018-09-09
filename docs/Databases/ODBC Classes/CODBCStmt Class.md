@@ -385,3 +385,30 @@ DO
    PRINT cwsOutput
 LOOP
 ```
+
+# <a name="BindParameter"></a>BindParameter
+
+Binds a buffer to a parameter marker in an SQL statement.
+
+```
+FUNCTION BindParameter (BYVAL ParameterNumber AS SQLUSMALLINT, BYVAL InputOutputType AS SQLSMALLINT, _
+   BYVAL ValueType AS SQLSMALLINT, BYVAL ParameterType AS SQLSMALLINT, BYVAL ColumnSize AS SQLULEN, _
+   BYVAL DecimalDigits AS SQLSMALLINT, BYVAL ParameterValuePtr AS SQLPOINTER, _
+   BYVAL BufferLength AS SQLLEN, BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ParameterNumber* | Parameter number, ordered sequentially in increasing parameter order, starting at 1. |
+| *InputOutputType* | The type of the parameter. |
+| *ValueType* | The C data type of the parameter. |
+| *ParameterType* | The SQL data type of the parameter. |
+| *ColumnSize* | The size of the column or expression of the corresponding parameter marker. |
+| *DecimalDigits* | The decimal digits of the column or expression of the corresponding parameter marker. |
+| *ParameterValuePtr* | A pointer to a buffer for the parameter's data. |
+| *BufferLength* | Length of the ParameterValuePtr buffer in bytes. |
+| StrLen_or_IndPtr | A pointer to a buffer for the parameter's length. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_INVALID_HANDLE, or SQL_ERROR.
