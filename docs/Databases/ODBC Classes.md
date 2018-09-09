@@ -2241,7 +2241,7 @@ An FIPS Transitional level-conformant driver will always return all of these opt
 Returns an SQLUINTEGER bitmask enumerating the rules supported for a foreign key in an UPDATE statement, as defined in SQL-92.
 The following bitmasks are used to determine which clauses are supported by the data source:
 
-SQL_SFKU_CASCADE<br><br>
+SQL_SFKU_CASCADE<br>
 SQL_SFKU_NO_ACTION<br>
 SQL_SFKU_SET_DEFAULT<br>
 SQL_SFKU_SET_NULL
@@ -2295,13 +2295,13 @@ SQL_SP_COMPARISON (Entry level)<br>
 SQL_SP_EXISTS (Entry level)<br>
 SQL_SP_IN (Entry level)<br>
 SQL_SP_ISNOTNULL (Entry level)<br>
-SQL_SP_ISNULL (Entry level)<br><br>
+SQL_SP_ISNULL (Entry level)<br>
 SQL_SP_LIKE (Entry level)<br>
 SQL_SP_MATCH_FULL (Full level)<br>
 SQL_SP_MATCH_PARTIAL(Full level)<br>
 SQL_SP_MATCH_UNIQUE_FULL (Full level)<br>
 SQL_SP_MATCH_UNIQUE_PARTIAL (Full level)<br>
-SQL_SP_OVERLAPS (FIPS Transitional level)<br><br>
+SQL_SP_OVERLAPS (FIPS Transitional level)<br>
 SQL_SP_QUANTIFIED_COMPARISON (Entry level)<br>
 SQL_SP_UNIQUE (Entry level)
 
@@ -2605,7 +2605,7 @@ SQL_FN_TD_CURDATE (ODBC 1.0)<br>
 SQL_FN_TD_CURTIME (ODBC 1.0)<br>
 SQL_FN_TD_DAYNAME (ODBC 2.0)<br>
 SQL_FN_TD_DAYOFMONTH (ODBC 1.0)<br>
-SQL_FN_TD_DAYOFWEEK (ODBC 1.0)<br><br>
+SQL_FN_TD_DAYOFWEEK (ODBC 1.0)<br>
 SQL_FN_TD_DAYOFYEAR (ODBC 1.0)<br>
 SQL_FN_TD_EXTRACT (ODBC 3.0)<br>
 SQL_FN_TD_HOUR (ODBC 1.0)<br>
@@ -2613,7 +2613,7 @@ SQL_FN_TD_MINUTE (ODBC 1.0)<br>
 SQL_FN_TD_MONTH (ODBC 1.0)<br>
 SQL_FN_TD_MONTHNAME (ODBC 2.0)<br>
 SQL_FN_TD_NOW (ODBC 1.0)<br>
-SQL_FN_TD_QUARTER (ODBC 1.0)<br><br>
+SQL_FN_TD_QUARTER (ODBC 1.0)<br>
 SQL_FN_TD_SECOND (ODBC 1.0)<br>
 SQL_FN_TD_TIMESTAMPADD (ODBC 2.0)<br>
 SQL_FN_TD_TIMESTAMPDIFF (ODBC 2.0)<br>
@@ -2640,7 +2640,7 @@ Returns an SQLUINTEGER bitmask enumerating the transaction isolation levels avai
 
 The following bitmasks are used in conjunction with the flag to determine which options are supported:
 
-SQL_TXN_READ_UNCOMMITTED<br><br>
+SQL_TXN_READ_UNCOMMITTED<br>
 SQL_TXN_READ_COMMITTED<br>
 SQL_TXN_REPEATABLE_READ<br>
 SQL_TXN_SERIALIZABLE
