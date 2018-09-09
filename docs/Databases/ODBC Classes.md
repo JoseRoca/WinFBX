@@ -331,41 +331,6 @@ Implements methods to create and manage statement objects. Inherits from COdbcBa
 | [UpdateByBookmark](#UpdateByBookmark) | Updates a set of rows where each row is identified by a bookmark. |
 | [UpdateRecord](#UpdateRecord) | Updates a record. |
 
-# <a name="ConstructorsDb"></a>Constructors (CODBC)
-
-Allocates a connection handle and, if needed, an environment handle, and opens the database.
-
-```
-CONSTRUCTOR CODBC (BYREF wszConnectionString AS WSTRING, BYVAL nODbcVersion AS SQLINTEGER = SQL_OV_ODBC3, _
-   BYVAL ConnectionPoolingAttr AS SQLUINTEGER = 0)
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *wszConnectionString* | The connection string. |
-| *nOdbcVersion* | Optional. ODBC version number: SQL_OV_ODBC2, SQL_OV_ODBC3 or SQL_OV_ODBC3_80. |
-| *ConnectionPoolingAttr* | Optional. SQL_CP_ONE_PER_DRIVER or SQL_CP_ONE_PER_HENV. |
-
-Establishes connections to a driver and a data source. The connection handle references storage of all information about the connection to the data source, including status, transaction state, and error information. 
-
-```
-CONSTRUCTOR CODBC (BYREF wszServerName AS WSTRING, BYREF wszUserName AS WSTRING, _
-   BYREF wszAuthentication AS WSTRING, BYVAL nODbcVersion AS SQLINTEGER = SQL_OV_ODBC3, _
-   BYVAL ConnectionPoolingAttr AS SQLUINTEGER = 0)
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *wszServerName* | Data source name. The data might be located on the same computer as the program, or on another computer somewhere on a network. |
-| *wszUserName* | User identifier. |
-| *wszAuthentication* | Authentication string (typically the password). |
-| *nOdbcVersion* | Optional. ODBC version number: SQL_OV_ODBC2, SQL_OV_ODBC3 or SQL_OV_ODBC3_80. |
-| *ConnectionPoolingAttr* | Optional. SQL_CP_ONE_PER_DRIVER or SQL_CP_ONE_PER_HENV. |
-
-#### GetLastResult
-
-SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, SQL_INVALID_HANDLE.
-
 # <a name="Error"></a>Error (CODBC)
 
 Returns TRUE if there has been an error; FALSE, otherwise.
@@ -378,7 +343,7 @@ FUNCTION Error () AS BOOLEAN
 
 Returns TRUE if the last result code is SQL_ERROR or SQL_INVALID_HANDLE.
 
-# <a name="GetCPMatch"></a>GetCPMatch (CODBC)
+# <a name="GetCPMatch"></a>GetCPMatch (CODBCBase)
 
 Returns a 32-bit SQLUINTEGER value that determines how a connection is chosen from a connection pool.
 
@@ -406,7 +371,7 @@ Only connections that exactly match the connection options in the call and the c
 
 Connections with matching connection string keywords can be used. Keywords must match, but not all connection attributes must  match.
 
-# <a name="GetDataSources"></a>GetDataSources (CODBC)
+# <a name="GetDataSources"></a>GetDataSources (CODBCBase)
 
 Lists available DSN / Drivers installed.
 
@@ -429,7 +394,7 @@ SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
 
 When **GetDataSources** returns either SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling the **SqlState** property.
 
-# <a name="GetDrivers"></a>GetDrivers (CODBC)
+# <a name="GetDrivers"></a>GetDrivers (CODBCBase)
 
 Lists driver descriptions and driver attribute keywords. This function is implemented only by the Driver Manager.
 
@@ -464,7 +429,7 @@ If SQL_FETCH_NEXT is passed to **GetDrivers** the very first time it is called, 
 
 Because **GetDrivers** is implemented in the Driver Manager, it is supported for all drivers regardless of a particular driver's standards compliance.
 
-# <a name="GetEnvAttr"></a>GetEnvAttr (CODBC)
+# <a name="GetEnvAttr"></a>GetEnvAttr (CODBCBase)
 
 Returns the current setting of an environment attribute.
 
@@ -484,7 +449,7 @@ FUNCTION GetEnvAttr (BYVAL Attribute AS SQLINTEGER, BYVAL ValuePtr AS SQLPOINTER
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
 
-# <a name="GetErrorInfo"></a>GetErrorInfo (CODBC)
+# <a name="GetErrorInfo"></a>GetErrorInfo (CODBCBase)
 
 Returns a verbose description of the last error(s).
 
@@ -503,7 +468,7 @@ FUNCTION GetErrorInfo (BYVAL HandleType AS SQLSMALLINT, BYVAL Handle AS SQLHANDL
 
 The description of the error or errors.
 
-# <a name="GetLastResult"></a>GetLastResult (CODBC)
+# <a name="GetLastResult"></a>GetLastResult (CODBCBase)
 
 Returns the last result code.
 
@@ -521,7 +486,7 @@ The character string value returned for an SQLSTATE consists of a two-character 
 
 Note Although successful execution of a function is normally indicated by a return value of SQL_SUCCESS, the SQLSTATE 00000 also indicates success.
 
-# <a name="GetOutputNTS"></a>GetOutputNTS (CODBC)
+# <a name="GetOutputNTS"></a>GetOutputNTS (CODBCBase)
 
 Returns a 32-bit integer that determines how the driver returns string data. If SQL_TRUE, the driver returns string data null-terminated. If SQL_FALSE, the driver does not return string data null-terminated. This attribute defaults to SQL_TRUE. A call to SetEnvAttr to set it to SQL_TRUE returns SQL_SUCCESS. A call to SetEnvAttr to set it to SQL_FALSE returns SQL_ERROR and SQLSTATE HYC00.
 
@@ -540,7 +505,7 @@ The current value of the attribute.
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
 
 
-# <a name="GetSqlState"></a>GetSqlState (CODBC)
+# <a name="GetSqlState"></a>GetSqlState (CODBCBase)
 
 Returns the SqlState for the specified handle.
 
@@ -691,7 +656,7 @@ The character string value returned for an SQLSTATE consists of a two-character 
 | IM015 | Corrupt file data source |
 
 
-# <a name="ODBCVersion"></a>ODBCVersion (CODBC)
+# <a name="ODBCVersion"></a>ODBCVersion (CODBCBase)
 
 Returns a 32-bit integer that determines whether certain functionality exhibits ODBC 2.x behavior or ODBC 3.x behavior.
 
@@ -730,7 +695,7 @@ To set the ODBC version, use the optional parameters of the **CODBC** class cons
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
 
-# <a name="SetCPMatch"></a>SetCPMatch (CODBC)
+# <a name="SetCPMatch"></a>SetCPMatch (CODBCBase)
 
 Sets a 32-bit SQLUINTEGER value that determines how a connection is chosen from a connection pool.
 
@@ -758,7 +723,7 @@ Connections with matching connection string keywords can be used. Keywords must 
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
 
-# <a name="SetEnvAttr"></a>SetEnvAttr (CODBC)
+# <a name="SetEnvAttr"></a>SetEnvAttr (CODBCBase)
 
 Sets attributes that govern aspects of environments.
 
@@ -777,7 +742,7 @@ FUNCTION SetEnvAttr (BYVAL Attribute AS SQLINTEGER, BYVAL ValuePtr AS SQLPOINTER
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
 
-# <a name="SetErrorProc"></a>SetErrorProc (CODBC)
+# <a name="SetErrorProc"></a>SetErrorProc (CODBCBase)
 
 Sets the address of an application defined error callback.
 
@@ -802,7 +767,7 @@ pDbc.SetErrorProc(@ODBC_ErrorCallback)    ' // Sets the error callback for the c
 pStmt.SetErrorProc(@ODBC_ErrorCallback)   ' // Sets the error callback for the statement object
 ```
 
-# <a name="SetOutputNTS"></a>SetOutputNTS (CODBC)
+# <a name="SetOutputNTS"></a>SetOutputNTS (CODBCBase)
 
 Returns a 32-bit integer that determines how the driver returns string data. If SQL_TRUE, the driver returns string data null-terminated. If SQL_FALSE, the driver does not return string data null-terminated. This attribute defaults to SQL_TRUE. A call to SetEnvAttr to set it to SQL_TRUE returns SQL_SUCCESS. A call to SetEnvAttr to set it to SQL_FALSE returns SQL_ERROR and SQLSTATE HYC00.
 
@@ -820,3 +785,37 @@ FUNCTION SetOutputNTS (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
 
+# <a name="ConstructorsDb"></a>Constructors (CODBC)
+
+Allocates a connection handle and, if needed, an environment handle, and opens the database.
+
+```
+CONSTRUCTOR CODBC (BYREF wszConnectionString AS WSTRING, BYVAL nODbcVersion AS SQLINTEGER = SQL_OV_ODBC3, _
+   BYVAL ConnectionPoolingAttr AS SQLUINTEGER = 0)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszConnectionString* | The connection string. |
+| *nOdbcVersion* | Optional. ODBC version number: SQL_OV_ODBC2, SQL_OV_ODBC3 or SQL_OV_ODBC3_80. |
+| *ConnectionPoolingAttr* | Optional. SQL_CP_ONE_PER_DRIVER or SQL_CP_ONE_PER_HENV. |
+
+Establishes connections to a driver and a data source. The connection handle references storage of all information about the connection to the data source, including status, transaction state, and error information. 
+
+```
+CONSTRUCTOR CODBC (BYREF wszServerName AS WSTRING, BYREF wszUserName AS WSTRING, _
+   BYREF wszAuthentication AS WSTRING, BYVAL nODbcVersion AS SQLINTEGER = SQL_OV_ODBC3, _
+   BYVAL ConnectionPoolingAttr AS SQLUINTEGER = 0)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszServerName* | Data source name. The data might be located on the same computer as the program, or on another computer somewhere on a network. |
+| *wszUserName* | User identifier. |
+| *wszAuthentication* | Authentication string (typically the password). |
+| *nOdbcVersion* | Optional. ODBC version number: SQL_OV_ODBC2, SQL_OV_ODBC3 or SQL_OV_ODBC3_80. |
+| *ConnectionPoolingAttr* | Optional. SQL_CP_ONE_PER_DRIVER or SQL_CP_ONE_PER_HENV. |
+
+#### GetLastResult
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, SQL_INVALID_HANDLE.
