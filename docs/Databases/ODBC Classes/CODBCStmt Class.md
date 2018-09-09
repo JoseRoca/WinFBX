@@ -1527,3 +1527,28 @@ The type of cursor.
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
 
+
+# <a name="GetData"></a>GetData
+
+Retrieves data for a single column in the result set. It can be called multiple times to retrieve variable-length data in parts.
+
+```
+FUNCTION GetData (BYVAL ColumnNumber AS SQLUSMALLINT, BYVAL TargetType AS SQLSMALLINT, _
+   BYVAL TargetValue AS SQLPOINTER, BYVAL BufferLength AS SQLLEN, _
+   BYVAL StrLen_or_Ind AS SQLLEN PTR) AS SQLRETURN
+FUNCTION GetData (BYREF ColumnName AS WSTRING, BYVAL TargetType AS SQLSMALLINT, _
+   BYVAL TargetValue AS SQLPOINTER, BYVAL BufferLength AS SQLLEN, _
+   BYVAL StrLen_or_Ind AS SQLLEN PTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColumnNumber* | Number or name of the column for which to return data. Result set columns are numbered in increasing column order starting at 1. The bookmark column is column number 0; this can be specified only if bookmarks are enabled. |
+| *TargetType* | The type identifier of the C data type of the *TargetValuePtr* buffer. If *TargetType* is SQL_ARD_TYPE, the driver uses the type identifier specified in the SQL_DESC_CONCISE_TYPE field of the ARD. If it is SQL_C_DEFAULT, the driver selects the default C data type based on the SQL data type of the source. |
+| *TargetValue* | Pointer to the buffer in which to return the data. |
+| *BufferLength* | Length of the *TargetValue* buffer in bytes.<br>The driver uses *BufferLength* to avoid writing past the end of the TargetValue buffer when returning variable-length data, such as character or binary data. Note that the driver counts the null-termination character when returning character data to *TargetValue*. *TargetValue* must therefore contain space for the null-termination character, or the driver will truncate the data.<br>When the driver returns fixed-length data, such as an integer or a date structure, the driver ignores BufferLength and assumes the buffer is large enough to hold the data. It is therefore important for the application to allocate a large enough buffer for fixed-length data or the driver will write past the end of the buffer.<br>GetData returns SQLSTATE HY090 (Invalid string or buffer length) when BufferLength is less than 0 but not when BufferLength is 0.<br>If *TargetValue* is set to a null pointer,*BufferLength* is ignored by the driver.  |
+| *StrLen_or_Ind* | Pointer to the buffer in which to return the length or indicator value. If this is a null pointer, no length or indicator value is returned. This returns an error when the data being fetched is NULL.<br>**GetData** can return the following values in the length/indicator buffer:<br>The length of the data available to return: SQL_NO_TOTAL, SQL_NULL_DATA. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
