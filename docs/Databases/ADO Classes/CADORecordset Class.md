@@ -249,7 +249,7 @@ Note numbers used in the cross-index:
 
 As an alternative to arrays and/or dictionary objects, we can use ADO to create in-memory recordsets. Some advantages of using ADO over SQLite for this task is that we don't need to use a third party DLL and that we can save a recordset to disk as a stream or as XML just calling **Save** or **SaveAsXml**.
 
-**Seek** does not work, but we can use **Find** (to search by name) or **AbsolutePosition** (to search by ordinal). We can also use other ADO methods such **Delete_**, **Sort** and **Filter**.
+**Seek** does not work (Seek only works with server-side cursors), but we can use **Find** (to search by name) or **AbsolutePosition** (to search by ordinal). We can also use other ADO methods such **Delete_**, **Sort** and **Filter**.
 
 We can also get all the rows as a two-dimensional safe array, calling the **GetRows** method, or as an string calling the **GetString** method, that allows to specify the number of rows to read, a separator (default = tab) and a row delimiter (default = CRLF).
 
