@@ -2932,8 +2932,8 @@ Saves any changes you make to the current row of a **Recordset** object.
 
 ```
 FUNCTION Update ( _
-   BYREF cvFieldList AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
-   BYREF cvValues AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND) _
+   BYREF cvFieldList AS CVAR = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
+   BYREF cvValues AS CVAR = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND) _
 ) AS HRESULT
 ```
 
