@@ -2707,14 +2707,14 @@ The number of the current row in the entire result set.
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
 
-# <a name="GetStmtRowNumber"></a>GetStmtRowNumber
+# <a name="GetStmtRowOperationPtr"></a>GetStmtRowOperationPtr
 
 Gets an SQLUSMALLINT value that points to an array of SQLUSMALLINT values used to ignore a row during a bulk operation using SetPos. Each value is set to either SQL_ROW_PROCEED (for the row to be included in the bulk operation) or SQL_ROW_IGNORE (for the row to be excluded from the bulk operation). (Rows cannot be ignored by using this array during calls to **BulkOperations**.)
 
 **Note**: Optional feature not implemented by the Microsoft Access Driver.
 
 ```
-FUNCTION GetStmtRowNumber () AS SQLUINTEGER
+FUNCTION GetStmtRowOperationPtr () AS SQLUINTEGER
 ```
 
 #### Remarks
