@@ -3457,3 +3457,43 @@ FUNCTION SetStmtAppParamDesc (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtAppRowDesc"></a>SetStmtAppRowDesc
+
+Sets the handle to the ARD for subsequent fetches on the statement handle. The initial value of this attribute is the descriptor implicitly allocated when the statement was initially allocated. If the value of this attribute is set to SQL_NULL_DESC or the handle originally allocated for the descriptor, an explicitly allocated ARD handle that was previously associated with the statement handle is dissociated from it and the statement handle reverts to the implicitly allocated ARD handle.
+
+This attribute cannot be set to a descriptor handle that was implicitly allocated for another statement or to another descriptor handle that was implicitly set on the same statement; implicitly allocated descriptor handles cannot be associated with more than one statement or descriptor handle.
+
+```
+FUNCTION SetStmtAppRowDesc (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Attribute value. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+
+# <a name="SetStmtAttr"></a>SetStmtAttr
+
+Sets the current setting of a statement attribute.
+
+**Note**: Additional procedures, one foe each attribute, have been developed to be used instead of this generic procedure.
+
+```
+FUNCTION SetStmtAttr (BYVAL Attribute AS SQLINTEGER, BYVAL ValuePtr AS SQLPOINTER, _
+   BYVAL StringLength AS SQLINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Attribute* | Attribute to set. |
+| *ValuePtr* | Pointer to the value to be associated with *Attribute*. Depending on the value of *Attribute*, *ValuePtr* will be a 32-bit unsigned integer value or a pointer to a null-terminated character string, a binary buffer, or a driver-defined value. If the *Attribute* argument is a driver-specific value, *ValuePtr* may be a signed integer. |
+| *StringLength* |  If *Attribute* is an ODBC-defined attribute and *ValuePtr* points to a character string or a binary buffer, this argument should be the length of *ValuePtr*. If Attribute is an ODBC-defined attribute and *ValuePtr* is an integer, *StringLength* is ignored.<br><br>If *Attribute* is a driver-defined attribute, the application indicates the nature of the attribute to the Driver Manager by setting the StringLength argument. StringLength can have the following values:<ul><li>If *ValuePtr* is a pointer to a character string, then *StringLength* is the length of the string or SQL_NTS.</li><li>If *ValuePtr* is a pointer to a binary buffer, then the application places the result of the SQL_LEN_BINARY_ATTR(length) macro in *StringLength*. This places a negative value in StringLength.</li><li>If *ValuePtr* is a pointer to a value other than a character string or a binary string, then *StringLength* should have the value SQL_IS_POINTER.<li><li>If *ValuePtr* contains a fixed-length value, then *StringLength* is either SQL_IS_INTEGER or SQL_IS_UINTEGER, as appropriate.</li></ul> |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
