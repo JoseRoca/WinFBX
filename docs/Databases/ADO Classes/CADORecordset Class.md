@@ -707,7 +707,7 @@ Use the **AddNew** method to create and initialize a new record. Use the **Suppo
 
 After you call the **AddNew** method, the new record becomes the current record and remains current after you call the **Update** method. Since the new record is appended to the **Recordset**, a call to **MoveNext** following the **Update** will move past the end of the **Recordset**, making **EOF** True. If the **Recordset** object does not support bookmarks, you may not be able to access the new record once you move to another record. Depending on your cursor type, you may need to call the **Requery** method to make the new record accessible.
 
-If you call **AddNew** while editing the current record or while adding a new record, ADO calls the Update method to save any changes and then creates the new record.
+If you call **AddNew** while editing the current record or while adding a new record, ADO calls the **Update** method to save any changes and then creates the new record.
 
 The behavior of the **AddNew** method depends on the updating mode of the **Recordset** object and whether you pass the *vFieldlist* and *vValues* arguments.
 
