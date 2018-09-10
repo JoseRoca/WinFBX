@@ -3770,3 +3770,16 @@ FUNCTION SetStmtRetrieveData (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
 | ---------- | ----------- |
 | *dwAttr* | Value of the attribute.<br>**SQL_RD_ON** = **FetchScroll** and, in ODBC 3.x, **Fetch** retrieve data after it positions the cursor to the specified location. This is the default.<br>**SQL_RD_OFF** = **FetchScroll** and, in ODBC 3.x, **Fetch** do not retrieve data after it positions the cursor. |
 
+#### Remarks
+
+By setting SQL_RETRIEVE_DATA to SQL_RD_OFF, an application can verify that a row exists or retrieve a bookmark for the row without incurring the overhead of retrieving rows.
+
+The value of this attribute can be set on an open cursor; however, the setting might not take effect immediately, in which case the driver will return SQLSTATE 01S02 (Option value changed) and reset the attribute to its original value.
+
+#### Return value
+
+SQL_RD_ON or SQL_RD_OFF.
+
+**Result value** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
