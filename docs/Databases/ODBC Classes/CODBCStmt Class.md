@@ -3971,3 +3971,41 @@ FUNCTION SetStmtUseBookmarks (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtAsyncEnable"></a>SetStmtAsyncEnable
+
+Sets an SQLUINTEGER value that specifies whether a function called with the specified statement is executed asynchronously.
+
+**Note**: Optional feature not implemented by the Microsoft Access Driver.
+
+```
+FUNCTION SetStmtAsyncEnable (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Value of the attribute.<br>**SQL_ASYNC_ENABLE_OFF** = Off (the default)<br>**SQL_ASYNC_ENABLE_ON** = On |
+
+#### Remarks
+
+Once a function has been called asynchronously, only the original function, **Cancel**, **GetDiagField**, or **GetDiagRec** can be called on the statement, and only the original function, **AllocStmt**, **GetDiagField**, **GetDiagRec**, or **GetFunctions** can be called on the connection associated with the statement, until the original function returns a code other than SQL_STILL_EXECUTING. Any other function called on the statement or the connection associated with the statement returns SQL_ERROR with an SQLSTATE of HY010 (Function sequence error). Functions can be called on other statements.
+
+For drivers with statement level asynchronous execution support, the statement attribute SQL_ATTR_ASYNC_ENABLE may be set. Its initial value is the same as the value of the connection level attribute with the same name at the time the statement handle was allocated.
+
+For drivers with connection-level, asynchronous-execution support, the statement attribute SQL_ATTR_ASYNC_ENABLE is read-only. Its value is the same as the value of the connection level attribute with the same name at the time the statement handle was allocated. Calling **SetStmtAttr** to set SQL_ATTR_ASYNC_ENABLE when the SQL_ASYNC_MODE InfoType returns SQL_AM_CONNECTION returns SQLSTATE HYC00 (Optional feature not implemented).
+
+As a standard practice, applications should execute functions asynchronously only on single-thread operating systems. On multithread operating systems, applications should execute functions on separate threads rather than executing them asynchronously on the same thread. No functionality is lost if drivers that operate only on multithread operating systems do not need to support asynchronous execution. 
+
+The following functions can be executed asynchronously:
+
+BulkOperations ColAttribute ColumnPrivileges Columns CopyDesc DescribeCol DescribeParam ExecDirect Execute Fetch FetchScroll ForeignKeys GetData GetDescField\[1] GetDescRec\[1] GetDiagField GetDiagRec GetTypeInfo MoreResults NumParams NumResultCols ParamData Prepare PrimaryKeys ProcedureColumns Procedures PutData SetPos SpecialColumns Statistics TablePrivileges Tables.
+
+\[1] These functions can be called asynchronously only if the descriptor is an implementation descriptor, not an application descriptor.
+
+#### Return value
+
+SQL_ASYNC_ENABLE_OFF or SQL_ASYNC_ENABLE_ON.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
