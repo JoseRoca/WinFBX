@@ -1844,7 +1844,7 @@ FUNCTION GetImpParamDescRec (BYVAL RecNumber AS SQLSMALLINT, BYVAL pwszName AS W
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered 1, with record number 0 being the bookmark record. The RecNumber argument must be less than or equal to the value of SQL_DESC_COUNT. If RecNumber is less than or equal to SQL_DESC_COUNT but the row does not contain data for a column or parameter, a call to **GetDescRec** will return the default values of the fields.ates the descriptor record from which the application seeks information. Descriptor records are numbered  |
+| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered 1, with record number 0 being the bookmark record. The *RecNumber* argument must be less than or equal to the value of SQL_DESC_COUNT. If RecNumber is less than or equal to SQL_DESC_COUNT but the row does not contain data for a column or parameter, a call to **GetDescRec** will return the default values of the fields.ates the descriptor record from which the application seeks information. Descriptor records are numbered  |
 | *pwszName* | A pointer to a buffer in which to return the SQL_DESC_NAME field for the descriptor record. |
 | *TypePtr* | A pointer to a buffer in which to return the value of the SQL_DESC_TYPE field for the descriptor record. |
 | *SubTypePtr* | For records whose type is SQL_DATETIME or SQL_INTERVAL, this is a pointer to a buffer in which to return the value of the SQL_DESC_DATETIME_INTERVAL_CODE field. |
