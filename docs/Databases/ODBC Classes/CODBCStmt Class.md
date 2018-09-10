@@ -2208,3 +2208,48 @@ SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVAL
 #### Diagnostics
 
 When **SpecialColumns** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value may be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
+
+# <a name="GetSqlState"></a>GetSqlState
+
+Returns the SqlState for the statement handle.
+
+```
+FUNCTION GetSqlState () AS CWSTR
+```
+
+#### Return value
+
+The SqlState value.
+
+# <a name="GetStatistics"></a>GetStatistics
+
+Retrieves a list of statistics about a single table and the indexes associated with the table. The driver returns this information as a result set on the specified statement handle.
+
+```
+FUNCTION GetStatistics (BYREF wszCatalogName AS WSTRING, BYVAL CatalogNameLength AS SQLSMALLINT, _
+   BYREF wszSchemaName AS WSTRING, BYVAL SchemaNameLength AS SQLSMALLINT, _
+   BYREF wszTableName AS WSTRING, BYVAL TableNameLength AS SQLSMALLINT, _
+   BYVAL fUnique AS SQLUSMALLINT, BYVAL fCardinality AS SQLUSMALLINT) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hStmt* | Statement handle. |
+| *wszCatalogName* | Procedure catalog. If a driver supports catalogs for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have catalogs. *wszCatalogName* cannot contain a string search pattern. |
+| *CatalogNameLength* | Length of *wszCatalogName*. |
+| *wszSchemaName* | String search pattern for procedure schema names. If a driver supports schemas for some procedures but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those procedures that do not have schemas. *wszSchemaName* cannot contain a string search pattern. |
+| *SchemaNameLength* | Length of *wszSchemaName*. |
+| *wszTableName* | Table name. *wszTableName* cannot contain a string search pattern.<br>If the SQL_ATTR_METADATA_ID statement attribute is set to SQL_TRUE, *wszTableName* is treated as an identifier and its case is not significant. If it is SQL_FALSE, *wszTableName* is an ordinary argument; it is treated literally, and its case is significant.  |
+| *TableNameLength* | Length of *wszTableName*. |
+| *fUnique* | Type of index: SQL_INDEX_UNIQUE or SQL_INDEX_ALL. |
+| *fCardinality* | Indicates the importance of the CARDINALITY and PAGES columns in the result set. The following options affect the return of the CARDINALITY and PAGES columns only; index information is returned even if CARDINALITY and PAGES are not returned.<br>SQL_ENSURE requests that the driver unconditionally retrieve the statistics. (Drivers that conform only to the X/Open standard and do not support ODBC extensions will not be able to support SQL_ENSURE.)<br>SQL_QUICK requests that the driver retrieve the CARDINALITY and PAGES only if they are readily available from the server. In this case, the driver does not ensure that the values are current. (Applications that are written to the X/Open standard will always get SQL_QUICK behavior from ODBC 3.x-compliant drivers.)  |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Diagnostics
+
+When **GetStatistics** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
+
+
