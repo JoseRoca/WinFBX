@@ -269,9 +269,9 @@ DIM pFields AS CAdoFields = pRecordset.Fields
 pFields.Append("Key", adVarChar, 10)
 pFields.Append("Item", adVarChar, 20)
 
-pRecordset.CursorType = adOpenKeyset
-pRecordset.CursorLocation = adUseClient
-pRecordset.LockType = adLockOptimistic
+'pRecordset.CursorType = adOpenKeyset
+'pRecordset.CursorLocation = adUseClient
+'pRecordset.LockType = adLockOptimistic
 pRecordset.Open(adOpenKeyset, adLockOptimistic)
 
 print "Record count: ", pRecordset.Recordcount
