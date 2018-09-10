@@ -85,6 +85,26 @@ Base64 is a group of similar encoding schemes that represent binary data in an A
 
 Base64 encoding schemes are commonly used when there is a need to encode binary data that needs be stored and transferred over media that are designed to deal with textual data. This is to ensure that the data remains intact without modification during transport. Base64 is used commonly in a number of applications including email via MIME, and storing complex data in XML.
 
+If we want to encode a unicode string, we must convert it to utf8 before calling AfxBase64Encode, e.g.
+
+````
+DIM cws AS CWSTR = "おはようございます – Good morning!"
+DIM s AS STRING = AfxBase64Encode(cws.Utf8)
+````
+
+To decode it, we can use
+
+````
+DIM cwsOut AS CWSTR = CWSTR(AfxBase64Decode(s), CP_UTF8)
+````
+
+or
+
+````
+DIM cwsOut AS CWSTR
+cws.utf8 = AfxBase64Decode(s)
+````
+
 # <a name="AfxBase64Encode"></a>AfxBase64Encode
 
 Converts the contents of a string to Base64 mime encoding.
