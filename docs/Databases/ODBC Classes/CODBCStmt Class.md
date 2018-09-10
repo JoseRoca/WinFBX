@@ -2635,7 +2635,7 @@ Setting this statement attribute sets the SQL_DESC_ARRAY_SIZE field in the ARD h
 
 #### Return value
 
-The number of rows returned by each call to Fetch or FetchScroll.
+The number of rows returned by each call to **Fetch** or **FetchScroll**.
 
 **Result code** (GetLastResult)
 
