@@ -3274,3 +3274,70 @@ FUNCTION SetCursorType (BYVAL CursorType AS DWORD) AS SQLRETURN
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetDynamicCursor"></a>SetDynamicCursor
+
+Specifies a dynamic cursor. Note: Microsoft Access Driver changes it to a Keyset cursor.
+
+```
+FUNCTION SetDynamicCursor () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetForwardOnlyCursor"></a>SetForwardOnlyCursor
+
+Specifies a forward only cursor.
+
+```
+FUNCTION SetForwardOnlyCursor () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+
+# <a name="SetKeysetDrivenCursor"></a>SetKeysetDrivenCursor
+
+Specifies a keyset driven cursor.
+
+```
+FUNCTION SetKeysetDrivenCursor () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+
+# <a name="SetLockConcurrency"></a>SetLockConcurrency
+
+Cursor uses the lowest level of locking sufficient to ensure that the row can be updated.
+
+```
+FUNCTION SetLockConcurrency () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetMultiuserKeysetCursor"></a>SetMultiuserKeysetCursor
+
+Creates a multiuser keyset cursor.
+
+```
+FUNCTION SetMultiuserKeysetCursor (BYVAL pwszCursorName AS WSTRING PTR = NULL) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pwszCursorName* | Name of the cursor. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
