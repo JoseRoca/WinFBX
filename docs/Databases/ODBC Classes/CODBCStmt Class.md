@@ -1897,7 +1897,7 @@ FUNCTION GetImpRowDescField (BYVAL RecNumber AS SQLSMALLINT, BYVAL FieldIdentifi
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered from 1, with record number 0 being the bookmark record. The RecNumber argument must be less or equal to the value of SQL_DESC_COUNT. If RecNumber is less that or equal to SQL_DESC_COUNT but the row does not contain data for a column or parameter, a call to GetImpRowDesc will return the default values of the fields.  |
+| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered from 1, with record number 0 being the bookmark record. The *RecNumber* argument must be less or equal to the value of SQL_DESC_COUNT. If RecNumber is less that or equal to SQL_DESC_COUNT but the row does not contain data for a column or parameter, a call to **GetImpRowDesc** will return the default values of the fields. |
 | *FieldIdentifier* | Indicates the field of the descriptor whose value is to be returned: SQL_DESC_NAME, SQL_DESC_TYPE, SQL_DESC_OCTET_LENGTH, SQL_DESC_PRECISION, SQL_DESC_SCALE, SQL_DESC_NULLABLE. |
 | *ValuePtr* | Pointer to a buffer in which to return the descriptor information. The data type depends on the value of *FieldIdentifier*. |
 | *BufferLength* | If *FieldIdentifier* is an ODBC-defined field and ValuePtr points to a character string or a binary buffer, this argument should be the length of *ValuePtr*. If *FieldIdentifier* is an ODBC-defined field and ValuePtr is an integer, *BufferLength* is ignored.<br>If *FieldIdentifier* is a driver-defined field, the application indicates the nature of the field to the Driver Manager by setting the BufferLength argument. *BufferLength* can have the following values:<br><br><ul><li>If *ValuePtr* is a pointer to a character string, then  BufferLengthis the length of the string or SQL_NTS.</li><li>If *ValuePtr* is a pointer to a binary buffer, then the application places the result of the SQL_LEN_BINARY_ATTR(length) macro in *BufferLength*. This places a negative value in *BufferLength*.</li><li>If *ValuePtr* is a pointer to a value other than a character string or binary string, then *BufferLength* should have the value SQL_IS_POINTER.</li><li>If *ValuePtr* is contains a fixed-length data type, then *BufferLength* is either SQL_IS_INTEGER, SQL_IS_UINTEGER, SQL_IS_SMALLINT, or SQL_IS_USMALLINT, as appropriate.</li></ul> |
@@ -1906,4 +1906,165 @@ FUNCTION GetImpRowDescField (BYVAL RecNumber AS SQLSMALLINT, BYVAL FieldIdentifi
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
 
-SQL_NO_DATA is returned if RecNumber is greater than the current number of descriptor records.
+SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records.
+
+# <a name="GetImpRowDescFieldName"></a>GetImpRowDescFieldName
+
+Returns the name of a single field of a descriptor record.
+
+```
+FUNCTION GetImpRowDescFieldName (BYVAL RecNumber AS SQLSMALLINT) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered from 1, with record number 0 being the bookmark record. The *RecNumber* argument must be less or equal to the value of SQL_DESC_COUNT. |
+
+#### Return value
+
+The name of the field.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
+
+SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records.
+
+# <a name="GetImpRowDescFieldNullable"></a>GetImpRowDescFieldNullable
+
+Returns the nullable value (TRUE or FALSE) of a single field of a descriptor record.
+
+```
+FUNCTION GetImpRowDescFieldNullable (BYVAL RecNumber AS SQLSMALLINT) AS SQLSMALLINT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered from 1, with record number 0 being the bookmark record. The *RecNumber* argument must be less or equal to the value of SQL_DESC_COUNT. |
+
+#### Return value
+
+TRUE or FALSE.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
+
+SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records.
+
+# <a name="GetImpRowDescFieldOctetLength"></a>GetImpRowDescFieldOctetLength
+
+Returns the octet length of a single field of a descriptor record.
+
+```
+FUNCTION GetImpRowDescFieldOctetLength (BYVAL RecNumber AS SQLSMALLINT) AS SQLSMALLINT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered from 1, with record number 0 being the bookmark record. The *RecNumber* argument must be less or equal to the value of SQL_DESC_COUNT. |
+
+#### Return value
+
+The octet length.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
+
+SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records.
+
+# <a name="GetImpRowDescFieldPrecision"></a>GetImpRowDescFieldPrecision
+
+Returns the precision value of a single field of a descriptor record.
+
+```
+FUNCTION GetImpRowDescFieldPrecision (BYVAL RecNumber AS SQLSMALLINT) AS SQLSMALLINT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered from 1, with record number 0 being the bookmark record. The *RecNumber* argument must be less or equal to the value of SQL_DESC_COUNT. |
+
+#### Return value
+
+The precision value.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
+
+SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records.
+
+# <a name="GetImpRowDescFieldScale"></a>GetImpRowDescFieldScale
+
+Returns the scale value of a single field of a descriptor record.
+
+```
+FUNCTION GetImpRowDescFieldScale (BYVAL RecNumber AS SQLSMALLINT) AS SQLSMALLINT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered from 1, with record number 0 being the bookmark record. The *RecNumber* argument must be less or equal to the value of SQL_DESC_COUNT. |
+
+#### Return value
+
+The scale value.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
+
+SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records.
+
+# <a name="GetImpRowDescFieldType"></a>GetImpRowDescFieldType
+
+Returns the type of a single field of a descriptor record.
+
+```
+FUNCTION GetImpRowDescFieldType (BYVAL RecNumber AS SQLSMALLINT) AS SQLSMALLINT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered from 1, with record number 0 being the bookmark record. The *RecNumber* argument must be less or equal to the value of SQL_DESC_COUNT. |
+
+#### Return value
+
+The type of the field.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
+
+SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records.
+
+# <a name="GetImpRowDescRec"></a>GetImpRowDescRec
+
+Returns the current settings or values of multiple fields of a descriptor record. The fields returned describe the name, data type, and storage of column or parameter data.
+
+```
+FUNCTION GetImpRowDescRec (BYVAL RecNumber AS SQLSMALLINT, BYVAL pwszName AS WSTRING PTR, _
+   BYVAL BufferLength AS SQLSMALLINT, BYVAL StringLength AS SQLSMALLINT PTR, _
+   BYVAL TypePtr AS SQLSMALLINT PTR, BYVAL SubTypePtr AS SQLSMALLINT PTR, _
+   BYVAL LengthPtr AS SQLLEN PTR, BYVAL PrecisionPtr AS SQLSMALLINT PTR, _
+   BYVAL ScalePtr AS SQLSMALLINT PTR, BYVAL NullablePtr AS SQLSMALLINT PTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered from 1, with record number 0 being the bookmark record. The RecNumber argument must be less or equal to the value of SQL_DESC_COUNT. If RecNumber is less that or equal to SQL_DESC_COUNT but the row does not contain data for a column or parameter, a call to **GetImpRowDesc** will return the default values of the fields. |
+| *pwszName* | A pointer to a buffer in which to return the SQL_DESC_NAME field for the descriptor record. |
+| *TypePtr* | A pointer to a buffer in which to return the value of the SQL_DESC_TYPE field for the descriptor record. |
+| *SubTypePtr* | For records whose type is SQL_DATETIME or SQL_INTERVAL, this is a pointer to a buffer in which to return the value of the SQL_DESC_DATETIME_INTERVAL_CODE field. |
+| *LengthPtr* | A pointer to a buffer in which to return the value of the SQL_DESC_OCTET_LENGTH field for the descriptor record. |
+| *PrecisionPtr* | A pointer to a buffer in which to return the value of the SQL_DESC_PRECISION field for the descriptor record. |
+| *ScaleSptr* | A pointer to a buffer in which to return the value of the SQL_DESC_SCALE field for the descriptor record. |
+| *NullablePtr* | A pointer to a buffer in which to return the value of the SQL_DESC_NULLABLE field for the descriptor record. |
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
+
+SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records or the the statement is in the prepared or executed state but there was no open cursor associated with it.
