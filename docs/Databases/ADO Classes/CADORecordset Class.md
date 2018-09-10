@@ -105,7 +105,7 @@ The **Fields** collection has an **Append** method, which provisionally creates 
 
 Certain providers (for example, the Microsoft OLE DB Provider for Internet Publishing) may populate the **Fields** collection with a subset of available fields for the **Record** or **Recordset**. Other fields will not be added to the collection until they are first referenced by name or indexed by your code.
 
-If you attempt to reference a nonexistent field by name, a new **Field** object will be appended to the **Fields** collection with a **Status** of **adFieldPendingInsert**. When you call Update, ADO will create a new field in your data source if allowed by your provider.
+If you attempt to reference a nonexistent field by name, a new **Field** object will be appended to the **Fields** collection with a **Status** of **adFieldPendingInsert**. When you call **Update**, ADO will create a new field in your data source if allowed by your provider.
 
 Each **Field** object corresponds to a column in the **Recordset**. You use the **Value** property of **Field** objects to set or return data for the current record. Depending on the functionality the provider exposes, some collections, methods, or properties of a **Field** object may not be available.
 
@@ -2932,15 +2932,15 @@ Saves any changes you make to the current row of a **Recordset** object.
 
 ```
 FUNCTION Update ( _
-   BYVAL vFieldList AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
-   BYVAL vValues AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND) _
+   BYREF cvFieldList AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
+   BYREF cvValues AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND) _
 ) AS HRESULT
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *vFieldList* | Optional. A Variant that represents a single name, or a Variant array that represents names or ordinal positions of the field or fields you wish to modify. |
-| *vValues* | Optional. A Variant that represents a single value, or a Variant array that represents values for the field or fields in the new record. |
+| *cvFieldList* | Optional. A Variant that represents a single name, or a Variant array that represents names or ordinal positions of the field or fields you wish to modify. |
+| *cvValues* | Optional. A Variant that represents a single value, or a Variant array that represents values for the field or fields in the new record. |
 
 #### Return value
 
