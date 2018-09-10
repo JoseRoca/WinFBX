@@ -2570,3 +2570,73 @@ The pointer to the array.
 Result code (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtQueryTimeout"></a>GetStmtQueryTimeout
+
+Gets an SQLUINTEGER value corresponding to the number of seconds to wait for an SQL statement to execute before returning to the application. If dwAttr is equal to 0 (default), there is no timeout.
+
+**Note**: Optional feature not implemented by the Microsoft Access Driver.
+
+```
+FUNCTION GetStmtQueryTimeout () AS SQLUINTEGER
+```
+
+#### Remarks
+
+If the specified timeout exceeds the maximum timeout in the data source or is smaller than the minimum timeout, **SetStmtAttr** substitutes that value and returns SQLSTATE 01S02 (Option value changed).
+
+Note that the application need not call CloseCursor to reuse the statement if a SELECT statement timed out.
+
+The query timeout set in this statement attribute is valid in both synchronous and asynchronous modes.
+
+#### Return value
+
+The number of seconds to wait for an SQL statement to execute before returning to the application. 
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtRetrieveData"></a>GetStmtRetrieveData
+
+Gets an SQLUINTEGER value specifying the data retrieval mode.
+
+```
+FUNCTION GetStmtRetrieveData () AS SQLUINTEGER
+```
+
+#### Remarks
+
+By setting SQL_RETRIEVE_DATA to SQL_RD_OFF, an application can verify that a row exists or retrieve a bookmark for the row without incurring the overhead of retrieving rows.
+
+The value of this attribute can be set on an open cursor; however, the setting might not take effect immediately, in which case the driver will return SQLSTATE 01S02 (Option value changed) and reset the attribute to its original value.
+
+#### Return value
+
+SQL_RD_ON or SQL_RD_OFF.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtRowArraySize"></a>GetStmtRowArraySize
+
+Gets an SQLUINTEGER value that specifies the number of rows returned by each call to **Fetch** or **FetchScroll**. It is also the number of rows in a bookmark array used in a bulk bookmark operation in **BulkOperations**. The default value is 1.
+
+```
+FUNCTION GetStmtRowArraySize () AS SQLUINTEGER
+```
+
+#### Remarks
+
+If the specified rowset size exceeds the maximum rowset size supported by the data source, the driver substitutes that value and returns SQLSTATE 01S02 (Option value changed).
+
+Setting this statement attribute sets the SQL_DESC_ARRAY_SIZE field in the ARD header.
+
+#### Return value
+
+The number of rows returned by each call to Fetch or FetchScroll.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
