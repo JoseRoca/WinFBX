@@ -2754,3 +2754,27 @@ The pointer to the buffer.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtRowStatusPtr"></a>GetStmtRowStatusPtr
+
+Gets an SQLUSMALLINT value that points to an array of SQLUSMALLINT values containing row status values after a call to **Fetch** or **FetchScroll**.
+
+```
+FUNCTION GetStmtRowStatusPtr () AS SQLUINTEGER
+```
+
+#### Remarks
+
+The array has as many elements as there are rows in the rowset. This statement attribute can be set to a null pointer, in which case the driver does not return row status values. This attribute can be set at any time, but the new value is not used until the next time BulkOperations, Fetch, FetchScroll, or SetPos is called.
+
+Setting this statement attribute sets the SQL_DESC_ARRAY_STATUS_PTR field in the IRD header.
+
+This attribute is mapped by an ODBC 2.x driver to the rgbRowStatus array in a call to **ExtendedFetch**.
+
+#### Return value
+
+The pointer to the array.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
