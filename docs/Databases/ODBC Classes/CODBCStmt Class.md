@@ -1829,3 +1829,32 @@ The type of the field.
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
 
 SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records or the statement is in the prepared or executed state but there was no open cursor associated with it.
+
+# <a name="GetImpParamDescRec"></a>GetImpParamDescRec
+
+Returns the current settings or values of multiple fields of a descriptor record. The fields returned describe the name, data type, and storage of column or parameter data.
+
+```
+FUNCTION GetImpParamDescRec (BYVAL RecNumber AS SQLSMALLINT, BYVAL pwszName AS WSTRING PTR, _
+   BYVAL BufferLength AS SQLSMALLINT, BYVAL StringLength AS SQLSMALLINT PTR, _
+   BYVAL TypePtr AS SQLSMALLINT PTR, BYVAL SubTypePtr AS SQLSMALLINT PTR, _
+   BYVAL LengthPtr AS SQLLEN PTR, BYVAL PrecisionPtr AS SQLSMALLINT PTR, _
+   BYVAL ScalePtr AS SQLSMALLINT PTR, BYVAL NullablePtr AS SQLSMALLINT PTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *RecNumber* | Indicates the descriptor record from which the application seeks information. Descriptor records are numbered 1, with record number 0 being the bookmark record. The RecNumber argument must be less than or equal to the value of SQL_DESC_COUNT. If RecNumber is less than or equal to SQL_DESC_COUNT but the row does not contain data for a column or parameter, a call to **GetDescRec** will return the default values of the fields.ates the descriptor record from which the application seeks information. Descriptor records are numbered  |
+| *pwszName* | A pointer to a buffer in which to return the SQL_DESC_NAME field for the descriptor record. |
+| *TypePtr* | A pointer to a buffer in which to return the value of the SQL_DESC_TYPE field for the descriptor record. |
+| *SubTypePtr* | For records whose type is SQL_DATETIME or SQL_INTERVAL, this is a pointer to a buffer in which to return the value of the SQL_DESC_DATETIME_INTERVAL_CODE field. |
+| *LengthPtr* | A pointer to a buffer in which to return the value of the SQL_DESC_OCTET_LENGTH field for the descriptor record. |
+| *PrecisionPtr* | A pointer to a buffer in which to return the value of the SQL_DESC_PRECISION field for the descriptor record. |
+| *ScalePtr* | A pointer to a buffer in which to return the value of the SQL_DESC_SCALE field for the descriptor record. |
+| *NullablePtr* | A pointer to a buffer in which to return the value of the SQL_DESC_NULLABLE field for the descriptor record. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
+
+SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records or the the statement is in the prepared or executed state but there was no open cursor associated with it.
