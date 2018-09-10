@@ -4066,12 +4066,12 @@ FUNCTION UpdateByBookmark () AS SQLRETURN
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
 
-# <a name="UnlockRecord"></a>UnlockRecord
+# <a name="UpdateRecord"></a>UpdateRecord
 
 The driver positions the cursor in the row specified by RowNumber and updates the underlying row of data with the values in the rowset buffers (the *TargetValue* argument in **BindCol**). It retrieves the lengths of the data from the length indicator buffers (the StrLen_or_Ind argument in **BindCol**). If the length of any column is SQL_COLUMN_IGNORE, the column is not updated. After updating the row, the driver changes the corresponding element of the row status array to SQL_ROW_UPDATED or SQL_ROW_ACCESS_WITH_INFO (if the row status array exists).
 
 ```
-FUNCTION UnlockRecord (BYVAL wRow AS SQLSETPOSIROW = 1) AS SQLRETURN
+FUNCTION UpdateRecord (BYVAL wRow AS SQLSETPOSIROW = 1) AS SQLRETURN
 ```
 
 | Parameter  | Description |
