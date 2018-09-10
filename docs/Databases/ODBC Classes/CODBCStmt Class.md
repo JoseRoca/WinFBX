@@ -3497,3 +3497,41 @@ FUNCTION SetStmtAttr (BYVAL Attribute AS SQLINTEGER, BYVAL ValuePtr AS SQLPOINTE
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtFetchBookmarkPtr"></a>SetStmtFetchBookmarkPtr
+
+Sets a pointer that points to a binary bookmark value. When **FetchScroll** is called with *FetchOrientation* equal to SQL_FETCH_BOOKMARK, the driver picks up the bookmark value from this field. This field defaults to a null pointer.
+
+The value pointed to by this field is not used for delete by bookmark, update by bookmark, or fetch by bookmark operations in **BulkOperations**, which use bookmarks cached in rowset buffers.
+
+```
+FUNCTION SetStmtFetchBookmarkPtr (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Pointer to a binary bookmark value. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtMaxLength"></a>SetStmtMaxLength
+
+Sets an SQLUINTEGER value that specifies the maximum amount of data that the driver returns from a character or binary column. Note Optional feature not implemented by the Microsoft Access Driver.
+
+```
+FUNCTION SetStmtMaxLength (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Maximum amount of data that the driver returns from a character or binary column. |
+
+#### Remarks
+
+If *dwAttr* is less than the length of the available data, **Fetch** or **GetData** truncates the data and returns SQL_SUCCESS. If dwAttr is 0 (the default), the driver attempts to return all available data. If the specified length is less than the minimum amount of data that the data source can return or greater than the maximum amount of data that the data source can return, the driver substitutes that value and returns SQLSTATE 01S02 (Option value changed). The value of this attribute can be set on an open cursor; however, the setting might not take effect immediately, in which case the driver will return SQLSTATE 01S02 (Option value changed) and reset the attribute to its original value. This attribute is intended to reduce network traffic and should be supported only when the data source (as opposed to the driver) in a  multiple-tier driver can implement it. This mechanism should not be used by applications to truncate data; to truncate data received, an application should specify the maximum buffer length in the BufferLength argument in **BindCol** or **GetDat**.
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
