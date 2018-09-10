@@ -2442,3 +2442,131 @@ The offset pointer.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtParamBindType"></a>GetStmtParamBindType
+
+Gets an SQLUINTEGER value that indicates the binding orientation to be used for dynamic parameters.
+
+```
+FUNCTION GetStmtParamBindType () AS SQLUINTEGER
+```
+
+#### Remarks
+
+This field is set to SQL_PARAM_BIND_BY_COLUMN (the default) to select column-wise binding.
+
+To select row-wise binding, this field is set to the length of the structure or an instance of a buffer that will be bound to a set of dynamic parameters. This length must include space for all of the bound parameters and any padding of the structure or buffer to ensure that when the address of a bound parameter is incremented with the specified length, the result will point to the beginning of the same parameter in the next set of parameters. When using the sizeof operator in ANSI C, this behavior is guaranteed.
+
+Setting this statement attribute sets the SQL_DESC_ BIND_TYPE field in the APD header.
+
+#### Return value
+
+The binding orientation.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtParamOperationPtr"></a>GetStmtParamOperationPtr
+
+Gets an SQLUSMALLINT value that points to an array of SQLUSMALLINT values used to ignore a parameter during execution of an SQL statement. Optional feature not implemented by the Microsoft Access Driver.
+
+```
+FUNCTION GetStmtParamOperationPtr () AS SQLUINTEGER
+```
+
+#### Remarks
+
+Each value is set to either SQL_PARAM_PROCEED (for the parameter to be executed) or SQL_PARAM_IGNORE (for the parameter to be ignored).
+
+A set of parameters can be ignored during processing by setting the status value in the array pointed to by SQL_DESC_ARRAY_STATUS_PTR in the APD to SQL_PARAM_IGNORE. A set of parameters is processed if its status value is set to SQL_PARAM_PROCEED or if no elements in the array are set.
+
+This statement attribute can be set to a null pointer, in which case the driver does not return parameter status values. This attribute can be set at any time, but the new value is not used until the next time **ExecDirect** or **Execute** is called.
+
+Setting this statement attribute sets the SQL_DESC_ARRAY_STATUS_PTR field in the APD header.
+
+#### Return value
+
+The pointer to the array.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtParamsetSize"></a>GetStmtParamsetSize
+
+Gets an SQLUINTEGER value that specifies the number of values for each parameter.
+
+```
+FUNCTION GetStmtParamsetSize () AS SQLUINTEGER
+```
+
+#### Remarks
+
+If SQL_ATTR_PARAMSET_SIZE is greater than 1, SQL_DESC_DATA_PTR, SQL_DESC_INDICATOR_PTR, and SQL_DESC_OCTET_LENGTH_PTR of the APD point to arrays. The cardinality of each array is equal to the value of this field.
+
+Setting this statement attribute sets the SQL_DESC_ARRAY_SIZE field in the APD header.
+
+#### Return value
+
+The number of values for each parameter.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtParamsProcessedPtr"></a>GetStmtParamsProcessedPtr
+
+Gets an SQLUINTEGER record field that points to a buffer in which to return the number of sets of parameters that have been processed, including error sets.
+
+```
+FUNCTION GetStmtParamsProcessedPtr () AS SQLUINTEGER
+```
+
+#### Remarks
+
+Setting this statement attribute sets the SQL_DESC_ROWS_PROCESSED_PTR field in the IPD header.
+
+If the call to **ExecDirect** or **Execute** that fills in the buffer pointed to by this attribute does not return SQL_SUCCESS or SQL_SUCCESS_WITH_INFO, the contents of the buffer are undefined.
+
+#### Return value
+
+The pointer to the buffer.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtParamStatusPtr"></a>GetStmtParamStatusPtr
+
+Gets an SQLUSMALLINT value that points to an array of SQLUSMALLINT values containing status information for each row of parameter values after a  call to **Execute** or **ExecDirect**. This field is required only if PARAMSET_SIZE is greater than 1.
+
+```
+FUNCTION GetStmtParamStatusPtr () AS SQLUINTEGER
+```
+
+#### Remarks
+
+The status values can contain the following values:
+
+**SQL_PARAM_SUCCESS**: The SQL statement was successfully executed for this set of parameters.
+
+**SQL_PARAM_SUCCESS_WITH_INFO**: The SQL statement was successfully executed for this set of parameters; however, warning information is available in the diagnostics data structure.
+
+**SQL_PARAM_ERROR**: There was an error in processing this set of parameters. Additional error information is available in the diagnostics data structure.
+
+**SQL_PARAM_UNUSED**: This parameter set was unused, possibly due to the fact that some previous parameter set caused an error that aborted further processing, or because SQL_PARAM_IGNORE was set for that set of parameters in the array specified by the SQL_ATTR_PARAM_OPERATION_PTR.
+
+**SQL_PARAM_DIAG_UNAVAILABLE**: The driver treats arrays of parameters as a monolithic unit and so does not generate this level of error information.
+
+This statement attribute can be set to a null pointer, in which case the driver does not return parameter status values. This attribute can be set at any time, but the new value is not used until the next time **Execute** or **ExecDirect** is called. Note that setting this attribute can affect the output parameter behavior implemented by the driver.
+
+Setting this statement attribute sets the SQL_DESC_ARRAY_STATUS_PTR field in the IPD header.
+
+Return value
+
+The pointer to the array.
+
+Result code (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
