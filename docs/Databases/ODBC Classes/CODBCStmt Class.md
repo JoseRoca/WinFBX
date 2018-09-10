@@ -2824,3 +2824,69 @@ SQL_UB_OFF, SQL_UB_VARIABLE or SQL_UB_FIXED.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetTablePrivileges"></a>GetTablePrivileges
+
+Returns a list of tables and the privileges associated with each table.
+
+```
+FUNCTION GetTablePrivileges (BYREF wszCatalogName AS WSTRING, BYVAL CatalogNameLength AS SQLSMALLINT, _
+   BYREF wszSchemaName AS WSTRING, BYVAL SchemaNameLength AS SQLSMALLINT, _
+   BYREF wszTableName AS WSTRING, BYVAL TableNameLength AS SQLSMALLINT) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszCatalogName* | Table catalog. If a driver supports catalogs for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have catalogs. *wszCatalogName* cannot contain a string search pattern. |
+| *CatalogNameLength* | Length of *wszCatalogName*. |
+| *wszSchemaName* | String search pattern for schema names. If a driver supports schemas for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have schemas. |
+| *SchemaNameLength* | Length of *wszSchemaName*. |
+| *wszTableName* | String search pattern for table names. Pass an empty string ("") for all tables. |
+| *TableNameLength* | Length of *wszTableName*. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Diagnostics
+
+When **TablePrivileges** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value may be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
+
+# <a name="GetTables"></a>GetTables
+
+Returns the list of table, catalog, or schema names, and table types, stored in a specific data source.
+
+```
+FUNCTION GetTables (BYREF wszCatalogName AS WSTRING, BYVAL CatalogNameLength AS SQLSMALLINT, _
+   BYREF wszSchemaName AS WSTRING, BYVAL SchemaNameLength AS SQLSMALLINT, _
+   BYREF wszTableName AS WSTRING, BYVAL TableNameLength AS SQLSMALLINT, _
+   BYREF wszTableType AS WSTRING, BYVAL TableTypeLength AS SQLSMALLINT) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszCatalogName* | Table catalog. If a driver supports catalogs for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have catalogs. *wszCatalogName* cannot contain a string search pattern. |
+| *CatalogNameLength* | Length of *wszCatalogName*. |
+| *wszSchemaName* | String search pattern for schema names. If a driver supports schemas for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have schemas. |
+| *SchemaNameLength* | Length of *wszSchemaName*. |
+| *wszTableName* | String search pattern for table names. Pass an empty string ("") for all tables. |
+| *TableNameLength* | Length of *wszTableName*. |
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszCatalogName* | Catalog name. The *wszCatalogName* argument accepts search patterns if the SQL_ODBC_VERSION environment attribute is SQL_OV_ODBC3; it does not accept search patterns if SQL_OV_ODBC2 is set. If a driver supports catalogs for some tables but not for others, such as when a driver retrieves data from different DBMSs, an empty string ("") indicates those tables that do not have catalogs. |
+| *CatalogNameLength* | Length of *wszCatalogName*. |
+| *wszSchemaName* | String search pattern for schema names. If a driver supports schemas for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") indicates those tables that do not have schemas. |
+| *SchemaNameLength* | Length of *wszSchemaName*. |
+| *wszTableName* | String search pattern for table names. |
+| *TableNameLength* | Length of *wszTableName*. |
+| *wszTableType* | List of table types to match. Table type names: 'TABLE', 'VIEW', 'SYSTEM TABLE', 'GLOBAL TEMPORARY', 'LOCAL TEMPORARY', 'ALIAS', 'SYNONIM', or a data source-specific type name. The meaning od 'ALIAS' and 'SYNONIM' are driver specific. Pass an empty string ("") to retrieve all table types.<br>If *wszTableTypes* is not an empty string, it must contain a list of comma-separated values for the types of interest; each value may be enclosed in single quotation marks (') or unquoted — for example, 'TABLE', 'VIEW' or TABLE, VIEW. An application should always specify the table type in uppercase; the driver should convert the table type to whatever case is needed by the data source. If the data source does not support a specified table type, Tables does not return any results for that type.<br>Note that the SQL_ATTR_METADATA_ID statement attribute has no effect upon the *wszTableTypes* argument. *wszTableTypes* is a value list argument, no matter what the setting of SQL_ATTR_METADATA_ID.  |
+| *TableTypeLength* | Length of *wszTableType*. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Diagnostics
+
+When **Tables** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
