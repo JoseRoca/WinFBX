@@ -282,7 +282,6 @@ pRecordset.AddNew
    pRecordset.Collect("Key") = "One"
    pRecordset.Collect("Item") = "Item one"
 'pRecordset.Update
-' Don't call Update or it will add an additional empty record
 
 pRecordset.AddNew
    pRecordset.Collect("Key") = "Two"
