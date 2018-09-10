@@ -3925,3 +3925,34 @@ This attribute is mapped by an ODBC 2.x driver to the rgbRowStatus array in a ca
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtSimulateCursor"></a>SetStmtSimulateCursor
+
+Sets an SQLUINTEGER value that specifies whether drivers that simulate positioned update and delete statements guarantee that such statements affect only one single row. Optional feature not implemented by the Microsoft Access Driver.
+
+```
+FUNCTION SetStmtSimulateCursor (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Value of the attribute. |
+
+#### Remarks
+
+To simulate positioned update and delete statements, most drivers construct a searched UPDATE or DELETE statement containing a WHERE clause that specifies the value of each column in the current row. Unless these columns make up a unique key, such a statement can affect more than one row. To guarantee that such statements affect only one row, the driver determines the columns in a unique key and adds these columns to the result set. If an application guarantees that the columns in the result set make up a unique key, the driver is not required to do so. This may reduce execution time.
+
+**SQL_SC_NON_UNIQUE** = The driver does not guarantee that simulated positioned update or delete statements will affect only one row; it is the application's responsibility to do so. If a statement affects more than one row, **Execute**, **ExecDirect**, or **SetPos** returns SQLSTATE 01001 (Cursor operation conflict).
+
+**SQL_SC_TRY_UNIQUE** = The driver attempts to guarantee that simulated positioned update or delete statements affect only one row. The driver always executes such statements, even if they might affect more than one row, such as when there is no unique key. If a statement affects more than one row, **Execute**, **ExecDirect**, or **SetPos** returns SQLSTATE 01001 (Cursor operation conflict).
+
+**SQL_SC_UNIQUE** = The driver guarantees that simulated positioned update or delete statements affect only one row. If the driver cannot guarantee this for a given statement, **ExecDirect** or **Prepare** returns an error.
+
+If the data source provides native SQL support for positioned update and delete statements and the driver does not simulate cursors, SQL_SUCCESS is returned when SQL_SC_UNIQUE is requested for SQL_SIMULATE_CURSOR. SQL_SUCCESS_WITH_INFO is returned if SQL_SC_TRY_UNIQUE or SQL_SC_NON_UNIQUE is requested. If the data source provides the SQL_SC_TRY_UNIQUE level of support and the driver does not, %QL_SUCCESS is returned for %SL_SC_TRY_UNIQUE and %QL_SUCCESS_WITH_INFO is returned for %QL_SC_NON_UNIQUE.
+
+If the specified cursor simulation type is not supported by the data source, the driver substitutes a different simulation type and returns SQLSTATE 01S02 (Option value changed). For SQL_SC_UNIQUE, the driver substitutes, in order, SQL_SC_TRY_UNIQUE or SQL_SC_NON_UNIQUE. For SQL_SC_TRY_UNIQUE, the driver substitutes SQL_SC_NON_UNIQUE.
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
