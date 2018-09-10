@@ -2573,7 +2573,7 @@ SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
 
 # <a name="GetStmtQueryTimeout"></a>GetStmtQueryTimeout
 
-Gets an SQLUINTEGER value corresponding to the number of seconds to wait for an SQL statement to execute before returning to the application. If dwAttr is equal to 0 (default), there is no timeout.
+Gets an SQLUINTEGER value corresponding to the number of seconds to wait for an SQL statement to execute before returning to the application. If *dwAttr* is equal to 0 (default), there is no timeout.
 
 **Note**: Optional feature not implemented by the Microsoft Access Driver.
 
@@ -2585,7 +2585,7 @@ FUNCTION GetStmtQueryTimeout () AS SQLUINTEGER
 
 If the specified timeout exceeds the maximum timeout in the data source or is smaller than the minimum timeout, **SetStmtAttr** substitutes that value and returns SQLSTATE 01S02 (Option value changed).
 
-Note that the application need not call CloseCursor to reuse the statement if a SELECT statement timed out.
+Note that the application need not call *CloseCursor* to reuse the statement if a SELECT statement timed out.
 
 The query timeout set in this statement attribute is valid in both synchronous and asynchronous modes.
 
