@@ -2068,3 +2068,24 @@ FUNCTION GetImpRowDescRec (BYVAL RecNumber AS SQLSMALLINT, BYVAL pwszName AS WST
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
 
 SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records or the the statement is in the prepared or executed state but there was no open cursor associated with it.
+
+# <a name="GetLongVarcharData"></a>GetLongVarcharData
+
+Retrieves long variable char data from the specified column of the result set.
+
+```
+FUNCTION GetLongVarcharData (BYVAL ColumnNumber AS SQLSMALLINT) AS CWSTR
+FUNCTION GetLongVarcharData (BYREF ColumnName AS WSTRING) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColumnNumber* / *ColumnName* | Number or name of the column for which to return data. Result set columns are numbered in increasing column order starting at 1. The bookmark column is column number 0; this can be specified only if bookmarks are enabled. |
+
+Return value
+
+The retrieved data.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_ERROR, or SQL_INVALID_HANDLE.
