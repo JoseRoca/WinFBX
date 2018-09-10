@@ -4009,3 +4009,75 @@ SQL_ASYNC_ENABLE_OFF or SQL_ASYNC_ENABLE_ON.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="UnbindCol"></a>UnbindCol
+
+Unbinds the specified column buffer bound by **BindCol** for the given statement handle.
+
+```
+FUNCTION UnbindCol (BYVAL ColNum AS SQLUSMALLINT) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ColNum* | Column number. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_INVALID_HANDLE, or SQL_ERROR.
+
+# <a name="UnbindColumns"></a>UnbindColumns
+
+Unbinds all column buffers bound by **BindCol** for the given statement handle.
+
+```
+FUNCTION UnbindColumns () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_INVALID_HANDLE, or SQL_ERROR.
+
+# <a name="UnlockRecord"></a>UnlockRecord
+
+Sets the cursor position in a rowset and unlocks the record.
+
+```
+FUNCTION UnlockRecord (BYVAL wRow AS SQLSETPOSIROW = 1) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wRow* | Optional. Row number inside the rowset. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="UpdateByBookmark"></a>UpdateByBookmark
+
+Updates a set of rows where each row is identified by a bookmark.
+
+```
+FUNCTION UpdateByBookmark () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="UnlockRecord"></a>UnlockRecord
+
+The driver positions the cursor in the row specified by RowNumber and updates the underlying row of data with the values in the rowset buffers (the *TargetValue* argument in **BindCol**). It retrieves the lengths of the data from the length indicator buffers (the StrLen_or_Ind argument in **BindCol**). If the length of any column is SQL_COLUMN_IGNORE, the column is not updated. After updating the row, the driver changes the corresponding element of the row status array to SQL_ROW_UPDATED or SQL_ROW_ACCESS_WITH_INFO (if the row status array exists).
+
+```
+FUNCTION UnlockRecord (BYVAL wRow AS SQLSETPOSIROW = 1) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wRow* | Optional. Row number inside the rowset.<br>Note: *wRow* is the row number inside the rowset (if the rowset has only one row, then *wRow* must be always 1). |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
