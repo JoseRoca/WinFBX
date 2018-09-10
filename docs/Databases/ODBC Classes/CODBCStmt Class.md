@@ -3269,9 +3269,7 @@ FUNCTION SetCursorType (BYVAL CursorType AS DWORD) AS SQLRETURN
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *CursorType* | The type of cursor.
-
-SQL_CURSOR_FORWARD_ONLY = The cursor only scrolls forward.<br>**SQL_CURSOR_STATIC** = The data in the result set is static.<br>**SQL_CURSOR_KEYSET_DRIVEN** = The driver saves and uses only the keys for the number of rows specified in the SQL_ATTR_KEYSET_SIZE statement attribute.<br>**SQL_CURSOR_DYNAMIC** = The driver saves and uses only the keys for the rows in the rowset.<br>The default value is SQL_FORWARD_ONLY. This attribute cannot be specified after the SQL statement has been prepared.<br>The application can specify the cursor type before executing a statement that creates a result set. It does this with the SQL_ATTR_CURSOR_TYPE statement attribute. If the application does not explicitly specify a type, a forward-only cursor will be used. To get a mixed cursor, an application specifies a keyset-driven cursor but declares a keyset size less than the result set size. |
+| *CursorType* | The type of cursor.<br>SQL_CURSOR_FORWARD_ONLY = The cursor only scrolls forward.<br>**SQL_CURSOR_STATIC** = The data in the result set is static.<br>**SQL_CURSOR_KEYSET_DRIVEN** = The driver saves and uses only the keys for the number of rows specified in the SQL_ATTR_KEYSET_SIZE statement attribute.<br>**SQL_CURSOR_DYNAMIC** = The driver saves and uses only the keys for the rows in the rowset.<br>The default value is SQL_FORWARD_ONLY. This attribute cannot be specified after the SQL statement has been prepared.<br>The application can specify the cursor type before executing a statement that creates a result set. It does this with the SQL_ATTR_CURSOR_TYPE statement attribute. If the application does not explicitly specify a type, a forward-only cursor will be used. To get a mixed cursor, an application specifies a keyset-driven cursor but declares a keyset size less than the result set size. |
 
 #### Return value
 
