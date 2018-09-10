@@ -2684,3 +2684,73 @@ The binding orientation.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtRowNumber"></a>GetStmtRowNumber
+
+Returns an SQLUINTEGER value that is the number of the current row in the entire result set. If the number of the current row cannot be determined or there is no current row, the driver returns 0.
+
+```
+FUNCTION GetStmtRowNumber () AS SQLUINTEGER
+```
+
+#### Remarks
+
+This attribute can be retrieved but not set.
+
+**Note**: Microsoft Access Driver returns 0.
+
+#### Return value
+
+The number of the current row in the entire result set.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtRowNumber"></a>GetStmtRowNumber
+
+Gets an SQLUSMALLINT value that points to an array of SQLUSMALLINT values used to ignore a row during a bulk operation using SetPos. Each value is set to either SQL_ROW_PROCEED (for the row to be included in the bulk operation) or SQL_ROW_IGNORE (for the row to be excluded from the bulk operation). (Rows cannot be ignored by using this array during calls to **BulkOperations**.)
+
+**Note**: Optional feature not implemented by the Microsoft Access Driver.
+
+```
+FUNCTION GetStmtRowNumber () AS SQLUINTEGER
+```
+
+#### Remarks
+
+This statement attribute can be set to a null pointer, in which case the driver does not return row status values. This attribute can be set at any time, but the new value is not used until the next time **SetPos** is called.
+
+Setting this statement attribute sets the SQL_DESC_ARRAY_STATUS_PTR field in the ARD.
+
+#### Return value
+
+The pointer to the array.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtRowsFetchedPtr"></a>GetStmtRowsFetchedPtr
+
+Gets an SQLUINTEGER value that points to a buffer in which to return the number of rows fetched after a call to **Fetch** or **FetchScroll**; the number of rows affected by a bulk operation performed by a call to **SetPos** with an *Operation* argument of SQL_REFRESH; or the number of rows affected by a bulk operation performed by **BulkOperations**. This number includes error rows.
+
+**Note**: Optional feature not implemented by the Microsoft Access Driver.
+
+```
+FUNCTION GetStmtRowsFetchedPtr () AS SQLUINTEGER
+```
+
+#### Remarks
+
+Setting this statement attribute sets the SQL_DESC_ROWS_PROCESSED_PTR field in the IRD header.
+
+If the call to **Fetch** or **FetchScroll** that fills in the buffer pointed to by this attribute does not return SQL_SUCCESS or SQL_SUCCESS_WITH_INFO, the contents of the buffer are undefined.
+
+#### Return value
+
+The pointer to the buffer.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
