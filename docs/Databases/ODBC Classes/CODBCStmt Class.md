@@ -2402,3 +2402,43 @@ The maximum number of rows to return to the application for a SELECT statement.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtNoScan"></a>GetStmtNoScan
+
+Gets an SQLUINTEGER value that indicates whether the driver should scan SQL strings for escape sequences.
+
+```
+FUNCTION GetStmtNoScan () AS SQLUINTEGER
+```
+
+#### Return value
+
+SQL_NOSCAN_OFF or SQL_NOSCAN_ON.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtParamBindOffsetPtr"></a>GetStmtParamBindOffsetPtr
+
+Gets an SQLUINTEGER value that points to an offset added to pointers to change binding of dynamic parameters.
+
+```
+FUNCTION GetStmtParamBindOffsetPtr () AS SQLUINTEGER
+```
+
+#### Remarks
+
+If this field is non-null, the driver dereferences the pointer, adds the dereferenced value to each of the deferred fields in the descriptor record (SQL_DESC_DATA_PTR, SQL_DESC_INDICATOR_PTR, and SQL_DESC_OCTET_LENGTH_PTR), and uses the new pointer values when binding. It is set to null by default.
+
+The bind offset is always added directly to the SQL_DESC_DATA_PTR, SQL_DESC_INDICATOR_PTR, and SQL_DESC_OCTET_LENGTH_PTR fields. If the offset is changed to a different value, the new value is still added directly to the value in the descriptor field. The new offset is not added to the field value plus any earlier offsets.
+
+Setting this statement attribute sets the SQL_DESC_BIND_OFFSET_PTR field in the APD header.
+
+#### Return value
+
+The offset pointer.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
