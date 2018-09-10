@@ -151,7 +151,7 @@ Implements methods to create and manage statement objects. Inherits from CODBCBa
 | [SetLockConcurrency](#SetLockConcurrency) | Cursor uses the lowest level of locking sufficient to ensure that the row can be updated. |
 | [SetMultiuserKeysetCursor](#SetMultiuserKeysetCursor) | Creates a multiuser keyset cursor. |
 | [SetOptimisticConcurrency](#SetOptimisticConcurrency) | Cursor uses optimistic concurrency control, comparing values. |
-| [SetPos](#SetPos) | Fetches the rowset rowset from the start of the current rowset. |
+| [SetPos](#SetPos) | Sets the cursor position in a rowset and allows an application to refresh data in the rowset or to update or delete data in the result set. |
 | [SetPosition](#SetPosition) | Sets the cursor position in a rowset. |
 | [SetReadOnlyConcurrency](#SetReadOnlyConcurrency) | Cursor is read-only. No updates are allowed. |
 | [SetRelativePosition](#SetRelativePosition) | Fetches the rowset from from the start of the current rowset. |
@@ -3364,7 +3364,10 @@ FUNCTION SetPos (BYVAL wRow AS SQLSETPOSIROW, BYVAL fOption AS SQLUSMALLINT, _
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *wRow* | Name of the cursor. |
+| *wRow* | Position of the row in the rowset on which to perform the operation specified with the fOption argument. If wRow is 0, the operation applies to every row in the rowset. |
+| *fOption* | Operation to perform: SQL_POSITION, SQL_REFRESH, SQL_UPDATE, SQL_DELETE. |
+| *fLock* | Specifies how to lock the row after performing the operation specified in the Operation argument.
+SQL_LOCK_NO_CHANGE, SQL_LOCK_EXCLUSIVE, SQL_LOCK_UNLOCK. |
 
 #### Diagnostics
 
