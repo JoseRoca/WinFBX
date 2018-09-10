@@ -3003,3 +3003,84 @@ FUNCTION MovePrevious () AS SQLRETURN
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="NumParams"></a>NumParams
+
+Returns the number of parameters in an SQL statement.
+
+```
+FUNCTION NumParams () AS SQLSMALLINT
+```
+
+#### Return value
+
+The number of parameters in an SQL statement.
+
+**Result value** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="NumResultCols"></a>NumResultCols
+
+Returns the number of columns in a result set.
+
+```
+FUNCTION NumResultCols () AS SQLSMALLINT
+```
+
+#### Return value
+
+The number of columns in a result set.
+
+**Result value** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ParamData"></a>ParamData
+
+**ParamData** is used in conjunction with **PutData** to supply parameter data at statement execution time.
+
+```
+FUNCTION ParamData (BYVAL ValuePtrPtr AS SQLPOINTER PTR) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ValuePtrPtr* | Pointer to a buffer in which to return the address of the *ParameterValue* buffer specified in **BindParameter** (for parameter data) or the address of the *TargetValue* buffer specified in **BindCol** (for column data), as contained in the SQL_DESC_DATA_PTR descriptor record field. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="Prepare"></a>Prepare
+
+Prepares an SQL string for execution.
+
+```
+FUNCTION Prepare (BYREF StatementText AS WSTRING) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *StatementText* | SQL text string. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="PutData"></a>PutData
+
+Allows an application to send data for a parameter or column to the driver at statement execution time. This function can be used to send character or binary data values in parts to a column with a character, binary, or data source–specific data type (for example, parameters of the SQL_LONGVARBINARY or SQL_LONGVARCHAR types).
+
+```
+FUNCTION PutData (BYVAL DataPtr AS SQLPOINTER, BYVAL StrLen_or_Ind AS SQLLEN) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *DataPtr* | Pointer to a buffer containing the actual data for the parameter or column. The data must be in the C data type specified in the *ValueType* argument of **BindParameter** (for parameter data) or the *TargetType* argument of **BindCol** (for column data). |
+| *StrLen_or_Ind* | Length of *DataPtr*. Specifies the amount of data sent in a call to **PutData**. The amount of data can vary with each call for a given parameter or column. *StrLen_or_Ind* is ignored unless it meets one of the following conditions:<br>*StrLen_or_Ind* is SQL_NTS, SQL_NULL_DATA, or SQL_DEFAULT_PARAM.<br>The C data type specified in **BindParameter** or **BindCol** is SQL_C_CHAR or SQL_C_BINARY.<br>The C data type is SQL_C_DEFAULT, and the default C data type for the specified SQL data type is SQL_C_CHAR or SQL_C_BINARY.<br>For all other types of C data, if StrLen_or_Ind is not SQL_NULL_DATA or SQL_DEFAULT_PARAM, the driver assumes that the size of the DataPtr buffer is the size of the C data type specified with *ValueType* or *TargetType* and sends the entire data value. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
