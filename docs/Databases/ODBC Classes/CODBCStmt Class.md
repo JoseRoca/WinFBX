@@ -3535,3 +3535,27 @@ If *dwAttr* is less than the length of the available data, **Fetch** or **GetDat
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtMaxRows"></a>SetStmtMaxRows
+
+Sets an SQLUINTEGER value corresponding to the maximum number of rows to return to the application for a SELECT statement.
+
+```
+FUNCTION SetStmtMaxRows (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Maximum number of rows to return to the application for a SELECT statement. |
+
+#### Remarks
+
+If *dwAttr* equals 0 (the default), the driver returns all rows. This attribute is intended to reduce network traffic. Conceptually, it is applied when the result set is created and limits the result set to the first *dwAttr* rows. If the number of rows in the result set is greater than *dwAttr*, the result set is truncated. SQL_ATTR_MAX_ROWS applies to all result sets on the statement, including those returned by catalog functions. SQL_ATTR_MAX_ROWS establishes a maximum for the value of the cursor row count.
+
+A driver should not emulate SQL_ATTR_MAX_ROWS behavior for **Fetch** or **FetchScroll** (if result set size limitations cannot be implemented at the data source) if it cannot guarantee that SQL_ATTR_MAX_ROWS will be implemented properly. It is driver-defined whether SQL_ATTR_MAX_ROWS applies to statements other than SELECT statements (such as catalog functions).
+
+The value of this attribute can be set on an open cursor; however, the setting might not take effect immediately, in which case the driver will return SQLSTATE 01S02 (Option value changed) and reset the attribute to its original value.
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
