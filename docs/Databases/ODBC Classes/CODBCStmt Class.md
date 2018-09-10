@@ -3238,3 +3238,41 @@ FUNCTION SetCursorScrollability (BYVAL CursorScrollability AS SQLUINTEGER) AS SQ
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetCursorSensitivity"></a>SetCursorSensitivity
+
+Sets a SQLUINTEGER value that specifies whether cursors on the statement handle made to a result set by another cursor. Setting this attribute affects subsequent calls to **ExecDirect** and **Execute**. An application can read back the value of this attribute to obtain its initial state or its state  as most recently set by the application.
+
+**Note**: Optional feature not implemented in Microsoft Access Driver.
+
+```
+FUNCTION SetCursorSensitivity (BYVAL CursorSensitivity AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *CursorSensitivity* | The type of cursor sensitivity.<br>**SQL_UNSPECIFIED** = It is unspecified what the cursor type is and whether  cursors on the statement handle make visible the changes made to a result set by another cursor. Cursors on the statement handle may make visible none, some, or all such changes. This is the default.<br>**SQL_INSENSITIVE** = All cursors on the statement handle show the result set without reflecting any changes made to it by any other cursor, which has a concurrency that is read-only.<br>**SQL_SENSITIVE** = All cursors on the statement handle make visible all changes made to a result set by another cursor. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetCursorType"></a>SetCursorType
+
+Sets a SQLUINTEGER value that specifies the cursor type.
+
+**Note**: Microsoft Access Driver changes SQL_CURSOR_DYNAMIC to SQL_CURSOR_KEYSET_DRIVEN.
+
+```
+FUNCTION SetCursorType (BYVAL CursorType AS DWORD) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *CursorType* | The type of cursor.
+
+SQL_CURSOR_FORWARD_ONLY = The cursor only scrolls forward.<br>**SQL_CURSOR_STATIC** = The data in the result set is static.<br>**SQL_CURSOR_KEYSET_DRIVEN** = The driver saves and uses only the keys for the number of rows specified in the SQL_ATTR_KEYSET_SIZE statement attribute.<br>**SQL_CURSOR_DYNAMIC** = The driver saves and uses only the keys for the rows in the rowset.<br>The default value is SQL_FORWARD_ONLY. This attribute cannot be specified after the SQL statement has been prepared.<br>The application can specify the cursor type before executing a statement that creates a result set. It does this with the SQL_ATTR_CURSOR_TYPE statement attribute. If the application does not explicitly specify a type, a forward-only cursor will be used. To get a mixed cursor, an application specifies a keyset-driven cursor but declares a keyset size less than the result set size. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
