@@ -78,7 +78,7 @@ Implements methods to create and manage statement objects. Inherits from CODBCBa
 | [GetImpParamDescFieldScale](#GetImpParamDescFieldScale) | Returns the scale value of a single field of a descriptor record. |
 | [GetImpParamDescFieldType](#GetImpParamDescFieldType) | Returns the type of a single field of a descriptor record. |
 | [GetImpParamDescRec](#GetImpParamDescRec) | Returns the current settings or values of multiple fields of a descriptor record. |
-| [GetStmtImpRowDesc](#GetStmtImpRowDesc) | Returns the handle to the IRD. |
+| [GetImpRowDesc](#GetImpRowDesc) | Returns the handle to the IRD. |
 | [GetImpRowDescField](#GetImpRowDescField) | Returns the current setting or value of a single field of a descriptor record. |
 | [GetImpRowDescFieldName](#GetImpRowDescFieldName) | Returns the name of a single field of a descriptor record. |
 | [GetImpRowDescFieldNullable](#GetImpRowDescFieldNullable) | Returns the nullable value (TRUE or FALSE) of a single field of a descriptor record. |
