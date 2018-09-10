@@ -173,8 +173,10 @@ TYPE CAdoRecordset EXTENDS CAdoBase
    DECLARE FUNCTION Seek (BYREF cvKeyValues AS CVAR, BYVAL SeekOption AS SeekEnum = adSeekFirstEQ) AS HRESULT
    ' // Creates a new record for an updatable Recordset object.
    DECLARE FUNCTION AddNew (BYREF cvFieldList AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), BYREF cvValues AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND)) AS HRESULT
+   DECLARE FUNCTION AddNew (BYVAL vFieldList AS VARIANT, BYVAL vValues AS VARIANT) AS HRESULT
    ' // Saves any changes you make to the current row of a Recordset object
    DECLARE FUNCTION Update (BYREF cvFieldList AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), BYREF cvValues AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND)) AS HRESULT
+   DECLARE FUNCTION Update (BYVAL vFieldList AS VARIANT, BYVAL vValues AS VARIANT) AS HRESULT
    ' // Retrieves information from the ADO Errors collection
    DECLARE FUNCTION GetErrorInfo (BYVAL nError AS HRESULT = 0) AS CBSTR
 
@@ -1047,8 +1049,14 @@ END FUNCTION
 ' Creates a new record for an updatable Recordset object.
 ' ===========================================================================================
 PRIVATE FUNCTION CAdoRecordset.AddNew (BYREF cvFieldList AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), BYREF cvValues AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND)) AS HRESULT
-   CADODB_DP("CAdoRecordset.AddNew")
+   CADODB_DP("CAdoRecordset.AddNew - CVAR")
    IF m_pRecordset THEN FUNCTION = SetResult(m_pRecordset->AddNew(cvFieldList, cvValues))
+END FUNCTION
+' ===========================================================================================
+' ===========================================================================================
+PRIVATE FUNCTION CAdoRecordset.AddNew (BYVAL vFieldList AS VARIANT, BYVAL vValues AS VARIANT) AS HRESULT
+   CADODB_DP("CAdoRecordset.AddNew - VARIANT")
+   IF m_pRecordset THEN FUNCTION = SetResult(m_pRecordset->AddNew(vFieldList, vValues))
 END FUNCTION
 ' ===========================================================================================
 
@@ -1057,7 +1065,13 @@ END FUNCTION
 ' ===========================================================================================
 PRIVATE FUNCTION CAdoRecordset.Update (BYREF cvFieldList AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), BYREF cvValues AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND)) AS HRESULT
    CADODB_DP("CAdoRecordset.Update")
-   IF m_pRecordset THEN FUNCTION = SetResult(m_pRecordset->AddNew(cvFieldList, cvValues))
+   IF m_pRecordset THEN FUNCTION = SetResult(m_pRecordset->Update(cvFieldList, cvValues))
+END FUNCTION
+' ===========================================================================================
+' ===========================================================================================
+PRIVATE FUNCTION CAdoRecordset.Update (BYVAL vFieldList AS VARIANT, BYVAL vValues AS VARIANT) AS HRESULT
+   CADODB_DP("CAdoRecordset.Update")
+   IF m_pRecordset THEN FUNCTION = SetResult(m_pRecordset->Update(vFieldList, vValues))
 END FUNCTION
 ' ===========================================================================================
 
