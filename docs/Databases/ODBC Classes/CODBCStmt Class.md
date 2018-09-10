@@ -2341,3 +2341,65 @@ FUNCTION GetStmtAttr (BYVAL Attribute AS SQLINTEGER, BYVAL ValuePtr AS SQLPOINTE
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtFetchBookmarkPtr"></a>GetStmtFetchBookmarkPtr
+
+Gets a pointer that points to a binary bookmark value. When **FetchScroll** is called with *FetchOrientation* equal to SQL_FETCH_BOOKMARK, the driver picks up the bookmark value from this field. This field defaults to a null pointer.
+
+The value pointed to by this field is not used for delete by bookmark, update by bookmark, or fetch by bookmark operations in **BulkOperations**, which use bookmarks cached in rowset buffers.
+
+```
+FUNCTION GetStmtFetchBookmarkPtr () AS SQLUINTEGER
+```
+
+#### Return value
+
+A pointer that points to a binary bookmark.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtMaxLength"></a>GetStmtMaxLength
+
+Gets an SQLUINTEGER value that specifies the maximum amount of data that the driver returns from a character or binary column. Optional feature not implemented by the Microsoft Access Driver.
+
+```
+FUNCTION GetStmtMaxLength () AS SQLUINTEGER
+```
+
+#### Remarks
+
+If *dwAttr* is less than the length of the available data, **Fetch** or **GetData** truncates the data and returns SQL_SUCCESS. If *dwAttr* is 0 (the default), the driver attempts to return all available data. If the specified length is less than the minimum amount of data that the data source can return or greater than the maximum amount of data that the data source can return, the driver substitutes that value and returns SQLSTATE 01S02 (Option value changed). The value of this attribute can be set on an open cursor; however, the setting might not take effect immediately, in which case the driver will return SQLSTATE 01S02 (Option value changed) and reset the attribute to its original value. This attribute is intended to reduce network traffic and should be supported only when the data source (as opposed to the driver) in a  multiple-tier driver can implement it. This mechanism should not be used by applications to truncate data; to truncate data received, an application should specify the maximum buffer length in the *BufferLength* argument in **BindCol** or **GetData**.
+
+#### Return value
+
+The maximum amount of data that the driver returns from a character or binary column.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtMaxRows"></a>GetStmtMaxRows
+
+Gets an SQLUINTEGER value corresponding to the maximum number of rows to return to the application for a SELECT statement.
+
+```
+FUNCTION GetStmtMaxRows () AS SQLUINTEGER
+```
+
+#### Remarks
+
+If *dwAttr* equals 0 (the default), the driver returns all rows. This attribute is intended to reduce network traffic. Conceptually, it is applied when the result set is created and limits the result set to the first dwAttr rows. If the number of rows in the result set is greater than *dwAttr*, the result set is truncated. SQL_ATTR_MAX_ROWS applies to all result sets on the statement, including those returned by catalog functions. SQL_ATTR_MAX_ROWS establishes a maximum for the value of the cursor row count.
+
+A driver should not emulate SQL_ATTR_MAX_ROWS behavior for *Fetch* or *FetchScroll* (if result set size limitations cannot be implemented at the data source) if it cannot guarantee that SQL_ATTR_MAX_ROWS will be implemented properly. It is driver-defined whether SQL_ATTR_MAX_ROWS applies to statements other than SELECT statements (such as catalog functions).
+
+The value of this attribute can be set on an open cursor; however, the setting might not take effect immediately, in which case the driver will return SQLSTATE 01S02 (Option value changed) and reset the attribute to its original value.
+
+#### Return value
+
+The maximum number of rows to return to the application for a SELECT statement.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
