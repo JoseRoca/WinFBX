@@ -3559,3 +3559,67 @@ The value of this attribute can be set on an open cursor; however, the setting m
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtNoScan"></a>SetStmtNoScan
+
+Sets an SQLUINTEGER value that indicates whether the driver should scan SQL strings for escape sequences.
+
+```
+FUNCTION SetStmtNoScan (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | The scan value.<br>**SQL_NOSCAN_OFF** = The driver scans SQL strings for escape sequences (the default).<br>**SQL_NOSCAN_ON** = The driver does not scan SQL strings for escape sequences. Instead, the driver sends the statement directly to the data source. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtParamBindOffsetPtr"></a>SetStmtParamBindOffsetPtr
+
+Sets an SQLUINTEGER value that points to an offset added to pointers to change binding of dynamic parameters.
+
+```
+FUNCTION SetStmtParamBindOffsetPtr (BYVAL dwAttr AS DWORD) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Offset value that points to an offset added to pointers to change binding of dynamic parameters. |
+
+#### Remarks
+
+If this field is non-null, the driver dereferences the pointer, adds the dereferenced value to each of the deferred fields in the descriptor record (SQL_DESC_DATA_PTR, SQL_DESC_INDICATOR_PTR, and SQL_DESC_OCTET_LENGTH_PTR), and uses the new pointer values when binding. It is set to null by default.
+
+The bind offset is always added directly to the SQL_DESC_DATA_PTR, SQL_DESC_INDICATOR_PTR, and SQL_DESC_OCTET_LENGTH_PTR fields. If the offset is changed to a different value, the new value is still added directly to the value in the descriptor field. The new offset is not added to the field value plus any earlier offsets.
+
+Setting this statement attribute sets the SQL_DESC_BIND_OFFSET_PTR field in the APD header.
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtParamBindType"></a>SetStmtParamBindType
+
+Sets an SQLUINTEGER value that indicates the binding orientation to be used for dynamic parameters.
+
+```
+FUNCTION SetStmtParamBindType (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | The binding operation. |
+
+#### Remarks
+
+This field is set to SQL_PARAM_BIND_BY_COLUMN (the default) to select column-wise binding.
+
+To select row-wise binding, this field is set to the length of the structure or an instance of a buffer that will be bound to a set of dynamic parameters. This length must include space for all of the bound parameters and any padding of the structure or buffer to ensure that when the address of a bound parameter is incremented with the specified length, the result will point to the beginning of the same parameter in the next set of parameters. When using the sizeof operator in ANSI C, this behavior is guaranteed.
+
+Setting this statement attribute sets the SQL_DESC_ BIND_TYPE field in the APD header.
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
