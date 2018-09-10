@@ -3870,7 +3870,7 @@ FUNCTION SetStmtRowOperationPtr (BYVAL dwAttr AS DWORD) AS SQLRETURN
 
 #### Remarks
 
-This statement attribute can be set to a null pointer, in which case the driver does not return row status values. This attribute can be set at any time, but the new value is not used until the next time SetPos is called.
+This statement attribute can be set to a null pointer, in which case the driver does not return row status values. This attribute can be set at any time, but the new value is not used until the next time **SetPos** is called.
 
 Setting this statement attribute sets the SQL_DESC_ARRAY_STATUS_PTR field in the ARD.
 
@@ -3897,6 +3897,30 @@ FUNCTION SetStmtRowsFetchedPtr (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
 Setting this statement attribute sets the SQL_DESC_ROWS_PROCESSED_PTR field in the IRD header.
 
 If the call to **Fetch** or **FetchScroll** that fills in the buffer pointed to by this attribute does not return SQL_SUCCESS or SQL_SUCCESS_WITH_INFO, the contents of the buffer are undefined.
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtRowStatusPtr"></a>SetStmtRowStatusPtr
+
+Sets an SQLUSMALLINT value that points to an array of SQLUSMALLINT values containing row status values after a call to Fetch or **FetchScroll**.
+
+```
+FUNCTION SetStmtRowStatusPtr (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Value of the attribute. |
+
+#### Remarks
+
+The array has as many elements as there are rows in the rowset. This statement attribute can be set to a null pointer, in which case the driver does not return row status values. This attribute can be set at any time, but the new value is not used until the next time **BulkOperations**, **Fetch**, **FetchScroll**, or **SetPos** is called.
+
+Setting this statement attribute sets the SQL_DESC_ARRAY_STATUS_PTR field in the IRD header.
+
+This attribute is mapped by an ODBC 2.x driver to the rgbRowStatus array in a call to **ExtendedFetch**.
 
 #### Return value
 
