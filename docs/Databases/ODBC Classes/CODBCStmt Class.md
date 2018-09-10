@@ -3783,3 +3783,121 @@ SQL_RD_ON or SQL_RD_OFF.
 **Result value** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtRowArraySize"></a>SetStmtRowArraySize
+
+Sets an SQLUINTEGER value that specifies the number of rows returned by each call to **Fetch** or **FetchScroll**. It is also the number of rows in a bookmark array used in a bulk bookmark operation in **BulkOperations**. The default value is 1.
+
+```
+FUNCTION SetStmtRowArraySize (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | The number of rows. |
+
+#### Remarks
+
+If the specified rowset size exceeds the maximum rowset size supported by the data source, the driver substitutes that value and returns SQLSTATE 01S02 (Option value changed).
+
+Setting this statement attribute sets the SQL_DESC_ARRAY_SIZE field in the ARD header.
+
+#### Return value
+
+The number of rows returned by each call to Fetch or FetchScroll.
+
+**Result value** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtRowBindOffsetPtr"></a>SetStmtRowBindOffsetPtr
+
+Sets an SQLUINTEGER value that points to an offset added to pointers to change binding of column data. If this field is non-null, the driver dereferences the pointer, adds the dereferenced value to each of the deferred fields in the descriptor record (SQL_DESC_DATA_PTR, SQL_DESC_INDICATOR_PTR, and SQL_DESC_OCTET_LENGTH_PTR), and uses the new pointer values when binding. It is set to null by default.
+
+```
+FUNCTION SetStmtRowBindOffsetPtr (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Value of the attribute. |
+
+#### Remarks
+
+Setting this statement attribute sets the SQL_DESC_BIND_OFFSET_PTR field in the ARD header.
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtRowBindType"></a>SetStmtRowBindType
+
+Sets an SQLUINTEGER value that sets the binding orientation to be used when **Fetch** or **FetchScroll** is called on the associated statement. Column-wise binding is selected by setting the value to SQL_BIND_BY_COLUMN. Row-wise binding is selected by setting the value to the length of a structure or an instance of a buffer into which result columns will be bound.
+
+```
+FUNCTION SetStmtRowBindType (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Value of the attribute. |
+
+#### Remarks
+
+If a length is specified, it must include space for all of the bound columns and any padding of the structure or buffer to ensure that when the address of a bound column is incremented with the specified length, the result will point to the beginning of the same column in the next row. When using the sizeof operator with structures or unions in ANSI C, this behavior is guaranteed.
+
+Column-wise binding is the default binding orientation for **Fetch** and **FetchScroll**.
+
+Setting this statement attribute sets the SQL_DESC_BIND_TYPE field in the ARD header.
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtRowOperationPtr"></a>SetStmtRowOperationPtr
+
+Sets an SQLUSMALLINT value that points to an array of SQLUSMALLINT values used to ignore a row during a bulk operation using SetPos. Each value is set to either SQL_ROW_PROCEED (for the row to be included in the bulk operation) or SQL_ROW_IGNORE (for the row to be excluded from the bulk operation). (Rows cannot be ignored by using this array during calls to **BulkOperations**.)
+
+**Note**: Optional feature not implemented by the Microsoft Access Driver.
+
+```
+FUNCTION SetStmtRowOperationPtr (BYVAL dwAttr AS DWORD) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Value of the attribute. |
+
+#### Remarks
+
+This statement attribute can be set to a null pointer, in which case the driver does not return row status values. This attribute can be set at any time, but the new value is not used until the next time SetPos is called.
+
+Setting this statement attribute sets the SQL_DESC_ARRAY_STATUS_PTR field in the ARD.
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtRowsFetchedPtr"></a>SetStmtRowsFetchedPtr
+
+Sets an SQLUINTEGER value that points to a buffer in which to return the number of rows fetched after a call to **Fetch** or **FetchScroll**; the number of rows affected by a bulk operation performed by a call to **SetPos** with an *Operation* argument of SQL_REFRESH; or the number of rows affected by a bulk operation performed by **BulkOperations**. This number includes error rows.
+
+**Note**: Optional feature not implemented by the Microsoft Access Driver.
+
+```
+FUNCTION SetStmtRowsFetchedPtr (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Value of the attribute. |
+
+#### Remarks
+
+Setting this statement attribute sets the SQL_DESC_ROWS_PROCESSED_PTR field in the IRD header.
+
+If the call to **Fetch** or **FetchScroll** that fills in the buffer pointed to by this attribute does not return SQL_SUCCESS or SQL_SUCCESS_WITH_INFO, the contents of the buffer are undefined.
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
