@@ -687,15 +687,15 @@ Creates a new record for an updatable **Recordset** object.
 
 ```
 FUNCTION AddNew ( _
-   BYVAL vFieldList AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
-   BYVAL vValues AS VARIANT = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND) _
+   BYREF cvFieldList AS CVAR = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND), _
+   BYREF cvValues AS CVAR = TYPE(VT_ERROR,0,0,0,DISP_E_PARAMNOTFOUND) _
 ) AS HRESULT
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *vFieldList* | Optional. A single name, or an array of names or ordinal positions of the fields in the new record. |
-| *vValues* | Optional. A single value, or an array of values for the fields in the new record. If *vFieldlist* is an array, *vValues* must also be an array with the same number of members; otherwise, an error occurs. The order of field names must match the order of field values in each array. |
+| *cvFieldList* | Optional. A single name, or an array of names or ordinal positions of the fields in the new record. |
+| *cvValues* | Optional. A single value, or an array of values for the fields in the new record. If *vFieldlist* is an array, *vValues* must also be an array with the same number of members; otherwise, an error occurs. The order of field names must match the order of field values in each array. |
 
 #### Return value
 
