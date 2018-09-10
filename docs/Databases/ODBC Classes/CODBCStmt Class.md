@@ -3150,7 +3150,11 @@ Returns the number of rows affected by an UPDATE, INSERT, or DELETE statement, o
 
 #### Remarks
 
-When **Execute**, **ExecDirect**, **BulkOperations*, **SetPos**, or **MoreResults** is called, the SQL_DIAG_ROW_COUNT field of the diagnostic data structure is set to the row count, and the row count is cached in an implementation-dependent way. **RowCount** returns the cached row count value. The cached row count value is valid until the statement handle is set back to the prepared or allocated state, the statement is reexecuted, or **CloseCursor** is called. Note that if a function has been called since the SQL_DIAG_ROW_COUNT field was set, the value returned by **RowCount** might be different from the value in the SQL_DIAG_ROW_COUNT field because the SQL_DIAG_ROW_COUNT field is reset to 0 by any function call.<br>For other statements and functions, the driver may define the value returned in **RowCountPtr**. For example, some data sources may be able to return the number of rows returned by a SELECT statement or a catalog function before fetching the rows.<br>Note: Many data sources cannot return the number of rows in a result set before fetching them; for maximum interoperability, applications should not rely on this behavior. |
+When **Execute**, **ExecDirect**, **BulkOperations*, **SetPos**, or **MoreResults** is called, the SQL_DIAG_ROW_COUNT field of the diagnostic data structure is set to the row count, and the row count is cached in an implementation-dependent way. **RowCount** returns the cached row count value. The cached row count value is valid until the statement handle is set back to the prepared or allocated state, the statement is reexecuted, or **CloseCursor** is called. Note that if a function has been called since the SQL_DIAG_ROW_COUNT field was set, the value returned by **RowCount** might be different from the value in the SQL_DIAG_ROW_COUNT field because the SQL_DIAG_ROW_COUNT field is reset to 0 by any function call.
+
+For other statements and functions, the driver may define the value returned in **RowCountPtr**. For example, some data sources may be able to return the number of rows returned by a SELECT statement or a catalog function before fetching the rows
+
+**Note**: Many data sources cannot return the number of rows in a result set before fetching them; for maximum interoperability, applications should not rely on this behavior.
 
 #### Result code
 
