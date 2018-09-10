@@ -2640,3 +2640,47 @@ The number of rows returned by each call to **Fetch** or **FetchScroll**.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtRowBindOffsetPtr"></a>GetStmtRowBindOffsetPtr
+
+Gets an SQLUINTEGER value that points to an offset added to pointers to change binding of column data. If this field is non-null, the driver dereferences the pointer, adds the dereferenced value to each of the deferred fields in the descriptor record (SQL_DESC_DATA_PTR, SQL_DESC_INDICATOR_PTR, and SQL_DESC_OCTET_LENGTH_PTR), and uses the new pointer values when binding. It is set to null by default.
+
+```
+FUNCTION GetStmtRowBindOffsetPtr () AS SQLUINTEGER
+```
+
+#### Remarks
+
+Setting this statement attribute sets the SQL_DESC_BIND_OFFSET_PTR field in the ARD header.
+
+#### Return value
+
+The offset pointer.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetStmtRowBindType"></a>GetStmtRowBindType
+
+Gets an SQLUINTEGER value that sets the binding orientation to be used when **Fetch** or **FetchScroll** is called on the associated statement. Column-wise binding is selected by setting the value to SQL_BIND_BY_COLUMN. Row-wise binding is selected by setting the value to the length of a structure or an instance of a buffer into which result columns will be bound.
+
+```
+FUNCTION GetStmtRowBindType () AS SQLUINTEGER
+```
+
+#### Remarks
+
+If a length is specified, it must include space for all of the bound columns and any padding of the structure or buffer to ensure that when the address of a bound column is incremented with the specified length, the result will point to the beginning of the same column in the next row. When using the sizeof operator with structures or unions in ANSI C, this behavior is guaranteed.
+
+Column-wise binding is the default binding orientation for **Fetch** and **FetchScroll**.
+
+Setting this statement attribute sets the SQL_DESC_BIND_TYPE field in the ARD header.
+
+#### Return value
+
+The binding orientation.
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
