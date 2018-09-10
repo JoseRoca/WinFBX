@@ -1726,7 +1726,7 @@ The name of the field.
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
 
-SQL_NO_DATA is returned if RecNumber is greater than the current number of descriptor records or the statement is in the prepared or executed state but there was no open cursor associated with it.
+SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records or the statement is in the prepared or executed state but there was no open cursor associated with it.
 
 # <a name="GetImpParamDescFieldNullable"></a>GetImpParamDescFieldNullable
 
