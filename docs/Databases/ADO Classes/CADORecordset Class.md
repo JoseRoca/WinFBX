@@ -255,6 +255,8 @@ We can also get all the rows as a two-dimensional safe array, calling the **GetR
 
 This is a good option for things that we can't do with normal arrays, such having a multi-dimensional array in which each dimension can be of any type.
 
+To get a localized description of the last ADO error, call the wrapper function **AfxGetOleErrorInfo**. The wrapper function **AfxAdoGetErrorInfo** or the **GetErrorInfo** method won't work because they need an active connection to a database.
+
 #### Example
 
 ```
