@@ -3159,3 +3159,51 @@ For other statements and functions, the driver may define the value returned in 
 #### Result code
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetAbsolutePosition"></a>SetAbsolutePosition
+
+Fetches the rowset starting at row *FetchOffset*.
+
+```
+FUNCTION SetAbsolutePosition (BYVAL FetchOffset AS SQLLEN) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *FetchOffset* | Return the rowset starting at row *FetchOffset*. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetCursorConcurrency"></a>SetCursorConcurrency
+
+Sets a SQLUINTEGER value that specifies the cursor concurrency.
+
+```
+FUNCTION SetCursorConcurrency (BYVAL LockType AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *LockType* | The type of concurrency.<br>SQL_CONCUR_READ_ONLY = Cursor is read-only. No updates are allowed.<br>SQL_CONCUR_LOCK = Cursor uses the lowest level of locking sufficient to ensure that the row can be updated.<br>SQL_CONCUR_ROWVER = Cursor uses optimistic concurrency control,comparing row versions such as SQLBase ROWID or Sybase TIMESTAMP.<br>SQL_CONCUR_VALUES = Cursor uses optimistic concurrency control, comparing values. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetCursorKeysetSize"></a>SetCursorKeysetSize
+
+Sets a SQLUINTEGER value that specifies the number of rows in the keyset-driven cursor.
+
+```
+FUNCTION SetCursorKeysetSize (BYVAL KeysetSize AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *KeysetSize* | The size of the keyset cursor.<br>If the keyset size is 0 (the default), the cursor is fully keyset-driven.<br>If the keyset size is greater than 0, the cursor is mixed (keyset-driven within the keyset and dynamic outside of the keyset). The default keyset size is 0. **Fetch** or **FetchScroll** returns an error if the keyset size is greater than 0 and less than the rowset size.<br>For keyset-driven and mixed cursors, the application can specify the keyset size. It does this with the SQL_ATTR_KEYSET_SIZE statement attribute. If  the keyset size is set to 0, which is the default, the keyset size is set to the result size and a keyset-driven cursor is used. The keyset size can be changed after the cursor has been opened. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
