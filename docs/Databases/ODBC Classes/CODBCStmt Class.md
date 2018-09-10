@@ -3671,3 +3671,63 @@ Setting this statement attribute sets the SQL_DESC_ARRAY_SIZE field in the APD h
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtParamsProcessedPtr"></a>SetStmtParamsProcessedPtr
+
+Sets an SQLUINTEGER record field that points to a buffer in which to return the number of sets of parameters that have been processed, including error sets.
+
+```
+FUNCTION SetStmtParamsProcessedPtr (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Value of the attribute. |
+
+#### Remarks
+
+Setting this statement attribute sets the SQL_DESC_ROWS_PROCESSED_PTR field in the IPD header.
+
+If the call to **ExecDirect** or **Execute** that fills in the buffer pointed to by this attribute does not return SQL_SUCCESS or SQL_SUCCESS_WITH_INFO, the contents of the buffer are undefined.
+
+#### Return value
+
+The pointer to the buffer.
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtParamStatusPtr"></a>SetStmtParamStatusPtr
+
+Sets an SQLUSMALLINT value that points to an array of SQLUSMALLINT values containing status information for each row of parameter values after a  call to **Execute** or **ExecDirect**. This field is required only if PARAMSET_SIZE is greater than 1.
+
+```
+FUNCTION SetStmtParamStatusPtr (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Value of the attribute. |
+
+#### Remarks
+
+The status values can contain the following values:
+
+**SQL_PARAM_SUCCESS**: The SQL statement was successfully executed for this set of parameters.
+
+**SQL_PARAM_SUCCESS_WITH_INFO**: The SQL statement was successfully executed for this set of parameters; however, warning information is available in the diagnostics data structure.
+
+**SQL_PARAM_ERROR**: There was an error in processing this set of parameters. Additional error information is available in the diagnostics data structure.
+
+**SQL_PARAM_UNUSED**: This parameter set was unused, possibly due to the fact that some previous parameter set caused an error that aborted further processing, or because SQL_PARAM_IGNORE was set for that set of parameters in the array specified by the SQL_ATTR_PARAM_OPERATION_PTR.
+
+**SQL_PARAM_DIAG_UNAVAILABLE**: The driver treats arrays of parameters as a monolithic unit and so does not generate this level of error information.
+
+This statement attribute can be set to a null pointer, in which case the driver does not return parameter status values. This attribute can be set at any time, but the new value is not used until the next time **Execute** or **ExecDirect** is called. Note that setting this attribute can affect the output parameter behavior implemented by the driver.
+
+Setting this statement attribute sets the SQL_DESC_ARRAY_STATUS_PTR field in the IPD header.
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
