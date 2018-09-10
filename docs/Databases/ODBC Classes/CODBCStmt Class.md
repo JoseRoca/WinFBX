@@ -3341,3 +3341,31 @@ FUNCTION SetMultiuserKeysetCursor (BYVAL pwszCursorName AS WSTRING PTR = NULL) A
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
 
+# <a name="SetOptimisticConcurrency"></a>SetOptimisticConcurrency
+
+Cursor uses optimistic concurrency control, comparing values.
+
+```
+FUNCTION SetOptimisticConcurrency () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetPos"></a>SetPos
+
+Sets the cursor position in a rowset and allows an application to refresh data in the rowset or to update or delete data in the result set.
+
+```
+FUNCTION SetPos (BYVAL wRow AS SQLSETPOSIROW, BYVAL fOption AS SQLUSMALLINT, _
+   BYVAL fLock AS SQLUSMALLINT) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wRow* | Name of the cursor. |
+
+#### Diagnostics
+
+When **SetPos** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value may be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
