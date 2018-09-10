@@ -3956,3 +3956,18 @@ If the specified cursor simulation type is not supported by the data source, the
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
 
+# <a name="SetStmtUseBookmarks"></a>SetStmtUseBookmarks
+
+Sets an SQLUINTEGER value that specifies whether an application will use bookmarks with a cursor.
+
+```
+FUNCTION SetStmtUseBookmarks (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Value of the attribute.<br>**SQL_UB_OFF** = Off (the default)<br>**SQL_UB_VARIABLE** = An application will use bookmarks with a cursor, and the driver will provide variable-length bookmarks if they are supported.<br>**SQL_UB_FIXED** is deprecated in ODBC 3.x. ODBC 3.x applications should always use variable-length bookmarks, even when working with ODBC 2.x drivers (which supported only 4-byte, fixed-length bookmarks). This is because a fixed-length bookmark is just a special case of a variable-length bookmark. When working with an ODBC 2.x driver, the Driver Manager maps SQL_UB_VARIABLE to SQL_UB_FIXED.<br>To use bookmarks with a cursor, the application must specify this attribute with the SQL_UB_VARIABLE value before opening the cursor. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
