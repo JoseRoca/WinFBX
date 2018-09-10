@@ -2865,15 +2865,6 @@ FUNCTION GetTables (BYREF wszCatalogName AS WSTRING, BYVAL CatalogNameLength AS 
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *wszCatalogName* | Table catalog. If a driver supports catalogs for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have catalogs. *wszCatalogName* cannot contain a string search pattern. |
-| *CatalogNameLength* | Length of *wszCatalogName*. |
-| *wszSchemaName* | String search pattern for schema names. If a driver supports schemas for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have schemas. |
-| *SchemaNameLength* | Length of *wszSchemaName*. |
-| *wszTableName* | String search pattern for table names. Pass an empty string ("") for all tables. |
-| *TableNameLength* | Length of *wszTableName*. |
-
-| Parameter  | Description |
-| ---------- | ----------- |
 | *wszCatalogName* | Catalog name. The *wszCatalogName* argument accepts search patterns if the SQL_ODBC_VERSION environment attribute is SQL_OV_ODBC3; it does not accept search patterns if SQL_OV_ODBC2 is set. If a driver supports catalogs for some tables but not for others, such as when a driver retrieves data from different DBMSs, an empty string ("") indicates those tables that do not have catalogs. |
 | *CatalogNameLength* | Length of *wszCatalogName*. |
 | *wszSchemaName* | String search pattern for schema names. If a driver supports schemas for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") indicates those tables that do not have schemas. |
@@ -2890,3 +2881,125 @@ SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVAL
 #### Diagnostics
 
 When **Tables** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
+
+# <a name="GetTypeInfo"></a>GetTypeInfo
+
+Returns information about data types supported by the data source. The driver returns the information in the form of an SQL result set. The data types are intended for use in Data Definition Language (DDL) statements.
+
+**Important**: Applications must use the type names returned in the TYPE_NAME column of the **GetTypeInfo** result set in ALTER TABLE and CREATE TABLE statements. **GetTypeInfo** may return more than one row with the same value in the DATA_TYPE column.
+
+```
+FUNCTION GetTypeInfo (BYVAL DataType AS SQLSMALLINT) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *DataType* | The SQL data type. SQL_ALL_TYPES specifies that information about all data types should be returned. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Diagnostics
+
+When **GetTypeInfo** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
+
+# <a name="Handle"></a>Handle
+
+Returns the statement handle.
+
+```
+FUNCTION Handle () AS SQLHANDLE
+```
+
+# <a name="LockRecord"></a>LockRecord
+
+Sets the cursor position in a rowset and locks the record.
+
+```
+FUNCTION LockRecord (BYVAL wRow AS SQLSETPOSIROW = 1) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wRow* | Optional. Row number inside the rowset. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="MoreResults"></a>MoreResults
+
+Determines whether more results are available on a statement containing SELECT, UPDATE, INSERT, or DELETE statements and, if so, initializes processing for those results.
+
+```
+FUNCTION MoreResults () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="Move"></a>Move
+
+Moves the cursor forward or backward *FetchOffset* rowsets.
+
+```
+FUNCTION Move (BYVAL FetchOffset AS SQLLEN) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *FetchOffset* | Return the rowset FetchOffset from the start of the current rowset. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="MoveFirst"></a>MoveFirst
+
+Fetches the first rowset of data from the result set and returns data for all bound columns. 
+
+```
+FUNCTION MoveFirst () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="MoveLast"></a>MoveLast
+
+Fetches the last rowset of data from the result set and returns data for all bound columns. 
+
+```
+FUNCTION MoveLast () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="MoveNext"></a>MoveNext
+
+Fetches the next rowset of data from the result set and returns data for all bound columns. 
+
+```
+FUNCTION MoveNext () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="MovePrevious"></a>MovePrevious
+
+Fetches the previous rowset of data from the result set and returns data for all bound columns. 
+
+```
+FUNCTION MovePrevious () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
