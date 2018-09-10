@@ -142,7 +142,6 @@ Implements methods to create and manage statement objects. Inherits from CODBCBa
 | [SetAbsolutePosition](#SetAbsolutePosition) | Fetches the rowset starting at the specified row. |
 | [SetCursorConcurrency](#SetCursorConcurrency) | Sets a SQLUINTEGER value that specifies the cursor concurrency. |
 | [SetCursorKeysetSize](#SetCursorKeysetSize) | Sets a SQLUINTEGER value that specifies the number of rows in the keyset-driven cursor. |
-| [SetCursorKeysetSize](#SetCursorKeysetSize) | Sets a SQLUINTEGER value that specifies the number of rows in the keyset-driven cursor. |
 | [SetCursorName](#SetCursorName) | Sets the cursor name associated with a specified statement. |
 | [SetCursorScrollability](#SetCursorScrollability) | Sets a SQLUINTEGER value that specifies the scrollability type. |
 | [SetCursorSensitivity](#SetCursorSensitivity) | Sets a SQLUINTEGER value that specifies whether cursors on the statement handle made to a result set by another cursor. |
@@ -3203,6 +3202,38 @@ FUNCTION SetCursorKeysetSize (BYVAL KeysetSize AS SQLUINTEGER) AS SQLRETURN
 | Parameter  | Description |
 | ---------- | ----------- |
 | *KeysetSize* | The size of the keyset cursor.<br>If the keyset size is 0 (the default), the cursor is fully keyset-driven.<br>If the keyset size is greater than 0, the cursor is mixed (keyset-driven within the keyset and dynamic outside of the keyset). The default keyset size is 0. **Fetch** or **FetchScroll** returns an error if the keyset size is greater than 0 and less than the rowset size.<br>For keyset-driven and mixed cursors, the application can specify the keyset size. It does this with the SQL_ATTR_KEYSET_SIZE statement attribute. If  the keyset size is set to 0, which is the default, the keyset size is set to the result size and a keyset-driven cursor is used. The keyset size can be changed after the cursor has been opened. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetCursorName"></a>SetCursorName
+
+Sets the cursor name associated with a specified statement.
+
+```
+FUNCTION SetCursorName (BYREF wszCursorName AS WSTRING) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszCursorName* | Cursor name. For efficient processing, the cursor name should not include any leading or trailing spaces in the cursor name, and if the cursor name includes a delimited identifier, the delimiter should be positioned as the first character in the cursor name. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetCursorScrollability"></a>SetCursorScrollability
+
+Sets a SQLUINTEGER value that specifies the scrollability type. Optional feature not implemented in Microsoft Access Driver.
+
+```
+FUNCTION SetCursorScrollability (BYVAL CursorScrollability AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *CursorScrollability* | The scrollability type.<br>**SQL_NONSCROLLABLE** = Scrollable cursors are not required on the statement handle. If the application calls FetchScroll on this handle, the only value of *FetchOrientation* is SQL_FETCH_NEXT. This is the default.<br>**SQL_SCROLLABLE** = Scrollable cursors are required on the statement handle. When calling **FetchScroll** the application may specify any valid value of *FetchOrientation*, achieving cursor positioning in modes other than the sequential mode. |
 
 #### Return value
 
