@@ -3371,3 +3371,89 @@ FUNCTION SetPos (BYVAL wRow AS SQLSETPOSIROW, BYVAL fOption AS SQLUSMALLINT, _
 #### Diagnostics
 
 When **SetPos** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value may be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
+
+# <a name="SetPosition"></a>SetPosition
+
+Sets the cursor position in a rowset. Uses SQL_POSITION as the operation type and SQL_LOCK_NO_CHANGE as the lock type.
+
+```
+FUNCTION SetPosition (BYVAL wRow AS SQLSETPOSIROW) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wRow* | Position of the row in the rowset. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetReadOnlyConcurrency"></a>SetReadOnlyConcurrency
+
+Cursor is read-only. No updates are allowed.
+
+```
+FUNCTION SetReadOnlyConcurrency () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetRelativePosition"></a>SetRelativePosition
+
+Fetches the rowset *FetchOffset* from the start of the current rowset.
+
+```
+FUNCTION SetRelativePosition (BYVAL FetchOffset AS SQLLEN) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *FetchOffset* | The rowset from from the start of the current rowset. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetRowVerConcurrency"></a>SetRowVerConcurrency
+
+Cursor uses optimistic concurrency control, comparing row versions such as SQLBase ROWID or Sybase TIMESTAMP.
+
+```
+FUNCTION SetRowVerConcurrency () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStaticCursor"></a>SetStaticCursor
+
+Specifies an static cursor.
+
+```
+FUNCTION SetStaticCursor () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="SetStmtAppParamDesc"></a>SetStmtAppParamDesc
+
+Sets the handle to the APD for subsequent calls to **Execute** and **ExecDirect** on the statement handle. The initial value of this attribute is the descriptor implicitly allocated when the statement was initially allocated. If the value of this attribute is set to SQL_NULL_DESC or the handle originally allocated for the descriptor, an explicitly allocated APD handle that was previously associated with the statement handle is dissociated from it and the statement handle reverts to the implicitly allocated APD  handle.
+
+This attribute cannot be set to a descriptor handle that was implicitly  allocated for another statement or to another descriptor handle that was implicitly set on the same statement; implicitly allocated descriptor handles cannot be associated with more than one statement or descriptor handle.
+
+```
+FUNCTION SetStmtAppParamDesc (BYVAL dwAttr AS SQLUINTEGER) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwAttr* | Attribute value. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
