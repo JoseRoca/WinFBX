@@ -2173,3 +2173,38 @@ SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVAL
 #### Diagnostics
 
 When **Procedures** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
+
+# <a name="GetSpecialColumns"></a>GetSpecialColumns
+
+Retrieves the following information about columns within a specified table:
+
+* The optimal set of columns that uniquely identifies a row in the table.
+* Columns that are automatically updated when any value in the row is updated by a transaction.
+
+```
+FUNCTION GetSpecialColumns (BYVAL identifierType AS SQLUSMALLINT, BYREF wszCatalogName AS WSTRING, _
+   BYVAL CatalogNameLength AS SQLUSMALLINT, BYREF wszSchemaName AS WSTRING, _
+   BYVAL SchemaNameLength AS SQLUSMALLINT, BYREF wszTableName AS WSTRING, _
+   BYVAL TableNameLength AS SQLUSMALLINT, BYVAL fScope AS SQLUSMALLINT,_
+   BYVAL fNullable AS SQLUSMALLINT) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *IdentifierType* | Type of column to return. Must be one of the following values:<br>SQL_BEST_ROWID: Returns the optimal column or set of columns that, by retrieving values from the column or columns, allows any row in the specified table to be uniquely identified. A column can be either a pseudo-column specifically designed for this purpose (as in Oracle ROWID or Ingres TID) or the column or columns of any unique index for the table.<br>SQL_ROWVER: Returns the column or columns in the specified table, if any, that are automatically updated by the data source when any value in the row is updated by any transaction (as in SQLBase ROWID or Sybase TIMESTAMP). |
+| *wszCatalogName* | Procedure catalog. If a driver supports catalogs for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have catalogs. *wszCatalogName* cannot contain a string search pattern. |
+| *CatalogNameLength* | Length of *wszCatalogName*. |
+| *wszSchemaName* | String search pattern for procedure schema names. If a driver supports schemas for some procedures but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those procedures that do not have schemas. |
+| *SchemaNameLength* | Length of *wszSchemaName*. |
+| *wszTableName* | Table name. This argument cannot be a null pointer. *wszTableName* cannot contain a string search pattern. |
+| *TableNameLength* | Length of *wszTableName*. |
+| *fScope* | Minimum required scope of the rowid. The returned rowid may be of greater scope. Must be one of the following:<br>SQL_SCOPE_CURROW: The rowid is guaranteed to be valid only while positioned on that row. A later reselect using rowid may not return a row if the row was updated or deleted by another transaction.<br>SQL_SCOPE_TRANSACTION: The rowid is guaranteed to be valid for the duration of the current transaction.<br>SQL_SCOPE_SESSION: The rowid is guaranteed to be valid for the duration of the session (across transaction boundaries). |
+| *fNullable* | Determines whether to return special columns that can have a NULL value. Must be one of the following:<br>SQL_NO_NULLS: Exclude special columns that can have NULL values. Some drivers cannot support SQL_NO_NULLS, and these drivers will return an empty result set if SQL_NO_NULLS was specified. Applications should be prepared for this case and request SQL_NO_NULLS only if it is absolutely required.<br>SQL_NULLABLE: return special columns even if they can have NULL values.  |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Diagnostics
+
+When **SpecialColumns** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value may be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
