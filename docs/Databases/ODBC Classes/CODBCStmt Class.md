@@ -1281,6 +1281,25 @@ FUNCTION ExecDirect (BYREF wszSqlStr AS WSTRING) AS SQLRETURN
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
 
+#### Example
+
+```
+#include once "Afx/COdbc/COdbc.inc"
+USING Afx
+
+' // Connect with the database
+DIM wszConStr AS WSTRING * 260 = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=biblio.mdb"
+DIM pDbc AS CODBC = wszConStr
+
+' // Allocate an statement object
+DIM pStmt AS COdbcStmt = @pDbc
+IF pStmt.Handle = NULL THEN PRINT "Failed to allocate the statement handle": SLEEP : END
+
+' // Insert a new record
+pStmt.ExecDirect ("INSERT INTO Authors (Au_ID, Author, [Year Born]) VALUES ('999', 'José Roca', 1950)")
+IF pStmt.Error = FALSE THEN PRINT "Record added" ELSE PRINT pStmt.GetErrorInfo
+```
+
 # <a name="Execute"></a>Execute
 
 Executes a prepared statement, using the current values of the parameter marker variables if any parameter markers exist in the statement.
@@ -2250,6 +2269,77 @@ SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVAL
 
 When **GetStatistics** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
 
+#### Example
+
+```
+#include once "Afx/COdbc/COdbc.inc"
+USING Afx
+
+' // Connect with the database
+DIM wszConStr AS WSTRING * 260 = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=biblio.mdb"
+DIM pDbc AS CODBC = wszConStr
+
+' // Allocate an statement object
+DIM pStmt AS COdbcStmt = @pDbc
+IF pStmt.Handle = NULL THEN PRINT "Failed to allocate the statement handle": SLEEP : END
+
+DIM cbbytes AS LONG
+DIM szCatalogName AS ZSTRING * 256
+DIM szSchemaName AS ZSTRING * 256
+DIM szTableName AS ZSTRING * 129
+DIM iNonUnique AS SHORT
+DIM szIndexQualifier AS ZSTRING * 129
+DIM szIndexName AS ZSTRING * 129
+DIM iInfoType AS SHORT
+DIM iOrdinalPosition AS SHORT
+DIM szColumnName AS ZSTRING * 129
+DIM szAscOrDesc AS ZSTRING * 2
+DIM lCardinality AS LONG
+DIM lPages AS LONG
+DIM szFilterCondition AS ZSTRING * 129
+
+' // Note: Despite calling the SQLStatisticsW function, the GetStatistics
+' // method fails if we use unicode variables instead of ansi.
+szTableName = "Authors"
+pStmt.GetStatistics(szCatalogName, LEN(szCatalogName), szSchemaName, LEN(szSchemaName), _
+   szTableName, LEN(szTableName), SQL_INDEX_ALL, SQL_ENSURE)
+
+print pStmt.GetLastResult
+pStmt.BindCol( 1, @szCatalogName, SIZEOF(szCatalogName), @cbBytes)
+pStmt.BindCol( 2, @szSchemaName, SIZEOF(szSchemaName), @cbbytes)
+pStmt.BindCol( 3, @szTableName, SIZEOF(szTableName), @cbbytes)
+pStmt.BindCol( 4, @iNonUnique, @cbbytes)
+pStmt.BindCol( 5, @szIndexQualifier, SIZEOF(szIndexQualifier), @cbbytes)
+pStmt.BindCol( 6, @szIndexName, SIZEOF(szIndexName), @cbbytes)
+pStmt.BindCol( 7, @iInfoType, @cbbytes)
+pStmt.BindCol( 8, @iOrdinalPosition, @cbbytes)
+pStmt.BindCol( 9, @szColumnName, SIZEOF(szColumnName), @cbbytes)
+pStmt.BindCol(10, @szAscOrDesc, SIZEOF(szAscOrDesc), @cbbytes)
+pStmt.BindCol(11, @lCardinality, @cbbytes)
+pStmt.BindCol(12, @lPages, @cbbytes)
+pStmt.BindCol(13, @szFilterCondition, SIZEOF(szFilterCondition), @cbbytes)
+DO
+   IF pStmt.Fetch = FALSE THEN EXIT DO
+   ? "Table catalog name: " & szCatalogName
+   ? "Table schema name: " & szSchemaName
+   ? "Table name: " & szTableName
+   ? "Non unique: " & STR(iNonUnique)
+   ? "Index qualifier: " & szIndexQualifier
+   ? "Index name: " & szIndexName
+   ? "Info type: " & STR(iInfoType)
+   ? "Ordinal position: " & STR(iOrdinalPosition)
+   ? "Column name: " & szColumnName
+   ? "Asc or desc: " & szAscOrDesc
+   ? "Cardinality: " & STR(lCardinality)
+   ? "Pages: " & STR(lPages)
+   ? "Filter condition: " & szFilterCondition
+   PRINT
+   PRINT "Press any key..."
+   SLEEP
+   CLS
+LOOP
+```
+
 # <a name="GetStmtAppParamDesc"></a>GetStmtAppParamDesc
 
 Gets the handle to the APD for subsequent calls to **Execute** and **ExecDirect** on the statement handle. The initial value of this attribute is the descriptor implicitly allocated when the statement was initially allocated. If the value of this attribute is set to SQL_NULL_DESC or the handle originally allocated for the descriptor, an explicitly allocated APD handle that was previously associated with the statement handle is dissociated from it and the statement handle reverts to the implicitly allocated APD  handle.
@@ -2903,6 +2993,90 @@ SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVAL
 
 When **GetTypeInfo** returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
 
+#### Example
+
+```
+#include once "Afx/COdbc/COdbc.inc"
+USING Afx
+
+' // Connect with the database
+DIM wszConStr AS WSTRING * 260 = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=biblio.mdb"
+DIM pDbc AS CODBC = wszConStr
+
+' // Allocate an statement object
+DIM pStmt AS COdbcStmt = @pDbc
+IF pStmt.Handle = NULL THEN PRINT "Failed to allocate the statement handle": SLEEP : END
+
+DIM cbbytes AS LONG
+DIM wszTypeName AS WSTRING * 129
+DIM iDataType AS SHORT
+DIM lColumnSize AS LONG
+DIM wszIntervalPrefix AS WSTRING * 129
+DIM wszIntervalSuffix AS WSTRING * 129
+DIM wszCreateParams AS WSTRING * 129
+DIM iNullable AS SHORT
+DIM iCaseSensitive AS SHORT
+DIM iSearchable AS SHORT
+DIM iUnsignedAttribute AS SHORT
+DIM iFixedPrecScale AS SHORT
+DIM iAutoUniqueValue AS SHORT
+DIM wszLocalTypeName AS WSTRING * 129
+DIM iMinimumScale AS SHORT
+DIM iMaximumScale AS SHORT
+DIM iSqlDataType AS SHORT
+DIM iSqlDatetimeSub AS SHORT
+DIM lNumPrecRadix AS LONG
+DIM iIntervalPrecision AS SHORT
+
+pStmt.GetTypeInfo(SQL_ALL_TYPES)
+pStmt.BindCol( 1, @wszTypeName, SIZEOF(wszTypeName), @cbbytes)
+pStmt.BindCol( 2, @iDataType, @cbbytes)
+pStmt.BindCol( 3, @lColumnSize, @cbbytes)
+pStmt.BindCol( 4, @wszIntervalPrefix, SIZEOF(wszIntervalPrefix), @cbbytes)
+pStmt.BindCol( 5, @wszIntervalSuffix, SIZEOF(wszIntervalSuffix), @cbbytes)
+pStmt.BindCol( 6, @wszCreateParams, SIZEOF(wszCreateParams), @cbbytes)
+pStmt.BindCol( 7, @iNullable, @cbbytes)
+pStmt.BindCol( 8, @iCasesensitive, @cbbytes)
+pStmt.BindCol( 9, @iSearchable, @cbbytes)
+pStmt.BindCol(10, @iUnsignedAttribute, @cbbytes)
+pStmt.BindCol(11, @iFixedPrecScale, @cbbytes)
+pStmt.BindCol(12, @iAutoUniqueValue, @cbbytes)
+pStmt.BindCol(13, @wszLocalTypeName, SIZEOF(wszLocalTypeName), @cbbytes)
+pStmt.BindCol(14, @iMinimumScale, @cbbytes)
+pStmt.BindCol(15, @iMaximumScale, @cbbytes)
+pStmt.BindCol(16, @iSqlDataType, @cbbytes)
+pStmt.BindCol(17, @iSqlDateTimeSub, @cbbytes)
+pStmt.BindCol(18, @lNumPrecRadix, @cbbytes)
+pStmt.BindCol(19, @iIntervalPrecision, @cbbytes)
+
+DO
+   IF pStmt.Fetch = FALSE THEN EXIT DO
+   ? "Type name: " & wszTypeName
+   ? "Data type: " & STR(iDataType)
+   ? "Column size: " & STR(lColumnSize)
+   ? "Interval prefix: " & wszIntervalPrefix
+   ? "Interval suffix: " & wszIntervalSuffix
+   ? "Create params: " & wszCreateParams
+   ? "Nullable: " & STR(iNullable)
+   ? "Case sensitive: " & STR(iCaseSensitive)
+   ? "Searchable: " & STR(iSearchable)
+   ? "Unsigned attribute: " & STR(iUnsignedAttribute)
+   ? "Fixed prec scale: " & STR(iFixedPrecScale)
+   ? "Auto unique value: " & STR(iAutoUniqueValue)
+   ? "Local type name: " & wszLocalTypeName
+   ? "Minimum scale: " & STR(iMinimumScale)
+   ? "Maximum scale: " & STR(iMaximumScale)
+   ? "SQL data type: " & STR(iSqlDataType)
+   ? "SQL Datetime sub: " & STR(iSqlDatetimeSub)
+   ? "Num prec radix: " & STR(lNumPrecRadix)
+   ? "Interval precision: " & STR(iIntervalPrecision)
+   PRINT
+   PRINT "Press any key..."
+   SLEEP
+   CLS
+LOOP
+```
+
 # <a name="Handle"></a>Handle
 
 Returns the statement handle.
@@ -3035,6 +3209,36 @@ The number of columns in a result set.
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
 
+#### Example
+
+```
+#include once "Afx/COdbc/COdbc.inc"
+USING Afx
+
+' // Connect with the database
+DIM wszConStr AS WSTRING * 260 = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=biblio.mdb"
+DIM pDbc AS CODBC = wszConStr
+
+' // Allocate an statement object
+DIM pStmt AS COdbcStmt = @pDbc
+IF pStmt.Handle = NULL THEN PRINT "Failed to allocate the statement handle": SLEEP : END
+
+' // Cursor type
+pStmt.SetMultiuserKeysetCursor
+
+' // Generate a result set
+pStmt.ExecDirect ("SELECT * FROM Authors ORDER BY Author")
+
+' // Retrieve the number of columns
+DIM numCols AS SQLSMALLINT = pStmt.NumResultCols
+PRINT "Number of columns:" & STR(numCols)
+
+' // Retrieve the names of the fields (columns)
+FOR idx AS LONG = 1 TO numCols
+   PRINT "Field #" & STR(idx) & " name: " & pStmt.ColName(idx)
+NEXT
+```
+
 # <a name="ParamData"></a>ParamData
 
 **ParamData** is used in conjunction with **PutData** to supply parameter data at statement execution time.
@@ -3066,6 +3270,39 @@ FUNCTION Prepare (BYREF StatementText AS WSTRING) AS SQLRETURN
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Example
+
+```
+#include once "Afx/COdbc/COdbc.inc"
+USING Afx
+
+' // Connect with the database
+DIM wszConStr AS WSTRING * 260 = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=biblio.mdb"
+DIM pDbc AS CODBC = wszConStr
+
+' // Allocate an statement object
+DIM pStmt AS COdbcStmt = @pDbc
+IF pStmt.Handle = NULL THEN PRINT "Failed to allocate the statement handle": SLEEP : END
+
+' // Cursor type
+pStmt.SetMultiuserKeysetCursor
+
+' // Prepare the statement
+pStmt.Prepare("UPDATE Authors SET Author=? WHERE Au_ID=?")
+' // Bind the columns
+DIM wszAuthor AS WSTRING * 256, cbAuthor AS LONG
+DIM lAuId AS LONG, cbAuId AS LONG
+pStmt.BindParameter(1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 255, 0, @wszAuthor, SIZEOF(wszAuthor), @cbAuthor)
+pStmt.BindParameter(2, SQL_PARAM_INPUT, SQL_C_LONG, SQL_INTEGER, 4, 0, @lAuId, 0, @cbAuID)
+' // Fill the parameter value
+lAuId = 999 : cbAuId = 4
+wszAuthor = "William Shakespeare" : cbAuthor = LEN(wszAuthor)
+' // Execute the prepared statement
+pStmt.Execute
+IF pStmt.Error = FALSE THEN  PRINT "Record updated" ELSE PRINT pStmt.GetErrorInfo
+
+```
 
 # <a name="PutData"></a>PutData
 
@@ -3222,6 +3459,28 @@ FUNCTION SetCursorName (BYREF wszCursorName AS WSTRING) AS SQLRETURN
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Example
+
+```
+#include once "Afx/COdbc/COdbc.inc"
+USING Afx
+
+' // Connect with the database
+DIM wszConStr AS WSTRING * 260 = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=biblio.mdb"
+DIM pDbc AS CODBC = wszConStr
+
+' // Allocate an statement object
+DIM pStmt AS COdbcStmt = @pDbc
+IF pStmt.Handle = NULL THEN PRINT "Failed to allocate the statement handle": SLEEP : END
+
+' // Cursor type
+pStmt.SetMultiuserKeysetCursor
+' // Sets the cursor name
+pStmt.SetCursorName "MyCursor"
+' // Gets the cursor name
+PRINT "Cursor name: " & pStmt.GetCursorName
+```
 
 # <a name="SetCursorScrollability"></a>SetCursorScrollability
 
@@ -4081,3 +4340,46 @@ FUNCTION UpdateRecord (BYVAL wRow AS SQLSETPOSIROW = 1) AS SQLRETURN
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Example
+
+```
+#include once "Afx/COdbc/COdbc.inc"
+USING Afx
+
+' // Connect with the database
+DIM wszConStr AS WSTRING * 260 = "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=biblio.mdb"
+DIM pDbc AS CODBC = wszConStr
+
+' // Allocate an statement object
+DIM pStmt AS COdbcStmt = @pDbc
+IF pStmt.Handle = NULL THEN PRINT "Failed to allocate the statement handle": SLEEP : END
+
+' // Cursor type
+pStmt.SetMultiuserKeysetCursor
+
+' // Bind the columns
+DIM AS LONG lAuId, cbAuId
+pStmt.BindCol(1, @lAuId, @cbAuId)
+DIM wszAuthor AS WSTRING * 256, cbAuthor AS LONG
+pStmt.BindCol(2, @wszAuthor, 256, @cbAuthor)
+DIM iYearBorn AS SHORT, cbYearBorn AS LONG
+pStmt.BindCol(3, @iYearBorn, @cbYearBorn)
+
+' // Generate a result set
+pStmt.ExecDirect ("SELECT * FROM Authors WHERE Au_Id=999")
+
+' // Fetch the record
+pstmt.Fetch
+
+' // Fill the values of the binded application variables and its sizes
+cbAuID = SQL_COLUMN_IGNORE
+wszAuthor = "Félix Lope de Vega Carpio"
+cbAuthor = LEN(wszAuthor) * 2   ' Unicode uses 2 bytes per character
+iYearBorn = 1562
+cbYearBorn = SIZEOF(iYearBorn)
+
+' // Update the record
+pStmt.UpdateRecord
+IF pStmt.Error = FALSE THEN PRINT "Record updated" ELSE PRINT pStmt.GetErrorInfo
+```
