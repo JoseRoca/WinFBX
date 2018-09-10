@@ -3084,3 +3084,74 @@ FUNCTION PutData (BYVAL DataPtr AS SQLPOINTER, BYVAL StrLen_or_Ind AS SQLLEN) AS
 #### Return value
 
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="RecordCount"></a>RecordCount
+
+Gets the number of records in the result set.
+
+```
+FUNCTION RecordCount (BYREF wszSqlStr AS WSTRING) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszSqlStr* | SQL string.<br>Uses an instruction like SqlStr = "SELECT COUNT(\*) FROM Customers".<br>This is a know workaround to get the number of records in a result set by using the same SELECT clause that will be used to open the result set but adding the COUNT function. |
+
+#### Return value
+
+The number of records in the result set.
+
+#### Result code
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NO_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="RefreshRecord"></a>RefreshRecord
+
+Sets the cursor position in a rowset and allows to refresh data in the rowset.
+
+```
+FUNCTION RefreshRecord (BYVAL wRow AS SQLSETPOSIROW = 1, _
+   BYVAL fLock AS SQLUSMALLINT = SQL_LOCK_NO_CHANGE) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wRow* | Optional. Row number inside the rowset. |
+| *fLock* | Optional. Lock type. SQL_LOCK_NO_CHANGE, SQL_LOCK_EXCLUSIVE, SQL_LOCK_UNLOCK |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="ResetParams"></a>ResetParams
+
+Releases all parameter buffers set by **BindParameter** for the given statement handle.
+
+```
+FUNCTION ResetParams () AS SQLRETURN
+```
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_INVALID_HANDLE, or SQL_ERROR.
+
+
+# <a name="RowCount"></a>RowCount
+
+Returns the number of rows affected by an UPDATE, INSERT, or DELETE statement; an SQL_ADD, SQL_UPDATE_BY_BOOKMARK, or SQL_DELETE_BY_BOOKMARK operation in **BulkOperations**; or an SQL_UPDATE or SQL_DELETE operation in **SetPos**.
+
+```
+FUNCTION RowCount () AS SQLLEN
+```
+
+#### Return value
+
+Returns the number of rows affected by an UPDATE, INSERT, or DELETE statement, or -1 if the number of affected rows is not available.
+
+#### Remarks
+
+When **Execute**, **ExecDirect**, **BulkOperations*, **SetPos**, or **MoreResults** is called, the SQL_DIAG_ROW_COUNT field of the diagnostic data structure is set to the row count, and the row count is cached in an implementation-dependent way. **RowCount** returns the cached row count value. The cached row count value is valid until the statement handle is set back to the prepared or allocated state, the statement is reexecuted, or **CloseCursor** is called. Note that if a function has been called since the SQL_DIAG_ROW_COUNT field was set, the value returned by **RowCount** might be different from the value in the SQL_DIAG_ROW_COUNT field because the SQL_DIAG_ROW_COUNT field is reset to 0 by any function call.<br>For other statements and functions, the driver may define the value returned in **RowCountPtr**. For example, some data sources may be able to return the number of rows returned by a SELECT statement or a catalog function before fetching the rows.<br>Note: Many data sources cannot return the number of rows in a result set before fetching them; for maximum interoperability, applications should not rely on this behavior. |
+
+#### Result code
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
