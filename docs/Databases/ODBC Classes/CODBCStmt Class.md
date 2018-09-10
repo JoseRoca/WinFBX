@@ -3366,8 +3366,7 @@ FUNCTION SetPos (BYVAL wRow AS SQLSETPOSIROW, BYVAL fOption AS SQLUSMALLINT, _
 | ---------- | ----------- |
 | *wRow* | Position of the row in the rowset on which to perform the operation specified with the fOption argument. If wRow is 0, the operation applies to every row in the rowset. |
 | *fOption* | Operation to perform: SQL_POSITION, SQL_REFRESH, SQL_UPDATE, SQL_DELETE. |
-| *fLock* | Specifies how to lock the row after performing the operation specified in the Operation argument.
-SQL_LOCK_NO_CHANGE, SQL_LOCK_EXCLUSIVE, SQL_LOCK_UNLOCK. |
+| *fLock* | Specifies how to lock the row after performing the operation specified in the Operation argument. SQL_LOCK_NO_CHANGE, SQL_LOCK_EXCLUSIVE, SQL_LOCK_UNLOCK. |
 
 #### Diagnostics
 
