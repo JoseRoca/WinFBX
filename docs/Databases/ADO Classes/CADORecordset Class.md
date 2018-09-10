@@ -65,7 +65,6 @@ Represents the entire set of records from a base table or the results of an exec
 | [Update](#Update) | Saves any changes you make to the current row of a **Recordset** object. |
 | [UpdateBatch](#UpdateBatch) | Writes all pending batch updates to disk. |
 
-
 #### Remarks
 
 You use **Recordset** objects to manipulate data from a provider. When you use ADO, you manipulate data almost entirely using **Recordset** objects. All **Recordset** objects consist of records (rows) and fields (columns). Depending on the functionality supported by the provider, some **Recordset** methods or properties may not be available.
@@ -245,6 +244,68 @@ Note numbers used in the cross-index:
 (4) For hierarchical recordsets, the "Maximum Rows" ADO property gets applied across all children. Depending on the order in which the rows are returned, you might have all, some or no children for each parent or orphaned children in the result set. Therefore, when reshaping hierarchical recordsets, the identifier for every child should be unique. In general, the Microsoft Data Shaping Service for OLE DB (MSDATASHAPE) provider does not allow for distinction between properties that can be inherited from the parent and those that cannot be inherited.
 
 (5) Does not apply.
+
+### In-memory recordsets
+
+As an alternative to arrays and/or dictionary objects, we can use ADO to create in-memory recordsets. Some advantages of using ADO over SQLite for this task is that we don't need to use a third party DLL and that we can save a recordset to disk as a stream or as XML just calling **Save** or **SaveAsXml**.
+
+**Seek** does not work, but we can use **Find** (to search by name) or **AbsolutePosition** (to search by ordinal). We can also use other ADO methods such **Delete_**, **Sort** and **Filter**.
+
+We can also get all the rows as a two-dimensional safe array, calling the **GetRows** method, or as an string calling the **GetString** method, that allows to specify the number of rows to read, a separator (default = tab) and a row delimiter (default = CRLF).
+
+This is a good option for things that we can't do with normal arrays, such having a multi-dimensional array in which each dimension can be of any type.
+
+#### Example
+
+```
+#include "Afx/CADODB/CADODB.inc"
+USING Afx
+
+' // Create an instance of the CAdoRecorset class
+DIM pRecordset AS CAdoRecordset
+' // Get a reference to the Fields collection
+DIM pFields AS CAdoFields = pRecordset.Fields
+
+pFields.Append("Key", adVarChar, 10)
+pFields.Append("Item", adVarChar, 20)
+
+pRecordset.CursorType = adOpenKeyset
+pRecordset.CursorLocation = adUseClient
+pRecordset.LockType = adLockOptimistic
+pRecordset.Open(adOpenKeyset, adLockOptimistic)
+
+print "Record count: ", pRecordset.Recordcount
+
+pRecordset.AddNew
+   pRecordset.Collect("Key") = "One"
+   pRecordset.Collect("Item") = "Item one"
+'pRecordset.Update
+' Don't call Update or it will add an additional empty record
+
+pRecordset.AddNew
+   pRecordset.Collect("Key") = "Two"
+   pRecordset.Collect("Item") = "Item two"
+'pRecordset.Update
+
+pRecordset.AddNew
+   pRecordset.Collect("Key") = "Three"
+   pRecordset.Collect("Item") = "Item three"
+'pRecordset.Update
+
+print "New record count: ", pRecordset.Recordcount
+
+'pRecordset.MoveFirst
+pRecordset.AbsolutePosition = 3
+DO
+   IF pRecordset.EOF THEN EXIT DO
+   PRINT pRecordset.Collect("Key")
+   PRINT pRecordset.Collect("Item")
+   IF pRecordset.MoveNext <> S_OK THEN EXIT DO
+LOOP
+
+pRecordset.MoveFirst
+PRINT pRecordset.GetString
+```
 
 # <a name="AbsolutePage"></a>AbsolutePage
 
