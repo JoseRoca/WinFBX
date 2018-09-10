@@ -1858,3 +1858,18 @@ FUNCTION GetImpParamDescRec (BYVAL RecNumber AS SQLSMALLINT, BYVAL pwszName AS W
 SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE.
 
 SQL_NO_DATA is returned if *RecNumber* is greater than the current number of descriptor records or the the statement is in the prepared or executed state but there was no open cursor associated with it.
+
+# <a name="GetStmtImpRowDesc"></a>GetStmtImpRowDesc
+
+Returns the handle to the IRD. The value of this attribute is the descriptor  allocated when the statement was initially allocated. The application  cannot set this attribute.
+
+This attribute can be retrieved by a call to **GetStmtAttr** but not set by a call to **SetStmtAttr**.
+
+```
+FUNCTION GetStmtImpRowDesc () AS SQLUINTEGER
+```
+
+**Result code** (GetLastResult)
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_ERROR, or SQL_INVALID_HANDLE.
+
