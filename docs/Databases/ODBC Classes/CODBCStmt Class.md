@@ -2089,3 +2089,30 @@ The retrieved data.
 **Result code** (GetLastResult)
 
 SQL_SUCCESS, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+# <a name="GetPrimaryKeys"></a>GetPrimaryKeys
+
+Returns the column names that make up the primary key for a table. This function does not support returning primary keys from multiple tables in a single call. Optional feature not implemented by the Microsoft Access Driver.
+
+```
+FUNCTION GetPrimaryKeys (BYREF wszCatalogName AS WSTRING, BYVAL CatalogNameLength AS SQLSMALLINT, _
+   BYREF wszSchemaName AS WSTRING, BYVAL SchemanameLength AS SQLSMALLINT, _
+   BYREF wszTableName AS WSTRING, BYVAL TableNameLength AS SQLSMALLINT) AS SQLRETURN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszCatalogName* | Catalog name. If a driver supports catalogs for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have catalogs. *wszCatalogName* cannot contain a string search pattern.<br>If the SQL_ATTR_METADATA_ID statement attribute is set to SQL_TRUE, *wszCatalogName* is treated as an identifier and its case is not significant. If it is SQL_FALSE, *wszCatalogName* is an ordinary argument; it is treated literally, and its case is significant. |
+| *CatalogNameLength* | Length of *wszCatalogName*. |
+| *wszSchemaName* | Schema name. If a driver supports schemas for some tables but not for others, such as when the driver retrieves data from different DBMSs, an empty string ("") denotes those tables that do not have schemas. *wszSchemaName* cannot contain a string search pattern. |
+| *SchemaNameLength* | Length of *wszSchemaName*. |
+| *wszTableName* | Table name. This argument cannot be a null pointer. *wszTableName* cannot contain a string search pattern. |
+| *TableNameLength* | Length of *wszTableName*. |
+
+#### Return value
+
+SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_STILL_EXECUTING, SQL_ERROR, or SQL_INVALID_HANDLE.
+
+#### Diagnostics
+
+When *PrimaryKeys* returns SQL_ERROR or SQL_SUCCESS_WITH_INFO, an associated SQLSTATE value can be obtained by calling **GetDiagRec** with a *HandleType* of SQL_HANDLE_STMT and a *Handle* of *hStmt*.
