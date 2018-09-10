@@ -79,7 +79,7 @@ FUNCTION AfxBase64Decode (BYREF strData AS STRING) AS STRING
 
 The decoded string on success, or a null string on failure.
 
-####Remaks
+#### Remaks
 
 Base64 is a group of similar encoding schemes that represent binary data in an ASCII string format by translating it into a radix-64 representation. The Base64 term originates from a specific MIME content transfer encoding.
 
@@ -121,7 +121,7 @@ FUNCTION AfxBase64Encode (BYREF strData AS STRING) AS STRING
 
 The encoded string on succeess, or a null string on failure.
 
-# Remaks
+#### Remarks
 
 Base64 is a group of similar encoding schemes that represent binary data in an ASCII string format by translating it into a radix-64 representation. The Base64 term originates from a specific MIME content transfer encoding.
 
