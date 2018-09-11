@@ -13,6 +13,8 @@ Assorted COM procedures.
 | [AfxNewCOM(CLSID)](#AfxNewCOM2) | Creates a single uninitialized object of the class associated with a specified CLSID. |
 | [AfxNewCOM(CLSID,IID)](#AfxNewCOM3) | Creates a single uninitialized object of the class associated with the specified CLSID and IID. |
 | [AfxNewCOM(LibName)](#AfxNewCOM4) | Loads the specified library from file and creates an instance of an object. |
+| [AfxGetCOM](#AfxGetCOM) | Returns a dispatch pointer to a running out-of-process server that is registered in the ROT. |
+| [AfxAnyCOM](#AfxAnyCOM) | Tries to use an existing, running application if available, or creates a new instance if not. |
 | [AfxGuid](#AfxGuid) | Converts a string into a 16-byte (128-bit) Globally Unique Identifier (GUID). |
 | [AfxGuidText](#AfxGuidText) | Returns a 38-byte human-readable guid string from a 16-byte GUID. |
 | [AfxSafeAddRef](#AfxSafeAddRef) | Increments the reference count for an interface on an object. |
@@ -231,6 +233,40 @@ An interface pointer or NULL.
 * Components intended for use as an add-in or a snap-in, such as an Office add-in or a control in a Web browser, aren't supported.
 * Components that manage a shared physical or virtual system resource aren't supported.
 * Visual ActiveX controls aren't supported because they need to be initilized and activated by the OLE container.
+
+# <a name="AfxGetCOM"></a>AfxGetCOM
+
+If the requested object is in an EXE (out-of-process server), such Office applications, and it is running and registered in the Running Object Table (ROT), **AfxGetCom** will return a pointer to its interface. Internally, **AfxGetCOM** calls the API function **GetActiveObject**.
+
+```
+FUNCTION AfxGetCom (BYREF wszProgID AS CONST WSTRING) AS IDispatch PTR
+FUNCTION AfxGetCom (BYREF classID AS CONST CLSID) AS IDispatch PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszProgID* | The ProgID of the object to retrieve. |
+| *classID* | The ClsID of the object to retrieve. |
+
+Be aware that **AfxGetCom** can fail under if Office is running but not registered in the ROT.
+
+When an Office application starts, it does not immediately register its running objects. This optimizes the application's startup process. Instead of registering at startup, an Office application registers its running objects in the ROT once it loses focus. Therefore, if you attempt to use **AfxGetCOM** to attach to a running instance of an Office application before the application has lost focus, you might receive an error.
+
+See: [GetObject or GetActiveObject cannot find a running Office application](https://support.microsoft.com/en-us/help/238610/getobject-or-getactiveobject-cannot-find-a-running-office-application)
+
+# <a name="AfxAnyCOM"></a>AfxAnyCOM
+
+Tries to use an existing, running application if available, or creates a new instance if not.
+
+```
+FUNCTION AfxAnyCOM (BYREF wszProgID AS CONST WSTRING) AS IDispatch PTR
+FUNCTION AfxAnyCOM (BYREF classID AS CONST CLSID) AS IDispatch PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszProgID* | The ProgID of the object to retrieve or create. |
+| *classID* | The ClsID of the object to retrieve or create. |
 
 # <a name="AfxGuid"></a>AfxGuid
 

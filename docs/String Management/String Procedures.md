@@ -79,11 +79,31 @@ FUNCTION AfxBase64Decode (BYREF strData AS STRING) AS STRING
 
 The decoded string on success, or a null string on failure.
 
-####Remaks
+#### Remaks
 
 Base64 is a group of similar encoding schemes that represent binary data in an ASCII string format by translating it into a radix-64 representation. The Base64 term originates from a specific MIME content transfer encoding.
 
 Base64 encoding schemes are commonly used when there is a need to encode binary data that needs be stored and transferred over media that are designed to deal with textual data. This is to ensure that the data remains intact without modification during transport. Base64 is used commonly in a number of applications including email via MIME, and storing complex data in XML.
+
+If we want to encode a unicode string, we must convert it to utf8 before calling AfxBase64Encode, e.g.
+
+````
+DIM cws AS CWSTR = "おはようございます – Good morning!"
+DIM s AS STRING = AfxBase64Encode(cws.Utf8)
+````
+
+To decode it, we can use
+
+````
+DIM cwsOut AS CWSTR = CWSTR(AfxBase64Decode(s), CP_UTF8)
+````
+
+or
+
+````
+DIM cwsOut AS CWSTR
+cws.utf8 = AfxBase64Decode(s)
+````
 
 # <a name="AfxBase64Encode"></a>AfxBase64Encode
 
@@ -101,11 +121,31 @@ FUNCTION AfxBase64Encode (BYREF strData AS STRING) AS STRING
 
 The encoded string on succeess, or a null string on failure.
 
-# Remaks
+#### Remarks
 
 Base64 is a group of similar encoding schemes that represent binary data in an ASCII string format by translating it into a radix-64 representation. The Base64 term originates from a specific MIME content transfer encoding.
 
 Base64 encoding schemes are commonly used when there is a need to encode binary data that needs be stored and transferred over media that are designed to deal with textual data. This is to ensure that the data remains intact without modification during transport. Base64 is used commonly in a number of applications including email via MIME, and storing complex data in XML.
+
+If we want to encode a unicode string, we must convert it to utf8 before calling AfxBase64Encode, e.g.
+
+````
+DIM cws AS CWSTR = "おはようございます – Good morning!"
+DIM s AS STRING = AfxBase64Encode(cws.Utf8)
+````
+
+To decode it, we can use
+
+````
+DIM cwsOut AS CWSTR = CWSTR(AfxBase64Decode(s), CP_UTF8)
+````
+
+or
+
+````
+DIM cwsOut AS CWSTR
+cws.utf8 = AfxBase64Decode(s)
+````
 
 # <a name="AfxCryptBinaryToString"></a>AfxCryptBinaryToString
 

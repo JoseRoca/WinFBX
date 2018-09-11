@@ -361,13 +361,14 @@ PRIVATE FUNCTION AfxGetCom OVERLOAD (BYREF wszProgID AS CONST WSTRING) AS ANY PT
    DIM classID AS CLSID, pUnk AS ANY PTR
    CLSIDFromProgID(wszProgID, @classID)
    IF IsEqualGuid(@classID, @IID_NULL) THEN RETURN NULL
-   IF GetActiveObject(@classID, NULL, @pUnk) = S_OK THEN RETURN pUnk
+   GetActiveObject(@classID, NULL, @pUnk)
+   RETURN pUnk
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetCom OVERLOAD (BYREF classID AS CONST CLSID) AS ANY PTR
    DIM pUnk AS ANY PTR
-   CoCreateInstance(@classID, NULL, CLSCTX_INPROC_SERVER, @IID_IUnknown, @pUnk)
+   GetActiveObject(@classID, NULL, @pUnk)
    RETURN pUnk
 END FUNCTION
 ' ========================================================================================
@@ -385,8 +386,9 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION AfxAnyCom OVERLOAD (BYREF classID AS CONST CLSID) AS ANY PTR
    DIM pUnk AS ANY PTR
-   IF GetActiveObject(@classID, NULL, @pUnk) = S_OK THEN RETURN pUnk
-   CoCreateInstance(@classID, NULL, CLSCTX_INPROC_SERVER, @IID_IUnknown, @pUnk)
+   IF GetActiveObject(@classID, NULL, @pUnk) <> S_OK THEN
+      CoCreateInstance(@classID, NULL, CLSCTX_INPROC_SERVER, @IID_IUnknown, @pUnk)
+   END IF
    RETURN pUnk
 END FUNCTION
 ' ========================================================================================

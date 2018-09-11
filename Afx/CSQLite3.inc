@@ -495,7 +495,7 @@ Public:
    DECLARE CONSTRUCTOR (BYREF wszDllPath AS WSTRING = "sqlite3.dll")
    DECLARE DESTRUCTOR
    DECLARE FUNCTION RefCount (BYVAL bIncrement AS BOOLEAN, BYREF wszDllPath AS WSTRING = "sqlite3.dll") AS LONG
-   DECLARE FUNCTION GetLastResult () AS HRESULT
+   DECLARE FUNCTION GetLastResult () AS LONG
    DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
    DECLARE FUNCTION Version () AS STRING
    DECLARE FUNCTION VersionNumber () AS LONG
@@ -569,7 +569,7 @@ END DESTRUCTOR
 ' ========================================================================================
 ' Returns the last result
 ' ========================================================================================
-PRIVATE FUNCTION CSQLite.GetLastResult () AS HRESULT
+PRIVATE FUNCTION CSQLite.GetLastResult () AS LONG
    RETURN m_Result
 END FUNCTION
 ' ========================================================================================
@@ -626,6 +626,7 @@ END FUNCTION
 ' It does not parse the SQL statements thus will not detect syntactically incorrect SQL.
 ' ========================================================================================
 PRIVATE FUNCTION CSQLite.Complete (BYREF wszSql AS CONST WSTRING) AS LONG
+   IF LEN(wszSql) = 0 THEN RETURN 1
    DIM pProc AS PFNSQLITE3COMPLETE16PROC = _
    cast(PFNSQLITE3COMPLETE16PROC, GetProcAddress(m_hLib, "sqlite3_complete16"))
    IF pProc = 0 THEN this.SetResult(GetLastError) : EXIT FUNCTION
@@ -650,6 +651,7 @@ END FUNCTION
 ' Example: pSql.CompileOptionUsed(("SQLITE_ENABLE_DBSTAT_VTAB").
 ' ========================================================================================
 PRIVATE FUNCTION CSQLite.CompileOptionUsed (BYREF szOptName AS ZSTRING) AS BOOLEAN
+   IF LEN(szOptName) = 0 THEN RETURN FALSE
    DIM pProc AS PFNSQLITE3COMPILEOPTIONUSEDPROC = _
    cast(PFNSQLITE3COMPILEOPTIONUSEDPROC, GetProcAddress(m_hLib, "sqlite3_compileoption_used"))
    IF pProc = 0 THEN this.SetResult(GetLastError) : EXIT FUNCTION
@@ -902,6 +904,7 @@ END FUNCTION
 ' Note that this method returns zero on a match and non-zero if the strings do not match.
 ' ========================================================================================
 PRIVATE FUNCTION CSQLite.StrGlob (BYREF szGlob AS ZSTRING, BYREF szStr AS ZSTRING) AS LONG
+   IF LEN(szGlob) = 0 OR LEN(szStr) = 0 THEN RETURN 1
    DIM pProc AS PFNSQLITE3STRGLOBPROC = _
    cast(PFNSQLITE3STRGLOBPROC, GetProcAddress(m_hLib, "sqlite3_strglob"))
    IF pProc = 0 THEN this.SetResult(GetLastError) : EXIT FUNCTION
@@ -1202,6 +1205,7 @@ END FUNCTION
 ' Creates a new prepared statement object.
 ' ========================================================================================
 PRIVATE FUNCTION CSQLiteDb.Prepare (BYREF wszSql AS WSTRING) AS sqlite3_stmt PTR
+   IF LEN(wszSql) = 0 THEN RETURN NULL
    DIM pProc AS PFNSQLITE3PREPARE16V2PROC = _
    cast(PFNSQLITE3PREPARE16V2PROC, GetProcAddress(m_hLib, "sqlite3_prepare16_v2"))
    IF pProc = 0 THEN this.SetResult(GetLastError) : EXIT FUNCTION
@@ -1563,6 +1567,7 @@ END FUNCTION
 ' ===========================================================================================
 PRIVATE FUNCTION CSQLiteStmt.ColumnText (BYREF wszColName AS WSTRING) AS CWSTR
    FUNCTION = ""
+   IF LEN(wszColName) = 0 THEN EXIT FUNCTION
    DIM pProc AS PFNSQLITE3COLUMNTEXT16PROC = _
    cast(PFNSQLITE3COLUMNTEXT16PROC, GetProcAddress(m_hLib, "sqlite3_column_text16"))
    IF pProc = 0 THEN this.SetResult(GetLastError) : EXIT FUNCTION
@@ -1768,13 +1773,16 @@ END FUNCTION
 ' ===========================================================================================
 
 ' ===========================================================================================
-' Returns the name of the specified SQL parameter in the prepared statement.
+' Returns the index of an SQL parameter given its name. The index value returned is suitable
+' for use as the second parameter to the Bind_* methods. A zero is returned if no matching
+' parameter is found.
 ' ===========================================================================================
 PRIVATE FUNCTION CSQLiteStmt.BindParameterIndex (BYREF szName AS ZSTRING) AS LONG
+   IF LEN(szName) = 0 THEN RETURN 0
    DIM pProc AS PFNSQLITE3BINDPARAMETERINDEXPROC = _
    cast(PFNSQLITE3BINDPARAMETERINDEXPROC, GetProcAddress(m_hLib, "sqlite3_bind_parameter_index"))
    IF pProc = 0 THEN this.SetResult(GetLastError) : EXIT FUNCTION
-   FUNCTION = pProc(m_hStmt, @szName)
+   RETURN pProc(m_hStmt, @szName)
 END FUNCTION
 ' ===========================================================================================
 
@@ -1807,6 +1815,7 @@ END FUNCTION
 ' ===========================================================================================
 PRIVATE FUNCTION CSQLiteStmt.ColumnDatabaseName (BYREF wszColName AS WSTRING) AS CWSTR
    FUNCTION = ""
+   IF LEN(wszColName) = 0 THEN EXIT FUNCTION
    DIM pProc AS PFNSQLITE3COLUMNDATABASENAMEPROC = _
    cast(PFNSQLITE3COLUMNDATABASENAMEPROC, GetProcAddress(m_hLib, "sqlite3_column_database_name16"))
    IF pProc = 0 THEN this.SetResult(GetLastError) : EXIT FUNCTION

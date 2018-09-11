@@ -1,8 +1,8 @@
-# CAdoStream Class
+# CADOStream Class
 
 Represents a stream of binary data or text.
 
-**Include file**: CAdoStream.inc (include CADODB.inc)
+**Include file**: CADOStream.inc (include CADODB.inc)
 
 #### Remarks
 
@@ -268,7 +268,7 @@ PROPERTY SET Mode (BYVAL nMode AS ConnectModeEnum)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nMode* | LONG. A **ConnectModeEnum** value. The default value for a Stream associated with an underlying source (opened with a URL as the source, or as the default **Stream** of a **Record**) is **adModeRead**. The default value for a **Stream** not associated with an underlying source (instantiated in memory) is **adModeUnknown**. |
+| *nMode* | LONG. A **ConnectModeEnum** value. The default value for a **Stream** associated with an underlying source (opened with a URL as the source, or as the default **Stream** of a **Record**) is **adModeRead**. The default value for a **Stream** not associated with an underlying source (instantiated in memory) is **adModeUnknown**. |
 
 #### Return value
 
@@ -284,7 +284,7 @@ This property is read/write while the object is closed and read-only while the o
 
 #### Remote Data Service Usage
 
-When used on a client-side Connection object, the **Mode** property can only be set to **adModeUnknown**.
+When used on a client-side **Connection** object, the **Mode** property can only be set to **adModeUnknown**.
 
 # <a name="Open"></a>Open
 
@@ -299,7 +299,7 @@ FUNCTION Open (BYREF cvSource AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARA
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *cvSource* | Optional. A **Variant** value that specifies the source of data for the **Stream**. *cvSource* may contain an absolute URL string that points to an existing node in a well-known tree structure, like an e-mail or file system. A URL should be specified using the URL keyword ("URL=scheme://server/folder"). Alternately, *cvSource* may contain a reference to an already open **Record** object, which opens the default stream associated with the Record. If *cvSource* is not specified, a **Stream** is instantiated and opened, associated with no underlying source by default. |
+| *cvSource* | Optional. A **Variant** value that specifies the source of data for the **Stream**. *cvSource* may contain an absolute URL string that points to an existing node in a well-known tree structure, like an e-mail or file system. A URL should be specified using the URL keyword ("URL=scheme://server/folder"). Alternately, *cvSource* may contain a reference to an already open **Record** object, which opens the default stream associated with the **Record**. If *cvSource* is not specified, a **Stream** is instantiated and opened, associated with no underlying source by default. |
 | *nMode* | Optional. A **ConnectModeEnum** value that specifies the access mode for the resultant **Stream** (for example, read/write or read-only). Default value is **adModeUnknown**. See the **Mode** property for more information about access modes. If **Mode** is not specified, it is inherited by the source object. For example, if the source **Record** is opened in read-only mode, the **Stream** will also be opened in read-only mode by default. |
 | *Options* | Optional. A **StreamOpenOptionsEnum** value. Default value is **adOpenStreamUnspecified**. |
 | *cbsUserName* | Optional. A **BSTR** value that contains the user identification that, if needed, accesses the **Stream** object. |
@@ -315,7 +315,7 @@ When a **Record** object is passed in as the source parameter, the *UserID* and 
 
 An **Open** **Options** value of **adOpenStreamFromRecord** identifies the contents of the **Source** parameter to be an already open **Record** object. The default behavior is to treat **Source** as a URL that points directly to a node in a tree structure, such as a file. The default stream associated with that node is opened.
 
-While the **Stream** is not open, it is possible to read all the read-only properties of the **Stream**. If a **Stream** is opened asynchronously, all subsequent operations (other than checking the State and other read-only properties) are blocked until the **Open** operation is completed.
+While the **Stream** is not open, it is possible to read all the read-only properties of the **Stream**. If a **Stream** is opened asynchronously, all subsequent operations (other than checking the **State** and other read-only properties) are blocked until the **Open** operation is completed.
 
 In addition to the options discussed above, by not specifying **Source**, you can simply instantiate a **Stream** object in memory without associating it with an underlying source. You can dynamically add data to the stream simply by writing binary or text data to the **Stream** with **Write** or **WriteText**, or by loading data from a file with **LoadFromFile**.
 
@@ -378,7 +378,7 @@ The current position can be moved to a point after the end of the stream. If you
 
 Negative values cannot be used to change the current position in a **Stream**. Only positive numbers can be used for **Position**.
 
-For read-only **Stream** objects, ADO will not return an error if **Position** is set to a value greater than the **Size** of the **Stream**. This does not change the size of the **Stream**, or alter the Stream contents in any way. However, doing this should be avoided because it results in a meaningless **Position** value.
+For read-only **Stream** objects, ADO will not return an error if **Position** is set to a value greater than the **Size** of the **Stream**. This does not change the size of the **Stream**, or alter the **Stream** contents in any way. However, doing this should be avoided because it results in a meaningless **Position** value.
 
 # <a name="Read"></a>Read
 
