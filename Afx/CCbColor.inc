@@ -208,7 +208,7 @@ PRIVATE CONSTRUCTOR CCbColor (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PT
       m_hCtl = pWindow->AddControl("COMBOBOX", pWindow->hWindow, cID, "", _
       x, y, nWidth, nHeight, WS_CHILD OR WS_VISIBLE OR CBS_OWNERDRAWFIXED OR CBS_HASSTRINGS OR _
       CBS_DROPDOWNLIST OR WS_TABSTOP OR CBS_DISABLENOSCROLL OR WS_VSCROLL, WS_EX_CLIENTEDGE, _
-      NULL, CAST(WNDPROC, @CCbColorProc))
+      NULL, CAST(SUBCLASSPROC, @CCbColorProc))
       m_ratio = pWindow->rxRatio
    END IF
    IF m_hCtl THEN
