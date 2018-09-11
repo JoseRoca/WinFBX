@@ -188,7 +188,7 @@ PRIVATE FUNCTION AfxStrRemove OVERLOAD (BYREF wszMainStr AS CONST WSTRING, BYREF
    DO
       DIM nPos AS LONG = INSTR(**cws, wszMatchStr)
       IF nPos = 0 THEN EXIT DO
-      cws.DelChars nPos, nLen
+      IF cws.DelChars(nPos, nLen) = FALSE THEN EXIT DO
    LOOP
    RETURN cws
 END FUNCTION
@@ -204,7 +204,7 @@ PRIVATE FUNCTION AfxStrRemoveI (BYREF wszMainStr AS CONST WSTRING, BYREF wszMatc
    DO
       DIM nPos AS LONG = INSTR(UCASE(**cwsMainStr), **cwsMatchStr)
       IF nPos = 0 THEN EXIT DO
-      cwsMainStr.DelChars nPos, nLen
+      IF cwsMainStr.DelChars(nPos, nLen) = FALSE THEN EXIT DO
    LOOP
    RETURN cwsMainStr
 END FUNCTION

@@ -837,7 +837,8 @@ PRIVATE FUNCTION CWstr.DelChars (BYVAL nIndex AS UINT, BYVAL nCount AS UINT) AS 
    DIM numChars AS UINT = m_BufferLen \ 2
    IF nCount > numChars - nIndex + 1 THEN nCount = numChars - nIndex + 1
    DIM nOffset AS UINT = (nIndex - 1 + nCount) * 2
-   memcpy(m_pBuffer + (nOffset - nCount * 2), m_pBuffer + nOffset, m_BufferLen - (nCount * 2))
+'   memcpy(m_pBuffer + (nOffset - nCount * 2), m_pBuffer + nOffset, m_BufferLen - (nCount * 2))
+   memcpy(m_pBuffer + (nOffset - nCount * 2), m_pBuffer + nOffset, m_BufferLen - nOffset)
    m_BufferLen -= (nCount * 2)
    ' Mark the end of the string with a double null
    m_pBuffer[m_BufferLen] = 0
