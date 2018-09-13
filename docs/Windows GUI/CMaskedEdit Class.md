@@ -243,8 +243,8 @@ SUB EnableMask (BYVAL lpszMask AS WSTRING PTR, BYVAL lpszInputTemplate AS WSTRIN
 | Parameter  | Description |
 | ---------- | ----------- |
 | *lpszMask* | A mask string that specifies the type of character that can appear at each position in the user input. The length of the *lpszInputTemplate* and *lpszMask* parameter strings must be the same. See the Remarks section for more detail about mask characters. |
-| *lpszInputTemplate* | A mask template string that specifies the literal characters that can appear at each position in the user input. Use the underscore character ('\_') as a character placeholder. The length of the *lpszInputTemplate* and *lpszMask* parameter strings must be the same.  |
-| *chMaskInputTemplate* | A default character that the framework substitutes for each invalid character in the user input. The default value of this parameter is underscore ('\_'). |
+| *lpszInputTemplate* | A mask template string that specifies the literal characters that can appear at each position in the user input. Use the underscore character ("\_") as a character placeholder. The length of the *lpszInputTemplate* and *lpszMask* parameter strings must be the same.  |
+| *chMaskInputTemplate* | A default character that the framework substitutes for each invalid character in the user input. The default value of this parameter is underscore ("\_"). |
 | *lpszValid* | A string that contains a set of valid characters. NULL indicates that all characters are valid. The default value of this parameter is NULL.  |
   
 ### Remarks  
