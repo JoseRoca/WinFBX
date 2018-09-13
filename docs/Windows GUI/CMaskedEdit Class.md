@@ -20,7 +20,7 @@ The `CMaskedEdit` class supports a masked edit control, which validates user inp
 |[EnableSetMaskedCharsOnly](#enablesetmaskedcharsonly)|Specifies whether the text is validated against only masked characters, or against the whole mask.|  
 |[GetWindowText](#getwindowtext)|Retrieves validated text from the masked edit control.|  
 |[hWindow](#hWindow)|Gets the control window handle. |
-|[SetPos](#setpos)|Gets the control window handle. |
+|[SetPos](#setpos)|Sets the position of the cursor.|
 |[SetValidChars](#setvalidchars)|Specifies a string of valid characters that the user can enter.|  
 |[SetWindowText](#setwindowtext)|Displays a prompt in the masked edit control.|  
 
