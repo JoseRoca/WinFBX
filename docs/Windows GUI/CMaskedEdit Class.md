@@ -324,11 +324,11 @@ SUB SetValidChars (BYVAL lpszValid AS WSTRING PTR)
  The following code example accepts only hexadecimal numbers.  
  
 ```
-m_wndMaskEdit.EnableMask(" AAAA"), _   ' // Mask string
+pMskEd.EnableMask("  AAAA"), _   ' // Mask string
 ("0x____"), _   ' // Template string
-('_')   ' // The default character that replaces the backspace character
-m_wndMaskEdit.SetValidChars("1234567890ABCDEFabcdef")   ' // Valid string characters
-m_wndMaskEdit.SetWindowText("0x01AF")
+("_")   ' // The default character that replaces the backspace character
+pMskEd.SetValidChars("1234567890ABCDEFabcdef")   ' // Valid string characters
+pMskEd.SetWindowText("0x01AF")
 ```
   
 ##  <a name="setwindowtext"></a>SetWindowText  
