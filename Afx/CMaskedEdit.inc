@@ -1158,7 +1158,7 @@ PRIVATE FUNCTION CMaskedEdit.SetWindowText (BYREF cwsText AS CWSTR) AS BOOLEAN
    FUNCTION = AfxSetWindowText(m_hCtl, **cwsText)
    IF LEN(m_strMask) <> 0 AND LEN(m_strInputTemplate) <> 0 THEN
       DIM nPos AS LONG = Edit_GetSelStart(m_hCtl)
-      IF nPos < 1 THEN nPos = 1
+'      IF nPos < 1 THEN nPos = 1
       this.SetPos nPos
    END IF
 END FUNCTION
