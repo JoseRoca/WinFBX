@@ -2493,10 +2493,10 @@ FUNCTION AddControl (BYREF wszClassName AS WSTRING, BYVAL hParent AS HWND = NULL
 | *wszTitle* | The window name. If the window style specifies a title bar, the window title is displayed in the title bar. When creating controls, such as buttons, check boxes, and static controls, use wszTitle to specify the text of the control. When creating a static control with the SS_ICON style, use wszTitle to specify the icon name or identifier. To specify an identifier, use the syntax *"#num"*. |
 | *x* | The x-coordinate of the upper-left corner of the window relative to the upper-left corner of the parent window's client area. |
 | *y* | The initial y-coordinate of the upper-left corner of the window relative to the upper-left corner of the parent window's client area. |
-| *nWidth* | The width of the window. |
-| *nHeight* | The height of the window. |
-| *dwStyle* | The style of the window being created. |
-| *dwExStyle* | The extended window style of the control being created. |
+| *nWidth* | The width of the control. |
+| *nHeight* | The height of the control. |
+| *dwStyle* | The window styles of the control being created. |
+| *dwExStyle* | The extended window styles of the control being created. |
 | *lpParam* | Optional. Pointer to a value to be passed to the window through the CREATESTRUCT structure (lpCreateParams member) pointed to by the lParam param of the WM_CREATE message. This message is sent to the created window by this function before it returns. |
 | *pWndProc* | Optional. Address of the window callback procedure. |
 | *uidSubclass* | Optional. The subclass ID. |
