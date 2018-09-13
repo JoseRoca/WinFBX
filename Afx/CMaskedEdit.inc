@@ -125,7 +125,8 @@ FUNCTION CMaskedEdit.CMaskedEditProc ( _
          DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
          IF pthis THEN
             IF LEN(pthis->m_strMask) <> 0 AND LEN(pthis->m_strInputTemplate) <> 0 THEN
-               'pthis->OnClear(wParam, HIWORD(lParam), LOWORD(lParam))
+               pthis->SetWindowText("")
+               pthis->SetPos
                EXIT FUNCTION
             END IF
          END IF
@@ -610,46 +611,20 @@ PRIVATE SUB CMaskedEdit.OnCharPrintchar(BYVAL nChar AS UINT, BYVAL nRepCnt AS UI
       END IF
       ' // Replace chars in Editbox and m_str
       IF LEN(m_strInputTemplate) THEN   ' // Use m_strInputTemplate
-         ' // Calc the number of literals with the same mask char
-         DIM nSameMaskCharsNum AS LONG = 1
-         DIM nIndex AS LONG = nStartPos   ' // an index of the first selected char
-         DIM chMaskChar AS USHORT = m_strMask[nIndex]
-         DIM bScanMore AS BOOLEAN = TRUE
-         WHILE bScanMore = TRUE AND nIndex + nSameMaskCharsNum < nGroupEnd
-            IF m_strMask[nIndex + nSameMaskCharsNum] = chMaskChar THEN
-               nSameMaskCharsNum += 1
-            ELSE
-               bScanMore = FALSE
-            END IF
-         WEND
-         ' // Make sure the selection has the same mask char
-         IF nEndPos - nStartPos > nSameMaskCharsNum THEN
-            MessageBeep(CAST(UINT, -1))
-            Edit_SetSel(m_hCtl, nIndex, nIndex + nSameMaskCharsNum)
-            RETURN
-         END IF
-         ' // Form the shifted replace string
-         IF nIndex < nGroupStart THEN RETURN
-         IF nIndex + nSameMaskCharsNum > nGroupEnd THEN RETURN
-         DIM cwsReplace AS CWSTR = MID(**m_str, nIndex, nSameMaskCharsNum)
-         IF nSameMaskCharsNum > 0 THEN
-            IF nStartPos > LEN(m_strInputTemplate) THEN RETURN
-            IF nEndPos > LEN(m_strInputTemplate) THEN RETURN
-            DIM nRange AS LONG = nEndPos - nStartPos
-            IF nRange < 1 THEN RETURN
-            cwsReplace = RIGHT(**cwsReplace, nSameMaskCharsNum - nRange + 1)
-            cwsReplace += WSTRING(nRange - 1, m_chMaskInputTemplate)
-            IF LEN(cwsReplace) = 0 THEN RETURN
-            MID(**cwsReplace, 1, 1) = WCHR(chChar)
-         END IF
-         ' // Replace the content with the shifted string
-         Edit_SetSel(m_hCtl, nIndex, nIndex+nSameMaskCharsNum)
-         Edit_ReplaceSel(m_hCtl, cwsReplace.m_pBuffer)
-         Edit_SetSel(m_hCtl, nIndex, nIndex)
-         FOR i AS LONG = 0 TO LEN(cwsReplace)
-            MID(**m_str, nIndex + i, 1) = WCHR(cwsReplace[i])
+         IF nStartPos > LEN(m_strInputTemplate) THEN RETURN
+         IF nEndPos > LEN(m_strInputTemplate) THEN RETURN
+         DIM nRange AS LONG = nEndPos - nStartPos
+         IF nRange < 1 THEN RETURN
+         DIM cwsReplace AS CWSTR
+         cwsReplace = WSTRING(nRange, m_chMaskInputTemplate)
+         MID(**cwsReplace, 1, 1) = WCHR(chChar)
+         Edit_SetSel(m_hCtl, nStartPos, nStartPos + nRange)
+         Edit_ReplaceSel(m_hCtl, cwsReplace)
+         Edit_SetSel(m_hCtl, nStartPos, nStartPos)
+         FOR i AS LONG = 0 TO LEN(cwsReplace) - 1
+            MID(**m_str, nStartPos + i + 1, 1) = WCHR(cwsReplace[i])
          NEXT
-         Edit_SetSel(m_hCtl, nStartPos+1, nStartPos+1)
+         Edit_SetSel(m_hCtl, nStartPos + 1, nStartPos + 1)
       ELSE
          ' // Don't use m_chMaskInputTemplate
          DIM nBeginOld AS LONG, nEndOld AS LONG
@@ -834,6 +809,7 @@ PRIVATE SUB CMaskedEdit.OnKeyDown(BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT, BY
          END IF
 
       CASE VK_BACK
+         IF GetKeyState(VK_SHIFT) AND &h80 THEN RETURN
          ' // Special processing
          this.OnCharBackspace(nChar, nRepCnt, nFlags)
          RETURN
@@ -933,7 +909,7 @@ PRIVATE SUB CMaskedEdit.OnCharBackspace (BYVAL nChar AS UINT, BYVAL nRepCnt AS U
          Edit_SetSel(m_hCtl, nIndex, nIndex + nSameMaskCharsNum)
          Edit_ReplaceSel(m_hCtl, cwsReplace)
          Edit_SetSel(m_hCtl, nIndex, nIndex)
-         FOR i AS LONG = 0 TO LEN(cwsReplace)
+         FOR i AS LONG = 0 TO LEN(cwsReplace) - 1
             MID(**m_str, nIndex + i + 1) = WCHR(cwsReplace[i])
          NEXT
       ELSE   ' // Don't use m_chMaskInputTemplate - delete symbol
@@ -942,55 +918,29 @@ PRIVATE SUB CMaskedEdit.OnCharBackspace (BYVAL nChar AS UINT, BYVAL nRepCnt AS U
          nEndOld = Edit_GetSelEnd(m_hCtl)
          this.DoUpdate(TRUE, nBeginOld, nEndOld)
       END IF
-'   ELSE   ' // Have one or more chars selected
-'      IF LEN(m_strInputTemplate) THEN   ' // Use m_strInputTemplate
-'         ' // Calc the number of literals with the same mask char
-'         IF nStartPos < 1 THEN RETURN
-'         IF nEndPos < 1 THEN RETURN
-'         IF nStartPos > LEN(m_strInputTemplate) THEN RETURN
-'         DIM nSameMaskCharsNum AS LONG = 1
-'         DIM nIndex AS LONG = nStartPos   ' // an index of the first selected char
-'         DIM chMaskChar AS USHORT = m_strMask[nIndex]
-'         DIM bScanMore AS BOOLEAN = TRUE
-'         WHILE bScanMore = TRUE AND nIndex + nSameMaskCharsNum < nGroupEnd
-'            IF m_strMask[nIndex + nSameMaskCharsNum] = chMaskChar THEN
-'               nSameMaskCharsNum += 1
-'            ELSE
-'               bScanMore = FALSE
-'            END IF
-'         WEND
-'         ' // Make sure the selection has the same mask char
-'         IF nEndPos - nStartPos > nSameMaskCharsNum THEN
-'            MessageBeep(CAST(UINT, -1))
-'            Edit_SetSel(m_hCtl, nIndex, nIndex+nSameMaskCharsNum)
-'            RETURN
-'         END IF
-'         ' // Form the shifted replace string
-'         IF nIndex < nGroupStart THEN RETURN
-'         IF nIndex + nSameMaskCharsNum > nGroupEnd THEN RETURN
-'         DIM cwsReplace AS CWSTR = MID(**m_str, nIndex + 1, nSameMaskCharsNum)
-'         IF nSameMaskCharsNum > 0 THEN
-'            IF nStartPos > LEN(m_strInputTemplate) THEN RETURN
-'            IF nEndPos > LEN(m_strInputTemplate) THEN RETURN
-'            DIM nRange AS LONG = nEndPos - nStartPos
-'            IF nRange < 0 THEN RETURN
-'            cwsReplace = RIGHT(**cwsReplace, nSameMaskCharsNum - nRange)
-'            cwsReplace += WSTRING(m_chMaskInputTemplate, nRange)
-'         END IF
-'         ' // Replace the content with the shifted string
-'         Edit_SetSel(m_hCtl, nIndex, nIndex + nSameMaskCharsNum)
-'         Edit_ReplaceSel(m_hCtl, cwsReplace)
-'         Edit_SetSel(m_hCtl, nIndex, nIndex)
-'         FOR i AS LONG = 0 TO LEN(cwsReplace)
-'            MID(**m_str, nIndex + i + 1) = WCHR(cwsReplace[i])
-'         NEXT
-'      ELSE
-'         ' // Don't use m_chMaskInputTemplate - delete symbols
-'         DIM nBeginOld AS LONG, nEndOld AS LONG
-'         nBeginOld = Edit_GetSelStart(m_hCtl)
-'         nEndOld = Edit_GetSelEnd(m_hCtl)
-'         this. DoUpdate(TRUE, nBeginOld, nEndOld)
-'      END IF
+   ELSE   ' // Have one or more chars selected
+      ' // Replace chars in Editbox and m_str
+      IF LEN(m_strInputTemplate) THEN   ' // Use m_strInputTemplate
+         IF nStartPos > LEN(m_strInputTemplate) THEN RETURN
+         IF nEndPos > LEN(m_strInputTemplate) THEN RETURN
+         DIM nRange AS LONG = nEndPos - nStartPos
+         IF nRange < 1 THEN RETURN
+         DIM cwsReplace AS CWSTR
+         cwsReplace = WSTRING(nRange, m_chMaskInputTemplate)
+         Edit_SetSel(m_hCtl, nStartPos, nStartPos + nRange)
+         Edit_ReplaceSel(m_hCtl, cwsReplace)
+         Edit_SetSel(m_hCtl, nStartPos, nStartPos)
+         FOR i AS LONG = 0 TO LEN(cwsReplace) - 1
+            MID(**m_str, nStartPos + i + 1, 1) = WCHR(cwsReplace[i])
+         NEXT
+         Edit_SetSel(m_hCtl, nStartPos, nStartPos)
+      ELSE
+         ' // Don't use m_chMaskInputTemplate - delete symbols
+         DIM nBeginOld AS LONG, nEndOld AS LONG
+         nBeginOld = Edit_GetSelStart(m_hCtl)
+         nEndOld = Edit_GetSelEnd(m_hCtl)
+         this.DoUpdate(TRUE, nBeginOld, nEndOld)
+      END IF
    END IF
 END SUB
 ' ========================================================================================
@@ -1066,7 +1016,7 @@ PRIVATE SUB CMaskedEdit.OnCharDelete (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT
          Edit_SetSel(m_hCtl, nIndex, nIndex + nSameMaskCharsNum)
          Edit_ReplaceSel(m_hCtl, cwsReplace)
          Edit_SetSel(m_hCtl, nIndex, nIndex)
-         FOR i AS LONG = 0 TO LEN(cwsReplace)
+         FOR i AS LONG = 0 TO LEN(cwsReplace) - 1
             MID(**m_str, nIndex + i + 1) = WCHR(cwsReplace[i])
          NEXT
       ELSE
@@ -1075,55 +1025,29 @@ PRIVATE SUB CMaskedEdit.OnCharDelete (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT
          nEndOld = Edit_GetSelEnd(m_hCtl)
          this.DoUpdate(TRUE, nBeginOld, nEndOld)
       END IF
-'   ELSE   ' // Have one or more chars selected
-'      IF LEN(m_strInputTemplate) THEN   ' // Use m_strInputTemplate
-'         ' // Calc the number of literals with the same mask char
-'         IF nStartPos < 1 THEN RETURN
-'         IF nEndPos < 1 THEN RETURN
-'         IF nStartPos > LEN(m_strInputTemplate) THEN RETURN
-'         DIM nSameMaskCharsNum AS LONG = 1
-'         DIM nIndex AS LONG = nStartPos   ' // an index of the first selected char
-'         DIM chMaskChar AS USHORT = m_strMask[nIndex]
-'         DIM bScanMore AS BOOLEAN = TRUE
-'         WHILE bScanMore = TRUE AND nIndex + nSameMaskCharsNum < nGroupEnd
-'            IF m_strMask[nIndex + nSameMaskCharsNum] = chMaskChar THEN
-'               nSameMaskCharsNum += 1
-'            ELSE
-'               bScanMore = FALSE
-'            END IF
-'         WEND
-'         ' // Make sure the selection has the same mask char
-'         IF nEndPos - nStartPos > nSameMaskCharsNum THEN
-'            MessageBeep(CAST(UINT, -1))
-'            Edit_SetSel(m_hCtl, nIndex, nIndex+nSameMaskCharsNum)
-'            RETURN
-'         END IF
-'         ' // Form the shifted replace string
-'         IF nIndex < nGroupStart THEN RETURN
-'         IF nIndex + nSameMaskCharsNum > nGroupEnd THEN RETURN
-'         DIM cwsReplace AS CWSTR = MID(**m_str, nIndex + 1, nSameMaskCharsNum)
-'         IF nSameMaskCharsNum > 0 THEN
-'            IF nStartPos > LEN(m_strInputTemplate) THEN RETURN
-'            IF nEndPos > LEN(m_strInputTemplate) THEN RETURN
-'            DIM nRange AS LONG = nEndPos - nStartPos
-'            IF nRange < 0 THEN RETURN
-'            cwsReplace = RIGHT(**cwsReplace, nSameMaskCharsNum - nRange)
-'            cwsReplace += WSTRING(m_chMaskInputTemplate, nRange)
-'         END IF
-'         ' // Replace the content with the shifted string
-'         Edit_SetSel(m_hCtl, nIndex, nIndex + nSameMaskCharsNum)
-'         Edit_ReplaceSel(m_hCtl, cwsReplace)
-'         Edit_SetSel(m_hCtl, nIndex, nIndex)
-'         FOR i AS LONG = 0 TO LEN(cwsReplace)
-'            MID(**m_str, nIndex + i + 1) = WCHR(cwsReplace[i])
-'         NEXT
-'      ELSE
-'         ' // Don't use m_chMaskInputTemplate - delete symbols
-'         DIM nBeginOld AS LONG, nEndOld AS LONG
-'         nBeginOld = Edit_GetSelStart(m_hCtl)
-'         nEndOld = Edit_GetSelEnd(m_hCtl)
-'         this. DoUpdate(TRUE, nBeginOld, nEndOld)
-'      END IF
+   ELSE   ' // Have one or more chars selected
+      ' // Replace chars in Editbox and m_str
+      IF LEN(m_strInputTemplate) THEN   ' // Use m_strInputTemplate
+         IF nStartPos > LEN(m_strInputTemplate) THEN RETURN
+         IF nEndPos > LEN(m_strInputTemplate) THEN RETURN
+         DIM nRange AS LONG = nEndPos - nStartPos
+         IF nRange < 1 THEN RETURN
+         DIM cwsReplace AS CWSTR
+         cwsReplace = WSTRING(nRange, m_chMaskInputTemplate)
+         Edit_SetSel(m_hCtl, nStartPos, nStartPos + nRange)
+         Edit_ReplaceSel(m_hCtl, cwsReplace)
+         Edit_SetSel(m_hCtl, nStartPos, nStartPos)
+         FOR i AS LONG = 0 TO LEN(cwsReplace) - 1
+            MID(**m_str, nStartPos + i + 1, 1) = WCHR(cwsReplace[i])
+         NEXT
+         Edit_SetSel(m_hCtl, nStartPos, nStartPos)
+      ELSE
+         ' // Don't use m_chMaskInputTemplate - delete symbols
+         DIM nBeginOld AS LONG, nEndOld AS LONG
+         nBeginOld = Edit_GetSelStart(m_hCtl)
+         nEndOld = Edit_GetSelEnd(m_hCtl)
+         this. DoUpdate(TRUE, nBeginOld, nEndOld)
+      END IF
    END IF
 END SUB
 ' ========================================================================================
@@ -1178,7 +1102,9 @@ END FUNCTION
 ' Gets the length of the text of the control
 ' ========================================================================================
 PRIVATE FUNCTION CMaskedEdit.GetWindowTextLength () AS LONG
-   RETURN LEN(AfxGetWindowText(m_hCtl))
+   DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
+   IF m_bGetMaskedCharsOnly THEN cws = AfxStrRemoveAny(cws, m_strInputTemplate)
+   RETURN LEN(cws)
 END FUNCTION
 ' ========================================================================================
 
