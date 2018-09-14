@@ -38,6 +38,7 @@ TYPE CMaskedEdit
       m_bMaskKeyInProgress AS BOOLEAN
       m_bPasteProcessing AS BOOLEAN
       m_bSetTextProcessing AS BOOLEAN
+      m_strUndo AS CWSTR               ' // Backup string for undo
 
    Public:
       DECLARE CONSTRUCTOR
@@ -96,49 +97,87 @@ FUNCTION CMaskedEdit.CMaskedEditProc ( _
 
       CASE WM_KEYDOWN
          DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
-         IF pthis THEN
-            IF LEN(pthis->m_strMask) <> 0 AND LEN(pthis->m_strInputTemplate) <> 0 THEN
-               pthis->OnKeyDown(wParam, HIWORD(lParam), LOWORD(lParam))
-               EXIT FUNCTION
-            END IF
+         IF pthis = NULL THEN EXIT FUNCTION
+         IF LEN(pthis->m_strMask) <> 0 AND LEN(pthis->m_strInputTemplate) <> 0 THEN
+            pthis->OnKeyDown(wParam, HIWORD(lParam), LOWORD(lParam))
+            EXIT FUNCTION
          END IF
 
       CASE WM_CHAR
+         ' // Handle Ctr+V - Decimal 22, Hex 16 - by sending a WM_PASTE message
+         IF wParam = 22 THEN
+            SendMessageW hwnd, WM_PASTE, 0, 0
+            EXIT FUNCTION
+         END IF
+         ' // Handle Ctrl+C - Decimal 3, Hex 3 - by sending a WM_COPY message
+         IF wParam = 3 THEN
+            SendMessageW hwnd, WM_COPY, 0, 0
+            EXIT FUNCTION
+         END IF
+         ' // Handle Ctrl+X - Decimal 24, Hex 18 - by sending a WM_CUT message
+         IF wParam = 24 THEN
+            SendMessageW hwnd, WM_CUT, 0, 0
+            EXIT FUNCTION
+         END IF
+         IF wParam = 26 THEN
+            DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
+            IF pthis = NULL THEN EXIT FUNCTION
+            DIM nPos AS LONG = Edit_GetSelStart(pthis->hWindow)
+            IF LEN(pthis->m_strUndo) THEN pthis->SetWindowText(pthis->m_strUndo)
+            Edit_SetSel(pthis->hWindow, nPos, nPos)
+            EXIT FUNCTION
+         END IF
          DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
-         IF pthis THEN
-            IF LEN(pthis->m_strMask) <> 0 AND LEN(pthis->m_strInputTemplate) <> 0 THEN
-               pthis->OnChar(wParam, HIWORD(lParam), LOWORD(lParam))
-               EXIT FUNCTION
-            END IF
+         IF pthis = NULL THEN EXIT FUNCTION
+         DIM nOld AS BOOLEAN = pthis->m_bGetMaskedCharsOnly
+         pthis->m_bGetMaskedCharsOnly = FALSE
+         pthis->m_strUndo = pthis->GetWindowText
+         pthis->m_bGetMaskedCharsOnly = nOld
+         IF LEN(pthis->m_strMask) <> 0 AND LEN(pthis->m_strInputTemplate) <> 0 THEN
+            pthis->OnChar(wParam, HIWORD(lParam), LOWORD(lParam))
+            EXIT FUNCTION
          END IF
 
-      CASE WM_CUT
+      CASE WM_CUT, WM_CLEAR
          DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
-         IF pthis THEN
-            IF LEN(pthis->m_strMask) <> 0 AND LEN(pthis->m_strInputTemplate) <> 0 THEN
-               'pthis->OnCut(wParam, HIWORD(lParam), LOWORD(lParam))
-               EXIT FUNCTION
+         IF pthis = NULL THEN EXIT FUNCTION
+         DIM nStart AS LONG = Edit_GetSelStart(pthis->hWindow)
+         DIM nEnd AS LONG = Edit_GetSelEnd(pthis->hWindow)
+         DIM nOld AS BOOLEAN = pthis->m_bGetMaskedCharsOnly
+         pthis->m_bGetMaskedCharsOnly = FALSE
+         DIM cwsText AS CWSTR = pthis->GetWindowText
+         pthis->m_bGetMaskedCharsOnly = nOld
+         IF LEN(cwsText) = 0 THEN EXIT FUNCTION
+         cwsText = MID(**cwsText, nStart + 1, nEnd - nStart)
+         IF uMsg = WM_CUT THEN AfxSetClipboardText(cwsText)
+         pthis->OnCharDelete(ASC(" "), 0, 0)
+         nOld = pthis->m_bGetMaskedCharsOnly
+         pthis->m_bGetMaskedCharsOnly = FALSE
+         cwsText = pthis->GetWindowText
+         pthis->m_bGetMaskedCharsOnly = nOld
+         IF LEN(pthis->m_strInputTemplate) = 0 THEN EXIT FUNCTION
+         pthis->SetWindowText(pthis->m_strInputTemplate)
+         FOR i AS LONG = 1 TO LEN(cwsText)
+            Edit_SetSel(pthis->m_hCtl, i - 1, i - 1)
+            IF MID(cwsText, i, 1) <> MID(pthis->m_strInputTemplate, i, 1) THEN
+               IF ASC(MID(cwsText, i, 1)) <> pthis->m_chMaskInputTemplate THEN
+                  pthis->OnCharPrintchar(ASC(MID(**cwsText, i, 1)), 0, 0)
+               END IF
             END IF
-         END IF
-
-      CASE WM_CLEAR
-         DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
-         IF pthis THEN
-            IF LEN(pthis->m_strMask) <> 0 AND LEN(pthis->m_strInputTemplate) <> 0 THEN
-               pthis->SetWindowText("")
-               pthis->SetPos
-               EXIT FUNCTION
-            END IF
-         END IF
+         NEXT
+         Edit_SetSel(pthis->hWindow, nStart, nStart)
+         pthis->SetPos
+         EXIT FUNCTION
 
       CASE WM_PASTE
          DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
-         IF pthis THEN
-            IF LEN(pthis->m_strMask) <> 0 AND LEN(pthis->m_strInputTemplate) <> 0 THEN
-               'pthis->OnPaste(wParam, HIWORD(lParam), LOWORD(lParam))
-               EXIT FUNCTION
-            END IF
-         END IF
+         IF pthis = NULL THEN EXIT FUNCTION
+         DIM cwsText AS CWSTR = AfxGetClipboardText
+         IF LEN(cwsText) = 0 THEN EXIT FUNCTION
+         FOR i AS LONG = 1 TO LEN(cwsText)
+            pthis->OnCharPrintchar((ASC(MID(**cwsText, i, 1))), 0, 0)
+         NEXT
+         EXIT FUNCTION
 
       CASE WM_DESTROY
          ' // REQUIRED: Remove control subclassing
