@@ -51,7 +51,7 @@ DIM int96 AS CInt96 = "79228162514264337593543950335"
 
 # Error Handling
 
-The class uses the API function `SetLastError` to set error information. After calling a method of the class, you can check its success or failure calling the API function `GetLastError`. To get a localized description of the error, you can call a function such `AfxGetWinErrMsg, passing the error code returned by `GetLastError`:
+The class uses the API function `SetLastError` to set error information. After calling a method of the class, you can check its success or failure calling the API function `GetLastError`. To get a localized description of the error, you can call a function such `AfxGetWinErrMsg`, passing the error code returned by `GetLastError`:
 
 ```
 PRIVATE FUNCTION AfxGetWinErrMsg (BYVAL dwError AS DWORD) AS CWSTR
