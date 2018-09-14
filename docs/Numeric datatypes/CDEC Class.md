@@ -15,7 +15,7 @@ print "new scale: ", dec.m_dec.scale  ' --> scale = 4
 
 ### Constructors
 
-Create a new instance of the **CDEC** class and assigns the values passed to it.
+Creates a new instance of the **CDEC** class and assigns the values passed to it.
 
 ```
 CONSTRUCTOR CDec
