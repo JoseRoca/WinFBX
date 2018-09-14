@@ -72,8 +72,8 @@ DIM dec AS CDEC = CDEC("-79,228,162,514,264,337,593,543,950.335", 1033)
 | [Operator LET](#Operator1) | Assigns a value to a **CDEC** variable. |
 | [CAST operators](#Operator2) | Converts a **CDEC** into another data type. |
 | [Operator \*](#Operator3) | Returns the address of the underlying **CURRENCY** structure. |
-| [Comparison operators](#Operator4) | Compares currency numbers. |
-| [Math operators](#Operator5) | Add, subtract, multiply or divide currency numbers. |
+| [Comparison operators](#Operator4) | Compares decimal numbers. |
+| [Math operators](#Operator5) | Add, subtract, multiply or divide decimal numbers. |
 
 ### Methods
 
