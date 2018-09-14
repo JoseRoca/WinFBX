@@ -41,8 +41,6 @@ CONSTRUCTOR CDec (BYVAL varSrc AS VARIANT, BYVAL lcid AS LCID = 0)
 
 #### Remarks
 
-Remarks
-
 As the bigger numeric variable supported by FreeBasic is a long integer, if we want to set bigger values we need to use strings, e.g.
 
 ```
