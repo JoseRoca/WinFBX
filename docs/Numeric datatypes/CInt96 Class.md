@@ -1,6 +1,6 @@
 # CInt96 Class
 
-`CInt96` is a wrapper class for the DECIMAL data type. Holds signed 128-bit (16-byte) values representing 96-bit (12-byte) integer numbers. The Decimal data type provides the greatest number of significant digits for a number. It supports up to 29 significant digits and can represent values in excess of 7.9228 x 10^28. It is particularly suitable for calculations, such as financial, that require a large number of digits but cannot tolerate rounding errors. The largest possible value is +/-79,228,162,514,264,337,593,543,950,335.
+`CInt96` is a wrapper class for the DECIMAL data type. Holds signed 128-bit (16-byte) values representing 96-bit (12-byte) integer numbers. It supports up to 29 significant digits and can represent values in excess of 7.9228 x 10^28. It is particularly suitable for calculations, such as financial, that require a large number of digits but cannot tolerate rounding errors. The largest possible value is +/-79,228,162,514,264,337,593,543,950,335.
 
 ### Constructors
 
