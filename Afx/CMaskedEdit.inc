@@ -68,7 +68,9 @@ TYPE CMaskedEdit
       DECLARE SUB EnableSetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
       DECLARE FUNCTION SetWindowText (BYREF cwsText AS CWSTR) AS BOOLEAN
       DECLARE FUNCTION GetWindowText () AS CWSTR
+      DECLARE FUNCTION GetWindowText (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS CWSTR
       DECLARE FUNCTION GetWindowTextLength () AS LONG
+      DECLARE FUNCTION GetWindowTextLength (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS LONG
       DECLARE SUB SetPos (BYVAL nPos AS LONG = -1)
 
       DECLARE STATIC FUNCTION CMaskedEditProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM, BYVAL uIdSubclass AS UINT_PTR, BYVAL dwRefData AS DWORD_PTR) AS LRESULT
@@ -119,6 +121,7 @@ FUNCTION CMaskedEdit.CMaskedEditProc ( _
             SendMessageW hwnd, WM_CUT, 0, 0
             EXIT FUNCTION
          END IF
+         ' // Handle Ctrl+Z - Decimal 26, Hex 1A - Undo
          IF wParam = 26 THEN
             DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
             IF pthis = NULL THEN EXIT FUNCTION
@@ -129,10 +132,7 @@ FUNCTION CMaskedEdit.CMaskedEditProc ( _
          END IF
          DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
          IF pthis = NULL THEN EXIT FUNCTION
-         DIM nOld AS BOOLEAN = pthis->m_bGetMaskedCharsOnly
-         pthis->m_bGetMaskedCharsOnly = FALSE
-         pthis->m_strUndo = pthis->GetWindowText
-         pthis->m_bGetMaskedCharsOnly = nOld
+         pthis->m_strUndo = pthis->GetWindowText(FALSE)
          IF LEN(pthis->m_strMask) <> 0 AND LEN(pthis->m_strInputTemplate) <> 0 THEN
             pthis->OnChar(wParam, HIWORD(lParam), LOWORD(lParam))
             EXIT FUNCTION
@@ -141,20 +141,15 @@ FUNCTION CMaskedEdit.CMaskedEditProc ( _
       CASE WM_CUT, WM_CLEAR
          DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
          IF pthis = NULL THEN EXIT FUNCTION
+         pthis->m_strUndo = pthis->GetWindowText(FALSE)
          DIM nStart AS LONG = Edit_GetSelStart(pthis->hWindow)
          DIM nEnd AS LONG = Edit_GetSelEnd(pthis->hWindow)
-         DIM nOld AS BOOLEAN = pthis->m_bGetMaskedCharsOnly
-         pthis->m_bGetMaskedCharsOnly = FALSE
-         DIM cwsText AS CWSTR = pthis->GetWindowText
-         pthis->m_bGetMaskedCharsOnly = nOld
+         DIM cwsText AS CWSTR = pthis->GetWindowText(FALSE)
          IF LEN(cwsText) = 0 THEN EXIT FUNCTION
          cwsText = MID(**cwsText, nStart + 1, nEnd - nStart)
          IF uMsg = WM_CUT THEN AfxSetClipboardText(cwsText)
          pthis->OnCharDelete(ASC(" "), 0, 0)
-         nOld = pthis->m_bGetMaskedCharsOnly
-         pthis->m_bGetMaskedCharsOnly = FALSE
-         cwsText = pthis->GetWindowText
-         pthis->m_bGetMaskedCharsOnly = nOld
+         cwsText = pthis->GetWindowText(FALSE)
          IF LEN(pthis->m_strInputTemplate) = 0 THEN EXIT FUNCTION
          pthis->SetWindowText(pthis->m_strInputTemplate)
          FOR i AS LONG = 1 TO LEN(cwsText)
@@ -172,6 +167,7 @@ FUNCTION CMaskedEdit.CMaskedEditProc ( _
       CASE WM_PASTE
          DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
          IF pthis = NULL THEN EXIT FUNCTION
+         pthis->m_strUndo = pthis->GetWindowText(FALSE)
          DIM cwsText AS CWSTR = AfxGetClipboardText
          IF LEN(cwsText) = 0 THEN EXIT FUNCTION
          FOR i AS LONG = 1 TO LEN(cwsText)
@@ -1136,6 +1132,13 @@ PRIVATE FUNCTION CMaskedEdit.GetWindowText () AS CWSTR
    RETURN cws
 END FUNCTION
 ' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CMaskedEdit.GetWindowText (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS CWSTR
+   DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
+   IF bGetMaskedCharsOnly THEN cws = AfxStrRemoveAny(cws, m_strInputTemplate)
+   RETURN cws
+END FUNCTION
+' ========================================================================================
 
 ' ========================================================================================
 ' Gets the length of the text of the control
@@ -1143,6 +1146,13 @@ END FUNCTION
 PRIVATE FUNCTION CMaskedEdit.GetWindowTextLength () AS LONG
    DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
    IF m_bGetMaskedCharsOnly THEN cws = AfxStrRemoveAny(cws, m_strInputTemplate)
+   RETURN LEN(cws)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CMaskedEdit.GetWindowTextLength (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS LONG
+   DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
+   IF bGetMaskedCharsOnly THEN cws = AfxStrRemoveAny(cws, m_strInputTemplate)
    RETURN LEN(cws)
 END FUNCTION
 ' ========================================================================================
