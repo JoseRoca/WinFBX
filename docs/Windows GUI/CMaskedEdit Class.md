@@ -279,10 +279,23 @@ SUB EnableSetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
   
 ```  
 FUNCTION GetWindowText () AS CWSTR
+FUNCTION GetWindowText (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS CWSTR
 ```  
-  
+| Parameter  | Description |
+| ---------- | ----------- |
+| *bGetMaskedCharsOnly* | IF TRUE, returns the text with the input mask removed; if FALSE, returns the text with the mask, as displayed in the control. |
+
 ### Return Value  
- The text from the masked edit control.
+The text from the masked edit control.
+
+#### Example
+
+```
+pMskEd.EnableMask("       cc       ddddd-dddd", "State: __, Zip: _____-____", "_")
+SetWindowText pMskEd.m_hCtl, "State: NY, Zip: 12345-6789"
+print pMskEd.GetWindowText(FALSE)   ' // Returns "State: NY, Zip: 12345-6789"
+print pMskEd.GetWindowText(TRUE)   ' // Returns NY123456789
+```
 
 ## <a name="hWindow"></a>hWindow
 
