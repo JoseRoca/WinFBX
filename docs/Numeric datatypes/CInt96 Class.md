@@ -49,6 +49,25 @@ DIM int96 AS CInt96 = "79228162514264337593543950335"
 | [Sign](#Sign) | Returns 0 if it is not signed of &h80 (128) if it is signed. |
 | [ToVar](#ToVar) | Returns the currency as a VT_CY variant. |
 
+# Error Handling
+
+The class uses the API function `SetLastError` to set error information. After calling a method of the class, you can check its success or failure calling the API function `GetLastError`. To get a localized description of the error, you can call a function such `AfxGetWinErrMsg, passing the error code returned by `GetLastError`:
+
+```
+PRIVATE FUNCTION AfxGetWinErrMsg (BYVAL dwError AS DWORD) AS CWSTR
+   DIM cbLen AS DWORD, pBuffer AS WSTRING PTR, cwsMsg AS CWSTR
+   cbLen = FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER OR _
+           FORMAT_MESSAGE_FROM_SYSTEM OR FORMAT_MESSAGE_IGNORE_INSERTS, _
+           NULL, dwError, BYVAL MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), _
+           cast(LPWSTR, @pBuffer), 0, NULL)
+   IF cbLen THEN
+      cwsMsg = *pBuffer
+      LocalFree pBuffer
+   END IF
+   RETURN cwsMsg
+END FUNCTION
+```
+
 # <a name="Operator1"></a>Operator LET (=)
 
 Assigns a value to a `CInt96` variable.
