@@ -84,8 +84,11 @@ OPERATOR LET (BYREF wszSrc AS WSTRING)
 
 ```
 DIM int96 AS CInt96
-c = 123456789
-c = "79228162514264337593543950335"
+int96 = 1234567890
+-or-
+DIM int96 AS CInt96 = 1234567890
+-or-
+DIM int96 AS CInt96 = "1234567890"
 ```
 
 # <a name="Operator2"></a>CAST Operators
