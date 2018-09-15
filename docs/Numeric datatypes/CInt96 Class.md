@@ -23,7 +23,7 @@ DIM int96 AS CInt96 = 1234567890
 
 #### Remarks
 
-As the bigger numeric variable supported by FreeBasic is a long integer, if we want to set bigger values we need to use strings, e.g.
+Because the bigger numeric variable supported by FreeBasic is a long integer, if we want to set bigger values we need to use strings, e.g.
 
 ```
 DIM int96 AS CInt96 = "79228162514264337593543950335"
