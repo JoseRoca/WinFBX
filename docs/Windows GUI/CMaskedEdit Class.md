@@ -17,7 +17,7 @@ The `CMaskedEdit` class supports a masked edit control, which validates user inp
 |[DisableMask](#disablemask)|Disables validating user input.|  
 |[EnableGetMaskedCharsOnly](#enablegetmaskedcharsonly)|Specifies whether the `GetWindowText` method retrieves only masked characters.|  
 |[EnableMask](#enablemask)|Initializes the masked edit control.|  
-|[EnableSetMaskedCharsOnly](#enablesetmaskedcharsonly)|Specifies whether the text is validated against only masked characters, or against the whole mask.|  
+[//]|[EnableSetMaskedCharsOnly](#enablesetmaskedcharsonly)|Specifies whether the text is validated against only masked characters, or against the whole mask.|  
 |[GetWindowText](#getwindowtext)|Retrieves validated text from the masked edit control.|  
 |[hWindow](#hWindow)|Gets the control window handle. |
 |[SetPos](#setpos)|Sets the position of the cursor.|
