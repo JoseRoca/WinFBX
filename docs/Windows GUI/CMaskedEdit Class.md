@@ -17,7 +17,6 @@ The `CMaskedEdit` class supports a masked edit control, which validates user inp
 |[DisableMask](#disablemask)|Disables validating user input.|  
 |[EnableGetMaskedCharsOnly](#enablegetmaskedcharsonly)|Specifies whether the `GetWindowText` method retrieves only masked characters.|  
 |[EnableMask](#enablemask)|Initializes the masked edit control.|  
-[//]|[EnableSetMaskedCharsOnly](#enablesetmaskedcharsonly)|Specifies whether the text is validated against only masked characters, or against the whole mask.|  
 |[GetWindowText](#getwindowtext)|Retrieves validated text from the masked edit control.|  
 |[hWindow](#hWindow)|Gets the control window handle. |
 |[SetPos](#setpos)|Sets the position of the cursor.|
@@ -265,14 +264,6 @@ SUB EnableMask (BYVAL lpszMask AS WSTRING PTR, BYVAL lpszInputTemplate AS WSTRIN
   
 ##  <a name="enablesetmaskedcharsonly"></a>EnableSetMaskedCharsOnly  
  Specifies whether the text is validated against only the masked characters, or against the whole mask.  
-  
-```  
-SUB EnableSetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
-```  
-  
-| Parameter  | Description |
-| ---------- | ----------- |
-| *bEnable* | TRUE to validate the user input against only masked characters; FALSE to validate against the whole mask. The default value is TRUE. |
   
 ##  <a name="getwindowtext"></a>GetWindowText  
  Retrieves validated text from the masked edit control.  
