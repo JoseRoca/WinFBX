@@ -4,7 +4,7 @@
 ' Contents: Masked edit control
 ' Based on CMFCMaskedEdit (Microsoft Foundation Classes)
 ' Compiler: FreeBasic 32 & 64-bit
-' Copyright (c) 2016 José Roca. Freeware. Use at your own risk.
+' Copyright (c) 2018 José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
@@ -33,11 +33,11 @@ TYPE CMaskedEdit
       m_chMaskInputTemplate AS USHORT   ' // Default char
       m_strValid AS CWSTR               ' // Valid string characters
       m_bGetMaskedCharsOnly AS BOOLEAN
-      m_bSetMaskedCharsOnly AS BOOLEAN
+'      m_bSetMaskedCharsOnly AS BOOLEAN
       m_bSelectByGroup AS BOOLEAN
-      m_bMaskKeyInProgress AS BOOLEAN
-      m_bPasteProcessing AS BOOLEAN
-      m_bSetTextProcessing AS BOOLEAN
+'      m_bMaskKeyInProgress AS BOOLEAN
+'      m_bPasteProcessing AS BOOLEAN
+'      m_bSetTextProcessing AS BOOLEAN
       m_strUndo AS CWSTR               ' // Backup string for undo
 
    Public:
@@ -59,7 +59,6 @@ TYPE CMaskedEdit
       DECLARE FUNCTION CheckChar (BYVAL chChar AS USHORT, BYVAL nPos AS LONG) AS BOOLEAN
       DECLARE FUNCTION SetValue (BYVAL lpszString AS WSTRING PTR, BYVAL bWithDelimiters AS BOOLEAN = TRUE) AS BOOLEAN
       DECLARE FUNCTION DoUpdate (BYVAL bRestoreLastGood AS BOOLEAN, BYVAL nBeginOld AS LONG = -1, BYVAL nEndOld AS LONG = -1) AS BOOLEAN
-      DECLARE SUB OnChar (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT, BYVAL nFlags AS UINT)
       DECLARE SUB OnCharPrintchar(BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT, BYVAL nFlags AS UINT)
       DECLARE SUB OnKeyDown (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT, BYVAL nFlags AS UINT)
       DECLARE SUB OnCharBackspace (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT, BYVAL nFlags AS UINT)
@@ -121,6 +120,8 @@ FUNCTION CMaskedEdit.CMaskedEditProc ( _
             SendMessageW hwnd, WM_CUT, 0, 0
             EXIT FUNCTION
          END IF
+         ' // Ket handle back space in WM_KEYDOWN
+         IF wParam = 8 THEN EXIT FUNCTION
          ' // Handle Ctrl+Z - Decimal 26, Hex 1A - Undo
          IF wParam = 26 THEN
             DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
@@ -134,7 +135,9 @@ FUNCTION CMaskedEdit.CMaskedEditProc ( _
          IF pthis = NULL THEN EXIT FUNCTION
          pthis->m_strUndo = pthis->GetWindowText(FALSE)
          IF LEN(pthis->m_strMask) <> 0 AND LEN(pthis->m_strInputTemplate) <> 0 THEN
-            pthis->OnChar(wParam, HIWORD(lParam), LOWORD(lParam))
+            IF iswprint(wParam) <> 0 AND (GetKeyState(VK_CONTROL) AND &H80) <> &H80 THEN
+               pthis->OnCharPrintchar(wParam, HIWORD(lParam), LOWORD(lParam))
+            END IF
             EXIT FUNCTION
          END IF
 
@@ -213,11 +216,11 @@ PRIVATE CONSTRUCTOR CMaskedEdit (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG
    END IF
 
    m_bGetMaskedCharsOnly = TRUE
-   m_bSetMaskedCharsOnly = TRUE
+'   m_bSetMaskedCharsOnly = TRUE
    m_bSelectByGroup = TRUE
-   m_bMaskKeyInProgress = FALSE
-   m_bPasteProcessing = FALSE
-   m_bSetTextProcessing = FALSE
+'   m_bMaskKeyInProgress = FALSE
+'   m_bPasteProcessing = FALSE
+'   m_bSetTextProcessing = FALSE
 
 END CONSTRUCTOR
 ' ========================================================================================
@@ -244,11 +247,11 @@ PRIVATE FUNCTION CMaskedEdit.Create (BYVAL pWindow AS CWindow PTR, BYVAL cID AS 
    END IF
 
    m_bGetMaskedCharsOnly = TRUE
-   m_bSetMaskedCharsOnly = TRUE
+'   m_bSetMaskedCharsOnly = TRUE
    m_bSelectByGroup = TRUE
-   m_bMaskKeyInProgress = FALSE
-   m_bPasteProcessing = FALSE
-   m_bSetTextProcessing = FALSE
+'   m_bMaskKeyInProgress = FALSE
+'   m_bPasteProcessing = FALSE
+'   m_bSetTextProcessing = FALSE
 
 END FUNCTION
 ' ========================================================================================
@@ -516,8 +519,8 @@ END FUNCTION
 
 ' ========================================================================================
 PRIVATE FUNCTION CMaskedEdit.DoUpdate (BYVAL bRestoreLastGood AS BOOLEAN, BYVAL nBeginOld AS LONG = -1, BYVAL nEndOld AS LONG = -1) AS BOOLEAN
-   IF m_bPasteProcessing THEN RETURN FALSE
-   m_bPasteProcessing = TRUE
+'   IF m_bPasteProcessing THEN RETURN FALSE
+'   m_bPasteProcessing = TRUE
    DIM cwsNew AS CWSTR = AfxGetWindowText(m_hCtl)
    DIM bRet AS BOOLEAN = this.SetValue(**cwsNew, TRUE)
    IF bRet = FALSE THEN MessageBeep(CAST(UINT, -1))
@@ -526,26 +529,9 @@ PRIVATE FUNCTION CMaskedEdit.DoUpdate (BYVAL bRestoreLastGood AS BOOLEAN, BYVAL 
       AfxSetWindowText(m_hCtl, **cwsOld)
       IF nBeginOld <> -1 THEN Edit_SetSel(m_hCtl, nBeginOld, nEndOld)
    END IF
-   m_bPasteProcessing = FALSE
+'   m_bPasteProcessing = FALSE
    RETURN bRet
 END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-PRIVATE SUB CMaskedEdit.OnChar (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT, BYVAL nFlags AS UINT)
-   DIM chChar AS USHORT = nChar
-'   IF iswprint(chChar) AND NOT (GetKeyState(VK_CONTROL) AND &h80) THEN
-   IF iswprint(chChar) <> 0 AND (GetKeyState(VK_CONTROL) AND &H80) <> &H80 THEN
-      this.OnCharPrintchar(nChar, nRepCnt, nFlags)
-      RETURN
-   ELSEIF (nChar = VK_DELETE OR nChar = VK_BACK) AND LEN(m_strMask) = 0 THEN
-      RETURN
-   END IF
-'   DIM nBeginOld AS LONG, nEndOld AS LONG
-'   nBeginOld = Edit_GetSelStart(m_hCtl)
-'   nEndOld = Edit_GetSelEnd(m_hCtl)
-'   this.DoUpdate(TRUE, nBeginOld, nEndOld)
-END SUB
 ' ========================================================================================
 
 ' ========================================================================================
@@ -846,12 +832,14 @@ PRIVATE SUB CMaskedEdit.OnKeyDown(BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT, BY
       CASE VK_BACK
          IF GetKeyState(VK_SHIFT) AND &h80 THEN RETURN
          ' // Special processing
+         this.m_strUndo = this.GetWindowText(FALSE)
          this.OnCharBackspace(nChar, nRepCnt, nFlags)
          RETURN
 
       CASE VK_DELETE
          IF GetKeyState(VK_SHIFT) AND &h80 THEN RETURN
          ' // Special processing
+         this.m_strUndo = this.GetWindowText(FALSE)
          this.OnCharDelete(nChar, nRepCnt, nFlags)
          RETURN
 
@@ -1091,9 +1079,9 @@ END SUB
 ' Specifies whether the text is validated against only the masked characters, or against
 ' the whole mask.
 ' ========================================================================================
-PRIVATE SUB CMaskedEdit.EnableSetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
-   m_bSetMaskedCharsOnly = bEnable
-END SUB
+'PRIVATE SUB CMaskedEdit.EnableSetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
+'   m_bSetMaskedCharsOnly = bEnable
+'END SUB
 ' ========================================================================================
 
 ' ========================================================================================
