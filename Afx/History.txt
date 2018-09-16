@@ -1,6 +1,13 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+16 Sep 2018 - Version 1.0.03
+- Added the CMemMapFile class (memory-mapped files).
+
+14 Sep 2018 - Version 1.0.03
+- Added a masked edit control (CMaskedEdit.inc).
+- Added a 96-bit integer class (CInt96.inc).
+
 10 Sep 2018 - Version 1.0.03
 - CWSTR.inc : Small modification in the DelChars method suggested by skyfish4tb.
 - AfxStr.inc : Small modifications in the AfxStrRemove and AfxStrRemoveI functions suggested by skyfish4tb.
