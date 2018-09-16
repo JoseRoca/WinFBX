@@ -120,8 +120,8 @@ FUNCTION CMaskedEdit.CMaskedEditProc ( _
             SendMessageW hwnd, WM_CUT, 0, 0
             EXIT FUNCTION
          END IF
-         ' // Ket handle back space in WM_KEYDOWN
-         IF wParam = 8 THEN EXIT FUNCTION
+         ' // Let handle back space in WM_KEYDOWN
+         IF wParam = 8 OR wParam = 127 THEN EXIT FUNCTION
          ' // Handle Ctrl+Z - Decimal 26, Hex 1A - Undo
          IF wParam = 26 THEN
             DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
