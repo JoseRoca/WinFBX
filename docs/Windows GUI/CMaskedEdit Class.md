@@ -262,9 +262,6 @@ SUB EnableMask (BYVAL lpszMask AS WSTRING PTR, BYVAL lpszInputTemplate AS WSTRIN
 |a|Alphanumeric character or space.|  
 |*|A printable character.|  
   
-##  <a name="enablesetmaskedcharsonly"></a>EnableSetMaskedCharsOnly  
- Specifies whether the text is validated against only the masked characters, or against the whole mask.  
-  
 ##  <a name="getwindowtext"></a>GetWindowText  
  Retrieves validated text from the masked edit control.  
   
