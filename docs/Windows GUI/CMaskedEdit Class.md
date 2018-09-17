@@ -52,12 +52,11 @@ CONSTRUCTOR CMaskedEdit (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR,  _
   
  3. Call the [SetValidChars](#setvalidchars) method to specify the list of valid characters.  
   
- 4. Call the [SetWindowText](#setwindowtext) method to specify the default text for the masked edit control.  
+ 4. Call the [SetText](#settext) or the [SetMaskedText](#setmaskedtext) methods to specify the default text for the masked edit control.  
   
- 5. Call the [GetWindowText](#getwindowtext) method to retrieve the validated text.  
+ 5. Call the [GetText](#gettext) method to retrieve the validated text.  
   
- If you do not call one or more methods to initialize the mask, valid characters, and default text, the masked edit control behaves just as the standard edit control behaves.  
-  
+ 
 ### Example  
  The following example demonstrates how to set up a mask (for example a phone number) by using the `EnableMask` method to create the mask for the masked edit control, and `SetWindowText` method to display a prompt in the masked edit control.
 
