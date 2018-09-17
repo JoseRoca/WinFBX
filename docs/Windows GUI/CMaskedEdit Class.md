@@ -309,16 +309,16 @@ SUB SetValidChars (BYVAL lpszValid AS WSTRING PTR)
 | *lpszValid* | A string that contains the set of valid input characters. NULL means that all characters are valid. The default value of this parameter is NULL. |
   
 ### Remarks  
- Use this method to define a list of valid characters. If an input character is not in this list, masked edit control will not accept it.  
+Use this method to define a list of valid characters. If an input character is not in this list, masked edit control will not accept it. 
   
- The following code example accepts only hexadecimal numbers.  
+The following code example accepts only hexadecimal numbers.  
  
 ```
 pMskEd.EnableMask("  AAAA"), _   ' // Mask string
 ("0x____"), _   ' // Template string
 ("_")   ' // The default character that replaces the backspace character
 pMskEd.SetValidChars("1234567890ABCDEFabcdef")   ' // Valid string characters
-pMskEd.SetText("0x01AF")
+pMskEd.SetMaskedText("0x01AF")
 ```
 
 ##  <a name="settext"></a>SetText  
@@ -332,6 +332,12 @@ FUNCTION SetText (BYREF cwsText AS CWSTR) AS BOOLEAN
 | ---------- | ----------- |
 | *cwsText* | Points to a string that will be used as a prompt. |
 
+#### Example
+
+```
+pMskEd.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
+pMskEd.SetText("1231231212")
+```
 
 ##  <a name="setmaskedtext"></a>SetMaskedText  
  Displays a prompt in the masked edit control.  
@@ -343,3 +349,11 @@ FUNCTION SetMaskedText (BYREF cwsText AS CWSTR) AS BOOLEAN
 | Parameter  | Description |
 | ---------- | ----------- |
 | *cwsText* | A string that will be used as a prompt. |
+
+#### Example
+
+```
+pMskEd.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
+pMskEd.SetText("1231231212")
+pMskEd.SetMaskedText("(123) 123-1212")
+```
