@@ -53,7 +53,7 @@ TYPE CMaskedEdit
       DECLARE SUB GetGroupBounds(BYREF nBegin AS LONG, BYREF nEnd AS LONG, BYVAL nStartPos AS LONG = 0, BYVAL bForward AS BOOLEAN = TRUE)
       DECLARE SUB EnableMask (BYVAL lpszMask AS WSTRING PTR, BYVAL lpszInputTemplate AS WSTRING PTR, _
               BYREF chMaskInputTemplate AS CWSTR = "_", BYVAL lpszValid AS WSTRING PTR = NULL)
-      DECLARE SUB DisableMask
+'      DECLARE SUB DisableMask
       DECLARE SUB SetValidChars (BYVAL lpszValid AS WSTRING PTR)
       DECLARE FUNCTION IsMaskedChar (BYVAL chChar AS USHORT, BYVAL chMaskChar AS USHORT) AS BOOLEAN
       DECLARE FUNCTION CheckChar (BYVAL chChar AS USHORT, BYVAL nPos AS LONG) AS BOOLEAN
@@ -65,11 +65,12 @@ TYPE CMaskedEdit
       DECLARE SUB OnCharDelete (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT, BYVAL nFlags AS UINT)
       DECLARE SUB EnableGetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
       DECLARE SUB EnableSetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
-      DECLARE FUNCTION SetWindowText (BYREF cwsText AS CWSTR) AS BOOLEAN
-      DECLARE FUNCTION GetWindowText () AS CWSTR
-      DECLARE FUNCTION GetWindowText (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS CWSTR
-      DECLARE FUNCTION GetWindowTextLength () AS LONG
-      DECLARE FUNCTION GetWindowTextLength (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS LONG
+      DECLARE FUNCTION SetText (BYREF cwsText AS CWSTR) AS BOOLEAN
+      DEClARE FUNCTION SetMaskedText (BYREF cwsText AS CWSTR) AS BOOLEAN
+      DECLARE FUNCTION GetText () AS CWSTR
+      DECLARE FUNCTION GetText (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS CWSTR
+      DECLARE FUNCTION GetTextLength () AS LONG
+      DECLARE FUNCTION GetTextLength (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS LONG
       DECLARE SUB SetPos (BYVAL nPos AS LONG = -1)
 
       DECLARE STATIC FUNCTION CMaskedEditProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM, BYVAL uIdSubclass AS UINT_PTR, BYVAL dwRefData AS DWORD_PTR) AS LRESULT
@@ -94,6 +95,13 @@ FUNCTION CMaskedEdit.CMaskedEditProc ( _
       CASE WM_GETDLGCODE
          ' // All keyboard input
          FUNCTION = DLGC_WANTARROWS OR DLGC_WANTCHARS ' DLGC_WANTALLKEYS
+         EXIT FUNCTION
+
+      CASE 9999
+         ' // Custom message to set the focus in the first editable group
+         DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
+         IF pthis = NULL THEN EXIT FUNCTION
+         pthis->SetPos
          EXIT FUNCTION
 
       CASE WM_KEYDOWN
@@ -121,19 +129,29 @@ FUNCTION CMaskedEdit.CMaskedEditProc ( _
             EXIT FUNCTION
          END IF
          ' // Let handle back space in WM_KEYDOWN
-         IF wParam = 8 OR wParam = 127 THEN EXIT FUNCTION
+         ' // If mask is enabled, let handle backspace in WM_KEYDOWN, else do default
+         IF wParam = 8 THEN
+            DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
+            IF pthis = NULL THEN EXIT FUNCTION
+            IF LEN(pthis->m_strMask) <> 0 AND LEN(pthis->m_strInputTemplate) <> 0 THEN EXIT FUNCTION
+         END IF
+         IF wParam = 127 THEN
+            DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
+            IF pthis = NULL THEN EXIT FUNCTION
+            IF LEN(pthis->m_strMask) = 0 OR LEN(pthis->m_strInputTemplate) = 0 THEN EXIT FUNCTION
+         END IF
          ' // Handle Ctrl+Z - Decimal 26, Hex 1A - Undo
          IF wParam = 26 THEN
             DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
             IF pthis = NULL THEN EXIT FUNCTION
             DIM nPos AS LONG = Edit_GetSelStart(pthis->hWindow)
-            IF LEN(pthis->m_strUndo) THEN pthis->SetWindowText(pthis->m_strUndo)
+            IF LEN(pthis->m_strUndo) THEN pthis->SetText(pthis->m_strUndo)
             Edit_SetSel(pthis->hWindow, nPos, nPos)
             EXIT FUNCTION
          END IF
          DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
          IF pthis = NULL THEN EXIT FUNCTION
-         pthis->m_strUndo = pthis->GetWindowText(FALSE)
+         pthis->m_strUndo = pthis->GetText(FALSE)
          IF LEN(pthis->m_strMask) <> 0 AND LEN(pthis->m_strInputTemplate) <> 0 THEN
             IF iswprint(wParam) <> 0 AND (GetKeyState(VK_CONTROL) AND &H80) <> &H80 THEN
                pthis->OnCharPrintchar(wParam, HIWORD(lParam), LOWORD(lParam))
@@ -144,17 +162,17 @@ FUNCTION CMaskedEdit.CMaskedEditProc ( _
       CASE WM_CUT, WM_CLEAR
          DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
          IF pthis = NULL THEN EXIT FUNCTION
-         pthis->m_strUndo = pthis->GetWindowText(FALSE)
+         pthis->m_strUndo = pthis->GetText(FALSE)
          DIM nStart AS LONG = Edit_GetSelStart(pthis->hWindow)
          DIM nEnd AS LONG = Edit_GetSelEnd(pthis->hWindow)
-         DIM cwsText AS CWSTR = pthis->GetWindowText(FALSE)
+         DIM cwsText AS CWSTR = pthis->GetText(FALSE)
          IF LEN(cwsText) = 0 THEN EXIT FUNCTION
          cwsText = MID(**cwsText, nStart + 1, nEnd - nStart)
          IF uMsg = WM_CUT THEN AfxSetClipboardText(cwsText)
          pthis->OnCharDelete(ASC(" "), 0, 0)
-         cwsText = pthis->GetWindowText(FALSE)
+         cwsText = pthis->GetText(FALSE)
          IF LEN(pthis->m_strInputTemplate) = 0 THEN EXIT FUNCTION
-         pthis->SetWindowText(pthis->m_strInputTemplate)
+         pthis->SetText(pthis->m_strInputTemplate)
          FOR i AS LONG = 1 TO LEN(cwsText)
             Edit_SetSel(pthis->m_hCtl, i - 1, i - 1)
             IF MID(cwsText, i, 1) <> MID(pthis->m_strInputTemplate, i, 1) THEN
@@ -170,7 +188,7 @@ FUNCTION CMaskedEdit.CMaskedEditProc ( _
       CASE WM_PASTE
          DIM pthis AS CMaskedEdit PTR = CAST(CMaskedEdit PTR, dwRefData)
          IF pthis = NULL THEN EXIT FUNCTION
-         pthis->m_strUndo = pthis->GetWindowText(FALSE)
+         pthis->m_strUndo = pthis->GetText(FALSE)
          DIM cwsText AS CWSTR = AfxGetClipboardText
          IF LEN(cwsText) = 0 THEN EXIT FUNCTION
          FOR i AS LONG = 1 TO LEN(cwsText)
@@ -392,17 +410,20 @@ BYREF chMaskInputTemplate AS CWSTR = "_", BYVAL lpszValid AS WSTRING PTR = NULL)
    IF LEN(m_strMask) <> LEN(m_strInputTemplate) THEN EXIT SUB
    m_strValid = ""
    IF lpszValid THEN m_strValid = *lpszValid
-   this.SetWindowText(m_strInputTemplate)
+   this.SetText(m_strInputTemplate)
 END SUB
 ' ========================================================================================
 
 ' ========================================================================================
 ' Disables validating user input.
 ' ========================================================================================
-PRIVATE SUB CMaskedEdit.DisableMask
-   m_strMask = ""
-   m_strInputTemplate = ""
-END SUB
+'PRIVATE SUB CMaskedEdit.DisableMask
+'   DIM cws AS CWSTR = this.GetWindowText
+'   cws = AfxStrRemoveAny(cws, m_strInputTemplate)
+'   m_strMask = ""
+'   m_strInputTemplate = ""
+'   AfxSetWindowText(m_hCtl, cws)
+'END SUB
 ' ========================================================================================
 
 ' ========================================================================================
@@ -832,14 +853,14 @@ PRIVATE SUB CMaskedEdit.OnKeyDown(BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT, BY
       CASE VK_BACK
          IF GetKeyState(VK_SHIFT) AND &h80 THEN RETURN
          ' // Special processing
-         this.m_strUndo = this.GetWindowText(FALSE)
+         this.m_strUndo = this.GetText(FALSE)
          this.OnCharBackspace(nChar, nRepCnt, nFlags)
          RETURN
 
       CASE VK_DELETE
          IF GetKeyState(VK_SHIFT) AND &h80 THEN RETURN
          ' // Special processing
-         this.m_strUndo = this.GetWindowText(FALSE)
+         this.m_strUndo = this.GetText(FALSE)
          this.OnCharDelete(nChar, nRepCnt, nFlags)
          RETURN
 
@@ -1093,59 +1114,6 @@ END SUB
 ' ========================================================================================
 
 ' ========================================================================================
-' Sets the text of the control
-' ========================================================================================
-PRIVATE FUNCTION CMaskedEdit.SetWindowText (BYREF cwsText AS CWSTR) AS BOOLEAN
-   IF cwsText = "" THEN
-      cwsText = m_strInputTemplate
-      m_str = m_strInputTemplate
-   ELSE
-      m_str = cwsText
-   END IF
-   FUNCTION = AfxSetWindowText(m_hCtl, **cwsText)
-   IF LEN(m_strMask) <> 0 AND LEN(m_strInputTemplate) <> 0 THEN
-      DIM nPos AS LONG = Edit_GetSelStart(m_hCtl)
-'      IF nPos < 1 THEN nPos = 1
-      this.SetPos nPos
-   END IF
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Gets the text of the control
-' ========================================================================================
-PRIVATE FUNCTION CMaskedEdit.GetWindowText () AS CWSTR
-   DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
-   IF m_bGetMaskedCharsOnly THEN cws = AfxStrRemoveAny(cws, m_strInputTemplate)
-   RETURN cws
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
-PRIVATE FUNCTION CMaskedEdit.GetWindowText (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS CWSTR
-   DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
-   IF bGetMaskedCharsOnly THEN cws = AfxStrRemoveAny(cws, m_strInputTemplate)
-   RETURN cws
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Gets the length of the text of the control
-' ========================================================================================
-PRIVATE FUNCTION CMaskedEdit.GetWindowTextLength () AS LONG
-   DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
-   IF m_bGetMaskedCharsOnly THEN cws = AfxStrRemoveAny(cws, m_strInputTemplate)
-   RETURN LEN(cws)
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
-PRIVATE FUNCTION CMaskedEdit.GetWindowTextLength (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS LONG
-   DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
-   IF bGetMaskedCharsOnly THEN cws = AfxStrRemoveAny(cws, m_strInputTemplate)
-   RETURN LEN(cws)
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
 PRIVATE SUB CMaskedEdit.SetPos (BYVAL nPos AS LONG = -1)
    IF nPos = -1 THEN
       ' // Calc last group bounds
@@ -1162,6 +1130,99 @@ PRIVATE SUB CMaskedEdit.SetPos (BYVAL nPos AS LONG = -1)
    END IF
    Edit_SetSel(m_hCtl, nPos, nPos)
 END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Sets the text of the control
+' ========================================================================================
+PRIVATE FUNCTION CMaskedEdit.SetText (BYREF cwsText AS CWSTR) AS BOOLEAN
+   IF LEN(m_strInputTemplate) = 0 THEN
+      AfxSetWindowText(m_hCtl, cwsText)
+   ELSEIF cwsText = "" THEN
+      ' // Clear the contents of the control
+      m_str = m_strInputTemplate
+      FUNCTION = AfxSetWindowText(m_hCtl, m_str)
+   ELSE
+      m_str = m_strInputTemplate
+      FUNCTION = AfxSetWindowText(m_hCtl, m_str)
+      IF cwsText <> m_strInputTemplate THEN
+         FOR i AS LONG = 1 TO LEN(cwsText)
+            this.OnCharPrintchar((ASC(MID(**cwsText, i, 1))), 0, 0)
+         NEXT
+         Edit_SetSel(m_hCtl, 0, 0)
+      END IF
+   END IF
+   DIM nPos AS LONG = Edit_GetSelStart(m_hCtl)
+   IF nPos = 0 AND LEN(m_str) <> 0 THEN PostMessageW(m_hCtl, 9999, 0, 0)
+   FUNCTION = TRUE
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets masked text to the control.
+' ========================================================================================
+PRIVATE FUNCTION CMaskedEdit.SetMaskedText (BYREF cwsText AS CWSTR) AS BOOLEAN
+   DIM cws AS CWSTR = cwsText
+   FOR i AS LONG = 1 TO LEN(m_strInputTemplate)
+      IF MID(**cws, i, 1) = MID(**m_strInputTemplate, i, 1) THEN MID(**cws, i, 1) = "_"
+   NEXT
+   cws = AfxStrRemoveAny(cws, "_")
+   FUNCTION = this.SetText(cws)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the text of the control
+' ========================================================================================
+PRIVATE FUNCTION CMaskedEdit.GetText () AS CWSTR
+   DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
+   IF m_bGetMaskedCharsOnly THEN
+      FOR i AS LONG = 1 TO LEN(m_strInputTemplate)
+         IF MID(**cws, i, 1) = MID(**m_strInputTemplate, i, 1) THEN MID(**cws, i, 1) = "_"
+      NEXT
+      cws = AfxStrRemoveAny(cws, "_")
+   END IF
+   RETURN cws
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CMaskedEdit.GetText (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS CWSTR
+   DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
+   IF bGetMaskedCharsOnly THEN
+      FOR i AS LONG = 1 TO LEN(m_strInputTemplate)
+         IF MID(**cws, i, 1) = MID(**m_strInputTemplate, i, 1) THEN MID(**cws, i, 1) = "_"
+      NEXT
+      cws = AfxStrRemoveAny(cws, "_")
+   END IF
+   RETURN cws
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the length of the text of the control
+' ========================================================================================
+PRIVATE FUNCTION CMaskedEdit.GetTextLength () AS LONG
+   DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
+   IF m_bGetMaskedCharsOnly THEN
+      FOR i AS LONG = 1 TO LEN(m_strInputTemplate)
+         IF MID(**cws, i, 1) = MID(**m_strInputTemplate, i, 1) THEN MID(**cws, i, 1) = "_"
+      NEXT
+      cws = AfxStrRemoveAny(cws, "_")
+   END IF
+   RETURN LEN(cws)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CMaskedEdit.GetTextLength (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS LONG
+   DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
+   IF bGetMaskedCharsOnly THEN
+      FOR i AS LONG = 1 TO LEN(m_strInputTemplate)
+         IF MID(**cws, i, 1) = MID(**m_strInputTemplate, i, 1) THEN MID(**cws, i, 1) = "_"
+      NEXT
+      cws = AfxStrRemoveAny(cws, "_")
+   END IF
+   RETURN LEN(cws)
+END FUNCTION
 ' ========================================================================================
 
 END NAMESPACE
