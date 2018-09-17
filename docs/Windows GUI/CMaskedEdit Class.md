@@ -330,7 +330,6 @@ FUNCTION SetMaskedText (BYREF cwsText AS CWSTR) AS BOOLEAN
 
 ```
 pMskEd.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
-pMskEd.SetText("1231231212")
 pMskEd.SetMaskedText("(123) 123-1212")
 ```
 
