@@ -14,7 +14,7 @@ The `CMaskedEdit` class supports a masked edit control, which validates user inp
 |Name|Description|  
 |----------|-----------------|  
 |[Create](#create)|Creates an instance of the control|  
-|[EnableGetMaskedCharsOnly](#enablegetmaskedcharsonly)|Specifies whether the `GetWindowText` method retrieves only masked characters.|  
+|[EnableGetMaskedCharsOnly](#enablegetmaskedcharsonly)|Specifies whether the `GetText` method retrieves only masked characters.|  
 |[EnableMask](#enablemask)|Initializes the masked edit control.|  
 |[GetText](#gettext)|Retrieves validated text from the masked edit control.|  
 |[hWindow](#hWindow)|Gets the control window handle. |
@@ -203,7 +203,7 @@ Same parameters that the `Constructor`.
 DIM pMakedEdit AS CMaskedEdit
 pMaskEdit.Create(CMaskedEdit(@pWindow, IDC_MASKED, 10, 30, 280, 23)
 pMakedEdit.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
-pMakedEdit.SetText("(123) 123-1212")
+pMakedEdit.SetMaskedText("(123) 123-1212")
 ```
 
 ##  <a name="enablegetmaskedcharsonly"></a>EnableGetMaskedCharsOnly  
@@ -215,10 +215,10 @@ SUB EnableGetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
   
 | Parameter  | Description |
 | ---------- | ----------- |
-| *bEnable* | TRUE to specify that the [GetWindowText](#getwindowtext) method retrieve only masked characters; FALSE to specify that the method retrieve the whole text. The default value is TRUE.   |
+| *bEnable* | TRUE to specify that the [GetText](#gettext) method retrieve only masked characters; FALSE to specify that the method retrieve the whole text. The default value is TRUE.   |
   
 ### Remarks  
- Use this method to enable retrieving masked characters. Then create a masked edit control that corresponds to the telephone number, such as (425) 555-0187. If you call the `GetWindowText` method, it returns "4255550187". If you disable retrieving masked characters, the `GetWindowText` method returns the text that is displayed in the edit control, for example "(425) 555-0187".  
+ Use this method to enable retrieving masked characters. Then create a masked edit control that corresponds to the telephone number, such as (425) 555-0187. If you call the `GetText` method, it returns "4255550187". If you disable retrieving masked characters, the `GetText` method returns the text that is displayed in the edit control, for example "(425) 555-0187".  
   
 ##  <a name="enablemask"></a>EnableMask  
  Initializes the masked edit control.  
