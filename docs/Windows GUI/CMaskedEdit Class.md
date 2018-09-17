@@ -58,12 +58,12 @@ CONSTRUCTOR CMaskedEdit (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR,  _
   
  
 ### Example  
- The following example demonstrates how to set up a mask (for example a phone number) by using the `EnableMask` method to create the mask for the masked edit control, and `SetWindowText` method to display a prompt in the masked edit control.
+The following example demonstrates how to set up a mask (for example a phone number) by using the `EnableMask` method to create the mask for the masked edit control, and `SetMaskedText` method to display a prompt in the masked edit control.
 
 ```
 DIM pMakedEdit AS CMaskedEdit = CMaskedEdit(@pWindow, IDC_MASKED, 10, 30, 280, 23)
 pMakedEdit.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
-pMakedEdit.SetWindowText("(123) 123-1212")
+pMakedEdit.SetMaskedText("(123) 123-1212")
 ```
 
 ### Full example
@@ -297,30 +297,6 @@ SUB SetPos (BYVAL nPos AS LONG = -1)
 | ---------- | ----------- |
 | *nPos* | 0-based index. |
 
-##  <a name="setvalidchars"></a>SetValidChars  
- Specifies a string of valid characters that the user can enter.  
-  
-```  
-SUB SetValidChars (BYVAL lpszValid AS WSTRING PTR)
-```  
-  
-| Parameter  | Description |
-| ---------- | ----------- |
-| *lpszValid* | A string that contains the set of valid input characters. NULL means that all characters are valid. The default value of this parameter is NULL. |
-  
-### Remarks  
-Use this method to define a list of valid characters. If an input character is not in this list, masked edit control will not accept it. 
-  
-The following code example accepts only hexadecimal numbers.  
- 
-```
-pMskEd.EnableMask("  AAAA"), _   ' // Mask string
-("0x____"), _   ' // Template string
-("_")   ' // The default character that replaces the backspace character
-pMskEd.SetValidChars("1234567890ABCDEFabcdef")   ' // Valid string characters
-pMskEd.SetMaskedText("0x01AF")
-```
-
 ##  <a name="settext"></a>SetText  
  Displays a prompt in the masked edit control.  
   
@@ -356,4 +332,28 @@ FUNCTION SetMaskedText (BYREF cwsText AS CWSTR) AS BOOLEAN
 pMskEd.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
 pMskEd.SetText("1231231212")
 pMskEd.SetMaskedText("(123) 123-1212")
+```
+
+##  <a name="setvalidchars"></a>SetValidChars  
+ Specifies a string of valid characters that the user can enter.  
+  
+```  
+SUB SetValidChars (BYVAL lpszValid AS WSTRING PTR)
+```  
+  
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lpszValid* | A string that contains the set of valid input characters. NULL means that all characters are valid. The default value of this parameter is NULL. |
+  
+### Remarks  
+Use this method to define a list of valid characters. If an input character is not in this list, masked edit control will not accept it. 
+  
+The following code example accepts only hexadecimal numbers.  
+ 
+```
+pMskEd.EnableMask("  AAAA"), _   ' // Mask string
+("0x____"), _   ' // Template string
+("_")   ' // The default character that replaces the backspace character
+pMskEd.SetValidChars("1234567890ABCDEFabcdef")   ' // Valid string characters
+pMskEd.SetMaskedText("0x01AF")
 ```
