@@ -18,10 +18,10 @@ The `CMaskedEdit` class supports a masked edit control, which validates user inp
 |[EnableMask](#enablemask)|Initializes the masked edit control.|  
 |[GetText](#gettext)|Retrieves validated text from the masked edit control.|  
 |[hWindow](#hWindow)|Gets the control window handle. |
+|[SetMaskedText](#setmaskedtext)|Displays a prompt in the masked edit control.|  
 |[SetPos](#setpos)|Sets the position of the cursor.|
 |[SetValidChars](#setvalidchars)|Specifies a string of valid characters that the user can enter.|  
 |[SetText](#settext)|Displays a prompt in the masked edit control.|  
-|[SetMaskedText](#setmaskedtext)|Displays a prompt in the masked edit control.|  
 
 ##  <a name="Constructors"></a>Constructors
 
