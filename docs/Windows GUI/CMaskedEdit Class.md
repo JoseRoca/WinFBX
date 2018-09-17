@@ -14,14 +14,14 @@ The `CMaskedEdit` class supports a masked edit control, which validates user inp
 |Name|Description|  
 |----------|-----------------|  
 |[Create](#create)|Creates an instance of the control|  
-|[DisableMask](#disablemask)|Disables validating user input.|  
 |[EnableGetMaskedCharsOnly](#enablegetmaskedcharsonly)|Specifies whether the `GetWindowText` method retrieves only masked characters.|  
 |[EnableMask](#enablemask)|Initializes the masked edit control.|  
-|[GetWindowText](#getwindowtext)|Retrieves validated text from the masked edit control.|  
+|[GetText](#gettext)|Retrieves validated text from the masked edit control.|  
 |[hWindow](#hWindow)|Gets the control window handle. |
 |[SetPos](#setpos)|Sets the position of the cursor.|
 |[SetValidChars](#setvalidchars)|Specifies a string of valid characters that the user can enter.|  
-|[SetWindowText](#setwindowtext)|Displays a prompt in the masked edit control.|  
+|[SetText](#settext)|Displays a prompt in the masked edit control.|  
+|[SetMskedText](#setmaskedtext)|Displays a prompt in the masked edit control.|  
 
 ##  <a name="Constructors"></a>Constructors
 
@@ -125,7 +125,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    DIM pMaskedEdit AS CMaskedEdit = CMaskedEdit(@pWindow, IDC_MASKED, 10, 30, 280, 23)
    SetFocus pMaskedEdit.hWindow
    pMaskedEdit.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
-   pMaskedEdit.SetWindowText("(123) 123-1212")
+   pMaskedEdit.SetText("(123) 123-1212")
 
    ' // Displays the window and dispatches the Windows messages
    FUNCTION = pWindow.DoEvents(nCmdShow)
@@ -204,21 +204,11 @@ Same parameters that the `Constructor`.
 DIM pMakedEdit AS CMaskedEdit
 pMaskEdit.Create(CMaskedEdit(@pWindow, IDC_MASKED, 10, 30, 280, 23)
 pMakedEdit.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
-pMakedEdit.SetWindowText("(123) 123-1212")
+pMakedEdit.SetText("(123) 123-1212")
 ```
 
-##  <a name="disablemask"></a>DisableMask  
- Disables validating user input.  
-  
-```  
-SUB DisableMask
-```  
-  
-### Remarks  
- If user input validation is disabled, the masked edit control behaves like the standard edit control.  
-  
 ##  <a name="enablegetmaskedcharsonly"></a>EnableGetMaskedCharsOnly  
- Specifies whether the `GetWindowText` method retrieves only masked characters.  
+ Specifies whether the `GetText` method retrieves only masked characters.  
   
 ```  
 SUB EnableGetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
@@ -262,12 +252,12 @@ SUB EnableMask (BYVAL lpszMask AS WSTRING PTR, BYVAL lpszInputTemplate AS WSTRIN
 |a|Alphanumeric character or space.|  
 |*|A printable character.|  
   
-##  <a name="getwindowtext"></a>GetWindowText  
+##  <a name="gettext"></a>GetText  
  Retrieves validated text from the masked edit control.  
   
 ```  
-FUNCTION GetWindowText () AS CWSTR
-FUNCTION GetWindowText (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS CWSTR
+FUNCTION GetText () AS CWSTR
+FUNCTION GetText (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS CWSTR
 ```  
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -280,9 +270,9 @@ The text from the masked edit control.
 
 ```
 pMskEd.EnableMask("       cc       ddddd-dddd", "State: __, Zip: _____-____", "_")
-SetWindowText pMskEd.m_hCtl, "State: NY, Zip: 12345-6789"
-print pMskEd.GetWindowText(FALSE)   ' // Returns "State: NY, Zip: 12345-6789"
-print pMskEd.GetWindowText(TRUE)   ' // Returns NY123456789
+SetText pMskEd.m_hCtl, "State: NY, Zip: 12345-6789"
+print pMskEd.GetText(FALSE)   ' // Returns "State: NY, Zip: 12345-6789"
+print pMskEd.GetText(TRUE)   ' // Returns NY123456789
 ```
 
 ## <a name="hWindow"></a>hWindow
@@ -329,16 +319,28 @@ pMskEd.EnableMask("  AAAA"), _   ' // Mask string
 ("0x____"), _   ' // Template string
 ("_")   ' // The default character that replaces the backspace character
 pMskEd.SetValidChars("1234567890ABCDEFabcdef")   ' // Valid string characters
-pMskEd.SetWindowText("0x01AF")
+pMskEd.SetText("0x01AF")
 ```
-  
-##  <a name="setwindowtext"></a>SetWindowText  
+
+##  <a name="settext"></a>SetText  
  Displays a prompt in the masked edit control.  
   
 ```  
-FUNCTION SetWindowText (BYREF cwsText AS CWSTR) AS BOOLEAN
+FUNCTION SetText (BYREF cwsText AS CWSTR) AS BOOLEAN
 ```  
   
 | Parameter  | Description |
 | ---------- | ----------- |
 | *cwsText* | Points to a string that will be used as a prompt. |
+
+
+##  <a name="setmaskedtext"></a>SetMaskedText  
+ Displays a prompt in the masked edit control.  
+  
+```  
+FUNCTION SetMaskedText (BYREF cwsText AS CWSTR) AS BOOLEAN
+```  
+  
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cwsText* | A string that will be used as a prompt. |
