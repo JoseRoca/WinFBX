@@ -124,7 +124,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    DIM pMaskedEdit AS CMaskedEdit = CMaskedEdit(@pWindow, IDC_MASKED, 10, 30, 280, 23)
    SetFocus pMaskedEdit.hWindow
    pMaskedEdit.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
-   pMaskedEdit.SetText("(123) 123-1212")
+   pMaskedEdit.SetMaskedText("(123) 123-1212")
 
    ' // Displays the window and dispatches the Windows messages
    FUNCTION = pWindow.DoEvents(nCmdShow)
