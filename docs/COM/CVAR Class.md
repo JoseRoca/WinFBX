@@ -1,6 +1,6 @@
 # CVAR Class
 
-The CVar class implements a VARIANT data type. The variant data type is a tagged union that can be used to represent any other data type. While lacking in efficiency, they are heavily used in COM Automation for its flexibility. The main purpose of the CVar class is to make its use as easy as possible when you need to use them to work with COM Automation objects.
+The `CVAR` class implements a `VARIANT` data type. The variant data type is a tagged union that can be used to represent any other data type. While lacking in efficiency, they are heavily used in COM Automation for its flexibility. The main purpose of the `CVAR` class is to make its use as easy as possible when you need to use them to work with COM Automation objects.
 
 **Include file**: CVAR.INC.
 
