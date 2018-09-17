@@ -343,7 +343,6 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' WARNING: Untested because I fon't have Office installed.
 ' If the requested object is in an EXE (out-of-process server), such Office applications,
 ' and it is running and registered in the Running Object Table (ROT), AfxGetCom will
 ' return a pointer to its interface. AfxAnyCom will first try to use an existing, running
@@ -356,8 +355,7 @@ END FUNCTION
 ' Office application before the application has lost focus, you might receive an error.
 ' See: https://support.microsoft.com/en-us/help/238610/getobject-or-getactiveobject-cannot-find-a-running-office-application
 ' ========================================================================================
-' ========================================================================================
-PRIVATE FUNCTION AfxGetCom OVERLOAD (BYREF wszProgID AS CONST WSTRING) AS ANY PTR
+PRIVATE FUNCTION AfxGetCom OVERLOAD (BYREF wszProgID AS CONST WSTRING) AS IDispatch PTR
    DIM classID AS CLSID, pUnk AS ANY PTR
    CLSIDFromProgID(wszProgID, @classID)
    IF IsEqualGuid(@classID, @IID_NULL) THEN RETURN NULL
@@ -366,14 +364,14 @@ PRIVATE FUNCTION AfxGetCom OVERLOAD (BYREF wszProgID AS CONST WSTRING) AS ANY PT
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION AfxGetCom OVERLOAD (BYREF classID AS CONST CLSID) AS ANY PTR
+PRIVATE FUNCTION AfxGetCom OVERLOAD (BYREF classID AS CONST CLSID) AS IDispatch PTR
    DIM pUnk AS ANY PTR
    GetActiveObject(@classID, NULL, @pUnk)
    RETURN pUnk
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION AfxAnyCom OVERLOAD (BYREF wszProgID AS CONST WSTRING) AS ANY PTR
+PRIVATE FUNCTION AfxAnyCom OVERLOAD (BYREF wszProgID AS CONST WSTRING) AS IDispatch PTR
    DIM classID AS CLSID, pUnk AS ANY PTR
    pUnk = AfxGetCom(wszProgID)
    IF pUnk THEN RETURN pUnk
@@ -384,7 +382,7 @@ PRIVATE FUNCTION AfxAnyCom OVERLOAD (BYREF wszProgID AS CONST WSTRING) AS ANY PT
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION AfxAnyCom OVERLOAD (BYREF classID AS CONST CLSID) AS ANY PTR
+PRIVATE FUNCTION AfxAnyCom OVERLOAD (BYREF classID AS CONST CLSID) AS IDispatch PTR
    DIM pUnk AS ANY PTR
    IF GetActiveObject(@classID, NULL, @pUnk) <> S_OK THEN
       CoCreateInstance(@classID, NULL, CLSCTX_INPROC_SERVER, @IID_IUnknown, @pUnk)
@@ -950,6 +948,30 @@ PRIVATE FUNCTION AfxVarToStr OVERLOAD (BYVAL pvarIn AS VARIANT PTR, BYVAL bClear
             s = LEFT(s, p) & dec
          END IF
          IF s = "0" THEN s = "0.0000"
+         RETURN s
+      CASE VT_CY OR VT_BYREF   ' // BYREF CURRENCY
+         DIM _cy AS CY = *pVarIn->pcyVal
+         DIM s AS STRING = STR(_cy.int64 / 10000)
+         DIM p AS LONG = INSTR(s, ".")
+         DIM dec AS STRING
+         IF p THEN
+            dec = MID(s + "0000", p + 1, 4)
+            s = LEFT(s, p) & dec
+         END IF
+         IF s = "0" THEN s = "0.0000"
+         RETURN s
+      CASE VT_DECIMAL   ' // Decimal
+         DIM bstrOut AS BSTR
+         VarBstrFromDec(@pVarIn->decVal, 0, 0, @bstrOut)
+         DIM s AS STRING = *cast(WSTRING PTR, bstrOut)
+         SysFreeString(bstrOut)
+         RETURN s
+      CASE VT_DECIMAL OR VT_BYREF   ' // BYREF DECIMAL
+         DIM bstrOut AS BSTR
+         DIM dec AS DECIMAL = *pVarIn->pdecVal
+         VarBstrFromDec(@dec, 0, 0, @bstrOut)
+         DIM s AS STRING = *cast(WSTRING PTR, bstrOut)
+         SysFreeString(bstrOut)
          RETURN s
 
       ' // VT_BYREF variants
