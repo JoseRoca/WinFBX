@@ -57,7 +57,7 @@ Allows to attach/choose a printer and get/set its setting values.
 | [SetPaperSize](#SetPaperSize) | Sets the paper length and width in units of 1/10 of a millimeter. |
 | [Tray](#Tray) | Specifies the paper source. |
 
-# <a name="AttachPrinter"></a>AttachPrinter
+### <a name="AttachPrinter"></a>AttachPrinter
 
 Creates a device context (DC) for the specified printer and attaches it to the class.
 
@@ -107,7 +107,7 @@ PRINT "Press any key to end..."
 SLEEP
 ```
 
-# <a name="ChoosePrinter"></a>ChoosePrinter
+### <a name="ChoosePrinter"></a>ChoosePrinter
 
 Displays a Print Dialog Box to select a printer.
 
@@ -130,7 +130,7 @@ DIM pPrint AS CPrint
 pPrint.ChoosePrinter
 ```
 
-# <a name="PageSetup"></a>PageSetup
+### <a name="PageSetup"></a>PageSetup
 
 Displays a Page Setup dialog box that enables the user to specify the attributes of a printed page. These attributes include the paper size and source, the page orientation (portrait or landscape), and the width of the page margins.
 
@@ -153,7 +153,7 @@ DIM pPrint AS CPrint
 pPrint.PageSetup
 ```
 
-# <a name="GetPrinterName"></a>GetPrinterName
+### <a name="GetPrinterName"></a>GetPrinterName
 
 Returns the name of the attached printer.
 
@@ -165,7 +165,7 @@ FUNCTION GetPrinterName () AS CWSTR
 
 CWSTR. The name of the attached printer. If there is not a printer attached, it returns an empty string.
 
-# <a name="GetDefaultPrinter"></a>GetDefaultPrinter
+### <a name="GetDefaultPrinter"></a>GetDefaultPrinter
 
 Returns the name of the default printer.
 
@@ -173,7 +173,7 @@ Returns the name of the default printer.
 FUNCTION GetDefaultPrinter () AS CWSTR
 ```
 
-# <a name="GetDefaultPrinterDriver"></a>GetDefaultPrinterDriver
+### <a name="GetDefaultPrinterDriver"></a>GetDefaultPrinterDriver
 
 Returns the name of the default printer driver.
 
@@ -181,7 +181,7 @@ Returns the name of the default printer driver.
 FUNCTION GetDefaultPrinterDriver () AS CWSTR
 ```
 
-# <a name="GetDefaultPrinterPort"></a>GetDefaultPrinterPort
+### <a name="GetDefaultPrinterPort"></a>GetDefaultPrinterPort
 
 Returns the name of the default printer port.
 
@@ -189,7 +189,7 @@ Returns the name of the default printer port.
 FUNCTION GetDefaultPrinterPort () AS CWSTR
 ```
 
-# <a name="EnumPrinterNames"></a>EnumPrinterNames
+### <a name="EnumPrinterNames"></a>EnumPrinterNames
 
 Returns a list with the available printers, print servers, domains, or print providers.
 Names are separated with a carriage return and a line feed characters.
@@ -198,7 +198,7 @@ Names are separated with a carriage return and a line feed characters.
 FUNCTION EnumPrinterNames () AS CWSTR
 ```
 
-# <a name="GetDC"></a>GetDC
+### <a name="GetDC"></a>GetDC
 
 Returns the handle of the attached printer.
 
@@ -210,7 +210,7 @@ FUNCTION GetDC () AS HDC
 
 HDC. The handle of the device context of the attached printer. If there is not a printer attached, it returns NULL.
 
-# <a name="GetPPIX"></a>GetPPIX
+### <a name="GetPPIX"></a>GetPPIX
 
 Returns the number of pixels per inch of the specified host printer page (horizontal resolution).
 
@@ -222,7 +222,7 @@ FUNCTION GetPPIX () AS LONG
 
 LONG. The number of pixels per inch of the specified host printer page. If there is not a printer attached, it returns 0.
 
-# <a name="GetPPIY"></a>GetPPIY
+### <a name="GetPPIY"></a>GetPPIY
 
 Returns the number of pixels per inch of the specified host printer page (vertical resolution).
 
@@ -234,7 +234,7 @@ FUNCTION GetPPIY () AS LONG
 
 LONG. The number of pixels per inch of the specified host printer page. If there is not a printer attached, it returns 0.
 
-# <a name="GetHorizontalUnits"></a>GetHorizontalUnits
+### <a name="GetHorizontalUnits"></a>GetHorizontalUnits
 
 Returns the width, in world units, of the printable area of the page.
 
@@ -246,7 +246,7 @@ FUNCTION GetHorizontalUnits () AS LONG
 
 LONG. The width, in world units, of the printable area of the page. If there is not a printer attached, it returns 0.
 
-# <a name="GetVerticalUnits"></a>GetVerticalUnits
+### <a name="GetVerticalUnits"></a>GetVerticalUnits
 
 Returns the height, in world units, of the printable area of the page.
 
@@ -258,7 +258,7 @@ FUNCTION GetVerticalUnits () AS LONG
 
 LONG. The height, in world units, of the printable area of the page. If there is not a printer attached, it returns 0.
 
-# <a name="GetHorizontalResolution"></a>GetHorizontalResolution
+### <a name="GetHorizontalResolution"></a>GetHorizontalResolution
 
 Returns the width, in pixels, of the printable area of the page.
 
@@ -266,7 +266,7 @@ Returns the width, in pixels, of the printable area of the page.
 FUNCTION GetHorizontalResolution () AS LONG
 ```
 
-# <a name="GetVerticalResolution"></a>GetVerticalResolution
+### <a name="GetVerticalResolution"></a>GetVerticalResolution
 
 Returns the height, in pixels, of the printable area of the page.
 
@@ -274,7 +274,7 @@ Returns the height, in pixels, of the printable area of the page.
 FUNCTION GetVerticalResolution () AS LONG
 ```
 
-# <a name="GetMarginUnits"></a>GetMarginUnits
+### <a name="GetMarginUnits"></a>GetMarginUnits
 
 Retrieves the margins (the non-printable area) of the printer page, in world units.
 
@@ -289,7 +289,7 @@ SUB GetMarginUnits (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LON
 | *nRight* | Right margin. |
 | *nBottom* | Bottom margin. |
 
-# <a name="GetMarginPixels"></a>GetMarginPixels
+### <a name="GetMarginPixels"></a>GetMarginPixels
 
 Retrieves the margins (the non-printable area) of the printer page, in pixels.
 
@@ -308,7 +308,7 @@ SUB GetMarginPixels (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LO
 
 LONG. The height, in pixels, of the printable area of the page. If there is not a printer attached, it returns 0.
 
-# <a name="PixelsToUnitsX"></a>PixelsToUnitsX
+### <a name="PixelsToUnitsX"></a>PixelsToUnitsX
 
 Converts pixels to world units (horizontal resolution).
 
@@ -320,7 +320,7 @@ FUNCTION PixelsToUnitsX (BYVAL pix AS LONG) AS LONG
 | ---------- | ----------- |
 | *pix* | The number of pixels to convert. |
 
-# <a name="PixelsToUnitsY"></a>PixelsToUnitsY
+### <a name="PixelsToUnitsY"></a>PixelsToUnitsY
 
 Converts pixels to world units (vertical resolution).
 
@@ -332,7 +332,7 @@ FUNCTION PixelsToUnitsY (BYVAL pix AS LONG) AS LONG
 | ---------- | ----------- |
 | *pix* | The number of pixels to convert. |
 
-# <a name="UnitsToPixelsX"></a>UnitsToPixelsX
+### <a name="UnitsToPixelsX"></a>UnitsToPixelsX
 
 Converts world units to pixels (horizontal resolution).
 
@@ -344,7 +344,7 @@ FUNCTION PixelsToUnitsX (BYVAL units AS LONG) AS LONG
 | ---------- | ----------- |
 | *units* | The number of world units to convert. |
 
-# <a name="UnitsToPixelsY"></a>UnitsToPixelsY
+### <a name="UnitsToPixelsY"></a>UnitsToPixelsY
 
 Converts world units to pixels (vertical resolution).
 
@@ -356,7 +356,7 @@ FUNCTION UnitsToPixelsY (BYVAL units AS LONG) AS LONG
 | ---------- | ----------- |
 | *units* | The number of world units to convert. |
 
-# <a name="PixelsToPointsX"></a>PixelsToPointsX
+### <a name="PixelsToPointsX"></a>PixelsToPointsX
 
 Converts pixels to point size (1/72 of an inch) according to the PPI of the printer (horizontal resolution).
 
@@ -372,7 +372,7 @@ FUNCTION PixelsToPointsX (BYVAL pix AS LONG) AS LONG
 
 LONG. The number of points. If there is not a printer attached, it returns 0.
 
-# <a name="PixelsToPointsY"></a>PixelsToPointsY
+### <a name="PixelsToPointsY"></a>PixelsToPointsY
 
 Converts pixels to point size (1/72 of an inch) according to the PPI of the printer (vertical resolution).
 
@@ -388,7 +388,7 @@ FUNCTION PixelsToPointsY (BYVAL pix AS LONG) AS LONG
 
 LONG. The number of points. If there is not a printer attached, it returns 0.
 
-# <a name="PointsToPixelsX"></a>PointsToPixelsX
+### <a name="PointsToPixelsX"></a>PointsToPixelsX
 
 Converts a point size (1/72 of an inch) to pixels according to the PPI of the printer (horizontal resolution).
 
@@ -404,7 +404,7 @@ FUNCTION PointsToPixelsX (BYVAL pts AS LONG) AS LONG
 
 LONG. The number of pixels. If there is not a printer attached, it returns 0.
 
-# <a name="PointsToPixelsY"></a>PointsToPixelsY
+### <a name="PointsToPixelsY"></a>PointsToPixelsY
 
 Converts a point size (1/72 of an inch) to pixels according to the PPI of the printer (vertical resolution).
 
@@ -420,7 +420,7 @@ FUNCTION PointsToPixelsY (BYVAL pts AS LONG) AS LONG
 
 LONG. The number of pixels. If there is not a printer attached, it returns 0.
 
-# <a name="GetPaperNames"></a>GetPaperNames
+### <a name="GetPaperNames"></a>GetPaperNames
 
 Returns a list of supported paper names (for example, Letter or Legal).
 
@@ -432,7 +432,7 @@ FUNCTION GetPaperNames () AS CWSTR
 
 CWSTR. A list of supported paper names on success, or an empty string on failure. The names are separated by a carriage return and a line feed characters.
 
-# <a name="PrintBitmap"></a>PrintBitmap
+### <a name="PrintBitmap"></a>PrintBitmap
 
 Prints a Windows bitmap to the attached printer.
 
@@ -456,7 +456,7 @@ FUNCTION PrintBitmap ( _
 
 BOOLEAN. Returns TRUE if the bitmap has been printed successfully, or FALSE otherwise.
 
-# <a name="PrintBitmapToFile"></a>PrintBitmapToFile
+### <a name="PrintBitmapToFile"></a>PrintBitmapToFile
 
 Prints a Windows bitmap to the specified output file.
 
@@ -482,7 +482,7 @@ FUNCTION PrintBitmapToFile ( _
 
 BOOLEAN. Returns TRUE if the bitmap has been printed successfully, or FALSE otherwise.
 
-# <a name="Collate"></a>Collate
+### <a name="Collate"></a>Collate
 
 If the printer supports collating, the return value is TRUE; otherwise, the return value is FALSE.
 
@@ -490,7 +490,7 @@ If the printer supports collating, the return value is TRUE; otherwise, the retu
 PROPERTY Collate () AS BOOLEAN
 ```
 
-# <a name="CollateMode"></a>CollateMode
+### <a name="CollateMode"></a>CollateMode
 
 Gets/sets the printer collating mode.
 
@@ -507,7 +507,7 @@ PROPERTY CollateMode (BYVAL nMode AS LONG)
 
 BOOLEAN. If the printer supports collating, the return value is TRUE; otherwise, the return value is FALSE. If TRUE, the pages that are printed should be collated. To collate is to print out the entire document before printing the next copy, as opposed to printing out each page of the document the required number of times.
 
-# <a name="Color"></a>Color
+### <a name="Color"></a>Color
 
 If the printer supports color mode, the return value is TRUE; otherwise, the return value is FALSE.
 
@@ -515,7 +515,7 @@ If the printer supports color mode, the return value is TRUE; otherwise, the ret
 PROPERTY Color () AS BOOLEAN
 ```
 
-# <a name="ColorMode"></a>ColorMode
+### <a name="ColorMode"></a>ColorMode
 
 Switches between color and monochrome on color printers. Some color printers have the capability to print using true black instead of a combination of cyan, magenta, and yellow (CMY). This usually creates darker and sharper text for documents. This option is only useful for color printers that support true black printing.
 
@@ -532,7 +532,7 @@ PROPERTY ColorMode (BYVAL nMode AS LONG)
 
 LONG. Returns the printer color mode: DMCOLOR_MONOCHROME or DMCOLOR_COLOR.
 
-# <a name="Copies"></a>Copies
+### <a name="Copies"></a>Copies
 
 Gets/sets the number of copies to print if the device supports multiple-page copies.
 
@@ -549,7 +549,7 @@ PROPERTY Copies (BYVAL nCopies AS LONG)
 
 LONG. The number of copies
 
-# <a name="Duplex"></a>Duplex
+### <a name="Duplex"></a>Duplex
 
 Checks if the printer supports duplex printing.
 
@@ -561,7 +561,7 @@ PROPERTY Duplex () AS BOOLEAN
 
 BOOLEAN. If the printer supports duplex printing, the return value is TRUE; otherwise, the return value is FALSE.
 
-# <a name="DuplexMode"></a>DuplexMode
+### <a name="DuplexMode"></a>DuplexMode
 
 Gets/sets the current duplex mode.
 
@@ -578,7 +578,7 @@ PROPERTY DuplexMode (BYVAL nMode AS LONG)
 
 LONG. If the printer supports duplex printing, returns the current duplex mode
 
-# <a name="Orientation"></a>Orientation
+### <a name="Orientation"></a>Orientation
 
 Gets/sets the printer orientation.
 
@@ -595,7 +595,7 @@ PROPERTY Orientation (BYVAL nOrientation AS LONG)
 
 LONG. The printer orientation.
 
-# <a name="PaperLength"></a>PaperLength
+### <a name="PaperLength"></a>PaperLength
 
 Gets/sets the printer paper length in units of 1/10 of a millimeter. This value overrides the length of the paper specified by the **PaperSize** property, and is used if the paper is of a custom size, or if the device is a dot matrix printer, which can print a page of arbitrary length. If you use this property, you must also use the **PaperWidth** property to set the print paper width. Alternatively, you can use the **SetPageSize** function to set both the length and width with only one call.
 
@@ -612,7 +612,7 @@ PROPERTY PaperLength (BYVAL nLength AS LONG)
 
 LONG. The printer paper length.
 
-# <a name="PaperSize"></a>PaperSize
+### <a name="PaperSize"></a>PaperSize
 
 Gets/sets the printer paper size.
 
@@ -629,7 +629,7 @@ PROPERTY PaperSize (BYVAL nSize AS LONG)
 
 LONG. The printer paper size.
 
-# <a name="SetPaperSize"></a>SetPaperSize
+### <a name="SetPaperSize"></a>SetPaperSize
 
 Sets the printer paper length and width.
 
@@ -646,7 +646,7 @@ FUNCTION SetPaperSize (BYVAL nLength AS LONG, BYVAL nWidth AS LONG) AS BOOLEAN
 
 BOOLEAN. Returns True on success or False on failure.
 
-# <a name="PaperWidth"></a>PaperWidth
+### <a name="PaperWidth"></a>PaperWidth
 
 Gets/sets the printer paper width in units of 1/10 of a millimeter. This value overrides the length of the paper specified by the *PaperSize* property, and is used if the paper is of a custom size, or if the device is a dot matrix printer, which can print a page of arbitrary length. It must be used if the **PaperLength** is also used. Alternatively, you can use the **SetPageSize** function to set both the length and width with only one call.
 
@@ -663,7 +663,7 @@ PROPERTY PaperWidth (BYVAL nWidth AS LONG)
 
 LONG. The printer paper width.
 
-# <a name="Quality"></a>Quality
+### <a name="Quality"></a>Quality
 
 Gets/sets the printer print quality mode.
 
@@ -680,7 +680,7 @@ PROPERTY Quality (BYVAL nMode AS LONG)
 
 LONG. The printer print quality mode.
 
-# <a name="Scale"></a>Scale
+### <a name="Scale"></a>Scale
 
 Gets/sets the factor by which the printed output is to be scaled.
 
@@ -697,7 +697,7 @@ PROPERTY Scale (BYVAL nScale AS LONG)
 
 LONG. The printer scaling factor.
 
-# <a name="Tray"></a>Tray
+### <a name="Tray"></a>Tray
 
 Gets/sets the paper source.
 
