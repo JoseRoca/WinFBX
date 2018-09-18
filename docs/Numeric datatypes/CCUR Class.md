@@ -1,14 +1,14 @@
 # CCUR Class
 
-**CCUR** is a wrapper class for the **CURRENCY** data type. CURRENCY is implemented as an 8-byte two's-complement integer value scaled by 10,000. This gives a fixed-point number with 15 digits to the left of the decimal point and 4 digits to the right. The CURRENCY data type is extremely useful for calculations involving money, or for any fixed-point calculations where accuracy is important.
+`CCUR` is a wrapper class for the `CURRENCY` data type. `CURRENCY` is implemented as an 8-byte two's-complement integer value scaled by 10,000. This gives a fixed-point number with 15 digits to the left of the decimal point and 4 digits to the right. The `CURRENCY` data type is extremely useful for calculations involving money, or for any fixed-point calculations where accuracy is important.
 
-The **CCUR** wrapper implements arithmetic, assignment, and comparison operations for this fixed-point type, and provides access to the numbers on either side of the decimal point in the form of two components: an integer component which stores the value to the left of the decimal point, and a fractional component which stores the value to the right of the decimal point. The fractional component is stored internally as an integer value between -9999 (CY_MIN_FRACTION) and +9999 (CY_MAX_FRACTION). The function GetFraction returns a value scaled by a factor of 10000 (CY_SCALE).
+The `CCUR` wrapper implements arithmetic, assignment, and comparison operations for this fixed-point type, and provides access to the numbers on either side of the decimal point in the form of two components: an integer component which stores the value to the left of the decimal point, and a fractional component which stores the value to the right of the decimal point. The fractional component is stored internally as an integer value between -9999 (CY_MIN_FRACTION) and +9999 (CY_MAX_FRACTION). The function `GetFraction` returns a value scaled by a factor of 10000 (CY_SCALE).
 
-When specifying the integer and fractional components of a **CCUR** object, remember that the fractional component is a number in the range 0 to 9999. This is important when dealing with a currency such as the US dollar that expresses amounts using only two significant digits after the decimal point. Even though the last two digits are not displayed, they must be taken into account.
+When specifying the integer and fractional components of a `CCUR` object, remember that the fractional component is a number in the range 0 to 9999. This is important when dealing with a currency such as the US dollar that expresses amounts using only two significant digits after the decimal point. Even though the last two digits are not displayed, they must be taken into account.
 
 ### Constructors
 
-Create a new instance of the **CCUR** class and assigns the values passed to it.
+Create a new instance of the `CCUR` class and assigns the values passed to it.
 
 ```
 CONSTRUCTOR CCur
@@ -131,7 +131,7 @@ SLEEP
 
 # <a name="Operator1"></a>Operator LET (=)
 
-Assigns a value to a **CCUR** variable.
+Assigns a value to a `CCUR` variable.
 
 ```
 OPERATOR LET (BYREF cSrc AS CCUR)
@@ -168,21 +168,21 @@ DIM c AS CCUR = 12345.1234
 
 # <a name="Operator2"></a>CAST Operators
 
-Converts a CCUR into another data type.
+Converts a `CCUR` into another data type.
 
 ```
 OPERATOR CAST () AS DOUBLE
 OPERATOR CAST () AS STRING
 ```
 
-These operators aren't called directly, They perform the conversion when the target is not a CCUR variable. For example, when assigning a CCUR variable to an standard numeric variable, the CAST() AS DOUBLE operator is implicity called.
+These operators aren't called directly, They perform the conversion when the target is not a CCUR variable. For example, when assigning a `CCUR` variable to an standard numeric variable, the CAST() AS DOUBLE operator is implicity called.
 
 ```
 OPERATOR CAST () AS CURRENCY
 OPERATOR CAST () AS VARIANT
 ```
 
-The casts to CURRENCY and VARIANT allow to assign a currency value to a CVAR:
+The casts to CURRENCY and VARIANT allow to assign a currency value to a `CVAR`:
 
 ```
 DIM c AS CCUR = 12345.12
@@ -196,7 +196,7 @@ cv = cast(VARIANT, c)
 
 # <a name="Operator3"></a>Operator *
 
-Returns the address of the underlying **CURRENCY** structure.
+Returns the address of the underlying `CURRENCY` structure.
 
 ```
 OPERATOR * (BYREF cur AS CCUR) AS CURRENCY PTR
@@ -284,14 +284,14 @@ DIM c AS CCUR = 123
 c = -c
 ```
 
-Or you can use the NOT operator:
+Or you can use the `NOT` operator:
 
 ```
 DIM c AS CCUR = 123
 c = NOT c
 ```
 
-Other FreeBasic operators such AND, MOD, OR, SHL and SHR can also be used with CCUR variables, e.g. c = c AND 1, c = c MOD 5, etc.
+Other FreeBasic operators such `AND`, `MOD`, `OR`, `SHL` and `SHR` can also be used with `CCUR` variables, e.g. c = c AND 1, c = c MOD 5, etc.
 
 # <a name="FormatCurrency"></a>FormatCurrency
 
@@ -416,7 +416,7 @@ FUNCTION ToVar () AS VARIANT
 
 #### Remarks
 
-Can be used to assign a currency directly to a CVAR variable.
+Can be used to assign a currency directly to a `CVAR` variable.
 
 ```
 DIM c AS CCUR = 12345.1234
