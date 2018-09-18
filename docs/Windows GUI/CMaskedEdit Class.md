@@ -23,7 +23,7 @@ The `CMaskedEdit` class supports a masked edit control, which validates user inp
 |[SetValidChars](#setvalidchars)|Specifies a string of valid characters that the user can enter.|  
 |[SetText](#settext)|Displays a prompt in the masked edit control.|  
 
-##  <a name="Constructors"></a>Constructors
+# <a name="Constructors"></a>Constructors
 
 ```
 CONSTRUCTOR CMaskedEdit
@@ -187,7 +187,7 @@ END FUNCTION
 ' ========================================================================================
 ```
 
-##  <a name="create"></a>Create
+# <a name="create"></a>Create
 
 ```
 FUNCTION CMaskedEdit.Create (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR,  _
@@ -206,7 +206,7 @@ pMakedEdit.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
 pMakedEdit.SetMaskedText("(123) 123-1212")
 ```
 
-##  <a name="enablegetmaskedcharsonly"></a>EnableGetMaskedCharsOnly  
+# <a name="enablegetmaskedcharsonly"></a>EnableGetMaskedCharsOnly  
  Specifies whether the `GetText` method retrieves only masked characters.  
   
 ```  
@@ -220,7 +220,7 @@ SUB EnableGetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
 ### Remarks  
  Use this method to enable retrieving masked characters. Then create a masked edit control that corresponds to the telephone number, such as (425) 555-0187. If you call the `GetText` method, it returns "4255550187". If you disable retrieving masked characters, the `GetText` method returns the text that is displayed in the edit control, for example "(425) 555-0187".  
   
-##  <a name="enablemask"></a>EnableMask  
+# <a name="enablemask"></a>EnableMask  
  Initializes the masked edit control.  
   
 ```  
@@ -251,7 +251,7 @@ SUB EnableMask (BYVAL lpszMask AS WSTRING PTR, BYVAL lpszInputTemplate AS WSTRIN
 |a|Alphanumeric character or space.|  
 |*|A printable character.|  
   
-##  <a name="gettext"></a>GetText  
+# <a name="gettext"></a>GetText  
  Retrieves validated text from the masked edit control.  
   
 ```  
@@ -274,7 +274,7 @@ print pMskEd.GetText(FALSE)   ' // Returns "State: NY, Zip: 12345-6789"
 print pMskEd.GetText(TRUE)   ' // Returns NY123456789
 ```
 
-## <a name="hWindow"></a>hWindow
+# <a name="hWindow"></a>hWindow
 
 Gets the control window handle.
 
@@ -286,7 +286,7 @@ PROPERTY hWindow () AS HWND
 
 The window handle.
 
-##  <a name="setpos"></a>SetPos
+# <a name="setpos"></a>SetPos
 
 Sets the position of the cursor.
 
@@ -297,7 +297,7 @@ SUB SetPos (BYVAL nPos AS LONG = -1)
 | ---------- | ----------- |
 | *nPos* | 0-based index. |
 
-##  <a name="settext"></a>SetText  
+# <a name="settext"></a>SetText  
  Displays a prompt in the masked edit control.  
   
 ```  
@@ -315,7 +315,7 @@ pMskEd.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
 pMskEd.SetText("1231231212")
 ```
 
-##  <a name="setmaskedtext"></a>SetMaskedText  
+# <a name="setmaskedtext"></a>SetMaskedText  
  Displays a prompt in the masked edit control.  
   
 ```  
@@ -333,7 +333,7 @@ pMskEd.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
 pMskEd.SetMaskedText("(123) 123-1212")
 ```
 
-##  <a name="setvalidchars"></a>SetValidChars  
+# <a name="setvalidchars"></a>SetValidChars  
  Specifies a string of valid characters that the user can enter.  
   
 ```  
