@@ -36,6 +36,7 @@ The **Region** object describes an area of the display surface. The area can be 
 Creates a region that is defined by a rectangle.
 
 ```
+CONSTRUCTOR CGpRegion
 CONSTRUCTOR CGpRegion (BYVAL pRegion AS CGpRegion PTR)
 CONSTRUCTOR CGpRegion (BYVAL rc AS GpRectF PTR)
 CONSTRUCTOR CGpRegion (BYVAL rc AS GpRect PTR)
