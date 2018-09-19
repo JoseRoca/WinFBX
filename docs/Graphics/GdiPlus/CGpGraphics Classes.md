@@ -1166,6 +1166,7 @@ FUNCTION DrawPath (BYVAL pPen AS CGpPen PTR, BYVAL pPath AS CGpGraphicsPath PTR)
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pPen* | Pointer to a pen that is used to draw the path. |
+| *pPath* | Pointer to a **GraphicsPath** object that specifies the sequence of lines and curves that make up the path. |
 
 #### Return value
 
