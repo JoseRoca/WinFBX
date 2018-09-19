@@ -2810,6 +2810,8 @@ FUNCTION GetPixelOffsetMode () AS PixelOffsetMode
 
 #### PixelOffsetMode Enumeration
 
+The **PixelOffsetMode** enumeration specifies the pixel offset mode. This enumeration is used by the **GetPixelOffsetMode** and **SetPixelOffsetMode** methods of the Graphics class.
+
 | Cpmstant   | Description |
 | ---------- | ----------- |
 | **PixelOffsetModeInvalid** | Used internally.  |
@@ -2874,6 +2876,23 @@ Returns the text rendering mode currently set for this **Graphics** object.
 ```
 FUNCTION GetTextRenderingHint () AS TextRenderingHint
 ```
+
+#### TextRenderingHint Enumeration
+
+Specifies the process used to render text. The process affects the quality of the text.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **TextRenderingHintSystemDefault** | Specifies that a character is drawn using the currently selected system font smoothing mode (also called a rendering hint). |
+| **TextRenderingHintSingleBitPerPixelGridFit** | Specifies that a character is drawn using its glyph bitmap and hinting to improve character appearance on stems and curvature. |
+| **TextRenderingHintSingleBitPerPixel** | Specifies that a character is drawn using its glyph bitmap and no hinting. This results in better performance at the expense of quality. |
+| **TextRenderingHintAntiAliasGridFit** | Specifies that a character is drawn using its antialiased glyph bitmap and hinting. This results in much better quality due to antialiasing at a higher performance cost. |
+| **TextRenderingHintAntiAlias**| Specifies that a character is drawn using its antialiased glyph bitmap and no hinting. Stem width differences may be noticeable because hinting is turned off. |
+| **TextRenderingHintClearTypeGridFit** | Specifies that a character is drawn using its glyph Microsoft ClearType bitmap and hinting. This type of text rendering cannot be used along with **CompositingModeSourceCopy**.<br>Microsoft Windows XP and Windows Server 2003 only: ClearType rendering is supported only on Windows XP and Windows Server 2003. Therefore, **TextRenderingHintClearTypeGridFit** is ignored on other operating systems even though Windows GDI+ is supported on those operating systems. |
+
+#### Remarks
+
+The quality associated with each process varies according to the circumstances. **TextRenderingHintClearTypeGridFit** provides the best quality for most LCD monitors and relatively small font sizes. **TextRenderingHintAntiAlias** provides the best quality for rotated text. Generally, a process that produces higher quality text is slower than a process that produces lower quality text.
 
 
 # <a name="GetTransform"></a>GetTransform (CGpGraphics)
@@ -3753,6 +3772,8 @@ FUNCTION SetPixelOffsetMode (BYVAL nMode AS PixelOffsetMode) AS GpStatus
 
 #### PixelOffsetMode Enumeration
 
+The **PixelOffsetMode** enumeration specifies the pixel offset mode. This enumeration is used by the **GetPixelOffsetMode** and **SetPixelOffsetMode** methods of the Graphics class.
+
 | Cpmstant   | Description |
 | ---------- | ----------- |
 | **PixelOffsetModeInvalid** | Used internally.  |
@@ -3908,6 +3929,24 @@ FUNCTION SetTextRenderingHint (BYVAL newMode AS TextRenderingHint) AS GpStatus
 | Parameter  | Description |
 | ---------- | ----------- |
 | *newMode* | Element of the **TextRenderingHint** enumeration that specifies the process currently used by this **Graphics** object to render text. |
+
+
+#### TextRenderingHint Enumeration
+
+Specifies the process used to render text. The process affects the quality of the text.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **TextRenderingHintSystemDefault** | Specifies that a character is drawn using the currently selected system font smoothing mode (also called a rendering hint). |
+| **TextRenderingHintSingleBitPerPixelGridFit** | Specifies that a character is drawn using its glyph bitmap and hinting to improve character appearance on stems and curvature. |
+| **TextRenderingHintSingleBitPerPixel** | Specifies that a character is drawn using its glyph bitmap and no hinting. This results in better performance at the expense of quality. |
+| **TextRenderingHintAntiAliasGridFit** | Specifies that a character is drawn using its antialiased glyph bitmap and hinting. This results in much better quality due to antialiasing at a higher performance cost. |
+| **TextRenderingHintAntiAlias**| Specifies that a character is drawn using its antialiased glyph bitmap and no hinting. Stem width differences may be noticeable because hinting is turned off. |
+| **TextRenderingHintClearTypeGridFit** | Specifies that a character is drawn using its glyph Microsoft ClearType bitmap and hinting. This type of text rendering cannot be used along with **CompositingModeSourceCopy**.<br>Microsoft Windows XP and Windows Server 2003 only: ClearType rendering is supported only on Windows XP and Windows Server 2003. Therefore, **TextRenderingHintClearTypeGridFit** is ignored on other operating systems even though Windows GDI+ is supported on those operating systems. |
+
+#### Remarks
+
+The quality associated with each process varies according to the circumstances. **TextRenderingHintClearTypeGridFit** provides the best quality for most LCD monitors and relatively small font sizes. **TextRenderingHintAntiAlias** provides the best quality for rotated text. Generally, a process that produces higher quality text is slower than a process that produces lower quality text.
 
 #### Return value
 
