@@ -243,6 +243,7 @@ If this matrix is the identity matrix, this method returns TRUE; otherwise, it r
 
 #### Example
 
+```
 #INCLUDE ONCE "Afx/CGdiPlus/CGdiPlus.inc"
 USING Afx
 
@@ -257,6 +258,7 @@ END IF
 
 ' // Must be deleted before the call to AfxGdipShutdown
 Delete pMatrix
+```
 
 # <a name="IsInvertible"></a>IsInvertible
 
