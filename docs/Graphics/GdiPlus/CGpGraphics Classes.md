@@ -3451,7 +3451,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 # <a name="SetClip"></a>SetClip (CGpGraphics)
 
-Updates the clipping region of this **Graphics** object to a region that is the combination of itself and the clipping region of another Graphics object.
+Updates the clipping region of this **Graphics** object to a region that is the combination of itself and the clipping region of another **Graphics** object.
 
 ```
 FUNCTION SetClip (BYVAL pGraphics AS CGpGraphics PTR, _
