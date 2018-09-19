@@ -567,7 +567,7 @@ The **GetPropertyIdList** method returns an array of **PROPIDs**. Before you cal
 
 # <a name="GetPropertyItem"></a>GetPropertyItem (CGpImage)
 
-Gets a specified property item (piece of metadata) from this Image object.
+Gets a specified property item (piece of metadata) from this **Image** object.
 
 ```
 FUNCTION GetPropertyItem (BYVAL propId AS PROPID, BYVAL propSize AS UINT, _
