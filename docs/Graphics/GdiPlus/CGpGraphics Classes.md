@@ -164,8 +164,6 @@ The **CGpGraphicsPathIterator** class provides methods for isolating selected su
 
 # <a name="ConstructorsGraphics"></a>Constructors (CGpGraphics)
 
-Creates a **GraphicsPath** object from another **GraphicsPath** object.
-
 Creates a **Graphics** object that is associated with a specified device context. When you use this method to create a **Graphics** object, make sure that the **Graphics** object is deleted before the device context is released.
 
 ```
