@@ -796,7 +796,7 @@ END SUB
 
 # <a name="Save"></a>Save (CGpImage)
 
-Rotates and flips this image.
+Saves this image to a file.
 
 ```
 FUNCTION Save (BYVAL pwszFileName AS WSTRING PTR, BYVAL clsidEncoder AS GUID PTR, _
