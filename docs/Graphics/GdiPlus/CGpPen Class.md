@@ -1029,7 +1029,7 @@ Gets the width currently set for this **Pen** object.
 FUNCTION GetWidth () AS SINGLE
 ```
 
-####Remarks
+#### Remarks
 
 If you pass the address of a pen to one of the draw methods of a **Graphics** object, the width of the pen's stroke is dependent on the unit of measure specified in the **Graphics** object. The default unit of measure is **UnitPixel**, which is an element of the **GpUnit** enumeration.
 
