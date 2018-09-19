@@ -410,96 +410,6 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ConstructorsLGBrush"></a>Constructors (CGpLinearGradientBrush)
-
-Creates a **LinearGradientBrush** object from a set of boundary points and boundary colors.
-
-```
-CONSTRUCTOR CGpLinearGradientBrush (BYVAL pLinearGradientBrush AS CGpLinearGradientBrush PTR)
-CONSTRUCTOR CGpLinearGradientBrush (BYVAL point1 AS GpPointF PTR, BYVAL point2 AS GpPointF PTR, _
-   BYVAL color1 AS ARGB, BYVAL color2 AS ARGB)
-CONSTRUCTOR CGpLinearGradientBrush (BYVAL point1 AS GpPoint PTR, BYVAL point2 AS GpPoint PTR, _
-   BYVAL color1 AS ARGB, BYVAL color2 AS ARGB)
-```
-
-Creates a **LinearGradientBrush** object based on a rectangle and mode of direction.
-
-```
-CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRectF PTR, BYVAL color1 AS ARGB, _
-   BYVAL color2 AS ARGB, BYVAL mode AS LinearGradientMode)
-CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRect PTR, BYVAL color1 AS ARGB, _
-   BYVAL color2 AS ARGB, BYVAL mode AS LinearGradientMode)
-```
-
-Creates a LinearGradientBrush object from a rectangle and angle of direction.
-
-```
-CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRectF PTR, BYVAL color1 AS ARGB, _
-   BYVAL color2 AS ARGB, BYVAL angle AS SINGLE, BYVAL isAngleScalable AS BOOL)
-CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRect PTR, BYVAL color1 AS ARGB, _
-   BYVAL color2 AS ARGB, BYVAL angle AS SINGLE, BYVAL isAngleScalable AS BOOL)
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *point1* | Reference to a **GpPoint** structure that specifies the starting point of the gradient. The starting boundary line passes through the starting point. |
-| *point2* | Reference to a **GpPoint** structure that specifies the ending point of the gradient. The ending boundary line passes through the ending point. |
-| *color1* | An ARGB value that specifies the color at the starting boundary line of this linear gradient brush. |
-| *color2* | An ARGB value that specifies the color at the ending boundary line of this linear gradient brush. |
-| *rc* | Reference to a rectangle that specifies the starting and ending points of the gradient. The upper-left corner of the rectangle is the starting point. The lower-right corner is the ending point. |
-| *mode* | Element of the **LinearGradientMode** enumeration that specifies the direction of the gradient. |
-| *angle* | Real number that, if *isAngleScalable* is TRUE, specifies the base angle from which the angle of the directional line is calculated, or that, if *isAngleScalable* is FALSE, specifies the angle of the directional line. The angle is measured from the top of the rectangle that is specified by rect and must be in degrees. The gradient follows the directional line. |
-| *isAngleScalable* | BOOL value that specifies whether the angle is scalable. If *isAngleScalable* is TRUE, the angle of the directional line is scalable; otherwise, the angle is not scalable. |
-
-# <a name="ConstructorsTBrush"></a>Constructors (CGpTextureBrush)
-
-Creates a texture brush.
-
-```
-CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode = WrapModeTile)
-CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL dstRect AS GpRectF PTR, _
-   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL)
-CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL dstRect AS GpRect PTR, _
-   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL)
-CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode, _
-   BYVAL dstRect AS GpRect PTR)
-CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode, _
-   BYVAL dstX AS SINGLE, BYVAL dstY AS SINGLE, BYVAL dstWidth AS SINGLE, BYVAL dstHeight AS SINGLE)
-CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode, _
-   BYVAL dstX AS INT_, BYVAL dstY AS INT_, BYVAL dstWidth AS INT_, BYVAL dstHeight AS INT_)
-```
-
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pImage* | Pointer to a variable that will receive a pointer to the Image object that is defined by this texture brush. |
-| *nWrapMode* | Element of the **WrapMode** enumeration that specifies how repeated copies of an image are used to tile an area when it is painted with this texture brush.  |
-| *dstX* | Leftmost coordinate of the image portion to be used by this brush. |
-| *dstY* | Uppermost coordinate of the image portion to be used by this brush. |
-| *dstWidth* | Width of the brush and width of the image portion to be used by the brush. |
-| *dstHeight* | Height of the brush and height of the image portion to be used by the brush. |
-| *dstHeight* | Height of the brush and height of the image portion to be used by the brush. |
-
-#### Remarks
-
-The *dstX*, *dstY*, *dstWidth*, and *dstHeight* parameters specify a rectangle. The size of the brush is defined by dstWidth and dstHeight. The *dstX* and *dstY* parameters have no affect on the brush's size or position — the brush is always oriented at (0, 0). The *dstX*, *dstY*, *dstWidth*, and *dstHeight* parameters define the portion of the image to be used by the brush.
-
-For example, suppose you have an image that is stored in an **Image** object and is 256 ×512 (width ×height) pixels. Then you create a **TextureBrush** object based on this image as follows:
-
-```
-TextureBrush(@someImage, WrapModeTile, 12, 50, 100, 150)
-```
-
-The brush will have a width of 100 units and a height of 150 units. The brush will use a rectangular portion of the image. This portion begins at the pixel having coordinates (12, 50). The width and height of the portion are 100 and 150, respectively, measured from the starting pixel.
-
-Now suppose you create another TextureBrush object based on the same image and specify a different rectangle:
-
-```
-TextureBrush(@someImage, WrapModeTile, 0, 0, 256, 512)
-```
-
-The brush will have width and height equal to 256 and 512, respectively. The brush will use the entire image instead of a portion of it because the rectangle specifies a starting pixel at coordinates (0, 0) and dimensions identical to those of the image.
-
 # <a name="GetForegroundColor"></a>GetForegroundColor (CGpHatchBrush)
 
 Gets the foreground color of this hatch brush.
@@ -623,12 +533,12 @@ SUB Example_HatchBrushGetHatchStyle (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
-
-# <a name="ConstructorLGBrush"></a>Constructors (CGpLinearGradientBrush)
+# <a name="ConstructorsLGBrush"></a>Constructors (CGpLinearGradientBrush)
 
 Creates a **LinearGradientBrush** object from a set of boundary points and boundary colors.
 
 ```
+CONSTRUCTOR CGpLinearGradientBrush (BYVAL pLinearGradientBrush AS CGpLinearGradientBrush PTR)
 CONSTRUCTOR CGpLinearGradientBrush (BYVAL point1 AS GpPointF PTR, BYVAL point2 AS GpPointF PTR, _
    BYVAL color1 AS ARGB, BYVAL color2 AS ARGB)
 CONSTRUCTOR CGpLinearGradientBrush (BYVAL point1 AS GpPoint PTR, BYVAL point2 AS GpPoint PTR, _
@@ -644,7 +554,7 @@ CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRect PTR, BYVAL color1 AS ARGB
    BYVAL color2 AS ARGB, BYVAL mode AS LinearGradientMode)
 ```
 
-Creates a **LinearGradientBrush** object from a rectangle and angle of direction.
+Creates a LinearGradientBrush object from a rectangle and angle of direction.
 
 ```
 CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRectF PTR, BYVAL color1 AS ARGB, _
@@ -662,7 +572,7 @@ CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRect PTR, BYVAL color1 AS ARGB
 | *rc* | Reference to a rectangle that specifies the starting and ending points of the gradient. The upper-left corner of the rectangle is the starting point. The lower-right corner is the ending point. |
 | *mode* | Element of the **LinearGradientMode** enumeration that specifies the direction of the gradient. |
 | *angle* | Real number that, if *isAngleScalable* is TRUE, specifies the base angle from which the angle of the directional line is calculated, or that, if *isAngleScalable* is FALSE, specifies the angle of the directional line. The angle is measured from the top of the rectangle that is specified by rect and must be in degrees. The gradient follows the directional line. |
-| *isAngleScalable* | BOOL value that specifies whether the angle is scalable. If isAngleScalable is TRUE, the angle of the directional line is scalable; otherwise, the angle is not scalable. |
+| *isAngleScalable* | BOOL value that specifies whether the angle is scalable. If *isAngleScalable* is TRUE, the angle of the directional line is scalable; otherwise, the angle is not scalable. |
 
 # <a name="GetBlendLGBrush"></a>GetBlend (CGpLinearGradientBrush)
 
@@ -1312,59 +1222,6 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="GetImage"></a>GetImage (CGpTextureBrush)
-
-Gets a pointer to the Image object that is defined by this texture brush.
-
-```
-FUNCTION GetImage (BYVAL pImage AS CGpImage PTR) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pImage* | Pointer to a variable that will receive a pointer to the Image object that is defined by this texture brush. |
-
-#### Return value
-
-This method returns the number of preset colors currently specified for this path gradient brush.
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and uses it to fill an ellipse. The code
-' then gets the brush's image and draws it.
-' ========================================================================================
-SUB Example_GetImage (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and use it to fill an ellipse.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   graphics.FillEllipse(@textureBrush, 0, 0, 200, 200)
-
-   ' // Get the brush's image, and draw that image
-   DIM pImage2 AS CGpImage
-   textureBrush.GetImage(@pImage2)
-   graphics.DrawImage(@pImage2, 10, 150)
-
-END SUB
-' ========================================================================================
-```
-
 # <a name="GetInterpolationColorCountPGBrush"></a>GetInterpolationColorCount (CGpPathGradientBrush)
 
 Gets the number of preset colors currently specified for this path gradient brush.
@@ -1985,65 +1842,6 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="GetTransformTBrush"></a>GetTransform (CGpTextureBrush)
-
-Gets the transformation matrix of this texture brush.
-
-```
-FUNCTION GetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pMatrix* | Pointer to a **Matrix** object that receives the transformation matrix. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A **TextureBrush** object maintains a transformation matrix that can store any affine transformation. When you use a texture brush to fill an area, GDI+ transforms the brush's image according to the brush's transformation matrix and then fills the area. The transformed image exists only during rendering; the image stored in the **TextureBrush** object is not transformed. For example, suppose you call *someTextureBrush.ScaleTransform(3)* and then paint an area with *someTextureBrush*. The width of the brush's image triples when the area is painted, but the image stored in *someTextureBrush* remains unchanged.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and sets the transformation of the brush.
-' The code then gets the brush's transformation matrix and proceeds to inspect or use the elements.
-' ========================================================================================
-SUB Example_GetTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.ScaleTransform(3, 2)
-
-   DIM matrix AS CGpMatrix
-   DIM elements(5) AS SINGLE
-
-   textureBrush.GetTransform(@matrix)
-   matrix.GetElements(@elements(0))
-
-   FOR j AS LONG = 0 TO 5
-      ' // Inspect or use the value in elements[j].
-      PRINT elements(j)
-   NEXT
-
-END SUB
-' ========================================================================================
-```
-
 # <a name="GetWrapModeLGBrush"></a>GetWrapMode (CGpLinearBrush)
 
 Gets the wrap mode for this brush. The wrap mode determines how an area is tiled when it is painted with a brush.
@@ -2152,57 +1950,6 @@ SUB Example_GetWrapMode (BYVAL hdc AS HDC)
    IF nWrapMode = WrapModeTileFlipX THEN
       graphics.FillRectangle(@pthGrBrush, 0, 0, 800, 800)
    END IF
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="GetWrapModeTBrush"></a>GetWrapMode (CGpTexturetBrush)
-
-Gets the wrap mode currently set for this texture brush.
-
-```
-FUNCTION GetWrapMode () AS WrapMode
-```
-
-#### Return value
-
-This method returns the wrap mode currently set for this texture brush. The value returned is one of the elements of the **WrapMode** enumeration.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush, sets the wrap mode of the brush, and uses
-' the brush to fill a rectangle. Next, the code gets the wrap mode of the brush and stores
-' the value. The code creates a second texture brush and uses the stored wrap mode to set
-' the wrap mode of the second texture brush. Then, the code uses the second texture brush
-' to fill a rectangle.
-' ========================================================================================
-SUB Example_WrapMode (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.SetWrapMode(WrapModeTileFlipX)
-   graphics.FillRectangle(@textureBrush, 0, 0, 200, 200)
-
-   ' // Get the brush's wrap mode.
-   DIM nWrapMode AS WrapMode = textureBrush.GetWrapMode
-
-   ' // Create a second texture brush with the same wrap mode.
-   DIM pImage2 AS CGpImage = "MyTexture.png"
-   DIM textureBrush2 AS CGpTextureBrush = @pImage2
-   textureBrush2.SetWrapMode(nWrapMode)
-   graphics.FillRectangle(@textureBrush2, 210, 0, 200, 200)
 
 END SUB
 ' ========================================================================================
@@ -2346,58 +2093,6 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="MultiplyTransformTBrush"></a>MultiplyTransform (CGpTextureBrush)
-
-Updates the brush's transformation matrix with the product of itself and another matrix.
-
-```
-FUNCTION MultiplyTransform (BYVAL pMatrix AS CGpMatrix PTR, _
-   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pMatrix* | Pointer to a matrix to be multiplied by the brush's current transformation matrix. |
-| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and sets the transformation of the brush.
-' The code then uses the transformed brush to fill a rectangle.
-' ========================================================================================
-SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Horizontal stretch
-   DIM matrix AS CGpMatrix = CGpMatrix(3, 0, 0, 1, 0, 0)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-
-   textureBrush.RotateTransform(30)   ' // rotate
-   textureBrush.MultiplyTransform(@matrix, MatrixOrderAppend)   ' // stretch
-   graphics.FillRectangle(@textureBrush, 0, 0, 400, 200)
-
-END SUB
-' ========================================================================================
-```
-
 # <a name="ResetTransformLGBrush"></a>ResetTransform (CGpLinearGradientBrush)
 
 Resets the transformation matrix of this linear gradient brush to the identity matrix. This means that no transformation takes place.
@@ -2509,56 +2204,6 @@ SUB Example_ResetTransform (BYVAL hdc AS HDC)
 
    ' // Fill the same area with the path gradient brush (no transformation).
    graphics.FillRectangle(@pthGrBrush, 0, 0, 500, 500)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="ResetTransformTBrush"></a>ResetTransform (CGpTextureBrush)
-
-Resets the transformation matrix of this texture brush to the identity matrix. This means that no transformation takes place.
-
-```
-FUNCTION ResetTransform () AS GpStatus
-```
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and sets the transformation of the brush.
-' Next, the code uses the transformed brush to fill a rectangle. Then, the code resets the
-' transformation of the brush and uses the untransformed brush to fill a rectangle.
-' ========================================================================================
-SUB Example_ResetTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.RotateTransform(30)
-
-   ' // Fill a rectangle with the transformed texture brush.
-   graphics.FillEllipse(@textureBrush, 0, 0, 200, 100)
-
-   ' // Reset the transformation
-   textureBrush.ResetTransform
-
-   ' // Fill a rectangle with the texture brush (no transformation).
-   graphics.FillEllipse(@textureBrush, 210, 0, 200, 100)
 
 END SUB
 ' ========================================================================================
@@ -2682,60 +2327,6 @@ SUB Example_RotateTransform (BYVAL hdc AS HDC)
 
    ' // Fill the same area with the transformed path gradient brush.
    graphics.FillRectangle(@pthGrBrush, 0, 0, 500, 500)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="RotateTransformTBrush"></a>RotateTransform (CGpTextureBrush)
-
-Updates this texture brush's current transformation matrix with the product of itself and a rotation matrix.
-
-```
-FUNCTION RotateTransform (BYVAL angle AS SINGLE, _
-   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *angle* | Simple precision number that specifies the angle of rotation in degrees. |
-| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A single 3×3 matrix can store any sequence of affine transformations. If you have several 3×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix R represents a rotation, and matrix T represents a translation. If matrix M is the product RT, then matrix M represents a composite transformation: first rotate, then translate.
-
-The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and sets the transformation of the brush.
-' The code then uses the transformed brush to fill a rectangle.
-' ========================================================================================
-SUB Example_RotateTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.ScaleTransform(3, 1)
-   textureBrush.RotateTransform(30, MatrixOrderAppend)
-   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
 
 END SUB
 ' ========================================================================================
@@ -2865,62 +2456,6 @@ SUB Example_ScaleTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
-
-# <a name="ScaleTransformTBrush"></a>ScaleTransform (CGpTextureBrush)
-
-Updates this texture brush's current transformation matrix with the product of itself and a scaling matrix.
-
-```
-FUNCTION ScaleTransform (BYVAL sx AS SINGLE, BYVAL sy AS SINGLE, _
-   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *sx* | Simple precision number that specifies the amount to scale in the x direction. |
-| *sy* | Simple precision number that specifies the amount to scale in the y direction. |
-| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A single 3×3 matrix can store any sequence of affine transformations. If you have several 3×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix T represents a translation, and matrix S represents a scaling. If matrix M is the product TS, then matrix M represents a composite transformation: first translate, then scale.
-
-The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and sets the transformation of the brush.
-' The code then uses the transformed brush to fill a rectangle.
-' ========================================================================================
-SUB Example_ScaleTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.RotateTransform(30)
-   textureBrush.ScaleTransform(3, 1, MatrixOrderAppend)
-   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
-
-END SUB
-' ========================================================================================
-```
-
 # <a name="SetBlendLGBrush"></a>SetBlend (CGpLinearGradientBrush)
 
 Sets the blend factors and the blend positions of this linear gradient brush to create a custom blend.
@@ -3901,58 +3436,6 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="SetTransformTBrush"></a>SetTransform (CGpTextureBrush)
-
-Sets the transformation matrix of this texture brush.
-
-```
-FUNCTION SetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pMatrix* | Pointer to a **Matrix** object that specifies the transformation matrix to use. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A **TextureBrush** object maintains a transformation matrix that can store any affine transformation. When you use a texture brush to fill an area, Windows GDI+ transforms the brush's image according to the brush's transformation matrix and then fills the area. The transformed image exists only during rendering; the image stored in the TextureBrush object is not transformed. For example, suppose you call and then paint an area with *someTextureBrush.ScaleTransform(3)* and then paint an area with *someTextureBrush*. The width of the brush's image triples when the area is painted, but the image stored in someTextureBrush remains unchanged.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and sets the transformation of the brush.
-' The code then uses the transformed brush to fill an ellipse.
-' ========================================================================================
-SUB Example_SetTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Horizontal stretch
-   DIM matrix AS CGpMatrix = CGpMatrix(2, 0, 0, 1, 0, 0)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.SetTransform(@matrix)
-   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
-
-END SUB
-' ========================================================================================
-```
-
 # <a name="SetWrapModeLGBrush"></a>SetWrapMode (CGpLinearGradientBrush)
 
 Sets the wrap mode of this linear gradient brush.
@@ -4067,65 +3550,6 @@ SUB Example_SetWrapMode (BYVAL hdc AS HDC)
    pthGrBrush.SetWrapMode(WrapModeTileFlipX)
 
    graphics.FillRectangle(@pthGrBrush, 0, 0, 800, 800)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="SetWrapModeTBrush"></a>SetWrapMode (CGpTextureBrush)
-
-Sets the wrap mode of this texture brush.
-
-```
-FUNCTION SetWrapMode (BYVAL wrapMode AS WrapMode) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *wrapMode* | Element of the **WrapMode** enumeration that specifies how repeated copies of an image are used to tile an area when it is painted with this texture brush. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-An area that extends beyond the boundaries of the brush is tiled with repeated copies of the brush. A texture brush may have alternate tiles flipped in a certain direction, as specified by the wrap mode. Flipping has the effect of reversing the brush's image. For example, if the wrap mode is specified as **WrapModeTileFlipX**, the brush is flipped about a line that is parallel to the y-axis.
-
-The texture brush is always oriented at (0, 0). If the wrap mode is specified as **WrapModeClamp**, no area outside of the brush is tiled. For example, suppose you create a texture brush, specifying **WrapModeClamp** as the wrap mode:
-
-```
-TextureBrush(SomeImage, WrapModeClamp)
-```
-
-Then you paint an area with the brush. If the size of the brush has a height of 50 and the painted area is a rectangle with its upper-left corner at (0, 50), you will see no repeated copies of the brush (no tiling).
-
-The default wrap mode for a texture brush is **WrapModeTile**, which specifies no flipping of the tile and no clamping.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush, sets the wrap mode of the brush, and uses
-' the brush to fill a rectangle.
-' ========================================================================================
-SUB Example_SetWrapMode (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.SetWrapMode(WrapModeTileFlipX)
-   graphics.FillRectangle(@textureBrush, 0, 0, 400, 200)
 
 END SUB
 ' ========================================================================================
@@ -4255,6 +3679,539 @@ SUB Example_TranslateTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ````
+
+# <a name="ConstructorsTBrush"></a>Constructors (CGpTextureBrush)
+
+Creates a texture brush.
+
+```
+CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode = WrapModeTile)
+CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL dstRect AS GpRectF PTR, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL)
+CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL dstRect AS GpRect PTR, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL)
+CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode, _
+   BYVAL dstRect AS GpRect PTR)
+CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode, _
+   BYVAL dstX AS SINGLE, BYVAL dstY AS SINGLE, BYVAL dstWidth AS SINGLE, BYVAL dstHeight AS SINGLE)
+CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode, _
+   BYVAL dstX AS INT_, BYVAL dstY AS INT_, BYVAL dstWidth AS INT_, BYVAL dstHeight AS INT_)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pImage* | Pointer to a variable that will receive a pointer to the Image object that is defined by this texture brush. |
+| *nWrapMode* | Element of the **WrapMode** enumeration that specifies how repeated copies of an image are used to tile an area when it is painted with this texture brush.  |
+| *dstX* | Leftmost coordinate of the image portion to be used by this brush. |
+| *dstY* | Uppermost coordinate of the image portion to be used by this brush. |
+| *dstWidth* | Width of the brush and width of the image portion to be used by the brush. |
+| *dstHeight* | Height of the brush and height of the image portion to be used by the brush. |
+| *dstHeight* | Height of the brush and height of the image portion to be used by the brush. |
+
+#### Remarks
+
+The *dstX*, *dstY*, *dstWidth*, and *dstHeight* parameters specify a rectangle. The size of the brush is defined by dstWidth and dstHeight. The *dstX* and *dstY* parameters have no affect on the brush's size or position — the brush is always oriented at (0, 0). The *dstX*, *dstY*, *dstWidth*, and *dstHeight* parameters define the portion of the image to be used by the brush.
+
+For example, suppose you have an image that is stored in an **Image** object and is 256 ×512 (width ×height) pixels. Then you create a **TextureBrush** object based on this image as follows:
+
+```
+TextureBrush(@someImage, WrapModeTile, 12, 50, 100, 150)
+```
+
+The brush will have a width of 100 units and a height of 150 units. The brush will use a rectangular portion of the image. This portion begins at the pixel having coordinates (12, 50). The width and height of the portion are 100 and 150, respectively, measured from the starting pixel.
+
+Now suppose you create another TextureBrush object based on the same image and specify a different rectangle:
+
+```
+TextureBrush(@someImage, WrapModeTile, 0, 0, 256, 512)
+```
+
+The brush will have width and height equal to 256 and 512, respectively. The brush will use the entire image instead of a portion of it because the rectangle specifies a starting pixel at coordinates (0, 0) and dimensions identical to those of the image.
+
+# <a name="GetImage"></a>GetImage (CGpTextureBrush)
+
+Gets a pointer to the Image object that is defined by this texture brush.
+
+```
+FUNCTION GetImage (BYVAL pImage AS CGpImage PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pImage* | Pointer to a variable that will receive a pointer to the Image object that is defined by this texture brush. |
+
+#### Return value
+
+This method returns the number of preset colors currently specified for this path gradient brush.
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and uses it to fill an ellipse. The code
+' then gets the brush's image and draws it.
+' ========================================================================================
+SUB Example_GetImage (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and use it to fill an ellipse.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   graphics.FillEllipse(@textureBrush, 0, 0, 200, 200)
+
+   ' // Get the brush's image, and draw that image
+   DIM pImage2 AS CGpImage
+   textureBrush.GetImage(@pImage2)
+   graphics.DrawImage(@pImage2, 10, 150)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetTransformTBrush"></a>GetTransform (CGpTextureBrush)
+
+Gets the transformation matrix of this texture brush.
+
+```
+FUNCTION GetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that receives the transformation matrix. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **TextureBrush** object maintains a transformation matrix that can store any affine transformation. When you use a texture brush to fill an area, GDI+ transforms the brush's image according to the brush's transformation matrix and then fills the area. The transformed image exists only during rendering; the image stored in the **TextureBrush** object is not transformed. For example, suppose you call *someTextureBrush.ScaleTransform(3)* and then paint an area with *someTextureBrush*. The width of the brush's image triples when the area is painted, but the image stored in *someTextureBrush* remains unchanged.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' The code then gets the brush's transformation matrix and proceeds to inspect or use the elements.
+' ========================================================================================
+SUB Example_GetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.ScaleTransform(3, 2)
+
+   DIM matrix AS CGpMatrix
+   DIM elements(5) AS SINGLE
+
+   textureBrush.GetTransform(@matrix)
+   matrix.GetElements(@elements(0))
+
+   FOR j AS LONG = 0 TO 5
+      ' // Inspect or use the value in elements[j].
+      PRINT elements(j)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetWrapModeTBrush"></a>GetWrapMode (CGpTexturetBrush)
+
+Gets the wrap mode currently set for this texture brush.
+
+```
+FUNCTION GetWrapMode () AS WrapMode
+```
+
+#### Return value
+
+This method returns the wrap mode currently set for this texture brush. The value returned is one of the elements of the **WrapMode** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush, sets the wrap mode of the brush, and uses
+' the brush to fill a rectangle. Next, the code gets the wrap mode of the brush and stores
+' the value. The code creates a second texture brush and uses the stored wrap mode to set
+' the wrap mode of the second texture brush. Then, the code uses the second texture brush
+' to fill a rectangle.
+' ========================================================================================
+SUB Example_WrapMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.SetWrapMode(WrapModeTileFlipX)
+   graphics.FillRectangle(@textureBrush, 0, 0, 200, 200)
+
+   ' // Get the brush's wrap mode.
+   DIM nWrapMode AS WrapMode = textureBrush.GetWrapMode
+
+   ' // Create a second texture brush with the same wrap mode.
+   DIM pImage2 AS CGpImage = "MyTexture.png"
+   DIM textureBrush2 AS CGpTextureBrush = @pImage2
+   textureBrush2.SetWrapMode(nWrapMode)
+   graphics.FillRectangle(@textureBrush2, 210, 0, 200, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="MultiplyTransformTBrush"></a>MultiplyTransform (CGpTextureBrush)
+
+Updates the brush's transformation matrix with the product of itself and another matrix.
+
+```
+FUNCTION MultiplyTransform (BYVAL pMatrix AS CGpMatrix PTR, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a matrix to be multiplied by the brush's current transformation matrix. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' The code then uses the transformed brush to fill a rectangle.
+' ========================================================================================
+SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Horizontal stretch
+   DIM matrix AS CGpMatrix = CGpMatrix(3, 0, 0, 1, 0, 0)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+
+   textureBrush.RotateTransform(30)   ' // rotate
+   textureBrush.MultiplyTransform(@matrix, MatrixOrderAppend)   ' // stretch
+   graphics.FillRectangle(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="ResetTransformTBrush"></a>ResetTransform (CGpTextureBrush)
+
+Resets the transformation matrix of this texture brush to the identity matrix. This means that no transformation takes place.
+
+```
+FUNCTION ResetTransform () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' Next, the code uses the transformed brush to fill a rectangle. Then, the code resets the
+' transformation of the brush and uses the untransformed brush to fill a rectangle.
+' ========================================================================================
+SUB Example_ResetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.RotateTransform(30)
+
+   ' // Fill a rectangle with the transformed texture brush.
+   graphics.FillEllipse(@textureBrush, 0, 0, 200, 100)
+
+   ' // Reset the transformation
+   textureBrush.ResetTransform
+
+   ' // Fill a rectangle with the texture brush (no transformation).
+   graphics.FillEllipse(@textureBrush, 210, 0, 200, 100)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="RotateTransformTBrush"></a>RotateTransform (CGpTextureBrush)
+
+Updates this texture brush's current transformation matrix with the product of itself and a rotation matrix.
+
+```
+FUNCTION RotateTransform (BYVAL angle AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *angle* | Simple precision number that specifies the angle of rotation in degrees. |
+| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A single 3×3 matrix can store any sequence of affine transformations. If you have several 3×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix R represents a rotation, and matrix T represents a translation. If matrix M is the product RT, then matrix M represents a composite transformation: first rotate, then translate.
+
+The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' The code then uses the transformed brush to fill a rectangle.
+' ========================================================================================
+SUB Example_RotateTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.ScaleTransform(3, 1)
+   textureBrush.RotateTransform(30, MatrixOrderAppend)
+   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="ScaleTransformTBrush"></a>ScaleTransform (CGpTextureBrush)
+
+Updates this texture brush's current transformation matrix with the product of itself and a scaling matrix.
+
+```
+FUNCTION ScaleTransform (BYVAL sx AS SINGLE, BYVAL sy AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *sx* | Simple precision number that specifies the amount to scale in the x direction. |
+| *sy* | Simple precision number that specifies the amount to scale in the y direction. |
+| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A single 3×3 matrix can store any sequence of affine transformations. If you have several 3×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix T represents a translation, and matrix S represents a scaling. If matrix M is the product TS, then matrix M represents a composite transformation: first translate, then scale.
+
+The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' The code then uses the transformed brush to fill a rectangle.
+' ========================================================================================
+SUB Example_ScaleTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.RotateTransform(30)
+   textureBrush.ScaleTransform(3, 1, MatrixOrderAppend)
+   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetTransformTBrush"></a>SetTransform (CGpTextureBrush)
+
+Sets the transformation matrix of this texture brush.
+
+```
+FUNCTION SetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that specifies the transformation matrix to use. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **TextureBrush** object maintains a transformation matrix that can store any affine transformation. When you use a texture brush to fill an area, Windows GDI+ transforms the brush's image according to the brush's transformation matrix and then fills the area. The transformed image exists only during rendering; the image stored in the TextureBrush object is not transformed. For example, suppose you call and then paint an area with *someTextureBrush.ScaleTransform(3)* and then paint an area with *someTextureBrush*. The width of the brush's image triples when the area is painted, but the image stored in someTextureBrush remains unchanged.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' The code then uses the transformed brush to fill an ellipse.
+' ========================================================================================
+SUB Example_SetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Horizontal stretch
+   DIM matrix AS CGpMatrix = CGpMatrix(2, 0, 0, 1, 0, 0)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.SetTransform(@matrix)
+   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetWrapModeTBrush"></a>SetWrapMode (CGpTextureBrush)
+
+Sets the wrap mode of this texture brush.
+
+```
+FUNCTION SetWrapMode (BYVAL wrapMode AS WrapMode) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wrapMode* | Element of the **WrapMode** enumeration that specifies how repeated copies of an image are used to tile an area when it is painted with this texture brush. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+An area that extends beyond the boundaries of the brush is tiled with repeated copies of the brush. A texture brush may have alternate tiles flipped in a certain direction, as specified by the wrap mode. Flipping has the effect of reversing the brush's image. For example, if the wrap mode is specified as **WrapModeTileFlipX**, the brush is flipped about a line that is parallel to the y-axis.
+
+The texture brush is always oriented at (0, 0). If the wrap mode is specified as **WrapModeClamp**, no area outside of the brush is tiled. For example, suppose you create a texture brush, specifying **WrapModeClamp** as the wrap mode:
+
+```
+TextureBrush(SomeImage, WrapModeClamp)
+```
+
+Then you paint an area with the brush. If the size of the brush has a height of 50 and the painted area is a rectangle with its upper-left corner at (0, 50), you will see no repeated copies of the brush (no tiling).
+
+The default wrap mode for a texture brush is **WrapModeTile**, which specifies no flipping of the tile and no clamping.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush, sets the wrap mode of the brush, and uses
+' the brush to fill a rectangle.
+' ========================================================================================
+SUB Example_SetWrapMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.SetWrapMode(WrapModeTileFlipX)
+   graphics.FillRectangle(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
 
 # <a name="TranslateTransformTBrush"></a>TranslateTransform (CGpTextureBrush)
 
