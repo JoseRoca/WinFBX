@@ -240,7 +240,7 @@ END TYPE
 | Member     | Description |
 | ---------- | ----------- |
 | **Flags** | Combination of flags from the **PaletteFlags** enumeration. |
-| **Count** | Number of elements in the Entries array. |
+| **Count** | Number of elements in the **Entries** array. |
 | **Entries** | Array of ARGB colors.  |
 
 # <a name="EncoderParameter"></a>EncoderParameter Structure
