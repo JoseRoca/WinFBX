@@ -178,10 +178,14 @@ CONSTRUCTOR CGpGraphics (BYVAL hdc AS HDC, BYVAL hDevice AS HANDLE)
 Creates a **Graphics** object that is associated with a specified window.
 
 ```
-CONSTRUCTOR CGpGraphics (BYVAL pImage AS CGpImage PTR)
+CONSTRUCTOR CGpGraphics (BYVAL hwnd AS HWND, BYVAL icm AS BOOLEAN = FALSE)
 ```
 
 Creates a **Graphics** object that is associated with an **Image** object. This constructor fails if the **Image** object is based on a metafile that was opened for reading. The Image(file) and Metafile(file) constructors open a metafile for reading. To open a metafile for recording, use a **Metafile** constructor that receives a device context handle.
+
+```
+CONSTRUCTOR CGpGraphics (BYVAL pImage AS CGpImage PTR)
+```
 
 This constructor also fails if the image uses one of the following pixel formats:
 
