@@ -1682,7 +1682,7 @@ END SUB
 
 # <a name="SetDashPattern"></a>SetDashPattern
 
-Sets an array of custom dashes and spaces for this Pen object.
+Sets an array of custom dashes and spaces for this **Pen** object.
 
 ```
 FUNCTION SetDashPattern (BYVAL dashArray AS SINGLE PTR, BYVAL nCount AS INT_) AS GpStatus
