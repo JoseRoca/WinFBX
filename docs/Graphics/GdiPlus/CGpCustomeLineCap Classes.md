@@ -12,7 +12,7 @@ The **CGpCustomLineCap** class encapsulates a custom line cap. A line cap define
 | [GetBaseCap](#GetBaseCap) | Gets the style of the base cap. |
 | [GetBaseInset](#GetBaseInset) | Gets the distance between the base cap to the start of the line. |
 | [GetStrokeCaps](#GetStrokeCaps) | Gets the end cap styles for both the start line cap and the end line cap. |
-| [GetStrokeJoin](#GetStrokeJoin) | Returns the style of LineJoin used to join multiple lines in the same **GraphicsPath** object. |
+| [GetStrokeJoin](#GetStrokeJoin) | Returns the style of **LineJoin** used to join multiple lines in the same **GraphicsPath** object. |
 | [GetWidthScale](#GetWidthScale) | Gets the value of the scale width. |
 | [SetBaseCap](#SetBaseCap) | Sets the **LineCap** that appears as part of this **CustomLineCap** at the end of a line. |
 | [SetBaseInset](#SetBaseInset) | Sets the base inset value of this custom line cap. |
