@@ -5994,7 +5994,7 @@ END SUB
 
 # <a name="Widen"></a>Widen (CGpGraphicsPath)
 
-Replaces this path with curves that enclose the area that is filled when this path is drawn by a specified pen. The Widen method also flattens the path.
+Replaces this path with curves that enclose the area that is filled when this path is drawn by a specified pen. The **Widen** method also flattens the path.
 
 ```
 FUNCTION Widen (BYVAL pPen AS CGpPen PTR, BYVAL pMatrix AS CGpMatrix PTR = NULL, _
