@@ -5042,7 +5042,7 @@ END SUB
 
 # <a name="ClearMarkers"></a>ClearMarkers (CGpGraphicsPath)
 
-Adds the outline of a string to this path.
+Clears the markers from this path.
 
 ```
 FUNCTION ClearMarkers () AS GpStatus
