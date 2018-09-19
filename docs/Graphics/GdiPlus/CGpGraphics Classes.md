@@ -6059,7 +6059,7 @@ CONSTRUCTOR CGpGraphicsPathIterator (BYVAL pPath AS CGpGraphicsPath PTR)
 
 # <a name="CopyData"></a>CopyData (CGpGraphicsPathIterator)
 
-Copies a subset of the path's data points to a PointF array and copies a subset of the path's point types to a byte array.
+Copies a subset of the path's data points to a *GpPointF* array and copies a subset of the path's point types to a byte array.
 
 ```
 FUNCTION CopyData (BYVAL pts AS GpPointF PTR, BYVAL types AS BYTE PTR, _
