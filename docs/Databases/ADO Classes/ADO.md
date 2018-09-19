@@ -11,7 +11,7 @@ The `CADOBase` object, from which the other ADO classes inherit, initializes and
 
 | Name       | Description |
 | ---------- | ----------- |
-| [CAdoBase Class](#CADOBase) | Base class for all the other ADO classes. |
+| [CADOBase Class](#CADOBase) | Base class for all the other ADO classes. |
 | [ADO Object Model](#ADOObjectModel) | ADO objects and their collections. |
 | [ADO Identifiers](#ADOIdentifiers) | PROGIDs, CLSIDs and IIDs. |
 | [ADO Errors](#ADOErrors) | ADO errors. |
