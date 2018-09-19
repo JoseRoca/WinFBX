@@ -202,7 +202,7 @@ END SUB
 
 # <a name="FindFirstItem"></a>FindFirstItem (CGpImage)
 
-Retrieves the description and the data size of the first metadata item in this Image object.
+Retrieves the description and the data size of the first metadata item in this **Image** object.
 
 ```
 FUNCTION FindFirstItem (BYVAL pitem AS ImageItemData PTR) AS GpStatus
