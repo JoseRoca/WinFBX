@@ -506,7 +506,7 @@ FUNCTION GetPaletteSize () AS INT_
 
 # <a name="GetPhysicalDimension"></a>GetPhysicalDimension (CGpImage)
 
-Gets the width and height of this image.
+Gets the width and height of this **Image** object.
 
 ```
 FUNCTION GetPhysicalDimension (BYVAL psize AS SizeF PTR) AS GpStatus
