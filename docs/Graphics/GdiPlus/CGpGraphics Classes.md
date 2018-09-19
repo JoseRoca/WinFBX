@@ -212,7 +212,7 @@ CONSTRUCTOR CGpGraphics (BYVAL pImage AS CGpImage PTR)
 
 # <a name="AddMetafileComment"></a>AddMetafileComment (CGpGraphics)
 
-Creates a **Graphics** object that is associated with a specified device context. When you use this method to create a **Graphics** object, make sure that the **Graphics** object is deleted before the device context is released.
+Adds a text comment to an existing metafile.
 
 ```
 FUNCTION AddMetafileComment (BYVAL pdata AS BYTE PTR, BYVAL sizeData AS UINT) AS GpStatus
