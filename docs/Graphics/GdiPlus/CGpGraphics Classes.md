@@ -151,7 +151,7 @@ The **CGpGraphicsPathIterator** class provides methods for isolating selected su
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorGraphicsPathIterator) | Creates a new **GraphicsPathIterator** object and associates it with a **GraphicsPath** object. |
+| [Constructor](#ConstructorGraphicsPathIterator) | Creates a new **GraphicsPathIterator** object and associates it with a **GraphicsPath** object. |
 | [CopyData](#CopyData) | Copies a subset of the path's data points to a **GpPointF** array and copies a subset of the path's point types to a byte array. |
 | [Enumerate](#Enumerate) | Copies the path's data points to a **GpPointF** array and copies the path's point types to a byte array. |
 | [GetCount](#GetCount) | Returns the number of data points in the path. |
