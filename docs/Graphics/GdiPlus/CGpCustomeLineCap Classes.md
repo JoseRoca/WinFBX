@@ -7,7 +7,7 @@ The **CGpCustomLineCap** class encapsulates a custom line cap. A line cap define
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#ConstructorCustomLineCap) | Creates a **CustomLineCap** object. |
+| [Constructors](#ConstructorCustomLineCap) | Creates a **CustomLineCap** object. |
 | [Clone](#Clone) | Copies the contents of the existing **CustomLineCap** object into a new **CustomLineCap** object. |
 | [GetBaseCap](#GetBaseCap) | Gets the style of the base cap. |
 | [GetBaseInset](#GetBaseInset) | Gets the distance between the base cap to the start of the line. |
@@ -30,7 +30,7 @@ The **CGpAdjustableArrowCap** object extends **CGpCustomLineCap**. This object b
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#ConstructorArrowCap) | Creates an adjustable arrow line cap with the specified height and width. |
+| [Constructors](#ConstructorArrowCap) | Creates an adjustable arrow line cap with the specified height and width. |
 | [GetHeight](#GetHeight) | Gets the height of the arrow cap. |
 | [GetMiddleInset](#GetMiddleInset) | Gets the value of the inset. |
 | [GetWidth](#GetWidth) | Gets the width of the arrow cap. |
@@ -40,11 +40,13 @@ The **CGpAdjustableArrowCap** object extends **CGpCustomLineCap**. This object b
 | [SetMiddleInset](#SetMiddleInset) | Sets the number of units that the midpoint of the base shifts towards the vertex. |
 | [SetWidth](#SetWidth) | Sets the width of the arrow cap. |
 
-# <a name="ConstructorCustomLineCap"></a>Constructor (CGpCustomLineCap)
+# <a name="ConstructorCustomLineCap"></a>Constructors (CGpCustomLineCap)
 
 Creates a **CustomLineCap** object.
 
 ```
+CONSTRUCTOR CGpCustomLineCap
+CONSTRUCTOR CGpCustomLineCap (BYVAL pCustomLineCap AS CGpCustomLineCap PTR)
 CONSTRUCTOR CGpCustomLineCap (BYVAL pFillPath AS CGpGraphicsPath PTR, _
    BYVAL pStrokePath AS CGpGraphicsPath PTR, BYVAL baseCap AS LineCap = LinecapFLat, _
    BYVAL baseInset AS SINGLE = 0.0)
@@ -812,11 +814,12 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ConstructorArrowCap"></a>Constructor (CGpAdjustableArrowCap)
+# <a name="ConstructorArrowCap"></a>Constructors (CGpAdjustableArrowCap)
 
 Creates an adjustable arrow line cap with the specified height and width. The arrow line cap can be filled or nonfilled. The middle inset defaults to zero.
 
 ```
+CONSTRUCTOR CGpAdjustableArrowCap (BYVAL pAdjustableArrowCap AS CGpAdjustableArrowCap PTR)
 CONSTRUCTOR CGpAdjustableArrowCap (BYVAL nHeight AS SINGLE, BYVAL nWidth AS SINGLE, _
    BYVAL bIsFilled AS BOOL = CTRUE)
 ```
