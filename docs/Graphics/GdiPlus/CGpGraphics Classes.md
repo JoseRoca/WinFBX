@@ -2855,6 +2855,26 @@ Determines whether smoothing (antialiasing) is applied to the **Graphics** objec
 FUNCTION GetSmoothingMode () AS SmoothingMode
 ```
 
+#### SmoothingMode Enumeration
+
+The **SmoothingMode** enumeration specifies the type of smoothing (antialiasing) that is applied to lines and curves. This enumeration is used by the **GetSmoothingMode** and **SetSmoothingMode** functions.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **SmoothingModeInvalid** | Reserved. |
+| **SmoothingModeDefault** | Specifies that smoothing is not applied. |
+| **SmoothingModeHighSpeed** | Specifies that smoothing is not applied. |
+| **SmoothingModeHighQuality** | Specifies that smoothing is applied using an 8 X 4 box filter. |
+| **SmoothingModeNone** | Specifies that smoothing is not applied. |
+| **SmoothingModeAntiAlias8x4** | Specifies that smoothing is applied using an 8 X 4 box filter. |
+| **SmoothingModeAntiAlias** | Specifies that smoothing is applied using an 8 X 4 box filter. |
+| **SmoothingModeAntiAlias8x8** | Specifies that smoothing is applied using an 8 X 8 box filter. |
+
+#### Remarks
+
+Smoothing performed by an 8 X 4 box filter gives better results for nearly vertical lines than it does for nearly horizontal lines. Smoothing performed by an 8 X 8 box filter gives equally good results for nearly vertical and nearly horizontal lines. The 8x8 algorithm produces higher quality smoothing but is slower than the 8 X 4 algorithm.
+
+
 #### Return value
 
 If smoothing (antialiasing) is applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias**. If smoothing (antialiasing) is not applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias** and **SmoothingModeNone** are elements of the **SmoothingMode** enumeration.
@@ -3852,6 +3872,26 @@ FUNCTION SetSmoothingMode (BYVAL smoothingMode AS LONG) AS GpStatus
 | Parameter  | Description |
 | ---------- | ----------- |
 | *smoothingMode* | Element of the **SmoothingMode** enumeration that specifies whether smoothing (antialiasing) is applied to lines and curves. |
+
+#### SmoothingMode Enumeration
+
+The **SmoothingMode** enumeration specifies the type of smoothing (antialiasing) that is applied to lines and curves. This enumeration is used by the **GetSmoothingMode** and **SetSmoothingMode** functions.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **SmoothingModeInvalid** | Reserved. |
+| **SmoothingModeDefault** | Specifies that smoothing is not applied. |
+| **SmoothingModeHighSpeed** | Specifies that smoothing is not applied. |
+| **SmoothingModeHighQuality** | Specifies that smoothing is applied using an 8 X 4 box filter. |
+| **SmoothingModeNone** | Specifies that smoothing is not applied. |
+| **SmoothingModeAntiAlias8x4** | Specifies that smoothing is applied using an 8 X 4 box filter. |
+| **SmoothingModeAntiAlias** | Specifies that smoothing is applied using an 8 X 4 box filter. |
+| **SmoothingModeAntiAlias8x8** | Specifies that smoothing is applied using an 8 X 8 box filter. |
+
+#### Remarks
+
+Smoothing performed by an 8 X 4 box filter gives better results for nearly vertical lines than it does for nearly horizontal lines. Smoothing performed by an 8 X 8 box filter gives equally good results for nearly vertical and nearly horizontal lines. The 8x8 algorithm produces higher quality smoothing but is slower than the 8 X 4 algorithm.
+
 
 #### Return value
 
