@@ -1048,7 +1048,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="GetWrapModeLGBrush"></a>GetWrapMode (CGpLinearBrush)
+# <a name="GetWrapModeLGBrush"></a>GetWrapMode (CGpLinearGradientBrush)
 
 Gets the wrap mode for this brush. The wrap mode determines how an area is tiled when it is painted with a brush.
 
