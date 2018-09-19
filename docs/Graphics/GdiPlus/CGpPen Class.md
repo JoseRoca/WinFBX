@@ -56,6 +56,7 @@ Encapsulates a **Pen** object. A **Pen** object is a Windows GDI+ object used to
 Creates a **Pen** object that uses a specified color and width.
 
 ```
+CONSTRUCTOR CGpPen
 CONSTRUCTOR CGpPen (BYVAL pPen AS CGpPen PTR)
 CONSTRUCTOR CGpPen (BYVAL pBrush AS CGpBrush PTR, BYVAL nWidth AS SINGLE = 1.0)
 CONSTRUCTOR CGpPen (BYVAL colour AS ARGB, BYVAL nWidth AS SINGLE = 1.0)
