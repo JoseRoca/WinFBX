@@ -219,11 +219,11 @@ END TYPE
 
 | Member     | Description |
 | ---------- | ----------- |
-| **m** | 55 array of real numbers. |
+| **m** | 5x5 array of real numbers. |
 
 #### Remarks
 
-A 55 color matrix is a homogeneous matrix for a 4-space transformation. The element in the fifth row and fifth column of a 55 homogeneous matrix must be 1, and all of the other elements in the fifth column must be 0. Color matrices are used to transform color vectors. The first four components of a color vector hold the red, green, blue, and alpha components (in that order) of a color. The fifth component of a color vector is always 1.
+A 5x5 color matrix is a homogeneous matrix for a 4-space transformation. The element in the fifth row and fifth column of a 5x5 homogeneous matrix must be 1, and all of the other elements in the fifth column must be 0. Color matrices are used to transform color vectors. The first four components of a color vector hold the red, green, blue, and alpha components (in that order) of a color. The fifth component of a color vector is always 1.
 
 # <a name="ColorPalette"></a>ColorPalette Structure
 
