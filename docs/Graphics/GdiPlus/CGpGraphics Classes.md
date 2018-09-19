@@ -220,7 +220,7 @@ FUNCTION AddMetafileComment (BYVAL pdata AS BYTE PTR, BYVAL sizeData AS UINT) AS
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *rgData* | Pointer to a buffer that contains the comment. |
+| *pData* | Pointer to a buffer that contains the comment. |
 | *sizeData* | Integer that specifies the number of bytes in the value of the *data* parameter.  |
 
 #### Return value
