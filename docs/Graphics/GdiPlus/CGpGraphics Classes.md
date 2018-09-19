@@ -5076,7 +5076,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 # <a name="CloseAllFigures"></a>CloseAllFigures (CGpGraphicsPath)
 
-Clears the markers from this path.
+Closes all open figures in this path.
 
 ```
 FUNCTION CloseAllFigures () AS GpStatus
