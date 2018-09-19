@@ -716,18 +716,6 @@ FUNCTION GetGammaCorrection () AS BOOL
 
 If gamma correction is enabled, this method returns TRUE; otherwise, it returns FALSE.
 
-# <a name="GetGammaCorrectionPGBrush"></a>GetGammaCorrection (CGpPathGradientBrush)
-
-Determines whether gamma correction is enabled for this path gradient brush.
-
-```
-FUNCTION GetGammaCorrection () AS BOOL
-```
-
-#### Return value
-
-If gamma correction is enabled, this method returns TRUE; otherwise, it returns FALSE.
-
 # <a name="GetInterpolationColorCountLGBrush"></a>GetInterpolationColorCount (CGpLinearGradientBrush)
 
 Gets the number of colors currently set to be interpolated for this linear gradient brush.
@@ -2306,6 +2294,19 @@ SUB Example_GetFocusScales (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetGammaCorrectionPGBrush"></a>GetGammaCorrection (CGpPathGradientBrush)
+
+Determines whether gamma correction is enabled for this path gradient brush.
+
+```
+FUNCTION GetGammaCorrection () AS BOOL
+```
+
+#### Return value
+
+If gamma correction is enabled, this method returns TRUE; otherwise, it returns FALSE.
+
 
 # <a name="GetInterpolationColorCountPGBrush"></a>GetInterpolationColorCount (CGpPathGradientBrush)
 
