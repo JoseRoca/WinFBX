@@ -164,7 +164,7 @@ The **CGpGraphicsPathIterator** class provides methods for isolating selected su
 
 # <a name="ConstructorsGraphics"></a>Constructors (CGpGraphics)
 
-Creates a **GraphicsPath** object from another +*GraphicsPath** object.
+Creates a **GraphicsPath** object from another **GraphicsPath** object.
 
 ```
 CONSTRUCTOR CGpGraphicsPath (BYVAL pGraphicsPath AS CGpGraphicsPath PTR)
