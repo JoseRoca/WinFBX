@@ -477,7 +477,7 @@ NEXT
 
 **Include file**: CAdoProperties.inc (include CADODB.inc).
 
-### Count (CADOProperties Class)
+## Count (CADOProperties Class)
 
 Retrieves the number of objects of the **Properties** collection.
 
@@ -491,7 +491,7 @@ Because numbering for members of a collection begins with zero, you should alway
 
 If the **Count** property is zero, there are no objects in the collection.
 
-### Item (CADOProperties Class)
+## Item (CADOProperties Class)
 
 Indicates a specific member of the **Properties** collection, by name or ordinal number.
 
@@ -511,7 +511,7 @@ An **Afx_ADOProperty** object reference.
 
 If **Item** cannot find an object in the collection corresponding to the **Index** argument, an error occurs.
 
-### Refresh (CADOProperties Class)
+## Refresh (CADOProperties Class)
 
 Refreshes the contents of the **Properties** collection.
 
