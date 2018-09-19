@@ -1410,8 +1410,9 @@ END SUB
 ' ========================================================================================
 ```
 
-Example
+#### Example
 
+```
 ' ========================================================================================
 ' The following example creates a RectF structure and determines whether the rectangle is
 ' visible or partially visible on the display device. If it is, it fills the rectangle.
@@ -1436,6 +1437,7 @@ SUB Example_IsVisibleRect (BYVAL hdc AS HDC)
 
 END SUB
 ' ========================================================================================
+```
 
 # <a name="MakeEmpty"></a>MakeEmpty
 
