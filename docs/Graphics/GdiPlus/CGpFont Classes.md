@@ -76,7 +76,13 @@ The **CGpFontFamily** class encapsulates a set of fonts that make up a font fami
 
 # <a name="ConstructorsFont"></a>Constructors (CGpFont)
 
-Creates and initializes a Font object from another Font object.
+Creates a **Font** object.
+
+```
+CONSTRUCTOR CGpFont
+```
+
+Creates and initializes a **Font** object from another Font object.
 
 ```
 CONSTRUCTOR CGpFont (BYVAL pFont AS CGpFont PTR)
@@ -645,6 +651,8 @@ When you use the GDI+ API, you must never allow your application to download arb
 Creates a **FontFamily** object based on a specified font collection.
 
 ```
+CONSTRUCTOR CGpFontFamily
+CONSTRUCTOR CGpFontFamily (BYVAL pFontFamily AS CGpFontFamily PTR)
 CONSTRUCTOR CGpFontFamily (BYVAL pwszName AS WSTRING PTR, pFontCollection AS CGpFontCollection PTR = NULL)
 ```
 
