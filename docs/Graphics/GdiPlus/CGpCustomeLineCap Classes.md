@@ -1144,7 +1144,7 @@ FUNCTION SetHeight (BYVAL nHeight AS SINGLE) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nHeight* | Simple precision number that specifies the height, in units, for the arrow cap. |
+| *nHeight* | The height, in units, for the arrow cap. |
 
 #### Return value
 
@@ -1203,7 +1203,7 @@ FUNCTION SetMiddleInset (BYVAL middleInset AS SINGLE) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *middleInset* | Simple precision number that specifies the number of units that the midpoint of the base shifts towards the vertex. |
+| *middleInset* | The number of units that the midpoint of the base shifts towards the vertex. |
 
 #### Return value
 
@@ -1256,7 +1256,7 @@ FUNCTION SetWidth (BYVAL nWidth AS SINGLE) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nWidth* | Simple precision number that specifies the width, in units, for the arrow cap. |
+| *nWidth* | The width, in units, for the arrow cap. |
 
 #### Return value
 
