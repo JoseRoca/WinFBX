@@ -159,7 +159,7 @@ CONSTRUCTOR CGpImage (BYVAL pStream AS IStream PTR, BYVAL useicm AS BOOLEAN = FA
 
 # <a name="CloneImage"></a>Clone (CGpImage)
 
-Creates an **Image** object based on a file.
+Copies the contents of the existing **Image** object into a new **Image** object.
 
 ```
 FUNCTION Clone (BYVAL pCloneImage AS CGpImage PTR) AS GpStatus
