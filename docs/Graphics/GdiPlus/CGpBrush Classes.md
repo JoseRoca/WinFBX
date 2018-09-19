@@ -250,11 +250,12 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ConstructorSolidBrush"></a>Constructor (CGpSolidBrush)
+# <a name="ConstructorSolidBrush"></a>Constructors (CGpSolidBrush)
 
-Create a **SolidBrush** object based on a color.
+Creates a **SolidBrush** object based on a color.
 
 ```
+CONSTRUCTOR CGpSolidBrush (BYVAL pSolidBrush AS CGpSolidBrush PTR)
 CONSTRUCTOR CGpSolidBrush (BYVAL colour AS ARGB = &hFF000000)
 ```
 
@@ -330,11 +331,12 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ConstructorHatchBrush"></a>Constructor (CGpHatchBrush)
+# <a name="ConstructorHatchBrush"></a>Constructors (CGpHatchBrush)
 
 Creates a **HatchBrush** object based on a hatch style, a foreground color, and a background color.
 
 ```
+CONSTRUCTOR CGpHatchBrush (BYVAL pHatchBrush AS CGpHatchBrush PTR)
 FUNCTION HatchBrush (BYVAL hatchStyle AS HatchStyle, BYVAL foreColor AS ARGB, _
    BYVAL backColor AS ARGB = &HFF000000)
 ```
@@ -413,6 +415,7 @@ END SUB
 Creates a **LinearGradientBrush** object from a set of boundary points and boundary colors.
 
 ```
+CONSTRUCTOR CGpLinearGradientBrush (BYVAL pLinearGradientBrush AS CGpLinearGradientBrush PTR)
 CONSTRUCTOR CGpLinearGradientBrush (BYVAL point1 AS GpPointF PTR, BYVAL point2 AS GpPointF PTR, _
    BYVAL color1 AS ARGB, BYVAL color2 AS ARGB)
 CONSTRUCTOR CGpLinearGradientBrush (BYVAL point1 AS GpPoint PTR, BYVAL point2 AS GpPoint PTR, _
