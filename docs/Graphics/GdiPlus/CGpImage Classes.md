@@ -479,7 +479,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 # <a name="GetPalette"></a>GetPalette (CGpImage)
 
-Gets the **ColorPalette** of this Image object.
+Gets the **ColorPalette** of this **Image** object.
 
 ```
 FUNCTION GetPalette (BYVAL pal AS ColorPalette PTR, BYVAL nSize AS INT_) AS GpStatus
