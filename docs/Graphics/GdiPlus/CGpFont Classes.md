@@ -28,6 +28,7 @@ The **CGpFontCollection** class contains methods for enumerating the font famili
 
 | Name       | Description |
 | ---------- | ----------- |
+| [Constructor](#ConstructorFontCollection) | Creates a Font object. |
 | [GetFamilies](#GetFamilies) | Gets the font families contained in this font collection. |
 | [GetFamilyCount](#GetFamilyCount) | Gets the number of font families contained in this font collection. |
 
@@ -558,6 +559,13 @@ SUB Example_IsAvailable (BYVAL hdc AS HDC)
    
 END SUB
 ' ========================================================================================
+```
+# <a name="ConstructorFontCollection"></a>Constructor (CGpFontCollection)
+
+Creates a **FontCollection** object.
+
+```
+CONSTRUCTOR CGpFontCollection
 ```
 
 # <a name="GetFamilies"></a>GetFamilies (CGpFontCollection)
