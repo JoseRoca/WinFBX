@@ -1081,7 +1081,7 @@ END SUB
 
 # <a name="SetFillState"></a>SetFillState (CGpAdjustableArrowCap)
 
-Creates an adjustable arrow line cap with the specified height and width. The arrow line cap can be filled or nonfilled. The middle inset defaults to zero.
+Sets the fill state of the arrow cap. If the arrow cap is not filled, only the outline is drawn.
 
 ```
 FUNCTION SetFillState (BYVAL bIsFilled AS BOOL) AS GpStatus
