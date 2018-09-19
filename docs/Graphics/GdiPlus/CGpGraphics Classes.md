@@ -255,7 +255,7 @@ This method returns a value that identifies the container.
 
 Use this method to create nested graphics containers. Graphics containers are used to retain graphics state, such as transformations, clipping regions, and various rendering properties.
 
-The **BeginContainer** method returns a value of type **GraphicsContainer**. When you have finished using a container, pass that value to the **EndContainer** method. The **GraphicsContainer** data type is defined in Gdiplusenums.inc.
+The **BeginContainer** method returns a value of type **GraphicsContainer**. When you have finished using a container, pass that value to the **EndContainer** method. The **GraphicsContainer** data type is defined in Gdiplusenums.bi.
 
 When you call the **BeginContainer** method of a **Graphics** object, an information block that holds the state of the **Graphics** object is put on a stack. The **BeginContainer** method returns a value that identifies that information block. When you pass the identifying value to the EndContainer method, the information block is removed from the stack and is used to restore the **Graphics** object to the state it was in at the time of the **BeginContainer** call.
 
@@ -3444,7 +3444,7 @@ FUNCTION Save () AS GraphicsState
 
 #### Return value
 
-This method returns a value that identifies the saved state. Pass this value to the **Restore** method when you want to restore the state. The **GraphicsState** data type is defined in Gdiplusenums.inc.
+This method returns a value that identifies the saved state. Pass this value to the **Restore** method when you want to restore the state. The **GraphicsState** data type is defined in Gdiplusenums.bi.
 
 
 # <a name="ScaleTransform"></a>ScaleTransform (CGpGraphics)
@@ -5178,7 +5178,7 @@ FUNCTION Flatten (BYVAL pMatrix AS CGpMatrix PTR = NULL, BYVAL flatness AS SINGL
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pMatrix* | Optional. Pointer to a **Matrix** object that specifies the transformation to be applied to the path's data points. The default value is NULL, which specifies that no transformation is to be applied. |
-| *flatness* | Optional. The maximum error between the path and its flattened approximation. Reducing the flatness increases the number of line segments in the approximation. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
+| *flatness* | Optional. The maximum error between the path and its flattened approximation. Reducing the flatness increases the number of line segments in the approximation. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.bi. |
 
 #### Return value
 
@@ -5692,7 +5692,7 @@ FUNCTION Outline (pMatrix AS CGpMatrix PTR = NULL, BYVAL flatness AS SINGLE = Fl
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pMatrix* | Optional. Pointer to a **Matrix** object that specifies the transformation. If this parameter is NULL, no transformation is applied. The default value is NULL. |
-| *flatness* | Optional. Simple precision number that specifies the maximum error between the path and its flattened approximation. Reducing the flatness increases the number of line segments in the approximation. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
+| *flatness* | Optional. Simple precision number that specifies the maximum error between the path and its flattened approximation. Reducing the flatness increases the number of line segments in the approximation. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.bi. |
 
 #### Return value
 
@@ -5932,7 +5932,7 @@ FUNCTION Warp (BYVAL destPoints AS GpPointF PTR, BYVAL count AS INT_, BYVAL srcR
 | *srcRect* | Reference to a rectangle that, along with the *destPoints* parameter, defines the warp transformation. |
 | *pMatrix* | Optional. Pointer to a Matrix object that represents a transformation to be applied along with the warp. If this parameter is NULL, no transformation is applied. The default value is NULL. |
 | *nWarpMode* | Optional. Element of the **WarpMode** enumeration that specifies the kind of warp to be applied. The default value is **WarpModePerspective**. |
-| *flatness* | Optional. Real number that influences the number of line segments that are used to approximate the original path. Small values specify that many line segments are used, and large values specify that few line segments are used. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
+| *flatness* | Optional. Real number that influences the number of line segments that are used to approximate the original path. Small values specify that many line segments are used, and large values specify that few line segments are used. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.bi. |
 
 #### Return value
 
@@ -6005,7 +6005,7 @@ FUNCTION Widen (BYVAL pPen AS CGpPen PTR, BYVAL pMatrix AS CGpMatrix PTR = NULL,
 | ---------- | ----------- |
 | *pPen* | Pointer to a **Pen** object. The path is made as wide as it would be when drawn by this pen. |
 | *pMatrix* | Optional. Pointer to a **Matrix** object that specifies a transformation to be applied along with the widening. If this parameter is NULL, no transformation is applied. The default value is NULL. |
-| *flatness* | Optional. Real number that influences the number of line segments that are used to approximate the original path. Small values specify that many line segments are used, and large values specify that few line segments are used. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
+| *flatness* | Optional. Real number that influences the number of line segments that are used to approximate the original path. Small values specify that many line segments are used, and large values specify that few line segments are used. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.bi. |
 
 #### Return value
 
