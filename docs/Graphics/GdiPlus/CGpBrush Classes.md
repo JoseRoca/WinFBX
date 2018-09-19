@@ -3691,6 +3691,7 @@ END SUB
 Creates a texture brush.
 
 ```
+CONSTRUCTOR CGpTextureBrush (BYVAL pTextureBrush AS CGpTextureBrush PTR)
 CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode = WrapModeTile)
 CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL dstRect AS GpRectF PTR, _
    BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL)
