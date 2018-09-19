@@ -952,7 +952,7 @@ FUNCTION GetRegionScansCount (BYVAL pMatrix AS CGpMatrix PTR) AS UINT
 
 #### Remarks
 
-The **GetRegionScansCount** method can be used before the GetRegionScans method to determine the number of rectangles. Then, you can allocate a buffer that is the correct size to store the rectangles that are obtained with the **GetRegionScans** method.
+The **GetRegionScansCount** method can be used before the **GetRegionScans** method to determine the number of rectangles. Then, you can allocate a buffer that is the correct size to store the rectangles that are obtained with the **GetRegionScans** method.
 
 #### Example
 
