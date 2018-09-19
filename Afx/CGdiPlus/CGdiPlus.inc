@@ -791,7 +791,6 @@ Public:
    m_pStringFormat AS GpStringFormat PTR
 
 Public:
-   DECLARE CONSTRUCTOR
    DECLARE CONSTRUCTOR (BYVAL pStringFormat AS CGpStringFormat PTR)
    DECLARE CONSTRUCTOR (BYVAL formatFlags AS INT_ = 0, BYVAL language AS LANGID = LANG_NEUTRAL)
    DECLARE DESTRUCTOR
