@@ -2808,7 +2808,7 @@ Gets the pixel offset mode currently set for this **Graphics** object.
 FUNCTION GetPixelOffsetMode () AS PixelOffsetMode
 ```
 
-#### PixelOffsetMode
+#### PixelOffsetMode Enumeration
 
 | Cpmstant   | Description |
 | ---------- | ----------- |
@@ -3751,7 +3751,7 @@ FUNCTION SetPixelOffsetMode (BYVAL nMode AS PixelOffsetMode) AS GpStatus
 | ---------- | ----------- |
 | *nMode* | Element of the **PixelOffsetMode** enumeration that specifies the pixel offset mode. |
 
-#### PixelOffsetMode
+#### PixelOffsetMode Enumeration
 
 | Cpmstant   | Description |
 | ---------- | ----------- |
