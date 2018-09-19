@@ -11,7 +11,7 @@ A closed shape, such as a rectangle or an ellipse, consists of an outline and an
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#ConstructorBrush) | Creates a **Brush** object from another **Brush** object. |
+| [Constructors](#ConstructorBrush) | Creates a **Brush** object from another **Brush** object. |
 | [Clone](#CloneBrush) | Copies the contents of the existing **Brush** object into a new **Brush** object. |
 | [GetType](#GetTypeBrush) | Gets the type of this brush. |
 
@@ -26,7 +26,7 @@ The **SolidBrush** object defines a solid color Brush object. A **Brush** object
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#ConstructorSolidBrush) | Creates a **SolidBrush** object based on a color. |
+| [Constructors](#ConstructorSolidBrush) | Creates a **SolidBrush** object based on a color. |
 | [GetColor](#GetColorSolidBrush) | Gets the color of this brush. |
 | [SetColor](#SetColorSolidBrush) | Sets the color of this brush. |
 
@@ -41,7 +41,7 @@ Creates a **HatchBrush** object based on a hatch style, a foreground color, and 
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#ConstructorHatchBrush) | Creates a **HatchBrush** object based on a hatch style, a foreground color, and a background color. |
+| [Constructors](#ConstructorHatchBrush) | Creates a **HatchBrush** object based on a hatch style, a foreground color, and a background color. |
 | [GetBackgroundColor](#GetBackgroundColor) | Gets the background color of this hatch brush. |
 | [GetForegroundColor](#GetForegroundColor) | Gets the foreground color of this hatch brush. |
 | [GetHatchStyle](#GetHatchStyle) | Gets the hatch style of this hatch brush. |
@@ -57,7 +57,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorsLGBrush) | Creates a **LinearGradientBrush** object. |
+| [Constructorss](#ConstructorsLGBrush) | Creates a **LinearGradientBrush** object. |
 | [GetBlend](#GetBlendLGBrush) | Gets the blend factors and their corresponding blend positions. |
 | [GetBlendCount](#GetBlendCountLGBrush) | Gets the number of blend factors currently set. |
 | [GetGammaCorrection](#GetGammaCorrectionLGBrush) | Determines whether gamma correction is enabled for this brush. |
