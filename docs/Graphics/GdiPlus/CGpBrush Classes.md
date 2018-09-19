@@ -1883,6 +1883,12 @@ END SUB
 
 # <a name="ConstructorsPGBrush"></a>Constructors (CGpPathGradientBrush)
 
+Creates a **PathGradientBrush** object from another **PathGradientBrush** object.
+
+```
+CONSTRUCTOR CGpPathGradientBrush (BYVAL pPathGradientBrush AS CGpPathGradientBrush PTR)
+```
+
 Creates a **PathGradientBrush** object based on an array of points. Initializes the wrap mode of the path gradient brush
 
 ```
