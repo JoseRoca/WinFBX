@@ -32,12 +32,6 @@ The **CGpStringFormat** class encapsulates text layout information (such as alig
 
 # <a name="Constructors"></a>Constructors
 
-Creates **StringFormat** object.
-
-```
-CONSTRUCTOR CGpStringFormat
-```
-
 Creates **StringFormat** object from another **StringFormat** object.
 
 ```
