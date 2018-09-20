@@ -1,6 +1,6 @@
 # CComplex Class
 
-`CComplex` is a class to work with complex numbers with Free Basic. Complex numbers are represented using the type `\_complex`. The real and imaginary part are stored in the members `x` and `y`.
+`CComplex` is a class to work with complex numbers with Free Basic. Complex numbers are represented using the type `_complex`. The real and imaginary part are stored in the members `x` and `y`.
 
 ```
 TYPE _complex
