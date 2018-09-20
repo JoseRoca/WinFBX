@@ -926,13 +926,13 @@ cpx = cpx.CDiv(2, 3)
 Divides by an imaginary number.
 
 ```
-FUNCTION CDivImag (BYVAL x AS DOUBLE) AS CComplex
+FUNCTION CDivImag (BYVAL y AS DOUBLE) AS CComplex
 ```
 
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *x* | A double value. |
+| *y* | A double value. |
 
 #### Example
 
