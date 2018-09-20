@@ -583,7 +583,7 @@ FUNCTION CACscReal (BYVAL value AS DOUBLE) AS CComplex
 #### Example
 
 ```
-DIM cpx AS CComplex = CComplex(1, 1)
+DIM cpx AS CComplex
 print cpx.CArcCscReal(1)
 Output: 1.570796326794897 0 * i
 ```
