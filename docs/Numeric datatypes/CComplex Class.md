@@ -430,7 +430,8 @@ FUNCTION CAdd (BYVAL x AS DOUBLE, BYVAL y AS DOUBLE) AS CComplex
 
 ```
 DIM cpx AS CComplex = CComplex(5, 6)
-DIM cpx2 AS CComplex = CComplex(2, 3) : cpx = cpx.CAdd(cpx2)
+DIM cpx2 AS CComplex = CComplex(2, 3)
+cpx = cpx.CAdd(cpx2)
 ' --or-- cpx = cpx.CAdd(CComplex(2, 3))
 ```
 ```
