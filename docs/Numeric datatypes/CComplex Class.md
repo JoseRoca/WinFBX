@@ -405,7 +405,7 @@ FUNCTION CAddImag (BYVAL x AS DOUBLE) AS CComplex
 | ---------- | ----------- |
 | *y* | A double value. |
 
-#### Examples
+#### Example
 
 ```
 DIM cpx AS CComplex = CComplex(5, 6)
@@ -424,7 +424,7 @@ FUNCTION CAddReal (BYVAL x AS DOUBLE) AS CComplex
 | ---------- | ----------- |
 | *x* | A double value. |
 
-#### Examples
+#### Example
 
 ```
 DIM cpx AS CComplex = CComplex(5, 6)
