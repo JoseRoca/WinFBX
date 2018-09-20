@@ -127,8 +127,8 @@ DIM cpx AS CComplex = TYPE<_complex>(3, 4)
 | [CMulImag](#CMulImag) | Multiplies by an imaginary number. |
 | [CMulReal](#CMulReal) | Multiplies by a real number. |
 | [CNeg](#CNegate) | Negates the complex number. |
+| [CNegate](#CNegate) | Negates the complex number. |
 | [CNegative](#CNegate) | Negates the complex number. |
-| [CNeg](#CNegate) | Negates the complex number. |
 | [CNorm](#CAbs2) | Returns the squared magnitude of this complex number, otherwise known as the complex norm. |
 | [CPhase](#CArg) | Returns the argument of this complex number. |
 | [CPolar](#CPolar) | Sets the complex number from the polar representation. |
