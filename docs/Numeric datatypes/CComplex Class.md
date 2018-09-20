@@ -1448,6 +1448,13 @@ Returns the complex hyperbolic tangent of this complex number.
 FUNCTION CTanH () AS CComplex
 ```
 
+#### Example
+
+```
+DIM cpx AS CComplex = CComplex(1, 1)
+PRINT cpx.CTanH
+Output: 1.083923327338695 +0.2717525853195119 * i
+```
 
 # <a name="ArcCosH"></a>ArcCosH
 
@@ -1466,9 +1473,9 @@ FUNCTION ArcCosH (BYVAL x AS DOUBLE) AS DOUBLE
 ```
 DIM AS double pi = 3.1415926535
 DIM AS double x, y
-DIM c AS CComplex
+DIM cpx AS CComplex
 x = cosh(pi / 4)
-y = c.ArcCosH(x)
+y = cpx.ArcCosH(x)
 print "cosh = ", pi/4, x
 print "ArcCosH = ", x, y
 
@@ -1492,21 +1499,12 @@ FUNCTION ArcTanH (BYVAL x AS DOUBLE) AS DOUBLE
 #### Example
 
 ```
-DIM cx AS CComplex
-print cx.ArcTanh(0.76159416)
+DIM cpx AS CComplex
+print cpx.ArcTanh(0.76159416)
 Output: 1.00000000962972
 
-print cx.ArcTanH(-0.1)
+print cpx.ArcTanH(-0.1)
 Output: -0.1003353477310756
-```
-
-
-#### Example
-
-```
-DIM cpx AS CComplex = CComplex(1, 1)
-PRINT cpx.CTanH
-Output: 1.083923327338695 +0.2717525853195119 * i
 ```
 
 # <a name="IsInfinity"></a>IsInfinity / IsInf
