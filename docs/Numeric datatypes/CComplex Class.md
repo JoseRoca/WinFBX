@@ -62,8 +62,6 @@ DIM cpx AS CComplex = TYPE<_complex>(3, 4)
 
 | Name       | Description |
 | ---------- | ----------- |
-| [ArcCosH](#ArcCosH) | Calculates the inverse hyperbolic cosine. |
-| [ArcTanH](#ArcTanH) | Returns the inverse hyperbolic tangent of a number. |
 | [CAbs](#CAbs) | Returns the magnitude of this complex number. |
 | [CAbs2](#CAbs2) | Returns the squared magnitude of this complex number, otherwise known as the complex norm. |
 | [CACos](#CArcCos) | Returns the complex arccosine of this complex number. |
@@ -152,6 +150,13 @@ DIM cpx AS CComplex = TYPE<_complex>(3, 4)
 | [CSwap](#CSwap) | Exchanges the contents of two complex numbers. |
 | [CTan](#CTan) | Returns the complex tangent of this complex number. |
 | [CTanH](#CTanH) | Returns the complex hyperbolic tangent of this complex number. |
+
+### Helper Methods
+
+| Name       | Description |
+| ---------- | ----------- |
+| [ArcCosH](#ArcCosH) | Calculates the inverse hyperbolic cosine. |
+| [ArcTanH](#ArcTanH) | Returns the inverse hyperbolic tangent of a number. |
 | [IsInf](#IsInfinity) | Determines whether the argument is an infinity. |
 | [IsInfinity](#IsInfinity) | Determines whether the argument is an infinity. |
 
@@ -326,57 +331,6 @@ cpx2 /= cpx1
 ```
 DIM cpx1 AS CComplex = CComplex(3, 4)
 DIM cpx2 AS CComplex = -cpx1
-```
-
-# <a name="ArcCosH"></a>ArcCosH
-
-Calculates the inverse hyperbolic cosine.
-
-```
-FUNCTION ArcCosH (BYVAL x AS DOUBLE) AS DOUBLE
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *x* | A double value. |
-
-#### Example
-
-```
-DIM AS double pi = 3.1415926535
-DIM AS double x, y
-DIM c AS CComplex
-x = cosh(pi / 4)
-y = c.ArcCosH(x)
-print "cosh = ", pi/4, x
-print "ArcCosH = ", x, y
-
-Output:
-cosh =  0.785398163375      1.324609089232506
-acosh = 1.324609089232506   0.7853981633749999
-```
-
-# <a name="ArcTanH"></a>ArcTanH
-
-Returns the inverse hyperbolic tangent of a number.
-
-```
-FUNCTION ArcTanH (BYVAL x AS DOUBLE) AS DOUBLE
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *x* | A double value. |
-
-#### Example
-
-```
-DIM cx AS CComplex
-print cx.ArcTanh(0.76159416)
-Output: 1.00000000962972
-
-print cx.ArcTanH(-0.1)
-Output: -0.1003353477310756
 ```
 
 # <a name="CAbs"></a>CAbs / CMagnitude
@@ -1493,6 +1447,59 @@ Returns the complex hyperbolic tangent of this complex number.
 ```
 FUNCTION CTanH () AS CComplex
 ```
+
+
+# <a name="ArcCosH"></a>ArcCosH
+
+Calculates the inverse hyperbolic cosine.
+
+```
+FUNCTION ArcCosH (BYVAL x AS DOUBLE) AS DOUBLE
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x* | A double value. |
+
+#### Example
+
+```
+DIM AS double pi = 3.1415926535
+DIM AS double x, y
+DIM c AS CComplex
+x = cosh(pi / 4)
+y = c.ArcCosH(x)
+print "cosh = ", pi/4, x
+print "ArcCosH = ", x, y
+
+Output:
+cosh =  0.785398163375      1.324609089232506
+acosh = 1.324609089232506   0.7853981633749999
+```
+
+# <a name="ArcTanH"></a>ArcTanH
+
+Returns the inverse hyperbolic tangent of a number.
+
+```
+FUNCTION ArcTanH (BYVAL x AS DOUBLE) AS DOUBLE
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x* | A double value. |
+
+#### Example
+
+```
+DIM cx AS CComplex
+print cx.ArcTanh(0.76159416)
+Output: 1.00000000962972
+
+print cx.ArcTanH(-0.1)
+Output: -0.1003353477310756
+```
+
 
 #### Example
 
