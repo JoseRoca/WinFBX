@@ -1379,12 +1379,12 @@ cpx = cpx.CSub(2, 3)
 Subtracts an imaginary number.
 
 ```
-FUNCTION CSubImag (BYVAL x AS DOUBLE) AS CComplex
+FUNCTION CSubImag (BYVAL y AS DOUBLE) AS CComplex
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *x* | A double value. |
+| *y* | A double value. |
 
 #### Example
 
