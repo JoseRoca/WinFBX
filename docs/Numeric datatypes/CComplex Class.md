@@ -55,8 +55,8 @@ DIM cpx AS CComplex = TYPE<_complex>(3, 4)
 | ---------- | ----------- |
 | [Operator LET](#Operator1) | Assigns a value to a **CComplex** variable. |
 | [CAST operators](#Operator2) | Converts a **CComplex** into another data type. |
-| [Comparison operators](#Operator3) | Compares currency numbers. |
-| [Math operators](#Operator4) | Add, subtract, multiply or divide currency numbers. |
+| [Comparison operators](#Operator3) | Compares complex numbers. |
+| [Math operators](#Operator4) | Add, subtract, multiply or divide complex numbers. |
 
 ### Methods and Properties
 
