@@ -1092,12 +1092,12 @@ cpx = cpx.CMul(2, 3)
 Multiplies by an imaginary number.
 
 ```
-FUNCTION CMulImag (BYVAL x AS DOUBLE) AS CComplex
+FUNCTION CMulImag (BYVAL y AS DOUBLE) AS CComplex
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *x* | A double value. |
+| *y* | A double value. |
 
 #### Example
 
