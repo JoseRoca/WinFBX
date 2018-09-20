@@ -403,7 +403,7 @@ FUNCTION CAddImag (BYVAL x AS DOUBLE) AS CComplex
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *x* | A double value. |
+| *y* | A double value. |
 
 #### Examples
 
