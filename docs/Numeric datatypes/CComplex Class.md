@@ -1,6 +1,6 @@
 # CComplex Class
 
-Complex numbers are represented using the type _complex. The real and imaginary part are stored in the members x and y.
+Complex numbers are represented using the type `\_complex`. The real and imaginary part are stored in the members x and y.
 
 ```
 TYPE _complex
