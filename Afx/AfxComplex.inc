@@ -597,12 +597,12 @@ END FUNCTION
 ' * Returns the squared magnitude of a complex number, otherwise known as the complex norm.
 ' Examples:
 '   DIM z AS _complex = (2, 3)
-'   DIM d AS DOUBLE = CAbs2(z)
+'   DIM d AS DOUBLE = Afx.CAbs2(z)
 '   PRINT d
 ' Output: 13
 ' --or--
 '   DIM z AS _complex = (2, 3)
-'   DIM d AS DOUBLE = AfxCNorm(z)
+'   DIM d AS DOUBLE = Afx.CNorm(z)
 '   PRINT d
 ' Output: 13
 ' =====================================================================================
@@ -1304,14 +1304,14 @@ END FUNCTION
 ' ========================================================================================
 ' Returns the complex hyperbolic arccosine of a real number.
 ' ========================================================================================
-PRIVATE FUNCTION CArcCoshReal (BYVAL value AS DOUBLE) AS _complex
+PRIVATE FUNCTION CArcCosHReal (BYVAL value AS DOUBLE) AS _complex
    IF value >= 1 THEN RETURN TYPE<_complex>(acosh(value), 0)
    IF value >= -1 THEN RETURN TYPE<_complex>(0, acos(value))
    RETURN TYPE<_complex>(acosh(-value), M_PI)
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION CACoshReal (BYVAL value AS DOUBLE) AS _complex
+PRIVATE FUNCTION CACosHReal (BYVAL value AS DOUBLE) AS _complex
    IF value >= 1 THEN RETURN TYPE<_complex>(acosh(value), 0)
    IF value >= -1 THEN RETURN TYPE<_complex>(0, acos(value))
    RETURN TYPE<_complex>(acosh(-value), M_PI)
@@ -1378,13 +1378,13 @@ END FUNCTION
 ' ========================================================================================
 ' Returns the complex hyperbolic arctangent of a real number.
 ' ========================================================================================
-PRIVATE FUNCTION CArcTanhReal (BYVAL value AS DOUBLE) AS _complex
+PRIVATE FUNCTION CArcTanHReal (BYVAL value AS DOUBLE) AS _complex
    IF value > -1 AND value < 1 THEN RETURN TYPE<_complex>(atanh(value), 0)
    RETURN TYPE<_complex>(atanh(1 / value), IIF(value < 0, M_PI_2, -M_PI_2))
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION CATanhReal (BYVAL value AS DOUBLE) AS _complex
+PRIVATE FUNCTION CATanHReal (BYVAL value AS DOUBLE) AS _complex
    IF value > -1 AND value < 1 THEN RETURN TYPE<_complex>(atanh(value), 0)
    RETURN TYPE<_complex>(atanh(1 / value), IIF(value < 0, M_PI_2, -M_PI_2))
 END FUNCTION
