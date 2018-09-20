@@ -1255,6 +1255,7 @@ Uses the cartesian components (x,y) to set the real and imaginary parts of the c
 
 ```
 PROPERTY CSet (BYVAL x AS DOUBLE, BYVAL y AS DOUBLE)
+PROPERTY CRect (BYVAL x AS DOUBLE, BYVAL y AS DOUBLE)
 ```
 
 | Parameter  | Description |
