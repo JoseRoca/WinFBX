@@ -600,8 +600,8 @@ FUNCTION CASec () AS CComplex
 #### Example
 
 ```
-DIM cpx AS CComplex
-print cpx.CArcSec(1.1)
+DIM cpx AS CComplex = CComplex(1, 1)
+print cpx.CArcSec
 Output: 1.118517879643706 +0.5306375309525176 * i
 ```
 
