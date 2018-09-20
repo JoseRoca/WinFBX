@@ -371,10 +371,11 @@ FUNCTION ArcTanH (BYVAL x AS DOUBLE) AS DOUBLE
 #### Example
 
 ```
-print atanh(0.76159416)
+DIM cx AS CComplex
+print cx.ArcTanh(0.76159416)
 Output: 1.00000000962972
 
-print atanh(-0.1)
+print cx.ArcTanH(-0.1)
 Output: -0.1003353477310756
 ```
 
