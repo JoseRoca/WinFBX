@@ -83,7 +83,7 @@ END TYPE
 | [CLog10](#CLog10) | Returns the complex base-10 logarithm of this complex number. |
 | [CLogAbs](#CLogAbs) | Returns the natural logarithm of the magnitude of a complex number. |
 | [CMagnitude](#CAbs) | Returns the magnitude of this complex number. |
-| [CMod](#CMod) | Returns the modulus of a complex number. |
+| [CMod](#CModulus) | Returns the modulus of a complex number. |
 | [CModulus](#CModulus) | Returns the modulus of a complex number. |
 | [CMulImag](#CMulImag) | Multiplies by an imaginary number. |
 | [CMulReal](#CMulReal) | Multiplies by a real number. |
