@@ -1194,7 +1194,6 @@ FUNCTION CNthRoot (BYVAL n AS LONG, BYVAL k AS LONG = 0) AS _complex
 ```
 DIM cpx AS CComplex = CComplex(2.3, -4.5)
 DIM n AS LONG = 5
-DIM k AS LONG = 0
 FOR i AS LONG = 0 TO n - 1
    print CStr(cpx.CNthRoot(n, i))
 NEXT
