@@ -24,7 +24,7 @@ END TYPE
 | ---------- | ----------- |
 | [CAbs](#CAbs) | Returns the magnitude of this complex number. |
 | [CAbs2](#CAbs2) | Returns the squared magnitude of this complex number, otherwise known as the complex norm. |
-| [CAbsSquare](#CAbsSquare) | Returns the absolute square (squared norm) of a complex number. |
+| [CAbsSqr](#CAbsSqr) | Returns the absolute square (squared norm) of a complex number. |
 | [CACos](#CArcCos) | Returns the complex arccosine of this complex number. |
 | [CACosH](#CArcCosH) | Returns the complex hyperbolic arccosine of this complex number. The branch cut is on the real axis, less than 1. |
 | [CACosHReal](#CArcCosHReal) | Returns the complex arccosine of this complex number. |
