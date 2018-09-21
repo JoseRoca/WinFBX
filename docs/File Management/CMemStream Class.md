@@ -83,7 +83,7 @@ OPERATOR CAST () AS IStream PTR
 | [GetLastResult](#GetLastResult2) | Returns the last result code. |
 | [GetErrorInfo](#GetErrorInfo2) | Returns a description of the last result code. |
 
-# CAdoStream Class
+# CADOStream Class
 
 An alternative to work with memory streams is to use the ADO stream object. To avoid confussons, the documentation for **CAdoStream** has been adapted to remove references to its use with URLs and ADO Record objects.
 
@@ -105,7 +105,7 @@ With the methods and properties of a **Stream** object, you can do the following
 
 **Note**: Since ADO supports the **IErrorInfo** interface, you can get a localized description of the last error calling the **AfxGetOleErrorInfo** function.
 
-**Include file**: CAdoStream.inc (include CADODB.inc)
+**Include file**: CADOStream.inc (include CADODB.inc)
 
 # Constructor
 
