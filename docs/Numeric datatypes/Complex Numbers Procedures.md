@@ -133,7 +133,7 @@ OPERATOR = (BYREF z1 AS _complex, BYREF z2 AS _complex) AS BOOLEAN
 OPERATOR <> (BYREF z1 AS _complex, BYREF z2 AS _complex) AS BOOLEAN
 ```
 
-#### Exammple
+#### Example
 
 ```
 DIM c1 AS _complex = (1, 2)
