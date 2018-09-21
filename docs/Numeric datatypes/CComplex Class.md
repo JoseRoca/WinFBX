@@ -64,6 +64,7 @@ DIM cpx AS CComplex = TYPE<_complex>(3, 4)
 | ---------- | ----------- |
 | [CAbs](#CAbs) | Returns the magnitude of this complex number. |
 | [CAbs2](#CAbs2) | Returns the squared magnitude of this complex number, otherwise known as the complex norm. |
+| [CAbsSqr](#CAbsSqr) | Returns the absolute square (squared norm) of a complex number. |
 | [CACos](#CArcCos) | Returns the complex arccosine of this complex number. |
 | [CACosH](#CArcCosH) | Returns the complex hyperbolic arccosine of this complex number. The branch cut is on the real axis, less than 1. |
 | [CACosHReal](#CArcCosHReal) | Returns the complex arccosine of this complex number. |
@@ -123,6 +124,8 @@ DIM cpx AS CComplex = TYPE<_complex>(3, 4)
 | [CLog10](#CLog10) | Returns the complex base-10 logarithm of this complex number. |
 | [CLogAbs](#CLogAbs) | Returns the natural logarithm of the magnitude of a complex number. |
 | [CMagnitude](#CAbs) | Returns the magnitude of this complex number. |
+| [CMod](#CModulus) | Returns the modulus of a complex number. |
+| [CModulus](#CModulus) | Returns the modulus of a complex number. |
 | [CMul](#CMul) | Multiplies by a complex number. |
 | [CMulImag](#CMulImag) | Multiplies by an imaginary number. |
 | [CMulReal](#CMulReal) | Multiplies by a real number. |
@@ -130,6 +133,7 @@ DIM cpx AS CComplex = TYPE<_complex>(3, 4)
 | [CNegate](#CNegate) | Negates the complex number. |
 | [CNegative](#CNegate) | Negates the complex number. |
 | [CNorm](#CAbs2) | Returns the squared magnitude of this complex number, otherwise known as the complex norm. |
+| [CNthRoot](#CNthRoot) | Returns the kth nth root of a complex number where k = 0, 1, 2, 3,...,n - 1. |
 | [CPhase](#CArg) | Returns the argument of this complex number. |
 | [CPolar](#CPolar) | Sets the complex number from the polar representation. |
 | [CPow](#CPow) | Returns this complex number raised to a complex power or to a real number. |
@@ -365,6 +369,21 @@ FUNCTION CNorm () AS DOUBLE
 DIM cpx AS CComplex = CComplex(2, 3)
 PRINT cpx.CAbs2
 Output: 13
+```
+# <a name="CAbsSqr"></a>CAbsSqr
+
+Returns the absolute square (squared norm) of a complex number.
+
+```
+FUNCTION CAbsSqr(BYREF z AS _complex) AS DOUBLE
+```
+
+#### Example
+
+```
+DIM cpx AS CComplex = CComplex(1.2345, -2.3456)
+print cpx.CAbsSqr
+Output: 7.025829610000001
 ```
 
 # <a name="CAdd"></a>CAdd
@@ -1058,6 +1077,22 @@ DIM cpx AS CComplex = CComplex(1.1, 0.1)
 PRINT cpx.CLogAbs
 Output: 0.09942542937258279
 ```
+# <a name="CModulus"></a>CModulus / CMod
+
+Returns the modulus of a complex number.
+
+```
+FUNCTION CModulus(BYREF z AS _complex) AS DOUBLE
+FUNCTION CMod(BYREF z AS _complex) AS DOUBLE
+```
+
+#### Example
+
+```
+DIM cpx AS CComplex = CComplex(2.3, -4.5)
+print cpx.CModulus
+Output: 5.053711507397311
+```
 
 # <a name="CMul"></a>CMul
 
@@ -1133,6 +1168,42 @@ Negates the complex number.
 FUNCTION CNeg (BYREF z AS _complex) AS _complex
 FUNCTION CNegate (BYREF z AS _complex) AS _complex
 FUNCTION CNegative (BYREF z AS _complex) AS _complex
+```
+# <a name="CNthRoot"></a>CNthRoot
+
+Returns the kth nth root of a complex number where k = 0, 1, 2, 3,...,n - 1.<br>
+De Moivre's formula states that for any complex number x and integer n it holds that<br>
+  cos(x)+ i*sin(x))^n = cos(n*x) + i*sin(n*x)<br>
+where i is the imaginary unit (i2 = -1).<br>
+Since z = r*e^(i*t) = r * (cos(t) + i sin(t))<br>
+  where<br>
+  z = (a, ib)<br>
+  r = modulus of z<br>
+  t = argument of z<br>
+  i = sqrt(-1.0)<br>
+we can calculate the nth root of z by the formula:<br>
+  z^(1/n) = r^(1/n) * (cos(x/n) + i sin(x/n))<br>
+by using log division.
+
+```
+FUNCTION CNthRoot (BYREF z AS _complex, BYVAL n AS LONG, BYVAL k AS LONG = 0) AS _complex
+```
+
+#### Example
+
+```
+DIM cpx AS CComplex = CComplex(2.3, -4.5)
+DIM n AS LONG = 5
+DIM k AS LONG = 0
+FOR i AS LONG = 0 TO n - 1
+   print CStr(cpx.CNthRoot(n, i))
+NEXT
+Output:
+ 1.349457704883236  -0.3012830564679053 * i
+ 0.7035425781022545 +1.190308959128094 * i
+-0.9146444790833151 +1.036934450322577 * i
+-1.268823953798186  -0.5494482247230521 * i
+ 0.1304681498960107 -1.376512128259714 * i
 ```
 
 # <a name="CPolar"></a>CPolar
