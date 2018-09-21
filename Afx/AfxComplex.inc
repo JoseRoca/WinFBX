@@ -1430,6 +1430,81 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Returns the absolute square (squared norm) of a complex number.
+' Example:
+' DIM z AS _complex = (1.2345, -2.3456)
+' print CAbsSqr(z)
+' Output: 7.025829610000001
+' ========================================================================================
+PRIVATE FUNCTION CAbsSqr(BYREF z AS _complex) AS DOUBLE
+   RETURN (z * CConjugate(z)).x
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns the modulus of a complex number.
+' Examples:
+' DIM z AS _complex = (2.3, -4.5)
+' print CModulus(z)
+' Output: 5.053711507397311
+' DIM z AS _complex = CPolar(0.2938, -0.5434)
+' print CModulus(z)
+' Output: 0.2938
+' ========================================================================================
+PRIVATE FUNCTION CModulus(BYREF z AS _complex) AS DOUBLE
+   RETURN SQR(z.x * z.x + z.y * z.y)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CMod(BYREF z AS _complex) AS DOUBLE
+   RETURN SQR(z.x * z.x + z.y * z.y)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns the kth nth root of a complex number where k = 0, 1, 2, 3,...,n - 1.
+' De Moivre's formula states that for any complex number x and integer n it holds that
+'   cos(x)+ i*sin(x))^n = cos(n*x) + i*sin(n*x)
+' where i is the imaginary unit (i2 = -1).
+' Since z = r*e^(i*t) = r * (cos(t) + i sin(t))
+'   where
+'   z = (a, ib)
+'   r = modulus of z
+'   t = argument of z
+'   i = sqrt(-1.0)
+' we can calculate the nth root of z by the formula:  
+'   z^(1/n) = r^(1/n) * (cos(x/n) + i sin(x/n))
+' by using log division.
+' Example:
+' DIM z AS _complex = (2.3, -4.5)
+' DIM n AS LONG = 5
+' DIM k AS LONG = 0
+' FOR i AS LONG = 0 TO n - 1
+'    print CStr(CNthRoot(z, n, i))
+' NEXT
+' Output:
+'  1.349457704883236  -0.3012830564679053 * i
+'  0.7035425781022545 +1.190308959128094 * i
+' -0.9146444790833151 +1.036934450322577 * i
+' -1.268823953798186  -0.5494482247230521 * i
+'  0.1304681498960107 -1.376512128259714 * i
+' ========================================================================================
+PRIVATE FUNCTION CNthRoot (BYREF z AS _complex, BYVAL n AS LONG, BYVAL k AS LONG = 0) AS _complex
+   DIM modulus AS DOUBLE, arg AS DOUBLE, t AS DOUBLE
+   modulus = SQR(z.x * z.x + z.y * z.y)
+   arg = atan2(z.y, z.x)
+   DIM lmod AS DOUBLE = LOG(modulus)
+   DIM rlmod AS DOUBLE = lmod / n
+   DIM rmod AS DOUBLE = EXP(rlmod)
+   DIM zr AS _complex
+   t = arg / n + 2 * k * M_PI / n
+   zr.x = rmod * COS(t)
+   zr.y = rmod * SIN(t)
+   RETURN zr
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Returns the sign of a complex number.
 ' If number is greater than zero, then CSgn returns 1.
 ' If number is equal to zero, then CSgn returns 0.
