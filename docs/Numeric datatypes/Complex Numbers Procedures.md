@@ -303,7 +303,7 @@ Output: 13
 Returns the absolute square (squared norm) of a complex number.
 
 ```
-FUNCTION CAbsSqr(BYREF z AS _complex) AS DOUBLE
+FUNCTION CAbsSqr (BYREF z AS _complex) AS DOUBLE
 ```
 
 #### Example
@@ -962,8 +962,8 @@ Output: 0.09942542937258279
 Returns the modulus of a complex number.
 
 ```
-FUNCTION CModulus(BYREF z AS _complex) AS DOUBLE
-FUNCTION CMod(BYREF z AS _complex) AS DOUBLE
+FUNCTION CModulus (BYREF z AS _complex) AS DOUBLE
+FUNCTION CMod (BYREF z AS _complex) AS DOUBLE
 ```
 
 #### Example
