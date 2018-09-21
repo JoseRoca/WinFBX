@@ -375,7 +375,7 @@ Output: 13
 Returns the absolute square (squared norm) of a complex number.
 
 ```
-FUNCTION CAbsSqr(BYREF z AS _complex) AS DOUBLE
+FUNCTION CAbsSqr () AS DOUBLE
 ```
 
 #### Example
@@ -1082,8 +1082,8 @@ Output: 0.09942542937258279
 Returns the modulus of a complex number.
 
 ```
-FUNCTION CModulus(BYREF z AS _complex) AS DOUBLE
-FUNCTION CMod(BYREF z AS _complex) AS DOUBLE
+FUNCTION CModulus () AS DOUBLE
+FUNCTION CMod () AS DOUBLE
 ```
 
 #### Example
@@ -1186,7 +1186,7 @@ we can calculate the nth root of z by the formula:<br>
 by using log division.
 
 ```
-FUNCTION CNthRoot (BYREF z AS _complex, BYVAL n AS LONG, BYVAL k AS LONG = 0) AS _complex
+FUNCTION CNthRoot (BYVAL n AS LONG, BYVAL k AS LONG = 0) AS _complex
 ```
 
 #### Example
