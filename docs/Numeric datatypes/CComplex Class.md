@@ -66,7 +66,7 @@ DIM cpx AS CComplex = TYPE<_complex>(3, 4)
 | [CAbs2](#CAbs2) | Returns the squared magnitude of this complex number, otherwise known as the complex norm. |
 | [CAbsSqr](#CAbsSqr) | Returns the absolute square (squared norm) of a complex number. |
 | [CACos](#CArcCos) | Returns the complex arccosine of this complex number. |
-| [CACosH](#CArcCosH) | Returns the complex hyperbolic arccosine of this complex number. The branch cut is on the real axis, less than 1. |
+| [CACosH](#CArcCosH) | Returns the complex hyperbolic arccosine of this complex number. |
 | [CACosHReal](#CArcCosHReal) | Returns the complex arccosine of this complex number. |
 | [CACosReal](#CArcCosReal) | Returns the complex arccosine of a real number. |
 | [CACot](#CArcCot) | Returns the complex arccotangent of this complex number. |
@@ -78,7 +78,7 @@ DIM cpx AS CComplex = TYPE<_complex>(3, 4)
 | [CAddImag](#CAddImag) | Adds an imaginary number. |
 | [CAddReal](#CAddReal) | Adds a real number. |
 | [CArcCos](#CArcCos) | Returns the complex arccosine of this complex number. |
-| [CArcCosH](#CArcCosH) | Returns the complex hyperbolic arccosine of this complex number. The branch cut is on the real axis, less than 1. |
+| [CArcCosH](#CArcCosH) | Returns the complex hyperbolic arccosine of this complex number. |
 | [CArcCosHReal](#CArcCosHReal) | Returns the complex arccosine of this complex number. |
 | [CArcCosReal](#CArcCosReal) | Returns the complex arccosine of a real number. |
 | [CArcCot](#CArcCot) | Returns the complex arccotangent of this complex number. |
@@ -89,22 +89,22 @@ DIM cpx AS CComplex = TYPE<_complex>(3, 4)
 | [CArcSec](#CArcSec) | Returns the complex arcsecant of this complex number. |
 | [CArcSecH](#CArcSecH) | Returns the complex hyperbolic arcsecant of this complex number. |
 | [CArcSecReal](#CArcSecReal) | Returns the complex arcsecant of a real number. |
-| [CArcSin](#CArcSin) | Returns the complex arcsine of this complex number. The branch cuts are on the real axis, less than -1 and greater than 1. |
-| [CArcSinH](#CArcSinH) | Returns the complex hyperbolic arcsine of this complex number. The branch cuts are on the imaginary axis, below -i and above i. |
+| [CArcSin](#CArcSin) | Returns the complex arcsine of this complex number. |
+| [CArcSinH](#CArcSinH) | Returns the complex hyperbolic arcsine of this complex number. |
 | [CArcSinReal](#CArcSinReal) | Returns the complex arcsine of a real number. |
-| [CArcTan](#CArcTan) | Returns the complex arctangent of this complex number. The branch cuts are on the imaginary axis, below -i and above i. |
-| [CArcTanH](#CArcTanH) | Returns the complex hyperbolic arctangent of this complex number. The branch cuts are on the real axis, less than -1 and greater than 1. |
+| [CArcTan](#CArcTan) | Returns the complex arctangent of this complex number. |
+| [CArcTanH](#CArcTanH) | Returns the complex hyperbolic arctangent of this complex number. |
 | [CArcTanHReal](#CArcTanHReal) | Returns the complex hyperbolic arctangent of a real number. |
 | [CArg](#CArg) | Returns the argument of this complex number. |
 | [CArgument](#CArg) | Returns the argument of this complex number. |
 | [CASec](#CArcSec) | Returns the complex arcsecant of this complex number. |
 | [CASecH](#CArcSecH) | Returns the complex hyperbolic arcsecant of this complex number. |
 | [CASecReal](#CArcSecReal) | Returns the complex arcsecant of a real number. |
-| [CASin](#CArcSin) | Returns the complex arcsine of this complex number. The branch cuts are on the real axis, less than -1 and greater than 1. |
-| [CASinH](#CArcSinH) | Returns the complex hyperbolic arcsine of this complex number. The branch cuts are on the imaginary axis, below -i and above i. |
+| [CASin](#CArcSin) | Returns the complex arcsine of this complex number. |
+| [CASinH](#CArcSinH) | Returns the complex hyperbolic arcsine of this complex number. |
 | [CASinReal](#CArcSinReal) | Returns the complex arcsine of a real number. |
-| [CATan](#CArcTan) | Returns the complex arctangent of this complex number. The branch cuts are on the imaginary axis, below -i and above i. |
-| [CATanH](#CArcTanH) | Returns the complex hyperbolic arctangent of this complex number. The branch cuts are on the real axis, less than -1 and greater than 1. |
+| [CATan](#CArcTan) | Returns the complex arctangent of this complex number. |
+| [CATanH](#CArcTanH) | Returns the complex hyperbolic arctangent of this complex number. |
 | [CATanHReal](#CArcTanHReal) | Returns the complex hyperbolic arctangent of a real number. |
 | [CConj](#CConjugate) | Returns the complex conjugate of this complex number. |
 | [CConjugate](#CConjugate) | Returns the complex conjugate of this complex number. |
@@ -120,7 +120,7 @@ DIM cpx AS CComplex = TYPE<_complex>(3, 4)
 | [CExp](#CExp) | Returns the complex exponential of this complex number. |
 | [CImag](#CImag) | Gets/sets the imaginary part of a complex number. |
 | [CInverse](#CReciprocal) | Returns the inverse, or reciprocal, of a complex number. |
-| [CLog](#CLog) | Returns the complex natural logarithm (base e) of this complex number. The branch cut is the negative real axis. |
+| [CLog](#CLog) | Returns the complex natural logarithm (base e) of this complex number. |
 | [CLog10](#CLog10) | Returns the complex base-10 logarithm of this complex number. |
 | [CLogAbs](#CLogAbs) | Returns the natural logarithm of the magnitude of a complex number. |
 | [CMagnitude](#CAbs) | Returns the magnitude of this complex number. |
@@ -146,8 +146,8 @@ DIM cpx AS CComplex = TYPE<_complex>(3, 4)
 | [CSgn](#CSgn) | Returns the sign of this complex number. |
 | [CSin](#CSin) | Returns the complex sine of this complex number. |
 | [CSinH](#CSinH) | Returns the complex hyperbolic sine of this complex number. |
-| [CSqr](#CSqr) | Returns the square root of the complex number z. The branch cut is the negative real axis. The result always lies in the right half of the complex plane. |
-| [CSqrt](#CSqr) | Returns the square root of the complex number z. The branch cut is the negative real axis. The result always lies in the right half of the complex plane. |
+| [CSqr](#CSqr) | Returns the square root of a complex number. |
+| [CSqrt](#CSqr) | Returns the square root of a complex number. |
 | [CSub](#CSub) | Subtracts a complex number. |
 | [CSubImag](#CSubImag) | Subtracts an imaginary number. |
 | [CSubReal](#CSubReal) | Subtracts a real number. |
@@ -541,7 +541,7 @@ Output: 0.5535743588970452 -0.4023594781085251 * i
 
 # <a name="CArcCotH"></a>CArcCotH / CACotH
 
-Returns the complex hyperbolic arccotangent of this complex number. Alias: CACotH.
+Returns the complex hyperbolic arccotangent of this complex number.
 
 ```
 FUNCTION CArcCotH () AS CComplex
