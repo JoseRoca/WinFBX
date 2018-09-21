@@ -1054,7 +1054,6 @@ FUNCTION CNthRoot (BYREF z AS _complex, BYVAL n AS LONG, BYVAL k AS LONG = 0) AS
 ```
 DIM z AS _complex = (2.3, -4.5)
 DIM n AS LONG = 5
-DIM k AS LONG = 0
 FOR i AS LONG = 0 TO n - 1
    print CStr(CNthRoot(z, n, i))
 NEXT
