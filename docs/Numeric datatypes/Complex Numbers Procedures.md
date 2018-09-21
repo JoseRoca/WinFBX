@@ -1031,18 +1031,18 @@ FUNCTION CNegative (BYREF z AS _complex) AS _complex
 
 # <a name="CNthRoot"></a>CNthRoot
 
-Returns the kth nth root of a complex number where k = 0, 1, 2, 3,...,n - 1.
-De Moivre's formula states that for any complex number x and integer n it holds that
-  cos(x)+ i*sin(x))^n = cos(n*x) + i*sin(n*x)
-where i is the imaginary unit (i2 = -1).
-Since z = r*e^(i*t) = r * (cos(t) + i sin(t))
-  where
-  z = (a, ib)
-  r = modulus of z
-  t = argument of z
-  i = sqrt(-1.0)
-we can calculate the nth root of z by the formula:  
-  z^(1/n) = r^(1/n) * (cos(x/n) + i sin(x/n))
+Returns the kth nth root of a complex number where k = 0, 1, 2, 3,...,n - 1.<br>
+De Moivre's formula states that for any complex number x and integer n it holds that<br>
+  cos(x)+ i*sin(x))^n = cos(n*x) + i*sin(n*x)<br>
+where i is the imaginary unit (i2 = -1).<br>
+Since z = r*e^(i*t) = r * (cos(t) + i sin(t))<br>
+  where<br>
+  z = (a, ib)<br>
+  r = modulus of z<br>
+  t = argument of z<br>
+  i = sqrt(-1.0)<br>
+we can calculate the nth root of z by the formula:<br>
+  z^(1/n) = r^(1/n) * (cos(x/n) + i sin(x/n))<br>
 by using log division.
 
 ```
