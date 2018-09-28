@@ -7,17 +7,17 @@ The **CGpFont** class allows the creation of **Font** objects. The Font object e
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorsFont) | Creates a Font object. |
-| [Clone](#Clone) | Copies the contents of the existing Font object into a new Font object. |
+| [Constructors](#ConstructorsFont) | Creates a **Font** object. |
+| [Clone](#Clone) | Copies the contents of the existing **Font** object into a new **Font** object. |
 | [GetFamily](#GetFamily) | Gets the font family on which this font is based. |
 | [GetHeight](#GetHeight) | Gets the line spacing of this font in the current unit of a specified Graphics object. |
 | [GetHeight(DPI)](#GetHeightDPI) | Gets the line spacing of this font in pixels. |
-| [GetLogFontA](#GetLogFont) | Uses a LOGFONTA structure to get the attributes of this Font object. |
-| [GetLogFontW](#GetLogFont) | Uses a LOGFONTW structure to get the attributes of this Font object. |
-| [GetSize](#GetSize) | Returns the font size (commonly called the em size) of this Font object. |
-| [GetStyle](#GetStyle) | Returns the font size (commonly called the em size) of this Font object. |
-| [GetUnit](#GetUnit) | Returns the unit of measure of this Font object. |
-| [IsAvailable](#IsAvailable) | Determines whether this Font object was created successfully. |
+| [GetLogFontA](#GetLogFont) | Uses a LOGFONTA structure to get the attributes of this **Font** object. |
+| [GetLogFontW](#GetLogFont) | Uses a LOGFONTW structure to get the attributes of this **Font** object. |
+| [GetSize](#GetSize) | Returns the font size (commonly called the em size) of this **Font** object. |
+| [GetStyle](#GetStyle) | Returns the font size (commonly called the em size) of this **Font** object. |
+| [GetUnit](#GetUnit) | Returns the unit of measure of this **Font** object. |
+| [IsAvailable](#IsAvailable) | Determines whether this **Font** object was created successfully. |
 
 # CGpFontCollection Class
 
@@ -28,6 +28,7 @@ The **CGpFontCollection** class contains methods for enumerating the font famili
 
 | Name       | Description |
 | ---------- | ----------- |
+| [Constructor](#ConstructorFontCollection) | Creates a **FontCollection** object. |
 | [GetFamilies](#GetFamilies) | Gets the font families contained in this font collection. |
 | [GetFamilyCount](#GetFamilyCount) | Gets the number of font families contained in this font collection. |
 
@@ -76,7 +77,13 @@ The **CGpFontFamily** class encapsulates a set of fonts that make up a font fami
 
 # <a name="ConstructorsFont"></a>Constructors (CGpFont)
 
-Creates and initializes a Font object from another Font object.
+Creates a **Font** object.
+
+```
+CONSTRUCTOR CGpFont
+```
+
+Creates and initializes a **Font** object from another Font object.
 
 ```
 CONSTRUCTOR CGpFont (BYVAL pFont AS CGpFont PTR)
@@ -553,6 +560,13 @@ SUB Example_IsAvailable (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+# <a name="ConstructorFontCollection"></a>Constructor (CGpFontCollection)
+
+Creates a **FontCollection** object.
+
+```
+CONSTRUCTOR CGpFontCollection
+```
 
 # <a name="GetFamilies"></a>GetFamilies (CGpFontCollection)
 
@@ -645,6 +659,8 @@ When you use the GDI+ API, you must never allow your application to download arb
 Creates a **FontFamily** object based on a specified font collection.
 
 ```
+CONSTRUCTOR CGpFontFamily
+CONSTRUCTOR CGpFontFamily (BYVAL pFontFamily AS CGpFontFamily PTR)
 CONSTRUCTOR CGpFontFamily (BYVAL pwszName AS WSTRING PTR, pFontCollection AS CGpFontCollection PTR = NULL)
 ```
 

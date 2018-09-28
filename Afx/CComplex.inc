@@ -132,6 +132,9 @@ TYPE CComplex
    DECLARE FUNCTION CDivImag (BYVAL y AS DOUBLE) AS CComplex
    DECLARE FUNCTION CConj () AS CComplex
    DECLARE FUNCTION CConjugate () AS CComplex
+   DECLARE FUNCTION CModulus () AS DOUBLE
+   DECLARE FUNCTION CMod () AS DOUBLE
+   DECLARE FUNCTION CNthRoot (BYVAL n AS LONG, BYVAL k AS LONG = 0) AS CComplex
    '// Properties of complex numbers
    DECLARE FUNCTION CArg () AS DOUBLE
    DECLARE FUNCTION CArgument () AS DOUBLE
@@ -139,6 +142,7 @@ TYPE CComplex
    DECLARE FUNCTION CAbs () AS DOUBLE
    DECLARE FUNCTION CMagnitude () AS DOUBLE
    DECLARE FUNCTION CAbs2 () AS DOUBLE
+   DECLARE FUNCTION CAbsSqr () AS DOUBLE
    DECLARE FUNCTION CLogAbs () AS DOUBLE
    DECLARE FUNCTION CNorm () AS DOUBLE
    DECLARE FUNCTION CInverse () AS CComplex
@@ -1852,6 +1856,81 @@ PRIVATE FUNCTION CComplex.CACotH () AS CComplex
    CCOMPLEX_DP("CCOMPLEX CACotH")
    DIM z AS CComplex = this.CReciprocal
    RETURN z.CArcTanH
+END FUNCTION
+' ========================================================================================
+
+
+' =====================================================================================
+' Returns the absolute square (squared norm) of a complex number.
+' Example:
+' DIM cpx AS CComplex = CComplex(1.2345, -2.3456)
+' print cpx.CAbsSqr
+' Output: 7.025829610000001
+' =====================================================================================
+PRIVATE FUNCTION CComplex.CAbsSqr () AS DOUBLE
+   CCOMPLEX_DP("CCOMPLEX CAbsSqr")
+   DIM z AS _complex = TYPE<_complex>(m_cpx.x, -m_cpx.y)
+   RETURN (m_cpx * z).x
+END FUNCTION
+' =====================================================================================
+
+' ========================================================================================
+' Returns the modulus of a complex number.
+' Examples:
+' DIM cpx AS CComplex = CComplex(2.3, -4.5)
+' print cpx.CModulus
+' Output: 5.053711507397311
+' ========================================================================================
+PRIVATE FUNCTION CComplex.CModulus () AS DOUBLE
+   RETURN SQR(m_cpx.x * m_cpx.x + m_cpx.y * m_cpx.y)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CComplex.CMod () AS DOUBLE
+   RETURN SQR(m_cpx.x * m_cpx.x + m_cpx.y * m_cpx.y)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns the kth nth root of a complex number where k = 0, 1, 2, 3,...,n - 1.
+' De Moivre's formula states that for any complex number x and integer n it holds that
+'   cos(x)+ i*sin(x))^n = cos(n*x) + i*sin(n*x)
+' where i is the imaginary unit (i2 = -1).
+' Since z = r*e^(i*t) = r * (cos(t) + i sin(t))
+'   where
+'   z = (a, ib)
+'   r = modulus of z
+'   t = argument of z
+'   i = sqrt(-1.0)
+' we can calculate the nth root of z by the formula:  
+'   z^(1/n) = r^(1/n) * (cos(x/n) + i sin(x/n))
+' by using log division.
+' Example:
+' DIM cpx AS CComplex = CComplex(2.3, -4.5)
+' DIM n AS LONG = 5
+' DIM k AS LONG = 0
+' FOR i AS LONG = 0 TO n - 1
+'    print CStr(cpx.CNthRoot(n, i))
+' NEXT
+' Output:
+'  1.349457704883236  -0.3012830564679053 * i
+'  0.7035425781022545 +1.190308959128094 * i
+' -0.9146444790833151 +1.036934450322577 * i
+' -1.268823953798186  -0.5494482247230521 * i
+'  0.1304681498960107 -1.376512128259714 * i
+' ========================================================================================
+PRIVATE FUNCTION CComplex.CNthRoot (BYVAL n AS LONG, BYVAL k AS LONG = 0) AS CComplex
+   DIM modulus AS DOUBLE, arg AS DOUBLE, t AS DOUBLE
+   modulus = SQR(m_cpx.x * m_cpx.x + m_cpx.y * m_cpx.y)
+   arg = atan2(m_cpx.y, m_cpx.x)
+   DIM lmod AS DOUBLE = LOG(modulus)
+   DIM rlmod AS DOUBLE = lmod / n
+   DIM rmod AS DOUBLE = EXP(rlmod)
+   DIM zr AS _complex
+   t = arg / n + 2 * k * M_PI / n
+   zr.x = rmod * COS(t)
+   zr.y = rmod * SIN(t)
+   RETURN zr
 END FUNCTION
 ' ========================================================================================
 

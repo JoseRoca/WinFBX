@@ -1,6 +1,6 @@
 # CGraphCtx Class
 
-**CGraphCtx** is a graphic control for pictures, text and graphics. You can use both GDI and GDI+ to draw graphics and text and to load and manipulate images. Optionally, you can add support for OpenGL by passing "OPENGL" in the caption.
+`CGraphCtx` is a graphic control for pictures, text and graphics. You can use both GDI and GDI+ to draw graphics and text and to load and manipulate images. Optionally, you can add support for OpenGL by passing "OPENGL" in the caption.
 
 This control features persistence and uses a virtual buffer (set initially equal to the size of the control when it is created) to allow to display images bigger than the size of the control. Scrollbars are automatically added when the size of the virtual buffer is bigger than the size of the control and removed when unneeded. It also features keyboard navigation and sends command messages to the parent window or dialog when the return or Escape keys are pressed, and notification messages for mouse clicks.
 
@@ -84,7 +84,7 @@ FUNCTION AfxCGraphPtr (BYVAL hwnd AS HWND) AS CGraphCtx PTR
 | [NM_RDBLCLK](#NM_RDBLCLK) | Sent by the control when the user double clicks it with the right mouse button. |
 | [NM_SETFOCUS](#NM_SETFOCUS) | Notifies a control's parent window that the control has received the input focus. |
 
-# <a name="NM_CLICK"></a>NM_CLICK Notification Message
+### <a name="NM_CLICK"></a>NM_CLICK Notification Message
 
 Sent by the control when the user clicks it with the left mouse button. This notification code is sent in the form of a WM_NOTIFY message.
 
@@ -104,7 +104,7 @@ END IF
 
 IDC_GRCTX is the constant value used as identifier of the control. Change it if needed.
 
-# <a name="NM_DBLCLK"></a>NM_DBLCLK Notification Message
+### <a name="NM_DBLCLK"></a>NM_DBLCLK Notification Message
 
 Sent by the control when the user double clicks it with the left mouse button. This notification code is sent in the form of a WM_NOTIFY message.
 
@@ -124,7 +124,7 @@ END IF
 
 IDC_GRCTX is the constant value used as identifier of the control. Change it if needed.
 
-# <a name="NM_KILLFOCUS"></a>NM_KILLFOCUS Notification Message
+### <a name="NM_KILLFOCUS"></a>NM_KILLFOCUS Notification Message
 
 Notifies a control's parent window that the control has lost the input focus. This notification code is sent in the form of a WM_NOTIFY message. 
 
@@ -144,7 +144,7 @@ END IF
 
 IDC_GRCTX is the constant value used as identifier of the control. Change it if needed.
 
-# <a name="NM_RCLICK"></a>NM_RCLICK Notification Message
+### <a name="NM_RCLICK"></a>NM_RCLICK Notification Message
 
 Notifies a control's parent window that the control has lost the input focus. This notification code is sent in the form of a WM_NOTIFY message. 
 
@@ -164,7 +164,7 @@ END IF
 
 IDC_GRCTX is the constant value used as identifier of the control. Change it if needed.
 
-# <a name="NM_RDBLCLK"></a>NM_RDBLCLK Notification Message
+### <a name="NM_RDBLCLK"></a>NM_RDBLCLK Notification Message
 
 Sent by the control when the user double clicks it with the right mouse button. This notification code is sent in the form of a WM_NOTIFY message.
 
@@ -184,7 +184,7 @@ END IF
 
 IDC_GRCTX is the constant value used as identifier of the control. Change it if needed.
 
-# <a name="NM_SETFOCUS"></a>NM_SETFOCUS Notification Message
+### <a name="NM_SETFOCUS"></a>NM_SETFOCUS Notification Message
 
 Notifies a control's parent window that the control has received the input focus. This notification code is sent in the form of a WM_NOTIFY message. 
 
@@ -204,7 +204,7 @@ END IF
 
 IDC_GRCTX is the constant value used as identifier of the control. Change it if needed.
 
-# <a name="Clear"></a>Clear
+### <a name="Clear"></a>Clear
 
 Clears the graphic control with the specified RGB color.
 
@@ -220,7 +220,7 @@ FUNCTION Clear (BYVAL RGBColor AS COLORREF) AS BOOLEAN
 
 TRUE or FALSE.
 
-# <a name="CreateBitmapFromFile"></a>CreateBitmapFromFile
+### <a name="CreateBitmapFromFile"></a>CreateBitmapFromFile
 
 Loads and displays the specified image in the Graphic Control. It also allows to convert the image to gray scale and/or dim the image.
 
@@ -239,7 +239,7 @@ SUB CreateBitmapFromFile (BYREF wszFileName AS WSTRING, _
 
 TRUE or FALSE.
 
-# <a name="DrawBitmap"></a>DrawBitmap
+### <a name="DrawBitmap"></a>DrawBitmap
 
 Draws a bitmap in the Graphic Control.
 
@@ -285,7 +285,7 @@ LineTo pMemBmp.GetMemDC, 30, 180
 pGraphCtx.DrawBitmap pMemBmp
 ```
 
-# <a name="GetBits"></a>GetBits
+### <a name="GetBits"></a>GetBits
 
 Returns the location of the DIB bit values.
 
@@ -297,7 +297,7 @@ FUNCTION GetBits () AS ANY PTR
 
 Pointer to the location of the DIB bit values.
 
-# <a name="GethBmp"></a>GethBmp
+### <a name="GethBmp"></a>GethBmp
 
 Returns the handle of the compatible bitmap.
 
@@ -305,7 +305,7 @@ Returns the handle of the compatible bitmap.
 FUNCTION GethBmp () AS HBITMAP
 ```
 
-# <a name="GethRC"></a>GethRC
+### <a name="GethRC"></a>GethRC
 
 If OpenGL is enabled, it returns the handle of the rendering context of the control.
 
@@ -313,7 +313,7 @@ If OpenGL is enabled, it returns the handle of the rendering context of the cont
 FUNCTION GethRC () AS HGLRC
 ```
 
-# <a name="GetMemDC"></a>GetMemDC
+### <a name="GetMemDC"></a>GetMemDC
 
 Returns the handle of the memory device context of the control.
 
@@ -321,7 +321,7 @@ Returns the handle of the memory device context of the control.
 FUNCTION GetMemDC () AS HDC
 ```
 
-# <a name="GetVirtualBufferHeight"></a>GetVirtualBufferHeight
+### <a name="GetVirtualBufferHeight"></a>GetVirtualBufferHeight
 
 Returns the height of the virtual buffer.
 
@@ -329,7 +329,7 @@ Returns the height of the virtual buffer.
 FUNCTION GetVirtualBufferHeight () AS LONG
 ```
 
-# <a name="GetVirtualBufferWidth"></a>GetVirtualBufferWidth
+### <a name="GetVirtualBufferWidth"></a>GetVirtualBufferWidth
 
 Returns the width of the virtual buffer.
 
@@ -337,7 +337,7 @@ Returns the width of the virtual buffer.
 FUNCTION GetVirtualBufferWidth () AS LONG
 ```
 
-# <a name="hWindow"></a>hWindow
+### <a name="hWindow"></a>hWindow
 
 Returns the handle of the control.
 
@@ -345,7 +345,7 @@ Returns the handle of the control.
 FUNCTION hWindow () AS HWND
 ```
 
-# <a name="LoadImageFromFile"></a>LoadImageFromFile
+### <a name="LoadImageFromFile"></a>LoadImageFromFile
 
 Loads and displays the specified image in the Graphic Control.
 
@@ -361,7 +361,7 @@ SUB LoadImageFromFile (BYREF wszFileName AS WSTRING)
 
 A quirk in the GDI+ **GdipCreateBitmapFromFile** function causes that black and white images are loaded with increased contrast. Therefore, it's better to use the **CreateBitmapFromFile** for black and white images.
 
-# <a name="LoadImageFromRes"></a>LoadImageFromRes
+### <a name="LoadImageFromRes"></a>LoadImageFromRes
 
 Loads the specified image from a resource file in the Graphic Control. It also allows to convert the image to gray scale and/or dim the image.
 
@@ -379,7 +379,7 @@ SUB LoadImageFromRes (BYVAL hInst AS HINSTANCE, BYREF wszImageName AS WSTRING, _
 | *bGrayScale* | TRUE or FALSE. Convert to gray scale. |
 | *clrBackground* | The background color. This parameter is ignored if the bitmap is totally opaque. |
 
-# <a name="MakeCurrent"></a>MakeCurrent
+### <a name="MakeCurrent"></a>MakeCurrent
 
 As more than one instance of this control can be used on a form, we need to make sure that OpenGL calls are directed to the correct rendering context. This is achieved by calling the **MakeCurrent** method.
 
@@ -390,7 +390,7 @@ FUNCTION MakeCurrent () AS BOOLEAN
 
 TRUE or FALSE.
 
-# <a name="PrintImage"></a>PrintImage
+### <a name="PrintImage"></a>PrintImage
 
 Prints the image in the default printer.
 
@@ -421,7 +421,7 @@ FUNCTION PrintImage (BYVAL bStretch AS BOOLEAN = FALSE, _
 
 Returns TRUE if the bitmap has been printed successfully, or FALSE otherwise.
 
-# <a name="Resizable"></a>Resizable
+### <a name="Resizable"></a>Resizable
 
 Gets/sets the value of the **Resizable** property.
 
@@ -438,7 +438,7 @@ TRUE or FALSE.
 
 Resizable and stretchable are mutually exclusive.
 
-# <a name="SaveImage"></a>SaveImage
+### <a name="SaveImage"></a>SaveImage
 
 Saves the image to a file.
 
@@ -464,7 +464,7 @@ If the method succeeds, it returns Ok, which is an element of the GDI+ Status en
 
 If the method fails, it returns one of the other elements of the GDI+ Status enumeration.
 
-# <a name="SetVirtualBufferSize"></a>SetVirtualBufferSize
+### <a name="SetVirtualBufferSize"></a>SetVirtualBufferSize
 
 Sets the size of the virtual buffer.
 
@@ -481,7 +481,7 @@ FUNCTION SetVirtualBufferSize (BYVAL nWidth AS LONG, BYVAL nHeight AS LONG) AS L
 
 If the function succeeds, the return value is S_OK (0).
 
-# <a name="Stretchable"></a>Stretchable
+### <a name="Stretchable"></a>Stretchable
 
 Gets/sets the value of the **Stretchable** property.
 
@@ -498,7 +498,7 @@ PROPERTY Stretchable (BYVAL bStretchable AS BOOLEAN)
 
 TRUE or FALSE.
 
-# <a name="StretchMode"></a>StretchMode
+### <a name="StretchMode"></a>StretchMode
 
 Gets/sets the value of the **StretchMode** property.
 
@@ -526,7 +526,7 @@ PROPERTY StretchMode (BYVAL nStretchMode AS LONG)
 
 The previous value of the property.
 
-# <a name="Skeleton"></a>CWindow Graphic Control Skeleton
+### <a name="Skeleton"></a>CWindow Graphic Control Skeleton
 
 ```
 ' ########################################################################################
@@ -624,7 +624,7 @@ END FUNCTION
 ' ========================================================================================
 ```
 
-# <a name="OpenGLSkeleton"></a>CWindow OpenGL Graphic Control Skeleton
+### <a name="OpenGLSkeleton"></a>CWindow OpenGL Graphic Control Skeleton
 
 The following example demonstrates the use of OpenGL and GDI+ together.
 

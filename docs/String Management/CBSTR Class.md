@@ -76,7 +76,7 @@ For a list of code pages see: [Code Page Identifiers](https://msdn.microsoft.com
 
 # Operators
 
-#### <a name="Operator*"></a>Operator *
+## <a name="Operator*"></a>Operator *
 
 Deferences the CBSTR.<br>One * returns the address of the underlying BSTR pointer.<br>Two ** returns the address of the start of the string data.
 
@@ -84,7 +84,7 @@ Deferences the CBSTR.<br>One * returns the address of the underlying BSTR pointe
 OPERATOR * (BYREF cbs AS CBSTR) AS AFX_BSTR
 ```
 
-#### <a name="bptr"></a>bptr
+## <a name="bptr"></a>bptr
 
 Returns the underlying BSTR pointer.
 
@@ -92,7 +92,7 @@ Returns the underlying BSTR pointer.
 FUNCTION bptr () BYREF AS AFX_BSTR
 ```
 
-#### <a name="sptr"></a>sptr
+## <a name="sptr"></a>sptr
 
 Returns the address of the CBSTR string data (same as **)
 
@@ -100,7 +100,7 @@ Returns the address of the CBSTR string data (same as **)
 FUNCTION sptr () AS WSTRING PTR
 ```
 
-#### <a name="vptr"></a>vptr
+## <a name="vptr"></a>vptr
 
 Frees the underlying BSTR and returns the BSTR pointer.
 
@@ -110,7 +110,7 @@ FUNCTION vptr () AS AFX_BSTR PTR
 
 Must be used to pass the underlying BSTR to an OUT BYVAL BSTR PTR parameter. If we pass a CBSTR to a function with an OUT BSTR parameter without first freeing it we will have a memory leak.
 
-#### <a name="wstr"></a>wstr
+## <a name="wstr"></a>wstr
 
 Returns the string data. Same as **.
 
@@ -118,7 +118,7 @@ Returns the string data. Same as **.
 FUNCTION wstr () BYREF AS CONST WSTRING
 ```
 
-#### <a name="Operator&"></a>Operator &
+## <a name="Operator&"></a>Operator &
 
 Concatenates strings.
 
@@ -126,7 +126,7 @@ Concatenates strings.
 OPERATOR & (BYREF cbs1 AS CBSTR, BYREF cbs2 AS CBSTR) AS CBSTR
 ```
 
-#### <a name="Operator+="></a>Operator +=
+## <a name="Operator+="></a>Operator +=
 
 Appends a string to the CBSTR.
 
@@ -137,7 +137,7 @@ OPERATOR += (BYREF cbs AS CBStr)
 OPERATOR += (BYREF ansiStr AS STRING)
 ```
 
-#### <a name="Operator&="></a>Operator &=
+## <a name="Operator&="></a>Operator &=
 
 Appends a string to the CBSTR.
 
@@ -155,7 +155,7 @@ OPERATOR &= (BYREF ansiStr AS STRING)
 | *cbs* | A CBSTR. |
 | *ansiStr* | An ansi string or string literal. |
 
-#### <a name="OperatorLet"></a>Operator Let
+## <a name="OperatorLet"></a>Operator Let
 
 Assigns a string to the CBSTR.
 
@@ -180,7 +180,7 @@ OPERATOR LET (BYREF bstrHandle AS AFX_BSTR)
 
 # Casting and Conversions
 
-#### <a name="OperatorCast"></a>Operator Cast
+## <a name="OperatorCast"></a>Operator Cast
 
 Return a pointer to the underlying BSTR or the string data. These operators aren't called directly.
 
@@ -189,7 +189,7 @@ OPERATOR CAST () BYREF AS CONST WSTRING
 OPERATOR CAST () AS ANY PTR
 ```
 
-#### <a name="wchar"></a>wchar
+## <a name="wchar"></a>wchar
 
 Returns the string data as a new unicode string allocated with CoTaskMemAlloc.
 Useful when we need to pass a pointer to a null terminated wide string to a function or method that will release it. If we pass a WSTRING it will GPF. If the length of the input string is 0, CoTaskMemAlloc allocates a zero-length item and returns a valid pointer to that item. If there is insufficient memory available, CoTaskMemAlloc returns NULL.
@@ -198,7 +198,7 @@ Useful when we need to pass a pointer to a null terminated wide string to a func
 FUNCTION wchar () AS WSTRING PTR
 ```
 
-#### <a name="Utf8"></a>Utf8
+## <a name="Utf8"></a>Utf8
 
 Converts from UTF8 to Unicode and from Unicode to UTF8.
 
@@ -209,7 +209,7 @@ PROPERTY Utf8 (BYREF utf8String AS STRING)
 
 # Methods
 
-#### <a name="Attach"></a>Attach
+## <a name="Attach"></a>Attach
 
 Attaches a BSTR to the CBSTR class.
 
@@ -217,7 +217,7 @@ Attaches a BSTR to the CBSTR class.
 SUB Attach (BYVAL pbstrSrc AS AFX_BSTR)
 ```
 
-#### <a name="Detach"></a>Detach
+## <a name="Detach"></a>Detach
 
 Detaches the underlying BSTR from the CBSTR class and returns it as the result of the function. The returned pointer must be freed by SysFreeString.
 
@@ -227,7 +227,7 @@ FUNCTION Detach () AS AFX_BSTR
 
 This method frees the *m_bstr* member of the CBSTR class and returns it as the result of the function. Because it no longer belongs to the class, it must be freed by SysFreeString.
 
-#### <a name="Append"></a>Append
+## <a name="Append"></a>Append
 
 Appends a string to the CBSTR. 
 
@@ -237,7 +237,7 @@ SUB Append (BYREF wszStr AS CONST WSTRING)
 
 *Remark*: The string can be a literal or a FB STRING, a WSTRING, a CWSTR or a CBSTR variable.
 
-#### <a name="Clear"></a>Clear
+## <a name="Clear"></a>Clear
 
 Frees the underlying BSTR.
 
@@ -245,7 +245,7 @@ Frees the underlying BSTR.
 SUB Clear
 ```
 
-#### <a name="Empty"></a>Empty
+## <a name="Empty"></a>Empty
 
 Frees the underlying BSTR.
 
@@ -253,7 +253,7 @@ Frees the underlying BSTR.
 SUB Empty
 ```
 
-#### <a name="Left"></a>Left
+## <a name="Left"></a>Left
 
 Returns the leftmost substring of the string.
 
@@ -266,7 +266,7 @@ FUNCTION Left OVERLOAD (BYREF cws AS CBSTR, BYVAL nChars AS INTEGER) AS CBSTR
 | *cbs* | The source CBSTR. |
 | *nChars* | The number of characters to return from the source string. |
 
-#### <a name="Right"></a>Right
+## <a name="Right"></a>Right
 
 Returns the rightmost substring of the string.
 
@@ -279,7 +279,7 @@ FUNCTION Right OVERLOAD (BYREF cbs AS CBSTR, BYVAL nChars AS INTEGER) AS CBSTR
 | *cbs* | The source CBSTR. |
 | *nChars* | The substring length, in characters. |
 
-#### <a name="LeftChars"></a>LeftChars
+## <a name="LeftChars"></a>LeftChars
 
 Returns the leftmost substring of the string.
 
@@ -291,7 +291,7 @@ FUNCTION LeftChars (BYVAL nChars AS LONG) AS CBSTR
 | ---------- | ----------- |
 | *nChars* | The number of characters to return from the source string. |
 
-#### <a name="MidChars"></a>MidChars
+## <a name="MidChars"></a>MidChars
 
 Returns a substring of the string.
 
@@ -306,7 +306,7 @@ MidChars (BYVAL nStart AS LONG, BYVAL nChars AS LONG = 0) AS CBSTR
 
 If CBSTR is empty then the null string ("") is returned. If *nStart* <= 0 then the null string ("") is returned.
 
-#### <a name="RightChars"></a>RightChars
+## <a name="RightChars"></a>RightChars
 
 Returns the rightmost substring of the string.
 
@@ -318,7 +318,7 @@ FUNCTION RightChars (BYVAL nChars AS LONG) AS CBSTR
 | ---------- | ----------- |
 | *nChars* | The substring length, in characters. |
 
-#### <a name="Val"></a>Val
+## <a name="Val"></a>Val
 
 Converts the string to a floating point number (DOUBLE).
 
@@ -330,7 +330,7 @@ FUNCTION Val OVERLOAD (BYREF cbs AS CBSTR) AS DOUBLE
 | ---------- | ----------- |
 | *cbs* | The source CBSTR. |
 
-#### <a name="ValDouble"></a>ValDouble
+## <a name="ValDouble"></a>ValDouble
 
 Converts the string to a floating point number (DOUBLE).
 
@@ -338,7 +338,7 @@ Converts the string to a floating point number (DOUBLE).
 FUNCTION ValDouble () AS DOUBLE
 ```
 
-#### <a name="ValInt"></a>ValInt
+## <a name="ValInt"></a>ValInt
 
 Converts the string to a signed 32-bit integer (LONG).
 
@@ -346,7 +346,7 @@ Converts the string to a signed 32-bit integer (LONG).
 FUNCTION ValInt () AS LONG
 ```
 
-#### <a name="ValLong"></a>ValLong
+## <a name="ValLong"></a>ValLong
 
 Converts the string to a signed 32-bit integer (LONG).
 
@@ -354,7 +354,7 @@ Converts the string to a signed 32-bit integer (LONG).
 FUNCTION ValLong () AS LONG
 ```
 
-#### <a name="ValLongInt"></a>ValLongInt
+## <a name="ValLongInt"></a>ValLongInt
 
 Converts the string to a signed 64-bit integer (LONGINT).
 
@@ -362,7 +362,7 @@ Converts the string to a signed 64-bit integer (LONGINT).
 FUNCTION ValLongInt () AS LONGINT
 ```
 
-#### <a name="Value"></a>Value
+## <a name="Value"></a>Value
 
 Converts the string to a floating point number (DOUBLE).
 
@@ -370,7 +370,7 @@ Converts the string to a floating point number (DOUBLE).
 FUNCTION Value () AS DOUBLE
 ```
 
-#### <a name="ValUInt"></a>ValUInt
+## <a name="ValUInt"></a>ValUInt
 
 Converts the string to a 32.bit unsigned integer (ULONG).
 
@@ -378,7 +378,7 @@ Converts the string to a 32.bit unsigned integer (ULONG).
 FUNCTION ValUInt () AS ULONG
 ```
 
-#### <a name="ValULong"></a>ValULong
+## <a name="ValULong"></a>ValULong
 
 Converts the string to a 32-bit unsigned integer (ULONG).
 
@@ -386,7 +386,7 @@ Converts the string to a 32-bit unsigned integer (ULONG).
 FUNCTION ValULong () AS ULONG
 ```
 
-#### <a name="ValULongInt"></a>ValULongInt
+## <a name="ValULongInt"></a>ValULongInt
 
 Converts the string to a 64-bit unsigned integer (ULONGINT).
 

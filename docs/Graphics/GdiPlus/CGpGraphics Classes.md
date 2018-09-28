@@ -151,7 +151,7 @@ The **CGpGraphicsPathIterator** class provides methods for isolating selected su
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorGraphicsPathIterator) | Creates a new **GraphicsPathIterator** object and associates it with a **GraphicsPath** object. |
+| [Constructor](#ConstructorGraphicsPathIterator) | Creates a new **GraphicsPathIterator** object and associates it with a **GraphicsPath** object. |
 | [CopyData](#CopyData) | Copies a subset of the path's data points to a **GpPointF** array and copies a subset of the path's point types to a byte array. |
 | [Enumerate](#Enumerate) | Copies the path's data points to a **GpPointF** array and copies the path's point types to a byte array. |
 | [GetCount](#GetCount) | Returns the number of data points in the path. |
@@ -163,12 +163,6 @@ The **CGpGraphicsPathIterator** class provides methods for isolating selected su
 | [Rewind](#Rewind) | Rewinds this iterator to the beginning of its associated path. |
 
 # <a name="ConstructorsGraphics"></a>Constructors (CGpGraphics)
-
-Creates a **GraphicsPath** object from another +*GraphicsPath** object.
-
-```
-CONSTRUCTOR CGpGraphicsPath (BYVAL pGraphicsPath AS CGpGraphicsPath PTR)
-```
 
 Creates a **Graphics** object that is associated with a specified device context. When you use this method to create a **Graphics** object, make sure that the **Graphics** object is deleted before the device context is released.
 
@@ -184,10 +178,14 @@ CONSTRUCTOR CGpGraphics (BYVAL hdc AS HDC, BYVAL hDevice AS HANDLE)
 Creates a **Graphics** object that is associated with a specified window.
 
 ```
-CONSTRUCTOR CGpGraphics (BYVAL pImage AS CGpImage PTR)
+CONSTRUCTOR CGpGraphics (BYVAL hwnd AS HWND, BYVAL icm AS BOOLEAN = FALSE)
 ```
 
 Creates a **Graphics** object that is associated with an **Image** object. This constructor fails if the **Image** object is based on a metafile that was opened for reading. The Image(file) and Metafile(file) constructors open a metafile for reading. To open a metafile for recording, use a **Metafile** constructor that receives a device context handle.
+
+```
+CONSTRUCTOR CGpGraphics (BYVAL pImage AS CGpImage PTR)
+```
 
 This constructor also fails if the image uses one of the following pixel formats:
 
@@ -214,7 +212,7 @@ CONSTRUCTOR CGpGraphics (BYVAL pImage AS CGpImage PTR)
 
 # <a name="AddMetafileComment"></a>AddMetafileComment (CGpGraphics)
 
-Creates a **Graphics** object that is associated with a specified device context. When you use this method to create a **Graphics** object, make sure that the **Graphics** object is deleted before the device context is released.
+Adds a text comment to an existing metafile.
 
 ```
 FUNCTION AddMetafileComment (BYVAL pdata AS BYTE PTR, BYVAL sizeData AS UINT) AS GpStatus
@@ -222,7 +220,7 @@ FUNCTION AddMetafileComment (BYVAL pdata AS BYTE PTR, BYVAL sizeData AS UINT) AS
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *rgData* | Pointer to a buffer that contains the comment. |
+| *pData* | Pointer to a buffer that contains the comment. |
 | *sizeData* | Integer that specifies the number of bytes in the value of the *data* parameter.  |
 
 #### Return value
@@ -257,7 +255,7 @@ This method returns a value that identifies the container.
 
 Use this method to create nested graphics containers. Graphics containers are used to retain graphics state, such as transformations, clipping regions, and various rendering properties.
 
-The **BeginContainer** method returns a value of type **GraphicsContainer**. When you have finished using a container, pass that value to the **EndContainer** method. The **GraphicsContainer** data type is defined in Gdiplusenums.inc.
+The **BeginContainer** method returns a value of type **GraphicsContainer**. When you have finished using a container, pass that value to the **EndContainer** method. The **GraphicsContainer** data type is defined in Gdiplusenums.bi.
 
 When you call the **BeginContainer** method of a **Graphics** object, an information block that holds the state of the **Graphics** object is put on a stack. The **BeginContainer** method returns a value that identifies that information block. When you pass the identifying value to the EndContainer method, the information block is removed from the stack and is used to restore the **Graphics** object to the state it was in at the time of the **BeginContainer** call.
 
@@ -1168,6 +1166,7 @@ FUNCTION DrawPath (BYVAL pPen AS CGpPen PTR, BYVAL pPath AS CGpGraphicsPath PTR)
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pPen* | Pointer to a pen that is used to draw the path. |
+| *pPath* | Pointer to a **GraphicsPath** object that specifies the sequence of lines and curves that make up the path. |
 
 #### Return value
 
@@ -2809,6 +2808,23 @@ Gets the pixel offset mode currently set for this **Graphics** object.
 FUNCTION GetPixelOffsetMode () AS PixelOffsetMode
 ```
 
+#### PixelOffsetMode Enumeration
+
+The **PixelOffsetMode** enumeration specifies the pixel offset mode. This enumeration is used by the **GetPixelOffsetMode** and **SetPixelOffsetMode** methods of the Graphics class.
+
+| Cpmstant   | Description |
+| ---------- | ----------- |
+| **PixelOffsetModeInvalid** | Used internally.  |
+| **PixelOffsetModeDefault** | Equivalent to **PixelOffsetModeNone**. |
+| **PixelOffsetModeHighSpeed** | Equivalent to **PixelOffsetModeNone**. |
+| **PixelOffsetModeHighQuality** | Equivalent to **PixelOffsetModeHalf**. |
+| **PixelOffsetModeNone** | Indicates that pixel centers have integer coordinates. |
+| **PixelOffsetModeHalf** | Indicates that pixel centers have coordinates that are half way between integer values. |
+
+#### Remarks
+
+Consider the pixel in the upper-left corner of an image with address (0, 0). With **PixelOffsetModeNone**, the pixel covers the area between 0.5 and 0.5 in both the x and y directions; that is, the pixel center is at (0, 0). With **PixelOffsetModeHalf**, the pixel covers the area between 0 and 1 in both the x and y directions; that is, the pixel center is at (0.5, 0.5).
+
 
 # <a name="GetRenderingOrigin"></a>GetRenderingOrigin (CGpGraphics)
 
@@ -2839,6 +2855,26 @@ Determines whether smoothing (antialiasing) is applied to the **Graphics** objec
 FUNCTION GetSmoothingMode () AS SmoothingMode
 ```
 
+#### SmoothingMode Enumeration
+
+The **SmoothingMode** enumeration specifies the type of smoothing (antialiasing) that is applied to lines and curves. This enumeration is used by the **GetSmoothingMode** and **SetSmoothingMode** functions.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **SmoothingModeInvalid** | Reserved. |
+| **SmoothingModeDefault** | Specifies that smoothing is not applied. |
+| **SmoothingModeHighSpeed** | Specifies that smoothing is not applied. |
+| **SmoothingModeHighQuality** | Specifies that smoothing is applied using an 8 X 4 box filter. |
+| **SmoothingModeNone** | Specifies that smoothing is not applied. |
+| **SmoothingModeAntiAlias8x4** | Specifies that smoothing is applied using an 8 X 4 box filter. |
+| **SmoothingModeAntiAlias** | Specifies that smoothing is applied using an 8 X 4 box filter. |
+| **SmoothingModeAntiAlias8x8** | Specifies that smoothing is applied using an 8 X 8 box filter. |
+
+#### Remarks
+
+Smoothing performed by an 8 X 4 box filter gives better results for nearly vertical lines than it does for nearly horizontal lines. Smoothing performed by an 8 X 8 box filter gives equally good results for nearly vertical and nearly horizontal lines. The 8x8 algorithm produces higher quality smoothing but is slower than the 8 X 4 algorithm.
+
+
 #### Return value
 
 If smoothing (antialiasing) is applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias**. If smoothing (antialiasing) is not applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias** and **SmoothingModeNone** are elements of the **SmoothingMode** enumeration.
@@ -2860,6 +2896,23 @@ Returns the text rendering mode currently set for this **Graphics** object.
 ```
 FUNCTION GetTextRenderingHint () AS TextRenderingHint
 ```
+
+#### TextRenderingHint Enumeration
+
+Specifies the process used to render text. The process affects the quality of the text.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **TextRenderingHintSystemDefault** | Specifies that a character is drawn using the currently selected system font smoothing mode (also called a rendering hint). |
+| **TextRenderingHintSingleBitPerPixelGridFit** | Specifies that a character is drawn using its glyph bitmap and hinting to improve character appearance on stems and curvature. |
+| **TextRenderingHintSingleBitPerPixel** | Specifies that a character is drawn using its glyph bitmap and no hinting. This results in better performance at the expense of quality. |
+| **TextRenderingHintAntiAliasGridFit** | Specifies that a character is drawn using its antialiased glyph bitmap and hinting. This results in much better quality due to antialiasing at a higher performance cost. |
+| **TextRenderingHintAntiAlias**| Specifies that a character is drawn using its antialiased glyph bitmap and no hinting. Stem width differences may be noticeable because hinting is turned off. |
+| **TextRenderingHintClearTypeGridFit** | Specifies that a character is drawn using its glyph Microsoft ClearType bitmap and hinting. This type of text rendering cannot be used along with **CompositingModeSourceCopy**.<br>Microsoft Windows XP and Windows Server 2003 only: ClearType rendering is supported only on Windows XP and Windows Server 2003. Therefore, **TextRenderingHintClearTypeGridFit** is ignored on other operating systems even though Windows GDI+ is supported on those operating systems. |
+
+#### Remarks
+
+The quality associated with each process varies according to the circumstances. **TextRenderingHintClearTypeGridFit** provides the best quality for most LCD monitors and relatively small font sizes. **TextRenderingHintAntiAlias** provides the best quality for rotated text. Generally, a process that produces higher quality text is slower than a process that produces lower quality text.
 
 
 # <a name="GetTransform"></a>GetTransform (CGpGraphics)
@@ -3391,7 +3444,7 @@ FUNCTION Save () AS GraphicsState
 
 #### Return value
 
-This method returns a value that identifies the saved state. Pass this value to the **Restore** method when you want to restore the state. The **GraphicsState** data type is defined in Gdiplusenums.inc.
+This method returns a value that identifies the saved state. Pass this value to the **Restore** method when you want to restore the state. The **GraphicsState** data type is defined in Gdiplusenums.bi.
 
 
 # <a name="ScaleTransform"></a>ScaleTransform (CGpGraphics)
@@ -3418,7 +3471,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 # <a name="SetClip"></a>SetClip (CGpGraphics)
 
-Updates the clipping region of this **Graphics** object to a region that is the combination of itself and the clipping region of another Graphics object.
+Updates the clipping region of this **Graphics** object to a region that is the combination of itself and the clipping region of another **Graphics** object.
 
 ```
 FUNCTION SetClip (BYVAL pGraphics AS CGpGraphics PTR, _
@@ -3737,6 +3790,23 @@ FUNCTION SetPixelOffsetMode (BYVAL nMode AS PixelOffsetMode) AS GpStatus
 | ---------- | ----------- |
 | *nMode* | Element of the **PixelOffsetMode** enumeration that specifies the pixel offset mode. |
 
+#### PixelOffsetMode Enumeration
+
+The **PixelOffsetMode** enumeration specifies the pixel offset mode. This enumeration is used by the **GetPixelOffsetMode** and **SetPixelOffsetMode** methods of the Graphics class.
+
+| Cpmstant   | Description |
+| ---------- | ----------- |
+| **PixelOffsetModeInvalid** | Used internally.  |
+| **PixelOffsetModeDefault** | Equivalent to **PixelOffsetModeNone**. |
+| **PixelOffsetModeHighSpeed** | Equivalent to **PixelOffsetModeNone**. |
+| **PixelOffsetModeHighQuality** | Equivalent to **PixelOffsetModeHalf**. |
+| **PixelOffsetModeNone** | Indicates that pixel centers have integer coordinates. |
+| **PixelOffsetModeHalf** | Indicates that pixel centers have coordinates that are half way between integer values. |
+
+#### Remarks
+
+Consider the pixel in the upper-left corner of an image with address (0, 0). With **PixelOffsetModeNone**, the pixel covers the area between 0.5 and 0.5 in both the x and y directions; that is, the pixel center is at (0, 0). With **PixelOffsetModeHalf**, the pixel covers the area between 0 and 1 in both the x and y directions; that is, the pixel center is at (0.5, 0.5).
+
 #### Return value
 
 If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
@@ -3802,6 +3872,26 @@ FUNCTION SetSmoothingMode (BYVAL smoothingMode AS LONG) AS GpStatus
 | Parameter  | Description |
 | ---------- | ----------- |
 | *smoothingMode* | Element of the **SmoothingMode** enumeration that specifies whether smoothing (antialiasing) is applied to lines and curves. |
+
+#### SmoothingMode Enumeration
+
+The **SmoothingMode** enumeration specifies the type of smoothing (antialiasing) that is applied to lines and curves. This enumeration is used by the **GetSmoothingMode** and **SetSmoothingMode** functions.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **SmoothingModeInvalid** | Reserved. |
+| **SmoothingModeDefault** | Specifies that smoothing is not applied. |
+| **SmoothingModeHighSpeed** | Specifies that smoothing is not applied. |
+| **SmoothingModeHighQuality** | Specifies that smoothing is applied using an 8 X 4 box filter. |
+| **SmoothingModeNone** | Specifies that smoothing is not applied. |
+| **SmoothingModeAntiAlias8x4** | Specifies that smoothing is applied using an 8 X 4 box filter. |
+| **SmoothingModeAntiAlias** | Specifies that smoothing is applied using an 8 X 4 box filter. |
+| **SmoothingModeAntiAlias8x8** | Specifies that smoothing is applied using an 8 X 8 box filter. |
+
+#### Remarks
+
+Smoothing performed by an 8 X 4 box filter gives better results for nearly vertical lines than it does for nearly horizontal lines. Smoothing performed by an 8 X 8 box filter gives equally good results for nearly vertical and nearly horizontal lines. The 8x8 algorithm produces higher quality smoothing but is slower than the 8 X 4 algorithm.
+
 
 #### Return value
 
@@ -3879,6 +3969,24 @@ FUNCTION SetTextRenderingHint (BYVAL newMode AS TextRenderingHint) AS GpStatus
 | Parameter  | Description |
 | ---------- | ----------- |
 | *newMode* | Element of the **TextRenderingHint** enumeration that specifies the process currently used by this **Graphics** object to render text. |
+
+
+#### TextRenderingHint Enumeration
+
+Specifies the process used to render text. The process affects the quality of the text.
+
+| Constant   | Description |
+| ---------- | ----------- |
+| **TextRenderingHintSystemDefault** | Specifies that a character is drawn using the currently selected system font smoothing mode (also called a rendering hint). |
+| **TextRenderingHintSingleBitPerPixelGridFit** | Specifies that a character is drawn using its glyph bitmap and hinting to improve character appearance on stems and curvature. |
+| **TextRenderingHintSingleBitPerPixel** | Specifies that a character is drawn using its glyph bitmap and no hinting. This results in better performance at the expense of quality. |
+| **TextRenderingHintAntiAliasGridFit** | Specifies that a character is drawn using its antialiased glyph bitmap and hinting. This results in much better quality due to antialiasing at a higher performance cost. |
+| **TextRenderingHintAntiAlias**| Specifies that a character is drawn using its antialiased glyph bitmap and no hinting. Stem width differences may be noticeable because hinting is turned off. |
+| **TextRenderingHintClearTypeGridFit** | Specifies that a character is drawn using its glyph Microsoft ClearType bitmap and hinting. This type of text rendering cannot be used along with **CompositingModeSourceCopy**.<br>Microsoft Windows XP and Windows Server 2003 only: ClearType rendering is supported only on Windows XP and Windows Server 2003. Therefore, **TextRenderingHintClearTypeGridFit** is ignored on other operating systems even though Windows GDI+ is supported on those operating systems. |
+
+#### Remarks
+
+The quality associated with each process varies according to the circumstances. **TextRenderingHintClearTypeGridFit** provides the best quality for most LCD monitors and relatively small font sizes. **TextRenderingHintAntiAlias** provides the best quality for rotated text. Generally, a process that produces higher quality text is slower than a process that produces lower quality text.
 
 #### Return value
 
@@ -4934,7 +5042,7 @@ END SUB
 
 # <a name="ClearMarkers"></a>ClearMarkers (CGpGraphicsPath)
 
-Adds the outline of a string to this path.
+Clears the markers from this path.
 
 ```
 FUNCTION ClearMarkers () AS GpStatus
@@ -4968,7 +5076,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 # <a name="CloseAllFigures"></a>CloseAllFigures (CGpGraphicsPath)
 
-Clears the markers from this path.
+Closes all open figures in this path.
 
 ```
 FUNCTION CloseAllFigures () AS GpStatus
@@ -5070,7 +5178,7 @@ FUNCTION Flatten (BYVAL pMatrix AS CGpMatrix PTR = NULL, BYVAL flatness AS SINGL
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pMatrix* | Optional. Pointer to a **Matrix** object that specifies the transformation to be applied to the path's data points. The default value is NULL, which specifies that no transformation is to be applied. |
-| *flatness* | Optional. The maximum error between the path and its flattened approximation. Reducing the flatness increases the number of line segments in the approximation. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
+| *flatness* | Optional. The maximum error between the path and its flattened approximation. Reducing the flatness increases the number of line segments in the approximation. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.bi. |
 
 #### Return value
 
@@ -5584,7 +5692,7 @@ FUNCTION Outline (pMatrix AS CGpMatrix PTR = NULL, BYVAL flatness AS SINGLE = Fl
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pMatrix* | Optional. Pointer to a **Matrix** object that specifies the transformation. If this parameter is NULL, no transformation is applied. The default value is NULL. |
-| *flatness* | Optional. Simple precision number that specifies the maximum error between the path and its flattened approximation. Reducing the flatness increases the number of line segments in the approximation. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
+| *flatness* | Optional. Simple precision number that specifies the maximum error between the path and its flattened approximation. Reducing the flatness increases the number of line segments in the approximation. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.bi. |
 
 #### Return value
 
@@ -5824,7 +5932,7 @@ FUNCTION Warp (BYVAL destPoints AS GpPointF PTR, BYVAL count AS INT_, BYVAL srcR
 | *srcRect* | Reference to a rectangle that, along with the *destPoints* parameter, defines the warp transformation. |
 | *pMatrix* | Optional. Pointer to a Matrix object that represents a transformation to be applied along with the warp. If this parameter is NULL, no transformation is applied. The default value is NULL. |
 | *nWarpMode* | Optional. Element of the **WarpMode** enumeration that specifies the kind of warp to be applied. The default value is **WarpModePerspective**. |
-| *flatness* | Optional. Real number that influences the number of line segments that are used to approximate the original path. Small values specify that many line segments are used, and large values specify that few line segments are used. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
+| *flatness* | Optional. Real number that influences the number of line segments that are used to approximate the original path. Small values specify that many line segments are used, and large values specify that few line segments are used. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.bi. |
 
 #### Return value
 
@@ -5886,7 +5994,7 @@ END SUB
 
 # <a name="Widen"></a>Widen (CGpGraphicsPath)
 
-Replaces this path with curves that enclose the area that is filled when this path is drawn by a specified pen. The Widen method also flattens the path.
+Replaces this path with curves that enclose the area that is filled when this path is drawn by a specified pen. The **Widen** method also flattens the path.
 
 ```
 FUNCTION Widen (BYVAL pPen AS CGpPen PTR, BYVAL pMatrix AS CGpMatrix PTR = NULL, _
@@ -5897,7 +6005,7 @@ FUNCTION Widen (BYVAL pPen AS CGpPen PTR, BYVAL pMatrix AS CGpMatrix PTR = NULL,
 | ---------- | ----------- |
 | *pPen* | Pointer to a **Pen** object. The path is made as wide as it would be when drawn by this pen. |
 | *pMatrix* | Optional. Pointer to a **Matrix** object that specifies a transformation to be applied along with the widening. If this parameter is NULL, no transformation is applied. The default value is NULL. |
-| *flatness* | Optional. Real number that influences the number of line segments that are used to approximate the original path. Small values specify that many line segments are used, and large values specify that few line segments are used. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.inc. |
+| *flatness* | Optional. Real number that influences the number of line segments that are used to approximate the original path. Small values specify that many line segments are used, and large values specify that few line segments are used. The default value is **FlatnessDefault**, which is a constant defined in Gdiplusenums.bi. |
 
 #### Return value
 
@@ -5938,7 +6046,7 @@ END SUB
 
 # <a name="ConstructorGraphicsPathIterator"></a>Constructor (CGpGraphicsPathIterator)
 
-Creates a **Graphics** object that is associated with a specified device context. When you use this method to create a **Graphics** object, make sure that the **Graphics** object is deleted before the device context is released.
+Creates a new **GraphicsPathIterator** object and associates it with a **GraphicsPath** object.
 
 ```
 CONSTRUCTOR CGpGraphicsPathIterator (BYVAL pPath AS CGpGraphicsPath PTR)
@@ -5951,7 +6059,7 @@ CONSTRUCTOR CGpGraphicsPathIterator (BYVAL pPath AS CGpGraphicsPath PTR)
 
 # <a name="CopyData"></a>CopyData (CGpGraphicsPathIterator)
 
-Copies a subset of the path's data points to a PointF array and copies a subset of the path's point types to a byte array.
+Copies a subset of the path's data points to a **GpPointF** array and copies a subset of the path's point types to a byte array.
 
 ```
 FUNCTION CopyData (BYVAL pts AS GpPointF PTR, BYVAL types AS BYTE PTR, _

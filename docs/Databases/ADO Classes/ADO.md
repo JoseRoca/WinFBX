@@ -2,16 +2,16 @@
 
 Microsoft ActiveX Data Objects (ADO) enable your client applications to access and manipulate data from a variety of sources through an OLE DB provider. Its primary benefits are ease of use, high speed, low memory overhead, and a small disk footprint. ADO supports key features for building client/server and Web-based applications. 
 
-**CADODB** are a collection of classes to allow to work with ADO using the FreeBasic compilers.
+`CADODB` are a collection of classes to allow to work with ADO using the FreeBasic compilers.
 
-The **CAdoBase** object, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derive classes to store the result codes of ADO calls.
+The `CADOBase` object, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derived classes to store the result codes of ADO calls.
 
 **Folder**: Afx/CADODB<br>
-**Files**: CADODB.inc, CAdoCommand.inc, CAdoConnection.inc, CAdoErrors.inc, CAdoFields.inc, CAdoParameters.inc, CAdoProperties.inc, CAdoRecord.inc, CAdoRecordset.inc, CAdoStream.inc.
+**Files**: CADODB.inc, CADOCommand.inc, CADOConnection.inc, CADOErrors.inc, CADOFields.inc, CADOParameters.inc, CADOProperties.inc, CADORecord.inc, CADORecordset.inc, CADOStream.inc.
 
 | Name       | Description |
 | ---------- | ----------- |
-| [CAdoBase Class](#CADOBase) | Base class for all the other ADO classes. |
+| [CADOBase Class](#CADOBase) | Base class for all the other ADO classes. |
 | [ADO Object Model](#ADOObjectModel) | ADO objects and their collections. |
 | [ADO Identifiers](#ADOIdentifiers) | PROGIDs, CLSIDs and IIDs. |
 | [ADO Errors](#ADOErrors) | ADO errors. |
@@ -269,7 +269,7 @@ The **Properties** collection contains all the **Property** objects for a specif
 
 **Include file**: CAdoProperties.inc (include CADODB.inc).
 
-## Attributes (CAdoProperty Class)
+## Attributes (CADOProperty Class)
 
 For a **Property** object, the **Attributes** property is read-only, and its value can be the sum of any one or more **PropertyAttributesEnum** values.
 
@@ -328,7 +328,7 @@ FOR i AS LONG = 0 TO nCount - 1
 NEXT
 ```
 
-## Name (CAdoProperty Class)
+## Name (CADOProperty Class)
 
 Returns the name of a **Property**.
 
@@ -360,7 +360,7 @@ FOR i AS LONG = 0 TO nCount - 1
 NEXT
 ```
 
-## Type_ (CAdoProperty Class)
+## Type_ (CADOProperty Class)
 
 Returns a **DataTypeEnum** value that indicates the operational type or data type of a **Property** object.
 
@@ -436,7 +436,7 @@ FOR i AS LONG = 0 TO nCount - 1
 NEXT
 ```
 
-## Value (CAdoProperty Class)
+## Value (CADOProperty Class)
 
 Sets or returns a Variant value that indicates the value of the object. Default value depends on the **Type_** property.
 
@@ -473,11 +473,11 @@ FOR i AS LONG = 0 TO nCount - 1
 NEXT
 ```
 
-# CAdoProperties Class Methods
+# CADOProperties Class Methods
 
 **Include file**: CAdoProperties.inc (include CADODB.inc).
 
-### Count (CAdoProperties Class)
+## Count (CADOProperties Class)
 
 Retrieves the number of objects of the **Properties** collection.
 
@@ -491,7 +491,7 @@ Because numbering for members of a collection begins with zero, you should alway
 
 If the **Count** property is zero, there are no objects in the collection.
 
-### Item (CAdoProperties Class)
+## Item (CADOProperties Class)
 
 Indicates a specific member of the **Properties** collection, by name or ordinal number.
 
@@ -511,7 +511,7 @@ An **Afx_ADOProperty** object reference.
 
 If **Item** cannot find an object in the collection corresponding to the **Index** argument, an error occurs.
 
-### Refresh (CAdoProperties Class)
+## Refresh (CADOProperties Class)
 
 Refreshes the contents of the **Properties** collection.
 

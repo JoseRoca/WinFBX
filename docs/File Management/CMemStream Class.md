@@ -83,7 +83,7 @@ OPERATOR CAST () AS IStream PTR
 | [GetLastResult](#GetLastResult2) | Returns the last result code. |
 | [GetErrorInfo](#GetErrorInfo2) | Returns a description of the last result code. |
 
-# CAdoStream Class
+# CADOStream Class
 
 An alternative to work with memory streams is to use the ADO stream object. To avoid confussons, the documentation for **CAdoStream** has been adapted to remove references to its use with URLs and ADO Record objects.
 
@@ -105,7 +105,7 @@ With the methods and properties of a **Stream** object, you can do the following
 
 **Note**: Since ADO supports the **IErrorInfo** interface, you can get a localized description of the last error calling the **AfxGetOleErrorInfo** function.
 
-**Include file**: CAdoStream.inc (include CADODB.inc)
+**Include file**: CADOStream.inc (include CADODB.inc)
 
 # Constructor
 
@@ -539,7 +539,7 @@ FUNCTION GetErrorInfo () AS CWSTR
 
 CWSTR. A description of the last result code. If the result code is S_OK (0), it returns "Success"; otherwise, it returns the hexadecimal value of the error code and a description such "Seek error", "Write fault", "Read fault" or "Invalid argument".
 
-# <a name="Charset"></a>Charset (CAdoStream)
+# <a name="Charset"></a>Charset (CADOStream)
 
 Indicates the character set into which the contents of a text **Stream** should be translated for storage in the **Stream** object's internal buffer.
 
@@ -564,7 +564,7 @@ For an open **Stream**, the current **Position** must be at the beginning of the
 
 **Charset** is used only with text **Stream** objects (**Type_** is **adTypeText**). This property is ignored if **Type_** is **adTypeBinary**.
 
-# <a name="Close"></a>Close (CAdoStream)
+# <a name="Close"></a>Close (CADOStream)
 
 Closes a **Stream** object and any dependent objects.
 
@@ -576,7 +576,7 @@ FUNCTION Close () AS HRESULT
 
 S_OK (0) or an HRESULT code.
 
-# <a name="CopyTo2"></a>CopyTo (CAdoStream)
+# <a name="CopyTo2"></a>CopyTo (CADOStream)
 
 Copies the specified number of characters or bytes (depending on **Type_**) in the **Stream** to another **Stream** object.
 
@@ -601,7 +601,7 @@ If there are existing characters or bytes in the destination stream, all content
 
 **CopyTo** should be used to copy data to a destination **Stream** of the same type as the source **Stream** (their **Type_** property settings are both **adTypeText** or both **adTypeBinary**). For text **Stream** objects, you can change the **Charset** property setting of the destination **Stream** to translate from one character set to another. Also, text **Stream** objects can be successfully copied into binary **Stream objects**, but binary **Stream** objects cannot be copied into text **Stream** objects.
 
-# <a name="EOS"></a>EOS (CAdoStream)
+# <a name="EOS"></a>EOS (CADOStream)
 
 Indicates whether the current position is at the end of the stream.
 
@@ -644,7 +644,7 @@ LONG. A **LineSeparatorEnum** value.
 
 **LineSeparator** is used only with text **Stream** objects (**Type_** is **adTypeText**). This property is ignored if **Type_** is **adTypeBinary**.
 
-# <a name="LoadFromFile"></a>LoadFromFile (CAdoStream)
+# <a name="LoadFromFile"></a>LoadFromFile (CADOStream)
 
 Loads the contents of an existing file into a **Stream**.
 
@@ -668,7 +668,7 @@ After a call to **LoadFromFile**, the current position is set to the beginning o
 
 Because 2 bytes may be added to the beginning of the stream for encoding, the size of the stream may not exactly match the size of the file from which it was loaded.
 
-# <a name="Mode"></a>Mode (CAdoStream)
+# <a name="Mode"></a>Mode (CADOStream)
 
 Indicates the available permissions for modifying data in a **Stream** object.
 
@@ -695,7 +695,7 @@ LONG. A **ConnectionModeEnum** value.
 
 This property is read/write while the object is closed and read-only while the object is open.
 
-# <a name="Open"></a>Open (CAdoStream)
+# <a name="Open"></a>Open (CADOStream)
 
 Opens the stream.
 
@@ -740,7 +740,7 @@ Negative values cannot be used to change the current position in a **Stream**. O
 
 For read-only **Stream** objects, ADO will not return an error if **Position** is set to a value greater than the **Size** of the **Stream**. This does not change the size of the **Stream**, or alter the Stream contents in any way. However, doing this should be avoided because it results in a meaningless **Position** value.
 
-# <a name="Read"></a>Read (CAdoStream)
+# <a name="Read"></a>Read (CADOStream)
 
 Reads a specified number of bytes from a binary **Stream** object.
 
@@ -769,7 +769,7 @@ If *NumBytes* is more than the number of bytes left in the **Stream**, only the 
 
 **Note**: *NumBytes* always measures bytes. For text **Stream** objects (**Type_** is **adTypeText**), use **ReadText**.
 
-# <a name="ReadText"></a>ReadText (CAdoStream)
+# <a name="ReadText"></a>ReadText (CADOStream)
 
 Reads a specified number of characters, an entire line, or the entire stream from a **Stream** object and returns the resulting string.
 
@@ -798,7 +798,7 @@ If *NumChars* is more than the number of characters left in the stream, only the
 
 **Note**: The **ReadText** method is used with text streams (**Type_** is **adTypeText**). For binary streams (**Type_** is **adTypeBinary**), use **Read**.
 
-# <a name="SaveToFile"></a>SaveToFile (CAdoStream)
+# <a name="SaveToFile"></a>SaveToFile (CADOStream)
 
 Saves the binary contents of a **Stream** to a file.
 
@@ -828,7 +828,7 @@ This method does not change the association of the **Stream** object to its unde
 
 After a **SaveToFile** operation, the current position (**Position**) in the stream is set to the beginning of the stream (0).
 
-# <a name="SetEOS"></a>SetEOS (CAdoStream)
+# <a name="SetEOS"></a>SetEOS (CADOStream)
 
 Sets the position that is the end of the stream.
 
@@ -848,7 +848,7 @@ Since **Write**, **WriteText**, and **CopyTo** do not truncate any extra values 
 
 **Caution**: If you set **EOS** to a position before the actual end of the stream, you will lose all data after the new **EOS** position.
 
-# <a name="Size"></a>Size (CAdoStream)
+# <a name="Size"></a>Size (CADOStream)
 
 Indicates the size of the stream in number of bytes.
 
@@ -860,7 +860,7 @@ PROPERTY Size () AS LONG
 
 LONG. The size of the stream in number of bytes.
 
-# <a name="SkipLine"></a>SkipLine (CAdoStream)
+# <a name="SkipLine"></a>SkipLine (CADOStream)
 
 Skips one entire line when reading a text stream.
 
@@ -878,7 +878,7 @@ All characters up to, and including the next line separator, are skipped. By def
 
 The **SkipLine** method is used with text streams (**Type_** is **adTypeText**).
 
-# <a name="State"></a>State (CAdoStream)
+# <a name="State"></a>State (CADOStream)
 
 Indicates for whether the state of the **Stream** object is open or closed.
 
@@ -898,7 +898,7 @@ PROPERTY State () AS ObjectStateEnum
 
 LONG. The current **Stream** state.
 
-# <a name="Type_"></a>Type_ (CAdoStream)
+# <a name="Type_"></a>Type_ (CADOStream)
 
 Indicates the type of data contained in the **Stream** (binary or text).
 
@@ -926,7 +926,7 @@ The **Type_** property is read/write only when the current position is at the be
 
 The **Type_** property determines which methods should be used for reading and writing the **Stream**. For text streams, use **ReadText** and **WriteText**. For binary streams, use **Read** and **Write**.
 
-# <a name="Write"></a>Write (CAdoStream)
+# <a name="Write"></a>Write (CADOStream)
 
 Writes binary data to a **Stream** object.
 
@@ -942,8 +942,7 @@ FUNCTION Write (BYREF cvBuffer AS CVAR) AS HRESULT
 
 S_OK (0) or an HRESULT code.
 
-# <a name="WriteText"></a>WriteText (CAdoStream)
-
+DO
 Writes a string to a **Stream** object.
 
 ```

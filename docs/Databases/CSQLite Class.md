@@ -261,7 +261,7 @@ The last result code is not global, but bound to each object, and its purpose is
 
 # <a name="Malloc"></a>Malloc
 
-Returns a pointer to a block of memory at least N bytes in length, where N is the parameter. If Malloc is unable to obtain sufficient free memory, it returns a NULL pointer. If the parameter nBytes to Malloc is zero or negative then returns a NULL pointer.
+Returns a pointer to a block of memory at least N bytes in length, where N is the parameter. If Malloc is unable to obtain sufficient free memory, it returns a NULL pointer. If the parameter *nBytes* to Malloc is zero or negative then returns a NULL pointer.
 
 ```
 FUNCTION Malloc (BYVAL nBytes AS LONG) AS ANY PTR

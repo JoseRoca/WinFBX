@@ -36,6 +36,7 @@ The **Region** object describes an area of the display surface. The area can be 
 Creates a region that is defined by a rectangle.
 
 ```
+CONSTRUCTOR CGpRegion
 CONSTRUCTOR CGpRegion (BYVAL pRegion AS CGpRegion PTR)
 CONSTRUCTOR CGpRegion (BYVAL rc AS GpRectF PTR)
 CONSTRUCTOR CGpRegion (BYVAL rc AS GpRect PTR)
@@ -951,7 +952,7 @@ FUNCTION GetRegionScansCount (BYVAL pMatrix AS CGpMatrix PTR) AS UINT
 
 #### Remarks
 
-The **GetRegionScansCount** method can be used before the GetRegionScans method to determine the number of rectangles. Then, you can allocate a buffer that is the correct size to store the rectangles that are obtained with the **GetRegionScans** method.
+The **GetRegionScansCount** method can be used before the **GetRegionScans** method to determine the number of rectangles. Then, you can allocate a buffer that is the correct size to store the rectangles that are obtained with the **GetRegionScans** method.
 
 #### Example
 
@@ -1409,8 +1410,9 @@ END SUB
 ' ========================================================================================
 ```
 
-Example
+#### Example
 
+```
 ' ========================================================================================
 ' The following example creates a RectF structure and determines whether the rectangle is
 ' visible or partially visible on the display device. If it is, it fills the rectangle.
@@ -1435,6 +1437,7 @@ SUB Example_IsVisibleRect (BYVAL hdc AS HDC)
 
 END SUB
 ' ========================================================================================
+```
 
 # <a name="MakeEmpty"></a>MakeEmpty
 

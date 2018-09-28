@@ -159,7 +159,7 @@ CONSTRUCTOR CGpImage (BYVAL pStream AS IStream PTR, BYVAL useicm AS BOOLEAN = FA
 
 # <a name="CloneImage"></a>Clone (CGpImage)
 
-Creates an **Image** object based on a file.
+Copies the contents of the existing **Image** object into a new **Image** object.
 
 ```
 FUNCTION Clone (BYVAL pCloneImage AS CGpImage PTR) AS GpStatus
@@ -202,7 +202,7 @@ END SUB
 
 # <a name="FindFirstItem"></a>FindFirstItem (CGpImage)
 
-Retrieves the description and the data size of the first metadata item in this Image object.
+Retrieves the description and the data size of the first metadata item in this **Image** object.
 
 ```
 FUNCTION FindFirstItem (BYVAL pitem AS ImageItemData PTR) AS GpStatus
@@ -479,7 +479,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 # <a name="GetPalette"></a>GetPalette (CGpImage)
 
-Gets the **ColorPalette** of this Image object.
+Gets the **ColorPalette** of this **Image** object.
 
 ```
 FUNCTION GetPalette (BYVAL pal AS ColorPalette PTR, BYVAL nSize AS INT_) AS GpStatus
@@ -506,7 +506,7 @@ FUNCTION GetPaletteSize () AS INT_
 
 # <a name="GetPhysicalDimension"></a>GetPhysicalDimension (CGpImage)
 
-Gets the width and height of this image.
+Gets the width and height of this **Image** object.
 
 ```
 FUNCTION GetPhysicalDimension (BYVAL psize AS SizeF PTR) AS GpStatus
@@ -567,7 +567,7 @@ The **GetPropertyIdList** method returns an array of **PROPIDs**. Before you cal
 
 # <a name="GetPropertyItem"></a>GetPropertyItem (CGpImage)
 
-Gets a specified property item (piece of metadata) from this Image object.
+Gets a specified property item (piece of metadata) from this **Image** object.
 
 ```
 FUNCTION GetPropertyItem (BYVAL propId AS PROPID, BYVAL propSize AS UINT, _
@@ -796,7 +796,7 @@ END SUB
 
 # <a name="Save"></a>Save (CGpImage)
 
-Rotates and flips this image.
+Saves this image to a file.
 
 ```
 FUNCTION Save (BYVAL pwszFileName AS WSTRING PTR, BYVAL clsidEncoder AS GUID PTR, _

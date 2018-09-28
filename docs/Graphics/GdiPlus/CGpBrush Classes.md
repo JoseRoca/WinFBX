@@ -11,7 +11,7 @@ A closed shape, such as a rectangle or an ellipse, consists of an outline and an
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#ConstructorBrush) | Creates a **Brush** object from another **Brush** object. |
+| [Constructors](#ConstructorsBrush) | Creates a **Brush** object from another **Brush** object. |
 | [Clone](#CloneBrush) | Copies the contents of the existing **Brush** object into a new **Brush** object. |
 | [GetType](#GetTypeBrush) | Gets the type of this brush. |
 
@@ -26,7 +26,7 @@ The **SolidBrush** object defines a solid color Brush object. A **Brush** object
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#ConstructorSolidBrush) | Creates a **SolidBrush** object based on a color. |
+| [Constructors](#ConstructorSolidBrush) | Creates a **SolidBrush** object based on a color. |
 | [GetColor](#GetColorSolidBrush) | Gets the color of this brush. |
 | [SetColor](#SetColorSolidBrush) | Sets the color of this brush. |
 
@@ -41,7 +41,7 @@ Creates a **HatchBrush** object based on a hatch style, a foreground color, and 
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#ConstructorHatchBrush) | Creates a **HatchBrush** object based on a hatch style, a foreground color, and a background color. |
+| [Constructors](#ConstructorHatchBrush) | Creates a **HatchBrush** object based on a hatch style, a foreground color, and a background color. |
 | [GetBackgroundColor](#GetBackgroundColor) | Gets the background color of this hatch brush. |
 | [GetForegroundColor](#GetForegroundColor) | Gets the foreground color of this hatch brush. |
 | [GetHatchStyle](#GetHatchStyle) | Gets the hatch style of this hatch brush. |
@@ -57,7 +57,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorsLGBrush) | Creates a **LinearGradientBrush** object. |
+| [Constructorss](#ConstructorsLGBrush) | Creates a **LinearGradientBrush** object. |
 | [GetBlend](#GetBlendLGBrush) | Gets the blend factors and their corresponding blend positions. |
 | [GetBlendCount](#GetBlendCountLGBrush) | Gets the number of blend factors currently set. |
 | [GetGammaCorrection](#GetGammaCorrectionLGBrush) | Determines whether gamma correction is enabled for this brush. |
@@ -147,74 +147,14 @@ Defines a **Brush** object that contains an **Image** object that is used for th
 | [SetWrapMode](#SetWrapModeTBrush) | Sets the wrap mode. |
 | [TranslateTransform](#TranslateTransformTBrush) | Updates this brush's current transformation matrix with the product of itself and a translation matrix. |
 
-# <a name="ConstructorsLGBrush"></a>Constructors (CGpLinearGradientBrush)
+# <a name="ConstructorsBrush"></a>Constructors (CGpBrush)
 
-Creates a **LinearGradientBrush** object from a set of boundary points and boundary colors.
-
-```
-CONSTRUCTOR CGpLinearGradientBrush (BYVAL point1 AS GpPointF PTR, BYVAL point2 AS GpPointF PTR, _
-   BYVAL color1 AS ARGB, BYVAL color2 AS ARGB)
-CONSTRUCTOR CGpLinearGradientBrush (BYVAL point1 AS GpPoint PTR, BYVAL point2 AS GpPoint PTR, _
-   BYVAL color1 AS ARGB, BYVAL color2 AS ARGB)
-```
-
-Creates a **LinearGradientBrush** object based on a rectangle and mode of direction.
+Creates a **Brush** object.
 
 ```
-CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRectF PTR, BYVAL color1 AS ARGB, _
-   BYVAL color2 AS ARGB, BYVAL mode AS LinearGradientMode)
-CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRect PTR, BYVAL color1 AS ARGB, _
-   BYVAL color2 AS ARGB, BYVAL mode AS LinearGradientMode)
+CONSTRUCTOR CGpBrush
+CONSTRUCTOR CGpBrush (BYVAL pBrush AS CGpBrush PTR)
 ```
-
-Creates a LinearGradientBrush object from a rectangle and angle of direction.
-
-```
-CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRectF PTR, BYVAL color1 AS ARGB, _
-   BYVAL color2 AS ARGB, BYVAL angle AS SINGLE, BYVAL isAngleScalable AS BOOL)
-CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRect PTR, BYVAL color1 AS ARGB, _
-   BYVAL color2 AS ARGB, BYVAL angle AS SINGLE, BYVAL isAngleScalable AS BOOL)
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *point1* | Reference to a **GpPoint** structure that specifies the starting point of the gradient. The starting boundary line passes through the starting point. |
-| *point2* | Reference to a **GpPoint** structure that specifies the ending point of the gradient. The ending boundary line passes through the ending point. |
-| *color1* | An ARGB value that specifies the color at the starting boundary line of this linear gradient brush. |
-| *color2* | An ARGB value that specifies the color at the ending boundary line of this linear gradient brush. |
-| *rc* | Reference to a rectangle that specifies the starting and ending points of the gradient. The upper-left corner of the rectangle is the starting point. The lower-right corner is the ending point. |
-| *mode* | Element of the **LinearGradientMode** enumeration that specifies the direction of the gradient. |
-| *angle* | Real number that, if *isAngleScalable* is TRUE, specifies the base angle from which the angle of the directional line is calculated, or that, if *isAngleScalable* is FALSE, specifies the angle of the directional line. The angle is measured from the top of the rectangle that is specified by rect and must be in degrees. The gradient follows the directional line. |
-| *isAngleScalable* | BOOL value that specifies whether the angle is scalable. If *isAngleScalable* is TRUE, the angle of the directional line is scalable; otherwise, the angle is not scalable. |
-
-# <a name="ConstructorsPGBrush"></a>Constructors (CGpPathGradientBrush)
-
-Creates a **PathGradientBrush** object based on an array of points. Initializes the wrap mode of the path gradient brush
-
-```
-CONSTRUCTOR CGpPathGradientBrush (BYVAL pts AS GpPointF PTR, BYVAL nCount AS LONG, _
-   BYVAL nWrapMode AS WrapMode = WrapModeClamp)
-```
-
-Creates a **PathGradientBrush** object based on an array of points. Initializes the wrap mode of the path gradient brush.
-
-```
-CONSTRUCTOR CGpPathGradientBrush (BYVAL pts AS GpPoint PTR, BYVAL nCount AS LONG, _
-   BYVAL nWrapMode AS WrapMode = WrapModeClamp)
-```
-
-Creates a **PathGradientBrush** object based on a GraphicsPath object.
-
-```
-CONSTRUCTOR CGpPathGradientBrush (BYVAL pGraphPath AS CGpGraphicsPath PTR)
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pts* | Pointer to an array of points that specifies the boundary path of the path gradient brush. |
-| *nCount* | Integer that specifies the number of elements in the *pts* array.  |
-| *nWrapMode* | Optional. Element of the **WrapMode** enumeration that specifies how areas painted with the path gradient brush will be tiled. The default value is **WrapModeClamp**. |
-| *pGraphPath* | Pointer to a **GraphicsPath** object that specifies the boundary path of the path gradient brush. |
 
 # <a name="CloneBrush"></a>Clone (CGpBrush)
 
@@ -310,11 +250,12 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ConstructorSolidBrush"></a>Constructor (CGpSolidBrush)
+# <a name="ConstructorSolidBrush"></a>Constructors (CGpSolidBrush)
 
-Create a **SolidBrush** object based on a color.
+Creates a **SolidBrush** object based on a color.
 
 ```
+CONSTRUCTOR CGpSolidBrush (BYVAL pSolidBrush AS CGpSolidBrush PTR)
 CONSTRUCTOR CGpSolidBrush (BYVAL colour AS ARGB = &hFF000000)
 ```
 
@@ -390,11 +331,12 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ConstructorHatchBrush"></a>Constructor (CGpHatchBrush)
+# <a name="ConstructorHatchBrush"></a>Constructors (CGpHatchBrush)
 
 Creates a **HatchBrush** object based on a hatch style, a foreground color, and a background color.
 
 ```
+CONSTRUCTOR CGpHatchBrush (BYVAL pHatchBrush AS CGpHatchBrush PTR)
 FUNCTION HatchBrush (BYVAL hatchStyle AS HatchStyle, BYVAL foreColor AS ARGB, _
    BYVAL backColor AS ARGB = &HFF000000)
 ```
@@ -467,55 +409,6 @@ SUB Example_HatchBrushGetBackgroundColor (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
-
-# <a name="ConstructorsTBrush"></a>Constructors (CGpTextureBrush)
-
-Creates a texture brush.
-
-```
-CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode = WrapModeTile)
-CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL dstRect AS GpRectF PTR, _
-   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL)
-CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL dstRect AS GpRect PTR, _
-   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL)
-CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode, _
-   BYVAL dstRect AS GpRect PTR)
-CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode, _
-   BYVAL dstX AS SINGLE, BYVAL dstY AS SINGLE, BYVAL dstWidth AS SINGLE, BYVAL dstHeight AS SINGLE)
-CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode, _
-   BYVAL dstX AS INT_, BYVAL dstY AS INT_, BYVAL dstWidth AS INT_, BYVAL dstHeight AS INT_)
-```
-
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pImage* | Pointer to a variable that will receive a pointer to the Image object that is defined by this texture brush. |
-| *nWrapMode* | Element of the **WrapMode** enumeration that specifies how repeated copies of an image are used to tile an area when it is painted with this texture brush.  |
-| *dstX* | Leftmost coordinate of the image portion to be used by this brush. |
-| *dstY* | Uppermost coordinate of the image portion to be used by this brush. |
-| *dstWidth* | Width of the brush and width of the image portion to be used by the brush. |
-| *dstHeight* | Height of the brush and height of the image portion to be used by the brush. |
-| *dstHeight* | Height of the brush and height of the image portion to be used by the brush. |
-
-#### Remarks
-
-The *dstX*, *dstY*, *dstWidth*, and *dstHeight* parameters specify a rectangle. The size of the brush is defined by dstWidth and dstHeight. The *dstX* and *dstY* parameters have no affect on the brush's size or position — the brush is always oriented at (0, 0). The *dstX*, *dstY*, *dstWidth*, and *dstHeight* parameters define the portion of the image to be used by the brush.
-
-For example, suppose you have an image that is stored in an **Image** object and is 256 ×512 (width ×height) pixels. Then you create a **TextureBrush** object based on this image as follows:
-
-```
-TextureBrush(@someImage, WrapModeTile, 12, 50, 100, 150)
-```
-
-The brush will have a width of 100 units and a height of 150 units. The brush will use a rectangular portion of the image. This portion begins at the pixel having coordinates (12, 50). The width and height of the portion are 100 and 150, respectively, measured from the starting pixel.
-
-Now suppose you create another TextureBrush object based on the same image and specify a different rectangle:
-
-```
-TextureBrush(@someImage, WrapModeTile, 0, 0, 256, 512)
-```
-
-The brush will have width and height equal to 256 and 512, respectively. The brush will use the entire image instead of a portion of it because the rectangle specifies a starting pixel at coordinates (0, 0) and dimensions identical to those of the image.
 
 # <a name="GetForegroundColor"></a>GetForegroundColor (CGpHatchBrush)
 
@@ -640,12 +533,12 @@ SUB Example_HatchBrushGetHatchStyle (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
-
-# <a name="ConstructorLGBrush"></a>Constructors (CGpLinearGradientBrush)
+# <a name="ConstructorsLGBrush"></a>Constructors (CGpLinearGradientBrush)
 
 Creates a **LinearGradientBrush** object from a set of boundary points and boundary colors.
 
 ```
+CONSTRUCTOR CGpLinearGradientBrush (BYVAL pLinearGradientBrush AS CGpLinearGradientBrush PTR)
 CONSTRUCTOR CGpLinearGradientBrush (BYVAL point1 AS GpPointF PTR, BYVAL point2 AS GpPointF PTR, _
    BYVAL color1 AS ARGB, BYVAL color2 AS ARGB)
 CONSTRUCTOR CGpLinearGradientBrush (BYVAL point1 AS GpPoint PTR, BYVAL point2 AS GpPoint PTR, _
@@ -661,7 +554,7 @@ CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRect PTR, BYVAL color1 AS ARGB
    BYVAL color2 AS ARGB, BYVAL mode AS LinearGradientMode)
 ```
 
-Creates a **LinearGradientBrush** object from a rectangle and angle of direction.
+Creates a LinearGradientBrush object from a rectangle and angle of direction.
 
 ```
 CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRectF PTR, BYVAL color1 AS ARGB, _
@@ -679,7 +572,7 @@ CONSTRUCTOR CGpLinearGradientBrush (BYVAL rc AS GpRect PTR, BYVAL color1 AS ARGB
 | *rc* | Reference to a rectangle that specifies the starting and ending points of the gradient. The upper-left corner of the rectangle is the starting point. The lower-right corner is the ending point. |
 | *mode* | Element of the **LinearGradientMode** enumeration that specifies the direction of the gradient. |
 | *angle* | Real number that, if *isAngleScalable* is TRUE, specifies the base angle from which the angle of the directional line is calculated, or that, if *isAngleScalable* is FALSE, specifies the angle of the directional line. The angle is measured from the top of the rectangle that is specified by rect and must be in degrees. The gradient follows the directional line. |
-| *isAngleScalable* | BOOL value that specifies whether the angle is scalable. If isAngleScalable is TRUE, the angle of the directional line is scalable; otherwise, the angle is not scalable. |
+| *isAngleScalable* | BOOL value that specifies whether the angle is scalable. If *isAngleScalable* is TRUE, the angle of the directional line is scalable; otherwise, the angle is not scalable. |
 
 # <a name="GetBlendLGBrush"></a>GetBlend (CGpLinearGradientBrush)
 
@@ -751,6 +644,1265 @@ SUB Example_GetBlend (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
+
+# <a name="GetBlendCountLGBrush"></a>GetBlendCount (CGpLinearGradientBrush)
+
+Gets the number of blend factors currently set for this **LinearGradientBrush** object.
+
+```
+FUNCTION GetBlendCount () AS INT_
+```
+
+#### Return value
+
+This method returns the number of blend factors currently set for this **LinearGradientBrush** object. If no custom blend has been set by using **SetBlend**, or if invalid positions were passed to **SetBlend**, then **GetBlend** returns 1.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush, sets its blend, and uses the brush
+' to fill a rectangle. The code then gets the blend. The blend factors and positions can
+' then be inspected or used in some way.
+' ========================================================================================
+SUB Example_GetBlend (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM factors(0 TO 3) AS SINGLE = {0.0, 0.4, 0.6, 1.0}
+   DIM positions(0 TO 3) AS SINGLE = {0.0, 0.2, 0.8, 1.0}
+
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(100, 0)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
+      GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+   linGrBrush.SetBlend(@factors(0), @positions(0), 4)
+
+   ' // Use the linear gradient brush to fill a rectangle.
+   graphics.FillRectangle(@linGrBrush, 0, 0, 100, 50)
+
+   ' // Obtain information about the linear gradient brush.
+   DIM blendCount AS LONG = linGrBrush.GetBlendCount
+   DIM rgFactors(blendCount - 1) AS SINGLE
+   DIM rgPositions(blendCount - 1) AS SINGLE
+
+   linGrBrush.GetBlend(@rgFactors(0), @rgPositions(0), blendCount)
+
+   FOR j AS LONG = 0 TO blendCount - 1
+'      // Inspect or use the value in rgFactors(j)
+'      // Inspect or use the value in rgPositions(j)
+      OutputDebugString STR(rgFactors(j)) & STR(rgPositions(j))
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetGammaCorrectionLGBrush"></a>GetGammaCorrection (CGpLinearGradientBrush)
+
+Gets the focus scales of this path gradient brush.
+
+```
+FUNCTION GetGammaCorrection () AS BOOL
+```
+
+#### Return value
+
+If gamma correction is enabled, this method returns TRUE; otherwise, it returns FALSE.
+
+# <a name="GetInterpolationColorCountLGBrush"></a>GetInterpolationColorCount (CGpLinearGradientBrush)
+
+Gets the number of colors currently set to be interpolated for this linear gradient brush.
+
+```
+FUNCTION GetInterpolationColorCount () AS INT_
+```
+
+#### Return value
+
+This method returns the number of colors to be interpolated for this linear gradient brush. If no colors have been set by using **SetInterpolationColors**, or if invalid positions were passed to **SetInterpolationColors**, then **GetInterpolationColorCount** returns 0.
+
+#### Remarks
+
+A simple linear gradient brush has two colors: a color at the starting boundary and a color at the ending boundary. When you paint with such a brush, the color changes gradually from the starting color to the ending color as you move from the starting boundary to the ending boundary. You can create a more complex gradient by using the **SetInterpolationColors** method to specify an array of colors and their corresponding blend positions to be interpolated for this linear gradient brush.
+
+You can obtain the colors and blend positions currently set for a linear gradient brush by calling its **GetInterpolationColors** method. Before you call the **GetInterpolationColors** method, you must allocate two buffers: one to hold the array of colors and one to hold the array of blend positions. You can call the **GetInterpolationColorCount** method to determine the required size of those buffers. The size of the colors buffer is the return value of **GetInterpolationColorCount** multiplied by **sizeof(Color)**. The size of the blend positions buffer is the value of **GetInterpolationColorCount** multiplied by **sizeof(REAL)**.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets the colors that are interpolated for this linear gradient
+' brush to red, blue, and green and sets the blend positions to 0, 0.3, and 1. The code
+' calls the LinearGradientBrush::GetInterpolationColorCount method of a LinearGradientBrush
+' object to obtain the number of colors currently set to be interpolated for the brush.
+' Next, the code gets the colors and their positions. Then, the code fills a small
+' rectangle with each color.
+' ========================================================================================
+SUB Example_GetInterpolationColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush, and set the colors to be interpolated.
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0)}
+   DIM positions(0 TO 2) AS SINGLE = {0.0, 0.3, 1.0}
+
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(100, 0)
+
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 255, 255, 255))
+   linGrBrush.SetInterpolationColors(@colors(0), @positions(0), 3)
+
+   ' // Obtain information about the linear gradient brush.
+   ' // How many colors have been specified to be interpolated for this brush?
+   DIM colorCount AS LONG = linGrBrush.GetInterpolationColorCount
+
+   ' // Allocate a buffer large enough to hold the set of colors.
+   DIM rgcolors(0 TO colorCount - 1) AS ARGB
+
+   ' // Allocate a buffer to hold the relative positions of the colors.
+   DIM rgPositions(0 TO colorCount - 1) AS SINGLE
+
+   ' // Get the colors and their relative positions.
+   linGrBrush.GetInterpolationColors(@rgcolors(0), @rgPositions(0), colorCount)
+
+   ' // Fill a small rectangle with each of the colors.
+   DIM pSolidBrush AS CGpSolidBrush PTR
+   FOR j AS LONG = 0 TO colorCount - 1
+      pSolidBrush = NEW CGpSolidBrush(rgcolors(j))
+      graphics.FillRectangle(pSolidBrush, 15 * j, 0, 10, 10)
+      Delete pSolidBrush
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetInterpolationColorsLGBrush"></a>GetInterpolationColors (CGpLinearGradientBrush)
+
+Gets the blend factors and their corresponding blend positions from a **LinearGradientBrush** object.
+
+```
+FUNCTION GetInterpolationColors (BYVAL presetColors AS ARGB PTR, _
+   BYVAL blendPositions AS SINGLE PTR, BYVAL count AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *presetColors* | Pointer to an array that receives the colors. A color of a given index in the presetColors array corresponds to the blend position of that same index in the *blendPositions* array. |
+| *blendPositions* | Pointer to an array that receives the blend positions. Each number in the array indicates a percentage of the distance between the starting boundary and the ending boundary and is in the range from 0.0 through 1.0, where 0.0 indicates the starting boundary of the gradient and 1.0 indicates the ending boundary. A blend position between 0.0 and 1.0 indicates a line, parallel to the boundary lines, that is a certain fraction of the distance from the starting boundary to the ending boundary. For example, a blend position of 0.7 indicates the line that is 70 percent of the distance from the starting boundary to the ending boundary. The color is constant on lines that are parallel to the boundary lines. |
+| *count* | Integer that specifies the number of elements in the presetColors array. This is the same as the number of elements in the blendPositions array. Before calling the **GetInterpolationColors** method of a **LinearGradientBrush** object, call the **GetInterpolationColorCount** method of that same **LinearGradientBrush** object to determine the current number of colors. The number of blend positions retrieved is the same as the number of colors retrieved. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example sets the colors that are interpolated for this linear gradient
+' brush to red, blue, and green and sets the blend positions to 0, 0.3, and 1. The code
+' calls the LinearGradientBrush::GetInterpolationColorCount method of a LinearGradientBrush
+' object to obtain the number of colors currently set to be interpolated for the brush.
+' Next, the code gets the colors and their positions. Then, the code fills a small
+' rectangle with each color.
+' ========================================================================================
+SUB Example_GetInterpolationColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush, and set the colors to be interpolated.
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0)}
+   DIM positions(0 TO 2) AS SINGLE = {0.0, 0.3, 1.0}
+
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(100, 0)
+
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 255, 255, 255))
+   linGrBrush.SetInterpolationColors(@colors(0), @positions(0), 3)
+
+   ' // Obtain information about the linear gradient brush.
+   ' // How many colors have been specified to be interpolated for this brush?
+   DIM colorCount AS LONG = linGrBrush.GetInterpolationColorCount
+
+   ' // Allocate a buffer large enough to hold the set of colors.
+   DIM rgcolors(0 TO colorCount - 1) AS ARGB
+
+   ' // Allocate a buffer to hold the relative positions of the colors.
+   DIM rgPositions(0 TO colorCount - 1) AS SINGLE
+
+   ' // Get the colors and their relative positions.
+   linGrBrush.GetInterpolationColors(@rgcolors(0), @rgPositions(0), colorCount)
+
+   ' // Fill a small rectangle with each of the colors.
+   DIM pSolidBrush AS CGpSolidBrush PTR
+   FOR j AS LONG = 0 TO colorCount - 1
+      pSolidBrush = NEW CGpSolidBrush(rgcolors(j))
+      graphics.FillRectangle(pSolidBrush, 15 * j, 0, 10, 10)
+      Delete pSolidBrush
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetLinearColors"></a>GetLinearColors (CGpLinearGradientBrush)
+
+Gets the starting color and ending color of this linear gradient brush.
+
+```
+FUNCTION GetLinearColors (BYVAL colors AS ARGB PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *colors* | Pointer to an array that receives the starting color and the ending color. The first color in the colors array is the color at the starting boundary line of the gradient; the second color in the colors array is the color at the ending boundary line. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and gets the boundary colors. Next,
+' the code uses each of the two colors to create a solid brush. Then, the code fills a
+' rectangle with each solid brush.
+' ========================================================================================
+SUB Example_GetLinearColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush.
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 100, 50)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   ' // Obtain information about the linear gradient brush.
+   DIM colors(0 TO 1) AS ARGB
+   linGrBrush.GetLinearColors(@colors(0))
+
+   ' // Fill a small rectangle with each of the two colors.
+   DIM solidBrush0 AS CGpSolidBrush = colors(0)
+   DIM solidBrush1 AS CGpSolidBrush = colors(1)
+   graphics.FillRectangle(@solidBrush0, 0, 0, 20, 20)
+   graphics.FillRectangle(@solidBrush1, 25, 0, 20, 20)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetRectangleLGBrush"></a>GetRectangle (CGpLinearGradientBrush)
+
+Gets the rectangle that defines the boundaries of the gradient.
+
+```
+FUNCTION GetRectangle (BYVAL rc AS GpRectF PTR) AS GpStatus
+FUNCTION GetRectangle (BYVAL rc AS GpRect PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *rc* | Pointer to a **GpRectF** or **GpRect** structure that receives the rectangle that defines the boundaries of the gradient. For example, if a linear gradient brush is constructed with a starting point at (20.2, 50.8) and an ending point at (60.5, 110.0), then the defining rectangle has its upper-left point at (20.2, 50.8), a width of 40.3, and a height of 59.2. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The rectangle defines the boundaries of the gradient in the following ways: the right and left sides of the rectangle form the boundaries of a horizontal gradient; the top and bottom sides form the boundaries of a vertical gradient; two of the diagonally opposing corners lie on the boundaries of a diagonal gradient. In each of these cases, either side/corner may be on the starting boundary, depending on how the starting and ending points are passed to the constructor.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush. Then the code gets the brush's
+' rectangle and draws it.
+' ========================================================================================
+SUB Example_GetRectangle (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush.
+   DIM pt1 AS GpPoint = GDIP_POINT(20, 10)
+   DIM pt2 AS GpPoint = GDIP_POINT(60, 110)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
+      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+
+   ' // Obtain information about the linear gradient brush.
+   DIM rc AS GpRect
+   linGrBrush.GetRectangle(@rc)
+
+   ' // Draw the retrieved rectangle.
+   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
+   graphics.DrawRectangle(@pen, @rc)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetTransformLGBrush"></a>GetTransform (CGpLinearGradientBrush)
+
+Gets the transformation matrix of this linear gradient brush. 
+
+```
+FUNCTION GetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that receives the transformation matrix. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **LinearGradientBrush** object maintains a transformation matrix that can store any affine transformation. When you use a linear gradient brush to fill an area, GDI+ transforms the brush's boundary lines according to the brush's transformation matrix and then fills the area. The transformed boundaries exist only during rendering; the boundaries stored in the **LinearGradientBrush** object are not transformed
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and sets its transformation matrix.
+' Next, the code gets the brush's transformation matrix and proceeds to inspect or use the
+' matrix elements.
+' ========================================================================================
+SUB Example_GetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush.
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(200, 0)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
+      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+
+   DIM matrixSet AS CGpMatrix = CGpMatrix(0, 1, -1, 0, 0, 0)
+
+   linGrBrush.SetTransform(@matrixSet)
+
+   ' // Obtain information about the linear gradient brush.
+   DIM matrixGet AS CGpMatrix
+   DIM elements(0 TO 5) AS SINGLE
+
+   linGrBrush.GetTransform(@matrixGet)
+   matrixGet.GetElements(@elements(0))
+
+   graphics.FillRectangle(@CGpSolidBrush(GDIP_ARGB(255, 0, 0, 0)), 0, 0, 20, 20)
+
+   FOR j AS LONG = 0 TO 5
+      ' // Inspect or use the value in elements[j].
+      PRINT STR(elements(j))
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetWrapModeLGBrush"></a>GetWrapMode (CGpLinearGradientBrush)
+
+Gets the wrap mode for this brush. The wrap mode determines how an area is tiled when it is painted with a brush.
+
+```
+FUNCTION GetWrapMode () AS WrapMode
+```
+
+#### Return value
+
+This method returns one of the following elements of the **WrapMode** enumeration:
+
+* WrapModeTile
+* WrapModeTileFlipX
+* WrapModeTileFlipY
+* WrapModeTileFlipXY
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and sets its wrap mode. Next, the
+' code gets the brush's wrap mode and performs tasks based on the brush's current wrap mode.
+' ========================================================================================
+SUB Example_GetWrapMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush.
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 100, 50)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   linGrBrush.SetWrapMode(WrapModeTileFlipX)
+
+   ' // Obtain information about the linear gradient brush.
+   DIM nWrapMode AS WrapMode
+   nWrapMode = linGrBrush.GetWrapMode
+
+   IF nWrapMode = WrapModeTileFlipX THEN
+      ' // Do some task
+   ELSEIF nWrapMode = WrapModeTileFlipY THEN
+      ' // Do a different task
+   END IF
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="MultiplyTransformLGBrush"></a>MultiplyTransform (CGpLinearGradientBrush)
+
+Updates this brush's transformation matrix with the product of itself and another matrix.
+
+```
+FUNCTION MultiplyTransform (BYVAL pMatrix AS CGpMatrix PTR, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a matrix to be multiplied by the brush's current transformation matrix. |
+| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A single 3 ×3 matrix can store any sequence of affine transformations. If you have several 3 ×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3 ×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix R represents a rotation, and matrix T represents a translation. If matrix M is the product RT, then matrix M represents a composite transformation: first rotate, then translate.
+
+The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and uses it to fill a rectangle.
+' Next, the code sets the brush's transformation matrix, fills a rectangle with the
+' transformed brush, modifies the brush's transformation matrix, and again fills a rectangle
+' with the transformed brush.
+' ========================================================================================
+SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM S AS CGpMatrix = CGpMatrix(2, 0, 0, 1, 0, 0)    ' // horizontal doubling
+   DIM T AS CGpMatrix = CGpMatrix(1, 0, 0, 1, 50, 0)   '  // horizontal translation of 50 units
+
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 200, 100)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   ' // Fill a large area with the gradient brush (no transformation).
+   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 100)
+
+   ' // Apply the scaling transformation.
+   linGrBrush.SetTransform(@S)
+
+   ' // Fill a large area with the scaled gradient brush.
+   graphics.FillRectangle(@linGrBrush, 0, 150, 800, 100)
+
+   ' // Form a composite transformation: first scale, then translate.
+   linGrBrush.MultiplyTransform(@T, MatrixOrderAppend)
+
+   ' // Fill a large area with the scaled and translated gradient brush.
+   graphics.FillRectangle(@linGrBrush, 0, 300, 800, 100)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="ResetTransformLGBrush"></a>ResetTransform (CGpLinearGradientBrush)
+
+Resets the transformation matrix of this linear gradient brush to the identity matrix. This means that no transformation takes place.
+
+```
+FUNCTION ResetTransform () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+ ========================================================================================
+' The following example creates a linear gradient brush and uses it to fill a rectangle.
+' Next, the code sets the brush's transformation matrix, fills a rectangle with the
+' transformed brush, resets the brush's transformation matrix, and fills a rectangle with
+' the untransformed brush.
+' ========================================================================================
+SUB Example_ResetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM S AS CGpMatrix = CGpMatrix(2, 0, 0, 1, 0, 0)    ' // horizontal doubling
+
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 200, 100)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   ' // Fill a large area with the gradient brush (no transformation).
+   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 100)
+
+   ' // Apply the scaling transformation.
+   linGrBrush.SetTransform(@S)
+
+   ' // Fill a large area with the scaled gradient brush.
+   graphics.FillRectangle(@linGrBrush, 0, 150, 800, 100)
+
+   ' // Reset the transformation
+   linGrBrush.ResetTransform
+
+   ' // Fill a large area with the gradient brush (no transformation)
+   graphics.FillRectangle(@linGrBrush, 0, 300, 800, 100)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="RotateTransformLGBrush"></a>RotateTransform (CGpLinearGradientBrush)
+
+Updates this brush's current transformation matrix with the product of itself and a rotation matrix.
+
+```
+FUNCTION RotateTransform (BYVAL angle AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *angle* | Simple precision number that specifies the angle of rotation in degrees. |
+| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A single 3 ×3 matrix can store any sequence of affine transformations. If you have several 3 ×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3 ×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix T represents a translation, and matrix R represents a rotation. If matrix M is the product TR, then matrix M represents a composite transformation: first translate, then rotate.
+
+The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and uses it to fill a rectangle.
+' Next, the code modifies the brush's transformation matrix, applying a composite transformation,
+' and then fills a rectangle with the transformed brush.
+' ========================================================================================
+SUB Example_RotateTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 80, 40)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   ' // Fill a large area with the gradient brush (no transformation).
+   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 150)
+
+   ' // Apply a composite transformation: first scale, then rotate.
+   linGrBrush.ScaleTransform(2, 1)   '                 ' // horizontal doubling
+   linGrBrush.RotateTransform(20, MatrixOrderAppend)   ' // 20-degree rotation
+
+   ' // Fill a large area with the transformed linear gradient brush.
+   graphics.FillRectangle(@linGrBrush, 0, 200, 800, 150)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="ScaleTransformLGBrush"></a>ScaleTransform (CGpLinearGradientBrush)
+
+Updates this brush's current transformation matrix with the product of itself and a scaling matrix.
+
+```
+FUNCTION ScaleTransform (BYVAL sx AS SINGLE, BYVAL sy AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *sx* | Simple precision number that specifies the amount to scale in the x direction. |
+| *sy* | Simple precision number that specifies the amount to scale in the y direction. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A single 3 ×3 matrix can store any sequence of affine transformations. If you have several 3 ×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3 ×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix T represents a translation, and matrix S represents a scaling. If matrix M is the product TS, then matrix M represents a composite transformation: first translate, then scale.
+
+The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and uses it to fill a rectangle.
+' Next, the code modifies the brush's transformation matrix, applying a composite transformation,
+' and then fills a rectangle with the transformed brush.
+' ========================================================================================
+SUB Example_ScaleTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 80, 40)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   ' // Fill a large area with the gradient brush (no transformation).
+   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 150)
+
+   ' // Apply a composite transformation: first translate, then scale.
+   linGrBrush.RotateTransform(60, 0)   ' // horizontal translation
+   linGrBrush.ScaleTransform(2, 1)     ' // horizontal doubling
+
+   ' // Fill a large area with the transformed linear gradient brush.
+   graphics.FillRectangle(@linGrBrush, 0, 200, 800, 150)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetBlendLGBrush"></a>SetBlend (CGpLinearGradientBrush)
+
+Sets the blend factors and the blend positions of this linear gradient brush to create a custom blend.
+
+```
+FUNCTION SetBlend (BYVAL blendFactors AS SINGLE PTR, BYVAL blendPositions AS SINGLE PTR, _
+   BYVAL count AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *blendFactors* | Pointer to an array of simple precision numbers that specify blend factors. Each number in the array specifies a percentage of the ending color and should be in the range from 0.0 through 1.0. |
+| *blendPositions* | Pointer to an array of simple precision numbers that specify blend positions. Each number in the array indicates a percentage of the distance between the starting boundary and the ending boundary and is in the range from 0.0 through 1.0, where 0.0 indicates the starting boundary of the gradient and 1.0 indicates the ending boundary. There must be at least two positions specified: the first position, which is always 0.0f, and the last position, which is always 1.0f. Otherwise, the behavior is undefined. A blend position between 0.0 and 1.0 indicates a line, parallel to the boundary lines, that is a certain fraction of the distance from the starting boundary to the ending boundary. For example, a blend position of 0.7 indicates the line that is 70 percent of the distance from the starting boundary to the ending boundary. The color is constant on lines that are parallel to the boundary lines. |
+| *count* | Optional. Integer that specifies the number of elements in the blendFactors array. This is the same as the number of elements in the *blendPositions* array. The blend factor at a given array index corresponds to the blend position at that same array index. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **LinearGradientBrush** object has two boundaries. When you fill an area with a linear gradient brush, the color changes gradually as you move from the starting boundary to the ending boundary. By default, the color is linearly related to the distance, but you can customize the relationship between color and distance by calling the **SetBlend** method.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush, sets a custom blend, and uses the
+' brush to fill a rectangle.
+' ========================================================================================
+SUB Example_SetBlend (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM factors(0 TO 3) AS SINGLE = {0.0, 0.4, 0.6, 1.0}
+   DIM positions(0 TO 3) AS SINGLE = {0.0, 0.2, 0.8, 1.0}
+   DIM rcf AS GpRectF = GDIP_RECTF(0, 0, 100, 50)
+
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rcf, GDIP_ARGB(255, 255, 0, 0), _
+       GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   linGrBrush.SetBlend(@factors(0), @positions(0), 4)
+   graphics.FillRectangle(@linGrBrush, @rcf)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetBlendBellShapeLGBrush"></a>SetBlendBellShape (CGpLinearGradientBrush)
+
+Sets the blend shape of this path gradient brush.
+
+```
+FUNCTION SetBlendBellShape (BYVAL focus AS SINGLE, BYVAL scale AS SINGLE = 1.0) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *focus* | Simple precision number that specifies where the center color will be at its highest intensity. This number must be in the range 0 through 1. |
+| *scale* | Simple precision number that specifies the maximum intensity of center color that gets blended with the boundary color. This number must be in the range 0 through 1. The default value is 1. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+By default, the color changes gradually from the starting color (color at the starting boundary of the linear gradient brush) to the ending color (color at the ending boundary of the linear gradient brush) as you move from the starting boundary to the ending boundary. You can customize the positioning and blending of the starting and ending colors by using the SetBlendBellShape method.
+
+The **SetBlendBellShape** method customizes the blend so that it follows a bell-shaped curve with the extremes of the bell's base at the gradient's boundaries. The starting color, which, in a default blend, is at the starting boundary of a linear gradient brush, appears at the starting and ending boundaries of the linear gradient brush when a bell-shaped blend is applied. The position of the ending color, which, in a default blend, is at the ending boundary, is somewhere between the boundaries and is determined by the value of the focus. In other words, the focus specifies the position of the peak of the bell. For example, a focus value of 0.7 places the peak at 70 percent of the distance between the starting and ending boundaries. The ending color appears at this peak.
+
+The ending color in a bell-shaped blend is a percentage of the gamut between the gradient's default-blend starting color and default-blend ending color. For example, suppose a linear gradient brush is constructed with red as the starting color and blue as the ending color. If **SetBlendBellShape** is called with a scale value of 0.8, the ending color in the bell shaped blend is a hue that is 80 percent between red and blue (20 percent red, 80 percent blue). A scale value of 1.0 produces an ending color that is 100 percent blue.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush, sets a bell-shaped blend, and uses
+' the brush to fill a rectangle. Twice more, the code sets a bell-shaped blend with different
+' values and, each time, uses the brush to fill a rectangle.
+' ========================================================================================
+SUB Example_SetBlendBellShape (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(500, 0)
+
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
+      GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+
+   linGrBrush.SetBlendBellShape(0.5, 0.6)
+   graphics.FillRectangle(@linGrBrush, 0, 0, 500, 50)
+
+   linGrBrush.SetBlendBellShape(0.5, 0.8)
+   graphics.FillRectangle(@linGrBrush, 0, 75, 500, 50)
+
+   linGrBrush.SetBlendBellShape(0.5, 1.0)
+   graphics.FillRectangle(@linGrBrush, 0, 150, 500, 50)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetBlendTriangularShapeLGBrush"></a>SetBlendTriangularShape (CGpLinearGradientBrush)
+
+Sets the blend shape of this path gradient brush.
+
+```
+FUNCTION SetBlendTriangularShape (BYVAL focus AS SINGLE, BYVAL scale AS SINGLE = 1.0) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *focus* | Simple precision number that specifies where the center color will be at its highest intensity. This number must be in the range 0 through 1. |
+| *scale* | Simple precision number that specifies the maximum intensity of center color that gets blended with the boundary color. This number must be in the range 0 through 1. The default value is 1. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+By default, the color changes gradually from the starting color (color at the starting boundary of the linear gradient brush) to the ending color (color at the ending boundary of the linear gradient brush) as you move from the starting boundary to the ending boundary. You can customize the positioning and blending of the starting and ending colors by using the **SetBlendTriangularShape** method.
+
+The **SetBlendTriangularShape** method customizes the blend so that it follows a triangular shape with the extremes of the triangle's base at the gradient's boundaries. The starting color, which, in a default blend, is at the starting boundary of a linear gradient brush, appears at the starting and ending boundaries of the linear gradient brush when a triangular-shaped blend is applied. The position of the ending color, which, in a default blend, is at the ending boundary, is somewhere between the boundaries and is determined by the value of the focus. In other words, the focus specifies the position of the peak of the triangle. For example, a focus value of 0.5 places the peak half way between the starting and ending boundaries. The ending color appears at this peak.
+
+The ending color in a triangular-shaped blend is a percentage of the gamut between the gradient's default-blend starting color and default-blend ending color. For example, suppose a linear gradient brush is constructed with red as the starting color and blue as the ending color. If **SetBlendTriangularShape** is called with a scale value of 0.3, the ending color in the triangular-shaped blend is a hue that is 30 percent between red and blue (70 percent red, 30 percent blue). A scale value of 1.0 produces an ending color that is 100 percent blue.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush, sets a triangular-shaped blend,
+' and uses the brush to fill a rectangle. Twice more, the code sets a triangular-shaped
+' blend with different values and, each time, uses the brush to fill a rectangle.
+' ========================================================================================
+SUB Example_SetBlendTriangularShape (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(500, 0)
+
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
+      GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255))
+
+   linGrBrush.SetBlendTriangularShape(0.5, 0.6)
+   graphics.FillRectangle(@linGrBrush, 0, 0, 500, 50)
+
+   linGrBrush.SetBlendTriangularShape(0.5, 0.8)
+   graphics.FillRectangle(@linGrBrush, 0, 75, 500, 50)
+
+   linGrBrush.SetBlendTriangularShape(0.5, 1.0)
+   graphics.FillRectangle(@linGrBrush, 0, 150, 500, 50)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetGammaCorrectionLGBrush"></a>SetGammaCorrection (CGpLinearGradientBrush)
+
+Specifies whether gamma correction is enabled for this linear gradient brush.
+
+```
+FUNCTION SetGammaCorrection (BYVAL useGammaCorrection AS BOOL) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *useGammaCorrection* | Boolean value that specifies whether gamma correction occurs during rendering. TRUE specifies that gamma correction is enabled, and FALSE specifies that gamma correction is not enabled. By default, gamma correction is disabled during construction of a **LinearGradientBrush** object. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Gamma correction is often done to match the intensity contrast of the gradient to the ability of the human eye to perceive intensity changes.
+
+# <a name="SetGammaCorrectionPGBrush"></a>SetGammaCorrection (CGpPathGradientBrush)
+
+Specifies specifies whether gamma correction is enabled for this path gradient brush.
+
+```
+FUNCTION SetGammaCorrection (BYVAL useGammaCorrection AS BOOL) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *useGammaCorrection* | Boolean value that specifies whether gamma correction is enabled. TRUE specifies that gamma correction is enabled, and FALSE specifies that gamma correction is not enabled. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+Gamma correction is often done to match the intensity contrast of the gradient to the ability of the human eye to perceive intensity changes.
+
+# <a name="SetInterpolationColorsLGBrush"></a>SetInterpolationColors (CGpLinearGradientBrush)
+
+Specifies whether gamma correction is enabled for this linear gradient brush.
+
+```
+FUNCTION SetInterpolationColors (BYVAL presetColors AS ARGB PTR, _
+   BYVAL blendPositions AS SINGLE PTR, BYVAL count AS LONG) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *presetColors* | Pointer to an array of ARGB colors that specify the colors to be interpolated for this linear gradient brush. A color of a given index in the *presetColors* array corresponds to the blend position of that same index in the *blendPositions* array. |
+| *blendPositions* | Pointer to an array of simple precision numbers that specify the blend positions. Each number in the array specifies a percentage of the distance between the starting boundary and the ending boundary and is in the range from 0.0 through 1.0, where 0.0 indicates the starting boundary of the gradient and 1.0 indicates the ending boundary. There must be at least two positions specified: the first position, which is always 0.0f, and the last position, which is always 1.0f. Otherwise, the behavior is undefined. A blend position between 0.0 and 1.0 indicates the line, parallel to the boundary lines, that is a certain fraction of the distance from the starting boundary to the ending boundary. For example, a blend position of 0.7 indicates the line that is 70 percent of the distance from the starting boundary to the ending boundary. The color is constant on lines that are parallel to the boundary lines. |
+| *count* | Integer that specifies the number of elements in the *presetColors* array. This is the same as the number of elements in the *blendPositions* array. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush, sets the colors to be interpolated
+' for the linear gradient brush, and fills a rectangle.
+' ========================================================================================
+SUB Example_SetInterpolationColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush, and set the colors to be interpolated.
+   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0)}
+   DIM positions(0 TO 2) AS SINGLE = {0.0, 0.3, 1.0}
+
+   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
+   DIM pt2 AS GpPoint = GDIP_POINT(100, 0)
+
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 255, 255, 255))
+   linGrBrush.SetInterpolationColors(@colors(0), @positions(0), 3)
+
+   graphics.FillRectangle(@linGrBrush, 0, 0, 100, 50)
+   
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetLinearColors"></a>SetLinearColors (CGpLinearGradientBrush)
+
+Sets the starting color and ending color of this linear gradient brush.
+
+```
+FUNCTION SetLinearColors (BYVAL color1 AS ARGB, BYVAL color2 AS ARGB) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *color1* | The color at the starting boundary line of this linear gradient brush. |
+| *color2* | The color that specifies the color at the ending boundary line of this linear gradient brush. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and uses it to fill a rectangle.
+' Next, the code changes the linear colors and uses the modified brush to fill another rectangle.
+' ========================================================================================
+SUB Example_SetLinearColors (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush.
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 100, 50)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   linGrBrush.SetLinearColors(GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0))
+   graphics.FillRectangle(@linGrBrush, 0, 75, 100, 50)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetTransformLGBrush"></a>SetTransform (CGpLinearGradientBrush)
+
+Sets the transformation matrix of this linear gradient brush.
+
+```
+FUNCTION SetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that specifies the transformation matrix to use. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **LinearGradientBrush** object has a rectangle that specifies the starting and ending boundaries of the gradient and a mode or angle that affects the direction. If the brush's transformation matrix is set to represent any transformation other than the identity, then the boundaries and direction are transformed according to that matrix during rendering.
+
+The transformation applies only during rendering. The boundaries stored by the **LinearGradientBrush** object are not altered by the **SetTransform** method.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and uses it to fill a rectangle.
+' Next, the code modifies the brush's transformation matrix and fills a rectangle with the
+' transformed brush.
+' ========================================================================================
+SUB Example_SetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 80, 40)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   DIM matrix AS CGpMatrix = CGpMatrix(2.0, 0, 0, 1, 0, 0)   ' // horizontal doubling
+
+   ' // Fill a large area with the gradient brush (no transformation).
+   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 50)
+
+   linGrBrush.SetTransform(@matrix)
+
+   ' // Fill a large area with the transformed linear gradient brush.
+   graphics.FillRectangle(@linGrBrush, 0, 75, 800, 50)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetWrapModeLGBrush"></a>SetWrapMode (CGpLinearGradientBrush)
+
+Sets the wrap mode of this linear gradient brush.
+
+```
+FUNCTION SetWrapMode (BYVAL wrapMode AS WrapMode) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wrapMode* | Element of the **WrapMode** enumeration that specifies how areas painted with this linear gradient brush will be tiled. The value of this parameter must be one of the following elements: **WrapModeTile**, **WrapModeTileFlipX**, **WrapModeTileFlipY**, **WrapModeTileFlipXY**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+The boundary lines of a linear gradient brush form a tile. When you paint an area with a linear gradient brush, the tile repeats. A linear gradient brush may have alternate tiles flipped in a certain direction, as specified by the wrap mode. Flipping has the effect of reversing the order of the colors.
+
+The wrap mode defaults to **WrapModeTile** when a **LinearGradientBrush** object is constructed.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and uses it to fill a rectangle.
+' Next, the code modifies the brush's wrap mode and uses the modified brush to fill another
+' rectangle.
+' ========================================================================================
+SUB Example_SetWrapMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a linear gradient brush.
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 100, 50)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+      GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   ' // Fill a large area using the gradient brush with the default wrap mode.
+   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 50)
+
+   linGrBrush.SetWrapMode(WrapModeTileFlipX)
+
+   ' // Fill a large area using the gradient brush with the new wrap mode.
+   graphics.FillRectangle(@linGrBrush, 0, 75, 800, 50)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="TranslateTransformLGBrush"></a>TranslateTransform (CGpLinearGradientBrush)
+
+Updates this brush's current transformation matrix with the product of itself and a translation matrix.
+
+```
+FUNCTION TranslateTransform (BYVAL dx AS SINGLE, BYVAL dy AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dx* | Simple precision number that specifies the horizontal component of the translation. |
+| *dy* | Simple precision number that specifies the vertical component of the translation. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A single 3×3 matrix can store any sequence of affine transformations. If you have several 3×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix *S* represents a scaling, and matrix *T* represents a translation. If matrix M is the product *ST*, then matrix *M* represents a composite transformation: first scale, then translate.
+
+The order of matrix multiplication is important. In general, the matrix product *RT* is not the same as the matrix product *TR*. In the example given in the previous paragraph, the composite transformation represented by *RT* (first rotate, then translate) is not the same as the composite transformation represented by *TR* (first translate, then rotate).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a linear gradient brush and uses it to fill a rectangle.
+' Next, the code modifies the brush's transformation matrix, applying a composite transformation,
+' and then fills a rectangle with the transformed brush.
+' ========================================================================================
+SUB Example_TranslateTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   DIM rc AS GpRect = GDIP_RECT(0, 0, 80, 40)
+   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
+       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
+
+   ' // Fill a large area with the gradient brush (no transformation).
+   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 150)
+
+   ' // Apply a composite transformation: first scale, then translate.
+   linGrBrush.ScaleTransform(2, 1)                           ' // horizontal doubling
+   linGrBrush.TranslateTransform(30, 0, MatrixOrderAppend)   ' // translation
+
+   ' // Fill a large area with the transformed linear gradient brush.
+   graphics.FillRectangle(@linGrBrush, 0, 200, 800, 150)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="ConstructorsPGBrush"></a>Constructors (CGpPathGradientBrush)
+
+Creates a **PathGradientBrush** object from another **PathGradientBrush** object.
+
+```
+CONSTRUCTOR CGpPathGradientBrush (BYVAL pPathGradientBrush AS CGpPathGradientBrush PTR)
+```
+
+Creates a **PathGradientBrush** object based on an array of points. Initializes the wrap mode of the path gradient brush
+
+```
+CONSTRUCTOR CGpPathGradientBrush (BYVAL pts AS GpPointF PTR, BYVAL nCount AS LONG, _
+   BYVAL nWrapMode AS WrapMode = WrapModeClamp)
+```
+
+Creates a **PathGradientBrush** object based on an array of points. Initializes the wrap mode of the path gradient brush.
+
+```
+CONSTRUCTOR CGpPathGradientBrush (BYVAL pts AS GpPoint PTR, BYVAL nCount AS LONG, _
+   BYVAL nWrapMode AS WrapMode = WrapModeClamp)
+```
+
+Creates a **PathGradientBrush** object based on a GraphicsPath object.
+
+```
+CONSTRUCTOR CGpPathGradientBrush (BYVAL pGraphPath AS CGpGraphicsPath PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pts* | Pointer to an array of points that specifies the boundary path of the path gradient brush. |
+| *nCount* | Integer that specifies the number of elements in the *pts* array.  |
+| *nWrapMode* | Optional. Element of the **WrapMode** enumeration that specifies how areas painted with the path gradient brush will be tiled. The default value is **WrapModeClamp**. |
+| *pGraphPath* | Pointer to a **GraphicsPath** object that specifies the boundary path of the path gradient brush. |
 
 # <a name="GetBlendPGBrush"></a>GetBlend (CGpPathGradientBrush)
 
@@ -831,65 +1983,6 @@ SUB Example_GetBlend (BYVAL hdc AS HDC)
    DIM rgPositions(blendCount - 1) AS SINGLE
 
    pthGrBrush.GetBlend(@rgFactors(0), @rgPositions(0), blendCount)
-
-   FOR j AS LONG = 0 TO blendCount - 1
-'      // Inspect or use the value in rgFactors(j)
-'      // Inspect or use the value in rgPositions(j)
-      OutputDebugString STR(rgFactors(j)) & STR(rgPositions(j))
-   NEXT
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="GetBlendCountLGBrush"></a>GetBlendCount (CGpLinearGradientBrush)
-
-Gets the number of blend factors currently set for this **LinearGradientBrush** object.
-
-```
-FUNCTION GetBlendCount () AS INT_
-```
-
-#### Return value
-
-This method returns the number of blend factors currently set for this **LinearGradientBrush** object. If no custom blend has been set by using **SetBlend**, or if invalid positions were passed to **SetBlend**, then **GetBlend** returns 1.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush, sets its blend, and uses the brush
-' to fill a rectangle. The code then gets the blend. The blend factors and positions can
-' then be inspected or used in some way.
-' ========================================================================================
-SUB Example_GetBlend (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   DIM factors(0 TO 3) AS SINGLE = {0.0, 0.4, 0.6, 1.0}
-   DIM positions(0 TO 3) AS SINGLE = {0.0, 0.2, 0.8, 1.0}
-
-   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
-   DIM pt2 AS GpPoint = GDIP_POINT(100, 0)
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
-      GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255))
-   linGrBrush.SetBlend(@factors(0), @positions(0), 4)
-
-   ' // Use the linear gradient brush to fill a rectangle.
-   graphics.FillRectangle(@linGrBrush, 0, 0, 100, 50)
-
-   ' // Obtain information about the linear gradient brush.
-   DIM blendCount AS LONG = linGrBrush.GetBlendCount
-   DIM rgFactors(blendCount - 1) AS SINGLE
-   DIM rgPositions(blendCount - 1) AS SINGLE
-
-   linGrBrush.GetBlend(@rgFactors(0), @rgPositions(0), blendCount)
 
    FOR j AS LONG = 0 TO blendCount - 1
 '      // Inspect or use the value in rgFactors(j)
@@ -1202,18 +2295,6 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="GetGammaCorrectionLGBrush"></a>GetGammaCorrection (CGpLinearGradientBrush)
-
-Gets the focus scales of this path gradient brush.
-
-```
-FUNCTION GetGammaCorrection () AS BOOL
-```
-
-#### Return value
-
-If gamma correction is enabled, this method returns TRUE; otherwise, it returns FALSE.
-
 # <a name="GetGammaCorrectionPGBrush"></a>GetGammaCorrection (CGpPathGradientBrush)
 
 Determines whether gamma correction is enabled for this path gradient brush.
@@ -1226,132 +2307,6 @@ FUNCTION GetGammaCorrection () AS BOOL
 
 If gamma correction is enabled, this method returns TRUE; otherwise, it returns FALSE.
 
-# <a name="GetInterpolationColorCountLGBrush"></a>GetInterpolationColorCount (CGpLinearGradientBrush)
-
-Gets the number of colors currently set to be interpolated for this linear gradient brush.
-
-```
-FUNCTION GetInterpolationColorCount () AS INT_
-```
-
-#### Return value
-
-This method returns the number of colors to be interpolated for this linear gradient brush. If no colors have been set by using **SetInterpolationColors**, or if invalid positions were passed to **SetInterpolationColors**, then **GetInterpolationColorCount** returns 0.
-
-#### Remarks
-
-A simple linear gradient brush has two colors: a color at the starting boundary and a color at the ending boundary. When you paint with such a brush, the color changes gradually from the starting color to the ending color as you move from the starting boundary to the ending boundary. You can create a more complex gradient by using the **SetInterpolationColors** method to specify an array of colors and their corresponding blend positions to be interpolated for this linear gradient brush.
-
-You can obtain the colors and blend positions currently set for a linear gradient brush by calling its **GetInterpolationColors** method. Before you call the **GetInterpolationColors** method, you must allocate two buffers: one to hold the array of colors and one to hold the array of blend positions. You can call the **GetInterpolationColorCount** method to determine the required size of those buffers. The size of the colors buffer is the return value of **GetInterpolationColorCount** multiplied by **sizeof(Color)**. The size of the blend positions buffer is the value of **GetInterpolationColorCount** multiplied by **sizeof(REAL)**.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example sets the colors that are interpolated for this linear gradient
-' brush to red, blue, and green and sets the blend positions to 0, 0.3, and 1. The code
-' calls the LinearGradientBrush::GetInterpolationColorCount method of a LinearGradientBrush
-' object to obtain the number of colors currently set to be interpolated for the brush.
-' Next, the code gets the colors and their positions. Then, the code fills a small
-' rectangle with each color.
-' ========================================================================================
-SUB Example_GetInterpolationColors (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a linear gradient brush, and set the colors to be interpolated.
-   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0)}
-   DIM positions(0 TO 2) AS SINGLE = {0.0, 0.3, 1.0}
-
-   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
-   DIM pt2 AS GpPoint = GDIP_POINT(100, 0)
-
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 255, 255, 255))
-   linGrBrush.SetInterpolationColors(@colors(0), @positions(0), 3)
-
-   ' // Obtain information about the linear gradient brush.
-   ' // How many colors have been specified to be interpolated for this brush?
-   DIM colorCount AS LONG = linGrBrush.GetInterpolationColorCount
-
-   ' // Allocate a buffer large enough to hold the set of colors.
-   DIM rgcolors(0 TO colorCount - 1) AS ARGB
-
-   ' // Allocate a buffer to hold the relative positions of the colors.
-   DIM rgPositions(0 TO colorCount - 1) AS SINGLE
-
-   ' // Get the colors and their relative positions.
-   linGrBrush.GetInterpolationColors(@rgcolors(0), @rgPositions(0), colorCount)
-
-   ' // Fill a small rectangle with each of the colors.
-   DIM pSolidBrush AS CGpSolidBrush PTR
-   FOR j AS LONG = 0 TO colorCount - 1
-      pSolidBrush = NEW CGpSolidBrush(rgcolors(j))
-      graphics.FillRectangle(pSolidBrush, 15 * j, 0, 10, 10)
-      Delete pSolidBrush
-   NEXT
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="GetImage"></a>GetImage (CGpTextureBrush)
-
-Gets a pointer to the Image object that is defined by this texture brush.
-
-```
-FUNCTION GetImage (BYVAL pImage AS CGpImage PTR) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pImage* | Pointer to a variable that will receive a pointer to the Image object that is defined by this texture brush. |
-
-#### Return value
-
-This method returns the number of preset colors currently specified for this path gradient brush.
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and uses it to fill an ellipse. The code
-' then gets the brush's image and draws it.
-' ========================================================================================
-SUB Example_GetImage (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and use it to fill an ellipse.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   graphics.FillEllipse(@textureBrush, 0, 0, 200, 200)
-
-   ' // Get the brush's image, and draw that image
-   DIM pImage2 AS CGpImage
-   textureBrush.GetImage(@pImage2)
-   graphics.DrawImage(@pImage2, 10, 150)
-
-END SUB
-' ========================================================================================
-```
 
 # <a name="GetInterpolationColorCountPGBrush"></a>GetInterpolationColorCount (CGpPathGradientBrush)
 
@@ -1373,82 +2328,6 @@ A simple path gradient brush has two colors: a boundary color and a center color
 
 You can obtain the interpolation colors and interpolation positions currently set for a **PathGradientBrush** object by calling the **GetInterpolationColors** method of that **PathGradientBrush** object. Before you call the **GetInterpolationColors** method, you must allocate two buffers: one to hold the array of interpolation colors and one to hold the array of interpolation positions. You can call the **GetInterpolationColorCount** method of the **PathGradientBrush** object to determine the required size of those buffers. The size of the color buffer is the return value of **GetInterpolationColorCount** multiplied by 4. The size of the position buffer is the value of **GetInterpolationColorCount** multiplied by 4 (the size of a simple precision number).
 
-# <a name="GetInterpolationColorsLGBrush"></a>GetInterpolationColors (CGpLinearGradientBrush)
-
-Gets the blend factors and their corresponding blend positions from a **LinearGradientBrush** object.
-
-```
-FUNCTION GetInterpolationColors (BYVAL presetColors AS ARGB PTR, _
-   BYVAL blendPositions AS SINGLE PTR, BYVAL count AS LONG) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *presetColors* | Pointer to an array that receives the colors. A color of a given index in the presetColors array corresponds to the blend position of that same index in the *blendPositions* array. |
-| *blendPositions* | Pointer to an array that receives the blend positions. Each number in the array indicates a percentage of the distance between the starting boundary and the ending boundary and is in the range from 0.0 through 1.0, where 0.0 indicates the starting boundary of the gradient and 1.0 indicates the ending boundary. A blend position between 0.0 and 1.0 indicates a line, parallel to the boundary lines, that is a certain fraction of the distance from the starting boundary to the ending boundary. For example, a blend position of 0.7 indicates the line that is 70 percent of the distance from the starting boundary to the ending boundary. The color is constant on lines that are parallel to the boundary lines. |
-| *count* | Integer that specifies the number of elements in the presetColors array. This is the same as the number of elements in the blendPositions array. Before calling the **GetInterpolationColors** method of a **LinearGradientBrush** object, call the **GetInterpolationColorCount** method of that same **LinearGradientBrush** object to determine the current number of colors. The number of blend positions retrieved is the same as the number of colors retrieved. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example sets the colors that are interpolated for this linear gradient
-' brush to red, blue, and green and sets the blend positions to 0, 0.3, and 1. The code
-' calls the LinearGradientBrush::GetInterpolationColorCount method of a LinearGradientBrush
-' object to obtain the number of colors currently set to be interpolated for the brush.
-' Next, the code gets the colors and their positions. Then, the code fills a small
-' rectangle with each color.
-' ========================================================================================
-SUB Example_GetInterpolationColors (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a linear gradient brush, and set the colors to be interpolated.
-   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0)}
-   DIM positions(0 TO 2) AS SINGLE = {0.0, 0.3, 1.0}
-
-   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
-   DIM pt2 AS GpPoint = GDIP_POINT(100, 0)
-
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 255, 255, 255))
-   linGrBrush.SetInterpolationColors(@colors(0), @positions(0), 3)
-
-   ' // Obtain information about the linear gradient brush.
-   ' // How many colors have been specified to be interpolated for this brush?
-   DIM colorCount AS LONG = linGrBrush.GetInterpolationColorCount
-
-   ' // Allocate a buffer large enough to hold the set of colors.
-   DIM rgcolors(0 TO colorCount - 1) AS ARGB
-
-   ' // Allocate a buffer to hold the relative positions of the colors.
-   DIM rgPositions(0 TO colorCount - 1) AS SINGLE
-
-   ' // Get the colors and their relative positions.
-   linGrBrush.GetInterpolationColors(@rgcolors(0), @rgPositions(0), colorCount)
-
-   ' // Fill a small rectangle with each of the colors.
-   DIM pSolidBrush AS CGpSolidBrush PTR
-   FOR j AS LONG = 0 TO colorCount - 1
-      pSolidBrush = NEW CGpSolidBrush(rgcolors(j))
-      graphics.FillRectangle(pSolidBrush, 15 * j, 0, 10, 10)
-      Delete pSolidBrush
-   NEXT
-
-END SUB
-' ========================================================================================
-```
 
 # <a name="GetInterpolationColorsPGBrush"></a>GetInterpolationColors (CGpPathGradientBrush)
 
@@ -1521,119 +2400,6 @@ SUB Example_GetInterpolationColors (BYVAL hdc AS HDC)
       solidBrush.SetColor(rgColors(j))
       graphics.FillRectangle(@solidBrush, 15 * j, 0, 10, 10)
    NEXT
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="GetLinearColors"></a>GetLinearColors (CGpLinearGradientBrush)
-
-Gets the starting color and ending color of this linear gradient brush.
-
-```
-FUNCTION GetLinearColors (BYVAL colors AS ARGB PTR) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *colors* | Pointer to an array that receives the starting color and the ending color. The first color in the colors array is the color at the starting boundary line of the gradient; the second color in the colors array is the color at the ending boundary line. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush and gets the boundary colors. Next,
-' the code uses each of the two colors to create a solid brush. Then, the code fills a
-' rectangle with each solid brush.
-' ========================================================================================
-SUB Example_GetLinearColors (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a linear gradient brush.
-   DIM rc AS GpRect = GDIP_RECT(0, 0, 100, 50)
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
-      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
-
-   ' // Obtain information about the linear gradient brush.
-   DIM colors(0 TO 1) AS ARGB
-   linGrBrush.GetLinearColors(@colors(0))
-
-   ' // Fill a small rectangle with each of the two colors.
-   DIM solidBrush0 AS CGpSolidBrush = colors(0)
-   DIM solidBrush1 AS CGpSolidBrush = colors(1)
-   graphics.FillRectangle(@solidBrush0, 0, 0, 20, 20)
-   graphics.FillRectangle(@solidBrush1, 25, 0, 20, 20)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="GetRectangleLGBrush"></a>GetRectangle (CGpLinearGradientBrush)
-
-Gets the rectangle that defines the boundaries of the gradient.
-
-```
-FUNCTION GetRectangle (BYVAL rc AS GpRectF PTR) AS GpStatus
-FUNCTION GetRectangle (BYVAL rc AS GpRect PTR) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *rc* | Pointer to a **GpRectF** or **GpRect** structure that receives the rectangle that defines the boundaries of the gradient. For example, if a linear gradient brush is constructed with a starting point at (20.2, 50.8) and an ending point at (60.5, 110.0), then the defining rectangle has its upper-left point at (20.2, 50.8), a width of 40.3, and a height of 59.2. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-The rectangle defines the boundaries of the gradient in the following ways: the right and left sides of the rectangle form the boundaries of a horizontal gradient; the top and bottom sides form the boundaries of a vertical gradient; two of the diagonally opposing corners lie on the boundaries of a diagonal gradient. In each of these cases, either side/corner may be on the starting boundary, depending on how the starting and ending points are passed to the constructor.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush. Then the code gets the brush's
-' rectangle and draws it.
-' ========================================================================================
-SUB Example_GetRectangle (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a linear gradient brush.
-   DIM pt1 AS GpPoint = GDIP_POINT(20, 10)
-   DIM pt2 AS GpPoint = GDIP_POINT(60, 110)
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
-      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255))
-
-   ' // Obtain information about the linear gradient brush.
-   DIM rc AS GpRect
-   linGrBrush.GetRectangle(@rc)
-
-   ' // Draw the retrieved rectangle.
-   DIM pen AS CGpPen = GDIP_ARGB(255, 0, 0, 0)
-   graphics.DrawRectangle(@pen, @rc)
 
 END SUB
 ' ========================================================================================
@@ -1836,74 +2602,6 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="GetTransformLGBrush"></a>GetTransform (CGpLinearGradientBrush)
-
-Gets the transformation matrix of this linear gradient brush. 
-
-```
-FUNCTION GetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pMatrix* | Pointer to a **Matrix** object that receives the transformation matrix. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A **LinearGradientBrush** object maintains a transformation matrix that can store any affine transformation. When you use a linear gradient brush to fill an area, GDI+ transforms the brush's boundary lines according to the brush's transformation matrix and then fills the area. The transformed boundaries exist only during rendering; the boundaries stored in the **LinearGradientBrush** object are not transformed
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush and sets its transformation matrix.
-' Next, the code gets the brush's transformation matrix and proceeds to inspect or use the
-' matrix elements.
-' ========================================================================================
-SUB Example_GetTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a linear gradient brush.
-   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
-   DIM pt2 AS GpPoint = GDIP_POINT(200, 0)
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
-      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255))
-
-   DIM matrixSet AS CGpMatrix = CGpMatrix(0, 1, -1, 0, 0, 0)
-
-   linGrBrush.SetTransform(@matrixSet)
-
-   ' // Obtain information about the linear gradient brush.
-   DIM matrixGet AS CGpMatrix
-   DIM elements(0 TO 5) AS SINGLE
-
-   linGrBrush.GetTransform(@matrixGet)
-   matrixGet.GetElements(@elements(0))
-
-   graphics.FillRectangle(@CGpSolidBrush(GDIP_ARGB(255, 0, 0, 0)), 0, 0, 20, 20)
-
-   FOR j AS LONG = 0 TO 5
-      ' // Inspect or use the value in elements[j].
-      PRINT STR(elements(j))
-   NEXT
-
-END SUB
-' ========================================================================================
-```
-
 # <a name="GetTransformPGBrush"></a>GetTransform (CGpPathGradientBrush)
 
 Gets the transformation matrix of this path gradient brush.
@@ -1972,121 +2670,6 @@ SUB Example_GetTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
-
-# <a name="GetTransformTBrush"></a>GetTransform (CGpTextureBrush)
-
-Gets the transformation matrix of this texture brush.
-
-```
-FUNCTION GetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pMatrix* | Pointer to a **Matrix** object that receives the transformation matrix. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A **TextureBrush** object maintains a transformation matrix that can store any affine transformation. When you use a texture brush to fill an area, GDI+ transforms the brush's image according to the brush's transformation matrix and then fills the area. The transformed image exists only during rendering; the image stored in the **TextureBrush** object is not transformed. For example, suppose you call *someTextureBrush.ScaleTransform(3)* and then paint an area with *someTextureBrush*. The width of the brush's image triples when the area is painted, but the image stored in *someTextureBrush* remains unchanged.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and sets the transformation of the brush.
-' The code then gets the brush's transformation matrix and proceeds to inspect or use the elements.
-' ========================================================================================
-SUB Example_GetTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.ScaleTransform(3, 2)
-
-   DIM matrix AS CGpMatrix
-   DIM elements(5) AS SINGLE
-
-   textureBrush.GetTransform(@matrix)
-   matrix.GetElements(@elements(0))
-
-   FOR j AS LONG = 0 TO 5
-      ' // Inspect or use the value in elements[j].
-      PRINT elements(j)
-   NEXT
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="GetWrapModeLGBrush"></a>GetWrapMode (CGpLinearBrush)
-
-Gets the wrap mode for this brush. The wrap mode determines how an area is tiled when it is painted with a brush.
-
-```
-FUNCTION GetWrapMode () AS WrapMode
-```
-
-#### Return value
-
-This method returns one of the following elements of the **WrapMode** enumeration:
-
-* WrapModeTile
-* WrapModeTileFlipX
-* WrapModeTileFlipY
-* WrapModeTileFlipXY
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush and sets its wrap mode. Next, the
-' code gets the brush's wrap mode and performs tasks based on the brush's current wrap mode.
-' ========================================================================================
-SUB Example_GetWrapMode (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a linear gradient brush.
-   DIM rc AS GpRect = GDIP_RECT(0, 0, 100, 50)
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
-      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
-
-   linGrBrush.SetWrapMode(WrapModeTileFlipX)
-
-   ' // Obtain information about the linear gradient brush.
-   DIM nWrapMode AS WrapMode
-   nWrapMode = linGrBrush.GetWrapMode
-
-   IF nWrapMode = WrapModeTileFlipX THEN
-      ' // Do some task
-   ELSEIF nWrapMode = WrapModeTileFlipY THEN
-      ' // Do a different task
-   END IF
-
-END SUB
-' ========================================================================================
-```
-
 # <a name="GetWrapModePGBrush"></a>GetWrapMode (CGpPathGradientBrush)
 
 Gets the wrap mode currently set for this path gradient brush.
@@ -2140,128 +2723,6 @@ SUB Example_GetWrapMode (BYVAL hdc AS HDC)
    IF nWrapMode = WrapModeTileFlipX THEN
       graphics.FillRectangle(@pthGrBrush, 0, 0, 800, 800)
    END IF
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="GetWrapModeTBrush"></a>GetWrapMode (CGpTexturetBrush)
-
-Gets the wrap mode currently set for this texture brush.
-
-```
-FUNCTION GetWrapMode () AS WrapMode
-```
-
-#### Return value
-
-This method returns the wrap mode currently set for this texture brush. The value returned is one of the elements of the **WrapMode** enumeration.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush, sets the wrap mode of the brush, and uses
-' the brush to fill a rectangle. Next, the code gets the wrap mode of the brush and stores
-' the value. The code creates a second texture brush and uses the stored wrap mode to set
-' the wrap mode of the second texture brush. Then, the code uses the second texture brush
-' to fill a rectangle.
-' ========================================================================================
-SUB Example_WrapMode (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.SetWrapMode(WrapModeTileFlipX)
-   graphics.FillRectangle(@textureBrush, 0, 0, 200, 200)
-
-   ' // Get the brush's wrap mode.
-   DIM nWrapMode AS WrapMode = textureBrush.GetWrapMode
-
-   ' // Create a second texture brush with the same wrap mode.
-   DIM pImage2 AS CGpImage = "MyTexture.png"
-   DIM textureBrush2 AS CGpTextureBrush = @pImage2
-   textureBrush2.SetWrapMode(nWrapMode)
-   graphics.FillRectangle(@textureBrush2, 210, 0, 200, 200)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="MultiplyTransformLGBrush"></a>MultiplyTransform (CGpLinearGradientBrush)
-
-Updates this brush's transformation matrix with the product of itself and another matrix.
-
-```
-FUNCTION MultiplyTransform (BYVAL pMatrix AS CGpMatrix PTR, _
-   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pMatrix* | Pointer to a matrix to be multiplied by the brush's current transformation matrix. |
-| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A single 3 ×3 matrix can store any sequence of affine transformations. If you have several 3 ×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3 ×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix R represents a rotation, and matrix T represents a translation. If matrix M is the product RT, then matrix M represents a composite transformation: first rotate, then translate.
-
-The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush and uses it to fill a rectangle.
-' Next, the code sets the brush's transformation matrix, fills a rectangle with the
-' transformed brush, modifies the brush's transformation matrix, and again fills a rectangle
-' with the transformed brush.
-' ========================================================================================
-SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   DIM S AS CGpMatrix = CGpMatrix(2, 0, 0, 1, 0, 0)    ' // horizontal doubling
-   DIM T AS CGpMatrix = CGpMatrix(1, 0, 0, 1, 50, 0)   '  // horizontal translation of 50 units
-
-   DIM rc AS GpRect = GDIP_RECT(0, 0, 200, 100)
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
-       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
-
-   ' // Fill a large area with the gradient brush (no transformation).
-   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 100)
-
-   ' // Apply the scaling transformation.
-   linGrBrush.SetTransform(@S)
-
-   ' // Fill a large area with the scaled gradient brush.
-   graphics.FillRectangle(@linGrBrush, 0, 150, 800, 100)
-
-   ' // Form a composite transformation: first scale, then translate.
-   linGrBrush.MultiplyTransform(@T, MatrixOrderAppend)
-
-   ' // Fill a large area with the scaled and translated gradient brush.
-   graphics.FillRectangle(@linGrBrush, 0, 300, 800, 100)
 
 END SUB
 ' ========================================================================================
@@ -2333,117 +2794,6 @@ SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ```
-
-# <a name="MultiplyTransformTBrush"></a>MultiplyTransform (CGpTextureBrush)
-
-Updates the brush's transformation matrix with the product of itself and another matrix.
-
-```
-FUNCTION MultiplyTransform (BYVAL pMatrix AS CGpMatrix PTR, _
-   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pMatrix* | Pointer to a matrix to be multiplied by the brush's current transformation matrix. |
-| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and sets the transformation of the brush.
-' The code then uses the transformed brush to fill a rectangle.
-' ========================================================================================
-SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Horizontal stretch
-   DIM matrix AS CGpMatrix = CGpMatrix(3, 0, 0, 1, 0, 0)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-
-   textureBrush.RotateTransform(30)   ' // rotate
-   textureBrush.MultiplyTransform(@matrix, MatrixOrderAppend)   ' // stretch
-   graphics.FillRectangle(@textureBrush, 0, 0, 400, 200)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="ResetTransformLGBrush"></a>ResetTransform (CGpLinearGradientBrush)
-
-Resets the transformation matrix of this linear gradient brush to the identity matrix. This means that no transformation takes place.
-
-```
-FUNCTION ResetTransform () AS GpStatus
-```
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Example
-
-```
- ========================================================================================
-' The following example creates a linear gradient brush and uses it to fill a rectangle.
-' Next, the code sets the brush's transformation matrix, fills a rectangle with the
-' transformed brush, resets the brush's transformation matrix, and fills a rectangle with
-' the untransformed brush.
-' ========================================================================================
-SUB Example_ResetTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   DIM S AS CGpMatrix = CGpMatrix(2, 0, 0, 1, 0, 0)    ' // horizontal doubling
-
-   DIM rc AS GpRect = GDIP_RECT(0, 0, 200, 100)
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
-       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
-
-   ' // Fill a large area with the gradient brush (no transformation).
-   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 100)
-
-   ' // Apply the scaling transformation.
-   linGrBrush.SetTransform(@S)
-
-   ' // Fill a large area with the scaled gradient brush.
-   graphics.FillRectangle(@linGrBrush, 0, 150, 800, 100)
-
-   ' // Reset the transformation
-   linGrBrush.ResetTransform
-
-   ' // Fill a large area with the gradient brush (no transformation)
-   graphics.FillRectangle(@linGrBrush, 0, 300, 800, 100)
-
-END SUB
-' ========================================================================================
-```
-
 # <a name="ResetTransformPGBrush"></a>ResetTransform (CGpPathGradientBrush)
 
 Resets the transformation matrix of this path gradient brush to the identity matrix. This means that no transformation will take place.
@@ -2497,118 +2847,6 @@ SUB Example_ResetTransform (BYVAL hdc AS HDC)
 
    ' // Fill the same area with the path gradient brush (no transformation).
    graphics.FillRectangle(@pthGrBrush, 0, 0, 500, 500)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="ResetTransformTBrush"></a>ResetTransform (CGpTextureBrush)
-
-Resets the transformation matrix of this texture brush to the identity matrix. This means that no transformation takes place.
-
-```
-FUNCTION ResetTransform () AS GpStatus
-```
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and sets the transformation of the brush.
-' Next, the code uses the transformed brush to fill a rectangle. Then, the code resets the
-' transformation of the brush and uses the untransformed brush to fill a rectangle.
-' ========================================================================================
-SUB Example_ResetTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.RotateTransform(30)
-
-   ' // Fill a rectangle with the transformed texture brush.
-   graphics.FillEllipse(@textureBrush, 0, 0, 200, 100)
-
-   ' // Reset the transformation
-   textureBrush.ResetTransform
-
-   ' // Fill a rectangle with the texture brush (no transformation).
-   graphics.FillEllipse(@textureBrush, 210, 0, 200, 100)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="RotateTransformLGBrush"></a>RotateTransform (CGpLinearGradientBrush)
-
-Updates this brush's current transformation matrix with the product of itself and a rotation matrix.
-
-```
-FUNCTION RotateTransform (BYVAL angle AS SINGLE, _
-   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *angle* | Simple precision number that specifies the angle of rotation in degrees. |
-| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A single 3 ×3 matrix can store any sequence of affine transformations. If you have several 3 ×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3 ×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix T represents a translation, and matrix R represents a rotation. If matrix M is the product TR, then matrix M represents a composite transformation: first translate, then rotate.
-
-The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush and uses it to fill a rectangle.
-' Next, the code modifies the brush's transformation matrix, applying a composite transformation,
-' and then fills a rectangle with the transformed brush.
-' ========================================================================================
-SUB Example_RotateTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   DIM rc AS GpRect = GDIP_RECT(0, 0, 80, 40)
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
-       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
-
-   ' // Fill a large area with the gradient brush (no transformation).
-   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 150)
-
-   ' // Apply a composite transformation: first scale, then rotate.
-   linGrBrush.ScaleTransform(2, 1)   '                 ' // horizontal doubling
-   linGrBrush.RotateTransform(20, MatrixOrderAppend)   ' // 20-degree rotation
-
-   ' // Fill a large area with the transformed linear gradient brush.
-   graphics.FillRectangle(@linGrBrush, 0, 200, 800, 150)
 
 END SUB
 ' ========================================================================================
@@ -2675,123 +2913,6 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="RotateTransformTBrush"></a>RotateTransform (CGpTextureBrush)
-
-Updates this texture brush's current transformation matrix with the product of itself and a rotation matrix.
-
-```
-FUNCTION RotateTransform (BYVAL angle AS SINGLE, _
-   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *angle* | Simple precision number that specifies the angle of rotation in degrees. |
-| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A single 3×3 matrix can store any sequence of affine transformations. If you have several 3×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix R represents a rotation, and matrix T represents a translation. If matrix M is the product RT, then matrix M represents a composite transformation: first rotate, then translate.
-
-The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and sets the transformation of the brush.
-' The code then uses the transformed brush to fill a rectangle.
-' ========================================================================================
-SUB Example_RotateTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.ScaleTransform(3, 1)
-   textureBrush.RotateTransform(30, MatrixOrderAppend)
-   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="ScaleTransformLGBrush"></a>ScaleTransform (CGpLinearGradientBrush)
-
-Updates this brush's current transformation matrix with the product of itself and a scaling matrix.
-
-```
-FUNCTION ScaleTransform (BYVAL sx AS SINGLE, BYVAL sy AS SINGLE, _
-   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *sx* | Simple precision number that specifies the amount to scale in the x direction. |
-| *sy* | Simple precision number that specifies the amount to scale in the y direction. |
-| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A single 3 ×3 matrix can store any sequence of affine transformations. If you have several 3 ×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3 ×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix T represents a translation, and matrix S represents a scaling. If matrix M is the product TS, then matrix M represents a composite transformation: first translate, then scale.
-
-The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush and uses it to fill a rectangle.
-' Next, the code modifies the brush's transformation matrix, applying a composite transformation,
-' and then fills a rectangle with the transformed brush.
-' ========================================================================================
-SUB Example_ScaleTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   DIM rc AS GpRect = GDIP_RECT(0, 0, 80, 40)
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
-       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
-
-   ' // Fill a large area with the gradient brush (no transformation).
-   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 150)
-
-   ' // Apply a composite transformation: first translate, then scale.
-   linGrBrush.RotateTransform(60, 0)   ' // horizontal translation
-   linGrBrush.ScaleTransform(2, 1)     ' // horizontal doubling
-
-   ' // Fill a large area with the transformed linear gradient brush.
-   graphics.FillRectangle(@linGrBrush, 0, 200, 800, 150)
-
-END SUB
-' ========================================================================================
-```
-
 # <a name="ScaleTransformPGBrush"></a>ScaleTransform (CGpPathGradientBrush)
 
 Updates this brush's current transformation matrix with the product of itself and a scaling matrix.
@@ -2849,117 +2970,6 @@ SUB Example_ScaleTransform (BYVAL hdc AS HDC)
 
    ' // Fill the same area with the transformed path gradient brush.
    graphics.FillRectangle(@pthGrBrush, 0, 0, 500, 500)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="ScaleTransformTBrush"></a>ScaleTransform (CGpTextureBrush)
-
-Updates this texture brush's current transformation matrix with the product of itself and a scaling matrix.
-
-```
-FUNCTION ScaleTransform (BYVAL sx AS SINGLE, BYVAL sy AS SINGLE, _
-   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *sx* | Simple precision number that specifies the amount to scale in the x direction. |
-| *sy* | Simple precision number that specifies the amount to scale in the y direction. |
-| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A single 3×3 matrix can store any sequence of affine transformations. If you have several 3×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix T represents a translation, and matrix S represents a scaling. If matrix M is the product TS, then matrix M represents a composite transformation: first translate, then scale.
-
-The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and sets the transformation of the brush.
-' The code then uses the transformed brush to fill a rectangle.
-' ========================================================================================
-SUB Example_ScaleTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.RotateTransform(30)
-   textureBrush.ScaleTransform(3, 1, MatrixOrderAppend)
-   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="SetBlendLGBrush"></a>SetBlend (CGpLinearGradientBrush)
-
-Sets the blend factors and the blend positions of this linear gradient brush to create a custom blend.
-
-```
-FUNCTION SetBlend (BYVAL blendFactors AS SINGLE PTR, BYVAL blendPositions AS SINGLE PTR, _
-   BYVAL count AS LONG) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *blendFactors* | Pointer to an array of simple precision numbers that specify blend factors. Each number in the array specifies a percentage of the ending color and should be in the range from 0.0 through 1.0. |
-| *blendPositions* | Pointer to an array of simple precision numbers that specify blend positions. Each number in the array indicates a percentage of the distance between the starting boundary and the ending boundary and is in the range from 0.0 through 1.0, where 0.0 indicates the starting boundary of the gradient and 1.0 indicates the ending boundary. There must be at least two positions specified: the first position, which is always 0.0f, and the last position, which is always 1.0f. Otherwise, the behavior is undefined. A blend position between 0.0 and 1.0 indicates a line, parallel to the boundary lines, that is a certain fraction of the distance from the starting boundary to the ending boundary. For example, a blend position of 0.7 indicates the line that is 70 percent of the distance from the starting boundary to the ending boundary. The color is constant on lines that are parallel to the boundary lines. |
-| *count* | Optional. Integer that specifies the number of elements in the blendFactors array. This is the same as the number of elements in the *blendPositions* array. The blend factor at a given array index corresponds to the blend position at that same array index. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A **LinearGradientBrush** object has two boundaries. When you fill an area with a linear gradient brush, the color changes gradually as you move from the starting boundary to the ending boundary. By default, the color is linearly related to the distance, but you can customize the relationship between color and distance by calling the **SetBlend** method.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush, sets a custom blend, and uses the
-' brush to fill a rectangle.
-' ========================================================================================
-SUB Example_SetBlend (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   DIM factors(0 TO 3) AS SINGLE = {0.0, 0.4, 0.6, 1.0}
-   DIM positions(0 TO 3) AS SINGLE = {0.0, 0.2, 0.8, 1.0}
-   DIM rcf AS GpRectF = GDIP_RECTF(0, 0, 100, 50)
-
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rcf, GDIP_ARGB(255, 255, 0, 0), _
-       GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
-
-   linGrBrush.SetBlend(@factors(0), @positions(0), 4)
-   graphics.FillRectangle(@linGrBrush, @rcf)
 
 END SUB
 ' ========================================================================================
@@ -3037,70 +3047,6 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="SetBlendBellShapeLGBrush"></a>SetBlendBellShape (CGpLinearGradientBrush)
-
-Sets the blend shape of this path gradient brush.
-
-```
-FUNCTION SetBlendBellShape (BYVAL focus AS SINGLE, BYVAL scale AS SINGLE = 1.0) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *focus* | Simple precision number that specifies where the center color will be at its highest intensity. This number must be in the range 0 through 1. |
-| *scale* | Simple precision number that specifies the maximum intensity of center color that gets blended with the boundary color. This number must be in the range 0 through 1. The default value is 1. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-By default, the color changes gradually from the starting color (color at the starting boundary of the linear gradient brush) to the ending color (color at the ending boundary of the linear gradient brush) as you move from the starting boundary to the ending boundary. You can customize the positioning and blending of the starting and ending colors by using the SetBlendBellShape method.
-
-The **SetBlendBellShape** method customizes the blend so that it follows a bell-shaped curve with the extremes of the bell's base at the gradient's boundaries. The starting color, which, in a default blend, is at the starting boundary of a linear gradient brush, appears at the starting and ending boundaries of the linear gradient brush when a bell-shaped blend is applied. The position of the ending color, which, in a default blend, is at the ending boundary, is somewhere between the boundaries and is determined by the value of the focus. In other words, the focus specifies the position of the peak of the bell. For example, a focus value of 0.7 places the peak at 70 percent of the distance between the starting and ending boundaries. The ending color appears at this peak.
-
-The ending color in a bell-shaped blend is a percentage of the gamut between the gradient's default-blend starting color and default-blend ending color. For example, suppose a linear gradient brush is constructed with red as the starting color and blue as the ending color. If **SetBlendBellShape** is called with a scale value of 0.8, the ending color in the bell shaped blend is a hue that is 80 percent between red and blue (20 percent red, 80 percent blue). A scale value of 1.0 produces an ending color that is 100 percent blue.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush, sets a bell-shaped blend, and uses
-' the brush to fill a rectangle. Twice more, the code sets a bell-shaped blend with different
-' values and, each time, uses the brush to fill a rectangle.
-' ========================================================================================
-SUB Example_SetBlendBellShape (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
-   DIM pt2 AS GpPoint = GDIP_POINT(500, 0)
-
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
-      GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255))
-
-   linGrBrush.SetBlendBellShape(0.5, 0.6)
-   graphics.FillRectangle(@linGrBrush, 0, 0, 500, 50)
-
-   linGrBrush.SetBlendBellShape(0.5, 0.8)
-   graphics.FillRectangle(@linGrBrush, 0, 75, 500, 50)
-
-   linGrBrush.SetBlendBellShape(0.5, 1.0)
-   graphics.FillRectangle(@linGrBrush, 0, 150, 500, 50)
-
-END SUB
-' ========================================================================================
-```
-
 # <a name="SetBlendBellShapePGBrush"></a>SetBlendBellShape (CGpPathGradientBrush)
 
 Sets the blend shape of this path gradient brush.
@@ -3165,70 +3111,6 @@ SUB Example_SetBlendBellShape (BYVAL hdc AS HDC)
    ' // center, the color is 70 percent red and 30 percent blue.
 
    graphics.FillRectangle(@pthGrBrush, 0, 0, 300, 300)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="SetBlendTriangularShapeLGBrush"></a>SetBlendTriangularShape (CGpLinearGradientBrush)
-
-Sets the blend shape of this path gradient brush.
-
-```
-FUNCTION SetBlendTriangularShape (BYVAL focus AS SINGLE, BYVAL scale AS SINGLE = 1.0) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *focus* | Simple precision number that specifies where the center color will be at its highest intensity. This number must be in the range 0 through 1. |
-| *scale* | Simple precision number that specifies the maximum intensity of center color that gets blended with the boundary color. This number must be in the range 0 through 1. The default value is 1. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-By default, the color changes gradually from the starting color (color at the starting boundary of the linear gradient brush) to the ending color (color at the ending boundary of the linear gradient brush) as you move from the starting boundary to the ending boundary. You can customize the positioning and blending of the starting and ending colors by using the **SetBlendTriangularShape** method.
-
-The **SetBlendTriangularShape** method customizes the blend so that it follows a triangular shape with the extremes of the triangle's base at the gradient's boundaries. The starting color, which, in a default blend, is at the starting boundary of a linear gradient brush, appears at the starting and ending boundaries of the linear gradient brush when a triangular-shaped blend is applied. The position of the ending color, which, in a default blend, is at the ending boundary, is somewhere between the boundaries and is determined by the value of the focus. In other words, the focus specifies the position of the peak of the triangle. For example, a focus value of 0.5 places the peak half way between the starting and ending boundaries. The ending color appears at this peak.
-
-The ending color in a triangular-shaped blend is a percentage of the gamut between the gradient's default-blend starting color and default-blend ending color. For example, suppose a linear gradient brush is constructed with red as the starting color and blue as the ending color. If **SetBlendTriangularShape** is called with a scale value of 0.3, the ending color in the triangular-shaped blend is a hue that is 30 percent between red and blue (70 percent red, 30 percent blue). A scale value of 1.0 produces an ending color that is 100 percent blue.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush, sets a triangular-shaped blend,
-' and uses the brush to fill a rectangle. Twice more, the code sets a triangular-shaped
-' blend with different values and, each time, uses the brush to fill a rectangle.
-' ========================================================================================
-SUB Example_SetBlendTriangularShape (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
-   DIM pt2 AS GpPoint = GDIP_POINT(500, 0)
-
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, _
-      GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255))
-
-   linGrBrush.SetBlendTriangularShape(0.5, 0.6)
-   graphics.FillRectangle(@linGrBrush, 0, 0, 500, 50)
-
-   linGrBrush.SetBlendTriangularShape(0.5, 0.8)
-   graphics.FillRectangle(@linGrBrush, 0, 75, 500, 50)
-
-   linGrBrush.SetBlendTriangularShape(0.5, 1.0)
-   graphics.FillRectangle(@linGrBrush, 0, 150, 500, 50)
 
 END SUB
 ' ========================================================================================
@@ -3498,104 +3380,6 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="SetGammaCorrectionLGBrush"></a>SetGammaCorrection (CGpLinearGradientBrush)
-
-Specifies whether gamma correction is enabled for this linear gradient brush.
-
-```
-FUNCTION SetGammaCorrection (BYVAL useGammaCorrection AS BOOL) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *useGammaCorrection* | Boolean value that specifies whether gamma correction occurs during rendering. TRUE specifies that gamma correction is enabled, and FALSE specifies that gamma correction is not enabled. By default, gamma correction is disabled during construction of a **LinearGradientBrush** object. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-Gamma correction is often done to match the intensity contrast of the gradient to the ability of the human eye to perceive intensity changes.
-
-# <a name="SetGammaCorrectionPGBrush"></a>SetGammaCorrection (CGpPathGradientBrush)
-
-Specifies specifies whether gamma correction is enabled for this path gradient brush.
-
-```
-FUNCTION SetGammaCorrection (BYVAL useGammaCorrection AS BOOL) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *useGammaCorrection* | Boolean value that specifies whether gamma correction is enabled. TRUE specifies that gamma correction is enabled, and FALSE specifies that gamma correction is not enabled. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-Gamma correction is often done to match the intensity contrast of the gradient to the ability of the human eye to perceive intensity changes.
-
-# <a name="SetInterpolationColorsLGBrush"></a>SetInterpolationColors (CGpLinearGradientBrush)
-
-Specifies whether gamma correction is enabled for this linear gradient brush.
-
-```
-FUNCTION SetInterpolationColors (BYVAL presetColors AS ARGB PTR, _
-   BYVAL blendPositions AS SINGLE PTR, BYVAL count AS LONG) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *presetColors* | Pointer to an array of ARGB colors that specify the colors to be interpolated for this linear gradient brush. A color of a given index in the *presetColors* array corresponds to the blend position of that same index in the *blendPositions* array. |
-| *blendPositions* | Pointer to an array of simple precision numbers that specify the blend positions. Each number in the array specifies a percentage of the distance between the starting boundary and the ending boundary and is in the range from 0.0 through 1.0, where 0.0 indicates the starting boundary of the gradient and 1.0 indicates the ending boundary. There must be at least two positions specified: the first position, which is always 0.0f, and the last position, which is always 1.0f. Otherwise, the behavior is undefined. A blend position between 0.0 and 1.0 indicates the line, parallel to the boundary lines, that is a certain fraction of the distance from the starting boundary to the ending boundary. For example, a blend position of 0.7 indicates the line that is 70 percent of the distance from the starting boundary to the ending boundary. The color is constant on lines that are parallel to the boundary lines. |
-| *count* | Integer that specifies the number of elements in the *presetColors* array. This is the same as the number of elements in the *blendPositions* array. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush, sets the colors to be interpolated
-' for the linear gradient brush, and fills a rectangle.
-' ========================================================================================
-SUB Example_SetInterpolationColors (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a linear gradient brush, and set the colors to be interpolated.
-   DIM colors(0 TO 2) AS ARGB = {GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0)}
-   DIM positions(0 TO 2) AS SINGLE = {0.0, 0.3, 1.0}
-
-   DIM pt1 AS GpPoint = GDIP_POINT(0, 0)
-   DIM pt2 AS GpPoint = GDIP_POINT(100, 0)
-
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@pt1, @pt2, GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 255, 255, 255))
-   linGrBrush.SetInterpolationColors(@colors(0), @positions(0), 3)
-
-   graphics.FillRectangle(@linGrBrush, 0, 0, 100, 50)
-   
-END SUB
-' ========================================================================================
-```
-
 # <a name="SetInterpolationColorsPGBrush"></a>SetInterpolationColors (CGpPathGradientBrush)
 
 Sets the preset colors and the blend positions of this path gradient brush.
@@ -3648,54 +3432,6 @@ SUB Example_SetInterpolationColors (BYVAL hdc AS HDC)
 
    pthGrBrush.SetInterpolationColors(@colors(0), @positions(0), 3)
    graphics.FillRectangle(@pthGrBrush, 0, 0, 300, 300)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="SetLinearColors"></a>SetLinearColors (CGpLinearGradientBrush)
-
-Sets the starting color and ending color of this linear gradient brush.
-
-```
-FUNCTION SetLinearColors (BYVAL color1 AS ARGB, BYVAL color2 AS ARGB) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *color1* | The color at the starting boundary line of this linear gradient brush. |
-| *color2* | The color that specifies the color at the ending boundary line of this linear gradient brush. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush and uses it to fill a rectangle.
-' Next, the code changes the linear colors and uses the modified brush to fill another rectangle.
-' ========================================================================================
-SUB Example_SetLinearColors (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a linear gradient brush.
-   DIM rc AS GpRect = GDIP_RECT(0, 0, 100, 50)
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
-      GDIP_ARGB(255, 0, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
-
-   linGrBrush.SetLinearColors(GDIP_ARGB(255, 0, 0, 255), GDIP_ARGB(255, 0, 255, 0))
-   graphics.FillRectangle(@linGrBrush, 0, 75, 100, 50)
 
 END SUB
 ' ========================================================================================
@@ -3758,66 +3494,6 @@ SUB Example_SetSurroundColors (BYVAL hdc AS HDC)
    pthGrBrush.SetSurroundColors(@colors(0), @nCount)
 
    graphics.FillRectangle(@pthGrBrush, 0, 0, 200, 200)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="SetTransformLGBrush"></a>SetTransform (CGpLinearGradientBrush)
-
-Sets the transformation matrix of this linear gradient brush.
-
-```
-FUNCTION SetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pMatrix* | Pointer to a **Matrix** object that specifies the transformation matrix to use. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A **LinearGradientBrush** object has a rectangle that specifies the starting and ending boundaries of the gradient and a mode or angle that affects the direction. If the brush's transformation matrix is set to represent any transformation other than the identity, then the boundaries and direction are transformed according to that matrix during rendering.
-
-The transformation applies only during rendering. The boundaries stored by the **LinearGradientBrush** object are not altered by the **SetTransform** method.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush and uses it to fill a rectangle.
-' Next, the code modifies the brush's transformation matrix and fills a rectangle with the
-' transformed brush.
-' ========================================================================================
-SUB Example_SetTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   DIM rc AS GpRect = GDIP_RECT(0, 0, 80, 40)
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
-       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
-
-   DIM matrix AS CGpMatrix = CGpMatrix(2.0, 0, 0, 1, 0, 0)   ' // horizontal doubling
-
-   ' // Fill a large area with the gradient brush (no transformation).
-   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 50)
-
-   linGrBrush.SetTransform(@matrix)
-
-   ' // Fill a large area with the transformed linear gradient brush.
-   graphics.FillRectangle(@linGrBrush, 0, 75, 800, 50)
 
 END SUB
 ' ========================================================================================
@@ -3889,117 +3565,6 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="SetTransformTBrush"></a>SetTransform (CGpTextureBrush)
-
-Sets the transformation matrix of this texture brush.
-
-```
-FUNCTION SetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pMatrix* | Pointer to a **Matrix** object that specifies the transformation matrix to use. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A **TextureBrush** object maintains a transformation matrix that can store any affine transformation. When you use a texture brush to fill an area, Windows GDI+ transforms the brush's image according to the brush's transformation matrix and then fills the area. The transformed image exists only during rendering; the image stored in the TextureBrush object is not transformed. For example, suppose you call and then paint an area with *someTextureBrush.ScaleTransform(3)* and then paint an area with *someTextureBrush*. The width of the brush's image triples when the area is painted, but the image stored in someTextureBrush remains unchanged.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush and sets the transformation of the brush.
-' The code then uses the transformed brush to fill an ellipse.
-' ========================================================================================
-SUB Example_SetTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Horizontal stretch
-   DIM matrix AS CGpMatrix = CGpMatrix(2, 0, 0, 1, 0, 0)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.SetTransform(@matrix)
-   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="SetWrapModeLGBrush"></a>SetWrapMode (CGpLinearGradientBrush)
-
-Sets the wrap mode of this linear gradient brush.
-
-```
-FUNCTION SetWrapMode (BYVAL wrapMode AS WrapMode) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *wrapMode* | Element of the **WrapMode** enumeration that specifies how areas painted with this linear gradient brush will be tiled. The value of this parameter must be one of the following elements: **WrapModeTile**, **WrapModeTileFlipX**, **WrapModeTileFlipY**, **WrapModeTileFlipXY**. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-The boundary lines of a linear gradient brush form a tile. When you paint an area with a linear gradient brush, the tile repeats. A linear gradient brush may have alternate tiles flipped in a certain direction, as specified by the wrap mode. Flipping has the effect of reversing the order of the colors.
-
-The wrap mode defaults to **WrapModeTile** when a **LinearGradientBrush** object is constructed.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush and uses it to fill a rectangle.
-' Next, the code modifies the brush's wrap mode and uses the modified brush to fill another
-' rectangle.
-' ========================================================================================
-SUB Example_SetWrapMode (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a linear gradient brush.
-   DIM rc AS GpRect = GDIP_RECT(0, 0, 100, 50)
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
-      GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
-
-   ' // Fill a large area using the gradient brush with the default wrap mode.
-   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 50)
-
-   linGrBrush.SetWrapMode(WrapModeTileFlipX)
-
-   ' // Fill a large area using the gradient brush with the new wrap mode.
-   graphics.FillRectangle(@linGrBrush, 0, 75, 800, 50)
-
-END SUB
-' ========================================================================================
-```
-
 # <a name="SetWrapModePGBrush"></a>SetWrapMode (CGpPathGradientBrush)
 
 Sets the wrap mode of this path gradient brush.
@@ -4055,128 +3620,6 @@ SUB Example_SetWrapMode (BYVAL hdc AS HDC)
    pthGrBrush.SetWrapMode(WrapModeTileFlipX)
 
    graphics.FillRectangle(@pthGrBrush, 0, 0, 800, 800)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="SetWrapModeTBrush"></a>SetWrapMode (CGpTextureBrush)
-
-Sets the wrap mode of this texture brush.
-
-```
-FUNCTION SetWrapMode (BYVAL wrapMode AS WrapMode) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *wrapMode* | Element of the **WrapMode** enumeration that specifies how repeated copies of an image are used to tile an area when it is painted with this texture brush. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-An area that extends beyond the boundaries of the brush is tiled with repeated copies of the brush. A texture brush may have alternate tiles flipped in a certain direction, as specified by the wrap mode. Flipping has the effect of reversing the brush's image. For example, if the wrap mode is specified as **WrapModeTileFlipX**, the brush is flipped about a line that is parallel to the y-axis.
-
-The texture brush is always oriented at (0, 0). If the wrap mode is specified as **WrapModeClamp**, no area outside of the brush is tiled. For example, suppose you create a texture brush, specifying **WrapModeClamp** as the wrap mode:
-
-```
-TextureBrush(SomeImage, WrapModeClamp)
-```
-
-Then you paint an area with the brush. If the size of the brush has a height of 50 and the painted area is a rectangle with its upper-left corner at (0, 50), you will see no repeated copies of the brush (no tiling).
-
-The default wrap mode for a texture brush is **WrapModeTile**, which specifies no flipping of the tile and no clamping.
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a texture brush, sets the wrap mode of the brush, and uses
-' the brush to fill a rectangle.
-' ========================================================================================
-SUB Example_SetWrapMode (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   ' // Create a texture brush, and set its transformation.
-   DIM pImage AS CGpImage = "HouseAndTree.gif"
-   DIM textureBrush AS CGpTextureBrush = @pImage
-   textureBrush.SetWrapMode(WrapModeTileFlipX)
-   graphics.FillRectangle(@textureBrush, 0, 0, 400, 200)
-
-END SUB
-' ========================================================================================
-```
-
-# <a name="TranslateTransformLGBrush"></a>TranslateTransform (CGpLinearGradientBrush)
-
-Updates this brush's current transformation matrix with the product of itself and a translation matrix.
-
-```
-FUNCTION TranslateTransform (BYVAL dx AS SINGLE, BYVAL dy AS SINGLE, _
-   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *dx* | Simple precision number that specifies the horizontal component of the translation. |
-| *dy* | Simple precision number that specifies the vertical component of the translation. |
-| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
-
-#### Return value
-
-If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
-
-If the function fails, it returns one of the other elements of the **Status** enumeration.
-
-#### Remarks
-
-A single 3×3 matrix can store any sequence of affine transformations. If you have several 3×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix *S* represents a scaling, and matrix *T* represents a translation. If matrix M is the product *ST*, then matrix *M* represents a composite transformation: first scale, then translate.
-
-The order of matrix multiplication is important. In general, the matrix product *RT* is not the same as the matrix product *TR*. In the example given in the previous paragraph, the composite transformation represented by *RT* (first rotate, then translate) is not the same as the composite transformation represented by *TR* (first translate, then rotate).
-
-#### Example
-
-```
-' ========================================================================================
-' The following example creates a linear gradient brush and uses it to fill a rectangle.
-' Next, the code modifies the brush's transformation matrix, applying a composite transformation,
-' and then fills a rectangle with the transformed brush.
-' ========================================================================================
-SUB Example_TranslateTransform (BYVAL hdc AS HDC)
-
-   ' // Create a graphics object from the window device context
-   DIM graphics AS CGpGraphics = hdc
-   ' // Get the DPI scaling ratio
-   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
-   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
-   ' // Set the scale transform
-   graphics.ScaleTransform(rxRatio, ryRatio)
-
-   DIM rc AS GpRect = GDIP_RECT(0, 0, 80, 40)
-   DIM linGrBrush AS CGpLinearGradientBrush = CGpLinearGradientBrush(@rc, _
-       GDIP_ARGB(255, 255, 0, 0), GDIP_ARGB(255, 0, 0, 255), LinearGradientModeHorizontal)
-
-   ' // Fill a large area with the gradient brush (no transformation).
-   graphics.FillRectangle(@linGrBrush, 0, 0, 800, 150)
-
-   ' // Apply a composite transformation: first scale, then translate.
-   linGrBrush.ScaleTransform(2, 1)                           ' // horizontal doubling
-   linGrBrush.TranslateTransform(30, 0, MatrixOrderAppend)   ' // translation
-
-   ' // Fill a large area with the transformed linear gradient brush.
-   graphics.FillRectangle(@linGrBrush, 0, 200, 800, 150)
 
 END SUB
 ' ========================================================================================
@@ -4243,6 +3686,540 @@ SUB Example_TranslateTransform (BYVAL hdc AS HDC)
 END SUB
 ' ========================================================================================
 ````
+
+# <a name="ConstructorsTBrush"></a>Constructors (CGpTextureBrush)
+
+Creates a texture brush.
+
+```
+CONSTRUCTOR CGpTextureBrush (BYVAL pTextureBrush AS CGpTextureBrush PTR)
+CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode = WrapModeTile)
+CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL dstRect AS GpRectF PTR, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL)
+CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL dstRect AS GpRect PTR, _
+   BYVAL pImageAttributes AS CGpImageAttributes PTR = NULL)
+CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode, _
+   BYVAL dstRect AS GpRect PTR)
+CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode, _
+   BYVAL dstX AS SINGLE, BYVAL dstY AS SINGLE, BYVAL dstWidth AS SINGLE, BYVAL dstHeight AS SINGLE)
+CONSTRUCTOR CGpTextureBrush (BYVAL pImage AS CGpImage PTR, BYVAL nWrapMode AS WrapMode, _
+   BYVAL dstX AS INT_, BYVAL dstY AS INT_, BYVAL dstWidth AS INT_, BYVAL dstHeight AS INT_)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pImage* | Pointer to a variable that will receive a pointer to the Image object that is defined by this texture brush. |
+| *nWrapMode* | Element of the **WrapMode** enumeration that specifies how repeated copies of an image are used to tile an area when it is painted with this texture brush.  |
+| *dstX* | Leftmost coordinate of the image portion to be used by this brush. |
+| *dstY* | Uppermost coordinate of the image portion to be used by this brush. |
+| *dstWidth* | Width of the brush and width of the image portion to be used by the brush. |
+| *dstHeight* | Height of the brush and height of the image portion to be used by the brush. |
+| *dstHeight* | Height of the brush and height of the image portion to be used by the brush. |
+
+#### Remarks
+
+The *dstX*, *dstY*, *dstWidth*, and *dstHeight* parameters specify a rectangle. The size of the brush is defined by dstWidth and dstHeight. The *dstX* and *dstY* parameters have no affect on the brush's size or position — the brush is always oriented at (0, 0). The *dstX*, *dstY*, *dstWidth*, and *dstHeight* parameters define the portion of the image to be used by the brush.
+
+For example, suppose you have an image that is stored in an **Image** object and is 256 ×512 (width ×height) pixels. Then you create a **TextureBrush** object based on this image as follows:
+
+```
+TextureBrush(@someImage, WrapModeTile, 12, 50, 100, 150)
+```
+
+The brush will have a width of 100 units and a height of 150 units. The brush will use a rectangular portion of the image. This portion begins at the pixel having coordinates (12, 50). The width and height of the portion are 100 and 150, respectively, measured from the starting pixel.
+
+Now suppose you create another TextureBrush object based on the same image and specify a different rectangle:
+
+```
+TextureBrush(@someImage, WrapModeTile, 0, 0, 256, 512)
+```
+
+The brush will have width and height equal to 256 and 512, respectively. The brush will use the entire image instead of a portion of it because the rectangle specifies a starting pixel at coordinates (0, 0) and dimensions identical to those of the image.
+
+# <a name="GetImage"></a>GetImage (CGpTextureBrush)
+
+Gets a pointer to the Image object that is defined by this texture brush.
+
+```
+FUNCTION GetImage (BYVAL pImage AS CGpImage PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pImage* | Pointer to a variable that will receive a pointer to the Image object that is defined by this texture brush. |
+
+#### Return value
+
+This method returns the number of preset colors currently specified for this path gradient brush.
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and uses it to fill an ellipse. The code
+' then gets the brush's image and draws it.
+' ========================================================================================
+SUB Example_GetImage (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and use it to fill an ellipse.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   graphics.FillEllipse(@textureBrush, 0, 0, 200, 200)
+
+   ' // Get the brush's image, and draw that image
+   DIM pImage2 AS CGpImage
+   textureBrush.GetImage(@pImage2)
+   graphics.DrawImage(@pImage2, 10, 150)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetTransformTBrush"></a>GetTransform (CGpTextureBrush)
+
+Gets the transformation matrix of this texture brush.
+
+```
+FUNCTION GetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that receives the transformation matrix. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **TextureBrush** object maintains a transformation matrix that can store any affine transformation. When you use a texture brush to fill an area, GDI+ transforms the brush's image according to the brush's transformation matrix and then fills the area. The transformed image exists only during rendering; the image stored in the **TextureBrush** object is not transformed. For example, suppose you call *someTextureBrush.ScaleTransform(3)* and then paint an area with *someTextureBrush*. The width of the brush's image triples when the area is painted, but the image stored in *someTextureBrush* remains unchanged.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' The code then gets the brush's transformation matrix and proceeds to inspect or use the elements.
+' ========================================================================================
+SUB Example_GetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.ScaleTransform(3, 2)
+
+   DIM matrix AS CGpMatrix
+   DIM elements(5) AS SINGLE
+
+   textureBrush.GetTransform(@matrix)
+   matrix.GetElements(@elements(0))
+
+   FOR j AS LONG = 0 TO 5
+      ' // Inspect or use the value in elements[j].
+      PRINT elements(j)
+   NEXT
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="GetWrapModeTBrush"></a>GetWrapMode (CGpTexturetBrush)
+
+Gets the wrap mode currently set for this texture brush.
+
+```
+FUNCTION GetWrapMode () AS WrapMode
+```
+
+#### Return value
+
+This method returns the wrap mode currently set for this texture brush. The value returned is one of the elements of the **WrapMode** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush, sets the wrap mode of the brush, and uses
+' the brush to fill a rectangle. Next, the code gets the wrap mode of the brush and stores
+' the value. The code creates a second texture brush and uses the stored wrap mode to set
+' the wrap mode of the second texture brush. Then, the code uses the second texture brush
+' to fill a rectangle.
+' ========================================================================================
+SUB Example_WrapMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.SetWrapMode(WrapModeTileFlipX)
+   graphics.FillRectangle(@textureBrush, 0, 0, 200, 200)
+
+   ' // Get the brush's wrap mode.
+   DIM nWrapMode AS WrapMode = textureBrush.GetWrapMode
+
+   ' // Create a second texture brush with the same wrap mode.
+   DIM pImage2 AS CGpImage = "MyTexture.png"
+   DIM textureBrush2 AS CGpTextureBrush = @pImage2
+   textureBrush2.SetWrapMode(nWrapMode)
+   graphics.FillRectangle(@textureBrush2, 210, 0, 200, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="MultiplyTransformTBrush"></a>MultiplyTransform (CGpTextureBrush)
+
+Updates the brush's transformation matrix with the product of itself and another matrix.
+
+```
+FUNCTION MultiplyTransform (BYVAL pMatrix AS CGpMatrix PTR, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a matrix to be multiplied by the brush's current transformation matrix. |
+| *order* | Optional. Element of the **MatrixOrder** enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' The code then uses the transformed brush to fill a rectangle.
+' ========================================================================================
+SUB Example_MultiplyTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Horizontal stretch
+   DIM matrix AS CGpMatrix = CGpMatrix(3, 0, 0, 1, 0, 0)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+
+   textureBrush.RotateTransform(30)   ' // rotate
+   textureBrush.MultiplyTransform(@matrix, MatrixOrderAppend)   ' // stretch
+   graphics.FillRectangle(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="ResetTransformTBrush"></a>ResetTransform (CGpTextureBrush)
+
+Resets the transformation matrix of this texture brush to the identity matrix. This means that no transformation takes place.
+
+```
+FUNCTION ResetTransform () AS GpStatus
+```
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' Next, the code uses the transformed brush to fill a rectangle. Then, the code resets the
+' transformation of the brush and uses the untransformed brush to fill a rectangle.
+' ========================================================================================
+SUB Example_ResetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.RotateTransform(30)
+
+   ' // Fill a rectangle with the transformed texture brush.
+   graphics.FillEllipse(@textureBrush, 0, 0, 200, 100)
+
+   ' // Reset the transformation
+   textureBrush.ResetTransform
+
+   ' // Fill a rectangle with the texture brush (no transformation).
+   graphics.FillEllipse(@textureBrush, 210, 0, 200, 100)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="RotateTransformTBrush"></a>RotateTransform (CGpTextureBrush)
+
+Updates this texture brush's current transformation matrix with the product of itself and a rotation matrix.
+
+```
+FUNCTION RotateTransform (BYVAL angle AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *angle* | Simple precision number that specifies the angle of rotation in degrees. |
+| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A single 3×3 matrix can store any sequence of affine transformations. If you have several 3×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix R represents a rotation, and matrix T represents a translation. If matrix M is the product RT, then matrix M represents a composite transformation: first rotate, then translate.
+
+The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' The code then uses the transformed brush to fill a rectangle.
+' ========================================================================================
+SUB Example_RotateTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.ScaleTransform(3, 1)
+   textureBrush.RotateTransform(30, MatrixOrderAppend)
+   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="ScaleTransformTBrush"></a>ScaleTransform (CGpTextureBrush)
+
+Updates this texture brush's current transformation matrix with the product of itself and a scaling matrix.
+
+```
+FUNCTION ScaleTransform (BYVAL sx AS SINGLE, BYVAL sy AS SINGLE, _
+   BYVAL order AS MatrixOrder = MatrixOrderPrepend) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *sx* | Simple precision number that specifies the amount to scale in the x direction. |
+| *sy* | Simple precision number that specifies the amount to scale in the y direction. |
+| *order* | Optional. Element of the MatrixOrder enumeration that specifies the order of multiplication. **MatrixOrderPrepend** specifies that the passed matrix is on the left, and **MatrixOrderAppend** specifies that the passed matrix is on the right. The default value is **MatrixOrderPrepend**. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A single 3×3 matrix can store any sequence of affine transformations. If you have several 3×3 matrices, each of which represents an affine transformation, the product of those matrices is a single 3×3 matrix that represents the entire sequence of transformations. The transformation represented by that product is called a composite transformation. For example, suppose matrix T represents a translation, and matrix S represents a scaling. If matrix M is the product TS, then matrix M represents a composite transformation: first translate, then scale.
+
+The order of matrix multiplication is important. In general, the matrix product RT is not the same as the matrix product TR. In the example given in the previous paragraph, the composite transformation represented by RT (first rotate, then translate) is not the same as the composite transformation represented by TR (first translate, then rotate).
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' The code then uses the transformed brush to fill a rectangle.
+' ========================================================================================
+SUB Example_ScaleTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.RotateTransform(30)
+   textureBrush.ScaleTransform(3, 1, MatrixOrderAppend)
+   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetTransformTBrush"></a>SetTransform (CGpTextureBrush)
+
+Sets the transformation matrix of this texture brush.
+
+```
+FUNCTION SetTransform (BYVAL pMatrix AS CGpMatrix PTR) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pMatrix* | Pointer to a **Matrix** object that specifies the transformation matrix to use. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+A **TextureBrush** object maintains a transformation matrix that can store any affine transformation. When you use a texture brush to fill an area, Windows GDI+ transforms the brush's image according to the brush's transformation matrix and then fills the area. The transformed image exists only during rendering; the image stored in the TextureBrush object is not transformed. For example, suppose you call and then paint an area with *someTextureBrush.ScaleTransform(3)* and then paint an area with *someTextureBrush*. The width of the brush's image triples when the area is painted, but the image stored in someTextureBrush remains unchanged.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush and sets the transformation of the brush.
+' The code then uses the transformed brush to fill an ellipse.
+' ========================================================================================
+SUB Example_SetTransform (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Horizontal stretch
+   DIM matrix AS CGpMatrix = CGpMatrix(2, 0, 0, 1, 0, 0)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.SetTransform(@matrix)
+   graphics.FillEllipse(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
+
+# <a name="SetWrapModeTBrush"></a>SetWrapMode (CGpTextureBrush)
+
+Sets the wrap mode of this texture brush.
+
+```
+FUNCTION SetWrapMode (BYVAL wrapMode AS WrapMode) AS GpStatus
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wrapMode* | Element of the **WrapMode** enumeration that specifies how repeated copies of an image are used to tile an area when it is painted with this texture brush. |
+
+#### Return value
+
+If the function succeeds, it returns **Ok**, which is an element of the **Status** enumeration.
+
+If the function fails, it returns one of the other elements of the **Status** enumeration.
+
+#### Remarks
+
+An area that extends beyond the boundaries of the brush is tiled with repeated copies of the brush. A texture brush may have alternate tiles flipped in a certain direction, as specified by the wrap mode. Flipping has the effect of reversing the brush's image. For example, if the wrap mode is specified as **WrapModeTileFlipX**, the brush is flipped about a line that is parallel to the y-axis.
+
+The texture brush is always oriented at (0, 0). If the wrap mode is specified as **WrapModeClamp**, no area outside of the brush is tiled. For example, suppose you create a texture brush, specifying **WrapModeClamp** as the wrap mode:
+
+```
+TextureBrush(SomeImage, WrapModeClamp)
+```
+
+Then you paint an area with the brush. If the size of the brush has a height of 50 and the painted area is a rectangle with its upper-left corner at (0, 50), you will see no repeated copies of the brush (no tiling).
+
+The default wrap mode for a texture brush is **WrapModeTile**, which specifies no flipping of the tile and no clamping.
+
+#### Example
+
+```
+' ========================================================================================
+' The following example creates a texture brush, sets the wrap mode of the brush, and uses
+' the brush to fill a rectangle.
+' ========================================================================================
+SUB Example_SetWrapMode (BYVAL hdc AS HDC)
+
+   ' // Create a graphics object from the window device context
+   DIM graphics AS CGpGraphics = hdc
+   ' // Get the DPI scaling ratio
+   DIM rxRatio AS SINGLE = graphics.GetDpiX / 96
+   DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
+   ' // Set the scale transform
+   graphics.ScaleTransform(rxRatio, ryRatio)
+
+   ' // Create a texture brush, and set its transformation.
+   DIM pImage AS CGpImage = "HouseAndTree.gif"
+   DIM textureBrush AS CGpTextureBrush = @pImage
+   textureBrush.SetWrapMode(WrapModeTileFlipX)
+   graphics.FillRectangle(@textureBrush, 0, 0, 400, 200)
+
+END SUB
+' ========================================================================================
+```
 
 # <a name="TranslateTransformTBrush"></a>TranslateTransform (CGpTextureBrush)
 

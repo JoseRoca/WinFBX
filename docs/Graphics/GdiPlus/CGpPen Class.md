@@ -56,6 +56,7 @@ Encapsulates a **Pen** object. A **Pen** object is a Windows GDI+ object used to
 Creates a **Pen** object that uses a specified color and width.
 
 ```
+CONSTRUCTOR CGpPen
 CONSTRUCTOR CGpPen (BYVAL pPen AS CGpPen PTR)
 CONSTRUCTOR CGpPen (BYVAL pBrush AS CGpBrush PTR, BYVAL nWidth AS SINGLE = 1.0)
 CONSTRUCTOR CGpPen (BYVAL colour AS ARGB, BYVAL nWidth AS SINGLE = 1.0)
@@ -1028,7 +1029,7 @@ Gets the width currently set for this **Pen** object.
 FUNCTION GetWidth () AS SINGLE
 ```
 
-####Remarks
+#### Remarks
 
 If you pass the address of a pen to one of the draw methods of a **Graphics** object, the width of the pen's stroke is dependent on the unit of measure specified in the **Graphics** object. The default unit of measure is **UnitPixel**, which is an element of the **GpUnit** enumeration.
 
@@ -1681,7 +1682,7 @@ END SUB
 
 # <a name="SetDashPattern"></a>SetDashPattern
 
-Sets an array of custom dashes and spaces for this Pen object.
+Sets an array of custom dashes and spaces for this **Pen** object.
 
 ```
 FUNCTION SetDashPattern (BYVAL dashArray AS SINGLE PTR, BYVAL nCount AS INT_) AS GpStatus

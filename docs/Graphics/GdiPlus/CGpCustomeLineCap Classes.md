@@ -7,12 +7,12 @@ The **CGpCustomLineCap** class encapsulates a custom line cap. A line cap define
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#ConstructorCustomLineCap) | Creates a **CustomLineCap** object. |
+| [Constructors](#ConstructorCustomLineCap) | Creates a **CustomLineCap** object. |
 | [Clone](#Clone) | Copies the contents of the existing **CustomLineCap** object into a new **CustomLineCap** object. |
 | [GetBaseCap](#GetBaseCap) | Gets the style of the base cap. |
 | [GetBaseInset](#GetBaseInset) | Gets the distance between the base cap to the start of the line. |
 | [GetStrokeCaps](#GetStrokeCaps) | Gets the end cap styles for both the start line cap and the end line cap. |
-| [GetStrokeJoin](#GetStrokeJoin) | Returns the style of LineJoin used to join multiple lines in the same **GraphicsPath** object. |
+| [GetStrokeJoin](#GetStrokeJoin) | Returns the style of **LineJoin** used to join multiple lines in the same **GraphicsPath** object. |
 | [GetWidthScale](#GetWidthScale) | Gets the value of the scale width. |
 | [SetBaseCap](#SetBaseCap) | Sets the **LineCap** that appears as part of this **CustomLineCap** at the end of a line. |
 | [SetBaseInset](#SetBaseInset) | Sets the base inset value of this custom line cap. |
@@ -30,7 +30,7 @@ The **CGpAdjustableArrowCap** object extends **CGpCustomLineCap**. This object b
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#ConstructorArrowCap) | Creates an adjustable arrow line cap with the specified height and width. |
+| [Constructors](#ConstructorArrowCap) | Creates an adjustable arrow line cap with the specified height and width. |
 | [GetHeight](#GetHeight) | Gets the height of the arrow cap. |
 | [GetMiddleInset](#GetMiddleInset) | Gets the value of the inset. |
 | [GetWidth](#GetWidth) | Gets the width of the arrow cap. |
@@ -40,11 +40,13 @@ The **CGpAdjustableArrowCap** object extends **CGpCustomLineCap**. This object b
 | [SetMiddleInset](#SetMiddleInset) | Sets the number of units that the midpoint of the base shifts towards the vertex. |
 | [SetWidth](#SetWidth) | Sets the width of the arrow cap. |
 
-# <a name="ConstructorCustomLineCap"></a>Constructor (CGpCustomLineCap)
+# <a name="ConstructorCustomLineCap"></a>Constructors (CGpCustomLineCap)
 
 Creates a **CustomLineCap** object.
 
 ```
+CONSTRUCTOR CGpCustomLineCap
+CONSTRUCTOR CGpCustomLineCap (BYVAL pCustomLineCap AS CGpCustomLineCap PTR)
 CONSTRUCTOR CGpCustomLineCap (BYVAL pFillPath AS CGpGraphicsPath PTR, _
    BYVAL pStrokePath AS CGpGraphicsPath PTR, BYVAL baseCap AS LineCap = LinecapFLat, _
    BYVAL baseInset AS SINGLE = 0.0)
@@ -59,7 +61,7 @@ CONSTRUCTOR CGpCustomLineCap (BYVAL pFillPath AS CGpGraphicsPath PTR, _
 
 #### Remarks
 
-The *fillPath* and *strokePath* parameters cannot be used at the same time. You should pass NULL to one of those two parameters. If you pass nonnull values to both parameters, then *fillPath* is ignored.
+The *pFillPath* and *pStrokePath* parameters cannot be used at the same time. You should pass NULL to one of those two parameters. If you pass nonnull values to both parameters, then *pFillPath* is ignored.
 
 The **CustomLineCap** class uses the winding fill mode regardless of the fill mode that is set for the **GraphicsPath** object passed to the **CustomLineCap** constructor.
 
@@ -812,11 +814,12 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ConstructorArrowCap"></a>Constructor (CGpAdjustableArrowCap)
+# <a name="ConstructorArrowCap"></a>Constructors (CGpAdjustableArrowCap)
 
 Creates an adjustable arrow line cap with the specified height and width. The arrow line cap can be filled or nonfilled. The middle inset defaults to zero.
 
 ```
+CONSTRUCTOR CGpAdjustableArrowCap (BYVAL pAdjustableArrowCap AS CGpAdjustableArrowCap PTR)
 CONSTRUCTOR CGpAdjustableArrowCap (BYVAL nHeight AS SINGLE, BYVAL nWidth AS SINGLE, _
    BYVAL bIsFilled AS BOOL = CTRUE)
 ```
@@ -1081,7 +1084,7 @@ END SUB
 
 # <a name="SetFillState"></a>SetFillState (CGpAdjustableArrowCap)
 
-Creates an adjustable arrow line cap with the specified height and width. The arrow line cap can be filled or nonfilled. The middle inset defaults to zero.
+Sets the fill state of the arrow cap. If the arrow cap is not filled, only the outline is drawn.
 
 ```
 FUNCTION SetFillState (BYVAL bIsFilled AS BOOL) AS GpStatus
@@ -1144,7 +1147,7 @@ FUNCTION SetHeight (BYVAL nHeight AS SINGLE) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nHeight* | Simple precision number that specifies the height, in units, for the arrow cap. |
+| *nHeight* | The height, in units, for the arrow cap. |
 
 #### Return value
 
@@ -1203,7 +1206,7 @@ FUNCTION SetMiddleInset (BYVAL middleInset AS SINGLE) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *middleInset* | Simple precision number that specifies the number of units that the midpoint of the base shifts towards the vertex. |
+| *middleInset* | The number of units that the midpoint of the base shifts towards the vertex. |
 
 #### Return value
 
@@ -1256,7 +1259,7 @@ FUNCTION SetWidth (BYVAL nWidth AS SINGLE) AS GpStatus
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nWidth* | Simple precision number that specifies the width, in units, for the arrow cap. |
+| *nWidth* | The width, in units, for the arrow cap. |
 
 #### Return value
 
