@@ -2,8 +2,6 @@
 
 **CDicObj** is an associative array of variants. Each item is associated with a unique key. The key is used to retrieve an individual item.
 
-**Include file**: CDicObj.inc
-
 #### Example
 
 ```
@@ -60,6 +58,8 @@ print
 PRINT "Press any key..."
 SLEEP
 ```
+
+**Include file**: CDicObj.inc
 
 ### Methods and Properties
 
