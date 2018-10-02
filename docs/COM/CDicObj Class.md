@@ -6,8 +6,7 @@
 
 #### Example
 
-Example
-
+```
 #define unicode
 #INCLUDE ONCE "Afx/CDicObj.inc"
 USING Afx
@@ -60,6 +59,7 @@ print
 
 PRINT "Press any key..."
 SLEEP
+```
 
 ### Methods and Properties
 
