@@ -48,7 +48,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    pWindow.Center
 
    ' // Add a button without position or size (it will be resized in the WM_SIZE message).
-   pWindow.AddControl("Button", , IDC_BUTTON, "Click me", , , , , , , , CAST(WNDPROC, @Button_SubclassProc))
+   pWindow.AddControl("Button", , IDC_BUTTON, "Click me", , , , , , , , CAST(SUBCLASSPROC, @Button_SubclassProc))
 
    |
 

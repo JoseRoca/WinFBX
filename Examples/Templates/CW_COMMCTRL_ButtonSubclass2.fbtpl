@@ -50,7 +50,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
 
    ' // Add a subclassed button without position or size (it will be resized in the WM_SIZE message).
    pWindow.AddControl("Button", , IDC_BUTTON, "Click me", , , , , , , , _
-      CAST(WNDPROC, @Button_SubclassProc), IDC_BUTTON, CAST(DWORD_PTR, @pWindow))
+      CAST(SUBCLASSPROC, @Button_SubclassProc), IDC_BUTTON, CAST(DWORD_PTR, @pWindow))
 
    |
 
