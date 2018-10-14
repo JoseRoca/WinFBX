@@ -1084,10 +1084,12 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CMaskedEdit.SetText (BYREF cwsText AS CWSTR, BYVAL bSetMaskedCharsOnly AS BOOLEAN) AS BOOLEAN
    DIM cws AS CWSTR = cwsText
-   FOR i AS LONG = 1 TO LEN(m_strInputTemplate)
-      IF MID(**cws, i, 1) = MID(**m_strInputTemplate, i, 1) THEN MID(**cws, i, 1) = "_"
-   NEXT
-   cws = AfxStrRemoveAny(cws, "_")
+   IF bSetMaskedCharsOnly THEN 
+      FOR i AS LONG = 1 TO LEN(m_strInputTemplate)
+         IF MID(**cws, i, 1) = MID(**m_strInputTemplate, i, 1) THEN MID(**cws, i, 1) = "_"
+      NEXT
+      cws = AfxStrRemoveAny(cws, "_")
+   END IF
    FUNCTION = this.SetText(cws)
 END FUNCTION
 ' ========================================================================================
