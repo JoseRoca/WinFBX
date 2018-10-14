@@ -32,13 +32,8 @@ TYPE CMaskedEdit
       m_ratio AS SINGLE                 ' // DPI ratio - width
       m_chMaskInputTemplate AS USHORT   ' // Default char
       m_strValid AS CWSTR               ' // Valid string characters
-      m_bGetMaskedCharsOnly AS BOOLEAN
-'      m_bSetMaskedCharsOnly AS BOOLEAN
       m_bSelectByGroup AS BOOLEAN
-'      m_bMaskKeyInProgress AS BOOLEAN
-'      m_bPasteProcessing AS BOOLEAN
-'      m_bSetTextProcessing AS BOOLEAN
-      m_strUndo AS CWSTR               ' // Backup string for undo
+      m_strUndo AS CWSTR                ' // Backup string for undo
 
    Public:
       DECLARE CONSTRUCTOR
@@ -53,7 +48,6 @@ TYPE CMaskedEdit
       DECLARE SUB GetGroupBounds(BYREF nBegin AS LONG, BYREF nEnd AS LONG, BYVAL nStartPos AS LONG = 0, BYVAL bForward AS BOOLEAN = TRUE)
       DECLARE SUB EnableMask (BYVAL lpszMask AS WSTRING PTR, BYVAL lpszInputTemplate AS WSTRING PTR, _
               BYREF chMaskInputTemplate AS CWSTR = "_", BYVAL lpszValid AS WSTRING PTR = NULL)
-'      DECLARE SUB DisableMask
       DECLARE SUB SetValidChars (BYVAL lpszValid AS WSTRING PTR)
       DECLARE FUNCTION IsMaskedChar (BYVAL chChar AS USHORT, BYVAL chMaskChar AS USHORT) AS BOOLEAN
       DECLARE FUNCTION CheckChar (BYVAL chChar AS USHORT, BYVAL nPos AS LONG) AS BOOLEAN
@@ -63,14 +57,10 @@ TYPE CMaskedEdit
       DECLARE SUB OnKeyDown (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT, BYVAL nFlags AS UINT)
       DECLARE SUB OnCharBackspace (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT, BYVAL nFlags AS UINT)
       DECLARE SUB OnCharDelete (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT, BYVAL nFlags AS UINT)
-      DECLARE SUB EnableGetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
-      DECLARE SUB EnableSetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
       DECLARE FUNCTION SetText (BYREF cwsText AS CWSTR) AS BOOLEAN
-      DEClARE FUNCTION SetMaskedText (BYREF cwsText AS CWSTR) AS BOOLEAN
-      DECLARE FUNCTION GetText () AS CWSTR
-      DECLARE FUNCTION GetText (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS CWSTR
-      DECLARE FUNCTION GetTextLength () AS LONG
-      DECLARE FUNCTION GetTextLength (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS LONG
+      DEClARE FUNCTION SetText (BYREF cwsText AS CWSTR, BYVAL bSetMaskedCharsOnly AS BOOLEAN) AS BOOLEAN
+      DECLARE FUNCTION GetText (BYVAL bGetMaskedCharsOnly AS BOOLEAN = FALSE) AS CWSTR
+      DECLARE FUNCTION GetTextLength (BYVAL bGetMaskedCharsOnly AS BOOLEAN = FALSE) AS LONG
       DECLARE SUB SetPos (BYVAL nPos AS LONG = -1)
 
       DECLARE STATIC FUNCTION CMaskedEditProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM, BYVAL uIdSubclass AS UINT_PTR, BYVAL dwRefData AS DWORD_PTR) AS LRESULT
@@ -233,12 +223,7 @@ PRIVATE CONSTRUCTOR CMaskedEdit (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG
       m_ratio = pWindow->rxRatio
    END IF
 
-   m_bGetMaskedCharsOnly = TRUE
-'   m_bSetMaskedCharsOnly = TRUE
    m_bSelectByGroup = TRUE
-'   m_bMaskKeyInProgress = FALSE
-'   m_bPasteProcessing = FALSE
-'   m_bSetTextProcessing = FALSE
 
 END CONSTRUCTOR
 ' ========================================================================================
@@ -264,12 +249,7 @@ PRIVATE FUNCTION CMaskedEdit.Create (BYVAL pWindow AS CWindow PTR, BYVAL cID AS 
       m_ratio = pWindow->rxRatio
    END IF
 
-   m_bGetMaskedCharsOnly = TRUE
-'   m_bSetMaskedCharsOnly = TRUE
    m_bSelectByGroup = TRUE
-'   m_bMaskKeyInProgress = FALSE
-'   m_bPasteProcessing = FALSE
-'   m_bSetTextProcessing = FALSE
 
 END FUNCTION
 ' ========================================================================================
@@ -415,18 +395,6 @@ END SUB
 ' ========================================================================================
 
 ' ========================================================================================
-' Disables validating user input.
-' ========================================================================================
-'PRIVATE SUB CMaskedEdit.DisableMask
-'   DIM cws AS CWSTR = this.GetWindowText
-'   cws = AfxStrRemoveAny(cws, m_strInputTemplate)
-'   m_strMask = ""
-'   m_strInputTemplate = ""
-'   AfxSetWindowText(m_hCtl, cws)
-'END SUB
-' ========================================================================================
-
-' ========================================================================================
 ' Specifies a string of valid characters that the user can enter.
 ' ========================================================================================
 PRIVATE SUB CMaskedEdit.SetValidChars (BYVAL lpszValid AS WSTRING PTR)
@@ -540,8 +508,6 @@ END FUNCTION
 
 ' ========================================================================================
 PRIVATE FUNCTION CMaskedEdit.DoUpdate (BYVAL bRestoreLastGood AS BOOLEAN, BYVAL nBeginOld AS LONG = -1, BYVAL nEndOld AS LONG = -1) AS BOOLEAN
-'   IF m_bPasteProcessing THEN RETURN FALSE
-'   m_bPasteProcessing = TRUE
    DIM cwsNew AS CWSTR = AfxGetWindowText(m_hCtl)
    DIM bRet AS BOOLEAN = this.SetValue(**cwsNew, TRUE)
    IF bRet = FALSE THEN MessageBeep(CAST(UINT, -1))
@@ -550,7 +516,6 @@ PRIVATE FUNCTION CMaskedEdit.DoUpdate (BYVAL bRestoreLastGood AS BOOLEAN, BYVAL 
       AfxSetWindowText(m_hCtl, **cwsOld)
       IF nBeginOld <> -1 THEN Edit_SetSel(m_hCtl, nBeginOld, nEndOld)
    END IF
-'   m_bPasteProcessing = FALSE
    RETURN bRet
 END FUNCTION
 ' ========================================================================================
@@ -927,20 +892,6 @@ PRIVATE SUB CMaskedEdit.OnCharBackspace (BYVAL nChar AS UINT, BYVAL nRepCnt AS U
                bScanMore = FALSE
             END IF
          WEND
-
-'         // Validate new string(dispensable)
-'         int i = nIndex;
-'         for (;(i + nSameMaskCharsNum < nGroupEnd); i++)
-'         {
-'            if (m_str[i] != m_chMaskInputTemplate) // allow m_chMaskInputTemplate
-'            {
-'               if (!IsMaskedChar(m_str[i], m_strMask[i]))
-'               {
-'                  MessageBeep((UINT)-1);
-'                  return;
-'               }
-'            }
-'         }
          ' // Form the shifted string
          IF nIndex < nGroupStart THEN RETURN
          IF nIndex + nSameMaskCharsNum > nGroupEnd THEN RETURN
@@ -1035,19 +986,6 @@ PRIVATE SUB CMaskedEdit.OnCharDelete (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT
                bScanMore = FALSE
             END IF
          WEND
-'         // Validate new string(dispensable)
-'         int i = nIndex;
-'         for (;(i + nSameMaskCharsNum < nGroupEnd); i++)
-'         {
-'            if (m_str[i] != m_chMaskInputTemplate) // allow m_chMaskInputTemplate
-'            {
-'               if (!IsMaskedChar(m_str[i], m_strMask[i]))
-'               {
-'                  MessageBeep((UINT)-1);
-'                  return;
-'               }
-'            }
-'         }
          ' // Form the shifted string
          IF nIndex < nGroupStart THEN RETURN
          IF nIndex + nSameMaskCharsNum > nGroupEnd THEN RETURN
@@ -1093,23 +1031,6 @@ PRIVATE SUB CMaskedEdit.OnCharDelete (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT
          this. DoUpdate(TRUE, nBeginOld, nEndOld)
       END IF
    END IF
-END SUB
-' ========================================================================================
-
-' ========================================================================================
-' Specifies whether the text is validated against only the masked characters, or against
-' the whole mask.
-' ========================================================================================
-'PRIVATE SUB CMaskedEdit.EnableSetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
-'   m_bSetMaskedCharsOnly = bEnable
-'END SUB
-' ========================================================================================
-
-' ========================================================================================
-' Specifies whether the GetWindowText method retrieves only masked characters.
-' ========================================================================================
-PRIVATE SUB CMaskedEdit.EnableGetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
-   m_bGetMaskedCharsOnly = bEnable
 END SUB
 ' ========================================================================================
 
@@ -1161,7 +1082,7 @@ END FUNCTION
 ' ========================================================================================
 ' Sets masked text to the control.
 ' ========================================================================================
-PRIVATE FUNCTION CMaskedEdit.SetMaskedText (BYREF cwsText AS CWSTR) AS BOOLEAN
+PRIVATE FUNCTION CMaskedEdit.SetText (BYREF cwsText AS CWSTR, BYVAL bSetMaskedCharsOnly AS BOOLEAN) AS BOOLEAN
    DIM cws AS CWSTR = cwsText
    FOR i AS LONG = 1 TO LEN(m_strInputTemplate)
       IF MID(**cws, i, 1) = MID(**m_strInputTemplate, i, 1) THEN MID(**cws, i, 1) = "_"
@@ -1174,19 +1095,7 @@ END FUNCTION
 ' ========================================================================================
 ' Gets the text of the control
 ' ========================================================================================
-PRIVATE FUNCTION CMaskedEdit.GetText () AS CWSTR
-   DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
-   IF m_bGetMaskedCharsOnly THEN
-      FOR i AS LONG = 1 TO LEN(m_strInputTemplate)
-         IF MID(**cws, i, 1) = MID(**m_strInputTemplate, i, 1) THEN MID(**cws, i, 1) = "_"
-      NEXT
-      cws = AfxStrRemoveAny(cws, "_")
-   END IF
-   RETURN cws
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
-PRIVATE FUNCTION CMaskedEdit.GetText (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS CWSTR
+PRIVATE FUNCTION CMaskedEdit.GetText (BYVAL bGetMaskedCharsOnly AS BOOLEAN = FALSE) AS CWSTR
    DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
    IF bGetMaskedCharsOnly THEN
       FOR i AS LONG = 1 TO LEN(m_strInputTemplate)
@@ -1201,19 +1110,7 @@ END FUNCTION
 ' ========================================================================================
 ' Gets the length of the text of the control
 ' ========================================================================================
-PRIVATE FUNCTION CMaskedEdit.GetTextLength () AS LONG
-   DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
-   IF m_bGetMaskedCharsOnly THEN
-      FOR i AS LONG = 1 TO LEN(m_strInputTemplate)
-         IF MID(**cws, i, 1) = MID(**m_strInputTemplate, i, 1) THEN MID(**cws, i, 1) = "_"
-      NEXT
-      cws = AfxStrRemoveAny(cws, "_")
-   END IF
-   RETURN LEN(cws)
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
-PRIVATE FUNCTION CMaskedEdit.GetTextLength (BYVAL bGetMaskedCharsOnly AS BOOLEAN) AS LONG
+PRIVATE FUNCTION CMaskedEdit.GetTextLength (BYVAL bGetMaskedCharsOnly AS BOOLEAN = FALSE) AS LONG
    DIM cws AS CWSTR = AfxGetWindowText(m_hCtl)
    IF bGetMaskedCharsOnly THEN
       FOR i AS LONG = 1 TO LEN(m_strInputTemplate)
