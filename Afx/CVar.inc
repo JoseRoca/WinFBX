@@ -2380,7 +2380,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE OPERATOR CVar.+= (BYREF cv AS CVAR)
    IF vd.vt = VT_BSTR AND cv.vd.vt = VT_BSTR THEN
-      ' // One of the values is a string, so concatenate
+      ' // Both values are strings, so concatenate
       VarCat(@vd, @cv.vd, @vd)
    ELSE
       ' // Add

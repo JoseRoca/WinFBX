@@ -1286,7 +1286,7 @@ END OPERATOR
 
 ' ========================================================================================
 ' One * returns the BSTR pointer.
-' Two ** returns the adress of the start of the string data.
+' Two ** returns the address of the start of the string data.
 ' Needed because LEFT and RIGHT (cbs) fail with an ambiguous call error.
 ' We have to use **cbs (notice the double indirection) with these functions.
 ' ========================================================================================
