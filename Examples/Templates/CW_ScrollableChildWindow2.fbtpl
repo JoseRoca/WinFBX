@@ -84,7 +84,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    ' // There is a problem with multiline and rich edit controls: if the ESC key is
    ' // pressed when the control has the focus, it closes the child dialog!
    ' // One solution is to subclass the control and process the VK_ESCAPE message.
-   pChildDlg.AddControl("EditMultiline", , IDC_EDIT2, "", 10, 45, 275, 80, , , , CAST(WNDPROC, @Edit_SubclassProc))
+   pChildDlg.AddControl("EditMultiline", , IDC_EDIT2, "", 10, 45, 275, 80, , , , CAST(SUBCLASSPROC, @Edit_SubclassProc))
    ' // Add a button
    pChildDlg.AddControl("Button", , IDOK, "&Ok", 208, 140, 76, 23)
    ' // Create an instance of the CScrollWindow class and attach the child dialog to it
@@ -179,7 +179,7 @@ FUNCTION ChildDlg_WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam 
       CASE WM_SIZE
          ' // In the WM_SIZE message we need to check the validity of the pointers
          ' // because this message is sent before we have had time to store them.
-         DIM pWindow AS CWindow PTR = cast(CWindow PTR, GetWindowLongPtrW(hwnd, 0))
+         DIM pWindow AS CWindow PTR = cast(CWindow PTR, GetWindowLongPtr(hwnd, 0))
          DIM pScrollWindow AS CScrollWindow PTR
          IF pWindow THEN pScrollWindow = pWindow->ScrollWindowPtr
          IF pScrollWindow THEN pScrollWindow->OnSize(wParam, lParam)
