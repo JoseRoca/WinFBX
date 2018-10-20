@@ -205,20 +205,6 @@ pMakedEdit.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
 pMakedEdit.SetText("(123) 123-1212"), TRUE
 ```
 
-# <a name="enablegetmaskedcharsonly"></a>EnableGetMaskedCharsOnly  
- Specifies whether the `GetText` method retrieves only masked characters.  
-  
-```  
-SUB EnableGetMaskedCharsOnly (BYVAL bEnable AS BOOLEAN = TRUE)
-```  
-  
-| Parameter  | Description |
-| ---------- | ----------- |
-| *bEnable* | TRUE to specify that the [GetText](#gettext) method retrieve only masked characters; FALSE to specify that the method retrieve the whole text. The default value is TRUE.   |
-  
-### Remarks  
- Use this method to enable retrieving masked characters. Then create a masked edit control that corresponds to the telephone number, such as (425) 555-0187. If you call the `GetText` method, it returns "4255550187". If you disable retrieving masked characters, the `GetText` method returns the text that is displayed in the edit control, for example "(425) 555-0187".  
-  
 # <a name="enablemask"></a>EnableMask  
  Initializes the masked edit control.  
   
