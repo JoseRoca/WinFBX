@@ -254,7 +254,7 @@ The text from the masked edit control.
 
 ```
 pMskEd.EnableMask("       cc       ddddd-dddd", "State: __, Zip: _____-____", "_")
-SetText pMskEd.m_hCtl, "State: NY, Zip: 12345-6789"
+pMskEd.SetText "State: NY, Zip: 12345-6789", TRUE
 print pMskEd.GetText(FALSE)   ' // Returns "State: NY, Zip: 12345-6789"
 print pMskEd.GetText(TRUE)   ' // Returns NY123456789
 ```
@@ -276,7 +276,7 @@ The length text from the masked edit control.
 
 ```
 pMskEd.EnableMask("       cc       ddddd-dddd", "State: __, Zip: _____-____", "_")
-SetText pMskEd.m_hCtl, "State: NY, Zip: 12345-6789"
+pMskEd.SetText "State: NY, Zip: 12345-6789", TRUE
 print pMskEd.GetTextLength   ' // Returns 14
 print pMskEd.GetTextLength(TRUE)   ' // Returns 10
 ```
