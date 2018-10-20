@@ -107,7 +107,7 @@ The FILE_ATTRIBUTE_SPARSE_FILE attribute on the file is set if any of the stream
 
 # <a name="FileExt"></a>FileExt
 
-Returns the extesion of the most-recently-found file.
+Returns the extension of the most-recently-found file.
 
 ```
 FUNCTION FileExt () AS CWSTR
