@@ -85,7 +85,7 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
          IF wParam <> SIZE_MINIMIZED THEN
             ' // Resize the buttons
             DIM pWindow AS CWindow PTR = AfxCWindowPtr(hwnd)
-            pWindow->MoveWindow GetDlgItem(hwnd, IDCANCEL), pWindow->ClientWidth - 120, pWindow->ClientHeight - 50, 75, 23, CTRUE
+            pWindow->MoveWindow GetDlgItem(hwnd, IDC_POPUP), pWindow->ClientWidth - 120, pWindow->ClientHeight - 50, 75, 23, CTRUE
          END IF
 
     	CASE WM_DESTROY
