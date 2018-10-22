@@ -7,7 +7,7 @@ CWindow: WebBrowser: Modeless popup with WebBrowser
 ' File: CW_ModelessPopupWindow.fbtpl
 ' Contents: Modeless popup window with embedded WebBrowser control
 ' Compiler: FreeBasic 32 & 64 bit
-' Copyright (c) 2018 José Roca. Freeware. Use at your own risk.
+' Copyright (c) 2018 JosÃ© Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
@@ -109,7 +109,7 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
 
       CASE WM_SIZE
          IF wParam <> SIZE_MINIMIZED THEN
-            ' // Resize the buttons
+            ' // Resize the button
             DIM pWindow AS CWindow PTR = AfxCWindowPtr(hwnd)
             pWindow->MoveWindow GetDlgItem(hwnd, IDC_POPUP), pWindow->ClientWidth - 140, pWindow->ClientHeight - 40, 75, 23, CTRUE
          END IF
