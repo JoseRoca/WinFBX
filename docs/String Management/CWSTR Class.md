@@ -200,7 +200,7 @@ IF hFile THEN
 END IF
 ```
 
-Notice that, contrarily to CreateFileW, FreeBasic's OPEN statemente doesn't allow to use unicode for the file name.
+Notice that, contrarily to **CreateFileW**, FreeBasic's OPEN statement doesn't allow to use unicode for the file name.
 
 # Operators
 

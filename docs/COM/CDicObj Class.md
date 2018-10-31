@@ -2,6 +2,63 @@
 
 **CDicObj** is an associative array of variants. Each item is associated with a unique key. The key is used to retrieve an individual item.
 
+#### Example
+
+```
+#define unicode
+#INCLUDE ONCE "Afx/CDicObj.inc"
+USING Afx
+
+' // Creates an instance of the CDicObj class
+DIM pDic AS CDicObj
+
+' // Adds some key, value pairs
+pDic.Add "a", "Athens"
+pDic.Add "b", "Belgrade"
+pDic.Add "c", "Cairo"
+
+print "Count: "; pDic.Count
+print pDic.Exists("a")
+print
+
+' // Retrieve an item and display it
+print pDic.Item("b")
+print
+
+' // Change key "b" to "m" and "Belgrade" to "México"
+pDic.Key("b") = "m"
+pDic.Item("m") = "México"
+print pDic.Item("m")
+print
+
+' // Get all the items and display them
+DIM cvItems AS CVAR = pDic.Items
+FOR i AS LONG = cvItems.GetLBound TO cvItems.GetUBound
+  print cvItems.GetVariantElem(i)
+NEXT
+print
+
+' // Get all the keys and display them
+DIM cvKeys AS CVAR = pDic.Keys
+FOR i AS LONG = cvKeys.GetLBound TO cvKeys.GetUBound
+  print cvKeys.GetVariantElem(i)
+NEXT
+print
+
+' // Remove key "m"
+pDic.Remove "m"
+IF pDic.Exists("m") THEN PRINT "Key m exists" ELSE PRINT "Key m doesn't exists"
+
+' // Remove all keys
+pDic.RemoveAll
+print "All the keys must have been deleted"
+print "Count: "; pDic.Count
+print
+
+PRINT "Press any key..."
+SLEEP
+```
+
 **Include file**: CDicObj.inc
 
 ### Methods and Properties

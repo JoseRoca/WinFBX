@@ -49,7 +49,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    pWindow.Center
 
    ' // Add a subclassed ownerdraw button
-   DIM hButton AS HWND = pWindow.AddControl("CustomButton", , IDC_BUTTON, "", 150, 50, 50, 50, , , , CAST(WNDPROC, @Button_SubclassProc))
+   DIM hButton AS HWND = pWindow.AddControl("CustomButton", , IDC_BUTTON, "", 150, 50, 50, 50, , , , CAST(SUBCLASSPROC, @Button_SubclassProc))
    SetFocus hButton
 
    |
