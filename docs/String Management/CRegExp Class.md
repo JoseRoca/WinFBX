@@ -1429,7 +1429,7 @@ Output:
 test
 ```
 
-Case sensitive, double search (c.t and d.g), whole words. Retrieves cut, cat, i.e. whole words with three letters that begin with c and end with t.
+Case sensitive, double search (c.t and d.g), whole words. Retrieves cut, cat, i.e. whole words with three letters that begin with c and end with t or begin with d and end with g.
 
 ```
 #INCLUDE ONCE "Afx/CRegExp.inc"
