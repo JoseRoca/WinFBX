@@ -1453,7 +1453,7 @@ cat
 dog
 ```
 
-Case insensitive, double search (c.t and d.g), whole words. Retrieves cut, cat, i.e. whole words with three letters that begin with c and end with t.
+Case insensitive, double search (c.t and d.g), whole words. Retrieves cut, cat, i.e. whole words with three letters that begin with c and end with t or begin with d and end with g.
 
 ```
 #INCLUDE ONCE "Afx/CRegExp.inc"
@@ -1462,7 +1462,7 @@ USING Afx
 
 ' // With this constructor we set the pattern, ignore case and global
 DIM pRegExp AS CRegExp = CRegExp($"\bc.t\b|\bd.g\b", TRUE, TRUE)
-pRegExp.Execute("I have cut a cat tail")
+pRegExp.Execute("I have a cat and a dog, because I love cats and dogs")
 FOR i AS LONG = 0 TO pRegExp.MatchCount - 1
    PRINT pRegExp.MatchValue(i)
 NEXT
@@ -1470,8 +1470,10 @@ NEXT
 
 ```
 Output:
-cut
 cat
+dog
+cat
+dog
 ```
 
 We can search for more than a word at the same time.
