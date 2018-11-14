@@ -1192,7 +1192,7 @@ Output:
 (555) 123-4567
 ```
 
-Swaps to words and remover the comma.
+Swaps to words and removes the comma.
 
 ```
 #INCLUDE ONCE "Afx/CRegExp.inc"
