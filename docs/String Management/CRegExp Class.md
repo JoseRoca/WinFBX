@@ -1581,7 +1581,7 @@ Output:
 2017
 ```
 
-Extract text between parentheses.
+Extracts text between parentheses.
 
 ```
 #INCLUDE ONCE "Afx/CRegExp.inc"
