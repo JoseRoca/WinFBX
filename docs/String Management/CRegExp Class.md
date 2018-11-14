@@ -1660,7 +1660,7 @@ The "\\d+" part matches a digit one or more times.
 
 The "(?:\[Ee]\[\\+\\-]?\\d+)?" matches "e+", "e-", "E+" or "E-" followed by one or more digits, with the "?" multiplier that allows zero or one instance of it.
 
-####Checking if an url is valid
+#### Checking if an url is valid
 
 ```
 #INCLUDE ONCE "Afx/CRegExp.inc"
