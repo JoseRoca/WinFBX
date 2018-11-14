@@ -1605,7 +1605,7 @@ Output:
 "text between parentheses"
 ```
 
-Extract text between curly braces.
+Extracts text between curly braces.
 
 ```
 #INCLUDE ONCE "Afx/CRegExp.inc"
