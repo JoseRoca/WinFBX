@@ -95,7 +95,7 @@ Implements methods to create and manage connection objects. Inherits from COdbcB
 | [GetConnectAttr](#GetConnectAttr) | Returns the current setting of a connection attribute. |
 | [GetDiagField](#GetDiagField) | Returns the current value of a field of a record of the diagnostic data structure (associated with an environment handle) that contains error, warning, and status information. |
 | [GetDiagRec](#GetDiagRec) | Returns the current values of multiple fields of a diagnostic record that contains error, warning, and status information. |
-| [GetErrorInfo](#GetErrorInfo) | Returns a verbose description of the last errors. |
+| [GetErrorInfo](#GetErrorInfo) | Returns a verbose description of the last error. |
 | [GetInfo](#GetInfo) | Returns general information about the driver and data source associated with a connection. |
 | [GetSqlState](#GetSqlState) | Returns the SqlState for the connection handle. |
 | [Handle](#Handle) | Returns the connection handle. |
