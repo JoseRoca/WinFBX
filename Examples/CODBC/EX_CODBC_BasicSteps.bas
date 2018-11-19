@@ -8,7 +8,7 @@ DIM pDbc AS CODBC = wszConStr
 IF pDbc.Handle = NULL THEN PRINT "Unable to create the connection handle" : SLEEP : END
 
 ' // Allocate an statement object
-DIM pStmt AS COdbcStmt = @pDbc
+DIM pStmt AS COdbcStmt = pDbc
 IF pStmt.Handle = NULL THEN PRINT "Unable to create the statement handle" : SLEEP : END
 
 ' // Generate a result set
