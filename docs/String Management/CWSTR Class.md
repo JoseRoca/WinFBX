@@ -7,6 +7,7 @@ The `CWSTR` class implements a dynamic unicode null terminated string. Free Basi
 Quirks:
 
 * MID as a function: Something like MID(cws, 2) doesn't work with languages such Russian and Chinese. Using MID(\*\*cws, 2), MID(cws.wstr, 2) or cws.MidChars(2) works.
+* TRIM, LTRIM, RTRIM, LSET and RSET don't work with languages such Russian and Chinese unless we prepend \*\* to the variable name.
 * MID as a statement: Something like MID(cws, 2, 1) = "x" compiles but does not change the contents of the dynamic unicode string. MID(cws.wstr, 2, 1) = "x" or MID(\*\*cws, 2, 1) = "x" works.
 * SELECT CASE: Something like SELECT CASE LEFT(cws, 2) does not compile; we have to use SELECT CASE LEFT(\*\*cws, 2).
 * Operator []: cwsText[0] = ASC("x") does not compile; we have to use (\*cwsText)\[0] = ASC("x").
