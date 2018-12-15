@@ -54,13 +54,14 @@ CONST GDIP_IMAGECTX_STRETCH     = 4   ' // Adjusts the image to the height and w
 TYPE CImageCtx
 
    Private:
-      m_hCtl    AS HWND             ' // Handle to the control
-      m_hFont   AS HFONT            ' // Handle to the font used by the control
-      m_pImage  AS GpImage PTR      ' // Image object pointer
-      m_token   AS ULONG_PTR        ' // Token returned by GdiplusStartup
-      m_BkColor AS COLORREF         ' // RGB background color
-      m_Fit     AS LONG             ' // Fit to width/height
-      m_InterpolationMode AS LONG   ' // Interpolation mode
+      m_hCtl       As HWnd             ' // Handle to the control
+      m_hFont      As HFONT            ' // Handle to the font used by the control
+      m_pImage     As GpImage Ptr      ' // Image object pointer
+      m_token      As ULONG_PTR        ' // Token returned by GdiplusStartup
+      m_BkColor    As COLORREF         ' // RGB background color
+      m_BkColorHot As COLORREF         ' // RGB background hot color
+      m_Fit        As Long             ' // Fit to width/height
+      m_InterpolationMode As Long      ' // Interpolation mode
 
    Public:
 
@@ -80,7 +81,9 @@ TYPE CImageCtx
       DECLARE FUNCTION GetImageHeight () AS LONG
       DECLARE FUNCTION SetBkColor (BYVAL clr AS LONG, BYVAL fRedraw AS BOOLEAN = FALSE) AS LONG
       DECLARE FUNCTION GetBkColor () AS LONG
-      DECLARE SUB SetInterpolationMode (BYVAL InterpolationMode AS LONG)
+      Declare Function SetBkColorHot (ByVal clr As Long, ByVal fRedraw As BOOLEAN = False) As Long
+      Declare Function GetBkColorHot () As Long
+      Declare Sub SetInterpolationMode (ByVal InterpolationMode As Long)
       DECLARE FUNCTION GetInterpolationMode () AS LONG
       DECLARE SUB Redraw
       DECLARE SUB Clear
@@ -264,7 +267,29 @@ PRIVATE FUNCTION CImageCtx.CImageCtxProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT
          .UpdateWindow hwnd
          EXIT FUNCTION
 
-   END SELECT
+      CASE WM_MOUSEMOVE
+         ' // Tracks the mouse movement and stores the hot state
+         Dim trackMouse As TrackMouseEvent
+         If .GetPropW(HWnd, "HOT") = 0 Then
+            trackMouse.cbSize = Sizeof(trackMouse)
+            trackMouse.dwFlags = TME_LEAVE
+            trackMouse.hwndTrack = HWnd
+            trackMouse.dwHoverTime = 1
+            .TrackMouseEvent(@trackMouse)
+            .SetPropW HWnd, "HOT", Cast(HANDLE, CTRUE)
+            .InvalidateRect HWnd, Null, 0
+            .UpdateWindow HWnd
+         End If
+         Exit Function
+
+      Case WM_MOUSELEAVE
+         ' // Removes the hot state and redraws the button
+         .RemovePropW HWnd, "HOT"
+         .InvalidateRect HWnd, Null, 0
+         .UpdateWindow HWnd
+         Exit Function
+
+   End Select
 
    ' // Default processing for other messages.
    FUNCTION = .DefWindowProcW(hWnd, uMsg, wParam, lParam)
@@ -284,7 +309,7 @@ END FUNCTION
 ' Draws the image
 ' Returns StatusOk or an error code.
 ' ========================================================================================
-PRIVATE FUNCTION CImageCtx.DrawImage (BYVAL hwnd AS HWND, BYVAL hDC AS HDC, BYVAL pImage AS GpImage PTR) AS LONG
+PRIVATE FUNCTION CImageCtx.DrawImage (BYVAL hwnd AS HWND, BYVAL _hDC AS HDC, BYVAL pImage AS GpImage PTR) AS LONG
 
    DIM pImageCtx AS CImageCtx PTR    ' // Pointer to the CImageCtx class
    DIM hStatus AS GpStatus           ' // Result code
@@ -299,20 +324,39 @@ PRIVATE FUNCTION CImageCtx.DrawImage (BYVAL hwnd AS HWND, BYVAL hDC AS HDC, BYVA
    DIM cy AS LONG                    ' // y-coordinate for center fill
    DIM nFit AS LONG                  ' // Fit
    DIM rc AS RECT                    ' // client area
-   DIM rcFill AS RECT                ' // Fill area
+   Dim memDC as HDC                  ' // Double buffering
+   Dim hbit As HBITMAP               ' // Double buffering
 
    ' // Check parameters validity
-   IF hWnd = NULL OR hDC = NULL OR pImage = NULL THEN RETURN E_POINTER
+   IF hWnd = NULL OR _hDC = NULL OR pImage = NULL THEN RETURN E_POINTER
    ' // Get a pointer to the class
-   pImageCtx = CAST(CImageCtx PTR, .GetWindowLongPtrW(hwnd, 0))
+   pImageCtx = CAST(CImageCtx PTR, GetWindowLongPtrW(hwnd, 0))
    IF pImageCtx = NULL THEN EXIT FUNCTION
+   
    ' // Retrieves the coordinates of the window's client area
-   .GetClientRect hwnd, @rc
+   GetClientRect hwnd, @rc
+   memDC = CreateCompatibleDC( _hDC )
+   hbit  = CreateCompatibleBitmap( _hDC, rc.right, rc.bottom )
+   If hbit Then hbit = SelectObject( memDC, hbit )
+
+   ' // Create the background brush based on normal or hot.
+   ' // Need to brush the entire background in order to accommodate any
+   ' // images that may have transparent backgrounds.
+   If GetPropW(m_hCtl, "HOT") Then 
+      hBgBrush = CreateSolidBrush(pImageCtx->m_BkColorHot)
+   Else
+      hBgBrush = CreateSolidBrush(pImageCtx->m_BkColor)
+   End If
+   FillRect memDC, @rc, hBgBrush
+   DeleteObject hBgBrush
+   
    ' // Retrieves the width and height of the image
-   hStatus = .GdipGetImageWidth(pImage, @ImageWidth)
-   hStatus = .GdipGetImageHeight(pImage, @ImageHeight)
+   hStatus = GdipGetImageWidth(pImage, @ImageWidth)
+   hStatus = GdipGetImageHeight(pImage, @ImageHeight)
+   
    ' // Creates a Graphics object
-   hStatus = .GdipCreateFromHDC(hdc, @pGraphics)
+   hStatus = .GdipCreateFromHDC(memDC, @pGraphics)
+   
    ' // Draws the image
    IF pGraphics THEN
       nFit = pImageCtx->m_Fit
@@ -326,8 +370,7 @@ PRIVATE FUNCTION CImageCtx.DrawImage (BYVAL hwnd AS HWND, BYVAL hDC AS HDC, BYVA
       IF nFit = GDIP_IMAGECTX_ACTUALSIZE THEN
          ' // If the width of the image is smaller than the width of the control
          ' // calculate the position for a centered image
-         w = ImageWidth
-         h = ImageHeight
+         w = ImageWidth: h = ImageHeight
          IF w < (rc.Right - rc.Left) THEN
             cx = ((rc.Right - rc.Left) - w) / 2
          END IF
@@ -335,34 +378,13 @@ PRIVATE FUNCTION CImageCtx.DrawImage (BYVAL hwnd AS HWND, BYVAL hDC AS HDC, BYVA
             cy = ((rc.Bottom - rc.Top) - h) / 2
          END IF
          ' // Draw the image
-         hStatus = .GdipDrawImageRectI(pGraphics, pImageCtx->m_pImage, cx, cy, ImageWidth, ImageHeight)
-         ' // Creates a brush and fills the client area of the window not covered by the image
-         hBgBrush = .CreateSolidBrush(pImageCtx->m_BkColor)
-         .GetClientRect hwnd, @rcFill
-         rcFill.Left = 0
-         rcFill.Right = cx
-         .FillRect hDC, @rcFill, hBgBrush
-         .GetClientRect hwnd, @rcFill
-         rcFill.Left = cx + w
-         .FillRect hDC, @rcFill, hBgBrush
-         .GetClientRect hwnd, @rcFill
-         rcFill.Left = cx
-         rcFill.Right = cx + w
-         rcFill.Bottom = cy
-         .FillRect hDC, @rcFill, hBgBrush
-         .GetClientRect hwnd, @rcFill
-         rcFill.Left = cx
-         rcFill.Right = cx + w
-         rcFill.Top = cy + h
-         .FillRect hDC, @rcFill, hBgBrush
-         ' // Deletes the brush
-         .DeleteObject hBgBrush
+         hStatus = GdipDrawImageRectI(pGraphics, pImageCtx->m_pImage, cx, cy, ImageWidth, ImageHeight)
       ELSEIF nFit = GDIP_IMAGECTX_STRETCH THEN
         ' Stretch or shrunk to fill the controls client area
          w = rc.Right - rc.Left
          h = rc.Bottom - rc.Top
          IF m_InterpolationMode THEN GdipSetInterpolationMode(pGraphics, m_InterpolationMode)
-         hStatus = .GdipDrawImageRectI(pGraphics, pImageCtx->m_pImage, 0, 0, w, h)
+         hStatus = GdipDrawImageRectI(pGraphics, pImageCtx->m_pImage, 0, 0, w, h)
       ELSEIF nFit = GDIP_IMAGECTX_FITTOWIDTH THEN
          ' // Calculate the percent of reduction or ampliation
          ' // and adjust the image height
@@ -375,17 +397,7 @@ PRIVATE FUNCTION CImageCtx.DrawImage (BYVAL hwnd AS HWND, BYVAL hDC AS HDC, BYVA
             cy = ((rc.Bottom - rc.Top) - h) / 2
          END IF
          IF m_InterpolationMode THEN GdipSetInterpolationMode(pGraphics, m_InterpolationMode)
-         hStatus = .GdipDrawImageRectI(pGraphics, pImageCtx->m_pImage, 0, cy, w, h)
-         ' // Creates a brush and fills the client area of the window not covered by the image
-         hBgBrush = .CreateSolidBrush(pImageCtx->m_BkColor)
-         .GetClientRect hwnd, @rcFill
-         rcFill.Bottom = cy
-         .FillRect hDC, @rcFill, hBgBrush
-         .GetClientRect hwnd, @rcFill
-         rcFill.Top = cy + h
-         .FillRect hDC, @rcFill, hBgBrush
-         ' // Deletes the brush
-         .DeleteObject hBgBrush
+         hStatus = GdipDrawImageRectI(pGraphics, pImageCtx->m_pImage, 0, cy, w, h)
       ELSE
          ' // Calculate the percent of reduction or ampliation
          ' // and adjust the image width
@@ -404,31 +416,20 @@ PRIVATE FUNCTION CImageCtx.DrawImage (BYVAL hwnd AS HWND, BYVAL hDC AS HDC, BYVA
          END IF
          ' // Draws the image
          IF m_InterpolationMode THEN GdipSetInterpolationMode(pGraphics, m_InterpolationMode)
-         hStatus = .GdipDrawImageRectI(pGraphics, pImageCtx->m_pImage, cx, 0, w, h)
-         ' // Creates a brush and fills the client area of the window not covered by the image
-         hBgBrush = .CreateSolidBrush(pImageCtx->m_BkColor)
-         .GetClientRect hwnd, @rcFill
-         rcFill.Left = 0
-         rcFill.Right = cx
-         .FillRect hDC, @rcFill, hBgBrush
-         .GetClientRect hwnd, @rcFill
-         rcFill.Left = cx + w
-         .FillRect hDC, @rcFill, hBgBrush
-         ' // Deletes the brush
-         .DeleteObject hBgBrush
+         hStatus = GdipDrawImageRectI(pGraphics, pImageCtx->m_pImage, cx, 0, w, h)
       END IF
       ' // Deletes the Graphics object
-      .GdipDeleteGraphics(pGraphics)
-   ELSE
-      ' // Creates a brush and fills the client area of the window
-      hBgBrush = .CreateSolidBrush(pImageCtx->m_BkColor)
-      .GetClientRect hwnd, @rcFill
-      .FillRect hDC, @rcFill, hBgBrush
-      ' // Deletes the brush
-      .DeleteObject hBgBrush
-   END IF
+      GdipDeleteGraphics(pGraphics)
+   End If
 
-END FUNCTION
+   ' Copy the entire memory bitmap over to the visual display
+   GetClientRect hwnd, @rc
+   BitBlt _hDC, 0, 0, rc.right, rc.bottom, memDC, 0, 0, SRCCOPY 
+
+   ' Cleanup
+   If hbit  Then DeleteObject SelectObject(memDC, hbit)
+   If memDC Then DeleteDC memDC
+End Function
 ' ========================================================================================
 
 ' ========================================================================================
@@ -681,9 +682,38 @@ END FUNCTION
 ' ========================================================================================
 ' Gets the background color of the control's window.
 ' ========================================================================================
-PRIVATE FUNCTION CImageCtx.GetBkColor () AS LONG
-   FUNCTION = m_BkColor
-END FUNCTION
+Private Function CImageCtx.GetBkColor () As Long
+   Function = m_BkColor
+End Function
+' ========================================================================================
+
+' ========================================================================================
+' Sets the background hot color of the control (when mouse is over the control).
+' Parameters:
+' * clr = RGB color.
+' * fRedraw = [optional] TRUE or FALSE (redraws the control to reflect the changes)
+' Return value:
+' * Returns the previous background color.
+' ========================================================================================
+Private Function CImageCtx.SetBkColorHot (ByVal clr As Long, ByVal fRedraw As BOOLEAN = False) As Long
+   ' // Returns the old setting
+   Function = m_BkColorHot
+   ' // Stores the new color
+   m_BkColorHot = clr
+   ' // Redraws the control
+   If fRedraw Then
+      .InvalidateRect m_hCtl, Null, 0
+      .UpdateWindow m_hCtl
+   End If
+End Function
+' ========================================================================================
+
+' ========================================================================================
+' Gets the background hot color of the control's window.
+' ========================================================================================
+Private Function CImageCtx.GetBkColorHot () As Long
+   Function = m_BkColorHot
+End Function
 ' ========================================================================================
 
 ' ========================================================================================
