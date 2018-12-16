@@ -93,7 +93,7 @@ A pointer to the CImageCtx class.
 | [SetBkColorHot](#SetBkColorHot) | Sets the background hot RGB color used by the **CImageCtx** control. |
 | [SetImageAdjustment](#SetImageAdjustment) | Sets the image adjustment setting used by the control. |
 | [SetImageHeight](#SetImageHeight) | Sets the height of the image. |
-| [SetImageSize](#SetImageWidth) | Sets the size of the image. |
+| [SetImageSize](#SetImageSize) | Sets the size of the image. |
 | [SetImageWidth](#SetImageWidth) | Sets the width of the image. |
 | [SetInterpolationMode](#SetInterpolationMode) | Sets the interpolation mode used by GDI+. |
 
