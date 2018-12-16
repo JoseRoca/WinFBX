@@ -54,13 +54,15 @@ CONST GDIP_IMAGECTX_STRETCH     = 4   ' // Adjusts the image to the height and w
 TYPE CImageCtx
 
    Private:
-      m_hCtl       As HWnd             ' // Handle to the control
-      m_hFont      As HFONT            ' // Handle to the font used by the control
-      m_pImage     As GpImage Ptr      ' // Image object pointer
-      m_token      As ULONG_PTR        ' // Token returned by GdiplusStartup
-      m_BkColor    As COLORREF         ' // RGB background color
-      m_BkColorHot As COLORREF         ' // RGB background hot color
-      m_Fit        As Long             ' // Fit to width/height
+      m_hCtl        As HWnd             ' // Handle to the control
+      m_hFont       As HFONT            ' // Handle to the font used by the control
+      m_pImage      As GpImage Ptr      ' // Image object pointer
+      m_token       As ULONG_PTR        ' // Token returned by GdiplusStartup
+      m_BkColor     As COLORREF         ' // RGB background color
+      m_BkColorHot  As COLORREF         ' // RGB background hot color
+      m_ImageWidth  AS LONG          ' // Image width
+      m_ImageHeight AS LONG          ' // Image height
+      m_Fit         As Long             ' // Fit to width/height
       m_InterpolationMode As Long      ' // Interpolation mode
 
    Public:
@@ -83,6 +85,9 @@ TYPE CImageCtx
       DECLARE FUNCTION GetBkColor () AS LONG
       Declare Function SetBkColorHot (ByVal clr As Long, ByVal fRedraw As BOOLEAN = False) As Long
       Declare Function GetBkColorHot () As Long
+      DECLARE SUB SetImageSize (BYVAL nWidth AS LONG, BYVAL nHeight AS LONG, BYVAL fRedraw AS LONG = FALSE)
+      DECLARE SUB SetImageWidth (BYVAL nWidth AS LONG, BYVAL fRedraw AS LONG = FALSE)
+      DECLARE SUB SetImageHeight (BYVAL nHeight AS LONG, BYVAL fRedraw AS LONG = FALSE)
       Declare Sub SetInterpolationMode (ByVal InterpolationMode As Long)
       DECLARE FUNCTION GetInterpolationMode () AS LONG
       DECLARE SUB Redraw
@@ -122,6 +127,10 @@ PRIVATE CONSTRUCTOR CImageCtx (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_P
       wAtom = .RegisterClassExW(@wcexw)
    END IF
 
+   ' // Set default values for background normal and hot colors
+   m_BkColor    = GetSysColor(COLOR_BTNFACE)
+   m_BkColorHot = m_BkColor
+   
    ' // Create the control
    IF dwStyle = 0 THEN dwStyle = WS_VISIBLE OR WS_CHILD OR WS_TABSTOP
    IF pWindow THEN m_hCtl = pWindow->AddControl(wszClassName, pWindow->hWindow, cID, wszTitle, x, y, nWidth, nHeight, dwStyle, dwExStyle, lpParam)
@@ -153,6 +162,15 @@ PRIVATE DESTRUCTOR CImageCtx
    ' // Shutdown GDI+
    IF m_token THEN GdiplusShutdown m_token
 END DESTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' Redraws the control.
+' ========================================================================================
+PRIVATE SUB CImageCtx.Redraw()
+   .InvalidateRect m_hCtl, NULL, 0
+   .UpdateWindow m_hCtl
+END SUB
 ' ========================================================================================
 
 ' ========================================================================================
@@ -277,16 +295,16 @@ PRIVATE FUNCTION CImageCtx.CImageCtxProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT
             trackMouse.dwHoverTime = 1
             .TrackMouseEvent(@trackMouse)
             .SetPropW HWnd, "HOT", Cast(HANDLE, CTRUE)
-            .InvalidateRect HWnd, Null, 0
-            .UpdateWindow HWnd
+            .InvalidateRect hwnd, NULL, 0
+            .UpdateWindow hwnd
          End If
          Exit Function
 
       Case WM_MOUSELEAVE
          ' // Removes the hot state and redraws the button
          .RemovePropW HWnd, "HOT"
-         .InvalidateRect HWnd, Null, 0
-         .UpdateWindow HWnd
+         .InvalidateRect hwnd, NULL, 0
+         .UpdateWindow hwnd
          Exit Function
 
    End Select
@@ -324,7 +342,7 @@ PRIVATE FUNCTION CImageCtx.DrawImage (BYVAL hwnd AS HWND, BYVAL _hDC AS HDC, BYV
    DIM cy AS LONG                    ' // y-coordinate for center fill
    DIM nFit AS LONG                  ' // Fit
    DIM rc AS RECT                    ' // client area
-   Dim memDC as HDC                  ' // Double buffering
+   Dim memDC as HDC                 ' // Double buffering
    Dim hbit As HBITMAP               ' // Double buffering
 
    ' // Check parameters validity
@@ -350,9 +368,9 @@ PRIVATE FUNCTION CImageCtx.DrawImage (BYVAL hwnd AS HWND, BYVAL _hDC AS HDC, BYV
    FillRect memDC, @rc, hBgBrush
    DeleteObject hBgBrush
    
-   ' // Retrieves the width and height of the image
-   hStatus = GdipGetImageWidth(pImage, @ImageWidth)
-   hStatus = GdipGetImageHeight(pImage, @ImageHeight)
+   ' // Retrieve the width and height of the image
+   ImageWidth  = m_ImageWidth
+   ImageHeight = m_ImageHeight
    
    ' // Creates a Graphics object
    hStatus = .GdipCreateFromHDC(memDC, @pGraphics)
@@ -448,21 +466,9 @@ PRIVATE FUNCTION CImageCtx.LoadImageFromFile (BYREF wszFileName AS WSTRING) AS L
    END IF
    ' // Loads the image
    .GdipLoadImageFromFile(wszFileName, @m_pImage)
-   ' // Erase the window's client area
-   DIM hBgBrush AS HBRUSH = .CreateSolidBrush(m_BkColor)
-   IF hBgBrush THEN
-      DIM hDC AS HDC = .GetDc(m_hCtl)
-      IF hDC THEN
-         DIM rcFill AS RECT
-         .GetClientRect m_hCtl, @rcFill
-         .FillRect hDC, @rcFill, hBgBrush
-         .DeleteDc hDC
-      END IF
-      .DeleteObject hBgBrush
-   END IF
-   ' // Redraws the control
-   .InvalidateRect m_hCtl, NULL, 0
-   .UpdateWindow m_hCtl
+   .GdipGetImageWidth(m_pImage, @m_ImageWidth)
+   .GdipGetImageHeight(m_pImage, @m_ImageHeight)
+   this.Redraw
 END FUNCTION
 ' ========================================================================================
 
@@ -484,21 +490,9 @@ PRIVATE FUNCTION CImageCtx.LoadBitmapFromResource (BYVAL hInstance AS HINSTANCE,
       m_pImage = NULL
    END IF
    DIM hStatus AS LONG = .GdipCreateBitmapFromResource(hInstance, wszResourceName, cast(GpBitmap PTR PTR, @m_pImage))
-   ' // Erases the window's client area
-   DIM hBgBrush AS HBRUSH = .CreateSolidBrush(m_BkColor)
-   IF hBgBrush THEN
-      DIM hDC AS HDC = .GetDc(m_hCtl)
-      IF hDC THEN
-         DIM rcFill AS RECT
-         .GetClientRect m_hCtl, @rcFill
-         .FillRect hDC, @rcFill, hBgBrush
-         .DeleteDc hDC
-      END IF
-      .DeleteObject hBgBrush
-   END IF
-   ' // Redraws the control
-   .InvalidateRect m_hCtl, NULL, 0
-   .UpdateWindow m_hCtl
+   .GdipGetImageWidth(m_pImage, @m_ImageWidth)
+   .GdipGetImageHeight(m_pImage, @m_ImageHeight)
+   this.Redraw
    FUNCTION = hStatus
 END FUNCTION
 ' ========================================================================================
@@ -548,6 +542,8 @@ PRIVATE FUNCTION CImageCtx.LoadImageFromResource (BYVAL hInstance AS HINSTANCE, 
                ' // Draws the image (required to keep it in memory, since we are
                ' // going to unlock and free the resource)
                IF pGraphics THEN hStatus = .GdipDrawImageI(pGraphics, m_pImage, 0, 0)
+               .GdipGetImageWidth(m_pImage, @m_ImageWidth)
+               .GdipGetImageHeight(m_pImage, @m_ImageHeight)
                ' // Deletes the graphics object
                IF pGraphics THEN .GdipDeleteGraphics(pGraphics)
                ' // Releases the device context handle
@@ -561,32 +557,9 @@ PRIVATE FUNCTION CImageCtx.LoadImageFromResource (BYVAL hInstance AS HINSTANCE, 
       ' // Free the memory
       .GlobalFree hGlobal
    END IF
-   ' // Erases the window's client area
-   DIM hBgBrush AS HBRUSH = .CreateSolidBrush(m_BkColor)
-   IF hBgBrush THEN
-      hDC = .GetDc(m_hCtl)
-      IF hDC THEN
-         DIM rcFill AS RECT
-         .GetClientRect m_hCtl, @rcFill
-         .FillRect hDC, @rcFill, hBgBrush
-         .DeleteDc hDC
-      END IF
-      .DeleteObject hBgBrush
-   END IF
-   ' // Redraws the control
-   .InvalidateRect m_hCtl, NULL, 0
-   .UpdateWindow m_hCtl
+   this.Redraw
    FUNCTION = hStatus
 END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Redraws the control.
-' ========================================================================================
-PRIVATE SUB CImageCtx.Redraw
-   .InvalidateRect m_hCtl, NULL, 0
-   .UpdateWindow m_hCtl
-END SUB
 ' ========================================================================================
 
 ' ========================================================================================
@@ -611,19 +584,12 @@ PRIVATE FUNCTION CImageCtx.SetImageAdjustment (BYVAL ImageAdjustment AS LONG, BY
    ' // Store the new setting
    m_Fit = ImageAdjustment
    ' // Redraws the control
-   IF fRedraw THEN
-      .InvalidateRect m_hCtl, NULL, 0
-      .UpdateWindow m_hCtl
-   END IF
+   IF fRedraw THEN this.Redraw
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
 ' Gets the image adjustment setting.
-' Parameter:
-' * hwnd = Control's window handle
-' Return value:
-' * The current adjustment setting.
 ' ========================================================================================
 PRIVATE FUNCTION CImageCtx.GetImageAdjustment () AS LONG
    FUNCTION = m_Fit
@@ -634,27 +600,15 @@ END FUNCTION
 ' Gets the width of the image.
 ' ========================================================================================
 PRIVATE FUNCTION CImageCtx.GetImageWidth () AS LONG
-   DIM ImageWidth AS DWORD
-   IF m_pImage THEN
-      .GdipGetImageWidth(m_pImage, @ImageWidth)
-      FUNCTION = ImageWidth
-   END IF
+   function = m_ImageWidth
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
 ' Gets the height of the image.
-' Parameter:
-' * hwnd = Control's window handle
-' Return value:
-' * The height of the image.
 ' ========================================================================================
 PRIVATE FUNCTION CImageCtx.GetImageHeight () AS LONG
-   DIM ImageHeight AS DWORD
-   IF m_pImage THEN
-      .GdipGetImageHeight(m_pImage, @ImageHeight)
-      FUNCTION = ImageHeight
-   END IF
+   function = m_ImageHeight
 END FUNCTION
 ' ========================================================================================
 
@@ -672,10 +626,7 @@ PRIVATE FUNCTION CImageCtx.SetBkColor (BYVAL clr AS LONG, BYVAL fRedraw AS BOOLE
    ' // Stores the new color
    m_BkColor = clr
    ' // Redraws the control
-   IF fRedraw THEN
-      .InvalidateRect m_hCtl, NULL, 0
-      .UpdateWindow m_hCtl
-   END IF
+   IF fRedraw THEN this.Redraw
 END FUNCTION
 ' ========================================================================================
 
@@ -701,10 +652,7 @@ Private Function CImageCtx.SetBkColorHot (ByVal clr As Long, ByVal fRedraw As BO
    ' // Stores the new color
    m_BkColorHot = clr
    ' // Redraws the control
-   If fRedraw Then
-      .InvalidateRect m_hCtl, Null, 0
-      .UpdateWindow m_hCtl
-   End If
+   If fRedraw Then this.Redraw
 End Function
 ' ========================================================================================
 
@@ -755,14 +703,7 @@ PRIVATE SUB CImageCtx.Clear
       .GdipDisposeImage(m_pImage)
       m_pImage = 0
    END IF
-   ' // Erase the contents of the window
-   DIM rcFill AS RECT
-   DIM hBgBrush AS HBRUSH = .CreateSolidBrush(m_BkColor)
-   .GetClientRect m_hCtl, @rcFill
-   DIM hDC AS HDC = GetDc(m_hCtl)
-   .FillRect hDC, @rcFill, hBgBrush
-   .ReleaseDC m_hCtl, hDC
-   .DeleteObject hBgBrush
+   this.Redraw
 END SUB
 ' ========================================================================================
 
@@ -781,6 +722,44 @@ END FUNCTION
 PRIVATE FUNCTION AfxCImageCtxPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CImageCtx PTR
    FUNCTION = CAST(CImageCtx PTR, .GetWindowLongPtrW(GetDlgItem(hParent, cID), 0))
 END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the size of the image
+' Parameters:
+' - nWidth = Width of the image, in pixels.
+' - nHeight = Height of the image, in pixels.
+' - fRedraw = TRUE or FALSE (redraws the image to reflect the changes)
+' ========================================================================================
+PRIVATE SUB CImageCtx.SetImageSize (BYVAL nWidth AS LONG, BYVAL nHeight AS LONG, BYVAL fRedraw AS LONG = FALSE)
+   m_ImageWidth = nWidth
+   m_ImageHeight = nHeight
+   IF fRedraw THEN this.Redraw
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Sets the width of the image
+' Parameters:
+' - nWidth = Width of the image, in pixels.
+' - fRedraw = TRUE or FALSE (redraws the image to reflect the changes)
+' ========================================================================================
+PRIVATE SUB CImageCtx.SetImageWidth (BYVAL nWidth AS LONG, BYVAL fRedraw AS LONG = FALSE)
+   m_ImageWidth = nWidth
+   IF fRedraw THEN this.Redraw
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Sets the height of the image
+' Parameters:
+' - nHeight = Height of the image, in pixels.
+' - fRedraw = TRUE or FALSE (redraws the image to reflect the changes)
+' ========================================================================================
+PRIVATE SUB CImageCtx.SetImageHeight (BYVAL nHeight AS LONG, BYVAL fRedraw AS LONG = FALSE)
+   m_ImageHeight = nHeight
+   IF fRedraw THEN this.Redraw
+END SUB
 ' ========================================================================================
 
 END NAMESPACE
