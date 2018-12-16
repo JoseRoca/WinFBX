@@ -60,10 +60,10 @@ TYPE CImageCtx
       m_token       As ULONG_PTR        ' // Token returned by GdiplusStartup
       m_BkColor     As COLORREF         ' // RGB background color
       m_BkColorHot  As COLORREF         ' // RGB background hot color
-      m_ImageWidth  AS LONG          ' // Image width
-      m_ImageHeight AS LONG          ' // Image height
+      m_ImageWidth  AS LONG             ' // Image width
+      m_ImageHeight AS LONG             ' // Image height
       m_Fit         As Long             ' // Fit to width/height
-      m_InterpolationMode As Long      ' // Interpolation mode
+      m_InterpolationMode As Long       ' // Interpolation mode
 
    Public:
 
