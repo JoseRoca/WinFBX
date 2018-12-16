@@ -3,6 +3,7 @@ Windows Framework for FreeBASIC.
 
 15 Dic 2018
 - Paul Squires: Added GetBkColorHot and SetBkColorHot methods, as well as double buffering.
+- Paul Squires: Added SetImageWidth, SetUmageHeight and SetUmageSize methods.
 
 16 Sep 2018 - Version 1.0.03
 - Added the CMemMapFile class (memory-mapped files).
