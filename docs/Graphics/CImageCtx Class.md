@@ -92,6 +92,9 @@ A pointer to the CImageCtx class.
 | [SetBkColor](#SetBkColor) | Sets the background RGB color used by the **CImageCtx** control. |
 | [SetBkColorHot](#SetBkColorHot) | Sets the background hot RGB color used by the **CImageCtx** control. |
 | [SetImageAdjustment](#SetImageAdjustment) | Sets the image adjustment setting used by the control. |
+| [SetImageHeight](#SetImageHeight) | Sets the height of the image. |
+| [SetImageSize](#SetImageWidth) | Sets the size of the image. |
+| [SetImageWidth](#SetImageWidth) | Sets the width of the image. |
 | [SetInterpolationMode](#SetInterpolationMode) | Sets the interpolation mode used by GDI+. |
 
 ### Notification Messages
@@ -450,6 +453,46 @@ FUNCTION SetImageAdjustment (BYVAL ImageAdjustment AS LONG, BYVAL fRedraw AS BOO
 #### Return value
 
 The previous setting value.
+
+# <a name="SetImageHeight"></a>SetImageHeight
+
+Sets the height of the image.
+
+```
+SUB SetImageHeight (BYVAL nHeight AS LONG, BYVAL fRedraw AS BOOLEAN = FALSE)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nHeight* | Height of the image, in pixels. |
+| *fRedraw* | Optional. TRUE to redraw the control to reflect the changes. |
+
+# <a name="SetImageSize"></a>SetImageSize
+
+Sets the size of the image.
+
+```
+SUB SetImageSize (BYVAL nWidth AS LONG, BYVAL nHeight AS LONG, BYVAL fRedraw AS BOOLEAN = FALSE)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nWidth* | Width of the image, in pixels. |
+| *nHeight* | Height of the image, in pixels. |
+| *fRedraw* | Optional. TRUE to redraw the control to reflect the changes. |
+
+# <a name="SetImageWidth"></a>SetImageWidth
+
+Sets the width of the image.
+
+```
+SUB SetImageWidth (BYVAL nWidth AS LONG, BYVAL fRedraw AS BOOLEAN = FALSE)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nWidth* | Height of the image, in pixels. |
+| *fRedraw* | Optional. TRUE to redraw the control to reflect the changes. |
 
 # <a name="SetInterpolationMode"></a>SetInterpolationMode
 
