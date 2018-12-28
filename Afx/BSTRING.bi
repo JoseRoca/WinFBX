@@ -499,7 +499,7 @@ END FUNCTION
 ' =====================================================================================
 ' Converts the string to a 32bit integer
 ' =====================================================================================
-PRIVATE FUNCTION ValLng OVERLOAD (BYREF bs AS BSTRING) AS LONG
+PRIVATE FUNCTION ValLng OVERLOAD (BYREF bs AS BSTRING) AS LONGINT
    RETURN .ValLng(**bs)
 END FUNCTION
 ' =====================================================================================
@@ -512,7 +512,7 @@ END FUNCTION
 ' =====================================================================================
 ' Converts the string to an unsigned 32bit integer
 ' =====================================================================================
-PRIVATE FUNCTION ValULng OVERLOAD (BYREF bs AS BSTRING) AS ULONG
+PRIVATE FUNCTION ValULng OVERLOAD (BYREF bs AS BSTRING) AS ULONGINT
    RETURN .ValULng(**bs)
 END FUNCTION
 ' =====================================================================================

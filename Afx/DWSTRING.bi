@@ -726,7 +726,7 @@ END FUNCTION
 ' =====================================================================================
 ' Converts the string to a 32bit integer
 ' =====================================================================================
-PRIVATE FUNCTION ValLng OVERLOAD (BYREF dws AS DWSTRING) AS LONG
+PRIVATE FUNCTION ValLng OVERLOAD (BYREF dws AS DWSTRING) AS LONGINT
    RETURN .ValLng(*dws.m_pBuffer)
 END FUNCTION
 ' =====================================================================================
@@ -739,7 +739,7 @@ END FUNCTION
 ' =====================================================================================
 ' Converts the string to an unsigned 32bit integer
 ' =====================================================================================
-PRIVATE FUNCTION ValULng OVERLOAD (BYREF dws AS DWSTRING) AS ULONG
+PRIVATE FUNCTION ValULng OVERLOAD (BYREF dws AS DWSTRING) AS ULONGINT
    RETURN .ValULng(*dws.m_pBuffer)
 END FUNCTION
 ' =====================================================================================
