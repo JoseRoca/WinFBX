@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+28 Dic 2018
+- Modified the overloaded functions ValLng and ValULng to return a LOGINT/ULONGINT.
+
 15 Dic 2018
 - Paul Squires: Added GetBkColorHot and SetBkColorHot methods, as well as double buffering.
 - Paul Squires: Added SetImageWidth, SetUmageHeight and SetUmageSize methods.

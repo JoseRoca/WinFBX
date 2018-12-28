@@ -1659,7 +1659,7 @@ END FUNCTION
 ' =====================================================================================
 ' Converts the string to a 32bit integer
 ' =====================================================================================
-PRIVATE FUNCTION ValLng OVERLOAD (BYREF cws AS CWSTR) AS LONG
+PRIVATE FUNCTION ValLng OVERLOAD (BYREF cws AS CWSTR) AS LONGINT
    RETURN .ValLng(*cast(WSTRING PTR, cws.m_pBuffer))
 END FUNCTION
 ' =====================================================================================
@@ -1672,7 +1672,7 @@ END FUNCTION
 ' =====================================================================================
 ' Converts the string to an unsigned 32bit integer
 ' =====================================================================================
-PRIVATE FUNCTION ValULng OVERLOAD (BYREF cws AS CWSTR) AS ULONG
+PRIVATE FUNCTION ValULng OVERLOAD (BYREF cws AS CWSTR) AS ULONGINT
    RETURN .ValULng(*cast(WSTRING PTR, cws.m_pBuffer))
 END FUNCTION
 ' =====================================================================================
@@ -1725,7 +1725,7 @@ END FUNCTION
 ' =====================================================================================
 ' Converts the string to a 32bit integer
 ' =====================================================================================
-PRIVATE FUNCTION ValLng OVERLOAD (BYREF cbs AS CBSTR) AS LONG
+PRIVATE FUNCTION ValLng OVERLOAD (BYREF cbs AS CBSTR) AS LONGINT
    RETURN .ValLng(**cbs)
 END FUNCTION
 ' =====================================================================================
@@ -1738,7 +1738,7 @@ END FUNCTION
 ' =====================================================================================
 ' Converts the string to an unsigned 32bit integer
 ' =====================================================================================
-PRIVATE FUNCTION ValULng OVERLOAD (BYREF cbs AS CBSTR) AS ULONG
+PRIVATE FUNCTION ValULng OVERLOAD (BYREF cbs AS CBSTR) AS ULONGINT
    RETURN .ValULng(**cbs)
 END FUNCTION
 ' =====================================================================================
