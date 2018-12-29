@@ -281,12 +281,6 @@ cws[0] = ASC("X")
 print cws
 ```
 
-The following alternate syntax for assigning a value is faster because it does not check for index validity, but if the index is invalid the result is undefined.
-
-```
-(*cws)[0] = ASC("X")
-```
-
 ## <a name="OperatorLet"></a>Operator Let
 
 Assigns a string to the CWSTR.
