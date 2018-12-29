@@ -34,6 +34,7 @@ Quirks:
 | [Empty](#Empty) | Frees the underlying BSTR. |
 | [Left](#Left) | Returns the leftmost substring of the string. Same as LEFT. |
 | [Right](#Right) | Returns the rightmost substring of the string. Same as RIGHT. |
+| [Char](#Char) | Gets or sets the corresponding unicode integer representation of the character at the specified position. |
 | [LeftChars](#LeftChars) | Returns the leftmost substring of the string. Same as Left. |
 | [MidChars](#MidChars) | Returns a substring of the string. Same as Mid. |
 | [RightChars](#RightChars) | Returns the rightmost substring of the string. Same as Right. |
@@ -294,6 +295,20 @@ FUNCTION Right OVERLOAD (BYREF cbs AS CBSTR, BYVAL nChars AS INTEGER) AS CBSTR
 | ---------- | ----------- |
 | *cbs* | The source CBSTR. |
 | *nChars* | The substring length, in characters. |
+
+## <a name="Char"></a>Char
+
+Gets or sets the corresponding unicode integer representation of the character at the position specified by the *nIndex* parameter.
+
+```
+PROPERTY Char (BYVAL nIndex AS UINT) AS USHORT
+PROPERTY Char (BYVAL nIndex AS UINT, BYVAL nValue AS USHORT)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nIndex* | The one based index of the character in the string (1 for the first character, 2 for the second, etc.). If nIndex is beyond the current length of the string, a 0 is returned. |
+| *nValue* | The unicode integer representation of the character. |
 
 ## <a name="LeftChars"></a>LeftChars
 
