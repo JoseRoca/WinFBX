@@ -21,7 +21,7 @@ Quirks:
 | [Operator &](#Operator&) | Concatenates strings. |
 | [Operator +=](#Operator+=) | Appends a string to the CBSTR. |
 | [Operator &=](#Operator&=) | Appends a string to the CBSTR. |
-| [Operator []](#Operator[]) | Gets/sets the corresponding unicode integer representation of the character at the specified position. |
+| [Operator []](#Operator[]) | Gets or sets the corresponding unicode integer representation of the character at the specified position. |
 | [Operator Let](#OperatorLet) | Assigns a string to the CBSTR. It implements the = operator. |
 | [Operator Cast](#OperatorCast) | Returns a pointer to the CBSTR buffer or the string data.<br>Casting is automatic. You don't have to call this operator. |
 | [wstr](#wstr) | Returns the string data. Same as \*\*. |
@@ -158,7 +158,7 @@ OPERATOR &= (BYREF ansiStr AS STRING)
 
 ## <a name="Operator[]"></a>Operator []
 
-Gets/sets the corresponding unicode integer representation of the character at the specified position. Tne index parameter is zero based ((0 for the first character, 1 for the second, etc.).
+Gets or sets the corresponding unicode integer representation of the character at the specified position. Tne index parameter is zero based ((0 for the first character, 1 for the second, etc.).
 
 ```
 OPERATOR [] (BYVAL nIndex AS LONG) AS USHORT
