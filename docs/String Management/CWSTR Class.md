@@ -268,7 +268,7 @@ OPERATOR &= (BYREF ansiStr AS STRING)
 
 ## <a name="Operator[]"></a>Operator []
 
-Gets or sets the corresponding unicode integer representation of the character at the specified position. Tne index parameter is zero based ((0 for the first character, 1 for the second, etc.).
+Gets or sets the corresponding unicode integer representation of the character at the specified position. The index parameter is zero based ((0 for the first character, 1 for the second, etc.). This operator must not be used in case of empty string because reference is undefined (inducing runtime error). Otherwise, the user must ensure that the index does not exceed the range "\[0, Len(cws) - 1]". Outside this range, results are undefined.
 
 ```
 OPERATOR [] (BYVAL nIndex AS LONG) BYREF AS USHORT
