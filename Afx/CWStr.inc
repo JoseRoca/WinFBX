@@ -125,6 +125,9 @@ TYPE CBSTR
       DECLARE OPERATOR &= (BYREF cws AS CWStr_)
       DECLARE OPERATOR &= (BYVAL n AS LONGINT)
       DECLARE OPERATOR &= (BYVAL n AS DOUBLE)
+      DECLARE PROPERTY Char(BYVAL nIndex AS UINT) AS USHORT
+      DECLARE PROPERTY Char(BYVAL nIndex AS UINT, BYVAL nValue AS USHORT)
+      DECLARE OPERATOR [] (BYVAL nIndex AS UINT) BYREF AS USHORT
       DECLARE FUNCTION LeftChars (BYVAL nChars AS LONG) AS CBSTR
       DECLARE FUNCTION RightChars (BYVAL nChars AS LONG) AS CBSTR
       DECLARE FUNCTION MidChars (BYVAL nStart AS LONG, BYVAL nChars AS LONG = 0) AS CBSTR
@@ -181,7 +184,7 @@ TYPE CWSTR
       DECLARE SUB Add (BYREF ansiStr AS STRING, BYVAL nCodePage AS UINT = 0)
       DECLARE PROPERTY Char(BYVAL nIndex AS UINT) AS USHORT
       DECLARE PROPERTY Char(BYVAL nIndex AS UINT, BYVAL nValue AS USHORT)
-      DECLARE OPERATOR [] (BYVAL nIndex AS UINT) AS USHORT
+      DECLARE OPERATOR [] (BYVAL nIndex AS UINT) BYREF AS USHORT
       DECLARE FUNCTION DelChars (BYVAL nIndex AS UINT, BYVAL nCount AS UINT) AS BOOLEAN
 		DECLARE FUNCTION Insert (BYREF cws AS CWSTR, BYVAL nIndex AS UINT) AS BOOLEAN
       DECLARE FUNCTION Insert (BYREF cbs AS CBSTR_, BYVAL nIndex AS LONG) AS BOOLEAN
@@ -767,12 +770,14 @@ END PROPERTY
 ' ========================================================================================
 ' Returns the corresponding ASCII or Unicode integer representation of the character at
 ' the zero-based position specified by the nIndex parameter (0 for the first character,
-' 1 for the second, etc.), e.g. value = cws[1]. Can't be used to change a value.
+' 1 for the second, etc.), e.g. value = cws[1], cws[1] = value.
 ' ========================================================================================
-PRIVATE OPERATOR CWStr.[] (BYVAL nIndex AS UINT) AS USHORT
-   IF nIndex < 0 OR nIndex > (m_BufferLen \ 2) - 1 THEN EXIT OPERATOR
+PRIVATE OPERATOR CWstr.[] (BYVAL nIndex AS UINT) BYREF AS USHORT
+   CWSTR_DP("CWSTR Operator []")
+   STATIC Zero AS USHORT = 0
+   IF nIndex < 0 OR nIndex > (m_BufferLen \ 2) - 1 THEN RETURN Zero
    ' Get the numeric character code at position nIndex
-   OPERATOR = PEEK(USHORT, m_pBuffer + (nIndex * 2))
+   OPERATOR = *CAST(USHORT PTR, m_pBuffer + (nIndex * 2))
 END OPERATOR
 ' ========================================================================================
 
@@ -1497,6 +1502,46 @@ PRIVATE OPERATOR CBStr.&= (BYVAL n AS DOUBLE)
    CBSTR_DP("CBSTR OPERATOR &= DOUBLE")
    DIM wsz AS WSTRING * 260 = .WSTR(n)
    this.Append(wsz)
+END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+' Returns the corresponding unicode integer representation of the character at the position
+' specified by the nIndex parameter (1 for the first character, 2 for the second, etc.).
+' If nIndex is beyond the current length of the string, a 0 is returned.
+' ========================================================================================
+PRIVATE PROPERTY CBStr.Char (BYVAL nIndex AS UINT) AS USHORT
+   CBSTR_DP("CBSTR PROPERTY GET Char")
+   IF nIndex < 1 OR nIndex > SysStringLen(m_bstr) THEN EXIT PROPERTY
+   ' Get the numeric character code at position nIndex
+   nIndex -= 1
+   PROPERTY = PEEK(USHORT, CAST(USHORT PTR, m_bstr + nIndex))
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Changes the corresponding unicode integer representation of the character at the position
+' specified by the nIndex parameter (1 for the first character, 2 for the second, etc.).
+' If nIndex is beyond the current length of the string, nothing is changed.
+' ========================================================================================
+PRIVATE PROPERTY CBStr.Char (BYVAL nIndex AS UINT, BYVAL nValue AS USHORT)
+   CBSTR_DP("CBSTR PROPERTY SET Char")
+   IF nIndex < 1 OR nIndex > SysStringLen(m_bstr) THEN EXIT PROPERTY
+   ' Set the numeric character code at position nIndex (zero based)
+   nIndex -= 1
+   POKE USHORT, CAST(USHORT PTR, m_bstr + nIndex), nValue
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Returns the corresponding ASCII or Unicode integer representation of the character at
+' the zero-based position specified by the nIndex parameter (0 for the first character,
+' 1 for the second, etc.), e.g. value = cbs[1], cbs[1] = value.
+' ========================================================================================
+PRIVATE OPERATOR CBStr.[] (BYVAL nIndex AS UINT) BYREF AS USHORT
+   CBSTR_DP("CBSTR Operator []")
+   STATIC Zero AS USHORT = 0
+   IF nIndex < 0 OR nIndex > SysStringLen(m_bstr) - 1 THEN RETURN Zero
+   ' Get the numeric character code at position nIndex
+   OPERATOR = *CAST(USHORT PTR, m_bstr + nIndex)
 END OPERATOR
 ' ========================================================================================
 
