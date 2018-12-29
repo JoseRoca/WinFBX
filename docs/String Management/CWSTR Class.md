@@ -279,7 +279,7 @@ OPERATOR [] (BYVAL nIndex AS LONG) AS USHORT
 DIM cws as CWSTR = "1234567890"
 print cws[1]
 cws[1] = ASC("X")
-print cws.
+print cws
 ```
 
 ## <a name="OperatorLet"></a>Operator Let
