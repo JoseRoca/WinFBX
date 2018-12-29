@@ -22,7 +22,7 @@ Quirks:
 | [Operator &](#Operator&) | Concatenates strings. |
 | [Operator +=](#Operator+=) | Appends a string to the CWSTR. |
 | [Operator &=](#Operator&=) | Appends a string to the CWSTR. |
-| [Operator []](#Operator[]) | Gets/sets the corresponding unicode integer representation of the character at the specified position. |
+| [Operator []](#Operator[]) | Gets or sets the corresponding unicode integer representation of the character at the specified position. |
 | [Operator Let](#OperatorLet) | Assigns a string to the CWSTR. It implements the = operator. |
 | [Operator Cast](#OperatorCast) | Returns a pointer to the CWSTR buffer or the string data.<br>Casting is automatic. You don't have to call this operator. |
 | [bstr](#bstr) | Returns the contents of the CWSTR as a BSTR. |
