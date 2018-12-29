@@ -167,8 +167,8 @@ OPERATOR [] (BYVAL nIndex AS LONG) AS USHORT
 ```
 DIM cbs as CBSTR = "1234567890"
 print cbs[1]
-ccs[1] = ASC("X")
-print cbs.
+cbs[1] = ASC("X")
+print cbs
 ```
 
 ## <a name="OperatorLet"></a>Operator Let
