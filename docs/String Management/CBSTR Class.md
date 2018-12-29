@@ -162,7 +162,7 @@ OPERATOR &= (BYREF ansiStr AS STRING)
 Gets or sets the corresponding unicode integer representation of the character at the specified position. Tne index parameter is zero based ((0 for the first character, 1 for the second, etc.).
 
 ```
-OPERATOR [] (BYVAL nIndex AS LONG) AS USHORT
+OPERATOR [] (BYVAL nIndex AS LONG) BYREF AS USHORT
 ```
 #### Example
 ```
