@@ -277,9 +277,15 @@ OPERATOR [] (BYVAL nIndex AS LONG) AS USHORT
 #### Example
 ```
 DIM cws as CWSTR = "1234567890"
-print cws[1]
-cws[1] = ASC("X")
+print cws[0]
+cws[0] = ASC("X")
 print cws
+```
+
+The following alternate syntax for assigning a value is faster because it does not check for index validity, but if the index is invalid the result is undefined.
+
+```
+(*cws)[0] = ASC("X")
 ```
 
 ## <a name="OperatorLet"></a>Operator Let
