@@ -10,7 +10,6 @@ Quirks:
 * TRIM, LTRIM, RTRIM, LSET and RSET don't work with languages like Russian or Chinese unless we prepend \*\* to the variable name.
 * MID as a statement: Something like MID(cws, 2, 1) = "x" compiles but does not change the contents of the dynamic unicode string. MID(cws.wstr, 2, 1) = "x" or MID(\*\*cws, 2, 1) = "x" works.
 * SELECT CASE: Something like SELECT CASE LEFT(cws, 2) does not compile; we have to use SELECT CASE LEFT(\*\*cws, 2).
-* Operator []: cwsText[0] = ASC("x") does not compile; we have to use (\*cwsText)\[0] = ASC("x").
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -272,7 +271,7 @@ OPERATOR &= (BYREF ansiStr AS STRING)
 Gets or sets the corresponding unicode integer representation of the character at the specified position. Tne index parameter is zero based ((0 for the first character, 1 for the second, etc.).
 
 ```
-OPERATOR [] (BYVAL nIndex AS LONG) AS USHORT
+OPERATOR [] (BYVAL nIndex AS LONG) BYREF AS USHORT
 ```
 #### Example
 ```
