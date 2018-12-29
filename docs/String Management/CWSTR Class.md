@@ -22,7 +22,7 @@ Quirks:
 | [Operator &](#Operator&) | Concatenates strings. |
 | [Operator +=](#Operator+=) | Appends a string to the CWSTR. |
 | [Operator &=](#Operator&=) | Appends a string to the CWSTR. |
-| [Operator []](#Operator[]) | Gets the corresponding unicode integer representation of the character at the specified position. |
+| [Operator []](#Operator[]) | Gets/sets the corresponding unicode integer representation of the character at the specified position. |
 | [Operator Let](#OperatorLet) | Assigns a string to the CWSTR. It implements the = operator. |
 | [Operator Cast](#OperatorCast) | Returns a pointer to the CWSTR buffer or the string data.<br>Casting is automatic. You don't have to call this operator. |
 | [bstr](#bstr) | Returns the contents of the CWSTR as a BSTR. |
@@ -269,10 +269,17 @@ OPERATOR &= (BYREF ansiStr AS STRING)
 
 ## <a name="Operator[]"></a>Operator []
 
-Appends a string to the CWSTR.
+Gets/sets the corresponding unicode integer representation of the character at the specified position. Tne index parameter is zero based ((0 for the first character, 1 for the second, etc.).
 
 ```
 OPERATOR [] (BYVAL nIndex AS LONG) AS USHORT
+```
+#### Example
+```
+DIM cws as CWSTR = "1234567890"
+print cws[1]
+cws[1] = ASC("X")
+print cws.
 ```
 
 ## <a name="OperatorLet"></a>Operator Let
