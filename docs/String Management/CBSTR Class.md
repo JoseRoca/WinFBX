@@ -21,6 +21,7 @@ Quirks:
 | [Operator &](#Operator&) | Concatenates strings. |
 | [Operator +=](#Operator+=) | Appends a string to the CBSTR. |
 | [Operator &=](#Operator&=) | Appends a string to the CBSTR. |
+| [Operator []](#Operator[]) | Gets/sets the corresponding unicode integer representation of the character at the specified position. |
 | [Operator Let](#OperatorLet) | Assigns a string to the CBSTR. It implements the = operator. |
 | [Operator Cast](#OperatorCast) | Returns a pointer to the CBSTR buffer or the string data.<br>Casting is automatic. You don't have to call this operator. |
 | [wstr](#wstr) | Returns the string data. Same as \*\*. |
@@ -154,6 +155,21 @@ OPERATOR &= (BYREF ansiStr AS STRING)
 | *cws* | A CWSTR. |
 | *cbs* | A CBSTR. |
 | *ansiStr* | An ansi string or string literal. |
+
+## <a name="Operator[]"></a>Operator []
+
+Gets/sets the corresponding unicode integer representation of the character at the specified position. Tne index parameter is zero based ((0 for the first character, 1 for the second, etc.).
+
+```
+OPERATOR [] (BYVAL nIndex AS LONG) AS USHORT
+```
+#### Example
+```
+DIM cbs as CBSTR = "1234567890"
+print cbs[1]
+ccs[1] = ASC("X")
+print cbs.
+```
 
 ## <a name="OperatorLet"></a>Operator Let
 
