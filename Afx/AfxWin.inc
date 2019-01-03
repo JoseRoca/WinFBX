@@ -1628,6 +1628,10 @@ END FUNCTION
 
 ' ========================================================================================
 ' Gets the width and height of the window, in pixels.
+' - hwnd = Handle of the window.
+' - nWidth = The width of the client area.
+' - nHeight = The height of the client ara.
+' Return value: TRUE or FALSE. To get extended error information, call GetLastError.
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetWindowSize (BYVAL hwnd AS HWND, BYREF nWidth AS LONG, BYREF nHeight AS LONG) AS BOOLEAN
    DIM rc AS RECT
