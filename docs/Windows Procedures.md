@@ -20,6 +20,7 @@ Assorted Windows procedures.
 | [AfxGetWindowHeight](#AfxGetWindowHeight) | Returns the height of a window, in pixels. |
 | [AfxGetWindowLocation](#AfxGetWindowLocation) | Returns the location of the top left corner of the window, in pixels. |
 | [AfxGetWindowRect](#AfxGetWindowRect) | Retrieves the dimensions of the bounding rectangle of the specified window. |
+| [AfxGetWindowSize](#AfxGetWindowSize) | Gets the width and height of a window, in pixels. |
 | [AfxGetWindowText](#AfxGetWindowText) | Gets the text of a window. |
 | [AfxGetWindowTextLength](#AfxGetWindowTextLength) | Gets the length of the text of a window. |
 | [AfxGetWindowWidth](#AfxGetWindowWidth) | Returns the width of a window, in pixels. |
@@ -2115,6 +2116,20 @@ FUNCTION AfxGetWindowRect (BYVAL hwnd AS HWND) AS RECT
 #### Return value
 
 A RECT structure with the retrieved dimensions.
+
+# <a name="AfxGetWindowSize"></a>AfxGetWindowSize
+
+Gets the width and height of the specified window, in pixels.
+
+```
+FUNCTION AfxGetWindowSize (BYVAL hwnd AS HWND, BYVAL nWidth AS LONG, BYVAL nHeight AS LONG) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hwnd* | Handle to the window. |
+| *nWidth* | The width of the window. |
+| *nHeight* | The height of the window. |
 
 # <a name="AfxGetWindowText"></a>AfxGetWindowText
 
