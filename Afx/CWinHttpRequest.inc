@@ -52,6 +52,7 @@ Public:
    DECLARE DESTRUCTOR
    DECLARE FUNCTION GetLastResult () AS HRESULT
    DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
+   DECLARE FUNCTION GetErrorInfo () AS CBSTR
    DECLARE FUNCTION Open (BYREF cbsMethod AS CBSTR, BYREF cbsUrl AS CBSTR, BYVAL bAsync AS BOOLEAN = FALSE) AS HRESULT
    DECLARE FUNCTION Send (BYREF cvBody AS CVAR = "") AS HRESULT
    DECLARE FUNCTION WaitForResponse (BYVAL nTimeout AS LONG = 0) AS BOOLEAN
@@ -103,6 +104,27 @@ END DESTRUCTOR
 ' ========================================================================================
 PRIVATE FUNCTION CWinHttpRequest.GetLastResult () AS HRESULT
    RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns the description of the most recent OLE error in the current logical thread and
+' clears the error state for the thread. It should be called as soon as possible after
+' calling a method of an Automation interface and will only succeed if the object supports
+' the IErrorInfo interface.
+' ========================================================================================
+PRIVATE FUNCTION CWinHttpRequest.GetErrorInfo () AS CBSTR
+   DIM pErrorInfo AS IErrorInfo PTR, cbsInfo AS CBSTR
+   DIM hr AS HRESULT = .GetErrorInfo(0, @pErrorInfo)
+   IF hr <> S_OK THEN RETURN ""
+   DIM bstrDescription AS AFX_BSTR
+   hr = pErrorInfo->lpvtbl->GetDescription(pErrorInfo, @bstrDescription)
+   IF hr = S_OK THEN
+      cbsInfo = *bstrDescription
+      SysFreeString bstrDescription
+      AfxSafeRelease(pErrorInfo)
+   END IF
+   RETURN cbsInfo
 END FUNCTION
 ' ========================================================================================
 
@@ -367,9 +389,9 @@ END FUNCTION
 ' Remarks: This is not the same that the values returned by GetLastResult.
 ' ========================================================================================
 PRIVATE FUNCTION CWinHttpRequest.GetStatus () AS LONG
-   DIM status AS LONG
-   IF m_pWinHttp THEN SetResult(m_pWinHttp->get_Status(@status))
-   RETURN status
+   DIM _status AS LONG
+   IF m_pWinHttp THEN SetResult(m_pWinHttp->get_Status(@_status))
+   RETURN _status
 END FUNCTION
 ' ========================================================================================
 
