@@ -708,23 +708,6 @@ END SUB
 ' ========================================================================================
 
 ' ========================================================================================
-' Returns a pointer to the class given the handle of its associated window handle.
-' hCtl = Handle of the image control.
-' ========================================================================================
-PRIVATE FUNCTION AfxCImageCtxPtr OVERLOAD (BYVAL hCtl AS HWND) AS CImageCtx PTR
-   FUNCTION = CAST(CImageCtx PTR, .GetWindowLongPtrW(hCtl, 0))
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
-' hParent = Handle of the parent window of the image control.
-' cID = Identifier of the image control.
-' ========================================================================================
-PRIVATE FUNCTION AfxCImageCtxPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CImageCtx PTR
-   FUNCTION = CAST(CImageCtx PTR, .GetWindowLongPtrW(GetDlgItem(hParent, cID), 0))
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
 ' Sets the size of the image
 ' Parameters:
 ' - nWidth = Width of the image, in pixels.
@@ -760,6 +743,23 @@ PRIVATE SUB CImageCtx.SetImageHeight (BYVAL nHeight AS LONG, BYVAL fRedraw AS LO
    m_ImageHeight = nHeight
    IF fRedraw THEN this.Redraw
 END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Returns a pointer to the class given the handle of its associated window handle.
+' hCtl = Handle of the image control.
+' ========================================================================================
+PRIVATE FUNCTION AfxCImageCtxPtr OVERLOAD (BYVAL hCtl AS HWND) AS CImageCtx PTR
+   FUNCTION = CAST(CImageCtx PTR, .GetWindowLongPtrW(hCtl, 0))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' hParent = Handle of the parent window of the image control.
+' cID = Identifier of the image control.
+' ========================================================================================
+PRIVATE FUNCTION AfxCImageCtxPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CImageCtx PTR
+   FUNCTION = CAST(CImageCtx PTR, .GetWindowLongPtrW(GetDlgItem(hParent, cID), 0))
+END FUNCTION
 ' ========================================================================================
 
 END NAMESPACE

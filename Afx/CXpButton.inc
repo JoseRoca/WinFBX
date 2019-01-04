@@ -1658,5 +1658,21 @@ PRIVATE PROPERTY CXpButton.BkBrushHot () AS HBRUSH
 END PROPERTY
 ' ========================================================================================
 
-END NAMESPACE
+' ========================================================================================
+' Returns a pointer to the class given the handle of its associated window handle.
+' hCtl = Handle of the button control.
+' ========================================================================================
+PRIVATE FUNCTION AfxCXpButtonPtr OVERLOAD (BYVAL hCtl AS HWND) AS CXpButton PTR
+   FUNCTION = CAST(CXpButton PTR, .GetWindowLongPtrW(hCtl, 0))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' hParent = Handle of the parent window of the image control.
+' cID = Identifier of the button control.
+' ========================================================================================
+PRIVATE FUNCTION AfxCXpButtonPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CXpButton PTR
+   FUNCTION = CAST(CXpButton PTR, .GetWindowLongPtrW(GetDlgItem(hParent, cID), 0))
+END FUNCTION
+' ========================================================================================
 
+END NAMESPACE
