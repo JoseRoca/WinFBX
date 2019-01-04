@@ -2,6 +2,9 @@ WinFBX
 Windows Framework for FreeBASIC.
 
 3 Jan 2019
+- Added the function AfxCXpButtonPtr to CXpButton.inc.
+
+3 Jan 2019
 - Added the function AfxGetWindowSize.
 
 28 Dic 2018
