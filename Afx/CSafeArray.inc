@@ -2219,142 +2219,144 @@ END FUNCTION
 
 ' ========================================================================================
 ' Base64 mime encoding
+' Deprecated. Use the AfxBase64EncodeA/W (in AfxStr.inc) instead.
 ' ========================================================================================
-PRIVATE FUNCTION AfxXmlBase64Encode (BYREF strData AS STRING) AS STRING
+'PRIVATE FUNCTION AfxXmlBase64Encode (BYREF strData AS STRING) AS STRING
 
-   ' // Initialize the COM library
-   CoInitialize NULL
-   DIM vData AS VARIANT
-   ' // Create a byte safe array
-   DIM rgsabound AS SAFEARRAYBOUND
-   rgsabound.cElements = LEN(strData)
-   rgsabound.lLBound = 0
-   DIM psa AS SAFEARRAY PTR
-   psa = SafeArrayCreate(VT_UI1, 1, @rgsabound)
-   IF psa THEN
-      ' // Lock the safearray for access
-      DIM pvData AS ANY PTR
-      SafeArrayAccessData(psa, @pvData)
-      IF pvData THEN
-         ' // copy the contents of the string
-         memcpy pvData, STRPTR(strData), LEN(strData)
-         ' // Unlock the safe array
-         SafeArrayUnaccessData(psa)
-      END IF
+'   ' // Initialize the COM library
+'   CoInitialize NULL
+'   DIM vData AS VARIANT
+'   ' // Create a byte safe array
+'   DIM rgsabound AS SAFEARRAYBOUND
+'   rgsabound.cElements = LEN(strData)
+'   rgsabound.lLBound = 0
+'   DIM psa AS SAFEARRAY PTR
+'   psa = SafeArrayCreate(VT_UI1, 1, @rgsabound)
+'   IF psa THEN
+'      ' // Lock the safearray for access
+'      DIM pvData AS ANY PTR
+'      SafeArrayAccessData(psa, @pvData)
+'      IF pvData THEN
+'         ' // copy the contents of the string
+'         memcpy pvData, STRPTR(strData), LEN(strData)
+'         ' // Unlock the safe array
+'         SafeArrayUnaccessData(psa)
+'      END IF
 
-      ' // Create a variant to host the safe array
-      vData.vt = VT_ARRAY OR VT_UI1
-      vData.parray = psa
+'      ' // Create a variant to host the safe array
+'      vData.vt = VT_ARRAY OR VT_UI1
+'      vData.parray = psa
 
-      ' // Create an instance of the IXMLDOMDocument interface
-      DIM pXmlDocument AS IXMLDOMDocument PTR
-      CoCreateInstance(@CLSID_DOMDocument, NULL, CLSCTX_INPROC_SERVER, @IID_IXMLDOMDocument, @pXmlDocument)
-      IF pXmlDocument THEN
-         ' // Create a "b64" element node
-         DIM pXmlElement AS IXMLDOMElement PTR
-         DIM pbstrTagName AS AFX_BSTR = SysAllocString("b64")
-         IF pbstrTagName THEN
-            pXmlDocument->lpvtbl->createElement(pXmlDocument, pbstrTagName, @pXmlElement)
-            SysFreeString pbstrTagName
-         END IF
-         ' // Set the data type to binary base 64 encoded
-         IF pXmlElement THEN
-            DIM pDataType AS AFX_BSTR = SysAllocString("bin.base64")
-            IF pDataType THEN
-               pXmlElement->lpvtbl->put_dataType(pXmlElement, pDataType)
-               SysFreeString pDataType
-            END IF
-            ' // Put the data in the node
-            pXmlElement->lpvtbl->put_nodeTypedValue(pXmlElement, vData)
-            ' // Get the data as text
-            DIM pbstrText AS AFX_BSTR
-            pXmlElement->lpvtbl->get_Text(pXmlElement, @pbstrText)
-            ' // Return the base 64 encoded text
-            IF pbstrText THEN
-               FUNCTION = *pbstrText
-               SysFreeString pbstrText
-            END IF
-            IUnknown_Release(pXmlElement)
-         END IF
-         IUnknown_Release(pXmlDocument)
-      END IF
-   END IF
-   ' // Clear the variant
-   VariantClear @vData
-   ' // Uninitialize the COM library
-   CoUninitialize
+'      ' // Create an instance of the IXMLDOMDocument interface
+'      DIM pXmlDocument AS IXMLDOMDocument PTR
+'      CoCreateInstance(@CLSID_DOMDocument, NULL, CLSCTX_INPROC_SERVER, @IID_IXMLDOMDocument, @pXmlDocument)
+'      IF pXmlDocument THEN
+'         ' // Create a "b64" element node
+'         DIM pXmlElement AS IXMLDOMElement PTR
+'         DIM pbstrTagName AS AFX_BSTR = SysAllocString("b64")
+'         IF pbstrTagName THEN
+'            pXmlDocument->lpvtbl->createElement(pXmlDocument, pbstrTagName, @pXmlElement)
+'            SysFreeString pbstrTagName
+'         END IF
+'         ' // Set the data type to binary base 64 encoded
+'         IF pXmlElement THEN
+'            DIM pDataType AS AFX_BSTR = SysAllocString("bin.base64")
+'            IF pDataType THEN
+'               pXmlElement->lpvtbl->put_dataType(pXmlElement, pDataType)
+'               SysFreeString pDataType
+'            END IF
+'            ' // Put the data in the node
+'            pXmlElement->lpvtbl->put_nodeTypedValue(pXmlElement, vData)
+'            ' // Get the data as text
+'            DIM pbstrText AS AFX_BSTR
+'            pXmlElement->lpvtbl->get_Text(pXmlElement, @pbstrText)
+'            ' // Return the base 64 encoded text
+'            IF pbstrText THEN
+'               FUNCTION = *pbstrText
+'               SysFreeString pbstrText
+'            END IF
+'            IUnknown_Release(pXmlElement)
+'         END IF
+'         IUnknown_Release(pXmlDocument)
+'      END IF
+'   END IF
+'   ' // Clear the variant
+'   VariantClear @vData
+'   ' // Uninitialize the COM library
+'   CoUninitialize
 
-END FUNCTION
+'END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
 ' Base64 mime decoding
+' Deprecated. Use the AfxBase64DecodeA/W (in AfxStr.inc) instead.
 ' ========================================================================================
-PRIVATE FUNCTION AfxXmlBase64Decode (BYREF strData AS STRING) AS STRING
+'PRIVATE FUNCTION AfxXmlBase64Decode (BYREF strData AS STRING) AS STRING
 
-   ' // Initialize the COM library
-   CoInitialize NULL
-   ' // Create an instance of the IXMLDOMDocument interface
-   DIM pXmlDocument AS IXMLDOMDocument PTR
-   CoCreateInstance(@CLSID_DOMDocument, NULL, CLSCTX_INPROC_SERVER, @IID_IXMLDOMDocument, @pXmlDocument)
-   IF pXmlDocument THEN
-      ' // Create a "b64" element node
-      DIM pXmlElement AS IXMLDOMElement PTR
-      DIM pbstrTagName AS AFX_BSTR = SysAllocString("b64")
-      IF pbstrTagName THEN
-         pXmlDocument->lpvtbl->createElement(pXmlDocument, pbstrTagName, @pXmlElement)
-         SysFreeString pbstrTagName
-      END IF
-      ' // Set the data type to binary base 64 encoded
-      IF pXmlElement THEN
-         DIM pDataType AS AFX_BSTR = SysAllocString("bin.base64")
-         IF pDataType THEN
-            pXmlElement->lpvtbl->put_dataType(pXmlElement, pDataType)
-            SysFreeString pDataType
-         END IF
-         ' // Put the data as text
-         DIM pbstrText AS AFX_BSTR = SysAllocString(strData)
-         IF pbstrText THEN
-            pXmlElement->lpvtbl->put_Text(pXmlElement, pbstrText)
-            SysFreeString pbstrText
-         END IF
-         ' // Get the data as a byte safe array
-         DIM vData AS VARIANT
-         pXmlElement->lpvtbl->get_nodeTypedValue(pXmlElement, @vData)
-         IF vData.parray THEN
-            ' // The number of dimensions must be 1
-            IF SafeArrayGetDim(vData.parray) = 1 THEN
-               ' // Retrieve the number of elements of the array
-               DIM nLBound AS LONG, nUBound AS LONG
-               SafeArrayGetLBound(vData.parray, 1, @nLBound)
-               SafeArrayGetUBound(vData.parray, 1, @nUBound)
-               ' // Calculate the number of bytes to read
-               DIM nBytes AS LONG = nUbound - nLBound + 1
-               IF nBytes THEN
-                  ' // Lock the safearray for access
-                  DIM pvData AS ANY PTR
-                  SafeArrayAccessData(vData.parray, @pvData)
-                  IF pvData THEN
-                     ' // Read the data
-                     DIM buffer AS STRING = SPACE(nBytes)
-                     memcpy STRPTR(buffer), pvData, nBytes
-                     ' // Unlock the array
-                     SafeArrayUnaccessData(vData.parray)
-                     ' // Return the data
-                     FUNCTION = buffer
-                  END IF
-               END IF
-            END IF
-         END IF
-         VariantClear @vData
-         IUnknown_Release(pXmlElement)
-      END IF
-      IUnknown_Release(pXmlDocument)
-   END IF
-   ' // Uninitialize the COM library
-   CoUninitialize
+'   ' // Initialize the COM library
+'   CoInitialize NULL
+'   ' // Create an instance of the IXMLDOMDocument interface
+'   DIM pXmlDocument AS IXMLDOMDocument PTR
+'   CoCreateInstance(@CLSID_DOMDocument, NULL, CLSCTX_INPROC_SERVER, @IID_IXMLDOMDocument, @pXmlDocument)
+'   IF pXmlDocument THEN
+'      ' // Create a "b64" element node
+'      DIM pXmlElement AS IXMLDOMElement PTR
+'      DIM pbstrTagName AS AFX_BSTR = SysAllocString("b64")
+'      IF pbstrTagName THEN
+'         pXmlDocument->lpvtbl->createElement(pXmlDocument, pbstrTagName, @pXmlElement)
+'         SysFreeString pbstrTagName
+'      END IF
+'      ' // Set the data type to binary base 64 encoded
+'      IF pXmlElement THEN
+'         DIM pDataType AS AFX_BSTR = SysAllocString("bin.base64")
+'         IF pDataType THEN
+'            pXmlElement->lpvtbl->put_dataType(pXmlElement, pDataType)
+'            SysFreeString pDataType
+'         END IF
+'         ' // Put the data as text
+'         DIM pbstrText AS AFX_BSTR = SysAllocString(strData)
+'         IF pbstrText THEN
+'            pXmlElement->lpvtbl->put_Text(pXmlElement, pbstrText)
+'            SysFreeString pbstrText
+'         END IF
+'         ' // Get the data as a byte safe array
+'         DIM vData AS VARIANT
+'         pXmlElement->lpvtbl->get_nodeTypedValue(pXmlElement, @vData)
+'         IF vData.parray THEN
+'            ' // The number of dimensions must be 1
+'            IF SafeArrayGetDim(vData.parray) = 1 THEN
+'               ' // Retrieve the number of elements of the array
+'               DIM nLBound AS LONG, nUBound AS LONG
+'               SafeArrayGetLBound(vData.parray, 1, @nLBound)
+'               SafeArrayGetUBound(vData.parray, 1, @nUBound)
+'               ' // Calculate the number of bytes to read
+'               DIM nBytes AS LONG = nUbound - nLBound + 1
+'               IF nBytes THEN
+'                  ' // Lock the safearray for access
+'                  DIM pvData AS ANY PTR
+'                  SafeArrayAccessData(vData.parray, @pvData)
+'                  IF pvData THEN
+'                     ' // Read the data
+'                     DIM buffer AS STRING = SPACE(nBytes)
+'                     memcpy STRPTR(buffer), pvData, nBytes
+'                     ' // Unlock the array
+'                     SafeArrayUnaccessData(vData.parray)
+'                     ' // Return the data
+'                     FUNCTION = buffer
+'                  END IF
+'               END IF
+'            END IF
+'         END IF
+'         VariantClear @vData
+'         IUnknown_Release(pXmlElement)
+'      END IF
+'      IUnknown_Release(pXmlDocument)
+'   END IF
+'   ' // Uninitialize the COM library
+'   CoUninitialize
 
-END FUNCTION
+'END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
