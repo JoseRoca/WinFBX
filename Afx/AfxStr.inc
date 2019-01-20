@@ -1396,17 +1396,6 @@ END FUNCTION
 #endif
 
 ' ========================================================================================
-PRIVATE FUNCTION AfxBase64Encode (BYREF strData AS STRING) AS STRING
-   DIM cchStr AS DWORD, strOut AS STRING
-   DIM bRes AS LONG = AfxCryptBinaryToStringA(STRPTR(strData), LEN(strData), CRYPT_STRING_BASE64, NULL, @cchStr)
-   IF bRes = 0 OR cchStr = 0 THEN EXIT FUNCTION
-   strOut = SPACE(cchStr)
-   bRes = AfxCryptBinaryToStringA(STRPTR(strData), LEN(strData), CRYPT_STRING_BASE64, STRPTR(strOut), @cchStr)
-   FUNCTION = strOut
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
 ' Converts a formatted string into an array of bytes.
 ' ========================================================================================
 PRIVATE FUNCTION AfxCryptStringToBinaryA (BYVAL pszString AS LPCSTR, BYVAL cchString AS DWORD, _
@@ -1443,7 +1432,33 @@ END FUNCTION
 #endif
 
 ' ========================================================================================
-PRIVATE FUNCTION AfxBase64Decode (BYREF strData AS STRING) AS STRING
+PRIVATE FUNCTION AfxBase64EncodeA (BYREF strData AS STRING) AS STRING
+   DIM cchStr AS DWORD, strOut AS STRING
+   DIM bRes AS LONG = AfxCryptBinaryToStringA(STRPTR(strData), LEN(strData), CRYPT_STRING_BASE64, NULL, @cchStr)
+   IF bRes = 0 OR cchStr = 0 THEN EXIT FUNCTION
+   strOut = SPACE(cchStr)
+   bRes = AfxCryptBinaryToStringA(STRPTR(strData), LEN(strData), CRYPT_STRING_BASE64, STRPTR(strOut), @cchStr)
+   FUNCTION = strOut
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION AfxBase64EncodeW (BYREF cwsData AS CWSTR) AS CWSTR
+   DIM cchStr AS DWORD, cwsOut AS CWSTR
+   DIM bRes AS LONG = AfxCryptBinaryToStringW(cwsData, LEN(cwsData) * 2, CRYPT_STRING_BASE64, NULL, @cchStr)
+   IF bRes = 0 OR cchStr = 0 THEN EXIT FUNCTION
+   cwsOut = WSPACE(cchStr)
+   bRes = AfxCryptBinaryToStringW(cwsData, LEN(cwsData) * 2, CRYPT_STRING_BASE64, CAST(UBYTE PTR, cwsOut), @cchStr)
+   FUNCTION = cwsOut
+END FUNCTION
+' ========================================================================================
+#ifndef UNICODE
+   #define AfxBase64Encode(p) AfxBase64EncodeA(p)
+#else
+   #define AfxBase64Encode(p) AfxBase64EncodeW(p)
+#endif
+
+' ========================================================================================
+PRIVATE FUNCTION AfxBase64DecodeA (BYREF strData AS STRING) AS STRING
    DIM cbBinary AS DWORD, strOut AS STRING
    DIM bRes AS LONG = AfxCryptStringToBinaryA(STRPTR(strData), LEN(strData), CRYPT_STRING_BASE64, NULL, @cbBinary, NULL, NULL)
    IF bRes = 0 OR cbBinary = 0 THEN EXIT FUNCTION
@@ -1452,6 +1467,21 @@ PRIVATE FUNCTION AfxBase64Decode (BYREF strData AS STRING) AS STRING
    FUNCTION = strOut
 END FUNCTION
 ' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION AfxBase64DecodeW (BYREF cwsData AS CWSTR) AS CWSTR
+   DIM cbBinary AS DWORD, cwsOut AS CWSTR
+   DIM bRes AS LONG = AfxCryptStringToBinaryW(cwsData, LEN(cwsData) * 2, CRYPT_STRING_BASE64, NULL, @cbBinary, NULL, NULL)
+   IF bRes = 0 OR cbBinary = 0 THEN EXIT FUNCTION
+   cwsOut = WSPACE(cbBinary)
+   bRes = AfxCryptStringToBinaryW(cwsData, LEN(cwsData) * 2, CRYPT_STRING_BASE64, CAST(UBYTE PTR, cwsOut), @cbBinary, NULL, NULL)
+   FUNCTION = cwsOut
+END FUNCTION
+' ========================================================================================
+#ifndef UNICODE
+   #define AfxBase64Decode(p) AfxBase64DecodeA(p)
+#else
+   #define AfxBase64Decode(p) AfxBase64DecodeW(p)
+#endif
 
 ' ========================================================================================
 ' Note: Although we can't write variadic functions with FreeBasic 64 bit (we can with 32
