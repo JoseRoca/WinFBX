@@ -1472,7 +1472,7 @@ PRIVATE FUNCTION AfxBase64DecodeW (BYREF cwsData AS CWSTR) AS CWSTR
    DIM cbBinary AS DWORD, cwsOut AS CWSTR
    DIM bRes AS LONG = AfxCryptStringToBinaryW(cwsData, LEN(cwsData) * 2, CRYPT_STRING_BASE64, NULL, @cbBinary, NULL, NULL)
    IF bRes = 0 OR cbBinary = 0 THEN EXIT FUNCTION
-   cwsOut = WSPACE(cbBinary)
+   cwsOut = WSPACE(cbBinary \ 2)
    bRes = AfxCryptStringToBinaryW(cwsData, LEN(cwsData) * 2, CRYPT_STRING_BASE64, CAST(UBYTE PTR, cwsOut), @cbBinary, NULL, NULL)
    FUNCTION = cwsOut
 END FUNCTION
