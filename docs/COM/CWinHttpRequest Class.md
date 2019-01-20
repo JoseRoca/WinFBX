@@ -525,24 +525,20 @@ Returns S_OK (0) if successful or an error value otherwise.
 #### Example
 
 ```
-#include "Afx/CWinHttpRequest.inc"
+#include once "Afx/CWinHttpRequest.inc"
 using Afx
 
-' // Create an instance of the CWinHttpRequest class
+' // Create an instance of the CWinHttp class
 DIM pWHttp AS CWinHttpRequest
 ' // Open an HTTP connection to an HTTP resource
 pWHttp.Open "GET", "http://microsoft.com"
 ' // Specify the user agent
 pWHttp.SetOption(WinHttpRequestOption_UserAgentString, "A WinHttpRequest Example Program")
-
 ' // Send an HTTP request to the HTTP server
 pWHttp.Send
 IF pWHttp.GetLastResult = S_OK THEN
    ' // Get user agent string.
-   DIM cvText AS CVAR = pWHttp.GetOption(WinHttpRequestOption_UserAgentString)
-   PRINT cvText
-   ' // We can also use:
-   ' PRINT pWHttp.GetOption(WinHttpRequestOption_UserAgentString)
+   PRINT pWHttp.GetOption(WinHttpRequestOption_UserAgentString)
    ' // Get URL
    PRINT pWHttp.GetOption(WinHttpRequestOption_URL)
    ' // Get URL Code Page.
@@ -550,6 +546,7 @@ IF pWHttp.GetLastResult = S_OK THEN
    ' // Convert percent symbols to escape sequences.
    PRINT pWHttp.GetOption(WinHttpRequestOption_EscapePercentInURL)
 END IF
+Sleep
 ```
 
 # <a name="SetProxy"></a>SetProxy
