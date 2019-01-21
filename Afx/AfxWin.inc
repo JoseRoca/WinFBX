@@ -3265,7 +3265,7 @@ END FUNCTION
 ' Unicode replacement for Free Basic's FileCopy.
 ' Returns 0 on success, or 1 if an error occurred.
 ' ========================================================================================
-PRIVATE FUNCTION AfxFilecopy (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR) AS LONG
+PRIVATE FUNCTION AfxFileCopy (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR) AS LONG
    DIM nRet AS LONG = IIF(CopyFileW(lpExistingFileName, lpNewFileName, FALSE) = 0, 1, 0)
    RETURN nRet
 END FUNCTION

@@ -346,7 +346,7 @@ PRIVATE FUNCTION CImageCtx.DrawImage (BYVAL hwnd AS HWND, BYVAL _hDC AS HDC, BYV
    Dim hbit As HBITMAP               ' // Double buffering
 
    ' // Check parameters validity
-   IF hWnd = NULL OR _hDC = NULL OR pImage = NULL THEN RETURN E_POINTER
+   IF hWnd = NULL OR _hDC = NULL THEN RETURN E_POINTER
    ' // Get a pointer to the class
    pImageCtx = CAST(CImageCtx PTR, GetWindowLongPtrW(hwnd, 0))
    IF pImageCtx = NULL THEN EXIT FUNCTION
@@ -376,7 +376,7 @@ PRIVATE FUNCTION CImageCtx.DrawImage (BYVAL hwnd AS HWND, BYVAL _hDC AS HDC, BYV
    hStatus = .GdipCreateFromHDC(memDC, @pGraphics)
    
    ' // Draws the image
-   IF pGraphics THEN
+   IF ( pGraphics ) andalso ( pImage )THEN
       nFit = pImageCtx->m_Fit
       IF nFit = GDIP_IMAGECTX_AUTOSIZE THEN
          IF (ImageWidth \ (rc.Right - rc.Left)) > (ImageHeight \ (rc.Bottom - rc.Top)) THEN
@@ -708,6 +708,23 @@ END SUB
 ' ========================================================================================
 
 ' ========================================================================================
+' Returns a pointer to the class given the handle of its associated window handle.
+' hCtl = Handle of the image control.
+' ========================================================================================
+PRIVATE FUNCTION AfxCImageCtxPtr OVERLOAD (BYVAL hCtl AS HWND) AS CImageCtx PTR
+   FUNCTION = CAST(CImageCtx PTR, .GetWindowLongPtrW(hCtl, 0))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' hParent = Handle of the parent window of the image control.
+' cID = Identifier of the image control.
+' ========================================================================================
+PRIVATE FUNCTION AfxCImageCtxPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CImageCtx PTR
+   FUNCTION = CAST(CImageCtx PTR, .GetWindowLongPtrW(GetDlgItem(hParent, cID), 0))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Sets the size of the image
 ' Parameters:
 ' - nWidth = Width of the image, in pixels.
@@ -743,23 +760,6 @@ PRIVATE SUB CImageCtx.SetImageHeight (BYVAL nHeight AS LONG, BYVAL fRedraw AS LO
    m_ImageHeight = nHeight
    IF fRedraw THEN this.Redraw
 END SUB
-' ========================================================================================
-
-' ========================================================================================
-' Returns a pointer to the class given the handle of its associated window handle.
-' hCtl = Handle of the image control.
-' ========================================================================================
-PRIVATE FUNCTION AfxCImageCtxPtr OVERLOAD (BYVAL hCtl AS HWND) AS CImageCtx PTR
-   FUNCTION = CAST(CImageCtx PTR, .GetWindowLongPtrW(hCtl, 0))
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
-' hParent = Handle of the parent window of the image control.
-' cID = Identifier of the image control.
-' ========================================================================================
-PRIVATE FUNCTION AfxCImageCtxPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CImageCtx PTR
-   FUNCTION = CAST(CImageCtx PTR, .GetWindowLongPtrW(GetDlgItem(hParent, cID), 0))
-END FUNCTION
 ' ========================================================================================
 
 END NAMESPACE
