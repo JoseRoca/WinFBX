@@ -490,9 +490,9 @@ IF hFile THEN
 END IF
 ```
 
-# <a name="AfxExtractResource"></a>AfxExtractResource
+# <a name="AfxExtractResourceToFile"></a>AfxExtractResourceToFile
 
-Extracts resource data and returns it as a string.
+Extracts resource data and saves it to a file.
 
 ```
 FUNCTION AfxExtractResourceToFile (BYVAL hInstance AS HINSTANCE, BYREF wszResourceName AS WSTRING, _
