@@ -469,6 +469,41 @@ FUNCTION AfxExtractResource (BYVAL hInstance AS HINSTANCE, _
 
 A string containing the resource data.
 
+# <a name="AfxExtractResource"></a>AfxExtractResource
+
+Extracts resource data and returns it as a string.
+
+```
+FUNCTION AfxExtractResourceToFile (BYVAL hInstance AS HINSTANCE, BYREF wszResourceName AS WSTRING, _
+   BYREF wszFileName AS WSTRING, BYVAL pResourceType AS LPWSTR) AS STRING
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hInstance* | A handle to the module whose portable executable file or an accompanying MUI file contains the resource. If this parameter is NULL, the function searches the module used to create the current process. |
+| *wszResourceName* | Name of the resource. If the resource is an image that uses an integral identifier, *wszResourceName* should begin with a number symbol (#) followed by the identifier in an ASCII format, e.g., "#998". Otherwise, use the text identifier name for the image. Only images embedded as raw data (type RCDATA) are valid. These must be in format .png, .jpg, .gif, .tiff. |
+| *wszFileName* | Path of the file where to save the extracted resource. |
+| *pResourceType* | Type of the resource, e.g. RT_RCDATA. For a list of predefined resource types see: [Resource Types](https://docs.microsoft.com/en-us/windows/desktop/menurc/resource-types) |
+
+#### Return value
+
+TRUE on success of FALSE on failure.
+
+#### Example
+
+```
+AfxExtractResourceToFile(NULL, "IDI_ARROW_RIGHT", "IDI_ARROW_RIGHT.png", RT_RCDATA)
+where IDI_ARROW_RIGHT is the identifier in the resource file for
+IDI_ARROW_RIGHT RCDATA ".\Resources\arrow_right_64.png"
+```
+#### Example
+
+```
+'    AfxExtractResourceToFile(NULL, "#111", "VEGA_PAZ_01.jpg", RT_RCDATA)
+'    where "#111" is the identifier in the resource file for
+'    111 RCDATA ".\Resources\VEGA_PAZ_01.jpg"
+```
+
 # <a name="AfxGetComputerName"></a>AfxGetComputerName
 
 Retrieves the NetBIOS name of the local computer. This name is established at system startup, when the system reads it from the registry.
