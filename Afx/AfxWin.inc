@@ -1167,6 +1167,119 @@ PRIVATE FUNCTION AfxGetMACAddress () AS STRING
 END FUNCTION
 ' ========================================================================================
 
+' ========================================================================================
+' Extracts resource data and returns it as a string.
+' Parameters:
+' - hInstance       = [in] A handle to the module whose portable executable file or an accompanying
+'                     MUI file contains the resource. If this parameter is NULL, the function searches
+'                     the module used to create the current process.
+' - wszResourceName = [in] Name of the resource. If the resource is an image that uses an integral
+'                     identifier, wszResourceName should begin with a number symbol (#)
+'                     followed by the identifier in an ASCII format, e.g., "#998". Otherwise,
+'                     use the text identifier name for the image. Only images embedded as raw data
+'                     (type RCDATA) are valid. These must be in format .png, .jpg, .gif, .tiff.
+' - pResourceType   = Type of the resource, e.g. RT_RCDATA. For a list of predefined resource types see:
+'                     https://docs.microsoft.com/en-us/windows/desktop/menurc/resource-types
+' Return Value:
+'    A string containing the resource data.
+' Example:
+' DIM strResData AS STRING = AfxExtractResource(NULL, "IDI_ARROW_RIGHT", RT_RCDATA)
+'   - where IDI_ARROW_RIGHT is the identifier in the resource file for
+'     IDI_ARROW_RIGHT RCDATA ".\Resources\arrow_right_64.png"
+' --or--
+' DIM strResData AS STRING = AfxExtractResource(NULL, "#111", RT_RCDATA)
+'   - where "#111" is the identifier in the resource file for
+'   - 111 RCDATA ".\Resources\VEGA_PAZ_01.jpg"
+' -----
+' // Write the resource data to a file
+' DIM hFile AS HANDLE = CreateFileW("PazVega.jpg", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL)
+' IF hFile THEN
+'    DIM dwBytesWritten AS DWORD
+'    DIM bSuccess AS BOOLEAN = WriteFile(hFile, STRPTR(strResData), LEN(strResData), @dwBytesWritten, NULL)
+'    CloseHandle(hFile)
+'    print bSuccess
+' END IF
+' ========================================================================================
+PRIVATE FUNCTION AfxExtractResource (BYVAL hInstance AS HINSTANCE, _
+   BYREF wszResourceName AS WSTRING, BYVAL pResourceType AS LPWSTR) AS STRING
+
+   ' // Find the resource
+   DIM hRes AS HRSRC
+   IF LEFT(wszResourceName, 1) = "#" THEN
+      DIM wID AS WORD = VAL(MID(wszResourceName, 2))
+      DIM dwID AS DWORD = MAKELONG(wID, 0)
+      hRes = FindResourceW(hInstance, MAKEINTRESOURCEW(dwID), pResourceType)
+   ELSE
+      hRes = FindResourceW(hInstance, wszResourceName, pResourceType)
+   END IF
+   IF hRes = NULL THEN RETURN ""
+   ' // Retrieve the resource size
+   DIM ResSize AS DWORD = SizeofResource(hInstance, hRes)
+   IF ResSize = 0 THEN RETURN ""
+   ' // Lock the resource
+   DIM pResData AS LPVOID = LockResource(LoadResource(hInstance, hRes))
+   IF pResData = NULL THEN RETURN ""
+   DIM strResData AS STRING = SPACE(ResSize)
+   memcpy STRPTR(strResData), pResData, ResSize
+   RETURN strResData
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Extracts resource data and saves it to a file.
+' Parameters:
+' - hInstance       = [in] A handle to the module whose portable executable file or an accompanying
+'                     MUI file contains the resource. If this parameter is NULL, the function searches
+'                     the module used to create the current process.
+' - wszResourceName = [in] Name of the resource. If the resource is an image that uses an integral
+'                     identifier, wszResourceName should begin with a number symbol (#)
+'                     followed by the identifier in an ASCII format, e.g., "#998". Otherwise,
+'                     use the text identifier name for the image. Only images embedded as raw data
+'                     (type RCDATA) are valid. These must be in format .png, .jpg, .gif, .tiff.
+' - wszFileName     = Path of the file where to save the extracted resource.
+' - pResourceType   = Type of the resource, e.g. RT_RCDATA. For a list of predefined resource types see:
+'                     https://docs.microsoft.com/en-us/windows/desktop/menurc/resource-types
+' Return Value:
+'    Returns TRUE on success or FALSE on failure.
+' Example:
+'    AfxExtractResourceToFile(NULL, "IDI_ARROW_RIGHT", "IDI_ARROW_RIGHT.png", RT_RCDATA)
+'    where IDI_ARROW_RIGHT is the identifier in the resource file for
+'    IDI_ARROW_RIGHT RCDATA ".\Resources\arrow_right_64.png"
+' Example:
+'    AfxExtractResourceToFile(NULL, "#111", "VEGA_PAZ_01.jpg", RT_RCDATA)
+'    where "#111" is the identifier in the resource file for
+'    111 RCDATA ".\Resources\VEGA_PAZ_01.jpg"
+' ========================================================================================
+PRIVATE FUNCTION AfxExtractResourceToFile (BYVAL hInstance AS HINSTANCE, BYREF wszResourceName AS WSTRING, _
+   BYREF wszFileName AS WSTRING, BYVAL pResourceType AS LPWSTR) AS BOOLEAN
+
+   ' // Find the resource
+   DIM hRes AS HRSRC
+   IF LEFT(wszResourceName, 1) = "#" THEN
+      DIM wID AS WORD = VAL(MID(wszResourceName, 2))
+      DIM dwID AS DWORD = MAKELONG(wID, 0)
+      hRes = FindResourceW(hInstance, MAKEINTRESOURCEW(dwID), pResourceType)
+   ELSE
+      hRes = FindResourceW(hInstance, wszResourceName, pResourceType)
+   END IF
+   IF hRes = NULL THEN RETURN FALSE
+   ' // Retrieve the resource size
+   DIM ResSize AS DWORD = SizeofResource(hInstance, hRes)
+   IF ResSize = 0 THEN RETURN FALSE
+   ' // Lock the resource
+   DIM pResData AS LPVOID = LockResource(LoadResource(hInstance, hRes))
+   IF pResData = NULL THEN RETURN FALSE
+   ' // Write the resource data to a file
+   DIM hFile AS HANDLE = CreateFileW(wszFileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL)
+   IF hFile = INVALID_HANDLE_VALUE THEN RETURN FALSE
+   DIM dwBytesWritten AS DWORD
+   DIM bSuccess AS BOOLEAN = WriteFile(hFile, pResData, ResSize, @dwBytesWritten, NULL)
+   CloseHandle(hFile)
+   RETURN bSuccess
+
+END FUNCTION
+' ========================================================================================
 
 ' ########################################################################################
 '                                      *** WINDOW ***

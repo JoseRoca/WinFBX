@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+22 Jan 2019
+- Added the functions AfxExtractResource and AfxExtractResourceToFile to AfxWin.inc.
+
 3 Jan 2019
 - Added the function AfxCXpButtonPtr to CXpButton.inc.
 
