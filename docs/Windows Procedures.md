@@ -456,7 +456,7 @@ Extracts resource data and returns it as a string.
 
 ```
 FUNCTION AfxExtractResource (BYVAL hInstance AS HINSTANCE, _
-   BYREF wszResourceName AS WSTRING, BYVAL pResourceType AS LPWSTR) AS STRING
+   BYREF wszResourceName AS WSTRING, BYVAL pResourceType AS LPWSTR = RT_RCDATA) AS STRING
 ```
 
 | Parameter  | Description |
@@ -472,11 +472,11 @@ A string containing the resource data.
 #### Example
 
 ```
-DIM strResData AS STRING = AfxExtractResource(NULL, "IDI_ARROW_RIGHT", RT_RCDATA)
+DIM strResData AS STRING = AfxExtractResource(NULL, "IDI_ARROW_RIGHT")
 where IDI_ARROW_RIGHT is the identifier in the resource file for
 IDI_ARROW_RIGHT RCDATA ".\Resources\arrow_right_64.png"
 --or--
-DIM strResData AS STRING = AfxExtractResource(NULL, "#111", RT_RCDATA)
+DIM strResData AS STRING = AfxExtractResource(NULL, "#111")
 ' where "#111" is the identifier in the resource file for
 ' 111 RCDATA ".\Resources\VEGA_PAZ_01.jpg"
 -----
@@ -496,7 +496,7 @@ Extracts resource data and saves it to a file.
 
 ```
 FUNCTION AfxExtractResourceToFile (BYVAL hInstance AS HINSTANCE, BYREF wszResourceName AS WSTRING, _
-   BYREF wszFileName AS WSTRING, BYVAL pResourceType AS LPWSTR) AS STRING
+   BYREF wszFileName AS WSTRING, BYVAL pResourceType AS LPWSTR = RT_RCDATA) AS STRING
 ```
 
 | Parameter  | Description |
@@ -513,14 +513,14 @@ TRUE on success of FALSE on failure.
 #### Example
 
 ```
-AfxExtractResourceToFile(NULL, "IDI_ARROW_RIGHT", "IDI_ARROW_RIGHT.png", RT_RCDATA)
+AfxExtractResourceToFile(NULL, "IDI_ARROW_RIGHT", "IDI_ARROW_RIGHT.png")
 where IDI_ARROW_RIGHT is the identifier in the resource file for
 IDI_ARROW_RIGHT RCDATA ".\Resources\arrow_right_64.png"
 ```
 #### Example
 
 ```
-AfxExtractResourceToFile(NULL, "#111", "VEGA_PAZ_01.jpg", RT_RCDATA)
+AfxExtractResourceToFile(NULL, "#111", "VEGA_PAZ_01.jpg")
 where "#111" is the identifier in the resource file for
 111 RCDATA ".\Resources\VEGA_PAZ_01.jpg"
 ```
