@@ -463,7 +463,7 @@ FUNCTION AfxExtractResource (BYVAL hInstance AS HINSTANCE, _
 | ---------- | ----------- |
 | *hInstance* | A handle to the module whose portable executable file or an accompanying MUI file contains the resource. If this parameter is NULL, the function searches the module used to create the current process. |
 | *wszResourceName* | Name of the resource. If the resource is an image that uses an integral identifier, *wszResourceName* should begin with a number symbol (#) followed by the identifier in an ASCII format, e.g., "#998". Otherwise, use the text identifier name for the image. Only images embedded as raw data (type RCDATA) are valid. These must be in format .png, .jpg, .gif, .tiff. |
-| *pResourceType* | Type of the resource, e.g. RT_RCDATA. For a list of predefined resource types see: [Resource Types] (https://docs.microsoft.com/en-us/windows/desktop/menurc/resource-types) |
+| *pResourceType* | Type of the resource, e.g. RT_RCDATA. For a list of predefined resource types see: [Resource Types](https://docs.microsoft.com/en-us/windows/desktop/menurc/resource-types) |
 
 #### Return value
 
