@@ -188,6 +188,8 @@ Assorted Windows procedures.
 | ---------- | ----------- |
 | [AfxCommand](#AfxCommand) | Returns command line parameters used to call the program. |
 | [AfxEnviron](#AfxEnviron) | Retrieves the contents of the specified variable from the environment block of the calling process. |
+| [AfxExtractResource](#AfxExtractResource) | Extracts resource data and returns it as a string. |
+| [AfxExtractResourceToFile](#AfxExtractResourceToFile) | Extracts resource data and saves it to a file. |
 | [AfxGetComputerName](#AfxGetComputerName) | Retrieves the NetBIOS name of the local computer. |
 | [AfxGetMACAddress](#AfxGetMACAddress) | Retrieves the MAC address of a machine's Ethernet card. |
 | [AfxGetUserName](#AfxGetUserName) | Retrieves the name of the user associated with the current thread. |
@@ -447,6 +449,25 @@ FUNCTION AfxSetDlgMsgResult (BYVAL hDlg AS HWND, BYVAL msg AS UINT, BYVAL result
 #### Return value
 
 If the function succeeds, the return value is TRUE. If the function fails, the return value is FALSE.
+
+# <a name="AfxExtractResource"></a>AfxExtractResource
+
+Extracts resource data and returns it as a string.
+
+```
+FUNCTION AfxExtractResource (BYVAL hInstance AS HINSTANCE, _
+   BYREF wszResourceName AS WSTRING, BYVAL pResourceType AS LPWSTR) AS STRING
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hInstance* | A handle to the module whose portable executable file or an accompanying MUI file contains the resource. If this parameter is NULL, the function searches the module used to create the current process. |
+| *wszResourceName* | Name of the resource. If the resource is an image that uses an integral identifier, *wszResourceName* should begin with a number symbol (#) followed by the identifier in an ASCII format, e.g., "#998". Otherwise, use the text identifier name for the image. Only images embedded as raw data (type RCDATA) are valid. These must be in format .png, .jpg, .gif, .tiff. |
+| *pResourceType* | Type of the resource, e.g. RT_RCDATA. For a list of predefined resource types see: \[Resource Types] (https://docs.microsoft.com/en-us/windows/desktop/menurc/resource-types) |
+
+#### Return value
+
+A string containing the resource data.
 
 # <a name="AfxGetComputerName"></a>AfxGetComputerName
 
