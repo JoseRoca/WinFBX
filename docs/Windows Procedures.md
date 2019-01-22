@@ -469,6 +469,27 @@ FUNCTION AfxExtractResource (BYVAL hInstance AS HINSTANCE, _
 
 A string containing the resource data.
 
+#### Example
+
+```
+DIM strResData AS STRING = AfxExtractResource(NULL, "IDI_ARROW_RIGHT", RT_RCDATA)
+where IDI_ARROW_RIGHT is the identifier in the resource file for
+IDI_ARROW_RIGHT RCDATA ".\Resources\arrow_right_64.png"
+--or--
+DIM strResData AS STRING = AfxExtractResource(NULL, "#111", RT_RCDATA)
+' where "#111" is the identifier in the resource file for
+' 111 RCDATA ".\Resources\VEGA_PAZ_01.jpg"
+-----
+' // Write the resource data to a file
+DIM hFile AS HANDLE = CreateFileW("PazVega.jpg", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL)
+IF hFile THEN
+   DIM dwBytesWritten AS DWORD
+   DIM bSuccess AS BOOLEAN = WriteFile(hFile, STRPTR(strResData), LEN(strResData), @dwBytesWritten, NULL)
+   CloseHandle(hFile)
+   print bSuccess
+END IF
+```
+
 # <a name="AfxExtractResource"></a>AfxExtractResource
 
 Extracts resource data and returns it as a string.
@@ -499,9 +520,9 @@ IDI_ARROW_RIGHT RCDATA ".\Resources\arrow_right_64.png"
 #### Example
 
 ```
-'    AfxExtractResourceToFile(NULL, "#111", "VEGA_PAZ_01.jpg", RT_RCDATA)
-'    where "#111" is the identifier in the resource file for
-'    111 RCDATA ".\Resources\VEGA_PAZ_01.jpg"
+AfxExtractResourceToFile(NULL, "#111", "VEGA_PAZ_01.jpg", RT_RCDATA)
+where "#111" is the identifier in the resource file for
+111 RCDATA ".\Resources\VEGA_PAZ_01.jpg"
 ```
 
 # <a name="AfxGetComputerName"></a>AfxGetComputerName
