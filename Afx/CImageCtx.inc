@@ -473,14 +473,14 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' UNTESTED
 ' Loads a bitmap from a resource file using GDI+
 ' Parameters:
 ' - hInstance = Instance handle
 ' - wszResourceName = Name of the resource.
 ' Return value:
 '   Ok or an error code.
-' Note: In Windows 7, it fails to load .jpg and .tif files. Works with .bmp and .png files.
+' Note: Because GdipCreateBitmapFromResource uses LoadImageW to load the resource, it only
+' works with icons or bitmaps. It works with .bmp and .png files, but fails with .jpg and .tif files.
 ' ========================================================================================
 PRIVATE FUNCTION CImageCtx.LoadBitmapFromResource (BYVAL hInstance AS HINSTANCE, BYREF wszResourceName AS WSTRING) AS LONG
    IF LEN(wszResourceName) = 0 THEN RETURN E_INVALIDARG
@@ -498,7 +498,6 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' UNTESTED
 ' Loads an image from a resource file using GDI+
 ' Parameters:
 ' - hInstance = Instance handle
