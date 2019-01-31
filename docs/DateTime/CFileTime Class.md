@@ -8,7 +8,7 @@ The following static const member variables are provided to simplify calculation
 
 ```
 CFileTime_Millisecond    10,000
-CFileTime_Second         CFileTime_Millisecond * 1,000
+CFileTime_Second         CFileTime_Millisecond * 1000
 CFileTime_Minute         CFileTime_Second * 60
 CFileTime_Hour           CFileTime_Minute * 60
 CFileTime_Day            CFileTime_Hour * 24
