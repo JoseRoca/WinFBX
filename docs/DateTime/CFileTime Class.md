@@ -7,7 +7,7 @@ The date and time value is stored as a 64-bit value representing the number of 1
 The following static const member variables are provided to simplify calculations (number of 100-nanosecond intervals):
 
 ```
-CFileTime_Millisecond    10,000
+CFileTime_Millisecond    10000ull
 CFileTime_Second         CFileTime_Millisecond * 1000
 CFileTime_Minute         CFileTime_Second * 60
 CFileTime_Hour           CFileTime_Minute * 60
