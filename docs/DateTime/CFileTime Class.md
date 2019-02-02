@@ -2,7 +2,7 @@
 
 This class provides methods for managing the date and time values associated with the creation, access and modification of files. The methods and data of this class are frequently used in conjunction with **CFileTimeSpan** objects, which deal with relative time values.
 
-The date and time value is stored as a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601. This is the Coordinated Universal Time (UTC) format.
+The date and time value is stored as a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601. A nanosecond is one-billionth of a second.
 
 The following static const member variables are provided to simplify calculations (number of 100-nanosecond intervals):
 
