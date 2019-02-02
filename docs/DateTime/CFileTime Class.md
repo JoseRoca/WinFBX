@@ -36,7 +36,7 @@ CFileTime_Week           CFileTime_Day * 7
 | [Minute](#Minute) | Returns the number of 100-nanosecond intervals that make up one minute. |
 | [Second](#Second) | Returns the number of 100-nanosecond intervals that make up one second. |
 | [SetTime](#SetTime) | Sets the date and time of this **CFileTime** object. |
-| [TimeString](#DateString) | Retuns the time as a string based on the specified mask, e.g. "dd-MM-yyyy". |
+| [TimeString](#TimeString) | Retuns the time as a string based on the specified mask, e.g. "dd-MM-yyyy". |
 | [UTCToLocal](#UTCToLocal) | Converts time based on the Coordinated Universal Time (UTC) to local file time. |
 | [Week](#Week) | Returns the number of 100-nanosecond intervals that make up one week. |
 
