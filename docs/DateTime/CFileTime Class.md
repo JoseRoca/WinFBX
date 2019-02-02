@@ -312,6 +312,40 @@ The following table defines the format types used to represent years.
 The formatted date.
 
 
+# <a name="TimeString"></a>TimeString
+
+Retuns the time as a string based on the specified mask, e.g. "hh':'mm':'ss".
+
+```
+FUNCTION TimeString (BYREF wszMask AS WSTRING, BYVAL lcid AS LCID = LOCALE_USER_DEFAULT) AS CWSTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ft* | A FILETIME structure. |
+| *wszMask* | A picture string that is used to form the time. |
+| *lcid* | Optional. The language identifier used for the conversion. Default is LOCALE_USER_DEFAULT. |
+
+
+The application can use the following elements to construct a format picture string. If spaces are used to separate the elements in the format string, these spaces appear in the same location in the output string. The letters must be in uppercase or lowercase as shown, for example, "ss", not "SS". Characters in the format string that are enclosed in single quotation marks appear in the same location and unchanged in the output string.
+
+| Picture    | Meaning |
+| ---------- | ----------- |
+| h | Hours with no leading zero for single-digit hours; 12-hour clock |
+| hh | Hours with leading zero for single-digit hours; 12-hour clock |
+| H | Hours with no leading zero for single-digit hours; 24-hour clock |
+| HH | Hours with leading zero for single-digit hours; 24-hour clock |
+| m | Minutes with no leading zero for single-digit minutes |
+| mm | Minutes with leading zero for single-digit minutes |
+| s | Seconds with no leading zero for single-digit seconds |
+| ss | Seconds with leading zero for single-digit seconds |
+| t | One character time marker string, such as A or P |
+| tt | Multi-character time marker string, such as AM or PM |
+
+#### Return value
+
+The formatted time.
+
 # <a name="Format"></a>Format (CFileTime)
 
 Converts a **CFileTime** object to a string.
@@ -454,37 +488,3 @@ FUNCTION SetTimeSpan (BYVAL nSpan AS LONGLONG)
 | Parameter  | Description |
 | ---------- | ----------- |
 | *nSpan* | The new value for the time span in milliseconds. |
-
-# <a name="TimeString"></a>TimeString
-
-Retuns the time as a string based on the specified mask, e.g. "hh':'mm':'ss".
-
-```
-FUNCTION TimeString (BYREF wszMask AS WSTRING, BYVAL lcid AS LCID = LOCALE_USER_DEFAULT) AS CWSTR
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *ft* | A FILETIME structure. |
-| *wszMask* | A picture string that is used to form the time. |
-| *lcid* | Optional. The language identifier used for the conversion. Default is LOCALE_USER_DEFAULT. |
-
-
-The application can use the following elements to construct a format picture string. If spaces are used to separate the elements in the format string, these spaces appear in the same location in the output string. The letters must be in uppercase or lowercase as shown, for example, "ss", not "SS". Characters in the format string that are enclosed in single quotation marks appear in the same location and unchanged in the output string.
-
-| Picture    | Meaning |
-| ---------- | ----------- |
-| h | Hours with no leading zero for single-digit hours; 12-hour clock |
-| hh | Hours with leading zero for single-digit hours; 12-hour clock |
-| H | Hours with no leading zero for single-digit hours; 24-hour clock |
-| HH | Hours with leading zero for single-digit hours; 24-hour clock |
-| m | Minutes with no leading zero for single-digit minutes |
-| mm | Minutes with leading zero for single-digit minutes |
-| s | Seconds with no leading zero for single-digit seconds |
-| ss | Seconds with leading zero for single-digit seconds |
-| t | One character time marker string, such as A or P |
-| tt | Multi-character time marker string, such as AM or PM |
-
-#### Return value
-
-The formatted time.
