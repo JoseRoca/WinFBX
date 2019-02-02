@@ -323,11 +323,11 @@ FUNCTION AfxFileTimeToTimeStr (BYREF ft AS FILETIME, BYREF wszMask AS WSTRING, _
 | Parameter  | Description |
 | ---------- | ----------- |
 | *ft* | A FILETIME structure. |
-| *wszMask* | A picture string that is used to form the date.<br>The format types "d", and "y" must be lowercase and the letter "M" must be uppercase.<br>For example, to get the date string "Wed, Aug 31 94", the application uses the picture string "ddd',' MMM dd yy". |
+| *wszMask* | A picture string that is used to form the time. |
 | *lcid* | Optional. The language identifier used for the conversion. Default is LOCALE_USER_DEFAULT. |
 
 
-A picture string that is used to form the time.
+The application can use the following elements to construct a format picture string. If spaces are used to separate the elements in the format string, these spaces appear in the same location in the output string. The letters must be in uppercase or lowercase as shown, for example, "ss", not "SS". Characters in the format string that are enclosed in single quotation marks appear in the same location and unchanged in the output string.
 
 | Picture    | Meaning |
 | ---------- | ----------- |
