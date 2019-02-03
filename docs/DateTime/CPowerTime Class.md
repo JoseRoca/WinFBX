@@ -19,6 +19,13 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [CAST Operator](#CastOp1) | Returns the **CPowerTime** value as a long integer. |
 | [LET Operator](#LetOp1) | Assigns a value to a **CPowerTime** object. |
 | [Operators](#Operators1) | Adds, subtracts or compares **CPowerTime** objects. |
+| [AddDays](#AddDays) | Adds the specified number of days to this **CPowerTime** object. You can subtract years by using a negative number. |
+| [AddHours](#AddHours) | Adds the specified number of hours to this **CPowerTime** object. You can subtract years by using a negative number. |
+| [AddMinutes](#AddMinutes) | Adds the specified number of minutes to this **CPowerTime** object. You can subtract years by using a negative number. |
+| [AddMonths](#AddMonths) | Adds the specified number of months to this **CPowerTime** object. You can subtract years by using a negative number. |
+| [AddMSeconds](#AddMSconds) | Adds the specified number of milliseconds to this **CPowerTime** object. You can subtract years by using a negative number. |
+| [AddSeconds](#AddSconds) | Adds the specified number of seconds to this **CPowerTime** object. You can subtract years by using a negative number. |
+| [AddYears](#AddYears) | Adds the specified number of years to this **CPowerTime** object. You can subtract years by using a negative number. |
 | [AstroDay](#AstroDay) | Returns the Astronomical Day for any given date. |
 | [DateString](#DateString) | Retuns the date as a string based on the specified mask, e.g. "dd-MM-yyyy". |
 | [Day](#Day) | Returns the Day component of the **CPowerTime** object. It is a  value in the range of 1-31. |
@@ -138,6 +145,91 @@ OPERATOR > (BYREF dt1 AS CPowerTime, BYREF dt2 AS CPowerTime) AS BOOLEAN
 OPERATOR <= (BYREF dt1 AS CPowerTime, BYREF dt2 AS CPowerTime) AS BOOLEAN
 OPERATOR >= (BYREF dt1 AS CPowerTime, BYREF dt2 AS CPowerTime) AS BOOLEAN
 ```
+
+# <a name="AddDays"></a>AddDays
+
+Adds the specified number of days to this **CPowerTime** object. You can subtract years by using a negative number.
+
+```
+SUB AddDays (BYVAL nDays AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nDays* | The number of days. |
+
+# <a name="AddHours"></a>AddHours
+
+Adds the specified number of hours to this **CPowerTime** object. You can subtract years by using a negative number.
+
+```
+AddHours (BYVAL nHours AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nHours* | The number of hours. |
+
+# <a name="AddMinutes"></a>AddMinutes
+
+Adds the specified number of minutes to this **CPowerTime** object. You can subtract years by using a negative number.
+
+```
+SUB AddMinutes (BYVAL nMinutes AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nMinutes* | The number of minutes. |
+
+# <a name="AddMonths"></a>AddMonths
+
+Adds the specified number of months to this **CPowerTime** object. You can subtract years by using a negative number.
+
+```
+SUB AddMonths (BYVAL nMonths AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nMonths* | The number of months. |
+
+# <a name="AddMSeconds"></a>AddMSeconds
+
+Adds the specified number of milliseconds to this **CPowerTime** object. You can subtract years by using a negative number.
+
+```
+SUB AddSeconds (BYVAL nSeconds AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nSeconds* | The number of seconds. |
+
+# <a name="AddSeconds"></a>AddSeconds
+
+Adds the specified number of seconds to this **CPowerTime** object. You can subtract years by using a negative number.
+
+```
+SUB AddMSeconds (BYVAL nMSeconds AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nMSeconds* | The number of milliseconds. |
+
+# <a name="AddYears"></a>AddYears
+
+Adds the specified number of years to this **CPowerTime** object. You can subtract years by using a negative number.
+
+```
+SUB AddYears (BYVAL nYears AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nYears* | The number of years. |
+
 # <a name="AstroDay"></a>AstroDay
 
 Returns the Astronomical Day for any given date.
