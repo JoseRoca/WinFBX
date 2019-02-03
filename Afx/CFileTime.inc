@@ -236,6 +236,8 @@ Public:
    DECLARE FUNCTION GetAsFileTime () AS FILETIME
    DECLARE FUNCTION GetAsSystemTime () AS SYSTEMTIME
    DECLARE FUNCTION Format (BYREF wszFmt AS WSTRING) AS CWSTR
+   DECLARE FUNCTION DateString (BYREF wszFmt AS WSTRING, BYVAL lcid AS LCID = LOCALE_USER_DEFAULT) AS CWSTR
+   DECLARE FUNCTION TimeString (BYREF wszFmt AS WSTRING, BYVAL lcid AS LCID = LOCALE_USER_DEFAULT) AS CWSTR
 
 END TYPE
 ' ========================================================================================
@@ -481,6 +483,27 @@ PRIVATE FUNCTION CFileTime.Format (BYREF wszFmt AS WSTRING) AS CWSTR
 END FUNCTION
 ' ========================================================================================
 
+' ========================================================================================
+' Retuns the date as a string based on the specified mask, e.g. "dd-MM-yyyy".
+' ========================================================================================
+PRIVATE FUNCTION CFileTime.DateString (BYREF wszMask AS WSTRING, BYVAL lcid AS LCID = LOCALE_USER_DEFAULT) AS CWSTR
+   DIM st AS SYSTEMTIME = this.GetAsSystemTime
+   DIM wszDateStr AS WSTRING * 260
+   GetDateFormatW(lcid, NULL, @st, wszMask, wszDateStr, SIZEOF(wszDateStr))
+   RETURN wszDateStr
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retuns the time as a string based on the specified mask, e.g. "hh':'mm':'ss".
+' ========================================================================================
+PRIVATE FUNCTION CFileTime.TimeString (BYREF wszMask AS WSTRING, BYVAL lcid AS LCID = LOCALE_USER_DEFAULT) AS CWSTR
+   DIM st AS SYSTEMTIME = this.GetAsSystemTime
+   DIM wszDateStr AS WSTRING * 260
+   GetTimeFormatW(lcid, NULL, @st, wszMask, wszDateStr, SIZEOF(wszDateStr))
+   RETURN wszDateStr
+END FUNCTION
+' ========================================================================================
 
 END NAMESPACE
 
