@@ -42,7 +42,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [GetFileTime](#GetFileTime) | Returns the value of the **CPowerTime** object. |
 | [Hour](#Hour) | Returns the Hour component of the **CPowerTime** object. It is a numeric value in the range of 0-23. |
 | [IsLeapYear](#IsLeapYear) | Determines if a given year is a leap year or not. |
-| [LocalToUTC](#LocalToUTC) | Converts a local file time to a file time based on the Coordinated Universal Time (UTC). |
+| [JulianToGregorian](#JulianToGregorian) | Converts a Julian date to a Gregorian date. |
 | [Minute](#Minute) | Returns the Minute component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
 | [Month](#Month) | Returns the Month component of the **CPowerTime** object. It is a  value in the range of 1-12. |
 | [MonthString](#MonthString) | Returns the Month component of the **CPowerTime** object as a string. |
@@ -386,6 +386,22 @@ FUNCTION IsLeapYear (BYVAL nYear AS LONG = 0) AS BOOLEAN
 #### Return value
 
 TRUE or FALSE.
+
+# <a name="JulianToGregorian"></a>JulianToGregorian
+
+Converts a Julian date to a Gregorian date.
+
+```
+FUNCTION JulianToGregorian (BYVAL nJulian AS LONG, BYVAL nDay AS LONG, _
+   BYVAL nMonth AS LONG, BYVAL nYear AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nJulian* | The Julian date. |
+| *nDay* | Out. The day (1-31). |
+| *nMonth* | Out. The month (1-12). |
+| *nYear* | Out. The four digit year. |
 
 # <a name="Minute"></a>Minute
 
