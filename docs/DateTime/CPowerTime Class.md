@@ -30,6 +30,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [Hour](#Hour) | Returns the Hour component of the **CPowerTime** object. It is a numeric value in the range of 0-23. |
 | [LocalToUTC](#LocalToUTC) | Converts a local file time to a file time based on the Coordinated Universal Time (UTC). |
 | [Minute](#Minute) | Returns the Minute component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
+| [Month](#Month) | Returns the Month component of the **CPowerTime** object. It is a  value in the range of 1-12. |
 | [MSecond](#MSecond) | Returns the millisecond component of the **CPowerTime** object.This is a numeric value in the range of 0-999. |
 | [Second](#Second) | Returns the Second component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
 | [SetFileTime](#SetFileTime) | Sets the date and time of this **CPowerTime** object. |
@@ -180,6 +181,14 @@ Returns the Minute component of the **CPowerTime** object. This is a numeric val
 
 ```
 FUNCTION Minute () AS LONG
+```
+
+# <a name="Month"></a>Month
+
+Returns the Month component of the **CPowerTime** object. It is a  value in the range of 1-12.
+
+```
+FUNCTION Month () AS LONG
 ```
 
 # <a name="MSecond"></a>MSecond
