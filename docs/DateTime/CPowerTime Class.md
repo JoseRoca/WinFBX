@@ -578,6 +578,18 @@ Returns the date as a Julian date.
 FUNCTION GetAsJulianDate () AS LONG
 ```
 
+Converts a Gregorian date to a Julian date. The year must be a 4 digit year.
+
+```
+FUNCTION GetAsJulian (BYVAL nYear AS LONG, BYVAL nMonth AS LONG, BYVAL nDay AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nYear* | A four digit year. |
+| *nMonth* | A month number (1-12). |
+| *nDay* | A day number (1-31). |
+
 # <a name="GetAsSystemTime"></a>GetAsSystemTime
 
 Returns the date and time as a **SYSTEMTIME** structure.
