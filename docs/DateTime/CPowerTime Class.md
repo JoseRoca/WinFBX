@@ -215,9 +215,8 @@ FUNCTION Hour () AS LONG
 # <a name="IsLeapYear"></a>IsLeapYear
 
 Determines if a given year is a leap year or not.
-' Note: A leap year is defined as all years divisible by 4, except for years divisible by
-' 100 that are not also divisible by 400. Years divisible by 400 are leap years. 2000 is a
-' leap year. 1900 is not a leap year.
+
+A leap year is defined as all years divisible by 4, except for years divisible by 100 that are not also divisible by 400. Years divisible by 400 are leap years. 2000 is a eap year. 1900 is not a leap year.
 
 ```
 FUNCTION IsLeapYear (BYVAL nYear AS LONG = 0) AS BOOLEAN
