@@ -37,6 +37,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [Second](#Second) | Returns the Second component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
 | [SetFileTime](#SetFileTime) | Sets the date and time of this **CPowerTime** object. |
 | [TimeString](#TimeString) | Retuns the time as a string based on the specified mask, e.g. "dd-MM-yyyy". |
+| [Today](#Today) | Assigns the current local date on this computer to this **CPowerTime** object. |
 | [UTCToLocal](#UTCToLocal) | Converts time based on the Coordinated Universal Time (UTC) to local file time. |
 | [Year](#Year) | Returns the Year component of the **CPowerTime** object. |
 
@@ -410,6 +411,14 @@ FUNCTION SetFileTime (BYVAL nTime AS ULONGLONG)
 | Parameter  | Description |
 | ---------- | ----------- |
 | *nTime* | The date and time expressed as a 64-bit value. |
+
+# <a name="Today"></a>Today
+
+Assigns the current local date on this computer to this **CPowerTime** object.
+
+```
+SUB Today
+```
 
 # <a name="ToUTC"></a>ToUTC
 
