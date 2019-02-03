@@ -27,6 +27,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [AddSeconds](#AddSeconds) | Adds the specified number of seconds to this **CPowerTime** object. You can subtract seconds by using a negative number. |
 | [AddYears](#AddYears) | Adds the specified number of years to this **CPowerTime** object. You can subtract years by using a negative number. |
 | [AstroDay](#AstroDay) | Returns the Astronomical Day for any given date. |
+| [AstroDayOfWeek](#AstroDayOfWeek) | Returns the Astronomical Day for any given date. |
 | [DateString](#DateString) | Retuns the date as a string based on the specified mask, e.g. "dd-MM-yyyy". |
 | [Day](#Day) | Returns the Day component of the **CPowerTime** object. It is a  value in the range of 1-31. |
 | [DaysInMonth](#DaysInMonth) | Returns the number of days in the specified month. |
@@ -56,6 +57,8 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [TimeString](#TimeString) | Retuns the time as a string based on the specified mask, e.g. "dd-MM-yyyy". |
 | [Today](#Today) | Assigns the current local date on this computer to this **CPowerTime** object. |
 | [UTCToLocal](#UTCToLocal) | Converts time based on the Coordinated Universal Time (UTC) to local file time. |
+| [WeekOne](#WeekOne) | Returns the first day of the first week of the year. |
+| [WeekNumber](#WeekNumber) | Returns the week number for a given date. |
 | [Year](#Year) | Returns the Year component of the **CPowerTime** object. |
 
 # <a name="Constructors1"></a>Constructors
@@ -269,6 +272,20 @@ PRINT cpt.AstroDay(-12400, 3, 1) - cpt.AstroDay(-12400, 2, 28)  ' Prints 2
 PRINT cpt.AstroDay(12000, 3, 1) - cpt.AstroDay(-12000, 2, 28) ' Prints 8765822
 PRINT cpt.AstroDay(1902, 2, 28) - cpt.AstroDay(1898, 3, 1)  ' Prints 1459 days
 ```
+
+# <a name="AstroDayOfWeek"></a>AstroDayOfWeek
+
+Calculates the day of the week, Sunday through Monday, of a given date.
+
+```
+FUNCTION AstroDayOfWeek (BYVAL nYear AS LONG = 0, BYVAL nMonth AS LONG = 0, BYVAL nDay AS LONG = 0) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nYear* | A four digit year. |
+| *nMonth* | A month number (1-12). |
+| *nDay* | A day number (1-31). |
 
 # <a name="Day"></a>Day
 
@@ -730,6 +747,34 @@ The CPowerTime object is converted to local time. It is assumed that the previou
 ```
 SUB ToLocalTime
 ```
+
+# <a name="WeekNumber"></a>WeekNumber
+
+Returns the week number for a given date. The year must be a 4 digit year. If a parameter is omited, the value stored in this **CPowerTime** object is assumed.
+
+```
+FUNCTION WeekNumber (BYVAL nYear AS LONG = 0, BYVAL nMonth AS LONG = 0, BYVAL nDay AS LONG = 0) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nYear* | A four digit year. |
+| *nMonth* | A month number (1-12). |
+| *nDay* | A day number (1-31). |
+
+# <a name="WeekOne"></a>WeekOne
+
+Returns the first day of the first week of a year. The year must be a 4 digit year. If the year is omited, the year of this **CPowerTime" object is assumed.
+
+```
+FUNCTION WeekOne (BYVAL nYear AS LONG = 0) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nYear* | A four digit year. |
+
+
 # <a name="Year"></a>Year
 
 Returns the Year component of the **CPowerTime** object.
