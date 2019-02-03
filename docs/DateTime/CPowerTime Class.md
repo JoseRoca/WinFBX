@@ -34,8 +34,10 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [DayOfWeekString](#DayOfWeekstring) | Returns the Day-of-Week component of the **CPowerTime** object as a string. |
 | [DaysDiff](#DaysDiff) | Returns the days of difference between two dates. |
 | [Format](#Format) | Converts a **CPowerTime** object to a string. |
-| [GetAsFileTime](#GetAsFileTime) | Returns the time as a **FILETIME** structure. |
-| [GetAsSystemTime](#GetAsSystemTime) | Returns the time as a **SYSTEMTIME** structure. |
+| [GetAsFileTime](#GetAsFileTime) | Returns the date and time as a **FILETIME** structure. |
+| [GetAsJulianDate](#GetAsJulianDate) | Returns the date as a Julian date. |
+| [GetAsSystemTime](#GetAsSystemTime) | Returns the date and time as a **SYSTEMTIME** structure. |
+| [GetAsVaiantTime](#GetAsVaiantTime) | Returns the date and time as a variant time. |
 | [GetCurrentTime](#GetCurrentTime) | Returns a **CPowerTime** object that represents the current system date and time. |
 | [GetFileTime](#GetFileTime) | Returns the value of the **CPowerTime** object. |
 | [Hour](#Hour) | Returns the Hour component of the **CPowerTime** object. It is a numeric value in the range of 0-23. |
@@ -562,18 +564,34 @@ print cft.Format("%A, %B %d, %Y %H:%M:%S")
 
 # <a name="GetAsFileTime"></a>GetAsFileTime
 
-Returns the time as a FILETIME structure.
+Returns the date and time as a FILETIME structure.
 
 ```
 FUNCTION GetAsFileTime () AS FILETIME
 ```
 
+# <a name="GetAsJulianDate"></a>GetAsJulianDate
+
+Returns the date as a Julian date.
+
+```
+FUNCTION GetAsJulianDate () AS LONG
+```
+
 # <a name="GetAsSystemTime"></a>GetAsSystemTime
 
-Returns the time as a **SYSTEMTIME** structure.
+Returns the date and time as a **SYSTEMTIME** structure.
 
 ```
 FUNCTION GetAsSystemTime () AS SYSTEMTIME
+```
+
+# <a name="GetAsVariantTime"></a>GetAsVariantTime
+
+Returns the date and time as a varaint time value.
+
+```
+FUNCTION GetAsVariantTime () AS DATE_
 ```
 
 # <a name="GetCurrentTime"></a>GetCurrentTime
