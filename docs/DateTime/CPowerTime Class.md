@@ -44,6 +44,8 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [Month](#Month) | Returns the Month component of the **CPowerTime** object. It is a  value in the range of 1-12. |
 | [MonthString](#MonthString) | Returns the Month component of the **CPowerTime** object as a string. |
 | [MSecond](#MSecond) | Returns the millisecond component of the **CPowerTime** object.This is a numeric value in the range of 0-999. |
+| [NewDate](#NewDate) | Sets a new date to this **CPowerTime** object. |
+| [NewTime](#NewTime) | Sets a new time to this **CPowerTime** object. |
 | [Now](#Now) | Assigns the current local date and time on this computer to this **CPowerTime** object. |
 | [NowUTC](#NowUTC) | Assigns the current Coordinated Universal date and time (UTC) to this **CPowerTime** object. |
 | [Second](#Second) | Returns the Second component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
@@ -362,7 +364,7 @@ Returns the Second component of the **CPowerTime** object. This is a numeric val
 FUNCTION Second () AS LONG
 ```
 
-# <a name="DsateString"></a>DateString
+# <a name="DateString"></a>DateString
 
 Retuns the date as a string based on the specified mask, e.g. "dd-MM-yyyy".
 
@@ -535,6 +537,39 @@ FUNCTION GetFileTime () AS LONGLONG
 DIM cft AS CPowerTime = CPowerTime().GetCurrentTime()
 print cft.GetFileTime
 ```
+
+# <a name="NewDate"></a>NewDate
+
+Sets a new date to this **CPowerTime** object.
+
+The date component of the **CPowerTime** object is assigned a new value based upon the specified parameters. The time component is unchanged. If parameters are invalid, **GetLastError** will return ERROR_INVALID_PARAMETER.
+
+```
+SUB NewDate (BYVAL nYear AS LONG = 0, BYVAL nMonth AS LONG = 0, BYVAL nDay AS LONG = 0)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nYear* | The new year. The valid values for this member are 1601 through 30827. |
+| *nMonth* | The new month. The valid values for this member are 1 through 12. |
+| *nDay* | The new day. The valid values for this member are 1 through 31. |
+
+# <a name="NewTime"></a>NewTime
+
+Sets a new time to this **CPowerTime** object.
+
+The time component of the **CPowerTime** object is assigned a new value based upon the specified parameters. The date component is unchanged. If parameters are invalid, **GetLastError** will return ERROR_INVALID_PARAMETER.
+
+```
+SUB NewTime (BYVAL nHour AS LONG = 0, BYVAL nMinute AS LONG = 0, BYVAL nSecond AS LONG = 0, BYVAL nMSecond AS LONG = 0)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nHour* | The new hour. The valid values for this member are 1 through 23. |
+| *nMinute* | The new minute. The valid values for this member are 1 through 59. |
+| *nSecond* | The new second. The valid values for this member are 1 through 59. |
+| *nMSecond* | The new milliseond. The valid values for this member are 1 through 999. |
 
 # <a name="Now"></a>Now
 
