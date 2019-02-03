@@ -32,6 +32,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [Day](#Day) | Returns the Day component of the **CPowerTime** object. It is a  value in the range of 1-31. |
 | [DaysInMonth](#DaysInMonth) | Returns the number of days in the specified month. |
 | [DayOfWeek](#DayOfWeek) | Returns the Day-of-Week component of the **CPowerTime** object. |
+| [DayOfYear](#DayOfYear) | Returns the day of the year, where Jan 1 is the first day of the year. |
 | [DayOfWeekString](#DayOfWeekstring) | Returns the Day-of-Week component of the **CPowerTime** object as a string. |
 | [DaysDiff](#DaysDiff) | Returns the days of difference between two dates. |
 | [DaysInYear](#DaysInYear) | Returns the number of days of the year. |
@@ -382,6 +383,21 @@ Returns the Day-of-Week name of the **CPowerTime** object, expressed as a string
 ```
 FUNCTION DayOfWeekString () AS CWSTR
 ```
+
+# <a name="DayOfYear"></a>DayOfYear
+
+Returns the day of the year, where Jan 1 is the first day of the year. If a parameter is omitted, the value stored in this **CPowerTime** object is assumed.
+
+```
+FUNCTION DayOfYear (BYVAL nYear AS LONG = 0, BYVAL nMonth AS LONG = 0, BYVAL nDay AS LONG = 0) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nYear* | A four digit year. |
+| *nMonth* | A month number (1-12). |
+| *nDay* | A day number (1-31). |
+
 
 # <a name="DaysInYear"></a>DaysInYear
 
