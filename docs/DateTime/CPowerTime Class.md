@@ -34,6 +34,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [DayOfWeek](#DayOfWeek) | Returns the Day-of-Week component of the **CPowerTime** object. |
 | [DayOfWeekString](#DayOfWeekstring) | Returns the Day-of-Week component of the **CPowerTime** object as a string. |
 | [DaysDiff](#DaysDiff) | Returns the days of difference between two dates. |
+| [DaysInYear](#DaysInYear) | Returns the number of days of the year. |
 | [Format](#Format) | Converts a **CPowerTime** object to a string. |
 | [GetAsFileTime](#GetAsFileTime) | Returns the date and time as a **FILETIME** structure. |
 | [GetAsJulianDate](#GetAsJulianDate) | Returns the date as a Julian date. |
@@ -379,6 +380,18 @@ Returns the Day-of-Week name of the **CPowerTime** object, expressed as a string
 ```
 FUNCTION DayOfWeekString () AS CWSTR
 ```
+
+# <a name="DaysInYear"></a>DaysInYear
+
+Returns the number of days in the specified year. If the year is omitted, the teard of this **CPowerTime** object is assumed.
+
+```
+FUNCTION DaysInYear (BYVAL nYear AS LONG = 0) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nYear* | A four digit year. |
 
 # <a name="Hour"></a>Hour
 
