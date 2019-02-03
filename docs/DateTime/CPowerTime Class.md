@@ -31,6 +31,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [GetCurrentTime](#GetCurrentTime) | Returns a **CPowerTime** object that represents the current system date and time. |
 | [GetFileTime](#GetFileTime) | Returns the value of the **CPowerTime** object. |
 | [Hour](#Hour) | Returns the Hour component of the **CPowerTime** object. It is a numeric value in the range of 0-23. |
+| [IsLeapYear](#IsLeapYear) | Determines if a given year is a leap year or not. |
 | [LocalToUTC](#LocalToUTC) | Converts a local file time to a file time based on the Coordinated Universal Time (UTC). |
 | [Minute](#Minute) | Returns the Minute component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
 | [Month](#Month) | Returns the Month component of the **CPowerTime** object. It is a  value in the range of 1-12. |
@@ -210,6 +211,25 @@ Returns the Hour component of the **CPowerTime** object. It is a numeric value i
 ```
 FUNCTION Hour () AS LONG
 ```
+
+# <a name="IsLeapYear"></a>IsLeapYear
+
+Determines if a given year is a leap year or not.
+' Note: A leap year is defined as all years divisible by 4, except for years divisible by
+' 100 that are not also divisible by 400. Years divisible by 400 are leap years. 2000 is a
+' leap year. 1900 is not a leap year.
+
+```
+FUNCTION IsLeapYear (BYVAL nYear AS LONG = 0) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nYear* | A four digit year. |
+
+#### Return value
+
+TRUE or FALSE.
 
 # <a name="Minute"></a>Minute
 
