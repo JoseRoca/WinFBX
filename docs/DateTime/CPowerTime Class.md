@@ -51,7 +51,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [Minute](#Minute) | Returns the Minute component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
 | [Month](#Month) | Returns the Month component of the **CPowerTime** object. It is a  value in the range of 1-12. |
 | [MonthString](#MonthString) | Returns the Month component of the **CPowerTime** object as a string. |
-| [MSecond](#MSecond) | Returns the millisecond component of the **CPowerTime** object.This is a numeric value in the range of 0-999. |
+| [MSecond](#MSecond) | Returns the Millisecond component of the **CPowerTime** object.This is a numeric value in the range of 0-999. |
 | [NewDate](#NewDate) | Sets a new date to this **CPowerTime** object. |
 | [NewTime](#NewTime) | Sets a new time to this **CPowerTime** object. |
 | [Now](#Now) | Assigns the current local date and time on this computer to this **CPowerTime** object. |
@@ -495,7 +495,7 @@ FUNCTION MonthString () AS CWSTR
 
 # <a name="MSecond"></a>MSecond
 
-Returns the millisecond component of the **CPowerTime** object. This is a numeric value in the range of 0-999.
+Returns the Millisecond component of the **CPowerTime** object. This is a numeric value in the range of 0-999.
 
 ```
 FUNCTION MSecond () AS LONG
