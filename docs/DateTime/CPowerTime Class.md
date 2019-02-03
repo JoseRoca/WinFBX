@@ -25,13 +25,13 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [GetAsFileTime](#GetAsFileTime) | Returns the time as a **FILETIME** structure. |
 | [GetAsSystemTime](#GetAsSystemTime) | Returns the time as a **SYSTEMTIME** structure. |
 | [GetCurrentTime](#GetCurrentTime) | Returns a **CPowerTime** object that represents the current system date and time. |
-| [GetTime](#GetTime) | Returns the value of the **CPowerTime** object. |
+| [GetFileTime](#GetFileTime) | Returns the value of the **CPowerTime** object. |
 | [Hour](#Hour) | Returns the Hour component of the **CPowerTime** object. It is a numeric value in the range of 0-23. |
 | [LocalToUTC](#LocalToUTC) | Converts a local file time to a file time based on the Coordinated Universal Time (UTC). |
 | [Minute](#Minute) | Returns the Minute component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
 | [MSecond](#MSecond) | Returns the millisecond component of the **CPowerTime** object.This is a numeric value in the range of 0-999. |
 | [Second](#Second) | Returns the Second component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
-| [SetTime](#SetTime) | Sets the date and time of this **CPowerTime** object. |
+| [SetFileTime](#SetFileTime) | Sets the date and time of this **CPowerTime** object. |
 | [TimeString](#TimeString) | Retuns the time as a string based on the specified mask, e.g. "dd-MM-yyyy". |
 | [UTCToLocal](#UTCToLocal) | Converts time based on the Coordinated Universal Time (UTC) to local file time. |
 
@@ -59,11 +59,11 @@ DIM cft AS CPowerTime = CPowerTime().GetCurrentTime()
 ```
 ```
 DIM cft AS CPowerTime = AfxLocalFileTime
-print cft.GetTime
+print cft.GetFileTime
 ```
 ```
 DIM cft AS CPowerTime = AfxLocalSystemTime
-print cft.GetTime
+print cft.GetFileTime
 ```
 
 # <a name="CastOp1"></a>CAST Operator
@@ -107,12 +107,12 @@ OPERATOR LET (BYREF st AS SYSTEMTIME)
 ```
 DIM cft AS CPowerTime
 cft = AfxLocalFileTime
-print cft.GetTime
+print cft.GetFileTime
 ```
 ```
 DIM cft AS CPowerTime
 cft = AfxLocalSystemTime
-print cft.GetTime
+print cft.GetFileTime
 ```
 
 # <a name="Operators1"></a>Operators
@@ -327,27 +327,27 @@ Returns a **CPowerTime** object that represents the current system date and time
 FUNCTION GetCurrentTime () AS CPowerTime
 ```
 
-# <a name="GetTime"></a>GetTime
+# <a name="GetFileTime"></a>GetFileTime
 
 Returns the value of the **CFileTime** object.
 
 ```
-FUNCTION GetTime () AS LONGLONG
+FUNCTION GetFileTime () AS LONGLONG
 ```
 
 #### Example
 
 ```
 DIM cft AS CPowerTime = CPowerTime().GetCurrentTime()
-print cft.GetTime
+print cft.GetFileTime
 ```
 
-# <a name="SetTime"></a>SetTime
+# <a name="SetFileTime"></a>SetFileTime
 
 Sets the date and time of this **CPowerTime** object
 
 ```
-FUNCTION SetTime (BYVAL nTime AS ULONGLONG)
+FUNCTION SetFileTime (BYVAL nTime AS ULONGLONG)
 ```
 
 | Parameter  | Description |
