@@ -59,7 +59,8 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [UTCToLocal](#UTCToLocal) | Converts time based on the Coordinated Universal Time (UTC) to local file time. |
 | [WeekOne](#WeekOne) | Returns the first day of the first week of the year. |
 | [WeekNumber](#WeekNumber) | Returns the week number for a given date. |
-| [WeeksInYear](#WeeksInYear) | Returns the number of weeks in the year. |
+| [WeeksInMonth](#WeeksInMonth) | Returns the number of weeks in the year. |
+| [WeeksInYear](#WeeksInYear) | Returns the number of weeks in the specefied month and year. |
 | [Year](#Year) | Returns the Year component of the **CPowerTime** object. |
 
 # <a name="Constructors1"></a>Constructors
@@ -765,7 +766,7 @@ FUNCTION WeekNumber (BYVAL nYear AS LONG = 0, BYVAL nMonth AS LONG = 0, BYVAL nD
 
 # <a name="WeekOne"></a>WeekOne
 
-Returns the first day of the first week of a year. The year must be a 4 digit year. If the year is omitted, the year of this **CPowerTime** object is assumed.
+Returns the first day of the first week of a year. If the year is omitted, the year of this **CPowerTime** object is assumed.
 
 ```
 FUNCTION WeekOne (BYVAL nYear AS LONG = 0) AS LONG
@@ -775,10 +776,23 @@ FUNCTION WeekOne (BYVAL nYear AS LONG = 0) AS LONG
 | ---------- | ----------- |
 | *nYear* | A four digit year. |
 
+# <a name="WeeksInMonth"></a>WeeksInMonth
+
+Returns the number of weeks in the specified month. Will be 4 or 5. If the year and month are omitted, the values of this **CPowerTime** object are assumed.
+
+```
+FUNCTION WeeksInMonth (BYVAL nMonth AS LONG = 0, BYVAL nYear AS LONG = 0) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nnMonth* | A month number (1-12). |
+| *nYear* | A four digit year. |
+
 # <a name="WeeksInYear"></a>WeeksInYear
 
 Returns the number of weeks in the year, where weeks are taken to start on Monday. Will be 52 or 53. The year must be a four figit year. 
- If the year is omitted, the year of this **CPowertime* object is assumed.
+ If the year is omitted, the year of this **CPowertime** object is assumed.
 ```
 FUNCTION WeeksInYear (BYVAL nYear AS LONG = 0) AS LONG
 ```
