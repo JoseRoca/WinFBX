@@ -73,9 +73,9 @@ Create new **CPowerTime** objects initialized to the specified value.
 
 ```
 CONSTRUCTOR CPowerTime
-CONSTRUCTOR CFileTime (BYVAL nTime AS ULONGLONG)
-CONSTRUCTOR CFileTime (BYREF ft AS FILETIME)
-CONSTRUCTOR CFileTime (BYREF st AS SYSTEMTIME)
+CONSTRUCTOR CPowerTime (BYVAL nTime AS ULONGLONG)
+CONSTRUCTOR CPowerTime (BYREF ft AS FILETIME)
+CONSTRUCTOR CPowerTime (BYREF st AS SYSTEMTIME)
 ```
 
 | Parameter  | Description |
@@ -698,7 +698,7 @@ FUNCTION GetCurrentTime () AS CPowerTime
 
 # <a name="GetFileTime"></a>GetFileTime
 
-Returns the value of the **CFileTime** object.
+Returns the value of the **CPowerTime** object.
 
 ```
 FUNCTION GetFileTime () AS LONGLONG
