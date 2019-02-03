@@ -22,6 +22,8 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [AstroDay](#AstroDay) | Returns the Astronomical Day for any given date. |
 | [DateString](#DateString) | Retuns the date as a string based on the specified mask, e.g. "dd-MM-yyyy". |
 | [Day](#Day) | Returns the Day component of the **CPowerTime** object. It is a  value in the range of 1-31. |
+| [DayOfWeek](#DayOfWeek) | Returns the Day-of-Week component of the **CPowerTime** object. |
+| [DayOfWeekString](#DayOfWeekstring) | Returns the Day-of-Week component of the **CPowerTime** object as a string. |
 | [Format](#Format) | Converts a **CPowerTime** object to a string. |
 | [GetAsFileTime](#GetAsFileTime) | Returns the time as a **FILETIME** structure. |
 | [GetAsSystemTime](#GetAsSystemTime) | Returns the time as a **SYSTEMTIME** structure. |
@@ -168,6 +170,22 @@ Returns the Day component of the **CPowerTime** object. It is a  value in the ra
 
 ```
 FUNCTION Day () AS LONG
+```
+
+# <a name="DayOfWeek"></a>DayOfWeek
+
+Returns the Day-of-Week component of the CPowerTime object. It is a numeric value in the range of 0-6 (representing Sunday through Saturday).
+
+```
+FUNCTION DayOfWeek () AS LONG
+```
+
+# <a name="DayOfWeekString"></a>DayOfWeekString
+
+Returns the Day-of-Week name of the CPowerTime object, expressed as a string (Monday, Tuesday...). The day name is appropriate for the locale, based upon the LCID parameter. If LCID is not given, the default LCID for the user is substituted.
+
+```
+FUNCTION DayOfWeekString () AS CWSTR
 ```
 
 # <a name="Hour"></a>Hour
