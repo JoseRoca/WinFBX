@@ -32,7 +32,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [Minute](#Minute) | Returns the Minute component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
 | [Month](#Month) | Returns the Month component of the **CPowerTime** object. It is a  value in the range of 1-12. |
 | [MSecond](#MSecond) | Returns the millisecond component of the **CPowerTime** object.This is a numeric value in the range of 0-999. |
-| [Now](#Now) | Assigns the current local date and time on this computer to this **CPowerTime^^ object. |
+| [Now](#Now) | Assigns the current local date and time on this computer to this **CPowerTime** object. |
 | [NowUTC](#NowUTC) | Assigns the current Coordinated Universal date and time (UTC) to this **CPowerTime** object. |
 | [Second](#Second) | Returns the Second component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
 | [SetFileTime](#SetFileTime) | Sets the date and time of this **CPowerTime** object. |
