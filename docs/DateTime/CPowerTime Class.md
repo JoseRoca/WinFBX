@@ -235,6 +235,12 @@ SUB AddYears (BYVAL nYears AS LONG)
 
 # <a name="AstroDay"></a>AstroDay
 
+Returns the Astronomical Day for this **CPowerTime** object.
+
+```
+FUNCTION AstroDay () AS LONG
+```
+
 Returns the Astronomical Day for any given date.
 
 ```
