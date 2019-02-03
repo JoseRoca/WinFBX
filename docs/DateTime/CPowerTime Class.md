@@ -19,12 +19,12 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [CAST Operator](#CastOp1) | Returns the **CPowerTime** value as a long integer. |
 | [LET Operator](#LetOp1) | Assigns a value to a **CPowerTime** object. |
 | [Operators](#Operators1) | Adds, subtracts or compares **CPowerTime** objects. |
-| [AddDays](#AddDays) | Adds the specified number of days to this **CPowerTime** object. You can subtract years by using a negative number. |
-| [AddHours](#AddHours) | Adds the specified number of hours to this **CPowerTime** object. You can subtract years by using a negative number. |
-| [AddMinutes](#AddMinutes) | Adds the specified number of minutes to this **CPowerTime** object. You can subtract years by using a negative number. |
-| [AddMonths](#AddMonths) | Adds the specified number of months to this **CPowerTime** object. You can subtract years by using a negative number. |
-| [AddMSeconds](#AddMSeconds) | Adds the specified number of milliseconds to this **CPowerTime** object. You can subtract years by using a negative number. |
-| [AddSeconds](#AddSeconds) | Adds the specified number of seconds to this **CPowerTime** object. You can subtract years by using a negative number. |
+| [AddDays](#AddDays) | Adds the specified number of days to this **CPowerTime** object. You can subtract days by using a negative number. |
+| [AddHours](#AddHours) | Adds the specified number of hours to this **CPowerTime** object. You can subtract hours by using a negative number. |
+| [AddMinutes](#AddMinutes) | Adds the specified number of minutes to this **CPowerTime** object. You can subtract minutes by using a negative number. |
+| [AddMonths](#AddMonths) | Adds the specified number of months to this **CPowerTime** object. You can subtract months by using a negative number. |
+| [AddMSeconds](#AddMSeconds) | Adds the specified number of milliseconds to this **CPowerTime** object. You can subtract milliseconds by using a negative number. |
+| [AddSeconds](#AddSeconds) | Adds the specified number of seconds to this **CPowerTime** object. You can subtract seconds by using a negative number. |
 | [AddYears](#AddYears) | Adds the specified number of years to this **CPowerTime** object. You can subtract years by using a negative number. |
 | [AstroDay](#AstroDay) | Returns the Astronomical Day for any given date. |
 | [DateString](#DateString) | Retuns the date as a string based on the specified mask, e.g. "dd-MM-yyyy". |
@@ -148,7 +148,7 @@ OPERATOR >= (BYREF dt1 AS CPowerTime, BYREF dt2 AS CPowerTime) AS BOOLEAN
 
 # <a name="AddDays"></a>AddDays
 
-Adds the specified number of days to this **CPowerTime** object. You can subtract years by using a negative number.
+Adds the specified number of days to this **CPowerTime** object. You can subtract days by using a negative number.
 
 ```
 SUB AddDays (BYVAL nDays AS LONG)
@@ -160,7 +160,7 @@ SUB AddDays (BYVAL nDays AS LONG)
 
 # <a name="AddHours"></a>AddHours
 
-Adds the specified number of hours to this **CPowerTime** object. You can subtract years by using a negative number.
+Adds the specified number of hours to this **CPowerTime** object. You can subtract hours by using a negative number.
 
 ```
 AddHours (BYVAL nHours AS LONG)
@@ -172,7 +172,7 @@ AddHours (BYVAL nHours AS LONG)
 
 # <a name="AddMinutes"></a>AddMinutes
 
-Adds the specified number of minutes to this **CPowerTime** object. You can subtract years by using a negative number.
+Adds the specified number of minutes to this **CPowerTime** object. You can subtract minutes by using a negative number.
 
 ```
 SUB AddMinutes (BYVAL nMinutes AS LONG)
@@ -184,7 +184,7 @@ SUB AddMinutes (BYVAL nMinutes AS LONG)
 
 # <a name="AddMonths"></a>AddMonths
 
-Adds the specified number of months to this **CPowerTime** object. You can subtract years by using a negative number.
+Adds the specified number of months to this **CPowerTime** object. You can subtract months by using a negative number.
 
 ```
 SUB AddMonths (BYVAL nMonths AS LONG)
@@ -196,7 +196,7 @@ SUB AddMonths (BYVAL nMonths AS LONG)
 
 # <a name="AddMSeconds"></a>AddMSeconds
 
-Adds the specified number of milliseconds to this **CPowerTime** object. You can subtract years by using a negative number.
+Adds the specified number of milliseconds to this **CPowerTime** object. You can subtract milliseconds by using a negative number.
 
 ```
 SUB AddSeconds (BYVAL nSeconds AS LONG)
@@ -208,15 +208,15 @@ SUB AddSeconds (BYVAL nSeconds AS LONG)
 
 # <a name="AddSeconds"></a>AddSeconds
 
-Adds the specified number of seconds to this **CPowerTime** object. You can subtract years by using a negative number.
+Adds the specified number of seconds to this **CPowerTime** object. You can subtract seconds by using a negative number.
 
 ```
-SUB AddMSeconds (BYVAL nMSeconds AS LONG)
+SUB AddSeconds (BYVAL nSeconds AS LONG)
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nMSeconds* | The number of milliseconds. |
+| *nSeconds* | The number of seconds. |
 
 # <a name="AddYears"></a>AddYears
 
