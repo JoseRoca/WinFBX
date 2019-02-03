@@ -35,6 +35,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [SetFileTime](#SetFileTime) | Sets the date and time of this **CPowerTime** object. |
 | [TimeString](#TimeString) | Retuns the time as a string based on the specified mask, e.g. "dd-MM-yyyy". |
 | [UTCToLocal](#UTCToLocal) | Converts time based on the Coordinated Universal Time (UTC) to local file time. |
+| [Year](#Year) | Returns the Year component of the **CPowerTime** object. |
 
 # <a name="Constructors1"></a>Constructors
 
@@ -397,4 +398,11 @@ The CPowerTime object is converted to local time. It is assumed that the previou
 
 ```
 SUB ToLocalTime
+```
+# <a name="Year"></a>Year
+
+Returns the Year component of the **CPowerTime** object.
+
+```
+FUNCTION Year () AS LONG
 ```
