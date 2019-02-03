@@ -303,6 +303,12 @@ print cpt2.DaysDiff(cpt)
 
 # <a name="DaysInMonth"></a>DaysInMonth
 
+Returns the number of days of this **CPowerTime** object.
+
+```
+FUNCTION DaysInMonth () AS LONG
+```
+
 Returns the number of days in the specified month.
 
 ```
