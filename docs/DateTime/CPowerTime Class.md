@@ -32,6 +32,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [DaysInMonth](#DaysInMonth) | Returns the number of days in the specified month. |
 | [DayOfWeek](#DayOfWeek) | Returns the Day-of-Week component of the **CPowerTime** object. |
 | [DayOfWeekString](#DayOfWeekstring) | Returns the Day-of-Week component of the **CPowerTime** object as a string. |
+| [DaysDiff](#DaysDiff) | Returns the days of difference between two dates. |
 | [Format](#Format) | Converts a **CPowerTime** object to a string. |
 | [GetAsFileTime](#GetAsFileTime) | Returns the time as a **FILETIME** structure. |
 | [GetAsSystemTime](#GetAsSystemTime) | Returns the time as a **SYSTEMTIME** structure. |
@@ -268,6 +269,19 @@ Returns the Day component of the **CPowerTime** object. It is a  value in the ra
 ```
 FUNCTION Day () AS LONG
 ```
+
+# <a name="DaysDiff"></a>DaysDiff
+
+Returns the days of difference between two dates.
+
+The date part of the internal **CPowerTime** object is compared to the date part of the specified external **CPowerTime** object. The time-of-day part of each is ignored. The difference in number of days is returned as the result of the function.
+
+```
+FUNCTION DaysDiff (BYREF cpt AS CPowerTime) AS LONG
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cpt* | The **CPowerTime** object to compare. |
 
 # <a name="DaysInMonth"></a>DaysInMonth
 
