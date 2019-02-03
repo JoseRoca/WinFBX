@@ -33,6 +33,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [LocalToUTC](#LocalToUTC) | Converts a local file time to a file time based on the Coordinated Universal Time (UTC). |
 | [Minute](#Minute) | Returns the Minute component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
 | [Month](#Month) | Returns the Month component of the **CPowerTime** object. It is a  value in the range of 1-12. |
+| [MonthString](#MonthString) | Returns the Month component of the **CPowerTime** object as a string. |
 | [MSecond](#MSecond) | Returns the millisecond component of the **CPowerTime** object.This is a numeric value in the range of 0-999. |
 | [Now](#Now) | Assigns the current local date and time on this computer to this **CPowerTime** object. |
 | [NowUTC](#NowUTC) | Assigns the current Coordinated Universal date and time (UTC) to this **CPowerTime** object. |
@@ -209,7 +210,15 @@ FUNCTION Minute () AS LONG
 Returns the Month component of the **CPowerTime** object. It is a  value in the range of 1-12.
 
 ```
-FUNCTION Month () AS LONG
+FUNCTION Month () AS LONGç
+```
+
+# <a name="MonthString"></a>MonthString
+
+Returns the Month component of the **CPowerTime** object, expressed as a string (January, February...).
+
+```
+FUNCTION MonthString () AS CWSTR
 ```
 
 # <a name="MSecond"></a>MSecond
