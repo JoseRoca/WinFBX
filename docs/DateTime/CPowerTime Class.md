@@ -174,7 +174,7 @@ FUNCTION Day () AS LONG
 
 # <a name="DayOfWeek"></a>DayOfWeek
 
-Returns the Day-of-Week component of the CPowerTime object. It is a numeric value in the range of 0-6 (representing Sunday through Saturday).
+Returns the Day-of-Week component of the **CPowerTime** object. It is a numeric value in the range of 0-6 (representing Sunday through Saturday).
 
 ```
 FUNCTION DayOfWeek () AS LONG
@@ -182,7 +182,7 @@ FUNCTION DayOfWeek () AS LONG
 
 # <a name="DayOfWeekString"></a>DayOfWeekString
 
-Returns the Day-of-Week name of the CPowerTime object, expressed as a string (Monday, Tuesday...). The day name is appropriate for the locale, based upon the LCID parameter. If LCID is not given, the default LCID for the user is substituted.
+Returns the Day-of-Week name of the **CPowerTime** object, expressed as a string (Monday, Tuesday...). The day name is appropriate for the locale, based upon the LCID parameter. If LCID is not given, the default LCID for the user is substituted.
 
 ```
 FUNCTION DayOfWeekString () AS CWSTR
