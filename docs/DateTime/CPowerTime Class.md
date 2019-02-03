@@ -289,6 +289,22 @@ FUNCTION DaysDiff (BYREF cpt AS CPowerTime) AS LONG
 | ---------- | ----------- |
 | *cpt* | The **CPowerTime** object to compare. |
 
+Calculates the days of difference between two dates.
+
+```
+FUNCTION DaysDiff (BYVAL nYear1 AS LONG, BYVAL nMonth1 AS LONG, BYVAL nDay1 AS LONG, _
+   BYVAL nYear2 AS LONG, BYVAL nMonth2 AS LONG, BYVAL nDay2 AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nYear1* | A four digit year. |
+| *nMonth1* | A month number (1-12). |
+| *nDay1* | A day number (1-31). |
+| *nYear2* | A four digit year. |
+| *nMonth2* | A month number (1-12). |
+| *nDay2* | A day number (1-31). |
+
 #### Example:
 
 ```
