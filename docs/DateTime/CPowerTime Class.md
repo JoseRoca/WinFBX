@@ -581,7 +581,7 @@ FUNCTION GetAsJulianDate () AS LONG
 Converts a Gregorian date to a Julian date. The year must be a 4 digit year.
 
 ```
-FUNCTION GetAsJulian (BYVAL nYear AS LONG, BYVAL nMonth AS LONG, BYVAL nDay AS LONG) AS LONG
+FUNCTION GetAsJulianDate (BYVAL nYear AS LONG, BYVAL nMonth AS LONG, BYVAL nDay AS LONG) AS LONG
 ```
 
 | Parameter  | Description |
