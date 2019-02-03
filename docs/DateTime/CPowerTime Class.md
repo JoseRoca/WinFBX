@@ -289,6 +289,18 @@ FUNCTION DaysDiff (BYREF cpt AS CPowerTime) AS LONG
 | ---------- | ----------- |
 | *cpt* | The **CPowerTime** object to compare. |
 
+#### Example:
+
+```
+DIM cpt AS CPowerTime
+cpt.NewDate(2019, 2, 2)
+DIM cpt2 AS CPowerTime
+cpt2.NewDate(1930, 12, 25)
+print cpt.DaysDiff(cpt2)
+' --or--
+print cpt2.DaysDiff(cpt)
+```
+
 Calculates the days of difference between two dates.
 
 ```
@@ -309,12 +321,7 @@ FUNCTION DaysDiff (BYVAL nYear1 AS LONG, BYVAL nMonth1 AS LONG, BYVAL nDay1 AS L
 
 ```
 DIM cpt AS CPowerTime
-cpt.NewDate(2019, 2, 2)
-DIM cpt2 AS CPowerTime
-cpt2.NewDate(1930, 12, 25)
-print cpt.DaysDiff(cpt2)
-' --or--
-print cpt2.DaysDiff(cpt)
+print cpt.DaysDiff(2019, 2, 2, 1930, 12, 25)
 ```
 
 # <a name="DaysInMonth"></a>DaysInMonth
