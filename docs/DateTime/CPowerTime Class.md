@@ -43,6 +43,8 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [GetCurrentTime](#GetCurrentTime) | Returns a **CPowerTime** object that represents the current system date and time. |
 | [GetFileTime](#GetFileTime) | Returns the value of the **CPowerTime** object. |
 | [Hour](#Hour) | Returns the Hour component of the **CPowerTime** object. It is a numeric value in the range of 0-23. |
+| [IsFirstDayOfMonth](#IsFirstDayOfMonth) | Returns true if the date is the first day of the month; false, otherwise. |
+| [IsLastDayOfMonth](#IsLastDayOfMonth) | Returns true if the date is the last day of the month; false, otherwise. |
 | [IsLeapYear](#IsLeapYear) | Determines if a given year is a leap year or not. |
 | [JulianToGregorian](#JulianToGregorian) | Converts a Julian date to a Gregorian date. |
 | [Minute](#Minute) | Returns the Minute component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
@@ -399,6 +401,22 @@ Returns the Hour component of the **CPowerTime** object. It is a numeric value i
 
 ```
 FUNCTION Hour () AS LONG
+```
+
+# <a name="IsFirstDayOfMonth"></a>IsFirstDayOfMonth
+
+Returns true if the date is the first day of the month; false, otherwise.
+
+```
+FUNCTION IsFirstDayOfMonth () AS BOOLEAN
+```
+
+# <a name="IsLastDayOfMonth"></a>IsLastDayOfMonth
+
+Returns true if the date is the last day of the month; false, otherwise.
+
+```
+FUNCTION IsLastDayOfMonth () AS BOOLEAN
 ```
 
 # <a name="IsLeapYear"></a>IsLeapYear
