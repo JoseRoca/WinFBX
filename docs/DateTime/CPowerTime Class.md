@@ -764,7 +764,7 @@ FUNCTION WeekNumber (BYVAL nYear AS LONG = 0, BYVAL nMonth AS LONG = 0, BYVAL nD
 
 # <a name="WeekOne"></a>WeekOne
 
-Returns the first day of the first week of a year. The year must be a 4 digit year. If the year is omited, the year of this **CPowerTime" object is assumed.
+Returns the first day of the first week of a year. The year must be a 4 digit year. If the year is omited, the year of this **CPowerTime** object is assumed.
 
 ```
 FUNCTION WeekOne (BYVAL nYear AS LONG = 0) AS LONG
