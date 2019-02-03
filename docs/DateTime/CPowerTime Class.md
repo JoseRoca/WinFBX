@@ -23,8 +23,8 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [AddHours](#AddHours) | Adds the specified number of hours to this **CPowerTime** object. You can subtract years by using a negative number. |
 | [AddMinutes](#AddMinutes) | Adds the specified number of minutes to this **CPowerTime** object. You can subtract years by using a negative number. |
 | [AddMonths](#AddMonths) | Adds the specified number of months to this **CPowerTime** object. You can subtract years by using a negative number. |
-| [AddMSeconds](#AddMSconds) | Adds the specified number of milliseconds to this **CPowerTime** object. You can subtract years by using a negative number. |
-| [AddSeconds](#AddSconds) | Adds the specified number of seconds to this **CPowerTime** object. You can subtract years by using a negative number. |
+| [AddMSeconds](#AddMSeconds) | Adds the specified number of milliseconds to this **CPowerTime** object. You can subtract years by using a negative number. |
+| [AddSeconds](#AddSeconds) | Adds the specified number of seconds to this **CPowerTime** object. You can subtract years by using a negative number. |
 | [AddYears](#AddYears) | Adds the specified number of years to this **CPowerTime** object. You can subtract years by using a negative number. |
 | [AstroDay](#AstroDay) | Returns the Astronomical Day for any given date. |
 | [DateString](#DateString) | Retuns the date as a string based on the specified mask, e.g. "dd-MM-yyyy". |
