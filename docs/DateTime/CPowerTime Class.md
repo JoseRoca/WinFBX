@@ -19,6 +19,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [CAST Operator](#CastOp1) | Returns the **CPowerTime** value as a long integer. |
 | [LET Operator](#LetOp1) | Assigns a value to a **CPowerTime** object. |
 | [Operators](#Operators1) | Adds, subtracts or compares **CPowerTime** objects. |
+| [AstroDay](#AstroDay) | Returns the Astronomical Day for any given date. |
 | [DateString](#DateString) | Retuns the date as a string based on the specified mask, e.g. "dd-MM-yyyy". |
 | [Day](#Day) | Returns the Day component of the **CPowerTime** object. It is a  value in the range of 1-31. |
 | [Format](#Format) | Converts a **CPowerTime** object to a string. |
@@ -126,6 +127,34 @@ OPERATOR < (BYREF dt1 AS CPowerTime, BYREF dt2 AS CPowerTime) AS BOOLEAN
 OPERATOR > (BYREF dt1 AS CPowerTime, BYREF dt2 AS CPowerTime) AS BOOLEAN
 OPERATOR <= (BYREF dt1 AS CPowerTime, BYREF dt2 AS CPowerTime) AS BOOLEAN
 OPERATOR >= (BYREF dt1 AS CPowerTime, BYREF dt2 AS CPowerTime) AS BOOLEAN
+```
+# <a name="AstroDay"></a>AstroDay
+
+Returns the Astronomical Day for any given date.
+
+```
+FUNCTION AstroDay (BYVAL nYear AS LONG, BYVAL nMonth AS LONG, BYVAL nDay AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nYear* | A four digit year. |
+| *nMonth* | A month number (1-12). |
+| *nDay* | A day number (1-31). |
+
+#### Return value
+
+The astronomical day.
+
+#### Remarks
+
+Among other things, can be used to find the number of days between any two dates, e.g.:
+
+```
+DIM cpt AS CPowerTime
+PRINT cpt.AstroDay(-12400, 3, 1) - cpt.AstroDay(-12400, 2, 28)  ' Prints 2
+PRINT cpt.AstroDay(12000, 3, 1) - cpt.AstroDay(-12000, 2, 28) ' Prints 8765822
+PRINT cpt.AstroDay(1902, 2, 28) - cpt.AstroDay(1898, 3, 1)  ' Prints 1459 days
 ```
 
 # <a name="Day"></a>Day
