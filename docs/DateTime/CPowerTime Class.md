@@ -283,6 +283,18 @@ FUNCTION DaysDiff (BYREF cpt AS CPowerTime) AS LONG
 | ---------- | ----------- |
 | *cpt* | The **CPowerTime** object to compare. |
 
+#### Example:
+
+```
+DIM cpt AS CPowerTime
+cpt.NewDate(2019, 2, 2)
+DIM cpt2 AS CPowerTime
+cpt2.NewDate(1930, 12, 25)
+print cpt.DaysDiff(cpt2)
+' --or--
+print cpt2.DaysDiff(cpt)
+```
+
 # <a name="DaysInMonth"></a>DaysInMonth
 
 Returns the number of days in the specified month.
