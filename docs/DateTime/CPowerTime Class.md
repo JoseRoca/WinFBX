@@ -160,7 +160,7 @@ SUB AddDays (BYVAL nDays AS LONG)
 
 # <a name="AddHours"></a>AddHours
 
-Adds the specified number of hours to this **CPowerTime** object. You can subtract hours by using a negative number.
+Adds the specified number of hours to this **CPowerTime** object. The valid values for this member are 1 through 23. You can subtract hours by using a negative number.
 
 ```
 AddHours (BYVAL nHours AS LONG)
@@ -172,7 +172,7 @@ AddHours (BYVAL nHours AS LONG)
 
 # <a name="AddMinutes"></a>AddMinutes
 
-Adds the specified number of minutes to this **CPowerTime** object. You can subtract minutes by using a negative number.
+Adds the specified number of minutes to this **CPowerTime** object. The valid values for this member are 1 through 59. You can subtract minutes by using a negative number.
 
 ```
 SUB AddMinutes (BYVAL nMinutes AS LONG)
@@ -184,7 +184,7 @@ SUB AddMinutes (BYVAL nMinutes AS LONG)
 
 # <a name="AddMonths"></a>AddMonths
 
-Adds the specified number of months to this **CPowerTime** object. You can subtract months by using a negative number.
+Adds the specified number of months to this **CPowerTime** object. ' The valid values for this member are 1 through 12. You can subtract months by using a negative number.
 
 ```
 SUB AddMonths (BYVAL nMonths AS LONG)
@@ -196,7 +196,7 @@ SUB AddMonths (BYVAL nMonths AS LONG)
 
 # <a name="AddMSeconds"></a>AddMSeconds
 
-Adds the specified number of milliseconds to this **CPowerTime** object. You can subtract milliseconds by using a negative number.
+Adds the specified number of milliseconds to this **CPowerTime** object. The valid values for this member are 1 through 999. You can subtract milliseconds by using a negative number.
 
 ```
 SUB AddSeconds (BYVAL nSeconds AS LONG)
@@ -208,7 +208,7 @@ SUB AddSeconds (BYVAL nSeconds AS LONG)
 
 # <a name="AddSeconds"></a>AddSeconds
 
-Adds the specified number of seconds to this **CPowerTime** object. You can subtract seconds by using a negative number.
+Adds the specified number of seconds to this **CPowerTime** object. The valid values for this member are 0 through 59. You can subtract seconds by using a negative number.
 
 ```
 SUB AddSeconds (BYVAL nSeconds AS LONG)
