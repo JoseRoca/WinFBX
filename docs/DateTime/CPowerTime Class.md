@@ -37,7 +37,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [GetAsFileTime](#GetAsFileTime) | Returns the date and time as a **FILETIME** structure. |
 | [GetAsJulianDate](#GetAsJulianDate) | Returns the date as a Julian date. |
 | [GetAsSystemTime](#GetAsSystemTime) | Returns the date and time as a **SYSTEMTIME** structure. |
-| [GetAsVaiantTime](#GetAsVaiantTime) | Returns the date and time as a variant time. |
+| [GetAsVariantTime](#GetAsVariantTime) | Returns the date and time as a variant time. |
 | [GetCurrentTime](#GetCurrentTime) | Returns a **CPowerTime** object that represents the current system date and time. |
 | [GetFileTime](#GetFileTime) | Returns the value of the **CPowerTime** object. |
 | [Hour](#Hour) | Returns the Hour component of the **CPowerTime** object. It is a numeric value in the range of 0-23. |
