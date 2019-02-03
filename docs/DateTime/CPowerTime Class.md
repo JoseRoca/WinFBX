@@ -561,7 +561,8 @@ Sets a new time to this **CPowerTime** object.
 The time component of the **CPowerTime** object is assigned a new value based upon the specified parameters. The date component is unchanged. If parameters are invalid, **GetLastError** will return ERROR_INVALID_PARAMETER.
 
 ```
-SUB NewTime (BYVAL nHour AS LONG = 0, BYVAL nMinute AS LONG = 0, BYVAL nSecond AS LONG = 0, BYVAL nMSecond AS LONG = 0)
+SUB NewTime (BYVAL nHour AS LONG = 0, BYVAL nMinute AS LONG = 0, _
+    BYVAL nSecond AS LONG = 0, BYVAL nMSecond AS LONG = 0)
 ```
 
 | Parameter  | Description |
