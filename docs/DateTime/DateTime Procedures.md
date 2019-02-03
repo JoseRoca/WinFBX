@@ -1370,7 +1370,7 @@ FUNCTION AfxWeeksInMonth (BYVAL nMonth AS LONG, BYVAL nYear AS LONG) AS LONG
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nYenMonthar* | A month number (1-12). |
+| *nMonth* | A month number (1-12). |
 | *nYear* | A four digit year. |
 
 # <a name="AfxWeeksInYear"></a>AfxWeeksInYear
