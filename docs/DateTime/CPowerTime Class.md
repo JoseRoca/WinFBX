@@ -22,6 +22,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [AstroDay](#AstroDay) | Returns the Astronomical Day for any given date. |
 | [DateString](#DateString) | Retuns the date as a string based on the specified mask, e.g. "dd-MM-yyyy". |
 | [Day](#Day) | Returns the Day component of the **CPowerTime** object. It is a  value in the range of 1-31. |
+| [DaysInMonth](#DaysInMonth) | Returns the number of days in the specified month. |
 | [DayOfWeek](#DayOfWeek) | Returns the Day-of-Week component of the **CPowerTime** object. |
 | [DayOfWeekString](#DayOfWeekstring) | Returns the Day-of-Week component of the **CPowerTime** object as a string. |
 | [Format](#Format) | Converts a **CPowerTime** object to a string. |
@@ -172,6 +173,19 @@ Returns the Day component of the **CPowerTime** object. It is a  value in the ra
 ```
 FUNCTION Day () AS LONG
 ```
+
+# <a name="DaysInMonth"></a>DaysInMonth
+
+Returns the number of days in the specified month.
+
+```
+FUNCTION DaysInMonth (BYVAL nMonth AS LONG, BYVAL nYear AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nMonth* | A month number (1-12). |
+| *nYear* | A four digit year. |
 
 # <a name="DayOfWeek"></a>DayOfWeek
 
