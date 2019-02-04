@@ -381,7 +381,7 @@ FUNCTION DayOfWeek () AS LONG
 Returns the Day-of-Week name of the **CPowerTime** object, expressed as a string (Monday, Tuesday...). The day name is appropriate for the locale, based upon the LCID parameter. If LCID is not given, the default LCID for the user is substituted.
 
 ```
-FUNCTION DayOfWeekString () AS CWSTR
+FUNCTION DayOfWeekString (BYVAL lcid AS LCID = LOCALE_USER_DEFAULT) AS CWSTR
 ```
 
 # <a name="DayOfYear"></a>DayOfYear
