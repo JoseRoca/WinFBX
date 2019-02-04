@@ -401,7 +401,7 @@ FUNCTION DayOfYear (BYVAL nYear AS LONG = 0, BYVAL nMonth AS LONG = 0, BYVAL nDa
 
 # <a name="DaysInYear"></a>DaysInYear
 
-Returns the number of days in the specified year. If the year is omitted, the teard of this **CPowerTime** object is assumed.
+Returns the number of days in the specified year. If the year is omitted, the year of this **CPowerTime** object is assumed.
 
 ```
 FUNCTION DaysInYear (BYVAL nYear AS LONG = 0) AS LONG
