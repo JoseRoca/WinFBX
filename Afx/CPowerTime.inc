@@ -10,6 +10,8 @@
 ' ########################################################################################
 
 #pragma once
+#include once "DateTime.bi"
+#include once "String.bi"
 #include once "Afx/AfxTime.inc"
 
 NAMESPACE Afx
@@ -42,16 +44,17 @@ Public:
    DECLARE CONSTRUCTOR (BYREF ft AS FILETIME)
    DECLARE CONSTRUCTOR (BYREF st AS SYSTEMTIME)
    DECLARE DESTRUCTOR
-   DECLARE OPERATOR CAST () AS LONGLONG
+   DECLARE OPERATOR CAST () AS ULONGLONG
    DECLARE OPERATOR LET (BYVAL nTime AS ULONGLONG)
    DECLARE OPERATOR LET (BYREF ft AS FILETIME)
    DECLARE OPERATOR LET (BYREF st AS SYSTEMTIME)
    DECLARE FUNCTION GetFileTime () AS ULONGLONG
    DECLARE SUB SetFileTime (BYVAL nTime AS ULONGLONG)
+   DECLARE PROPERTY DateSerial () AS DOUBLE
+   DECLARE PROPERTY DateSerial (BYVAL dTime AS DOUBLE)
    DECLARE FUNCTION GetCurrentTime () AS CPowerTime
    DECLARE FUNCTION GetAsFileTime () AS FILETIME
    DECLARE FUNCTION GetAsSystemTime () AS SYSTEMTIME
-   DECLARE FUNCTION GetAsVariantTime () AS DATE_
    DECLARE FUNCTION GetAsJulianDate () AS LONG
    DECLARE FUNCTION GetAsJulianDate (BYVAL nYear AS LONG, BYVAL nMonth AS LONG, BYVAL nDay AS LONG) AS LONG
    DECLARE FUNCTION Year () AS LONG
@@ -150,7 +153,7 @@ END DESTRUCTOR
 '   DIM nTime AS LONGLONG = cpt
 '   print nTime
 ' ========================================================================================
-PRIVATE OPERATOR CPowerTime.CAST () AS LONGLONG
+PRIVATE OPERATOR CPowerTime.CAST () AS ULONGLONG
    RETURN (CULNGINT(dwHighDateTime) shl 32) OR dwLowDateTime
 END OPERATOR
 ' ========================================================================================
@@ -238,17 +241,27 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Returns the date and time as a variant time value.
+' Gets/sets the date and time as a FreeBasic date serial.
 ' ========================================================================================
-PRIVATE FUNCTION CPowerTime.GetAsVariantTime () AS DATE_
+PRIVATE PROPERTY CPowerTime.DateSerial () AS DOUBLE
    DIM ft AS FILETIME
-	ft.dwLowDateTime = dwLowDateTime
-	ft.dwHighDateTime = dwHighDateTime
-   DIM dt AS DATE_, st AS SYSTEMTIME
+   ft.dwLowDateTime = dwLowDateTime
+   ft.dwHighDateTime = dwHighDateTime
+   DIM dt AS DOUBLE, st AS SYSTEMTIME
    FileTimeToSystemTime(@ft, @st)
    SystemTimeToVariantTime @st, @dt
    RETURN dt
-END FUNCTION
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CPowerTime.DateSerial (BYVAL dTime AS DOUBLE)
+   DIM st AS SYSTEMTIME
+   VariantTimeToSystemTime dTime, @st
+   DIM ft AS FILETIME
+   SystemTimeToFileTime @st, @ft
+	dwLowDateTime = ft.dwLowDateTime
+   dwHighDateTime = ft.dwHighDateTime
+END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
