@@ -16,7 +16,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | Name       | Description |
 | ---------- | ----------- |
 | [Constructors](#Constructors1) | Create new **CPowerTime** objects initialized to the specified value. |
-| [CAST Operator](#CastOp1) | Returns the **CPowerTime** value as a long integer. |
+| [CAST Operator](#CastOp1) | Returns the **CPowerTime** value as an unsigned long integer. |
 | [LET Operator](#LetOp1) | Assigns a value to a **CPowerTime** object. |
 | [Operators](#Operators1) | Adds, subtracts or compares **CPowerTime** objects. |
 | [AddDays](#AddDays) | Adds the specified number of days to this **CPowerTime** object. You can subtract days by using a negative number. |
@@ -100,10 +100,10 @@ print cft.GetFileTime
 
 # <a name="CastOp1"></a>CAST Operator
 
-Returns the **CPowerTime** value as a long integer.
+Returns the **CPowerTime** value as an unsigned long integer.
 
 ```
-OPERATOR CAST () AS LONGLONG
+OPERATOR CAST () AS ULONGLONG
 ```
 
 #### Examples
