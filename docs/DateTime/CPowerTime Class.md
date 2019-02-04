@@ -28,7 +28,8 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [AddYears](#AddYears) | Adds the specified number of years to this **CPowerTime** object. You can subtract years by using a negative number. |
 | [AstroDay](#AstroDay) | Returns the Astronomical Day for any given date. |
 | [AstroDayOfWeek](#AstroDayOfWeek) | Returns the Astronomical Day for any given date. |
-| [DateString](#DateString) | Retuns the date as a string based on the specified mask, e.g. "dd-MM-yyyy". |
+| [DateSerial](#DateSerial) | Gets/sets the date and time as a FreeBasic date serial. |
+| [DateString](#DateString) | Returns the date as a string based on the specified mask, e.g. "dd-MM-yyyy". |
 | [Day](#Day) | Returns the Day component of the **CPowerTime** object. It is a  value in the range of 1-31. |
 | [DaysInMonth](#DaysInMonth) | Returns the number of days in the specified month. |
 | [DayOfWeek](#DayOfWeek) | Returns the Day-of-Week component of the **CPowerTime** object. |
@@ -40,7 +41,6 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [GetAsFileTime](#GetAsFileTime) | Returns the date and time as a **FILETIME** structure. |
 | [GetAsJulianDate](#GetAsJulianDate) | Returns the date as a Julian date. |
 | [GetAsSystemTime](#GetAsSystemTime) | Returns the date and time as a **SYSTEMTIME** structure. |
-| [GetAsVariantTime](#GetAsVariantTime) | Returns the date and time as a variant time. |
 | [GetCurrentTime](#GetCurrentTime) | Returns a **CPowerTime** object that represents the current system date and time. |
 | [GetFileTime](#GetFileTime) | Returns the value of the **CPowerTime** object. |
 | [Hour](#Hour) | Returns the Hour component of the **CPowerTime** object. It is a numeric value in the range of 0-23. |
@@ -680,12 +680,24 @@ Returns the date and time as a **SYSTEMTIME** structure.
 FUNCTION GetAsSystemTime () AS SYSTEMTIME
 ```
 
-# <a name="GetAsVariantTime"></a>GetAsVariantTime
+# <a name="DateSerial"></a>DateSerial
 
-Returns the date and time as a varaint time value.
+Gets/sets the date and time as a FreeBasic date serial.
 
 ```
-FUNCTION GetAsVariantTime () AS DATE_
+PROPERTY DateSerial () AS DOUBLE
+PROPERTY DateSerial (BYVAL dTime AS DOUBLE)
+```
+#### Usage examples
+
+```
+DIM ct AS CPowerTime
+ct.DateSerial = DateSerial(2019, 2, 4)
+Print Format(ct.DateSerial, "yyyy/mm/dd") 
+ct.DateSerial = DateValue("4/2/2019")
+Print Format(ct.DateSerial, "yyyy/mm/dd") 
+ct.DateSerial = TimeValue("11:59:59PM")
+Print Format(ds, "hh:mm:ss")
 ```
 
 # <a name="GetCurrentTime"></a>GetCurrentTime
