@@ -198,7 +198,7 @@ SUB AddMinutes (BYVAL nMinutes AS LONG)
 
 # <a name="AddMonths"></a>AddMonths
 
-Adds the specified number of months to this **CPowerTime** object. ' The valid values for this member are 1 through 12. You can subtract months by using a negative number.
+Adds the specified number of months to this **CPowerTime** object. The valid values for this member are 1 through 12. You can subtract months by using a negative number.
 
 ```
 SUB AddMonths (BYVAL nMonths AS LONG)
