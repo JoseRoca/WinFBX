@@ -697,7 +697,7 @@ Print Format(ct.DateSerial, "yyyy/mm/dd")
 ct.DateSerial = DateValue("4/2/2019")
 Print Format(ct.DateSerial, "yyyy/mm/dd") 
 ct.DateSerial = TimeValue("11:59:59PM")
-Print Format(ds, "hh:mm:ss")
+Print Format(dt, "hh:mm:ss")
 ct.DateSerial = Now
 Print Format(ct.DateSerial, "yyyy/mm/dd hh:mm:ss") 
 ct.DateSerial = DateSerial(2005, 11, 28) + TimeSerial(7, 30, 50)
