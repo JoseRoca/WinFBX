@@ -377,7 +377,9 @@ PRIVATE FUNCTION AfxAnyCom OVERLOAD (BYREF wszProgID AS CONST WSTRING) AS IDispa
    IF pUnk THEN RETURN pUnk
    CLSIDFromProgID(wszProgID, @classID)
    IF IsEqualGuid(@classID, @IID_NULL) THEN RETURN NULL
-   CoCreateInstance(@classID, NULL, CLSCTX_INPROC_SERVER, @IID_IUnknown, @pUnk)
+   IF GetActiveObject(@classID, NULL, @pUnk) <> S_OK THEN
+      CoCreateInstance(@classID, NULL, CLSCTX_INPROC_SERVER, @IID_IUnknown, @pUnk)
+   END IF
    RETURN pUnk
 END FUNCTION
 ' ========================================================================================
@@ -1195,7 +1197,7 @@ END FUNCTION
 
 ' ========================================================================================
 ' Allows to pass the variant by reference, i.e. AfxVarToStr(v), instead of using AfxVarToStr(@v)
-' This also allows to use directly the retult of a function that returns a VARIANT or a CVAR,
+' This also allows to use directly the result of a function that returns a VARIANT or a CVAR,
 ' e.g. AfxVarToStr(AfxVarFromLong(83838), TRUE), AfxVarToStr(AfxCVarFromLong(83838)), while
 ' trying to use the first overloaded function, e.g. AfxVarToStr(@AfxVarFromLong(83838), TRUE),
 ' gives an apparently bogus compiler error: Error 7: Expected ")".
