@@ -356,40 +356,64 @@ END FUNCTION
 ' See: https://support.microsoft.com/en-us/help/238610/getobject-or-getactiveobject-cannot-find-a-running-office-application
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetCom OVERLOAD (BYREF wszProgID AS CONST WSTRING) AS IDispatch PTR
-   DIM classID AS CLSID, pUnk AS ANY PTR
+   DIM classID AS CLSID, pUnk AS IUnknown PTR, pDisp AS IDispatch PTR
    CLSIDFromProgID(wszProgID, @classID)
    IF IsEqualGuid(@classID, @IID_NULL) THEN RETURN NULL
    GetActiveObject(@classID, NULL, @pUnk)
-   RETURN pUnk
+   IF pUnk THEN
+      pUnk->lpVtbl->QueryInterface(pUnk, @IID_IDispatch, @pDisp)
+      pUnk->lpVtbl->Release(pUnk)
+   END IF
+   RETURN pDisp
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetCom OVERLOAD (BYREF classID AS CONST CLSID) AS IDispatch PTR
-   DIM pUnk AS ANY PTR
+   DIM pUnk AS IUnknown PTR, pDisp AS IDispatch PTR
    GetActiveObject(@classID, NULL, @pUnk)
-   RETURN pUnk
+   IF pUnk THEN
+      pUnk->lpVtbl->QueryInterface(pUnk, @IID_IDispatch, @pDisp)
+      pUnk->lpVtbl->Release(pUnk)
+   END IF
+   RETURN pDisp
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION AfxAnyCom OVERLOAD (BYREF wszProgID AS CONST WSTRING) AS IDispatch PTR
-   DIM classID AS CLSID, pUnk AS ANY PTR
-   pUnk = AfxGetCom(wszProgID)
-   IF pUnk THEN RETURN pUnk
+   DIM classID AS CLSID, pUnk AS IUnknown PTR, pDisp AS IDispatch PTR
    CLSIDFromProgID(wszProgID, @classID)
    IF IsEqualGuid(@classID, @IID_NULL) THEN RETURN NULL
-   IF GetActiveObject(@classID, NULL, @pUnk) <> S_OK THEN
-      CoCreateInstance(@classID, NULL, CLSCTX_INPROC_SERVER, @IID_IUnknown, @pUnk)
+   ' // Check if there is an instance already running
+   IF GetActiveObject(@classID, NULL, @pUnk) = S_OK THEN
+      pUnk->lpVtbl->QueryInterface(pUnk, @IID_IDispatch, @pDisp)
+      pUnk->lpVtbl->Release(pUnk)
+      RETURN pDisp
    END IF
-   RETURN pUnk
+   ' // Otherwise, create a new instance
+   CoCreateInstance(@classID, NULL, CLSCTX_INPROC_SERVER, @IID_IUnknown, @pUnk)
+   IF pUnk THEN
+      pUnk->lpVtbl->QueryInterface(pUnk, @IID_IDispatch, @pDisp)
+      pUnk->lpVtbl->Release(pUnk)
+   END IF
+   RETURN pDisp
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION AfxAnyCom OVERLOAD (BYREF classID AS CONST CLSID) AS IDispatch PTR
-   DIM pUnk AS ANY PTR
-   IF GetActiveObject(@classID, NULL, @pUnk) <> S_OK THEN
-      CoCreateInstance(@classID, NULL, CLSCTX_INPROC_SERVER, @IID_IUnknown, @pUnk)
+   DIM pUnk AS IUnknown PTR, pDisp AS IDispatch PTR
+   ' // Check if there is an instance already running
+   IF GetActiveObject(@classID, NULL, @pUnk) = S_OK THEN
+      pUnk->lpVtbl->QueryInterface(pUnk, @IID_IDispatch, @pDisp)
+      pUnk->lpVtbl->Release(pUnk)
+      RETURN pDisp
    END IF
-   RETURN pUnk
+   ' // Otherwise, create a new instance
+   CoCreateInstance(@classID, NULL, CLSCTX_INPROC_SERVER, @IID_IUnknown, @pUnk)
+   IF pUnk THEN
+      pUnk->lpVtbl->QueryInterface(pUnk, @IID_IDispatch, @pDisp)
+      pUnk->lpVtbl->Release(pUnk)
+   END IF
+   RETURN pDisp
 END FUNCTION
 ' ========================================================================================
 
