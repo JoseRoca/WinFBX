@@ -389,7 +389,7 @@ DECLARE SUB StatusBar_GetTipText (BYVAL hStatusBar AS HWND, BYVAL nPart AS WORD,
 DECLARE FUNCTION StatusBar_GetUnicodeFormat (BYVAL hStatusBar AS HWND) AS DWORD
 DECLARE FUNCTION StatusBar_IsSimple (BYVAL hStatusBar AS HWND) AS BOOLEAN
 DECLARE FUNCTION StatusBar_SetBkColor (BYVAL hStatusBar AS HWND, BYVAL clrBk AS COLORREF) AS COLORREF
-DECLARE SUB StatusBar_SetFont (BYVAL hStatusBar AS HWND, BYVAL hFont AS DWORD, BYVAL fRedraw AS LONG = FALSE)
+DECLARE SUB StatusBar_SetFont (BYVAL hStatusBar AS HWND, BYVAL hFont AS HFONT, BYVAL fRedraw AS LONG = FALSE)
 DECLARE FUNCTION StatusBar_SetIcon (BYVAL hStatusBar AS HWND, BYVAL nPart AS LONG, BYVAL hIcon AS HICON) AS BOOLEAN
 DECLARE SUB StatusBar_SetMinHeight (BYVAL hStatusBar AS HWND, BYVAL minHeight AS DWORD)
 DECLARE FUNCTION StatusBar_SetParts (BYVAL hStatusBar AS HWND, BYVAL dwParts AS DWORD, BYVAL rgWidths AS LONG PTR) AS BOOLEAN
@@ -4151,7 +4151,7 @@ END FUNCTION
 ' ========================================================================================
 '  Sets the font that the status bar is to use when drawing text.
 ' ========================================================================================
-PRIVATE SUB StatusBar_SetFont (BYVAL hStatusBar AS HWND, BYVAL hFont AS DWORD, BYVAL fRedraw AS LONG = FALSE)
+PRIVATE SUB StatusBar_SetFont (BYVAL hStatusBar AS HWND, BYVAL hFont AS HFONT, BYVAL fRedraw AS LONG = FALSE)
    SendMessageW(hStatusBar, WM_SETFONT, cast(WPARAM, hFont), cast(LPARAM, fRedraw))
 END SUB
 ' ========================================================================================
