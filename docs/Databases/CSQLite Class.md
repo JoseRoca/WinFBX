@@ -89,7 +89,7 @@ The database is opened for reading and writing, and is created if it does not al
 
 # CSQLiteStmt Class
 
-Wraps a sqlite3_stmt pointer returned by the Prepare method of the CSQLite class.
+Wraps a sqlite3_stmt pointer returned by the **Prepare** method of the **CSQLite** class.
 
 Inherits from CSQLite.
 
