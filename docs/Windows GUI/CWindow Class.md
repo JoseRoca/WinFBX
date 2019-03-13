@@ -3490,7 +3490,7 @@ DIM nWidth AS LONG = pWindow.Width
 
 # <a name="ScreenX"></a>ScreenX
 
-Returns the unscaled x-coordinate of the window.
+Returns the unscaled x-coordinate of the window relative to the screen.
 
 ```
 PROPERTY ScreenX () AS LONG
@@ -3504,7 +3504,7 @@ DIM nLeft AS LONG = pWindow.ScreenX
 
 # <a name="ScreenY"></a>ScreenY
 
-Returns the unscaled y-coordinate of the window.
+Returns the unscaled y-coordinate of the window relative to the screen.
 
 ```
 PROPERTY ScreenY () AS LONG
