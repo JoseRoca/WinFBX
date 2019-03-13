@@ -122,6 +122,8 @@ TYPE CWindow
       DECLARE FUNCTION UnScaleY (BYVAL cy AS SINGLE) AS SINGLE
       DECLARE PROPERTY Width () AS LONG
       DECLARE PROPERTY Height () AS LONG
+      DECLARE PROPERTY ScreenX () AS LONG
+      DECLARE PROPERTY ScreenY () AS LONG
       DECLARE PROPERTY ClientHeight () AS LONG
       DECLARE PROPERTY ClientWidth () AS LONG
       DECLARE PROPERTY ControlWidth (BYVAL hwnd AS HWND) AS LONG
@@ -1048,7 +1050,7 @@ END FUNCTION
 ' =====================================================================================
 
 ' =====================================================================================
-' Returns the width of the window
+' Returns the unscaled width of the window
 ' =====================================================================================
 PRIVATE PROPERTY CWindow.Width () AS LONG
    DIM rc AS RECT
@@ -1059,13 +1061,41 @@ END PROPERTY
 ' =====================================================================================
 
 ' =====================================================================================
-' Returns the height of the window
+' Returns the unscaled height of the window
 ' =====================================================================================
 PRIVATE PROPERTY CWindow.Height () AS LONG
    DIM rc AS RECT
    .GetWindowRect m_hwnd, @rc
    ' // Divide by m_rx to make the result High DPI aware
    PROPERTY = (rc.Bottom - rc.Top) / m_ry
+END PROPERTY
+' =====================================================================================
+
+' =====================================================================================
+' Returns the unscaled x-coordinate of the window relative to the screen.
+' =====================================================================================
+PRIVATE PROPERTY CWindow.ScreenX () AS LONG
+   DIM rc AS RECT
+   ' // Get the dimensions of the window
+   .GetWindowRect(m_hwnd, @rc)
+   ' // Convert the coordinates to be relative to the parent
+   .MapWindowPoints(HWND_DESKTOP, GetParent(m_hwnd), CAST(POINT PTR, @rc), 2)
+   ' // Divide by m_rx to make the result High DPI aware
+   PROPERTY = rc.Left / m_rx
+END PROPERTY
+' =====================================================================================
+
+' =====================================================================================
+' Returns the unscaled y-coordinate of the window relative to the screen.
+' =====================================================================================
+PRIVATE PROPERTY CWindow.ScreenY () AS LONG
+   DIM rc AS RECT
+   ' // Get the dimensions of the window
+   .GetWindowRect(m_hwnd, @rc)
+   ' // Convert the coordinates to be relative to the parent
+   .MapWindowPoints(HWND_DESKTOP, GetParent(m_hwnd), CAST(POINT PTR, @rc), 2)
+   ' // Divide by m_ry to make the result High DPI aware
+   PROPERTY = rc.Top / m_ry
 END PROPERTY
 ' =====================================================================================
 
