@@ -88,7 +88,7 @@ CONST PGB_SETBARDIR      = WM_USER + 159   ' // wParam sets bar direction, 0:lef
 CONST PGB_SETGRADIENTDIR = WM_USER + 160   ' // wParam sets gradient direction - 0:horizontal, 1:vertical, lParam controls rebuild of control
 CONST PGB_SETTXTANGLE    = WM_USER + 161   ' // wParam sets rotated font, lParam controls rebuild of control
 CONST PGB_SETFONT        = WM_USER + 162   ' // wParam = Handle of the font, lParam controls rebuild of control
-CONST PGB_GETFONT        = WM_USER + 162   ' // Returns the hanfle of the font
+CONST PGB_GETFONT        = WM_USER + 163   ' // Returns the hanfle of the font
 ' ========================================================================================
 
 ' ========================================================================================
