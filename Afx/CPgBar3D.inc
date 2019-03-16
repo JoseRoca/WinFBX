@@ -556,7 +556,7 @@ PRIVATE FUNCTION CPgBar3D.CPgBar3DProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, 
          .GetObjectW(pPgBar->m_hFont, SIZEOF(lfw), @lfw)
          lfw.lfescapement  = wParam * 10   ' // Angle is given in tenths of degrees
          lfw.lforientation = wParam * 10   ' // Both should be same
-         lfw.lfWeight = FW_BOLD            ' // Whatever, this one looks something like system font..
+'         lfw.lfWeight = FW_BOLD            ' // Whatever, this one looks something like system font..
          pPgBar->m_hRotateFont = .CreateFontIndirectW(@lfw)   ' // Create the font and store its handle
          IF lParam THEN .SendMessageW hwnd, PGB_BUILDBARS, 0, 1   ' // Rebuild and refresh if lParam says so
          EXIT FUNCTION
