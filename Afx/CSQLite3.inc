@@ -1451,6 +1451,7 @@ PRIVATE FUNCTION CSQLiteStmt.Finalize () AS LONG
    cast(PFNSQLITE3FINALIZEPROC, GetProcAddress(m_hLib, "sqlite3_finalize"))
    IF pProc = 0 THEN this.SetResult(GetLastError) : EXIT FUNCTION
    FUNCTION = pProc(m_hStmt)
+   m_hStmt = 0
    IF m_pColNames THEN m_pColNames->RemoveAll
 END FUNCTION
 ' ===========================================================================================
