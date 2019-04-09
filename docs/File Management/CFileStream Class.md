@@ -381,6 +381,26 @@ FUNCTION WriteTextA (BYREF strText AS STRING) AS ULONG
 
 ULONG. The characters written.
 
+#### Example
+
+```
+'#CONSOLE ON
+#INCLUDE ONCE "Afx/AfxWin.inc"
+#INCLUDE ONCE "Afx/CStream.inc"
+USING Afx
+
+DIM pstm AS CFileStream
+pstm.Open(AfxGetExePath & "\TextA1.txt", STGM_READWRITE)
+pstm.Seek(5, STREAM_SEEK_SET)
+pstm.WriteTextA(" 12345 ")
+pstm.Seek(0, STREAM_SEEK_SET)
+DIM s AS STRING = pstm.ReadTextA(50)
+print s
+
+PRINT "Press any key to end..."
+SLEEP
+```
+
 # <a name="WriteTextW"></a>WriteTextW
 
 Writes a string at the current seek position. Unicode version.
@@ -396,6 +416,27 @@ FUNCTION WriteTextW (BYREF wszText AS WSTRING) AS ULONG
 #### Return value
 
 ULONG. The characters written.
+
+#### Example
+
+```
+'#CONSOLE ON
+#INCLUDE ONCE "Afx/AfxWin.inc"
+#INCLUDE ONCE "Afx/CStream.inc"
+USING Afx
+
+DIM pstm AS CFileStream
+pstm.Open(AfxGetExePath & "\TextW1.txt", STGM_READWRITE)
+pstm.Seek(2, STREAM_SEEK_SET)   ' Skip BOM
+pstm.Seek(5 * 2, STREAM_SEEK_CUR)
+pstm.WriteTextW(" 12345 ")
+pstm.Seek(2, STREAM_SEEK_SET)   ' Skip BOM
+DIM cws AS CWSTR = pstm.ReadTextW(50)
+print cws
+
+PRINT "Press any key to end..."
+SLEEP
+```
 
 # <a name="Seek"></a>Seek
 
