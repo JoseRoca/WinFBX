@@ -250,6 +250,24 @@ FUNCTION Read (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG) AS ULONG
 
 ULONG. The actual number of bytes read from the stream. Note: The number of bytes read may be zero.
 
+#### Example
+
+```
+'#CONSOLE ON
+#INCLUDE ONCE "Afx/AfxWin.inc"
+#INCLUDE ONCE "Afx/CStream.inc"
+USING Afx
+
+DIM pstm AS CFileStream
+pstm.Open(AfxGetExePath & "\TextA1.txt", STGM_READ)
+DIM strText AS STRING = SPACE(10)
+pstm.Read(STRPTR(strText), LEN(strText))
+print strText
+
+PRINT "Press any key to end..."
+SLEEP
+```
+
 # <a name="ReadTextA"></a>ReadTextA
 
 Reads a specified number of characters from the stream into memory, starting at the current seek pointer. Ansi version.
