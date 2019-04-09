@@ -266,6 +266,23 @@ FUNCTION ReadTextA (BYVAL numChars AS LONG) AS STRING
 
 STRING. The characters read.
 
+#### Example
+
+```
+'#CONSOLE ON
+#INCLUDE ONCE "Afx/AfxWin.inc"
+#INCLUDE ONCE "Afx/CStream.inc"
+USING Afx
+
+DIM pstm AS CFileStream
+pstm.Open(AfxGetExePath & "\TextA1.txt", STGM_READ)
+DIM strText AS STRING = pstm.ReadTextA(-1)
+PRINT strText
+
+PRINT "Press any key to end..."
+SLEEP
+```
+
 # <a name="ReadTextW"></a>ReadTextW
 
 Reads a specified number of characters from the stream into memory, starting at the current seek pointer. Unicode version.
@@ -281,6 +298,23 @@ FUNCTION ReadTextW (BYVAL numChars AS LONG) AS CWSTR
 #### Return value
 
 CWSTR. The characters read.
+
+#### Example
+
+```
+'#CONSOLE ON
+#INCLUDE ONCE "Afx/AfxWin.inc"
+#INCLUDE ONCE "Afx/CStream.inc"
+USING Afx
+
+DIM pstm AS CFileStream
+pstm.Open(AfxGetExePath & "\TextW1.txt", STGM_READ)
+DIM cwsText AS STRING = pstm.ReadTextW(-1)
+PRINT cwsText
+
+PRINT "Press any key to end..."
+SLEEP
+```
 
 # <a name="Write"></a>Write
 
