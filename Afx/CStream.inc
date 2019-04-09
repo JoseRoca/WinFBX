@@ -52,6 +52,8 @@ Private:
 
 Public:
    DECLARE CONSTRUCTOR
+   DECLARE CONSTRUCTOR (BYREF cwsFile AS CWSTR, BYVAL grfMode AS DWORD = STGM_READ, _
+           BYVAL dwAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL, BYVAL fCreate AS WINBOOL = FALSE)
    DECLARE CONSTRUCTOR (BYVAL pwszFile AS WSTRING PTR, BYVAL grfMode AS DWORD = STGM_READ, _
            BYVAL dwAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL, BYVAL fCreate AS WINBOOL = FALSE)
    DECLARE CONSTRUCTOR (BYVAL pstm AS IStream PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
@@ -62,6 +64,8 @@ Public:
    DECLARE OPERATOR CAST () AS IStream PTR
    DECLARE FUNCTION Attach (BYVAL pstm AS IStream PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
    DECLARE FUNCTION Detach () AS IStream PTR
+   DECLARE FUNCTION Open (BYREF cwsFile AS CWSTR, BYVAL grfMode AS DWORD = STGM_READ, _
+           BYVAL dwAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL, BYVAL fCreate AS WINBOOL = FALSE) AS HRESULT
    DECLARE FUNCTION Open (BYVAL pwszFile AS WSTRING PTR, BYVAL grfMode AS DWORD = STGM_READ, _
            BYVAL dwAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL, BYVAL fCreate AS WINBOOL = FALSE) AS HRESULT
    DECLARE SUB Close
@@ -116,6 +120,15 @@ END CONSTRUCTOR
 ' - fCreate : A BOOL value that helps specify, in conjunction with grfMode, how existing
 '   files should be treated when creating the stream. See Remarks for details.
 '   https://docs.microsoft.com/en-us/windows/desktop/api/shlwapi/nf-shlwapi-shcreatestreamonfileex
+' ========================================================================================
+PRIVATE CONSTRUCTOR CFileStream (BYREF cwsFile AS CWSTR, BYVAL grfMode AS DWORD = STGM_READ, _
+BYVAL dwAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL, BYVAL fCreate AS WINBOOL = FALSE)
+   ' // Initialize the COM library
+   DIM hr AS HRESULT = CoInitialize(NULL)
+   IF hr = S_OK OR hr = S_FALSE THEN m_bUninitCOM = TRUE
+   this.SetResult(AfxSHCreateStreamOnFileEx(*cwsFile, grfMode, dwAttributes, fCreate, @m_pStream))
+END CONSTRUCTOR
+' ========================================================================================
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CFileStream (BYVAL pwszFile AS WSTRING PTR, BYVAL grfMode AS DWORD = STGM_READ, _
 BYVAL dwAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL, BYVAL fCreate AS WINBOOL = FALSE)
@@ -228,6 +241,12 @@ END FUNCTION
 ' - fCreate : A BOOL value that helps specify, in conjunction with grfMode, how existing
 '   files should be treated when creating the stream. See Remarks for details.
 '   https://docs.microsoft.com/en-us/windows/desktop/api/shlwapi/nf-shlwapi-shcreatestreamonfileex
+' ========================================================================================
+PRIVATE FUNCTION CFileStream.Open (BYREF cwsFile AS CWSTR, BYVAL grfMode AS DWORD = STGM_READ, _
+BYVAL dwAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL, BYVAL fCreate AS WINBOOL = FALSE) AS HRESULT
+   IF m_pStream <> NULL THEN m_pStream->lpvtbl->Release(m_pStream) : m_pStream = NULL
+   RETURN this.SetResult(AfxSHCreateStreamOnFileEx(*cwsFile, grfMode, dwAttributes, fCreate, @m_pStream))
+END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CFileStream.Open (BYVAL pwszFile AS WSTRING PTR, BYVAL grfMode AS DWORD = STGM_READ, _
 BYVAL dwAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL, BYVAL fCreate AS WINBOOL = FALSE) AS HRESULT
