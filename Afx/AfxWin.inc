@@ -1201,7 +1201,7 @@ END FUNCTION
 ' END IF
 ' ========================================================================================
 PRIVATE FUNCTION AfxExtractResource (BYVAL hInstance AS HINSTANCE, _
-   BYREF wszResourceName AS WSTRING, BYVAL pResourceType AS LPWSTR = RT_RCDATA) AS STRING
+   BYREF wszResourceName AS WSTRING, BYVAL pResourceType AS LPWSTR = MAKEINTRESOURCEW(10)) AS STRING
 
    ' // Find the resource
    DIM hRes AS HRSRC
@@ -1252,7 +1252,7 @@ END FUNCTION
 '    111 RCDATA ".\Resources\VEGA_PAZ_01.jpg"
 ' ========================================================================================
 PRIVATE FUNCTION AfxExtractResourceToFile (BYVAL hInstance AS HINSTANCE, BYREF wszResourceName AS WSTRING, _
-   BYREF wszFileName AS WSTRING, BYVAL pResourceType AS LPWSTR = RT_RCDATA) AS BOOLEAN
+   BYREF wszFileName AS WSTRING, BYVAL pResourceType AS LPWSTR = MAKEINTRESOURCEW(10)) AS BOOLEAN
 
    ' // Find the resource
    DIM hRes AS HRSRC
