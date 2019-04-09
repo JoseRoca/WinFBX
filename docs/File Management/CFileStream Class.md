@@ -309,7 +309,7 @@ USING Afx
 
 DIM pstm AS CFileStream
 pstm.Open(AfxGetExePath & "\TextW1.txt", STGM_READ)
-DIM cwsText AS STRING = pstm.ReadTextW(-1)
+DIM cwsText AS CWSTR = pstm.ReadTextW(-1)
 PRINT cwsText
 
 PRINT "Press any key to end..."
