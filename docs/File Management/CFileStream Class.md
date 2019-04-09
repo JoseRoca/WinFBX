@@ -177,7 +177,7 @@ The *grfMode* and *fCreate* parameters work together to specify how the function
 
 ```
 '#CONSOLE ON
-#INCLUDE ONCE "\Afx\CStream.inc"
+#INCLUDE ONCE "Afx/CStream.inc"
 USING Afx
 
 SCOPE
