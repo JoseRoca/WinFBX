@@ -233,7 +233,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Waits until the page had been fully downloaded or te timeout has expired.
+' Waits until the page had been fully downloaded or the timeout has expired.
 ' - dbTimeout: Timeout in seconds.
 ' Return value:
 ' READYSTATE_UNINITIALIZED = 0
