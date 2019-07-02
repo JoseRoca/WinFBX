@@ -102,6 +102,7 @@ END FUNCTION
 PRIVATE FUNCTION COdbcStmt.ExecDirect (BYREF wszSqlStr AS WSTRING) AS SQLRETURN
    m_Result = SetResult(SQLExecDirectW(m_hStmt, @wszSqlStr, SQL_NTS), "COdbcStmt.ExecDirect", SQL_HANDLE_STMT, m_hStmt)
    ' // Retrieve the names of the fields (columns)
+   IF m_Result = SQL_ERROR THEN RETURN m_Result
    ERASE rgColNames
    DIM numCols AS SQLSMALLINT = this.NumResultCols
    IF numCols THEN
@@ -320,6 +321,7 @@ END FUNCTION
 ' =====================================================================================
 PRIVATE FUNCTION COdbcStmt.Execute () AS SQLRETURN
    m_Result = SetResult(SQLExecute(m_hStmt), "COdbcStmt.Execute", SQL_HANDLE_STMT, m_hStmt)
+   IF m_Result = SQL_ERROR THEN RETURN m_Result
    ' // Retrieve the names of the fields (columns)
    ERASE rgColNames
    DIM numCols AS SQLSMALLINT = this.NumResultCols
