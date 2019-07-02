@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+2 Jul 2019
+- Added error check to the ExecDiret and Execute methods.
+
 22 Jan 2019
 - Added the functions AfxExtractResource and AfxExtractResourceToFile to AfxWin.inc.
 
