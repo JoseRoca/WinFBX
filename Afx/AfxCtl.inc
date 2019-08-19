@@ -627,7 +627,7 @@ PRIVATE FUNCTION AfxGetComboBoxText (BYVAL hComboBox AS HWND, BYVAL nIndex AS LO
    DIM nLen AS LONG = SendMessageW(hComboBox, CB_GETLBTEXTLEN, nIndex, 0)
    DIM cwsText AS CWSTR = SPACE(nLen + 1)
    SendMessageW(hComboBox, CB_GETLBTEXT, nIndex, cast(LPARAM, *cwsText))
-   RETURN cwsText
+   RETURN LEFT(**cwsText, LEN(cwsText) - 1)
 END FUNCTION
 ' ========================================================================================
 
