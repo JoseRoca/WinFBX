@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+19 Aug 2019
+- Modified the AfxGetComboBoxText function to remove the trailing null.
+
 2 Jul 2019
 - Added error check to the ExecDiret and Execute methods.
 
