@@ -148,11 +148,11 @@ FUNCTION AfxIFileOpenDialog (BYVAL hwndOwner AS HWND, BYVAL sigdnName AS SIGDN =
    ' // Allow multiselection
    hr = pofd->lpVtbl->SetOptions(pofd, FOS_ALLOWMULTISELECT)
 
-   ' // Set the default folder
+   ' // Set the folder
    DIM pFolder AS IShellItem PTR
    SHCreateItemFromParsingName (CURDIR, NULL, @IID_IShellItem, @pFolder)
    IF pFolder THEN
-      pofd->lpVtbl->SetDefaultFolder(pofd, pFolder)
+      pofd->lpVtbl->SetFolder(pofd, pFolder)
       pFolder->lpVtbl->Release(pFolder)
    END IF
 

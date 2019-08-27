@@ -137,16 +137,17 @@ FUNCTION AfxIFileSaveDialog (BYVAL hwndOwner AS HWND, BYVAL pwszFileName AS WSTR
    hr = psfd->lpVtbl->SetFileName(psfd, pwszFileName)
    ' // Set the extension
    hr = psfd->lpVtbl->SetDefaultExtension(psfd, pwszDefExt)
-   ' // Display the dialog
-   hr = psfd->lpVtbl->Show(psfd, hwndOwner)
 
-   ' // Set the default folder
+   ' // Set the folder
    DIM pFolder AS IShellItem PTR
    SHCreateItemFromParsingName (CURDIR, NULL, @IID_IShellItem, @pFolder)
    IF pFolder THEN
-      psfd->lpVtbl->SetDefaultFolder(psfd, pFolder)
+      psfd->lpVtbl->SetFolder(psfd, pFolder)
       pFolder->lpVtbl->Release(pFolder)
    END IF
+
+   ' // Display the dialog
+   hr = psfd->lpVtbl->Show(psfd, hwndOwner)
 
    ' // Get the result
    DIM pItem AS IShellItem PTR

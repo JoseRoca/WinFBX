@@ -131,16 +131,17 @@ FUNCTION AfxIFileOpenDialog (BYVAL hwndOwner AS HWND, BYVAL sigdnName AS SIGDN =
 
    ' // Set the title of the dialog
    hr = pofd->lpVtbl->SetTitle(pofd, "A Single-Selection Dialog")
-   ' // Display the dialog
-   hr = pofd->lpVtbl->Show(pofd, hwndOwner)
 
-   ' // Set the default folder
+   ' // Set the folder
    DIM pFolder AS IShellItem PTR
    SHCreateItemFromParsingName (CURDIR, NULL, @IID_IShellItem, @pFolder)
    IF pFolder THEN
-      pofd->lpVtbl->SetDefaultFolder(pofd, pFolder)
+      pofd->lpVtbl->SetFolder(pofd, pFolder)
       pFolder->lpVtbl->Release(pFolder)
    END IF
+
+   ' // Display the dialog
+   hr = pofd->lpVtbl->Show(pofd, hwndOwner)
 
    ' // Get the result
    DIM pItem AS IShellItem PTR
