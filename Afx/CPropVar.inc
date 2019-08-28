@@ -1238,8 +1238,14 @@ END FUNCTION
 
 ' ########################################################################################
 ' CPropVar - PROPVARIANT class
+' Extending from WSTRING allows to se some of the FB instrinsic string functions such
+' PRINT, LEFT, MID, RIGHT, for unicode output.
 ' ########################################################################################
+#if __FB_VERSION__ < "1.07.0"
 TYPE CPropVar
+#else
+TYPE CPropVar EXTENDS WSTRING
+#endif
 
 Private:
    cws AS CWSTR          ' // To allow to return a WSTRING by reference

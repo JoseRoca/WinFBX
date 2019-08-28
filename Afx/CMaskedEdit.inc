@@ -579,7 +579,7 @@ PRIVATE SUB CMaskedEdit.OnCharPrintchar(BYVAL nChar AS UINT, BYVAL nRepCnt AS UI
          ' // Replace char in Editbox and m_str
          Edit_SetSel(m_hCtl, nStartPos, nEndPos + 1)
          DIM cws AS CWSTR = WCHR(chChar)
-         Edit_ReplaceSel(m_hCtl, cws)
+         Edit_ReplaceSel(m_hCtl, *cws)
          MID(**m_str, nEndPos + 1, 1) = WCHR(chChar)
          Edit_SetSel(m_hCtl, nEndPos + 1, nEndPos + 1)
          ' // Automaticaly move the cursor to the next group
@@ -626,7 +626,7 @@ PRIVATE SUB CMaskedEdit.OnCharPrintchar(BYVAL nChar AS UINT, BYVAL nRepCnt AS UI
          cwsReplace = WSTRING(nRange, m_chMaskInputTemplate)
          MID(**cwsReplace, 1, 1) = WCHR(chChar)
          Edit_SetSel(m_hCtl, nStartPos, nStartPos + nRange)
-         Edit_ReplaceSel(m_hCtl, cwsReplace)
+         Edit_ReplaceSel(m_hCtl, *cwsReplace)
          Edit_SetSel(m_hCtl, nStartPos, nStartPos)
          FOR i AS LONG = 0 TO LEN(cwsReplace) - 1
             MID(**m_str, nStartPos + i + 1, 1) = WCHR(cwsReplace[i])
@@ -902,7 +902,7 @@ PRIVATE SUB CMaskedEdit.OnCharBackspace (BYVAL nChar AS UINT, BYVAL nRepCnt AS U
          END IF
          ' // Replace the content with the shifted string
          Edit_SetSel(m_hCtl, nIndex, nIndex + nSameMaskCharsNum)
-         Edit_ReplaceSel(m_hCtl, cwsReplace)
+         Edit_ReplaceSel(m_hCtl, *cwsReplace)
          Edit_SetSel(m_hCtl, nIndex, nIndex)
          FOR i AS LONG = 0 TO LEN(cwsReplace) - 1
             MID(**m_str, nIndex + i + 1) = WCHR(cwsReplace[i])
@@ -923,7 +923,7 @@ PRIVATE SUB CMaskedEdit.OnCharBackspace (BYVAL nChar AS UINT, BYVAL nRepCnt AS U
          DIM cwsReplace AS CWSTR
          cwsReplace = WSTRING(nRange, m_chMaskInputTemplate)
          Edit_SetSel(m_hCtl, nStartPos, nStartPos + nRange)
-         Edit_ReplaceSel(m_hCtl, cwsReplace)
+         Edit_ReplaceSel(m_hCtl, *cwsReplace)
          Edit_SetSel(m_hCtl, nStartPos, nStartPos)
          FOR i AS LONG = 0 TO LEN(cwsReplace) - 1
             MID(**m_str, nStartPos + i + 1, 1) = WCHR(cwsReplace[i])
@@ -996,7 +996,7 @@ PRIVATE SUB CMaskedEdit.OnCharDelete (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT
          END IF
          ' // Replace the content with the shifted string
          Edit_SetSel(m_hCtl, nIndex, nIndex + nSameMaskCharsNum)
-         Edit_ReplaceSel(m_hCtl, cwsReplace)
+         Edit_ReplaceSel(m_hCtl, *cwsReplace)
          Edit_SetSel(m_hCtl, nIndex, nIndex)
          FOR i AS LONG = 0 TO LEN(cwsReplace) - 1
             MID(**m_str, nIndex + i + 1) = WCHR(cwsReplace[i])
@@ -1017,7 +1017,7 @@ PRIVATE SUB CMaskedEdit.OnCharDelete (BYVAL nChar AS UINT, BYVAL nRepCnt AS UINT
          DIM cwsReplace AS CWSTR
          cwsReplace = WSTRING(nRange, m_chMaskInputTemplate)
          Edit_SetSel(m_hCtl, nStartPos, nStartPos + nRange)
-         Edit_ReplaceSel(m_hCtl, cwsReplace)
+         Edit_ReplaceSel(m_hCtl, *cwsReplace)
          Edit_SetSel(m_hCtl, nStartPos, nStartPos)
          FOR i AS LONG = 0 TO LEN(cwsReplace) - 1
             MID(**m_str, nStartPos + i + 1, 1) = WCHR(cwsReplace[i])

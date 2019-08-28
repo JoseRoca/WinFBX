@@ -5,7 +5,11 @@ Windows Framework for FreeBASIC.
 - Modified the AfxGetComboBoxText function to remove the trailing null.
 
 2 Jul 2019
-- Added error check to the ExecDiret and Execute methods.
+- ODBC: Added error check to the ExecDiret and Execute methods.
+
+Jun 2019
+- Modified CWSTR.inc, AfxStr.inc, CVAR.inc, CPropVar.inc and CMaskEdit.inc
+  to use the new FreeBasic 1.097 feature EXTEND WSTRING.
 
 22 Jan 2019
 - Added the functions AfxExtractResource and AfxExtractResourceToFile to AfxWin.inc.

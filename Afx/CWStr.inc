@@ -79,7 +79,11 @@ END FUNCTION
 ' ========================================================================================
 ' CBStr - OLE strings class
 ' ========================================================================================
+#if __FB_VERSION__ < "1.07.0"
 TYPE CBSTR
+#else
+TYPE CBSTR EXTENDS WSTRING
+#endif
 
    Public:
       m_bstr AS AFX_BSTR
@@ -87,7 +91,7 @@ TYPE CBSTR
    Public:
       DECLARE CONSTRUCTOR
       DECLARE CONSTRUCTOR (BYREF wszStr AS CONST WSTRING = "")
-      DECLARE CONSTRUCTOR (BYREF ansiStr AS STRING = "", BYVAL nCodePage AS UINT = 0)
+      DECLARE CONSTRUCTOR (BYREF ansiStr AS CONST STRING = "", BYVAL nCodePage AS UINT = 0)
       DECLARE CONSTRUCTOR (BYREF cbs AS CBStr)
       DECLARE CONSTRUCTOR (BYREF cws AS CWStr_)
       DECLARE CONSTRUCTOR (BYREF bstrHandle AS AFX_BSTR = NULL, BYVAL fAttach AS LONG = TRUE)
@@ -98,16 +102,16 @@ TYPE CBSTR
       DECLARE FUNCTION bptr () AS AFX_BSTR
       DECLARE FUNCTION vptr () AS AFX_BSTR PTR
       DECLARE FUNCTION sptr () AS WSTRING PTR
-      DECLARE FUNCTION wstr () BYREF AS CONST WSTRING
+      DECLARE FUNCTION wstr () BYREF AS WSTRING
       DECLARE FUNCTION wchar () AS WSTRING PTR
-      DECLARE OPERATOR LET (BYREF ansiStr AS STRING)
+      DECLARE OPERATOR LET (BYREF ansiStr AS CONST STRING)
       DECLARE OPERATOR LET (BYREF wszStr AS CONST WSTRING)
       DECLARE OPERATOR LET (BYREF cbs AS CBStr)
       DECLARE OPERATOR LET (BYREF cws AS CWStr_)
       DECLARE OPERATOR LET (BYREF bstrHandle AS AFX_BSTR)
       DECLARE OPERATOR LET (BYVAL n AS LONGINT)
       DECLARE OPERATOR LET (BYVAL n AS DOUBLE)
-      DECLARE OPERATOR CAST () BYREF AS CONST WSTRING
+      DECLARE OPERATOR CAST () BYREF AS WSTRING
       DECLARE OPERATOR CAST () AS ANY PTR
       DECLARE SUB Append (BYREF wszStr AS CONST WSTRING)
       DECLARE SUB Empty
@@ -140,7 +144,7 @@ TYPE CBSTR
       DECLARE FUNCTION ValDouble () AS DOUBLE
       DECLARE FUNCTION Value () AS DOUBLE
       DECLARE PROPERTY Utf8 () AS STRING
-      DECLARE PROPERTY Utf8 (BYREF utf8String AS STRING)
+      DECLARE PROPERTY Utf8 (BYREF utf8String AS CONST STRING)
 
 END TYPE
 ' ========================================================================================
@@ -148,20 +152,25 @@ END TYPE
 ' ########################################################################################
 '                                  *** CWSTR CLASS ***
 ' ########################################################################################
+#if __FB_VERSION__ < "1.07.0"
 TYPE CWSTR
+#else
+TYPE CWSTR EXTENDS WSTRING
+#endif
+
+   Public:
+      m_pBuffer AS UBYTE PTR        ' Pointer to the buffer
+      m_BufferLen AS UINT           ' Length in bytes of the current string in the buffer
 
    Private:
       m_Capacity AS UINT            ' The total size of the buffer
       m_GrowSize AS LONG = 260 * 2  ' How much to grow the buffer by when required
 
    Public:
-      m_pBuffer AS UBYTE PTR        ' Pointer to the buffer
-      m_BufferLen AS UINT           ' Length in bytes of the current string in the buffer
-
       DECLARE CONSTRUCTOR
       DECLARE CONSTRUCTOR (BYVAL nChars AS UINT, BYVAL bClear AS BOOLEAN)
       DECLARE CONSTRUCTOR (BYVAL pwszStr AS WSTRING PTR)
-      DECLARE CONSTRUCTOR (BYREF ansiStr AS STRING, BYVAL nCodePage AS UINT = 0)
+      DECLARE CONSTRUCTOR (BYREF ansiStr AS CONST STRING, BYVAL nCodePage AS UINT = 0)
       DECLARE CONSTRUCTOR (BYREF cws AS CWSTR)
       DECLARE CONSTRUCTOR (BYREF cbs AS CBSTR_)
       DECLARE CONSTRUCTOR (BYVAL n AS LONGINT)
@@ -181,7 +190,7 @@ TYPE CWSTR
       DECLARE SUB Add (BYREF cws AS CWSTR)
       DECLARE SUB Add (BYREF cbs AS CBSTR_)
       DECLARE SUB Add (BYVAL pwszStr AS WSTRING PTR)
-      DECLARE SUB Add (BYREF ansiStr AS STRING, BYVAL nCodePage AS UINT = 0)
+      DECLARE SUB Add (BYREF ansiStr AS CONST STRING, BYVAL nCodePage AS UINT = 0)
       DECLARE PROPERTY Char(BYVAL nIndex AS UINT) AS USHORT
       DECLARE PROPERTY Char(BYVAL nIndex AS UINT, BYVAL nValue AS USHORT)
       DECLARE OPERATOR [] (BYVAL nIndex AS UINT) BYREF AS USHORT
@@ -189,10 +198,10 @@ TYPE CWSTR
 		DECLARE FUNCTION Insert (BYREF cws AS CWSTR, BYVAL nIndex AS UINT) AS BOOLEAN
       DECLARE FUNCTION Insert (BYREF cbs AS CBSTR_, BYVAL nIndex AS LONG) AS BOOLEAN
       DECLARE FUNCTION Insert (BYVAL pwszStr AS WSTRING PTR, BYVAL nIndex AS UINT) AS BOOLEAN
-      DECLARE FUNCTION Insert (BYREF ansiStr AS STRING, BYVAL nIndex AS UINT, BYVAL nCodePage AS UINT = 0) AS BOOLEAN
-      DECLARE OPERATOR CAST () BYREF AS CONST WSTRING
+      DECLARE FUNCTION Insert (BYREF ansiStr AS CONST STRING, BYVAL nIndex AS UINT, BYVAL nCodePage AS UINT = 0) AS BOOLEAN
+      DECLARE OPERATOR CAST () BYREF AS WSTRING
       DECLARE OPERATOR CAST () AS ANY PTR
-      DECLARE OPERATOR LET (BYREF ansiStr AS STRING)
+      DECLARE OPERATOR LET (BYREF ansiStr AS CONST STRING)
       DECLARE OPERATOR LET (BYREF wszStr AS CONST WSTRING)
       DECLARE OPERATOR LET (BYREF pwszStr AS WSTRING PTR)
       DECLARE OPERATOR LET (BYREF cws AS CWSTR)
@@ -200,24 +209,24 @@ TYPE CWSTR
       DECLARE OPERATOR LET (BYVAL n AS LONGINT)
       DECLARE OPERATOR LET (BYVAL n AS DOUBLE)
 '      DECLARE OPERATOR @ () AS WSTRING PTR
-      DECLARE OPERATOR += (BYREF wszStr AS WSTRING)
+      DECLARE OPERATOR += (BYREF wszStr AS CONST WSTRING)
       DECLARE OPERATOR += (BYREF cws AS CWSTR)
       DECLARE OPERATOR += (BYREF cbs AS CBSTR_)
-      DECLARE OPERATOR += (BYREF ansiStr AS STRING)
+      DECLARE OPERATOR += (BYREF ansiStr AS CONST STRING)
       DECLARE OPERATOR += (BYVAL n AS LONGINT)
       DECLARE OPERATOR += (BYVAL n AS DOUBLE)
-      DECLARE OPERATOR &= (BYREF wszStr AS WSTRING)
+      DECLARE OPERATOR &= (BYREF wszStr AS CONST WSTRING)
       DECLARE OPERATOR &= (BYREF cws AS CWSTR)
       DECLARE OPERATOR &= (BYREF cbs AS CBSTR_)
-      DECLARE OPERATOR &= (BYREF ansiStr AS STRING)
+      DECLARE OPERATOR &= (BYREF ansiStr AS CONST STRING)
       DECLARE OPERATOR &= (BYVAL n AS LONGINT)
       DECLARE OPERATOR &= (BYVAL n AS DOUBLE)
       DECLARE FUNCTION vptr () AS WSTRING PTR
       DECLARE FUNCTION sptr () AS WSTRING PTR
-      DECLARE FUNCTION wstr () BYREF AS CONST WSTRING
+      DECLARE FUNCTION wstr () BYREF AS WSTRING
       DECLARE FUNCTION wchar () AS WSTRING PTR
       DECLARE PROPERTY utf8 () AS STRING
-      DECLARE PROPERTY utf8 (BYREF ansiStr AS STRING)
+      DECLARE PROPERTY utf8 (BYREF ansiStr AS CONST STRING)
       DECLARE FUNCTION cbstr () AS CBSTR_
       DECLARE FUNCTION bstr () AS AFX_BSTR
       DECLARE FUNCTION LeftChars (BYVAL nChars AS LONG) AS CWSTR
@@ -272,7 +281,7 @@ PRIVATE CONSTRUCTOR CWstr (BYVAL pwszStr AS WSTRING PTR)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CWstr (BYREF ansiStr AS STRING, BYVAL nCodePage AS UINT = 0)
+PRIVATE CONSTRUCTOR CWstr (BYREF ansiStr AS CONST STRING, BYVAL nCodePage AS UINT = 0)
    CWSTR_DP("+++BEGIN- CWSTR CONSTRUCTOR STRING - " & .WSTR(VARPTR(ansiStr)))
    IF .LEN(ansiStr) THEN
       this.Add(ansiStr, nCodePage)    ' Add the passed ansi string
@@ -392,7 +401,7 @@ END OPERATOR
 ' ========================================================================================
 ' Returns the string data (same as **).
 ' ========================================================================================
-PRIVATE OPERATOR CWstr.CAST () BYREF AS CONST WSTRING
+PRIVATE OPERATOR CWstr.CAST () BYREF AS WSTRING
    CWSTR_DP("CWSTR CAST BYREF AS WSTRING - buffer: " & .WSTR(m_pBuffer))
    OPERATOR = *cast(WSTRING PTR, m_pBuffer)
 END OPERATOR
@@ -400,7 +409,7 @@ END OPERATOR
 ' ========================================================================================
 ' Returns the string data (same as **).
 ' ========================================================================================
-PRIVATE FUNCTION CWstr.wstr () BYREF AS CONST WSTRING
+PRIVATE FUNCTION CWstr.wstr () BYREF AS WSTRING
    CWSTR_DP("CWSTR wstr - buffer: " & .WSTR(m_pBuffer))
    RETURN *cast(WSTRING PTR, m_pBuffer)
 END FUNCTION
@@ -416,7 +425,7 @@ PRIVATE OPERATOR CWstr.Let (BYREF wszStr AS CONST WSTRING)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE OPERATOR CWstr.Let (BYREF ansiStr AS STRING)
+PRIVATE OPERATOR CWstr.Let (BYREF ansiStr AS CONST STRING)
    CWSTR_DP("CWSTR LET STRING")
    this.Clear
    this.Add(ansiStr)
@@ -425,6 +434,7 @@ END OPERATOR
 ' ========================================================================================
 PRIVATE OPERATOR CWstr.Let (BYREF pwszStr AS WSTRING PTR)
    CWSTR_DP("CWSTR LET WSTRING PTR = " & .WSTR(pwszStr))
+   IF m_pBuffer = CAST(UBYTE PTR, pwszStr) THEN EXIT OPERATOR   ' Ignore self assign
    this.Clear
    IF pwszStr = NULL THEN EXIT OPERATOR
    this.Add(*pwszStr)
@@ -550,7 +560,7 @@ PRIVATE SUB CWstr.Add (BYVAL pwszStr AS WSTRING PTR)
 END SUB
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE SUB CWstr.Add (BYREF ansiStr AS STRING, BYVAL nCodePage AS UINT = 0)
+PRIVATE SUB CWstr.Add (BYREF ansiStr AS CONST STRING, BYVAL nCodePage AS UINT = 0)
    CWSTR_DP("CWSTR Add STRING Code page = " & .WSTR (nCodePage))
    IF LEN(ansiStr) = 0 THEN RETURN
    ' Create the wide string from the incoming ansi string
@@ -580,7 +590,7 @@ END SUB
 ' ========================================================================================
 ' Appends a string to the CWSTR
 ' ========================================================================================
-PRIVATE OPERATOR CWStr.+= (BYREF wszStr AS WSTRING)
+PRIVATE OPERATOR CWStr.+= (BYREF wszStr AS CONST WSTRING)
    CWSTR_DP("CWSTR OPERATOR += WSTRING")
    this.Add(wszStr)
 END OPERATOR
@@ -589,7 +599,7 @@ END OPERATOR
 ' ========================================================================================
 ' Appends a string to the CWSTR
 ' ========================================================================================
-PRIVATE OPERATOR CWStr.+= (BYREF ansiStr AS STRING)
+PRIVATE OPERATOR CWStr.+= (BYREF ansiStr AS CONST STRING)
    CWSTR_DP("CWSTR OPERATOR += STRING")
    this.Add(ansiStr)
 END OPERATOR
@@ -631,7 +641,7 @@ END OPERATOR
 ' ========================================================================================
 ' Appends a WSTRING to the CWSTR
 ' ========================================================================================
-PRIVATE OPERATOR CWStr.&= (BYREF wszStr AS WSTRING)
+PRIVATE OPERATOR CWStr.&= (BYREF wszStr AS CONST WSTRING)
    CWSTR_DP("CWSTR OPERATOR &= WSTRING")
    this.Add(wszStr)
 END OPERATOR
@@ -640,7 +650,7 @@ END OPERATOR
 ' ========================================================================================
 ' Appends a string to the CWSTR
 ' ========================================================================================
-PRIVATE OPERATOR CWStr.&= (BYREF ansiStr AS STRING)
+PRIVATE OPERATOR CWStr.&= (BYREF ansiStr AS CONST STRING)
    CWSTR_DP("CWSTR OPERATOR &= STRING")
    this.Add(ansiStr)
 END OPERATOR
@@ -771,12 +781,12 @@ END PROPERTY
 ' Returns the corresponding ASCII or Unicode integer representation of the character at
 ' the zero-based position specified by the nIndex parameter (0 for the first character,
 ' 1 for the second, etc.), e.g. value = cws[1], cws[1] = value.
+' This operator must not be used in case of empty string because reference is undefined
+' (inducing runtime error). Otherwise, the user must ensure that the index does not exceed
+' the range "[0, Len(cws) - 1]". Outside this range, results are undefined.
 ' ========================================================================================
 PRIVATE OPERATOR CWstr.[] (BYVAL nIndex AS UINT) BYREF AS USHORT
    CWSTR_DP("CWSTR Operator []")
-   STATIC Zero AS USHORT = 0
-   IF nIndex < 0 OR nIndex > (m_BufferLen \ 2) - 1 THEN RETURN Zero
-   ' Get the numeric character code at position nIndex
    OPERATOR = *CAST(USHORT PTR, m_pBuffer + (nIndex * 2))
 END OPERATOR
 ' ========================================================================================
@@ -911,7 +921,7 @@ PRIVATE FUNCTION CWstr.Insert (BYVAL pwszStr AS WSTRING PTR, BYVAL nIndex AS UIN
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE FUNCTION CWstr.Insert (BYREF ansiStr AS STRING, BYVAL nIndex AS UINT, BYVAL nCodePage AS UINT = 0) AS BOOLEAN
+PRIVATE FUNCTION CWstr.Insert (BYREF ansiStr AS CONST STRING, BYVAL nIndex AS UINT, BYVAL nCodePage AS UINT = 0) AS BOOLEAN
    CWSTR_DP("CWSTR Insert STRING")
    IF nIndex < 1 OR nIndex > m_BufferLen \ 2 OR .LEN(ansiStr) = 0 THEN RETURN FALSE
    ' Create the wide string from the incoming ansi string
@@ -951,7 +961,7 @@ END PROPERTY
 ' ========================================================================================
 ' Converts UTF8 to unicode and assigns it to the CWSTR.
 ' ========================================================================================
-PRIVATE PROPERTY CWstr.Utf8 (BYREF utf8String AS STRING)
+PRIVATE PROPERTY CWstr.Utf8 (BYREF utf8String AS CONST STRING)
    CWSTR_DP("CWSTR Utf8 SET PROPERTY")
    this.Clear
    this.Add(utf8String, CP_UTF8)
@@ -1094,7 +1104,7 @@ PRIVATE CONSTRUCTOR CBStr (BYREF wszStr AS CONST WSTRING = "")
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CBStr (BYREF ansiStr AS STRING = "", BYVAL nCodePage AS UINT = 0)
+PRIVATE CONSTRUCTOR CBStr (BYREF ansiStr AS CONST STRING = "", BYVAL nCodePage AS UINT = 0)
    IF nCodePage = CP_UTF8 THEN
       DIM dwLen AS DWORD = MultiByteToWideChar(CP_UTF8, 0, STRPTR(ansiStr), LEN(ansiStr), NULL, 0)
       IF dwLen THEN
@@ -1226,7 +1236,7 @@ PRIVATE OPERATOR CBStr.Let (BYREF wszStr AS CONST WSTRING)
    m_bstr = SysAllocString(wszStr)
 END OPERATOR
 ' ========================================================================================
-PRIVATE OPERATOR CBStr.Let (BYREF ansiStr AS STRING)
+PRIVATE OPERATOR CBStr.Let (BYREF ansiStr AS CONST STRING)
    CBSTR_DP("CBSTR LET STRING")
    IF m_bstr THEN SysFreeString(m_bstr)
    m_bstr = SysAllocString(ansiStr)
@@ -1304,7 +1314,7 @@ END OPERATOR
 ' ========================================================================================
 ' * Returns a pointer to the string data (same as **)
 ' ========================================================================================
-PRIVATE OPERATOR CBStr.CAST () BYREF AS CONST WSTRING
+PRIVATE OPERATOR CBStr.CAST () BYREF AS WSTRING
    CBSTR_DP("CBSTR OPERATOR CAST BYREF AS WSTRING " & .WSTR(m_bstr))
    OPERATOR =  *CAST(WSTRING PTR, m_bstr)
 END OPERATOR
@@ -1321,7 +1331,7 @@ END OPERATOR
 ' ========================================================================================
 ' * Returns a pointer to the string data (same as **)
 ' ========================================================================================
-PRIVATE FUNCTION CBStr.wstr () BYREF AS CONST WSTRING
+PRIVATE FUNCTION CBStr.wstr () BYREF AS WSTRING
    CBSTR_DP("CBSTR wstr " & .WSTR(m_bstr))
    RETURN *CAST(WSTRING PTR, m_bstr)
 END FUNCTION
@@ -1535,12 +1545,12 @@ END PROPERTY
 ' Returns the corresponding ASCII or Unicode integer representation of the character at
 ' the zero-based position specified by the nIndex parameter (0 for the first character,
 ' 1 for the second, etc.), e.g. value = cbs[1], cbs[1] = value.
+' This operator must not be used in case of empty string because reference is undefined
+' (inducing runtime error). Otherwise, the user must ensure that the index does not exceed
+' the range "[0, Len(cws) - 1]". Outside this range, results are undefined.
 ' ========================================================================================
 PRIVATE OPERATOR CBStr.[] (BYVAL nIndex AS UINT) BYREF AS USHORT
    CBSTR_DP("CBSTR Operator []")
-   STATIC Zero AS USHORT = 0
-   IF nIndex < 0 OR nIndex > SysStringLen(m_bstr) - 1 THEN RETURN Zero
-   ' Get the numeric character code at position nIndex
    OPERATOR = *CAST(USHORT PTR, m_bstr + nIndex)
 END OPERATOR
 ' ========================================================================================
@@ -1653,7 +1663,7 @@ END PROPERTY
 ' ========================================================================================
 ' Converts UTF8 to unicode and assigns it to the CWSTR.
 ' ========================================================================================
-PRIVATE PROPERTY CBStr.Utf8 (BYREF utf8String AS STRING)
+PRIVATE PROPERTY CBStr.Utf8 (BYREF utf8String AS CONST STRING)
    CBSTR_DP("CWSTR Utf8 SET PROPERTY")
    IF m_bstr THEN SysFreeString(m_bstr)
    DIM dwLen AS DWORD = MultiByteToWideChar(CP_UTF8, 0, STRPTR(utf8String), LEN(utf8String), NULL, 0)

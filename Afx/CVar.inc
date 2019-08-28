@@ -52,8 +52,14 @@ NAMESPACE Afx
 
 ' ########################################################################################
 ' CVar - VARIANT class
+' Extending from WSTRING allows to se some of the FB instrinsic string functions such
+' PRINT, LEFT, MID, RIGHT, for unicode output.
 ' ########################################################################################
+#if __FB_VERSION__ < "1.07.0"
 TYPE CVar
+#else
+TYPE CVar EXTENDS WSTRING
+#endif
 
 Private:
    cws AS CWSTR          ' // To allow to return a WSTRING by reference
@@ -88,7 +94,7 @@ Public:
    DECLARE FUNCTION bstr () AS CBSTR
    DECLARE OPERATOR CAST () AS VARIANT
    DECLARE OPERATOR CAST () AS ANY PTR
-   DECLARE OPERATOR CAST () BYREF AS CONST WSTRING
+   DECLARE OPERATOR CAST () BYREF AS WSTRING
    DECLARE FUNCTION ToStr () AS CWSTR
    DECLARE FUNCTION ToWStr () AS CWSTR
    DECLARE FUNCTION ToBStr () AS CBSTR
@@ -687,7 +693,7 @@ END OPERATOR
 ' =====================================================================================
 ' Extracts the contents of a VARIANT and returns them as a WSTRING.
 ' =====================================================================================
-PRIVATE OPERATOR CVar.CAST () BYREF AS CONST WSTRING
+PRIVATE OPERATOR CVar.CAST () BYREF AS WSTRING
    CVAR_DP("CVAR CAST BYREF AS WSTRING")
    ' Note: cws is not a temporary string but a private variable or the class
    cws = AfxVarToStr(@vd)

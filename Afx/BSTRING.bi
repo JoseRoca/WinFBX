@@ -334,7 +334,7 @@ PRIVATE OPERATOR BSTRING.LET (BYVAL pwszStr AS WSTRING PTR)
       ' Attach the passed handle to the class
       m_bstr = pwszStr
    ELSE
-      ' Allocate an OLE string with the contents of the string pointed by bstrHandle
+      ' Allocate an OLE string with the contents of the string pointed by pwszStr
       m_bstr = SysAllocString(pwszStr)
    END IF
 END OPERATOR

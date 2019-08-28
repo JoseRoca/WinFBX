@@ -300,7 +300,7 @@ END FUNCTION
 ' This function is case sensitive.
 ' Example: AfxStrReplace("Hello World", "World", "Earth")   ' -> "Hello Earth"
 ' ========================================================================================
-PRIVATE FUNCTION AfxStrReplace OVERLOAD (BYREF wszMainStr AS CONST WSTRING, BYREF wszMatchStr AS CONST WSTRING, BYREF wszReplaceWith AS WSTRING) AS CWSTR
+PRIVATE FUNCTION AfxStrReplace OVERLOAD (BYREF wszMainStr AS CONST WSTRING, BYREF wszMatchStr AS CONST WSTRING, BYREF wszReplaceWith AS CONST WSTRING) AS CWSTR
    DIM cwsMainStr AS CWSTR = wszMainStr
    DIM nLenReplaceWith AS LONG = LEN(wszReplaceWith)
    DIM nLenMatchStr AS LONG = LEN(wszMatchStr)
@@ -526,7 +526,7 @@ END FUNCTION
 ' This function is case-sensitive.
 ' Example: AfxStrRemain("Brevity is the soul of wit", "is ")   ' -> "the soul of wit"
 ' ========================================================================================
-PRIVATE FUNCTION AfxStrRemain (BYREF wszMainStr AS WSTRING, BYREF wszMatchStr AS CONST WSTRING, BYVAL nStart AS LONG = 1) AS CWSTR
+PRIVATE FUNCTION AfxStrRemain (BYREF wszMainStr AS CONST WSTRING, BYREF wszMatchStr AS CONST WSTRING, BYVAL nStart AS LONG = 1) AS CWSTR
    IF LEN(wszMainStr) = 0 OR LEN(wszMatchStr) = 0 THEN RETURN ""
    IF nStart = 0 OR nStart > LEN(wszMainStr) THEN RETURN ""
    IF nStart < 0 THEN nStart = LEN(wszMainStr) + nStart + 1
@@ -541,7 +541,7 @@ END FUNCTION
 ' * Case insensitive version of AfxStrRemain.
 ' Example: AfxStrRemainI("Brevity is the soul of wit", "Is ")   ' -> "the soul of wit"
 ' ========================================================================================
-PRIVATE FUNCTION AfxStrRemainI (BYREF wszMainStr AS WSTRING, BYREF wszMatchStr AS CONST WSTRING, BYVAL nStart AS LONG = 1) AS CWSTR
+PRIVATE FUNCTION AfxStrRemainI (BYREF wszMainStr AS CONST WSTRING, BYREF wszMatchStr AS CONST WSTRING, BYVAL nStart AS LONG = 1) AS CWSTR
    IF LEN(wszMainStr) = 0 OR LEN(wszMatchStr) = 0 THEN RETURN ""
    IF nStart = 0 OR nStart > LEN(wszMainStr) THEN RETURN ""
    IF nStart < 0 THEN nStart = LEN(wszMainStr) + nStart + 1
@@ -568,7 +568,7 @@ END FUNCTION
 ' This function is case-sensitive.
 ' Example: AfxStrRemainAny("I think, therefore I am", ",")   ' -> " therefore I am"
 ' ========================================================================================
-PRIVATE FUNCTION AfxStrRemainAny (BYREF wszMainStr AS CONST WSTRING, BYREF wszMatchStr AS WSTRING, BYVAL nStart AS LONG = 1) AS CWSTR
+PRIVATE FUNCTION AfxStrRemainAny (BYREF wszMainStr AS CONST WSTRING, BYREF wszMatchStr AS CONST WSTRING, BYVAL nStart AS LONG = 1) AS CWSTR
    IF LEN(wszMainStr) = 0 OR LEN(wszMatchStr) = 0 THEN RETURN ""
    IF nStart = 0 OR nStart > LEN(wszMainStr) THEN RETURN ""
    IF nStart < 0 THEN nStart = LEN(wszMainStr) + nStart + 1
@@ -985,7 +985,7 @@ END FUNCTION
 ' wszInsertString is appended to wszMainStr. The first character in the string is position 1, etc.
 ' DIM cws AS CWSTR = AfxStrInsert("1234567890", "--", 6)
 ' ========================================================================================
-PRIVATE FUNCTION AfxStrInsert (BYREF wszMainStr AS CONST WSTRING, BYREF wszInsertString AS WSTRING, BYVAL nPosition AS LONG) AS CWSTR
+PRIVATE FUNCTION AfxStrInsert (BYREF wszMainStr AS CONST WSTRING, BYREF wszInsertString AS CONST WSTRING, BYVAL nPosition AS LONG) AS CWSTR
    DIM cws AS CWSTR = wszMainStr
    IF nPosition <= 0 THEN RETURN cws
    IF nPosition > LEN(wszMainStr) THEN
@@ -1447,7 +1447,7 @@ PRIVATE FUNCTION AfxBase64EncodeW (BYREF cwsData AS CWSTR) AS CWSTR
    DIM bRes AS LONG = AfxCryptBinaryToStringW(cwsData, LEN(cwsData) * 2, CRYPT_STRING_BASE64, NULL, @cchStr)
    IF bRes = 0 OR cchStr = 0 THEN EXIT FUNCTION
    cwsOut = WSPACE(cchStr)
-   bRes = AfxCryptBinaryToStringW(cwsData, LEN(cwsData) * 2, CRYPT_STRING_BASE64, CAST(UBYTE PTR, cwsOut), @cchStr)
+   bRes = AfxCryptBinaryToStringW(cwsData, LEN(cwsData) * 2, CRYPT_STRING_BASE64, cwsOut, @cchStr)
    FUNCTION = cwsOut
 END FUNCTION
 ' ========================================================================================
@@ -1473,7 +1473,7 @@ PRIVATE FUNCTION AfxBase64DecodeW (BYREF cwsData AS CWSTR) AS CWSTR
    DIM bRes AS LONG = AfxCryptStringToBinaryW(cwsData, LEN(cwsData) * 2, CRYPT_STRING_BASE64, NULL, @cbBinary, NULL, NULL)
    IF bRes = 0 OR cbBinary = 0 THEN EXIT FUNCTION
    cwsOut = WSPACE(cbBinary \ 2)
-   bRes = AfxCryptStringToBinaryW(cwsData, LEN(cwsData) * 2, CRYPT_STRING_BASE64, CAST(UBYTE PTR, cwsOut), @cbBinary, NULL, NULL)
+   bRes = AfxCryptStringToBinaryW(cwsData, LEN(cwsData) * 2, CRYPT_STRING_BASE64, cwsOut, @cbBinary, NULL, NULL)
    FUNCTION = cwsOut
 END FUNCTION
 ' ========================================================================================
