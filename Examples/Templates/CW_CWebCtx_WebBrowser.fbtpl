@@ -52,9 +52,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    ' // Add a WebBrowser control
    DIM pwb AS CWebCtx = CWebCtx(@pWindow, IDC_WEBBROWSER, 0, 0, pWindow.ClientWidth, pWindow.ClientHeight)
    ' // Navigate to a URL
-'   pwb.Navigate("http://www.planetsquires.com/protect/forum/index.php")
-   pwb.Navigate("https://forum.powerbasic.com/")
-'   pwb.Navigate("https://elpais.com/")
+   pwb.Navigate("http://www.planetsquires.com/protect/forum/index.php")
    ' // Optional: Wait for page load with a timeout of 5 seconds
    DIM lReadyState AS READYSTATE = pwb.WaitForPageLoad(5)
    ' // Set the focus in the page (the page must be fully loaded)
