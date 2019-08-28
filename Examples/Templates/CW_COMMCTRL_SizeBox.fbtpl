@@ -43,6 +43,9 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    ' // Create the main window with default coordinates
    DIM pWindow AS CWindow
    pWindow.Create(NULL, "Size box", @WndProc)
+   ' // Sizes it by setting the wanted width and height of its client area
+   pWindow.SetClientSize(500, 320)
+   ' // Centers the window
    pWindow.Center
 
    ' // Add a size box control (it will be positioned and displayed in the WM_SIZE message)
