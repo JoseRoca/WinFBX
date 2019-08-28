@@ -81,9 +81,9 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
             ' // Get selected date
             IF ptnmsc->nmhdr.code = MCN_SELCHANGE THEN
                DIM wszDate AS WSTRING * 260
-               wszDate = "Day: " & WSTR$(ptnmsc->stSelStart.wDay) & " " & _
-                         "Month: " & WSTR$(ptnmsc->stSelStart.wMonth) & " " & _
-                         "Year: " & WSTR$(ptnmsc->stSelStart.wYear)
+               wszDate = "Day: " & WSTR(ptnmsc->stSelStart.wDay) & " " & _
+                         "Month: " & WSTR(ptnmsc->stSelStart.wMonth) & " " & _
+                         "Year: " & WSTR(ptnmsc->stSelStart.wYear)
                SendMessageW hwnd, WM_SETTEXT, 0, CAST(LPARAM, @wszDate)
                ' Note: Don't use MessageBox here or you will get non-stop messages!
                EXIT FUNCTION
