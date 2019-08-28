@@ -260,7 +260,7 @@ FUNCTION TabPage1_WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam 
 '            ILFree(pidlBrowse)
 '         END IF
          DIM wszPath AS WSTRING * MAX_PATH
-         wszPath = "C:\Users"   ' --> change me
+         wszPath = $"C:\Users"   ' --> change me
          IF SUCCEEDED(SHParseDisplayName(wszPath, NULL, @pidlBrowse, 0, NULL)) THEN
             peb->lpVtbl->BrowseToIDList(peb, pidlBrowse, 0)
             ILFree(pidlBrowse)
