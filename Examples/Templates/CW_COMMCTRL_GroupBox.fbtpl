@@ -53,6 +53,9 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    DIM pWindow AS CWindow
    pWindow.Brush = GetStockObject(WHITE_BRUSH)
    pWindow.Create(NULL, "GroupBox example", @WndProc)
+   ' // Sizes it by setting the wanted width and height of its client area
+   pWindow.SetClientSize(500, 320)
+   ' // Centers the window
    pWindow.Center
 
    ' // Add the controls
