@@ -46,6 +46,9 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    ' // Create the main window
    DIM pWindow AS CWindow
    pWindow.Create(NULL, "CWindow with ownerdraw button", @WndProc)
+   ' // Sizes it by setting the wanted width and height of its client area
+   pWindow.SetClientSize(500, 320)
+   ' // Center the window
    pWindow.Center
 
    ' // Add a subclassed ownerdraw button
