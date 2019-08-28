@@ -113,11 +113,11 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
          cyClient = HIWORD(lParam)
          xCenter = cxClient  \ 2
          yCenter = cyClient  \ 2
-         iScale = MIN&(cxClient * xPixel, cyClient * yPixel) \ 16
+         iScale = MIN(cxClient * xPixel, cyClient * yPixel) \ 16
          cxRadius = iScale \ xPixel
          cyRadius = iScale \ yPixel
-         cxMove = MAX&(1, cxRadius \ 2)
-         cyMove = MAX&(1, cyRadius \ 2)
+         cxMove = MAX(1, cxRadius \ 2)
+         cyMove = MAX(1, cyRadius \ 2)
          cxTotal = 2 * (cxRadius + cxMove)
          cyTotal = 2 * (cyRadius + cyMove)
          IF hBitmap THEN DeleteObject hBitmap
