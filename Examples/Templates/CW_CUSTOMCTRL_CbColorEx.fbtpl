@@ -43,6 +43,9 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
 
    DIM pWindow AS CWindow
    pWindow.Create(NULL, "ComboBox color list", @WndProc)
+   ' // Sizes it by setting the wanted width and height of its client area
+   pWindow.SetClientSize(500, 320)
+   ' // Centers the window
    pWindow.Center
 
    DIM rgNames (17) AS WSTRING * 20 = {"Auto", "Negro", "Azul", "Verde", "Cian", "Rojo", _
