@@ -148,7 +148,9 @@ END FUNCTION
 '   file is actually a directory. Otherwise FALSE.
 ' ========================================================================================
 PRIVATE FUNCTION CFindFile.IsDots () AS BOOLEAN
-   IF ASC(m_FileInfo.cFileName) = 46 THEN RETURN TRUE
+   IF (m_FileInfo.dwFileAttributes AND FILE_ATTRIBUTE_DIRECTORY) = FILE_ATTRIBUTE_DIRECTORY THEN
+      IF m_FileInfo.cFileName = "." OR m_FileInfo.cFileName = ".." THEN RETURN TRUE
+   END IF
 END FUNCTION
 ' ========================================================================================
 
