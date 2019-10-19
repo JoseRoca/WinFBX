@@ -437,7 +437,7 @@ TRUE or FALSE.
 ##### Remarks
 
 If resizable, the virtual buffer is set to the size of the control. If the control is made smaller and then bigger, part of the contents
-are lost. Therefore, the caller must redraw it.Resizable and stretchable are mutually exclusive.
+are lost. Therefore, the caller must redraw it. Resizable and stretchable are mutually exclusive.
 
 ### <a name="SaveImage"></a>SaveImage
 
