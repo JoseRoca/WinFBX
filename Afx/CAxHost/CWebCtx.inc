@@ -1020,6 +1020,9 @@ END FUNCTION
 ' Warning: This code uses an undocumented command-group GUID that is subject to change in
 ' the future. Currently it works in all versions of Internet Explorer up to 11.
 ' See http://support.microsoft.com/?kbid=311288
+' Note: Internet Explorer 8 introduced support for the OLECMDID_FIND option to the ExecWB method
+' of the IWebBrowser2 interface. Therefore, the code of this Find method cab be replaced with:
+' IF m_pWebBrowser THEN RETURN m_pWebBrowser->ExecWB(OLECMDID_FIND, OLECMDEXECOPT_DODEFAULT, NULL, NULL)
 ' ========================================================================================
 PRIVATE FUNCTION CWebCtx.Find () AS HRESULT
    IF m_pWebBrowser = NULL THEN RETURN E_POINTER
