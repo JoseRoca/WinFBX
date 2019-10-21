@@ -384,7 +384,7 @@ instead of
 
 ```
 pWindow.AddControl("Button", pWindow.hWindow, IDCANCEL, "&Close", 350, 250, 75, 23, _
-   WS_CHILD OR WS_VISIBLE OR WS_TABSTOP OR BS_PUSHBUTTON OR BS_CENTER OR BS_VCENTER
+   WS_CHILD OR WS_VISIBLE OR WS_TABSTOP OR BS_PUSHBUTTON OR BS_CENTER OR BS_VCENTER)
 ```
 
 For a list of predefined class names and styles, see the **AddControl** method.
