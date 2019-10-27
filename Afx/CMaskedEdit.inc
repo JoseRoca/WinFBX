@@ -29,7 +29,6 @@ TYPE CMaskedEdit
       m_strMask AS CWSTR                ' // The mask string
       m_strInputTemplate AS CWSTR       ' // "_" char = character entry
       m_str AS CWSTR                    ' // Initial value
-      m_ratio AS SINGLE                 ' // DPI ratio - width
       m_chMaskInputTemplate AS USHORT   ' // Default char
       m_strValid AS CWSTR               ' // Valid string characters
       m_bSelectByGroup AS BOOLEAN
@@ -220,7 +219,6 @@ PRIVATE CONSTRUCTOR CMaskedEdit (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG
       m_hCtl = pWindow->AddControl("EDIT", pWindow->hWindow, cID, "", _
       x, y, nWidth, nHeight, dwStyle, dwExStyle, NULL, CAST(SUBCLASSPROC, @CMaskedEditProc), _
       cID, CAST(DWORD_PTR, @this))
-      m_ratio = pWindow->rxRatio
    END IF
 
    m_bSelectByGroup = TRUE
@@ -246,7 +244,6 @@ PRIVATE FUNCTION CMaskedEdit.Create (BYVAL pWindow AS CWindow PTR, BYVAL cID AS 
       m_hCtl = pWindow->AddControl("EDIT", pWindow->hWindow, cID, "", _
       x, y, nWidth, nHeight, dwStyle, dwExStyle, NULL, CAST(SUBCLASSPROC, @CMaskedEditProc), _
       cID, CAST(DWORD_PTR, @this))
-      m_ratio = pWindow->rxRatio
    END IF
 
    m_bSelectByGroup = TRUE
