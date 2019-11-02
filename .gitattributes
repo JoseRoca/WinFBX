@@ -21,6 +21,7 @@
 *.jpg binary
 *.gif binary
 *.bmp binary
+*.wmv binary
 *.ico binary
 *.zip binary
 *.rar binary
