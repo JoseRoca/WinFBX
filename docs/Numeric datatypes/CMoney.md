@@ -81,7 +81,7 @@ money = 12345.12
 
 # <a name="Operator2"></a>CAST Operators
 
-Converts a CMoney into another data type.
+Converts a **CMoney** into another data type.
 
 ```
 OPERATOR CAST () AS LONGINT
