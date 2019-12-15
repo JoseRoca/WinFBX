@@ -74,14 +74,14 @@ Assigns a value to a **CMoney** variable.
 #### Examples
 
 ```
-DIM c AS CDEC
-c = 123
-c = 12345.12
+DIM money AS CMoney
+money = 123
+money = 12345.12
 ```
 
 # <a name="Operator2"></a>CAST Operators
 
-Converts a CDEC into another data type.
+Converts a CMoney into another data type.
 
 ```
 OPERATOR CAST () AS LONGINT
