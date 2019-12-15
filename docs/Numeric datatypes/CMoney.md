@@ -108,6 +108,8 @@ OPERATOR * (BYREF money AS CMoney) AS DECIMAL PTR
 
 # <a name="Operator4"></a>Comparison operators
 
+Compares **CMoney** numbers.
+
 ```
 OPERATOR = (BYREF money1 AS CMoney, BYREF money2 AS CMoney) AS BOOLEAN
 OPERATOR <> (BYREF money1 AS CMoney, BYREF money2 AS CMoney) AS BOOLEAN
@@ -118,6 +120,8 @@ OPERATOR >= (BYREF money1 AS CMoney, BYREF money2 AS CMoney) AS BOOLEAN
 ```
 
 # <a name="Operator5"></a>Math operators
+
+Add, subtract, multiply or divide **CMoney** numbers.
 
 ```
 OPERATOR + (BYREF money1 AS CMoney, BYREF money2 AS CMoney) AS CMoney
