@@ -4,7 +4,7 @@
 
 When using 2 decimal digits, the greatest possible value is +/-792,281,625,142,643,375,935,439,503.35. However, the formatting functions, **FormatCurrency** and **FormatNumber** can only return a maximum value of +/-922,337,203,685,477.58, which are more than enough for financial calculations, because they use a currency data type. For greater values, you can format the returned string by yourself.
 
-The locale identifier defaults to 1033 (US), for consistency with FreeBasic numeric data types, but you can change it by defining it before including CMoney.inc, e.g. #define AFX_CMONEY_LCID 1031 (Spain). The locale identifier (LCID) instructs the methods of this class about input and output string should be treated. For example, if you choose the Spanish LCID, the formated string input and output will us a comma, instead of a point, as the dcimañ separator, and a point, instead of a comma, as the thousands separator.
+The locale identifier defaults to 1033 (US), for consistency with FreeBasic numeric data types, but you can change it by defining it before including CMoney.inc, e.g. #define AFX_CMONEY_LCID 1031 (Spain). The locale identifier (LCID) instructs the methods of this class about how input and output strings should be treated. For example, if you choose the Spanish LCID, the formated string input and output will us a comma, instead of a point, as the dcimañ separator, and a point, instead of a comma, as the thousands separator.
 
 ### Constructors
 
@@ -25,6 +25,24 @@ CONSTRUCTOR (BYVAL nValue AS SINGLE)
 CONSTRUCTOR (BYVAL nValue AS DOUBLE)
 CONSTRUCTOR (BYREF wszSrc AS WSTRING)
 CONSTRUCTOR (BYREF cws AS CWSTR)
+```
+
+#### Remarks
+
+We can use to use strings to set the values, e.g.:
+
+```
+DIM money AS CMoney = "1234567890.12"
+```
+--or--
+```
+DIM money AS CMoney = "1,234,567,890.12"
+```
+
+When using a locale identifier other than the default one, we may need to use different separators for the thousands and the decimal point. For example, if using the locale identifier for Spain we need to use "," as the decimal separator and "." as the thousands separator.
+
+```
+DIM money AS CMoney = "1.234.567.890,12"
 ```
 
 ### Operators
