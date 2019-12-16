@@ -268,7 +268,7 @@ FUNCTION Sign () AS UBYTE
 Returns the money number as a VT_CURRENCY variant.
 
 ```
-FUNCTION ToVar () AS VARIANT
+FUNCTION ToCyVar () AS VARIANT
 ```
 
 # <a name="ToVar"></a>ToVar
