@@ -1,6 +1,6 @@
 ' ########################################################################################
 ' Microsoft Windows
-' File: CInt.inc
+' File: CInt96.inc
 ' Contents: 96-bit (12 bytes) integer data type.
 ' Compiler: FreeBasic 32 & 64-bit
 ' Written in 2018 by José Roca. Freeware. Use at your own risk.
@@ -12,7 +12,6 @@
 #pragma once
 #include once "windows.bi"
 #include once "win/ole2.bi"
-'using Afx
 
 NAMESPACE Afx
 
