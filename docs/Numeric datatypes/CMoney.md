@@ -29,7 +29,7 @@ CONSTRUCTOR (BYREF cws AS CWSTR)
 
 #### Remarks
 
-We can use to use strings to set the values, e.g.:
+We can also use strings to set the value, e.g.:
 
 ```
 DIM money AS CMoney = "1234567890.12"
