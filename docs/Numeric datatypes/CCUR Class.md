@@ -334,11 +334,11 @@ PRINT c.FormatCurrency   --> 12.345,12 € (Spain)
 Formats a currency into a string form.
 
 ```
-FUNCTION FormatCurrency (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+FUNCTION FormatNumber (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
    BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS STRING
 ```
 ```
-FUNCTION FormatCurrencyW (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
+FUNCTION FormatNumberW (BYVAL iNumDig AS LONG = -1, BYVAL ilncLead AS LONG = -2, _
    BYVAL iUseParens AS LONG = -2, BYVAL iGroup AS LONG = -2, BYVAL dwFlags AS DWORD = 0) AS CBSTR
 ```
 
