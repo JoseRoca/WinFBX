@@ -11,7 +11,7 @@ The locale identifier defaults to 1033 (US), for consistency with FreeBasic nume
 Creates a new instance of the **CMoney** class and assigns the value passed to it.
 
 ```
-CONSTRUCTOR CDec
+CONSTRUCTOR CMoney
 CONSTRUCTOR (BYREF cSrc AS CMoney)
 CONSTRUCTOR (BYVAL nInteger AS LONGINT)
 CONSTRUCTOR (BYVAL nUInteger AS ULONGINT)
