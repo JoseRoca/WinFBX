@@ -8,7 +8,7 @@ The locale identifier defaults to 1033 (US), for consistency with FreeBasic nume
 
 ### Constructors
 
-Creates a new instance of the **CMoney** class and assigns the values passed to it.
+Creates a new instance of the **CMoney** class and assigns the value passed to it.
 
 ```
 CONSTRUCTOR CDec
