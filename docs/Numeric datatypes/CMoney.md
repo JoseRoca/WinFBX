@@ -98,7 +98,7 @@ OPERATOR CAST () AS STRING
 
 #### Remarks
 
-These operators aren't called directly, They perform the conversion when the target is not a CMoney variable.
+These operators aren't called directly, They perform the conversion when the target is not a **CMoney** variable.
 
 # <a name="Operator3"></a>Operator *
 
