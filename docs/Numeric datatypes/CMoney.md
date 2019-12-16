@@ -153,7 +153,7 @@ money /= 2.3
 
 #### Remarks
 
-The version OPERATOR - (BYREF money AS CMoney( AS CMoney changes the sign of a decimal number.
+The version OPERATOR - (BYREF money AS CMoney) AS CMoney changes the sign of a decimal number.
 
 ```
 DIM money AS CMoney = 123
