@@ -513,10 +513,16 @@ FUNCTION Invoke (BYVAL pwszName AS WSTRING PTR, cvArg1...cvArg16) AS CVAR
 | Parameter  | Description |
 | ---------- | ----------- |
 | *dispID* | Identifies the member. Use **GetIDsOfNames** or the object's documentation to obtain the dispatch identifier. |
-| *pwszName* | The name of the property to call. |
+| *pwszName* | The name of the method or property to call. |
 | *cvArg1...cvArg16* | CVAR. Parameters that will be passed to **IDIspatch.Invoke** as an array of variants in reversed order. |
 
-Remarks
+#### Return value
+
+Returns a variant with the result of the call when the **Invoke** method is used instead of **Get** to retrieve the value of a property. If it is not a get property, it returns a null variant.
+
+#### Remarks
+
+For optional parameters, we must use a VT_ERROR VARIANT with a value of DISP_E_PARAMNOTFOUND. You can use the function **AfxCVarOptPrm** or the macro **CVAR_OPTPRM** for this purpose.
 
 To check for succes or failure, call the **GetLastResult** method. It will return S_OK (0) on succes or an HRESULT code on failure.
 
@@ -534,10 +540,6 @@ To check for succes or failure, call the **GetLastResult** method. It will retur
 | DISP_E_UNKNOWNINTERFACE | The interface identifier passed in *riid* is not IID_NULL. |
 | DISP_E_UNKNOWNLCID | The member being invoked interprets string arguments according to the LCID, and the LCID is not recognized. If the LCID is not needed to interpret arguments, this error should not be returned. |
 | DISP_E_PARAMNOTOPTIONAL | A required parameter was omitted. |
-
-#### Remarks
-
-For optional parameters, we must use a VT_ERROR VARIANT with a value of DISP_E_PARAMNOTFOUND. You can use the function **AfxCVarOptPrm** or the macro **CVAR_OPTPRM** for this purpose.
 
 # <a name="SetLcid"></a>SetLcid
 
