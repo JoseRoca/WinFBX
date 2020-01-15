@@ -2579,9 +2579,7 @@ SUB CParseTypeLib.GenerateCode
                      ELSE
                         wszText = "_ EXTENDS Afx_" & wszInheritedInterface
                      END IF
-                  END IF
-                  IF LEN(wszText) THEN
-                     cwsCode += "TYPE " & wszItemText & wszText & CHR(13, 10)
+                     cwsCode += "TYPE Afx_" & wszItemText & wszText & CHR(13, 10)
                   ELSE
                      cwsCode += "TYPE " & wszItemText & "VTbl" & CHR(13, 10)
                   END IF

@@ -20,10 +20,10 @@ USING Afx
 ' // Constants
 CONST CLASSNAME    = "TLB_100"
 CONST PROGNAME     = "TLB_100"
-CONST TLBVERSION   = "1.00 Beta - Build 10"
+CONST TLBVERSION   = "1.00 Beta - Build 11"
 CONST TLBCAPTION   = "TypeLib Browser for Free Basic 1.00"
-CONST TLBCOPYRIGHT = "© 2016-2017 by José Roca"
-CONST MAILADDRESS  = "JRoca@com.it-berater.org"
+CONST TLBCOPYRIGHT = "© 2016-2020 by José Roca"
+CONST MAILADDRESS  = "joseroca.daman@gmail.com"
 CONST INIFILENAME  = "TLB_100.ini"
 
 ' // Handles
