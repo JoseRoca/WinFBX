@@ -1344,7 +1344,7 @@ PRIVATE FUNCTION CParseTypeLib.ParseTypeInfos () AS HRESULT
                         IF LEN(cwsHelpString) THEN TreeView_AddItem(hTreeView, hSubNode, NULL, "Documentation string: " & cwsHelpString)
                         IF pRefTypeAttr->wTypeFlags THEN TreeView_AddItem(hTreeView, hSubNode, NULL, "Attributes =  " & WSTR(pRefTypeAttr->wTypeFlags) & " [&h" & HEX(pRefTypeAttr->wTypeFlags, 8) & "]" & TLB_InterfaceFlagsToStr(pRefTypeAttr->wTypeFlags))
                         cwsInheritedInterface = TLB_GetImplementedInterface(pRefTypeInfo)
-                        TreeView_AddItem(hTreeView, hSubNode, NULL, "Inherited interface = " & cwsInheritedInterface)
+                        IF LEN(cwsInheritedInterface) THEN TreeView_AddItem(hTreeView, hSubNode, NULL, "Inherited interface = " & cwsInheritedInterface)
                         ' /*** Datamembers ***/
                         IF pRefTypeAttr->cVars THEN
                            hSubNode2 = TreeView_AddItem(hTreeView, hSubNode, NULL, "Number of datamembers = " & WSTR(pRefTypeAttr->cVars))
@@ -1401,7 +1401,7 @@ PRIVATE FUNCTION CParseTypeLib.ParseTypeInfos () AS HRESULT
                   IF LEN(cwsHelpString) THEN TreeView_AddItem(hTreeView, hSubNode, NULL, "Documentation string: " & cwsHelpString)
                   IF pTypeAttr->wTypeFlags THEN TreeView_AddItem(hTreeView, hSubNode, NULL, "Attributes =  " & WSTR(pTypeAttr->wTypeFlags) & " [&h" & HEX(pTypeAttr->wTypeFlags, 8) & "]" & TLB_InterfaceFlagsToStr(pTypeAttr->wTypeFlags))
                   cwsInheritedInterface = TLB_GetImplementedInterface(pTypeInfo)
-                  TreeView_AddItem(hTreeView, hSubNode, NULL, "Inherited interface = " & cwsInheritedInterface)
+                  IF LEN(cwsInheritedInterface) THEN TreeView_AddItem(hTreeView, hSubNode, NULL, "Inherited interface = " & cwsInheritedInterface)
                   ' /*** Datamembers ***/
                   IF pTypeAttr->cVars THEN
                      hSubNode2 = TreeView_AddItem(hTreeView, hSubNode, NULL, "Number of datamembers = " & WSTR(pTypeAttr->cVars))
@@ -2026,7 +2026,6 @@ SUB CParseTypeLib.GenerateCode
                      cwsCode += "' " & wszSubItemText & CHR(13, 10)
                      IF LEFT(wszSubItemText, 22) = "Inherited interface = " THEN
                         wszInheritedInterface = MID(wszSubItemText, 23)
-'                        IF wszInheritedInterface = "IUnknown" OR wszInheritedInterface = "IDispatch" THEN wszInheritedInterface = "Afx_" & wszInheritedInterface
                      END IF
                      hMethodsParentNode = NULL
                      IF LEFT(wszSubItemText, 17) = "Number of methods" AND VAL(MID(wszSubItemText, 21)) > 0 THEN
@@ -2048,7 +2047,9 @@ SUB CParseTypeLib.GenerateCode
                IF hMethodsParentNode THEN
                   DIM wszText AS WSTRING * MAX_PATH
                   IF m_VTableView THEN
-                     IF wszInheritedInterface = "IUnknown" THEN
+                     IF wszItemText = "IUnknown" THEN
+                        wszText = "_ EXTENDS OBJECT"
+                     ELSEIF wszInheritedInterface = "IUnknown" THEN
                         wszText = "_ EXTENDS Afx_IUnknown"
                      ELSEIF wszInheritedInterface = "IDispatch" THEN
                         wszText = "_ EXTENDS Afx_IDispatch"
@@ -2060,12 +2061,14 @@ SUB CParseTypeLib.GenerateCode
                      cwsCode += "TYPE " & wszItemText & "VTbl" & CHR(13, 10)
                   END IF
                   IF m_VTableView = FALSE THEN
-                     cwsCode += "   QueryInterface AS FUNCTION (BYVAL this AS " & wszItemText & " PTR, BYVAL riid AS CONST IID CONST PTR, BYVAL ppvObj AS ANY PTR PTR) AS HRESULT" & CHR(13, 10)
-                     cwsCode += "   AddRef AS FUNCTION (BYVAL this AS " & wszItemText & " PTR) AS ULONG" & CHR(13, 10)
-                     cwsCode += "   Release AS FUNCTION (BYVAL this AS " & wszItemText & " PTR) AS ULONG" & CHR(13, 10)
-                     cwsMacros + = "#define " & wszItemText & "_QueryInterface(this, riid, ppvObject) (this)->lpVtbl->QueryInterface(this, riid, ppvObject)" & CHR(13, 10)
-                     cwsMacros + = "#define " & wszItemText & "_AddRef(this) (this)->lpVtbl->AddRef(this)" & CHR(13, 10)
-                     cwsMacros + = "#define " & wszItemText & "_Release(this) (this)->lpVtbl->Release(this)" & CHR(13, 10)
+                     IF wszItemText <> "IUnknown" THEN
+                        cwsCode += "   QueryInterface AS FUNCTION (BYVAL this AS " & wszItemText & " PTR, BYVAL riid AS CONST IID CONST PTR, BYVAL ppvObj AS ANY PTR PTR) AS HRESULT" & CHR(13, 10)
+                        cwsCode += "   AddRef AS FUNCTION (BYVAL this AS " & wszItemText & " PTR) AS ULONG" & CHR(13, 10)
+                        cwsCode += "   Release AS FUNCTION (BYVAL this AS " & wszItemText & " PTR) AS ULONG" & CHR(13, 10)
+                        cwsMacros + = "#define " & wszItemText & "_QueryInterface(this, riid, ppvObject) (this)->lpVtbl->QueryInterface(this, riid, ppvObject)" & CHR(13, 10)
+                        cwsMacros + = "#define " & wszItemText & "_AddRef(this) (this)->lpVtbl->AddRef(this)" & CHR(13, 10)
+                        cwsMacros + = "#define " & wszItemText & "_Release(this) (this)->lpVtbl->Release(this)" & CHR(13, 10)
+                     END IF
                   END IF
                   ' // Search the methods and properties
                   DIM hMethods AS HTREEITEM = TreeView_GetChild(hTreeView, hMethodsParentNode)

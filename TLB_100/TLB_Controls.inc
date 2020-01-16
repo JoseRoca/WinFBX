@@ -299,7 +299,7 @@ FUNCTION TabPage2_WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam 
             0, 0, pTabPage->ControlClientWidth(hwnd), pTabPage->ControlClientHeight(hwnd), _
             WS_CHILD OR WS_VISIBLE OR WS_HSCROLL OR WS_VSCROLL OR WS_BORDER OR WS_TABSTOP OR ES_LEFT OR _
             ES_AUTOHSCROLL OR ES_AUTOVSCROLL OR ES_MULTILINE OR ES_NOHIDESEL OR ES_WANTRETURN OR ES_SAVESEL, _
-            WS_EX_CLIENTEDGE, , @TLB_Edit_CodeView_WndProc)
+            WS_EX_CLIENTEDGE, , CAST(SUBCLASSPROC, @TLB_Edit_CodeView_WndProc))
          pWindow->UserData(AFX_HCODEVIEW) = cast(LONG_PTR, hCodeView)
          Edit_LimitText(hCodeView, 31457279)
          ' // Create a font for the Code view edit control
