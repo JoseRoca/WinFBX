@@ -473,8 +473,9 @@ END FUNCTION
 ' Unicode replacement for Free Basic's ChDir.
 ' Return value: Returns 0 on success or -1 on failure.
 ' ========================================================================================
-PRIVATE FUNCTION AfxChDir (BYVAL pwszPathName AS LPCWSTR) AS BOOLEAN
-   RETURN NOT SetCurrentDirectoryW(pwszPathName)
+PRIVATE FUNCTION AfxChDir (BYVAL pwszPathName AS LPCWSTR) AS LONG
+   DIM res AS LONG = SetCurrentDirectoryW(pwszPathName)
+   IF res = 0 THEN RETURN -1 ELSE RETURN 0
 END FUNCTION
 ' ========================================================================================
 
@@ -3316,10 +3317,12 @@ PRIVATE FUNCTION AfxMakeDir (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
+' Unicode replacement for FreeBasic MkDir.
 ' Returns 0 on success, or -1 on failure.
 ' ========================================================================================
-PRIVATE FUNCTION AfxMkDir (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
-   RETURN NOT CreateDirectoryW(lpPathName, NULL)
+PRIVATE FUNCTION AfxMkDir (BYVAL lpPathName AS LPCWSTR) AS LONG
+   DIM res AS LONG = CreateDirectoryW(lpPathName, NULL)
+   IF res = 0 THEN RETURN -1 ELSE RETURN 0
 END FUNCTION
 ' ========================================================================================
 
@@ -3350,8 +3353,9 @@ END FUNCTION
 ' Unicode replacement for Free Basic's RmDir.
 ' Returns 0 on success and -1 on failure.
 ' ========================================================================================
-PRIVATE FUNCTION AfxRmDir (BYVAL lpPathName AS LPCWSTR) AS BOOLEAN
-   RETURN NOT RemoveDirectoryW(lpPathName)
+PRIVATE FUNCTION AfxRmDir (BYVAL lpPathName AS LPCWSTR) AS LONG
+   DIM res AS LONG = RemoveDirectoryW(lpPathName)
+   IF res = 0 THEN RETURN -1 ELSE RETURN 0
 END FUNCTION
 ' ========================================================================================
 
@@ -3409,7 +3413,8 @@ END FUNCTION
 ' Returns 0 on success, or non-zero on failure.
 ' ========================================================================================
 PRIVATE FUNCTION AfxName (BYVAL lpExistingFileName AS LPCWSTR, BYVAL lpNewFileName AS LPCWSTR) AS LONG
-   RETURN NOT AfxMoveFile(lpExistingFileName, lpNewFileName)
+   DIM res AS LONG = MoveFileW(lpExistingFileName, lpNewFileName)
+   IF res = 0 THEN RETURN -1 ELSE RETURN 0
 END FUNCTION
 ' ========================================================================================
 
