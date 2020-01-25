@@ -82,25 +82,12 @@ Public:
    DECLARE FUNCTION SetValues (BYVAL nInteger AS LONGLONG, BYVAL nFraction AS SHORT) AS HRESULT
    DECLARE FUNCTION SetFraction (BYVAL nFraction AS SHORT) AS HRESULT
    DECLARE OPERATOR LET (BYREF cSrc AS CCUR)
-   DECLARE OPERATOR LET (BYVAL cySrc AS CURRENCY)
-   DECLARE OPERATOR LET (BYVAL bSrc AS BYTE)
-   DECLARE OPERATOR LET (BYVAL ubSrc AS UBYTE)
-   DECLARE OPERATOR LET (BYVAL sSrc AS SHORT)
-   DECLARE OPERATOR LET (BYVAL usSrc AS USHORT)
-   DECLARE OPERATOR LET (BYVAL lSrc AS LONG)
-   DECLARE OPERATOR LET (BYVAL ulSrc AS ULONG)
-   DECLARE OPERATOR LET (BYVAL fSrc AS SINGLE)
-   DECLARE OPERATOR LET (BYVAL dSrc AS DOUBLE)
-   DECLARE OPERATOR LET (BYVAL dSrc AS DECIMAL)
-   DECLARE OPERATOR LET (BYREF strSrc AS STRING)
-   DECLARE OPERATOR LET (BYVAL varSrc AS VARIANT)
-   DECLARE OPERATOR LET (BYVAL pDispSrc AS IDispatch PTR)
    DECLARE OPERATOR += (BYREF cur AS CCUR)
    DECLARE OPERATOR -= (BYREF cur AS CCUR)
    DECLARE OPERATOR *= (BYREF cur AS CCUR)
    DECLARE OPERATOR /= (BYREF cOperand AS CCUR)
-   DECLARE OPERATOR CAST () AS CURRENCY
    DECLARE OPERATOR CAST () AS DOUBLE
+   DECLARE OPERATOR CAST () AS CURRENCY
    DECLARE OPERATOR CAST () AS STRING
    DECLARE OPERATOR CAST () AS VARIANT
    DECLARE FUNCTION Round (BYVAL nDecimals AS LONG) AS CCUR
@@ -282,74 +269,6 @@ END DESTRUCTOR
 ' ========================================================================================
 PRIVATE OPERATOR CCur.LET (BYREF cSrc AS CCUR)
    m_cur.int64 = cSrc.m_cur.int64
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYVAL cySrc AS CURRENCY)
-   m_cur = cySrc
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYVAL bSrc AS BYTE)
-   VarCyFromI1(bSrc, @m_cur)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYVAL ubSrc AS UBYTE)
-   VarCyFromUI1(ubSrc, @m_cur)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYVAL sSrc AS SHORT)
-   VarCyFromI2(sSrc, @m_cur)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYVAL usSrc AS USHORT)
-   VarCyFromUI2(usSrc, @m_cur)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYVAL lSrc AS LONG)
-   VarCyFromI4(lSrc, @m_cur)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYVAL ulSrc AS ULONG)
-   VarCyFromUI4(ulSrc, @m_cur)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYVAL fSrc AS SINGLE)
-   VarCyFromR4(fSrc, @m_cur)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYVAL dSrc AS DOUBLE)
-   VarCyFromR8(dSrc, @m_cur)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYVAL dSrc AS DECIMAL)
-   VarCyFromDec(@dSrc, @m_cur)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYREF szSrc AS STRING)
-   VarCyFromR8(VAL(szSrc), @m_cur)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYVAL varSrc AS VARIANT)
-   DIM v AS VARIANT
-   DIM hr AS HRESULT = VariantChangeType(@v, @varSrc, 0, VT_CY)
-   IF FAILED(hr) THEN EXIT OPERATOR
-   m_cur = v.cyVal
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.LET (BYVAL pDispSrc AS IDispatch PTR)
-   VarCyFromDisp(pDispSrc, GetThreadLocale(), @m_cur)
 END OPERATOR
 ' ========================================================================================
 
