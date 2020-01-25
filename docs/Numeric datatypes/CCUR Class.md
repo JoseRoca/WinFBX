@@ -133,10 +133,6 @@ SLEEP
 
 Assigns a value to a `CCUR` variable.
 
-```
-OPERATOR LET (BYREF cSrc AS CCUR)
-```
-
 #### Examples
 
 ```
@@ -146,7 +142,7 @@ c = 12345.1234
 c = "77777.999"
 ```
 
-The operator that accepts a DOUBLE value is particulary useful, because it allows to set the integer and fractionary parts at the same time with just a number, e.g.
+Passing a DOUBLE value allows to set the integer and fractionary parts at the same time with just a number, e.g.
 
 ```
 DIM c AS CCUR = 12345.1234
