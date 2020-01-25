@@ -3,8 +3,8 @@
 ' File: CCur.inc
 ' Contents: Currency data type
 ' Compiler: FreeBasic 32 & 64-bit
-' Written in 2017 by José Roca. Freeware. Use at your own risk.
-' Most of this code is based in the ATL's CComCurrency class.
+' (C) 2017-2020 by José Roca. Freeware. Use at your own risk.
+' Part of this code is based in the ATL's CComCurrency class.
 ' Copyright (C) Microsoft Corporation.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
@@ -96,17 +96,9 @@ Public:
    DECLARE OPERATOR LET (BYVAL varSrc AS VARIANT)
    DECLARE OPERATOR LET (BYVAL pDispSrc AS IDispatch PTR)
    DECLARE OPERATOR += (BYREF cur AS CCUR)
-   DECLARE OPERATOR += (BYVAL nValue AS LONG)
-   DECLARE OPERATOR += (BYVAL nValue AS DOUBLE)
    DECLARE OPERATOR -= (BYREF cur AS CCUR)
-   DECLARE OPERATOR -= (BYREF nValue AS LONG)
-   DECLARE OPERATOR -= (BYREF nValue AS DOUBLE)
    DECLARE OPERATOR *= (BYREF cur AS CCUR)
-   DECLARE OPERATOR *= (BYVAL nOperand AS LONG)
-   DECLARE OPERATOR *= (BYVAL nOperand AS DOUBLE)
    DECLARE OPERATOR /= (BYREF cOperand AS CCUR)
-   DECLARE OPERATOR /= (BYVAL nOperand AS LONG)
-   DECLARE OPERATOR /= (BYVAL nOperand AS DOUBLE)
    DECLARE OPERATOR CAST () AS CURRENCY
    DECLARE OPERATOR CAST () AS DOUBLE
    DECLARE OPERATOR CAST () AS STRING
@@ -406,61 +398,10 @@ PRIVATE OPERATOR + (BYREF cur1 AS CCUR, BYREF cur2 AS CCUR) AS CCUR
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE OPERATOR + (BYREF cur AS CCUR, BYVAL nValue AS LONG) AS CCUR
-   DIM cy AS CURRENCY
-   DIM c AS CURRENCY
-   VarCyFromI4(nValue, @c)
-   VarCyAdd(cur.m_cur, c, @cy)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR + (BYVAL nValue AS LONG, BYREF cur AS CCUR) AS CCUR
-   DIM cy AS CURRENCY
-   DIM c AS CURRENCY
-   VarCyFromI4(nValue, @c)
-   VarCyAdd(c, cur.m_cur, @cy)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR + (BYREF cur AS CCUR, BYVAL nValue AS DOUBLE) AS CCUR
-   DIM cy AS CURRENCY
-   DIM c AS CURRENCY
-   VarCyFromR8(nValue, @c)
-   VarCyAdd(cur.m_cur, c, @cy)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR + (BYVAL nValue AS DOUBLE, BYREF cur AS CCUR) AS CCUR
-   DIM cy AS CURRENCY
-   DIM c AS CURRENCY
-   VarCyFromR8(nValue, @c)
-   VarCyAdd(c, cur.m_cur, @cy)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
 PRIVATE OPERATOR CCur.+= (BYREF cur AS CCUR)
    VarCyAdd(m_cur, cur.m_cur, @m_cur)
 END OPERATOR
 ' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.+= (BYVAL nValue AS LONG)
-   DIM c AS CURRENCY
-   VarCyFromI4(nValue, @c)
-   VarCyAdd(m_cur, c, @m_cur)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.+= (BYVAL nValue AS DOUBLE)
-   DIM c AS CURRENCY
-   VarCyFromR8(nValue, @c)
-   VarCyAdd(m_cur, c, @m_cur)
-END OPERATOR
-' ========================================================================================
-
 ' ========================================================================================
 PRIVATE OPERATOR - (BYREF cur1 AS CCUR, BYREF cur2 AS CCUR) AS CCUR
    DIM c AS CURRENCY
@@ -469,61 +410,10 @@ PRIVATE OPERATOR - (BYREF cur1 AS CCUR, BYREF cur2 AS CCUR) AS CCUR
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE OPERATOR - (BYREF cur AS CCUR, BYVAL nValue AS LONG) AS CCUR
-   DIM cy AS CURRENCY
-   DIM c AS CURRENCY
-   VarCyFromI4(nValue, @c)
-   VarCySub(cur.m_cur, c, @cy)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR - (BYVAL nValue AS LONG, BYREF cur AS CCUR) AS CCUR
-   DIM cy AS CURRENCY
-   DIM c AS CURRENCY
-   VarCyFromI4(nValue, @c)
-   VarCySub(c, cur.m_cur, @cy)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR - (BYREF cur AS CCUR, BYVAL nValue AS DOUBLE) AS CCUR
-   DIM cy AS CURRENCY
-   DIM c AS CURRENCY
-   VarCyFromR8(nValue, @c)
-   VarCySub(cur.m_cur, c, @cy)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR - (BYVAL nValue AS DOUBLE, BYREF cur AS CCUR) AS CCUR
-   DIM cy AS CURRENCY
-   DIM c AS CURRENCY
-   VarCyFromR8(nValue, @c)
-   VarCySub(c, cur.m_cur, @cy)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
 PRIVATE OPERATOR CCur.-= (BYREF cur AS CCUR)
    VarCySub(m_cur, cur.m_cur, @m_cur)
 END OPERATOR
 ' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.-= (BYREF nValue AS LONG)
-   DIM c AS CURRENCY
-   VarCyFromI4(nValue, @c)
-   VarCySub(m_cur, c, @m_cur)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.-= (BYREF nValue AS DOUBLE)
-   DIM c AS CURRENCY
-   VarCyFromR8(nValue, @c)
-   VarCySub(m_cur, c, @m_cur)
-END OPERATOR
-' ========================================================================================
-
 ' ========================================================================================
 PRIVATE OPERATOR - (BYREF cur AS CCUR) AS CCUR
    DIM cy AS CURRENCY
@@ -531,41 +421,10 @@ PRIVATE OPERATOR - (BYREF cur AS CCUR) AS CCUR
    RETURN cy
 END OPERATOR
 ' ========================================================================================
-
 ' ========================================================================================
 PRIVATE OPERATOR * (BYREF cur1 AS CCUR, BYREF cur2 AS CCUR) AS CCUR
    DIM cy AS CURRENCY
    VarCyMul(cur1.m_cur, cur2.m_cur, @cy)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR * (BYREF cur AS CCUR, BYVAL nOperand AS LONG) AS CCUR
-   DIM cy AS CURRENCY
-   VarCyMulI4(cur.m_cur, nOperand, @cy)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR * (BYVAL nOperand AS LONG, BYREF cur AS CCUR) AS CCUR
-   DIM cy AS CURRENCY
-   VarCyMulI4(cur.m_cur, nOperand, @cy)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR * (BYREF cur AS CCUR, BYVAL nOperand AS DOUBLE) AS CCUR
-   DIM cy AS CURRENCY
-   DIM c AS CCUR = nOperand
-   VarCyMul(cur.m_cur, c, @cy)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR * (BYVAL nOperand AS DOUBLE, BYREF cur AS CCUR) AS CCUR
-   DIM cy AS CURRENCY
-   DIM c AS CCUR = nOperand
-   VarCyMul(cur.m_cur, c, @cy)
    RETURN cy
 END OPERATOR
 ' ========================================================================================
@@ -575,18 +434,6 @@ PRIVATE OPERATOR CCur.*= (BYREF cur AS CCUR)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE OPERATOR CCur.*= (BYVAL nOperand AS LONG)
-   VarCyMulI4(m_cur, nOperand, @m_cur)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur.*= (BYVAL nOperand AS DOUBLE)
-   DIM c AS CCUR = nOperand
-   m_cur *= c
-END OPERATOR
-' ========================================================================================
-
-' ========================================================================================
 PRIVATE OPERATOR / (BYREF cur AS CCUR, BYVAL cOperand AS CCUR) AS CCUR
    DIM cy AS CURRENCY
    IF cOperand.m_cur.int64 = 0 THEN RETURN cur.m_cur.int64
@@ -595,55 +442,9 @@ PRIVATE OPERATOR / (BYREF cur AS CCUR, BYVAL cOperand AS CCUR) AS CCUR
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE OPERATOR / (BYREF cur AS CCUR, BYVAL nOperand AS LONG) AS CCUR
-   DIM cy AS CURRENCY
-   IF nOperand = 0 THEN RETURN cur.m_cur.int64
-   cy.int64 = cur.m_cur.int64 / nOperand
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR / (BYREF cur AS CCUR, BYVAL nOperand AS DOUBLE) AS CCUR
-   DIM cy AS CURRENCY
-   IF nOperand = 0 THEN RETURN cur.m_cur.int64
-   cy.int64 = cur.m_cur.int64 / nOperand
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR / (BYVAL nValue AS LONG, BYREF cur AS CCUR) AS CCUR
-   DIM cy AS CURRENCY
-   IF nValue = 0 THEN RETURN CCUR(0, 0)
-   cy = CCUR(nValue, 0) / (cur.m_cur.int64 / CY_SCALE)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR / (BYVAL nValue AS DOUBLE, BYREF cur AS CCUR) AS CCUR
-   DIM cy AS CURRENCY
-   IF nValue = 0 THEN RETURN CCUR(0, 0)
-   cy = CCUR(nValue) / (cur.m_cur.int64 / CY_SCALE)
-   RETURN cy
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
 PRIVATE OPERATOR CCur./= (BYREF cOperand AS CCUR)
    IF cOperand.m_cur.int64 = 0 THEN EXIT OPERATOR
    m_cur.int64 /= (cOperand.m_cur.int64 / CY_SCALE)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur./= (BYVAL nOperand AS LONG)
-   DIM cy AS CURRENCY
-   IF nOperand = 0 THEN EXIT OPERATOR
-   m_cur.int64 /= nOperand
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CCur./= (BYVAL nOperand AS DOUBLE)
-   DIM cy AS CURRENCY
-   IF nOperand = 0 THEN EXIT OPERATOR
-   m_cur.int64 /= nOperand
 END OPERATOR
 ' ========================================================================================
 
