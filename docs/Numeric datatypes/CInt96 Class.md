@@ -74,9 +74,6 @@ Assigns a value to a `CInt96` variable.
 
 ```
 OPERATOR LET (BYREF cSrc AS CInt96)
-OPERATOR LET (BYVAL nInteger AS LONGINT)
-OPERATOR LET (BYVAL nUInteger AS ULONGINT)
-OPERATOR LET (BYREF wszSrc AS WSTRING)
 ```
 
 #### Examples
