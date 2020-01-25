@@ -29,7 +29,7 @@
 #include once "Afx/CCur.inc"
 #include once "Afx/CDec.inc"
 #include once "Afx/CInt96.inc"
-#include once "Afx/CVar.inc"
+'#include once "Afx/CVar.inc"
 #include once "Afx/CWSTR.inc"
 
 NAMESPACE Afx
@@ -38,7 +38,7 @@ NAMESPACE Afx
    #define AFX_CMONEY_LCID 1033          ' // The locale identifier (1033 = US LCID)
 #endif
 #if not defined(AFX_CMONEY_DECIMAL_PLACES)
-   #define AFX_CMONEY_DECIMAL_PLACES 2   ' // The number of decimal places (0-4)
+   #define AFX_CMONEY_DECIMAL_PLACES 2   ' // The number of decimal places (0-9)
 #endif
 
 ' ========================================================================================
@@ -59,7 +59,7 @@ Public:
    DECLARE CONSTRUCTOR (BYREF cy AS CCUR)
    DECLARE CONSTRUCTOR (BYREF dec AS CDEC)
    DECLARE CONSTRUCTOR (BYREF ci AS CInt96)
-   DECLARE CONSTRUCTOR (BYREF cv AS CVAR)
+'   DECLARE CONSTRUCTOR (BYREF cv AS CVAR)
    DECLARE CONSTRUCTOR (BYVAL nValue AS SINGLE)
    DECLARE CONSTRUCTOR (BYVAL nValue AS DOUBLE)
    DECLARE CONSTRUCTOR (BYREF wszSrc AS WSTRING)
@@ -153,11 +153,12 @@ PRIVATE CONSTRUCTOR CMoney (BYREF ci AS CInt96)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CMoney (BYREF cv AS CVar)
-   m_money.scale = AFX_CMONEY_DECIMAL_PLACES
-   SetLastError(VarDecFromStr(cv.ToStr, AFX_CMONEY_LCID, 0, @m_money))
-   IF m_money.scale <> AFX_CMONEY_DECIMAL_PLACES THEN SetLastError(VarDecRound(@m_money, AFX_CMONEY_DECIMAL_PLACES, @m_money))
-END CONSTRUCTOR
+' Using this constructor causes ambiguous cast errors.
+'PRIVATE CONSTRUCTOR CMoney (BYREF cv AS CVar)
+'   m_money.scale = AFX_CMONEY_DECIMAL_PLACES
+'   SetLastError(VarDecFromStr(cv.ToStr, AFX_CMONEY_LCID, 0, @m_money))
+'   IF m_money.scale <> AFX_CMONEY_DECIMAL_PLACES THEN SetLastError(VarDecRound(@m_money, AFX_CMONEY_DECIMAL_PLACES, @m_money))
+'END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CMoney (BYVAL nValue AS SINGLE)
