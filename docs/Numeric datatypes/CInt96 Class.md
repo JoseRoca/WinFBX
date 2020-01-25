@@ -23,7 +23,7 @@ DIM int96 AS CInt96 = 1234567890
 
 #### Remarks
 
-Because the bigger numeric variable natively supported by Free Basic is a long integer, if we want to set bigger values we need to use strings, e.g.
+Because the bigger numeric variable natively supported by Free Basic is a long/ulong integer, if we want to set bigger values we need to use strings, e.g.
 
 ```
 DIM int96 AS CInt96 = "79228162514264337593543950335"
@@ -72,9 +72,7 @@ END FUNCTION
 
 Assigns a value to a `CInt96` variable.
 
-```
-OPERATOR LET (BYREF cSrc AS CInt96)
-```
+Because the bigger numeric variable natively supported by Free Basic is a long/ulong integer, if we want to set bigger values we need to use strings.
 
 #### Examples
 
