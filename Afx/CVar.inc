@@ -370,8 +370,8 @@ END CONSTRUCTOR
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CVar (BYVAL dec AS DECIMAL)
    CVAR_DP("CVAR CONSTRUCTOR - DECIMAL")
-   vd.vt = VT_DECIMAL
    vd.decVal = dec
+   vd.vt = VT_DECIMAL
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -1268,7 +1268,7 @@ END OPERATOR
 ' ========================================================================================
 PRIVATE OPERATOR CVar.Let (BYVAL dec AS DECIMAL)
    CVAR_DP("CVAR LET - DECIMAL")
-   VariantClear(@vd) : vd.vt = VT_DECIMAL : vd.decVal = dec
+   VariantClear(@vd) : vd.decVal = dec : vd.vt = VT_DECIMAL
 END OPERATOR
 ' ========================================================================================
 
@@ -1903,8 +1903,8 @@ END FUNCTION
 PRIVATE FUNCTION CVar.PutDec (BYVAL dec AS DECIMAL) AS HRESULT
    CVAR_DP("CVAR PutDec")
    VariantClear(@vd)
-   vd.vt = VT_DECIMAL
    vd.decVal = dec
+   vd.vt = VT_DECIMAL
    RETURN S_OK
 END FUNCTION
 ' =====================================================================================
@@ -1918,7 +1918,7 @@ PRIVATE FUNCTION CVar.PutDecFromStr (BYVAL pwszIn AS WSTRING PTR, BYVAL lcid AS 
    IF pwszIn = NULL THEN RETURN E_INVALIDARG
    DIM dec AS DECIMAL
    DIM hr AS HRESULT = VarDecFromStr(pwszIn, lcid, dwFlags, @dec)
-   IF hr = S_OK THEN vd.vt = VT_DECIMAL : vd.decVal = dec
+   IF hr = S_OK THEN vd.decVal = dec: vd.vt = VT_DECIMAL
    RETURN hr
 END FUNCTION
 ' =====================================================================================
@@ -1931,7 +1931,7 @@ PRIVATE FUNCTION CVar.PutDecFromDouble (BYVAL dbIn AS DOUBLE) AS HRESULT
    VariantClear(@vd)
    DIM dec AS DECIMAL
    DIM hr AS HRESULT = VarDecFromR8(dbIn, @dec)
-   IF hr = S_OK THEN vd.vt = VT_DECIMAL : vd.decVal = dec
+   IF hr = S_OK THEN vd.decVal = dec : vd.vt = VT_DECIMAL
    RETURN hr
 END FUNCTION
 ' =====================================================================================
@@ -1944,7 +1944,7 @@ PRIVATE FUNCTION CVar.PutDecFromCy (BYVAL cyIn AS CY) AS HRESULT
    VariantClear(@vd)
    DIM decOut AS DECIMAL
    DIM hr AS HRESULT = VarDecFromCy(cyIn, @decOut)
-   IF hr = S_OK THEN vd.vt = VT_DECIMAL : vd.decVal = decOut
+   IF hr = S_OK THEN vd.decVal = decOut : vd.vt = VT_DECIMAL
    RETURN hr
 END FUNCTION
 ' =====================================================================================

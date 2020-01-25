@@ -26,11 +26,6 @@
 #pragma once
 #include once "windows.bi"
 #include once "win/ole2.bi"
-#include once "Afx/CCur.inc"
-#include once "Afx/CDec.inc"
-#include once "Afx/CInt96.inc"
-'#include once "Afx/CVar.inc"
-#include once "Afx/CWSTR.inc"
 
 NAMESPACE Afx
 
@@ -56,23 +51,14 @@ Public:
    DECLARE CONSTRUCTOR (BYVAL nUInteger AS ULONGINT)
    DECLARE CONSTRUCTOR (BYREF decSrc AS DECIMAL)
    DECLARE CONSTRUCTOR (BYVAL cy AS CURRENCY)
-   DECLARE CONSTRUCTOR (BYREF cy AS CCUR)
-   DECLARE CONSTRUCTOR (BYREF dec AS CDEC)
-   DECLARE CONSTRUCTOR (BYREF ci AS CInt96)
-'   DECLARE CONSTRUCTOR (BYREF cv AS CVAR)
-   DECLARE CONSTRUCTOR (BYVAL nValue AS SINGLE)
    DECLARE CONSTRUCTOR (BYVAL nValue AS DOUBLE)
    DECLARE CONSTRUCTOR (BYREF wszSrc AS WSTRING)
-   DECLARE CONSTRUCTOR (BYREF cws AS CWSTR)
    DECLARE DESTRUCTOR
    DECLARE OPERATOR LET (BYREF cSrc AS CMoney)
    DECLARE OPERATOR += (BYREF money AS CMoney)
    DECLARE OPERATOR -= (BYREF money AS CMoney)
    DECLARE OPERATOR *= (BYREF money AS CMoney)
    DECLARE OPERATOR /= (BYREF cOperand AS CMoney)
-   DECLARE OPERATOR CAST () AS LONGINT
-   DECLARE OPERATOR CAST () AS ULONGINT
-   DECLARE OPERATOR CAST () AS SINGLE
    DECLARE OPERATOR CAST () AS DOUBLE
    DECLARE OPERATOR CAST () AS CURRENCY
    DECLARE OPERATOR CAST () AS DECIMAL
@@ -133,42 +119,6 @@ PRIVATE CONSTRUCTOR CMoney (BYVAL cy AS CURRENCY)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CMoney (BYREF cy AS CCUR)
-   m_money.scale = AFX_CMONEY_DECIMAL_PLACES
-   DIM hr AS LONG = VarDecFromCy(cy.m_cur, @m_money)
-   IF hr <> S_OK THEN SetLastError(hr) : EXIT CONSTRUCTOR
-   IF m_money.scale <> AFX_CMONEY_DECIMAL_PLACES THEN SetLastError(VarDecRound(@m_money, AFX_CMONEY_DECIMAL_PLACES, @m_money))
-END CONSTRUCTOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE CONSTRUCTOR CMoney (BYREF dec AS CDEC)
-   m_money = dec.m_dec
-   IF m_money.scale <> AFX_CMONEY_DECIMAL_PLACES THEN SetLastError(VarDecRound(@m_money, AFX_CMONEY_DECIMAL_PLACES, @m_money))
-END CONSTRUCTOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE CONSTRUCTOR CMoney (BYREF ci AS CInt96)
-   m_money = ci.m_int96
-   IF m_money.scale <> AFX_CMONEY_DECIMAL_PLACES THEN SetLastError(VarDecRound(@m_money, AFX_CMONEY_DECIMAL_PLACES, @m_money))
-END CONSTRUCTOR
-' ========================================================================================
-' ========================================================================================
-' Using this constructor causes ambiguous cast errors.
-'PRIVATE CONSTRUCTOR CMoney (BYREF cv AS CVar)
-'   m_money.scale = AFX_CMONEY_DECIMAL_PLACES
-'   SetLastError(VarDecFromStr(cv.ToStr, AFX_CMONEY_LCID, 0, @m_money))
-'   IF m_money.scale <> AFX_CMONEY_DECIMAL_PLACES THEN SetLastError(VarDecRound(@m_money, AFX_CMONEY_DECIMAL_PLACES, @m_money))
-'END CONSTRUCTOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE CONSTRUCTOR CMoney (BYVAL nValue AS SINGLE)
-   m_money.scale = AFX_CMONEY_DECIMAL_PLACES
-   DIM hr AS LONG = VarDecFromR4(nValue, @m_money)
-   IF hr <> S_OK THEN SetLastError(hr) : EXIT CONSTRUCTOR
-   IF m_money.scale <> AFX_CMONEY_DECIMAL_PLACES THEN SetLastError(VarDecRound(@m_money, AFX_CMONEY_DECIMAL_PLACES, @m_money))
-END CONSTRUCTOR
-' ========================================================================================
-' ========================================================================================
 PRIVATE CONSTRUCTOR CMoney (BYVAL nValue AS DOUBLE)
    m_money.scale = AFX_CMONEY_DECIMAL_PLACES
    DIM hr AS LONG = VarDecFromR8(nValue, @m_money)
@@ -180,13 +130,6 @@ END CONSTRUCTOR
 PRIVATE CONSTRUCTOR CMoney (BYREF wszSrc AS WSTRING)
    m_money.scale = AFX_CMONEY_DECIMAL_PLACES
    SetLastError(VarDecFromStr(@wszSrc, AFX_CMONEY_LCID, 0, @m_money))
-   IF m_money.scale <> AFX_CMONEY_DECIMAL_PLACES THEN SetLastError(VarDecRound(@m_money, AFX_CMONEY_DECIMAL_PLACES, @m_money))
-END CONSTRUCTOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE CONSTRUCTOR CMoney (BYREF cws AS CWSTR)
-   m_money.scale = AFX_CMONEY_DECIMAL_PLACES
-   SetLastError(VarDecFromStr(*cws, AFX_CMONEY_LCID, 0, @m_money))
    IF m_money.scale <> AFX_CMONEY_DECIMAL_PLACES THEN SetLastError(VarDecRound(@m_money, AFX_CMONEY_DECIMAL_PLACES, @m_money))
 END CONSTRUCTOR
 ' ========================================================================================
@@ -324,29 +267,6 @@ PRIVATE OPERATOR CMoney./= (BYREF cOperand AS CMoney)
 END OPERATOR
 ' ========================================================================================
 
-' ========================================================================================
-' Cast operators.
-' ========================================================================================
-PRIVATE OPERATOR CMoney.CAST () AS LONGINT
-   DIM nValue AS LONGINT
-   SetLastError(VarI8FromDec(@m_money, @nValue))
-   OPERATOR = nValue
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CMoney.CAST () AS ULONGINT
-   DIM nValue AS LONGINT
-   SetLastError(VarUI8FromDec(@m_money, @nValue))
-   OPERATOR = nValue
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CMoney.CAST () AS SINGLE
-   DIM nValue AS SINGLE
-   SetLastError(VarR4FromDec(@m_money, @nValue))
-   OPERATOR = nValue
-END OPERATOR
-' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR CMoney.CAST () AS DOUBLE
    DIM nValue AS DOUBLE

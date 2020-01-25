@@ -3,7 +3,7 @@
 ' File: CInt96.inc
 ' Contents: 96-bit (12 bytes) integer data type.
 ' Compiler: FreeBasic 32 & 64-bit
-' Written in 2018 by José Roca. Freeware. Use at your own risk.
+' (C) 2018-2020 by José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
@@ -36,31 +36,9 @@ Public:
    DECLARE OPERATOR LET (BYVAL nUInteger AS ULONGINT)
    DECLARE OPERATOR LET (BYREF wszSrc AS WSTRING)
    DECLARE OPERATOR += (BYREF int96 AS CInt96)
-   DECLARE OPERATOR += (BYVAL nValue AS LONGINT)
-   DECLARE OPERATOR += (BYVAL nValue AS ULONGINT)
-   DECLARE OPERATOR += (BYREF wszValue AS WSTRING)
    DECLARE OPERATOR -= (BYREF int96 AS CInt96)
-   DECLARE OPERATOR -= (BYVAL nValue AS LONGINT)
-   DECLARE OPERATOR -= (BYVAL nValue AS ULONGINT)
-   DECLARE OPERATOR -= (BYREF wszValue AS WSTRING)
    DECLARE OPERATOR *= (BYREF int96 AS CInt96)
-   DECLARE OPERATOR *= (BYVAL nValue AS LONGINT)
-   DECLARE OPERATOR *= (BYVAL nValue AS ULONGINT)
-   DECLARE OPERATOR *= (BYREF wszValue AS WSTRING)
    DECLARE OPERATOR /= (BYREF cOperand AS CInt96)
-   DECLARE OPERATOR /= (BYVAL nValue AS LONGINT)
-   DECLARE OPERATOR /= (BYVAL nValue AS ULONGINT)
-   DECLARE OPERATOR /= (BYREF wszValue AS WSTRING)
-   DECLARE OPERATOR CAST () AS BYTE
-   DECLARE OPERATOR CAST () AS UBYTE
-   DECLARE OPERATOR CAST () AS SHORT
-   DECLARE OPERATOR CAST () AS USHORT
-   DECLARE OPERATOR CAST () AS LONG
-   DECLARE OPERATOR CAST () AS ULONG
-   DECLARE OPERATOR CAST () AS LONGINT
-   DECLARE OPERATOR CAST () AS ULONGINT
-   DECLARE OPERATOR CAST () AS SINGLE
-   DECLARE OPERATOR CAST () AS DOUBLE
    DECLARE OPERATOR CAST () AS CURRENCY
    DECLARE OPERATOR CAST () AS VARIANT
    DECLARE OPERATOR CAST () AS STRING
@@ -90,11 +68,15 @@ PRIVATE CONSTRUCTOR CInt96 (BYREF decSrc AS DECIMAL)
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
+' Make sure that nValue is greater that -9223372036854775808 or it will be truncated.
+' For values smaller than -9223372036854775808 use a string.
 PRIVATE CONSTRUCTOR CInt96 (BYVAL nInteger AS LONGINT)
    SetLastError(VarDecFromI8(nInteger, @m_int96))
 END CONSTRUCTOR
 ' ========================================================================================
 ' ========================================================================================
+' Make sure that nValue does not exceed 18446744073709551615 or it will be truncated.
+' For values greater than 18446744073709551615 use a string.
 PRIVATE CONSTRUCTOR CInt96 (BYVAL nUInteger AS ULONGINT)
    SetLastError(VarDecFromUI8(nuInteger, @m_int96))
 END CONSTRUCTOR
@@ -140,38 +122,32 @@ END OPERATOR
 ' ========================================================================================
 ' Comparison operators.
 ' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR = (BYREF int961 AS CInt96, BYREF int962 AS CInt96) AS BOOLEAN
    RETURN (VarDecCmp(@int961.m_int96, @int962.m_int96) = VARCMP_EQ)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR <> (BYREF int961 AS CInt96, BYREF int962 AS CInt96) AS BOOLEAN
    RETURN (VarDecCmp(@int961.m_int96, @int962.m_int96) <> VARCMP_EQ)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR < (BYREF int961 AS CInt96, BYREF int962 AS CInt96) AS BOOLEAN
    RETURN (VarDecCmp(@int961.m_int96, @int962.m_int96) = VARCMP_LT)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR > (BYREF int961 AS CInt96, BYREF int962 AS CInt96) AS BOOLEAN
    RETURN (VarDecCmp(@int961.m_int96, @int962.m_int96) = VARCMP_GT)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR <= (BYREF int961 AS CInt96, BYREF int962 AS CInt96) AS BOOLEAN
    DIM hr AS HRESULT = VarDecCmp(@int961.m_int96, @int962.m_int96)
    RETURN (hr = VARCMP_LT) OR (hr = VARCMP_EQ)
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR >= (BYREF int961 AS CInt96, BYREF int962 AS CInt96) AS BOOLEAN
    DIM hr AS HRESULT = VarDecCmp(@int961.m_int96, @int962.m_int96)
    RETURN (hr = VARCMP_GT) OR (hr = VARCMP_EQ)
@@ -181,7 +157,6 @@ END OPERATOR
 ' ========================================================================================
 ' Math operators.
 ' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR + (BYREF int961 AS CInt96, BYREF int962 AS CInt96) AS CInt96
    DIM dec AS DECIMAL
    DIM hr AS LONG = VarDecAdd(@int961.m_int96, @int962.m_int96, @dec)
@@ -190,112 +165,11 @@ PRIVATE OPERATOR + (BYREF int961 AS CInt96, BYREF int962 AS CInt96) AS CInt96
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR + (BYREF int96Src AS CInt96, BYREF wszValue AS WSTRING) AS CInt96
-   DIM d AS DECIMAL
-   DIM dec AS DECIMAL
-   IF INSTR(wszValue, ".") THEN SetLastError(E_INVALIDARG) : RETURN int96Src
-   DIM hr AS LONG = VarDecFromStr(@wszValue, 0, 0, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   hr = VarDecAdd(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-
-' ========================================================================================
-' *** Ok ***
-' Make sure that nValue is greater that -9223372036854775808 or it will be truncated.
-' For values smaller than -9223372036854775808 use a string.
-' ========================================================================================
-PRIVATE OPERATOR + (BYREF int96Src AS CInt96, BYVAL nValue AS LONGINT) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromI8(nValue, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   hr = VarDecAdd(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR + (BYVAL nValue AS LONGINT, BYREF int96Src AS CInt96) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromI8(nValue, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nValue
-   hr = VarDecAdd(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nValue
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-
-' ========================================================================================
-' *** Ok ***
-' Make sure that nValue does not exceed 18446744073709551615 or it will be truncated.
-' For values greater than 18446744073709551615 use a string.
-' ========================================================================================
-PRIVATE OPERATOR + (BYREF int96Src AS CInt96, BYVAL nValue AS ULONGINT) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromUI8(nValue, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   hr = VarDecAdd(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR + (BYVAL nValue AS ULONGINT, BYREF int96Src AS CInt96) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromUI8(nValue, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nValue
-   hr = VarDecAdd(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nValue
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-
-' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR CInt96.+= (BYREF int96Src AS CInt96)
     SetLastError(VarDecAdd(@m_int96, @int96Src.m_int96, @m_int96))
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-' *** Ok ***
-' Make sure that nValue is greater that -9223372036854775808 or it will be truncated.
-' For values smaller than -9223372036854775808 use a string.
-PRIVATE OPERATOR CInt96.+= (BYVAL nValue AS LONGINT)
-   DIM dec AS DECIMAL
-   DIM hr AS LONG = VarDecFromI8(nValue, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) ELSE SetLastError(VarDecAdd(@m_int96, @dec, @m_int96))
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-' Make sure that nValue does not exceed 18446744073709551615 or it will be truncated.
-' For values greater than 18446744073709551615 use a string.
-PRIVATE OPERATOR CInt96.+= (BYVAL nValue AS ULONGINT)
-   DIM dec AS DECIMAL
-   DIM hr AS LONG = VarDecFromUI8(nValue, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) ELSE SetLastError(VarDecAdd(@m_int96, @dec, @m_int96))
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR CInt96.+= (BYREF wszValue AS WSTRING)
-   DIM d AS DECIMAL
-   DIM dec AS DECIMAL
-   IF INSTR(wszValue, ".") THEN SetLastError(E_INVALIDARG) : EXIT OPERATOR
-   DIM hr AS LONG = VarDecFromStr(@wszValue, 0, 0, @d)
-   IF hr <> S_OK THEN SetLastError(hr) ELSE SetLastError(VarDecAdd(@m_int96, @d, @m_int96))
-END OPERATOR
-' ========================================================================================
-
-' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR - (BYREF int961 AS CInt96, BYREF int962 AS CInt96) AS CInt96
    DIM dec AS DECIMAL
    DIM hr AS LONG = VarDecSub(@int961.m_int96, @int962.m_int96, @dec)
@@ -304,121 +178,18 @@ PRIVATE OPERATOR - (BYREF int961 AS CInt96, BYREF int962 AS CInt96) AS CInt96
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-' *** Ok ***
-' Make sure that nValue is greater that -9223372036854775808 or it will be truncated.
-' For values smaller than -9223372036854775808 use a string.
-PRIVATE OPERATOR - (BYREF int96Src AS CInt96, BYVAL nValue AS LONGINT) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromI8(nValue, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   hr = VarDecSub(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-' Make sure that nValue does not exceed 18446744073709551615 or it will be truncated.
-' For values greater than 18446744073709551615 use a string.
-PRIVATE OPERATOR - (BYREF int96Src AS CInt96, BYVAL nValue AS ULONGINT) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromUI8(nValue, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   hr = VarDecSub(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-' Make sure that nValue is greater that -9223372036854775808 or it will be truncated.
-' For values smaller than -9223372036854775808 use a string.
-PRIVATE OPERATOR - (BYVAL nValue AS LONGINT, BYREF int96Src AS CInt96) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromI8(nValue, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nValue
-   hr = VarDecSub(@d, @int96Src.m_int96, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nValue
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-' Make sure that nValue does not exceed 18446744073709551615 or it will be truncated.
-' For values greater than 18446744073709551615 use a string.
-PRIVATE OPERATOR - (BYVAL nValue AS ULONGINT, BYREF int96Src AS CInt96) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromUI8(nValue, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nValue
-   hr = VarDecSub(@d, @int96Src.m_int96, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nValue
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR - (BYREF int96Src AS CInt96, BYREF wszValue AS WSTRING) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   IF INSTR(wszValue, ".") THEN SetLastError(E_INVALIDARG) : RETURN int96Src
-   DIM hr AS LONG = VarDecFromStr(@wszValue, 0, 0, @d)
-   IF VarDecSub(@int96Src.m_int96, @d, @dec) <> S_OK THEN RETURN int96Src
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-
-' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR CInt96.-= (BYREF int96Src AS CInt96)
    SetLastError(VarDecSub(@m_int96, @int96Src.m_int96, @m_int96))
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-' *** Ok ***
-' Make sure that nValue does not exceed 18446744073709551615 or it will be truncated.
-' For values greater than 18446744073709551615 use a string.
-PRIVATE OPERATOR CInt96.-= (BYVAL nValue AS LONGINT)
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromI8(nValue, @d)
-   IF hr <> S_OK THEN SetLastError(hr) ELSE SetLastError(VarDecSub(@m_int96, @d, @m_int96))
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-' Make sure that nValue does not exceed 18446744073709551615 or it will be truncated.
-' For values greater than 18446744073709551615 use a string.
-PRIVATE OPERATOR CInt96.-= (BYVAL nValue AS ULONGINT)
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromUI8(nValue, @d)
-   IF hr <> S_OK THEN SetLastError(hr) ELSE SetLastError(VarDecSub(@m_int96, @d, @m_int96))
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR CInt96.-= (BYREF wszValue AS WSTRING)
-   DIM d AS DECIMAL
-   DIM dec AS DECIMAL
-   IF INSTR(wszValue, ".") THEN EXIT OPERATOR
-   DIM hr AS LONG = VarDecFromStr(@wszValue, 0, 0, @d)
-   IF hr <> S_OK THEN SetLastError(hr) ELSE SetLastError(VarDecSub(@m_int96, @d, @m_int96))
-END OPERATOR
-' ========================================================================================
-
-' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR - (BYREF int96Src AS CInt96) AS CInt96
    DIM dec AS DECIMAL
    SetLastError(VarDecNeg(@int96Src.m_int96, @dec))
    RETURN dec
 END OPERATOR
 ' ========================================================================================
-
 ' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR * (BYREF int961 AS CInt96, BYREF int962 AS CInt96) AS CInt96
    DIM dec AS DECIMAL
    DIM hr AS LONG = VarDecMul(@int961.m_int96, @int962.m_int96, @dec)
@@ -427,102 +198,11 @@ PRIVATE OPERATOR * (BYREF int961 AS CInt96, BYREF int962 AS CInt96) AS CInt96
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR * (BYVAL nOperand AS LONGINT, BYREF int96Src AS CInt96) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromI8(nOperand, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nOperand
-   hr = VarDecMul(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nOperand
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR * (BYREF int96Src AS CInt96, BYVAL nOperand AS LONGINT) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromI8(nOperand, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   hr = VarDecMul(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR * (BYREF int96Src AS CInt96, BYVAL nOperand AS ULONGINT) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr  AS LONG = VarDecFromUI8(nOperand, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   hr = VarDecMul(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR * (BYVAL nOperand AS ULONGINT, BYREF int96Src AS CInt96) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromUI8(nOperand, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nOperand
-   hr = VarDecMul(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nOperand
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR * (BYREF int96Src AS CInt96, BYREF wszValue AS WSTRING) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   IF INSTR(wszValue, ".") THEN SetLastError(E_INVALIDARG) : RETURN int96Src
-   DIM hr AS LONG = VarDecFromStr(@wszValue, 0, 0, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   hr = VarDecMul(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-
-' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR CInt96.*= (BYREF int96Src AS CInt96)
    SetLasterror(VarDecMul(@m_int96, @int96Src.m_int96, @m_int96))
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR CInt96.*= (BYVAL nOperand AS LONGINT)
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromI8(nOperand, @d)
-   IF hr THEN SetLastError(hr) ELSE SetLastError(VarDecMul(@m_int96, @d, @m_int96))
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR CInt96.*= (BYVAL nOperand AS ULONGINT)
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromUI8(nOperand, @d)
-   IF hr <> S_OK THEN SetLasterror(hr) ELSE SetLastError(VarDecMul(@m_int96, @d, @m_int96))
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR CInt96.*= (BYREF wszValue AS WSTRING)
-   DIM d AS DECIMAL
-   DIM dec AS DECIMAL
-   IF INSTR(wszValue, ".") THEN SetLastError(E_INVALIDARG) : EXIT OPERATOR
-   DIM hr AS LONG = VarDecFromStr(@wszValue, 0, 0, @d)
-   IF hr <> S_OK THEN SetLastError(hr) ELSE SetLastError(VarDecMul(@m_int96, @d, @m_int96))
-END OPERATOR
-' ========================================================================================
-
-' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR / (BYREF int96Src AS CInt96, BYREF cOperand AS CInt96) AS CInt96
    DIM dec AS DECIMAL
    DIM hr AS LONG = VarDecDiv(@int96Src.m_int96, @cOperand.m_int96, @dec)
@@ -533,114 +213,8 @@ PRIVATE OPERATOR / (BYREF int96Src AS CInt96, BYREF cOperand AS CInt96) AS CInt9
 END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR / (BYREF int96Src AS CInt96, BYVAL nOperand AS LONGINT) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromI8(nOperand, @d)
-   hr = VarDecDiv(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   IF dec.Scale THEN hr = VarDecInt(@dec, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR / (BYVAL nOperand AS LONGINT, BYREF int96Src AS CInt96) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromI8(nOperand, @d)
-   hr = VarDecDiv(@d, @int96Src.m_int96, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nOperand
-   IF dec.Scale THEN hr = VarDecInt(@dec, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR / (BYREF int96Src AS CInt96, BYVAL nOperand AS ULONGINT) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromUI8(nOperand, @d)
-   hr = VarDecDiv(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   IF dec.Scale THEN hr = VarDecInt(@dec, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR / (BYVAL nOperand AS ULONGINT, BYREF int96Src AS CInt96) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromUI8(nOperand, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nOperand
-   hr = VarDecDiv(@d, @int96Src.m_int96, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nOperand
-   IF dec.Scale THEN hr = VarDecInt(@dec, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN nOperand
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR / (BYREF int96Src AS CInt96, BYREF wszValue AS WSTRING) AS CInt96
-   DIM dec AS DECIMAL
-   DIM d AS DECIMAL
-   IF INSTR(wszValue, ".") THEN SetLastError(E_INVALIDARG) : RETURN int96Src
-   DIM hr AS LONG = VarDecFromStr(@wszValue, 0, 0, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   hr = VarDecDiv(@int96Src.m_int96, @d, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   IF dec.Scale THEN hr = VarDecInt(@dec, @dec)
-   IF hr <> S_OK THEN SetLastError(hr) : RETURN int96Src
-   RETURN dec
-END OPERATOR
-' ========================================================================================
-
-' ========================================================================================
-' *** Ok ***
 PRIVATE OPERATOR CInt96./= (BYREF cOperand AS CInt96)
    DIM hr AS LONG = VarDecDiv(@m_int96, @cOperand.m_int96, @m_int96)
-   IF hr <> S_OK THEN SetLastError(hr) : EXIT OPERATOR
-   IF m_int96.Scale THEN SetLastError(VarDecInt(@m_int96, @m_int96))
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR CInt96./= (BYVAL nOperand AS LONGINT)
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromI8(nOperand, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : EXIT OPERATOR
-   hr = VarDecDiv(@m_int96, @d, @m_int96)
-   IF hr <> S_OK THEN SetLastError(hr) : EXIT OPERATOR
-   IF m_int96.Scale THEN SetLastError(VarDecInt(@m_int96, @m_int96))
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR CInt96./= (BYVAL nOperand AS ULONGINT)
-   DIM d AS DECIMAL
-   DIM hr AS LONG = VarDecFromUI8(nOperand, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : EXIT OPERATOR
-   hr = VarDecDiv(@m_int96, @d, @m_int96)
-   IF hr <> S_OK THEN SetLastError(hr) : EXIT OPERATOR
-   IF m_int96.Scale THEN SetLastError(VarDecInt(@m_int96, @m_int96))
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-' *** Ok ***
-PRIVATE OPERATOR CInt96./= (BYREF wszValue AS WSTRING)
-   DIM d AS DECIMAL
-   DIM dec AS DECIMAL
-   IF INSTR(wszValue, ".") THEN SetLastError(E_INVALIDARG) : EXIT OPERATOR
-   DIM hr AS LONG = VarDecFromStr(@wszValue, 0, 0, @d)
-   IF hr <> S_OK THEN SetLastError(hr) : EXIT OPERATOR
-   hr = VarDecDiv(@m_int96, @d, @m_int96)
    IF hr <> S_OK THEN SetLastError(hr) : EXIT OPERATOR
    IF m_int96.Scale THEN SetLastError(VarDecInt(@m_int96, @m_int96))
 END OPERATOR
@@ -648,76 +222,6 @@ END OPERATOR
 
 ' ========================================================================================
 ' Cast operators.
-' ========================================================================================
-PRIVATE OPERATOR CInt96.CAST () AS BYTE
-   DIM nValue AS BYTE
-   SetLastError(VarI1FromDec(@m_int96, @nValue))
-   OPERATOR = nValue
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CInt96.CAST () AS UBYTE
-   DIM nValue AS UBYTE
-   SetLastError(VarUI1FromDec(@m_int96, @nValue))
-   OPERATOR = nValue
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CInt96.CAST () AS SHORT
-   DIM nValue AS SHORT
-   SetLastError(VarI2FromDec(@m_int96, @nValue))
-   OPERATOR = nValue
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CInt96.CAST () AS USHORT
-   DIM nValue AS USHORT
-   SetLastError(VarUI2FromDec(@m_int96, @nValue))
-   OPERATOR = nValue
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CInt96.CAST () AS LONG
-   DIM nValue AS LONG
-   SetLastError(VarI4FromDec(@m_int96, @nValue))
-   OPERATOR = nValue
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CInt96.CAST () AS ULONG
-   DIM nValue AS ULONG
-   SetLastError(VarUI4FromDec(@m_int96, @nValue))
-   OPERATOR = nValue
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CInt96.CAST () AS LONGINT
-   DIM nValue AS LONGINT
-   SetLastError(VarI8FromDec(@m_int96, @nValue))
-   OPERATOR = nValue
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CInt96.CAST () AS ULONGINT
-   DIM nValue AS LONGINT
-   SetLastError(VarUI8FromDec(@m_int96, @nValue))
-   OPERATOR = nValue
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CInt96.CAST () AS SINGLE
-   DIM nValue AS SINGLE
-   SetLastError(VarR4FromDec(@m_int96, @nValue))
-   OPERATOR = nValue
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CInt96.CAST () AS DOUBLE
-   DIM nValue AS DOUBLE
-   SetLastError(VarR8FromDec(@m_int96, @nValue))
-   OPERATOR = nValue
-END OPERATOR
-' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR CInt96.CAST () AS CURRENCY
    DIM cy AS CURRENCY

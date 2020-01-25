@@ -3,7 +3,7 @@
 ' File: CPropVar.inc
 ' Contents: Windows PROPVARIANT class.
 ' Compiler: FreeBasic 32 & 64-bit
-' Copyright (c) 2017 José Roca. Freeware. Use at your own risk.
+' (C) 2017-2020 José Roca. Freeware. Use at your own risk.
 ' THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 ' EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
@@ -1586,8 +1586,8 @@ END CONSTRUCTOR
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CPropVar (BYVAL dec AS DECIMAL)
    CPROPVAR_DP("CPropVar CONSTRUCTOR - DECIMAL")
-   pvd.vt = VT_DECIMAL
    pvd.decVal = dec
+   pvd.vt = VT_DECIMAL
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -2582,7 +2582,7 @@ END OPERATOR
 ' ========================================================================================
 PRIVATE OPERATOR CPropVar.Let (BYVAL dec AS DECIMAL)
    CPROPVAR_DP("CPropVar LET - DECIMAL")
-   PropVariantClear(@pvd) : pvd.vt = VT_DECIMAL : pvd.decVal = dec
+   PropVariantClear(@pvd) : pvd.decVal = dec : pvd.vt = VT_DECIMAL
 END OPERATOR
 ' ========================================================================================
 
@@ -3357,8 +3357,8 @@ END FUNCTION
 PRIVATE FUNCTION CPropVar.PutDec (BYREF dec AS DECIMAL) AS HRESULT
    CPROPVAR_DP("CPropVar PutDec")
    PropVariantClear(@pvd)
-   pvd.vt = VT_DECIMAL
    pvd.decVal = dec
+   pvd.vt = VT_DECIMAL
    RETURN S_OK
 END FUNCTION
 ' =====================================================================================
@@ -3372,7 +3372,7 @@ PRIVATE FUNCTION CPropVar.PutDecFromStr (BYVAL pwszIn AS WSTRING PTR, BYVAL lcid
    IF pwszIn = NULL THEN RETURN E_INVALIDARG
    DIM dec AS DECIMAL
    DIM hr AS HRESULT = VarDecFromStr(pwszIn, lcid, dwFlags, @dec)
-   IF hr = S_OK THEN pvd.vt = VT_DECIMAL : pvd.decVal = dec
+   IF hr = S_OK THEN pvd.decVal = dec : pvd.vt = VT_DECIMAL
    RETURN hr
 END FUNCTION
 ' =====================================================================================
@@ -3385,7 +3385,7 @@ PRIVATE FUNCTION CPropVar.PutDecFromDouble (BYVAL dbIn AS DOUBLE) AS HRESULT
    PropVariantClear(@pvd)
    DIM dec AS DECIMAL
    DIM hr AS HRESULT = VarDecFromR8(dbIn, @dec)
-   IF hr = S_OK THEN pvd.vt = VT_DECIMAL : pvd.decVal = dec
+   IF hr = S_OK THEN pvd.decVal = dec : pvd.vt = VT_DECIMAL
    RETURN hr
 END FUNCTION
 ' =====================================================================================
@@ -3398,7 +3398,7 @@ PRIVATE FUNCTION CPropVar.PutDecFromCy (BYVAL cyIn AS CY) AS HRESULT
    PropVariantClear(@pvd)
    DIM decOut AS DECIMAL
    DIM hr AS HRESULT = VarDecFromCy(cyIn, @decOut)
-   IF hr = S_OK THEN pvd.vt = VT_DECIMAL : pvd.decVal = decOut
+   IF hr = S_OK THEN pvd.decVal = decOut : pvd.vt = VT_DECIMAL
    RETURN hr
 END FUNCTION
 ' =====================================================================================
