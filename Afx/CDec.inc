@@ -44,21 +44,6 @@ Public:
    DECLARE CONSTRUCTOR (BYVAL varSrc AS VARIANT, BYVAL lcid AS LCID = 0)
    DECLARE DESTRUCTOR
    DECLARE OPERATOR LET (BYREF cSrc AS CDec)
-   DECLARE OPERATOR LET (BYVAL decSrc AS DECIMAL)
-   DECLARE OPERATOR LET (BYVAL cySrc AS CURRENCY)
-   DECLARE OPERATOR LET (BYVAL bSrc AS BYTE)
-   DECLARE OPERATOR LET (BYVAL ubSrc AS UBYTE)
-   DECLARE OPERATOR LET (BYVAL sSrc AS SHORT)
-   DECLARE OPERATOR LET (BYVAL usSrc AS USHORT)
-   DECLARE OPERATOR LET (BYVAL lSrc AS LONG)
-   DECLARE OPERATOR LET (BYVAL ulSrc AS ULONG)
-   DECLARE OPERATOR LET (BYVAL fSrc AS SINGLE)
-   DECLARE OPERATOR LET (BYVAL dSrc AS DOUBLE)
-   DECLARE OPERATOR LET (BYVAL nInteger AS LONGINT)
-   DECLARE OPERATOR LET (BYVAL nUInteger AS ULONGINT)
-   DECLARE OPERATOR LET (BYREF wszSrc AS WSTRING)
-   DECLARE OPERATOR LET (BYVAL pDispSrc AS IDispatch PTR)
-   DECLARE OPERATOR LET (BYVAL varSrc AS VARIANT)
    DECLARE OPERATOR += (BYREF dec AS CDec)
    DECLARE OPERATOR -= (BYREF dec AS CDec)
    DECLARE OPERATOR *= (BYREF dec AS CDec)
@@ -198,84 +183,6 @@ END DESTRUCTOR
 ' ========================================================================================
 PRIVATE OPERATOR CDec.LET (BYREF cSrc AS CDec)
    m_dec = cSrc.m_dec
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL decSrc AS DECIMAL)
-   m_dec = decSrc
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL cySrc AS CURRENCY)
-   VarDecFromCy(cySrc, @m_dec)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL bSrc AS BYTE)
-   VarDecFromI1(bSrc, @m_dec)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL ubSrc AS UBYTE)
-   VarDecFromUI1(ubSrc, @m_dec)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL sSrc AS SHORT)
-   VarDecFromI2(sSrc, @m_dec)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL usSrc AS USHORT)
-   VarDecFromUI2(usSrc, @m_dec)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL lSrc AS LONG)
-   VarDecFromI4(lSrc, @m_dec)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL ulSrc AS ULONG)
-   VarDecFromUI4(ulSrc, @m_dec)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL nInteger AS LONGINT)
-   VarDecFromI8(nInteger, @m_dec)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL nUInteger AS ULONGINT)
-   VarDecFromUI8(nuInteger, @m_dec)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL fSrc AS SINGLE)
-   VarDecFromR4(fSrc, @m_dec)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL dSrc AS DOUBLE)
-   VarDecFromR8(dSrc, @m_dec)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYREF wszSrc AS WSTRING)
-   VarDecFromStr(@wszSrc, m_lcid, 0, @m_dec)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL pDispSrc AS IDispatch PTR)
-   VarDecFromDisp(pDispSrc, m_lcid, @m_dec)
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CDec.LET (BYVAL varSrc AS VARIANT)
-   DIM v AS VARIANT
-   DIM hr AS HRESULT = VariantChangeType(@v, @varSrc, 0, VT_DECIMAL)
-   IF FAILED(hr) THEN EXIT OPERATOR
-   m_dec = v.decVal
 END OPERATOR
 ' ========================================================================================
 

@@ -32,9 +32,6 @@ Public:
    DECLARE CONSTRUCTOR (BYREF wszSrc AS WSTRING)
    DECLARE DESTRUCTOR
    DECLARE OPERATOR LET (BYREF cSrc AS CInt96)
-   DECLARE OPERATOR LET (BYVAL nInteger AS LONGINT)
-   DECLARE OPERATOR LET (BYVAL nUInteger AS ULONGINT)
-   DECLARE OPERATOR LET (BYREF wszSrc AS WSTRING)
    DECLARE OPERATOR += (BYREF int96 AS CInt96)
    DECLARE OPERATOR -= (BYREF int96 AS CInt96)
    DECLARE OPERATOR *= (BYREF int96 AS CInt96)
@@ -96,26 +93,10 @@ END DESTRUCTOR
 ' ========================================================================================
 
 ' ========================================================================================
-' Assignment operators
+' Assignment operator
 ' ========================================================================================
 PRIVATE OPERATOR CInt96.LET (BYREF cSrc AS CInt96)
    m_int96 = cSrc.m_int96
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CInt96.LET (BYVAL nInteger AS LONGINT)
-   SetLastError(VarDecFromI8(nInteger, @m_int96))
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CInt96.LET (BYVAL nUInteger AS ULONGINT)
-   SetLastError(VarDecFromUI8(nuInteger, @m_int96))
-END OPERATOR
-' ========================================================================================
-' ========================================================================================
-PRIVATE OPERATOR CInt96.LET (BYREF wszSrc AS WSTRING)
-   IF INSTR(wszSrc, ".") THEN SetLastError(E_INVALIDARG) : EXIT OPERATOR
-   SetLastError(VarDecFromStr(@wszSrc, 0, 0, @m_int96))
 END OPERATOR
 ' ========================================================================================
 
