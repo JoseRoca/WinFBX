@@ -552,7 +552,7 @@ using Afx
 DIM pDisp AS CDispInvoke = "Msxml2.XMLHTTP.6.0"
 ' // To check for success, see if the value returned by the DispPtr method is not null
 IF pDisp.DispPtr = NULL THEN END
-pDisp.Invoke("open", "GET", "https://sourceforge.net/", 0)
+pDisp.Invoke("open", "GET", "https://sourceforge.net/", FALSE)
 pDisp.Invoke("Send")
 DIM strResponse AS STRING = pDisp.Get("ResponseText")
 print strResponse
