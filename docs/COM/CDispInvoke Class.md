@@ -541,6 +541,24 @@ To check for succes or failure, call the **GetLastResult** method. It will retur
 | DISP_E_UNKNOWNLCID | The member being invoked interprets string arguments according to the LCID, and the LCID is not recognized. If the LCID is not needed to interpret arguments, this error should not be returned. |
 | DISP_E_PARAMNOTOPTIONAL | A required parameter was omitted. |
 
+#### Usage example
+
+```
+'#CONSOLE ON
+#include once "Afx/CDIspInvoke.inc"
+using Afx
+
+' // Create an instance of the Msxml2 object
+DIM pDisp AS CDispInvoke = "Msxml2.XMLHTTP.6.0"
+' // To check for success, see if the value returned by the DispPtr method is not null
+IF pDisp.DispPtr = NULL THEN END
+pDisp.Invoke("open", "GET", "https://sourceforge.net/", 0)
+pDisp.Invoke("Send")
+DIM strResponse AS STRING = pDisp.Get("ResponseText")
+print strResponse
+SLEEP
+```
+
 # <a name="SetLcid"></a>SetLcid
 
 Sets de locale identifier used by the class.
