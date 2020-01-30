@@ -62,6 +62,7 @@ Public:
    DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
    DECLARE OPERATOR LET (BYVAL pstm AS IStream PTR)
    DECLARE OPERATOR CAST () AS IStream PTR
+   DECLARE FUNCTION StreamPtr () AS IStream PTR
    DECLARE FUNCTION Attach (BYVAL pstm AS IStream PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
    DECLARE FUNCTION Detach () AS IStream PTR
    DECLARE FUNCTION Open (BYREF cwsFile AS CWSTR, BYVAL grfMode AS DWORD = STGM_READ, _
@@ -199,6 +200,15 @@ PRIVATE OPERATOR CFileStream.CAST () AS IStream PTR
    m_Result = 0
    OPERATOR = m_pStream
 END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+' Returns a pointer to the underlying IStream interface
+' ========================================================================================
+PRIVATE FUNCTION CFileStream.StreamPtr () AS IStream PTR
+   m_Result = 0
+   RETURN m_pStream
+END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
@@ -679,6 +689,7 @@ Public:
    DECLARE FUNCTION GetLastResult () AS HRESULT
    DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
    DECLARE OPERATOR CAST () AS IStream PTR
+   DECLARE FUNCTION StreamPtr () AS IStream PTR
    DECLARE FUNCTION Read (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG, BYVAL pcbRead AS ULONG PTR) AS HRESULT
    DECLARE FUNCTION Read (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG) AS ULONG
    DECLARE FUNCTION Write (BYVAL pv AS ANY PTR, BYVAL cb AS ULONG, BYVAL pcbWritten AS ULONG PTR) AS HRESULT
@@ -753,6 +764,15 @@ PRIVATE OPERATOR CMemStream.CAST () AS IStream PTR
    m_Result = 0
    OPERATOR = m_pStream
 END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+' Returns a pointer to the underlying IStream interface
+' ========================================================================================
+PRIVATE FUNCTION CMemStream.StreamPtr () AS IStream PTR
+   m_Result = 0
+   RETURN m_pStream
+END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
@@ -991,6 +1011,7 @@ Public:
    DECLARE FUNCTION GetLastResult () AS HRESULT
    DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
    DECLARE OPERATOR CAST () AS IStream PTR
+   DECLARE FUNCTION StreamPtr () AS IStream PTR
    DECLARE FUNCTION Read (BYVAL numChars AS LONG) AS CWSTR
    DECLARE FUNCTION Write (BYREF wszText AS CONST WSTRING) AS ULONG
    DECLARE FUNCTION Append (BYREF wszText AS CONST WSTRING) AS ULONG
@@ -1000,6 +1021,8 @@ Public:
    DECLARE FUNCTION SeekAtEndOfStream () AS ULONGINT
    DECLARE FUNCTION SetSize (BYVAL libNewSize AS ULONGINT) AS HRESULT
    DECLARE FUNCTION GetSize () AS ULONGINT
+   DECLARE FUNCTION CopyTo (BYVAL pstm AS IStream PTR, BYVAL cb AS ULONGINT, _
+           BYVAL pcbRead AS ULONGINT PTR = NULL, BYVAL pcbWritten AS ULONGINT PTR = NULL) AS HRESULT
    DECLARE FUNCTION Clone (BYVAL ppstm AS IStream PTR PTR) AS HRESULT
    DECLARE FUNCTION Clone () AS IStream PTR
    DECLARE FUNCTION GetErrorInfo () AS CWSTR
@@ -1073,6 +1096,15 @@ PRIVATE OPERATOR CMemTextStream.CAST () AS IStream PTR
    m_Result = 0
    OPERATOR = m_pStream
 END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+' Returns a pointer to the underlying IStream interface
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.StreamPtr () AS IStream PTR
+   m_Result = 0
+   RETURN m_pStream
+END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
@@ -1185,6 +1217,31 @@ PRIVATE FUNCTION CMemTextStream.GetSize () AS ULONGINT
    DIM tstatstg AS STATSTG
    this.SetResult(m_pStream->lpvtbl->Stat(m_pStream, @tstatstg, STATFLAG_NONAME))
    RETURN tstatstg.cbSize.QuadPart \ 2
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Copies a specified number of characters from the current seek pointer in the stream to the
+' current seek pointer in another stream.
+' - pstm : A pointer to the destination stream. The stream pointed to by pstm can be a new
+'   stream or a clone of the source stream.
+' - cb : The number of characters of data to attempt to copy into the stream.
+' - pcbRead : A pointer to the location where this method writes the actual number of bytes
+'   read from the source. You can set this pointer to NULL. In this case, this method does
+'   not provide the actual number of bytes read.
+' - pcbWritten : A pointer to the location where this method writes the actual number of
+'   bytes written to the destination. You can set this pointer to NULL. In this case, this
+'   method does not provide the actual number of bytes written.
+' ========================================================================================
+PRIVATE FUNCTION CMemTextStream.CopyTo (BYVAL pstm AS IStream PTR, BYVAL cb AS ULONGINT, _
+BYVAL pcbRead AS ULONGINT PTR = NULL, BYVAL pcbWritten AS ULONGINT PTR = NULL) AS HRESULT
+   IF m_pStream = NULL THEN RETURN this.SetResult(E_POINTER)
+   DIM ulicb AS ULARGE_INTEGER: ulicb.QuadPart = cb * 2
+   DIM ulicbRead AS ULARGE_INTEGER, ulicbWritten AS ULARGE_INTEGER
+   this.SetResult(m_pStream->lpvtbl->CopyTo(m_pStream, pstm, ulicb, @ulicbRead, @ulicbWritten))
+   IF pcbRead THEN *pcbRead = ulicbRead.QuadPart
+   IF pcbWritten THEN *pcbWritten = ulicbWritten.QuadPart
+   RETURN m_Result
 END FUNCTION
 ' ========================================================================================
 
