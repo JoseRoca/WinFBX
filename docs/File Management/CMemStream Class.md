@@ -173,11 +173,20 @@ pStream.Close
 
 # <a name="StreamPtr"></a>StreamPtr
 
-Returns a pointer to the underlying IStream interface.
+Returns a pointer to the underlying **IStream** interface.
 
 ```
 FUNCTION StreamPtr () AS IStreamPtr
 ```
+
+#### Remarks
+
+To save a memory stream to a file you can:
+
+1. Create an instance of the **CFileStream** class
+2. Get a pointer to its underlying **IStream** interface with **CFileStream.StreamPtr**
+3. Copy the contents of the memory stream to the file stream with **CMemStream.CopyTo**
+5. Close the file with **CFileStream.Close**
 
 # <a name="Read1"></a>Read (CMemStream)
 
