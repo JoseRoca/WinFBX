@@ -151,7 +151,7 @@ pStream.Close
 | ---------- | ----------- |
 | [Charset](#Charset) | Indicates the character set into which the contents of a text **Stream** should be translated for storage in the **Stream** object's internal buffer. |
 | [Close](#Close) | Closes a **Stream** object and any dependent objects. |
-| [CopyTo](#CopyTo2) | Copies the specified number of characters or bytes (depending on **Type_**) in the **Stream** to another **Stream** object. |
+| [CopyTo](#CopyTo3) | Copies the specified number of characters or bytes (depending on **Type_**) in the **Stream** to another **Stream** object. |
 | [EOS](#EOS) | Indicates whether the current position is at the end of the stream. |
 | [LineSeparator](#LineSeparator) | Indicates the binary character to be used as the line separator in text **Stream** objects. |
 | [LoadFromFile](#LoadFromFile) | Loads the contents of an existing file into a **Stream**. |
@@ -500,7 +500,7 @@ FUNCTION SetSize (BYVAL libNewSize AS ULONGINT) AS HRESULT
 
 HRESULT. S_OK (0) on success, or an error code on failure.
 
-# <a name="CopyTo"></a>CopyTo2 (CMemTextStream)
+# <a name="CopyTo2"></a>CopyTo (CMemTextStream)
 
 Copies a specified number of characters from the current seek pointer in the stream to the current seek pointer in another stream.
 
@@ -599,7 +599,7 @@ FUNCTION Close () AS HRESULT
 
 S_OK (0) or an HRESULT code.
 
-# <a name="CopyTo2"></a>CopyTo (CADOStream)
+# <a name="CopyTo3"></a>CopyTo (CADOStream)
 
 Copies the specified number of characters or bytes (depending on **Type_**) in the **Stream** to another **Stream** object.
 
