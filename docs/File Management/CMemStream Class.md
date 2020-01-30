@@ -37,6 +37,7 @@ OPERATOR CAST () AS IStream PTR
 | [GetSize](#GetSize1) | Returns the size of the stream. |
 | [SetSize](#SetSize1) | Changes the size of the stream. |
 | [Clone](#Clone1) | Creates a new stream with its own seek pointer that references the same bytes as the original stream. |
+| [StreamPtr](#StreamPtr) | Returns a pointer to the underlying IStream interface. |
 | [GetLastResult](#GetLastResult1) | Returns the last result code. |
 | [GetErrorInfo](#GetErrorInfo1) | Returns a description of the last result code. |
 
@@ -81,6 +82,7 @@ OPERATOR CAST () AS IStream PTR
 | [GetSize](#GetSize2) | Returns the size of the stream. |
 | [SetSize](#SetSize2) | Changes the size of the stream. |
 | [Clone](#Clone2) | Creates a new stream with its own seek pointer that references the same bytes as the original stream. |
+| [StreamPtr](#StreamPtr) | Returns a pointer to the underlying IStream interface. |
 | [GetLastResult](#GetLastResult2) | Returns the last result code. |
 | [GetErrorInfo](#GetErrorInfo2) | Returns a description of the last result code. |
 
@@ -168,6 +170,14 @@ pStream.Close
 | [Type_](#Type_) | Indicates the type of data contained in the **Stream** (binary or text). |
 | [Write](#Write) | Writes binary data to a **Stream** object. |
 | [WriteText](#WriteText) | Writes a string to a **Stream** object. |
+
+# <a name="StreamPtr"></a>StreamPtr
+
+Returns a pointer to the underlying IStream interface.
+
+```
+FUNCTION StreamPtr () AS IStreamPtr
+```
 
 # <a name="Read1"></a>Read (CMemStream)
 
