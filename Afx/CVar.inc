@@ -78,7 +78,9 @@ Public:
    DECLARE CONSTRUCTOR (BYVAL pvar AS VARIANT PTR)
    DECLARE CONSTRUCTOR (BYVAL cy AS CURRENCY)
    DECLARE CONSTRUCTOR (BYVAL dec AS DECIMAL)
+   DECLARE CONSTRUCTOR (BYVAL _value AS LONG)
    DECLARE CONSTRUCTOR (BYVAL b AS BOOLEAN)
+   DECLARE CONSTRUCTOR (BYVAL _value AS DOUBLE)
    DECLARE CONSTRUCTOR (BYVAL pdisp AS IDispatch PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE CONSTRUCTOR (BYVAL punk AS IUnknown PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE CONSTRUCTOR (BYVAL _value AS LONGINT, BYVAL _vType AS WORD = VT_I4)
@@ -142,6 +144,7 @@ Public:
    DECLARE OPERATOR Let (BYVAL pvar AS VARIANT PTR)
    DECLARE OPERATOR Let (BYVAL cy AS CURRENCY)
    DECLARE OPERATOR Let (BYVAL dec AS DECIMAL)
+   DECLARE OPERATOR Let (BYVAL _value AS LONG)
    DECLARE OPERATOR Let (BYVAL b AS BOOLEAN)
    DECLARE OPERATOR Let (BYVAL pdisp AS IDispatch PTR)
    DECLARE OPERATOR Let (BYVAL punk AS IUnknown PTR)
@@ -376,12 +379,34 @@ END CONSTRUCTOR
 ' ========================================================================================
 
 ' ========================================================================================
+' Initializes a CVAR from a LONG value.
+' For some reason, without it, when including CAfeArray.inc, the constructor with a boolean
+' throws and overflow error.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CVar (BYVAL _value AS LONG)
+   CVAR_DP("CVAR CONSTRUCTOR - LONG")
+   vd.vt = VT_I4
+   vd.lVal = _value
+END CONSTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
 ' Initializes a CVAR from a BOOLEAN value.
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CVar (BYVAL b AS BOOLEAN)
    CVAR_DP("CVAR CONSTRUCTOR - BOOLEAN")
    vd.vt = VT_BOOL
    vd.boolVal = IIF(b = FALSE, 0, -1)
+END CONSTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' Initializes a CVAR from a DOUBLE value.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CVar (BYVAL _value AS DOUBLE)
+   CVAR_DP("CVAR CONSTRUCTOR - DOUBLE")
+   vd.vt = VT_R8
+   vd.dblVal = _value
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -1269,6 +1294,15 @@ END OPERATOR
 PRIVATE OPERATOR CVar.Let (BYVAL dec AS DECIMAL)
    CVAR_DP("CVAR LET - DECIMAL")
    VariantClear(@vd) : vd.decVal = dec : vd.vt = VT_DECIMAL
+END OPERATOR
+' ========================================================================================
+
+' ========================================================================================
+' Assigns a LONG value.
+' ========================================================================================
+PRIVATE OPERATOR CVar.Let (BYVAL _value AS LONG)
+   CVAR_DP("CVAR LET - LONG")
+   VariantClear(@vd) : vd.vt = VT_I4 : vd.lVal = _value
 END OPERATOR
 ' ========================================================================================
 
