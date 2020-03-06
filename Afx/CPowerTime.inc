@@ -585,7 +585,7 @@ PRIVATE SUB CPowerTime.AddSeconds (BYVAL nSeconds AS LONG)
 END SUB
 ' ========================================================================================
 ' ========================================================================================
-' Adds the specified number of seconds to this CPowerTime object.
+' Adds the specified number of milliseconds to this CPowerTime object.
 ' The valid values for this member are 0 through 999.
 ' You can subtract seconds by using a negative number.
 ' ========================================================================================
