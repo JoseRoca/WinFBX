@@ -855,7 +855,7 @@ FUNCTION WeeksInMonth (BYVAL nMonth AS LONG = 0, BYVAL nYear AS LONG = 0) AS LON
 
 # <a name="WeeksInYear"></a>WeeksInYear
 
-Returns the number of weeks in the year, where weeks are taken to start on Monday. Will be 52 or 53. The year must be a four figit year. 
+Returns the number of weeks in the year, where weeks are taken to start on Monday. Will be 52 or 53. The year must be a four digit year. 
  If the year is omitted, the year of this **CPowertime** object is assumed.
 ```
 FUNCTION WeeksInYear (BYVAL nYear AS LONG = 0) AS LONG
