@@ -3296,7 +3296,9 @@ BYVAL pwszText AS WSTRING PTR, BYVAL lParam AS LPARAM = 0, BYVAL iImage AS LONG 
    tvinsert.Item.lParam         = lParam
    tvinsert.Item.mask           = TVIF_TEXT OR TVIF_IMAGE OR TVIF_SELECTEDIMAGE OR TVIF_PARAM
    tvinsert.Item.pszText        = pwszText
-   tvinsert.Item.cchTextMax     = LEN(*pwszText)
+   IF pwszText <> LPSTR_TEXTCALLBACK THEN
+      tvinsert.Item.cchTextMax  = LEN(*pwszText)
+   END IF
    FUNCTION = cast(HTREEITEM, SendMessageW(hwndTV, TVM_INSERTITEMW, 0, cast(LPARAM, cast(TVINSERTSTRUCTW PTR, @tvinsert))))
 END FUNCTION
 ' ========================================================================================
