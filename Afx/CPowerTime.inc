@@ -516,12 +516,10 @@ END SUB
 ' ========================================================================================
 ' ========================================================================================
 ' Adds the specified number of months to this CPowerTime object.
-' The valid values for this member are 1 through 12.
 ' You can subtract months by using a negative number.
 ' ========================================================================================
 PRIVATE SUB CPowerTime.AddMonths (BYVAL nMonths AS LONG)
    IF nMonths = 0 THEN RETURN
-   IF nMonths > 12 OR nMonths < -12 THEN RETURN
    DIM nYear AS LONG = this.Year
    DIM nMonth AS LONG = this.Month
    DIM nDays AS LONG
@@ -553,45 +551,37 @@ END SUB
 ' ========================================================================================
 ' ========================================================================================
 ' Adds the specified number of hours to this CPowerTime object.
-' The valid values for this member are 1 through 23.
 ' You can subtract hours by using a negative number.
 ' ========================================================================================
 PRIVATE SUB CPowerTime.AddHours (BYVAL nHours AS LONG)
    IF nHours = 0 THEN RETURN
-   IF nHours > 23 OR nHours < -23 THEN RETURN
    this.SetFileTime(this.GetFileTime() + CPowerTime_Hour * nHours)
 END SUB
 ' ========================================================================================
 ' ========================================================================================
 ' Adds the specified number of minutes to this CPowerTime object.
-' The valid values for this member are 1 through 59.
 ' You can subtract minutes by using a negative number.
 ' ========================================================================================
 PRIVATE SUB CPowerTime.AddMinutes (BYVAL nMinutes AS LONG)
    IF nMinutes = 0 THEN RETURN
-   IF nMinutes > 59 OR nMinutes < -59 THEN RETURN
    this.SetFileTime(this.GetFileTime() + CPowerTime_Minute * nMinutes)
 END SUB
 ' ========================================================================================
 ' ========================================================================================
 ' Adds the specified number of seconds to this CPowerTime object.
-' The valid values for this member are 1 through 59.
 ' You can subtract seconds by using a negative number.
 ' ========================================================================================
 PRIVATE SUB CPowerTime.AddSeconds (BYVAL nSeconds AS LONG)
    IF nSeconds = 0 THEN RETURN
-   IF nSeconds > 59 OR nSeconds < -59 THEN RETURN
    this.SetFileTime(this.GetFileTime() + CPowerTime_Second * nSeconds)
 END SUB
 ' ========================================================================================
 ' ========================================================================================
 ' Adds the specified number of milliseconds to this CPowerTime object.
-' The valid values for this member are 0 through 999.
 ' You can subtract seconds by using a negative number.
 ' ========================================================================================
 PRIVATE SUB CPowerTime.AddMSeconds (BYVAL nMSeconds AS LONG)
    IF nMSeconds = 0 THEN RETURN
-   IF nMSeconds > 999 OR nMSeconds < -999 THEN RETURN
    this.SetFileTime(this.GetFileTime() + CPowerTime_Millisecond * nMSeconds)
 END SUB
 ' ========================================================================================
