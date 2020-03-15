@@ -1,6 +1,20 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+15 March 2020
+- Added the AfxMessageBoxTimeout function.
+
+7 March 2020
+- Modified the TreeView_AddItem function to check if the user has passed LPSTR_TEXTCALLBACK
+  instead of an string in the pwszText parameter.
+
+23 January 2020
+- Modified AfxChDir, AfxMkDir, AfxRmDir and AfxName to return 0 on success or -1 on failure.
+
+25 Sep 2019
+- Modified the IsDots method of the CFindFile class to check for "." and ".." instead of
+  just checking if the filename starts with a dot.
+
 19 Aug 2019
 - Modified the AfxGetComboBoxText function to remove the trailing null.
 

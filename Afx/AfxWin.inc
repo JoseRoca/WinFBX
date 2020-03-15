@@ -48,6 +48,36 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Displays a modal dialog box that contains a system icon, a set of buttons, and a brief
+' application-specific message, such as status or error information. 
+' The message box times out and auto closes if the user does not respond to it first.
+' The message box returns an integer value that indicates which button the user clicked.
+' This is an undocuimented function available in user32.dll since Windows XP.
+' This wrapper function calls MessageBoxTimeoutW dynamically. If the API function is not
+' available, it calls the MessageBoxW function, which don't times out.
+' Usage example:
+' DIM dwFlags AS UINT = MB_OK OR MB_SETFOREGROUND OR MB_SYSTEMMODAL OR MB_ICONINFORMATION
+' DIM iRet AS LONG = AfxMessageBoxTimeout(NULL, "Test a timeout of 5 seconds.", _
+'                    "MessageBoxTimeout Test", dwFlags, 0, 5000)
+' ========================================================================================
+PRIVATE FUNCTION AfxMessageBoxTimeout (BYVAL hwnd AS HWND, BYVAL pwszText AS LPWSTR, BYVAL pwszCaption AS LPWSTR, _
+   BYVAL uType AS UINT, BYVAL wLanguageId AS WORD, BYVAL dwMilliseconds AS DWORD) AS LONG
+   DIM AS ANY PTR pLib = DyLibLoad("user32.dll")
+   IF pLib = NULL THEN
+      ' // Use the normal message box
+      FUNCTION = MessageBoxW(hwnd, pwszText, pwszCaption, uType)
+   ELSE
+      ' // Call the undocumented MessageBoxTimeoutW function
+      DIM pMessageBoxTimeout AS FUNCTION (BYVAL hwnd AS HWND, BYVAL pwszText AS LPWSTR, BYVAL pwszCaption AS LPWSTR, _
+          BYVAL uType AS UINT, BYVAL wLanguageId AS WORD, BYVAL dwMilliseconds AS DWORD) AS LONG
+      pMessageBoxTimeout = DyLibSymbol(pLib, "MessageBoxTimeoutW")
+      IF pMessageBoxTimeout THEN FUNCTION = pMessageBoxTimeout(hwnd, pwszText, pwszCaption, uType, wLanguageId, dwMilliseconds)
+      DyLibFree(pLib)
+   END IF
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Returns command line parameters used to call the program
 ' Unicode replacement for FreeBasic Command keyword.
 ' Usage: result = AfxCommand ( [ index ] )
