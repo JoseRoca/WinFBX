@@ -63,17 +63,18 @@ END FUNCTION
 PRIVATE FUNCTION AfxMessageBoxTimeout (BYVAL hwnd AS HWND, BYVAL pwszText AS LPWSTR, BYVAL pwszCaption AS LPWSTR, _
    BYVAL uType AS UINT, BYVAL wLanguageId AS WORD, BYVAL dwMilliseconds AS DWORD) AS LONG
    DIM AS ANY PTR pLib = DyLibLoad("user32.dll")
-   IF pLib = NULL THEN
+   IF pLib = NULL THEN RETURN 0
+   ' // Call the undocumented MessageBoxTimeoutW function
+   DIM pMessageBoxTimeout AS FUNCTION (BYVAL hwnd AS HWND, BYVAL pwszText AS LPWSTR, BYVAL pwszCaption AS LPWSTR, _
+       BYVAL uType AS UINT, BYVAL wLanguageId AS WORD, BYVAL dwMilliseconds AS DWORD) AS LONG
+   pMessageBoxTimeout = DyLibSymbol(pLib, "MessageBoxTimeoutW")
+   IF pMessageBoxTimeout THEN
+      FUNCTION = pMessageBoxTimeout(hwnd, pwszText, pwszCaption, uType, wLanguageId, dwMilliseconds)
+   ELSE
       ' // Use the normal message box
       FUNCTION = MessageBoxW(hwnd, pwszText, pwszCaption, uType)
-   ELSE
-      ' // Call the undocumented MessageBoxTimeoutW function
-      DIM pMessageBoxTimeout AS FUNCTION (BYVAL hwnd AS HWND, BYVAL pwszText AS LPWSTR, BYVAL pwszCaption AS LPWSTR, _
-          BYVAL uType AS UINT, BYVAL wLanguageId AS WORD, BYVAL dwMilliseconds AS DWORD) AS LONG
-      pMessageBoxTimeout = DyLibSymbol(pLib, "MessageBoxTimeoutW")
-      IF pMessageBoxTimeout THEN FUNCTION = pMessageBoxTimeout(hwnd, pwszText, pwszCaption, uType, wLanguageId, dwMilliseconds)
-      DyLibFree(pLib)
    END IF
+   DyLibFree(pLib)
 END FUNCTION
 ' ========================================================================================
 
