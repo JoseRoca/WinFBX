@@ -9,7 +9,6 @@
 ' ########################################################################################
 
 #pragma once
-#define unicode
 #include once "windows.bi"
 #include once "Afx/CWSTR.inc"
 #include once "Afx/CDicObj.inc"
