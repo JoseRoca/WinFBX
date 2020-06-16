@@ -694,7 +694,7 @@ END FUNCTION
 ' Universal Time (UTC) and local time. All translations between UTC and local time are
 ' based on the following formula: UTC = local time + bias. Units = minutes.
 ' ========================================================================================
-PRIVATE FUNCTION AfxTimeZoneBias () AS DWORD
+PRIVATE FUNCTION AfxTimeZoneBias () AS LONG
    DIM tzi AS TIME_ZONE_INFORMATION
    DIM r AS DWORD = GetTimeZoneInformation(@tzi)
    IF r = TIME_ZONE_ID_INVALID THEN RETURN 0
@@ -708,7 +708,7 @@ END FUNCTION
 ' The value of this property is added to the Bias property to form the bias used during
 ' daylight time. In most time zones, the value of this property is 60. Units = minutes.
 ' ========================================================================================
-PRIVATE FUNCTION AfxTimeZoneDaylightBias () AS DWORD
+PRIVATE FUNCTION AfxTimeZoneDaylightBias () AS LONG
    DIM tzi AS TIME_ZONE_INFORMATION
    DIM r AS DWORD = GetTimeZoneInformation(@tzi)
    IF r = TIME_ZONE_ID_INVALID THEN RETURN 0

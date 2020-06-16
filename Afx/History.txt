@@ -1,6 +1,10 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+17 June 2020
+- AfxTime.inc: Changed the return type of the AfxTimeZoneBias and AfxTimeZoneDaylightBias
+  from DWORD to LONG.
+
 15 March 2020
 - Added the AfxMessageBoxTimeout function.
 
