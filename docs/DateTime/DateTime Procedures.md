@@ -1177,7 +1177,7 @@ The converted time value as SYSTEMTIME structure.
 Returns the current bias for local time translation. The bias is the difference between Coordinated Universal Time (UTC) and local time. All translations between UTC and local time are based on the following formula: UTC = local time + bias. Units = minutes.
 
 ```
-FUNCTION AfxTimeZoneBias () AS DWORD
+FUNCTION AfxTimeZoneBias () AS LONG
 ```
 
 # <a name="AfxTimeZoneDaylightBias"></a>AfxTimeZoneDaylightBias
@@ -1193,7 +1193,7 @@ FUNCTION AfxTimeZoneDaylightBias () AS LONG
 Returns the **DaylightDayOfWeek** of the **DaylightMonth** when the transition from standard time to daylight saving time occurs on this operating system.
 
 ```
-FUNCTION AfxTimeZoneDaylightDay () AS DWORD
+FUNCTION AfxTimeZoneDaylightDay () AS LONG
 ```
 
 **Example**: If the transition day (**DaylightDayOfWeek**) occurs on a Sunday, then the value "1" indicates the first Sunday of the **DaylightMonth**, "2" indicates the second Sunday, and so on. The value "5" indicates the last **DaylightDayOfWeek** in the month.
