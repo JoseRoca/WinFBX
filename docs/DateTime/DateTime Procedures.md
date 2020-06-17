@@ -74,6 +74,7 @@ Assorted date and time procedures.
 | [AfxTimeZoneDaylightDay](#AfxTimeZoneDaylightDay) | **DaylightDayOfWeek** of the **DaylightMonth** when the transition from standard time to daylight saving time occurs on this operating system. |
 | [AfxTimeZoneDaylightDayOfWeek](#AfxTimeZoneDaylightDayOfWeek) | Day of the week when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneDaylightHour](#AfxTimeZoneDaylightHour) | Hour of the day when the transition from standard time to daylight saving time occurs on an operating system. |
+| [AfxTimeZoneDaylightMinute](#AfxTimeZoneDaylightMinute) | Minute of of the **DaylightHour** when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneDaylightMonth](#AfxTimeZoneDaylightMonth) | Month when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneDaylightName](#AfxTimeZoneDaylightName) | A description for daylight saving time. For example, "EST" could indicate Eastern Standard Time. This string can be empty. |
 | [AfxTimeZoneId](#AfxTimeZoneId) | Returns the time zone identifier. |
@@ -82,6 +83,7 @@ Assorted date and time procedures.
 | [AfxTimeZoneStandardDay](#AfxTimeZoneStandardDay) | **StandardDayOfWeek** of the **StandardMonth** when the transition from daylight saving time to standard time occurs on an operating system. |
 | [AfxTimeZoneStandardDayOfWeek](#AfxTimeZoneStandardDayOfWeek) | Day of the week when the transition from daylight saving time to standard time occurs on an operating system. |
 | [AfxTimeZoneStandardHour](#AfxTimeZoneStandardHour) |Hour of the day when the transition from daylight saving time to standard time occurs on an operating system. |
+| [AfxTimeZoneStandardMinute](#AfxTimeZoneStandardMinute) | Minute of of the **StandardHour** when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneStandardMonth](#AfxTimeZoneStandardMonth) | Month when the transition from daylight saving time to standard time occurs on an operating system. |
 | [AfxTimeZoneStandardName](#AfxTimeZoneStandardName) | A description for standard time. For example, "EST" could indicate Eastern Standard Time. This string can be empty. |
 | [AfxVariantDateTimeToStr](#AfxVariantDateTimeToStr) | Converts a DATE_ type to a string. |
@@ -1199,7 +1201,7 @@ FUNCTION AfxTimeZoneDaylightBias () AS LONG
 Returns the **DaylightDayOfWeek** of the **DaylightMonth** when the transition from standard time to daylight saving time occurs on this operating system.
 
 ```
-FUNCTION AfxTimeZoneDaylightDay () AS LONG
+FUNCTION AfxTimeZoneDaylightDay () AS WORD
 ```
 
 **Example**: If the transition day (**DaylightDayOfWeek**) occurs on a Sunday, then the value "1" indicates the first Sunday of the **DaylightMonth**, "2" indicates the second Sunday, and so on. The value "5" indicates the last **DaylightDayOfWeek** in the month.
@@ -1209,7 +1211,7 @@ FUNCTION AfxTimeZoneDaylightDay () AS LONG
 Day of the week when the transition from standard time to daylight saving time occurs on an operating system.
 
 ```
-FUNCTION AfxTimeZoneDaylightDayOfWeek () AS DWORD
+FUNCTION AfxTimeZoneDaylightDayOfWeek () AS WORD
 ```
 
 #### Return value
@@ -1221,7 +1223,15 @@ The day of the week when the transition from standard time to daylight saving ti
 Hour of the day when the transition from standard time to daylight saving time occurs on an operating system.
 
 ```
-FUNCTION AfxTimeZoneDaylightHour () AS DWORD
+FUNCTION AfxTimeZoneDaylightHour () AS WORD
+```
+
+# <a name="AfxTimeZoneDaylightMinute"></a>AfxTimeZoneDaylightMinute
+
+Minute of the **DaylightHour** when the transition from standard time to daylight saving time occurs on an operating system.
+
+```
+FUNCTION AfxTimeZoneDaylightMinute () AS WORD
 ```
 
 # <a name="AfxTimeZoneDaylightMonth"></a>AfxTimeZoneDaylightMonth
@@ -1229,7 +1239,7 @@ FUNCTION AfxTimeZoneDaylightHour () AS DWORD
 Month when the transition from standard time to daylight saving time occurs on an operating system.
 
 ```
-FUNCTION AfxTimeZoneDaylightMonth () AS DWORD
+FUNCTION AfxTimeZoneDaylightMonth () AS WORD
 ```
 
 #### Return value
@@ -1291,7 +1301,7 @@ TRUE or FALSE.
 Returns the **StandardDayOfWeek** of the **StandardMonth** when the transition from daylight saving to standard time occurs on this operating system.
 
 ```
-FUNCTION AfxTimeZoneStandardDay () AS LONG
+FUNCTION AfxTimeZoneStandardDay () AS WORD
 ```
 
 **Example**: If the transition day (**StandardDayOfWeek**) occurs on a Sunday, then the value "1" indicates the first Sunday of the **StandardMonth**, "2" indicates the second Sunday, and so on. The value "5" indicates the last **StandardDayOfWeek** in the month.
@@ -1301,7 +1311,7 @@ FUNCTION AfxTimeZoneStandardDay () AS LONG
 Day of the week when the transition from daylight saving time to standard time occurs on an operating system.
 
 ```
-FUNCTION AfxTimeZoneStandardDayOfWeek () AS DWORD
+FUNCTION AfxTimeZoneStandardDayOfWeek () AS WORD
 ```
 
 #### Return value
@@ -1313,7 +1323,15 @@ The day of the week when the transition from daylight saving time to standard ti
 Hour of the day when the transition from daylight time saving time to standard time occurs on an operating system.
 
 ```
-FUNCTION AfxTimeZoneStandardHour () AS DWORD
+FUNCTION AfxTimeZoneStandardHour () AS WORD
+```
+
+# <a name="AfxTimeZoneStandardMinute"></a>AfxTimeZoneStandardMinute
+
+Minute of the **StandardHour** when the transition from standard time to daylight saving time occurs on an operating system.
+
+```
+FUNCTION AfxTimeZoneStandardMinute () AS WORD
 ```
 
 # <a name="AfxTimeZoneStandardMonth"></a>AfxTimeZoneStandardMonth
@@ -1321,7 +1339,7 @@ FUNCTION AfxTimeZoneStandardHour () AS DWORD
 Month when the transition from daylight saving time to standard time occurs on an operating system.
 
 ```
-FUNCTION AfxTimeZoneStandardMonth () AS DWORD
+FUNCTION AfxTimeZoneStandardMonth () AS WORD
 ```
 
 #### Return value
