@@ -4,6 +4,13 @@ Windows Framework for FreeBASIC.
 17 June 2020
 - AfxTime.inc: Changed the return type of the AfxTimeZoneBias and AfxTimeZoneDaylightBias
   from DWORD to LONG.
+- AfxTime.inc: Added the following functions:
+  AfxTimeZoneId
+  AfxTimeZoneIsStandardSavingTime
+  AfxTimeZoneStandardDay
+  AfxTimeZoneStandardDayOfWeek
+  AfxTimeZoneStandardHour
+  AfxTimeZoneStandardMonth
 
 15 March 2020
 - Added the AfxMessageBoxTimeout function.
