@@ -76,7 +76,8 @@ Assorted date and time procedures.
 | [AfxTimeZoneDaylightHour](#AfxTimeZoneDaylightHour) | Hour of the day when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneDaylightMonth](#AfxTimeZoneDaylightMonth) | Month when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneDaylightName](#AfxTimeZoneDaylightName) | A description for daylight saving time. For example, "EST" could indicate Eastern Standard Time. This string can be empty. |
-| [AfxTimeZoneIsDaylightSavingTime](#AfxTimeZoneIsDaylightSavingTime) | Indicates whether the the system is operating in the range of daylight saving time for the current time zone. |
+| [AfxTimeZoneIsDaylightSavingTime](#AfxTimeZoneIsDaylightSavingTime) | Indicates whether the the system is operating in the range covered by the DaylightDate member of the TIME_ZONE_INFORMATION structure. |
+| [AfxTimeZoneIsStandardSavingTime](#AfxTimeZoneIsStandardSavingTime) | Indicates whether the the system is operating in the range covered by the StandardDate member of the TIME_ZONE_INFORMATION structure. |
 | [AfxTimeZoneStandardName](#AfxTimeZoneStandardName) | A description for standard time. For example, "EST" could indicate Eastern Standard Time. This string can be empty. |
 | [AfxVariantDateTimeToStr](#AfxVariantDateTimeToStr) | Converts a DATE_ type to a string. |
 | [AfxVariantDateToStr](#AfxVariantDateToStr) | Converts a DATE_ type to a string containing only the date. |
@@ -1240,10 +1241,22 @@ FUNCTION AfxTimeZoneDaylightName () AS CWSTR
 
 # <a name="AfxTimeZoneIsDaylightSavingTime"></a>AfxTimeZoneIsDaylightSavingTime
 
-Indicates whether the the system is operating in the range of daylight saving time for the current time zone.
+Indicates whether the the system is operating in the range covered by the DaylightDate member of the TIME_ZONE_INFORMATION structure.
 
 ```
 FUNCTION AfxTimeZoneIsDaylightSavingTime () AS BOOLEAN
+```
+
+#### Return value
+
+TRUE or FALSE.
+
+# <a name="AfxTimeZoneIsStandardSavingTime"></a>AfxTimeZoneIsStandardSavingTime
+
+Indicates whether the the system is operating in the range covered by the StandardDate member of the TIME_ZONE_INFORMATION structure.
+
+```
+FUNCTION AfxTimeZoneIsStandardSavingTime () AS BOOLEAN
 ```
 
 #### Return value
