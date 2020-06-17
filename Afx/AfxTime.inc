@@ -826,6 +826,18 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Minute of the DaylightHour when the transition from standard time to daylight saving
+' time occurs on an operating system.
+' ========================================================================================
+PRIVATE FUNCTION AfxTimeZoneDaylightMinute () AS WORD
+   DIM tzi AS TIME_ZONE_INFORMATION
+   DIM r AS DWORD = GetTimeZoneInformation(@tzi)
+   IF r = TIME_ZONE_ID_INVALID THEN RETURN 0
+   RETURN tzi.DaylightDate.wMinute
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' StandardDayOfWeek of the StandardMonth when the transition from daylight saving time to
 ' standard time occurs on an operating system.
 ' If the transition day (StandardDayOfWeek) occurs on a Sunday, then the value "1" indicates
@@ -874,6 +886,18 @@ PRIVATE FUNCTION AfxTimeZoneStandardMonth () AS WORD
    DIM r AS DWORD = GetTimeZoneInformation(@tzi)
    IF r = TIME_ZONE_ID_INVALID THEN RETURN 0
    RETURN tzi.StandardDate.wMonth
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Minute of the StandardHour when the transition from daylight saving time to standard time
+' occurs on an operating system.
+' ========================================================================================
+PRIVATE FUNCTION AfxTimeZoneStandardMinute () AS WORD
+   DIM tzi AS TIME_ZONE_INFORMATION
+   DIM r AS DWORD = GetTimeZoneInformation(@tzi)
+   IF r = TIME_ZONE_ID_INVALID THEN RETURN 0
+   RETURN tzi.StandardDate.wMinute
 END FUNCTION
 ' ========================================================================================
 
