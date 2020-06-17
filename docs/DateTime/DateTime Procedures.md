@@ -75,6 +75,10 @@ Assorted date and time procedures.
 | [AfxTimeZoneDaylightDayOfWeek](#AfxTimeZoneDaylightDayOfWeek) | Day of the week when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneDaylightHour](#AfxTimeZoneDaylightHour) | Hour of the day when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneDaylightMonth](#AfxTimeZoneDaylightMonth) | Month when the transition from standard time to daylight saving time occurs on an operating system. |
+| [AfxTimeZoneStandardDay](#AfxTimeZoneStandardDay) | **StandardDayOfWeek** of the **StandardMonth** when the transition from daylight saving time to standard time occurs on an operating system. |
+| [AfxTimeZoneStandardDayOfWeek](#AfxTimeZoneStandardDayOfWeek) | Day of the week when the transition from daylight saving time to standard time occurs on an operating system. |
+| [AfxTimeZoneStandardHour](#AfxTimeZoneStandardHour) |Hour of the day when the transition from daylight saving time to standard time occurs on an operating system. |
+| [AfxTimeZoneStandardMonth](#AfxTimeZoneStandardMonth) | Month when the transition from daylight saving time to standard time occurs on an operating system. |
 | [AfxTimeZoneDaylightName](#AfxTimeZoneDaylightName) | A description for daylight saving time. For example, "EST" could indicate Eastern Standard Time. This string can be empty. |
 | [AfxTimeZoneId](#AfxTimeZoneId) | Returns the time zone identifier. |
 | [AfxTimeZoneIsDaylightSavingTime](#AfxTimeZoneIsDaylightSavingTime) | Indicates whether the the system is operating in the range covered by the DaylightDate member of the TIME_ZONE_INFORMATION structure. |
