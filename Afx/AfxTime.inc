@@ -679,8 +679,40 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Indicates whether the the system is operating in the range of daylight saving time
-' for the current time zone.
+' Returns the time zone identifier.
+' Return values:
+' - TIME_ZONE_ID_UNKNOWN (0)
+'     Daylight saving time is not used in the current time zone, because there are no
+'     transition dates or automatic adjustment for daylight saving time is disabled.
+' - TIME_ZONE_ID_STANDARD (1)
+'     The system is operating in the range covered by the StandardDate member of the
+'     TIME_ZONE_INFORMATION structure.
+' - TIME_ZONE_ID_DAYLIGHT (2)
+'     The system is operating in the range covered by the DaylightDate member of the
+'     TIME_ZONE_INFORMATION structure.
+' If the function fails for other reasons, such as an out of memory error, it returns
+' TIME_ZONE_ID_INVALID. To get extended error information, call GetLastError.
+' ========================================================================================
+PRIVATE FUNCTION AfxTimeZoneId () AS DWORD
+   DIM tzi AS TIME_ZONE_INFORMATION
+   RETURN GetTimeZoneInformation(@tzi)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Indicates whether the the system is operating in the range covered by the StandardDate
+' member of the TIME_ZONE_INFORMATION structure.
+' ========================================================================================
+PRIVATE FUNCTION AfxTimeZoneIsStandardSavingTime () AS BOOLEAN
+   DIM tzi AS TIME_ZONE_INFORMATION
+   DIM r AS DWORD = GetTimeZoneInformation(@tzi)
+   RETURN (r = TIME_ZONE_ID_STANDARD)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Indicates whether the the system is operating in the range covered by the DaylightDate
+' member of the TIME_ZONE_INFORMATION structure.
 ' ========================================================================================
 PRIVATE FUNCTION AfxTimeZoneIsDaylightSavingTime () AS BOOLEAN
    DIM tzi AS TIME_ZONE_INFORMATION
@@ -790,6 +822,58 @@ PRIVATE FUNCTION AfxTimeZoneDaylightMonth () AS WORD
    DIM r AS DWORD = GetTimeZoneInformation(@tzi)
    IF r = TIME_ZONE_ID_INVALID THEN RETURN 0
    RETURN tzi.DaylightDate.wMonth
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' StandardDayOfWeek of the StandardMonth when the transition from daylight saving time to
+' standard time occurs on an operating system.
+' If the transition day (StandardDayOfWeek) occurs on a Sunday, then the value "1" indicates
+' the first Sunday of the StandardMonth, "2" indicates the second Sunday, and so on.
+' The value "5" indicates the last StandardDayOfWeek in the month.
+' ========================================================================================
+PRIVATE FUNCTION AfxTimeZoneStandardDay () AS WORD
+   DIM tzi AS TIME_ZONE_INFORMATION
+   DIM r AS DWORD = GetTimeZoneInformation(@tzi)
+   IF r = TIME_ZONE_ID_INVALID THEN RETURN 0
+   RETURN tzi.StandardDate.wDay
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Day of the week when the transition from daylight saving time to standard time occurs on
+' an operating system.
+' Sunday (0), Monday (1), Tuesday (2), Wednesday (3), Thursday (4), Friday (5), Saturday (6)
+' ========================================================================================
+PRIVATE FUNCTION AfxTimeZoneStandardDayOfWeek () AS WORD
+   DIM tzi AS TIME_ZONE_INFORMATION
+   DIM r AS DWORD = GetTimeZoneInformation(@tzi)
+   IF r = TIME_ZONE_ID_INVALID THEN RETURN 0
+   RETURN tzi.StandardDate.wDayOfWeek
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Hour of the day when the transition from daylight saving time to standard time occurs on
+' an operating system. Example: 11
+' ========================================================================================
+PRIVATE FUNCTION AfxTimeZoneStandardHour () AS WORD
+   DIM tzi AS TIME_ZONE_INFORMATION
+   DIM r AS DWORD = GetTimeZoneInformation(@tzi)
+   IF r = TIME_ZONE_ID_INVALID THEN RETURN 0
+   RETURN tzi.StandardDate.wHour
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Month when the transition from daylight saving time to standard time occurs on an operating system.
+' January (1), February (2), and so on.
+' ========================================================================================
+PRIVATE FUNCTION AfxTimeZoneStandardMonth () AS WORD
+   DIM tzi AS TIME_ZONE_INFORMATION
+   DIM r AS DWORD = GetTimeZoneInformation(@tzi)
+   IF r = TIME_ZONE_ID_INVALID THEN RETURN 0
+   RETURN tzi.StandardDate.wMonth
 END FUNCTION
 ' ========================================================================================
 
