@@ -1318,7 +1318,7 @@ FUNCTION AfxTimeZoneStandardHour () AS DWORD
 
 # <a name="AfxTimeZoneStandardMonth"></a>AfxTimeZoneStandardMonth
 
-Hour of the day when the transition from daylight saving time to standard time occurs on an operating system.
+Month when the transition from daylight saving time to standard time occurs on an operating system.
 
 ```
 FUNCTION AfxTimeZoneStandardMonth () AS DWORD
