@@ -76,6 +76,7 @@ Assorted date and time procedures.
 | [AfxTimeZoneDaylightHour](#AfxTimeZoneDaylightHour) | Hour of the day when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneDaylightMonth](#AfxTimeZoneDaylightMonth) | Month when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneDaylightName](#AfxTimeZoneDaylightName) | A description for daylight saving time. For example, "EST" could indicate Eastern Standard Time. This string can be empty. |
+| [AfxTimeZoneId](#AfxTimeZoneId) | Returns the time zone identifier. |
 | [AfxTimeZoneIsDaylightSavingTime](#AfxTimeZoneIsDaylightSavingTime) | Indicates whether the the system is operating in the range covered by the DaylightDate member of the TIME_ZONE_INFORMATION structure. |
 | [AfxTimeZoneIsStandardSavingTime](#AfxTimeZoneIsStandardSavingTime) | Indicates whether the the system is operating in the range covered by the StandardDate member of the TIME_ZONE_INFORMATION structure. |
 | [AfxTimeZoneStandardName](#AfxTimeZoneStandardName) | A description for standard time. For example, "EST" could indicate Eastern Standard Time. This string can be empty. |
@@ -1230,6 +1231,22 @@ FUNCTION AfxTimeZoneDaylightMonth () AS DWORD
 #### Return value
 
 The month when the transition from standard time to daylight saving time occurs on an operating system. 1 = January, 2 = February, and so on.
+
+# <a name="AfxTimeZoneId"></a>AfxTimeZoneId
+
+Returns the time zone identifier.
+
+```
+FUNCTION AfxTimeZoneId () AS DWORD
+```
+
+#### Return value
+
+| **TIME_ZONE_ID_UNKNOWN** (0) | Daylight saving time is not used in the current time zone, because there are no transition dates or automatic adjustment for daylight saving time is disabled. |
+| **TIME_ZONE_ID_STANDARD** (1) | The system is operating in the range covered by the StandardDate member of the TIME_ZONE_INFORMATION structure. |
+| **TIME_ZONE_ID_DAYLIGHT** (2) | The system is operating in the range covered by the DaylightDate member of the TIME_ZONE_INFORMATION structure. |
+
+If the function fails for other reasons, such as an out of memory error, it returns **TIME_ZONE_ID_INVALID**. To get extended error information, call **GetLastError**.
 
 # <a name="AfxTimeZoneDaylightName"></a>AfxTimeZoneDaylightName
 
