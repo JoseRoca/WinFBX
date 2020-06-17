@@ -1242,6 +1242,8 @@ FUNCTION AfxTimeZoneId () AS DWORD
 
 #### Return value
 
+| Value       | Description |
+| ---------- | ----------- |
 | **TIME_ZONE_ID_UNKNOWN** (0) | Daylight saving time is not used in the current time zone, because there are no transition dates or automatic adjustment for daylight saving time is disabled. |
 | **TIME_ZONE_ID_STANDARD** (1) | The system is operating in the range covered by the StandardDate member of the TIME_ZONE_INFORMATION structure. |
 | **TIME_ZONE_ID_DAYLIGHT** (2) | The system is operating in the range covered by the DaylightDate member of the TIME_ZONE_INFORMATION structure. |
