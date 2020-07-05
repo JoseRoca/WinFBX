@@ -2339,7 +2339,8 @@ BYVAL nLen AS LONG = 260, BYVAL bPassword AS BOOLEAN = FALSE) AS CWSTR
 
    ' // Create the window
    DIM pInputBox AS CWindow
-   DIM dwStyle AS DWORD = WS_VISIBLE OR WS_CAPTION OR WS_POPUPWINDOW
+'   DIM dwStyle AS DWORD = WS_VISIBLE OR WS_CAPTION OR WS_POPUPWINDOW
+   DIM dwStyle AS DWORD = WS_CAPTION OR WS_POPUPWINDOW
    DIM dwExStyle AS DWORD = WS_EX_DLGMODALFRAME OR WS_EX_CONTROLPARENT
    DIM hInputBox AS HWND = pInputBox.Create(hParent, **cwsCaption, @AfxInputBoxWindowProc, x, y, 326, 142, dwStyle, dwExStyle)
    ' // Center the window
