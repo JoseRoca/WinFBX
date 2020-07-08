@@ -450,7 +450,7 @@ DECLARE FUNCTION UpDown_GetBuddy (BYVAL hUDM AS HWND) AS HWND
 DECLARE FUNCTION UpDown_GetPos (BYVAL hUDM AS HWND) AS LONG
 DECLARE FUNCTION UpDown_GetPos32 (BYVAL hUDM AS HWND, BYVAL pfError AS LONG PTR = NULL) AS LONG
 DECLARE FUNCTION UpDown_GetRange (BYVAL hUDM AS HWND) AS LONG
-DECLARE SUB UpDown_GetRange32 (BYVAL hUDM AS HWND, BYVAL pLow AS WORD PTR, BYVAL pHigh AS WORD PTR)
+DECLARE SUB UpDown_GetRange32 (BYVAL hUDM AS HWND, BYVAL pLow AS LONG PTR, BYVAL pHigh AS LONG PTR)
 DECLARE FUNCTION UpDown_GetUnicodeFormat (BYVAL hUDM AS HWND) AS DWORD
 DECLARE FUNCTION UpDown_SetAccel (BYVAL hUDM AS HWND, BYVAL cAccels AS DWORD, BYREF paAccels AS UDACCEL PTR) AS BOOLEAN
 DECLARE FUNCTION UpDown_SetBase (BYVAL hUDM AS HWND, BYVAL nBase AS LONG) AS LONG
@@ -2283,7 +2283,7 @@ END FUNCTION
 
 ' ========================================================================================
 ' Deletes an icon associated with an static control. Returns TRUE o FALSE.
-' ========================================================================================
+' ========================================================================================
 PRIVATE FUNCTION Static_DeleteIcon (BYVAL hStatic AS HWND) AS BOOLEAN
    FUNCTION = DeleteObject(cast(HGDIOBJ, SendMessageW(hStatic, STM_SETICON, 0, 0)))
 END FUNCTION
@@ -4757,7 +4757,7 @@ END FUNCTION
 ' ========================================================================================
 ' Returns the 32-bit position of an up-down control.
 ' ========================================================================================
-PRIVATE SUB UpDown_GetRange32 (BYVAL hUDM AS HWND, BYVAL pLow AS WORD PTR, BYVAL pHigh AS WORD PTR)
+PRIVATE SUB UpDown_GetRange32 (BYVAL hUDM AS HWND, BYVAL pLow AS LONG PTR, BYVAL pHigh AS LONG PTR)
    SendMessageW(hUDM, UDM_GETRANGE32, cast(WPARAM, pLow), cast(LPARAM, pHigh))
 END SUB
 ' ========================================================================================
