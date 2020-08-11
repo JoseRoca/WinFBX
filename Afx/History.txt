@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+11 August 2020
+- AfxTime.inc: Changed 1721116 to 1721119 in the AfxAstroDay function.
+
 17 June 2020
 - AfxTime.inc: Changed the return type of the AfxTimeZoneBias and AfxTimeZoneDaylightBias
   from DWORD to LONG.
