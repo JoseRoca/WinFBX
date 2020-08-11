@@ -633,7 +633,7 @@ END SUB
 ' ========================================================================================
 PRIVATE FUNCTION CPowerTime.AstroDay () AS LONG
    DIM y AS DOUBLE = this.Year + (this.Month - 2.85) / 12
-   RETURN INT(INT(INT(367 * y) - 1.75 * INT(y) + this.Day) - 0.75 * INT(0.01 * y)) + 1721116
+   RETURN INT(INT(INT(367 * y) - 1.75 * INT(y) + this.Day) - 0.75 * INT(0.01 * y)) + 1721119
 END FUNCTION
 ' ========================================================================================
 
