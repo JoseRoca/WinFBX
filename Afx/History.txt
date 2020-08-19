@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+20 August 2020
+- CVAR.inc: Remed the boolean constructor becuase sometimes is wrongly called.
+
 11 August 2020
 - AfxTime.inc: Changed 1721116 to 1721119 in the AfxAstroDay function.
 - CPowerTime.inc: Changed 1721116 to 1721119 in the AstroDay method.
