@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+16 October 2020
+- AfxWin.inc: Added function AfxGetWindowFontInfo.
+
 20 August 2020
 - CVAR.inc: Remed the boolean constructor becuase sometimes is wrongly called.
 

@@ -2799,6 +2799,23 @@ END SUB
 ' ========================================================================================
 
 ' ========================================================================================
+' Retrieves information about the font being used by a window or control
+' Parameter:
+' - hwnd = Handle of the window or control.
+' Return value:
+' - A LOGFONTW structure.
+' ========================================================================================
+PRIVATE FUNCTION AfxGetWindowFontInfo (BYVAL hwnd AS HWND) AS LOGFONTW
+   ' // Get the handle of the font used by the window or control
+   DIM hCurFont AS HFONT = CAST(HFONT, SendMessageW(hwnd, WM_GETFONT, 0, 0))
+   ' // Get the LOGFONTW structure
+   DIM lfw AS LOGFONTW
+   IF hCurFont THEN GetObjectW(hCurFont, SIZEOF(lfw), @lfw)
+   RETURN lfw
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Retrieves information about the fonts used by Windows.
 ' Parameters:
 ' - nType = The type of font:
