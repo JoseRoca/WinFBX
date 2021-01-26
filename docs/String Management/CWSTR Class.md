@@ -101,7 +101,7 @@ It can be used with Windows API functions, e.g.
 
 ```
 DIM nLen AS LONG = SendMessageW(hwnd, WM_GETTEXTLENGTH, 0, 0)
-DIM cwsText AS CWSTR = CWSTR(nLen + 1, 0)
+DIM cwsText AS CWSTR = WSPACE(nLen + 1)
 SendMessageW(hwnd, WM_GETTEXT, nLen + 1, cast(LPARAM, *cwsText))
 ```
 
