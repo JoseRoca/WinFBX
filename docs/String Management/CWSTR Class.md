@@ -88,6 +88,8 @@ CONSTRUCTOR CWstr (BYREF n AS DOUBLE)
 
 For a list of code pages see: [Code Page Identifiers](https://msdn.microsoft.com/en-us/library/windows/desktop/dd317756(v=vs.85).aspx)
 
+The first constructor pre-allocates memory using FreeBasic's Allocate or CAllocate, depending of the value of the *bClear* parameter. It is only useful to minimize memory allocations if you plan to construct a very big string using multiple string concatenations and you know in advance the maximum size of the final string. Initially, the memory is uninitialized (Allocate) or initializated with zeros (CAllocate).
+
 `CWSTR` works transparently with literals and Free Basic native strings, e.g.
 
 ```
