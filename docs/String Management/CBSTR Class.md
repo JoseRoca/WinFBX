@@ -4,7 +4,7 @@ The **CBSTR** class implements a dynamic unicode null terminated string. Free Ba
 
 **Include file**: CWSTR.INC.
 
-Quirks:
+Quirks in FreeBasic versions older than 1.07:
 
 * MID as a function: Something like MID(cbs, 2) doesn't work with languages such Russian and Chinese. Using MID(\*\*cbs, 2), MID(cbs.wstr, 2) or cbs.MidChars(2) works.
 * MID as a statement: Something like MID(cbs, 2, 1) = "x" compiles but does not change the contents of the dynamic unicode string. MID(\*\*cbs, 2, 1) = "x" works.
