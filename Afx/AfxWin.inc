@@ -3689,7 +3689,7 @@ PRIVATE FUNCTION AfxGetFileSize (BYREF wszFileSpec AS WSTRING) AS ULONGLONG
    FindClose hFind
    IF (fd.dwFileAttributes AND FILE_ATTRIBUTE_DIRECTORY) <> FILE_ATTRIBUTE_DIRECTORY AND _
       (fd.dwFileAttributes AND FILE_ATTRIBUTE_TEMPORARY) <> FILE_ATTRIBUTE_TEMPORARY THEN
-      DIM ullSize AS ULONGLONG = (fd.nFileSizeHigh * (&hFFFFFFFF + 1)) + fd.nFileSizeLow
+      DIM ullSize AS ULONGLONG = (fd.nFileSizeHigh * (&hFFFFFFFFull + 1)) + fd.nFileSizeLow
       RETURN ullSize
    END IF
 END FUNCTION

@@ -1,6 +1,9 @@
 WinFBX
 Windows Framework for FreeBASIC.
 
+14 February 2021
+- AfxGetFileSize: Added the ull suffix to &hFFFFFFFFull + 1.
+
 16 October 2020
 - AfxWin.inc: Added function AfxGetWindowFontInfo.
 
