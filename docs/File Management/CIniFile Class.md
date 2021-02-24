@@ -141,9 +141,9 @@ CSAFEARRAY. The names of all the keys of the specified section.
 
 ```
 DIM cIni AS CInifile = "Test.ini"
-DIM csa AS CSafeArray = GetKeyNames("Startup")
+DIM csa AS CSafeArray = cIni.GetKeyNames("Startup")
 FOR i AS LONG = csa.LBound TO csa.UBound
-   print csa.GetString(i)
+   print csa.GetStr(i)
 NEXT
 ```
 
@@ -177,7 +177,7 @@ CSAFEARRAY. The names of all the sections of the file.
 DIM cIni AS CInifile = "Test.ini"
 DIM csa AS CSafeArray = cIni.GetSectionNames
 FOR i AS LONG = csa.LBound TO csa.UBound
-   print csa.GetString(i)
+   print csa.GetStr(i)
 NEXT
 ```
 
