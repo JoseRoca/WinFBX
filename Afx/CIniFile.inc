@@ -168,7 +168,7 @@ END FUNCTION
 ' DIM cIni AS CInifile = "Test.ini"
 ' DIM csa AS CSafeArray = cIni.GetSectionNames
 ' FOR i AS LONG = csa.LBound TO csa.UBound
-'    print csa.GetStr(i)
+'    print csa.GetString(i)
 ' NEXT
 ' ========================================================================================
 PRIVATE FUNCTION CIniFile.GetSectionNames () AS CSafeArray
@@ -194,7 +194,7 @@ END FUNCTION
 ' DIM cIni AS CInifile = "Test.ini"
 ' DIM csa AS CSafeArray = cIni.GetKeyNames("Startup")
 ' FOR i AS LONG = csa.LBound TO csa.UBound
-'    print csa.GetStr(i)
+'    print csa.GetString(i)
 ' NEXT
 ' ========================================================================================
 PRIVATE FUNCTION CIniFile.GetKeyNames (BYREF wszSectionName AS WSTRING) AS CSafeARray
