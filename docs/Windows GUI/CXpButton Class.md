@@ -6,7 +6,7 @@ Theme aware push button that can also act as a toggle button and display an icon
 * Allows up to three images per button (for normal, hot and disabled states). If you want a button with a centered image and no text, use the XPBI_CENTERCENTER flag in the **ImagePos** method.
 * Can be used as a toggle button setting this flag with the **Toggle** method.
 * Images and fonts are owned and destroyed by the control.
-* If theming is diabled, you can use you own colors for the different elements of the button: Background, foreground, text, etc.
+* If theming is disabled, you can use you own colors for the different elements of the button: Background, foreground, text, etc.
 
 ### Constructor
 
