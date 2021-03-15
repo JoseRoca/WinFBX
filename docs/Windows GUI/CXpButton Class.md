@@ -143,7 +143,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
 
    ' // Create the first button
    DIM pXpButton1 AS CXpButton = CXpButton(@pWindow, IDC_BUTTON1, "&Hot", 50, 10, 114, 34)
-   ' // Load a png icon from file (remember to change thr path of the file)
+   ' // Load a png icon from file (remember to change the path of the file)
    pXpButton1.SetImageFromFile(ExePath & "/arrow_left_64.png", XPBI_NORMAL)
    ' // Load a Windows predefined icon as the "hot" image
    pXpButton1.SetIcon LoadIcon(NULL, IDI_QUESTION), XPBI_HOT
