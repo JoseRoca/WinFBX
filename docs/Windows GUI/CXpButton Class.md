@@ -2,7 +2,7 @@
 
 Theme aware push button that can also act as a toggle button and display an icon or bitmap.
 
-* Draws a themed button in Windows XP or superior, using the functions available in UxTheme.dll, or a button with classic appearance in other versions of Windows, using GDI functions. 
+* Draws a themed button using the functions available in UxTheme.dll or a button with classic appearance using GDI functions. 
 * Allows up to three images per button (for normal, hot and disabled states). If you want a button with a centered image and no text, use the XPBI_CENTERCENTER flag in the **ImagePos** method.
 * Can be used as a toggle button setting this flag with the **Toggle** method.
 * Images and fonts are owned and destroyed by the control.
