@@ -176,7 +176,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    pXpButton3.SetTextForeColorDown BGR(255, 255, 255)
    ' // Set the text background color when pressed to red
    pXpButton3.SetTextBkColorDown BGR(255, 0, 0)
-   ' // Set the text backround color when pressed to red
+   ' // Set the text background color when pressed to red
    pXpButton3.SetTextBkColorDown BGR(255, 0, 0)
    ' // Set the text format (cnetered and single line)
    pXpButton3.TextFormat = DT_CENTER OR DT_VCENTER OR DT_SINGLELINE
