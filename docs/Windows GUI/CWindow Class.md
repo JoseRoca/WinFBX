@@ -396,7 +396,8 @@ If the application is DPI aware, controls created with the **AddControl** method
 For the first way, used before Windows XP, you need to pass the address of the subclassed procedure, e.g.
 
 ```
-pWindow.AddControl("Button", pWindow.hWindow, IDC_BUTTON, "Click me", 350, 250, 75, 23, , , , CAST(WNDPROC, @Button_SubclassProc))
+pWindow.AddControl("Button", pWindow.hWindow, IDC_BUTTON, "Click me", _
+   350, 250, 75, 23, , , , CAST(SUBCLASSPROC, @Button_SubclassProc))
 ```
 
 and use a callback like this one:
