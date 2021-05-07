@@ -144,7 +144,7 @@ FUNCTION AfxIFileOpenDialog (BYVAL hwndOwner AS HWND, BYVAL sigdnName AS SIGDN =
    pofd->lpVtbl->SetFileTypes(pofd, 3, @rgFileTypes(1))
 
    ' // Set the title of the dialog
-   hr = pofd->lpVtbl->SetTitle(pofd, "A Single-Selection Dialog")
+   hr = pofd->lpVtbl->SetTitle(pofd, "A Multiple-Selection Dialog")
    ' // Allow multiselection
    hr = pofd->lpVtbl->SetOptions(pofd, FOS_ALLOWMULTISELECT)
 
