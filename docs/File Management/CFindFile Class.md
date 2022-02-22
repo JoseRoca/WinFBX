@@ -19,6 +19,23 @@ You cannot use a trailing backslash \ in the *wszFileSpec* parameter for **FindF
 
 **Include file**: CFindFile.inc
 
+#### Usage example:
+
+```
+#include once "Afx/CFindFile.inc"
+using Afx
+
+DIM pFinder AS CFindFile
+DIM wszPath AS WSTRING * 260 = "C:\Programs\WinFBX\Examples\Complex\*.bas"
+IF pFinder.FindFile(wszPath) = S_OK THEN
+   DO
+      PRINT pFinder.FilePath
+      IF pFinder.FindNext = 0 THEN EXIT DO
+   LOOP
+END IF
+pFinder.Close
+```
+
 ### Methods
 
 | Name       | Description |
