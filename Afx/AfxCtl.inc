@@ -1197,7 +1197,7 @@ PRIVATE FUNCTION Header_GetItemText (BYVAL hwndHD AS HWND, BYVAL nItem AS LONG, 
    hdi.mask = HDI_TEXT
    hdi.psztext = pwszText
    hdi.cchtextmax = cchtextmax
-   FUNCTION = SendMessageW(hwndHD, HDM_GETITEMW, 0, cast(LPARAM, cast(HDITEMW PTR, @hdi)))
+   FUNCTION = SendMessageW(hwndHD, HDM_GETITEMW, cast(WPARAM, nItem), cast(LPARAM, cast(HDITEMW PTR, @hdi)))
 END FUNCTION
 ' ========================================================================================
 
