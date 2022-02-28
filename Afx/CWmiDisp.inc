@@ -30,6 +30,7 @@ PRIVATE FUNCTION AfxWmiGetErrorCodeText (BYVAL hRes AS HRESULT) AS CBSTR
    CoCreateInstance(@CLSID_WbemStatusCodeText_, NULL, CLSCTX_INPROC_SERVER, @IID_IWbemStatusCodeText_, @pIWbemStatusCodeText)
    IF pIWbemStatusCodeText THEN
       DIM hr AS HRESULT = pIWbemStatusCodeText->lpvtbl->GetErrorCodeText(pIWbemStatusCodeText, hRes, 0, 0, cbsErrMsg.vptr)
+      pIWbemStatusCodeText->lpvtbl->Release(pIWbemStatusCodeText)
    END IF
    RETURN cbsErrMsg
 END FUNCTION
@@ -48,6 +49,7 @@ PRIVATE FUNCTION AfxWmiGetFacilityCodeText (BYVAL hRes AS LONG) AS CBSTR
    CoCreateInstance(@CLSID_WbemStatusCodeText_, NULL, CLSCTX_INPROC_SERVER, @IID_IWbemStatusCodeText_, @pIWbemStatusCodeText)
    IF pIWbemStatusCodeText THEN
       DIM hr AS HRESULT = pIWbemStatusCodeText->lpvtbl->GetFacilityCodeText(pIWbemStatusCodeText, hRes, 0, 0, cbsErrMsg.vptr)
+      pIWbemStatusCodeText->lpvtbl->Release(pIWbemStatusCodeText)
    END IF
    RETURN cbsErrMsg
 END FUNCTION
