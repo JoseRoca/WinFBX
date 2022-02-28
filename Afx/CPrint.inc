@@ -172,15 +172,16 @@ PRIVATE FUNCTION CPrint.ChoosePrinter (BYVAL hwndOwner AS HWND = NULL) AS BOOLEA
    pd.hwndOwner = hwndOwner
    pd.flags = PD_RETURNDC OR PD_HIDEPRINTTOFILE OR PD_DISABLEPRINTTOFILE OR PD_NOSELECTION OR PD_NOPAGENUMS
    IF PrintDlgW(@pd) THEN
-      IF pd.hDevMode THEN
-         DIM pdm AS DEVMODEW PTR = GlobalLock(pd.hDevMode)
-         IF pdm THEN
-            m_wszPrinterName = pdm->dmDeviceName
-            GlobalUnlock(pd.hDevMode)
-         END IF
-         GlobalFree(pd.hDevMode)
+      IF pd.hDevMode THEN GlobalFree(pd.hDevMode)
+      IF pd.hDevNames THEN
+         DIM pName as WSTRING PTR
+         DIM pdn AS DEVNAMES PTR
+         pdn = GlobalLock(pd.hdevnames)
+         pName = cast(WSTRING PTR, pdn) + pdn->wdeviceoffset
+         m_wszPrinterName = *pName
+         GlobalUnlock(pd.hdevnames)
+         GlobalFree(pd.hDevNames)
       END IF
-      IF pd.hDevNames THEN GlobalFree(pd.hDevNames)
       IF m_hDC THEN DeleteDC m_hDC
       m_hDC = pd.hDC
       RETURN TRUE
