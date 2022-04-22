@@ -179,7 +179,7 @@ FUNCTION FileURL () AS CWSTR
 Call this function to open a file search.
 
 ```
-UNCTION FindFile (BYREF wszFileSpec AS WSTRING) AS LONG_PTR
+FUNCTION FindFile (BYREF wszFileSpec AS WSTRING) AS LONG_PTR
 ```
 
 | Parameter  | Description |
