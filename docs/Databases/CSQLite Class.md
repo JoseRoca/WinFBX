@@ -940,6 +940,52 @@ FUNCTION Prepare (BYREF wszSql AS WSTRING) AS sqlite3_stmt PTR
 
 An sqlite3_stmt pointer.
 
+...
+' Binding
+'#CONSOLE ON
+#define UNICODE
+#INCLUDE ONCE "Afx/AfxWin.inc"
+#INCLUDE ONCE "Afx/CSQLite3.inc"
+USING Afx
+
+' // Optional: Specify the DLL path and/or name
+' // This allows to use a DLL with a different name that sqlite3.dll,
+' // located anywhere, avoiding the neeed to have multiple copies of the same dll.
+DIM pSql AS CSQLite = "sqlite3_32.dll"
+print pSql.m_hLib
+
+' // Create a new database
+' // I'm deleting and recreating the database for testing purposes
+DIM cwsDbName AS CWSTR = AfxGetExePathName & "Test.sdb"
+IF AfxFileExists(cwsDbName) THEN AfxDeleteFile(cwsDbName)
+DIM pDbc AS CSQLiteDb = cwsDbName
+
+' // Create a table
+IF pDbc.Exec("CREATE TABLE t (xyz text)") <> SQLITE_DONE THEN
+   AfxMsg "Unable to create the table"
+   END
+END IF
+
+' // Prepare the statement
+DIM sql AS CWSTR = "INSERT INTO t (xyz) VALUES (?)"
+DIM pStmt AS CSqliteStmt = pDbc.Prepare(sql)
+' // Bind the text
+pStmt.BindText(1, "fruit")
+' // Execute the prepared statement
+pStmt.Step_
+PRINT "Row id was", pDbc.LastInsertRowId
+
+' // Prepare a query
+pStmt.hStmt = pDbc.Prepare("SELECT * FROM t")
+' // Read the value
+pStmt.GetRow
+PRINT pStmt.ColumnText("xyz")
+
+PRINT
+PRINT "Press any key..."
+SLEEP
+...
+
 # <a name="ProgressHandler"></a>ProgressHandler
 
 The **ProgressHandler** method causes a callback function to be invoked periodically during long running calls to **Step_** and **GetRow** for a database connection. An example use for this interface is to keep a GUI updated during a large query.
@@ -1317,6 +1363,52 @@ SQLITE_OK on success or an error code if anything goes wrong. SQLITE_RANGE is re
 If **BindText** is called with a NULL pointer for the prepared statement or with a prepared statement for which **Step_** has been called more recently than **Reset**, then the call will return SQLITE_MISUSE. If **BindText** is passed a prepared statement that has been finalized, the result is undefined and probably harmful.
 
 Bindings are not cleared by the Reset function. Unbound parameters are interpreted as NULL.
+
+...
+' Binding
+'#CONSOLE ON
+#define UNICODE
+#INCLUDE ONCE "Afx/AfxWin.inc"
+#INCLUDE ONCE "Afx/CSQLite3.inc"
+USING Afx
+
+' // Optional: Specify the DLL path and/or name
+' // This allows to use a DLL with a different name that sqlite3.dll,
+' // located anywhere, avoiding the neeed to have multiple copies of the same dll.
+DIM pSql AS CSQLite = "sqlite3_32.dll"
+print pSql.m_hLib
+
+' // Create a new database
+' // I'm deleting and recreating the database for testing purposes
+DIM cwsDbName AS CWSTR = AfxGetExePathName & "Test.sdb"
+IF AfxFileExists(cwsDbName) THEN AfxDeleteFile(cwsDbName)
+DIM pDbc AS CSQLiteDb = cwsDbName
+
+' // Create a table
+IF pDbc.Exec("CREATE TABLE t (xyz text)") <> SQLITE_DONE THEN
+   AfxMsg "Unable to create the table"
+   END
+END IF
+
+' // Prepare the statement
+DIM sql AS CWSTR = "INSERT INTO t (xyz) VALUES (?)"
+DIM pStmt AS CSqliteStmt = pDbc.Prepare(sql)
+' // Bind the text
+pStmt.BindText(1, "fruit")
+' // Execute the prepared statement
+pStmt.Step_
+PRINT "Row id was", pDbc.LastInsertRowId
+
+' // Prepare a query
+pStmt.hStmt = pDbc.Prepare("SELECT * FROM t")
+' // Read the value
+pStmt.GetRow
+PRINT pStmt.ColumnText("xyz")
+
+PRINT
+PRINT "Press any key..."
+SLEEP
+...
 
 # <a name="BindZeroBlob"></a>BindZeroBlob
 
