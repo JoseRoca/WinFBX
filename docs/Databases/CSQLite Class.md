@@ -63,6 +63,61 @@ CONSTRUCTOR CSQLiteDb (BYREF wszPath AS WSTRING)
 
 The database is opened for reading and writing, and is created if it does not already exist. If the filename is ":memory:", then a private, temporary in-memory database is created for the connection. This in-memory database will vanish when the database connection is closed. If the filename is an empty string, then a private, temporary on-disk database will be created. This private database will be automatically deleted as soon as the database connection is closed. If URI filename interpretation is enabled, and the filename argument begins with "file:", then the filename is interpreted as a URI.
 
+#### Basic steps
+
+```
+' Basic steps
+'#CONSOLE ON
+#define UNICODE
+#INCLUDE ONCE "Afx/AfxWin.inc"
+#INCLUDE ONCE "Afx/CSQLite3.inc"
+USING Afx
+
+' // Optional: Specify the DLL path and/or name
+' // This allows to use a DLL with a different name that sqlite3.dll,
+' // located anywhere, avoiding the neeed to have multiple copies of the same dll.
+DIM pSql AS CSQLite = "sqlite3_32.dll"
+print pSql.m_hLib
+
+' // Create a new database
+' // I'm deleting and recreating the database for testing purposes
+DIM cwsDbName AS CWSTR = AfxGetExePathName & "Test.sdb"
+IF AfxFileExists(cwsDbName) THEN AfxDeleteFile(cwsDbName)
+DIM pDbc AS CSQLiteDb = cwsDbName
+
+' // Create a table
+IF pDbc.Exec("CREATE TABLE t (xyz text)") <> SQLITE_DONE THEN
+   AfxMsg "Unable to create the table"
+   END
+END IF
+
+' // Insert rows
+IF pDbc.Exec("INSERT INTO t (xyz) VALUES ('fruit')") <> SQLITE_DONE THEN AfxMsg "INSERT failed"
+IF pDbc.Exec("INSERT INTO t (xyz) VALUES ('fish')") <> SQLITE_DONE THEN AfxMsg "INSERT failed"
+
+' // Prepare a query
+DIM pStmt AS CSqliteStmt = pDbc.Prepare("SELECT * FROM t")
+PRINT "Column count: ", pStmt.ColumnCount
+' // Read the column names and values
+DO
+   ' // Fetch rows of the result set
+   IF pStmt.GetRow = SQLITE_DONE THEN EXIT DO
+   ' // Read the columns and values
+   FOR i AS LONG = 0 TO pStmt.ColumnCount- 1
+      ' // Get the value using the number of column...
+      PRINT pStmt.ColumnName(i)
+      PRINT pStmt.ColumnText(i)
+      ' // ...or using the column name
+      PRINT pStmt.ColumnText("xyz")
+   NEXT
+LOOP
+
+PRINT
+PRINT "Press any key..."
+SLEEP
+
+```
+
 ### Methods
 
 | Name       | Description |
