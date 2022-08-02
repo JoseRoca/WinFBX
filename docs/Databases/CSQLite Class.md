@@ -942,7 +942,7 @@ An sqlite3_stmt pointer.
 
 #### Example
 
-...
+```
 ' Binding
 '#CONSOLE ON
 #define UNICODE
@@ -986,7 +986,7 @@ PRINT pStmt.ColumnText("xyz")
 PRINT
 PRINT "Press any key..."
 SLEEP
-...
+```
 
 # <a name="ProgressHandler"></a>ProgressHandler
 
