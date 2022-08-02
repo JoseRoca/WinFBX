@@ -850,6 +850,58 @@ The **BindZeroblob** and **ResultZeroblob** functions and the built-in zeroblob 
 
 To avoid a resource leak, every open BLOB handle should eventually be released by a call to **CloseBlob*. 
 
+```
+' Blob
+'#CONSOLE ON
+#define UNICODE
+#INCLUDE ONCE "Afx/AfxWin.inc"
+#INCLUDE ONCE "Afx/CSQLite3.inc"
+USING Afx
+
+' // Optional: Specify the DLL path and/or name
+' // This allows to use a DLL with a different name that sqlite3.dll,
+' // located anywhere, avoiding the neeed to have multiple copies of the same dll.
+DIM pSql AS CSQLite = "sqlite3_32.dll"
+print pSql.m_hLib
+
+' // Create a new database
+' // I'm deleting and recreating the database for testing purposes
+DIM cwsDbName AS CWSTR = AfxGetExePathName & "TestBlob.sdb"
+IF AfxFileExists(cwsDbName) THEN AfxDeleteFile(cwsDbName)
+DIM pDbc AS CSQLiteDb = cwsDbName
+
+' // Create a table
+IF pDbc.Exec("CREATE TABLE t (xyz blob)") <> SQLITE_DONE THEN
+   AfxMsg "Unable to create the table"
+   END
+END IF
+
+' // Prepare the statement
+DIM sql AS CWSTR = "INSERT INTO t (xyz) VALUES (?)"
+DIM pStmt AS CSqliteStmt = pDbc.Prepare(sql)
+' // Bind the blob
+DIM fakeBlob AS STRING
+fakeBlob = STRING(500, "A")
+pStmt.BindBlob(1, STRPTR(fakeBlob), 500, SQLITE_TRANSIENT)
+' // Execute the prepared statement
+pStmt.Step_
+PRINT "Row id was", pDbc.LastInsertRowId
+
+' // Open the blob
+DIM pBlob AS CSQLiteBlob = pDbc.OpenBlob("main", "t", "xyz", 1)
+DIM nBlobBytes AS LONG = pBlob.Bytes
+PRINT "Blob bytes: ", nBlobBytes
+' // Read the blob
+DIM strBlob AS STRING
+strBlob = STRING(nBlobBytes, CHR(0))
+pBlob.Read(STRPTR(strBlob), nBlobBytes)
+PRINT strBlob
+
+PRINT
+PRINT "Press any key..."
+SLEEP
+```
+
 # <a name="OpenDb"></a>OpenDb
 
 Opens an SQLite database file as specified by the filename argument.
@@ -1057,6 +1109,58 @@ SQLITE_OK on success or an error code if anything goes wrong. SQLITE_RANGE is re
 If **BindBlob** is called with a NULL pointer for the prepared statement or with a prepared statement for which **Step_** has been called more recently than **Reset**, then the call will return SQLITE_MISUSE. If **BindBlob** is passed a prepared statement that has been finalized, the result is undefined and probably harmful.
 
 Bindings are not cleared by the **Reset** function. Unbound parameters are interpreted as NULL.
+
+```
+' Blob
+'#CONSOLE ON
+#define UNICODE
+#INCLUDE ONCE "Afx/AfxWin.inc"
+#INCLUDE ONCE "Afx/CSQLite3.inc"
+USING Afx
+
+' // Optional: Specify the DLL path and/or name
+' // This allows to use a DLL with a different name that sqlite3.dll,
+' // located anywhere, avoiding the neeed to have multiple copies of the same dll.
+DIM pSql AS CSQLite = "sqlite3_32.dll"
+print pSql.m_hLib
+
+' // Create a new database
+' // I'm deleting and recreating the database for testing purposes
+DIM cwsDbName AS CWSTR = AfxGetExePathName & "TestBlob.sdb"
+IF AfxFileExists(cwsDbName) THEN AfxDeleteFile(cwsDbName)
+DIM pDbc AS CSQLiteDb = cwsDbName
+
+' // Create a table
+IF pDbc.Exec("CREATE TABLE t (xyz blob)") <> SQLITE_DONE THEN
+   AfxMsg "Unable to create the table"
+   END
+END IF
+
+' // Prepare the statement
+DIM sql AS CWSTR = "INSERT INTO t (xyz) VALUES (?)"
+DIM pStmt AS CSqliteStmt = pDbc.Prepare(sql)
+' // Bind the blob
+DIM fakeBlob AS STRING
+fakeBlob = STRING(500, "A")
+pStmt.BindBlob(1, STRPTR(fakeBlob), 500, SQLITE_TRANSIENT)
+' // Execute the prepared statement
+pStmt.Step_
+PRINT "Row id was", pDbc.LastInsertRowId
+
+' // Open the blob
+DIM pBlob AS CSQLiteBlob = pDbc.OpenBlob("main", "t", "xyz", 1)
+DIM nBlobBytes AS LONG = pBlob.Bytes
+PRINT "Blob bytes: ", nBlobBytes
+' // Read the blob
+DIM strBlob AS STRING
+strBlob = STRING(nBlobBytes, CHR(0))
+pBlob.Read(STRPTR(strBlob), nBlobBytes)
+PRINT strBlob
+
+PRINT
+PRINT "Press any key..."
+SLEEP
+```
 
 # <a name="BindDouble"></a>BindDouble
 
