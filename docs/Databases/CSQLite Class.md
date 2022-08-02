@@ -940,6 +940,8 @@ FUNCTION Prepare (BYREF wszSql AS WSTRING) AS sqlite3_stmt PTR
 
 An sqlite3_stmt pointer.
 
+#### Example
+
 ...
 ' Binding
 '#CONSOLE ON
