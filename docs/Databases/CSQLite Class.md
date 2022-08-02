@@ -1366,7 +1366,9 @@ If **BindText** is called with a NULL pointer for the prepared statement or with
 
 Bindings are not cleared by the Reset function. Unbound parameters are interpreted as NULL.
 
-...
+#### Example
+
+```
 ' Binding
 '#CONSOLE ON
 #define UNICODE
@@ -1410,7 +1412,7 @@ PRINT pStmt.ColumnText("xyz")
 PRINT
 PRINT "Press any key..."
 SLEEP
-...
+```
 
 # <a name="BindZeroBlob"></a>BindZeroBlob
 
