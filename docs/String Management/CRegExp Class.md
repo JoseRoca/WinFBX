@@ -1061,7 +1061,7 @@ USING Afx
 
 DIM pRegExp AS CRegExp
 DIM cbs AS CBSTR
-cbs = pRegExp.RemoveStr("abacadabra", "[abc]", TRUE) ' - prints "dr"
+cbs = pRegExp.Remove("abacadabra", "[abc]", TRUE) ' - prints "dr"
 print cbs
 ```
 
@@ -1080,7 +1080,7 @@ USING Afx
 
 DIM pRegExp AS CRegExp
 DIM cbs AS CBSTR
-cbs = pRegExp.RemoveStr("abacadabra", "ab")
+cbs = pRegExp.Remove("abacadabra", "ab")
 print cbs
 ```
 ```
@@ -1094,7 +1094,7 @@ USING Afx
 
 DIM pRegExp AS CRegExp
 DIM cbs AS CBSTR
-cbs = pRegExp.RemoveStr("World, worldx, world", $"\bworld\b", TRUE)
+cbs = pRegExp.Remove("World, worldx, world", $"\bworld\b", TRUE)
 print cbs
 ```
 
@@ -1113,7 +1113,7 @@ USING Afx
 
 DIM pRegExp AS CRegExp
 DIM cbs AS CBSTR
-cbs = pRegExp.ReplaceStr("abacadabra", "[bac]", "*")
+cbs = pRegExp.Replace("abacadabra", "[bac]", "*")
 print cbs
 ```
 
@@ -1132,7 +1132,7 @@ USING Afx
 
 DIM pRegExp AS CRegExp
 DIM cbs AS CBSTR
-cbs = pRegExp.ReplaceStr("Hello World", "World", "Earth")
+cbs = pRegExp.Replace("Hello World", "World", "Earth")
 print cbs
 ```
 
@@ -1150,7 +1150,7 @@ USING Afx
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "Is is the cost of of gasoline going up up?"
 DIM cbsPattern AS CBSTR = $"\b([a-z]+) \1\b"
-DIM cbs AS CBSTR = pRegExp.ReplaceStr(cbsText, cbsPattern, "$1", TRUE)
+DIM cbs AS CBSTR = pRegExp.Replace(cbsText, cbsPattern, "$1", TRUE)
 print cbs
 ```
 
@@ -1168,7 +1168,7 @@ USING Afx
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "This is a text.With some dots.Between words. This one not."
 DIM cbsPattern AS CBSTR = "(\.)(\w)"
-DIM cbs AS CBSTR = pRegExp.ReplaceStr(cbsText, cbsPattern, "$1 $2")
+DIM cbs AS CBSTR = pRegExp.Replace(cbsText, cbsPattern, "$1 $2")
 print cbs
 ```
 
@@ -1184,7 +1184,7 @@ Changes the format of a telephone number.
 USING Afx
 
 DIM pRegExp AS CRegExp
-PRINT pRegExp.ReplaceStr("555-123-4567", "(\d{3})-(\d{3})-(\d{4})", "($1) $2-$3")
+PRINT pRegExp.Replace("555-123-4567", "(\d{3})-(\d{3})-(\d{4})", "($1) $2-$3")
 ```
 
 ```
@@ -1199,7 +1199,7 @@ Swaps to words and removes the comma.
 USING Afx
 
 DIM pRegExp AS CRegExp
-PRINT pRegExp.ReplaceStr("0000.34500044", $"\b0{1,}\.", ".")
+PRINT pRegExp.Replace("0000.34500044", $"\b0{1,}\.", ".")
 ```
 
 ```
@@ -1214,7 +1214,7 @@ Removes leading zeroes.
 USING Afx
 
 DIM pRegExp AS CRegExp
-PRINT pRegExp.ReplaceStr("0000.34500044", $"\b0{1,}\.", ".")
+PRINT pRegExp.Replace("0000.34500044", $"\b0{1,}\.", ".")
 ```
 
 ```
@@ -1231,7 +1231,7 @@ USING Afx
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "This is a ""quoted"" string"
 DIm cbsPattern AS CBSTR = """[^""]*"""
-PRINT pRegExp.ReplaceStr(cbsText, cbsPattern, "***")
+PRINT pRegExp.Replace(cbsText, cbsPattern, "***")
 ```
 
 ```
@@ -1249,7 +1249,7 @@ DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "This is a " & CHR(9) & " test string"
 'DIM cbsText AS CBSTR = !"This is a \t test string" ' alternative way
 DIm cbsPattern AS CBSTR = $"\t"
-PRINT pRegExp.ReplaceStr(cbsText, cbsPattern, "|")
+PRINT pRegExp.Replace(cbsText, cbsPattern, "|")
 ```
 
 ```
