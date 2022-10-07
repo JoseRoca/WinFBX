@@ -96,6 +96,7 @@ A pointer to the CXpButton class.
 | [TextBkColorDown](#TextBkColorDown) | Gets/sets the text background color of the button when it is down (pressed). |
 | [TextForeColor](#TextForeColor) | Gets/sets the text foreground color of the button. |
 | [TextForeColorDown](#TextForeColorDown) | Gets/sets the text foreground color of the button when it is down (pressed). |
+| [TextForeColorHot](#TextForeColorHot) | Gets/sets the text foreground hot color of the button. |
 | [TextFormat](#TextFormat) | Gets/sets the method of formatting the text. |
 | [TextMargin](#TextMargin) | Gets/sets the margin of the text of the button. |
 | [Toggle](#Toggle) | Gets/sets button to toggle state (CTRUE) or to pushbutton state (FALSE). |
@@ -698,6 +699,19 @@ PROPERTY TextForeColorDown (BYVAL textColor AS COLORREF)
 #### Return value
 
 The text foreground color of the button when it is down (pressed) as a COLORREF value.
+
+```
+PROPERTY TextForeColorHot () AS COLORREF
+PROPERTY TextForeColorHot (BYVAL textColor AS COLORREF)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *textColor* | A COLORREF color value. Use the FreeBasic BGR function. |
+
+#### Return value
+
+The text foreground hot color of the button.
 
 # <a name="TextFormat"></a>TextFormat
 
