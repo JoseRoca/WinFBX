@@ -700,6 +700,10 @@ PROPERTY TextForeColorDown (BYVAL textColor AS COLORREF)
 
 The text foreground color of the button when it is down (pressed) as a COLORREF value.
 
+# <a name="TextForeColorHot"></a>TextForeColorHot
+
+Gets/sets the text foreground hot color of the button.
+
 ```
 PROPERTY TextForeColorHot () AS COLORREF
 PROPERTY TextForeColorHot (BYVAL textColor AS COLORREF)
