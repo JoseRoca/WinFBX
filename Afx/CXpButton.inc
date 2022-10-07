@@ -71,11 +71,13 @@ TYPE CXpButton
       m_hBkBrushDown      AS HBRUSH        ' // Background color brush down
       m_hBkBrushHot       AS HBRUSH        ' // Background color brush hot
       m_TextForeColor     AS COLORREF      ' // Text foreground color
+      m_TextForeColorHot  AS COLORREF      ' // Text foreground color hot
       m_TextBkColor       AS COLORREF      ' // Text background color
       m_TextForeColorDown AS LONG = -1     ' // Text foreground down color
       m_TextBkColorDown   AS LONG = -1     ' // Text background down color
       m_rx                AS SINGLE = 1    ' // Horizontal scaling ratio
       m_ry                AS SINGLE = 1    ' // Vertical scaling ratio
+      m_AllowFocusRect    AS BOOLEAN = TRUE ' // Enable/Disable the drawing of the focus rectangle
 
    Public:
       DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszTitle AS WSTRING = "", _
@@ -127,12 +129,16 @@ TYPE CXpButton
       DECLARE FUNCTION GetButtonBkColorDown () AS COLORREF
       DECLARE SUB SetTextForeColor (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
       DECLARE FUNCTION GetTextForeColor () AS COLORREF
+      DECLARE SUB SetTextForeColorHot (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
+      DECLARE FUNCTION GetTextForeColorHot () AS COLORREF
       DECLARE SUB SetTextBkColor (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
       DECLARE FUNCTION GetTextBkColor () AS COLORREF
       DECLARE SUB SetTextForeColorDown (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
       DECLARE FUNCTION GetTextForeColorDown () AS COLORREF
       DECLARE SUB SetTextBkColorDown (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
       DECLARE FUNCTION GetTextBkColorDown () AS COLORREF
+      DECLARE SUB SetAllowFocusRect (BYVAL bAllowFocusRect AS BOOLEAN, BYVAL fRedraw AS LONG = FALSE)
+      DECLARE FUNCTION GetAllowFocusRect () AS BOOLEAN
 
       ' // Properties
       DECLARE PROPERTY Font () AS HFONT
@@ -163,6 +169,8 @@ TYPE CXpButton
       DECLARE PROPERTY ButtonBkColorHot (BYVAL bkColorHot AS COLORREF)
       DECLARE PROPERTY TextForeColor () AS COLORREF
       DECLARE PROPERTY TextForeColor (BYVAL textColor AS COLORREF)
+      DECLARE PROPERTY TextForeColorHot () AS COLORREF
+      DECLARE PROPERTY TextForeColorHot (BYVAL textColor AS COLORREF)
       DECLARE PROPERTY TextBkColor () AS COLORREF
       DECLARE PROPERTY TextBkColor (BYVAL textColor AS COLORREF)
       DECLARE PROPERTY TextForeColorDown () AS COLORREF
@@ -177,6 +185,8 @@ TYPE CXpButton
       DECLARE PROPERTY BkBrush () AS HBRUSH
       DECLARE PROPERTY BkBrushDown () AS HBRUSH
       DECLARE PROPERTY BkBrushHot () AS HBRUSH
+      DECLARE PROPERTY AllowFocusRect() AS BOOLEAN
+      DECLARE PROPERTY AllowFocusRect(BYVAL bAllowFocusRect AS BOOLEAN)
 
       ' // Callback function
       DECLARE STATIC FUNCTION CXPButtonProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
@@ -920,6 +930,8 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
    .GetClientRect m_hCtl, @rcClient
    rc = rcClient
 
+   IF m_AllowFocusRect = FALSE THEN bIsFocused = FALSE
+   
    ' // Draws the button
    IF m_bIsThemed THEN
       ' // Increase 1 pixel to include the edge
@@ -1055,9 +1067,7 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
             .OffsetRect @rcContent, -1, -1
             .SetTextColor hDc, GetSysColor(COLOR_3DSHADOW)
             .DrawTextW hDc, @wszCaption, -1, @rcContent, m_dwTextFlags
-         ELSE
-'            .SetTextColor hDc, GetSysColor(COLOR_BTNTEXT)
-'            .SetBkColor hDc, GetSysColor(COLOR_BTNFACE)
+         ELSE   
             IF m_bToggled THEN
                IF m_TextForeColorDown <> -1 AND m_TextBkColorDown <> -1 THEN
                   .SetTextColor hDc, m_TextForeColorDown
@@ -1078,6 +1088,10 @@ PRIVATE SUB CXpButton.UxDrawPushButton (BYVAL hDC AS HDC)
                .SetTextColor hDc, m_TextForeColor
                .SetBkColor hDc, m_TextBkColor
             END IF
+            IF iStateId = PBS_HOT Then
+               .SetTextColor hDc, m_TextForeColorHot
+               .SetBkColor hDc, m_TextBkColor
+            END IF   
             .DrawTextW hDc, @wszCaption, -1, @rcContent, m_dwTextFlags
          END IF
       END IF
@@ -1569,11 +1583,33 @@ PRIVATE PROPERTY CXpButton.TextForeColor () AS COLORREF
    PROPERTY = m_TextForeColor
 END PROPERTY
 ' ========================================================================================
+
 ' ========================================================================================
 PRIVATE PROPERTY CXpButton.TextForeColor (BYVAL textColor AS COLORREF)
    m_TextForeColor = textColor
    this.Redraw
 END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets/sets the text foreground hot color of the button.
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.TextForeColorHot () AS COLORREF
+   PROPERTY = m_TextForeColorHot
+END PROPERTY
+PRIVATE FUNCTION CXpButton.GetTextForeColorHot () AS COLORREF
+   RETURN m_TextForeColorHot
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.TextForeColorHot (BYVAL textColor AS COLORREF)
+   m_TextForeColorHot = textColor
+   this.Redraw
+END PROPERTY
+PRIVATE SUB CXpButton.SetTextForeColorHot (BYVAL textColor AS COLORREF, BYVAL fRedraw AS LONG = FALSE)
+   m_TextForeColorHot = textColor
+   IF fRedraw THEN this.Redraw
+END SUB
 ' ========================================================================================
 
 ' ========================================================================================
@@ -1657,6 +1693,31 @@ PRIVATE PROPERTY CXpButton.BkBrushHot () AS HBRUSH
    PROPERTY = m_hBkBrushHot
 END PROPERTY
 ' ========================================================================================
+
+' ========================================================================================
+' Gets whether to display the button's focus rectangle
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.AllowFocusRect() AS BOOLEAN
+   PROPERTY = m_AllowFocusRect
+END PROPERTY      
+
+FUNCTION CXpButton.GetAllowFocusRect() AS BOOLEAN
+   FUNCTION = m_AllowFocusRect
+END FUNCTION
+
+' ========================================================================================
+' Sets whether to display the button's focus rectangle
+' ========================================================================================
+PRIVATE PROPERTY CXpButton.AllowFocusRect(BYVAL bAllowFocusRect AS BOOLEAN)
+   m_AllowFocusRect = bAllowFocusRect
+   this.Redraw
+END PROPERTY      
+
+SUB CXpButton.SetAllowFocusRect(BYVAL bAllowFocusRect AS BOOLEAN, BYVAL fRedraw AS LONG = FALSE)
+   m_AllowFocusRect = bAllowFocusRect
+   IF fRedraw THEN this.Redraw
+END SUB
+
 
 ' ========================================================================================
 ' Returns a pointer to the class given the handle of its associated window handle.
