@@ -77,6 +77,7 @@ A pointer to the CXpButton class.
 
 | Parameter  | Description |
 | ---------- | ----------- |
+| [AllowFocusRect](#AllowFocusRect) | Gets/sets wheter to display the button's focus rectangle. |
 | [BkBrush](#BkBrush) | Returns the background color brush. |
 | [ButtonBkColor](#ButtonBkColor) | Gets/sets the background color of button. |
 | [ButtonBkColorDown](#ButtonBkColorDown) | Gets/sets the background color of button when it is down (pressed or toggled). |
@@ -397,6 +398,23 @@ SUB SetImageFromRes (BYVAL hInstance AS HINSTANCE, BYREF wszImageName AS WSTRING
 | *dimPercent* | Percent of dimming (1-99) |
 | *bGrayScale* | CTRUE or FALSE. Convert to gray scale. |
 | *fRedraw* | Optional. CTRUE or FALSE (redraws the button to reflect the changes). |
+
+# <a name="AllowFocusRect"></a>AllowFocusRect
+
+Gets/sets wheter to display the button's focus rectangle.
+
+```
+PROPERTY AllowFocusRect () AS BOOLEAN
+PROPERTY AllowFocusRect (BYVAL bAllowFocusRect AS BOOLEAN)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *bAllowFocusRect* | BOOLEAN. TRUE or FALSE. |
+
+#### Return value
+
+TRUE or FALSE.
 
 # <a name="BkBrush"></a>BkBrush
 
