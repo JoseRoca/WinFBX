@@ -161,9 +161,9 @@ pFileSys.CopyFolder "c:\mydocuments\letters\*", "c:\tempfolder\"
 
 But you can't use:
 
-...
+```
 pFileSys.CopyFolder "c:\mydocuments\*\*", "c:\tempfolder\"
-...
+```
 
 If *cbsSource* contains wildcard characters, or destination ends with a path separator (\\), it is assumed that destination is an existing folder in which to copy matching folders and subfolders. Otherwise, destination is assumed to be the name of a folder to create. In either case, four things can happen when an individual folder is copied:
 
