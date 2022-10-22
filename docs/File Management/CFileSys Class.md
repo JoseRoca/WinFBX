@@ -151,7 +151,28 @@ HRESULT. S_OK (0) on success, or an error code on failure.
 
 #### Remarks
 
-Wildcard characters can only be used in the last path component of the *cbSource* argument.
+Wildcard characters can only be used in the last path component of the *cbSource* argument. For example you can use:
+...
+DIM pFileSys AS CFileSys
+pFileSys.CopyFolder "c:\mydocuments\letters\*", "c:\tempfolder\"
+...
+But you can't use:
+...
+pFileSys.CopyFolder "c:\mydocuments\*\*", "c:\tempfolder\"
+...
+If *cbsSource* contains wildcard characters, or destination ends with a path separator (\\), it is assumed that destination is an existing folder in which to copy matching folders and subfolders. Otherwise, destination is assumed to be the name of a folder to create. In either case, four things can happen when an individual folder is copied:
+
+   - If destination does not exist, the source folder and all its contents gets copied. This is the usual case.
+
+   - If destination is an existing file, an error occurs.
+
+   - If destination is a directory, an attempt is made to copy the folder and all its contents. If a file contained in source already exists in destination, an error occurs if overwrite is False. Otherwise, it will attempt to copy the file over the existing file.
+
+   - If destination is a read-only directory, an error occurs if an attempt is made to copy an existing read-only file into that directory and overwrite is False.
+
+An error also occurs if a source using wildcard characters doesn't match any folders.
+
+The CopyFolder method stops on the first error it encounters. No attempt is made to roll back any changes made before an error occurs.
 
 #### Usage example
 
