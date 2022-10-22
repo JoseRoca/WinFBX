@@ -142,7 +142,7 @@ FUNCTION CopyFolder (BYREF cbsSource AS CBSTR, BYREF cbsDestination AS CBSTR, _
 | Name       | Description |
 | ---------- | ----------- |
 | *cbsSource* | CBSTR. Character string file specification, which can include wildcard characters, for one or more folders to be copied. |
-| *cbsDestination* | CBSTR. Character string destination where the folder and subfolders from source are to be copied (must end with a "\"). Wildcard characters are not allowed.  |
+| *cbsDestination* | CBSTR. Character string destination where the folder and subfolders from source are to be copied (must end with a "\\"). Wildcard characters are not allowed.  |
 | *OverWriteFiles* | Boolean value that indicates if existing folders are to be overwritten. If true, files are overwritten; if false, they are not. The default is true. |
 
 #### Return value
