@@ -193,7 +193,7 @@ But you can't use:
 pFileSys.CopyFolder "c:\mydocuments\*\*", "c:\tempfolder\"
 ```
 
-If *cbsSource* contains wildcard characters, or destination ends with a path separator (\\), it is assumed that destination is an existing folder in which to copy matching folders and subfolders. Otherwise, destination is assumed to be the name of a folder to create. In either case, four things can happen when an individual folder is copied:
+If *cbsSource* contains wildcard characters, or destination ends with a path separator ("\\"), it is assumed that destination is an existing folder in which to copy matching folders and subfolders. Otherwise, destination is assumed to be the name of a folder to create. In either case, four things can happen when an individual folder is copied:
 
    - If destination does not exist, the source folder and all its contents gets copied. This is the usual case.
 
@@ -422,7 +422,7 @@ Boolean. The path name.
 
 #### Remarks
 
-A path is complete and unambiguous if it provides a complete reference from the root of the specified drive. A complete path can only end with a path separator character (\) if it specifies the root folder of a mapped drive.
+A path is complete and unambiguous if it provides a complete reference from the root of the specified drive. A complete path can only end with a path separator character ("\\") if it specifies the root folder of a mapped drive.
 
 Assuming the current directory is c:\mydocuments\reports, the following table illustrates the behavior of the **GetAbsolutePathName** method.
 
