@@ -240,7 +240,7 @@ An error occurs if the specified folder already exists.
 ```
 #INCLUDE ONCE "Afx/CFileSys.inc"
 DIM pFileSys AS CFileSys
-DIM pFolder AS Afx_Folder PTR
+DIM pFolder AS Afx_IFolder PTR
 pFolder = pFileSys.CreateFolder("C:\MyNewFolder")
 IF pFolder THEN
    ' ....
