@@ -173,11 +173,11 @@ If *cbsSource* contains wildcard characters, or destination ends with a path sep
 
    - If destination is a directory, an attempt is made to copy the folder and all its contents. If a file contained in source already exists in destination, an error occurs if overwrite is False. Otherwise, it will attempt to copy the file over the existing file.
 
-   - If destination is a read-only directory, an error occurs if an attempt is made to copy an existing read-only file into that directory and overwrite is False.
+   - If destination is a read-only directory, an error occurs if an attempt is made to copy an existing read-only file into that directory and *OverWriteFiles* is False.
 
 An error also occurs if a source using wildcard characters doesn't match any folders.
 
-The CopyFolder method stops on the first error it encounters. No attempt is made to roll back any changes made before an error occurs.
+The **CopyFolder** method stops on the first error it encounters. No attempt is made to roll back any changes made before an error occurs.
 
 #### Usage example
 
