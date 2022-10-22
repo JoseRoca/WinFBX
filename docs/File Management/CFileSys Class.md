@@ -153,10 +153,11 @@ HRESULT. S_OK (0) on success, or an error code on failure.
 
 Wildcard characters can only be used in the last path component of the *cbSource* argument. For example you can use:
 
-...
+```
+#INCLUDE ONCE "Afx/CFileSys.inc"
 DIM pFileSys AS CFileSys
 pFileSys.CopyFolder "c:\mydocuments\letters\*", "c:\tempfolder\"
-...
+```
 
 But you can't use:
 
