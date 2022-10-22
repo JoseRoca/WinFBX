@@ -120,7 +120,35 @@ HRESULT. S_OK (0) on success, or an error code on failure.
 
 #### Remarks
 
-Wildcard characters can only be used in the last path component of the *cbSource* argument.
+Wildcard characters can only be used in the last path component of the *cbSource* argument. For example, you can use:
+
+```
+#INCLUDE ONCE "Afx/CFileSys.inc"
+DIM pFileSys AS CFileSys
+pFileSys.CopyFile("c:\mydocuments\letters\*.doc", "c:\tempfolder\")
+```
+
+But you can't use:
+
+```
+pFileSys.CopyFile("c:\mydocuments\*\R1???97.xls", "c:\tempfolder")
+```
+
+If *cbsSource* contains wildcard characters, or destination ends with a path separator ("\\"), it is assumed that destination is an existing folder in which to copy matching files. Otherwise, destination is assumed to be the name of a file to create. In either case, three things can happen when an individual file is copied:
+
+   - If destination does not exist, source gets copied. This is the usual case.
+
+   - If destination is an existing file, an error occurs if overwrite is False. Otherwise, an attempt is made to copy source over the existing file.
+
+   - If destination is a directory, an error occurs.
+
+   - An error also occurs if a source using wildcard characters doesn't match any files. The **CopyFile** method stops on the first error it encounters. No attempt is made to roll back or undo any changes made before an error occurs.
+
+Files copied to a new destination path will keep the same file name. To rename the copied file, simply include the new file name in the destination path. For example, this will copy the file to a new location and the file in the new location will have a different name:
+
+```
+pFileSys.CopyFile("c:\mydocuments\letters\sample.doc", "c:\tempfolder\sample_new.doc")
+```
 
 #### Usage example
 
