@@ -156,7 +156,7 @@ FUNCTION CAxHost_IServiceProvider.QueryService (BYVAL guidService AS const GUID 
    CAXH_DP("QueryService IID = " & s2)
    ' // Handle SID_SInPlaceBrowser (needed to enable the filesystem object to navigate
    ' // in-place within the WebBrowser control when running on Windows 7+)
-   IF IsEqualIID(@guidService, @SID_SInPlaceBrowser) THEN
+   IF IsEqualIID(guidService, @SID_SInPlaceBrowser) THEN
       RETURN AfxAxHostQueryService(CAST(IUnknown PTR, m_pAxHost->m_pOcx), @SID_SShellBrowser, riid, @ppvObject)
    END IF
    RETURN E_NOINTERFACE
