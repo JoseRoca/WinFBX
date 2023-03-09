@@ -668,8 +668,8 @@ END FUNCTION
 ' ========================================================================================
 ' Sets character formatting in a rich edit control.
 ' ========================================================================================
-PRIVATE FUNCTION RichEdit_SetCharFormat (BYVAL hRichEdit AS HWND, BYVAL chfmt AS DWORD, BYVAL pchfmt AS DWORD) AS LONG
-   FUNCTION = SendMessageW(hRichEdit, EM_SETCHARFORMAT, chfmt, pchfmt)
+PRIVATE FUNCTION RichEdit_SetCharFormat (BYVAL hRichEdit AS HWND, BYVAL chfmt AS DWORD, BYVAL lpcf AS CHARFORMATW PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETCHARFORMAT, chfmt, lpcf)
 END FUNCTION
 ' ========================================================================================
 
@@ -1098,7 +1098,7 @@ FUNCTION RichEdit_LoadRtfFromFileW ( _
 
    ' // Opens the file and sends the message
    hFile = CreateFileW(wszFileName, GENERIC_READ, FILE_SHARE_READ, _
-                       BYVAL NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL)
+                       NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL)
    IF hFile = INVALID_HANDLE_VALUE THEN EXIT FUNCTION
    eds.dwCookie = cast(DWORD_PTR, hFile)
    eds.pfnCallback = cast(EDITSTREAMCALLBACK, @RichEdit_LoadRtfFromFileCallback)
