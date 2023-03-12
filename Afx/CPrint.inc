@@ -439,7 +439,7 @@ PRIVATE FUNCTION CPrint.SetPrinterInfo (BYVAL dmField AS DWORD, BYVAL nValue AS 
    ' // Start by opening the printer
    DIM hPrinter AS HANDLE
    DIM pd AS PRINTER_DEFAULTSW
-   pd.DesiredAccess = PRINTER_ALL_ACCESS
+   pd.DesiredAccess = PRINTER_ACCESS_USE
    IF OpenPrinterW(m_wszPrinterName, @hPrinter, @pd) = FALSE THEN RETURN FALSE
 
    ' // The first GetPrinterW call tells you how big the buffer should be in
