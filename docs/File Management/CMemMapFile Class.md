@@ -250,7 +250,7 @@ When modifying a file through a mapped view, the last modification timestamp may
 
 # <a name="GetFileHandle"></a>GetFileHandle
 
-Returns the handle of the underlying disk file (it does not appli to objects created with the `MapMemory` or `MapSharedMemory` methods)..
+Returns the handle of the underlying disk file (it does not apply to objects created with the `MapMemory` or `MapSharedMemory` methods)..
 
 ```
 FUNCTION GetFileHandle () AS HANDLE
@@ -266,7 +266,7 @@ FUNCTION GetFileMappingHandle () AS HANDLE
 
 # <a name="GetFileSize"></a>GetFileSize
 
-Returns the size of the underlying disk file (it does not appli to objects created with the `MapMemory` or `MapSharedMemory` methods).
+Returns the size of the underlying disk file (it does not apply to objects created with the `MapMemory` or `MapSharedMemory` methods).
 
 ```
 GetFileSize () AS LONGINT
