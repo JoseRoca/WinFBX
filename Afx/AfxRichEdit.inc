@@ -669,7 +669,7 @@ END FUNCTION
 ' Sets character formatting in a rich edit control.
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_SetCharFormat (BYVAL hRichEdit AS HWND, BYVAL chfmt AS DWORD, BYVAL lpcf AS CHARFORMATW PTR) AS LONG
-   FUNCTION = SendMessageW(hRichEdit, EM_SETCHARFORMAT, chfmt, lpcf)
+   FUNCTION = SendMessageW(hRichEdit, EM_SETCHARFORMAT, chfmt, cast (LPARAM, lpcf))
 END FUNCTION
 ' ========================================================================================
 
