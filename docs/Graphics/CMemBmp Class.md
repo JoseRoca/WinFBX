@@ -69,7 +69,7 @@ As the **CGraphCtx** graphic control uses DIBs, to draw a **CMemBmp** memory bit
 | [GetPlanes](#GetPlanes) | Returns the count of color planes of the memory bitmap. |
 | [GetWidth](#GetWidth) | Returns the width of the memory bitmap in pixels. |
 | [GetWidthBytes](#GetWidthBytes) | Returns the number of bytes in each scan line of the memory bitmap. |
-| [PrintBtmap](#PrintBtmap) | Prints the bitmap in the default printer. |
+| [PrintBitmap](#PrintBitmap) | Prints the bitmap in the default printer. |
 | [SaveBitmap](#SaveBitmap) | Saves the bitmap to a file. |
 | [SetPixel](#SetPixel) | Sets the pixel at the specified coordinates to the specified color. |
 
@@ -225,12 +225,12 @@ Returns the number of bytes in each scan line of the memory bitmap.
 FUNCTION GetWidthBytes () AS LONG
 ```
 
-# <a name="PrintBtmap"></a>PrintBtmap
+# <a name="PrintBitmap"></a>PrintBitmap
 
 Prints the bitmap in the default printer.
 
 ```
-FUNCTION PrintBtmap (BYVAL bStretch AS BOOLEAN = FALSE, _
+FUNCTION PrintBitmap (BYVAL bStretch AS BOOLEAN = FALSE, _
    BYVAL nStretchMode AS LONG = InterpolationModeHighQualityBicubic) AS BOOLEAN
 ```
 
