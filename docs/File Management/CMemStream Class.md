@@ -88,7 +88,7 @@ OPERATOR CAST () AS IStream PTR
 
 # CADOStream Class
 
-An alternative to work with memory streams is to use the ADO stream object. To avoid confussons, the documentation for **CAdoStream** has been adapted to remove references to its use with URLs and ADO Record objects.
+An alternative to work with memory streams is to use the ADO stream object. To avoid confussions, the documentation for **CAdoStream** has been adapted to remove references to its use with URLs and ADO Record objects.
 
 With the methods and properties of a **Stream** object, you can do the following:
 
