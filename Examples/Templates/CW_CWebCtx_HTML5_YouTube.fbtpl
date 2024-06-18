@@ -90,7 +90,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    pwb.SetEventProc("NewWindow3", @WebBrowser_NewWindow3Proc)
 
    ' // Build the script
-   DIM strCode AS STRING = "sJFOhTBelpU"   ' --> Change me: 11 character video code
+   DIM strCode AS STRING = "K8C9Cl2HxYU"   ' --> Change me: 11 character video code
    DIM s AS STRING = BuildYouTubeScript(strCode)
    ' // Save the script as a temporary file
    DIM wszPath AS WSTRING * MAX_PATH = AfxSaveTempFile(s, "html")
