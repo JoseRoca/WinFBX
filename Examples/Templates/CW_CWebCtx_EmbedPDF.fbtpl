@@ -53,7 +53,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    DIM pwb AS CWebCtx = CWebCtx(@pWindow, IDC_WEBBROWSER, 0, 0, pWindow.ClientWidth, pWindow.ClientHeight)
    
    ' // Embed Adobe reader just loading a .PDF file
-   pwb.Navigate("http://homepage.univie.ac.at/hans.leo.nemeschkal/biometry/FBeginner.pdf")
+   pwb.Navigate("https://www.auditsi.eu/?wpfb_dl=26")
 
    ' // Displays the window and dispatches the Windows messages
    FUNCTION = pWindow.DoEvents(nCmdShow)
