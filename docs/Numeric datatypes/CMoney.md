@@ -4,7 +4,7 @@
 
 When using 2 decimal digits, the greatest possible value is +/-792,281,625,142,643,375,935,439,503.35. However, the formatting functions, **FormatCurrency** and **FormatNumber** can only return a maximum value of +/-922,337,203,685,477.58, which are more than enough for financial calculations, because they use a currency data type. For greater values, you can format the returned string by yourself.
 
-The locale identifier defaults to 1033 (US), for consistency with FreeBasic numeric data types, but you can change it by defining it before including CMoney.inc, e.g. #define AFX_CMONEY_LCID 3082 (Spain). The locale identifier (LCID) instructs the methods of this class about how input and output strings should be treated. For example, if you choose the Spanish LCID, the formated string input and output will use a comma, instead of a point, as the dcimal separator, and a point, instead of a comma, as the thousands separator.
+The locale identifier defaults to 1033 (US), for consistency with FreeBasic numeric data types, but you can change it by defining it before including CMoney.inc, e.g. #define AFX_CMONEY_LCID 3082 (Spain). The locale identifier (LCID) instructs the methods of this class about how input and output strings should be treated. For example, if you choose the Spanish LCID, the formated string input and output will use a comma, instead of a point, as the decimal separator, and a point, instead of a comma, as the thousands separator.
 
 ### Constructors
 
