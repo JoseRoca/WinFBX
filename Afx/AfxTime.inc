@@ -339,7 +339,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION AfxAstroDay (BYVAL nDay AS LONG, BYVAL nMonth AS LONG, BYVAL nYear AS LONG) AS LONG
    DIM y AS DOUBLE = nYear + (nMonth - 2.85) / 12
-   RETURN INT(INT(INT(367 * y) - 1.75 * INT(y) + nDay) - 0.75 * INT(0.01 * y)) + 1721119
+   RETURN INT(INT(INT(367 * y) - 1.75 * INT(y) + nDay) - 0.75 * INT(0.01 * y)) + 1721116
 END FUNCTION
 ' ========================================================================================
 
