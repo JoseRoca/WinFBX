@@ -384,6 +384,25 @@ Clears the CVAR and returns the address of the underlying variant. Can be used t
 FUNCTION vptr () AS VARIANT PTR
 ```
 
+#### Example
+
+```
+SUB Foo (BYVAL v AS VARIANT PTR)
+   v->vt = VT_I4
+   v->lVal = 12345
+END SUB
+DIM cv AS CVAR = "Test string"
+Foo cv.vptr
+PRINT cv
+
+Otherwise, you need to clear the underlying variant before passing the CVAR.
+
+DIM cv AS CVAR = "Test string"
+cv.Clear
+Foo *cv
+PRINT cv
+```
+
 # <a name="wstr"></a>wstr
 
 Extracts the content of the underlying variant and returns it as a CWSTR.
