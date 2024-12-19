@@ -376,6 +376,29 @@ Returns the address of the underlying variant. Same as **vptr** but without clea
 FUNCTION sptr () AS VARIANT PTR
 ```
 
+#### Usage example
+
+```
+SUB Foo (BYVAL v AS VARIANT PTR)
+   PRINT AfxVarToStr(v)
+END SUB
+
+' Using the pointer syntax:
+
+DIM pcv AS CVAR PTR = NEW CVAR("Test string")
+Foo pcv->sptr
+Delete pcv
+
+Using the normal syntax:
+
+DIM cv AS CVAR = "Test string"
+Foo cv.sptr
+
+But with the normal syntax you can use the * operator instead:
+DIM cv AS CVAR = "Test string"
+Foo *cv
+```
+
 # <a name="vptr"></a>vptr
 
 Clears the CVAR and returns the address of the underlying variant. Can be used to pass the variant to an OUT BYVAL VARIANT PTR parameter. If we pass a CVAR to a function with an OUT variant parameter without first clearing the contents of the CVAR, we may have a memory leak.
