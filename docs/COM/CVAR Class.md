@@ -294,6 +294,68 @@ OPERATOR Or (BYREF cv1 AS CVAR, BYREF cv2 AS CVAR) AS INTEGER
 OPERATOR Xor (BYREF cv1 AS CVAR, BYREF cv2 AS CVAR) AS INTEGER
 ```
 
+#### Note to the operator *
+
+Returns the address of the underlying variant.
+One * returns the address of the underlying variant.
+Two ** deferences the variant data.
+
+Can be used to pass the variant to a BYVAL VARIANT parameter, e.g.
+
+```
+SUB Foo (BYVAL v AS VARIANT)
+   PRINT AfxVarToStr(@v)
+END SUB
+DIM cv AS CVAR = "Test string"
+Foo **cv
+
+-or-
+
+Foo *cv.sptr
+
+Using the pointer syntax:
+
+DIM pcv AS CVAR PTR  = NEW CVAR("Test string")
+Foo *pcv
+Delete pcv
+
+Using the constructors_
+Foo CVAR(12345, "LONG")
+Foo **CVAR(12345, "LONG")
+```
+
+#### Note to the CAST operator
+
+The CAST operators allow to transparently pass the underlying VARIANT to a procedure.
+They aren't called directly.
+
+```
+SUB Foo (BYREF v AS VARIANT)
+   PRINT AfxVarToStr(@v)
+END SUB
+
+Foo CVAR(12345, "LONG")
+
+SUB Foo2 (BYVAL v AS VARIANT)
+   PRINT AfxVarToStr(@v)
+END SUB
+Foo2 CVAR(12345, "LONG")
+
+SUB Foo3 (BYREF cv AS CVAR)
+   PRINT cv
+END SUB
+Foo3 CVAR(12345, "LONG")
+
+SUB Foo4 (BYVAL cv AS CVAR PTR)
+   PRINT *cv
+END SUB
+Foo4 @CVAR(12345, "LONG")
+```
+
+#### Remarks
+
+I haven't added a cast to return a numeric value because with procedures like PRINT that can use both a number or a string the compiler will fail, not knowing which cast it should use. If you want to convert it to a number, use VAL(cvar).
+
 # <a name="vType"></a>vType
 
 Returns the VARIANT type.
