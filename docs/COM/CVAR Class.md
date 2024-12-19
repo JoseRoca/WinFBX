@@ -187,27 +187,33 @@ DIM cv AS CVAR = 123456.78   ' Creates a VT_R8 (5) variant
 ```
 We can use the constructors to pass values to parameters in procedures without assigning them first to a variable, e.g.:
 
+```
 SUB Foo (BYREF cv AS CVAR)
    PRINT AfxCVarToStr(cv)
 END SUB
-'
+
 Foo CVAR("Test string")
 Foo CVAR(12345)
 Foo CVAR(12345, "LONG")
+```
 
+```
 SUB Foo (BYVAL cv AS CVAR PTR)
    PRINT AfxCVarToStr(cv)
 END SUB
 Foo @CVAR("Test string")
 Foo @CVAR(12345)
 Foo @CVAR(12345, "LONG")
-'
+```
+
+```
 SUB Foo (BYval v AS VARIANT PTR)
    PRINT AfxVarToStr(v)
 END SUB
 Foo CVAR("Test string")
 Foo CVAR(12345)
 Foo CVAR(12345, "LONG")
+```
 
 # <a name="Operators"></a>Operators
 
