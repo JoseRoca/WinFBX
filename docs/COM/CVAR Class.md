@@ -179,6 +179,36 @@ CONSTRUCTOR (BYVAL _pvar AS ANY PTR, BYREF strType AS STRING)
 | *strType* | The variant type as a string: "BOOL", "BYTE", "UBYTE", "SHORT", "USHORT, "INT", UINT", "LONG", "ULONG", "LONGINT", "SINGLE, "DOUBLE", "NULL". |
 | *fAddRef* | TRUE or FALSE. If TRUE, increases the reference count of the passed interface. |
 
+#### Examples
+```
+DIM cv AS CVAR = "Test string"   ' Creates a VT_BSTR (8) variant
+DIM cv AS CVAR = 12345   ' Creates a VT_I4 (3) variant
+DIM cv AS CVAR = 123456.78   ' Creates a VT_R8 (5) variant
+```
+We can use the constructors to pass values to parameters in procedures without assigning them first to a variable, e.g.:
+
+SUB Foo (BYREF cv AS CVAR)
+   PRINT AfxCVarToStr(cv)
+END SUB
+'
+Foo CVAR("Test string")
+Foo CVAR(12345)
+Foo CVAR(12345, "LONG")
+
+SUB Foo (BYVAL cv AS CVAR PTR)
+   PRINT AfxCVarToStr(cv)
+END SUB
+Foo @CVAR("Test string")
+Foo @CVAR(12345)
+Foo @CVAR(12345, "LONG")
+'
+SUB Foo (BYval v AS VARIANT PTR)
+   PRINT AfxVarToStr(v)
+END SUB
+Foo CVAR("Test string")
+Foo CVAR(12345)
+Foo CVAR(12345, "LONG")
+
 # <a name="Operators"></a>Operators
 
 Procedures that perform a certain function with their operands. They do the same actions that the native FreeBasic operators but with variants. For detailed descriptions see the FreeBasic documentation.
