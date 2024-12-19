@@ -383,7 +383,7 @@ SUB Foo (BYVAL v AS VARIANT PTR)
    PRINT AfxVarToStr(v)
 END SUB
 
-' Using the pointer syntax:
+Using the pointer syntax:
 
 DIM pcv AS CVAR PTR = NEW CVAR("Test string")
 Foo pcv->sptr
