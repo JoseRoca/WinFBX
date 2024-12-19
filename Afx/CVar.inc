@@ -52,7 +52,7 @@ NAMESPACE Afx
 
 ' ########################################################################################
 ' CVar - VARIANT class
-' Extending from WSTRING allows to se some of the FB instrinsic string functions such
+' Extending from WSTRING allows to use some of the FB instrinsic string functions such
 ' PRINT, LEFT, MID, RIGHT, for unicode output.
 ' ########################################################################################
 #if __FB_VERSION__ < "1.07.0"
@@ -79,7 +79,7 @@ Public:
    DECLARE CONSTRUCTOR (BYVAL cy AS CURRENCY)
    DECLARE CONSTRUCTOR (BYVAL dec AS DECIMAL)
    DECLARE CONSTRUCTOR (BYVAL _value AS LONG)
-'   DECLARE CONSTRUCTOR (BYVAL b AS BOOLEAN)
+   DECLARE CONSTRUCTOR (BYVAL b AS BOOLEAN)
    DECLARE CONSTRUCTOR (BYVAL _value AS DOUBLE)
    DECLARE CONSTRUCTOR (BYVAL pdisp AS IDispatch PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE CONSTRUCTOR (BYVAL punk AS IUnknown PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
@@ -145,7 +145,7 @@ Public:
    DECLARE OPERATOR Let (BYVAL cy AS CURRENCY)
    DECLARE OPERATOR Let (BYVAL dec AS DECIMAL)
    DECLARE OPERATOR Let (BYVAL _value AS LONG)
-'   DECLARE OPERATOR Let (BYVAL b AS BOOLEAN)
+   DECLARE OPERATOR Let (BYVAL b AS BOOLEAN)
    DECLARE OPERATOR Let (BYVAL pdisp AS IDispatch PTR)
    DECLARE OPERATOR Let (BYVAL punk AS IUnknown PTR)
    DECLARE OPERATOR Let (BYVAL _value AS LONGINT)
@@ -380,7 +380,7 @@ END CONSTRUCTOR
 
 ' ========================================================================================
 ' Initializes a CVAR from a LONG value.
-' For some reason, without it, when including CAfeArray.inc, the constructor with a boolean
+' For some reason, without it, when including CSafeArray.inc, the constructor with a boolean
 ' throws and overflow error.
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CVar (BYVAL _value AS LONG)
@@ -393,11 +393,11 @@ END CONSTRUCTOR
 ' ========================================================================================
 ' Initializes a CVAR from a BOOLEAN value.
 ' ========================================================================================
-'PRIVATE CONSTRUCTOR CVar (BYVAL b AS BOOLEAN)
-'   CVAR_DP("CVAR CONSTRUCTOR - BOOLEAN")
-'   vd.vt = VT_BOOL
-'   vd.boolVal = IIF(b = FALSE, 0, -1)
-'END CONSTRUCTOR
+PRIVATE CONSTRUCTOR CVar (BYVAL b AS BOOLEAN)
+   CVAR_DP("CVAR CONSTRUCTOR - BOOLEAN")
+   vd.vt = VT_BOOL
+   vd.boolVal = IIF(b = FALSE, 0, -1)
+END CONSTRUCTOR
 ' ========================================================================================
 
 ' ========================================================================================
@@ -1309,10 +1309,10 @@ END OPERATOR
 ' ========================================================================================
 ' Assigns a BOOLEAN value.
 ' ========================================================================================
-'PRIVATE OPERATOR CVar.Let (BYVAL b AS BOOLEAN)
-'   CVAR_DP("CVAR LET - BOOLEAN")
-'   VariantClear(@vd) : vd.vt = VT_BOOL : vd.boolVal = IIF(b = FALSE, 0, -1)
-'END OPERATOR
+PRIVATE OPERATOR CVar.Let (BYVAL b AS BOOLEAN)
+   CVAR_DP("CVAR LET - BOOLEAN")
+   VariantClear(@vd) : vd.vt = VT_BOOL : vd.boolVal = IIF(b = FALSE, 0, -1)
+END OPERATOR
 ' ========================================================================================
 
 ' ========================================================================================
