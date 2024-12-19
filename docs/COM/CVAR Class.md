@@ -395,6 +395,7 @@ DIM cv AS CVAR = "Test string"
 Foo cv.sptr
 
 But with the normal syntax you can use the * operator instead:
+
 DIM cv AS CVAR = "Test string"
 Foo *cv
 ```
