@@ -1884,7 +1884,7 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
          END IF
          EXIT FUNCTION
 
-    	CASE WM_DESTROY
+      CASE WM_DESTROY
          ' // End the application
          PostQuitMessage(0)
          EXIT FUNCTION
