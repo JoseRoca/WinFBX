@@ -216,7 +216,7 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
                END IF
          END SELECT
 
-    	CASE WM_DESTROY
+      CASE WM_DESTROY
          ' // Ends the application by sending a WM_QUIT message
          PostQuitMessage(0)
          EXIT FUNCTION
