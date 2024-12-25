@@ -1092,7 +1092,7 @@ FUNCTION WndProc (BYVAL hWnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
                EXIT FUNCTION
          END SELECT
 
-    	CASE WM_DESTROY
+      CASE WM_DESTROY
          PostQuitMessage(0)
          EXIT FUNCTION
 
