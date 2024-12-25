@@ -2032,7 +2032,7 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
          END IF
          EXIT FUNCTION
 
-    	CASE WM_DESTROY
+      CASE WM_DESTROY
          RemovePropW hwnd, "CLAYOUTPTR"
          ' // End the application
          PostQuitMessage(0)
@@ -2333,7 +2333,7 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
             IF GetWindow(hwndClient, GW_CHILD) THEN EXIT FUNCTION
          END IF
 
-    	CASE WM_DESTROY
+      CASE WM_DESTROY
          PostQuitMessage(0)
          EXIT FUNCTION
 
