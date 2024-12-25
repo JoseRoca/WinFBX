@@ -720,7 +720,7 @@ DIM hImageList AS HIMAGELIST
 DIM cx AS LONG = 16 * pWindow.DPI \ 96
 hImageList = ImageList_Create(cx, cx, ILC_COLOR32 OR ILC_MASK, 4, 0)
 IF hImageList THEN
-   AfxGdipAddIconFromRes(hImageList, hInst, "IDI_ARROW_LEFT_32")
+   AfxGdipAddIconFromRes(hImageList, hInst, "IDI_ARROW_LEFT_48")
    AfxGdipAddIconFromRes(hImageList, hInst, "IDI_ARROW_RIGHT_48")
    AfxGdipAddIconFromRes(hImageList, hInst, "IDI_HOME_48")
    AfxGdipAddIconFromRes(hImageList, hInst, "IDI_SAVE_48")
@@ -738,7 +738,7 @@ DIM hDisabledImageList AS HIMAGELIST
 DIM cx AS LONG = 16 * pWindow.DPI \ 96
 hDisabledImageList = ImageList_Create(cx, cx, ILC_COLOR32 OR ILC_MASK, 4, 0)
 IF hDisabledImageList THEN
-   AfxGdipAddIconFromRes(hDisabledImageList, hInst, "IDI_ARROW_LEFT_32", 60, TRUE))
+   AfxGdipAddIconFromRes(hDisabledImageList, hInst, "IDI_ARROW_LEFT_48", 60, TRUE))
    AfxGdipAddIconFromRes(hDisabledImageList, hInst, "IDI_ARROW_RIGHT_48", 60, TRUE))
    AfxGdipAddIconFromRes(hDisabledImageList, hInst, "IDI_HOME_48", 60, TRUE))
    AfxGdipAddIconFromRes(hDisabledImageList, hInst, "IDI_SAVE_48", 60, TRUE))
