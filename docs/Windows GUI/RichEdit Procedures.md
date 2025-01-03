@@ -49,5 +49,28 @@
 | [RichEdit_GetSel](#RichEdit_GetSel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
 | [RichEdit_GetSelText](#RichEdit_GetSelText) | Retrieves the currently selected text in a rich edit control. |
 | [RichEdit_GetText](#RichEdit_GetText) | Retrieves the text from a rich edit control. |
+| [RichEdit_GetTextEx](#RichEdit_GetTextEx) | Gets all of the text from the rich edit control in any particular code base you want. |
+| [RichEdit_GetTextLength](#RichEdit_GetTextLength) | Retrieves the length of all text in a rich edit control. |
+| [RichEdit_GetTextLengthEx](#RichEdit_GetTextLengthEx) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
+| [RichEdit_GetTextMode](#RichEdit_GetTextMode) | Gets the current text mode and undo level of a rich edit control. |
+| [RichEdit_GetTextRange](#RichEdit_GetTextRange) | Retrieves a specified range of characters from a rich edit control. |
+| [RichEdit_GetThumb](#RichEdit_GetThumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
+| [RichEdit_GetTypographyOptions](#RichEdit_GetTypographyOptions) | Returns the current state of the typography options of a rich edit control. |
+| [RichEdit_GetUndoName](#RichEdit_GetUndoName) | Retrieves the type of the next undo action, if any. |
+| [RichEdit_GetWordBreakProc](#RichEdit_GetWordBreakProc) | Gets the address of the current Wordwrap function. |
+| [RichEdit_GetWordBreakProcEx](#RichEdit_GetWordBreakProcEx) | Retrieves the address of the currently registered extended word-break procedure. |
+| [RichEdit_GetWordWrapMode](#RichEdit_GetWordWrapMode) | Gets the current word wrap and word-break options for the rich edit control. |
+| [RichEdit_GetZoom](#RichEdit_GetZoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
+| [RichEdit_HideSelection](#RichEdit_HideSelection) | Hides or shows the selection in a rich edit control. |
+| [RichEdit_IsIME](#RichEdit_IsIME) | Determines if current input locale is an East Asian locale. |
+| [RichEdit_LimitText](#RichEdit_LimitText) | Sets the text limit of a rich edit control. The text limit is the maximum amount of text, in TCHARs, that the user can type into the edit control. |
+| [RichEdit_LineFromChar](#RichEdit_LineFromChar) | Gets the index of the line that contains the specified character index in a multiline rich edit control. |
+| [RichEdit_LineIndex](#RichEdit_LineIndex) | Gets the character index of the first character of a specified line in a multiline rich edit control. |
+| [RichEdit_LineLength](#RichEdit_LineLength) | Retrieves the length, in characters, of a line in a rich edit control. |
+| [RichEdit_LineScroll](#RichEdit_LineScroll) | Scrolls the text in a multiline rich edit control. |
+| [RichEdit_PasteSpecial](#RichEdit_PasteSpecial) | Pastes a specific clipboard format in a rich edit control. |
+| [RichEdit_PosFromChar](#RichEdit_PosFromChar) | Retrieves the client area coordinates of a specified character in a rich edit control. |
+
+
 
 
