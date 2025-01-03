@@ -887,14 +887,14 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CDispInvoke.Get (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS CVAR
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke Get 1 - DispId - CVAR")
-   SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, dispID, cvArg, 1, m_lcid))
+   SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, dispID, *cvArg, 1, m_lcid))
    RETURN m_varResult
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE FUNCTION CDispInvoke.Get (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR) AS CVAR
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke Get 1 - Name - CVAR")
-   SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, pwszName, cvArg, 1, m_lcid))
+   SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, pwszName, *cvArg, 1, m_lcid))
    RETURN m_varResult
 END FUNCTION
 ' ========================================================================================
@@ -924,20 +924,20 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE PROPERTY CDispInvoke.Put (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR)
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke.Put - DISPID - CVAR")
-   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, dispID, cvArg, 1, m_lcid))
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, dispID, *cvArg, 1, m_lcid))
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE PROPERTY CDispInvoke.Put (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR)
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke.Put - Name - CVAR")
-   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, pwszName, cvArg, 1, m_lcid))
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, pwszName, *cvArg, 1, m_lcid))
 END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
 PRIVATE FUNCTION CDispInvoke.Set (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS HRESULT
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke.Set - dispID - CVAR1")
-   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, dispID, cvArg, 1, m_lcid))
+   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, dispID, *cvArg, 1, m_lcid))
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -965,7 +965,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CDispInvoke.Set (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR) AS HRESULT
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke.Set - Name - CVAR1")
-   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, pwszName, cvArg, 1, m_lcid))
+   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUT, pwszName, *cvArg, 1, m_lcid))
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -995,34 +995,34 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE PROPERTY CDispInvoke.PutRef (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR)
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke.PutRef - DISPID - CVAR")
-   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, dispID, cvArg, 1, m_lcid))
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, dispID, *cvArg, 1, m_lcid))
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE PROPERTY CDispInvoke.PutRef (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR)
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke.PutRef - Name - CVAR")
-   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, pwszName, cvArg, 1, m_lcid))
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, pwszName, *cvArg, 1, m_lcid))
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE PROPERTY CDispInvoke.PutRef (BYVAL dispID AS DISPID, BYVAL pv AS ANY PTR)
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke.PutRef - DISPID - ANY PTR")
    DIM cvArg AS CVAR = CVAR(CAST(IUnknown PTR, pv), TRUE)
-   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, dispID, cvArg, 1, m_lcid))
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, dispID, *cvArg, 1, m_lcid))
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE PROPERTY CDispInvoke.PutRef (BYVAL pwszName AS WSTRING PTR, BYVAL pv AS ANY PTR)
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke.PutRef - Name - ANY PTR")
    DIM cvArg AS CVAR = CVAR(CAST(IUnknown PTR, pv), TRUE)
-   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, pwszName, cvArg, 1, m_lcid))
+   SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, pwszName, *cvArg, 1, m_lcid))
 END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
 PRIVATE FUNCTION CDispInvoke.SetRef (BYVAL dispID AS DISPID, BYREF cvArg AS CVAR) AS HRESULT
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke.SetRef - dispID - CVAR1")
-   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, dispID, cvArg, 1, m_lcid))
+   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, dispID, *cvArg, 1, m_lcid))
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -1043,7 +1043,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CDispInvoke.SetRef (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR) AS HRESULT
    CDISPINVOKE_DP("CDISPINVOKE DispInvoke.SetRef - Name - CVAR1")
-   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, pwszName, cvArg, 1, m_lcid))
+   RETURN SetResult(this.DispInvoke(DISPATCH_PROPERTYPUTREF, pwszName, *cvArg, 1, m_lcid))
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -1078,7 +1078,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CDispInvoke.Invoke (BYVAL dispId AS DISPID, BYREF cvArg AS CVAR) AS CVAR
    CDISPINVOKE_DP("CDISPINVOKE Invoke - DISPID - CVAR 1")
-   SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, dispID, cvArg, 1, m_lcid))
+   SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, dispID, *cvArg, 1, m_lcid))
    RETURN m_varResult
 END FUNCTION
 ' ========================================================================================
@@ -1213,7 +1213,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CDispInvoke.Invoke (BYVAL pwszName AS WSTRING PTR, BYREF cvArg AS CVAR) AS CVAR
    CDISPINVOKE_DP("CDISPINVOKE Invoke - NAME - 1")
-   SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, pwszName, cvArg, 1, m_lcid))
+   SetResult(this.DispInvoke(DISPATCH_METHOD OR DISPATCH_PROPERTYGET, pwszName, *cvArg, 1, m_lcid))
    RETURN m_varResult
 END FUNCTION
 ' ========================================================================================
