@@ -38,5 +38,16 @@
 | [RichEdit_GetLineCount](#RichEdit_GetLineCount) | Gets the number of lines in a multiline rich edit control. |
 | [RichEdit_GetModify](#RichEdit_GetModify) | Gets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
 | [RichEdit_GetOleInterface](#RichEdit_GetOleInterface) | Gets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
-| [RichEdit_GetOptions](#RichEdit_GetOptions) | ' Retrieves rich edit control options. |
+| [RichEdit_GetOptions](#RichEdit_GetOptions) | Retrieves rich edit control options. |
+| [RichEdit_GetPageRotate](#RichEdit_GetPageRotate) | Deprecated. Gets the text layout for a Microsoft Rich Edit control. |
+| [RichEdit_GetParaFormat](#RichEdit_GetParaFormat) | Retrieves the paragraph formatting of the current selection in a rich edit control. |
+| [RichEdit_GetPasswordChar](#RichEdit_GetPasswordChar) | Gets the password character that a rich edit control displays when the user enters text. |
+| [RichEdit_GetPunctuation](#RichEdit_GetPunctuation) | Gets the current punctuation characters for the rich edit control. |
+| [RichEdit_GetRect](#RichEdit_GetRect) | Gets the formatting rectangle of a rich edit control. |
+| [RichEdit_GetRedoName](#RichEdit_GetRedoName) | Retrieves the type of the next action, if any, in the control's redo queue. |
+| [RichEdit_GetScrollPos](#RichEdit_GetScrollPos) | Obtains the current scroll position of the edit control. |
+| [RichEdit_GetSel](#RichEdit_GetSel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
+| [RichEdit_GetSelText](#RichEdit_GetSelText) | Retrieves the currently selected text in a rich edit control. |
+| [RichEdit_GetText](#RichEdit_GetText) | Retrieves the text from a rich edit control. |
+
 
