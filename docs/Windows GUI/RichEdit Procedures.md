@@ -37,7 +37,7 @@
 | [RichEdit_GetLine](#RichEdit_GetLine) | Copies a line of text from a rich edit control. |
 | [RichEdit_GetLineCount](#RichEdit_GetLineCount) | Gets the number of lines in a multiline rich edit control. |
 | [RichEdit_GetModify](#RichEdit_GetModify) | Gets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
-| [RichEdit_GetOleInterface](#RichEdit_GetOleInterface) | Gets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
+| [RichEdit_GetOleInterface](#RichEdit_GetOleInterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [RichEdit_GetOptions](#RichEdit_GetOptions) | Retrieves rich edit control options. |
 | [RichEdit_GetPageRotate](#RichEdit_GetPageRotate) | Deprecated. Gets the text layout for a Microsoft Rich Edit control. |
 | [RichEdit_GetParaFormat](#RichEdit_GetParaFormat) | Retrieves the paragraph formatting of the current selection in a rich edit control. |
