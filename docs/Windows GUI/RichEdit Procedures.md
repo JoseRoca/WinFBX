@@ -24,3 +24,19 @@
 | [RichEdit_GetCTFOpenStatus](#RichEdit_GetCTFOpenStatus) | Determines if the Text Services Framework (TSF) keyboard is open or closed. |
 | [RichEdit_GetEditStyle](#RichEdit_GetEditStyle) | Retrieves the current edit style flags. |
 | [RichEdit_GetEventMask](#RichEdit_GetEventMask) | Retrieves the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window. |
+| [RichEdit_GetFirstVisibleLine](#RichEdit_GetFirstVisibleLine) | Gets the zero-based index of the uppermost visible line in a multiline rich edit control. |
+| [RichEdit_GetHyphenateInfo](#RichEdit_GetHyphenateInfo) | Gets information about hyphenation for a Microsoft Rich Edit control. |
+| [RichEdit_GetIMEColor](#RichEdit_GetIMEColor) | Retrieves the Input Method Editor (IME) composition color. This message is available only in Asian-language versions of the operating system. |
+| [RichEdit_GetIMECompMode](#RichEdit_GetIMECompMode) | Gets the current IME mode for a rich edit control. |
+| [RichEdit_GetIMECompText](#RichEdit_GetIMECompText) | Gets the Input Method Editor (IME) composition text. |
+| [RichEdit_GetIMEModeBias](#RichEdit_GetIMEModeBias) | Gets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
+| [RichEdit_GetIMEOptions](#RichEdit_GetIMEOptions) | Retrieves the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system. |
+| [RichEdit_GetIMEProperty](#RichEdit_GetIMEProperty) | Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
+| [RichEdit_GetLangOptions](#RichEdit_GetLangOptions) | Gets a rich edit control's option settings for Input Method Editor (IME) and Asian language support. |
+| [RichEdit_GetLimitText](#RichEdit_GetLimitText) | Gets the current text limit for a rich edit control. |
+| [RichEdit_GetLine](#RichEdit_GetLine) | Copies a line of text from a rich edit control. |
+| [RichEdit_GetLineCount](#RichEdit_GetLineCount) | Gets the number of lines in a multiline rich edit control. |
+| [RichEdit_GetModify](#RichEdit_GetModify) | Gets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
+| [RichEdit_GetOleInterface](#RichEdit_GetOleInterface) | Gets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
+| [RichEdit_GetOptions](#RichEdit_GetOptions) | ' Retrieves rich edit control options. |
+
