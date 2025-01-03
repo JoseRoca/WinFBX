@@ -309,8 +309,8 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Gets the state of a rich edit control's modification flag. The flag indicates whether
-' the contents of the rich edit control have been modified.
+' Retrieves an IRichEditOle object that a client can use to access a rich edit control's
+' Component Object Model (COM) functionality.
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_GetOleInterface (BYVAL hRichEdit AS HWND, BYVAL ppObject AS IUnknown PTR PTR) AS LONG
    FUNCTION = SendMessageW(hRichEdit, EM_GETOLEINTERFACE, 0, cast(LPARAM, @ppObject))
