@@ -241,3 +241,20 @@ FUNCTION RichEdit_CanUndo (BYVAL hRichEdit AS HWND) AS LONG
 If there are actions in the control's undo queue, the return value is nonzero.
 
 If the undo queue is empty, the return value is zero.
+
+# <a name="RichEdit_CharFromPos"></a>RichEdit_CharFromPos
+
+Gets information about the character closest to a specified point in the client area of an edit control.
+
+```
+FUNCTION RichEdit_CharFromPos (BYVAL hRichEdit AS HWND, BYVAL lppl AS POINTL PTR) AS LONG
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the RichEdit control. |
+| *lppl* | A pointer to a [POINTL](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-pointl) structure that contains the horizontal and vertical coordinates of a point in the control's client area. The coordinates are in screen units and are relative to the upper-left corner of the control's client area.. |
+
+#### Return value
+
+The return value specifies the zero-based character index of the character nearest the specified point. The return value indicates the last character in the edit control if the specified point is beyond the last character in the control.
+
