@@ -1181,3 +1181,26 @@ END FUNCTION
 #### Return value
 
 The selected text as a **CWSTR** (dynamic unicode string).
+
+# <a name="RichEdit_GetText"></a>RichEdit_GetText
+
+Retrieves the text from a rich edit control.
+
+```
+FUNCTION RichEdit_GetText (BYVAL hRichEdit AS HWND) AS CWSTR
+   DIM cbLen AS DWORD = SendMessageW(hRichEdit, WM_GETTEXTLENGTH, 0, 0)
+   IF cbLen < 1 THEN RETURN ""
+   DIM cwsText AS CWSTR = cbLen + 1
+   cbLen = SendMessageW(hRichEdit, WM_GETTEXT, cbLen + 1, cast(LPARAM, *cwsText))
+   RETURN LEFT(**cwsText, cbLen)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Remarks
+
+The Windows API function **GetWindowText** can also be used to retrive the text of a rich edit control, but it cannot retrieve the text of a control in another application.
+
