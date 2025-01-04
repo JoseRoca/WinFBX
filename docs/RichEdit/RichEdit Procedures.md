@@ -668,3 +668,17 @@ END FUNCTION
 The return value is the zero-based index of the uppermost visible line in a multiline edit control.
 
 For single-line rich edit controls, the return value is zero.
+
+# <a name="RichEdit_GetHyphenateInfo"></a>RichEdit_GetHyphenateInfo
+
+Gets information about hyphenation for a Microsoft Rich Edit control.
+
+```
+SUB RichEdit_GetHyphenateInfo (BYVAL hRichEdit AS HWND, BYVAL lphi AS HYPHENATEINFO PTR)
+   SendMessageW hRichEdit, EM_GETHYPHENATEINFO, cast(WPARAM, lphi), 0
+END SUB
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lphi* | A pointer to a [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure. |
