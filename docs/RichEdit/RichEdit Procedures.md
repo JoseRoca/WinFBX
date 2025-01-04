@@ -144,7 +144,7 @@ FUNCTION RichEdit_AutoUrlDetect (BYVAL hRichEdit AS HWND, BYVAL fUrlDetect AS LO
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the RichEdit control. |
-| *fUrlDetect* | The handle of the RichEdit control. Specify 0 to disable automatic link detection, or one of the following values to enable various kinds of detection. |
+| *fUrlDetect* | Specify 0 to disable automatic link detection, or one of the following values to enable various kinds of detection. |
 
 | fUrlDetect value  | Description |
 | --------------- | ----------- |
