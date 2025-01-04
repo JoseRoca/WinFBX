@@ -633,4 +633,20 @@ Returns the current edit style flags, which can include one or more of the follo
 | **SES_USECTF** | **Windows XP with SP1**: Turns on TSF support. (default: 0). |
 | **SES_XLTCRCRLFTOCR** | Turns on translation of CRCRLFs to CRs. When this bit is on and a file is read in, all instances of CRCRLF will be converted to hard CRs internally. This will affect the text wrapping. Note that if such a file is saved as plain text, the CRs will be replaced by CRLFs. This is the .txt standard for plain text (default: 0, which deletes CRCRLFs on input). |
 
+# <a name="RichEdit_GetEventMask"></a>RichEdit_GetEventMask
+
+Retrieves the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window.
+
+```
+FUNCTION RichEdit_GetEventMask (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETEVENTMASK, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+This message returns the event mask for the rich edit control.
 
