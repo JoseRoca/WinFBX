@@ -415,4 +415,4 @@ If the target string is found, the return value is the zero-based position of th
 
 #### Remarks
 
-**RichEdit_FindTextEx** uses the FINDTEXTEXW structure, while **RichEdit_FindText** uses the FINDTEXTW structure. The difference is that EM_FINDTEXTEXW reports the range of text that was found.
+**RichEdit_FindTextEx** uses the [FINDTEXTEXW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-findtextexw) structure, while **RichEdit_FindText** uses the [FINDTEXTW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-findtextw) structure. The difference is that EM_FINDTEXTEXW reports the range of text that was found.
