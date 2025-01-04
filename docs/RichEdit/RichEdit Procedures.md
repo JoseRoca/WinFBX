@@ -338,3 +338,21 @@ END SUB
 The text limit set by the EM_EXLIMITTEXT message does not limit the amount of text that you can stream into a rich edit control using the EM_STREAMIN message with lParam set to SF_TEXT. However, it does limit the amount of text that you can stream into a rich edit control using the EM_STREAMIN message with lParam set to SF_RTF.
 
 Before EM_EXLIMITTEXT is called, the default limit to the amount of text a user can enter is 32,767 characters.
+
+# <a name="RichEdit_ExLineFromChar"></a>RichEdit_ExLineFromChar
+
+Determines which line contains the specified character in a rich edit control.
+
+```
+FUNCTION RichEdit_ExLineFromChar (BYVAL hRichEdit AS HWND, BYVAL iIndex AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_EXLINEFROMCHAR, 0, iIndex)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *iIndex* | Zero-based index of the character. |
+
+#### Return value
+
+Returns the zero-based index of the line.
