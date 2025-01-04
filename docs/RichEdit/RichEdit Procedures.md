@@ -935,7 +935,7 @@ The system automatically clears the modification flag to zero when the control i
 
 # <a name="RichEdit_GetOleInterface"></a>RichEdit_GetOleInterface
 
-Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality.
+Retrieves an **IRichEditOle** object that a client can use to access a rich edit control's Component Object Model (COM) functionality.
 
 ```
 FUNCTION RichEdit_GetOleInterface (BYVAL hRichEdit AS HWND, BYVAL ppObject AS IUnknown PTR PTR) AS LONG
@@ -952,3 +952,22 @@ END FUNCTION
 If the operation succeeds, the return value is a nonzero value.
 
 If the operation fails, the return value is zero.
+
+# <a name="RichEdit_GetOptions"></a>RichEdit_GetOptions
+
+Retrieves rich edit control options.
+
+```
+FUNCTION RichEdit_GetOptions (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETOPTIONS, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+This message returns a combination of the current option flag values described in the **RichEdit_SetOptions** message.
+
