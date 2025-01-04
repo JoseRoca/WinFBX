@@ -1156,4 +1156,28 @@ It is better to use the values returned in *pdwStartPos* and *pdwEndPos* because
 
 If there is no selection, the starting and ending values are both the position of the caret.
 
-You can also use the **RichEdit-ExGetSel** message to retrieve the same information. **RichEdit-ExGetSel** also returns starting and ending character positions as 32-bit values.
+You can also use the **EM_EXGETSEL** message to retrieve the same information. **EM_EXGETSEL** also returns starting and ending character positions as 32-bit values. A combination of the use of **EM_EXGETSEL** and **EM_GETSELTEXT** are used ine the **RichEdit_GetSelText** function to retrieve the selected text as a **CWSTR**.
+
+# <a name="RichEdit_GetSelText"></a>RichEdit_GetSelText
+
+Retrieves the currently selected text in a rich edit control.
+
+```
+FUNCTION RichEdit_GetSelText (BYVAL hRichEdit AS HWND) AS CWSTR
+   DIM dwStartPos AS DWORD, dwEndPos AS DWORD, cr AS CHARRANGE
+   SendMessageW(hRichEdit, EM_EXGETSEL, 0, cast(LPARAM, @cr))
+   DIM cbLen AS DWORD = ABS(cr.cpMax - cr.cpMin)
+   IF cbLen < 1 THEN RETURN ""
+   DIM cwsText AS CWSTR = cbLen + 1
+   cbLen = SendMessageW(hRichEdit, EM_GETSELTEXT, 0, cast(LPARAM, *cwsText))
+   RETURN LEFT(**cwsText, cbLen)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+The selected text as a **CWSTR** (dynamic unicode string).
