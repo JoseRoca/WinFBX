@@ -727,3 +727,27 @@ The return value is one of the following values.
 | **ICM_LEVEL2** | Level 2. |
 | **ICM_LEVEL2_5** | Level 2.5. |
 | **ICM_LEVEL2_SUI** | Special UI. |
+
+# <a name="RichEdit_GetIMECompText"></a>RichEdit_GetIMECompText
+
+Gets the Input Method Editor (IME) composition text.
+
+```
+FUNCTION RichEdit_GetIMECompText (BYVAL hRichEdit AS HWND, BYVAL lpict AS IMECOMPTEXT PTR, BYVAL buffer AS ANY PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETIMECOMPTEXT, cast(WPARAM, lpict), cast(LPARAM, buffer))
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lpict* | A pointer to the [IMECOMPTEXT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-imecomptext) structure. |
+| *buffer* | The buffer that receives the composition text. The size of this buffer is contained in the *cb* member of the IMECOMPTEXT structure. |
+
+#### Return value
+If successful, the return value is the number of Unicode characters copied to the buffer. Otherwise, it is zero.
+
+#### Remarks
+
+This message only takes Unicode strings.
+
+**Security Warning**: Be sure to have a buffer sufficient for the size of the input. Failure to do so could cause problems for your application.
