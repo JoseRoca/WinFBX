@@ -199,7 +199,7 @@ FUNCTION RichEdit_CanPaste (BYVAL hRichEdit AS HWND, BYVAL clipformat AS LONG) A
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the RichEdit control. |
-| *clipformat* | Specifies the [Clipboard Formats] (https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats) to try. To try any format currently on the clipboard, set this parameter to zero. |
+| *clipformat* | Specifies the [Clipboard Formats](https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats) to try. To try any format currently on the clipboard, set this parameter to zero. |
 
 #### Return value
 
