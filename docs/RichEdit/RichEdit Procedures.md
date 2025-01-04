@@ -6,7 +6,7 @@
 | [RichEdit_CanPaste](#RichEdit_CanPaste) | Determines whether a rich edit control can paste a specified clipboard format. |
 | [RichEdit_CanRedo](#RichEdit_CanRedo) | Determines whether there are any actions in the rich edit control redo queue. |
 | [RichEdit_CanUndo](#RichEdit_CanUndo) | Determines whether there are any actions in the rich edit control undo queue. |
-| [RichEdit_CharFromPos](#RichEdit_CharFromPos) | Gets information about the character closest to a specified point in the client area of a rich edit control. |
+| [RichEdit_CharFromPos](#RichEdit_CharFromPos) | Retrieves information about the character closest to a specified point in the client area of a rich edit control. |
 | [RichEdit_DisplayBand](#RichEdit_DisplayBand) | Displays a portion of the contents of a rich edit control, as previously formatted for a device using the EM_FORMATRANGE message. |
 | [RichEdit_EmptyUndoBuffer](#RichEdit_EmptyUndoBuffer) | Resets the undo flag of a rich edit control. The undo flag is set whenever an operation within the rich edit control can be undone. |
 | [RichEdit_ExGetSel](#RichEdit_ExGetSel) | Retrieves the starting and ending character positions of the selection in a rich edit control. |
@@ -20,52 +20,52 @@
 | [RichEdit_GetAutoUrlDetect](#RichEdit_GetAutoUrlDetect) | Indicates whether the auto URL detection is turned on in the rich edit control. |
 | [RichEdit_GetBidiOptions](#RichEdit_GetBidiOptions) | Indicates the current state of the bidirectional options in the rich edit control. |
 | [RichEdit_GetCharFormat](#RichEdit_GetCharFormat) | Determines the current character formatting in a rich edit control. |
-| [RichEdit_GetCTFModeBias](#RichEdit_GetCTFModeBias) | Gets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
+| [RichEdit_GetCTFModeBias](#RichEdit_GetCTFModeBias) | Retrieves the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [RichEdit_GetCTFOpenStatus](#RichEdit_GetCTFOpenStatus) | Determines if the Text Services Framework (TSF) keyboard is open or closed. |
 | [RichEdit_GetEditStyle](#RichEdit_GetEditStyle) | Retrieves the current edit style flags. |
 | [RichEdit_GetEventMask](#RichEdit_GetEventMask) | Retrieves the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window. |
-| [RichEdit_GetFirstVisibleLine](#RichEdit_GetFirstVisibleLine) | Gets the zero-based index of the uppermost visible line in a multiline rich edit control. |
-| [RichEdit_GetHyphenateInfo](#RichEdit_GetHyphenateInfo) | Gets information about hyphenation for a Microsoft Rich Edit control. |
+| [RichEdit_GetFirstVisibleLine](#RichEdit_GetFirstVisibleLine) | Retrieves the zero-based index of the uppermost visible line in a multiline rich edit control. |
+| [RichEdit_GetHyphenateInfo](#RichEdit_GetHyphenateInfo) | Retrieves information about hyphenation for a Microsoft Rich Edit control. |
 | [RichEdit_GetIMEColor](#RichEdit_GetIMEColor) | Retrieves the Input Method Editor (IME) composition color. This message is available only in Asian-language versions of the operating system. |
-| [RichEdit_GetIMECompMode](#RichEdit_GetIMECompMode) | Gets the current IME mode for a rich edit control. |
-| [RichEdit_GetIMECompText](#RichEdit_GetIMECompText) | Gets the Input Method Editor (IME) composition text. |
-| [RichEdit_GetIMEModeBias](#RichEdit_GetIMEModeBias) | Gets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
+| [RichEdit_GetIMECompMode](#RichEdit_GetIMECompMode) | Retrieves the current IME mode for a rich edit control. |
+| [RichEdit_GetIMECompText](#RichEdit_GetIMECompText) | Retrieves the Input Method Editor (IME) composition text. |
+| [RichEdit_GetIMEModeBias](#RichEdit_GetIMEModeBias) | Retrieves the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [RichEdit_GetIMEOptions](#RichEdit_GetIMEOptions) | Retrieves the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system. |
-| [RichEdit_GetIMEProperty](#RichEdit_GetIMEProperty) | Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
-| [RichEdit_GetLangOptions](#RichEdit_GetLangOptions) | Gets a rich edit control's option settings for Input Method Editor (IME) and Asian language support. |
-| [RichEdit_GetLimitText](#RichEdit_GetLimitText) | Gets the current text limit for a rich edit control. |
+| [RichEdit_GetIMEProperty](#RichEdit_GetIMEProperty) | Retrieves the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
+| [RichEdit_GetLangOptions](#RichEdit_GetLangOptions) | Retrieves a rich edit control's option settings for Input Method Editor (IME) and Asian language support. |
+| [RichEdit_GetLimitText](#RichEdit_GetLimitText) | Retrieves the current text limit for a rich edit control. |
 | [RichEdit_GetLine](#RichEdit_GetLine) | Copies a line of text from a rich edit control. |
-| [RichEdit_GetLineCount](#RichEdit_GetLineCount) | Gets the number of lines in a multiline rich edit control. |
-| [RichEdit_GetModify](#RichEdit_GetModify) | Gets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
+| [RichEdit_GetLineCount](#RichEdit_GetLineCount) | Retrieves the number of lines in a multiline rich edit control. |
+| [RichEdit_GetModify](#RichEdit_GetModify) | Retrieves the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
 | [RichEdit_GetOleInterface](#RichEdit_GetOleInterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [RichEdit_GetOptions](#RichEdit_GetOptions) | Retrieves rich edit control options. |
-| [RichEdit_GetPageRotate](#RichEdit_GetPageRotate) | Deprecated. Gets the text layout for a Microsoft Rich Edit control. |
+| [RichEdit_GetPageRotate](#RichEdit_GetPageRotate) | Deprecated. Retrieves the text layout for a Microsoft Rich Edit control. |
 | [RichEdit_GetParaFormat](#RichEdit_GetParaFormat) | Retrieves the paragraph formatting of the current selection in a rich edit control. |
-| [RichEdit_GetPasswordChar](#RichEdit_GetPasswordChar) | Gets the password character that a rich edit control displays when the user enters text. |
-| [RichEdit_GetPunctuation](#RichEdit_GetPunctuation) | Gets the current punctuation characters for the rich edit control. |
-| [RichEdit_GetRect](#RichEdit_GetRect) | Gets the formatting rectangle of a rich edit control. |
+| [RichEdit_GetPasswordChar](#RichEdit_GetPasswordChar) | Retrieves the password character that a rich edit control displays when the user enters text. |
+| [RichEdit_GetPunctuation](#RichEdit_GetPunctuation) | Retrieves the current punctuation characters for the rich edit control. |
+| [RichEdit_GetRect](#RichEdit_GetRect) | Retrieves the formatting rectangle of a rich edit control. |
 | [RichEdit_GetRedoName](#RichEdit_GetRedoName) | Retrieves the type of the next action, if any, in the control's redo queue. |
 | [RichEdit_GetScrollPos](#RichEdit_GetScrollPos) | Obtains the current scroll position of the edit control. |
-| [RichEdit_GetSel](#RichEdit_GetSel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
+| [RichEdit_GetSel](#RichEdit_GetSel) | Retrieves the starting and ending character positions of the current selection in a rich edit control. |
 | [RichEdit_GetSelText](#RichEdit_GetSelText) | Retrieves the currently selected text in a rich edit control. |
 | [RichEdit_GetText](#RichEdit_GetText) | Retrieves the text from a rich edit control. |
-| [RichEdit_GetTextEx](#RichEdit_GetTextEx) | Gets all of the text from the rich edit control in any particular code base you want. |
+| [RichEdit_GetTextEx](#RichEdit_GetTextEx) | Retrieves all of the text from the rich edit control in any particular code base you want. |
 | [RichEdit_GetTextLength](#RichEdit_GetTextLength) | Retrieves the length of all text in a rich edit control. |
 | [RichEdit_GetTextLengthEx](#RichEdit_GetTextLengthEx) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
-| [RichEdit_GetTextMode](#RichEdit_GetTextMode) | Gets the current text mode and undo level of a rich edit control. |
+| [RichEdit_GetTextMode](#RichEdit_GetTextMode) | Retrieves the current text mode and undo level of a rich edit control. |
 | [RichEdit_GetTextRange](#RichEdit_GetTextRange) | Retrieves a specified range of characters from a rich edit control. |
-| [RichEdit_GetThumb](#RichEdit_GetThumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
+| [RichEdit_GetThumb](#RichEdit_GetThumb) | Retrieves the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
 | [RichEdit_GetTypographyOptions](#RichEdit_GetTypographyOptions) | Returns the current state of the typography options of a rich edit control. |
 | [RichEdit_GetUndoName](#RichEdit_GetUndoName) | Retrieves the type of the next undo action, if any. |
-| [RichEdit_GetWordBreakProc](#RichEdit_GetWordBreakProc) | Gets the address of the current Wordwrap function. |
+| [RichEdit_GetWordBreakProc](#RichEdit_GetWordBreakProc) | Retrieves the address of the current Wordwrap function. |
 | [RichEdit_GetWordBreakProcEx](#RichEdit_GetWordBreakProcEx) | Retrieves the address of the currently registered extended word-break procedure. |
-| [RichEdit_GetWordWrapMode](#RichEdit_GetWordWrapMode) | Gets the current word wrap and word-break options for the rich edit control. |
-| [RichEdit_GetZoom](#RichEdit_GetZoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
+| [RichEdit_GetWordWrapMode](#RichEdit_GetWordWrapMode) | Retrieves the current word wrap and word-break options for the rich edit control. |
+| [RichEdit_GetZoom](#RichEdit_GetZoom) | Retrieves the current zoom ratio, which is always between 1/64 and 64. |
 | [RichEdit_HideSelection](#RichEdit_HideSelection) | Hides or shows the selection in a rich edit control. |
 | [RichEdit_IsIME](#RichEdit_IsIME) | Determines if current input locale is an East Asian locale. |
 | [RichEdit_LimitText](#RichEdit_LimitText) | Sets the text limit of a rich edit control. The text limit is the maximum amount of text, in TCHARs, that the user can type into the edit control. |
-| [RichEdit_LineFromChar](#RichEdit_LineFromChar) | Gets the index of the line that contains the specified character index in a multiline rich edit control. |
-| [RichEdit_LineIndex](#RichEdit_LineIndex) | Gets the character index of the first character of a specified line in a multiline rich edit control. |
+| [RichEdit_LineFromChar](#RichEdit_LineFromChar) | Retrieves the index of the line that contains the specified character index in a multiline rich edit control. |
+| [RichEdit_LineIndex](#RichEdit_LineIndex) | Retrieves the character index of the first character of a specified line in a multiline rich edit control. |
 | [RichEdit_LineLength](#RichEdit_LineLength) | Retrieves the length, in characters, of a line in a rich edit control. |
 | [RichEdit_LineScroll](#RichEdit_LineScroll) | Scrolls the text in a multiline rich edit control. |
 | [RichEdit_PasteSpecial](#RichEdit_PasteSpecial) | Pastes a specific clipboard format in a rich edit control. |
@@ -150,13 +150,13 @@ END FUNCTION
 
 | fUrlDetect value  | Description |
 | --------------- | ----------- |
-| AURL_DISABLEMIXEDLGC | **Windows 8 or later**: Disable recognition of domain names that contain labels with characters belonging to more than one of the following scripts: Latin, Greek, and Cyrillic. |
-| AURL_ENABLEDRIVELETTERS | **Windows 8 or later**: Recognize file names that have a leading drive specification, such as c:\temp. |
+| AURL_DISABLEMIXEDLGC | **Windows 8**: Disable recognition of domain names that contain labels with characters belonging to more than one of the following scripts: Latin, Greek, and Cyrillic. |
+| AURL_ENABLEDRIVELETTERS | **Windows 8**: Recognize file names that have a leading drive specification, such as c:\temp. |
 | AURL_ENABLEEA | This value is deprecated; use **AURL_ENABLEEAURLS** instead. |
 | AURL_ENABLEEAURLS | Recognize URLs that contain East Asian characters. |
-| AURL_ENABLEEMAILADDR | **Windows 8 or later**: Recognize email addresses. |
-| AURL_ENABLETELNO | **Windows 8 or later**: Recognize telephone numbers. |
-| AURL_ENABLEURL | **Windows 8 or later**: Recognize URLs that include the path. |
+| AURL_ENABLEEMAILADDR | **Windows 8**: Recognize email addresses. |
+| AURL_ENABLETELNO | **Windows 8**: Recognize telephone numbers. |
+| AURL_ENABLEURL | **Windows 8**: Recognize URLs that include the path. |
 
 #### Return value
 
@@ -548,7 +548,7 @@ This message returns the value of the **dwMask** member of the [CHARFORMAT](http
 
 # <a name="RichEdit_GetCTFModeBias"></a>RichEdit_GetCTFModeBias
 
-Gets the Text Services Framework mode bias values for a Microsoft Rich Edit control.
+Retrieves the Text Services Framework mode bias values for a Microsoft Rich Edit control.
 
 ```
 FUNCTION RichEdit_GetCTFModeBias (BYVAL hRichEdit AS HWND) AS LONG
@@ -652,7 +652,7 @@ This message returns the event mask for the rich edit control.
 
 # <a name="RichEdit_GetFirstVisibleLine"></a>RichEdit_GetFirstVisibleLine
 
-Gets the zero-based index of the uppermost visible line in a multiline edit control. You can send this message to either an edit control or a rich edit control.
+Retrieves the zero-based index of the uppermost visible line in a multiline edit control. You can send this message to either an edit control or a rich edit control.
 
 ```
 FUNCTION RichEdit_GetFirstVisibleLine (BYVAL hRichEdit AS HWND) AS LONG
@@ -671,7 +671,7 @@ For single-line rich edit controls, the return value is zero.
 
 # <a name="RichEdit_GetHyphenateInfo"></a>RichEdit_GetHyphenateInfo
 
-Gets information about hyphenation for a Microsoft Rich Edit control.
+Retrieves information about hyphenation for a Microsoft Rich Edit control.
 
 ```
 SUB RichEdit_GetHyphenateInfo (BYVAL hRichEdit AS HWND, BYVAL lphi AS HYPHENATEINFO PTR)
@@ -730,7 +730,7 @@ The return value is one of the following values.
 
 # <a name="RichEdit_GetIMECompText"></a>RichEdit_GetIMECompText
 
-Gets the Input Method Editor (IME) composition text.
+Retrieves the Input Method Editor (IME) composition text.
 
 ```
 FUNCTION RichEdit_GetIMECompText (BYVAL hRichEdit AS HWND, BYVAL lpict AS IMECOMPTEXT PTR, BYVAL buffer AS ANY PTR) AS DWORD
@@ -754,7 +754,7 @@ This message only takes Unicode strings.
 
 # <a name="RichEdit_GetIMEModeBias"></a>RichEdit_GetIMEModeBias
 
-Gets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
+Retrieves the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
 
 ```
 FUNCTION RichEdit_GetIMEModeBias (BYVAL hRichEdit AS HWND) AS DWORD
@@ -774,3 +774,76 @@ This message returns the current IME mode bias setting.
 To get the Text Services Framework mode bias, use **RichEdit_GetCTFModeBias**.
 
 The application should call **RichEdit_IsIME** before calling this function.
+
+# <a name="RichEdit_GetIMEOptions"></a>RichEdit_GetIMEOptions
+
+Retrieves the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system.
+
+```
+FUNCTION RichEdit_GetIMEOptions (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETIMEOPTIONS, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+This message returns one or more of the IME option flag values described in the **RichEdit_SetIMEOptions** message.
+
+# <a name="RichEdit_GetIMEProperty"></a>RichEdit_GetIMEProperty
+
+Retrieves the property and capabilities of the Input Method Editor (IME) associated with the current input locale.
+
+```
+FUNCTION RichEdit_GetIMEOptions (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETIMEOPTIONS, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+This message returns one or more of the IME option flag values described in the **RichEdit_SetIMEOptions** message.
+
+# <a name="RichEdit_GetIMEProperty"></a>RichEdit_GetIMEProperty
+
+Retrieves a rich edit control's option settings for Input Method Editor (IME) and Asian language support.
+
+```
+FUNCTION RichEdit_GetLangOptions (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETLANGOPTIONS, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+Returns the IME and Asian language settings, which can be zero or more of the following values.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **IMF_AUTOFONT** | If this flag is set, the control automatically changes fonts when the user explicitly changes to a different keyboard layout. It is useful to turn off IMF_AUTOFONT for universal Unicode fonts. This option is turned on by default (1). |
+| **IMF_AUTOFONTSIZEADJUST** | If this flag is set, the control scales font-bound font sizes from insertion point size according to script. For example, Asian fonts are slightly larger than Western ones. This option is turned on by default (1). |
+| **IMF_AUTOKEYBOARD** | If this flag is set, the control automatically changes the keyboard layout when the user explicitly changes to a different font, or when the user explicitly changes the insertion point to a new location in the text. Will be turned on automatically for bidirectional controls. For all other controls, it is turned off by default. This option is turned off by default (0). |
+| **IMF_DISABLEAUTOBIDIAUTOKEYBOARD** | **Windows 8**: If this flag is set, the control uses language neutral logic for automatic keyboard switching. This option is turned off by default (0). |
+| **IMF_DUALFONT** | If this flag is set, the control uses dual-font mode. Used for Asian language support. The control uses an English font for ASCII text and a Asian font for Asian text. This option is turned on by default (1). |
+| **IMF_IMEALWAYSSENDNOTIFY** | This flag controls how the rich edit control notifies the client during IME composition:<br>0: No EN_CHANGE or EN_SELCHANGE notifications during undetermined state. Send notification when the final string comes in. This is the default.<br>1: Send EN_CHANGE and EN_SELCHANGE events during undetermined state. |
+| **IMF_IMECANCELCOMPLETE** | This flag determines how the control uses the composition string of an IME if the user cancels it. If this flag is set, the control discards the composition string. If this flag is not set, the control uses the composition string as the result string. This option is turned off by default (0). |
+| **IMF_NOIMPLICITLANG** | **Windows 8**: If this flag is set, disable stamping keyboard input with the keyboard language and ensuring that non-East Asian language IDss are compatible with the character repertoire. This option is turned off by default (0). |
+| **IMF_NOKBDLIDFIXUP** | **Windows 8**: If this flag is set, the rich edit control disables stamping keyboard language on an empty control. This option is turned off by default (0). |
+| **IMF_SPELLCHECKING** | **Windows 8**: If this flag is set, the rich edit control turns on spell checking. This option is turned off by default (0). |
+| **IMF_TKBAUTOCORRECTION** | **Windows 8**: If this flag is set, enable touch keyboard autocorrect. This option is turned off by default (0). |
+| **IMF_TKBPREDICTION** | **Windows 10**: Ignored.<br>**Windows 8**: If this flag is set, the rich edit control enables touch keyboard prediction. This option is turned off by default (0). |
+| **IMF_UIFONTS** | Use user-interface default fonts. This option is turned off by default (0). |
+
+**Remarks**
+
+The **IMF_AUTOFONT** flag is set by default. The **IMF_AUTOKEYBOARD** and **IMF_IMECANCELCOMPLETE** flags are cleared by default.
+
+
