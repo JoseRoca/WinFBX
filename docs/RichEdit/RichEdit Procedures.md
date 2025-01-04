@@ -1204,3 +1204,26 @@ END FUNCTION
 
 The Windows API function **GetWindowText** can also be used to retrive the text of a rich edit control, but it cannot retrieve the text of a control in another application.
 
+# <a name="RichEdit_GetTextEx"></a>RichEdit_GetTextEx
+
+Retrieves all of the text from the rich edit control in any particular code base you want.
+
+```
+FUNCTION RichEdit_GetTextEx (BYVAL hRichEdit AS HWND, BYVAL lpgtex AS GETTEXTEX PTR, BYVAL buffer AS ANY PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETTEXTEX, cast(WPARAM, lpgtex), cast(LPARAM, buffer))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lpgtex* | Pointer to a [GETTEXTEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextex) structure, which indicates how to translate the text before putting it into the output buffer. |
+| *buffer* | Pointer to the buffer to receive the text. The size of this buffer, in bytes, is specified by the *cb* member of the [GETTEXTEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextex) structure. Use the **RichEdit_GetTextLength** message to get the required size of the buffer. |
+
+#### Return value
+
+The return value is the number of characters copied into the output buffer, not including the null terminator.
+
+#### Remarks
+
+If the size of the output buffer is less than the size of the text in the control, the edit control will copy text from its beginning and place it in the buffer until the buffer is full. A terminating null character will still be placed at the end of the buffer.
