@@ -133,3 +133,53 @@
 | [RichEdit_LoadRtfFromResourceW](#RichEdit_LoadRtfFromResourceW) | Loads a Rich Text Resource File into a Rich Edit control. |
 | [RichEdit_SetFontW](#RichEdit_SetFontW) | Sets the font used by a rich edit control. |
 
+# <a name="RichEdit_AutoUrlDetect"></a>RichEdit_AutoUrlDetect
+
+Enables or disables automatic detection of URLs by a rich edit control.
+
+```
+FUNCTION RichEdit_AutoUrlDetect (BYVAL hRichEdit AS HWND, BYVAL fUrlDetect AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the RichEdit control. |
+| *fUrlDetect* | The handle of the RichEdit control. Specify 0 to disable automatic link detection, or one of the following values to enable various kinds of detection. |
+
+| fUrlDetect value  | Description |
+| --------------- | ----------- |
+| AURL_DISABLEMIXEDLGC | **Windows 8**: Disable recognition of domain names that contain labels with characters belonging to more than one of the following scripts: Latin, Greek, and Cyrillic. |
+| AURL_ENABLEDRIVELETTERS | Windows 8: Recognize file names that have a leading drive specification, such as c:\temp. |
+| AURL_ENABLEEA | This value is deprecated; use **AURL_ENABLEEAURLS** instead. |
+| AURL_ENABLEEAURLS | Recognize URLs that contain East Asian characters. |
+| AURL_ENABLEEMAILADDR | **Windows 8**: Recognize email addresses. |
+| AURL_ENABLETELNO | **Windows 8**: Recognize telephone numbers. |
+| AURL_ENABLEURL | **Windows 8**: Recognize URLs that include the path. |
+
+#### Return value
+
+If automatic URL detection is enabled (that is, *fUrlDetect* includes AURL_ENABLEURL), the rich edit control scans any modified text to determine whether the text matches the format of a URL (or more generally in Windows 8 or later an IRI International Resource Identifier). The control detects URLs that begin with the following scheme names:
+
+- callto
+- file
+- ftp
+- gopher
+- http
+- https
+- mailto
+- news
+- notes
+- nntp
+- onenote
+- outlook
+- prospero
+- tel
+- telnet
+- wais
+- webcal
+
+#### Return value
+
+If the message succeeds, the return value is zero.
+
+If the message fails, the return value is a nonzero value. For example, the message might fail due to insufficient memory or an invalid detection option.
