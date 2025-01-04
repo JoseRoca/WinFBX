@@ -877,9 +877,9 @@ FUNCTION RichEdit_GetLine (BYVAL hRichEdit AS HWND, BYVAL which AS DWORD) AS CWS
    DIM n AS LONG = SendMessageW(hRichEdit, EM_GETLINE, which, cast(LPARAM, *buffer))
    RETURN LEFT(**buffer, n)
 END FUNCTION
-
-**Note**: Before sending the EM_GETLINE message, the first word of the buffer has to be set to the size, in **TCHAR**s, of the buffer. For ANSI text, this is the number of bytes; for Unicode text, this is the number of characters. The size in the first word is overwritten by the copied line.
 ```
+**Note**: Before sending the EM_GETLINE message, the first word of the buffer has to be set to the size, in **TCHAR**s, of the buffer. For ANSI text, this is the number of bytes; for Unicode text, this is the number of characters. The size in the first word is overwritten by the copied line.
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
