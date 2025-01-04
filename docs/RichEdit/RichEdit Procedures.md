@@ -751,3 +751,26 @@ If successful, the return value is the number of Unicode characters copied to th
 This message only takes Unicode strings.
 
 **Security Warning**: Be sure to have a buffer sufficient for the size of the input. Failure to do so could cause problems for your application.
+
+# <a name="RichEdit_GetIMEModeBias"></a>RichEdit_GetIMEModeBias
+
+Gets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
+
+```
+FUNCTION RichEdit_GetIMEModeBias (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETIMEMODEBIAS, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+This message returns the current IME mode bias setting.
+
+#### Remarks
+
+To get the Text Services Framework mode bias, use **RichEdit_GetCTFModeBias**.
+
+The application should call **RichEdit_IsIME** before calling this function.
