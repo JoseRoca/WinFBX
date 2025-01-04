@@ -416,3 +416,29 @@ If the target string is found, the return value is the zero-based position of th
 #### Remarks
 
 **RichEdit_FindTextEx** uses the [FINDTEXTEXW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-findtextexw) structure, while **RichEdit_FindText** uses the [FINDTEXTW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-findtextw) structure. The difference is that EM_FINDTEXTEXW reports the range of text that was found.
+
+# <a name="RichEdit_FindWordBreak"></a>RichEdit_FindWordBreak
+
+Finds the next word break before or after the specified character position or retrieves information about the character at that position.
+
+```
+FUNCTION RichEdit_FindWordBreak (BYVAL hRichEdit AS HWND, BYVAL fOperation AS DWORD, BYVAL dwStartPos AS DWORD) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_FINDWORDBREAK, fOperation, dwStartPos)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *fOperation* | pecifies the find operation. This parameter can be one of the following values.<br>**WB_CLASSIFY**. Returns the character class and word-break flags of the character at the specified position.<br>**WB_ISDELIMITER**. Returns TRUE if the character at the specified position is a delimiter, or FALSE otherwise.<br>**WB_LEFT**. Finds the nearest character before the specified position that begins a word.<br>**WB_LEFTBREAK**. Finds the next word end before the specified position. This value is the same as WB_PREVBREAK.<br>**WB_MOVEWORDLEFT**. Finds the next character that begins a word before the specified position. This value is used during CTRL+LEFT ARROW key processing. This value is the similar to WB_MOVEWORDPREV. See Remarks for more information.<br>**WB_MOVEWORDRIGHT**. Finds the next character that begins a word after the specified position. This value is used during CTRL+right key processing. This value is similar to WB_MOVEWORDNEXT. See Remarks for more information.<br>**WB_RIGHT**. Finds the next character that begins a word after the specified position.<br>**WB_RIGHTBREAK**. Finds the next end-of-word delimiter after the specified position. This value is the same as WB_NEXTBREAK. |
+| *dwStartPos* | ero-based character starting position. |
+
+#### Return value
+
+The message returns a value based on the *fOperation* parameter.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **WB_CLASSIFY** | Returns the character class and word-break flags of the character at the specified position. |
+| **WB_ISDELIMITER** | Returns TRUE if the character at the specified position is a delimiter; otherwise it returns FALSE. |
+| **Others** | Returns the character index of the word break. |
+
