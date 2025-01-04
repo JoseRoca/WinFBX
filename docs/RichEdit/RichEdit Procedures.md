@@ -281,3 +281,19 @@ If the operation fails, the return value is FALSE.
 Text and Component Object Model (COM) objects are clipped by the rectangle. The application does not need to set the clipping region.
 
 Banding is the process by which a single page of output is generated using one or more separate rectangles, or bands. When all bands are placed on the page, a complete image results. This approach is often used by raster printers that do not have sufficient memory or ability to image a full page at one time. Banding devices include most dot matrix printers as well as some laser printers.
+
+# <a name="RichEdit_EmptyUndoBuffer"></a>RichEdit_EmptyUndoBuffer
+
+Resets the undo flag of an edit control. The undo flag is set whenever an operation within the edit control can be undone.
+
+```
+SUB RichEdit_EmptyUndoBuffer (BYVAL hRichEdit AS HWND)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+This procedure does not return a value.
+
