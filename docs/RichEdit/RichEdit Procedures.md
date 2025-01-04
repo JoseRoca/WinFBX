@@ -702,3 +702,28 @@ END FUNCTION
 If the operation succeeds, the return value is a nonzero value.
 
 If the operation fails, the return value is zero.
+
+# <a name="RichEdit_GetIMECompMode"></a>RichEdit_GetIMECompMode
+
+Retrieves the current Input Method Editor (IME) mode for a rich edit control.
+
+```
+FUNCTION RichEdit_GetIMECompMode (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETIMECOMPMODE, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+The return value is one of the following values.
+
+| Return code | Description |
+| ----------- | ----------- |
+| **ICM_NOTOPEN** | IME is not open. |
+| **ICM_LEVEL3** | True inline mode. |
+| **ICM_LEVEL2** | Level 2. |
+| **ICM_LEVEL2_5** | Level 2.5. |
+| **ICM_LEVEL2_SUI** | Special UI. |
