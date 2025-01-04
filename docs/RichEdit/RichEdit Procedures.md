@@ -293,7 +293,14 @@ SUB RichEdit_EmptyUndoBuffer (BYVAL hRichEdit AS HWND)
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
 
-#### Return value
+# <a name="RichEdit_ExGetSel"></a>RichEdit_ExGetSel
 
-This procedure does not return a value.
+Retrieves the starting and ending character positions of the selection in a rich edit control.
 
+```
+SUB RichEdit_ExGetSel (BYVAL hRichEdit AS HWND, BYVAL lpchr AS CHARRANGE PTR)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lpchr* | A pointer to a [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) A CHARRANGE structure that receives the selection range. |
