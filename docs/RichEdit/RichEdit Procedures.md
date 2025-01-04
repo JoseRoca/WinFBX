@@ -1202,7 +1202,7 @@ END FUNCTION
 
 #### Remarks
 
-The Windows API function **GetWindowText** can also be used to retrive the text of a rich edit control, but it cannot retrieve the text of a control in another application.
+The Windows API function **GetWindowTextW** can also be used to retrive the text of a rich edit control, but it cannot retrieve the text of a control in another application.
 
 # <a name="RichEdit_GetTextEx"></a>RichEdit_GetTextEx
 
@@ -1227,3 +1227,28 @@ The return value is the number of characters copied into the output buffer, not 
 #### Remarks
 
 If the size of the output buffer is less than the size of the text in the control, the edit control will copy text from its beginning and place it in the buffer until the buffer is full. A terminating null character will still be placed at the end of the buffer.
+
+# <a name="RichEdit_GetTextLength"></a>RichEdit_GetTextLength
+
+Retrieves the length of all text in a rich edit control.
+
+```
+FUNCTION RichEdit_GetTextLength (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, WM_GETTEXTLENGTH, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+####Return value
+
+The return value is the length of the text in characters, not including the terminating null character.
+
+#### Remarks
+
+When the **WM_GETTEXTLENGTH** message is sent, the **DefWindowProc** function returns the length, in characters, of the text. Under certain conditions, the **DefWindowProc** function returns a value that is larger than the actual length of the text. This occurs with certain mixtures of ANSI and Unicode, and is due to the system allowing for the possible existence of double-byte character set (DBCS) characters within the text. The return value, however, will always be at least as large as the actual length of the text; you can thus always use it to guide buffer allocation. This behavior can occur when an application uses both ANSI functions and common dialogs, which use Unicode.
+
+To retrieve the text, you can also use the **AfxGetWindowText** function, the **WM_GETTEXT** message, or the Windows API **GetWindowTextW** function.
+
