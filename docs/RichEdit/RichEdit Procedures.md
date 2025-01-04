@@ -566,4 +566,19 @@ The current Text Services Framework mode bias value.
 
 To get the IME mode bias, call **RichEdit_GetIMEModeBias**.
 
+# <a name="RichEdit_GetCTFOpenStatus"></a>RichEdit_GetCTFOpenStatus
 
+Determines if the Text Services Framework (TSF) keyboard is open or closed.
+
+```
+FUNCTION RichEdit_GetCTFOpenStatus (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETCTFOPENSTATUS, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+If the TSF keyboard is open, the return value is TRUE. Otherwise, it is FALSE.
