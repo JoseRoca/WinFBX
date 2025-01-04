@@ -903,6 +903,7 @@ END FUNCTION
 | *hRichEdit* | The handle of the rich edit control. |
 
 #### Return value
+
 The return value is an integer specifying the total number of text lines in the multiline edit control or rich edit control. If the control has no text, the return value is 1. The return value will never be less than 1.
 
 ### Remarks
@@ -910,3 +911,24 @@ The return value is an integer specifying the total number of text lines in the 
 The **EM_GETLINECOUNT** message retrieves the total number of text lines, not just the number of lines that are currently visible.
 
 If the Wordwrap feature is enabled, the number of lines can change when the dimensions of the editing window change.
+
+# <a name="RichEdit_GetModify"></a>RichEdit_GetModify
+
+Retrieves the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified.
+
+```
+FUNCTION RichEdit_GetModify (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETMODIFY, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+If the contents of edit control have been modified, the return value is nonzero; otherwise, it is zero.
+
+### Remarks
+
+The system automatically clears the modification flag to zero when the control is created. If the user changes the control's text, the system sets the flag to nonzero. You can send the **RichEdit_SetModify** message to the edit control to set or clear the flag.
