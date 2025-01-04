@@ -1110,3 +1110,23 @@ If there are no redoable actions or the type of the next redoable action is unkn
 #### Remarks
 
 The types of actions that can be undone or redone include typing, delete, drag-drop, cut, and paste operations. This information can be useful for applications that provide an extended user interface for undo and redo operations, such as a drop-down list box of redoable actions.
+
+# <a name="RichEdit_GetScrollPos"></a>RichEdit_GetScrollPos
+
+Retrieves the current scroll position of the edit control.
+
+```
+FUNCTION RichEdit_GetScrollPos (BYVAL hRichEdit AS HWND, BYVAL lppt AS POINT PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETSCROLLPOS, 0, cast(LPARAM, lppt))
+END FUNCTIO
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lppt* | Pointer to a [POINT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-point) structure. After calling **RichEdit_GetScrollPos**, this parameters contains a point in the virtual text space of the document, expressed in pixels. This point will be the point that is currently located in the upper-left corner of the edit control window. |
+
+#### Remarks
+
+The values returned in the [POINT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-point) structure are 16-bit values (even in the 32-bit wide fields).
+
