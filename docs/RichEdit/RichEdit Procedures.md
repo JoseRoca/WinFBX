@@ -387,7 +387,7 @@ END FUNCTION
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
-| *fOptions* | Specifies the parameters of the search operation. This parameter can be one or more of the following values.<br> | *FR_DOWN* | If set, the operation searches from the end of the current selection to the end of the document. If not set, the operation searches from the end of the current selection to the beginning of the document. ||
+| *fOptions* | Specifies the parameters of the search operation. This parameter can be one or more of the following values.<br>*FR_DOWN*. If set, the operation searches from the end of the current selection to the end of the document. If not set, the operation searches from the end of the current selection to the beginning of the document.|
 
 | *lpcr* | A pointer to a [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) structure that specifies the selection range. |
 
