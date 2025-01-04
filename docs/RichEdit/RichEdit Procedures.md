@@ -224,3 +224,20 @@ If there are actions in the control redo queue, the return value is a nonzero va
 
 If the redo queue is empty, the return value is zero.
 
+
+# <a name="RichEdit_CanUndo"></a>RichEdit_CanUndo
+
+Determines whether there are any actions in an edit control's undo queue.
+
+```
+FUNCTION RichEdit_CanUndo (BYVAL hRichEdit AS HWND) AS LONG
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the RichEdit control. |
+
+#### Return value
+
+If there are actions in the control's undo queue, the return value is nonzero.
+
+If the undo queue is empty, the return value is zero.
