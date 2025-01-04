@@ -148,17 +148,17 @@ FUNCTION RichEdit_AutoUrlDetect (BYVAL hRichEdit AS HWND, BYVAL fUrlDetect AS LO
 
 | fUrlDetect value  | Description |
 | --------------- | ----------- |
-| AURL_DISABLEMIXEDLGC | **Windows 8**: Disable recognition of domain names that contain labels with characters belonging to more than one of the following scripts: Latin, Greek, and Cyrillic. |
-| AURL_ENABLEDRIVELETTERS | **Windows 8**: Recognize file names that have a leading drive specification, such as c:\temp. |
+| AURL_DISABLEMIXEDLGC | **Windows 8 or later**: Disable recognition of domain names that contain labels with characters belonging to more than one of the following scripts: Latin, Greek, and Cyrillic. |
+| AURL_ENABLEDRIVELETTERS | **Windows 8 or later**: Recognize file names that have a leading drive specification, such as c:\temp. |
 | AURL_ENABLEEA | This value is deprecated; use **AURL_ENABLEEAURLS** instead. |
 | AURL_ENABLEEAURLS | Recognize URLs that contain East Asian characters. |
-| AURL_ENABLEEMAILADDR | **Windows 8**: Recognize email addresses. |
-| AURL_ENABLETELNO | **Windows 8**: Recognize telephone numbers. |
-| AURL_ENABLEURL | **Windows 8**: Recognize URLs that include the path. |
+| AURL_ENABLEEMAILADDR | **Windows 8 or later**: Recognize email addresses. |
+| AURL_ENABLETELNO | **Windows 8 or later**: Recognize telephone numbers. |
+| AURL_ENABLEURL | **Windows 8 or later**: Recognize URLs that include the path. |
 
 #### Return value
 
-If automatic URL detection is enabled (that is, *fUrlDetect* includes AURL_ENABLEURL), the rich edit control scans any modified text to determine whether the text matches the format of a URL (or more generally in Windows 8 or later an IRI International Resource Identifier). The control detects URLs that begin with the following scheme names:
+If automatic URL detection is enabled (that is, *fUrlDetect* includes **AURL_ENABLEURL**), the rich edit control scans any modified text to determine whether the text matches the format of a URL (or more generally in Windows 8 or later an IRI International Resource Identifier). The control detects URLs that begin with the following scheme names:
 
 - callto
 - file
