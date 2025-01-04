@@ -508,3 +508,22 @@ When auto URL detection is on, Microsoft Rich Edit is constantly checking typed 
 - outlook:
 
 Rich Edit also recognizes standard path names that start with \\\. When Rich Edit locates a URL, it changes the URL text color, underlines the text, and notifies the client using [EN_LINK](https://learn.microsoft.com/en-us/windows/win32/controls/en-link).
+
+# <a name="RichEdit_GetBidiOptions"></a>RichEdit_GetBidiOptions
+
+Indicates the current state of the bidirectional options in the rich edit control.
+
+```
+SUB RichEdit_GetBidiOptions (BYVAL hRichEdit AS HWND, BYVAL lpbo AS BIDIOPTIONS PTR)
+   SendMessageW hRichEdit, EM_GETBIDIOPTIONS, 0, cast(LPARAM, lpbo)
+END SUB
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lpbo* | A pointer to a [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure that receives the current state of the bidirectional options in the rich edit control. |
+
+#### Remarks
+
+This message sets the values of the **wMask** and **wEffects** members to the value of the current state of the bidirectional options in the rich edit control.
+
