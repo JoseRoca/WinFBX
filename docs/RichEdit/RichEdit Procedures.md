@@ -207,3 +207,20 @@ If the clipboard format can be pasted, the return value is a nonzero value.
 
 If the clipboard format cannot be pasted, the return value is zero.
 
+# <a name="RichEdit_CanRedo"></a>RichEdit_CanRedo
+
+Determines whether there are any actions in the control redo queue.
+
+```
+FUNCTION RichEdit_CanRedo (BYVAL hRichEdit AS HWND) AS LONG
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the RichEdit control. |
+
+#### Return value
+
+If there are actions in the control redo queue, the return value is a nonzero value.
+
+If the redo queue is empty, the return value is zero.
+
