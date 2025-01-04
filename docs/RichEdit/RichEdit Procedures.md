@@ -865,5 +865,27 @@ The return value is the text limit.
 
 #### Remarks
 
-The text limit is the maximum amount of text, in TCHARs, that the control can contain. For ANSI text, this is the number of bytes; for Unicode text, this is the number of characters. Two documents with the same character limit will yield the same text limit, even if one is ANSI and the other is Unicode.
+The text limit is the maximum amount of text, in **TCHAR**s, that the control can contain. For ANSI text, this is the number of bytes; for Unicode text, this is the number of characters. Two documents with the same character limit will yield the same text limit, even if one is ANSI and the other is Unicode.
+
+# <a name="RichEdit_GetLine"></a>RichEdit_GetLine
+
+Copies a line of text from a rich edit control.
+
+```
+FUNCTION RichEdit_GetLine (BYVAL hRichEdit AS HWND, BYVAL which AS DWORD) AS CWSTR
+   DIM buffer AS CWSTR = MKI(32765) + STRING(32765, 0)
+   DIM n AS LONG = SendMessageW(hRichEdit, EM_GETLINE, which, cast(LPARAM, *buffer))
+   RETURN LEFT(**buffer, n)
+END FUNCTION
+
+**Note**: Before sending the EM_GETLINE message, the first word of the buffer has to be set to the size, in **TCHAR**s, of the buffer. For ANSI text, this is the number of bytes; for Unicode text, this is the number of characters. The size in the first word is overwritten by the copied line.
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *which* | The zero-based index of the line to retrieve from a multiline edit control. A value of zero specifies the topmost line. This parameter is ignored by a single-line edit control. |
+
+#### Retuen value
+
+A copy of the line.
 
