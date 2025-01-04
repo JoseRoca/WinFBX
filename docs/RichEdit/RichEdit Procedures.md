@@ -527,3 +527,21 @@ END SUB
 
 This message sets the values of the **wMask** and **wEffects** members to the value of the current state of the bidirectional options in the rich edit control.
 
+# <a name="RichEdit_GetCharFormat"></a>RichEdit_GetCharFormat
+
+Determines the character formatting in a rich edit control.
+
+```
+FUNCTION RichEdit_GetCharFormat (BYVAL hRichEdit AS HWND, BYVAL fOption AS DWORD, BYVAL lpcf AS CHARFORMATW PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETCHARFORMAT, fOption, cast(LPARAM, lpcf))
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *fOption* | Specifies the range of text from which to retrieve formatting. It can be one of the following values.<br>**SCF_DEFAULT**The default character formatting.<br>**SCF_SELECTION** The current selection's character formatting. |
+| *lpcf* | A pointer tp a [CHARFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformata) structure that receives the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set. |
+
+#### Return value
+
+This message returns the value of the dwMask member of the CHARFORMAT structure.
