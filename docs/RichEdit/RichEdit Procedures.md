@@ -932,3 +932,23 @@ If the contents of edit control have been modified, the return value is nonzero;
 ### Remarks
 
 The system automatically clears the modification flag to zero when the control is created. If the user changes the control's text, the system sets the flag to nonzero. You can send the **RichEdit_SetModify** message to the edit control to set or clear the flag.
+
+# <a name="RichEdit_GetOleInterface"></a>RichEdit_GetOleInterface
+
+Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality.
+
+```
+FUNCTION RichEdit_GetOleInterface (BYVAL hRichEdit AS HWND, BYVAL ppObject AS IUnknown PTR PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETOLEINTERFACE, 0, cast(LPARAM, @ppObject))
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *ppObject* | Pointer to a pointer that receives the **IRichEditOle** object. The control calls the **AddRef** method for the object before returning, so the calling application must call the **Release** method when it is done with the object. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value.
+
+If the operation fails, the return value is zero.
