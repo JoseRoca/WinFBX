@@ -1277,7 +1277,7 @@ This message is a fast and easy way to determine the number of characters in the
 
 # <a name="RichEdit_GetTextMode"></a>RichEdit_GetTextMode
 
-the current text mode and undo level of a rich edit control.
+Retrieves the current text mode and undo level of a rich edit control.
 
 ```
 FUNCTION RichEdit_GetTextMode (BYVAL hRichEdit AS HWND) AS DWORD
@@ -1303,3 +1303,22 @@ The return value is one or more values from the [TEXTMODE](https://learn.microso
 | **TM_MULTILEVELUNDO**       |   8   | The control supports multiple undo actions. This is the default setting. Use the *RichEdit_SetUndoLimit* message to set the maximum number of undo actions. |
 | **TM_SINGLECODEPAGE** |  16   | The control only allows the English keyboard and a keyboard corresponding to the default character set. For example, you could have Greek and English. Note that this prevents Unicode text from entering the control. For example, use this value if a Rich Edit control must be restricted to ANSI text. |
 | **TM_MULTICODEPAGE** |  32   | The control allows multiple code pages and Unicode text into the control. This is the default setting. |
+
+# <a name="RichEdit_GetTextRange"></a>RichEdit_GetTextRange
+
+Retrieves a specified range of characters from a rich edit control.
+
+```
+FUNCTION RichEdit_GetTextRange (BYVAL hRichEdit AS HWND, BYVAL lptrg AS TEXTRANGE PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETTEXTRANGE, 0, cast(LPARAM, lptrg))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lptrg* | Pointer to a [TEXTRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-textrangea) structure that specifies the range of characters to retrieve and a buffer to copy the characters to. |
+
+#### Return value
+
+The message returns the number of characters copied, not including the terminating null character.
