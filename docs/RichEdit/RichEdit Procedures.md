@@ -988,3 +988,22 @@ END FUNCTION
 #### Return value
 
 The current text layout. For a list of possible text layout values, see **RichEdit_SetPageRotate**.
+
+# <a name="RichEdit_GetParaFormat"></a>RichEdit_GetParaFormat
+
+Retrieves the paragraph formatting of the current selection in a rich edit control.
+
+```
+FUNCTION RichEdit_GetParaFormat (BYVAL hRichEdit AS HWND, BYVAL pParaFmt AS PARAFORMAT PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETPARAFORMAT, 0, cast(LPARAM, pParaFmt))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pParaFmt* | Pointer to a [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure that receives the paragraph formatting attributes of the current selection. If more than one paragraph is selected, the structure receives the attributes of the first paragraph, and the **dwMask** member specifies which attributes are consistent throughout the entire selection. |
+
+#### Return value
+
+This message returns the value of the dwMask member of the [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure.
