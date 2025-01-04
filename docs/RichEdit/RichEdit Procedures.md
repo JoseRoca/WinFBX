@@ -139,6 +139,8 @@ Enables or disables automatic detection of URLs by a rich edit control.
 
 ```
 FUNCTION RichEdit_AutoUrlDetect (BYVAL hRichEdit AS HWND, BYVAL fUrlDetect AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_AUTOURLDETECT, fUrlDetect, 0)
+END FUNCTION
 ```
 
 | Parameter  | Description |
@@ -188,13 +190,14 @@ If the message succeeds, the return value is zero.
 
 If the message fails, the return value is a nonzero value. For example, the message might fail due to insufficient memory or an invalid detection option.
 
-
 # <a name="RichEdit_CanPaste"></a>RichEdit_CanPaste
 
 Determines whether a rich edit control can paste a specified clipboard format.
 
 ```
 FUNCTION RichEdit_CanPaste (BYVAL hRichEdit AS HWND, BYVAL clipformat AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_CANPASTE, clipformat, 0)
+END FUNCTION
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -213,6 +216,8 @@ Determines whether there are any actions in the rich control redo queue.
 
 ```
 FUNCTION RichEdit_CanRedo (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_CANREDO, 0, 0)
+END FUNCTION
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -224,13 +229,14 @@ If there are actions in the control redo queue, the return value is a nonzero va
 
 If the redo queue is empty, the return value is zero.
 
-
 # <a name="RichEdit_CanUndo"></a>RichEdit_CanUndo
 
 Determines whether there are any actions in the rich edit control undo queue.
 
 ```
 FUNCTION RichEdit_CanUndo (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_CANUNDO, 0, 0)
+END FUNCTION
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -248,6 +254,8 @@ Gets information about the character closest to a specified point in the client 
 
 ```
 FUNCTION RichEdit_CharFromPos (BYVAL hRichEdit AS HWND, BYVAL lppl AS POINTL PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_CHARFROMPOS, 0, cast(LPARAM, lppl))
+END FUNCTION
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -264,6 +272,8 @@ Displays a portion of the contents of a rich edit control, as previously formatt
 
 ```
 FUNCTION RichEdit_DisplayBand (BYVAL hRichEdit AS HWND, BYVAL lprc AS RECT PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_DISPLAYBAND, 0, cast(LPARAM, lprc))
+END FUNCTION
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -288,6 +298,8 @@ Resets the undo flag of an edit control. The undo flag is set whenever an operat
 
 ```
 SUB RichEdit_EmptyUndoBuffer (BYVAL hRichEdit AS HWND)
+   SendMessageW hRichEdit, EM_EMPTYUNDOBUFFER, 0, 0
+END SUB
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -299,8 +311,30 @@ Retrieves the starting and ending character positions of the selection in a rich
 
 ```
 SUB RichEdit_ExGetSel (BYVAL hRichEdit AS HWND, BYVAL lpchr AS CHARRANGE PTR)
+   SendMessageW hRichEdit, EM_EXGETSEL, 0, cast(LPARAM, lpchr)
+END SUB
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
-| *lpchr* | A pointer to a [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) A CHARRANGE structure that receives the selection range. |
+| *lpchr* | A pointer to a [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) structure that receives the selection range. |
+
+# <a name="RichEdit_ExLimitText"></a>RichEdit_ExLimitText
+
+Retrieves the starting and ending character positions of the selection in a rich edit control.
+
+```
+SUB RichEdit_ExLimitText (BYVAL hRichEdit AS HWND, BYVAL dwLimit AS DWORD)
+   SendMessageW hRichEdit, EM_EXLIMITTEXT, 0, dwLimit
+END SUB
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *dwLimit* | Specifies the maximum amount of text that can be entered. If this parameter is zero, the default maximum is used, which is 64K characters. A COM object counts as a single character. |
+
+#### Remarks
+
+The text limit set by the EM_EXLIMITTEXT message does not limit the amount of text that you can stream into a rich edit control using the EM_STREAMIN message with lParam set to SF_TEXT. However, it does limit the amount of text that you can stream into a rich edit control using the EM_STREAMIN message with lParam set to SF_RTF.
+
+Before EM_EXLIMITTEXT is called, the default limit to the amount of text a user can enter is 32,767 characters.
