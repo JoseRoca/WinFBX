@@ -650,3 +650,21 @@ END FUNCTION
 
 This message returns the event mask for the rich edit control.
 
+# <a name="RichEdit_GetFirstVisibleLine"></a>RichEdit_GetFirstVisibleLine
+
+Gets the zero-based index of the uppermost visible line in a multiline edit control. You can send this message to either an edit control or a rich edit control.
+
+```
+FUNCTION RichEdit_GetFirstVisibleLine (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETFIRSTVISIBLELINE, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+The return value is the zero-based index of the uppermost visible line in a multiline edit control.
+
+For single-line rich edit controls, the return value is zero.
