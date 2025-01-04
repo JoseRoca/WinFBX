@@ -1075,3 +1075,38 @@ Under certain conditions, **RichEdit_GetRect** might not return the exact values
 
 The formatting rectangle does not include the selection bar, which is an unmarked area to the left of each paragraph. When clicked, the selection bar selects the line.
 
+# <a name="RichEdit_GetRedoName"></a>RichEdit_GetRedoName
+
+Retrieves the type of the next action, if any, in the rich edit control's redo queue.
+
+```
+FUNCTION RichEdit_GetRedoName (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETREDONAME, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+If the redo queue for the control is not empty, the value returned is an [UNDONAMEID](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-undonameid) enumeration value that indicates the type of the next action in the control's redo queue.
+
+If there are no redoable actions or the type of the next redoable action is unknown, the return value is zero.
+
+#### UNDONAMEID enumeration
+
+| Name              | Value | Description |
+| ----------------- | ----- | ----------- |
+| **UID_UNKNOWN**   |   0   | The type of undo action is unknown. |
+| **UID_TYPING**    |   1   | Typing operation. |
+| **UID_DELETE**    |   2   | Delete operation. |
+| **UID_DRAGDROP**  |   3   | Drag-and-drop operation. |
+| **UID_CUT**       |   4   | Cut operation. |
+| **UID_PASTE**     |   5   | Paste operation. |
+| **UID_AUTOTABLE** |   6   | Automatic table insertion; for example, typing +---+---+<Enter> to insert a table row. |
+
+#### Remarks
+
+The types of actions that can be undone or redone include typing, delete, drag-drop, cut, and paste operations. This information can be useful for applications that provide an extended user interface for undo and redo operations, such as a drop-down list box of redoable actions.
