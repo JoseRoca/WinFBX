@@ -471,3 +471,40 @@ This message returns the index of the last character that fits in the region, pl
 This message is typically used to format the content of rich edit control for an output device such as a printer.
 
 After using this message to format a range of text, it is important that you free cached information by sending **EM_FORMATRANGE** again, but with lParam set to **NULL**; otherwise, a memory leak will occur. Also, after using this message for one device, you must free cached information before using it again for a different device.
+
+# <a name="RichEdit_GetAutoUrlDetect"></a>RichEdit_GetAutoUrlDetect
+
+Indicates whether the auto URL detection is turned on in the rich edit control.
+
+```
+FUNCTION RichEdit_GetAutoUrlDetect (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETAUTOURLDETECT, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+If auto-URL detection is active, the return value is 1.
+
+If auto-URL detection is inactive, the return value is 0.
+
+#### Remarks
+
+When auto URL detection is on, Microsoft Rich Edit is constantly checking typed text for a valid URL. Rich Edit recognizes URLs that start with these prefixes:
+
+. http:
+. file:
+. mailto:
+. ftp:
+. https:
+. gopher:
+. nntp:
+. prospero:
+. telnet:
+. news:
+. wais:
+. outlook:
+
+Rich Edit also recognizes standard path names that start with \\\. When Rich Edit locates a URL, it changes the URL text color, underlines the text, and notifies the client using [EN_LINK](https://learn.microsoft.com/en-us/windows/win32/controls/en-link).
