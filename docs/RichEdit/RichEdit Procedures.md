@@ -187,3 +187,23 @@ A rich edit control sends the **EN_LINK** notification when it receives various 
 If the message succeeds, the return value is zero.
 
 If the message fails, the return value is a nonzero value. For example, the message might fail due to insufficient memory or an invalid detection option.
+
+
+# <a name="RichEdit_CanPaste"></a>RichEdit_CanPaste
+
+Determines whether a rich edit control can paste a specified clipboard format.
+
+```
+FUNCTION RichEdit_CanPaste (BYVAL hRichEdit AS HWND, BYVAL clipformat AS LONG) AS LONG
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the RichEdit control. |
+| *clipformat* | Specifies the [Clipboard Formats] (https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats) to try. To try any format currently on the clipboard, set this parameter to zero. |
+
+#### Return value
+
+If the clipboard format can be pasted, the return value is a nonzero value.
+
+If the clipboard format cannot be pasted, the return value is zero.
+
