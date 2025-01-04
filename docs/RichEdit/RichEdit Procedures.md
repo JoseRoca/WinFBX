@@ -63,7 +63,7 @@
 | [RichEdit_GetZoom](#RichEdit_GetZoom) | Retrieves the current zoom ratio, which is always between 1/64 and 64. |
 | [RichEdit_HideSelection](#RichEdit_HideSelection) | Hides or shows the selection in a rich edit control. |
 | [RichEdit_IsIME](#RichEdit_IsIME) | Determines if current input locale is an East Asian locale. |
-| [RichEdit_LimitText](#RichEdit_LimitText) | Sets the text limit of a rich edit control. The text limit is the maximum amount of text, in TCHARs, that the user can type into the edit control. |
+| [RichEdit_LimitText](#RichEdit_LimitText) | Sets the text limit of a rich edit control. The text limit is the maximum amount of text, in characters, that the user can type into the edit control. |
 | [RichEdit_LineFromChar](#RichEdit_LineFromChar) | Retrieves the index of the line that contains the specified character index in a multiline rich edit control. |
 | [RichEdit_LineIndex](#RichEdit_LineIndex) | Retrieves the character index of the first character of a specified line in a multiline rich edit control. |
 | [RichEdit_LineLength](#RichEdit_LineLength) | Retrieves the length, in characters, of a line in a rich edit control. |
@@ -91,7 +91,7 @@
 | [RichEdit_SetIMEModeBias](#RichEdit_SetIMEModeBias) | Sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [RichEdit_SetIMEOptions](#RichEdit_SetIMEOptions) | Sets the Input Method Editor (IME) options. |
 | [RichEdit_SetLangOptions](#RichEdit_SetLangOptions) | Sets options for Input Method Editor (IME) and Asian language support in a rich edit control. |
-| [RichEdit_SetLimitText](#RichEdit_SetLimitText) | Sets the text limit of a rich edit control. The text limit is the maximum amount of text, in TCHARs, that the user can type into the edit control. |
+| [RichEdit_SetLimitText](#RichEdit_SetLimitText) | Sets the text limit of a rich edit control. The text limit is the maximum amount of text, in characters, that the user can type into the edit control. |
 | [RichEdit_SetMargins](#RichEdit_SetMargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
 | [RichEdit_SetModify](#RichEdit_SetModify) | Sets or clears the modification flag for a rich edit control. The modification flag indicates whether the text within the rich edit control has been modified. |
 | [RichEdit_SetOleCallback](#RichEdit_SetOleCallback) | Gives a rich edit control an IRichEditOleCallback object that the control uses to get OLE-related resources and information from the client. |
@@ -865,7 +865,7 @@ The return value is the text limit.
 
 #### Remarks
 
-The text limit is the maximum amount of text, in **TCHAR**s, that the control can contain. For ANSI text, this is the number of bytes; for Unicode text, this is the number of characters. Two documents with the same character limit will yield the same text limit, even if one is ANSI and the other is Unicode.
+The text limit is the maximum amount of text, in characters, that the control can contain. For ANSI text, this is the number of bytes; for Unicode text, this is the number of characters. Two documents with the same character limit will yield the same text limit, even if one is ANSI and the other is Unicode.
 
 # <a name="RichEdit_GetLine"></a>RichEdit_GetLine
 
@@ -878,7 +878,7 @@ FUNCTION RichEdit_GetLine (BYVAL hRichEdit AS HWND, BYVAL which AS DWORD) AS CWS
    RETURN LEFT(**buffer, n)
 END FUNCTION
 ```
-**Note**: Before sending the EM_GETLINE message, the first word of the buffer has to be set to the size, in **TCHAR**s, of the buffer. For ANSI text, this is the number of bytes; for Unicode text, this is the number of characters. The size in the first word is overwritten by the copied line.
+**Note**: Before sending the EM_GETLINE message, the first word of the buffer has to be set to the size, in characters, of the buffer. The size in the first word is overwritten by the copied line.
 
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -1118,7 +1118,7 @@ Retrieves the current scroll position of the edit control.
 ```
 FUNCTION RichEdit_GetScrollPos (BYVAL hRichEdit AS HWND, BYVAL lppt AS POINT PTR) AS DWORD
    FUNCTION = SendMessageW(hRichEdit, EM_GETSCROLLPOS, 0, cast(LPARAM, lppt))
-END FUNCTIO
+END FUNCTION
 ```
 
 | Parameter  | Description |
@@ -1130,3 +1130,30 @@ END FUNCTIO
 
 The values returned in the [POINT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-point) structure are 16-bit values (even in the 32-bit wide fields).
 
+# <a name="RichEdit_GetSel"></a>RichEdit_GetSel
+
+Retrieves the starting and ending character positions of the current selection in a rich edit control.
+
+```
+FUNCTION RichEdit_GetSel (BYVAL hRichEdit AS HWND, BYVAL pdwStartPos AS DWORD PTR, BYVAL pdwEndPos AS DWORD PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETSEL, cast(WPARAM, pdwStartPos), cast(LPARAM, pdwEndPos))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pdwStartPos* | A pointer to a **DWORD** value that receives the starting position of the selection. This parameter can be **NULL**. |
+| *pdwEndPos* | A pointer to a **DWORD** value that receives the position of the first unselected character after the end of the selection. This parameter can be **NULL**. |
+
+#### Return value
+
+The return value is a zero-based value with the starting position of the selection in the **LOWORD** and the position of the first character after the last selected character in the **HIWORD**. If either of these values exceeds 65,535, the return value is -1.
+
+It is better to use the values returned in *pdwStartPos* and *pdwEndPos* because they are full 32-bit values.
+
+#### Remarks
+
+If there is no selection, the starting and ending values are both the position of the caret.
+
+You can also use the **RichEdit-ExGetSel** message to retrieve the same information. **RichEdit-ExGetSel** also returns starting and ending character positions as 32-bit values.
