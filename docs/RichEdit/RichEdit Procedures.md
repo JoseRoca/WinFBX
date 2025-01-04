@@ -442,3 +442,8 @@ The message returns a value based on the *fOperation* parameter.
 | **WB_ISDELIMITER** | Returns TRUE if the character at the specified position is a delimiter; otherwise it returns FALSE. |
 | **Others** | Returns the character index of the word break. |
 
+#### Remarks
+If fOperation is WB_LEFT and WB_RIGHT, the word-break procedure finds word breaks only after delimiters. This matches the functionality of an edit control. If fOperation is WB_MOVEWORDLEFT or WB_MOVEWORDRIGHT, the word-break procedure also compares character classes and word-break flags.
+
+For information about character classes and word-break flags, see [Word and Line Breaks](https://learn.microsoft.com/en-us/windows/win32/controls/use-word-and-line-break-information).
+
