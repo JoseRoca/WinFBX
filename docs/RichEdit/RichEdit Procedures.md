@@ -682,3 +682,23 @@ END SUB
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
 | *lphi* | A pointer to a [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure. |
+
+# <a name="RichEdit_GetIMEColor"></a>RichEdit_GetIMEColor
+
+Retrieves the Input Method Editor (IME) composition color. This message is available only in Asian-language versions of the operating system.
+
+```
+FUNCTION RichEdit_GetIMEColor (BYVAL hRichEdit AS HWND, BYVAL rgCmpclr AS COMPCOLOR PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETIMECOLOR, 0, cast(LPARAM, rgCmpclr))
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *rgCmpclr* | A four-element array of [COMPCOLOR](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-compcolor) structures that receives the composition color. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value.
+
+If the operation fails, the return value is zero.
