@@ -1007,3 +1007,24 @@ END FUNCTION
 #### Return value
 
 This message returns the value of the dwMask member of the [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure.
+
+# <a name="RichEdit_GetPasswordChar"></a>RichEdit_GetPasswordChar
+
+Retrieves the password character that a rich edit control displays when the user enters text.
+
+```
+FUNCTION RichEdit_GetPasswordChar (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETPASSWORDCHAR, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+The return value specifies the character to be displayed in place of any characters typed by the user. If the return value is **NULL**, there is no password character, and the control displays the characters typed by the user.
+
+Remarks
+If an edit control is created with the **ES_PASSWORD** style, the default password character is set to an asterisk (*). If an edit control is created without the **ES_PASSWORD** style, there is no password character. To change the password character, send the **RichEdit_SetPasswordChar** message.
