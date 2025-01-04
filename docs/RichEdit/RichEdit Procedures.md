@@ -1037,7 +1037,7 @@ Retrieves the current punctuation characters for the rich edit control.
 ```
 FUNCTION RichEdit_GetPunctuation (BYVAL hRichEdit AS HWND, BYVAL punctp AS DWORD, BYVAL lppunct AS PUNCTUATION PTR) AS LONG
    FUNCTION = SendMessageW(hRichEdit, EM_GETPUNCTUATION, punctp, cast(LPARAM, lppunct))
-END FUNCTIO
+END FUNCTION
 ```
 
 | Parameter  | Description |
@@ -1051,3 +1051,27 @@ END FUNCTIO
 If the operation succeeds, the return value is a nonzero value.
 
 If the operation fails, the return value is zero.
+
+# <a name="RichEdit_GetRect"></a>RichEdit_GetRect
+
+Retrieves the formatting rectangle of an edit control. The formatting rectangle is the limiting rectangle into which the control draws the text. The limiting rectangle is independent of the size of the edit-control window.
+
+```
+SUB RichEdit_GetRect (BYVAL hRichEdit AS HWND, BYVAL prc AS RECT PTR)
+   SendMessageW hRichEdit, EM_GETRECT, 0, cast(LPARAM, prc)
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *prc* | A pointer to a [RECT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect) structure that receives the formatting rectangle |
+
+#### Remarks
+
+You can modify the formatting rectangle of a multiline edit control by using the **RichEdit_SeRect** and **RichEdit_SeRectNP** messages.
+
+Under certain conditions, **RichEdit_GetRect** might not return the exact values that **RichEdit_SeRect** and **RichEdit_SeRectNP** set it will be approximately correct, but it can be off by a few pixels.
+
+The formatting rectangle does not include the selection bar, which is an unmarked area to the left of each paragraph. When clicked, the selection bar selects the line.
+
