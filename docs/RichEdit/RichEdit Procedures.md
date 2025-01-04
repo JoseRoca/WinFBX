@@ -356,3 +356,21 @@ END FUNCTION
 #### Return value
 
 Returns the zero-based index of the line.
+
+# <a name="RichEdit_ExSetSel"></a>RichEdit_ExSetSel
+
+Selects a range of characters or Component Object Model (COM) objects in a Microsoft Rich Edit control.
+
+```
+FUNCTION RichEdit_ExSetSel (BYVAL hRichEdit AS HWND, BYVAL lpcr AS CHARRANGE PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_EXSETSEL, 0, cast(LPARAM, lpcr))
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lpcr* | A pointer to a [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) structure that specifies the selection range. |
+
+#### Return value
+
+The return value is the selection that is actually set.
