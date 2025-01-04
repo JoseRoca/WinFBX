@@ -1275,4 +1275,31 @@ The message returns the number of characters in the edit control, depending on t
 
 This message is a fast and easy way to determine the number of characters in the Unicode version of the rich edit control. However, for a non-Unicode target code page you will potentially be converting to a combination of single-byte and double-byte characters.
 
+# <a name="RichEdit_GetTextMode"></a>RichEdit_GetTextMode
 
+the current text mode and undo level of a rich edit control.
+
+```
+FUNCTION RichEdit_GetTextMode (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETTEXTMODE, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+The return value is one or more values from the [TEXTMODE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-textmode) enumeration type. The values indicate the current text mode and undo level of the control.
+
+#### TEXTMODE enumeration
+
+| Name              | Value | Description |
+| ----------------- | ----- | ----------- |
+| **TM_PLAINTEXT**  |   1   | Indicates plain-text mode, in which the control is similar to a standard edit control. |
+| **TM_RICHTEXT**   |   2   | Indicates rich-text mode, in which the control has the standard rich edit functionality. Rich-text mode is the default setting. |
+| **TM_SINGLELEVELUNDO**  |   4   | The control allows the user to undo only the last action in the undo queue. |
+| **TM_MULTILEVELUNDO**       |   8   | The control supports multiple undo actions. This is the default setting. Use the *RichEdit_SetUndoLimit* message to set the maximum number of undo actions. |
+| **TM_SINGLECODEPAGE** |  16   | The control only allows the English keyboard and a keyboard corresponding to the default character set. For example, you could have Greek and English. Note that this prevents Unicode text from entering the control. For example, use this value if a Rich Edit control must be restricted to ANSI text. |
+| **TM_MULTICODEPAGE** |  32   | The control allows multiple code pages and Unicode text into the control. This is the default setting. |
