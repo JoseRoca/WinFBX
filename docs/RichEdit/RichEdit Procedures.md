@@ -889,3 +889,24 @@ END FUNCTION
 
 A copy of the line.
 
+# <a name="RichEdit_GetLineCount"></a>RichEdit_GetLineCount
+
+Retrieves the number of lines in a multiline rich edit control.
+
+```
+FUNCTION RichEdit_GetLineCount (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETLINECOUNT, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+The return value is an integer specifying the total number of text lines in the multiline edit control or rich edit control. If the control has no text, the return value is 1. The return value will never be less than 1.
+
+### Remarks
+
+The **EM_GETLINECOUNT** message retrieves the total number of text lines, not just the number of lines that are currently visible.
+
+If the Wordwrap feature is enabled, the number of lines can change when the dimensions of the editing window change.
