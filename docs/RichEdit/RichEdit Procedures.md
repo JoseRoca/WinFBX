@@ -1252,3 +1252,27 @@ When the **WM_GETTEXTLENGTH** message is sent, the **DefWindowProc** function re
 
 To retrieve the text, you can also use the **AfxGetWindowText** function, the **WM_GETTEXT** message, or the Windows API **GetWindowTextW** function.
 
+# <a name="RichEdit_GetTextLengthEx"></a>RichEdit_GetTextLengthEx
+
+Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control.
+
+```
+FUNCTION RichEdit_GetTextLengthEx (BYVAL hRichEdit AS HWND, BYVAL lpgtex AS GETTEXTLENGTHEX PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETTEXTLENGTHEX, cast(WPARAM, lpgtex), 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lpgtex* | Pointer to a [GETTEXTLENGTHEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextlengthex) structure that receives the text length information. |
+
+#### Return value
+
+The message returns the number of characters in the edit control, depending on the setting of the flags in the GETTEXTLENGTHEX structure. If incompatible flags were set in the flags member, the message returns E_INVALIDARG .
+
+#### Remarks
+
+This message is a fast and easy way to determine the number of characters in the Unicode version of the rich edit control. However, for a non-Unicode target code page you will potentially be converting to a combination of single-byte and double-byte characters.
+
+
