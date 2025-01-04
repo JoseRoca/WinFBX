@@ -494,17 +494,17 @@ If auto-URL detection is inactive, the return value is 0.
 
 When auto URL detection is on, Microsoft Rich Edit is constantly checking typed text for a valid URL. Rich Edit recognizes URLs that start with these prefixes:
 
-. http:
-. file:
-. mailto:
-. ftp:
-. https:
-. gopher:
-. nntp:
-. prospero:
-. telnet:
-. news:
-. wais:
-. outlook:
+- http:
+- file:
+- mailto:
+- ftp:
+- https:
+- gopher:
+- nntp:
+- prospero:
+- telnet:
+- news:
+- wais:
+- outlook:
 
 Rich Edit also recognizes standard path names that start with \\\. When Rich Edit locates a URL, it changes the URL text color, underlines the text, and notifies the client using [EN_LINK](https://learn.microsoft.com/en-us/windows/win32/controls/en-link).
