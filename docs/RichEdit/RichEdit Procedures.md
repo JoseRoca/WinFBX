@@ -971,3 +971,20 @@ END FUNCTION
 
 This message returns a combination of the current option flag values described in the **RichEdit_SetOptions** message.
 
+# <a name="RichEdit_GetPageRotate"></a>RichEdit_GetPageRotate
+
+Deprecated. Retrieves the text layout for a Microsoft Rich Edit control.
+
+```
+FUNCTION RichEdit_GetPageRotate (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETPAGEROTATE, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+The current text layout. For a list of possible text layout values, see **RichEdit_SetPageRotate**.
