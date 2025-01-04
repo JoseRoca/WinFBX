@@ -1026,5 +1026,28 @@ END FUNCTION
 
 The return value specifies the character to be displayed in place of any characters typed by the user. If the return value is **NULL**, there is no password character, and the control displays the characters typed by the user.
 
-Remarks
+#### Remarks
+
 If an edit control is created with the **ES_PASSWORD** style, the default password character is set to an asterisk (*). If an edit control is created without the **ES_PASSWORD** style, there is no password character. To change the password character, send the **RichEdit_SetPasswordChar** message.
+
+# <a name="RichEdit_GetPunctuation"></a>RichEdit_GetPunctuation
+
+Retrieves the current punctuation characters for the rich edit control.
+
+```
+FUNCTION RichEdit_GetPunctuation (BYVAL hRichEdit AS HWND, BYVAL punctp AS DWORD, BYVAL lppunct AS PUNCTUATION PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETPUNCTUATION, punctp, cast(LPARAM, lppunct))
+END FUNCTIO
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *punctp* | The punctuation type can be one of the following values.<br>**PC_LEADING**. Leading punctuation characters.<br>**PC_FOLLOWING**. Following punctuation characters.<br>**PC_DELIMITER**. Delimiter.<br>**PC_OVERFLOW**. Not supported |
+| *lppunct* | Pointer to a [PUNCTUATION](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-punctuation) structure that receives the punctuation characters. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value.
+
+If the operation fails, the return value is zero.
