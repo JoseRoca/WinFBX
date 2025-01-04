@@ -544,4 +544,4 @@ END FUNCTION
 
 #### Return value
 
-This message returns the value of the dwMask member of the CHARFORMAT structure.
+This message returns the value of the **dwMask** member of the [CHARFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformata) structure.
