@@ -178,6 +178,10 @@ If automatic URL detection is enabled (that is, *fUrlDetect* includes AURL_ENABL
 - wais
 - webcal
 
+When automatic link detection is enabled, the rich edit control removes the **CFE_LINK** effect from modified text that does not have a format recognized by the control. If your application uses the **CFE_LINK** effect to mark other types of text, do not enable automatic link detection. The rich edit control does not check whether a detected link exists; that responsibility belongs to the client.
+
+A rich edit control sends the **EN_LINK** notification when it receives various messages while the mouse pointer is over text that has the **CFE_LINK** effect. 
+
 #### Return value
 
 If the message succeeds, the return value is zero.
