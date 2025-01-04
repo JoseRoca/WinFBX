@@ -809,7 +809,7 @@ END FUNCTION
 
 This message returns one or more of the IME option flag values described in the **RichEdit_SetIMEOptions** message.
 
-# <a name="RichEdit_GetIMEProperty"></a>RichEdit_GetIMEProperty
+# <a name="RichEdit_GetLangOptions"></a>RichEdit_GetLangOptions
 
 Retrieves a rich edit control's option settings for Input Method Editor (IME) and Asian language support.
 
@@ -828,12 +828,12 @@ Returns the IME and Asian language settings, which can be zero or more of the fo
 
 | Return code  | Description |
 | ------------ | ----------- |
-| **IMF_AUTOFONT** | If this flag is set, the control automatically changes fonts when the user explicitly changes to a different keyboard layout. It is useful to turn off IMF_AUTOFONT for universal Unicode fonts. This option is turned on by default (1). |
+| **IMF_AUTOFONT** | If this flag is set, the control automatically changes fonts when the user explicitly changes to a different keyboard layout. It is useful to turn off **IMF_AUTOFONT** for universal Unicode fonts. This option is turned on by default (1). |
 | **IMF_AUTOFONTSIZEADJUST** | If this flag is set, the control scales font-bound font sizes from insertion point size according to script. For example, Asian fonts are slightly larger than Western ones. This option is turned on by default (1). |
 | **IMF_AUTOKEYBOARD** | If this flag is set, the control automatically changes the keyboard layout when the user explicitly changes to a different font, or when the user explicitly changes the insertion point to a new location in the text. Will be turned on automatically for bidirectional controls. For all other controls, it is turned off by default. This option is turned off by default (0). |
 | **IMF_DISABLEAUTOBIDIAUTOKEYBOARD** | **Windows 8**: If this flag is set, the control uses language neutral logic for automatic keyboard switching. This option is turned off by default (0). |
 | **IMF_DUALFONT** | If this flag is set, the control uses dual-font mode. Used for Asian language support. The control uses an English font for ASCII text and a Asian font for Asian text. This option is turned on by default (1). |
-| **IMF_IMEALWAYSSENDNOTIFY** | This flag controls how the rich edit control notifies the client during IME composition:<br>0: No EN_CHANGE or EN_SELCHANGE notifications during undetermined state. Send notification when the final string comes in. This is the default.<br>1: Send EN_CHANGE and EN_SELCHANGE events during undetermined state. |
+| **IMF_IMEALWAYSSENDNOTIFY** | This flag controls how the rich edit control notifies the client during IME composition:<br>0: No **EN_CHANGE** or **EN_SELCHANGE** notifications during undetermined state. Send notification when the final string comes in. This is the default.<br>1: Send **EN_CHANGE** and **EN_SELCHANGE** events during undetermined state. |
 | **IMF_IMECANCELCOMPLETE** | This flag determines how the control uses the composition string of an IME if the user cancels it. If this flag is set, the control discards the composition string. If this flag is not set, the control uses the composition string as the result string. This option is turned off by default (0). |
 | **IMF_NOIMPLICITLANG** | **Windows 8**: If this flag is set, disable stamping keyboard input with the keyboard language and ensuring that non-East Asian language IDss are compatible with the character repertoire. This option is turned off by default (0). |
 | **IMF_NOKBDLIDFIXUP** | **Windows 8**: If this flag is set, the rich edit control disables stamping keyboard language on an empty control. This option is turned off by default (0). |
@@ -846,4 +846,24 @@ Returns the IME and Asian language settings, which can be zero or more of the fo
 
 The **IMF_AUTOFONT** flag is set by default. The **IMF_AUTOKEYBOARD** and **IMF_IMECANCELCOMPLETE** flags are cleared by default.
 
+# <a name="RichEdit_GetLimitText"></a>RichEdit_GetLimitText
+
+Retrieves the current text limit for an edit control. You can send this message to either an edit control or a rich edit control.
+
+```
+FUNCTION RichEdit_GetLimitText (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETLIMITTEXT, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+The return value is the text limit.
+
+#### Remarks
+
+The text limit is the maximum amount of text, in TCHARs, that the control can contain. For ANSI text, this is the number of bytes; for Unicode text, this is the number of characters. Two documents with the same character limit will yield the same text limit, even if one is ANSI and the other is Unicode.
 
