@@ -4,9 +4,9 @@
 | ---------- | ----------- |
 | [RichEdit_AutoUrlDetect](#RichEdit_AutoUrlDetect) | Enables or disables automatic detection of URLs by a rich edit control. |
 | [RichEdit_CanPaste](#RichEdit_CanPaste) | Determines whether a rich edit control can paste a specified clipboard format. |
-| [RichEdit_CanRedo](#RichEdit_CanRedo) | Determines whether there are any actions in the control redo queue. |
-| [RichEdit_CanUndo](#RichEdit_CanUndo) | Determines whether there are any actions in an edit control's undo queue. |
-| [RichEdit_CharFromPos](#RichEdit_CharFromPos) | Gets information about the character closest to a specified point in the client area of an edit control. |
+| [RichEdit_CanRedo](#RichEdit_CanRedo) | Determines whether there are any actions in the rich edit control redo queue. |
+| [RichEdit_CanUndo](#RichEdit_CanUndo) | Determines whether there are any actions in the rich edit control undo queue. |
+| [RichEdit_CharFromPos](#RichEdit_CharFromPos) | Gets information about the character closest to a specified point in the client area of a rich edit control. |
 | [RichEdit_DisplayBand](#RichEdit_DisplayBand) | Displays a portion of the contents of a rich edit control, as previously formatted for a device using the EM_FORMATRANGE message. |
 | [RichEdit_EmptyUndoBuffer](#RichEdit_EmptyUndoBuffer) | Resets the undo flag of a rich edit control. The undo flag is set whenever an operation within the rich edit control can be undone. |
 | [RichEdit_ExGetSel](#RichEdit_ExGetSel) | Retrieves the starting and ending character positions of the selection in a rich edit control. |
@@ -143,7 +143,7 @@ FUNCTION RichEdit_AutoUrlDetect (BYVAL hRichEdit AS HWND, BYVAL fUrlDetect AS LO
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *hRichEdit* | The handle of the RichEdit control. |
+| *hRichEdit* | The handle of the rich edit control. |
 | *fUrlDetect* | Specify 0 to disable automatic link detection, or one of the following values to enable various kinds of detection. |
 
 | fUrlDetect value  | Description |
@@ -198,7 +198,7 @@ FUNCTION RichEdit_CanPaste (BYVAL hRichEdit AS HWND, BYVAL clipformat AS LONG) A
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *hRichEdit* | The handle of the RichEdit control. |
+| *hRichEdit* | The handle of the rich edit control. |
 | *clipformat* | Specifies the [Clipboard Formats](https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats) to try. To try any format currently on the clipboard, set this parameter to zero. |
 
 #### Return value
@@ -209,14 +209,14 @@ If the clipboard format cannot be pasted, the return value is zero.
 
 # <a name="RichEdit_CanRedo"></a>RichEdit_CanRedo
 
-Determines whether there are any actions in the control redo queue.
+Determines whether there are any actions in the rich control redo queue.
 
 ```
 FUNCTION RichEdit_CanRedo (BYVAL hRichEdit AS HWND) AS LONG
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *hRichEdit* | The handle of the RichEdit control. |
+| *hRichEdit* | The handle of the rich edit control. |
 
 #### Return value
 
@@ -227,14 +227,14 @@ If the redo queue is empty, the return value is zero.
 
 # <a name="RichEdit_CanUndo"></a>RichEdit_CanUndo
 
-Determines whether there are any actions in an edit control's undo queue.
+Determines whether there are any actions in the rich edit control undo queue.
 
 ```
 FUNCTION RichEdit_CanUndo (BYVAL hRichEdit AS HWND) AS LONG
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *hRichEdit* | The handle of the RichEdit control. |
+| *hRichEdit* | The handle of the rich edit control. |
 
 #### Return value
 
@@ -244,17 +244,40 @@ If the undo queue is empty, the return value is zero.
 
 # <a name="RichEdit_CharFromPos"></a>RichEdit_CharFromPos
 
-Gets information about the character closest to a specified point in the client area of an edit control.
+Gets information about the character closest to a specified point in the client area of a rich edit control.
 
 ```
 FUNCTION RichEdit_CharFromPos (BYVAL hRichEdit AS HWND, BYVAL lppl AS POINTL PTR) AS LONG
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *hRichEdit* | The handle of the RichEdit control. |
-| *lppl* | A pointer to a [POINTL](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-pointl) structure that contains the horizontal and vertical coordinates of a point in the control's client area. The coordinates are in screen units and are relative to the upper-left corner of the control's client area.. |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lppl* | A pointer to a [POINTL](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-pointl) structure that contains the horizontal and vertical coordinates of a point in the control's client area. The coordinates are in screen units and are relative to the upper-left corner of the control's client area. |
 
 #### Return value
 
 The return value specifies the zero-based character index of the character nearest the specified point. The return value indicates the last character in the edit control if the specified point is beyond the last character in the control.
 
+# <a name="RichEdit_DisplayBand"></a>RichEdit_DisplayBand
+
+Displays a portion of the contents of a rich edit control, as previously formatted for a device using the [EM_FORMATRANGE]([url](https://learn.microsoft.com/en-us/windows/win32/controls/em-formatrange)) message.
+
+```
+FUNCTION RichEdit_DisplayBand (BYVAL hRichEdit AS HWND, BYVAL lprc AS RECT PTR) AS LONG
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lprc* | A pointer to a [RECT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect) structure specifying the display area of the device. |
+
+#### Return value
+
+If the operation succeeds, the return value is TRUE.
+
+If the operation fails, the return value is FALSE.
+
+#### Remarks
+
+Text and Component Object Model (COM) objects are clipped by the rectangle. The application does not need to set the clipping region.
+
+Banding is the process by which a single page of output is generated using one or more separate rectangles, or bands. When all bands are placed on the page, a complete image results. This approach is often used by raster printers that do not have sufficient memory or ability to image a full page at one time. Banding devices include most dot matrix printers as well as some laser printers.
