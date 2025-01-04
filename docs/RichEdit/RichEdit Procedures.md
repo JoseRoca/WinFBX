@@ -545,3 +545,25 @@ END FUNCTION
 #### Return value
 
 This message returns the value of the **dwMask** member of the [CHARFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformata) structure.
+
+# <a name="RichEdit_GetCTFModeBias"></a>RichEdit_GetCTFModeBias
+
+Gets the Text Services Framework mode bias values for a Microsoft Rich Edit control.
+
+```
+FUNCTION RichEdit_GetCTFModeBias (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETCTFMODEBIAS, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+The current Text Services Framework mode bias value.
+
+#### Remarks
+
+To get the IME mode bias, call **RichEdit_GetIMEModeBias**.
+
+
