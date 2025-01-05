@@ -1398,3 +1398,25 @@ If there are no actions that can be undone or the type of the next undo action i
 #### Remarks
 
 The types of actions that can be undone or redone include typing, delete, drag, drop, cut, and paste operations. This information can be useful for applications that provide an extended user interface for undo and redo operations, such as a drop-down list box of actions that can be undone.
+
+# <a name="RichEdit_GetWordBreakProc"></a>RichEdit_GetWordBreakProc
+
+Retrieves the address of the current Wordwrap function.
+
+```
+FUNCTION RichEdit_GetWordBreakProc (BYVAL hRichEdit AS HWND) AS LONG_PTR
+   FUNCTION = SendMessageW(hRichEdit, EM_GETWORDBREAKPROC, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+The return value specifies the address of the application-defined Wordwrap function. The return value is **NULL** if no Wordwrap function exists.
+
+#### Remarks
+
+A Wordwrap function scans a text buffer that contains text to be sent to the display, looking for the first word that does not fit on the current display line. The wordwrap function places this word at the beginning of the next line on the display. A Wordwrap function defines the point at which the system should break a line of text for multiline edit controls, usually at a space character that separates two words.
