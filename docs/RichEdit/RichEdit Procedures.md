@@ -2111,3 +2111,31 @@ If the operation fails, the return value is zero.
 #### Note
 
 This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions.
+
+# <a name="RichEdit_SetIMEModeBias"></a>RichEdit_SetIMEModeBias
+
+Sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
+
+```
+FUNCTION RichEdit_SetIMEModeBias (BYVAL hRichEdit AS HWND, BYVAL nModeBias AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit,EM_SETIMEMODEBIAS, nModeBias, nModeBias)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *nModeBias* | IME mode bias value. It can be one of the following.<br>**IMF_SMODE_PLAURALCLAUSE**. Sets the IME mode bias to Name.<br>**IMF_SMODE_NONE**. No bias. |
+
+#### Return value
+
+This message returns the new IME mode bias setting.
+
+#### Remarks
+
+When the IME generates a list of alternative choices for a set of characters, this message sets the criteria by which some of the choices will appear at the top of the list.
+
+To set the Text Services Framework (TSF) mode bias, use **RichEdit_SetCTFModeBias**.
+
+The application should call **RichEdit_IsIME** before calling this function.
+
