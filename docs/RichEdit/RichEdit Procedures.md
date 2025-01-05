@@ -2734,3 +2734,29 @@ Returns **TRUE** if *pto* is valid, otherwise **FALSE**.
 #### Remarks
 
 Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
+
+# <a name="RichEdit_SetUndoLimit"></a>RichEdit_SetUndoLimit
+
+Sets the maximum number of actions that can stored in the undo queue of a rich edit control.
+
+```
+FUNCTION RichEdit_SetUndoLimit (BYVAL hRichEdit AS HWND, BYVAL maxactions AS DWORD) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETUNDOLIMIT, maxactions, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *maxactions* | Specifies the maximum number of actions that can be stored in the undo queue. |
+
+#### Return value
+
+The return value is the new maximum number of undo actions for the rich edit control. This value may be less than *maxactions* if memory is limited.
+
+#### Remarks
+
+By default, the maximum number of actions in the undo queue is 100. If you increase this number, there must be enough available memory to accommodate the new number. For better performance, set the limit to the smallest possible value.
+
+Setting the limit to zero disables the **Undo** feature.
+
