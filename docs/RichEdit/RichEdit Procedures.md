@@ -2330,7 +2330,7 @@ This message sets the text layout for the entire document. However, embedded con
 
 # <a name="RichEdit_SetPalette"></a>RichEdit_SetPalette
 
-Deprecated. Sets the text layout for a Microsoft Rich Edit control.
+Changes the palette that a rich edit control uses for its display window.
 
 ```
 SUB RichEdit_SetPalette (BYVAL hRichEdit AS HWND, BYVAL newPalette AS HPALETTE)
@@ -2346,3 +2346,24 @@ END SUB
 #### Remarks
 
 The rich edit control does not check whether the new palette is valid.
+
+# <a name="RichEdit_SetParaFormat"></a>RichEdit_SetParaFormat
+
+Sets the paragraph formatting for the current selection in a rich edit control.
+
+```
+FUNCTION RichEdit_SetParaFormat (BYVAL hRichEdit AS HWND, BYVAL pfmt AS PARAFORMAT PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETPARAFORMAT, 0, cast(LPARAM, pfmt))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pfmt* | pointer to a [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure specifying the new paragraph formatting attributes. Only the attributes specified by the dwMask member are changed. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value.
+
+If the operation fails, the return value is zero.
