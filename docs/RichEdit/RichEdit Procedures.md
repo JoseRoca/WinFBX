@@ -1872,7 +1872,7 @@ END FUNCTION
 | **SCF_SELECTION** | Applies the formatting to the current selection. If the selection is empty, the character formatting is applied to the insertion point, and the new character format is in effect only until the insertion point changes. |
 | **SPF_SETDEFAULT** | Sets the default paragraph formatting attributes. |
 | **SCF_SMARTFONT** | Apply the font only if it can handle script. |
-| **SCF_USEUIRULES** | **RichEdit 4.1**: Used with SCF_SELECTION. Indicates that format came from a toolbar or other UI tool, so UI formatting rules should be used instead of literal formatting. |
+| **SCF_USEUIRULES** | **RichEdit 4.1**: Used with **SCF_SELECTION**. Indicates that format came from a toolbar or other UI tool, so UI formatting rules should be used instead of literal formatting. |
 | **SCF_WORD** | Applies the formatting to the selected word or words. If the selection is empty but the insertion point is inside a word, the formatting is applied to the word. The **SCF_WORD** value must be used in conjunction with the **SCF_SELECTION** value. |
 
 #### Return value
@@ -1884,3 +1884,44 @@ If the operation fails, the return value is zero.
 #### Remarks
 
 If this message is sent more than once with the same parameters, the effect on the text is toggled. That is, sending the message once produces the effect, sending the message twice cancels the effect, and so forth.
+
+# <a name="RichEdit_SetCTFModeBias"></a>RichEdit_SetCTFModeBias
+
+Sets the Text Services Framework (TSF) mode bias for a rich edit control.
+
+```
+FUNCTION RichEdit_SetCTFModeBias (BYVAL hRichEdit AS HWND, BYVAL nModeBias AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETCTFMODEBIAS, nModeBias, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *nModeBias* | Mode bias value. This can be one of the following values below. |
+
+| Mode bias value  | Meaning |
+| ---------------- | ------- |
+| **CTFMODEBIAS_DEFAULT** | There is no mode bias. |
+| **CTFMODEBIAS_FILENAME** | The bias is to a filename. |
+| **CTFMODEBIAS_NAME** | The bias is to a name. |
+| **CTFMODEBIAS_READING** | The bias is to the reading. |
+| **CTFMODEBIAS_DATETIME** | The bias is to a date or time. |
+| **CTFMODEBIAS_CONVERSATION** | The bias is to a conversation. |
+| **CTFMODEBIAS_NUMERIC** | The bias is to a number. |
+| **CTFMODEBIAS_HIRAGANA** | The bias is to hiragana strings. |
+| **CTFMODEBIAS_KATAKANA** | The bias is to katakana strings. |
+| **CTFMODEBIAS_HANGUL** | The bias is to Hangul characters. |
+| **CTFMODEBIAS_HALFWIDTHKATAKANA** | The bias is to half-width katakana strings. |
+| **CTFMODEBIAS_FULLWIDTHALPHANUMERIC** | The bias is to full-width alphanumeric characters. |
+| **CTFMODEBIAS_HALFWIDTHALPHANUMERIC** | The bias is to half-width alphanumeric characters. |
+
+#### Return value
+
+If successful, the return value is the new TSF mode bias value. If unsuccessful, the return value is the old TSF mode bias value.
+
+#### Remarks
+
+When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
+
+To set the mode bias for the Input Method Editor (IME), use **RichEdit_setModeBias**.
