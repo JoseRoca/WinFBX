@@ -2285,3 +2285,22 @@ If the operation succeeds, the return value is a nonzero value.
 
 If the operation fails, the return value is zero.
 
+# <a name="RichEdit_SetOptions"></a>RichEdit_SetOptions
+
+Sets the options for a rich edit control.
+
+```
+FUNCTION RichEdit_SetOptions (BYVAL hRichEdit AS HWND, BYVAL fCoop AS LONG, BYVAL fOptions AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETOPTIONS, fCoop, fOptions)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *fCoop* | pecifies the operation, which can be one of these values.<br>**ECOOP_SET**. Sets the options to those specified by *fOptions*.<br>**ECOOP_OR**. Combines the specified options with the current options.<br>**ECOOP_AND**. Retains only those current options that are also specified by *fOptions*.<br>**ECOOP_XOR**. Logically exclusive OR the current options with those specified by *fOptions*. |
+| *fOptions* | Specifies one or more of the following values.<br>**ECO_AUTOWORDSELECTION**- Automatic selection of word on double-click.<br>**ECO_AUTOVSCROLL**. Same as **ES_AUTOVSCROLL** style.<br>**ECO_AUTOHSCROLL**. Same as **ES_AUTOHSCROLL** style.<br>**ECO_NOHIDESEL**. Same as **ES_NOHIDESEL** style.<br>**ECO_READONLY**. Same as **ES_READONLY** style.<br>**ECO_WANTRETURN**. Same as **ES_WANTRETURN** style.<br>**ECO_SELECTIONBAR**. Same as **ES_SELECTIONBAR** style.<br>**ECO_VERTICAL**. Same as **ES_VERTICAL** style. Available in Asian-language versions only. |
+
+#### Return value
+
+This message returns the current options of the edit control.
