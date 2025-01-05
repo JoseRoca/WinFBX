@@ -587,9 +587,9 @@ END SUB
 ' ========================================================================================
 ' Retrieves the client area coordinates of a specified character in a rich edit control.
 ' ========================================================================================
-PRIVATE FUNCTION RichEdit_PosFromChar (BYVAL hRichEdit AS HWND, BYVAL pt AS POINTL PTR, BYVAL index as DWORD) AS DWORD
-   FUNCTION = SendMessageW(hRichEdit, EM_POSFROMCHAR, cast(WPARAM, pt), index)
-END FUNCTION
+PRIVATE SUB RichEdit_PosFromChar (BYVAL hRichEdit AS HWND, BYVAL pt AS POINTL PTR, BYVAL index as DWORD)
+   SendMessageW(hRichEdit, EM_POSFROMCHAR, cast(WPARAM, pt), index)
+END SUB
 ' ========================================================================================
 
 ' ========================================================================================
@@ -652,9 +652,9 @@ END FUNCTION
 ' ========================================================================================
 ' Sets the current state of the bidirectional options in the rich edit control.
 ' ========================================================================================
-PRIVATE FUNCTION RichEdit_SetBidiOptions (BYVAL hRichEdit AS HWND, BYVAL pOptions AS BIDIOPTIONS PTR) AS LONG
-   FUNCTION = SendMessageW(hRichEdit, EM_SETBIDIOPTIONS, 0, cast(LPARAM, pOptions))
-END FUNCTION
+PRIVATE SUB RichEdit_SetBidiOptions (BYVAL hRichEdit AS HWND, BYVAL pOptions AS BIDIOPTIONS PTR)
+   SendMessageW(hRichEdit, EM_SETBIDIOPTIONS, 0, cast(LPARAM, pOptions))
+END SUB
 ' ========================================================================================
 
 ' ========================================================================================
@@ -806,7 +806,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Deprecated. Sets the text layout for a Microsoft Rich Edit control.
+' Changes the palette that a rich edit control uses for its display window.
 ' ========================================================================================
 PRIVATE SUB RichEdit_SetPalette (BYVAL hRichEdit AS HWND, BYVAL newPalette AS HPALETTE)
    SendMessageW hRichEdit, EM_SETPALETTE, cast(WPARAM, newPalette), 0
@@ -921,7 +921,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Sets the text mode or undo level of a rich edit control.
+' Sets the current state of the typography options of a rich edit control.
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_SetTypographyOptions (BYVAL hRichEdit AS HWND, BYVAL pto AS LONG, BYVAL fMask AS LONG) AS LONG
    FUNCTION = SendMessageW(hRichEdit, EM_SETTYPOGRAPHYOPTIONS, pto, fMask)
@@ -948,8 +948,8 @@ END SUB
 ' ========================================================================================
 ' Sets the extended word-break procedure.
 ' ========================================================================================
-PRIVATE FUNCTION RichEdit_SetWordBreakProcEx (BYVAL hRichEdit AS HWND, BYVAL pfn AS EDITWORDBREAKPROC) AS DWORD
-   FUNCTION = SendMessageW(hRichEdit, EM_SETWORDBREAKPROCEX, 0, cast(LPARAM, cast(EDITWORDBREAKPROC, pfn)))
+PRIVATE FUNCTION RichEdit_SetWordBreakProcEx (BYVAL hRichEdit AS HWND, BYVAL pfn AS EDITWORDBREAKPROCEX) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETWORDBREAKPROCEX, 0, cast(LPARAM, cast(EDITWORDBREAKPROCEX, pfn)))
 END FUNCTION
 ' ========================================================================================
 
@@ -987,7 +987,7 @@ END FUNCTION
 
 ' ========================================================================================
 ' Replaces the contents of a rich edit control with a stream of data provided by an
-' application defined–EditStreamCallback callback function.
+' application defined EditStreamCallback callback function.
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_StreamIn (BYVAL hRichEdit AS HWND, BYVAL psf AS LONG, BYVAL pedst AS EDITSTREAM PTR) AS DWORD
    FUNCTION = SendMessageW(hRichEdit, EM_STREAMIN, psf, cast(LPARAM, pedst))
@@ -995,7 +995,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Causes a rich edit control to pass its contents to an application–defined
+' Causes a rich edit control to pass its contents to an application defined
 ' EditStreamCallback callback function.
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_StreamOut (BYVAL hRichEdit AS HWND, BYVAL psf AS LONG, BYVAL pedst AS EDITSTREAM PTR) AS DWORD
@@ -1084,7 +1084,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-FUNCTION RichEdit_LoadRtfFromFileW ( _
+PRIVATE FUNCTION RichEdit_LoadRtfFromFileW ( _
    BYVAL hRichEdit AS HWND _                ' // Handle of the Rich Edit control
  , BYREF wszFileName AS WSTRING _           ' // Name of the file to load
  ) AS BOOLEAN                               ' // TRUE or FALSE
@@ -1146,7 +1146,7 @@ END FUNCTION
 ' ========================================================================================
 ' Loads a RTF resource file into a Rich Edit control.
 ' The EM_STREAMIN message replaces the contents of a rich edit control with a stream of
-' data provided by an application defined–EditStreamCallback callback function.
+' data provided by an application defined EditStreamCallback callback function.
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_LoadRtfFromResourceW ( _
    BYVAL hRichEdit AS HWND _                ' // Handle of the Rich Edit control
