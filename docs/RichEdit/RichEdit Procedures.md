@@ -1480,7 +1480,17 @@ END FUNCTION
 #### Return value
 The message returns TRUE if message is processed, which it will be if both *pzNum* and *pzDen* are not **NULL**.
 
-#### Remarks
+# <a name="RichEdit_HideSelection"></a>RichEdit_HideSelection
 
-Edit: Supported in Windows 10 1809 and later. The edit control needs to have the ES_EX_ZOOMABLE extended style set, for this message to have an effect.
+Hides or shows the selection in a rich edit control.
 
+```
+SUB RichEdit_HideSelection (BYVAL hRichEdit AS HWND, BYVAL fHide AS DWORD)
+   SendMessageW hRichEdit, EM_HIDESELECTION, fHide, 0
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *fHide* | Value specifying whether to hide or show the selection. If this parameter is zero, the selection is shown. Otherwise, the selection is hidden. |
