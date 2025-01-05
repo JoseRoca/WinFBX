@@ -2328,3 +2328,21 @@ Return value is the new text layout value.
 
 This message sets the text layout for the entire document. However, embedded contents are not rotated and must be rotated separately by the application.
 
+# <a name="RichEdit_SetPalette"></a>RichEdit_SetPalette
+
+Deprecated. Sets the text layout for a Microsoft Rich Edit control.
+
+```
+SUB RichEdit_SetPalette (BYVAL hRichEdit AS HWND, BYVAL newPalette AS HPALETTE)
+   SendMessageW hRichEdit, EM_SETPALETTE, cast(WPARAM, newPalette), 0
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *newPalette* | Handle to the new palette used by the rich edit control. |
+
+#### Remarks
+
+The rich edit control does not check whether the new palette is valid.
