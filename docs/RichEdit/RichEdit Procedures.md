@@ -2912,3 +2912,41 @@ A rich edit control groups consecutive typing actions, including characters dele
 
 You can send the **RichEdit_StopGroupTyping** message to break consecutive typing actions into smaller undo groups. For example, you could send **RichEdit_StopGroupTyping** after each character or at each word break.
 
+# <a name="RichEdit_StreamIn"></a>RichEdit_StreamIn
+
+Replaces the contents of a rich edit control with a stream of data provided by an application defined [EditStreamCallback](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-editstreamcallback) callback function.
+
+```
+FUNCTION RichEdit_StreamIn (BYVAL hRichEdit AS HWND, BYVAL psf AS LONG, BYVAL pedst AS EDITSTREAM PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_STREAMIN, psf, cast(LPARAM, pedst))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *psf* | Specifies the data format and replacement options. This value must be one of the following values (see table below). |
+| *pedst* | Pointer to an [EDITSTREAM](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-editstream)  structure. On input, the **pfnCallback** member of this structure must point to an application defined **EditStreamCallback** function. On output, the **dwError** member can contain a nonzero error code if an error occurred. |
+
+| Value  | Meaning |
+| ------ | ------- |
+| **SF_RTF** | RTF |
+| **SF_TEXT** | Text |
+
+In addition, you can specify the following flags.
+
+| Value  | Meaning |
+| ------ | ------- |
+| **SFF_PLAINRTF** | If specified, only keywords common to all languages are streamed in. Language-specific RTF keywords in the stream are ignored. If not specified, all keywords are streamed in. You can combine this flag with the **SF_RTF** flag. |
+| **SFF_SELECTION** | If specified, the data stream replaces the contents of the current selection. If not specified, the data stream replaces the entire contents of the control. You can combine this flag with the **SF_TEXT** or **SF_RTF** flags. |
+| **SF_UNICODE** | **Rich Edit 2.0 and later**: Indicates Unicode text. You can combine this flag with the **SF_TEXT** flag. |
+| **SF_USECODEPAGE** | **Rich Edit 3.0 and later**: Reads UTF-8 RTF and text using other code pages. The code page is set in the high word of *psf*. For example, for UTF-8 RTF, set *psf* to (CP_UTF8 << 16) | SF_USECODEPAGE | SF_RTF. |
+
+#### Return value
+
+This message returns the number of characters read.
+
+#### Remarks
+
+When you send an **RichEdit_StreamIn** message, the rich edit control makes repeated calls to the **EditStreamCallback** function specified by the **pfnCallback** member of the [EDITSTREAM](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-editstream) structure. Each time the callback function is called, it fills a buffer with data to read into the control. This continues until the callback function indicates that the stream-in operation has been completed or an error occurs.
+
