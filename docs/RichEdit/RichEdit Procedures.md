@@ -2393,3 +2393,28 @@ If an edit control is created with the **ES_PASSWORD** style, the default passwo
 
 **Rich Edit**: Supported in Microsoft Rich Edit 2.0 and later. Both single-line and multiline edit controls support the password style and messages.
 
+# <a name="RichEdit_SetPunctuation"></a>RichEdit_SetPunctuation
+
+Sets the punctuation characters for a rich edit control.
+
+```
+FUNCTION RichEdit_SetPunctuation (BYVAL hRichEdit AS HWND, BYVAL ptype AS LONG, BYVAL ppunct AS PUNCTUATION PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETPUNCTUATION, ptype, cast(LPARAM, ppunct))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *ptype* | Specifies the punctuation type, which can be one of the following values.<br>**PC_LEADING**. Leading punctuation characters.<br>**PC_FOLLOWING**. Following punctuation characters.<br>**PC_DELIMITER**. Delimiter.<br>**PC_OVERFLOW**. Not supported. |
+| *ppunct* | Pointer to a [PUNCTUATION](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-punctuation) structure that contains the punctuation characters. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value.
+
+If the operation fails, the return value is zero.
+
+### Note
+
+This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions.
