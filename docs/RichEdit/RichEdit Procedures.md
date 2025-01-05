@@ -2995,3 +2995,30 @@ This message returns the number of characters written to the data stream.
 #### Remarks
 
 When you send an **RichEdit_StreamOut** message, the rich edit control makes repeated calls to the **EditStreamCallback** function specified by the **pfnCallback** member of the [EDITSTREAM](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-editstream) structure.  Each time it calls the callback function, the control passes a buffer containing a portion of the contents of the control. This process continues until the control has passed all its contents to the callback function, or until an error occurs.
+
+# <a name="RichEdit_Undo"></a>RichEdit_Undo
+
+This message undoes the last edit control operation in the control's undo queue.
+
+```
+FUNCTION RichEdit_Undo (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_UNDO, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+Return value
+#### For a single-line edit control, the return value is always **TRUE**.
+
+For a multiline edit control, the return value is **TRUE** if the undo operation is successful, or **FALSE** if the undo operation fails.
+
+#### Remarks
+
+**Edit controls and Rich Edit 1.0**: An undo operation can also be undone. For example, you can restore deleted text with the first **EM_UNDO** message, and remove the text again with a second **EM_UNDO** message as long as there is no intervening edit operation.
+
+**Rich Edit 2.0 and later**: The undo feature is multilevel so sending two **EM_UNDO** messages will undo the last two operations in the undo queue. To redo an operation, send the **EM_REDO** message.
+
+**Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later.
