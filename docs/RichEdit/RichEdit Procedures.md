@@ -2672,7 +2672,7 @@ END FUNCTION
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
-| *pvalues* | One or more values from the TEXTMODE enumeration type. The values specify the new settings for the control's text mode and undo level parameters. |
+| *pvalues* | One or more values from the [TEXTMODE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-textmode) enumeration type. The values specify the new settings for the control's text mode and undo level parameters. |
 
 Specify one of the following values to set the text mode parameter. If you do not specify a text mode value, the text mode remains at its current setting.
 
