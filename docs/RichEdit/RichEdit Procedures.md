@@ -282,9 +282,9 @@ END FUNCTION
 
 #### Return value
 
-If the operation succeeds, the return value is TRUE.
+If the operation succeeds, the return value is **TRUE**.
 
-If the operation fails, the return value is FALSE.
+If the operation fails, the return value is **FALSE**.
 
 #### Remarks
 
@@ -429,7 +429,7 @@ END FUNCTION
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
-| *fOperation* | pecifies the find operation. This parameter can be one of the following values.<br>**WB_CLASSIFY**. Returns the character class and word-break flags of the character at the specified position.<br>**WB_ISDELIMITER**. Returns TRUE if the character at the specified position is a delimiter, or FALSE otherwise.<br>**WB_LEFT**. Finds the nearest character before the specified position that begins a word.<br>**WB_LEFTBREAK**. Finds the next word end before the specified position. This value is the same as WB_PREVBREAK.<br>**WB_MOVEWORDLEFT**. Finds the next character that begins a word before the specified position. This value is used during CTRL+LEFT ARROW key processing. This value is the similar to WB_MOVEWORDPREV. See Remarks for more information.<br>**WB_MOVEWORDRIGHT**. Finds the next character that begins a word after the specified position. This value is used during CTRL+right key processing. This value is similar to WB_MOVEWORDNEXT. See Remarks for more information.<br>**WB_RIGHT**. Finds the next character that begins a word after the specified position.<br>**WB_RIGHTBREAK**. Finds the next end-of-word delimiter after the specified position. This value is the same as WB_NEXTBREAK. |
+| *fOperation* | pecifies the find operation. This parameter can be one of the following values.<br>**WB_CLASSIFY**. Returns the character class and word-break flags of the character at the specified position.<br>**WB_ISDELIMITER**. Returns **TRUE** if the character at the specified position is a delimiter, or **FALSE** otherwise.<br>**WB_LEFT**. Finds the nearest character before the specified position that begins a word.<br>**WB_LEFTBREAK**. Finds the next word end before the specified position. This value is the same as WB_PREVBREAK.<br>**WB_MOVEWORDLEFT**. Finds the next character that begins a word before the specified position. This value is used during CTRL+LEFT ARROW key processing. This value is the similar to WB_MOVEWORDPREV. See Remarks for more information.<br>**WB_MOVEWORDRIGHT**. Finds the next character that begins a word after the specified position. This value is used during CTRL+right key processing. This value is similar to WB_MOVEWORDNEXT. See Remarks for more information.<br>**WB_RIGHT**. Finds the next character that begins a word after the specified position.<br>**WB_RIGHTBREAK**. Finds the next end-of-word delimiter after the specified position. This value is the same as WB_NEXTBREAK. |
 | *dwStartPos* | Zero-based character starting position. |
 
 #### Return value
@@ -439,7 +439,7 @@ The message returns a value based on the *fOperation* parameter.
 | Return code  | Description |
 | ------------ | ----------- |
 | **WB_CLASSIFY** | Returns the character class and word-break flags of the character at the specified position. |
-| **WB_ISDELIMITER** | Returns TRUE if the character at the specified position is a delimiter; otherwise it returns FALSE. |
+| **WB_ISDELIMITER** | Returns **TRUE** if the character at the specified position is a delimiter; otherwise it returns **FALSE**. |
 | **Others** | Returns the character index of the word break. |
 
 #### Remarks
@@ -581,7 +581,7 @@ END FUNCTION
 
 #### Return value
 
-If the TSF keyboard is open, the return value is TRUE. Otherwise, it is FALSE.
+If the TSF keyboard is open, the return value is **TRUE**. Otherwise, it is **FALSE**.
 
 # <a name="RichEdit_GetEditStyle"></a>RichEdit_GetEditStyle
 
@@ -1478,7 +1478,7 @@ END FUNCTION
 | *pzDen* | A pointer to a **DWORD** value that receives the denominator of the zoom ratio.. |
 
 #### Return value
-The message returns TRUE if message is processed, which it will be if both *pzNum* and *pzDen* are not **NULL**.
+The message returns **TRUE** if message is processed, which it will be if both *pzNum* and *pzDen* are not **NULL**.
 
 # <a name="RichEdit_HideSelection"></a>RichEdit_HideSelection
 
@@ -1494,3 +1494,22 @@ END SUB
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
 | *fHide* | Value specifying whether to hide or show the selection. If this parameter is zero, the selection is shown. Otherwise, the selection is hidden. |
+
+# <a name="RichEdit_IsIME"></a>RichEdit_IsIME
+
+Determines if current input locale is an East Asian locale.
+
+```
+FUNCTION RichEdit_IsIME (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_ISIME, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+Returns **TRUE** if it is an East Asian locale. Otherwise, it returns **FALSE**.
+
