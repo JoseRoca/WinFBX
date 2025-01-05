@@ -2549,3 +2549,33 @@ If the start is 0 and the end is -1, all the text in the edit control is selecte
 **Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later.
 
 If the edit control has the **ES_NOHIDESEL** style, the selected text is highlighted regardless of whether the control has focus. Without the **ES_NOHIDESEL** style, the selected text is highlighted only when the edit control has the focus.
+
+# <a name="RichEdit_SetTabStops"></a>RichEdit_SetTabStops
+
+Sets the tab stops in a multiline rich edit control. The **EM_SETTABSTOPS** message sets the tab stops in a multiline edit control. When text is copied to the control, any tab character in the text causes space to be generated up to the next tab stop. This message is processed only by multiline edit controls.
+
+```
+FUNCTION RichEdit_SetTabStops (BYVAL hRichEdit AS HWND, BYVAL nTabs AS LONG, BYVAL rgTabStops AS LONG_PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETTABSTOPS, nTabs, cast(LPARAM, rgTabStops))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *nTabs* | The number of tab stops contained in the array. If this parameter is zero, the *rgTabStops* parameter is ignored and default tab stops are set at every 32 dialog template units. If this parameter is 1, tab stops are set at every n dialog template units, where n is the distance pointed to by the *rgTabStops* parameter. If this parameter is greater than 1, *rgTabStops* is a pointer to an array of tab stops. |
+| *rgTabStops* | A pointer to an array of unsigned integers specifying the tab stops, in dialog template units. If the *nTabs* parameter is 1, this parameter is a pointer to an unsigned integer containing the distance between all tab stops, in dialog template units. |
+
+#### Return value
+
+If all the tabs are set, the return value is *TRUE*.
+
+If all the tabs are not set, the return value is *FALSE*.
+
+#### Remarks
+
+The **EM_SETTABSTOPS** message does not automatically redraw the edit control window. If the application is changing the tab stops for text already in the edit control, it should call the Windows API **InvalidateRect** function to redraw the edit control window.
+
+The values specified in the array are in dialog template units, which are the device-independent units used in dialog box templates. To convert measurements from dialog template units to screen units (pixels), use the Windows API **MapDialogRect** function.
+
+**Rich Edit**: Supported in Microsoft Rich Edit 3.0 and later. A rich edit control can have the maximum number of tab stops specified by MAX_TAB_STOPS.
