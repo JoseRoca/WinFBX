@@ -1438,3 +1438,25 @@ END FUNCTION
 #### Return value
 
 The message returns the address of the current procedure.
+
+# <a name="RichEdit_GetWordWrapMode"></a>RichEdit_GetWordWrapMode
+
+Retrieves the current word wrap and word-break options for the rich edit control.
+
+```
+FUNCTION RichEdit_GetWordWrapMode (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETWORDWRAPMODE, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+The message returns the current word wrap and word-break options.
+
+####Remarks
+
+This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions of Rich Edit. This message must not be sent by the application-defined, word-break procedure.
