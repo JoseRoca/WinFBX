@@ -1340,3 +1340,25 @@ END FUNCTION
 #### Return value
 
 The return value is the position of the scroll box.
+
+# <a name="RichEdit_GetTypographyOptions"></a>RichEdit_GetTypographyOptions
+
+Returns the current state of the typography options of a rich edit control.
+
+```
+FUNCTION RichEdit_GetTypographyOptions (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETTYPOGRAPHYOPTIONS, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+Returns the current typography options. For a list of options, see [EM_SETTYPOGRAPHYOPTIONS](https://learn.microsoft.com/en-us/windows/win32/controls/em-settypographyoptions).
+
+#### Remarks
+
+You can turn on advanced line breaking by sending the **RichEdit_SetTypographyOPtions** message. Advanced and normal line breaking may also be turned on automatically by the rich edit control if it is needed for certain languages.
