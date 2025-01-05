@@ -1420,3 +1420,21 @@ The return value specifies the address of the application-defined Wordwrap funct
 #### Remarks
 
 A Wordwrap function scans a text buffer that contains text to be sent to the display, looking for the first word that does not fit on the current display line. The wordwrap function places this word at the beginning of the next line on the display. A Wordwrap function defines the point at which the system should break a line of text for multiline edit controls, usually at a space character that separates two words.
+
+# <a name="RichEdit_GetWordBreakProcEx"></a>RichEdit_GetWordBreakProcEx
+
+Retrieves the address of the currently registered extended word-break procedure.
+
+```
+FUNCTION RichEdit_GetWordBreakProcEx (BYVAL hRichEdit AS HWND) AS LONG_PTR
+   FUNCTION = SendMessageW(hRichEdit, EM_GETWORDBREAKPROCEX, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+The message returns the address of the current procedure.
