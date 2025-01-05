@@ -1925,3 +1925,23 @@ If successful, the return value is the new TSF mode bias value. If unsuccessful,
 When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
 
 To set the mode bias for the Input Method Editor (IME), use **RichEdit_setModeBias**.
+
+# <a name="RichEdit_SetCTFOpenStatus"></a>RichEdit_SetCTFOpenStatus
+
+Opens or closes the Text Services Framework (TSF) keyboard.
+
+```
+FUNCTION RichEdit_SetCTFOpenStatus (BYVAL hRichEdit AS HWND, BYVAL fTSFkbd AS LONG) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETCTFOPENSTATUS, fTSFkbd, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *fTSFkbd* | To turn on the TSF keyboard, use **TRUE**. To turn off the TSF keyboard, use **FALSE**. |
+
+#### Return value
+
+f successful, this message returns **TRUE**. If unsuccessful, this message returns **FALSE**.
+
