@@ -2615,3 +2615,22 @@ END IF
 ```
 
 If *lnwidth* is zero, no line breaks are created.
+
+# <a name="RichEdit_SetText"></a>RichEdit_SetText
+
+Sets the text of an edit control.
+
+```
+FUNCTION RichEdit_SetText (BYVAL hRichEdit AS HWND, BYVAL pwszText AS WSTRING PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, WM_SETTEXT, 0, cast(LPARAM, pwszText))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pwszText* | A pointer to a null-terminated string that is the window text. |
+
+#### Return value
+
+The return value is **TRUE** if the text is set.
