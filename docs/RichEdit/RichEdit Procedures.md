@@ -1738,3 +1738,24 @@ END SUB
 
 This message is useful during **WM_SIZE** processing for the parent of a bottomless rich edit control.
 
+# <a name="RichEdit_Scroll"></a>RichEdit_Scroll
+
+Scrolls the text vertically in a multiline rich edit control.
+
+```
+FUNCTION RichEdit_Scroll (BYVAL hRichEdit AS HWND, BYVAL nAction AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SCROLL, nAction, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *nAction* | The action the scroll bar is to take. This parameter can be one of the following values:<br>**SB_LINEDOWN**. Scrolls down one line.<br>**SB_LINEUP**. Scrolls up one line.<br>**SB_PAGEDOWN**. Scrolls down one page.<br>**SB_PAGEUP**. Scrolls up one page. |
+
+#### Return value
+If the message is successful, the **HIWORD** of the return value is **TRUE**, and the **LOWORD** is the number of lines that the command scrolls. The number returned may not be the same as the actual number of lines scrolled if the scrolling moves to the beginning or the end of the text. If the *nAction* parameter specifies an invalid value, the return value is **FALSE**.
+
+#### Remarks
+
+To scroll to a specific line or character position, use the **RichEdit_LineScroll** message. To scroll the caret into view, use the **RichEdit_ScrollCaret** message.
