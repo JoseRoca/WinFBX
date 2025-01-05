@@ -3097,3 +3097,67 @@ PRIVATE FUNCTION RichEdit_SetFontW ( _
 END FUNCTION
 ' ========================================================================================
 ```
+
+# <a name="RichEdit_LoadRtfFromFileW"></a>RichEdit_LoadRtfFromFileW
+
+Loads the contents of a RTF file into a Rich Edit Control.
+
+```
+FUNCTION RichEdit_LoadRtfFromFileW (BYVAL hRichEdit AS HWND, BYREF wszFileName AS WSTRING) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *wszFileName* | The name of the RTF file to load. |
+
+#### Return value
+
+If the operation succeeds, the return value is **TRUE**.
+
+If the operation fails, the return value is **FALSE**.
+
+#### Implementation
+
+```
+' ========================================================================================
+' Callback function used by the RichEdit_LoadRtfFromFileW function.
+' Transfers a stream of data into a rich edit control.
+' ========================================================================================
+FUNCTION RichEdit_LoadRtfFromFileCallback ( _
+   BYVAL hFile AS HANDLE _                  ' // Value of the dwCookie member of the EDITSTREAM structure.
+ , BYVAL lpBuff AS BYTE PTR _               ' // Pointer to a buffer to write to
+ , BYVAL cb AS LONG _                       ' // Maximum number of bytes to read
+ , BYVAL pcb AS LONG PTR _                  ' // Number of bytes actually read
+ ) AS UINT                                  ' // 0 for success, or an error code
+
+   IF ReadFile(hFile, lpBuff, cb, pcb, NULL) = 0 THEN FUNCTION = GetLastError
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+FUNCTION RichEdit_LoadRtfFromFileW ( _
+   BYVAL hRichEdit AS HWND _                ' // Handle of the Rich Edit control
+ , BYREF wszFileName AS WSTRING _           ' // Name of the file to load
+ ) AS BOOLEAN                               ' // TRUE or FALSE
+
+   DIM hFile AS HANDLE                      ' // File handle
+   DIM eds AS EDITSTREAM                    ' // EDITSTREAM structure
+
+   ' // Checks the validity of the parameters
+   IF hRichEdit = 0 THEN EXIT FUNCTION
+   IF LEN(wszFileName) = 0 THEN EXIT FUNCTION
+
+   ' // Opens the file and sends the message
+   hFile = CreateFileW(wszFileName, GENERIC_READ, FILE_SHARE_READ, _
+                       NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL)
+   IF hFile = INVALID_HANDLE_VALUE THEN EXIT FUNCTION
+   eds.dwCookie = cast(DWORD_PTR, hFile)
+   eds.pfnCallback = cast(EDITSTREAMCALLBACK, @RichEdit_LoadRtfFromFileCallback)
+   IF SendMessageW(hRichEdit, EM_STREAMIN, SF_RTF, cast(LPARAM, @eds)) > 0 AND eds.dwError = 0 THEN FUNCTION = TRUE
+   CloseHandle hFile
+
+END FUNCTION
+' ========================================================================================
+```
