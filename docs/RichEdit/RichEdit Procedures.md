@@ -1322,3 +1322,21 @@ END FUNCTION
 #### Return value
 
 The message returns the number of characters copied, not including the terminating null character.
+
+# <a name="RichEdit_GetThumb"></a>RichEdit_GetThumb
+
+Retrieves the position of the scroll box (thumb) in the vertical scroll bar of a multiline edit control.
+
+```
+FUNCTION RichEdit_GetThumb (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETTHUMB, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+The return value is the position of the scroll box.
