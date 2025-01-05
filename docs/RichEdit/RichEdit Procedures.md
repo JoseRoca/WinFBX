@@ -2883,3 +2883,32 @@ END SUB
 
 This method is only valid when the control is in-place active. Calls made while the control is inactive may fail.
 
+# <a name="RichEdit_StopGroupTyping"></a>RichEdit_StopGroupTyping
+
+Stops a rich edit control from collecting additional typing actions into the current undo action. The control stores the next typing action, if any, into a new action in the undo queue.
+
+```
+FUNCTION RichEdit_StopGroupTyping (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_STOPGROUPTYPING, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+The return value is zero. This message cannot fail.
+
+#### Remarks
+A rich edit control groups consecutive typing actions, including characters deleted by using the BackSpace key, into a single undo action until one of the following events occurs:
+
+- The control receives an **EM_STOPGROUPTYPING** message.
+- The control loses focus.
+- The user moves the current selection, either by using the arrow keys or by clicking the mouse.
+- The user presses the **Delete** key.
+- The user performs any other action, such as a paste operation that does not involve typing.
+
+You can send the **RichEdit_StopGroupTyping** message to break consecutive typing actions into smaller undo groups. For example, you could send **RichEdit_StopGroupTyping** after each character or at each word break.
+
