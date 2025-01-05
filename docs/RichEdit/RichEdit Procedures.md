@@ -1945,3 +1945,22 @@ END FUNCTION
 
 f successful, this message returns **TRUE**. If unsuccessful, this message returns **FALSE**.
 
+# <a name="RichEdit_SetEditStyle"></a>RichEdit_SetEditStyle
+
+Sets the current edit style flags.
+
+```
+FUNCTION RichEdit_SetEditStyle (BYVAL hRichEdit AS HWND, BYVAL fStyle AS LONG, BYVAL fMask AS LONG) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETEDITSTYLE, fStyle, fMask)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *fTSFkbd* | Specifies one or more edit style flags. For a list of possible values, see **RichEdit_GetEditStyle**. |
+| *fMask* | A mask consisting of one or more of the *fTSFkbd* values. Only the values specified in this mask will be set or cleared. This allows a single flag to be set or cleared without reading the current flag states. |
+
+#### Return value
+
+The return value is the state of the edit style flags after the rich edit control has attempted to implement your edit style changes. The edit style flags are a set of flags that indicate the current edit style.
