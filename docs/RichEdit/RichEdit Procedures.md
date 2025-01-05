@@ -2634,3 +2634,27 @@ END FUNCTION
 #### Return value
 
 The return value is **TRUE** if the text is set.
+
+# <a name="RichEdit_SetTextExW"></a>RichEdit_SetTextExW
+
+Sets the text of an edit control. Combines the functionality of the **WM_SETTEXT** and **EM_REPLACESEL** messages, and adds the ability to set text using a code page and to use either rich text or plain text.
+
+```
+FUNCTION RichEdit_SetTextExW (BYVAL hRichEdit AS HWND, BYVAL pstex AS SETTEXTEX PTR, BYVAL pwszText AS WSTRING PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETTEXTEX, cast(WPARAM, pstex), cast(LPARAM, pwszText))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pstex* | Pointer to a [SETTEXTEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-settextex) structure that specifies flags and an optional code page to use in translating to Unicode. |
+| *pwszText* | Pointer to the null-terminated text to insert. This text is an ANSI string, unless the code page is 1200 (Unicode). If *pwszText* starts with a valid RTF ASCII sequence for example, "{\rtf" or "{urtf" the text is read in using the RTF reader. |
+
+#### Return value
+
+If the operation is setting all of the text and succeeds, the return value is 1.
+
+If the operation is setting the selection and succeeds, the return value is the number of bytes or characters copied.
+
+If the operation fails, the return value is zero.
