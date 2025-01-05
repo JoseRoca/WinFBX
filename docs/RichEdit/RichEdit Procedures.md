@@ -1457,6 +1457,30 @@ END FUNCTION
 
 The message returns the current word wrap and word-break options.
 
-####Remarks
+#### Remarks
 
 This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions of Rich Edit. This message must not be sent by the application-defined, word-break procedure.
+
+# <a name="RichEdit_GetZoom"></a>RichEdit_GetZoom
+
+Retrieves the current zoom ratio, which is always between 1/64 and 64.
+
+```
+FUNCTION RichEdit_GetZoom (BYVAL hRichEdit AS HWND, BYVAL pzNum AS DWORD PTR, BYVAL pzDen AS DWORD PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_GETZOOM, cast(WPARAM, pzNum), cast(LPARAM, pzDen))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pzNum* | A pointer to a **DWORD** value that receives the numerator of the zoom ratio. |
+| *pzDen* | A pointer to a **DWORD** value that receives the denominator of the zoom ratio.. |
+
+#### Return value
+The message returns TRUE if message is processed, which it will be if both *pzNum* and *pzDen* are not **NULL**.
+
+#### Remarks
+
+Edit: Supported in Windows 10 1809 and later. The edit control needs to have the ES_EX_ZOOMABLE extended style set, for this message to have an effect.
+
