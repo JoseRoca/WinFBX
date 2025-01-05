@@ -2835,3 +2835,30 @@ This message returns the current word-wrapping and word-breaking options.
 #### Remarks
 
 This message must not be sent by the application defined word breaking procedure.
+
+# <a name="RichEdit_SetZoom"></a>RichEdit_SetZoom
+
+Sets the zoom ratio for a multiline edit control or a rich edit control. The ratio must be a value between 1/64 and 64. The edit control needs to have the ES_EX_ZOOMABLE extended style set, for this message to have an effect, see [Edit Control Extended Styles](https://learn.microsoft.com/en-us/windows/win32/controls/edit-control-window-extended-styles).
+
+```
+FUNCTION RichEdit_SetZoom (BYVAL hRichEdit AS HWND, BYVAL zNum AS DWORD, BYVAL zDen AS DWORD) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETZOOM, zNum, zDen)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *zNum* | Numerator of the zoom ratio. |
+| *zDen* | Denominator of the zoom ratio. These parameters can have the following values. |
+
+| Value  | Meaning |
+| ------ | ------- |
+| **Both 0** | Turns off zooming by using the EM_SETZOOM message (zooming may still occur using [TxGetExtent](https://learn.microsoft.com/en-us/windows/win32/api/textserv/nf-textserv-itexthost-txgetextent). |
+| **1/64 < (wParam / lParam) < 64** | Zooms display by the zoom ratio numerator/denominator |
+
+#### Return value
+
+If the new zoom setting is accepted, the return value is **TRUE**.
+
+If the new zoom setting is not accepted, the return value is **FALSE**.
