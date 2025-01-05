@@ -1873,7 +1873,7 @@ END FUNCTION
 | **SPF_SETDEFAULT** | Sets the default paragraph formatting attributes. |
 | **SCF_SMARTFONT** | Apply the font only if it can handle script. |
 | **SCF_USEUIRULES** | **RichEdit 4.1**: Used with SCF_SELECTION. Indicates that format came from a toolbar or other UI tool, so UI formatting rules should be used instead of literal formatting. |
-| **SCF_WORD** | Applies the formatting to the selected word or words. If the selection is empty but the insertion point is inside a word, the formatting is applied to the word. The SCF_WORD value must be used in conjunction with the SCF_SELECTION value. |
+| **SCF_WORD** | Applies the formatting to the selected word or words. If the selection is empty but the insertion point is inside a word, the formatting is applied to the word. The **SCF_WORD** value must be used in conjunction with the **SCF_SELECTION** value. |
 
 #### Return value
 
