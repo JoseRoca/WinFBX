@@ -2225,3 +2225,18 @@ The **RichEdit_SetLimitText** message limits only the text the user can enter. I
 
 **RichEdit_SetLimitText** ad **RichEdit_LimitText** are the same message.
 
+# <a name="RichEdit_SetMargins"></a>RichEdit_SetMargins
+
+Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins.
+
+```
+PRIVATE SUB RichEdit_SetMargins (BYVAL hRichEdit AS HWND, BYVAL nMargins AS LONG, BYVAL nWidth AS LONG)
+   SendMessageW(hRichEdit, EM_SETMARGINS, nMargins, nWidth)
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *nMargins* | TThe margins to set. This parameter can be one or more of the following values.<br>**EC_LEFTMARGIN**. Sets the left margin.<br>**EC_RIGHTMARGIN^^. Sets the right margin.<br>**EC_USEFONTINFO**. Sets the left and right margins to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margins are set to zero. The *nWidth* parameter is ignored. |
+| *nWidth* | The **LOWORD** specifies the new width of the left margin, in pixels. This value is ignored if *nMargins* does not include **EC_LEFTMARGIN**.<br>**Rich Edit 3.0 and later**: The **LOWORD** can specify the **EC_USEFONTINFO** value to set the left margin to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margin is set to zero.<br>The **HIWORD** specifies the new width of the right margin, in pixels. This value is ignored if *nMargins* does not include **EC_RIGHTMARGIN**.<br>**Rich Edit 3.0 and later**: The **HIWORD** can specify the **EC_USEFONTINFO** value to set the right margin to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margin is set to zero |
