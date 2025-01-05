@@ -1362,3 +1362,39 @@ Returns the current typography options. For a list of options, see [EM_SETTYPOGR
 #### Remarks
 
 You can turn on advanced line breaking by sending the **RichEdit_SetTypographyOPtions** message. Advanced and normal line breaking may also be turned on automatically by the rich edit control if it is needed for certain languages.
+
+# <a name="RichEdit_GetUndoName"></a>RichEdit_GetUndoName
+
+Retrieves the type of the next undo action, if any.
+
+```
+FUNCTION RichEdit_GetUndoName (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETUNDONAME, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+If there is an undo action, the value returned is an [UNDONAMEID](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-undonameid) enumeration value that indicates the type of the next action in the control's undo queue.
+
+If there are no actions that can be undone or the type of the next undo action is unknown, the return value is zero.
+
+#### UNDONAMEID enumeration
+
+| Name              | Value | Description |
+| ----------------- | ----- | ----------- |
+| **UID_UNKNOWN**   |   0   | The type of undo action is unknown. |
+| **UID_TYPING**    |   1   | Typing operation. |
+| **UID_DELETE**    |   2   | Delete operation. |
+| **UID_DRAGDROP**  |   3   | Drag-and-drop operation. |
+| **UID_CUT**       |   4   | Cut operation. |
+| **UID_PASTE**     |   5   | Paste operation. |
+| **UID_AUTOTABLE** |   6   | Automatic table insertion; for example, typing +---+---+<Enter> to insert a table row. |
+
+#### Remarks
+
+The types of actions that can be undone or redone include typing, delete, drag, drop, cut, and paste operations. This information can be useful for applications that provide an extended user interface for undo and redo operations, such as a drop-down list box of actions that can be undone.
