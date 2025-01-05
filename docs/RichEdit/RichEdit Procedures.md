@@ -1588,3 +1588,27 @@ END FUNCTION
 #### Return value
 
 If *index* is greater than the number of characters in the control, the return value is zero.
+
+# <a name="RichEdit_LineScroll"></a>RichEdit_LineScroll
+
+Scrolls the text in a multiline rich edit control.
+
+```
+FUNCTION RichEdit_LineScroll (BYVAL hRichEdit AS HWND, BYVAL y AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_LINESCROLL, 0, y)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *y* | The number of lines to scroll vertically. |
+
+#### Return value
+
+**TRUE** or **FALSE**.
+
+#### Remarks
+
+The control does not scroll vertically past the last line of text in the edit control. If the current line plus the number of lines specified by the *y* parameter exceeds the total number of lines in the edit control, the value is adjusted so that the last line of the edit control is scrolled to the top of the edit-control window.
+
