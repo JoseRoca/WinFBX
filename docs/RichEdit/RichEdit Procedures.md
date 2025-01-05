@@ -1695,3 +1695,28 @@ If the **Redo** operation fails, the return value is zero.
 #### Remarks
 
 To determine whether there are any actions in the control's redo queue, send the **RichEdit_CanRedo** message.
+
+# <a name="RichRichEdit_ReplaceSelEdit_Redo"></a>RichEdit_ReplaceSel
+
+Replaces the current selection in a rich edit control with the specified text.
+
+```
+SUB RichEdit_ReplaceSel (BYVAL hRichEdit AS HWND, BYVAL bCanBeUndone AS LONG, BYVAL pwszText AS WSTRING PTR)
+   SendMessageW hRichEdit, EM_REPLACESEL, bCanBeUndone, cast(LPARAM, pwszText)
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *bCanBeUndone* | Specifies whether the replacement operation can be undone. If this is **TRUE**, the operation can be undone. If this is **FALSE**, the operation cannot be undone. |
+| *pwszText* | A pointer to a null-terminated string containing the replacement text. |
+
+#### Remarks
+
+Use the **RichEdit_ReplaceSel** message to replace only a portion of the text in an edit control. To replace all of the text, use the **RichEdit_SetText** message or the **SetWindowText** Windows API function.
+
+If there is no selection, the replacement text is inserted at the caret.
+
+In a rich edit control, the replacement text takes the formatting of the character at the caret or, if there is a selection, of the first character in the selection.
+
