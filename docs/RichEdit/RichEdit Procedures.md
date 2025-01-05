@@ -1759,3 +1759,17 @@ If the message is successful, the **HIWORD** of the return value is **TRUE**, an
 #### Remarks
 
 To scroll to a specific line or character position, use the **RichEdit_LineScroll** message. To scroll the caret into view, use the **RichEdit_ScrollCaret** message.
+
+# <a name="RichEdit_ScrollCaret"></a>RichEdit_ScrollCaret
+
+Scrolls the caret into view in a rich edit control.
+
+```
+SUB RichEdit_ScrollCaret (BYVAL hRichEdit AS HWND)
+   SendMessageW hRichEdit, EM_SCROLLCARET, 0, 0
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
