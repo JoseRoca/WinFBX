@@ -2854,7 +2854,7 @@ END FUNCTION
 
 | Value  | Meaning |
 | ------ | ------- |
-| **Both 0** | Turns off zooming by using the EM_SETZOOM message (zooming may still occur using [TxGetExtent](https://learn.microsoft.com/en-us/windows/win32/api/textserv/nf-textserv-itexthost-txgetextent). |
+| **Both 0** | Turns off zooming by using the **EM_SETZOOM** message (zooming may still occur using [TxGetExtent](https://learn.microsoft.com/en-us/windows/win32/api/textserv/nf-textserv-itexthost-txgetextent). |
 | **1/64 < (wParam / lParam) < 64** | Zooms display by the zoom ratio numerator/denominator |
 
 #### Return value
@@ -2862,3 +2862,24 @@ END FUNCTION
 If the new zoom setting is accepted, the return value is **TRUE**.
 
 If the new zoom setting is not accepted, the return value is **FALSE**.
+
+# <a name="RichEdit_ShowScrollBar"></a>RichEdit_ShowScrollBar
+
+Shows or hides one of the scroll bars in the host window of a rich edit control.
+
+```
+SUB RichEdit_ShowScrollBar (BYVAL hRichEdit AS HWND, BYVAL nScrollBar AS DWORD, BYVAL fShow AS LONG)
+   SendMessageW hRichEdit, EM_SHOWSCROLLBAR, nScrollBar, fShow
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *nScrollBar* | Identifies which scroll bar to display: horizontal or vertical. This parameter must be **SB_VERT** or **SB_HORZ**. |
+| *fShow* | Specifies whether to show the scroll bar or hide it. Specify **TRUE** to show the scroll bar and **FALSE** to hide it. |
+
+#### Remarks
+
+This method is only valid when the control is in-place active. Calls made while the control is inactive may fail.
+
