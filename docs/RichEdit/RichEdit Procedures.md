@@ -1513,3 +1513,21 @@ END FUNCTION
 
 Returns **TRUE** if it is an East Asian locale. Otherwise, it returns **FALSE**.
 
+# <a name="RichEdit_LimitText"></a>RichEdit_LimitText
+
+ets the text limit of a rich edit control. The text limit is the maximum amount of text, in characters, that the user can type into the edit control.
+
+```
+SUB RichEdit_LimitText (BYVAL hRichEdit AS HWND, BYVAL chMax AS DWORD)
+   SendMessageW hRichEdit, EM_LIMITTEXT, chMax, 0
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *chMax* | The maximum number of characters the user can enter. If this parameter is zero, the text length is set to 64,000 characters. |
+
+#### Remarks
+
+The **RichEdit_LimitText** message limits only the text the user can enter. It does not affect any text already in the edit control when the message is sent, nor does it affect the length of the text copied to the edit control by the **RichEdit_SetText** message. If an application uses the **RichEdit_SetTExt** message to place more text into an edit control than is specified in the **RichEdit_LimitText** message, the user can edit the entire contents of the edit control.
