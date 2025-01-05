@@ -1720,3 +1720,21 @@ If there is no selection, the replacement text is inserted at the caret.
 
 In a rich edit control, the replacement text takes the formatting of the character at the caret or, if there is a selection, of the first character in the selection.
 
+# <a name="RichEdit_RequestResize"></a>RichEdit_RequestResize
+
+Forces a rich edit control to send an **EN_REQUESTRESIZE** notification message to its parent window.
+
+```
+SUB RichEdit_RequestResize (BYVAL hRichEdit AS HWND)
+   SendMessageW hRichEdit, EM_REQUESTRESIZE, 0, 0
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Remarks
+
+This message is useful during **WM_SIZE** processing for the parent of a bottomless rich edit control.
+
