@@ -1822,3 +1822,22 @@ In plain text controls, **RichEdit_SetBidiOptions** automatically determines the
 
 **RichEdit_SetBidiOptions** only switches the default paragraph format to RTL (right to left) if it finds an RTL character.
 
+# <a name="RichEdit_SetBkgndColor"></a>RichEdit_SetBkgndColor
+
+Sets the background color for a rich edit control.
+
+```
+FUNCTION RichEdit_SetBkgndColor (BYVAL hRichEdit AS HWND, BYVAL pSysColor AS DWORD, BYVAL pBkColor AS DWORD) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETBKGNDCOLOR, pSysColor, pBkColor)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pSysColor* | Specifies whether to use the system color. If this parameter is a nonzero value, the background is set to the window background system color. Otherwise, the background is set to the specified color. |
+| *pBkColor* | A [COLORREF](https://learn.microsoft.com/en-us/windows/win32/gdi/colorref) structure specifying the color if *pSysColor* is zero. To generate a COLORREF, use the RGB macro (renamed as BGR in the FreeBasic Windows headers). |
+
+#### Return value
+
+This message returns the original background color.
