@@ -3100,7 +3100,7 @@ END FUNCTION
 
 # <a name="RichEdit_LoadRtfFromFileW"></a>RichEdit_LoadRtfFromFileW
 
-Loads the contents of a RTF file into a Rich Edit Control.
+Loads the contents of a RTF file into a Rich Edit control.
 
 ```
 FUNCTION RichEdit_LoadRtfFromFileW (BYVAL hRichEdit AS HWND, BYREF wszFileName AS WSTRING) AS BOOLEAN
@@ -3157,6 +3157,111 @@ FUNCTION RichEdit_LoadRtfFromFileW ( _
    eds.pfnCallback = cast(EDITSTREAMCALLBACK, @RichEdit_LoadRtfFromFileCallback)
    IF SendMessageW(hRichEdit, EM_STREAMIN, SF_RTF, cast(LPARAM, @eds)) > 0 AND eds.dwError = 0 THEN FUNCTION = TRUE
    CloseHandle hFile
+
+END FUNCTION
+' ========================================================================================
+```
+
+# <a name="RichEdit_LoadRtfFromResourceW"></a>RichEdit_LoadRtfFromResourceW
+
+Loads a RTF resource file into a Rich Edit control.
+
+```
+FUNCTION RichEdit_LoadRtfFromResourceW (BYVAL hRichEdit AS HWND, BYVAL hInstance AS HINSTANCE, BYREF wszResourceName AS WSTRING) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *hInstance* | The instance handle. |
+| *wszResourceName* | The name of the resource to load. |
+
+#### Return value
+
+If the operation succeeds, the return value is **TRUE**.
+
+If the operation fails, the return value is **FALSE**.
+
+#### Implementation
+
+```
+' ========================================================================================
+' Custom structure used by the RichEdit_LoadRtfFromResourceW function.
+' ========================================================================================
+TYPE AFX_RICHEDIT_CUSTOMDATA
+   pData  AS BYTE PTR
+   nLen   AS LONG
+   curPos AS LONG
+END TYPE
+' ========================================================================================
+
+' ========================================================================================
+' Callback function used by the RichEdit_LoadRtfFromResourceW function.
+' Transfers a stream of data into a rich edit control.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_LoadRtfFromResourceCallback ( _
+   BYVAL pCustData AS AFX_RICHEDIT_CUSTOMDATA PTR _   ' // Value of the dwCookie member of the EDITSTREAM structure.
+ , BYVAL lpBuff AS BYTE PTR _                         ' // Pointer to a buffer to write to.
+ , BYVAL cb AS LONG _                                 ' // Number of bytes to write.
+ , BYVAL pcb AS LONG PTR _                            ' // Number of bytes actually written.
+ ) AS DWORD                                           ' // 0 for success, or an error code
+
+   DIM nBytes AS LONG
+   IF pCustData->nLen - pCustData->curPos > cb THEN nBytes = cb ELSE nBytes = pCustData->nLen - pCustData->curPos
+   IF nBytes THEN
+      CopyMemory(lpBuff, pCustData->pData + pCustData->curPos, nBytes)
+      pCustData->curPos = pCustData->curPos + nBytes
+      FUNCTION = 0
+   ELSE
+      FUNCTION = 1
+   END IF
+   *pcb = nBytes
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Loads a RTF resource file into a Rich Edit control.
+' The EM_STREAMIN message replaces the contents of a rich edit control with a stream of
+' data provided by an application defined EditStreamCallback callback function.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_LoadRtfFromResourceW ( _
+   BYVAL hRichEdit AS HWND _                ' // Handle of the Rich Edit control
+ , BYVAL hInstance AS HINSTANCE _           ' // Instance handle
+ , BYREF wszResourceName AS WSTRING _       ' // Name of the resource to load
+ ) AS BOOLEAN                               ' // TRUE or FALSE
+
+   DIM hResInfo AS HRSRC                        ' // Resource handle
+   DIM pResData AS LPVOID                       ' // Pointer to the resource data
+   DIM eds AS EDITSTREAM                        ' // EDITSTREAM structure
+   DIM rtfCustData AS AFX_RICHEDIT_CUSTOMDATA   ' // AFX_RICHEDIT_CUSTOMDATA structure
+
+   ' // Checks the validity of the parameters
+   IF hRichEdit = NULL OR hInstance = NULL THEN EXIT FUNCTION
+   IF LEN(wszResourceName) = 0 THEN EXIT FUNCTION
+
+   ' // Loads the resource
+   hResInfo = FindResourceW(hInstance, wszResourceName, RT_RCDATA)
+   IF hResInfo = NULL THEN EXIT FUNCTION
+
+   ' // Loads and locks the resource
+   ' // Note  LockResource does not actually lock memory; it is just used to obtain
+   ' // a pointer to the memory containing the resource data.
+   pResData = LockResource(LoadResource(hInstance, hResInfo))
+   IF pResData = NULL THEN EXIT FUNCTION
+   DIM cbSize AS LONG = SizeofResource(hInstance, hResInfo)
+   DIM buffer AS STRING = SPACE(cbSize)
+   CopyMemory(STRPTR(buffer), pResData, cbSize)
+
+   ' // Sends the message
+   rtfCustData.pData = STRPTR(buffer)
+   rtfCustData.nLen = cbSize
+   rtfCustData.curPos = 0
+   eds.dwCookie = cast(DWORD_PTR, @rtfCustData)
+   eds.pfnCallback = cast(EDITSTREAMCALLBACK, @RichEdit_LoadRtfFromResourceCallback)
+   IF SendMessageW(hRichEdit, EM_STREAMIN, SF_RTF, cast(LPARAM, @eds)) > 0 AND eds.dwError = 0 THEN
+      FUNCTION = TRUE
+   END IF
 
 END FUNCTION
 ' ========================================================================================
