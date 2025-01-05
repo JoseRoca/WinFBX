@@ -1515,7 +1515,7 @@ Returns **TRUE** if it is an East Asian locale. Otherwise, it returns **FALSE**.
 
 # <a name="RichEdit_LimitText"></a>RichEdit_LimitText
 
-ets the text limit of a rich edit control. The text limit is the maximum amount of text, in characters, that the user can type into the edit control.
+Sets the text limit of a rich edit control. The text limit is the maximum amount of text, in characters, that the user can type into the edit control.
 
 ```
 SUB RichEdit_LimitText (BYVAL hRichEdit AS HWND, BYVAL chMax AS DWORD)
@@ -1531,3 +1531,22 @@ END SUB
 #### Remarks
 
 The **RichEdit_LimitText** message limits only the text the user can enter. It does not affect any text already in the edit control when the message is sent, nor does it affect the length of the text copied to the edit control by the **RichEdit_SetText** message. If an application uses the **RichEdit_SetTExt** message to place more text into an edit control than is specified in the **RichEdit_LimitText** message, the user can edit the entire contents of the edit control.
+
+# <a name="RichEdit_LineFromChar"></a>RichEdit_LineFromChar
+
+Retrieves the index of the line that contains the specified character index in a multiline rich edit control.
+
+```
+FUNCTION RichEdit_LineFromChar (BYVAL hRichEdit AS HWND, BYVAL index AS DWORD) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_LINEFROMCHAR, index, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *index* | The character index of the character contained in the line whose number is to be retrieved. If this parameter is -1, **RichEdit_LineFromChar** retrieves either the line number of the current line (the line containing the caret) or, if there is a selection, the line number of the line containing the beginning of the selection. |
+
+#### Return value
+
+The return value is the zero-based line number of the line containing the character index specified by wParam.
