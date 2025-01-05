@@ -2240,3 +2240,26 @@ END SUB
 | *hRichEdit* | The handle of the rich edit control. |
 | *nMargins* | TThe margins to set. This parameter can be one or more of the following values.<br>**EC_LEFTMARGIN**. Sets the left margin.<br>**EC_RIGHTMARGIN**. Sets the right margin.<br>**EC_USEFONTINFO**. Sets the left and right margins to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margins are set to zero. The *nWidth* parameter is ignored. |
 | *nWidth* | The **LOWORD** specifies the new width of the left margin, in pixels. This value is ignored if *nMargins* does not include **EC_LEFTMARGIN**.<br>**Rich Edit 3.0 and later**: The **LOWORD** can specify the **EC_USEFONTINFO** value to set the left margin to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margin is set to zero.<br>The **HIWORD** specifies the new width of the right margin, in pixels. This value is ignored if *nMargins* does not include **EC_RIGHTMARGIN**.<br>**Rich Edit 3.0 and later**: The **HIWORD** can specify the **EC_USEFONTINFO** value to set the right margin to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margin is set to zero |
+
+**RichEdit_SetLimitText** ad **RichEdit_LimitText** are the same message.
+
+# <a name="RichEdit_SetModify"></a>RichEdit_SetModify
+
+Sets or clears the modification flag for a rich edit control. The modification flag indicates whether the text within the rich edit control has been modified
+
+```
+SUB RichEdit_SetModify (BYVAL hRichEdit AS HWND, BYVAL fModify AS LONG)
+   SendMessageW hRichEdit, EM_SETMODIFY, fModify, 0
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *fModify* | The new value for the modification flag. A value of **TRUE** indicates the text has been modified, and a value of **FALSE** indicates it has not been modified. |
+
+#### Remarks
+
+The system automatically clears the modification flag to zero when the control is created. If the user changes the control's text, the system sets the flag to nonzero. You can send the **RichEdit_GetModify** message to the edit control to retrieve the current state of the flag.
+
+Rich Edit 1.0: Objects created without the **REO_DYNAMICSIZE** flag will lock in their extents when the modify flag is set to **FALSE**.
