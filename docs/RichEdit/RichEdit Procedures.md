@@ -2072,3 +2072,17 @@ Additional examples are shown in the following table.
 | 80 | 1 | 90 |
 | 80 | -1 | 72 |
 
+# <a name="RichEdit_SetHyphenateInfo"></a>RichEdit_SetHyphenateInfo
+
+Sets the way a Microsoft Rich Edit control does hyphenation.
+
+```
+SUB RichEdit_SetHyphenateInfo (BYVAL hRichEdit AS HWND, BYVAL phinfo AS HYPHENATEINFO PTR)
+   SendMessageW hRichEdit, EM_SETHYPHENATEINFO, cast(WPARAM, phinfo), 0
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *phinfo* | Pointer to a [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure. |
