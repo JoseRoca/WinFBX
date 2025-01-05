@@ -1802,3 +1802,26 @@ If the selection is not empty, the return value is a set of flags containing one
 #### Remarks
 
 This message is useful during **WM_SIZE** processing for the parent of a bottomless rich edit control.
+
+# <a name="RichEdit_SetBidiOptions"></a>RichEdit_SetBidiOptions
+
+Sets the current state of the bidirectional options in the rich edit control.
+
+```
+FUNCTION RichEdit_SetBidiOptions (BYVAL hRichEdit AS HWND, BYVAL pOptions AS BIDIOPTIONS PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETBIDIOPTIONS, 0, cast(LPARAM, pOptions))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pOptions* | Pointer to a [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure that indicates how to set the state of the bidirectional options in the rich edit control. |
+
+#### Remarks
+
+The rich edit control must be in plain text mode or **RichEdit_SetBidiOptions** will not do anything.
+
+In plain text controls, **RichEdit_SetBidiOptions** automatically determines the paragraph direction and/or alignment based on the context rules. These rules state that the direction and/or alignment is derived from the first strong character in the control. A strong character is one from which text direction can be determined (see Unicode Standard version 2.0). The paragraph direction and/or alignment is applied to the default format.
+
+**RichEdit_SetBidiOptions** only switches the default paragraph format to RTL (right to left) if it finds an RTL character.
