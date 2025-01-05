@@ -2514,10 +2514,38 @@ END FUNCTION
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
-| *pt* | Pointer to a [POINT]((https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-point)) structure which specifies a point in the virtual text space of the document, expressed in pixels. The document will be scrolled until this point is located in the upper-left corner of the edit control window. If you want to change the view such that the upper left corner of the view is two lines down and one character in from the left edge. You would pass a point of (7, 22).
-
-The rich edit control checks the x and y coordinates and adjusts them if necessary, so that a complete line is displayed at the top. It also ensures that the text is never completely scrolled off the view rectangle. |
+| *pt* | Pointer to a [POINT]((https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-point)) structure which specifies a point in the virtual text space of the document, expressed in pixels. The document will be scrolled until this point is located in the upper-left corner of the edit control window. If you want to change the view such that the upper left corner of the view is two lines down and one character in from the left edge. You would pass a point of (7, 22).<br>The rich edit control checks the x and y coordinates and adjusts them if necessary, so that a complete line is displayed at the top. It also ensures that the text is never completely scrolled off the view rectangle. |
 
 #### Return value
 
 This message always returns 1.
+
+# <a name="RichEdit_SetSel"></a>RichEdit_SetSel
+
+Selects a range of characters in an edit control.
+
+```
+SUB RichEdit_SetSel (BYVAL hRichEdit AS HWND, BYVAL nStart AS LONG, BYVAL nEnd AS LONG)
+   SendMessageW hRichEdit, EM_SETSEL, nStart, nEnd
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *nStart* | The starting character position of the selection. |
+| *nEnd* | The ending character position of the selection. |
+
+#### Remarks
+
+The start value can be greater than the end value. The lower of the two values specifies the character position of the first character in the selection. The higher value specifies the position of the first character beyond the selection.
+
+The start value is the anchor point of the selection, and the end value is the active end. If the user uses the SHIFT key to adjust the size of the selection, the active end can move but the anchor point remains the same.
+
+If the start is 0 and the end is -1, all the text in the edit control is selected. If the start is -1, any current selection is deselected.
+
+**Edit controls**: The control displays a flashing caret at the end position regardless of the relative values of start and end.
+
+**Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later.
+
+If the edit control has the **ES_NOHIDESEL** style, the selected text is highlighted regardless of whether the control has focus. Without the **ES_NOHIDESEL** style, the selected text is highlighted only when the edit control has the focus.
