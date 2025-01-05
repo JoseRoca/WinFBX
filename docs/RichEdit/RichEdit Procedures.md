@@ -3266,3 +3266,60 @@ PRIVATE FUNCTION RichEdit_LoadRtfFromResourceW ( _
 END FUNCTION
 ' ========================================================================================
 ```
+
+# <a name="RichEdit_GetRtfText"></a>RichEdit_GetRtfText
+
+Retrieves RTF formatted text from a Rich Edit control.
+
+```
+FUNCTION RichEdit_GetRtfText (BYVAL hRichEdit AS HWND) AS STRING
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+Returns the retrieved text or a null string.
+
+#### Implementation
+
+```
+' ========================================================================================
+' Callback used by the RichEdit_GetRtfText function.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_GetTextCallback ( _
+   BYVAL dwCookie AS DWORD_PTR _                      ' // Value of the dwCookie member of the EDITSTREAM structure.
+ , BYVAL pbBuff AS BYTE PTR _                         ' // Pointer to the buffer to read from.
+ , BYVAL cb AS LONG _                                 ' // Number of bytes to read.
+ , BYVAL pcb AS LONG PTR _                            ' // Number of bytes actually read.
+ ) AS DWORD                                           ' // 0 for success, or an error code
+
+   DIM pcws AS CWSTR PTR = cast(CWSTR PTR, dwCookie)
+   pcws->AppendBuffer(pbBuff, cb)
+   *pcb = cb
+   FUNCTION = 0
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves RTF formatted text from a Rich Edit control
+' - hRichEdit = Handle of the Rich Edit control.
+' Returns the retrieved text or a null string.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_GetRtfText (BYVAL hRichEdit AS HWND) AS STRING
+
+   DIM eds AS EDITSTREAM, cws AS CWSTR
+   eds.dwCookie = cast(DWORD_PTR, @cws)
+   eds.pfnCallBack = cast(EDITSTREAMCALLBACK, @RichEdit_GetTextCallback)
+   SendMessageW hRichEdit, EM_STREAMOUT, SF_RTF, cast(LPARAM, @eds)
+   ' // Copy the ansi contents of the CWSTR to a STRING
+   DIM s AS STRING = SPACE(cws.m_BufferLen - 2)   ' // -2 to remove the ending nulls
+   IF LEN(s) THEN CopyMemory(STRPTR(s), cws.m_pBuffer, cws.m_BufferLen - 2)
+   RETURN s
+
+END FUNCTION
+' ========================================================================================
+```
