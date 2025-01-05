@@ -2367,3 +2367,29 @@ END FUNCTION
 If the operation succeeds, the return value is a nonzero value.
 
 If the operation fails, the return value is zero.
+
+# <a name="RichEdit_SetPasswordChar"></a>RichEdit_SetPasswordChar
+
+Sets or removes the password character for a rich edit control. When a password character is set, that character is displayed in place of the characters typed by the user.
+
+```
+SUB RichEdit_SetPasswordChar (BYVAL hRichEdit AS HWND, BYVAL dwchar AS DWORD)
+   SendMessageW hRichEdit, EM_SETPASSWORDCHAR, dwchar, 0
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *dwchar* | The character to be displayed in place of the characters typed by the user. If this parameter is zero, the control removes the current password character and displays the characters typed by the user. |
+
+#### Remarks
+
+When an edit control receives the **EM_SETPASSWORDCHAR** message, the control redraws all visible characters using the character specified by the dwchar parameter. If *dwchar* is zero, the control redraws all visible characters using the characters typed by the user.
+
+If an edit control is created with the **ES_PASSWORD** style, the default password character is set to an asterisk (*). If an edit control is created without the **ES_PASSWORD** style, there is no password character. The **ES_PASSWORD** style is removed if an **EM_SETPASSWORDCHAR message** is sent with the *dwchar* parameter set to zero.
+
+**Edit controls**: Multiline edit controls do not support the password style or messages.
+
+**Rich Edit**: Supported in Microsoft Rich Edit 2.0 and later. Both single-line and multiline edit controls support the password style and messages.
+
