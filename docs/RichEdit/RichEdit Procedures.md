@@ -1532,6 +1532,10 @@ END SUB
 
 The **RichEdit_LimitText** message limits only the text the user can enter. It does not affect any text already in the edit control when the message is sent, nor does it affect the length of the text copied to the edit control by the **RichEdit_SetText** message. If an application uses the **RichEdit_SetTExt** message to place more text into an edit control than is specified in the **RichEdit_LimitText** message, the user can edit the entire contents of the edit control.
 
+#### Note
+
+**RichEdit_LimitText** ad **RichEdit_SetLimitText** are the same message.
+
 # <a name="RichEdit_LineFromChar"></a>RichEdit_LineFromChar
 
 Retrieves the index of the line that contains the specified character index in a multiline rich edit control.
@@ -2197,3 +2201,27 @@ The **RichEdit_SetLangOptions** message controls the following:
 - Spell checking, autocorrect, and touch keyboard prediction.
 
 This message sets the values of all language option flags. To change a subset of the flags, send the **RichEdit-GetLangOptions** message to get the current option flags, change the flags that you need to change, and then send the **RichEdit_SetLangOptions** message with the result.
+
+# <a name="RichEdit_SetLimitText"></a>RichEdit_SetLimitText
+
+Sets the text limit of a rich edit control. The text limit is the maximum amount of text, in characters, that the user can type into the edit control.
+
+```
+SUB RichEdit_SetLimitText (BYVAL hRichEdit AS HWND, BYVAL chMax AS DWORD)
+   SendMessageW hRichEdit, EM_LIMITTEXT, chMax, 0
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *chMax* | The maximum number of characters the user can enter. If this parameter is zero, the text length is set to 64,000 characters. |
+
+#### Remarks
+
+The **RichEdit_SetLimitText** message limits only the text the user can enter. It does not affect any text already in the edit control when the message is sent, nor does it affect the length of the text copied to the edit control by the **RichEdit_SetText** message. If an application uses the **RichEdit_SetTExt** message to place more text into an edit control than is specified in the **RichEdit_SetLimitText** message, the user can edit the entire contents of the edit control.
+
+#### Note
+
+**RichEdit_SetLimitText** ad **RichEdit_LimitText** are the same message.
+
