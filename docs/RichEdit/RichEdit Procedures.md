@@ -1633,9 +1633,9 @@ END SUB
 Retrieves the client area coordinates of a specified character in a rich edit control.
 
 ```
-FUNCTION RichEdit_PosFromChar (BYVAL hRichEdit AS HWND, BYVAL pt AS POINTL PTR, BYVAL index as DWORD) AS DWORD
-   FUNCTION = SendMessageW(hRichEdit, EM_POSFROMCHAR, cast(WPARAM, pt), index)
-END FUNCTION
+SUB RichEdit_PosFromChar (BYVAL hRichEdit AS HWND, BYVAL pt AS POINTL PTR, BYVAL index as DWORD)
+   SendMessageW(hRichEdit, EM_POSFROMCHAR, cast(WPARAM, pt), index)
+END SUB
 ```
 
 | Parameter  | Description |
@@ -1643,10 +1643,6 @@ END FUNCTION
 | *hRichEdit* | The handle of the rich edit control. |
 | *pt* | A pointer to a [POINTL](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-pointl) structure that receives the client area coordinates of the character. The coordinates are in screen units and are relative to the upper-left corner of the control's client area. |
 | *index* | The zero-based index of the character. |
-
-#### Return value
-
-The return value is not used.
 
 #### Remarks
 
@@ -1808,9 +1804,9 @@ This message is useful during **WM_SIZE** processing for the parent of a bottoml
 Sets the current state of the bidirectional options in the rich edit control.
 
 ```
-FUNCTION RichEdit_SetBidiOptions (BYVAL hRichEdit AS HWND, BYVAL pOptions AS BIDIOPTIONS PTR) AS LONG
-   FUNCTION = SendMessageW(hRichEdit, EM_SETBIDIOPTIONS, 0, cast(LPARAM, pOptions))
-END FUNCTION
+SUB RichEdit_SetBidiOptions (BYVAL hRichEdit AS HWND, BYVAL pOptions AS BIDIOPTIONS PTR)
+   SendMessageW(hRichEdit, EM_SETBIDIOPTIONS, 0, cast(LPARAM, pOptions))
+END SUB
 ```
 
 | Parameter  | Description |
@@ -1825,3 +1821,4 @@ The rich edit control must be in plain text mode or **RichEdit_SetBidiOptions** 
 In plain text controls, **RichEdit_SetBidiOptions** automatically determines the paragraph direction and/or alignment based on the context rules. These rules state that the direction and/or alignment is derived from the first strong character in the control. A strong character is one from which text direction can be determined (see Unicode Standard version 2.0). The paragraph direction and/or alignment is applied to the default format.
 
 **RichEdit_SetBidiOptions** only switches the default paragraph format to RTL (right to left) if it finds an RTL character.
+
