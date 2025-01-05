@@ -1612,3 +1612,18 @@ END FUNCTION
 
 The control does not scroll vertically past the last line of text in the edit control. If the current line plus the number of lines specified by the *y* parameter exceeds the total number of lines in the edit control, the value is adjusted so that the last line of the edit control is scrolled to the top of the edit-control window.
 
+# <a name="RichEdit_PasteSpecial"></a>RichEdit_PasteSpecial
+
+Pastes a specific clipboard format in a rich edit control.
+
+```
+SUB RichEdit_PasteSpecial (BYVAL hRichEdit AS HWND, BYVAL clpfmt AS DWORD, BYVAL lprps AS REPASTESPECIAL PTR)
+   SendMessageW hRichEdit, EM_PASTESPECIAL, clpfmt, cast(LPARAM, lprps)
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *clpfmt* | Specifies the [ Clipboard Formats](https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats). |
+| *lprps* | Pointer to a [REPASTESPECIAL](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-repastespecial) structure or **NULL**. If an object is being pasted, the REPASTESPECIAL structure is filled in with the desired display aspect. If *clpfmt* is **NULL** or the *dwAspect* member is zero, the display aspect used will be the contents of the object descriptor. |
