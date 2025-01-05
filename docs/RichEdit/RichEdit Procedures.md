@@ -1671,3 +1671,27 @@ END FUNCTION
 #### Return value
 
 This message always returns zero.
+
+# <a name="RichEdit_Redo"></a>RichEdit_Redo
+
+Redoes the next action in the control's redo queue.
+
+```
+FUNCTION RichEdit_Redo (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_REDO, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+If the **Redo** operation succeeds, the return value is a nonzero value.
+
+If the **Redo** operation fails, the return value is zero.
+
+#### Remarks
+
+To determine whether there are any actions in the control's redo queue, send the **RichEdit_CanRedo** message.
