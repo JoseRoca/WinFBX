@@ -1792,7 +1792,8 @@ END FUNCTION
 
 If the selection is not empty, the return value is a set of flags containing one or more of the following values.
 
-| Return code | | Description |
+| Return code  | Description |
+| ------------ | ----------- |
 | SEL_TEXT | Text.|
 | SEL_OBJECT | At least one COM object. |
 | SEL_MULTICHAR | More than one character of text. |
