@@ -2579,3 +2579,39 @@ The **EM_SETTABSTOPS** message does not automatically redraw the edit control wi
 The values specified in the array are in dialog template units, which are the device-independent units used in dialog box templates. To convert measurements from dialog template units to screen units (pixels), use the Windows API **MapDialogRect** function.
 
 **Rich Edit**: Supported in Microsoft Rich Edit 3.0 and later. A rich edit control can have the maximum number of tab stops specified by MAX_TAB_STOPS.
+
+# <a name="RichEdit_SetTargetDevice"></a>RichEdit_SetTargetDevice
+
+Sets the target device and line width used for WYSIWYG formatting in a rich edit control.
+
+```
+FUNCTION RichEdit_SetTargetDevice (BYVAL hRichEdit AS HWND, BYVAL hDC AS HDC, BYVAL lnwidth AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETTARGETDEVICE, cast(WPARAM, hDC), lnwidth)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *hDC* | HDC [Handle to a Device Context] for the target device. |
+| *lnwidth* | Line width to use for formatting. |
+
+#### Return value
+
+The return value is zero if the operation fails, or nonzero if it succeeds.
+
+#### Remarks
+
+The HDC for the default printer can be obtained as follows.
+
+```
+DIM hdc AS HDC
+DIM pd AS PRINTDLGW
+pd.lStructSize = SIZEOF(pd)
+pd.flags = PD_RETURNDC OR PD_RETURNDEFAULT
+IF PrintDlgW(@pd) THEN
+   hdc =  = pd.hDC
+END IF
+```
+
+If *lnwidth* is zero, no line breaks are created.
