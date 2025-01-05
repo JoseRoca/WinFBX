@@ -2418,3 +2418,32 @@ If the operation fails, the return value is zero.
 ### Note
 
 This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions.
+
+# <a name="RichEdit_SetReadOnly"></a>RichEdit_SetReadOnly
+
+Sets or removes the read-only style (ES_READONLY) of a rich edit control.
+
+```
+FUNCTION RichEdit_SetReadOnly (BYVAL hRichEdit AS HWND, BYVAL fReadOnly AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETREADONLY, fReadOnly, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *fReadOnly* | Specifies whether to set or remove the **ES_READONLY** style. A value of **TRUE** sets the **ES_READONLY+* style; a value of **FALSE** removes the **ES_READONLY** style. |
+
+#### Return value
+
+If the operation succeeds, the return value is nonzero.
+
+If the operation fails, the return value is zero.
+
+#### Remarks
+
+When an edit control has the **ES_READONLY** style, the user cannot change the text within the edit control.
+
+To determine whether an edit control has the **ES_READONLY** style, use the Windows API **GetWindowLong** function with the **GWL_STYLE** flag.
+
+**Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later.
