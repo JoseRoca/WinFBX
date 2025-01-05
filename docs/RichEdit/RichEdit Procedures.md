@@ -2501,3 +2501,23 @@ END SUB
 #### Remarks
 **Rich Edit**: Supported in Microsoft Rich Edit 3.0 and later.
 
+# <a name="RichEdit_SetScrollPos"></a>RichEdit_SetScrollPos
+
+Scrolls the contents of a rich edit control to the specified point.
+
+```
+FUNCTION RichEdit_SetScrollPos (BYVAL hRichEdit AS HWND, BYVAL pt AS POINT PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETSCROLLPOS, 0, cast(LPARAM, pt))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pt* | Pointer to a [POINT]((https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-point)) structure which specifies a point in the virtual text space of the document, expressed in pixels. The document will be scrolled until this point is located in the upper-left corner of the edit control window. If you want to change the view such that the upper left corner of the view is two lines down and one character in from the left edge. You would pass a point of (7, 22).
+
+The rich edit control checks the x and y coordinates and adjusts them if necessary, so that a complete line is displayed at the top. It also ensures that the text is never completely scrolled off the view rectangle. |
+
+#### Return value
+
+This message always returns 1.
