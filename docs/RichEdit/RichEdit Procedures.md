@@ -1627,3 +1627,30 @@ END SUB
 | *hRichEdit* | The handle of the rich edit control. |
 | *clpfmt* | Specifies the [ Clipboard Formats](https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats). |
 | *lprps* | Pointer to a [REPASTESPECIAL](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-repastespecial) structure or **NULL**. If an object is being pasted, the REPASTESPECIAL structure is filled in with the desired display aspect. If *clpfmt* is **NULL** or the *dwAspect* member is zero, the display aspect used will be the contents of the object descriptor. |
+
+# <a name="RichEdit_PosFromChar"></a>RichEdit_PosFromChar
+
+Retrieves the client area coordinates of a specified character in a rich edit control.
+
+```
+FUNCTION RichEdit_PosFromChar (BYVAL hRichEdit AS HWND, BYVAL pt AS POINTL PTR, BYVAL index as DWORD) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_POSFROMCHAR, cast(WPARAM, pt), index)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pt* | A pointer to a [POINTL](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-pointl) structure that receives the client area coordinates of the character. The coordinates are in screen units and are relative to the upper-left corner of the control's client area. |
+| *index* | The zero-based index of the character. |
+
+#### Return value
+
+The return value is not used.
+
+#### Remarks
+
+A returned coordinate can be a negative value if the specified character is not displayed in the edit control's client area. The coordinates are truncated to integer values.
+
+If the character is a line delimiter, the returned coordinates indicate a point just beyond the last visible character in the line. If the specified index is greater than the index of the last character in the control, the control returns -1.
+
