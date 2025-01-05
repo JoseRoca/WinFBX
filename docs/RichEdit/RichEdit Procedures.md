@@ -2263,3 +2263,25 @@ END SUB
 The system automatically clears the modification flag to zero when the control is created. If the user changes the control's text, the system sets the flag to nonzero. You can send the **RichEdit_GetModify** message to the edit control to retrieve the current state of the flag.
 
 Rich Edit 1.0: Objects created without the **REO_DYNAMICSIZE** flag will lock in their extents when the modify flag is set to **FALSE**.
+
+# <a name="RichEdit_SetOleCallback"></a>RichEdit_SetOleCallback
+
+Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client.
+
+```
+FUNCTION RichEdit_SetOleCallback (BYVAL hRichEdit AS HWND, BYVAL pCallback AS ANY PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETOLECALLBACK, 0, cast(LPARAM, pCallback))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pCallback* | Pointer to an **IRichEditOleCallback** object. The control calls the **AddRef** method for the object before returning. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value.
+
+If the operation fails, the return value is zero.
+
