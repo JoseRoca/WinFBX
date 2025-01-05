@@ -2782,3 +2782,25 @@ A Wordwrap function scans a text buffer that contains text to be sent to the scr
 A Wordwrap function defines the point at which the system should break a line of text for multiline edit controls, usually at a space character that separates two words. Either a multiline or a single-line edit control might call this function when the user presses arrow keys in combination with the CTRL key to move the caret to the next word or previous word. The default Wordwrap function breaks a line of text at a space character. The application-defined function may define the Wordwrap to occur at a hyphen or a character other than the space character.
 
 **Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later.
+
+Setting the limit to zero disables the **Undo** feature.
+
+# <a name="RichEdit_SetWordBreakProcEx"></a>RichEdit_SetWordBreakProcEx
+
+Sets the extended word-break procedure.
+
+```
+FUNCTION RichEdit_SetWordBreakProcEx (BYVAL hRichEdit AS HWND, BYVAL pfn AS EDITWORDBREAKPROC) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETWORDBREAKPROCEX, 0, cast(LPARAM, cast(EDITWORDBREAKPROC, pfn)))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pfn* | Pointer to an [EditWordBreakProcEx](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-editwordbreakprocex) function, or **NULL** to use the default procedure. |
+
+#### Return value
+
+This message returns the address of the previous extended word-break procedure.
+
