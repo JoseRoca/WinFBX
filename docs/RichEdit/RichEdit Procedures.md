@@ -2421,7 +2421,7 @@ This message is supported only in Asian-language versions of Microsoft Rich Edit
 
 # <a name="RichEdit_SetReadOnly"></a>RichEdit_SetReadOnly
 
-Sets or removes the read-only style (ES_READONLY) of a rich edit control.
+Sets or removes the read-only style (**ES_READONLY**) of a rich edit control.
 
 ```
 FUNCTION RichEdit_SetReadOnly (BYVAL hRichEdit AS HWND, BYVAL fReadOnly AS LONG) AS LONG
@@ -2447,3 +2447,33 @@ When an edit control has the **ES_READONLY** style, the user cannot change the t
 To determine whether an edit control has the **ES_READONLY** style, use the Windows API **GetWindowLong** function with the **GWL_STYLE** flag.
 
 **Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later.
+
+# <a name="RichEdit_SetRect"></a>RichEdit_SetRect
+
+Sets the formatting rectangle of a multiline rich edit control.
+
+```
+SUB RichEdit_SetRect (BYVAL hRichEdit AS HWND, BYVAL fCoord AS LONG, BYVAL prect AS RECT PTR)
+   SendMessageW hRichEdit, EM_SETRECT, fCoord, cast(LPARAM, prect)
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *fCoord* | **Rich Edit 2.0 and later**: Indicates whether *prect* specifies absolute or relative coordinates. A value of zero indicates absolute coordinates. A value of 1 indicates offsets relative to the current formatting rectangle. (The offsets can be positive or negative.)<br>**Edit controls and Rich Edit 1.0**: This parameter is not used and must be zero. |
+| *prect* | A pointer to a [RECT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect) structure that specifies the new dimensions of the rectangle. If this parameter is **NULL**, the formatting rectangle is set to its default values. |
+
+*** Remarks
+
+Setting *prect* to **NULL** has no effect if a touch device is installed, or if **EM_SETRECT** is sent from a thread that has a hook installed (see [SetWindowsHookEx](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexw) ). In these cases, *prect* should contain a valid pointer to a [RECT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect) structure.
+
+The **EM_SETRECT** message causes the text of the edit control to be redrawn. To change the size of the formatting rectangle without redrawing the text, use the **EM_SETRECTNP** message.
+
+When an edit control is first created, the formatting rectangle is set to a default size. You can use the **EM_SETRECT** message to make the formatting rectangle larger or smaller than the edit control window.
+
+If the edit control does not have a horizontal scroll bar, and the formatting rectangle is set to be larger than the edit control window, lines of text exceeding the width of the edit control window (but smaller than the width of the formatting rectangle) are clipped instead of wrapped.
+
+If the edit control contains a border, the formatting rectangle is reduced by the size of the border. If you are adjusting the rectangle returned by an **EM_GETRECT** message, you must remove the size of the border before using the rectangle with the **EM_SETRECT** message.
+
+**Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later. The formatting rectangle does not include the selection bar, which is an unmarked area to the left of each paragraph. When the user clicks in the selection bar, the corresponding line is selected.
