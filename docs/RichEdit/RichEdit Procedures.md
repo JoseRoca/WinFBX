@@ -2711,3 +2711,26 @@ In rich text mode, a rich edit control has standard rich edit functionality. How
 
 The control must contain no text when it receives the **RichEdit_SetText** message. To ensure there is no text, send a **RichEdit_SetText** message with an empty string ("").
 
+# <a name="RichEdit_SetTypographyOptions"></a>RichEdit_SetTypographyOptions
+
+Sets the current state of the typography options of a rich edit control.
+
+```
+FUNCTION RichEdit_SetTypographyOptions (BYVAL hRichEdit AS HWND, BYVAL pto AS LONG, BYVAL fMask AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETTYPOGRAPHYOPTIONS, pto, fMask)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pto* | Specifies one or both of the following values.<br>**TO_ADVANCEDTYPOGRAPHY**. Advanced line breaking and line formatting is turned on.<br>**TO_SIMPLELINEBREAK**. Faster line breaking for simple text (requires **TO_ADVANCEDTYPOGRAPHY**). |
+| *fMask* | A mask consisting of one or more of the flags in *pto*. Only the flags that are set in this mask will be set or cleared. This allows a single flag to be set or cleared without reading the current flag states. |
+
+#### Return value
+
+Returns **TRUE** if *pto* is valid, otherwise **FALSE**.
+
+#### Remarks
+
+Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
