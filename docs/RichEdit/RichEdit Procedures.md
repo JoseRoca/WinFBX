@@ -2086,3 +2086,28 @@ END SUB
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
 | *phinfo* | Pointer to a [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure. |
+
+# <a name="RichEdit_SetIMEColor"></a>RichEdit_SetIMEColor
+
+Sets the Input Method Editor (IME) composition color.
+
+```
+FUNCTION RichEdit_SetIMEColor (BYVAL hRichEdit AS HWND, BYVAL pcompcolor AS COMPCOLOR PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETIMECOLOR, 0, cast(LPARAM, pcompcolor))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pcompcolor* | Pointer to a [COMPCOLOR](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-compcolor) structure that contains the composition color to be set. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value.
+
+If the operation fails, the return value is zero.
+
+#### Note
+
+This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions.
