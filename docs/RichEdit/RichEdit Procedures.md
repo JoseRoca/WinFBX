@@ -883,7 +883,7 @@ END FUNCTION
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
-| *which* | The zero-based index of the line to retrieve from a multiline edit control. A value of zero specifies the topmost line. This parameter is ignored by a single-line edit control. |
+| *which* | The zero-based index of the line to retrieve from a multiline edit control. A value of zero specifies the topmost line. |
 
 #### Retuen value
 
@@ -1568,5 +1568,23 @@ END FUNCTION
 
 #### Return value
 
-The return value is the character index of the line specified in the wParam parameter, or it is -1 if the specified line number is greater than the number of lines in the edit control.
+The return value is the character index of the line specified in the *nLine* parameter, or it is -1 if the specified line number is greater than the number of lines in the edit control.
 
+# <a name="RichEdit_LineLength"></a>RichEdit_LineLength
+
+Retrieves the length, in characters, of a line in a rich edit control.
+
+```
+FUNCTION RichEdit_LineLength (BYVAL hRichEdit AS HWND, BYVAL index AS DWORD) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_LINELENGTH, index, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *index* | The character index of a character in the line whose length is to be retrieved. If this parameter is greater than the number of characters in the control, the return value is zero.<br>This parameter can be -1. In this case, the message returns the number of unselected characters on lines containing selected characters. For example, if the selection extended from the fourth character of one line through the eighth character from the end of the next line, the return value would be 10 (three characters on the first line and seven on the next). |
+
+#### Return value
+
+If *index* is greater than the number of characters in the control, the return value is zero.
