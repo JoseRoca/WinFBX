@@ -2466,7 +2466,7 @@ END SUB
 
 *** Remarks
 
-Setting *prect* to **NULL** has no effect if a touch device is installed, or if **EM_SETRECT** is sent from a thread that has a hook installed (see [SetWindowsHookEx](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexw) ). In these cases, *prect* should contain a valid pointer to a [RECT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect) structure.
+Setting *prect* to **NULL** has no effect if a touch device is installed, or if **EM_SETRECT** is sent from a thread that has a hook installed (see [SetWindowsHookEx](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexw)). In these cases, *prect* should contain a valid pointer to a [RECT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect) structure.
 
 The **EM_SETRECT** message causes the text of the edit control to be redrawn. To change the size of the formatting rectangle without redrawing the text, use the **EM_SETRECTNP** message.
 
@@ -2477,3 +2477,27 @@ If the edit control does not have a horizontal scroll bar, and the formatting re
 If the edit control contains a border, the formatting rectangle is reduced by the size of the border. If you are adjusting the rectangle returned by an **EM_GETRECT** message, you must remove the size of the border before using the rectangle with the **EM_SETRECT** message.
 
 **Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later. The formatting rectangle does not include the selection bar, which is an unmarked area to the left of each paragraph. When the user clicks in the selection bar, the corresponding line is selected.
+
+# <a name="RichEdit_SetRectNP"></a>RichEdit_SetRectNP
+
+Sets the formatting rectangle of a multiline rich edit control. The **EM_SETRECTNP** message is identical to the **EM_SETRECT** message, except that **EM_SETRECTNP** does not redraw the edit control window.
+
+The formatting rectangle is the limiting rectangle into which the control draws the text. The limiting rectangle is independent of the size of the edit control window.
+
+This message is processed only by multiline edit controls. You can send this message to either an edit control or a rich edit control.
+
+```
+SUB RichEdit_SetRectNP (BYVAL hRichEdit AS HWND, BYVAL fCoord AS LONG, BYVAL prect AS RECT PTR)
+   SendMessageW hRichEdit, EM_SETRECTNP, fCoord, cast(LPARAM, prect)
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *fCoord* | **Rich Edit 3.0 and later**: Indicates whether *prect* specifies absolute or relative coordinates. A value of zero indicates absolute coordinates. A value of 1 indicates offsets relative to the current formatting rectangle. (The offsets can be positive or negative.)<br>**Edit controls: This parameter is not used and must be zero. |
+| *prect* | A pointer to a [RECT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect) structure that specifies the new dimensions of the rectangle. If this parameter is **NULL**, the formatting rectangle is set to its default values. |
+
+#### Remarks
+**Rich Edit**: Supported in Microsoft Rich Edit 3.0 and later.
+
