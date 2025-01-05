@@ -2804,3 +2804,34 @@ END FUNCTION
 
 This message returns the address of the previous extended word-break procedure.
 
+# <a name="RichEdit_SetWordWrapMode"></a>RichEdit_SetWordWrapMode
+
+Sets the word-wrapping and word-breaking options for a rich edit control.
+
+```
+FUNCTION RichEdit_SetWordWrapMode (BYVAL hRichEdit AS HWND, BYVAL pvalues AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETWORDWRAPMODE, pvalues, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pvalues* | Specifies one or more of the following values. |
+
+| Value  | Meaning |
+| ------ | ------- |
+| **WBF_WORDWRAP** | Enables Asian-specific word wrap operations, such as kinsoku in Japanese. |
+| **WBF_WORDBREAK** | Enables English word-breaking operations in Japanese and Chinese. Enables Hangeul word-breaking operation. |
+| **WBF_OVERFLOW** | Recognizes overflow punctuation. (Not currently supported.) |
+| **WBF_LEVEL1** | Sets the Level 1 punctuation table as the default. |
+| **WBF_LEVEL2** | Sets the Level 2 punctuation table as the default. |
+| **WBF_CUSTOM** | Sets the application-defined punctuation table. |
+
+#### Return value
+
+This message returns the current word-wrapping and word-breaking options.
+
+#### Remarks
+
+This message must not be sent by the application defined word breaking procedure.
