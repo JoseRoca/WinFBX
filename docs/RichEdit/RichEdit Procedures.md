@@ -1550,3 +1550,23 @@ END FUNCTION
 #### Return value
 
 The return value is the zero-based line number of the line containing the character index specified by wParam.
+
+# <a name="RichEdit_LineIndex"></a>RichEdit_LineIndex
+
+Retrieves the character index of the first character of a specified line in a multiline rich edit control.
+
+```
+FUNCTION RichEdit_LineIndex (BYVAL hRichEdit AS HWND, BYVAL nLine AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_LINEINDEX, nLine, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *nLine* | The zero-based line number. A value of -1 specifies the current line number (the line that contains the caret). |
+
+#### Return value
+
+The return value is the character index of the line specified in the wParam parameter, or it is -1 if the specified line number is greater than the number of lines in the edit control.
+
