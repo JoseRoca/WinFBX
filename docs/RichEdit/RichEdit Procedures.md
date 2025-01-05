@@ -2760,3 +2760,25 @@ By default, the maximum number of actions in the undo queue is 100. If you incre
 
 Setting the limit to zero disables the **Undo** feature.
 
+# <a name="RichEdit_SetWordBreakProc"></a>RichEdit_SetWordBreakProc
+
+Replaces a rich edit control's default Wordwrap function with an application-defined Wordwrap function.
+
+```
+SUB RichEdit_SetWordBreakProc (BYVAL hRichEdit AS HWND, BYVAL pfn AS EDITWORDBREAKPROC)
+   SendMessageW hRichEdit, EM_SETWORDBREAKPROC, 0, cast(LPARAM, cast(EDITWORDBREAKPROC, pfn))
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pfn* | The address of the application-defined Wordwrap function. For more information about breaking lines, see the description of the [EditWordBreakProc](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nc-winuser-editwordbreakprocw) callback function. |
+
+#### Remarks
+
+A Wordwrap function scans a text buffer that contains text to be sent to the screen, looking for the first word that does not fit on the current screen line. The Wordwrap function places this word at the beginning of the next line on the screen.
+
+A Wordwrap function defines the point at which the system should break a line of text for multiline edit controls, usually at a space character that separates two words. Either a multiline or a single-line edit control might call this function when the user presses arrow keys in combination with the CTRL key to move the caret to the next word or previous word. The default Wordwrap function breaks a line of text at a space character. The application-defined function may define the Wordwrap to occur at a hyphen or a character other than the space character.
+
+**Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later.
