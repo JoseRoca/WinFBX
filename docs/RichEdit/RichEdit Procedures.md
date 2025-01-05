@@ -2658,3 +2658,56 @@ If the operation is setting all of the text and succeeds, the return value is 1.
 If the operation is setting the selection and succeeds, the return value is the number of bytes or characters copied.
 
 If the operation fails, the return value is zero.
+
+# <a name="RichEdit_SetTextMode"></a>RichEdit_SetTextMode
+
+Sets the text mode or undo level of a rich edit control. The message fails if the control contains any text.
+
+```
+FUNCTION RichEdit_SetTextMode (BYVAL hRichEdit AS HWND, BYVAL pvalues AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETTEXTMODE, 0, pvalues)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pvalues* | One or more values from the TEXTMODE enumeration type. The values specify the new settings for the control's text mode and undo level parameters. |
+
+Specify one of the following values to set the text mode parameter. If you do not specify a text mode value, the text mode remains at its current setting.
+
+| Value  | Meaning |
+| ------ | ----------- |
+| **TM_PLAINTEXT** | Indicates plain text mode, in which the control is similar to a standard edit control. For more information about plain text mode, see the **Remarks** section. |
+| **TM_RICHTEXT** | Indicates rich text mode, in which the control has standard rich edit functionality. Rich text mode is the default setting. |
+
+Specify one of the following values to set the undo level parameter. If you do not specify an undo level value, the undo level remains at its current setting.
+
+| Value  | Meaning |
+| ------ | ----------- |
+| **TM_SINGLELEVELUNDO** | The control allows the user to undo only the last action that can be undone. |
+| **TM_MULTILEVELUNDO** | The control supports multiple undo operations. This is the default setting. Use the **RichEdit_SetUndoLimit** message to set the maximum number of undo actions. |
+
+Specify one of the following values to set the code page parameter. If you do not specify an code page value, the code page remains at its current setting.
+
+| Value  | Meaning |
+| ------ | ----------- |
+| **TM_SINGLECODEPAGE** | The control only allows the English keyboard and a keyboard corresponding to the default character set. For example, you could have Greek and English. Note that this prevents Unicode text from entering the control. For example, use this value if a Rich Edit control must be restricted to ANSI text. |
+| **TM_MULTICODEPAGE** | The control allows multiple code pages and Unicode text into the control. This is the default setting. |
+
+#### Return value
+
+If the message succeeds, the return value is zero.
+
+If the message fails, the return value is a nonzero value.
+
+#### Remarks
+
+In rich text mode, a rich edit control has standard rich edit functionality. However, in plain text mode, the control is similar to a standard edit control:
+
+- The text in a plain text control can have only one format (such as Bold, 10pt Arial).
+- The user cannot paste rich text formats, such as Rich Text Format (RTF) or embedded objects into a plain text control.
+- Rich text mode controls always have a default end-of-document marker or carriage return, to format paragraphs. Plain text controls, on the other hand, do not need the default, end-of-document marker, so it is omitted.
+
+The control must contain no text when it receives the **RichEdit_SetText** message. To ensure there is no text, send a **RichEdit_SetText** message with an empty string ("").
+
