@@ -3022,3 +3022,78 @@ For a multiline edit control, the return value is **TRUE** if the undo operation
 **Rich Edit 2.0 and later**: The undo feature is multilevel so sending two **EM_UNDO** messages will undo the last two operations in the undo queue. To redo an operation, send the **EM_REDO** message.
 
 **Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later.
+
+# <a name="RichEdit_SetFontW"></a>RichEdit_SetFontW
+
+Sets the font used by a rich edit control.
+
+```
+FUNCTION RichEdit_SetFontW (BYVAL hRichEdit AS HWND, BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS LRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *wszFaceName* | The font name. |
+| *ptsize* | The font size in points. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value.
+
+If the operation fails, the return value is zero.
+
+#### Implementation
+
+```
+' ========================================================================================
+' Enumerates font families. Used by the RichEdit_SetFontW function.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_EnumFontFamProcW ( _
+   BYVAL lpelf    AS ENUMLOGFONTW PTR, _     ' // Address of ENUMLOGFONT structure
+   BYVAL lpntm    AS NEWTEXTMETRICW PTR, _   ' // Address of NEWTEXTMETRIC structure
+   BYVAL FontType AS LONG, _                 ' // Font type
+   BYVAL lplf     AS LOGFONTW PTR _          ' // Address of LOGFONT struct
+   ) AS LONG
+
+   lplf->lfCharSet        = lpelf->elfLogFont.lfCharSet
+   lplf->lfPitchAndFamily = lpelf->elfLogFont.lfPitchAndFamily
+   lplf->lfFaceName       = lpelf->elfLogFont.lfFaceName
+
+   FUNCTION = FALSE
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the font used by a rich edit control.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_SetFontW ( _
+   BYVAL hRichEdit AS HWND, _             ' // Handle to the RichEdit control
+   BYREF wszFaceName AS WSTRING, _        ' // Font name
+   BYVAL ptsize AS LONG _                 ' // Font size in points
+   ) AS LRESULT
+
+   DIM lResult AS LRESULT                 ' // Result code
+   DIM hDC AS HDC                         ' // Handle of the device context
+   DIM tlf AS LOGFONTW                    ' // LOGFONT structure
+   DIM tcf AS CHARFORMATW                 ' // CHARFORMATW structure
+
+   hDC = GetDC(NULL)
+   EnumFontFamiliesW(hDC, wszFaceName, cast(FONTENUMPROCW, @RichEdit_EnumFontFamProcW), cast(LPARAM, @tlf))
+   ReleaseDC NULL, hDC
+   tcf.cbSize = SIZEOF(tcf)
+   tcf.dwMask = CFM_BOLD OR CFM_ITALIC OR CFM_UNDERLINE OR CFM_STRIKEOUT OR _
+                CFM_FACE OR CFM_CHARSET OR CFM_SIZE
+   tcf.yHeight = ptsize * 20   ' // Expects it in 20ths of a point
+   tcf.bCharSet = tlf.lfCharSet
+   tcf.bPitchAndFamily = tlf.lfPitchAndFamily
+   tcf.szFaceName = tlf.lfFaceName
+   lResult = SendMessageW(hRichEdit, EM_SETCHARFORMAT, SCF_ALL, cast(LPARAM, @tcf))
+   ' // Specify which notifications the control sends to its parent window
+   IF lResult <> 0 THEN lResult = SendMessageW(hRichEdit, EM_SETEVENTMASK, 0, ENM_CHANGE)
+   FUNCTION = lResult
+
+END FUNCTION
+' ========================================================================================
+```
