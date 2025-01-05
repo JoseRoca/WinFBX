@@ -1773,3 +1773,31 @@ END SUB
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
+
+# <a name="RichEdit_SelectionType"></a>RichEdit_SelectionType
+
+Determines the selection type for a rich edit control.
+
+```
+FUNCTION RichEdit_SelectionType (BYVAL hRichEdit AS HWND) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SELECTIONTYPE, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+If the selection is not empty, the return value is a set of flags containing one or more of the following values.
+
+| Return code | | Description |
+| SEL_TEXT | Text.|
+| SEL_OBJECT | At least one COM object. |
+| SEL_MULTICHAR | More than one character of text. |
+| SEL_MULTIOBJECT | More than one COM object. |
+
+#### Remarks
+
+This message is useful during **WM_SIZE** processing for the parent of a bottomless rich edit control.
