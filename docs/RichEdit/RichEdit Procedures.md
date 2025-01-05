@@ -1654,3 +1654,20 @@ A returned coordinate can be a negative value if the specified character is not 
 
 If the character is a line delimiter, the returned coordinates indicate a point just beyond the last visible character in the line. If the specified index is greater than the index of the last character in the control, the control returns -1.
 
+# <a name="RichEdit_Reconversion"></a>RichEdit_Reconversion
+
+Invokes the Input Method Editor (IME) reconversion dialog box.
+
+```
+FUNCTION RichEdit_Reconversion (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_RECONVERSION, 0, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+This message always returns zero.
