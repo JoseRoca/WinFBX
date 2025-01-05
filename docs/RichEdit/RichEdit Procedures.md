@@ -1841,3 +1841,46 @@ END FUNCTION
 #### Return value
 
 This message returns the original background color.
+
+# <a name="RichEdit_SetCharFormat"></a>RichEdit_SetCharFormat
+
+Sets character formatting in a rich edit control.
+
+```
+FUNCTION RichEdit_SetCharFormat (BYVAL hRichEdit AS HWND, BYVAL chfmt AS DWORD, BYVAL lpcf AS CHARFORMATW PTR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETCHARFORMAT, chfmt, cast (LPARAM, lpcf))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *chfmt* | Character formatting that applies to the control. If this parameter is zero, the default character format is set. Otherwise, it can be one of the following values (see Formatting values below). |
+| *lpcf* | Pointer to a [CHARFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformata) structure specifying the character formatting to use. Only the formatting attributes specified by the **dwMask** member are changed. The **szFaceName** and **bCharSet** members may be overruled when invalid for characters, for example: Arial on kanji characters. |
+
+#### Formatting values
+
+| Value  | Meaning |
+| ------ | ------- |
+| **SCF_ALL** | Applies the formatting to all text in the control. Not valid with **SCF_SELECTION** or **SCF_WORD**. |
+| **SCF_ASSOCIATEFONT** | **RichEdit 4.1**: Associates a font to a given script, thus changing the default font for that script. To specify the font, use the following members of **CHARFORMAT2**: yHeight, bCharSet, bPitchAndFamily, szFaceName, and lcid. |
+| **SCF_ASSOCIATEFONT2** | **RichEdit 4.1**: Associates a surrogate (plane-2) font to a given script, thus changing the default font for that script. To specify the font, use the following members of **CHARFORMAT2**: yHeight, bCharSet, bPitchAndFamily, szFaceName, and lcid. |
+| **SCF_CHARREPFROMLCID** | Gets the character repertoire from the LCID. |
+| **SCF_DEFAULT** | **RichEdit 4.1**: Sets the default font for the control. |
+| **SPF_DONTSETDEFAULT** | Prevents setting the default paragraph format when the rich edit control is empty. |
+| **SCF_NOKBUPDATE** | **RichEdit 4.1**: Prevents keyboard switching to match the font. For example, if an Arabic font is set, normally the automatic keyboard feature for Bidi languages changes the keyboard to an Arabic keyboard. |
+| **SCF_SELECTION** | Applies the formatting to the current selection. If the selection is empty, the character formatting is applied to the insertion point, and the new character format is in effect only until the insertion point changes. |
+| **SPF_SETDEFAULT** | Sets the default paragraph formatting attributes. |
+| **SCF_SMARTFONT** | Apply the font only if it can handle script. |
+| **SCF_USEUIRULES** | **RichEdit 4.1**: Used with SCF_SELECTION. Indicates that format came from a toolbar or other UI tool, so UI formatting rules should be used instead of literal formatting. |
+| **SCF_WORD** | Applies the formatting to the selected word or words. If the selection is empty but the insertion point is inside a word, the formatting is applied to the word. The SCF_WORD value must be used in conjunction with the SCF_SELECTION value. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value.
+
+If the operation fails, the return value is zero.
+
+#### Remarks
+
+If this message is sent more than once with the same parameters, the effect on the text is toggled. That is, sending the message once produces the effect, sending the message twice cancels the effect, and so forth.
