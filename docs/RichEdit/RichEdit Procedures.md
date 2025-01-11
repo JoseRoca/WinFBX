@@ -114,6 +114,7 @@
 | [RichEdit_SetScrollPos](#RichEdit_SetScrollPos) | Tells the rich edit control to scroll to a particular point. |
 | [RichEdit_SetSel](#RichEdit_SetSel) | Selects a range of characters in a rich edit control. |
 | [RichEdit_SetStoryType](#RichEdit_SetStoryType) | Sets the story type. |
+| [RichEdit_SetTableParams](#SetTableParams) | Changes the parameters of rows in a table. |
 | [RichEdit_SetTabStops](#RichEdit_SetTabStops) | Sets the tab stops in a multiline rich edit control. |
 | [RichEdit_SetTargetDevice](#RichEdit_SetTargetDevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
 | [RichEdit_SetText](#RichEdit_SetText) | Sets the text of an edit control. |
@@ -2780,6 +2781,36 @@ END FUNCTION
 #### Return value
 
 The story type that was set.
+
+# <a name="RichEdit_SetTableParams"></a>RichEdit_SetTableParams
+
+Changes the parameters of rows in a table.
+
+```
+FUNCTION RichEdit_SetTableParams (BYVAL hRichEdit AS HWND, BYVAL lptp AS TABLEROWPARMS PTR, BYVAL lptcp AS TABLECELLPARMS PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETTABLEPARMS, cast(WPARAM, lptp), cast(LPARAM, lptcp))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lptp* | A pointer to a [TABLEROWPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablerowparms) structure. |
+| *lptcp* | A pointer to a [TABLECELLPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablecellparms) structure. |
+
+#### Return value
+
+Returns S_OK if successful, or one of the following error codes.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **E_FAIL** | Changes cannot be made. This can occur if the control is a plain-text or single-line control, or if the insertion point is inside a math object. It also occurs if tables are disabled if the **RichEdit_SetEditStyleEx** message sets the **SES_EX_NOTABLE** value. |
+| **E_INVALIDARG** | The *lptp* or *lptcp* parameters are NULL or point to an invalid structure. The **cbRow** member of the **TABLEROWPARMS** structure must equal sizeof(TABLEROWPARMS) or sizeof(TABLEROWPARMS) 2*sizeof(long). The latter value is the size of the RichEdit 4.1 **TABLEROWPARMS** structure. The **cbCell** member of the **TABLEROWPARMS** structure must equal sizeof(TABLECELLPARMS). The query character position must be at a table row delimiter. |
+| **E_OUTOFMEMORY** | Insufficient memory is available. |
+
+#### Remarks
+
+This message changes the parameters of the number of rows specified by the **cRow** member of the **TABLEROWPARMS** structure, if the table has that many consecutive rows. If **cRow** is less than 0, the message iterates until the end of the table. If the new cell count differs from the current cell count by +1 or 1, it inserts or deletes the cell at the index specified by the **iCell** member of **TABLEROWPARMS**. The starting table row is identified by a character position. This position is specified by **cpStartRow** members with values that are greater than or equal to zero. The position should be inside the table row, but not inside a nested table, unless you want to change that table s parameters. If the **cpStartRow** member is 1, the character position is given by the current selection. For this, position the selection anywhere inside the table row, or select the row with the active end of the selection at the end of the table row.
 
 # <a name="RichEdit_SetTabStops"></a>RichEdit_SetTabStops
 
