@@ -681,7 +681,7 @@ Returns the extended edit style flags, which can include one or more of the foll
 
 | Return code | Description |
 | ----------- | ----------- |
-| **SES_EX_HANDLEFRIENDLYURL** | Display friendly name links with the same text color and underlining as automatic links, provided that temporary formatting isn t used or uses text autocolor (default: 0). |
+| **SES_EX_HANDLEFRIENDLYURL** | Display friendly name links with the same text color and underlining as automatic links, provided that temporary formatting isn't used or uses text autocolor (default: 0). |
 | **SES_EX_MULTITOUCH** | Enable touch support in Rich Edit. This includes selection, caret placement, and context-menu invocation. When this flag is not set, touch is emulated by mouse commands, which do not take touch-mode specifics into account (default: 0). |
 | **SES_EX_NOACETATESELECTION** | Display selected text using classic Windows selection text and background colors instead of background acetate color (default: 0). |
 | **SES_EX_NOMATH** | Disable insertion of math zones (default: 1). To enable math editing and display, send the **RichEdit_SetEditStyleEx** message with *fStyle* set to 0, and *fMask* set to SES_EX_NOMATH. |
@@ -2239,7 +2239,7 @@ END FUNCTION
 
 | Edit style flag | Description |
 | --------------- | ----------- |
-| **SES_EX_HANDLEFRIENDLYURL** | Display friendly name links with the same text color and underlining as automatic links, provided that temporary formatting isn t used or uses text autocolor (default: 0). |
+| **SES_EX_HANDLEFRIENDLYURL** | Display friendly name links with the same text color and underlining as automatic links, provided that temporary formatting isn't used or uses text autocolor (default: 0). |
 | **SES_EX_MULTITOUCH** | Enable touch support in Rich Edit. This includes selection, caret placement, and context-menu invocation. When this flag is not set, touch is emulated by mouse commands, which do not take touch-mode specifics into account (default: 0). |
 | **SES_EX_NOACETATESELECTION** | Display selected text using classic Windows selection text and background colors instead of background acetate color (default: 0). |
 | **SES_EX_NOMATH** | Disable insertion of math zones (default: 1). To enable math editing and display, send the **RichEdit_SetEditStyleEx** message with *fStyle* set to 0, and *fMask* set to SES_EX_NOMATH. |
