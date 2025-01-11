@@ -112,6 +112,7 @@
 | [RichEdit_SetRectNP](#RichEdit_SetRectNP) | Sets the formatting rectangle of a multiline rich edit control. |
 | [RichEdit_SetScrollPos](#RichEdit_SetScrollPos) | Tells the rich edit control to scroll to a particular point. |
 | [RichEdit_SetSel](#RichEdit_SetSel) | Selects a range of characters in a rich edit control. |
+| [RichEdit_SetStoryType](#RichEdit_SetStoryType) | Sets the story type. |
 | [RichEdit_SetTabStops](#RichEdit_SetTabStops) | Sets the tab stops in a multiline rich edit control. |
 | [RichEdit_SetTargetDevice](#RichEdit_SetTargetDevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
 | [RichEdit_SetText](#RichEdit_SetText) | Sets the text of an edit control. |
@@ -1291,7 +1292,7 @@ END FUNCTION
 
 Returns the story type, which can be a client-defined custom value, or one of the following values:
 
-| COnstant  | Value | Description |
+| Constant  | Value | Description |
 | --------- | ----- | ----------- |
 | **tomCommentsStory** | 4 | The story used for comments. |
 | **tomEndnotesStory** | 3 | The story used for endnotes. |
@@ -2708,6 +2709,44 @@ If the start is 0 and the end is -1, all the text in the edit control is selecte
 **Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later.
 
 If the edit control has the **ES_NOHIDESEL** style, the selected text is highlighted regardless of whether the control has focus. Without the **ES_NOHIDESEL** style, the selected text is highlighted only when the edit control has the focus.
+
+# <a name="RichEdit_SetStoryType"></a>RichEdit_SetStoryType
+
+Sets the story type.
+
+```
+FUNCTION RichEdit_SetStoryType (BYVAL hRichEdit AS HWND, BYVAL Index AS LONG, BYVAL dwType AS DWORD) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETSTORYTYPE, Index, dwType)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *Index* | The story index. |
+| *dwType* | The new story type. See the list below. |
+
+| Constant  | Value | Description |
+| --------- | ----- | ----------- |
+| **tomCommentsStory** | 4 | The story used for comments. |
+| **tomEndnotesStory** | 3 | The story used for endnotes. |
+| **tomEvenPagesFooterStory** | 8 | The story containing footers for even pages. |
+| **tomEvenPagesHeaderStory** | 6 | The story containing headers for even pages. |
+| **tomFindStory** | 128 | The story used for a Find dialog. |
+| **tomFirstPageFooterStory** | 11 | The story containing the footer for the first page. |
+| **tomFirstPageHeaderStory** | 10 | The story containing the header for the first page. |
+| **tomFootnotesStory** | 2 | The story used for footnotes. |
+| **tomMainTextStory** | 1 | The main story always exists for a rich edit control. |
+| **tomPrimaryFooterStory** | 9 | The story containing footers for odd pages. |
+| **tomPrimaryFooterStory** | 7 | The story containing headers for odd pages. |
+| **tomReplaceStory** | 129 | The story used for a Replace dialog. |
+| **tomScratchStory** | 127 | The scratch story. |
+| **tomTextFrameStory** | 5 | The story used for a text box. |
+| **tomUnknownStory** | 0 | No special type. |
+
+#### Return value
+
+The story type that was set.
 
 # <a name="RichEdit_SetTabStops"></a>RichEdit_SetTabStops
 
