@@ -51,6 +51,7 @@
 | [RichEdit_GetScrollPos](#RichEdit_GetScrollPos) | Obtains the current scroll position of the edit control. |
 | [RichEdit_GetSel](#RichEdit_GetSel) | Retrieves the starting and ending character positions of the current selection in a rich edit control. |
 | [RichEdit_GetSelText](#RichEdit_GetSelText) | Retrieves the currently selected text in a rich edit control. |
+| [RichEdit_GetStoryType](#RichEdit_GetStoryType) | Gets the story type. |
 | [RichEdit_GetText](#RichEdit_GetText) | Retrieves the text from a rich edit control. |
 | [RichEdit_GetTextEx](#RichEdit_GetTextEx) | Retrieves all of the text from the rich edit control in any particular code base you want. |
 | [RichEdit_GetTextLength](#RichEdit_GetTextLength) | Retrieves the length of all text in a rich edit control. |
@@ -1270,6 +1271,41 @@ END FUNCTION
 #### Remarks
 
 The Windows API function **GetWindowTextW** can also be used to retrive the text of a rich edit control, but it cannot retrieve the text of a control in another application.
+
+# <a name="RichEdit_GetStoryType"></a>RichEdit_GetStoryType
+
+Gets the story type.
+
+```
+FUNCTION RichEdit_GetStoryTpe (BYVAL hRichEdit AS HWND, BYVAL Index AS DWORD) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETSTORYTYPE, Index, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *Index* | The story index. |
+
+#### Return value
+
+Returns the story type, which can be a client-defined custom value, or one of the following values:
+
+tomCommentsStory
+tomEndnotesStory
+tomEvenPagesFooterStory
+tomEvenPagesHeaderStory
+tomFindStory
+tomFirstPageFooterStory
+tomFirstPageHeaderStory
+tomFootnotesStory
+tomMainTextStory
+tomPrimaryFooterStory
+tomPrimaryHeaderStory
+tomReplaceStory
+tomScratchStory
+tomTextFrameStory
+tomUnknownStory
 
 # <a name="RichEdit_GetTextEx"></a>RichEdit_GetTextEx
 
