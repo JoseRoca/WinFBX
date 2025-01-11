@@ -88,8 +88,11 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
                   DIM dwColor AS COLORREF
                   dwColor = SendMessageW(CAST(HWND, lParam), CBCOL_GETSELCOLOR, 0, 0)
                   ' Alternate way
-'                  DIM pCbColor AS CCbColorEx PTR = CAST(CCbColorEx PTR, SendMessageW(CAST(HWND, lParam), CBCOL_GETCLASSPTR, 0, 0))
-'                  IF pCbColor <> NULL THEN dwColor = pCbColor->SelColor
+'                   DIM pCbColor AS CCbColorEx PTR = AfxCCbColorExPtr(CAST(HWND, lParam))
+'                   IF pCbColor THEN dwColor = pCbColor->SelColor
+                  ' Another alternate way
+'                   DIM pCbColor AS CCbColorEx PTR = CAST(CCbColorEx PTR, SendMessageW(CAST(HWND, lParam), CBCOL_GETCLASSPTR, 0, 0))
+'                   IF pCbColor <> NULL THEN dwColor = pCbColor->SelColor
                END IF
          END SELECT
 
