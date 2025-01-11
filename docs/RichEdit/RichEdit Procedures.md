@@ -3179,8 +3179,8 @@ Setting the limit to zero disables the **Undo** feature.
 Replaces a rich edit control's default Wordwrap function with an application-defined Wordwrap function.
 
 ```
-SUB RichEdit_SetWordBreakProc (BYVAL hRichEdit AS HWND, BYVAL pfn AS EDITWORDBREAKPROC)
-   SendMessageW hRichEdit, EM_SETWORDBREAKPROC, 0, cast(LPARAM, cast(EDITWORDBREAKPROC, pfn))
+SUB RichEdit_SetWordBreakProc (BYVAL hRichEdit AS HWND, BYVAL pfn AS LONG_PTR)
+   SendMessageW(hRichEdit, EM_SETWORDBREAKPROC, 0, cast(LPARAM, pfn))
 END SUB
 ```
 
@@ -3202,8 +3202,8 @@ A Wordwrap function defines the point at which the system should break a line of
 Sets the extended word-break procedure.
 
 ```
-FUNCTION RichEdit_SetWordBreakProcEx (BYVAL hRichEdit AS HWND, BYVAL pfn AS EDITWORDBREAKPROC) AS LONG_PTR
-   FUNCTION = SendMessageW(hRichEdit, EM_SETWORDBREAKPROCEX, 0, cast(LPARAM, cast(EDITWORDBREAKPROC, pfn)))
+FUNCTION RichEdit_SetWordBreakProcEx (BYVAL hRichEdit AS HWND, BYVAL pfn AS LONG_PTR) AS LONG_PTR
+   FUNCTION = SendMessageW(hRichEdit, EM_SETWORDBREAKPROCEX, 0, cast(LPARAM, pfn))
 END FUNCTION
 ```
 
