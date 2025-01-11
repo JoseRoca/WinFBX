@@ -107,6 +107,7 @@
 | [RichEdit_SetRectNP](#RichEdit_SetRectNP) | Sets the formatting rectangle of a multiline rich edit control. |
 | [RichEdit_SetScrollPos](#RichEdit_SetScrollPos) | Tells the rich edit control to scroll to a particular point. |
 | [RichEdit_SetSel](#RichEdit_SetSel) | Selects a range of characters in a rich edit control. |
+| [RichEdit_SetEditStyleEx](#RichEdit_SetEditStyleEx) | Sets the current edit style flags for a rich edit control. |
 | [RichEdit_SetTabStops](#RichEdit_SetTabStops) | Sets the tab stops in a multiline rich edit control. |
 | [RichEdit_SetTargetDevice](#RichEdit_SetTargetDevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
 | [RichEdit_SetText](#RichEdit_SetText) | Sets the text of an edit control. |
@@ -1993,6 +1994,37 @@ END FUNCTION
 | *hRichEdit* | The handle of the rich edit control. |
 | *fTSFkbd* | Specifies one or more edit style flags. For a list of possible values, see **RichEdit_GetEditStyle**. |
 | *fMask* | A mask consisting of one or more of the *fTSFkbd* values. Only the values specified in this mask will be set or cleared. This allows a single flag to be set or cleared without reading the current flag states. |
+
+#### Return value
+
+The return value is the state of the edit style flags after the rich edit control has attempted to implement your edit style changes. The edit style flags are a set of flags that indicate the current edit style.
+
+# <a name="RichEdit_SetEditStyleEx"></a>RichEdit_SetEditStyleEx
+
+Sets the current edit style flags for a rich edit control.
+
+```
+FUNCTION RichEdit_SetEditStyleEx (BYVAL hRichEdit AS HWND, BYVAL fStyle AS LONG, BYVAL fMask AS LONG) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETEDITSTYLEEX, fStyle, fMask)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *fStyle* | Specifies one or more edit style flags. For a list of possible values, see table below. |
+| *fMask* | A mask consisting of one or more of the *fStyle* values. Only the values specified in this mask will be set or cleared. This allows a single flag to be set or cleared without reading the current flag states. |
+
+| Edit style flag | Description |
+| --------------- | ----------- |
+| **SES_EX_HANDLEFRIENDLYURL** | Display friendly name links with the same text color and underlining as automatic links, provided that temporary formatting isn t used or uses text autocolor (default: 0). |
+| **SES_EX_MULTITOUCH** | Enable touch support in Rich Edit. This includes selection, caret placement, and context-menu invocation. When this flag is not set, touch is emulated by mouse commands, which do not take touch-mode specifics into account (default: 0). |
+| **SES_EX_NOACETATESELECTION** | Display selected text using classic Windows selection text and background colors instead of background acetate color (default: 0). |
+| **SES_EX_NOMATH** | Disable insertion of math zones (default: 1). To enable math editing and display, send the **RichEdit_SetEditStyleEx** message with *fStyle* set to 0, and *fMask* set to SES_EX_NOMATH. |
+| **SES_EX_NOTABLE** | Disable insertion of tables. The **RichEdit_InsertTable** message returns **E_FAIL** and RTF tables are skipped (default: 0). |
+| **SES_EX_USESINGLELINE** | Enable a multiline control to act like a single-line control with the ability to scroll vertically when the single-line height is greater than the window height (default: 0). |
+| **SES_HIDETEMPFORMAT** | Hide temporary formatting that is created when **ITextFont.Reset** is called with **tomApplyTmp**. For example, such formatting is used by spell checkers to display a squiggly underline under possibly misspelled words. |
+| **SES_EX_USEMOUSEWPARAM** | Use *wParam* when handling the **WM_MOUSEMOVE** message and do not call **GetAsyncKeyState**. |
 
 #### Return value
 
