@@ -125,6 +125,7 @@
 | [RichEdit_SetTextMode](#RichEdit_SetTextMode) | Sets the text mode or undo level of a rich edit control. |
 | [RichEdit_SetTouchOptions](#RichEdit_SetTouchOptions) | Sets the touch options associated with a rich edit control. |
 | [RichEdit_SetTypographyOptions](#RichEdit_SetTypographyOptions) | Sets the text mode or undo level of a rich edit control. |
+| [RichEdit_SetUIName](#SetUIName) | Sets the name of a rich edit control for UI Automation (UIA). |
 | [RichEdit_SetUndoLimit](#RichEdit_SetUndoLimit) | Sets the maximum number of actions that can stored in the undo queue. |
 | [RichEdit_SetWordBreakProc](#RichEdit_SetWordBreakProc) | Replaces a rich edit control's default Wordwrap function with an application-defined wordwrap function. |
 | [RichEdit_SetWordBreakProcEx](#RichEdit_SetWordBreakProcEx) | Sets the extended word-break procedure. |
@@ -3093,6 +3094,25 @@ Returns **TRUE** if *pto* is valid, otherwise **FALSE**.
 #### Remarks
 
 Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
+
+# <a name="RichEdit_SetUIAName"></a>RichEdit_SetUIAName
+
+Sets the name of a rich edit control for UI Automation (UIA).
+
+```
+FUNCTION RichEdit_SetUIAName (BYVAL hRichEdit AS HWND, BYVAL bstrName AS AFX_BSTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETUIANAME, 0, cast(LPARAM, bstrName))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *bstrName* | A pointer to the null-terminated name string. |
+
+#### Return value
+
+TRUE if the name for UIA is successfully set, otherwise FALSE.
 
 # <a name="RichEdit_SetUndoLimit"></a>RichEdit_SetUndoLimit
 
