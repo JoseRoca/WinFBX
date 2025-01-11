@@ -17,7 +17,7 @@
 | [RichEdit_FindTextEx](#RichEdit_FindTextEx) | Finds text within a rich edit control. |
 | [RichEdit_FindWordBreak](#RichEdit_FindWordBreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [RichEdit_FormatRange](#RichEdit_FormatRange) | Formats a range of text in a rich edit control for a specific device. |
-| [RichEdit_RichEdit_GetAutoCorrectProc](#RichEdit_GetAutoCorrectProc) | Gets a pointer to the application-defined **AutoCorrectProc** callback function. |
+| [RichEdit_GetAutoCorrectProc](#RichEdit_GetAutoCorrectProc) | Gets a pointer to the application-defined **AutoCorrectProc** callback function. |
 | [RichEdit_GetAutoUrlDetect](#RichEdit_GetAutoUrlDetect) | Indicates whether the auto URL detection is turned on in the rich edit control. |
 | [RichEdit_GetBidiOptions](#RichEdit_GetBidiOptions) | Indicates the current state of the bidirectional options in the rich edit control. |
 | [RichEdit_GetCharFormat](#RichEdit_GetCharFormat) | Determines the current character formatting in a rich edit control. |
