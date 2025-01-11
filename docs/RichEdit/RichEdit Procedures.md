@@ -68,6 +68,7 @@
 | [RichEdit_GetWordWrapMode](#RichEdit_GetWordWrapMode) | Retrieves the current word wrap and word-break options for the rich edit control. |
 | [RichEdit_GetZoom](#RichEdit_GetZoom) | Retrieves the current zoom ratio, which is always between 1/64 and 64. |
 | [RichEdit_HideSelection](#RichEdit_HideSelection) | Hides or shows the selection in a rich edit control. |
+| [RichEdit_InsertImage](#RichEdit_InsertImage) | Replaces the selection with a blob that displays an image. |
 | [RichEdit_IsIME](#RichEdit_IsIME) | Determines if current input locale is an East Asian locale. |
 | [RichEdit_LimitText](#RichEdit_LimitText) | Sets the text limit of a rich edit control. The text limit is the maximum amount of text, in characters, that the user can type into the edit control. |
 | [RichEdit_LineFromChar](#RichEdit_LineFromChar) | Retrieves the index of the line that contains the specified character index in a multiline rich edit control. |
@@ -1644,6 +1645,34 @@ END FUNCTION
 
 #### Return value
 The message returns **TRUE** if message is processed, which it will be if both *pzNum* and *pzDen* are not **NULL**.
+
+# <a name="RichEdit_InsertImage"></a>RichEdit_InsertImage
+
+Replaces the selection with a blob that displays an image.
+
+```
+FUNCTION RichEdit_InsertImage (BYVAL hRichEdit AS HWND, BYVAL lpip AS RICHEDIT_IMAGE_PARAMETERS PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_INSERTIMAGE, 0, cast(LPARAM, lpip))
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lpip* | A pointer to a [RICHEDIT_IMAGE_PARAMETERS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-richedit_image_parameters) structure that contains the image blob. |
+
+#### Return value
+
+Returns S_OK if successful, or one of the following error codes.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **E_FAIL** | Cannot insert the image. |
+| **E_INVALIDARG** | The *lpip* parameter is NULL or points to an invalid image. |
+| **E_OUTOFMEMORY** | Insufficient memory is available. |
+
+#### Remarks
+
+If the selection is an insertion point, the image blob is inserted at the insertion point.
 
 # <a name="RichEdit_HideSelection"></a>RichEdit_HideSelection
 
