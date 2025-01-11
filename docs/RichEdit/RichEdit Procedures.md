@@ -125,7 +125,7 @@
 | [RichEdit_SetTextMode](#RichEdit_SetTextMode) | Sets the text mode or undo level of a rich edit control. |
 | [RichEdit_SetTouchOptions](#RichEdit_SetTouchOptions) | Sets the touch options associated with a rich edit control. |
 | [RichEdit_SetTypographyOptions](#RichEdit_SetTypographyOptions) | Sets the text mode or undo level of a rich edit control. |
-| [RichEdit_SetUIName](#SetUIName) | Sets the name of a rich edit control for UI Automation (UIA). |
+| [RichEdit_SetUIAName](#SetUIAName) | Sets the name of a rich edit control for UI Automation (UIA). |
 | [RichEdit_SetUndoLimit](#RichEdit_SetUndoLimit) | Sets the maximum number of actions that can stored in the undo queue. |
 | [RichEdit_SetWordBreakProc](#RichEdit_SetWordBreakProc) | Replaces a rich edit control's default Wordwrap function with an application-defined wordwrap function. |
 | [RichEdit_SetWordBreakProcEx](#RichEdit_SetWordBreakProcEx) | Sets the extended word-break procedure. |
