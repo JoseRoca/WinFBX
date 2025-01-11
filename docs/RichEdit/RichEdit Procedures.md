@@ -17,6 +17,7 @@
 | [RichEdit_FindTextEx](#RichEdit_FindTextEx) | Finds text within a rich edit control. |
 | [RichEdit_FindWordBreak](#RichEdit_FindWordBreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [RichEdit_FormatRange](#RichEdit_FormatRange) | Formats a range of text in a rich edit control for a specific device. |
+| [RichEdit_RichEdit_GetAutoCorrectProc](#RichEdit_GetAutoCorrectProc) | Gets a pointer to the application-defined AutoCorrectProc callback function. |
 | [RichEdit_GetAutoUrlDetect](#RichEdit_GetAutoUrlDetect) | Indicates whether the auto URL detection is turned on in the rich edit control. |
 | [RichEdit_GetBidiOptions](#RichEdit_GetBidiOptions) | Indicates the current state of the bidirectional options in the rich edit control. |
 | [RichEdit_GetCharFormat](#RichEdit_GetCharFormat) | Determines the current character formatting in a rich edit control. |
@@ -485,6 +486,20 @@ This message returns the index of the last character that fits in the region, pl
 This message is typically used to format the content of rich edit control for an output device such as a printer.
 
 After using this message to format a range of text, it is important that you free cached information by sending **EM_FORMATRANGE** again, but with lParam set to **NULL**; otherwise, a memory leak will occur. Also, after using this message for one device, you must free cached information before using it again for a different device.
+
+# <a name="RichEdit_GetAutoCorrectProc"></a>RichEdit_GetAutoCorrectProc
+
+Gets a pointer to the application-defined AutoCorrectProc callback function.
+
+```
+FUNCTION RichEdit_GetAutoCorrectProc (BYVAL hRichEdit AS HWND) AS LONG_PTR
+   FUNCTION = SendMessageW(hRichEdit, EM_GETAUTOCORRECTPROC, 0, 0)
+END FUNCTION
+```
+
+#### Return value
+
+Returns a pointer to the application-defined AutoCorrectProc callback function.
 
 # <a name="RichEdit_GetAutoUrlDetect"></a>RichEdit_GetAutoUrlDetect
 
