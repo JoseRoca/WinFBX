@@ -85,6 +85,7 @@
 | [RichEdit_SetCTFModeBias](#RichEdit_SetCTFModeBias) | Sets the Text Services Framework (TSF) mode bias for a Microsoft Rich Edit control. |
 | [RichEdit_SetCTFOpenStatus](#RichEdit_SetCTFOpenStatus) | Opens or closes the Text Services Framework (TSF) keyboard. |
 | [RichEdit_SetEditStyle](#RichEdit_SetEditStyle) | Sets the current edit style flags. |
+| [RichEdit_SetEditStyleEx](#RichEdit_SetEditStyleEx) | Sets the current edit style flags for a rich edit control. |
 | [RichEdit_SetEventMask](#RichEdit_SetEventMask) | Sets the event mask for a rich edit control. |
 | [RichEdit_SetFontSize](#RichEdit_SetFontSize) | Sets the font size for the selected text. |
 | [RichEdit_SetHyphenateInfo](#RichEdit_SetHyphenateInfo) | Sets the way a Microsoft Rich Edit control does hyphenation. |
@@ -107,7 +108,6 @@
 | [RichEdit_SetRectNP](#RichEdit_SetRectNP) | Sets the formatting rectangle of a multiline rich edit control. |
 | [RichEdit_SetScrollPos](#RichEdit_SetScrollPos) | Tells the rich edit control to scroll to a particular point. |
 | [RichEdit_SetSel](#RichEdit_SetSel) | Selects a range of characters in a rich edit control. |
-| [RichEdit_SetEditStyleEx](#RichEdit_SetEditStyleEx) | Sets the current edit style flags for a rich edit control. |
 | [RichEdit_SetTabStops](#RichEdit_SetTabStops) | Sets the tab stops in a multiline rich edit control. |
 | [RichEdit_SetTargetDevice](#RichEdit_SetTargetDevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
 | [RichEdit_SetText](#RichEdit_SetText) | Sets the text of an edit control. |
