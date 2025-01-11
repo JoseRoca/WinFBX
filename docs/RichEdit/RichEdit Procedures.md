@@ -60,6 +60,7 @@
 | [RichEdit_GetTextMode](#RichEdit_GetTextMode) | Retrieves the current text mode and undo level of a rich edit control. |
 | [RichEdit_GetTextRange](#RichEdit_GetTextRange) | Retrieves a specified range of characters from a rich edit control. |
 | [RichEdit_GetThumb](#RichEdit_GetThumb) | Retrieves the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
+| [RichEdit_GetTouchOptions](#RichEdit_GetTouchOptions) | Retrieves the touch options that are associated with a rich edit control. |
 | [RichEdit_GetTypographyOptions](#RichEdit_GetTypographyOptions) | Returns the current state of the typography options of a rich edit control. |
 | [RichEdit_GetUndoName](#RichEdit_GetUndoName) | Retrieves the type of the next undo action, if any. |
 | [RichEdit_GetWordBreakProc](#RichEdit_GetWordBreakProc) | Retrieves the address of the current Wordwrap function. |
@@ -1480,6 +1481,30 @@ END FUNCTION
 #### Return value
 
 The return value is the position of the scroll box.
+
+# <a name="RichEdit_GetTouchOptions"></a>RichEdit_GetTouchOptions
+
+Retrieves the touch options that are associated with a rich edit control.
+
+```
+FUNCTION RichEdit_GetTouchOptions (BYVAL hRichEdit AS HWND, BYVAL Options AS LONG PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETTOUCHOPTIONS, cast(WPARAM, Options), 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *Options* | he touch options to retrieve. It can be one of the following values. |
+
+| Value  | Meaning |
+| ------ | ------- |
+| **RTO_SHOWHANDLES** | Retrieves whether the touch grippers are visible. |
+| **RTO_DISABLEHANDLES** | Retrieving this flag is not implemented. |
+
+#### Return value
+
+Returns the value of the option specified by the *Options* parameter. It is nonzero if *Options* is **RTO_SHOWHANDLES** and the touch grippers are visible; zero, otherwise.
 
 # <a name="RichEdit_GetTypographyOptions"></a>RichEdit_GetTypographyOptions
 
