@@ -2041,8 +2041,8 @@ This message is useful during **WM_SIZE** processing for the parent of a bottoml
 Sets a pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
 
 ```
-FUNCTION RichEdit_SetAutoCorrectProc (BYVAL hRichEdit AS HWND, BYVAL pfn AS AUTOCORRECTPROC) AS DWORD
-   FUNCTION = SendMessageW(hRichEdit, EM_SETAUTOCORRECTPROC, 0, cast(LPARAM, cast(AUTOCORRECTPROC, pfn)))
+FUNCTION RichEdit_SetAutoCorrectProc (BYVAL hRichEdit AS HWND, BYVAL pfn AS LONG_PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETAUTOCORRECTPROC, 0, cast(LPARAM, pfn))
 END FUNCTION
 ```
 
