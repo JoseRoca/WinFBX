@@ -52,6 +52,7 @@
 | [RichEdit_GetSel](#RichEdit_GetSel) | Retrieves the starting and ending character positions of the current selection in a rich edit control. |
 | [RichEdit_GetSelText](#RichEdit_GetSelText) | Retrieves the currently selected text in a rich edit control. |
 | [RichEdit_GetStoryType](#RichEdit_GetStoryType) | Gets the story type. |
+| [RichEdit_GetTableParams](#RichEdit_GetTableParams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
 | [RichEdit_GetText](#RichEdit_GetText) | Retrieves the text from a rich edit control. |
 | [RichEdit_GetTextEx](#RichEdit_GetTextEx) | Retrieves all of the text from the rich edit control in any particular code base you want. |
 | [RichEdit_GetTextLength](#RichEdit_GetTextLength) | Retrieves the length of all text in a rich edit control. |
@@ -1250,6 +1251,38 @@ END FUNCTION
 #### Return value
 
 The selected text as a **CWSTR** (dynamic unicode string).
+
+# <a name="RichEdit_GetTableParams"></a>RichEdit_GetTableParams
+
+Retrieves the table parameters for a table row and the cell parameters for the specified number of cells.
+
+```
+FUNCTION RichEdit_GetTableParams (BYVAL hRichEdit AS HWND, BYVAL lptp AS TABLEROWPARMS PTR, BYVAL lptcp AS TABLECELLPARMS PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETTABLEPARMS, cast(WPARAM, lptp), cast(LPARAM, lptcp))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lptp* | A pointer to a [TABLEROWPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablerowparms) structure. |
+| *lptcp* | A pointer to a [TABLECELLPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablecellparms) structure. |
+
+#### Return value
+
+Returns S_OK if successful, or one of the following error codes.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **E_FAIL** | Changes cannot be made. This can occur if the control is a plain-text or single-line control, or if the insertion point is inside a math object. It also occurs if tables are disabled if the **RichEdit_SetEditStyleEx** message sets the **SES_EX_NOTABLE** value. |
+| **E_INVALIDARG** | The *lptp* or *lptcp* parameters are NULL or point to an invalid structure. The **cbRow** member of the **TABLEROWPARMS** structure must equal sizeof(TABLEROWPARMS) or sizeof(TABLEROWPARMS) 2*sizeof(long). The latter value is the size of the RichEdit 4.1 **TABLEROWPARMS** structure. The **cbCell** member of the **TABLEROWPARMS** structure must equal sizeof(TABLECELLPARMS). The query character position must be at a table row delimiter. |
+| **E_OUTOFMEMORY** | Insufficient memory is available. |
+
+#### Remarks
+
+This message gets the table parameters for the row at the character position specified by the **cpStartRow** member of the **TABLEROWPARMS** structure, and the number of cells specified by the **cCells** member of the **TABLECELLPARMS** structure.
+
+The character position specified by the **cpStartRow** member of the **TABLEROWPARMS** structure should be at the start of the table row, or at the end delimiter of the table row. If **cpStartRow** is set to 1, the character position is given by the current selection. In this case, position the selection at the end of the row (between the cell mark and the end delimiter of the table row), or select the row.
 
 # <a name="RichEdit_GetText"></a>RichEdit_GetText
 
