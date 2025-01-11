@@ -24,6 +24,14 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Calls the autocorrect callback function that is stored by the **RichEdit_SetAutocorrectProc**
+' message, provided that the text preceding the insertion point is a candidate for autocorrection.
+' ========================================================================================
+FUNCTION RichEdit_CallAutocorrectProc (BYVAL hRichEdit AS HWND, BYVAL char AS WCHAR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_CALLAUTOCORRECTPROC, char, 0)
+END FUNCTION
+
+' ========================================================================================
 ' Determines whether a rich edit control can paste a specified clipboard format.
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_CanPaste (BYVAL hRichEdit AS HWND, BYVAL clipformat AS LONG) AS LONG
@@ -141,6 +149,14 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Gets a pointer to the application-defined AutoCorrectProc callback function.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_GetAutoCorrectProc (BYVAL hRichEdit AS HWND) AS LONG_PTR
+   FUNCTION = SendMessageW(hRichEdit, EM_GETAUTOCORRECTPROC, 0, 0)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Indicates whether the auto URL detection is turned on in the rich edit control.
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_GetAutoUrlDetect (BYVAL hRichEdit AS HWND) AS LONG
@@ -185,6 +201,30 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_GetEditStyle (BYVAL hRichEdit AS HWND) AS DWORD
    FUNCTION = SendMessageW(hRichEdit, EM_GETEDITSTYLE, 0, 0)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Returns the extended edit style flags.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_GetEditStyleEx (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETEDITSTYLEEX, 0, 0)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the current ellipsis mode.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_GetEllipsisMode (BYVAL hRichEdit AS HWND, BYVAL pmode AS DWORD PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETELLIPSISMODE, 0, cast(LPARAM, @pMode))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the current ellipsis mode.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_GetEllipsisState (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETELLIPSISSTATE, 0, 0)
 END FUNCTION
 ' ========================================================================================
 
@@ -407,6 +447,22 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Gets the story type.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_GetStoryTpe (BYVAL hRichEdit AS HWND, BYVAL Index AS DWORD) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETSTORYTYPE, Index, 0)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the table parameters for a table row and the cell parameters for the specified number of cells.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_GetTableParams (BYVAL hRichEdit AS HWND, BYVAL lptp AS TABLEROWPARMS PTR, BYVAL lptcp AS TABLECELLPARMS PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETTABLEPARMS, cast(WPARAM, lptp), cast(LPARAM, lptcp))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Retrieves the text from a rich edit control.
 ' Note: GetWindowText cannot retrieve the text of a control in another application.
 ' ========================================================================================
@@ -470,6 +526,14 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Retrieves the touch options that are associated with a rich edit control.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_GetTouchOptions (BYVAL hRichEdit AS HWND, BYVAL Options AS LONG PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETTOUCHOPTIONS, cast(WPARAM, Options), 0)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Returns the current state of the typography options of a rich edit control.
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_GetTypographyOptions (BYVAL hRichEdit AS HWND) AS DWORD
@@ -523,6 +587,22 @@ END FUNCTION
 PRIVATE SUB RichEdit_HideSelection (BYVAL hRichEdit AS HWND, BYVAL fHide AS DWORD)
    SendMessageW hRichEdit, EM_HIDESELECTION, fHide, 0
 END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Replaces the selection with a blob that displays an image.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_InsertImage (BYVAL hRichEdit AS HWND, BYVAL lpip AS RICHEDIT_IMAGE_PARAMETERS PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_INSERTIMAGE, 0, cast(LPARAM, lpip))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Inserts one or more identical table rows with empty cells.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_InsertTable (BYVAL hRichEdit AS HWND, BYVAL lptp AS TABLEROWPARMS PTR, BYVAL lptcp AS TABLECELLPARMS PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_INSERTTABLE, cast(WPARAM, lptp), cast(LPARAM, lptcp))
+END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
@@ -650,6 +730,14 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Sets a pointer to the application-defined AutoCorrectProc callback procedure.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_SetAutoCorrectProc (BYVAL hRichEdit AS HWND, BYVAL pfn AS LONG_PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETAUTOCORRECTPROC, 0, cast(LPARAM, pfn))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Sets the current state of the bidirectional options in the rich edit control.
 ' ========================================================================================
 PRIVATE SUB RichEdit_SetBidiOptions (BYVAL hRichEdit AS HWND, BYVAL pOptions AS BIDIOPTIONS PTR)
@@ -694,6 +782,22 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_SetEditStyle (BYVAL hRichEdit AS HWND, BYVAL fStyle AS LONG, BYVAL fMask AS LONG) AS DWORD
    FUNCTION = SendMessageW(hRichEdit, EM_SETEDITSTYLE, fStyle, fMask)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the current extended edit style flags.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_SetEditStyleEx (BYVAL hRichEdit AS HWND, BYVAL fStyle AS LONG, BYVAL fMask AS LONG) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETEDITSTYLEEX, fStyle, fMask)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the current extended edit style flags.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_SetElipsisMode (BYVAL hRichEdit AS HWND, BYVAL fMode AS DWORD) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETELLIPSISMODE, 0, fMode)
 END FUNCTION
 ' ========================================================================================
 
@@ -879,6 +983,20 @@ END SUB
 ' ========================================================================================
 
 ' ========================================================================================
+PRIVATE FUNCTION RichEdit_SetStoryType (BYVAL hRichEdit AS HWND, BYVAL Index AS LONG, BYVAL dwType AS DWORD) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETSTORYTYPE, Index, dwType)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Changes the parameters of rows in a table.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_SetTableParams (BYVAL hRichEdit AS HWND, BYVAL lptp AS TABLEROWPARMS PTR, BYVAL lptcp AS TABLECELLPARMS PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETTABLEPARMS, cast(WPARAM, lptp), cast(LPARAM, lptcp))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Sets the tab stops in a multiline rich edit control.
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_SetTabStops (BYVAL hRichEdit AS HWND, BYVAL nTabs AS LONG, BYVAL rgTabStops AS LONG_PTR) AS LONG
@@ -921,10 +1039,26 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Sets the touch options associated with a rich edit control.
+' ========================================================================================
+PRIVATE SUB RichEdit_SetTouchOptions (BYVAL hRichEdit AS HWND, BYVAL Options AS LONG, BYVAL fEnable AS LONG)
+   SendMessageW(hRichEdit, EM_SETTOUCHOPTIONS, Options, fEnable)
+END SUB
+' ========================================================================================
+
+' ========================================================================================
 ' Sets the current state of the typography options of a rich edit control.
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_SetTypographyOptions (BYVAL hRichEdit AS HWND, BYVAL pto AS LONG, BYVAL fMask AS LONG) AS LONG
    FUNCTION = SendMessageW(hRichEdit, EM_SETTYPOGRAPHYOPTIONS, pto, fMask)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the maximum number of actions that can stored in the undo queue.
+' ========================================================================================
+PRIVATE FUNCTION RichEdit_SetUIAName (BYVAL hRichEdit AS HWND, BYVAL bstrName AS AFX_BSTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETUIANAME, 0, cast(LPARAM, bstrName))
 END FUNCTION
 ' ========================================================================================
 
@@ -937,19 +1071,18 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Replaces a rich edit control's default Wordwrap function with an application-defined
-' Wordwrap function.
+' Replaces a rich edit control's default Wordwrap function with an application-defined Wordwrap function.
 ' ========================================================================================
-PRIVATE SUB RichEdit_SetWordBreakProc (BYVAL hRichEdit AS HWND, BYVAL pfn AS EDITWORDBREAKPROC)
-   SendMessageW hRichEdit, EM_SETWORDBREAKPROC, 0, cast(LPARAM, cast(EDITWORDBREAKPROC, pfn))
+PRIVATE SUB RichEdit_SetWordBreakProc (BYVAL hRichEdit AS HWND, BYVAL pfn AS LONG_PTR)
+   SendMessageW(hRichEdit, EM_SETWORDBREAKPROC, 0, cast(LPARAM, pfn))
 END SUB
 ' ========================================================================================
 
 ' ========================================================================================
 ' Sets the extended word-break procedure.
 ' ========================================================================================
-PRIVATE FUNCTION RichEdit_SetWordBreakProcEx (BYVAL hRichEdit AS HWND, BYVAL pfn AS EDITWORDBREAKPROCEX) AS DWORD
-   FUNCTION = SendMessageW(hRichEdit, EM_SETWORDBREAKPROCEX, 0, cast(LPARAM, cast(EDITWORDBREAKPROCEX, pfn)))
+PRIVATE FUNCTION RichEdit_SetWordBreakProcEx (BYVAL hRichEdit AS HWND, BYVAL pfn AS LONG_PTR) AS LONG_PTR
+   FUNCTION = SendMessageW(hRichEdit, EM_SETWORDBREAKPROCEX, 0, cast(LPARAM, pfn))
 END FUNCTION
 ' ========================================================================================
 
