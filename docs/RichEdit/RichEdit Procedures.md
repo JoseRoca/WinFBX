@@ -3019,10 +3019,6 @@ END SUB
 | **RTO_SHOWHANDLES** | Show or hide the touch gripper handles, depending on the value of *Options*. |
 | **RTO_DISABLEHANDLES** | Enable or disable the touch gripper handles, depending on the value of *Options*. When handles are disabled, they are hidden if they are visible and remain hidden until an **RichEdit_SetTouchOptions** message changes their status. |
 
-#### Return value
-
-Returns the value of the option specified by the *Options* parameter. It is nonzero if *Options* is **RTO_SHOWHANDLES** and the touch grippers are visible; zero, otherwise.
-
 # <a name="RichEdit_SetTypographyOptions"></a>RichEdit_SetTypographyOptions
 
 Sets the current state of the typography options of a rich edit control.
