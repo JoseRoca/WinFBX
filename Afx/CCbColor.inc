@@ -30,7 +30,7 @@ CONST CBCOL_GETSELCOLOR  = WM_USER + 202
 TYPE CCbColor
 
    Private:
-      m_hCtl  AS HWND           ' // Button handle
+      m_hCtl  AS HWND           ' // Combobox handle
       m_hFont AS HFONT          ' // Font handle
       m_oldProc AS WNDPROC      ' // Subclass procedure
       m_autoColor AS COLORREF   ' // Auto color
@@ -349,6 +349,18 @@ END PROPERTY
 PRIVATE PROPERTY CCbColor.ScalingRatio () AS SINGLE
    PROPERTY = m_ratio
 END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves a pointer to the CCbColor class from the handle of the Combobox control.
+' Usage example:
+' DIM pCbColor AS CCbColor PTR = AfxCCbColorPtr(CAST(HWND, lParam))
+' IF pCbColor <> NULL THEN dwColor = pCbColor->SelColor
+' ========================================================================================
+PRIVATE FUNCTION AfxCCbColorPtr (BYVAL hCbColor AS HWND) AS CCbColor PTR
+   DIM pCbColor AS CCbColor PTR = CAST(CCbColor PTR, .GetPropW(hCbColor, "CBCOLORPTR"))
+   RETURN pCbColor
+END FUNCTION
 ' ========================================================================================
 
 END NAMESPACE

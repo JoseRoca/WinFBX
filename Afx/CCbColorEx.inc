@@ -362,4 +362,16 @@ PRIVATE PROPERTY CCbColorEx.ScalingRatio () AS SINGLE
 END PROPERTY
 ' ========================================================================================
 
+' ========================================================================================
+' Retrieves a pointer to the CCbColor class from the handle of the Combobox control.
+' Usage example:
+' DIM pCbColor AS CCbColorEx PTR = AfxCCbColorExPtr(CAST(HWND, lParam))
+' IF pCbColor THEN dwColor = pCbColor->SelColor
+' ========================================================================================
+PRIVATE FUNCTION AfxCCbColorExPtr (BYVAL hCbColorEx AS HWND) AS CCbColorEx PTR
+   DIM pCbColorEx AS CCbColorEx PTR = CAST(CCbColorEx PTR, SendMessageW(hCbColorEx, CBCOL_GETCLASSPTR, 0, 0))
+   RETURN pCbColorEx
+END FUNCTION
+' ========================================================================================
+
 END NAMESPACE
