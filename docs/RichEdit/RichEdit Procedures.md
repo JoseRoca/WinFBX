@@ -25,6 +25,7 @@
 | [RichEdit_GetEditStyle](#RichEdit_GetEditStyle) | Retrieves the current edit style flags. |
 | [RichEdit_GetEditStyleEx](#RichEdit_GetEditStyleEx) | Retrieves the current extended edit style flags. |
 | [RichEdit_GetEllipsisMode](#RichEdit_GetEllipsisMode) | Retrieves the current ellipsis mode. |
+| [RichEdit_GetEllipsisState](#RichEdit_GetEllipsisState) | Retrieves the current ellipsis state. |
 | [RichEdit_GetEventMask](#RichEdit_GetEventMask) | Retrieves the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window. |
 | [RichEdit_GetFirstVisibleLine](#RichEdit_GetFirstVisibleLine) | Retrieves the zero-based index of the uppermost visible line in a multiline rich edit control. |
 | [RichEdit_GetHyphenateInfo](#RichEdit_GetHyphenateInfo) | Retrieves information about hyphenation for a Microsoft Rich Edit control. |
@@ -682,6 +683,22 @@ END FUNCTION
 #### Return value
 
 If *pmode* is not NULL, the return value equals TRUE; otherwise, the return value equals FALSE.
+
+# <a name="RichEdit_GetEllipsisState"></a>RichEdit_GetEllipsisState
+
+Retrieves the current ellipsis state.
+
+```
+FUNCTION RichEdit_GetEllipsisState (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETELLIPSISSTATE, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+The return value is TRUE if an ellipsis is being displayed and FALSE otherwise.
 
 # <a name="RichEdit_GetEventMask"></a>RichEdit_GetEventMask
 
