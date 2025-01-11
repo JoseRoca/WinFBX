@@ -23,6 +23,7 @@
 | [RichEdit_GetCTFModeBias](#RichEdit_GetCTFModeBias) | Retrieves the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [RichEdit_GetCTFOpenStatus](#RichEdit_GetCTFOpenStatus) | Determines if the Text Services Framework (TSF) keyboard is open or closed. |
 | [RichEdit_GetEditStyle](#RichEdit_GetEditStyle) | Retrieves the current edit style flags. |
+| [RichEdit_GetEditStyleEx](#RichEdit_GetEditStyleEx) | Retrieves the current extended edit style flags. |
 | [RichEdit_GetEventMask](#RichEdit_GetEventMask) | Retrieves the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window. |
 | [RichEdit_GetFirstVisibleLine](#RichEdit_GetFirstVisibleLine) | Retrieves the zero-based index of the uppermost visible line in a multiline rich edit control. |
 | [RichEdit_GetHyphenateInfo](#RichEdit_GetHyphenateInfo) | Retrieves information about hyphenation for a Microsoft Rich Edit control. |
@@ -632,6 +633,34 @@ Returns the current edit style flags, which can include one or more of the follo
 | **SES_USEATFONT** | **Windows XP with SP1**: Uses an @ font, which is designed for vertical text; this is used with the ES_VERTICAL window style. The name of an @ font begins with the @ symbol, for example, "@Batang" (default: 0, but is automatically turned on for vertical text layout). |
 | **SES_USECTF** | **Windows XP with SP1**: Turns on TSF support. (default: 0). |
 | **SES_XLTCRCRLFTOCR** | Turns on translation of CRCRLFs to CRs. When this bit is on and a file is read in, all instances of CRCRLF will be converted to hard CRs internally. This will affect the text wrapping. Note that if such a file is saved as plain text, the CRs will be replaced by CRLFs. This is the .txt standard for plain text (default: 0, which deletes CRCRLFs on input). |
+
+# <a name="RichEdit_GetEditStyleEx"></a>RichEdit_GetEditStyleEx
+
+Retrieves the current extended edit style flags.
+
+```
+FUNCTION RichEdit_GetEditStyleEx (BYVAL hRichEdit AS HWND) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETEDITSTYLEEX, 0, 0)
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+Returns the extended edit style flags, which can include one or more of the following values.
+
+| Return code | Description |
+| ----------- | ----------- |
+| **SES_EX_HANDLEFRIENDLYURL** | Display friendly name links with the same text color and underlining as automatic links, provided that temporary formatting isn t used or uses text autocolor (default: 0). |
+| **SES_EX_MULTITOUCH** | Enable touch support in Rich Edit. This includes selection, caret placement, and context-menu invocation. When this flag is not set, touch is emulated by mouse commands, which do not take touch-mode specifics into account (default: 0). |
+| **SES_EX_NOACETATESELECTION** | Display selected text using classic Windows selection text and background colors instead of background acetate color (default: 0). |
+| **SES_EX_NOMATH** | Disable insertion of math zones (default: 1). To enable math editing and display, send the **RichEdit_SetEditStyleEx** message with *fStyle* set to 0, and *fMask* set to SES_EX_NOMATH. |
+| **SES_EX_NOTABLE** | Disable insertion of tables. The **RichEdit_InsertTable** message returns **E_FAIL** and RTF tables are skipped (default: 0). |
+| **SES_EX_USESINGLELINE** | Enable a multiline control to act like a single-line control with the ability to scroll vertically when the single-line height is greater than the window height (default: 0). |
+| **SES_HIDETEMPFORMAT** | Hide temporary formatting that is created when **ITextFont.Reset** is called with **tomApplyTmp**. For example, such formatting is used by spell checkers to display a squiggly underline under possibly misspelled words. |
+| **SES_EX_USEMOUSEWPARAM** | Use *wParam* when handling the **WM_MOUSEMOVE** message and do not call **GetAsyncKeyState**. |
 
 # <a name="RichEdit_GetEventMask"></a>RichEdit_GetEventMask
 
