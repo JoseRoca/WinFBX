@@ -181,8 +181,10 @@ END SUB
 '   602 Windows 8
 '   603 Windows 8.1
 '  1000 Windows 10
-' Note: As Windows 95 and Windows NT return the same version number, we also need to call
+' Note 1: As Windows 95 and Windows NT return the same version number, we also need to call
 ' GetWindowsPlatform to differentiate them.
+' Note 2: As Windows 10 and Windows 11 return the same version number, we also need to call
+' AfxWindowsBuild to differentiate them. Windows 11 is Windows 10 build 21996 and higher.
 ' ========================================================================================
 'PRIVATE FUNCTION AfxWindowsVersion () AS LONG
 '   DIM dwVersion AS DWORD
