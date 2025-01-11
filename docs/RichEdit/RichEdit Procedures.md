@@ -85,7 +85,7 @@
 | [RichEdit_Scroll](#RichEdit_Scroll) | Scrolls the text vertically in a multiline rich edit control. |
 | [RichEdit_ScrollCaret](#RichEdit_ScrollCaret) | Scrolls the caret into view in a rich edit control. |
 | [RichEdit_SelectionType](#RichEdit_SelectionType) | Determines the selection type for a rich edit control. |
-| [RichEdit_SetAutocorrectProc](#RichEdit_SetAutocorrectProc) | Sets a pointer to the application-defined AutoCorrectProc callback procedure. |
+| [RichEdit_SetAutocorrectProc](#RichEdit_SetAutocorrectProc) | Sets a pointer to the application-defined **AutoCorrectProc** callback procedure. |
 | [RichEdit_SetBidiOptions](#RichEdit_SetBidiOptions) | Sets the current state of the bidirectional options in the rich edit control. |
 | [RichEdit_SetBkgndColor](#RichEdit_SetBkgndColor) | Sets the background color for a rich edit control. |
 | [RichEdit_SetCharFormat](#RichEdit_SetCharFormat) | Sets character formatting in a rich edit control. |
