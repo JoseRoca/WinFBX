@@ -114,7 +114,7 @@
 | [RichEdit_SetScrollPos](#RichEdit_SetScrollPos) | Tells the rich edit control to scroll to a particular point. |
 | [RichEdit_SetSel](#RichEdit_SetSel) | Selects a range of characters in a rich edit control. |
 | [RichEdit_SetStoryType](#RichEdit_SetStoryType) | Sets the story type. |
-| [RichEdit_SetTableParams](#SetTableParams) | Changes the parameters of rows in a table. |
+| [RichEdit_SetTableParams](#RichEdit_SetTableParams) | Changes the parameters of rows in a table. |
 | [RichEdit_SetTabStops](#RichEdit_SetTabStops) | Sets the tab stops in a multiline rich edit control. |
 | [RichEdit_SetTargetDevice](#RichEdit_SetTargetDevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
 | [RichEdit_SetText](#RichEdit_SetText) | Sets the text of an edit control. |
