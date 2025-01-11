@@ -85,6 +85,7 @@
 | [RichEdit_Scroll](#RichEdit_Scroll) | Scrolls the text vertically in a multiline rich edit control. |
 | [RichEdit_ScrollCaret](#RichEdit_ScrollCaret) | Scrolls the caret into view in a rich edit control. |
 | [RichEdit_SelectionType](#RichEdit_SelectionType) | Determines the selection type for a rich edit control. |
+| [RichEdit_SetAutocorrectProc](#RichEdit_SetAutocorrectProc) | Sets a pointer to the application-defined AutoCorrectProc callback procedure. |
 | [RichEdit_SetBidiOptions](#RichEdit_SetBidiOptions) | Sets the current state of the bidirectional options in the rich edit control. |
 | [RichEdit_SetBkgndColor](#RichEdit_SetBkgndColor) | Sets the background color for a rich edit control. |
 | [RichEdit_SetCharFormat](#RichEdit_SetCharFormat) | Sets character formatting in a rich edit control. |
@@ -2019,6 +2020,25 @@ If the selection is not empty, the return value is a set of flags containing one
 #### Remarks
 
 This message is useful during **WM_SIZE** processing for the parent of a bottomless rich edit control.
+
+# <a name="RichEdit_SetAutoCorrectProc"></a>RichEdit_SetAutoCorrectProc
+
+Sets a pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
+
+```
+FUNCTION RichEdit_SetAutoCorrectProc (BYVAL hRichEdit AS HWND, BYVAL pfn AS AUTOCORRECTPROC) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETAUTOCORRECTPROC, 0, cast(LPARAM, cast(AUTOCORRECTPROC, pfn)))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pfn* | Pointer to an [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) function. |
+
+#### Return value
+
+If the operation succeeds, the return value is zero. If the operation fails, the return value is a nonzero value.
 
 # <a name="RichEdit_SetBidiOptions"></a>RichEdit_SetBidiOptions
 
