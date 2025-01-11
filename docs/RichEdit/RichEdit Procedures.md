@@ -87,6 +87,7 @@
 | [RichEdit_SetCTFOpenStatus](#RichEdit_SetCTFOpenStatus) | Opens or closes the Text Services Framework (TSF) keyboard. |
 | [RichEdit_SetEditStyle](#RichEdit_SetEditStyle) | Sets the current edit style flags. |
 | [RichEdit_SetEditStyleEx](#RichEdit_SetEditStyleEx) | Sets the current edit style flags for a rich edit control. |
+| [RichEdit_SetEllipsisMode](#RichEdit_SetEllipsisMode) | Sets the current ellipsis mode for a rich edit control. |
 | [RichEdit_SetEventMask](#RichEdit_SetEventMask) | Sets the event mask for a rich edit control. |
 | [RichEdit_SetFontSize](#RichEdit_SetFontSize) | Sets the font size for the selected text. |
 | [RichEdit_SetHyphenateInfo](#RichEdit_SetHyphenateInfo) | Sets the way a Microsoft Rich Edit control does hyphenation. |
@@ -2048,6 +2049,29 @@ END FUNCTION
 #### Return value
 
 The return value is the state of the edit style flags after the rich edit control has attempted to implement your edit style changes. The edit style flags are a set of flags that indicate the current edit style.
+
+# <a name="RichEdit_SetEllipsisMode"></a>RichEdit_SetEllipsisMode
+
+Sets the current ellipsis mode. When enabled, an ellipsis ( ) is displayed for text that doesn't fit in the display window. The ellipsis is only used when the control isn't active. When active, scroll bars are used to reveal text that doesn't fit into the display window.
+
+```
+FUNCTION RichEdit_SetElipsisMode (BYVAL hRichEdit AS HWND, BYVAL fMode AS DWORD) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETELLIPSISMODE, 0, fMode)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *fMode* | One of the values listed below. |
+
+| Value  | Meaning |
+| ------ | ----------- |
+| **ELLIPSIS_NONE** | No ellipsis is used. |
+| **ELLIPSIS_END** | Ellipsis at the end (forced break). |
+| **ELLIPSIS_WORD** | Ellipsis at the end (word break). |
+
+The bits for these values all fit in the **ELLIPSIS_MASK**.
 
 # <a name="RichEdit_SetEventMask"></a>RichEdit_SetEventMask
 
