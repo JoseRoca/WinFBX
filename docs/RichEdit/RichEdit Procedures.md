@@ -1495,7 +1495,7 @@ END FUNCTION
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
-| *Options* | he touch options to retrieve. It can be one of the following values. |
+| *Options* | The touch options to retrieve. It can be one of the following values. |
 
 | Value  | Meaning |
 | ------ | ------- |
@@ -2997,6 +2997,31 @@ In rich text mode, a rich edit control has standard rich edit functionality. How
 - Rich text mode controls always have a default end-of-document marker or carriage return, to format paragraphs. Plain text controls, on the other hand, do not need the default, end-of-document marker, so it is omitted.
 
 The control must contain no text when it receives the **RichEdit_SetText** message. To ensure there is no text, send a **RichEdit_SetText** message with an empty string ("").
+
+# <a name="RichEdit_SetTouchOptions"></a>RichEdit_SetTouchOptions
+
+Sets the touch options associated with a rich edit control.
+
+```
+SUB RichEdit_SetTouchOptions (BYVAL hRichEdit AS HWND, BYVAL Options AS LONG, BYVAL fEnable AS LONG) AS LONG
+   SendMessageW(hRichEdit, EM_SETTOUCHOPTIONS, Options, fEnable)
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *Options* | The touch options to set. It can be one of the following values. |
+| *fEnable* | Set to **TRUE** to show/enable the touch selection handles, or **FALSE** to hide/disable the touch selection handles. |
+
+| Value  | Meaning |
+| ------ | ------- |
+| **RTO_SHOWHANDLES** | Show or hide the touch gripper handles, depending on the value of *Options*. |
+| **RTO_DISABLEHANDLES** | Enable or disable the touch gripper handles, depending on the value of *Options*. When handles are disabled, they are hidden if they are visible and remain hidden until an **RichEdit_SetTouchOptions** message changes their status. |
+
+#### Return value
+
+Returns the value of the option specified by the *Options* parameter. It is nonzero if *Options* is **RTO_SHOWHANDLES** and the touch grippers are visible; zero, otherwise.
 
 # <a name="RichEdit_SetTypographyOptions"></a>RichEdit_SetTypographyOptions
 
