@@ -1291,21 +1291,23 @@ END FUNCTION
 
 Returns the story type, which can be a client-defined custom value, or one of the following values:
 
-tomCommentsStory
-tomEndnotesStory
-tomEvenPagesFooterStory
-tomEvenPagesHeaderStory
-tomFindStory
-tomFirstPageFooterStory
-tomFirstPageHeaderStory
-tomFootnotesStory
-tomMainTextStory
-tomPrimaryFooterStory
-tomPrimaryHeaderStory
-tomReplaceStory
-tomScratchStory
-tomTextFrameStory
-tomUnknownStory
+| COnstant  | Value | Description |
+| --------- | ----- | ----------- |
+| **tomCommentsStory** | 4 | The story used for comments. |
+| **tomEndnotesStory** | 3 | The story used for endnotes. |
+| **tomEvenPagesFooterStory** | 8 | The story containing footers for even pages. |
+| **tomEvenPagesHeaderStory** | 6 | The story containing headers for even pages. |
+| **tomFindStory** | 128 | The story used for a Find dialog. |
+| **tomFirstPageFooterStory** | 11 | The story containing the footer for the first page. |
+| **tomFirstPageHeaderStory** | 10 | The story containing the header for the first page. |
+| **tomFootnotesStory** | 2 | The story used for footnotes. |
+| **tomMainTextStory** | 1 | The main story always exists for a rich edit control. |
+| **tomPrimaryFooterStory** | 9 | The story containing footers for odd pages. |
+| **tomPrimaryFooterStory** | 7 | The story containing headers for odd pages. |
+| **tomReplaceStory** | 129 | The story used for a Replace dialog. |
+| **tomScratchStory** | 127 | The scratch story. |
+| **tomTextFrameStory** | 5 | The story used for a text box. |
+| **tomUnknownStory** | 0 | No special type. |
 
 # <a name="RichEdit_GetTextEx"></a>RichEdit_GetTextEx
 
