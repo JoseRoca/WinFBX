@@ -1647,6 +1647,21 @@ END FUNCTION
 #### Return value
 The message returns **TRUE** if message is processed, which it will be if both *pzNum* and *pzDen* are not **NULL**.
 
+# <a name="RichEdit_HideSelection"></a>RichEdit_HideSelection
+
+Hides or shows the selection in a rich edit control.
+
+```
+SUB RichEdit_HideSelection (BYVAL hRichEdit AS HWND, BYVAL fHide AS DWORD)
+   SendMessageW hRichEdit, EM_HIDESELECTION, fHide, 0
+END SUB
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *fHide* | Value specifying whether to hide or show the selection. If this parameter is zero, the selection is shown. Otherwise, the selection is hidden. |
+
 # <a name="RichEdit_InsertImage"></a>RichEdit_InsertImage
 
 Replaces the selection with a blob that displays an image.
@@ -1670,21 +1685,6 @@ Returns S_OK if successful, or one of the following error codes.
 | **E_FAIL** | Cannot insert the image. |
 | **E_INVALIDARG** | The *lpip* parameter is NULL or points to an invalid image. |
 | **E_OUTOFMEMORY** | Insufficient memory is available. |
-
-# <a name="RichEdit_HideSelection"></a>RichEdit_HideSelection
-
-Hides or shows the selection in a rich edit control.
-
-```
-SUB RichEdit_HideSelection (BYVAL hRichEdit AS HWND, BYVAL fHide AS DWORD)
-   SendMessageW hRichEdit, EM_HIDESELECTION, fHide, 0
-END SUB
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *hRichEdit* | The handle of the rich edit control. |
-| *fHide* | Value specifying whether to hide or show the selection. If this parameter is zero, the selection is shown. Otherwise, the selection is hidden. |
 
 # <a name="RichEdit_InsertTable"></a>RichEdit_InsertTable
 
