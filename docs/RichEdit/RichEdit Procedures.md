@@ -3,6 +3,7 @@
 | Name       | Description |
 | ---------- | ----------- |
 | [RichEdit_AutoUrlDetect](#RichEdit_AutoUrlDetect) | Enables or disables automatic detection of URLs by a rich edit control. |
+| [RichEdit_CallAutocorrectProc](#RichEdit_CallAutocorrectProc) | Calls the application-defined autocorrect callback procedure. |
 | [RichEdit_CanPaste](#RichEdit_CanPaste) | Determines whether a rich edit control can paste a specified clipboard format. |
 | [RichEdit_CanRedo](#RichEdit_CanRedo) | Determines whether there are any actions in the rich edit control redo queue. |
 | [RichEdit_CanUndo](#RichEdit_CanUndo) | Determines whether there are any actions in the rich edit control undo queue. |
@@ -204,6 +205,25 @@ A rich edit control sends the [EN_LINK](https://learn.microsoft.com/en-us/window
 If the message succeeds, the return value is zero.
 
 If the message fails, the return value is a nonzero value. For example, the message might fail due to insufficient memory or an invalid detection option.
+
+# <a name="RichEdit_CallAutocorrectProc"></a>RichEdit_CallAutocorrectProc
+
+Calls the autocorrect callback function that is stored by the **RichEdit_SetAutocorrectProc** message, provided that the text preceding the insertion point is a candidate for autocorrection.
+
+```
+FUNCTION RichEdit_CallAutocorrectProc (BYVAL hRichEdit AS HWND, BYVAL char AS WCHAR) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_CALLAUTOCORRECTPROC, char, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *char* | A character of type **WCHAR**. If this character is a tab (U+0009), and the character preceding the insertion point isn't a tab, then the character preceding the insertion point is treated as part of the autocorrect candidate string instead of as a string delimiter; otherwise, *char* has no effect. |
+
+#### Return value
+
+The return value is zero if the message succeeds, or nonzero if an error occurs.
 
 # <a name="RichEdit_CanPaste"></a>RichEdit_CanPaste
 
