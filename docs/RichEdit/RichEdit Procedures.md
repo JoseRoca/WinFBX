@@ -1647,31 +1647,6 @@ END FUNCTION
 #### Return value
 The message returns **TRUE** if message is processed, which it will be if both *pzNum* and *pzDen* are not **NULL**.
 
-# <a name="RichEdit_InsertTable"></a>RichEdit_InsertTable
-
-Inserts one or more identical table rows with empty cells.
-
-```
-FUNCTION RichEdit_InsertTable (BYVAL hRichEdit AS HWND, BYVAL lptp AS TABLEROWPARMS PTR, BYVAL lptcp AS TABLECELLPARMS PTR) AS DWORD
-   FUNCTION = SendMessageW(hRichEdit, EM_INSERTTABLE, cast(WPARAM, lptp), cast(LPARAM, lptcp))
-END FUNCTION
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *hRichEdit* | The handle of the rich edit control. |
-| *lptp* | A pointer to a [TABLEROWPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablerowparms) structure. |
-| *lptcp* | A pointer to a [TABLECELLPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablecellparms) structure. |
-
-#### Return value
-
-Returns S_OK if the table is inserted, or an error code if not.
-
-#### Remarks
-
-If the **cpStartRow** member of the **TABLEROWPARMS** is –1, this message deletes the selected text (if any), and then inserts empty table rows with the row and cell parameters given by *lptp^* and *lptcp*. It leaves the selection pointing to the start of the first cell in the first row. The client can then populate the table cells by pointing the selection (or an **ITextRange**) to the various cell end marks and inserting and formatting the desired text. Such text can include nested table rows. Alternatively, if the **cpStartRow** member of the **TABLEROWPARMS** is 0 or greater, table rows are inserted at the character position given by **cpStartRow**. This only changes the current selection if the table is inserted inside the selected text.
-
-A Microsoft Rich Edit table consists of a sequence of table rows which, in turn, consist of sequences of paragraphs. A table row starts with the special two-character delimiter paragraph U+FFF9 U+000D and ends with the two-character delimiter paragraph U+FFFB U+000D. Each cell is terminated by the cell mark U+0007, which is treated as a hard end-of-paragraph mark just as U+000D (CR) is. The table row and cell parameters are treated as special paragraph formatting of the table-row delimiters. The formatting contains the information in the **TABLEROWPARMS** structure. The cell parameters given by the **TABLECELLPARMS** structure are stored in an expanded version of the tabs array. This format allows tables to be nested within other tables, up to fifteen levels deep.
-
 # <a name="RichEdit_InsertImage"></a>RichEdit_InsertImage
 
 Replaces the selection with a blob that displays an image.
@@ -1710,6 +1685,31 @@ END SUB
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
 | *fHide* | Value specifying whether to hide or show the selection. If this parameter is zero, the selection is shown. Otherwise, the selection is hidden. |
+
+# <a name="RichEdit_InsertTable"></a>RichEdit_InsertTable
+
+Inserts one or more identical table rows with empty cells.
+
+```
+FUNCTION RichEdit_InsertTable (BYVAL hRichEdit AS HWND, BYVAL lptp AS TABLEROWPARMS PTR, BYVAL lptcp AS TABLECELLPARMS PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_INSERTTABLE, cast(WPARAM, lptp), cast(LPARAM, lptcp))
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lptp* | A pointer to a [TABLEROWPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablerowparms) structure. |
+| *lptcp* | A pointer to a [TABLECELLPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablecellparms) structure. |
+
+#### Return value
+
+Returns S_OK if the table is inserted, or an error code if not.
+
+#### Remarks
+
+If the **cpStartRow** member of the **TABLEROWPARMS** is –1, this message deletes the selected text (if any), and then inserts empty table rows with the row and cell parameters given by *lptp^* and *lptcp*. It leaves the selection pointing to the start of the first cell in the first row. The client can then populate the table cells by pointing the selection (or an **ITextRange**) to the various cell end marks and inserting and formatting the desired text. Such text can include nested table rows. Alternatively, if the **cpStartRow** member of the **TABLEROWPARMS** is 0 or greater, table rows are inserted at the character position given by **cpStartRow**. This only changes the current selection if the table is inserted inside the selected text.
+
+A Microsoft Rich Edit table consists of a sequence of table rows which, in turn, consist of sequences of paragraphs. A table row starts with the special two-character delimiter paragraph U+FFF9 U+000D and ends with the two-character delimiter paragraph U+FFFB U+000D. Each cell is terminated by the cell mark U+0007, which is treated as a hard end-of-paragraph mark just as U+000D (CR) is. The table row and cell parameters are treated as special paragraph formatting of the table-row delimiters. The formatting contains the information in the **TABLEROWPARMS** structure. The cell parameters given by the **TABLECELLPARMS** structure are stored in an expanded version of the tabs array. This format allows tables to be nested within other tables, up to fifteen levels deep.
 
 # <a name="RichEdit_IsIME"></a>RichEdit_IsIME
 
