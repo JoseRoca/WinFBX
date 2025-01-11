@@ -3187,7 +3187,7 @@ A Wordwrap function defines the point at which the system should break a line of
 Sets the extended word-break procedure.
 
 ```
-FUNCTION RichEdit_SetWordBreakProcEx (BYVAL hRichEdit AS HWND, BYVAL pfn AS EDITWORDBREAKPROC) AS LRESULT
+FUNCTION RichEdit_SetWordBreakProcEx (BYVAL hRichEdit AS HWND, BYVAL pfn AS EDITWORDBREAKPROC) AS LONG_PTR
    FUNCTION = SendMessageW(hRichEdit, EM_SETWORDBREAKPROCEX, 0, cast(LPARAM, cast(EDITWORDBREAKPROC, pfn)))
 END FUNCTION
 ```
