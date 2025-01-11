@@ -3182,14 +3182,12 @@ A Wordwrap function defines the point at which the system should break a line of
 
 **Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later.
 
-Setting the limit to zero disables the **Undo** feature.
-
 # <a name="RichEdit_SetWordBreakProcEx"></a>RichEdit_SetWordBreakProcEx
 
 Sets the extended word-break procedure.
 
 ```
-FUNCTION RichEdit_SetWordBreakProcEx (BYVAL hRichEdit AS HWND, BYVAL pfn AS EDITWORDBREAKPROC) AS DWORD
+FUNCTION RichEdit_SetWordBreakProcEx (BYVAL hRichEdit AS HWND, BYVAL pfn AS EDITWORDBREAKPROC) AS LRESULT
    FUNCTION = SendMessageW(hRichEdit, EM_SETWORDBREAKPROCEX, 0, cast(LPARAM, cast(EDITWORDBREAKPROC, pfn)))
 END FUNCTION
 ```
