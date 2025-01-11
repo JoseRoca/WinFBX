@@ -24,6 +24,7 @@
 | [RichEdit_GetCTFOpenStatus](#RichEdit_GetCTFOpenStatus) | Determines if the Text Services Framework (TSF) keyboard is open or closed. |
 | [RichEdit_GetEditStyle](#RichEdit_GetEditStyle) | Retrieves the current edit style flags. |
 | [RichEdit_GetEditStyleEx](#RichEdit_GetEditStyleEx) | Retrieves the current extended edit style flags. |
+| [RichEdit_GetEllipsisMode](#RichEdit_GetEllipsisMode) | Retrieves the current ellipsis mode. |
 | [RichEdit_GetEventMask](#RichEdit_GetEventMask) | Retrieves the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window. |
 | [RichEdit_GetFirstVisibleLine](#RichEdit_GetFirstVisibleLine) | Retrieves the zero-based index of the uppermost visible line in a multiline rich edit control. |
 | [RichEdit_GetHyphenateInfo](#RichEdit_GetHyphenateInfo) | Retrieves information about hyphenation for a Microsoft Rich Edit control. |
@@ -662,6 +663,24 @@ Returns the extended edit style flags, which can include one or more of the foll
 | **SES_EX_USESINGLELINE** | Enable a multiline control to act like a single-line control with the ability to scroll vertically when the single-line height is greater than the window height (default: 0). |
 | **SES_HIDETEMPFORMAT** | Hide temporary formatting that is created when **ITextFont.Reset** is called with **tomApplyTmp**. For example, such formatting is used by spell checkers to display a squiggly underline under possibly misspelled words. |
 | **SES_EX_USEMOUSEWPARAM** | Use *wParam* when handling the **WM_MOUSEMOVE** message and do not call **GetAsyncKeyState**. |
+
+# <a name="RichEdit_GetEllipsisMode"></a>RichEdit_GetEllipsisMode
+
+Retrieves the current ellipsis mode. When enabled, an ellipsis ( ) is displayed for text that doesn't fit in the display window. The ellipsis is only used when the control is not active. When active, scroll bars are used to reveal text that doesn't fit into the display window.
+
+```
+FUNCTION RichEdit_GetEllipsisMode (BYVAL hRichEdit AS HWND, BYVAL pmode AS DWORD PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETELLIPSISMODE, 0, cast(LPARAM, @pMode))
+END FUNCTION
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *pmode* | Pointer to a DWORD which receives one of the following values.<br>**ELLIPSIS_NONE**. No ellipsis is used.<br>**ELLIPSIS_END**. Ellipsis at the end (forced break).<br>**ELLIPSIS_WORD**. Ellipsis at the end (word break). |
+
+#### Return value
+
+If *pmode* is not NULL, the return value equals TRUE; otherwise, the return value equals FALSE.
 
 # <a name="RichEdit_GetEventMask"></a>RichEdit_GetEventMask
 
