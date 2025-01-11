@@ -3055,7 +3055,7 @@ The control must contain no text when it receives the **RichEdit_SetText** messa
 Sets the touch options associated with a rich edit control.
 
 ```
-SUB RichEdit_SetTouchOptions (BYVAL hRichEdit AS HWND, BYVAL Options AS LONG, BYVAL fEnable AS LONG) AS LONG
+SUB RichEdit_SetTouchOptions (BYVAL hRichEdit AS HWND, BYVAL Options AS LONG, BYVAL fEnable AS LONG)
    SendMessageW(hRichEdit, EM_SETTOUCHOPTIONS, Options, fEnable)
 END SUB
 ```
