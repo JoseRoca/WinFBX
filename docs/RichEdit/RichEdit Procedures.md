@@ -17,7 +17,7 @@
 | [RichEdit_FindTextEx](#RichEdit_FindTextEx) | Finds text within a rich edit control. |
 | [RichEdit_FindWordBreak](#RichEdit_FindWordBreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [RichEdit_FormatRange](#RichEdit_FormatRange) | Formats a range of text in a rich edit control for a specific device. |
-| [RichEdit_RichEdit_GetAutoCorrectProc](#RichEdit_GetAutoCorrectProc) | Gets a pointer to the application-defined AutoCorrectProc callback function. |
+| [RichEdit_RichEdit_GetAutoCorrectProc](#RichEdit_GetAutoCorrectProc) | Gets a pointer to the application-defined **AutoCorrectProc** callback function. |
 | [RichEdit_GetAutoUrlDetect](#RichEdit_GetAutoUrlDetect) | Indicates whether the auto URL detection is turned on in the rich edit control. |
 | [RichEdit_GetBidiOptions](#RichEdit_GetBidiOptions) | Indicates the current state of the bidirectional options in the rich edit control. |
 | [RichEdit_GetCharFormat](#RichEdit_GetCharFormat) | Determines the current character formatting in a rich edit control. |
@@ -489,7 +489,7 @@ After using this message to format a range of text, it is important that you fre
 
 # <a name="RichEdit_GetAutoCorrectProc"></a>RichEdit_GetAutoCorrectProc
 
-Gets a pointer to the application-defined AutoCorrectProc callback function.
+Gets a pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
 
 ```
 FUNCTION RichEdit_GetAutoCorrectProc (BYVAL hRichEdit AS HWND) AS LONG_PTR
@@ -499,7 +499,7 @@ END FUNCTION
 
 #### Return value
 
-Returns a pointer to the application-defined AutoCorrectProc callback function.
+Returns a pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
 
 # <a name="RichEdit_GetAutoUrlDetect"></a>RichEdit_GetAutoUrlDetect
 
