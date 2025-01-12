@@ -21,7 +21,7 @@ Public:
    m_pTextRange2 AS ITextRange2 PTR
 
 Public:
-   DECLARE CONSTRUCTOR (BYVAL pTextRange2 AS ITextRange2 PTR)
+   DECLARE CONSTRUCTOR (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
    DECLARE FUNCTION GetLastResult () AS HRESULT
    DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
@@ -150,9 +150,10 @@ END TYPE
 ' ========================================================================================
 ' CTextRange2 constructor
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CTextRange2 (BYVAL pTextRange2 AS ITextRange2 PTR)
+PRIVATE CONSTRUCTOR CTextRange2 (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    ' // Store the pointer of ITextRange2 interface
    IF pTextRange2 = NULL THEN m_Result = E_INVALIDARG : EXIT CONSTRUCTOR
+   IF fAddRef THEN pTextRange2->lpvtbl->AddRef(pTextRange2)
    m_pTextRange2 = pTextRange2
 END CONSTRUCTOR
 ' ========================================================================================

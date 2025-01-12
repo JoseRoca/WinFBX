@@ -24,7 +24,7 @@ Public:
    m_pTextSelection2 AS ITextSelection2 PTR
 
 Public:
-   DECLARE CONSTRUCTOR (BYVAL pTextSelection2 AS ITextSelection2 PTR)
+   DECLARE CONSTRUCTOR (BYVAL pTextSelection2 AS ITextSelection2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
    DECLARE FUNCTION GetLastResult () AS HRESULT
    DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
@@ -150,9 +150,10 @@ END TYPE
 ' ========================================================================================
 ' CTextSelection2 constructor
 ' ========================================================================================
-PRIVATE CONSTRUCTOR CTextSelection2 (BYVAL pTextSelection2 AS ITextSelection2 PTR)
+PRIVATE CONSTRUCTOR CTextSelection2 (BYVAL pTextSelection2 AS ITextSelection2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    ' // Store the pointer of ITextSelection2 interface
    IF pTextSelection2 = NULL THEN m_Result = E_INVALIDARG : EXIT CONSTRUCTOR
+   IF fAddRef THEN pTextSelection2->lpvtbl->AddRef(pTextSelection2)
    m_pTextSelection2 = pTextSelection2
 END CONSTRUCTOR
 ' ========================================================================================

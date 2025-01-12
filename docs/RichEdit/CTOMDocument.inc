@@ -111,6 +111,7 @@ END TYPE
 ' CTextDocument constructor
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTextDocument2 (BYVAL hRichEdit AS HWND)
+   IF hRichEdit = 0 OR hRichEdit = m_hRichEdit THEN EXIT CONSTRUCTOR
    ' // Store the handle to the Rich Edit control
    m_hRichEdit = hRichEdit
    ' // Initialize the COM library
@@ -126,7 +127,7 @@ PRIVATE CONSTRUCTOR CTextDocument2 (BYVAL hRichEdit AS HWND)
       IUnknown_Release(pUnk)
    END IF
    ' // Set a property with a pointer to the class
-   .SetPropW(m_hRichEdit, "TEXTDOC", CAST(HANDLE, @this))
+   .SetPropW(m_hRichEdit, "TEXTDOCPTR", CAST(HANDLE, @this))
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -139,7 +140,7 @@ PRIVATE DESTRUCTOR CTextDocument2
    ' // Free the COM library
    IF m_bUninitCOM THEN CoUninitialize
    ' // Remove the property with a pointer to the class
-   .RemovePropW(m_hRichEdit, "TEXTDOC")
+   IF m_hRichEdit THEN .RemovePropW(m_hRichEdit, "TEXTDOCPTR")
 END DESTRUCTOR
 ' ========================================================================================
 
@@ -871,7 +872,7 @@ END FUNCTION
 ' END IF
 ' ========================================================================================
 PRIVATE FUNCTION AfxCTextDocumentPtr (BYVAL hRichEdit AS HWND) AS CTextDocument2 PTR
-   DIM pTextDoc2 AS CTextDocument2 PTR = CAST(CTextDocument2 PTR, .GetPropW(hRichEdit, "TEXTDOC"))
+   DIM pTextDoc2 AS CTextDocument2 PTR = CAST(CTextDocument2 PTR, .GetPropW(hRichEdit, "TEXTDOCPTR"))
    RETURN pTextDoc2
 END FUNCTION
 ' ========================================================================================

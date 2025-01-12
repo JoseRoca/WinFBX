@@ -22,5 +22,6 @@ NAMESPACE Afx
 #include once "Afx/CTOMPara.inc"
 #include once "Afx/CTOMSelection.inc"
 #include once "Afx/CTOMFont.inc"
+#include once "Afx/CTOMRow.inc"
 
 END NAMESPACE
