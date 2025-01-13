@@ -1293,6 +1293,43 @@ END FUNCTION
 
 The selected text as a **CWSTR** (dynamic unicode string).
 
+# <a name="RichEdit_GetStoryType"></a>RichEdit_GetStoryType
+
+Gets the story type.
+
+```
+FUNCTION RichEdit_GetStoryTpe (BYVAL hRichEdit AS HWND, BYVAL Index AS DWORD) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_GETSTORYTYPE, Index, 0)
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *Index* | The story index. |
+
+#### Return value
+
+Returns the story type, which can be a client-defined custom value, or one of the following values:
+
+| Constant  | Value | Description |
+| --------- | ----- | ----------- |
+| **tomCommentsStory** | 4 | The story used for comments. |
+| **tomEndnotesStory** | 3 | The story used for endnotes. |
+| **tomEvenPagesFooterStory** | 8 | The story containing footers for even pages. |
+| **tomEvenPagesHeaderStory** | 6 | The story containing headers for even pages. |
+| **tomFindStory** | 128 | The story used for a Find dialog. |
+| **tomFirstPageFooterStory** | 11 | The story containing the footer for the first page. |
+| **tomFirstPageHeaderStory** | 10 | The story containing the header for the first page. |
+| **tomFootnotesStory** | 2 | The story used for footnotes. |
+| **tomMainTextStory** | 1 | The main story always exists for a rich edit control. |
+| **tomPrimaryFooterStory** | 9 | The story containing footers for odd pages. |
+| **tomPrimaryFooterStory** | 7 | The story containing headers for odd pages. |
+| **tomReplaceStory** | 129 | The story used for a Replace dialog. |
+| **tomScratchStory** | 127 | The scratch story. |
+| **tomTextFrameStory** | 5 | The story used for a text box. |
+| **tomUnknownStory** | 0 | No special type. |
+
 # <a name="RichEdit_GetTableParams"></a>RichEdit_GetTableParams
 
 Retrieves the table parameters for a table row and the cell parameters for the specified number of cells.
@@ -1346,43 +1383,6 @@ END FUNCTION
 #### Remarks
 
 The Windows API function **GetWindowTextW** can also be used to retrive the text of a rich edit control, but it cannot retrieve the text of a control in another application.
-
-# <a name="RichEdit_GetStoryType"></a>RichEdit_GetStoryType
-
-Gets the story type.
-
-```
-FUNCTION RichEdit_GetStoryTpe (BYVAL hRichEdit AS HWND, BYVAL Index AS DWORD) AS DWORD
-   FUNCTION = SendMessageW(hRichEdit, EM_GETSTORYTYPE, Index, 0)
-END FUNCTION
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *hRichEdit* | The handle of the rich edit control. |
-| *Index* | The story index. |
-
-#### Return value
-
-Returns the story type, which can be a client-defined custom value, or one of the following values:
-
-| Constant  | Value | Description |
-| --------- | ----- | ----------- |
-| **tomCommentsStory** | 4 | The story used for comments. |
-| **tomEndnotesStory** | 3 | The story used for endnotes. |
-| **tomEvenPagesFooterStory** | 8 | The story containing footers for even pages. |
-| **tomEvenPagesHeaderStory** | 6 | The story containing headers for even pages. |
-| **tomFindStory** | 128 | The story used for a Find dialog. |
-| **tomFirstPageFooterStory** | 11 | The story containing the footer for the first page. |
-| **tomFirstPageHeaderStory** | 10 | The story containing the header for the first page. |
-| **tomFootnotesStory** | 2 | The story used for footnotes. |
-| **tomMainTextStory** | 1 | The main story always exists for a rich edit control. |
-| **tomPrimaryFooterStory** | 9 | The story containing footers for odd pages. |
-| **tomPrimaryFooterStory** | 7 | The story containing headers for odd pages. |
-| **tomReplaceStory** | 129 | The story used for a Replace dialog. |
-| **tomScratchStory** | 127 | The scratch story. |
-| **tomTextFrameStory** | 5 | The story used for a text box. |
-| **tomUnknownStory** | 0 | No special type. |
 
 # <a name="RichEdit_GetTextEx"></a>RichEdit_GetTextEx
 
