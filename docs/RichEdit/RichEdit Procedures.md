@@ -444,6 +444,13 @@ type CHARRANGE as _charrange
 
 The return value is the selection that is actually set.
 
+#### Usage example
+
+```
+DIM chrRange AS CHARRANGE = TYPE<CHARRANGE>(3, 12)
+RichEdit_ExSetSel(hRichEdit, @chrRange)
+```
+
 # <a name="RichEdit_FindText"></a>RichEdit_FindText
 
 Finds Unicode text within a rich edit control.
