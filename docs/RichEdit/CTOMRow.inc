@@ -14,18 +14,14 @@
 ' ########################################################################################
 ' CTextRow class
 ' ########################################################################################
-TYPE CTextRow
+TYPE CTextRow EXTENDS CTOMBase
 
 Public:
-   m_Result AS HRESULT
    m_pTextRow AS ITextRow PTR
 
 Public:
    DECLARE CONSTRUCTOR (BYVAL pTextRow AS ITextRow PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
-   DECLARE FUNCTION GetLastResult () AS HRESULT
-   DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
-   DECLARE FUNCTION GetErrorInfo () AS CWSTR
    DECLARE OPERATOR LET (BYVAL pTextRow AS ITextRow PTR)
    DECLARE OPERATOR CAST () AS ITextRow PTR
    DECLARE FUNCTION TextRowPtr () AS ITextRow PTR
@@ -105,23 +101,6 @@ PRIVATE DESTRUCTOR CTextRow
    ' // Release the ITextRow interface
    IF m_pTextRow THEN m_pTextRow->lpvtbl->Release(m_pTextRow)
 END DESTRUCTOR
-' ========================================================================================
-
-' ========================================================================================
-' Returns the last result code.
-' ========================================================================================
-PRIVATE FUNCTION CTextRow.GetLastResult () AS HRESULT
-   RETURN m_Result
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Sets the last result code.
-' ========================================================================================
-PRIVATE FUNCTION CTextRow.SetResult (BYVAL Result AS HRESULT) AS HRESULT
-   m_Result = Result
-   RETURN m_Result
-END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================

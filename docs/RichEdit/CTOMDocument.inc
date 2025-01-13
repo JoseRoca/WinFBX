@@ -14,22 +14,16 @@
 ' ########################################################################################
 ' CTextDocument2 class
 ' ########################################################################################
-TYPE CTextDocument2
+TYPE CTextDocument2 EXTENDS CTOMBase
 
 Public:
    m_hRichEdit AS HWND
    m_Result AS HRESULT
    m_pTextDocument2 AS ITextDocument2 PTR
 
-Private:
-   m_bUninitCOM AS BOOLEAN
-
 Public:
    DECLARE CONSTRUCTOR (BYVAL hRichEdit AS HWND)
    DECLARE DESTRUCTOR
-   DECLARE FUNCTION GetLastResult () AS HRESULT
-   DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
-   DECLARE FUNCTION GetErrorInfo () AS CWSTR
    DECLARE OPERATOR LET (BYVAL pTextDocument2 AS ITextDocument2 PTR)
    DECLARE OPERATOR CAST () AS ITextDocument2 PTR
    DECLARE FUNCTION TextDocumentPtr () AS ITextDocument2 PTR
@@ -111,12 +105,10 @@ END TYPE
 ' CTextDocument constructor
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTextDocument2 (BYVAL hRichEdit AS HWND)
+   CTOM_DP("BEGIN CTextDocument2 CONSTRUCTOR - hRichEdit " & WSTR(hRichEdit))
    IF hRichEdit = 0 OR hRichEdit = m_hRichEdit THEN EXIT CONSTRUCTOR
    ' // Store the handle to the Rich Edit control
    m_hRichEdit = hRichEdit
-   ' // Initialize the COM library
-   DIM hr AS HRESULT = CoInitialize(NULL)
-   IF hr = S_OK OR hr = S_FALSE THEN m_bUninitCOM = TRUE
    ' // Retrieve a pointer to a IRichEditOle object of the Rich Edit control
    DIM pUnk AS IUnknown PTR
    m_Result = SendMessageW(hRichEdit, EM_GETOLEINTERFACE, 0, cast(LPARAM, @pUnk))
@@ -126,8 +118,9 @@ PRIVATE CONSTRUCTOR CTextDocument2 (BYVAL hRichEdit AS HWND)
       m_Result = IUnknown_QueryInterface(pUnk, @IID_ITextDocument2_, @m_pTextDocument2)
       IUnknown_Release(pUnk)
    END IF
+   CTOM_DP("END CTextDocument2 CONSTRUCTOR - m_pTextDocument2 = " & WSTR(m_pTextDocument2))
    ' // Set a property with a pointer to the class
-   .SetPropW(m_hRichEdit, "TEXTDOCPTR", CAST(HANDLE, @this))
+'   .SetPropW(m_hRichEdit, "TEXTDOCPTR", CAST(HANDLE, @this))
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -135,30 +128,14 @@ END CONSTRUCTOR
 ' CTextDocument destructor
 ' ========================================================================================
 PRIVATE DESTRUCTOR CTextDocument2
+   CTOM_DP("CTextDocument2 DESTRUCTOR - m_pTextDocument2 = " & WSTR(m_pTextDocument2))
    ' // Release the interface
-   IF m_pTextDocument2 THEN m_pTextDocument2->lpvtbl->Release(m_pTextDocument2)
-   ' // Free the COM library
-   IF m_bUninitCOM THEN CoUninitialize
+   DIM dwRefCount AS ULONG
+   IF m_pTextDocument2 THEN dwRefCount = m_pTextDocument2->lpvtbl->Release(m_pTextDocument2)
+   CTOM_DP("CTextDocument2 DESTRUCTOR - m_pTextDocument2 ref count = " & WSTR(dwRefCount))
    ' // Remove the property with a pointer to the class
-   IF m_hRichEdit THEN .RemovePropW(m_hRichEdit, "TEXTDOCPTR")
+'   IF m_hRichEdit THEN .RemovePropW(m_hRichEdit, "TEXTDOCPTR")
 END DESTRUCTOR
-' ========================================================================================
-
-' ========================================================================================
-' Returns the last result code.
-' ========================================================================================
-PRIVATE FUNCTION CTextDocument2.GetLastResult () AS HRESULT
-   RETURN m_Result
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Sets the last result code.
-' ========================================================================================
-PRIVATE FUNCTION CTextDocument2.SetResult (BYVAL Result AS HRESULT) AS HRESULT
-   m_Result = Result
-   RETURN m_Result
-END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
@@ -679,8 +656,10 @@ END FUNCTION
 ' Retrieves a new text range for the active story of the document.
 ' ========================================================================================
 PRIVATE FUNCTION CTextDocument2.Range2 (BYVAL cpActive AS LONG, BYVAL cpAnchor AS LONG) AS ITextRange2 PTR
+   CTOM_DP("BEGIN CTextRange2.Range2 - m_pTextDocument2 = " & WSTR(m_pTextDocument2))
    DIM pRange2 AS ITextRange2 PTR
    this.SetResult(m_pTextDocument2->lpvtbl->Range2(m_pTextDocument2, cpActive, cpAnchor, @pRange2))
+   CTOM_DP("END CTextRange2.Range2 - pRange2 = " & WSTR(pRange2))
    RETURN pRange2
 END FUNCTION
 ' ========================================================================================
@@ -837,33 +816,6 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Returns a description of the last result code.
-' ========================================================================================
-PRIVATE FUNCTION CTextDocument2.GetErrorInfo () AS CWSTR
-   IF SUCCEEDED(m_Result) THEN RETURN "Success"
-   DIM s AS CWSTR = "Error &h" & HEX(m_Result, 8)
-   SELECT CASE m_Result
-      CASE E_POINTER : s += ": E_POINTER - Null pointer"
-      CASE S_OK : s += ": S_OK - Success"
-      CASE S_FALSE : s += ": S_FALSE - Failure"
-      CASE E_NOTIMPL : s += ": E_NOTIMPL - Not implemented."
-      CASE E_INVALIDARG : s += ": E_INVALIDARG - Invalid argument"
-      CASE E_OUTOFMEMORY : s += ": E_OUTOFMEMORY - Insufficient memory"
-'      CASE E_FILENOTFOUND : s += "E_FILENOTFOUND - File not found"
-      CASE &h80070002 : s += "E_FILENOTFOUND - File not found"
-      CASE E_ACCESSDENIED : s += "E_ACCESSDENIED - Access denied"
-      CASE E_FAIL : s += ": E_FAIL - Access denied"
-      CASE NOERROR : s += ": NOERROR - Success" '' (same as S_OK)
-      CASE CO_E_RELEASED:  : s += ": CO_E_RELEASED: - The object has been released"
-      CASE ELSE
-         s += "Unknown error"
-   END SELECT
-   RETURN s
-
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
 ' Retrieves a pointer to the CTextDocument2 class from the handle of the Rich Edit control.
 ' Usage example:
 ' DIM pCTextDocument2 AS CTextDocument2 PTR = AfxCTextDocumentPtr(hRichEdit)
@@ -871,8 +823,9 @@ END FUNCTION
 '    DIM CbsName AS CBSTR = pCTextDocument2->GetName
 ' END IF
 ' ========================================================================================
-PRIVATE FUNCTION AfxCTextDocumentPtr (BYVAL hRichEdit AS HWND) AS CTextDocument2 PTR
-   DIM pTextDoc2 AS CTextDocument2 PTR = CAST(CTextDocument2 PTR, .GetPropW(hRichEdit, "TEXTDOCPTR"))
-   RETURN pTextDoc2
-END FUNCTION
+'PRIVATE FUNCTION AfxCTextDocumentPtr (BYVAL hRichEdit AS HWND) AS CTextDocument2 PTR
+'   DIM pTextDoc2 AS CTextDocument2 PTR = CAST(CTextDocument2 PTR, .GetPropW(hRichEdit, "TEXTDOCPTR"))
+'   RETURN pTextDoc2
+'END FUNCTION
 ' ========================================================================================
+

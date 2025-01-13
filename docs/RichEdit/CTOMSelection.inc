@@ -17,18 +17,14 @@
 ' ########################################################################################
 ' CTextSelection2 class
 ' ########################################################################################
-TYPE CTextSelection2
+TYPE CTextSelection2 EXTENDS CTOMBase
 
 Public:
-   m_Result AS HRESULT
    m_pTextSelection2 AS ITextSelection2 PTR
 
 Public:
    DECLARE CONSTRUCTOR (BYVAL pTextSelection2 AS ITextSelection2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
-   DECLARE FUNCTION GetLastResult () AS HRESULT
-   DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
-   DECLARE FUNCTION GetErrorInfo () AS CWSTR
    DECLARE OPERATOR LET (BYVAL pTextSelection2 AS ITextSelection2 PTR)
    DECLARE OPERATOR CAST () AS ITextSelection2 PTR
    DECLARE FUNCTION TextSelectionPtr () AS ITextSelection2 PTR
@@ -165,23 +161,6 @@ PRIVATE DESTRUCTOR CTextSelection2
    ' // Release the ITextSelection2 interface
    IF m_pTextSelection2 THEN m_pTextSelection2->lpvtbl->Release(m_pTextSelection2)
 END DESTRUCTOR
-' ========================================================================================
-
-' ========================================================================================
-' Returns the last result code.
-' ========================================================================================
-PRIVATE FUNCTION CTextSelection2.GetLastResult () AS HRESULT
-   RETURN m_Result
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Sets the last result code.
-' ========================================================================================
-PRIVATE FUNCTION CTextSelection2.SetResult (BYVAL Result AS HRESULT) AS HRESULT
-   m_Result = Result
-   RETURN m_Result
-END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================

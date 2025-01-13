@@ -14,18 +14,14 @@
 ' ########################################################################################
 ' CTextRange2 class
 ' ########################################################################################
-TYPE CTextRange2
+TYPE CTextRange2 EXTENDS CTOMBase
 
 Public:
-   m_Result AS HRESULT
    m_pTextRange2 AS ITextRange2 PTR
 
 Public:
    DECLARE CONSTRUCTOR (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
-   DECLARE FUNCTION GetLastResult () AS HRESULT
-   DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
-   DECLARE FUNCTION GetErrorInfo () AS CWSTR
    DECLARE OPERATOR LET (BYVAL pTextRange2 AS ITextRange2 PTR)
    DECLARE OPERATOR CAST () AS ITextRange2 PTR
    DECLARE FUNCTION TextRangePtr () AS ITextRange2 PTR
@@ -151,10 +147,12 @@ END TYPE
 ' CTextRange2 constructor
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTextRange2 (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
+   CTOM_DP("BEGIN CTextRange2 CONSTRUCTOR - pTextRange2 = " & WSTR(pTextRange2))
    ' // Store the pointer of ITextRange2 interface
    IF pTextRange2 = NULL THEN m_Result = E_INVALIDARG : EXIT CONSTRUCTOR
    IF fAddRef THEN pTextRange2->lpvtbl->AddRef(pTextRange2)
    m_pTextRange2 = pTextRange2
+   CTOM_DP("END CTextRange2 CONSTRUCTOR - m_pTextRange2 = " & WSTR(m_pTextRange2))
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -162,26 +160,12 @@ END CONSTRUCTOR
 ' CTextRange2 destructor
 ' ========================================================================================
 PRIVATE DESTRUCTOR CTextRange2
+   CTOM_DP("CTextRange2 DESTRUCTOR - m_pTextRange2 = " & WSTR(m_pTextRange2))
    ' // Release the ITextRange2 interface
-   IF m_pTextRange2 THEN m_pTextRange2->lpvtbl->Release(m_pTextRange2)
+   DIM dwRefCount AS ULONG
+   IF m_pTextRange2 THEN dwRefCount = m_pTextRange2->lpvtbl->Release(m_pTextRange2)
+   CTOM_DP("CTextDocument2 DESTRUCTOR - m_pTextRange2 ref count = " & WSTR(dwRefCount))
 END DESTRUCTOR
-' ========================================================================================
-
-' ========================================================================================
-' Returns the last result code.
-' ========================================================================================
-PRIVATE FUNCTION CTextRange2.GetLastResult () AS HRESULT
-   RETURN m_Result
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Sets the last result code.
-' ========================================================================================
-PRIVATE FUNCTION CTextRange2.SetResult (BYVAL Result AS HRESULT) AS HRESULT
-   m_Result = Result
-   RETURN m_Result
-END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
@@ -245,6 +229,7 @@ END FUNCTION
 ' Gets the plain text in this range.
 ' ========================================================================================
 PRIVATE FUNCTION CTextRange2.GetText () AS CBSTR
+   CTOM_DP("CTextRange2.GetText - m_pTextRange2 = " & WSTR(m_pTextRange2))
    DIM pText AS AFX_BSTR
    this.SetResult(m_pTextRange2->lpvtbl->GetText(m_pTextRange2, @pText))
    RETURN pText
@@ -1135,6 +1120,7 @@ END FUNCTION
 ' Gets the text in this range according to the specified conversion flags.
 ' ========================================================================================
 PRIVATE FUNCTION CTextRange2.GetText2 (BYVAL Flags AS LONG) AS CBSTR
+   CTOM_DP("CTextRange2.GetText2 - m_pTextRange2 = " & WSTR(m_pTextRange2))
    DIM pText2 AS AFX_BSTR
    this.SetResult(m_pTextRange2->lpvtbl->GetText2(m_pTextRange2, Flags, @pText2))
    RETURN pText2

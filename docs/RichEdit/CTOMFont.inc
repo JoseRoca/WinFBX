@@ -14,18 +14,14 @@
 ' ########################################################################################
 ' CTextFont2 class
 ' ########################################################################################
-TYPE CTextFont2
+TYPE CTextFont2 EXTENDS CTOMBase
 
 Public:
-   m_Result AS HRESULT
    m_pTextFont2 AS ITextFont2 PTR
 
 Public:
    DECLARE CONSTRUCTOR (BYVAL pTextFont2 AS ITextFont2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
-   DECLARE FUNCTION GetLastResult () AS HRESULT
-   DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
-   DECLARE FUNCTION GetErrorInfo () AS CWSTR
    DECLARE OPERATOR LET (BYVAL pTextFont2 AS ITextFont2 PTR)
    DECLARE OPERATOR CAST () AS ITextFont2 PTR
    DECLARE FUNCTION TextFont2Ptr () AS ITextFont2 PTR
@@ -158,23 +154,6 @@ PRIVATE DESTRUCTOR CTextFont2
    ' // Release the ITextFont2 interface
    IF m_pTextFont2 THEN m_pTextFont2->lpvtbl->Release(m_pTextFont2)
 END DESTRUCTOR
-' ========================================================================================
-
-' ========================================================================================
-' Returns the last result code.
-' ========================================================================================
-PRIVATE FUNCTION CTextFont2.GetLastResult () AS HRESULT
-   RETURN m_Result
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Sets the last result code.
-' ========================================================================================
-PRIVATE FUNCTION CTextFont2.SetResult (BYVAL Result AS HRESULT) AS HRESULT
-   m_Result = Result
-   RETURN m_Result
-END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================

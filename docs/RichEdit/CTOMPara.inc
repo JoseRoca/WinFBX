@@ -14,18 +14,14 @@
 ' ########################################################################################
 ' CTextPara2 class
 ' ########################################################################################
-TYPE CTextPara2
+TYPE CTextPara2 EXTENDS CTOMBase
 
 Public:
-   m_Result AS HRESULT
    m_pTextPara2 AS ITextPara2 PTR
 
 Public:
    DECLARE CONSTRUCTOR (BYVAL pTextPara2 AS ITextPara2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
-   DECLARE FUNCTION GetLastResult () AS HRESULT
-   DECLARE FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
-   DECLARE FUNCTION GetErrorInfo () AS CWSTR
    DECLARE OPERATOR LET (BYVAL pTextPara2 AS ITextPara2 PTR)
    DECLARE OPERATOR CAST () AS ITextPara2 PTR
    DECLARE FUNCTION TextParaPtr () AS ITextPara2 PTR
@@ -121,23 +117,6 @@ PRIVATE DESTRUCTOR CTextPara2
    ' // Release the ITextPara2 interface
    IF m_pTextPara2 THEN m_pTextPara2->lpvtbl->Release(m_pTextPara2)
 END DESTRUCTOR
-' ========================================================================================
-
-' ========================================================================================
-' Returns the last result code.
-' ========================================================================================
-PRIVATE FUNCTION CTextPara2.GetLastResult () AS HRESULT
-   RETURN m_Result
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Sets the last result code.
-' ========================================================================================
-PRIVATE FUNCTION CTextPara2.SetResult (BYVAL Result AS HRESULT) AS HRESULT
-   m_Result = Result
-   RETURN m_Result
-END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
