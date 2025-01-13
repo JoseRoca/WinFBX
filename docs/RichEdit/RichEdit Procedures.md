@@ -354,6 +354,20 @@ END SUB
 | *hRichEdit* | The handle of the rich edit control. |
 | *lpchr* | A pointer to a [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) structure that receives the selection range. |
 
+#### CHARRANGE structure
+```
+type _charrange field = 4
+	cpMin as LONG
+	cpMax as LONG
+end type
+
+type CHARRANGE as _charrange
+```
+| Member  | Description |
+| ------- | ----------- |
+| *cpMin* | Character position index immediately preceding the first character in the range. |
+| *cpMax* | Character position immediately following the last character in the range. |
+
 # <a name="RichEdit_ExLimitText"></a>RichEdit_ExLimitText
 
 Sets an upper limit to the amount of text the user can type or paste into a rich edit control.
@@ -405,6 +419,20 @@ END FUNCTION
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
 | *lpcr* | A pointer to a [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) structure that specifies the selection range. |
+
+#### CHARRANGE structure
+```
+type _charrange field = 4
+	cpMin as LONG
+	cpMax as LONG
+end type
+
+type CHARRANGE as _charrange
+```
+| Member  | Description |
+| ------- | ----------- |
+| *cpMin* | Character position index immediately preceding the first character in the range. |
+| *cpMax* | Character position immediately following the last character in the range. |
 
 #### Return value
 
