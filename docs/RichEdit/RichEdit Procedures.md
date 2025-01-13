@@ -368,6 +368,12 @@ type CHARRANGE as _charrange
 | *cpMin* | Character position index immediately preceding the first character in the range. |
 | *cpMax* | Character position immediately following the last character in the range. |
 
+#### Usage example
+```
+DIM chrRange AS CHARRANGE
+RichEdit_ExGetSel(hRichEdit, @chrRange)
+```
+
 # <a name="RichEdit_ExLimitText"></a>RichEdit_ExLimitText
 
 Sets an upper limit to the amount of text the user can type or paste into a rich edit control.
