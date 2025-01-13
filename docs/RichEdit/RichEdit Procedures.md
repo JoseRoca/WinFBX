@@ -356,7 +356,7 @@ END SUB
 
 # <a name="RichEdit_ExLimitText"></a>RichEdit_ExLimitText
 
-Retrieves the starting and ending character positions of the selection in a rich edit control.
+Sets an upper limit to the amount of text the user can type or paste into a rich edit control.
 
 ```
 SUB RichEdit_ExLimitText (BYVAL hRichEdit AS HWND, BYVAL dwLimit AS DWORD)
@@ -370,9 +370,9 @@ END SUB
 
 #### Remarks
 
-The text limit set by the EM_EXLIMITTEXT message does not limit the amount of text that you can stream into a rich edit control using the EM_STREAMIN message with lParam set to SF_TEXT. However, it does limit the amount of text that you can stream into a rich edit control using the EM_STREAMIN message with lParam set to SF_RTF.
+The text limit set by the **RichEdit_ExLimitText** message does not limit the amount of text that you can stream into a rich edit control using the **RichEdit_StreamIn** message with the *pedst* parameter set to SF_TEXT. However, it does limit the amount of text that you can stream into a rich edit control using the **RichEdit_StreamIn** message with the *pedst* parameter set set to SF_RTF.
 
-Before EM_EXLIMITTEXT is called, the default limit to the amount of text a user can enter is 32,767 characters.
+Before **RichEdit_ExLimitText** is called, the default limit to the amount of text a user can enter is 32,767 characters.
 
 # <a name="RichEdit_ExLineFromChar"></a>RichEdit_ExLineFromChar
 
