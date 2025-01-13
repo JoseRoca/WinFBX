@@ -371,7 +371,7 @@ END SUB
 #### Remarks
 
 The text limit set by the **RichEdit_ExLimitText** message does not limit the amount of text that you can stream into a rich edit control using the **RichEdit_StreamIn** message with the *pedst* parameter set to SF_TEXT. However, it does limit the amount of text that you can stream into a rich edit control using the **RichEdit_StreamIn** message with the *pedst* parameter set set to SF_RTF.
-[!NOTE]
+
 Before **RichEdit_ExLimitText** is called, the default limit to the amount of text a user can enter is 32,767 characters.
 
 # <a name="RichEdit_ExLineFromChar"></a>RichEdit_ExLineFromChar
