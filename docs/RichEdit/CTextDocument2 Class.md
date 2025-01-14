@@ -1148,3 +1148,31 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 ### Remarks
 
 The first 16 index values are for special underline colors. If an index between 1 and 16 hasn't been defined by a call to the **etEffectColor** method, **GetEffectColor** returns the corresponding Microsoft Word default color.
+
+# <a name="GetPreferredFont"></a>GetPreferredFont
+
+Retrieves the preferred font for a particular character repertoire and character position.
+
+```
+FUNCTION CTextDocument2.GetPreferredFont (BYVAL cp AS LONG, BYVAL CodePage AS LONG, _
+BYVAL Options AS LONG, BYVAL curCodepage AS LONG, BYVAL curFontSize AS LONG, BYVAL pbstr AS BSTR PTR, _
+BYVAL pPitchAndFamily AS LONG PTR, BYVAL pNewFontSize AS LONG PTR) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->GetPreferredFont(m_pTextDocument2, cp, CodePage, _
+   Options, curCodePage, curFontSize, pbstr, pPitchAndFamily, pNewFontSize))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cp* | The character position for the preferred font. |
+| *CharRep* | The character repertoire index for the preferred font. It can be one of the following values: **tomAboriginal**, **tomAnsi**, **tomArabic**, **tomArmenian**, **tomBaltic**, **tomBengali**, **tomBIG5**, **tomBraille**, **tomCherokee**, **tomCyrillic**, **tomDefaultCharRep**, **tomDevanagari**, **tomEastEurope**, **tomEmoji**, **tomEthiopic**, **tomGB2312**, **tomGeorgian**, **tomGreek**, **tomGujarati**, **tomGurmukhi**, **tomHangul**, **tomHebrew**, **tomJamo**, **tomKannada**, **tomKayahli**, **tomKharoshthi**, **tomKhmer**, **tomLao**, **tomLimbu**, **tomMac**, **tomMalayalam**, **tomMongolian**, **tomMyanmar**, **tomNewTaiLu**, **tomOEM**, **tomOgham**, **tomOriya**, **tomPC437**, **tomRunic**, **tomShiftJIS**, **tomSinhala**, **tomSylotinagr**, **tomSymbol**, **tomSyriac**, **tomTaiLe**, **tomTamil**, **tomTelugu**, **tomThaana**, **tomThai**, **tomTibetan**, **tomTurkish**, **tomUsymbol**, **tomVietnamese**, **tomYi**. |
+| *Options* | The preferred font options. The low-order word can be a combination of the following values.<br>**tomIgnoreCurrentFont**, **tomMatchCharRep**, **tomMatchFontSignature**, **tomMatchAscii**, **tomGetHeightOnly**, **tomMatchMathFont**. If the high-order word of Options is tomUseTwips, the font heights are given in twips. |
+| *curCharRep* | The index of the current character repertoire. |
+| *curFontSize* | The current font size. |
+| *pPitchAndFamily* | The font pitch and family. |
+| *pNewFontSize* | The new font size. |
+
+#### Return value
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
