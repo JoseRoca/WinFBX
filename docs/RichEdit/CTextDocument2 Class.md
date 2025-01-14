@@ -939,4 +939,27 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 Call this method only if the **GetStoryCount** method returns a value that is greater than one.
 
+# <a name="GetTypographyOptions"></a>GetTypographyOptions
 
+Gets the typography options.
+
+```
+FUNCTION CTextDocument2.GetTypographyOptions () AS LONG
+   DIM Options AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->GetTypographyOptions(m_pTextDocument2, @Options))
+   RETURN Options
+END FUNCTION
+```
+
+#### Return value
+
+A combination of the following typography options.
+
+| Value | Meaning |
+| ----- | ------- |
+| **TO_ADVANCEDTYPOGRAPHY** | Advanced typography (special line breaking and line formatting) is turned on. |
+| **TO_SIMPLELINEBREAK** | Normal line breaking and formatting is used. |
+
+#### Return value
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
