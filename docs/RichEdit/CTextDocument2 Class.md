@@ -37,4 +37,50 @@
 | [SetDocumentPara](#SetDocumentPara) | Sets the default paragraph formatting for this instance of the Text Object Model (TOM) engine. |
 | [GetEastAsianFlags](#GetEastAsianFlags) | Gets the East Asian flags. |
 | [GetGenerator](#GetGenerator) | Gets the name of the Text Object Model (TOM) engine. |
+| [SetIMEInProgress](#SetIMEInProgress) | Sets the state of the Input Method Editor (IME) in-progress flag. |
+| [GetNotificationMode](#GetNotificationMode) | Gets the notification mode. |
+| [SetNotificationMode](#SetNotificationMode) | Sets the notification mode. Use **tomTrue** to turn on notifications, or **tomFalse** to turn them off. |
+| [GetSelection2](#GetSelection2) | Gets the active selection. |
+| [GetStoryRanges2](#GetStoryRanges2) | Gets an object for enumerating the stories in a document. |
+| [GetTypographyOptions](#GetTypographyOptions) | Gets the typography options. |
+| [GetVersion](#GetVersion) | Gets the version number of the Text Object Model (TOM) engine. |
+| [GetWindow](#GetWindow) | Gets the handle of the window that the Text Object Model (TOM) engine is using to display output. |
+| [AttachMsgFilter](#AttachMsgFilter) | Attaches a new message filter to the edit instance. All window messages that the edit instance receives are forwarded to the message filter. |
+| [CheckTextLimit](#CheckTextLimit) | Checks whether the number of characters to be added would exceed the maximum text limit. |
+| [GetCallManager](#GetCallManager) | Gets the call manager. |
+| [GetClientRect](#GetClientRect) | Retrieves the client rectangle of the rich edit control. |
+| [GetEffectColor](#GetEffectColor) | Retrieves the color used for special text attributes. |
+| [GetImmContext](#GetImmContext) | Gets the Input Method Manager (IMM) input context from the Text Object Model (TOM) host. |
+| [GetPreferredFont](#GetPreferredFont) | Retrieves the preferred font for a particular character repertoire and character position. |
+| [GetProperty](#GetProperty) | Retrieves the value of a property. |
+| [GetStrings](#GetStrings) | Gets a collection of rich-text strings. |
+| [Notify](#Notify) | Notifies the Text Object Model (TOM) engine client of particular Input Method Editor (IME) events. |
+| [Range2](#Range2) | Retrieves a new text range for the active story of the document. |
+| [RangeFromPoint2](#RangeFromPoint2) | Retrieves the degenerate range at (or nearest to) a particular point on the screen. |
+| [ReleaseCallManager](#ReleaseCallManager) | Releases the call manager. |
+| [ReleaseImmContext](#ReleaseImmContext) | Releases an Input Method Manager (IMM) input context. |
+| [SetEffectColor](#SetEffectColor) | Specifies the color to use for special text attributes. |
+| [SetProperty](#SetProperty) | Specifies a new value for a property. |
+| [SetTypographyOptions](#SetTypographyOptions) | Specifies the typography options for the document. |
+| [SysBeep](#SysBeep) | Generates a system beep. |
+| [Update](#Update) | Updates the selection and caret. |
+| [UpdateWindow](#UpdateWindow) | Notifies the client that the view has changed and the client should update the view if the Text Object Model (TOM) engine is in-place active. |
+| [GetMathProperties](#GetMathProperties) | Gets the math properties for the document. |
+| [SetMathProperties](#SetMathProperties) | Specifies the math properties to use for the document. |
+| [GetActiveStory](#GetActiveStory) | Gets the active story; that is, the story that receives keyboard and mouse input. |
+| [SetActiveStory](#SetActiveStory) | Sets the active story; that is, the story that receives keyboard and mouse input. |
+| [GetMainStory](#GetMainStory) | Gets the main story. |
+| [GetNewStory](#GetNewStory) | Gets a new story. Not implemented. |
+| [GetStory](#GetStory) | Retrieves the story that corresponds to a particular index. |
 
+# <a name="GetName"></a>GetName
+
+Gets the file name of this document. This is the ITextDocument default property.
+
+```
+PRIVATE FUNCTION CTextDocument2.GetName () AS CBSTR
+   DIM pName AS AFX_BSTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetName(m_pTextDocument2, @pName))
+   RETURN pName
+END FUNCTION
+```
