@@ -963,3 +963,24 @@ A combination of the following typography options.
 #### Return value
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetVersion"></a>GetVersion
+
+Gets the version number of the Text Object Model (TOM) engine.
+
+```
+FUNCTION CTextDocument2.GetVersion () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->GetVersion(m_pTextDocument2, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+#### Return value
+
+The version number. Byte 3 gives the major version number, byte 2 the minor version number, and the low-order 16 bits give the build number.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
