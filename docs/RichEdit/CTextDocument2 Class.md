@@ -647,3 +647,28 @@ The caret type. It can be one of the following values:
 #### Result code
 
 If the method succeeds **GetLastResult** returns **S_OK**. If the method fails, it returns an **HRESULT** error code.
+
+# <a name="SetCaretType"></a>SetCaretType
+
+Sets the caret type.
+
+```
+FUNCTION CTextDocument2.SetCaretType (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->SetCaretType(m_pTextDocument2, Value))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new caret type. It can be one of the following values: |
+
+| Constant | Value | Description |
+| -------- | ----- | ----------- |
+| **tomKoreanBlockCaret** | &h1 | The Korean block caret. |
+| **tomNormalCaret** | 0 | Normal caret. |
+| **tomNullCaret** | &h2 | NULL caret (caret suppressed) |
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
