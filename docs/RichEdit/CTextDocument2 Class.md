@@ -144,3 +144,31 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | Result code | Description |
 | ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
+
+# <a name="GetStoryRanges"></a>GetStoryRanges
+
+Gets the story collection object used to enumerate the stories in a document.
+
+```
+FUNCTION CTextDocument2.GetStoryRanges () AS ITextStoryRanges PTR
+   DIM pStoryRanges AS ITextStoryRanges PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetStoryRanges(m_pTextDocument2, @pStoryRanges))
+   RETURN pStoryRanges
+END FUNCTION
+```
+#### Return value
+
+A pointer to the **ITextStoryRanges** interface.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_NOTIMPL** | Not implemented; only one story in this document. |
+
+#### Remarks
+
+Invoke this method only if **GetStoryCount** returns a value greater than 1.
+
