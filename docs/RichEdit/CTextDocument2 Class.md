@@ -816,3 +816,23 @@ The East Asian flags. This parameter can be a combination of the following value
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+# <a name="GetGenerator"></a>GetGenerator
+
+Gets the name of the Text Object Model (TOM) engine.
+
+```
+FUNCTION CTextDocument2.GetGenerator () AS CBSTR
+   DIM bstr AS AFX_BSTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetGenerator(m_pTextDocument2, @bstr))
+   RETURN bstr
+END FUNCTION
+```
+
+#### Return value
+
+The name of the TOM engine.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
