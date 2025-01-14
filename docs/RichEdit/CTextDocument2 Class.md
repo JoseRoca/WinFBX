@@ -836,3 +836,21 @@ The name of the TOM engine.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+# <a name="SetIMEInProgress"></a>SetIMEInProgress
+
+Sets the state of the Input Method Editor (IME) in-progress flag.
+
+```
+FUNCTION CTextDocument2.SetIMEInProgress (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->SetIMEInProgress(m_pTextDocument2, Value))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | Use **tomTrue** to turn on the IME in-progress flag, or **tomFalse** to turn it off. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
