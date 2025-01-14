@@ -1321,3 +1321,23 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="ReleaseImmContext"></a>ReleaseImmContext
+
+Releases an Input Method Manager (IMM) input context.
+
+```
+FUNCTION CTextDocument2.ReleaseImmContext (BYVAL Context AS __int64) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->ReleaseImmContext(m_pTextDocument2, Context))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Context* | The IMM input context to release. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
