@@ -493,3 +493,27 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns a C
 #### Remarks
 
 The screen is unfrozen unless the freeze count is nonzero.
+
+# <a name="Undo"></a>UNdo
+
+Performs a specified number of undo operations.
+
+```
+FUNCTION CTextDocument2.Undo (BYVAL Count AS LONG) AS LONG
+   DIM nCount AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->Undo(m_pTextDocument2, Count, @nCount))
+   RETURN nCount
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Count* | The specified number of undo operations. If the value of this parameter is **tomFalse**, undo processing is suspended. If this parameter is **tomTrue**, undo processing is restored. |
+
+#### Return value
+
+The actual count of undo operations performed. This parameter can be NULL.
+
+#### Result code
+
+If all of the *Count* undo operations were performed, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**, indicating that less than *Count* undo operations were performed.
