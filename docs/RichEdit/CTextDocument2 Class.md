@@ -913,3 +913,20 @@ A pointer to the **ITextSelection2** interface of the selection. This pointer is
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetStoryRanges2"></a>GetStoryRanges2
+
+Gets an object for enumerating the stories in a document.
+
+```
+FUNCTION CTextDocument2.GetStoryRanges2 () AS ITextStoryRanges2 PTR
+   DIM pStories AS ITextStoryRanges2 PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetStoryRanges2(m_pTextDocument2, @pStories))
+   RETURN pStories
+END FUNCTION
+```
+
+#### Return value
+
+A pointer to the **ITextStoryRanges2** interface used for enumerating stories.
+
