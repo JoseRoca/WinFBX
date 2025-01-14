@@ -740,3 +740,23 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 You can also set the default character formatting by calling the **Reset** method of the **ITextFont** interface with a value of **tomDefault**.
 
+# <a name="GetDocumentPara"></a>GetDocumentPara
+
+Gets an object that provides the default paragraph format information for this instance of the Text Object Model (TOM) engine.
+
+```
+FUNCTION CTextDocument2.GetDocumentPara () AS ITextPara2 PTR
+   DIM pITextPara2 AS ITextPara2 PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetDocumentPara(m_pTextDocument2, @pITextPara2))
+   RETURN pITextPara2
+END FUNCTION
+```
+
+#### Return value
+
+A pointer to the **ITextPara2** interface.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
