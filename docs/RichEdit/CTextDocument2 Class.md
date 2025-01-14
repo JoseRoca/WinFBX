@@ -1057,3 +1057,27 @@ The number of characters that exceed the maximum text limit. This parameter is 0
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+# <a name="GetCallManager"></a>GetCallManager
+
+Gets the call manager.
+
+```
+FUNCTION CTextDocument2.GetCallManager () AS IUnknown PTR
+   DIM pVoid AS IUnknown PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetCallManager(m_pTextDocument2, @pVoid))
+   RETURN pVoid
+END FUNCTION
+```
+
+#### Return value
+
+The call manager object.
+
+#### Result code
+
+If the method succeeds,**GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The call manager object is opaque to the caller. The Text Object Model (TOM) engine uses the object to handle internal notifications for particular scenarios.
+
