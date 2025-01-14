@@ -1255,3 +1255,29 @@ END FUNCTION
 #### Rerturn value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="Range2"></a>Range2
+
+Notifies the Text Object Model (TOM) engine client of particular Input Method Editor (IME) events.
+
+```
+FUNCTION CTextDocument2.Range2 (BYVAL cpActive AS LONG, BYVAL cpAnchor AS LONG) AS ITextRange2 PTR
+   DIM pRange2 AS ITextRange2 PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->Range2(m_pTextDocument2, cpActive, cpAnchor, @pRange2))
+   RETURN pRange2
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cpActive* | The active end of the new text range. The default value is 0; that is, the beginning of the story. |
+| *cpAnchor* | The anchor end of the new text range. The default value is 0. |
+
+#### Return value
+
+The new text range.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
