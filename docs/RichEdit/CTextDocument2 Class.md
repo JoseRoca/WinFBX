@@ -1663,3 +1663,27 @@ A pointer to the **ITextStory** interface of the new story.
 #### Result code
 
 If this method succeeds, **GetLastResult** returns **S_OK**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetStory"></a>GetStory
+
+Retrieves the story that corresponds to a particular index.
+
+```
+FUNCTION CTextDocument2.GetStory (BYVAl Index AS LONG) AS ITextStory PTR
+   DIM pStory AS ITextStory PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetStory(m_pTextDocument2, Index, @pStory))
+   RETURN pStory
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Index* | The index of the story to retrieve. |
+
+#### Return value
+
+A pointer to the **ITextStory** interface of the requested story.
+
+#### Result code
+
+If this method succeeds, **GetLastResult** returns **S_OK**. Otherwise, it returns an **HRESULT** error code.
