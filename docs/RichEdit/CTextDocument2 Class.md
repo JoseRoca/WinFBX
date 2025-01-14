@@ -874,3 +874,22 @@ The notification mode. This parameter is set to **tomTrue** if notifications are
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetNotificationMode"></a>SetNotificationMode
+
+Sets the notification mode.
+
+```
+FUNCTION CTextDocument2.SetNotificationMode (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->SetNotificationMode(m_pTextDocument2, Value))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The notification mode. Use tomTrue to turn on notifications, or tomFalse to turn them off. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
