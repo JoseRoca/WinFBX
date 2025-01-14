@@ -1302,3 +1302,22 @@ END FUNCTION
 #### Result code
 
 If the method succeeds, **GetLastResult^^ returns **NOERROR**. Otherwise, it returns an **HRESUL** error code.
+
+# <a name="ReleaseCallManager"></a>ReleaseCallManager
+
+Releases the call manager.
+
+```
+FUNCTION CTextDocument2.ReleaseCallManager (BYVAL pVoid AS IUnknown PTR) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->ReleaseCallManager(m_pTextDocument2, pVoid))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pvoid* | The call manager object to release. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
