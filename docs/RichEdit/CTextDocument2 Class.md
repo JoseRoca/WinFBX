@@ -1196,3 +1196,26 @@ The IMM input context.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetProperty"></a>GetProperty
+
+Retrieves the value of a property.
+
+```
+FUNCTION CTextDocument2.GetProperty (BYVAL nType AS LONG) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->GetProperty(m_pTextDocument2, nType, @Value))
+   RETURN Value
+END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *nType* | The identifier of the property to retrieve. It can be one of the following property IDs: **tomCanCopy**, **tomCanRedo**, **tomCanUndo**, **tomDocMathBuild**, **tomMathInterSpace**, **tomMathIntraSpace**, **tomMathLMargin**, **tomMathPostSpace**, **tomMathPreSpace**, **tomMathRMargin**, **tomMathWrapIndent**, **tomMathWrapRight**, **tomUndoLimit**, **tomEllipsisMode**, **tomEllipsisState** |
+
+#### Return value
+
+The value of the property.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
