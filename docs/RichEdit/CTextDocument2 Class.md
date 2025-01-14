@@ -1431,3 +1431,18 @@ Typography options.
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SysBeep"></a>SysBeep
+
+Generates a system beep.
+
+```
+FUNCTION CTextDocument2.SysBeep () AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->SysBeep(m_pTextDocument2))
+   RETURN m_Result
+END FUNCTION
+```
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
