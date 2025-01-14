@@ -2,6 +2,25 @@
 
 ### ITextDocument Interface
 
+The **ITextDocument** interface is the Text Object Model (TOM) top-level interface, which retrieves the active selection and range objects for any story in the document—whether active or not. It enables the application to:
+
+- Open and save documents.
+- Control undo behavior and screen updating.
+- Find a range from a screen position.
+- Get an **ITextStoryRanges** story enumerator.
+
+#### When to implement
+
+Applications typically do not implement the **ITextDocument** interface. Microsoft text solutions, such as rich edit controls, implement **ITextDocument** as part of their TOM implementation.
+
+#### When to Use
+
+Applications can retrieve an **ITextDocument** pointer from a rich edit control. To do this, send an **EM_GETOLEINTERFACE** message to retrieve an **IRichEditOle** object from a rich edit control. Then, call the object's **IUnknown::QueryInterface** method to retrieve an **ITextDocument** pointer.
+
+#### Inheritance
+
+The **ITextDocument** interface inherits from the IUnknown interface. **ITextDocument** also has these types of members:
+
 | Name       | Description |
 | ---------- | ----------- |
 | [GetName](#GetName) | Gets the file name of this document. |
@@ -25,6 +44,10 @@
 | [RangeFromPoint](#RangeFromPoint) | Retrieves a range for the content at or nearest to the specified point on the screen. |
 
 ### ITextDocument2 Interface
+
+Extends the **ITextDocument** interface, adding methods that enable the Input Method Editor (IME) to drive the rich edit control, and methods to retrieve other interfaces such as **ITextDisplays**, **ITextRange2**, **ITextFont2**, **ITextPara2**, and so on.
+
+Some **ITextDocument2** methods used with the IME need access to the current window handle (HWND). Use the **GetWindow** method of the **ITextDocument2** interface to retrieve the handle.
 
 | Name       | Description |
 | ---------- | ----------- |
