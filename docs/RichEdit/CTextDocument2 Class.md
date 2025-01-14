@@ -84,7 +84,7 @@ PRIVATE FUNCTION CTextDocument2.GetName () AS CBSTR
    RETURN pName
 END FUNCTION
 ```
-#### Result code
+### Result code
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
@@ -109,7 +109,7 @@ END FUNCTION
 
 The **ITextSelection** pointer of the active selection.
 
-#### Result code
+### Result code
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
