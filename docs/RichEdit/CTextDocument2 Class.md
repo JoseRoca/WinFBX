@@ -86,7 +86,7 @@ END FUNCTION
 ```
 #### Return value
 
-The filename of this document, or an emmpty setring if there is not a filename associated with this object.
+The filename of this document, or an empty setring if there is not a filename associated with this object.
 
 #### Result code
 
