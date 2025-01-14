@@ -1706,7 +1706,7 @@ FUNCTION CTOMBase.GetLastResult () AS HRESULT
 END FUNCTION
 ```
 
-# <a name="SetLastResult"></a>SetLastResult
+# <a name="SetResult"></a>SetResult
 
 Sets the last result code.
 
@@ -1714,5 +1714,37 @@ Sets the last result code.
 FUNCTION CTOMBase.SetResult (BYVAL Result AS HRESULT) AS HRESULT
    m_Result = Result
    RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Result* | The HRESULT error code returned by the methods. |
+
+# <a name="GetErrorInfo"></a>GetErrorInfo
+
+Returns a description of the last result code.
+
+```
+FUNCTION CTOMBase.GetErrorInfo () AS CWSTR
+   IF SUCCEEDED(m_Result) THEN RETURN "Success"
+   DIM s AS CWSTR = "Error &h" & HEX(m_Result, 8)
+   SELECT CASE m_Result
+      CASE E_POINTER : s += ": E_POINTER - Null pointer"
+      CASE S_OK : s += ": S_OK - Success"
+      CASE S_FALSE : s += ": S_FALSE - Failure"
+      CASE E_NOTIMPL : s += ": E_NOTIMPL - Not implemented."
+      CASE E_INVALIDARG : s += ": E_INVALIDARG - Invalid argument"
+      CASE E_OUTOFMEMORY : s += ": E_OUTOFMEMORY - Insufficient memory"
+'      CASE E_FILENOTFOUND : s += "E_FILENOTFOUND - File not found"
+      CASE &h80070002 : s += "E_FILENOTFOUND - File not found"
+      CASE E_ACCESSDENIED : s += "E_ACCESSDENIED - Access denied"
+      CASE E_FAIL : s += ": E_FAIL - Access denied"
+      CASE NOERROR : s += ": NOERROR - Success" '' (same as S_OK)
+      CASE CO_E_RELEASED:  : s += ": CO_E_RELEASED: - The object has been released"
+      CASE ELSE
+         s += "Unknown error"
+   END SELECT
+   RETURN s
 END FUNCTION
 ```
