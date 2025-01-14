@@ -84,7 +84,11 @@ PRIVATE FUNCTION CTextDocument2.GetName () AS CBSTR
    RETURN pName
 END FUNCTION
 ```
-### Result code
+#### Return value
+
+The filename of this document, or an emmpty setring if there is not a filename associated with this object.
+
+#### Result code
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
@@ -105,11 +109,11 @@ PRIVATE FUNCTION CTextDocument2.GetSelection () AS ITextSelection PTR
    RETURN pSelection
 END FUNCTION
 ```
-### Return value
+#### Return value
 
 The **ITextSelection** pointer of the active selection.
 
-### Result code
+#### Result code
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
