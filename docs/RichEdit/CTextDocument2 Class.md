@@ -1385,3 +1385,22 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 The first 16 index values are for special underline colors. If an index between 1 and 16 hasn't been defined by a call to the **SetEffectColor** method of the **ITextDocument2** interface, the corresponding Microsoft Word default color is used.
 
+# <a name="SetProperty"></a>SetProperty
+
+Specifies a new value for a property.
+
+```
+FUNCTION CTextDocument2.SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->SetProperty(m_pTextDocument2, nType, Value))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *nType* | The identifier of the property. It can be one of the following property IDs: **tomCanCopy**, **tomCanRedo**, **tomCanUndo**, **tomDocMathBuild**, **tomMathInterSpace**, **tomMathIntraSpace**, **tomMathLMargin**, **tomMathPostSpace**, **tomMathPreSpace**, **tomMathRMargin**, **tomMathWrapIndent**, **tomMathWrapRight**, **tomUndoLimit**, **tomEllipsisMode**, **tomEllipsisState**. |
+| *Value* | The new property value. |
+
+#### Return value
+
+If the method succeeds, it returns *NOERRO*. Otherwise, it returns an *HRESULT* error code.
