@@ -264,3 +264,23 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+# <a name="New_"></a>New_
+
+Opens a new document.
+
+```
+FUNCTION CTextDocument2.New_ () AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->New_(m_pTextDocument2))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+#### Return value
+
+If the method succeeds, it returns S_OK.
+
+#### Remarks
+
+If another document is open, this method saves any current changes and closes the current document before opening a new one.
+
