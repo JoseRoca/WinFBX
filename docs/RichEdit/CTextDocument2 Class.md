@@ -1219,3 +1219,20 @@ The value of the property.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetStrings"></a>GetStrings
+
+Gets a collection of rich-text strings.
+
+```
+FUNCTION CTextDocument2.GetStrings () AS ITextStrings PTR
+   DIM pStrs AS ITextStrings PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetStrings(m_pTextDocument2, @pStrs))
+   RETURN pStrs
+END FUNCTION
+```
+
+#### Return value
+
+A pointer to the **ITextStrings** interface of the collection of rich-text strings.
+
