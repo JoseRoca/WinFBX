@@ -325,8 +325,8 @@ END FUNCTION
 
 Any combination of these values may be used:
 
-| Flag | Value | Description |
-| ---- | ----- | ----------- |
+| Constant | Value | Description |
+| -------- | ----- | ----------- |
 | **tomReadOnly** | &h100 | Read only. |
 | **tomShareDenyRead** | &h200 | Other programs cannot read. |
 | **tomShareDenyWrite** | &h400 | Other programs cannot write. |
@@ -334,7 +334,7 @@ Any combination of these values may be used:
 
 These values are mutually exclusive:
 
-| Flag | Value | Description |
+| Constant | Value | Description |
 | ---- | ----- | ----------- |
 | **tomCreateNew** | &h10 | Create a new file. Fail if the file already exists. |
 | **tomCreateAlways** | &h20 | Create a new file. Destroy the existing file if it exists. |
@@ -376,8 +376,8 @@ END FUNCTION
 
 Any combination of these values may be used:
 
-| Flag | Value | Description |
-| ---- | ----- | ----------- |
+| Constant | Value | Description |
+| -------- | ----- | ----------- |
 | **tomReadOnly** | &h100 | Read only. |
 | **tomShareDenyRead** | &h200 | Other programs cannot read. |
 | **tomShareDenyWrite** | &h400 | Other programs cannot write. |
@@ -385,8 +385,8 @@ Any combination of these values may be used:
 
 These values are mutually exclusive:
 
-| Flag | Value | Description |
-| ---- | ----- | ----------- |
+| Constant | Value | Description |
+| -------- | ----- | ----------- |
 | **tomCreateNew** | &h10 | Create a new file. Fail if the file already exists. |
 | **tomCreateAlways** | &h20 | Create a new file. Destroy the existing file if it exists. |
 | **tomOpenExisting** | &h30 | Open an existing file. Fail if the file does not exist. |
@@ -622,3 +622,28 @@ If the method succeeds **GetLastResult** returns **S_OK**. If the method fails, 
 | **E_INVALIDARG** | Invalid argument. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
+# <a name="GetCaretType"></a>GetCaretType
+
+Gets the caret type.
+
+```
+FUNCTION CTextDocument2.GetCaretType () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->GetCaretType(m_pTextDocument2, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+### Return value
+
+The caret type. It can be one of the following values:
+
+| Constant | Value | Description |
+| -------- | ----- | ----------- |
+| **tomKoreanBlockCaret** | &h1 | The Korean block caret. |
+| **tomNormalCaret** | 0 | Normal caret. |
+| **tomNullCaret** | &h2 | NULL caret (caret suppressed) |
+
+#### Result code
+
+If the method succeeds **GetLastResult** returns **S_OK**. If the method fails, it returns an **HRESULT** error code.
