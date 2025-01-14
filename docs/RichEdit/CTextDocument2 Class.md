@@ -1023,7 +1023,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *pFilter* | TThe message filter. |
+| *pFilter* | The message filter. |
 
 #### Return value
 
@@ -1032,3 +1032,28 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 #### Remarks
 
 The message filter must be bound to the document before it can be used.
+
+# <a name="CheckTextLimit"></a>CheckTextLimit
+
+Checks whether the number of characters to be added would exceed the maximum text limit.
+
+```
+FUNCTION CTextDocument2.CheckTextLimit (BYVAL cch AS LONG) AS LONG
+   DIM pcch AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->CheckTextLimit(m_pTextDocument2, cch, @pcch))
+   RETURN pcch
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cch* | The number of characters to be added. |
+
+#### Return value
+
+The number of characters that exceed the maximum text limit. This parameter is 0 if the number of characters does not exceed the limit.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
