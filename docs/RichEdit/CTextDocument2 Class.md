@@ -711,8 +711,32 @@ END FUNCTION
 
 ### Return value
 
-A pointer to the ITextFont2 interface.
+A pointer to the **ITextFont2** interface.
 
 ### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetDocumentFont"></a>SetDocumentFont
+
+Sets the default character formatting for this instance of the Text Object Model (TOM) engine.
+
+```
+FUNCTION CTextDocument2.SetDocumentFont (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->SetDocumentFont(m_pTextDocument2, pFont))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pFont* | The font object that provides the default character formatting. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+You can also set the default character formatting by calling the **Reset** method of the **ITextFont** interface with a value of **tomDefault**.
+
