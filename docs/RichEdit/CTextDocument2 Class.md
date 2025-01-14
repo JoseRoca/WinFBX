@@ -75,7 +75,7 @@
 
 # <a name="GetName"></a>GetName
 
-Gets the file name of this document. This is the ITextDocument default property.
+Gets the file name of this document. This is the **ITextDocument** default property.
 
 ```
 PRIVATE FUNCTION CTextDocument2.GetName () AS CBSTR
