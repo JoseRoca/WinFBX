@@ -418,3 +418,29 @@ If the count is nonzero, **GetLastResult** returns **S_OK**. If the count is zer
 #### Remarks
 
 If the freeze count is nonzero, screen updating is disabled. This allows a sequence of editing operations to be performed without the performance loss and flicker of screen updating. To decrement the freeze count, call the **Unfreeze** method.
+
+# <a name="Unfreeze"></a>Unfreeze
+
+Decrements the freeze count.
+
+```
+FUNCTION CTextDocument2.Unfreeze () AS LONG
+   DIM nCount AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->Unfreeze(m_pTextDocument2, @nCount))
+   RETURN nCount
+END FUNCTION
+```
+
+#### Return value
+
+The updated freeze count.
+
+#### Result code
+
+If the freeze count is zero, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**, indicating that the freeze count is nonzero.
+
+#### Remarks
+
+If the freeze count goes to zero, screen updating is enabled. This method cannot decrement the count below zero, and no error occurs if it is executed with a zero freeze count.
+
+Note, if edit collection is active, screen updating is suppressed, even if the freeze count is zero.
