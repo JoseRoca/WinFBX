@@ -1619,3 +1619,27 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetMainStory"></a>GetMainStory
+
+Gets the main story.
+
+```
+FUNCTION CTextDocument2.GetMainStory () AS ITextStory PTR
+   DIM pStory AS ITextStory PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetMainStory(m_pTextDocument2, @pStory))
+   RETURN pStory
+END FUNCTION
+```
+
+#### Return value
+
+A pointer to the **ITextStory** interface of the main story.
+
+#### Return value
+
+If this method succeeds, **GetLastResult** returns **S_OK**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+A rich edit control automatically includes the main story; a call to the **GetNewStory** method is not required.
