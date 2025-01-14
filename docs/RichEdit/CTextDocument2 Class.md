@@ -84,9 +84,11 @@ PRIVATE FUNCTION CTextDocument2.GetName () AS CBSTR
    RETURN pName
 END FUNCTION
 ```
+#### Result code
+
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
-| Return code | Description |
+| Result code | Description |
 | ----------- | ----------- |
 | **S_FALSE** | No file name associated with this object. |
 | **E_INVALIDARG** | Invalid argument. |
@@ -94,8 +96,24 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 # <a name="GetSelection"></a>GetSelection
 
-Gets the file name of this document. This is the ITextDocument default property.
+Gets the active selection.
 
 ```
-
+PRIVATE FUNCTION CTextDocument2.GetSelection () AS ITextSelection PTR
+   DIM pSelection AS ITextSelection PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetSelection(m_pTextDocument2, @pSelection))
+   RETURN pSelection
+END FUNCTION
 ```
+### Return value
+
+The **ITextSelection** pointer of the active selection.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **S_FALSE** | Indicates no active selection. |
+| **E_INVALIDARG** | Invalid argument. |
