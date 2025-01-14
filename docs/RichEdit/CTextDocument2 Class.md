@@ -1081,3 +1081,26 @@ If the method succeeds,**GetLastResult** returns **NOERROR**. Otherwise, it retu
 
 The call manager object is opaque to the caller. The Text Object Model (TOM) engine uses the object to handle internal notifications for particular scenarios.
 
+# <a name="GetClientRect"></a>GetClientRect
+
+Retrieves the client rectangle of the rich edit control.
+
+```
+FUNCTION CTextDocument2.GetClientRect (BYVAL nType AS LONG, BYVAL pLeft AS LONG PTR, _
+BYVAL pTop AS LONG PTR, BYVAL pRight AS LONG PTR, BYVAL pBottom AS LONG PTR) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->GetClientRect(m_pTextDocument2, nType, pLeft, pTop, pRight, pBottom))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *nType* | The client rectangle retrieval options. It can be a combination of the following values.<br>**tomClientCoord**. Retrieve the rectangle in client coordinates. If this value isn't specified, the function retrieves screen coordinates.<br>**tomIncludeInset**. Add left and top insets to the left and top coordinates of the client rectangle, and subtract right and bottom insets from the right and bottom coordinates.<br>**tomTransform**. Use a world transform (XFORM) provided by the host application to transform the retrieved rectangle coordinates. |
+| *pLeft* | The x-coordinate of the upper-left corner of the rectangle. |
+| *pTop* | The y-coordinate of the upper-left corner of the rectangle. |
+| *pRight* | The x-coordinate of the lower-right corner of the rectangle. |
+| *pBottom* | The y-coordinate of the lower-right corner of the rectangle. |
+
+#### Return value
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
