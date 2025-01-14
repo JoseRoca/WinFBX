@@ -760,3 +760,26 @@ A pointer to the **ITextPara2** interface.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+# <a name="SetDocumentPara"></a>SetDocumentPara
+
+Sets the default paragraph formatting for this instance of the Text Object Model (TOM) engine.
+
+```
+FUNCTION CTextDocument2.SetDocumentPara (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->SetDocumentPara(m_pTextDocument2, pPara))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pPara* | The paragraph object that provides the default paragraph formatting |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+You can also set the default character formatting by calling the **Reset** method of the **ITextFont** interface with a value of **tomDefault**.
+
