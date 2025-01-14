@@ -96,6 +96,14 @@ Some **ITextDocument2** methods used with the IME need access to the current win
 | [GetNewStory](#GetNewStory) | Gets a new story. Not implemented. |
 | [GetStory](#GetStory) | Retrieves the story that corresponds to a particular index. |
 
+### Methods inherited from CTOMBase Class
+
+| Name       | Description |
+| ---------- | ----------- |
+| [GetLastResult](#GetLastResult) | Returns the last result code |
+| [SetResult](#SetResult) | Sets the last result code. |
+| [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
+
 # <a name="GetName"></a>GetName
 
 Gets the file name of this document. This is the **ITextDocument** default property.
@@ -1687,3 +1695,13 @@ A pointer to the **ITextStory** interface of the requested story.
 #### Result code
 
 If this method succeeds, **GetLastResult** returns **S_OK**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetLastResult"></a>GetLastResult
+
+Returns the last result code
+
+```
+FUNCTION CTOMBase.GetLastResult () AS HRESULT
+   RETURN m_Result
+END FUNCTION
+```
