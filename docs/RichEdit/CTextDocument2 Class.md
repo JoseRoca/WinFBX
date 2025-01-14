@@ -1481,3 +1481,52 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+# <a name="GetMathProperties"></a>GetMathProperties
+
+Gets the math properties for the document.
+
+```
+FUNCTION CTextDocument2.GetMathProperties () AS LONG
+   DIM Options AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->GetMathProperties(m_pTextDocument2, @Options))
+   RETURN Options
+END FUNCTION
+```
+
+#### Return value
+
+A combination of the following math properties:
+
+| Property | Meaning |
+| -------- | ----------- |
+| *tomMathDispAlignMask* | Display-mode alignment mask. |
+| *tomMathDispAlignCenter* | Center (default) alignment. |
+| *tomMathDispAlignLeft* | Left alignment. |
+| *tomMathDispAlignRight* | Right alignment. |
+| *tomMathDispIntUnderOver* | Display-mode integral limits location. |
+| *tomMathDispFracTeX* | Display-mode nested fraction script size. |
+| *tomMathDispNaryGrow* | Math-paragraph n-ary grow. |
+| *tomMathDocEmptyArgMask* | Empty arguments display mask. |
+| *tomMathDocEmptyArgAuto* | Automatically use a dotted square to denote empty arguments, if necessary. |
+| *tomMathDocEmptyArgAlways* | Always use a dotted square to denote empty arguments. |
+| *tomMathDocEmptyArgNever* | Don't denote empty arguments. |
+| *tomMathDocSbSpOpUnchanged* | Display the underscore (_) and caret (^) as themselves. |
+| *tomMathDocDiffMask* | Style mask for the **tomMathDocDiffUpright**, **tomMathDocDiffItalic**, **tomMathDocDiffOpenItalic** options. |
+| *tomMathDocDiffItalic* | Use italic (default) for math differentials. |
+| *tomMathDocDiffUpright* | Use an upright font for math differentials. |
+| *tomMathDocDiffOpenItalic* | Use open italic (default) for math differentials. |
+| *tomMathDispNarySubSup* | Math-paragraph non-integral n-ary limits location. |
+| *tomMathDispDef* | Math-paragraph spacing defaults. |
+| *tomMathEnableRtl* | Enable right-to-left (RTL) math zones in RTL paragraphs. |
+| *tomMathBrkBinMask* | Equation line break mask. |
+| *tomMathBrkBinBefore* | Break before binary/relational operator. |
+| *tomMathBrkBinAfter* | Break after binary/relational operator. |
+| *tomMathBrkBinDup* | Duplicate binary/relational before/after. |
+| *tomMathBrkBinSubMask* | Duplicate mask for minus operator. |
+| *tomMathBrkBinSubMM* | - - (minus on both lines). |
+| *tomMathBrkBinSubPM* | + - |
+| *tomMathBrkBinSubMP* | - + |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
