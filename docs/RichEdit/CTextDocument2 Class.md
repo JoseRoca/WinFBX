@@ -1341,3 +1341,47 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+# <a name="SetEffectColor"></a>SetEffectColor
+
+Specifies the color to use for special text attributes.
+
+```
+FUNCTION CTextDocument2.SetEffectColor (BYVAL Index AS LONG, BYVAL Value AS ULONG) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->SetEffectColor(m_pTextDocument2, Index, Value))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Index* | The index of the color to retrieve. For a list of values, see the table below. |
+| *Value* | The new color for the specified index. |
+
+| Index | Meaning |
+| --------- | ----------- |
+| 0 | Text color. |
+| 1 | RGB(0, 0, 0) |
+| 2 | RGB(0, 0, 255) |
+| 3 | RGB(0, 255, 255) |
+| 4 | RGB(0, 255, 0) |
+| 5 | RGB(255, 0, 255) |
+| 6 | RGB(255, 0, 0) |
+| 7 | RGB(255, 255, 0) |
+| 8 | RGB(255, 255, 255) |
+| 9 | RGB(0, 0, 128) |
+| 10 | RGB(0, 128, 128) |
+| 11 | RGB(0, 128, 0) |
+| 12 | RGB(128, 0, 128) |
+| 13 | RGB(128, 0, 0) |
+| 14 | RGB(128, 128, 0) |
+| 15 | RGB(128, 128, 128) |
+| 16 | RGB(192, 192, 192) |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The first 16 index values are for special underline colors. If an index between 1 and 16 hasn't been defined by a call to the **SetEffectColor** method of the **ITextDocument2** interface, the corresponding Microsoft Word default color is used.
+
