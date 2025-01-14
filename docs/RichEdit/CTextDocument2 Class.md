@@ -413,5 +413,8 @@ The updated freeze count.
 
 #### Result code
 
-If the count is nonzero, it returns **S_OK**. If the count is zero, it returns **FALSE**.
+If the count is nonzero, **GetLastResult** returns **S_OK**. If the count is zero, it returns **FALSE**.
 
+#### Remarks
+
+If the freeze count is nonzero, screen updating is disabled. This allows a sequence of editing operations to be performed without the performance loss and flicker of screen updating. To decrement the freeze count, call the **Unfreeze** method.
