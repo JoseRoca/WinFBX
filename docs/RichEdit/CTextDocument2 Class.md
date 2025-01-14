@@ -26,6 +26,8 @@
 
 ### ITextDocument2 Interface
 
+| Name       | Description |
+| ---------- | ----------- |
 | [GetCaretType](#GetCaretType) | Gets the caret type. |
 | [SetCaretType](#SetCaretType) | Sets the caret type. |
 | [GetDisplays](#GetDisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
