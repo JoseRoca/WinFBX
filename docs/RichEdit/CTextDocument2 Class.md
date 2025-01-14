@@ -1600,3 +1600,22 @@ A pointer to the **ITextStory** interface of the active story.
 #### Result code
 
 If the method succeeds, **GetLAstREsult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetActiveStory"></a>SetActiveStory
+
+Sets the active story; that is, the story that receives keyboard and mouse input.
+
+```
+FUNCTION CTextDocument2.SetActiveStory (BYVAL pStory AS ITextStory PTR) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->SetActiveStory(m_pTextDocument2, pStory))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pStory* | The story to set as active. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
