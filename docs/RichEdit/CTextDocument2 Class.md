@@ -208,9 +208,34 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *Value* | New value of the Saved property. It can be one of the following values:<br>**tomTrue**. No changes to the file since the last time it was saved.<br>**tomFalse**. There are changes to the file. |
+| *Value* | New value of the **Saved** property. It can be one of the following values:<br>**tomTrue**. No changes to the file since the last time it was saved.<br>**tomFalse**. There are changes to the file. |
 
 #### Return value
 
 The return value is S_OK.
+
+# <a name="GetDefaultTabStop"></a>GetDefaultTabStop
+
+Gets the default tab width.
+
+```
+FUNCTION CTextDocument2.GetDefaultTabStop () AS SINGLE
+   DIM Value AS SINGLE
+   this.SetResult(m_pTextDocument2->lpvtbl->GetDefaultTabStop(m_pTextDocument2, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+#### Return value
+
+The default tab width.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+
 
