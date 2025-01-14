@@ -984,3 +984,28 @@ The version number. Byte 3 gives the major version number, byte 2 the minor vers
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+# <a name="GetWindow"></a>GetWindow
+
+Gets the handle of the window that the Text Object Model (TOM) engine is using to display output.
+
+```
+FUNCTION CTextDocument2.GetWindow () AS __int64
+   DIM pHwnd AS __int64
+   this.SetResult(m_pTextDocument2->lpvtbl->GetWindow(m_pTextDocument2, @pHwnd))
+   RETURN pHwnd
+END FUNCTION
+```
+
+#### Return value
+
+The handle of the window that the TOM engine is using.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+A rich edit control doesn't need to own the window that the TOM engine is using. For example, the rich edit control might be windowless.
+
+The Input Method Editor (IME) needs the handle of the window that is receiving keyboard messages. This method retrieves that handle.
