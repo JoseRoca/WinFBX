@@ -888,7 +888,27 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *Value* | The notification mode. Use tomTrue to turn on notifications, or tomFalse to turn them off. |
+| *Value* | The notification mode. Use **tomTrue** to turn on notifications, or **tomFalse** to turn them off. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetSelection2"></a>GetSelection2
+
+Gets the active selection.
+
+```
+FUNCTION CTextDocument2.GetSelection2 () AS ITextSelection2 PTR
+   DIM ppSel AS ITextSelection2 PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetSelection2(m_pTextDocument2, @ppSel))
+   RETURN ppSel
+END FUNCTION
+```
+
+#### Return value
+
+A pointer to the **ITextSelection2** interface of the selection. This pointer is **NULL** if the rich edit control is not in-place active.
 
 #### Result code
 
