@@ -546,3 +546,24 @@ If the method succeeds **GetLastResult** returns **S_OK**. If the method fails, 
 | ------------ | ----------- |
 | **S_OK** | Method succeeds. |
 | **S_FALSE** | Less than Count redo operations were performed. |
+
+# <a name="Range"></a>Range
+
+Retrieves a text range object for a specified range of content in the active story of the document.
+
+```
+FUNCTION CTextDocument2.Range (BYVAL cpActive AS LONG, BYVAL cpAnchor AS LONG) AS ITextRange PTR
+   DIM pTextRange AS ITextRange PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->Range(m_pTextDocument2, cpActive, cpAnchor, @pTextRange))
+   RETURN pTextRange
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cpActive* | The start position of new range. The default value is zero, which represents the start of the document. |
+| *cpAnchor* | The end position of new range. The default value is zero. |
+
+### Return value
+
+Pointer to a **ITextRange** interface to the specified text range.
