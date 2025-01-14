@@ -394,3 +394,24 @@ If *pVar* is null or missing, the file name given by this document's name is use
 If *pVar* specifies a file name, that name should replace the current Name property. Similarly, the *Flags* and *CodePage* arguments can overrule those supplied in the **Open** method and define the values to use for files created with the **New_** method.
 
 Unicode plain-text files should be saved with the Unicode byte-order mark (0xFEFF) as the first character. This character should be removed when the file is read in; that is, it is only used for import/export to identify the plain text as Unicode and to identify the byte order of that text. Microsoft Notepad adopted this convention, which is now recommended by the Unicode standard.
+
+# <a name="Freeze"></a>Freeze
+
+Increments the freeze count.
+
+```
+FUNCTION CTextDocument2.Freeze () AS LONG
+   DIM nCount AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->Freeze(m_pTextDocument2, @nCount))
+   RETURN nCount
+END FUNCTION
+```
+
+#### Return value
+
+The updated freeze count.
+
+#### Result code
+
+If the count is nonzero, it returns **S_OK**. If the count is zero, it returns **FALSE**.
+
