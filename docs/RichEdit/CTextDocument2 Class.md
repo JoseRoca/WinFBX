@@ -494,7 +494,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns a C
 
 The screen is unfrozen unless the freeze count is nonzero.
 
-# <a name="Undo"></a>UNdo
+# <a name="Undo"></a>Undo
 
 Performs a specified number of undo operations.
 
@@ -512,8 +512,37 @@ END FUNCTION
 
 #### Return value
 
-The actual count of undo operations performed. This parameter can be NULL.
+The actual count of undo operations performed.
 
 #### Result code
 
 If all of the *Count* undo operations were performed, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**, indicating that less than *Count* undo operations were performed.
+
+# <a name="Redo"></a>Redo
+
+Performs a specified number of redo operations.
+
+```
+FUNCTION CTextDocument2.Redo (BYVAL Count AS LONG) AS LONG
+   DIM nCount AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->Redo(m_pTextDocument2, Count, @nCount))
+   RETURN nCount
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Count* | The number of redo operations specified. |
+
+#### Return value
+
+The actual count of redo operations performed.
+
+#### Result code
+
+If the method succeeds **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result value | Description |
+| ------------ | ----------- |
+| **S_OK** | Method succeeds. |
+| **S_FALSE** | Less than Count redo operations were performed. |
