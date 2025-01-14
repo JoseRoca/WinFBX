@@ -1705,3 +1705,14 @@ FUNCTION CTOMBase.GetLastResult () AS HRESULT
    RETURN m_Result
 END FUNCTION
 ```
+
+# <a name="SetLastResult"></a>SetLastResult
+
+Sets the last result code.
+
+```
+FUNCTION CTOMBase.SetResult (BYVAL Result AS HRESULT) AS HRESULT
+   m_Result = Result
+   RETURN m_Result
+END FUNCTION
+```
