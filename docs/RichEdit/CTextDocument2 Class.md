@@ -296,7 +296,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *pVar* | A VARIANT that specifies the name of the file to open. |
+| *pVar* | A **VARIANT** that specifies the name of the file to open. |
 | *Flags* | The file creation, open, share, and conversion flags. Default value is zero, which gives read/write access and read/write sharing, open always, and automatic recognition of the file format (unrecognized file formats are treated as text). Other values are defined in the following groups (see table below). |
 | *CodePage* | The code page to use for the file. Zero (the default value) means **CP_ACP** (ANSI code page) unless the file begins with a Unicode BOM 0xfeff, in which case the file is considered to be Unicode. Note that code page 1200 is Unicode, **CP_UTF8** is UTF-8. |
 
@@ -333,3 +333,64 @@ The return value can be an **HRESULT** value that corresponds to a system error 
 | **E_INVALIDARG** | Invalid argument. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **E_NOTIMPL** | Feature not implemented. |
+
+# <a name="Save"></a>Save
+
+Saves the document.
+
+```
+FUNCTION CTextDocument2.Save (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG, BYVAL CodePage AS LONG) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->Save(m_pTextDocument2, pVar, Flags, CodePage))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pVar* | The save target. This parameter is a **VARIANT**, which can be a file name, or NULL. |
+| *Flags* | File creation, open, share, and conversion flags. For a list of possible values, see table below. |
+| *CodePage* | The specified code page. Common values are **CP_ACP** (zero: system ANSI code page), 1200 (Unicode), and 1208 (UTF-8). |
+
+Any combination of these values may be used:
+
+| Flag | Value | Description |
+| ---- | ----- | ----------- |
+| **tomReadOnly** | &h100 | Read only. |
+| **tomShareDenyRead** | &h200 | Other programs cannot read. |
+| **tomShareDenyWrite** | &h400 | Other programs cannot write. |
+| **tomPasteFile** | &h1000 | Replace the selection with a file. |
+
+These values are mutually exclusive:
+
+| Flag | Value | Description |
+| ---- | ----- | ----------- |
+| **tomCreateNew** | &h10 | Create a new file. Fail if the file already exists. |
+| **tomCreateAlways** | &h20 | Create a new file. Destroy the existing file if it exists. |
+| **tomOpenExisting** | &h30 | Open an existing file. Fail if the file does not exist. |
+| **tomOpenAlways** | &h40 | Open an existing file. Create a new file if the file does not exist. |
+| **tomTruncateExisting** | &h50 | Open an existing file, but truncate it to zero length. |
+| **tomRTF** | &h1 | Open as RTF. |
+| **tomText** | &h2 | Open as text ANSI or Unicode. |
+| **tomHTML** | &h3 | Open as HTML. |
+| **tomWordDocument* | &h4 | Open as Word document. |
+
+#### Return value
+
+The return value can be an **HRESULT** value that corresponds to a system error or COM error code, including one of the following values.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **S_OK** | Method succeeds. |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **E_NOTIMPL** | Feature not implemented. |
+
+#### Remarks
+
+To use the parameters that were specified for opening the file, use zero values for the parameters.
+
+If *pVar* is null or missing, the file name given by this document's name is used. If both of these are missing or null, the method fails.
+
+If *pVar* specifies a file name, that name should replace the current Name property. Similarly, the *Flags* and *CodePage* arguments can overrule those supplied in the **Open** method and define the values to use for files created with the **New_** method.
+
+Unicode plain-text files should be saved with the Unicode byte-order mark (0xFEFF) as the first character. This character should be removed when the file is read in; that is, it is only used for import/export to identify the plain text as Unicode and to identify the byte order of that text. Microsoft Notepad adopted this convention, which is now recommended by the Unicode standard.
