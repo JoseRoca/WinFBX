@@ -1530,3 +1530,53 @@ A combination of the following math properties:
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetMathProperties"></a>SetMathProperties
+
+Sets the math properties for the document.
+
+```
+FUNCTION CTextDocument2.SetMathProperties (BYVAL Options AS LONG, BYVAL Mask AS LONG) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->SetMathProperties(m_pTextDocument2, Options, Mask))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Options* | The math properties to set. For a list of possible properties, see the table below. |
+| *Mask* | The math mask. For a list of possible masks, see the table below. |
+
+| Property | Meaning |
+| -------- | ----------- |
+| *tomMathDispAlignMask* | Display-mode alignment mask. |
+| *tomMathDispAlignCenter* | Center (default) alignment. |
+| *tomMathDispAlignLeft* | Left alignment. |
+| *tomMathDispAlignRight* | Right alignment. |
+| *tomMathDispIntUnderOver* | Display-mode integral limits location. |
+| *tomMathDispFracTeX* | Display-mode nested fraction script size. |
+| *tomMathDispNaryGrow* | Math-paragraph n-ary grow. |
+| *tomMathDocEmptyArgMask* | Empty arguments display mask. |
+| *tomMathDocEmptyArgAuto* | Automatically use a dotted square to denote empty arguments, if necessary. |
+| *tomMathDocEmptyArgAlways* | Always use a dotted square to denote empty arguments. |
+| *tomMathDocEmptyArgNever* | Don't denote empty arguments. |
+| *tomMathDocSbSpOpUnchanged* | Display the underscore (_) and caret (^) as themselves. |
+| *tomMathDocDiffMask* | Style mask for the **tomMathDocDiffUpright**, **tomMathDocDiffItalic**, **tomMathDocDiffOpenItalic** options. |
+| *tomMathDocDiffItalic* | Use italic (default) for math differentials. |
+| *tomMathDocDiffUpright* | Use an upright font for math differentials. |
+| *tomMathDocDiffOpenItalic* | Use open italic (default) for math differentials. |
+| *tomMathDispNarySubSup* | Math-paragraph non-integral n-ary limits location. |
+| *tomMathDispDef* | Math-paragraph spacing defaults. |
+| *tomMathEnableRtl* | Enable right-to-left (RTL) math zones in RTL paragraphs. |
+| *tomMathBrkBinMask* | Equation line break mask. |
+| *tomMathBrkBinBefore* | Break before binary/relational operator. |
+| *tomMathBrkBinAfter* | Break after binary/relational operator. |
+| *tomMathBrkBinDup* | Duplicate binary/relational before/after. |
+| *tomMathBrkBinSubMask* | Duplicate mask for minus operator. |
+| *tomMathBrkBinSubMM* | - - (minus on both lines). |
+| *tomMathBrkBinSubPM* | + - |
+| *tomMathBrkBinSubMP* | - + |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
