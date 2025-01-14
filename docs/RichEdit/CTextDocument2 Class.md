@@ -542,8 +542,8 @@ The actual count of redo operations performed.
 
 If the method succeeds **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
 
-| Result value | Description |
-| ------------ | ----------- |
+| Result code | Description |
+| ----------- | ----------- |
 | **S_OK** | Method succeeds. |
 | **S_FALSE** | Less than Count redo operations were performed. |
 
@@ -567,3 +567,35 @@ END FUNCTION
 ### Return value
 
 Pointer to a **ITextRange** interface to the specified text range.
+
+# <a name="RangeFromPoint"></a>RangeFromPoint
+
+Retrieves a range for the content at or nearest to the specified point on the screen.
+
+```
+UNCTION CTextDocument2.RangeFromPoint (BYVAL x AS LONG, BYVAL y AS LONG) AS ITextRange PTR
+   DIM pTextRange AS ITextRange PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->RangeFromPoint(m_pTextDocument2, x, y, @pTextRange))
+   RETURN pTextRange
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *x* | The horizontal coordinate of the specified point, in screen coordinates. |
+| *y* | The vertical coordinate of the specified point, in screen coordinates. |
+
+### Return value
+
+Pointer to a **ITextRange** interface that corresponds to the specified point.
+
+#### Result code
+
+If the method succeeds **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **S_OK** | Method succeeds. |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+
