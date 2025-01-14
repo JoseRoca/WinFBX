@@ -1465,3 +1465,19 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="UpdateWindow"></a>UpdateWindow
+
+Notifies the client that the view has changed and the client should update the view if the Text Object Model (TOM) engine is in-place active.
+
+```
+FUNCTION CTextDocument2.UpdateWindow () AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->UpdateWindow(m_pTextDocument2))
+   RETURN m_Result
+END FUNCTION
+```
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
