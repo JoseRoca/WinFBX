@@ -78,7 +78,7 @@
 Gets the file name of this document. This is the **ITextDocument** default property.
 
 ```
-PRIVATE FUNCTION CTextDocument2.GetName () AS CBSTR
+FUNCTION CTextDocument2.GetName () AS CBSTR
    DIM pName AS AFX_BSTR
    this.SetResult(m_pTextDocument2->lpvtbl->GetName(m_pTextDocument2, @pName))
    RETURN pName
@@ -103,7 +103,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets the active selection.
 
 ```
-PRIVATE FUNCTION CTextDocument2.GetSelection () AS ITextSelection PTR
+FUNCTION CTextDocument2.GetSelection () AS ITextSelection PTR
    DIM pSelection AS ITextSelection PTR
    this.SetResult(m_pTextDocument2->lpvtbl->GetSelection(m_pTextDocument2, @pSelection))
    RETURN pSelection
@@ -120,4 +120,27 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | Result code | Description |
 | ----------- | ----------- |
 | **S_FALSE** | Indicates no active selection. |
+| **E_INVALIDARG** | Invalid argument. |
+
+# <a name="GetStoryCount"></a>GetStoryCount
+
+Gets the count of stories in this document.
+
+```
+FUNCTION CTextDocument2.GetStoryCount () AS LONG
+   DIM nCount AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->GetStoryCount(m_pTextDocument2, @nCount))
+   RETURN nCount
+END FUNCTION
+```
+#### Return value
+
+The number of stories in the document.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
