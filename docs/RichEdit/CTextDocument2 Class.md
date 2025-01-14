@@ -1404,3 +1404,30 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns *NOERRO*. Otherwise, it returns an *HRESULT* error code.
+
+# <a name="SetTypographyOptions"></a>SetTypographyOptions
+
+Specifies the typography options for the document.
+
+```
+FUNCTION CTextDocument2.SetTypographyOptions (BYVAL Options AS LONG, BYVAL Mask AS LONG) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->SetTypographyOptions(m_pTextDocument2, Options, Mask))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Options* | The typography options to set. For a list of possible options, see the table below. |
+| *Mask* | A mask identifying the options to set. For example, to turn on **TO_ADVANCEDTYPOGRAPHY**, call *SetTypographyOptions (TO_ADVANCEDTYPOGRAPHY, TO_ADVANCEDTYPOGRAPHY)*. |
+
+Typography options.
+
+| Value | Meaning |
+| ----- | ------- |
+| **TO_ADVANCEDTYPOGRAPHY** | Advanced typography (special line breaking and line formatting) is turned on. |
+| **TO_SIMPLELINEBREAK** | Normal line breaking and formatting is used. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
