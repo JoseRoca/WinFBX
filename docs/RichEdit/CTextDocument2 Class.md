@@ -253,7 +253,6 @@ END FUNCTION
 | --------- | ----------- |
 | *Value* | New default tab setting, in floating-point points. Default value is 36.0 points, that is, 0.5 inches. |
 
-
 If the method succeeds it returns S_OK. If the method fails, it returns one of the following COM error codes. For more information on COM error codes, see Error Handling in COM.
 
 #### Result code
@@ -284,3 +283,53 @@ If the method succeeds, it returns S_OK.
 
 If another document is open, this method saves any current changes and closes the current document before opening a new one.
 
+# <a name="Open"></a>Open
+
+Opens a specified document. There are parameters to specify access and sharing privileges, creation and conversion of the file, as well as the code page for the file.
+
+```
+FUNCTION CTextDocument2.Open (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG, BYVAL CodePage AS LONG) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->Open(m_pTextDocument2, pVar, Flags, CodePage))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pVar* | A VARIANT that specifies the name of the file to open. |
+| *Flags* | The file creation, open, share, and conversion flags. Default value is zero, which gives read/write access and read/write sharing, open always, and automatic recognition of the file format (unrecognized file formats are treated as text). Other values are defined in the following groups (see table below). |
+| *CodePage* | The code page to use for the file. Zero (the default value) means **CP_ACP** (ANSI code page) unless the file begins with a Unicode BOM 0xfeff, in which case the file is considered to be Unicode. Note that code page 1200 is Unicode, **CP_UTF8** is UTF-8. |
+
+Any combination of these values may be used:
+
+| Flag | | Value | Description |
+| ---- | | ----- | ----------- |
+| *tomReadOnly* | | &h100 | | Read only. |
+| *tomShareDenyRead* | | &h200 | | Other programs cannot read. |
+| *tomShareDenyWrite* | | &h400 | | Other programs cannot write. |
+| *tomPasteFile* | | &h1000 | | Replace the selection with a file. |
+
+These values are mutually exclusive:
+
+| Flag | | Value | Description |
+| ---- | | ----- | ----------- |
+| *tomCreateNew* | | &h10 | | Create a new file. Fail if the file already exists. |
+| *tomCreateAlways* | | &h20 | | Create a new file. Destroy the existing file if it exists. |
+| *tomOpenExisting* | | &h30 | | Open an existing file. Fail if the file does not exist. |
+| *tomOpenAlways* | | &h40 | | Open an existing file. Create a new file if the file does not exist. |
+| *tomTruncateExisting* | | &h50 | | Open an existing file, but truncate it to zero length. |
+| *tomRTF* | | &h1 | | Open as RTF. |
+| *tomText* | | &h2 | | Open as text ANSI or Unicode. |
+| *tomHTML* | | &h3 | | Open as HTML. |
+| *tomWordDocument* | | &h4 | | Open as Word document. |
+
+#### Return value
+
+The return value can be an **HRESULT** value that corresponds to a system error or COM error code, including one of the following values.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **S_OK** | Method succeeds. |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **E_NOTIMPL** | Feature not implemented. |
