@@ -930,3 +930,13 @@ END FUNCTION
 
 A pointer to the **ITextStoryRanges2** interface used for enumerating stories.
 
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+#### Remarks
+
+Call this method only if the **GetStoryCount** method returns a value that is greater than one.
+
+
