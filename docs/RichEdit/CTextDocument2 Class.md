@@ -172,3 +172,26 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 Invoke this method only if **GetStoryCount** returns a value greater than 1.
 
+# <a name="GetSaved"></a>GetSaved
+
+Gets a value that indicates whether changes have been made since the file was last saved.
+
+```
+FUNCTION CTextDocument2.GetSaved () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->GetSaved(m_pTextDocument2, @Value))
+   RETURN Value
+END FUNCTION
+```
+#### Return value
+
+The value **tomTrue** if no changes have been made since the file was last saved, or the value tomFalse if there are unsaved changes.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+
