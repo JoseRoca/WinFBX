@@ -304,24 +304,24 @@ Any combination of these values may be used:
 
 | Flag | Value | Description |
 | ---- | ----- | ----------- |
-| *tomReadOnly* | &h100 | Read only. |
-| *tomShareDenyRead* | &h200 | Other programs cannot read. |
-| *tomShareDenyWrite* | &h400 | Other programs cannot write. |
-| *tomPasteFile* | &h1000 | Replace the selection with a file. |
+| **tomReadOnly** | &h100 | Read only. |
+| **tomShareDenyRead** | &h200 | Other programs cannot read. |
+| **tomShareDenyWrite** | &h400 | Other programs cannot write. |
+| **tomPasteFile** | &h1000 | Replace the selection with a file. |
 
 These values are mutually exclusive:
 
 | Flag | Value | Description |
 | ---- | ----- | ----------- |
-| *tomCreateNew* | &h10 | Create a new file. Fail if the file already exists. |
-| *tomCreateAlways* | &h20 | Create a new file. Destroy the existing file if it exists. |
-| *tomOpenExisting* | &h30 | Open an existing file. Fail if the file does not exist. |
-| *tomOpenAlways* | &h40 | Open an existing file. Create a new file if the file does not exist. |
-| *tomTruncateExisting* | &h50 | Open an existing file, but truncate it to zero length. |
-| *tomRTF* | &h1 | Open as RTF. |
-| *tomText* | &h2 | Open as text ANSI or Unicode. |
-| *tomHTML* | &h3 | Open as HTML. |
-| *tomWordDocument* | &h4 | Open as Word document. |
+| **tomCreateNew** | &h10 | Create a new file. Fail if the file already exists. |
+| **tomCreateAlways** | &h20 | Create a new file. Destroy the existing file if it exists. |
+| **tomOpenExisting** | &h30 | Open an existing file. Fail if the file does not exist. |
+| **tomOpenAlways** | &h40 | Open an existing file. Create a new file if the file does not exist. |
+| **tomTruncateExisting** | &h50 | Open an existing file, but truncate it to zero length. |
+| **tomRTF** | &h1 | Open as RTF. |
+| **tomText** | &h2 | Open as text ANSI or Unicode. |
+| **tomHTML** | &h3 | Open as HTML. |
+| **tomWordDocument* | &h4 | Open as Word document. |
 
 #### Return value
 
