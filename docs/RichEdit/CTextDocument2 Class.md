@@ -1176,3 +1176,23 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetImmContext"></a>GetImmContext
+
+Gets the Input Method Manager (IMM) input context from the Text Object Model (TOM) host.
+
+```
+FUNCTION CTextDocument2.GetImmContext () AS __int64
+   DIM Context AS __int64
+   this.SetResult(m_pTextDocument2->lpvtbl->GetImmContext(m_pTextDocument2, @Context))
+   RETURN Context
+END FUNCTION
+```
+
+#### Return value
+
+The IMM input context.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
