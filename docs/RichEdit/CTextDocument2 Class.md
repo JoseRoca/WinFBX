@@ -672,3 +672,27 @@ END FUNCTION
 #### Result code
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetDisplays"></a>GetDisplays
+
+Gets the displays collection for this Text Object Model (TOM) engine instance.
+
+```
+FUNCTION CTextDocument2.GetDisplays () AS ITextDisplays PTR
+   DIM pTextDisplays AS ITextDisplays PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetDisplays(m_pTextDocument2, @pTextDisplays))
+   RETURN pTextDisplays
+END FUNCTION
+```
+
+### Return value
+
+A pointer to the **ITextDisplays** interface.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The rich edit control doesn't implement this method.
