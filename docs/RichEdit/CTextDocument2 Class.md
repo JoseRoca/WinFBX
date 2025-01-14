@@ -238,4 +238,29 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
 
+# <a name="SetDefaultTabStop"></a>SetDefaultTabStop
 
+Sets the default tab stop, which is used when no tab exists beyond the current display position.
+
+```
+FUNCTION CTextDocument2.SetDefaultTabStop (BYVAL Value AS SINGLE) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->SetDefaultTabStop(m_pTextDocument2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | New default tab setting, in floating-point points. Default value is 36.0 points, that is, 0.5 inches. |
+
+
+If the method succeeds it returns S_OK. If the method fails, it returns one of the following COM error codes. For more information on COM error codes, see Error Handling in COM.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
