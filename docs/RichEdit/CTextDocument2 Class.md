@@ -1236,3 +1236,22 @@ END FUNCTION
 
 A pointer to the **ITextStrings** interface of the collection of rich-text strings.
 
+# <a name="Notify"></a>Notify
+
+Notifies the Text Object Model (TOM) engine client of particular Input Method Editor (IME) events.
+
+```
+FUNCTION CTextDocument2.Notify (BYVAL nNotify AS LONG) AS HRESULT
+   DIM pStrs AS ITextStrings PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->Notify(m_pTextDocument2, nNotify))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *nNotify* | An IME notification code. |
+
+#### Rerturn value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
