@@ -195,3 +195,22 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
 
+# <a name="SetSaved"></a>SetSaved
+
+Sets the document **Saved** property.
+
+```
+FUNCTION CTextDocument2.SetSaved (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->SetSaved(m_pTextDocument2, Value))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | New value of the Saved property. It can be one of the following values:<br>**tomTrue**. No changes to the file since the last time it was saved.<br>**tomFalse**. There are changes to the file. |
+
+#### Return value
+
+The return value is S_OK.
+
