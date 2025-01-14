@@ -691,8 +691,28 @@ A pointer to the **ITextDisplays** interface.
 
 #### Result code
 
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 #### Remarks
 
 The rich edit control doesn't implement this method.
+
+# <a name="GetDocumentFont"></a>GetDocumentFont
+
+Gets an object that provides the default character format information for this instance of the Text Object Model (TOM) engine.
+
+```
+FUNCTION CTextDocument2.GetDocumentFont () AS ITextFont2 PTR
+   DIM pITextFont2 AS ITextFont2 PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetDocumentFont(m_pTextDocument2, @pITextFont2))
+   RETURN pITextFont2
+END FUNCTION
+```
+
+### Return value
+
+A pointer to the ITextFont2 interface.
+
+### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
