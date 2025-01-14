@@ -84,3 +84,18 @@ PRIVATE FUNCTION CTextDocument2.GetName () AS CBSTR
    RETURN pName
 END FUNCTION
 ```
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Return code | Description |
+| ----------- | ----------- |
+| **S_FALSE** | No file name associated with this object. |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_OUTOFMEMORY** | Insufficient memory for output string. |
+
+# <a name="GetSelection"></a>GetSelection
+
+Gets the file name of this document. This is the ITextDocument default property.
+
+```
+
+```
