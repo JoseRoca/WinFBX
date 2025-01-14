@@ -444,3 +444,28 @@ If the freeze count is zero, **GetLastResult** returns **S_OK**. If the method f
 If the freeze count goes to zero, screen updating is enabled. This method cannot decrement the count below zero, and no error occurs if it is executed with a zero freeze count.
 
 Note, if edit collection is active, screen updating is suppressed, even if the freeze count is zero.
+
+# <a name="BeginEditCollection"></a>BeginEditCollection
+
+Turns on edit collection (also called undo grouping).
+
+```
+FUNCTION CTextDocument2.BeginEditCollection () AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->BeginEditCollection(m_pTextDocument2))
+   RETURN m_Result
+END FUNCTION
+```
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Return code | Description |
+| ----------- | ----------- |
+| **S_OK** | Method succeeds. |
+| **S_FALSE** | Undo is not enabled. |
+| **E_NOTIMPL** | Feature not implemented. |
+
+#### Remarks
+
+A single **Undo** command undoes all changes made while edit collection is turned on.
