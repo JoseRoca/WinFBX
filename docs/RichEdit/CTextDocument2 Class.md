@@ -1009,3 +1009,26 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 A rich edit control doesn't need to own the window that the TOM engine is using. For example, the rich edit control might be windowless.
 
 The Input Method Editor (IME) needs the handle of the window that is receiving keyboard messages. This method retrieves that handle.
+
+# <a name="AttachMsgFilter"></a>AttachMsgFilter
+
+Attaches a new message filter to the edit instance. All window messages that the edit instance receives are forwarded to the message filter.
+
+```
+FUNCTION CTextDocument2.AttachMsgFilter (BYVAL pFilter AS IUnknown PTR) AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->AttachMsgFilter(m_pTextDocument2, pFilter))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pFilter* | TThe message filter. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The message filter must be bound to the document before it can be used.
