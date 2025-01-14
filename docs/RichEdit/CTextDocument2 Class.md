@@ -854,3 +854,23 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetNotificationMode"></a>GetNotificationMode
+
+Gets the notification mode.
+
+```
+FUNCTION CTextDocument2.GetNotificationMode () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->GetNotificationMode(m_pTextDocument2, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+#### Return value
+
+The notification mode. This parameter is set to **tomTrue** if notifications are active, or **tomFalse** if not.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
