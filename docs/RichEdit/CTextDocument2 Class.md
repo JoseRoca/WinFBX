@@ -447,7 +447,7 @@ Note, if edit collection is active, screen updating is suppressed, even if the f
 
 # <a name="BeginEditCollection"></a>BeginEditCollection
 
-Turns on edit collection (also called undo grouping).
+Turns on edit collection (also called *undo grouping*).
 
 ```
 FUNCTION CTextDocument2.BeginEditCollection () AS HRESULT
@@ -469,3 +469,27 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 #### Remarks
 
 A single **Undo** command undoes all changes made while edit collection is turned on.
+
+# <a name="EndEditCollection"></a>EndEditCollection
+
+Turns off edit collection (also called *undo grouping*).
+
+```
+FUNCTION CTextDocument2.EndEditCollection () AS HRESULT
+   this.SetResult(m_pTextDocument2->lpvtbl->EndEditCollection(m_pTextDocument2))
+   RETURN m_Result
+END FUNCTION
+```
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns a COM error code.
+
+| Return value | Description |
+| ------------ | ----------- |
+| **S_OK** | Method succeeds. |
+| **E_NOTIMPL** | Feature not implemented. |
+
+#### Remarks
+
+The screen is unfrozen unless the freeze count is nonzero.
