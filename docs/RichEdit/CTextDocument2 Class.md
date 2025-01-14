@@ -1636,10 +1636,30 @@ END FUNCTION
 
 A pointer to the **ITextStory** interface of the main story.
 
-#### Return value
+#### Result code
 
 If this method succeeds, **GetLastResult** returns **S_OK**. Otherwise, it returns an **HRESULT** error code.
 
 #### Remarks
 
 A rich edit control automatically includes the main story; a call to the **GetNewStory** method is not required.
+
+# <a name="GetNewStory"></a>GetNewStory
+
+Gets a new story. Not implemented.
+
+```
+FUNCTION CTextDocument2.GetNewStory () AS ITextStory PTR
+   DIM pStory AS ITextStory PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetNewStory(m_pTextDocument2, @pStory))
+   RETURN pStory
+END FUNCTION
+```
+
+#### Return value
+
+A pointer to the **ITextStory** interface of the new story.
+
+#### Result code
+
+If this method succeeds, **GetLastResult** returns **S_OK**. Otherwise, it returns an **HRESULT** error code.
