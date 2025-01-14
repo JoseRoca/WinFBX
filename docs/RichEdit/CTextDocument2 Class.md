@@ -1281,3 +1281,24 @@ The new text range.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+# <a name="RangeFromPoint2"></a>RangeFromPoint2
+
+Retrieves the degenerate range at (or nearest to) a particular point on the screen.
+
+```
+FUNCTION CTextDocument2.RangeFromPoint2 (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG) AS ITextRange2 PTR
+   DIM pRange2 AS ITextRange2 PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->RangeFromPoint2(m_pTextDocument2, x, y, nType, @pRange2))
+   RETURN pRange2
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *x* | The x-coordinate of a point, in screen coordinates. |
+| *y* | The y-coordinate of a point, in screen coordinates. |
+| *nType* | The alignment type of the specified point. For a list of valid values, see the [GetPoint](https://learn.microsoft.com/en-us/windows/win32/api/tom/nf-tom-itextrange-getpoint) method of the **ITextRange** interface. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult^^ returns **NOERROR**. Otherwise, it returns an **HRESUL** error code.
