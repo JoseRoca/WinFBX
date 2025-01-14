@@ -773,7 +773,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *pPara* | The paragraph object that provides the default paragraph formatting |
+| *pPara* | The paragraph object that provides the default paragraph formatting. |
 
 #### Return value
 
@@ -782,4 +782,37 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 #### Remarks
 
 You can also set the default character formatting by calling the **Reset** method of the **ITextFont** interface with a value of **tomDefault**.
+
+# <a name="GetEastAsianFlags"></a>GetEastAsianFlags
+
+Gets an object that provides the default paragraph format information for this instance of the Text Object Model (TOM) engine.
+
+```
+FUNCTION CTextDocument2.GetEastAsianFlags () AS LONG
+   DIM pFlags AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->GetEastAsianFlags(m_pTextDocument2, @pFlags))
+   RETURN pFlags
+END FUNCTION
+```
+
+#### Return value
+
+The East Asian flags. This parameter can be a combination of the following values.
+
+| Value | Meaning |
+| ----- | ------- |
+| *tomRE10Mode* | TOM version 1.0 emulation mode. |
+| *tomUseAtFont* | Use @ fonts for CJK vertical text. |
+| *tomTextFlowMask* | A mask for the following four text orientations. |
+| *tomTextFlowES* | Ordinary left-to-right horizontal text. |
+| *tomTextFlowSW* | Ordinary East Asian vertical text. |
+| *tomTextFlowWN* | An alternative orientation. |
+| *tomTextFlowNE* | An alternative orientation. |
+| *tomUsePassword* | Use password control. |
+| *tomNoIME* | Turn off IME operation (see **ES_NOIME**). |
+| *tomSelfIME* | The rich edit host handles IME operation (see **ES_SELFIME**) . |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
