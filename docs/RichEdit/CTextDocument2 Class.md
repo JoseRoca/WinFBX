@@ -1580,3 +1580,23 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetActiveStory"></a>GetActiveStory
+
+Gets the active story; that is, the story that receives keyboard and mouse input.
+
+```
+FUNCTION CTextDocument2.GetActiveStory () AS ITextStory PTR
+   DIM pStory AS ITextStory PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetActiveStory(m_pTextDocument2, @pStory))
+   RETURN pStory
+END FUNCTION
+```
+
+#### Return value
+
+A pointer to the **ITextStory** interface of the active story.
+
+#### Result code
+
+If the method succeeds, **GetLAstREsult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
