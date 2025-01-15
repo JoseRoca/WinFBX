@@ -128,7 +128,7 @@ DIM DIM pCTextDoc AS CTextDocument2
 pCTextDoc.Attach(pTextDocument2)
 ```
 
-# <a name="CONSTRUCTOR2"></a>CONSTRUCTOR
+# <a name="CONSTRUCTOR2"></a>CONSTRUCTOR(hRichEdit)
 
 Called when a **CTextDocument2** class variable is created passing the handle of a Rich Edit control.
 
