@@ -2,6 +2,16 @@
 
 Class that wraps all the methods of the **ITextDocument** and **ITextDocument2** interfaces.
 
+| Name       | Description |
+| ---------- | ----------- |
+| [CONSTRUCTOR](#CONSTRUCTOR) | Gets the file name of this document. |
+| [DESTRUCTOR](#DESTRUCTOR) | Gets the file name of this document. |
+| [LET](#LET) | Gets the file name of this document. |
+| [CAST](#CAST) | Gets the file name of this document. |
+| [TextDocumentPtr](#TextDocumentPtr) | Gets the file name of this document. |
+| [Attach](#Attach) | Gets the file name of this document. |
+| [Detach](#Detach) | Gets the file name of this document. |
+
 ### ITextDocument Interface
 
 The **ITextDocument** interface is the Text Object Model (TOM) top-level interface, which retrieves the active selection and range objects for any story in the document—whether active or not. It enables the application to:
