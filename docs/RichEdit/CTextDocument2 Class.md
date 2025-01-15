@@ -4,13 +4,13 @@ Class that wraps all the methods of the **ITextDocument** and **ITextDocument2**
 
 | Name       | Description |
 | ---------- | ----------- |
-| [CONSTRUCTOR](#CONSTRUCTOR) | Gets the file name of this document. |
-| [DESTRUCTOR](#DESTRUCTOR) | Gets the file name of this document. |
-| [LET](#LET) | Gets the file name of this document. |
-| [CAST](#CAST) | Gets the file name of this document. |
-| [TextDocumentPtr](#TextDocumentPtr) | Gets the file name of this document. |
-| [Attach](#Attach) | Gets the file name of this document. |
-| [Detach](#Detach) | Gets the file name of this document. |
+| [CONSTRUCTOR](#CONSTRUCTOR) | Called when a class variable is created. |
+| [DESTRUCTOR](#DESTRUCTOR) | Called automatically when a class variable goes out of scope or is destroyed. |
+| [LET](#LET) | Assignment operator. |
+| [CAST](#CAST) | Cast operator. |
+| [TextDocumentPtr](#TextDocumentPtr) | Returns a pointer to the underlying ITextDocument2 interface. |
+| [Attach](#Attach) | Attaches an ITextDocument2 interface pointer to the class. |
+| [Detach](#Detach) | Detaches the underlying ITextDocument2 interface pointer from the class. |
 
 ### ITextDocument Interface
 
@@ -118,7 +118,7 @@ Some **ITextDocument2** methods used with the IME need access to the current win
 
 # <a name="CONSTRUCTOR"></a>CONSTRUCTOR
 
-Creates a new instance of the class.
+Called when a class variable is created.
 
 ```
 CONSTRUCTOR CTextDocument2 (BYVAL hRichEdit AS HWND)
@@ -144,7 +144,6 @@ END CONSTRUCTOR
 #### Return value
 
 A pointer to the new instance of the class.
-
 
 #### Usage examples
 
@@ -179,6 +178,88 @@ DIM cbsText AS CBSTR = pCRange2->GetText2(0)
 Delete pCRange2
 ' // Delete the class
 Delete pCTextDocument2
+```
+
+# <a name="DESTRUCTOR"></a>CONSTRUCTOR
+
+Called automatically when a class variable goes out of scope or is destroyed.
+
+```
+DESTRUCTOR CTextDocument2
+   ' // Release the TextDocument2 interface
+   IF m_pTextDocument2 THEN m_pTextDocument2->lpvtbl->Release(m_pTextDocument2)
+END DESTRUCTOR
+```
+
+# <a name="LET"></a>LET
+
+Assignment operator.
+
+```
+OPERATOR CTextDocument2.LET (BYVAL pTextDocument AS ITextDocument2 PTR)
+   m_Result = 0
+   IF pTextDocument = NULL THEN m_Result = E_INVALIDARG : EXIT OPERATOR
+   ' // Release the interface
+   IF m_pTextDocument2 THEN m_pTextDocument2->lpvtbl->Release(m_pTextDocument2)
+   ' // Attach the passed interface pointer to the class
+   m_pTextDocument2 = pTextDocument
+END OPERATOR
+```
+
+# <a name="CAST"></a>CAST
+
+Cast operator.
+
+```
+OPERATOR CTextDocument2.CAST () AS ITextDocument2 PTR
+   m_Result = 0
+   OPERATOR = m_pTextDocument2
+END OPERATOR
+```
+
+# <a name="CAST"></a>CAST
+
+Cast operator.
+
+```
+OPERATOR CTextDocument2.CAST () AS ITextDocument2 PTR
+   m_Result = 0
+   OPERATOR = m_pTextDocument2
+END OPERATOR
+```
+# <a name="Attach"></a>Attach
+
+Attaches an *ITextDocument2* interface pointer to the class.
+
+```
+FUNCTION CTextDocument2.Attach (BYVAL pTextDocument AS ITextDocument2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
+   m_Result = 0
+   IF pTextDocument = NULL THEN m_Result = E_INVALIDARG : RETURN m_Result
+   ' // Release the interface
+   IF m_pTextDocument2 THEN m_Result = m_pTextDocument2->lpvtbl->Release(m_pTextDocument2)
+   ' // Attach the passed interface pointer to the class
+   IF fAddRef THEN pTextDocument->lpvtbl->AddRef(pTextDocument)
+   m_pTextDocument2 = pTextDocument
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pTextDocument* | The **ITextDocument2** interface pointer to attach. |
+| *fAddRef* | **TRUE** to increment the reference count of te object. Default is FALSE. |
+
+# <a name="Detach"></a>Detach
+
+Detaches the underlying **ITextDocument2** interface pointer from the class
+
+```
+FUNCTION CTextDocument2.Detach () AS ITextDocument2 PTR
+   m_Result = 0
+   DIM pTextDocument AS ITextDocument2 PTR = m_pTextDocument2
+   m_pTextDocument2 = NULL
+   RETURN pTextDOcument
+END FUNCTION
 ```
 
 # <a name="GetName"></a>GetName
