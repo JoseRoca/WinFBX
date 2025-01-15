@@ -8,9 +8,9 @@ Class that wraps all the methods of the **ITextDocument** and **ITextDocument2**
 | [DESTRUCTOR](#DESTRUCTOR) | Called automatically when a class variable goes out of scope or is destroyed. |
 | [LET](#LET) | Assignment operator. |
 | [CAST](#CAST) | Cast operator. |
-| [TextDocumentPtr](#TextDocumentPtr) | Returns a pointer to the underlying ITextDocument2 interface. |
-| [Attach](#Attach) | Attaches an ITextDocument2 interface pointer to the class. |
-| [Detach](#Detach) | Detaches the underlying ITextDocument2 interface pointer from the class. |
+| [TextDocumentPtr](#TextDocumentPtr) | Returns a pointer to the underlying **ITextDocument2** interface. |
+| [Attach](#Attach) | Attaches an **ITextDocument2** interface pointer to the class. |
+| [Detach](#Detach) | Detaches the underlying **ITextDocument2** interface pointer from the class. |
 
 ### ITextDocument Interface
 
@@ -248,7 +248,7 @@ END OPERATOR
 
 # <a name="TextDocumentPtr"></a>TextDocumentPtr
 
-Returns a pointer to the underlying ITextDocument2 interface
+Returns a pointer to the underlying **ITextDocument2** interface
 
 ```
 FUNCTION CTextDocument2.TextDocumentPtr () AS ITextDocument2 PTR
@@ -259,7 +259,7 @@ END FUNCTION
 
 # <a name="Attach"></a>Attach
 
-Attaches an *ITextDocument2* interface pointer to the class.
+Attaches an **ITextDocument2** interface pointer to the class.
 
 ```
 FUNCTION CTextDocument2.Attach (BYVAL pTextDocument AS ITextDocument2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
