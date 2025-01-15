@@ -4,8 +4,8 @@ Class that wraps all the methods of the **ITextDocument** and **ITextDocument2**
 
 | Name       | Description |
 | ---------- | ----------- |
-| [CONSTRUCTOR1](#CONSTRUCTOR) | Called when a class variable is created. |
-| [CONSTRUCTOR2](#CONSTRUCTOR(hRichEdit)) | Called when a class variable is created passing the handle of a Rich Edit control. |
+| [CONSTRUCTOR](#CONSTRUCTOR) | Called when a class variable is created. |
+| [CONSTRUCTOR(hRichEdit)](#CONSTRUCTOR(hRichEdit)) | Called when a class variable is created passing the handle of a Rich Edit control. |
 | [DESTRUCTOR](#DESTRUCTOR) | Called automatically when a class variable goes out of scope or is destroyed. |
 | [LET](#LET) | Assignment operator. |
 | [CAST](#CAST) | Cast operator. |
