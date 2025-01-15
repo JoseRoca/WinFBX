@@ -15,7 +15,7 @@
 DECLARE FUNCTION AfxRichEditTOM_GetText (BYVAL hRichEdit AS HWND, BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS CBSTR
 
 ' ========================================================================================
-' Gets the plain text in this range.
+' Gets the plain text in the specified range.
 ' ========================================================================================
 PRIVATE FUNCTION AfxRichEditTOM_GetText (BYVAL hRichEdit AS HWND, BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS CBSTR
    ' // Create an instance of the CTextDocument2 class
