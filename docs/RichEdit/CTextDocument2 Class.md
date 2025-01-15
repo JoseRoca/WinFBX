@@ -4,8 +4,8 @@ Class that wraps all the methods of the **ITextDocument** and **ITextDocument2**
 
 | Name       | Description |
 | ---------- | ----------- |
-| [CONSTRUCTOR](#CONSTRUCTOR) | Called when a class variable is created. |
-| [CONSTRUCTOR](#CONSTRUCTOR2) | Called when a class variable is created passing the handle of a Rich Edit control. |
+| [CONSTRUCTOR1](#CONSTRUCTOR) | Called when a class variable is created. |
+| [CONSTRUCTOR2](#CONSTRUCTOR) | Called when a class variable is created passing the handle of a Rich Edit control. |
 | [DESTRUCTOR](#DESTRUCTOR) | Called automatically when a class variable goes out of scope or is destroyed. |
 | [LET](#LET) | Assignment operator. |
 | [CAST](#CAST) | Cast operator. |
@@ -117,7 +117,7 @@ Some **ITextDocument2** methods used with the IME need access to the current win
 | [SetResult](#SetResult) | Sets the last result code. |
 | [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
 
-# <a name="CONSTRUCTOR"></a>CONSTRUCTOR2
+# <a name="CONSTRUCTOR1"></a>CONSTRUCTOR
 
 Called when a **CTextDocument2** class variable is created.
 
@@ -128,7 +128,7 @@ DIM DIM pCTextDoc AS CTextDocument2
 pCTextDoc.Attach(pTextDocument2)
 ```
 
-# <a name="CONSTRUCTOR"></a>CONSTRUCTOR
+# <a name="CONSTRUCTOR2"></a>CONSTRUCTOR
 
 Called when a **CTextDocument2** class variable is created passing the handle of a Rich Edit control.
 
