@@ -1,5 +1,7 @@
 # CTextDocument2 Class
 
+Class that wraps all the methods of the **ITextDocument** and **ITextDocument2** interfaces.
+
 ### ITextDocument Interface
 
 The **ITextDocument** interface is the Text Object Model (TOM) top-level interface, which retrieves the active selection and range objects for any story in the document—whether active or not. It enables the application to:
