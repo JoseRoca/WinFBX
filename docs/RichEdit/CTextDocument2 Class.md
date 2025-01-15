@@ -1907,7 +1907,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *Result* | The HRESULT error code returned by the methods. |
+| *Result* | The **HRESULT** error code returned by the methods. |
 
 # <a name="GetErrorInfo"></a>GetErrorInfo
 
