@@ -141,6 +141,11 @@ END CONSTRUCTOR
 | --------- | ----------- |
 | *hRichEdit* | Handle of the Rich Edit control |
 
+#### Return value
+
+A pointer to the new instance of the class.
+
+
 #### Usage examples
 
 To use with the dotted syntax.
@@ -175,8 +180,6 @@ Delete pCRange2
 ' // Delete the class
 Delete pCTextDocument2
 ```
-
-#### Return value
 
 # <a name="GetName"></a>GetName
 
