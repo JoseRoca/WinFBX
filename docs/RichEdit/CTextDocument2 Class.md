@@ -160,10 +160,12 @@ END CONSTRUCTOR
 
 ## CONSTRUCTOR (ITextDocument2 PTR)
 
+```
 CONSTRUCTOR CTextDocument2 (BYVAL pTextDocument2 AS ITextDocument2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    IF fAddRef THEN pTextDocument2->lpvtbl->AddRef(pTextDocument2)
    m_pTextDocument2 = pTextDocument2
 END CONSTRUCTOR
+```
 
 | Parameter | Description |
 | --------- | ----------- |
