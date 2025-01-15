@@ -31,7 +31,7 @@ Applications can retrieve an **ITextDocument** pointer from a rich edit control.
 
 #### Inheritance
 
-The **ITextDocument** interface inherits from the IUnknown interface. **ITextDocument** also has these types of members:
+The **ITextDocument** interface inherits from the IDispatch interface. **ITextDocument** also has these types of members:
 
 | Name       | Description |
 | ---------- | ----------- |
