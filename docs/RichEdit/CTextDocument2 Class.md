@@ -131,8 +131,8 @@ DECLARE CONSTRUCTOR (BYVAL pTextDocument2 AS ITextDocument2 PTR, BYVAL fAddRef A
 Can be used, for example, when we have an **ITextDocument2** interface pointer returned by a function and we want to attach it to a new instance of the **CTextDocument2** class.
 
 ```
-DIM DIM pCTextDoc AS CTextDocument2
-pCTextDoc.Attach(pTextDocument2)
+DIM DIM pCTextDocument2 AS CTextDocument2
+pCTextDocument2.Attach(pTextDocument2)
 ```
 
 ## CONSTRUCTOR (hRichEdit)
