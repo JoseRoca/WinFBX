@@ -20,6 +20,7 @@ Public:
    m_pTextRange2 AS ITextRange2 PTR
 
 Public:
+   DECLARE CONSTRUCTOR
    DECLARE CONSTRUCTOR (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
    DECLARE OPERATOR LET (BYVAL pTextRange2 AS ITextRange2 PTR)
@@ -145,6 +146,16 @@ END TYPE
 
 ' ========================================================================================
 ' CTextRange2 constructor
+' Called when a class variable is created.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CTextRange2
+   CTOM_DP("CONSTRUCTOR")
+END CONSTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' CTextRange2 constructor
+' Called when a class variable is created.
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTextRange2 (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    CTOM_DP("BEGIN CTextRange2 CONSTRUCTOR - pTextRange2 = " & WSTR(pTextRange2))
@@ -158,6 +169,7 @@ END CONSTRUCTOR
 
 ' ========================================================================================
 ' CTextRange2 destructor
+' Called automatically when a class variable goes out of scope or is destroyed.
 ' ========================================================================================
 PRIVATE DESTRUCTOR CTextRange2
    CTOM_DP("CTextRange2 DESTRUCTOR - m_pTextRange2 = " & WSTR(m_pTextRange2))

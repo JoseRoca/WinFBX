@@ -17,12 +17,13 @@
 TYPE CTextDocument2 EXTENDS CTOMBase
 
 Public:
-   m_hRichEdit AS HWND
    m_Result AS HRESULT
    m_pTextDocument2 AS ITextDocument2 PTR
 
 Public:
+   DECLARE CONSTRUCTOR
    DECLARE CONSTRUCTOR (BYVAL hRichEdit AS HWND)
+   DECLARE CONSTRUCTOR (BYVAL pTextDocument2 AS ITextDocument2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
    DECLARE OPERATOR LET (BYVAL pTextDocument2 AS ITextDocument2 PTR)
    DECLARE OPERATOR CAST () AS ITextDocument2 PTR
@@ -103,12 +104,20 @@ END TYPE
 
 ' ========================================================================================
 ' CTextDocument constructor
+' Called when a class variable is created.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CTextDocument2
+   CTOM_DP("CONSTRUCTOR")
+END CONSTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' CTextDocument constructor
+' Called when a class variable is created.
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTextDocument2 (BYVAL hRichEdit AS HWND)
    CTOM_DP("BEGIN CTextDocument2 CONSTRUCTOR - hRichEdit " & WSTR(hRichEdit))
-   IF hRichEdit = 0 OR hRichEdit = m_hRichEdit THEN EXIT CONSTRUCTOR
-   ' // Store the handle to the Rich Edit control
-   m_hRichEdit = hRichEdit
+   IF hRichEdit = 0 THEN EXIT CONSTRUCTOR
    ' // Retrieve a pointer to a IRichEditOle object of the Rich Edit control
    DIM pUnk AS IUnknown PTR
    m_Result = SendMessageW(hRichEdit, EM_GETOLEINTERFACE, 0, cast(LPARAM, @pUnk))
@@ -119,13 +128,24 @@ PRIVATE CONSTRUCTOR CTextDocument2 (BYVAL hRichEdit AS HWND)
       IUnknown_Release(pUnk)
    END IF
    CTOM_DP("END CTextDocument2 CONSTRUCTOR - m_pTextDocument2 = " & WSTR(m_pTextDocument2))
-   ' // Set a property with a pointer to the class
-'   .SetPropW(m_hRichEdit, "TEXTDOCPTR", CAST(HANDLE, @this))
+END CONSTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' CTextDocument constructor
+' Called when a class variable is created.
+' ========================================================================================
+PRIVATE CONSTRUCTOR CTextDocument2 (BYVAL pTextDocument2 AS ITextDocument2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
+   CTOM_DP("BEGIN CTextDocument2 CONSTRUCTOR - ITextDocument2 PTR = " & WSTR(pTextDocument2))
+   IF fAddRef THEN pTextDocument2->lpvtbl->AddRef(pTextDocument2)
+   m_pTextDocument2 = pTextDocument2
+   CTOM_DP("END CTextDocument2 CONSTRUCTOR - m_pTextDocument2 = " & WSTR(m_pTextDocument2))
 END CONSTRUCTOR
 ' ========================================================================================
 
 ' ========================================================================================
 ' CTextDocument destructor
+' Called automatically when a class variable goes out of scope or is destroyed.
 ' ========================================================================================
 PRIVATE DESTRUCTOR CTextDocument2
    CTOM_DP("CTextDocument2 DESTRUCTOR - m_pTextDocument2 = " & WSTR(m_pTextDocument2))
@@ -133,8 +153,6 @@ PRIVATE DESTRUCTOR CTextDocument2
    DIM dwRefCount AS ULONG
    IF m_pTextDocument2 THEN dwRefCount = m_pTextDocument2->lpvtbl->Release(m_pTextDocument2)
    CTOM_DP("CTextDocument2 DESTRUCTOR - m_pTextDocument2 ref count = " & WSTR(dwRefCount))
-   ' // Remove the property with a pointer to the class
-'   IF m_hRichEdit THEN .RemovePropW(m_hRichEdit, "TEXTDOCPTR")
 END DESTRUCTOR
 ' ========================================================================================
 
@@ -161,7 +179,7 @@ END OPERATOR
 ' ========================================================================================
 
 ' ========================================================================================
-' Returns a pointer to the underlying IStream interface
+' Returns a pointer to the underlying ITextDocument2 interface
 ' ========================================================================================
 PRIVATE FUNCTION CTextDocument2.TextDocumentPtr () AS ITextDocument2 PTR
    m_Result = 0
@@ -170,7 +188,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Attaches the passed text document object to the class
+' Attaches an ITextDocument2 interface pointer to the class.
 ' ========================================================================================
 PRIVATE FUNCTION CTextDocument2.Attach (BYVAL pTextDocument AS ITextDocument2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
    m_Result = 0
@@ -185,7 +203,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Detaches the interface pointer from the class
+' Detaches the underlying ITextDocument2 interface pointer from the class
 ' ========================================================================================
 PRIVATE FUNCTION CTextDocument2.Detach () AS ITextDocument2 PTR
    m_Result = 0
@@ -365,9 +383,9 @@ END FUNCTION
 ' ========================================================================================
 ' Retrieves a text range object for a specified range of content in the active story of the document.
 ' ========================================================================================
-PRIVATE FUNCTION CTextDocument2.Range (BYVAL cp1 AS LONG, BYVAL cp2 AS LONG) AS ITextRange PTR
+PRIVATE FUNCTION CTextDocument2.Range (BYVAL cpActive AS LONG, BYVAL cpAnchor AS LONG) AS ITextRange PTR
    DIM pTextRange AS ITextRange PTR
-   this.SetResult(m_pTextDocument2->lpvtbl->Range(m_pTextDocument2, cp1, cp2, @pTextRange))
+   this.SetResult(m_pTextDocument2->lpvtbl->Range(m_pTextDocument2, cpActive, cpAnchor, @pTextRange))
    RETURN pTextRange
 END FUNCTION
 ' ========================================================================================
@@ -603,11 +621,11 @@ END FUNCTION
 ' ========================================================================================
 ' Retrieves the preferred font for a particular character repertoire and character position.
 ' ========================================================================================
-PRIVATE FUNCTION CTextDocument2.GetPreferredFont (BYVAL cp AS LONG, BYVAL CodePage AS LONG, _
-BYVAL Options AS LONG, BYVAL curCodepage AS LONG, BYVAL curFontSize AS LONG, BYVAL pbstr AS BSTR PTR, _
+PRIVATE FUNCTION CTextDocument2.GetPreferredFont (BYVAL cp AS LONG, BYVAL CharRep AS LONG, _
+BYVAL Options AS LONG, BYVAL curCharRep AS LONG, BYVAL curFontSize AS LONG, BYVAL pbstr AS BSTR PTR, _
 BYVAL pPitchAndFamily AS LONG PTR, BYVAL pNewFontSize AS LONG PTR) AS HRESULT
-   this.SetResult(m_pTextDocument2->lpvtbl->GetPreferredFont(m_pTextDocument2, cp, CodePage, _
-   Options, curCodePage, curFontSize, pbstr, pPitchAndFamily, pNewFontSize))
+   this.SetResult(m_pTextDocument2->lpvtbl->GetPreferredFont(m_pTextDocument2, cp, CharRep, _
+   Options, curCharRep, curFontSize, pbstr, pPitchAndFamily, pNewFontSize))
    RETURN m_Result
 END FUNCTION
 ' ========================================================================================
@@ -813,19 +831,5 @@ PRIVATE FUNCTION CTextDocument2.GetStory (BYVAl Index AS LONG) AS ITextStory PTR
    this.SetResult(m_pTextDocument2->lpvtbl->GetStory(m_pTextDocument2, Index, @pStory))
    RETURN pStory
 END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Retrieves a pointer to the CTextDocument2 class from the handle of the Rich Edit control.
-' Usage example:
-' DIM pCTextDocument2 AS CTextDocument2 PTR = AfxCTextDocumentPtr(hRichEdit)
-' IF pCTextDocument2 THEN
-'    DIM CbsName AS CBSTR = pCTextDocument2->GetName
-' END IF
-' ========================================================================================
-'PRIVATE FUNCTION AfxCTextDocumentPtr (BYVAL hRichEdit AS HWND) AS CTextDocument2 PTR
-'   DIM pTextDoc2 AS CTextDocument2 PTR = CAST(CTextDocument2 PTR, .GetPropW(hRichEdit, "TEXTDOCPTR"))
-'   RETURN pTextDoc2
-'END FUNCTION
 ' ========================================================================================
 
