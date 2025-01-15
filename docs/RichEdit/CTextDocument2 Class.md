@@ -5,6 +5,7 @@ Class that wraps all the methods of the **ITextDocument** and **ITextDocument2**
 | Name       | Description |
 | ---------- | ----------- |
 | [CONSTRUCTOR](#CONSTRUCTOR) | Called when a class variable is created. |
+| [CONSTRUCTOR](#CONSTRUCTOR2) | Called when a class variable is created passing the handle of a Rich Edit control. |
 | [DESTRUCTOR](#DESTRUCTOR) | Called automatically when a class variable goes out of scope or is destroyed. |
 | [LET](#LET) | Assignment operator. |
 | [CAST](#CAST) | Cast operator. |
@@ -116,9 +117,20 @@ Some **ITextDocument2** methods used with the IME need access to the current win
 | [SetResult](#SetResult) | Sets the last result code. |
 | [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
 
+# <a name="CONSTRUCTOR"></a>CONSTRUCTOR2
+
+Called when a **CTextDocument2** class variable is created.
+
+Can be used, for example, when we have an **ITextDocument2** interface pointer returned by a function and we want to attach it to a new instance of the **CTextDocument2** class.
+
+```
+DIM DIM pCTextDoc AS CTextDocument2
+pCTextDoc.Attach(pTextDocument2)
+```
+
 # <a name="CONSTRUCTOR"></a>CONSTRUCTOR
 
-Called when a class variable is created.
+Called when a **CTextDocument2** class variable is created passing the handle of a Rich Edit control.
 
 ```
 CONSTRUCTOR CTextDocument2 (BYVAL hRichEdit AS HWND)
@@ -140,6 +152,7 @@ END CONSTRUCTOR
 | Parameter | Description |
 | --------- | ----------- |
 | *hRichEdit* | Handle of the Rich Edit control |
+
 
 #### Return value
 
@@ -217,16 +230,17 @@ OPERATOR CTextDocument2.CAST () AS ITextDocument2 PTR
 END OPERATOR
 ```
 
-# <a name="CAST"></a>CAST
+# <a name="TextDocumentPtr"></a>TextDocumentPtr
 
-Cast operator.
+Returns a pointer to the underlying ITextDocument2 interface
 
 ```
-OPERATOR CTextDocument2.CAST () AS ITextDocument2 PTR
+FUNCTION CTextDocument2.TextDocumentPtr () AS ITextDocument2 PTR
    m_Result = 0
-   OPERATOR = m_pTextDocument2
-END OPERATOR
+   RETURN m_pTextDocument2
+END FUNCTION
 ```
+
 # <a name="Attach"></a>Attach
 
 Attaches an *ITextDocument2* interface pointer to the class.
