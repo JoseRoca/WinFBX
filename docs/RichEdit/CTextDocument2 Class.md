@@ -120,7 +120,13 @@ Some **ITextDocument2** methods used with the IME need access to the current win
 
 Called when a **CTextDocument2** class variable is created.
 
-# <a name="CONSTRUCTOR1"></a>CONSTRUCTOR(Empty)
+```
+DECLARE CONSTRUCTOR
+DECLARE CONSTRUCTOR (BYVAL hRichEdit AS HWND)
+DECLARE CONSTRUCTOR (BYVAL pTextDocument2 AS ITextDocument2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
+```
+
+## CONSTRUCTOR (Empty)
 
 Can be used, for example, when we have an **ITextDocument2** interface pointer returned by a function and we want to attach it to a new instance of the **CTextDocument2** class.
 
@@ -129,13 +135,15 @@ DIM DIM pCTextDoc AS CTextDocument2
 pCTextDoc.Attach(pTextDocument2)
 ```
 
-# <a name="CONSTRUCTOR2"></a>CONSTRUCTOR(hRichEdit)
+## CONSTRUCTOR (hRichEdit)
 
-Called when a **CTextDocument2** class variable is created passing the handle of a Rich Edit control.
+| Parameter | Description |
+| --------- | ----------- |
+| *hRichEdit* | Handle of the Rich Edit control. |
 
 ```
 CONSTRUCTOR CTextDocument2 (BYVAL hRichEdit AS HWND)
-   IF hRichEdit = 0 OR hRichEdit = m_hRichEdit THEN EXIT CONSTRUCTOR
+   IF hRichEdit = 0 THEN EXIT CONSTRUCTOR
    ' // Store the handle to the Rich Edit control
    m_hRichEdit = hRichEdit
    ' // Retrieve a pointer to a IRichEditOle object of the Rich Edit control
@@ -150,10 +158,17 @@ CONSTRUCTOR CTextDocument2 (BYVAL hRichEdit AS HWND)
 END CONSTRUCTOR
 ```
 
+## CONSTRUCTOR (ITextDocument2 PTR)
+
+CONSTRUCTOR CTextDocument2 (BYVAL pTextDocument2 AS ITextDocument2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
+   IF fAddRef THEN pTextDocument2->lpvtbl->AddRef(pTextDocument2)
+   m_pTextDocument2 = pTextDocument2
+END CONSTRUCTOR
+
 | Parameter | Description |
 | --------- | ----------- |
-| *hRichEdit* | Handle of the Rich Edit control |
-
+| *pTextDocument2* | An ITextDocument2 interface pointer. |
+| *fAddRef* | Optional. TRUE to increment the reference count of the passed ITextDocument2 interface pointer; otherise, FALSE. Default is FALSE. |
 
 #### Return value
 
