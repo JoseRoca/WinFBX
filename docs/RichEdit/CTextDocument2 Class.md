@@ -4,8 +4,7 @@ Class that wraps all the methods of the **ITextDocument** and **ITextDocument2**
 
 | Name       | Description |
 | ---------- | ----------- |
-| [CONSTRUCTOR](#CONSTRUCTOR) | Called when a class variable is created. |
-| [CONSTRUCTOR(hRichEdit)](#CONSTRUCTOR(hRichEdit)) | Called when a class variable is created passing the handle of a Rich Edit control. |
+| [CONSTRUCTORS](#CONSTRUCTORS) | Called when a class variable is created. |
 | [DESTRUCTOR](#DESTRUCTOR) | Called automatically when a class variable goes out of scope or is destroyed. |
 | [LET](#LET) | Assignment operator. |
 | [CAST](#CAST) | Cast operator. |
@@ -117,9 +116,11 @@ Some **ITextDocument2** methods used with the IME need access to the current win
 | [SetResult](#SetResult) | Sets the last result code. |
 | [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
 
-# <a name="CONSTRUCTOR1"></a>CONSTRUCTOR
+# <a name="CONSTRUCTORS"></a>CONSTRUCTORS
 
 Called when a **CTextDocument2** class variable is created.
+
+# <a name="CONSTRUCTOR1"></a>CONSTRUCTOR(Empty)
 
 Can be used, for example, when we have an **ITextDocument2** interface pointer returned by a function and we want to attach it to a new instance of the **CTextDocument2** class.
 
