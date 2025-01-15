@@ -97,6 +97,8 @@ The **ITextRange2** objects are powerful editing and data-binding tools that ena
 
 The **ITextRange2** interface inherits from **ITextSelection**, that in turn inherits from **ITextRange**. **ITextRange2** also has these types of members:
 
+| Name       | Description |
+| ---------- | ----------- |
 | [GetCch](#GetCch) | Gets the count of characters in a range. |
 | [GetCells](#GetCells) | Gets a cells object with the parameters of cells in the currently selected table row or column. |
 | [GetColumn](#GetColumn) | Gets the column properties for the currently selected column. |
