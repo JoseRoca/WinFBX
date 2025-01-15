@@ -180,7 +180,7 @@ Delete pCRange2
 Delete pCTextDocument2
 ```
 
-# <a name="DESTRUCTOR"></a>CONSTRUCTOR
+# <a name="DESTRUCTOR"></a>DESTRUCTOR
 
 Called automatically when a class variable goes out of scope or is destroyed.
 
