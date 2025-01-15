@@ -116,6 +116,48 @@ Some **ITextDocument2** methods used with the IME need access to the current win
 | [SetResult](#SetResult) | Sets the last result code. |
 | [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
 
+# <a name="CONSTRUCTOR"></a>CONSTRUCTOR
+
+Creates a new instance of the class.
+
+```
+CONSTRUCTOR CTextDocument2 (BYVAL hRichEdit AS HWND)
+   IF hRichEdit = 0 OR hRichEdit = m_hRichEdit THEN EXIT CONSTRUCTOR
+   ' // Store the handle to the Rich Edit control
+   m_hRichEdit = hRichEdit
+   ' // Retrieve a pointer to a IRichEditOle object of the Rich Edit control
+   DIM pUnk AS IUnknown PTR
+   m_Result = SendMessageW(hRichEdit, EM_GETOLEINTERFACE, 0, cast(LPARAM, @pUnk))
+   ' // Retrieve a pointer to its ITextDocument2 interface
+   IF pUnk THEN
+      DIM IID_ITextDocument2_ AS IID = AfxGuid(AFX_IID_ITextDocument2)
+      m_Result = IUnknown_QueryInterface(pUnk, @IID_ITextDocument2_, @m_pTextDocument2)
+      IUnknown_Release(pUnk)
+   END IF
+END CONSTRUCTOR
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *hRichEdit* | Handle of the Rich Edit control |
+
+#### Usage examples
+
+To use with the dotted syntax.
+
+```
+DIM pTextDocument2 AS CTextDocument2 = hRichEdit
+```
+
+To use with the pointer syntax.
+
+```
+DIM pCTextDocument2 AS CTextDocument2 PTR = NEW CTextDocument2(hRichEdit)
+```
+
+
+#### Return value
+
 # <a name="GetName"></a>GetName
 
 Gets the file name of this document. This is the **ITextDocument** default property.
