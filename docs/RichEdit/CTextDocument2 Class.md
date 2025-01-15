@@ -144,8 +144,6 @@ pCTextDocument2.Attach(pTextDocument2)
 ```
 CONSTRUCTOR CTextDocument2 (BYVAL hRichEdit AS HWND)
    IF hRichEdit = 0 THEN EXIT CONSTRUCTOR
-   ' // Store the handle to the Rich Edit control
-   m_hRichEdit = hRichEdit
    ' // Retrieve a pointer to a IRichEditOle object of the Rich Edit control
    DIM pUnk AS IUnknown PTR
    m_Result = SendMessageW(hRichEdit, EM_GETOLEINTERFACE, 0, cast(LPARAM, @pUnk))
