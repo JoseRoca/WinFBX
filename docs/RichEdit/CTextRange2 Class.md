@@ -529,6 +529,20 @@ The duplicate of the range.
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **E_FAIL**.
 
+#### Usage example
+
+```
+DIM pCTextDocument2 AS CTextDocument2 = hRichEdit
+IF pCTextDocument2 THEN
+   DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(3, 8)
+   IF pCRange2 THEN
+      DIM pCRangeDup AS CTextRange2 = pCRange2.GetDuplicate
+      DIM cbsText AS CBSTR = pCRangeDup.GetText
+      AfxMsg cbsText
+   END IF
+END IF
+```
+
 # <a name="GetFormattedText"></a>GetFormattedText
 
 ```
