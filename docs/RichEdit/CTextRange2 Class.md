@@ -422,7 +422,7 @@ Gets the character at the start position of the range.
 FUNCTION CTextRange2.GetChar () AS CBSTR
    DIM Char AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->GetChar(m_pTextRange2, @Char))
-   RETURN CHR(Char)
+   RETURN WCHR(Char)
 END FUNCTION
 ```
 #### Return value
