@@ -799,3 +799,223 @@ FUNCTION CTextRange2.ChangeCase (BYVAL nType AS LONG) AS HRESULT
 END FUNCTION
 ```
 
+# <a name="GetPoint"></a>GetPoint
+
+```
+FUNCTION CTextRange2.GetPoint (BYVAL nType AS LONG, BYVAL px AS LONG PTR, BYVAL py AS LONG PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->GetPoint(m_pTextRange2, nType, px, py))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="SetPoint"></a>SetPoint
+
+```
+FUNCTION CTextRange2.SetPoint (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG, BYVAL Extend AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetPoint(m_pTextRange2, x, y, nType, Extend))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="ScrollIntoView"></a>ScrollIntoView
+
+```
+FUNCTION CTextRange2.ScrollIntoView (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->ScrollIntoView(m_pTextRange2, Value))
+   RETURN m_Result
+END FUNCTION
+```
+# <a name="GetEmbeddedObject"></a>GetEmbeddedObject
+
+```
+FUNCTION CTextRange2.GetEmbeddedObject () AS IUnknown PTR
+   DIM pObject AS IUnknown PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetEmbeddedObject(m_pTextRange2, @pObject))
+   RETURN pObject
+END FUNCTION
+```
+# <a name="GetFlags"></a>GetFlags
+
+```
+FUNCTION CTextRange2.GetFlags () AS LONG
+   DIM pFlags AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetFlags(m_pTextRange2, @pFlags))
+   RETURN pFlags
+END FUNCTION
+```
+
+# <a name="SetFlags"></a>SetFlags
+
+```
+FUNCTION CTextRange2.SetFlags (BYVAL Flags AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetFlags(m_pTextRange2, Flags))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="GetType"></a>GetType
+
+```
+FUNCTION CTextRange2.GetType () AS LONG
+   DIM nType AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetType(m_pTextRange2, @nType))
+   RETURN nType
+END FUNCTION
+```
+
+# <a name="MoveLeft"></a>MoveLeft
+
+```
+FUNCTION CTextRange2.MoveLeft (BYVAL Unit AS LONG, BYVAL Count AS LONG, BYVAL Extend AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->MoveLeft(m_pTextRange2, Unit, Count, Extend, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="MoveRight"></a>MoveRight
+
+```
+FUNCTION CTextRange2.MoveRight (BYVAL Unit AS LONG, BYVAL Count AS LONG, BYVAL Extend AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->MoveRight(m_pTextRange2, Unit, Count, Extend, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="MoveUp"></a>MoveUp
+
+```
+FUNCTION CTextRange2.MoveUp (BYVAL Unit AS LONG, BYVAL Count AS LONG, BYVAL Extend AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->MoveUp(m_pTextRange2, Unit, Count, Extend, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="MoveDown"></a>MoveDown
+
+```
+FUNCTION CTextRange2.MoveDown (BYVAL Unit AS LONG, BYVAL Count AS LONG, BYVAL Extend AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->MoveDown(m_pTextRange2, Unit, Count, Extend, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="HomeKey"></a>HomeKey
+
+```
+FUNCTION CTextRange2.HomeKey (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->HomeKey(m_pTextRange2, Unit, Extend, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="EndKey"></a>EndKey
+
+```
+FUNCTION CTextRange2.EndKey (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->EndKey(m_pTextRange2, Unit, Extend, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="TypeText"></a>TypeText
+
+```
+FUNCTION CTextRange2.TypeText (BYVAL bstr AS AFX_BSTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->TypeText(m_pTextRange2, bstr))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="GetCch"></a>GetCch
+
+```
+FUNCTION CTextRange2.GetCch () AS LONG
+   DIM cch AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetCch(m_pTextRange2, @cch))
+   RETURN cch
+END FUNCTION
+```
+
+# <a name="GetCells"></a>GetCells
+
+```
+FUNCTION CTextRange2.GetCells () AS IUnknown PTR
+   DIM pCells AS IUnknown PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetCells(m_pTextRange2, @pCells))
+   RETURN pCells
+END FUNCTION
+```
+
+# <a name="GetColumn"></a>GetColumn
+
+```
+FUNCTION CTextRange2.GetColumn () AS IUnknown PTR
+   DIM pColumn AS IUnknown PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetColumn(m_pTextRange2, @pColumn))
+   RETURN pColumn
+END FUNCTION
+```
+
+# <a name="GetCount"></a>GetCount
+
+```
+FUNCTION CTextRange2.GetCount () AS LONG
+   DIM Count AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetCount(m_pTextRange2, @Count))
+   RETURN Count
+END FUNCTION
+```
+
+# <a name="GetDuplicate2"></a>GetDuplicate2
+
+```
+FUNCTION CTextRange2.GetDuplicate2 () AS ITextRange2 PTR
+   DIM pRange AS ITextRange2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetDuplicate2(m_pTextRange2, @pRange))
+   RETURN pRange
+END FUNCTION
+```
+
+# <a name="GetFont2"></a>GetFont2
+
+```
+FUNCTION CTextRange2.GetFont2 () AS ITextFont2 PTR
+   DIM pFont AS ITextFont2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetFont2(m_pTextRange2, @pFont))
+   RETURN pFont
+END FUNCTION
+```
+
+# <a name="SetFont2"></a>SetFont2
+
+```
+FUNCTION CTextRange2.SetFont2 (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetFont2(m_pTextRange2, pFont))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="GetFormattedText2"></a>GetFormattedText2
+
+```
+FUNCTION CTextRange2.GetFormattedText2 () AS ITextRange2 PTR
+   DIM pRange AS ITextRange2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetFormattedText2(m_pTextRange2, @pRange))
+   RETURN pRange
+END FUNCTION
+```
+
+# <a name="SetFormattedText2"></a>SetFormattedText2
+
+```
+FUNCTION CTextRange2.SetFormattedText2 (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetFormattedText2(m_pTextRange2, pRange))
+   RETURN m_Result
+END FUNCTION
+```
