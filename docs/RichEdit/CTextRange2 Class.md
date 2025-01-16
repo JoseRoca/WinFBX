@@ -502,9 +502,9 @@ The method returns an **HRESULT** value. If the method succeeds, it returns **S_
 #### Usage example
 
 ```
-DIM pCTextDocument AS CTextDocument2 = hRichEdit
-IF pCTextDocument THEN
-   DIM pCRange2 AS CTextRange2 = pCTextDocument.Range2(3, 8)
+DIM pCTextDocument2 AS CTextDocument2 = hRichEdit
+IF pCTextDocument2 THEN
+   DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(3, 8)
    IF pCRange2 THEN pcRange2.SetChar("X")
 END IF
 ```
@@ -512,11 +512,11 @@ END IF
 # <a name="GetDuplicate"></a>GetDuplicate
 
 ```
-DIM pCTextDocument AS CTextDocument2 = hRichEdit
-IF pCTextDocument THEN
-   DIM pCRange2 AS CTextRange2 = pCTextDocument.Range2(3, 8)
-   IF pCRange2 THEN pcRange2.SetChar("X")
-END IF
+FUNCTION CTextRange2.GetDuplicate () AS ITextRange2 PTR
+   DIM pRange AS ITextRange2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetDuplicate(m_pTextRange2, @pRange))
+   RETURN pRange
+END FUNCTION
 ```
 
 # <a name="GetFormattedText"></a>GetFormattedText
