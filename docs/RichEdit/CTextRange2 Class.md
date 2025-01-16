@@ -392,11 +392,11 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 ```
 ' // Create a new instance of the CTextDocument2 class
-DIM pTextDocument2 AS CTextDocument2 = hRichEdit
+DIM pCTextDocument2 AS CTextDocument2 = hRichEdit
 ' // Get the number of characters of the text in the Rich Edit control
 DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
 ' // Get the 0-based range of all the text
-DIM pCRange2 AS CTextRange2 = pCTextDocument.Range2(0, numChars)
+DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(0, numChars)
 ' // Get the text
 DIM cbsText AS CBSTR = pCRange2.GetText
 ```
