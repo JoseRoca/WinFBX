@@ -342,3 +342,234 @@ FUNCTION CTOMBase.GetErrorInfo () AS CWSTR
    RETURN s
 END FUNCTION
 ```
+
+# <a name="GetText"></a>GetText
+
+```
+FUNCTION CTextRange2.GetText () AS CBSTR
+   CTOM_DP("CTextRange2.GetText - m_pTextRange2 = " & WSTR(m_pTextRange2))
+   DIM pText AS AFX_BSTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetText(m_pTextRange2, @pText))
+   RETURN pText
+END FUNCTION
+```
+
+# <a name="SetText"></a>SetText
+
+```
+FUNCTION CTextRange2.SetText (BYVAL bstr AS AFX_BSTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetText(m_pTextRange2, bstr))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+# <a name="GetChar"></a>GetChar
+
+```
+FUNCTION CTextRange2.GetChar () AS LONG
+   DIM Char AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetChar(m_pTextRange2, @Char))
+   RETURN Char
+END FUNCTION
+```
+
+# <a name="SetChar"></a>SetChar
+
+```
+FUNCTION CTextRange2.SetChar (BYVAL Char AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetChar(m_pTextRange2, Char))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+# <a name="GetDuplicate"></a>GetDuplicate
+
+```
+FUNCTION CTextRange2.GetDuplicate () AS ITextRange2 PTR
+   DIM pRange AS ITextRange2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetDuplicate(m_pTextRange2, @pRange))
+   RETURN pRange
+END FUNCTION
+```
+
+# <a name="GetFormattedText"></a>GetFormattedText
+
+```
+FUNCTION CTextRange2.GetFormattedText () AS ITextRange2 PTR
+   DIM pRange AS ITextRange2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetFormattedText(m_pTextRange2, @pRange))
+   RETURN pRange
+END FUNCTION
+```
+
+# <a name="SetFormattedText"></a>SetFormattedText
+
+```
+FUNCTION CTextRange2.SetFormattedText (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetFormattedText(m_pTextRange2, pRange))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+# <a name="GetStart"></a>GetStart
+
+```
+FUNCTION CTextRange2.GetStart () AS LONG
+   DIM cpFirst AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetStart(m_pTextRange2, @cpFirst))
+   RETURN cpFirst
+END FUNCTION
+```
+
+# <a name="SetStart"></a>SetStart
+
+```
+FUNCTION CTextRange2.SetStart (BYVAL cpFirst AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetStart(m_pTextRange2, cpFirst))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+# <a name="GetEnd"></a>GetEnd
+
+```
+FUNCTION CTextRange2.GetEnd () AS LONG
+   DIM cpLim AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetEnd(m_pTextRange2, @cpLim))
+   RETURN cpLim
+END FUNCTION
+```
+
+# <a name="SetEnd"></a>SetEnd
+
+```
+FUNCTION CTextRange2.SetEnd (BYVAL cpLim AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetEnd(m_pTextRange2, cpLim))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+# <a name="GetFont"></a>GetFont
+
+```
+FUNCTION CTextRange2.GetFont () AS ITextFont PTR
+   DIM pFont AS ITextFont PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetFont(m_pTextRange2, @pFont))
+   RETURN pFont
+END FUNCTION
+```
+
+# <a name="SetFont"></a>SetFont
+
+```
+FUNCTION CTextRange2.SetFont (BYVAL pFont AS ITextFont PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetFont(m_pTextRange2, pFont))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+# <a name="GetPara"></a>GetPara
+
+```
+FUNCTION CTextRange2.GetPara () AS ITextPara PTR
+   DIM pPara AS ITextPara PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetPara(m_pTextRange2, @pPara))
+   RETURN pPara
+END FUNCTION
+```
+
+# <a name="SetPara"></a>SetPara
+
+```
+FUNCTION CTextRange2.SetPara (BYVAL pPara AS ITextPara PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetPara(m_pTextRange2, pPara))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+# <a name="GetStoryLength"></a>GetStoryLength
+
+```
+FUNCTION CTextRange2.GetStoryLength () AS LONG
+   DIM Count AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetStoryLength(m_pTextRange2, @Count))
+   RETURN Count
+END FUNCTION
+```
+
+# <a name="GetStoryType"></a>GetStoryType
+
+```
+FUNCTION CTextRange2.GetStoryType () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetStoryType(m_pTextRange2, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+# <a name="Collapse"></a>Collapse
+
+```
+FUNCTION CTextRange2.Collapse (BYVAL bStart AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->Collapse(m_pTextRange2, bStart))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="Expand"></a>Expand
+
+```
+FUNCTION CTextRange2.Expand (BYVAL Unit AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->Expand(m_pTextRange2, Unit, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="GetIndex"></a>GetIndex
+
+```
+FUNCTION CTextRange2.GetIndex (BYVAL Unit AS LONG) AS LONG
+   DIM Index AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetIndex(m_pTextRange2, Unit, @Index))
+   RETURN Index
+END FUNCTION
+```
+
+# <a name="SetIndex"></a>SetIndex
+
+```
+FUNCTION CTextRange2.SetIndex (BYVAL Unit AS LONG, BYVAL Index AS LONG, BYVAl Extend AS LONG) AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->SetIndex(m_pTextRange2, Unit, Index, Extend))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="SetRange"></a>SetRange
+
+```
+FUNCTION CTextRange2.SetRange (BYVAL cpAnchor AS LONG, BYVAL cpActive AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetRange(m_pTextRange2, cpAnchor, cpActive))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="InRange"></a>InRange
+
+```
+FUNCTION CTextRange2.InRange (BYVAL pRange AS ITextRange2 PTR) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->InRange(m_pTextRange2, pRange, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+# <a name="InStory"></a>InStory
+
+```
+FUNCTION CTextRange2.InStory (BYVAL pRange AS ITextRange2 PTR) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->InStory(m_pTextRange2, pRange, @Value))
+   RETURN Value
+END FUNCTION
+```
