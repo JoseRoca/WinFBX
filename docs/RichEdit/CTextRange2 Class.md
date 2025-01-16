@@ -126,3 +126,9 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [GetInlineObject](#GetInlineObject) | Gets the properties of the inline object at the range active end. |
 | [GetProperty](#GetProperty) | Gets the value of a property. |
 | [GetRect](#GetRect) | Retrieves a rectangle of the specified type for the current range. |
+| [GetSubrange](#GetSubrange) | Retrieves a subrange in a range. |
+| [GetText2](#GetText2) | Gets the text in this range according to the specified conversion flags. |
+| [HexToUnicode](#HexToUnicode) | Converts and replaces the hexadecimal number at the end of this range to a Unicode character. |
+| [InsertTable](#InsertTable) | Inserts a table in a range. |
+| [Linearize](#Linearize) | Translates the built-up math, ruby, and other inline objects in this range to linearized form. |
+| [SetActiveSubrange](#SetActiveSubrange) | Makes the specified subrange the active subrange of this range. |
