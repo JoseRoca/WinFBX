@@ -25,8 +25,8 @@ The **ITextRange** interface inherits from the **IDispatch** interface. **ITextR
 | [GetChar](#GetChar) | Gets the character at the start position of the range. |
 | [SetChar](#SetChar) | Sets the character at the starting position of the range. |
 | [GetDuplicate](#GetDuplicate) | Gets a duplicate of this range object. |
-| [GetFormattedText](#GetFormattedText2) | Gets an **ITextRange** object with the specified range's formatted text. |
-| [SetFormattedText](#SetFormattedText2) | Sets the formatted text of this range text to the formatted text of the specified range. |
+| [GetFormattedText](#GetFormattedText) | Gets an **ITextRange** object with the specified range's formatted text. |
+| [SetFormattedText](#SetFormattedText) | Sets the formatted text of this range text to the formatted text of the specified range. |
 | [GetStart](#GetStart) | Gets the start character position of the range. |
 | [SetStart](#SetStart) | Sets the character position for the start of this range. |
 | [GetEnd](#GetEnd) | Gets the end character position of the range. |
@@ -106,8 +106,8 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [GetDuplicate2](#GetDuplicate2) | Gets a duplicate of a range object. |
 | [GetFont2](#GetFont2) | Gets an **ITextFont2** object with the character attributes of the current range. |
 | [SetFont2](#SetFont2) | Sets the character formatting attributes of the range. |
-| [GetFormattedText2](#GetFormattedText2) | Gets an **ITextRange2** object with the current range's formatted text. |
-| [SetFormattedText2](#SetFormattedText2) | Sets the text of this range to the formatted text of the specified range. |
+| [GetFormattedText2](#GetFormattedText) | Gets an **ITextRange2** object with the current range's formatted text. |
+| [SetFormattedText2](#SetFormattedText) | Sets the text of this range to the formatted text of the specified range. |
 | [GetGravity](#GetGravity) | Gets the gravity of this range. |
 | [SetGravity](#SetGravity) | Sets the gravity of this range. |
 | [GetPara2](#GetPara2) | Gets an **ITextPara2** object with the paragraph attributes of a range. |
