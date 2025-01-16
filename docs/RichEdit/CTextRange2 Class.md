@@ -383,9 +383,19 @@ DIM pTextDocument2 AS CTextDocument2 = hRichEdit
 ' // Get the number of characters of the text in the Rich Edit control
 DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
 ' // Get the 0-based range of all the text
-DIM pCRange2 AS CTextRange2 = pCTextDoc.Range2(0, numChars)
+DIM pCRange2 AS CTextRange2 = pCTextDocument.Range2(0, numChars)
 ' // Get the text
 DIM cbsText AS CBSTR = pCRange2.GetText
+```
+
+**Note**: The following lines of code:
+```
+DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(0, numChars)
+DIM cbsText AS CBSTR = pCRange2.GetText2(0)
+```
+can be replaced with a compound syntax:
+```
+DIM cbsText AS CBSTR = CTextRange2(pCTextDocument2.Range2(0, numChars)).GetText2(0)
 ```
 
 # <a name="SetText"></a>SetText
@@ -412,8 +422,8 @@ The method returns an **HRESULT** value. If the method succeeds, it returns S_OK
 
 #### Usage example
 ```
-DIM pCTextDoc AS CTextDocument2 = hRichEdit
-DIM pCRange2 AS CTextRange2 = pCTextDoc.Range2(3, 8)
+DIM pCTextDocument AS CTextDocument2 = hRichEdit
+DIM pCRange2 AS CTextRange2 = pCTextDocument.Range2(3, 8)
 DIM cbsText AS CBSTR = "new text"
 pCRange2.SetText(cbsText)
 ' You can also use a string literal
