@@ -494,7 +494,7 @@ END FUNCTION
 
 The method returns an **HRESULT** value. If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following error codes.
 
-| Return code | Description |
+| Result code | Description |
 | ----------- | ----------- |
 | **E_ACCESSDENIED** | Text is write-protected. |
 | **E_OUTOFMEMORY** | Out of memory. |
@@ -511,6 +511,8 @@ END IF
 
 # <a name="GetDuplicate"></a>GetDuplicate
 
+Gets a duplicate of this range object.
+
 ```
 FUNCTION CTextRange2.GetDuplicate () AS ITextRange2 PTR
    DIM pRange AS ITextRange2 PTR
@@ -518,6 +520,14 @@ FUNCTION CTextRange2.GetDuplicate () AS ITextRange2 PTR
    RETURN pRange
 END FUNCTION
 ```
+
+#### Return value
+
+The duplicate of the range.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **E_FAIL**.
 
 # <a name="GetFormattedText"></a>GetFormattedText
 
