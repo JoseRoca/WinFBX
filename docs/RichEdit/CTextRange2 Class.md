@@ -443,15 +443,39 @@ END IF
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns S_OK; if it fails, it returns S_FALSE.
+If the method succeeds, **GetLastResult** returns **S_OK**; if it fails, it returns **S_FALSE**.
 
 # <a name="SetChar"></a>SetChar
+
+Sets the character at the starting position of the range.
 
 ```
 FUNCTION CTextRange2.SetChar (BYREF cbsChar AS CBSTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetChar(m_pTextRange2, ASC(cbsChar)))
    FUNCTION = m_Result
 END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *cbsChar* | New value for character at the starting position. |
+
+#### Return code
+
+The method returns an **HRESULT** value. If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Return code | Description |
+| ----------- | ----------- |
+| **E_ACCESSDENIED** | Text is write-protected. |
+| **E_OUTOFMEMORY** | Out of memory. |
+
+#### Usage example
+
+```
+DIM pCTextDocument AS CTextDocument2 = hRichEdit
+IF pCTextDocument THEN
+   DIM pCRange2 AS CTextRange2 = pCTextDocument.Range2(3, 8)
+   IF pCRange2 THEN pcRange2.SetChar("X")
+END IF
 ```
 
 # <a name="GetDuplicate"></a>GetDuplicate
