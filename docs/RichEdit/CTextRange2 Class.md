@@ -139,3 +139,206 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [SetInlineObject](#SetInlineObject) | Sets the text of this range. |
 | [GetMathFunctionType](#GetMathFunctionType) | Retrieves the math function type associated with the specified math function name. |
 | [InsertImage](#InsertImage) | Inserts an image into this range. |
+
+### Methods inherited from CTOMBase Class
+
+| Name       | Description |
+| ---------- | ----------- |
+| [GetLastResult](#GetLastResult) | Returns the last result code |
+| [SetResult](#SetResult) | Sets the last result code. |
+| [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
+
+# <a name="CONSTRUCTORS"></a>CONSTRUCTORS
+
+Called when a **CTextRange2** class variable is created.
+
+```
+DECLARE CONSTRUCTOR
+DECLARE CONSTRUCTOR (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
+```
+
+## CONSTRUCTOR (Empty)
+
+Can be used, for example, when we have an **ITextRange2** interface pointer returned by a function and we want to attach it to a new instance of the **CTextRange2** class.
+
+```
+DIM DIM pCTextRange2 AS CTextRange2
+pCCTextRange2.Attach(pTextRange2)
+```
+## CONSTRUCTOR (ITextRange2 PTR)
+
+```
+CONSTRUCTOR CTextRange2 (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
+   IF pTextRange2 = NULL THEN m_Result = E_INVALIDARG : EXIT CONSTRUCTOR
+   IF fAddRef THEN pTextRange2->lpvtbl->AddRef(pTextRange2)
+   ' // Store the pointer of ITextRange2 interface
+   m_pTextRange2 = pTextRange2
+END CONSTRUCTOR
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pTextDocpTextRange2ument2* | An **ITextRange2** interface pointer. |
+| *fAddRef* | Optional. TRUE to increment the reference count of the passed **ITextDocument2** interface pointer; otherise, FALSE. Default is FALSE. |
+
+#### Return value
+
+A pointer to the new instance of the class.
+
+#### Usage examples
+
+To use with the dotted syntax.
+
+```
+SCOPE
+   ' // Create a new instance of the CTextDocument2 class
+   DIM pTextDocument2 AS CTextDocument2 = hRichEdit
+   ' // Get the number of characters of the text in the Rich Edit control
+   DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
+   ' // Get the 0-based range of all the text
+   DIM pCRange2 AS CTextRange2 = pCTextDoc.Range2(0, numChars)
+   ' // Get the text
+   DIM cbsText AS CBSTR = pCRange2.GetText2(0)
+   ' // The CTextDocument2 class and the CTextRange2 class will be destroyed when the scope ends
+END SCOPE
+```
+
+To use with the pointer syntax.
+
+```
+' // Create a new instance of the CTextDocument2 class
+DIM pCTextDocument2 AS CTextDocument2 PTR = NEW CTextDocument2(hRichEdit)
+' // Get the number of characters of the text in the Rich Edit control
+DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
+' // Get the 0-based range of all the text
+DIM pCRange2 AS CTextRange2 = pCTextDoc->Range2(0, numChars)
+' // Get the text
+DIM cbsText AS CBSTR = pCRange2->GetText2(0)
+' // Delete the range
+Delete pCRange2
+' // Delete the class
+Delete pCTextDocument2
+```
+
+# <a name="DESTRUCTOR"></a>DESTRUCTOR
+
+Called automatically when a class variable goes out of scope or is destroyed.
+
+```
+DESTRUCTOR CTextRange2
+   ' // Release the ITextRange2 interface
+   IF m_pTextRange2 THEN m_pTextRange2->lpvtbl->Release(m_pTextRange2)
+END DESTRUCTOR
+```
+
+# <a name="LET"></a>LET
+
+Assignment operator.
+
+```
+OPERATOR CTextRange2.LET (BYVAL pTextRange2 AS ITextRange2 PTR)
+   m_Result = 0
+   IF pTextRange2 = NULL THEN m_Result = E_INVALIDARG : EXIT OPERATOR
+   ' // Release the interface
+   IF m_pTextRange2 THEN m_pTextRange2->lpvtbl->Release(m_pTextRange2)
+   ' // Attach the passed interface pointer to the class
+   m_pTextRange2 = pTextRange2
+END OPERATOR
+```
+
+# <a name="CAST"></a>CAST
+
+Cast operator.
+
+```
+OPERATOR CTextRange2.CAST () AS ITextRange2 PTR
+   m_Result = 0
+   OPERATOR = m_pTextRange2
+END OPERATOR
+```
+
+# <a name="TextRangePtr"></a>TextRangePtr
+
+Returns a pointer to the underlying **ITextRange2** interface
+
+```
+FUNCTION CTextRange2.TextRangePtr () AS ITextRange2 PTR
+   m_Result = 0
+   RETURN m_pTextRange2
+END FUNCTION
+```
+
+# <a name="Attach"></a>Attach
+
+Attaches an **ITextRange2** interface pointer to the class.
+
+```
+PRIVATE FUNCTION CTextRange2.Attach (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
+   m_Result = 0
+   IF pTextRange2 = NULL THEN m_Result = E_INVALIDARG : RETURN m_Result
+   ' // Release the interface
+   IF m_pTextRange2 THEN m_Result = m_pTextRange2->lpvtbl->Release(m_pTextRange2)
+   ' // Attach the passed interface pointer to the class
+   IF fAddRef THEN pTextRange2->lpvtbl->AddRef(pTextRange2)
+   m_pTextRange2 = pTextRange2
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pTextRange2* | The **ITextDocument2** interface pointer to attach. |
+| *fAddRef* | **TRUE** to increment the reference count of te object. Default is FALSE. |
+
+# <a name="GetLastResult"></a>GetLastResult
+
+Returns the last result code
+
+```
+FUNCTION CTOMBase.GetLastResult () AS HRESULT
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="SetResult"></a>SetResult
+
+Sets the last result code.
+
+```
+FUNCTION CTOMBase.SetResult (BYVAL Result AS HRESULT) AS HRESULT
+   m_Result = Result
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Result* | The **HRESULT** error code returned by the methods. |
+
+# <a name="GetErrorInfo"></a>GetErrorInfo
+
+Returns a description of the last result code.
+
+```
+FUNCTION CTOMBase.GetErrorInfo () AS CWSTR
+   IF SUCCEEDED(m_Result) THEN RETURN "Success"
+   DIM s AS CWSTR = "Error &h" & HEX(m_Result, 8)
+   SELECT CASE m_Result
+      CASE E_POINTER : s += ": E_POINTER - Null pointer"
+      CASE S_OK : s += ": S_OK - Success"
+      CASE S_FALSE : s += ": S_FALSE - Failure"
+      CASE E_NOTIMPL : s += ": E_NOTIMPL - Not implemented."
+      CASE E_INVALIDARG : s += ": E_INVALIDARG - Invalid argument"
+      CASE E_OUTOFMEMORY : s += ": E_OUTOFMEMORY - Insufficient memory"
+'      CASE E_FILENOTFOUND : s += "E_FILENOTFOUND - File not found"
+      CASE &h80070002 : s += "E_FILENOTFOUND - File not found"
+      CASE E_ACCESSDENIED : s += "E_ACCESSDENIED - Access denied"
+      CASE E_FAIL : s += ": E_FAIL - Access denied"
+      CASE NOERROR : s += ": NOERROR - Success" '' (same as S_OK)
+      CASE CO_E_RELEASED:  : s += ": CO_E_RELEASED: - The object has been released"
+      CASE ELSE
+         s += "Unknown error"
+   END SELECT
+   RETURN s
+END FUNCTION
+```
