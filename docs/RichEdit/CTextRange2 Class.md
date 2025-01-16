@@ -25,8 +25,8 @@ The **ITextRange** interface inherits from the **IDispatch** interface. **ITextR
 | [GetChar](#GetChar) | Gets the character at the start position of the range. |
 | [SetChar](#SetChar) | Sets the character at the starting position of the range. |
 | [GetDuplicate](#GetDuplicate) | Gets a duplicate of this range object. |
-| [GetFormattedText](#GetFormattedText) | Gets an **ITextRange** object with the specified range's formatted text. |
-| [SetFormattedText](#SetFormattedText) | Sets the formatted text of this range text to the formatted text of the specified range. |
+| [GetFormattedText](#GetFormattedText2) | Gets an **ITextRange** object with the specified range's formatted text. |
+| [SetFormattedText](#SetFormattedText2) | Sets the formatted text of this range text to the formatted text of the specified range. |
 | [GetStart](#GetStart) | Gets the start character position of the range. |
 | [SetStart](#SetStart) | Sets the character position for the start of this range. |
 | [GetEnd](#GetEnd) | Gets the end character position of the range. |
@@ -543,7 +543,7 @@ IF pCTextDocument2 THEN
 END IF
 ```
 
-# <a name="GetFormattedText"></a>GetFormattedText
+# <a name="GetFormattedText2"></a>GetFormattedText
 
 ```
 FUNCTION CTextRange2.GetFormattedText () AS ITextRange2 PTR
@@ -553,7 +553,7 @@ FUNCTION CTextRange2.GetFormattedText () AS ITextRange2 PTR
 END FUNCTION
 ```
 
-# <a name="SetFormattedText"></a>SetFormattedText
+# <a name="SetFormattedText2"></a>SetFormattedText
 
 ```
 FUNCTION CTextRange2.SetFormattedText (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
