@@ -192,11 +192,11 @@ To use with the dotted syntax.
 ```
 SCOPE
    ' // Create a new instance of the CTextDocument2 class
-   DIM pTextDocument2 AS CTextDocument2 = hRichEdit
+   DIM pCTextDocument2 AS CTextDocument2 = hRichEdit
    ' // Get the number of characters of the text in the Rich Edit control
    DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
    ' // Get the 0-based range of all the text
-   DIM pCRange2 AS CTextRange2 = pCTextDoc.Range2(0, numChars)
+   DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(0, numChars)
    ' // Get the text
    DIM cbsText AS CBSTR = pCRange2.GetText2(0)
    ' // The CTextDocument2 class and the CTextRange2 class will be destroyed when the scope ends
@@ -211,7 +211,7 @@ DIM pCTextDocument2 AS CTextDocument2 PTR = NEW CTextDocument2(hRichEdit)
 ' // Get the number of characters of the text in the Rich Edit control
 DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
 ' // Get the 0-based range of all the text
-DIM pCRange2 AS CTextRange2 = pCTextDoc->Range2(0, numChars)
+DIM pCRange2 AS CTextRange2 PTR = NEW CTextRange2(pCTextDocument2->Range2(0, numChars))
 ' // Get the text
 DIM cbsText AS CBSTR = pCRange2->GetText2(0)
 ' // Delete the range
