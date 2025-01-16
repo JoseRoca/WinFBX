@@ -349,7 +349,6 @@ Gets the plain text in this range.
 
 ```
 FUNCTION CTextRange2.GetText () AS CBSTR
-   CTOM_DP("CTextRange2.GetText - m_pTextRange2 = " & WSTR(m_pTextRange2))
    DIM pText AS AFX_BSTR
    this.SetResult(m_pTextRange2->lpvtbl->GetText(m_pTextRange2, @pText))
    RETURN pText
