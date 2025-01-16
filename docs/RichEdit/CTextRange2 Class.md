@@ -532,14 +532,14 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets the character at the starting position of the range.
 
 ```
-FUNCTION CTextRange2.SetChar (BYREF cbsChar AS CBSTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetChar(m_pTextRange2, ASC(cbsChar)))
+FUNCTION CTextRange2.SetChar (BYVAL char AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetChar(m_pTextRange2, char))
    FUNCTION = m_Result
 END FUNCTION
 ```
 | Parameter | Description |
 | --------- | ----------- |
-| *cbsChar* | New value for character at the starting position. |
+| *char* | New value for character at the starting position. |
 
 #### Return code
 
@@ -556,7 +556,7 @@ The method returns an **HRESULT** value. If the method succeeds, it returns **S_
 DIM pCTextDocument2 AS CTextDocument2 = hRichEdit
 IF pCTextDocument2 THEN
    DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(3, 8)
-   IF pCRange2 THEN pcRange2.SetChar("X")
+   IF pCRange2 THEN pcRange2.SetChar(ASC("X"))
 END IF
 ```
 
