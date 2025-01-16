@@ -345,6 +345,8 @@ END FUNCTION
 
 # <a name="GetText"></a>GetText
 
+Gets the plain text in this range.
+
 ```
 FUNCTION CTextRange2.GetText () AS CBSTR
    CTOM_DP("CTextRange2.GetText - m_pTextRange2 = " & WSTR(m_pTextRange2))
@@ -352,6 +354,31 @@ FUNCTION CTextRange2.GetText () AS CBSTR
    this.SetResult(m_pTextRange2->lpvtbl->GetText(m_pTextRange2, @pText))
    RETURN pText
 END FUNCTION
+```
+
+#### Return value
+
+The retrieved text.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_OUTOFMEMORY** | Insufficient memory to hold the text. |
+
+#### Usage example
+
+```
+' // Create a new instance of the CTextDocument2 class
+DIM pTextDocument2 AS CTextDocument2 = hRichEdit
+' // Get the number of characters of the text in the Rich Edit control
+DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
+' // Get the 0-based range of all the text
+DIM pCRange2 AS CTextRange2 = pCTextDoc.Range2(0, numChars)
+' // Get the text
+DIM cbsText AS CBSTR = pCRange2.GetText
 ```
 
 # <a name="SetText"></a>SetText
@@ -1204,12 +1231,62 @@ END FUNCTION
 
 # <a name="GetText2"></a>GetText2
 
+Gets the text in this range according to the specified conversion flags.
+
 ```
 FUNCTION CTextRange2.GetText2 (BYVAL Flags AS LONG) AS CBSTR
    DIM pText2 AS AFX_BSTR
    this.SetResult(m_pTextRange2->lpvtbl->GetText2(m_pTextRange2, Flags, @pText2))
    RETURN pText2
 END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Flags* | The flags controlling how the text is retrieved. The flags can include a combination of the values in the table below. Specifying a *Flags* value of 0 is the same as calling the **GetText** method. |
+
+| Flag | Value | Description |
+| ---- | ----- | ----------- |
+| tomAdjustCRLF | 7 | Adjust CR/LFs at the start. |
+| tomUseCRLF | 2 | Use CR/LF in place of a carriage return or a line feed. |
+| tomIncludeNumbering | 64 | Include list numbers. |
+| tomNoHidden | 32 | Don't include hidden text. |
+| tomNoMathZoneBrackets | &h100 | Don't include math zone brackets. |
+| tomTextize | 4 | Copy up to &hFFFC (OLE object). |
+| tomAllowFinalEOP | 8 | Allow a final end-of-paragraph (EOP) marker. |
+| tomTranslateTableCell | 128 | Replace table row delimiter characters with spaces. |
+| tomFoldMathAlpha | 128 | Replace table row delimiter characters with spaces. |
+| tomLanguageTag | 16 | Fold math alphanumerics to ASCII/Greek. |
+
+#### Return value
+
+The text in the range
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied.. |
+| **E_OUTOFMEMORY** | Insufficient memory to hold the text. |
+
+#### Remarks
+
+This method includes the special flag **tomLanguageTag** to get the BCP-47 language tag for the range. This is an industry standard language tag which may be preferable to the language code identifier (LCID) obtained by calling the **GetLanguageID** method of the **ITextFont** interface.
+
+#### Usage example
+
+```
+' // Create a new instance of the CTextDocument2 class
+DIM pTextDocument2 AS CTextDocument2 = hRichEdit
+' // Get the number of characters of the text in the Rich Edit control
+DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
+' // Get the 0-based range of all the text
+DIM pCRange2 AS CTextRange2 = pCTextDoc.Range2(0, numChars)
+' // Get the text
+DIM cbsText AS CBSTR = pCRange2.GetText2(0)
 ```
 
 # <a name="HexToUnicode"></a>HexToUnicode
