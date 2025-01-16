@@ -254,7 +254,7 @@ END DESTRUCTOR
 
 # <a name="LET"></a>LET
 
-Assignment operator.
+Assignment operator. The assigned pointer must be an "addrefed" one.
 
 ```
 OPERATOR CTextRange2.LET (BYVAL pTextRange2 AS ITextRange2 PTR)
