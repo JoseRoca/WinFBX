@@ -386,15 +386,15 @@ DIM cbsText AS CBSTR = pCRange2.GetText
 Sets the text in this range.
 
 ```
-FUNCTION CTextRange2.SetText (BYVAL bstr AS AFX_BSTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetText(m_pTextRange2, bstr))
+FUNCTION CTextRange2.SetText (BYREF cbs AS CBSTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetText(m_pTextRange2, cbs))
    FUNCTION = m_Result
 END FUNCTION
 ```
 
 | Parameter | Description |
 | --------- | ----------- |
-| *bstr* | Text that replaces the current text in this range. If null, the current text is deleted. |
+| *cbs* | Text that replaces the current text in this range. If "", the current text is deleted. |
 
 The method returns an **HRESULT** value. If the method succeeds, it returns S_OK. If the method fails, it returns one of the following COM error codes.
 
@@ -412,8 +412,8 @@ DIM cbsText AS CBSTR = "new text"
 pCRange2.SetText(cbsText)
 ' You can also use a string literal
 pCRange2.SetText("new text")
-' or pass a null pointer to delete the range
-pCRange2.SetText(NULL)
+' or pass an empty string to delete the range
+pCRange2.SetText("")
 ```
 
 # <a name="GetChar"></a>GetChar
@@ -1409,6 +1409,19 @@ The method returns an **HRESULT** value. If the method succeeds, it returns S_OK
 If the **bstr** parameter is **NULL**, the text in the range is deleted.
 
 This method is similar to **SetText**, but lets the client specify flags that control various insertion options, including the special flag **tomLanguageTag** to get the BCP-47 language tag for the range. This is an industry standard language tag that may be preferable **SetLanguageID**, which uses a language code identifier (LCID).
+
+#### Usage example
+```
+DIM pCTextDoc AS CTextDocument2 = hRichEdit
+DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
+DIM pCRange2 AS CTextRange2 = pCTextDoc.Range2(3, 8)
+DIM cbsText AS CBSTR = "new text"
+pCRange2.SetText2(0, cbsText)
+' You can also use a string literal
+pCRange2.SetText2(0, "new text")
+' or pass an empty string to delete the range
+pCRange2.SetText2(0, "")
+```
 
 # <a name="UnicodeToHex"></a>UnicodeToHex
 
