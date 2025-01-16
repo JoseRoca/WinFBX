@@ -450,15 +450,15 @@ pCRange2.SetText("")
 Gets the character at the start position of the range.
 
 ```
-FUNCTION CTextRange2.GetChar () AS CBSTR
+FUNCTION CTextRange2.GetChar () AS LONG
    DIM Char AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->GetChar(m_pTextRange2, @Char))
-   RETURN WCHR(Char)
+   RETURN Char
 END FUNCTION
 ```
 #### Return value
 
-The character at the start position of the range, or an empty string on failure.
+The character at the start position of the range.
 
 #### Usage example
 
@@ -467,14 +467,65 @@ DIM pCTextDocument AS CTextDocument2 = hRichEdit
 IF pCTextDocument THEN
    DIM pCRange2 AS CTextRange2 = pCTextDocument.Range2(3, 8)
    IF pCRange2 THEN
-      DIM cbs AS CBSTR = pcRange2.GetChar
+      DIM char AS CBSTR = pcRange2.GetChar
+      AfxMsg WCHR(char)
    END IF
 END IF
 ```
-
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **S_OK**; if it fails, it returns **S_FALSE**.
+
+#### Remarks
+
+The character retrieved by this method is a **LONG**, which hide the way that they are stored in the backing store (as bytes, words, variable-length, and so forth), and they do not require using a **BSTR**.
+
+The **Char** property, which can do most things that a characters collection can, has two big advantages:
+
+- It can reference any character in the parent story instead of being limited to the parent range.
+- It is significantly faster, since **LONG**s are involved instead of range objects.
+
+Accordingly, the Text Object Model (TOM) does not support a characters collection.
+
+# <a name="GetChar2"></a>GetChar2
+
+Gets the character at the specified offset from the end of this range.
+
+```
+FUNCTION CTextRange2.GetChar2 (BYVAL Offset AS LONG) AS LONG
+   DIM Char AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetChar2(m_pTextRange2, @Char, Offset))
+   RETURN Char
+END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *Offset* | The offset from the end of the range. An offset of 0 gets the character at the end of the range. |
+
+#### Return value
+
+The character value.
+
+#### Remarks
+
+This method differs from **GetChar** in the following ways:
+
+- It returns the UTF-32 character for the surrogate pair instead of the pair's lead code.
+- It gets the character code, or codes, at the specified offset from the end of the range instead of the character at the start of the range.
+
+If the character is the lead code for a surrogate pair, the corresponding UTF-32 character is returned.
+
+If *Offset* specifies a character before the start of the story or at the end of the story, this method returns the character code 0.
+
+| If the Offset value is | This character is returned |
+| ---------------------- | -------------------------- |
+| 0 | The character at the end of the range. |
+| Negative and accesses the middle of a surrogate pair | The corresponding UTF-32 character. |
+| Positive and accesses the middle of a surrogate pair | The UTF-32 character following that pair. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetChar"></a>SetChar
 
@@ -1344,16 +1395,6 @@ FUNCTION CTextRange2.Find (BYVAL pRange AS ITextRange2 PTR, BYVAL Count AS LONG,
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->Find(m_pTextRange2, pRange, Count, Flags, @Delta))
    RETURN Delta
-END FUNCTION
-```
-
-# <a name="GetChar2"></a>GetChar2
-
-```
-FUNCTION CTextRange2.GetChar2 (BYVAL Offset AS LONG) AS LONG
-   DIM Char AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetChar2(m_pTextRange2, @Char, Offset))
-   RETURN Char
 END FUNCTION
 ```
 
