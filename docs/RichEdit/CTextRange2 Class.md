@@ -1220,3 +1220,96 @@ FUNCTION CTextRange2.HexToUnicode () AS HRESULT
    RETURN m_Result
 END FUNCTION
 ```
+
+# <a name="InsertTable"></a>InsertTable
+
+```
+FUNCTION CTextRange2.InsertTable (BYVAL cCol AS LONG, BYVAL cRow AS LONG, BYVAL AutoFit AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->InsertTable(m_pTextRange2, cCol, cRow, AutoFit))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="Linearize"></a>Linearize
+
+```
+FUNCTION CTextRange2.Linearize (BYVAL Flags AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->Linearize(m_pTextRange2, Flags))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="SetActiveSubrange"></a>SetActiveSubrange
+
+```
+FUNCTION CTextRange2.SetActiveSubrange (BYVAL cpAnchor AS LONG, BYVAL cpActive AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetActiveSubrange(m_pTextRange2, cpAnchor, cpActive))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="SetDropCap"></a>SetDropCap
+
+```
+FUNCTION CTextRange2.SetDropCap (BYVAL cLine AS LONG, BYVAL Position AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetDropCap(m_pTextRange2, cLine, Position))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="SetProperty"></a>SetProperty
+
+```
+FUNCTION CTextRange2.SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetProperty(m_pTextRange2, nType, Value))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="SetText2"></a>SetText2
+
+```
+FUNCTION CTextRange2.SetText2 (BYVAL Flags AS LONG, BYVAL bstr AS AFX_BSTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetText2(m_pTextRange2, Flags, bstr))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+# <a name="UnicodeToHex"></a>UnicodeToHex
+
+```
+FUNCTION CTextRange2.UnicodeToHex () AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->UnicodeToHex(m_pTextRange2))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="SetInlineObject"></a>SetInlineObject
+
+```
+FUNCTION CTextRange2.SetInlineObject (BYVAL nType AS Long, BYVAL Align AS LONG, BYVAL Char AS LONG, _
+BYVAL Char1 AS LONG, BYVAL Char2 AS LONG, BYVAL Count AS LONG, BYVAL TeXStyle AS LONG, BYVAL cCol AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetInlineObject(m_pTextRange2, nType, Align, Char, Char1, Char2, Count, TeXStyle, cCol))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="GetMathFunctionType"></a>GetMathFunctionType
+
+```
+FUNCTION CTextRange2.GetMathFunctionType (BYVAL bstr AS AFX_BSTR) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetMathFunctionType(m_pTextRange2, bstr, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+# <a name="InsertImage"></a>InsertImage
+
+```
+FUNCTION CTextRange2.InsertImage (BYVAL width_ AS LONG, BYVAL height AS LONG, BYVAL ascent AS LONG, _
+BYVAL nType AS LONG, BYVAL bstrAltText AS AFX_BSTR, BYVAL pStream AS IStream PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->InsertImage(m_pTextRange2, width_, height, ascent, nType, bstrAltText, pStream))
+   RETURN m_Result
+END FUNCTION
+```
