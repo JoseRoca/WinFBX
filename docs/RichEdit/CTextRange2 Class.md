@@ -383,12 +383,25 @@ DIM cbsText AS CBSTR = pCRange2.GetText
 
 # <a name="SetText"></a>SetText
 
+Sets the text in this range.
+
 ```
 FUNCTION CTextRange2.SetText (BYVAL bstr AS AFX_BSTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetText(m_pTextRange2, bstr))
    FUNCTION = m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *bstr* | Text that replaces the current text in this range. If null, the current text is deleted. |
+
+The method returns an **HRESULT** value. If the method succeeds, it returns S_OK. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_ACCESSDENIED** | Text is write-protected. |
+| **E_OUTOFMEMORY** | Insufficient memory to hold the text. |
 
 # <a name="GetChar"></a>GetChar
 
@@ -1247,16 +1260,16 @@ END FUNCTION
 
 | Flag | Value | Description |
 | ---- | ----- | ----------- |
-| tomAdjustCRLF | 7 | Adjust CR/LFs at the start. |
-| tomUseCRLF | 2 | Use CR/LF in place of a carriage return or a line feed. |
-| tomIncludeNumbering | 64 | Include list numbers. |
-| tomNoHidden | 32 | Don't include hidden text. |
-| tomNoMathZoneBrackets | &h100 | Don't include math zone brackets. |
-| tomTextize | 4 | Copy up to &hFFFC (OLE object). |
-| tomAllowFinalEOP | 8 | Allow a final end-of-paragraph (EOP) marker. |
-| tomTranslateTableCell | 128 | Replace table row delimiter characters with spaces. |
-| tomFoldMathAlpha | 128 | Replace table row delimiter characters with spaces. |
-| tomLanguageTag | 16 | Fold math alphanumerics to ASCII/Greek. |
+| **tomAdjustCRLF** | 1 | Adjust CR/LFs at the start. |
+| **tomUseCRLF** | 2 | Use CR/LF in place of a carriage return or a line feed. |
+| **tomIncludeNumbering** | 64 | Include list numbers. |
+| **tomNoHidden** | 32 | Don't include hidden text. |
+| **tomNoMathZoneBrackets** | &h100 | Don't include math zone brackets. |
+| **tomTextize** | 4 | Copy up to &hFFFC (OLE object). |
+| **tomAllowFinalEOP** | 8 | Allow a final end-of-paragraph (EOP) marker. |
+| **tomTranslateTableCell** | 128 | Replace table row delimiter characters with spaces. |
+| **tomFoldMathAlpha** | 128 | Replace table row delimiter characters with spaces. |
+| **tomLanguageTag** | 16 | Fold math alphanumerics to ASCII/Greek. |
 
 #### Return value
 
@@ -1345,12 +1358,44 @@ END FUNCTION
 
 # <a name="SetText2"></a>SetText2
 
+Sets the text of this range.
+
 ```
 FUNCTION CTextRange2.SetText2 (BYVAL Flags AS LONG, BYVAL bstr AS AFX_BSTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetText2(m_pTextRange2, Flags, bstr))
    FUNCTION = m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Flags* | Flags controlling how the text is inserted in the range. The flag can be one of the following values (see table below) |
+| *bstr* | Text that replaces the current text in this range. If null, the current text is deleted. |
+
+| Flag | Value | Description |
+| ---- | ----- | ----------- |
+| **tomUnicodeBiDi** | 1 | Use the Unicode bidirectional (bidi) algorithm. |
+| **tomMathCFCheck** | 4 | Check math-zone character formatting. |
+| **tomUnlink** | 8 | Don't include text as part of a hyperlink. |
+| **tomUnhide** | &h10 | Don't insert as hidden text. |
+| **tomCheckTextLimit** | &h20 | Obey the current text limit instead of increasing the text to fit. |
+| **tomLanguageTag** | &h1000 | Get the BCP-47 language tag for this range. |
+
+#### Return value
+
+The method returns an **HRESULT** value. If the method succeeds, it returns S_OK. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Text is write-protected. |
+| **E_OUTOFMEMORY** | Insufficient memory to hold the text. |
+
+#### Remarks
+
+If the **bstr** parameter is **NULL**, the text in the range is deleted.
+
+This method is similar to **SetText**, but lets the client specify flags that control various insertion options, including the special flag **tomLanguageTag** to get the BCP-47 language tag for the range. This is an industry standard language tag that may be preferable **SetLanguageID**, which uses a language code identifier (LCID).
 
 # <a name="UnicodeToHex"></a>UnicodeToHex
 
