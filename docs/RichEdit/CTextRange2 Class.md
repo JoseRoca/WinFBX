@@ -417,18 +417,18 @@ pCRange2.SetText("")
 # <a name="GetChar"></a>GetChar
 
 ```
-FUNCTION CTextRange2.GetChar () AS LONG
+FUNCTION CTextRange2.GetChar () AS CBSTR
    DIM Char AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->GetChar(m_pTextRange2, @Char))
-   RETURN Char
+   RETURN CHR(Char)
 END FUNCTION
 ```
 
 # <a name="SetChar"></a>SetChar
 
 ```
-FUNCTION CTextRange2.SetChar (BYVAL Char AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetChar(m_pTextRange2, Char))
+FUNCTION CTextRange2.SetChar (BYREF cbsChar AS CBSTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetChar(m_pTextRange2, ASC(cbsChar)))
    FUNCTION = m_Result
 END FUNCTION
 ```
