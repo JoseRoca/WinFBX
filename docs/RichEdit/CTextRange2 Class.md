@@ -512,11 +512,11 @@ END IF
 # <a name="GetDuplicate"></a>GetDuplicate
 
 ```
-FUNCTION CTextRange2.GetDuplicate () AS ITextRange2 PTR
-   DIM pRange AS ITextRange2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetDuplicate(m_pTextRange2, @pRange))
-   RETURN pRange
-END FUNCTION
+DIM pCTextDocument AS CTextDocument2 = hRichEdit
+IF pCTextDocument THEN
+   DIM pCRange2 AS CTextRange2 = pCTextDocument.Range2(3, 8)
+   IF pCRange2 THEN pcRange2.SetChar("X")
+END IF
 ```
 
 # <a name="GetFormattedText"></a>GetFormattedText
