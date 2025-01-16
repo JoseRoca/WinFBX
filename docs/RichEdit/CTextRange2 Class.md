@@ -206,7 +206,9 @@ END SCOPE
 ```
 DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(0, numChars)
 DIM cbsText AS CBSTR = pCRange2.GetText2(0)
+```
 can be replaced with a compound syntax:
+```
 DIM cbsText AS CBSTR = CTextRange2(pCTextDocument2.Range2(0, numChars)).GetText2(0)
 ```
 To use with the pointer syntax.
