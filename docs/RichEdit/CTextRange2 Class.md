@@ -406,7 +406,6 @@ The method returns an **HRESULT** value. If the method succeeds, it returns S_OK
 #### Usage example
 ```
 DIM pCTextDoc AS CTextDocument2 = hRichEdit
-DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
 DIM pCRange2 AS CTextRange2 = pCTextDoc.Range2(3, 8)
 DIM cbsText AS CBSTR = "new text"
 pCRange2.SetText(cbsText)
@@ -759,9 +758,9 @@ END FUNCTION
 # <a name="FindText"></a>FindText
 
 ```
-FUNCTION CTextRange2.FindText (BYVAL bstr AS AFX_BSTR, BYVAL cch AS LONG, BYVAL Flags AS LONG) AS LONG
+FUNCTION CTextRange2.FindText (BYREF cbs AS CBSTR, BYVAL cch AS LONG, BYVAL Flags AS LONG) AS LONG
    DIM Length AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->FindText(m_pTextRange2, bstr, cch, Flags, @Length))
+   this.SetResult(m_pTextRange2->lpvtbl->FindText(m_pTextRange2, cbs, cch, Flags, @Length))
    RETURN Length
 END FUNCTION
 ```
@@ -769,9 +768,9 @@ END FUNCTION
 # <a name="FindTextStart"></a>FindTextStart
 
 ```
-FUNCTION CTextRange2.FindTextStart (BYVAL bstr AS AFX_BSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
+FUNCTION CTextRange2.FindTextStart (BYREF cbs AS CBSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
    DIM Length AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->FindTextStart(m_pTextRange2, bstr, Count, Flags, @Length))
+   this.SetResult(m_pTextRange2->lpvtbl->FindTextStart(m_pTextRange2, cbs, Count, Flags, @Length))
    RETURN Length
 END FUNCTION
 ```
@@ -779,9 +778,9 @@ END FUNCTION
 # <a name="FindTextEnd"></a>FindTextEnd
 
 ```
-FUNCTION CTextRange2.FindTextEnd (BYVAL bstr AS AFX_BSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
+FUNCTION CTextRange2.FindTextEnd (BYREF cbs AS CBSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
    DIM Length AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->FindTextEnd(m_pTextRange2, bstr, Count, Flags, @Length))
+   this.SetResult(m_pTextRange2->lpvtbl->FindTextEnd(m_pTextRange2, cbs, Count, Flags, @Length))
    RETURN Length
 END FUNCTION
 ```
@@ -979,8 +978,8 @@ END FUNCTION
 # <a name="TypeText"></a>TypeText
 
 ```
-FUNCTION CTextRange2.TypeText (BYVAL bstr AS AFX_BSTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->TypeText(m_pTextRange2, bstr))
+FUNCTION CTextRange2.TypeText (BYREF cbs AS CBSTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->TypeText(m_pTextRange2, cbs))
    RETURN m_Result
 END FUNCTION
 ```
@@ -1154,8 +1153,8 @@ END FUNCTION
 # <a name="SetURL"></a>SetURL
 
 ```
-FUNCTION CTextRange2.SetURL (BYVAL bstr AS AFX_BSTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetURL(m_pTextRange2, bstr))
+FUNCTION CTextRange2.SetURL (BYREF cbs AS CBSTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetURL(m_pTextRange2, cbs))
    RETURN m_Result
 END FUNCTION
 ```
@@ -1374,8 +1373,8 @@ END FUNCTION
 Sets the text of this range.
 
 ```
-FUNCTION CTextRange2.SetText2 (BYVAL Flags AS LONG, BYVAL bstr AS AFX_BSTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetText2(m_pTextRange2, Flags, bstr))
+FUNCTION CTextRange2.SetText2 (BYVAL Flags AS LONG, BYREF cbs AS CBSTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetText2(m_pTextRange2, Flags, cbs))
    FUNCTION = m_Result
 END FUNCTION
 ```
@@ -1383,7 +1382,7 @@ END FUNCTION
 | Parameter | Description |
 | --------- | ----------- |
 | *Flags* | Flags controlling how the text is inserted in the range. The flag can be one of the following values (see table below) |
-| *bstr* | Text that replaces the current text in this range. If null, the current text is deleted. |
+| *cbs* | Text that replaces the current text in this range. If "", the current text is deleted. |
 
 | Flag | Value | Description |
 | ---- | ----- | ----------- |
@@ -1406,14 +1405,11 @@ The method returns an **HRESULT** value. If the method succeeds, it returns S_OK
 
 #### Remarks
 
-If the **bstr** parameter is **NULL**, the text in the range is deleted.
-
 This method is similar to **SetText**, but lets the client specify flags that control various insertion options, including the special flag **tomLanguageTag** to get the BCP-47 language tag for the range. This is an industry standard language tag that may be preferable **SetLanguageID**, which uses a language code identifier (LCID).
 
 #### Usage example
 ```
-DIM pCTextDoc AS CTextDocument2 = hRichEdit
-DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
+DIM pCTextDocument AS CTextDocument2 = hRichEdit
 DIM pCRange2 AS CTextRange2 = pCTextDoc.Range2(3, 8)
 DIM cbsText AS CBSTR = "new text"
 pCRange2.SetText2(0, cbsText)
@@ -1445,9 +1441,9 @@ END FUNCTION
 # <a name="GetMathFunctionType"></a>GetMathFunctionType
 
 ```
-FUNCTION CTextRange2.GetMathFunctionType (BYVAL bstr AS AFX_BSTR) AS LONG
+FUNCTION CTextRange2.GetMathFunctionType (BYREF cbs AS CBSTR) AS LONG
    DIM Value AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetMathFunctionType(m_pTextRange2, bstr, @Value))
+   this.SetResult(m_pTextRange2->lpvtbl->GetMathFunctionType(m_pTextRange2, cbs, @Value))
    RETURN Value
 END FUNCTION
 ```
@@ -1456,8 +1452,8 @@ END FUNCTION
 
 ```
 FUNCTION CTextRange2.InsertImage (BYVAL width_ AS LONG, BYVAL height AS LONG, BYVAL ascent AS LONG, _
-BYVAL nType AS LONG, BYVAL bstrAltText AS AFX_BSTR, BYVAL pStream AS IStream PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->InsertImage(m_pTextRange2, width_, height, ascent, nType, bstrAltText, pStream))
+BYVAL nType AS LONG, BYREF cbsAltText AS CBSTR, BYVAL pStream AS IStream PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->InsertImage(m_pTextRange2, width_, height, ascent, nType, cbsAltText, pStream))
    RETURN m_Result
 END FUNCTION
 ```
