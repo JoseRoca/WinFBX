@@ -211,7 +211,7 @@ can be replaced with a compound syntax:
 ```
 DIM cbsText AS CBSTR = CTextRange2(pCTextDocument2.Range2(0, numChars)).GetText2(0)
 ```
-*CTextRange2(pCTextDocument2.Range2(0, numChars))* creates a temporary instance of the **CTextRange** class that can be used to call its methods (in this example, *GetText2(0)*). The temporary instance of the class is destroyed automatically after its use.
+*CTextRange2(pCTextDocument2.Range2(0, numChars))* creates a temporary instance of the **CTextRange2** class that can be used to call its methods (in this example, *GetText2(0)*). The temporary instance of the class is destroyed automatically after its use.
 
 <ins>To use with the pointer syntax.</ins>
 
@@ -229,6 +229,17 @@ Delete pCRange2
 ' // Delete the class
 Delete pCTextDocument2
 ```
+
+**Note**: Although the following lines of code:
+```
+DIM pCRange2 AS CTextRange2 PTR = NEW CTextRange2(pCTextDocument2->Range2(0, numChars))
+DIM cbsText AS CBSTR = pCRange2->GetText2(0)
+```
+could be replaced with a compound syntax:
+```
+DIM cbsText AS CBSTR = NEW CTextRange2(pCTextDocument2->Range2(0, numChars))->GetText2(0)
+```
+it would create memory leaks because the instance of the **CTextRange2** class is not automatically deleted and we can't deleted it because we don't have a pointer to it.
 
 # <a name="DESTRUCTOR"></a>DESTRUCTOR
 
