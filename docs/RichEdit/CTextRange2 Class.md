@@ -555,6 +555,13 @@ FUNCTION CTextRange2.GetFormattedText () AS ITextRange2 PTR
    RETURN pRange
 END FUNCTION
 ```
+```
+FUNCTION CTextRange2.GetFormattedText2 () AS ITextRange2 PTR
+   DIM pRange AS ITextRange2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetFormattedText2(m_pTextRange2, @pRange))
+   RETURN pRange
+END FUNCTION
+```
 
 #### Result code
 
@@ -569,6 +576,13 @@ In this implementation of the class, **SetFormattedText** and **SetFormattedText
 FUNCTION CTextRange2.SetFormattedText (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetFormattedText(m_pTextRange2, pRange))
    FUNCTION = m_Result
+END FUNCTION
+```
+
+```
+FUNCTION CTextRange2.SetFormattedText2 (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetFormattedText2(m_pTextRange2, pRange))
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1171,25 +1185,6 @@ END FUNCTION
 ```
 FUNCTION CTextRange2.SetFont2 (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetFont2(m_pTextRange2, pFont))
-   RETURN m_Result
-END FUNCTION
-```
-
-# <a name="GetFormattedText2"></a>GetFormattedText2
-
-```
-FUNCTION CTextRange2.GetFormattedText2 () AS ITextRange2 PTR
-   DIM pRange AS ITextRange2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetFormattedText2(m_pTextRange2, @pRange))
-   RETURN pRange
-END FUNCTION
-```
-
-# <a name="SetFormattedText2"></a>SetFormattedText2
-
-```
-FUNCTION CTextRange2.SetFormattedText2 (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetFormattedText2(m_pTextRange2, pRange))
    RETURN m_Result
 END FUNCTION
 ```
