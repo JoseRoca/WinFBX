@@ -239,7 +239,7 @@ could be replaced with a compound syntax:
 ```
 DIM cbsText AS CBSTR = NEW CTextRange2(pCTextDocument2->Range2(0, numChars))->GetText2(0)
 ```
-it would create memory leaks because the instance of the **CTextRange2** class is not automatically deleted and we can't deleted it because we don't have a pointer to it.
+it would create memory leaks because the instance of the **CTextRange2** class is not automatically deleted and we can't destroy it with **Delete** because we don't have a pointer to it.
 
 # <a name="DESTRUCTOR"></a>DESTRUCTOR
 
