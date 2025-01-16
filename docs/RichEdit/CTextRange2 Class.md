@@ -103,9 +103,9 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [GetCells](#GetCells) | Gets a cells object with the parameters of cells in the currently selected table row or column. |
 | [GetColumn](#GetColumn) | Gets the column properties for the currently selected column. |
 | [GetCount](#GetCount) | Gets the count of subranges, including the active subrange in the current range. |
-| [GetDuplicate2](#GetDuplicate2) | Gets a duplicate of a range object. |
-| [GetFont2](#GetFont2) | Gets an **ITextFont2** object with the character attributes of the current range. |
-| [SetFont2](#SetFont2) | Sets the character formatting attributes of the range. |
+| [GetDuplicate2](#GetDuplicate) | Gets a duplicate of a range object. |
+| [GetFont2](#GetFont) | Gets an **ITextFont2** object with the character attributes of the current range. |
+| [SetFont2](#SetFont) | Sets the character formatting attributes of the range. |
 | [GetFormattedText2](#GetFormattedText) | Gets an **ITextRange2** object with the current range's formatted text. |
 | [SetFormattedText2](#SetFormattedText) | Sets the text of this range to the formatted text of the specified range. |
 | [GetGravity](#GetGravity) | Gets the gravity of this range. |
@@ -511,12 +511,19 @@ END IF
 
 # <a name="GetDuplicate"></a>GetDuplicate
 
-Gets a duplicate of this range object.
+Gets a duplicate of this range object. In this implementation of the class, **GetDuplicate** and **GetDuplicate2** are the same method.
 
 ```
 FUNCTION CTextRange2.GetDuplicate () AS ITextRange2 PTR
    DIM pRange AS ITextRange2 PTR
    this.SetResult(m_pTextRange2->lpvtbl->GetDuplicate(m_pTextRange2, @pRange))
+   RETURN pRange
+END FUNCTION
+```
+```
+FUNCTION CTextRange2.GetDuplicate2 () AS ITextRange2 PTR
+   DIM pRange AS ITextRange2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetDuplicate2(m_pTextRange2, @pRange))
    RETURN pRange
 END FUNCTION
 ```
@@ -585,7 +592,6 @@ FUNCTION CTextRange2.SetFormattedText2 (BYVAL pRange AS ITextRange2 PTR) AS HRES
    RETURN m_Result
 END FUNCTION
 ```
-
 | Parameter | Description |
 | --------- | ----------- |
 | *pRange* | The formatted text to replace this range's text. |
@@ -639,6 +645,8 @@ END FUNCTION
 
 # <a name="GetFont"></a>GetFont
 
+Gets an **ITextFont2** object with the character attributes of the current range. In this implementation of the class, **GetFont** and **GetFont2** are the same method.
+
 ```
 FUNCTION CTextRange2.GetFont () AS ITextFont PTR
    DIM pFont AS ITextFont PTR
@@ -646,15 +654,51 @@ FUNCTION CTextRange2.GetFont () AS ITextFont PTR
    RETURN pFont
 END FUNCTION
 ```
+```
+FUNCTION CTextRange2.GetFont2 () AS ITextFont2 PTR
+   DIM pFont AS ITextFont2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetFont2(m_pTextRange2, @pFont))
+   RETURN pFont
+END FUNCTION
+```
+#### Return value
+
+The **ITextFont2** object.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an HRESULT error code.
 
 # <a name="SetFont"></a>SetFont
 
+Sets the character formatting attributes of the range. In this implementation of the class, **SetFont** and **SetFont2** are the same method.
+
 ```
-FUNCTION CTextRange2.SetFont (BYVAL pFont AS ITextFont PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetFont(m_pTextRange2, pFont))
+FUNCTION CTextRange2.SetFont (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetFont2(m_pTextRange2, pFont))
    FUNCTION = m_Result
 END FUNCTION
 ```
+```
+FUNCTION CTextRange2.SetFont2 (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetFont2(m_pTextRange2, pFont))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pFont* | The font object with the desired character formatting attributes. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes:
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
 
 # <a name="GetPara"></a>GetPara
 
@@ -1157,35 +1201,6 @@ FUNCTION CTextRange2.GetCount () AS LONG
    DIM Count AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->GetCount(m_pTextRange2, @Count))
    RETURN Count
-END FUNCTION
-```
-
-# <a name="GetDuplicate2"></a>GetDuplicate2
-
-```
-FUNCTION CTextRange2.GetDuplicate2 () AS ITextRange2 PTR
-   DIM pRange AS ITextRange2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetDuplicate2(m_pTextRange2, @pRange))
-   RETURN pRange
-END FUNCTION
-```
-
-# <a name="GetFont2"></a>GetFont2
-
-```
-FUNCTION CTextRange2.GetFont2 () AS ITextFont2 PTR
-   DIM pFont AS ITextFont2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetFont2(m_pTextRange2, @pFont))
-   RETURN pFont
-END FUNCTION
-```
-
-# <a name="SetFont2"></a>SetFont2
-
-```
-FUNCTION CTextRange2.SetFont2 (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetFont2(m_pTextRange2, pFont))
-   RETURN m_Result
 END FUNCTION
 ```
 
