@@ -543,7 +543,10 @@ IF pCTextDocument2 THEN
 END IF
 ```
 
-# <a name="GetFormattedText2"></a>GetFormattedText
+# <a name="GetFormattedText"></a>GetFormattedText
+
+Gets an **ITextRange2** object with the specified range's formatted text.
+In this implementation of the class, **GetFormattedText** and **GetFormattedText2** are the same method.
 
 ```
 FUNCTION CTextRange2.GetFormattedText () AS ITextRange2 PTR
@@ -553,7 +556,14 @@ FUNCTION CTextRange2.GetFormattedText () AS ITextRange2 PTR
 END FUNCTION
 ```
 
-# <a name="SetFormattedText2"></a>SetFormattedText
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns **E_OUTOFMEMORY**. 
+
+# <a name="SetFormattedText"></a>SetFormattedText
+
+Sets the formatted text of this range text to the formatted text of the specified range.
+In this implementation of the class, **SetFormattedText** and **SetFormattedText2** are the same method.
 
 ```
 FUNCTION CTextRange2.SetFormattedText (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
@@ -561,6 +571,19 @@ FUNCTION CTextRange2.SetFormattedText (BYVAL pRange AS ITextRange2 PTR) AS HRESU
    FUNCTION = m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pRange* | The formatted text to replace this range's text. |
+
+### Return code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_ACCESSDENIED** | Text is write-protected. |
+| **E_OUTOFMEMORY** | Out of memory. |
 
 # <a name="GetStart"></a>GetStart
 
