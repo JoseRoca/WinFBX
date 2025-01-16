@@ -179,7 +179,7 @@ END CONSTRUCTOR
 | Parameter | Description |
 | --------- | ----------- |
 | *pTextTextRange2* | An **ITextRange2** interface pointer. |
-| *fAddRef* | Optional. TRUE to increment the reference count of the passed **ITextDocument2** interface pointer; otherise, FALSE. Default is FALSE. |
+| *fAddRef* | Optional. TRUE to increment the reference count of the passed **ITextDocument2** interface pointer; otherwise, FALSE. Default is FALSE. |
 
 #### Return value
 
@@ -187,7 +187,7 @@ A pointer to the new instance of the class.
 
 #### Usage examples
 
-To use with the dotted syntax.
+<ins>To use with the dotted syntax.</ins>
 
 ```
 SCOPE
@@ -211,7 +211,9 @@ can be replaced with a compound syntax:
 ```
 DIM cbsText AS CBSTR = CTextRange2(pCTextDocument2.Range2(0, numChars)).GetText2(0)
 ```
-To use with the pointer syntax.
+*CTextRange2(pCTextDocument2.Range2(0, numChars))* creates a temporary instance of the **CTextRange** class that can be used to call the methods of the **CTextRange** class (in this example *GetText2(0)*). The temporary instance of the class is destroyed automatically after its use.
+
+<ins>To use with the pointer syntax.</ins>
 
 ```
 ' // Create a new instance of the CTextDocument2 class
