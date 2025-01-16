@@ -110,8 +110,8 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [SetFormattedText2](#SetFormattedText) | Sets the text of this range to the formatted text of the specified range. |
 | [GetGravity](#GetGravity) | Gets the gravity of this range. |
 | [SetGravity](#SetGravity) | Sets the gravity of this range. |
-| [GetPara2](#GetPara2) | Gets an **ITextPara2** object with the paragraph attributes of a range. |
-| [SetPara2](#SetPara2) | Sets the paragraph format attributes of a range. |
+| [GetPara2](#GetPara) | Gets an **ITextPara2** object with the paragraph attributes of a range. |
+| [SetPara2](#SetPara) | Sets the paragraph format attributes of a range. |
 | [GetRow](#GetRow) | Gets the row properties in the currently selected row. |
 | [GetStartPara](#GetStartPara) | Gets the character position of the start of the paragraph that contains the range's start character position. |
 | [GetTable](#GetTable) |  Not implemented. Gets the table properties in the currently selected table. |
@@ -685,7 +685,6 @@ FUNCTION CTextRange2.SetFont2 (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
    RETURN m_Result
 END FUNCTION
 ```
-
 | Parameter | Description |
 | --------- | ----------- |
 | *pFont* | The font object with the desired character formatting attributes. |
@@ -702,15 +701,34 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 # <a name="GetPara"></a>GetPara
 
+Gets an **ITextPara2** object with the paragraph attributes of a range.
+
 ```
-FUNCTION CTextRange2.GetPara () AS ITextPara PTR
-   DIM pPara AS ITextPara PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetPara(m_pTextRange2, @pPara))
+FUNCTION CTextRange2.GetPara () AS ITextPara2 PTR
+   DIM pPara AS ITextPara2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetPara2(m_pTextRange2, @pPara))
+   RETURN pPara
+END FUNCTION
+```
+```
+FUNCTION CTextRange2.GetPara2 () AS ITextPara2 PTR
+   DIM pPara AS ITextPara2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetPara2(m_pTextRange2, @pPara))
    RETURN pPara
 END FUNCTION
 ```
 
+#### Return value
+
+The **ITextPara2** object.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
 # <a name="SetPara"></a>SetPara
+
+Sets the paragraph format attributes of a range. In this implementation of the class, **SetPara** and **SetPara2** are the same method.
 
 ```
 FUNCTION CTextRange2.SetPara (BYVAL pPara AS ITextPara PTR) AS HRESULT
@@ -718,6 +736,26 @@ FUNCTION CTextRange2.SetPara (BYVAL pPara AS ITextPara PTR) AS HRESULT
    FUNCTION = m_Result
 END FUNCTION
 ```
+```
+FUNCTION CTextRange2.SetPara2 (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetPara2(m_pTextRange2, pPara))
+   RETURN m_Result
+END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *pPara* | The desired paragraph format. |
+
+Return value
+Type: HRESULT
+
+If the method succeeds, it returns S_OK. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
 
 # <a name="GetStoryLength"></a>GetStoryLength
 
@@ -1219,25 +1257,6 @@ END FUNCTION
 ```
 FUNCTION CTextRange2.SetGravity (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetGravity(m_pTextRange2, Value))
-   RETURN m_Result
-END FUNCTION
-```
-
-# <a name="GetPara2"></a>GetPara2
-
-```
-FUNCTION CTextRange2.GetPara2 () AS ITextPara2 PTR
-   DIM pPara AS ITextPara2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetPara2(m_pTextRange2, @pPara))
-   RETURN pPara
-END FUNCTION
-```
-
-# <a name="SetPara2"></a>SetPara2
-
-```
-FUNCTION CTextRange2.SetPara2 (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetPara2(m_pTextRange2, pPara))
    RETURN m_Result
 END FUNCTION
 ```
