@@ -403,6 +403,19 @@ The method returns an **HRESULT** value. If the method succeeds, it returns S_OK
 | **E_ACCESSDENIED** | Text is write-protected. |
 | **E_OUTOFMEMORY** | Insufficient memory to hold the text. |
 
+#### Usage example
+```
+DIM pCTextDoc AS CTextDocument2 = hRichEdit
+DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
+DIM pCRange2 AS CTextRange2 = pCTextDoc.Range2(3, 8)
+DIM cbsText AS CBSTR = "new text"
+pCRange2.SetText(cbsText)
+' You can also use a string literal
+pCRange2.SetText("new text")
+' or pass a null pointer to delete the range
+pCRange2.SetText(NULL)
+```
+
 # <a name="GetChar"></a>GetChar
 
 ```
