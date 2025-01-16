@@ -573,3 +573,229 @@ FUNCTION CTextRange2.InStory (BYVAL pRange AS ITextRange2 PTR) AS LONG
    RETURN Value
 END FUNCTION
 ```
+
+# <a name="IsEqual"></a>IsEqual
+
+```
+FUNCTION CTextRange2.IsEqual (BYVAL pRange AS ITextRange2 PTR) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->IsEqual(m_pTextRange2, pRange, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+# <a name="Select_"></a>Select_
+
+```
+FUNCTION CTextRange2.Select_ () AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->Select(m_pTextRange2))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="StartOf"></a>StartOf
+
+```
+FUNCTION CTextRange2.StartOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->StartOf(m_pTextRange2, Unit, Extend, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="EndOf"></a>EndOf
+
+```
+FUNCTION CTextRange2.EndOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->EndOf(m_pTextRange2, Unit, Extend, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="Move"></a>Move
+
+```
+FUNCTION CTextRange2.Move (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->Move(m_pTextRange2, Unit, Count, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="MoveStart"></a>MoveStart
+
+```
+FUNCTION CTextRange2.MoveStart (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->MoveStart(m_pTextRange2, Unit, Count, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="MoveEnd"></a>MoveEnd
+
+```
+FUNCTION CTextRange2.MoveEnd (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->MoveEnd(m_pTextRange2, Unit, Count, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="MoveWhile"></a>MoveWhile
+
+```
+FUNCTION CTextRange2.MoveWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->MoveWhile(m_pTextRange2, Cset, Count, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="MoveStartWhile"></a>MoveStartWhile
+
+```
+FUNCTION CTextRange2.MoveStartWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->MoveStartWhile(m_pTextRange2, Cset, Count, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="MoveEndWhile"></a>MoveEndWhile
+
+```
+FUNCTION CTextRange2.MoveEndWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->MoveEndWhile(m_pTextRange2, Cset, Count, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="MoveUntil"></a>MoveUntil
+
+```
+FUNCTION CTextRange2.MoveUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->MoveUntil(m_pTextRange2, Cset, Count, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="MoveStartUntil"></a>MoveStartUntil
+
+```
+FUNCTION CTextRange2.MoveStartUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->MoveStartUntil(m_pTextRange2, Cset, Count, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="MoveEndUntil"></a>MoveEndUntil
+
+```
+FUNCTION CTextRange2.MoveEndUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->MoveEndUntil(m_pTextRange2, Cset, Count, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="FindText"></a>FindText
+
+```
+FUNCTION CTextRange2.FindText (BYVAL bstr AS AFX_BSTR, BYVAL cch AS LONG, BYVAL Flags AS LONG) AS LONG
+   DIM Length AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->FindText(m_pTextRange2, bstr, cch, Flags, @Length))
+   RETURN Length
+END FUNCTION
+```
+
+# <a name="FindTextStart"></a>FindTextStart
+
+```
+FUNCTION CTextRange2.FindTextStart (BYVAL bstr AS AFX_BSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
+   DIM Length AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->FindTextStart(m_pTextRange2, bstr, Count, Flags, @Length))
+   RETURN Length
+END FUNCTION
+```
+
+# <a name="FindTextEnd"></a>FindTextEnd
+
+```
+FUNCTION CTextRange2.FindTextEnd (BYVAL bstr AS AFX_BSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
+   DIM Length AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->FindTextEnd(m_pTextRange2, bstr, Count, Flags, @Length))
+   RETURN Length
+END FUNCTION
+```
+
+# <a name="Delete_"></a>Delete_
+
+```
+FUNCTION CTextRange2.Delete_ (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->Delete_(m_pTextRange2, Unit, Count, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="Cut"></a>Cut
+
+```
+FUNCTION CTextRange2.Cut (BYVAL pVar AS VARIANT PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->Cut(m_pTextRange2, pVar))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="Copy"></a>Copy
+
+```
+FUNCTION CTextRange2.Copy (BYVAL pVar AS VARIANT PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->Copy(m_pTextRange2, pVar))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="Paste"></a>Paste
+
+```
+FUNCTION CTextRange2.Paste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->Paste(m_pTextRange2, pVar, Format))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="CanPaste"></a>CanPaste
+
+```
+FUNCTION CTextRange2.CanPaste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->CanPaste(m_pTextRange2, pVar, Format, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+# <a name="CanEdit"></a>CanEdit
+
+```
+FUNCTION CTextRange2.CanEdit () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->CanEdit(m_pTextRange2, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+# <a name="ChangeCase"></a>ChangeCase
+
+```
+FUNCTION CTextRange2.ChangeCase (BYVAL nType AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->ChangeCase(m_pTextRange2, nType))
+   RETURN m_Result
+END FUNCTION
+```
+
