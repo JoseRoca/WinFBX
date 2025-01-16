@@ -114,7 +114,7 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [SetPara2](#SetPara2) | Sets the paragraph format attributes of a range. |
 | [GetRow](#GetRow) | Gets the row properties in the currently selected row. |
 | [GetStartPara](#GetStartPara) | Gets the character position of the start of the paragraph that contains the range's start character position. |
-| [GetTable](#GetTable) | Gets the table properties in the currently selected table. Not implemented. |
+| [GetTable](#GetTable) |  Not implemented. Gets the table properties in the currently selected table. |
 | [GetURL](#GetURL) | Returns the URL text associated with a range. |
 | [SetURL](#SetURL) | Sets the text in this range to that of the specified URL. |
 | [AddSubrange](#AddSubrange) | Adds a subrange to this range. |
@@ -132,3 +132,10 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [InsertTable](#InsertTable) | Inserts a table in a range. |
 | [Linearize](#Linearize) | Translates the built-up math, ruby, and other inline objects in this range to linearized form. |
 | [SetActiveSubrange](#SetActiveSubrange) | Makes the specified subrange the active subrange of this range. |
+| [SetDropCap](#SetDropCap) | Not implemented. Sets the drop-cap parameters for the paragraph that contains the current range. |
+| [SetProperty](#SetProperty) | Sets the value of the specified property. |
+| [SetText2](#SetText2) | Sets the text of this range. |
+| [UnicodeToHex](#UnicodeToHex) | Converts the Unicode character(s) preceding the start position of this text range to a hexadecimal number, and selects it. |
+| [SetInlineObject](#SetInlineObject) | Sets the text of this range. |
+| [GetMathFunctionType](#GetMathFunctionType) | Retrieves the math function type associated with the specified math function name. |
+| [InsertImage](#InsertImage) | Inserts an image into this range. |
