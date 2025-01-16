@@ -167,8 +167,8 @@ END CONSTRUCTOR
 
 | Parameter | Description |
 | --------- | ----------- |
-| *pTextDocument2* | An ITextDocument2 interface pointer. |
-| *fAddRef* | Optional. TRUE to increment the reference count of the passed ITextDocument2 interface pointer; otherise, FALSE. Default is FALSE. |
+| *pTextDocument2* | An **ITextDocument2** interface pointer. |
+| *fAddRef* | Optional. TRUE to increment the reference count of the passed **ITextDocument2** interface pointer; otherise, FALSE. Default is FALSE. |
 
 #### Return value
 
@@ -215,7 +215,7 @@ Called automatically when a class variable goes out of scope or is destroyed.
 
 ```
 DESTRUCTOR CTextDocument2
-   ' // Release the TextDocument2 interface
+   ' // Release the ITextDocument2 interface
    IF m_pTextDocument2 THEN m_pTextDocument2->lpvtbl->Release(m_pTextDocument2)
 END DESTRUCTOR
 ```
@@ -225,13 +225,13 @@ END DESTRUCTOR
 Assignment operator.
 
 ```
-OPERATOR CTextDocument2.LET (BYVAL pTextDocument AS ITextDocument2 PTR)
+OPERATOR CTextDocument2.LET (BYVAL pTextDocument2 AS ITextDocument2 PTR)
    m_Result = 0
-   IF pTextDocument = NULL THEN m_Result = E_INVALIDARG : EXIT OPERATOR
+   IF pTextDocument2 = NULL THEN m_Result = E_INVALIDARG : EXIT OPERATOR
    ' // Release the interface
    IF m_pTextDocument2 THEN m_pTextDocument2->lpvtbl->Release(m_pTextDocument2)
    ' // Attach the passed interface pointer to the class
-   m_pTextDocument2 = pTextDocument
+   m_pTextDocument2 = pTextDocument2
 END OPERATOR
 ```
 
@@ -262,21 +262,21 @@ END FUNCTION
 Attaches an **ITextDocument2** interface pointer to the class.
 
 ```
-FUNCTION CTextDocument2.Attach (BYVAL pTextDocument AS ITextDocument2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
+FUNCTION CTextDocument2.Attach (BYVAL pTextDocument2 AS ITextDocument2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
    m_Result = 0
    IF pTextDocument = NULL THEN m_Result = E_INVALIDARG : RETURN m_Result
    ' // Release the interface
    IF m_pTextDocument2 THEN m_Result = m_pTextDocument2->lpvtbl->Release(m_pTextDocument2)
    ' // Attach the passed interface pointer to the class
-   IF fAddRef THEN pTextDocument->lpvtbl->AddRef(pTextDocument)
-   m_pTextDocument2 = pTextDocument
+   IF fAddRef THEN pTextDocument2->lpvtbl->AddRef(pTextDocument2)
+   m_pTextDocument2 = pTextDocument2
    RETURN m_Result
 END FUNCTION
 ```
 
 | Parameter | Description |
 | --------- | ----------- |
-| *pTextDocument* | The **ITextDocument2** interface pointer to attach. |
+| *pTextDocument2* | The **ITextDocument2** interface pointer to attach. |
 | *fAddRef* | **TRUE** to increment the reference count of te object. Default is FALSE. |
 
 # <a name="Detach"></a>Detach
@@ -286,9 +286,9 @@ Detaches the underlying **ITextDocument2** interface pointer from the class
 ```
 FUNCTION CTextDocument2.Detach () AS ITextDocument2 PTR
    m_Result = 0
-   DIM pTextDocument AS ITextDocument2 PTR = m_pTextDocument2
+   DIM pTextDocument2 AS ITextDocument2 PTR = m_pTextDocument2
    m_pTextDocument2 = NULL
-   RETURN pTextDOcument
+   RETURN pTextDOcument2
 END FUNCTION
 ```
 
