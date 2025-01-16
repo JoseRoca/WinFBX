@@ -211,7 +211,7 @@ can be replaced with a compound syntax:
 ```
 DIM cbsText AS CBSTR = CTextRange2(pCTextDocument2.Range2(0, numChars)).GetText2(0)
 ```
-*CTextRange2(pCTextDocument2.Range2(0, numChars))* creates a temporary instance of the **CTextRange** class that can be used to call the methods of the **CTextRange** class (in this example *GetText2(0)*). The temporary instance of the class is destroyed automatically after its use.
+*CTextRange2(pCTextDocument2.Range2(0, numChars))* creates a temporary instance of the **CTextRange** class that can be used to call its methods (in this example, *GetText2(0)*). The temporary instance of the class is destroyed automatically after its use.
 
 <ins>To use with the pointer syntax.</ins>
 
