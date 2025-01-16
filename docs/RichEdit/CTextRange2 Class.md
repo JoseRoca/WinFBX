@@ -797,10 +797,9 @@ END FUNCTION
 | --------- | ----------- |
 | *pPara* | The desired paragraph format. |
 
-Return value
-Type: HRESULT
+#### Result code
 
-If the method succeeds, it returns S_OK. If the method fails, it returns one of the following COM error codes.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
 | Result code | Description |
 | ----------- | ----------- |
