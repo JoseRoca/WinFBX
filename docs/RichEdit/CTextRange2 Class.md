@@ -416,6 +416,8 @@ pCRange2.SetText("")
 
 # <a name="GetChar"></a>GetChar
 
+Gets the character at the start position of the range.
+
 ```
 FUNCTION CTextRange2.GetChar () AS CBSTR
    DIM Char AS LONG
@@ -423,6 +425,25 @@ FUNCTION CTextRange2.GetChar () AS CBSTR
    RETURN CHR(Char)
 END FUNCTION
 ```
+#### Return value
+
+The character at the start position of the range, or an empty string on failure.
+
+#### Usage example
+
+```
+DIM pCTextDocument AS CTextDocument2 = hRichEdit
+IF pCTextDocument THEN
+   DIM pCRange2 AS CTextRange2 = pCTextDocument.Range2(3, 8)
+   IF pCRange2 THEN
+      DIM cbs AS CBSTR = pcRange2.GetChar
+   END IF
+END IF
+```
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns S_OK; if it fails, it returns S_FALSE.
 
 # <a name="SetChar"></a>SetChar
 
