@@ -467,7 +467,7 @@ DIM pCTextDocument AS CTextDocument2 = hRichEdit
 IF pCTextDocument THEN
    DIM pCRange2 AS CTextRange2 = pCTextDocument.Range2(3, 8)
    IF pCRange2 THEN
-      DIM char AS CBSTR = pcRange2.GetChar
+      DIM char AS LONG = pcRange2.GetChar
       AfxMsg WCHR(char)
    END IF
 END IF
