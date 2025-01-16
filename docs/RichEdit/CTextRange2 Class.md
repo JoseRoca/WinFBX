@@ -658,6 +658,8 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 # <a name="GetStart"></a>GetStart
 
+Gets the start character position of the range.
+
 ```
 FUNCTION CTextRange2.GetStart () AS LONG
    DIM cpFirst AS LONG
@@ -665,8 +667,17 @@ FUNCTION CTextRange2.GetStart () AS LONG
    RETURN cpFirst
 END FUNCTION
 ```
+#### Return value
+
+The start character position.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
 # <a name="SetStart"></a>SetStart
+
+Sets the character position for the start of this range.
 
 ```
 FUNCTION CTextRange2.SetStart (BYVAL cpFirst AS LONG) AS HRESULT
@@ -674,6 +685,13 @@ FUNCTION CTextRange2.SetStart (BYVAL cpFirst AS LONG) AS HRESULT
    FUNCTION = m_Result
 END FUNCTION
 ```
+| Parameter | Description |
+| --------- | ----------- |
+| *cpFirst* | The new character position for the start of the range. |
+
+#### Return value
+
+The method returns an HRESULT value. If the method succeeds, it returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
 # <a name="GetEnd"></a>GetEnd
 
