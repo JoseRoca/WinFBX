@@ -1019,3 +1019,204 @@ FUNCTION CTextRange2.SetFormattedText2 (BYVAL pRange AS ITextRange2 PTR) AS HRES
    RETURN m_Result
 END FUNCTION
 ```
+
+# <a name="GetGravity"></a>GetGravity
+
+```
+FUNCTION CTextRange2.GetGravity () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetGravity(m_pTextRange2, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+# <a name="SetGravity"></a>SetGravity
+
+```
+FUNCTION CTextRange2.SetGravity (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetGravity(m_pTextRange2, Value))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="GetPara2"></a>GetPara2
+
+```
+FUNCTION CTextRange2.GetPara2 () AS ITextPara2 PTR
+   DIM pPara AS ITextPara2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetPara2(m_pTextRange2, @pPara))
+   RETURN pPara
+END FUNCTION
+```
+
+# <a name="SetPara2"></a>SetPara2
+
+```
+FUNCTION CTextRange2.SetPara2 (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetPara2(m_pTextRange2, pPara))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="GetRow"></a>GetRow
+
+```
+FUNCTION CTextRange2.GetRow () AS ITextRow PTR
+   DIM pRow AS ITextRow PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetRow(m_pTextRange2, @pRow))
+   RETURN pRow
+END FUNCTION
+```
+
+# <a name="GetStartPara"></a>GetStartPara
+
+```
+FUNCTION CTextRange2.GetStartPara () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetStartPara(m_pTextRange2, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+# <a name="GetTable"></a>GetTable
+
+```
+FUNCTION CTextRange2.GetTable () AS IUnknown PTR
+   DIM pTable AS IUnknown PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetTable(m_pTextRange2, @pTable))
+   RETURN pTable
+END FUNCTION
+```
+
+# <a name="GetURL"></a>GetURL
+
+```
+FUNCTION CTextRange2.GetURL () AS CBSTR
+   DIM pbstr AS AFX_BSTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetURL(m_pTextRange2, @pbstr))
+   RETURN pbstr
+END FUNCTION
+```
+
+# <a name="SetURL"></a>SetURL
+
+```
+FUNCTION CTextRange2.SetURL (BYVAL bstr AS AFX_BSTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetURL(m_pTextRange2, bstr))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="AddSubrange"></a>AddSubrange
+
+```
+FUNCTION CTextRange2.AddSubrange (BYVAL cp1 AS LONG, BYVAL cp2 AS LONG, BYVAL Activate AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->AddSubrange(m_pTextRange2, cp1, cp2, Activate))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="BuildUpMath"></a>BuildUpMath
+
+```
+FUNCTION CTextRange2.BuildUpMath (BYVAL Flags AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->BuildUpMath(m_pTextRange2, Flags))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="DeleteSubrange"></a>DeleteSubrange
+
+```
+FUNCTION CTextRange2.DeleteSubrange (BYVAL cpFirst AS LONG, BYVAL cpLim AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->DeleteSubrange(m_pTextRange2, cpFirst, cpLim))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="Find"></a>Find
+
+```
+FUNCTION CTextRange2.Find (BYVAL pRange AS ITextRange2 PTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS HRESULT
+   DIM Delta AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->Find(m_pTextRange2, pRange, Count, Flags, @Delta))
+   RETURN Delta
+END FUNCTION
+```
+
+# <a name="GetChar2"></a>GetChar2
+
+```
+FUNCTION CTextRange2.GetChar2 (BYVAL Offset AS LONG) AS LONG
+   DIM Char AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetChar2(m_pTextRange2, @Char, Offset))
+   RETURN Char
+END FUNCTION
+```
+
+# <a name="GetDropCap"></a>GetDropCap
+
+```
+FUNCTION CTextRange2.GetDropCap (BYVAL pcLine AS LONG PTR, BYVAL pPosition AS LONG PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->GetDropCap(m_pTextRange2, pcLine, pPosition))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="GetInlineObject"></a>GetInlineObject
+
+```
+FUNCTION CTextRange2.GetInlineObject (BYVAL pcLine AS LONG PTR, BYVAL pType AS LONG PTR, BYVAL pAlign AS LONG PTR, BYVAL pChar AS LONG PTR, BYVAL pChar1 AS LONG PTR, _
+BYVAL pChar2 AS LONG PTR, BYVAL pCount AS LONG PTR,  BYVAL pTeXStyle AS LONG PTR, BYVAL pcCol AS LONG PTR, BYVAL pLevel AS LONG PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->GetInlineObject(m_pTextRange2, pcLine, pType, pAlign, pChar, pChar1, pChar2, pCount, pTeXStyle, pcCol))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="GetProperty"></a>GetProperty
+
+```
+FUNCTION CTextRange2.GetProperty (BYVAL nType AS LONG) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetProperty(m_pTextRange2, nType, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+# <a name="GetRect"></a>GetRect
+
+```
+FUNCTION CTextRange2.GetRect (BYVAL nType AS LONG, BYVAL pLeft AS LONG PTR, BYVAL pTop AS LONG PTR, _
+BYVAL pRight AS LONG PTR, BYVAL pBottom AS LONG PTR, BYVAL pHit AS LONG PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->GetRect(m_pTextRange2, nType, pLeft, pTop, pRight, pBottom, pHit))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="GetSubrange"></a>GetSubrange
+
+```
+FUNCTION CTextRange2.GetSubrange (BYVAL iSubrange AS LONG, BYVAL pcpFirst AS LONG PTR, BYVAL pcpLim AS LONG PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->GetSubrange(m_pTextRange2, iSubrange, pcpFirst, pcpLim))
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="GetText2"></a>GetText2
+
+```
+FUNCTION CTextRange2.GetText2 (BYVAL Flags AS LONG) AS CBSTR
+   DIM pText2 AS AFX_BSTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetText2(m_pTextRange2, Flags, @pText2))
+   RETURN pText2
+END FUNCTION
+```
+
+# <a name="HexToUnicode"></a>HexToUnicode
+
+```
+FUNCTION CTextRange2.HexToUnicode () AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->HexToUnicode(m_pTextRange2))
+   RETURN m_Result
+END FUNCTION
+```
