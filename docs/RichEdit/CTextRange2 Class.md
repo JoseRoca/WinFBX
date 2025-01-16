@@ -178,7 +178,7 @@ END CONSTRUCTOR
 
 | Parameter | Description |
 | --------- | ----------- |
-| *pTextDocpTextRange2ument2* | An **ITextRange2** interface pointer. |
+| *pTextTextRange2* | An **ITextRange2** interface pointer. |
 | *fAddRef* | Optional. TRUE to increment the reference count of the passed **ITextDocument2** interface pointer; otherise, FALSE. Default is FALSE. |
 
 #### Return value
