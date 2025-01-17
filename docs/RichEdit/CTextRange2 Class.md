@@ -695,6 +695,8 @@ The method returns an HRESULT value. If the method succeeds, it returns **S_OK**
 
 # <a name="GetEnd"></a>GetEnd
 
+Gets the end character position of the range.
+
 ```
 FUNCTION CTextRange2.GetEnd () AS LONG
    DIM cpLim AS LONG
@@ -702,8 +704,23 @@ FUNCTION CTextRange2.GetEnd () AS LONG
    RETURN cpLim
 END FUNCTION
 ```
+#### Return value
+
+The end character position.
+
+#### Result code
+
+If the method succeeds, **GetLastREsult** returns **S_OK**. If method fails, it returns **S_FALSE**.
+
+#### Remarks
+
+Although a pointer to a range remains valid when the text is edited, this is not the case for the character position. A character position is volatile; that is, it becomes invalid as soon as text is inserted or deleted before the character position. Be careful about using methods that return character position values, especially if the values are to be stored for any duration.
+
+This method is similar to the **GetStart** method which gets the start character position of the range.
 
 # <a name="SetEnd"></a>SetEnd
+
+Sets the end position of the range.
 
 ```
 FUNCTION CTextRange2.SetEnd (BYVAL cpLim AS LONG) AS HRESULT
@@ -711,6 +728,21 @@ FUNCTION CTextRange2.SetEnd (BYVAL cpLim AS LONG) AS HRESULT
    FUNCTION = m_Result
 END FUNCTION
 ```
+| Parameter | Description |
+| --------- | ----------- |
+| *cpLim* | The new end position. |
+
+#### Return value
+
+The method returns an **HRESULT** value. If the method succeeds, it returns **S_OK**. If the method fails, it returns **S_FALSE**.
+
+#### Remarks
+
+If the new end position is less than the start position, this method also sets the start position to *cp*; that is, the range becomes an insertion point.
+
+If this range is actually the selection, the end position becomes the active end and, if the display is not frozen, it is scrolled into view.
+
+**SetStart** sets the range's start position and **SetRange** sets both range ends simultaneously.
 
 # <a name="GetFont"></a>GetFont
 
