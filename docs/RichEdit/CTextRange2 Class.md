@@ -204,12 +204,13 @@ END SCOPE
 ```
 **Note**: The following lines of code:
 ```
+DIM pCTextDocument2 AS CTextDocument2 = hRichEdit
 DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(0, numChars)
 DIM cbsText AS CBSTR = pCRange2.GetText2(0)
 ```
 can be replaced with a compound syntax:
 ```
-DIM cbsText AS CBSTR = CTextRange2(pCTextDocument2.Range2(0, numChars)).GetText2(0)
+DIM cbsText AS CBSTR = CTextRange2(CTextDocument2(hRichEdit).Range2(0, numChars)).GetText2(0)
 ```
 *CTextRange2(pCTextDocument2.Range2(0, numChars))* creates a temporary instance of the **CTextRange2** class that can be used to call its methods (in this example, *GetText2(0)*). The temporary instance of the class is destroyed automatically after its use.
 
