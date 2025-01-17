@@ -1229,7 +1229,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *Unit* | *Unit* to use in the move operation. For a list of Unit values, see the table below. |
+| *Unit* | *Unit* to use in the move operation. For a list of *Unit* values, see the table below. |
 | *Extend* | How to move the ends of the range. It can be one of the following values. |
 
 |     |     |
@@ -1277,6 +1277,8 @@ The **StartOf** and **EndOf** methods differ from the **HomeKey** and **EndKey**
 
 # <a name="EndOf"></a>EndOf
 
+Moves this range's ends to the end of the last overlapping Unit in the range.
+
 ```
 FUNCTION CTextRange2.EndOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
    DIM Delta AS LONG
@@ -1284,6 +1286,41 @@ FUNCTION CTextRange2.EndOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
    RETURN Delta
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Unit* | *Unit* to use. efault value: **tomWord**. For a list of *Unit* values, see the table below. |
+| *Extend* | Indicator of how the shifting of the range ends is to proceed. It can be one of the following. |
+
+|     |     |
+| --- | --- |
+| 0 (or tomMove) | Collapses a nondegenerate range to the End of the original range by moving the insertion point. This is the default. |
+| 1 (or tomExtend) | Moves End to the end of the overlapping *Unit*. Does not move Start. |
+
+Table of Unit values:
+
+| Unit | Value | Meaning |
+| ---- | ----- | ------- |
+| **tomCharacter** | 1 | Character. |
+| **tomWord** | 2 | Word. |
+| **tomSentence** | 3 | Sentence. |
+| **tomParagraph** | 4 | Paragraph. |
+| **tomLine** | 5 | Line (on display). |
+| **tomStory** | 6 | Story. |
+| **tomScreen** | 7 | Screen (as for PAGE UP/PAGE DOWN). |
+| **tomSection** | 8 | Section. |
+| **tomColumn** | 9 | Table column. |
+| **tomRow** | 10 | Table row. |
+| **tomWindow** | 11 | Upper-left or lower-right of the window. |
+| **tomCell** | 12 | Table cell. |
+| **tomCharFormat** | 13 | Run of constant character formatting. |
+| **tomParaFormat** | 14 | Run of constant paragraph formatting. |
+| **tomTable** | 15 | Table. |
+| **tomObject** | 16 | Embedded object. |
+
+#### Return value
+
+The number of characters the insertion point or End is moved plus 1 if a collapse occurs to the entry End. If the range includes the final CR (carriage return) (at the end of the story) and *Extend* = **tomMove**, then the method returns –1 to indicate that the collapse occurred before the end of the range (because an insertion point cannot exist beyond the final CR).
 
 # <a name="Move"></a>Move
 
