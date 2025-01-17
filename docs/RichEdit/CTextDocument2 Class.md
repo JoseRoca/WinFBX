@@ -483,7 +483,7 @@ END FUNCTION
 
 #### Return value
 
-The return value is S_OK.
+The return value is **S_OK**.
 
 # <a name="GetDefaultTabStop"></a>GetDefaultTabStop
 
