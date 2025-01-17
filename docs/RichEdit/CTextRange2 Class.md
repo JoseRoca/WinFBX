@@ -1217,6 +1217,8 @@ The caret for an ambiguous character position is displayed at the beginning of t
 
 # <a name="StartOf"></a>StartOf
 
+Moves the range ends to the start of the first overlapping *Unit* in the range.
+
 ```
 FUNCTION CTextRange2.StartOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
    DIM Delta AS LONG
@@ -1224,6 +1226,52 @@ FUNCTION CTextRange2.StartOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
    RETURN Delta
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Unit* | *Unit* to use in the move operation. For a list of Unit values, see the table below. |
+| *Extend* | How to move the ends of the range. It can be one of the following values. |
+
+| 0 (or tomMove) | Collapses a nondegenerate range to the start position by moving the insertion point. This is the default. |
+| 1 (or tomExtend) | Moves the start position to the beginning of the overlapping Unit. Does not move the end position. |
+
+Table of Unit values:
+
+| Unit | Value | Meaning |
+| ---- | ----- | ------- |
+| **tomCharacter** | 1 | Character. |
+| **tomWord** | 2 | Word. |
+| **tomSentence** | 3 | Sentence. |
+| **tomParagraph** | 4 | Paragraph. |
+| **tomLine** | 5 | Line (on display). |
+| **tomStory** | 6 | Story. |
+| **tomScreen** | 7 | Screen (as for PAGE UP/PAGE DOWN). |
+| **tomSection** | 8 | Section. |
+| **tomColumn** | 9 | Table column. |
+| **tomRow** | 10 | Table row. |
+| **tomWindow** | 11 | Upper-left or lower-right of the window. |
+| **tomCell** | 12 | Table cell. |
+| **tomCharFormat** | 13 | Run of constant character formatting. |
+| **tomParaFormat** | 14 | Run of constant paragraph formatting. |
+| **tomTable** | 15 | Table. |
+| **tomObject** | 16 | Embedded object. |
+
+#### Return value
+
+The signed number of characters that the start position is moved. It can be null. This value is always less than or equal to zero, because the motion is always toward the beginning of the story.
+
+The method returns an HRESULT value. If the method succeeds, it returns S_OK. If the method fails, it returns one of the following error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_NOTIMPL** | Unit is not supported. |
+| **S_FALSE** | Failure for some other reason. |
+
+#### Remarks
+
+If the range is an insertion point on a boundary between Units, **StartOf** does not change the start position.
+
+The **StartOf** and **EndOf** methods differ from the **HomeKey** and **EndKey** methods in that the latter extend from the active end, whereas **StartOf** extends from the start position and **EndOf** extends from the end position.
 
 # <a name="EndOf"></a>EndOf
 
