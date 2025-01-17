@@ -868,8 +868,17 @@ FUNCTION CTextRange2.GetStoryLength () AS LONG
    RETURN Count
 END FUNCTION
 ```
+#### Return value
+
+The count of characters in the range's story.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
 # <a name="GetStoryType"></a>GetStoryType
+
+Get the type of the range's story.
 
 ```
 FUNCTION CTextRange2.GetStoryType () AS LONG
@@ -880,7 +889,22 @@ END FUNCTION
 ```
 #### Return value
 
-The count of characters in the range's story.
+The type of the range's story. It can be one of the following values:
+
+| Story type | Value |
+| ---------- | ----- |
+| **tomUnknownStory** | 0 |
+| **tomMainTextStory** | 1 |
+| **tomFootnotesStory** | 2 |
+| **tomEndnotesStory** | 3 |
+| **tomCommentsStory** | 4 |
+| **tomTextFrameStory** | 5 |
+| **tomEvenPagesHeaderStory** | 6 |
+| **tomPrimaryHeaderStory** | 7 |
+| **tomEvenPagesFooterStory** | 8 |
+| **tomPrimaryFooterStory** | 9 |
+| **tomFirstPageHeaderStory** | 10 |
+| **tomFirstPageFooterStory** | 11 |
 
 #### Result code
 
