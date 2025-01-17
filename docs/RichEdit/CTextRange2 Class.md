@@ -929,6 +929,10 @@ END FUNCTION
 | **tomStart or tomTrue** | Range is collapsed to the start of the range. This is the default. |
 | **tomEnd or tomFalse** | Range is collapsed to the end of the range. |
 
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
+
 # <a name="Expand"></a>Expand
 
 Expands this range so that any partial units it contains are completely contained.
@@ -1073,14 +1077,34 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 # <a name="SetRange"></a>SetRange
 
+Adjusts the range endpoints to the specified values.
+
 ```
 FUNCTION CTextRange2.SetRange (BYVAL cpAnchor AS LONG, BYVAL cpActive AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetRange(m_pTextRange2, cpAnchor, cpActive))
    RETURN m_Result
 END FUNCTION
 ```
+| Parameter | Description |
+| --------- | ----------- |
+| *cpAnchor* | The character position for the anchor end of the range. |
+| *cpActive* | The character position for the active end of the range. |
+
+#### Return value
+
+If this method succeeds, it returns **S_OK**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+This method sets the range's start position to *min(cpActive, cpAnchor)*, and the end position to *max(cpActive, cpAnchor)*. If the range is a nondegenerate selection, *cpAnchor* is the active end, and *cpAnchor* is the anchor end. If the range is a degenerate selection, the selection is displayed at the start of the line, rather than at the end of the previous line.
+
+This method removes any other subranges this range may have. To preserve the current subranges, use **SetActiveSubrange**.
+
+If the text range is a selection, you can set the attributes of the selection by using the **SetFlags** method.
 
 # <a name="InRange"></a>InRange
+
+Determines whether this range is within or at the same text as a specified range.
 
 ```
 FUNCTION CTextRange2.InRange (BYVAL pRange AS ITextRange2 PTR) AS LONG
@@ -1089,8 +1113,39 @@ FUNCTION CTextRange2.InRange (BYVAL pRange AS ITextRange2 PTR) AS LONG
    RETURN Value
 END FUNCTION
 ```
+| Parameter | Description |
+| --------- | ----------- |
+| *pRange* | Text that is compared to the current range. |
+
+#### Return value
+
+The comparison result. The pointer can be null. The method returns **tomTrue** only if the range is in or at the same text as *pRange*.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
+
+#### Remarks
+For range2 to be contained in range1, both ranges must be in the same story, and the limits of range2 must satisfy either of the following statements.
+
+- The start and end character positions of range1 are the same as range2. That is, both ranges are degenerate and have identical insertion points.
+- Range2 is a nondegenerate range with start and end character positions at or within those of range1.
+
+The following example shows how to walk one range with another.
+
+range2 = range1.GetDuplicate
+range2.SetEnd = range2.SetStart       ' Collapse range2 to its start position 
+While range2.InRange(range1)    ' Iterate so long as range2 remains within range1
+   ...   ' This code would change the range2 character positions 
+Wend
+
+When the **FindText**, **MoveWhile**, and **MoveUntil** method families are used, you can use one range to walk another by specifying the appropriate limit count of characters (for an example, see the Remarks in **Find**).
+
+**IsEqual** is a special case of **InRange** that returns **tomTrue** if the *pRange* has the same start and end character positions and belongs to the same story.
 
 # <a name="InStory"></a>InStory
+
+Determines whether this range's story is the same as a specified range's story.
 
 ```
 FUNCTION CTextRange2.InStory (BYVAL pRange AS ITextRange2 PTR) AS LONG
@@ -1100,7 +1155,21 @@ FUNCTION CTextRange2.InStory (BYVAL pRange AS ITextRange2 PTR) AS LONG
 END FUNCTION
 ```
 
+| Parameter | Description |
+| --------- | ----------- |
+| *pRange* | The **ITextRange2** object whose story is compared to this range's story. |
+
+#### Return value
+
+The comparison result. Returns **tomTrue** if this range's story is the same as that of the *pRange*; otherwise it receives **tomFalse**.
+
+#### Result code
+
+If the two stories are the same, **GetLastResult** returns **S_OK**. Otherwise, it returns **S_FALSE**.
+
 # <a name="IsEqual"></a>IsEqual
+
+Determines whether this range has the same character positions and story as those of a specified range.
 
 ```
 FUNCTION CTextRange2.IsEqual (BYVAL pRange AS ITextRange2 PTR) AS LONG
@@ -1109,6 +1178,20 @@ FUNCTION CTextRange2.IsEqual (BYVAL pRange AS ITextRange2 PTR) AS LONG
    RETURN Value
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pRange* | The **ITextRange2** object that is compared to this range. |
+
+#### Return value
+
+The comparison result. Returns **tomTrue** if this range points at the same text (has the same start and end character positions and story) as *pRange*; otherwise it returns **tomFalse**.
+
+#### Result code
+
+If the ranges have the same character positions and story, **GetLastResult** returns **S_OK**. Otherwise, it returns **S_FALSE**.
+
+The **IsEqual** method returns **tomTrue** only if the range points at the same text as *pRange*.
 
 # <a name="Select_"></a>Select_
 
