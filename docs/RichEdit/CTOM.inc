@@ -32,7 +32,6 @@ NAMESPACE Afx
       #ENDIF
    #ENDMACRO
 #ENDIF
-
 ' ========================================================================================
 
 ' ########################################################################################
@@ -41,7 +40,7 @@ NAMESPACE Afx
 TYPE CTOMBase
 
    DIM m_Result AS HRESULT
-   DIM m_bUninitCOM AS BOOLEAN
+'   DIM m_bUninitCOM AS BOOLEAN
 
    DECLARE CONSTRUCTOR
    DECLARE DESTRUCTOR
@@ -58,11 +57,11 @@ END TYPE
 CONSTRUCTOR CTOMBase
    CTOM_DP("*** BEGIN CTOMBase CONSTRUCTOR")
    ' // Initialize the COM library
-   IF m_bUninitCOM = FALSE THEN
-      DIM hr AS HRESULT = CoInitialize(NULL)
-      IF hr = S_OK OR hr = S_FALSE THEN m_bUninitCOM = TRUE
-   END IF
-   CTOM_DP("*** END CTOMBase CONSTRUCTOR - CoInitialize")
+'   IF m_bUninitCOM = FALSE THEN
+'      DIM hr AS HRESULT = CoInitialize(NULL)
+'      IF hr = S_OK OR hr = S_FALSE THEN m_bUninitCOM = TRUE
+'   END IF
+'   CTOM_DP("*** END CTOMBase CONSTRUCTOR - CoInitialize")
 END CONSTRUCTOR
 ' ========================================================================================
 
@@ -71,13 +70,13 @@ END CONSTRUCTOR
 ' ===========================================================================================
 DESTRUCTOR CTOMBase
    ' // Free the COM library
-   IF m_bUninitCOM THEN CoUninitialize
-   CTOM_DP("*** CTOMBase DESTRUCTOR - CoUninitialize")
+'   IF m_bUninitCOM THEN CoUninitialize
+'   CTOM_DP("*** CTOMBase DESTRUCTOR - CoUninitialize")
 END DESTRUCTOR
 ' ===========================================================================================
 
 ' ========================================================================================
-' Returns the last result
+' Returns the last result code
 ' ========================================================================================
 PRIVATE FUNCTION CTOMBase.GetLastResult () AS HRESULT
    CTOM_DP("CTOMBase.GetLastResult - Result = " & HEX(m_Result))
@@ -118,7 +117,6 @@ PRIVATE FUNCTION CTOMBase.GetErrorInfo () AS CWSTR
          s += "Unknown error"
    END SELECT
    RETURN s
-
 END FUNCTION
 ' ========================================================================================
 

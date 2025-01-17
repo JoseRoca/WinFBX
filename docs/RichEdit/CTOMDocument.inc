@@ -190,14 +190,14 @@ END FUNCTION
 ' ========================================================================================
 ' Attaches an ITextDocument2 interface pointer to the class.
 ' ========================================================================================
-PRIVATE FUNCTION CTextDocument2.Attach (BYVAL pTextDocument AS ITextDocument2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
+PRIVATE FUNCTION CTextDocument2.Attach (BYVAL pTextDocument2 AS ITextDocument2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
    m_Result = 0
-   IF pTextDocument = NULL THEN m_Result = E_INVALIDARG : RETURN m_Result
+   IF pTextDocument2 = NULL THEN m_Result = E_INVALIDARG : RETURN m_Result
    ' // Release the interface
    IF m_pTextDocument2 THEN m_Result = m_pTextDocument2->lpvtbl->Release(m_pTextDocument2)
    ' // Attach the passed interface pointer to the class
-   IF fAddRef THEN pTextDocument->lpvtbl->AddRef(pTextDocument)
-   m_pTextDocument2 = pTextDocument
+   IF fAddRef THEN pTextDocument2->lpvtbl->AddRef(pTextDocument2)
+   m_pTextDocument2 = pTextDocument2
    RETURN m_Result
 END FUNCTION
 ' ========================================================================================
@@ -207,9 +207,9 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextDocument2.Detach () AS ITextDocument2 PTR
    m_Result = 0
-   DIM pTextDocument AS ITextDocument2 PTR = m_pTextDocument2
+   DIM pTextDocument2 AS ITextDocument2 PTR = m_pTextDocument2
    m_pTextDocument2 = NULL
-   RETURN pTextDOcument
+   RETURN pTextDOcument2
 END FUNCTION
 ' ========================================================================================
 

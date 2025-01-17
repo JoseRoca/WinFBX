@@ -20,6 +20,7 @@ Public:
    m_pTextFont2 AS ITextFont2 PTR
 
 Public:
+   DECLARE CONSTRUCTOR
    DECLARE CONSTRUCTOR (BYVAL pTextFont2 AS ITextFont2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
    DECLARE OPERATOR LET (BYVAL pTextFont2 AS ITextFont2 PTR)
@@ -134,6 +135,13 @@ Public:
    DECLARE FUNCTION SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
 
 END TYPE
+' ========================================================================================
+
+' ========================================================================================
+' CTextRange2 constructor
+' ========================================================================================
+PRIVATE CONSTRUCTOR CTextFont2
+END CONSTRUCTOR
 ' ========================================================================================
 
 ' ========================================================================================

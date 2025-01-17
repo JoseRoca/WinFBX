@@ -20,6 +20,7 @@ Public:
    m_pTextPara2 AS ITextPara2 PTR
 
 Public:
+   DECLARE CONSTRUCTOR
    DECLARE CONSTRUCTOR (BYVAL pTextPara2 AS ITextPara2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
    DECLARE OPERATOR LET (BYVAL pTextPara2 AS ITextPara2 PTR)
@@ -97,6 +98,13 @@ Public:
    DECLARE FUNCTION SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
 
 END TYPE
+' ========================================================================================
+
+' ========================================================================================
+' CTextRange2 constructor
+' ========================================================================================
+PRIVATE CONSTRUCTOR CTextPara2
+END CONSTRUCTOR
 ' ========================================================================================
 
 ' ========================================================================================

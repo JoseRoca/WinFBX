@@ -31,9 +31,9 @@ Public:
 
    ' // ITextRange interface methods
    DECLARE FUNCTION GetText () AS CBSTR
-   DECLARE FUNCTION SetText (BYVAL bstr AS AFX_BSTR) AS HRESULT
+   DECLARE FUNCTION SetText (BYREF cbs AS CBSTR) AS HRESULT
    DECLARE FUNCTION GetChar () AS LONG
-   DECLARE FUNCTION SetChar (BYVAL Char AS LONG) AS HRESULT
+   DECLARE FUNCTION SetChar (BYVAL char AS LONG) AS HRESULT
    DECLARE FUNCTION GetDuplicate () AS ITextRange2 PTR
    DECLARE FUNCTION GetFormattedText () AS ITextRange2 PTR
    DECLARE FUNCTION SetFormattedText (BYVAl pRange AS ITextRange2 PTR) AS HRESULT
@@ -41,10 +41,10 @@ Public:
    DECLARE FUNCTION SetStart (BYVAL cpFirst AS LONG) AS HRESULT
    DECLARE FUNCTION GetEnd () AS LONG
    DECLARE FUNCTION SetEnd (BYVAL cpLim AS LONG) AS HRESULT
-   DECLARE FUNCTION GetFont () AS ITextFont PTR
-   DECLARE FUNCTION SetFont (BYVAL pFont AS ITextFont PTR) AS HRESULT
-   DECLARE FUNCTION GetPara () AS ITextPara PTR
-   DECLARE FUNCTION SetPara (BYVAL pPara AS ITextPara PTR) AS HRESULT
+   DECLARE FUNCTION GetFont () AS ITextFont2 PTR
+   DECLARE FUNCTION SetFont (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+   DECLARE FUNCTION GetPara () AS ITextPara2 PTR
+   DECLARE FUNCTION SetPara (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
    DECLARE FUNCTION GetStoryLength () AS LONG
    DECLARE FUNCTION GetStoryType () AS LONG
    DECLARE FUNCTION Collapse (BYVAL bStart AS LONG) AS HRESULT
@@ -67,9 +67,9 @@ Public:
    DECLARE FUNCTION MoveUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
    DECLARE FUNCTION MoveStartUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
    DECLARE FUNCTION MoveEndUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
-   DECLARE FUNCTION FindText (BYVAL bstr AS AFX_BSTR, BYVAL cch AS LONG, BYVAL Flags AS LONG) AS LONG
-   DECLARE FUNCTION FindTextStart (BYVAL bstr AS AFX_BSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
-   DECLARE FUNCTION FindTextEnd (BYVAL bstr AS AFX_BSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
+   DECLARE FUNCTION FindText (BYREF cbs AS CBSTR, BYVAL cch AS LONG, BYVAL Flags AS LONG) AS LONG
+   DECLARE FUNCTION FindTextStart (BYREF cbs AS CBSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
+   DECLARE FUNCTION FindTextEnd (BYREF cbs AS CBSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
    DECLARE FUNCTION Delete_ (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
    DECLARE FUNCTION Cut (BYVAL pVar AS VARIANT PTR) AS HRESULT
    DECLARE FUNCTION Copy (BYVAL pVar AS VARIANT PTR) AS HRESULT
@@ -92,7 +92,7 @@ Public:
    DECLARE FUNCTION MoveDown (BYVAL Unit AS LONG, BYVAL Count AS LONG, BYVAL Extend AS LONG) AS LONG
    DECLARE FUNCTION HomeKey (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
    DECLARE FUNCTION EndKey (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
-   DECLARE FUNCTION TypeText (BYVAL bstr AS AFX_BSTR) AS HRESULT
+   DECLARE FUNCTION TypeText (BYREF cbs AS CBSTR) AS HRESULT
 
    ' // ITextRange2 interface
    DECLARE FUNCTION GetCch () AS LONG
@@ -112,12 +112,12 @@ Public:
    DECLARE FUNCTION GetStartPara () AS LONG
    DECLARE FUNCTION GetTable () AS IUnknown PTR
    DECLARE FUNCTION GetURL () AS CBSTR
-   DECLARE FUNCTION SetURL (BYVAL bstr AS AFX_BSTR) AS HRESULT
+   DECLARE FUNCTION SetURL (BYREF cbstr AS CBSTR) AS HRESULT
    DECLARE FUNCTION AddSubrange (BYVAL cp1 AS LONG, BYVAL cp2 AS LONG, BYVAL Activate AS LONG) AS HRESULT
    DECLARE FUNCTION BuildUpMath (BYVAL Flags AS LONG) AS HRESULT
    DECLARE FUNCTION DeleteSubrange (BYVAL cpFirst AS LONG, BYVAL cpLim AS LONG) AS HRESULT
    DECLARE FUNCTION Find (BYVAL pRange AS ITextRange2 PTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS HRESULT
-   DECLARE FUNCTION GetChar2 (BYVAL Offset AS LONG) AS HRESULT
+   DECLARE FUNCTION GetChar2 (BYVAL Offset AS LONG) AS LONG
    DECLARE FUNCTION GetDropCap (BYVAL pcLine AS LONG PTR, BYVAL pPosition AS LONG PTR) AS HRESULT
    DECLARE FUNCTION GetInlineObject (BYVAL pcLine AS LONG PTR, BYVAL pType AS LONG PTR, BYVAL pAlign AS LONG PTR, BYVAL pChar AS LONG PTR, BYVAL pChar1 AS LONG PTR, _
       BYVAL pChar2 AS LONG PTR, BYVAL pCount AS LONG PTR,  BYVAL pTeXStyle AS LONG PTR, BYVAL pcCol AS LONG PTR, BYVAL pLevel AS LONG PTR) AS HRESULT
@@ -132,14 +132,14 @@ Public:
    DECLARE FUNCTION SetActiveSubrange (BYVAL cpAnchor AS LONG, BYVAL cpActive AS LONG) AS HRESULT
    DECLARE FUNCTION SetDropCap (BYVAL cLine AS LONG, BYVAL Position AS LONG) AS HRESULT
    DECLARE FUNCTION SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
-   DECLARE FUNCTION SetText2 (BYVAL Flags AS LONG, BYVAL bstr AS AFX_BSTR) AS HRESULT
+   DECLARE FUNCTION SetText2 (BYVAL Flags AS LONG, BYREF cbs AS CBSTR) AS HRESULT
    DECLARE FUNCTION UnicodeToHex () AS HRESULT
    DECLARE FUNCTION SetInlineObject (BYVAL nType AS Long, BYVAL Align AS LONG, BYVAL Char AS LONG, _
       BYVAL Char1 AS LONG, BYVAL Char2 AS LONG, BYVAL Count AS LONG, BYVAL TeXStyle AS LONG, BYVAL cCol AS LONG) AS HRESULT
-   DECLARE FUNCTION GetMathFunctionType (BYVAL bstr AS AFX_BSTR) AS HRESULT
+   DECLARE FUNCTION GetMathFunctionType (BYREF cbs AS CBSTR) AS HRESULT
    DECLARE FUNCTION InsertImage (BYVAL width_ AS LONG, BYVAL height_ AS LONG, BYVAL ascent AS LONG, BYVAL nType AS LONG, BYVAL bstrAltText AS BSTR, BYVAL pStream AS IStream PTR) AS HRESULT
    DECLARE FUNCTION InsertImage (BYVAL width_ AS LONG, BYVAL height AS LONG, BYVAL ascent AS LONG, _
-      BYVAL nType AS LONG, BYVAL bstrAltText AS AFX_BSTR, BYVAL pStream AS IStream PTR) AS HRESULT
+      BYVAL nType AS LONG, BYREF bstrAltText AS CBSTR, BYVAL pStream AS IStream PTR) AS HRESULT
 
 END TYPE
 ' ========================================================================================
@@ -159,9 +159,9 @@ END CONSTRUCTOR
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTextRange2 (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    CTOM_DP("BEGIN CTextRange2 CONSTRUCTOR - pTextRange2 = " & WSTR(pTextRange2))
-   ' // Store the pointer of ITextRange2 interface
    IF pTextRange2 = NULL THEN m_Result = E_INVALIDARG : EXIT CONSTRUCTOR
    IF fAddRef THEN pTextRange2->lpvtbl->AddRef(pTextRange2)
+   ' // Store the pointer of ITextRange2 interface
    m_pTextRange2 = pTextRange2
    CTOM_DP("END CTextRange2 CONSTRUCTOR - m_pTextRange2 = " & WSTR(m_pTextRange2))
 END CONSTRUCTOR
@@ -184,6 +184,7 @@ END DESTRUCTOR
 ' Assignment operator
 ' ========================================================================================
 PRIVATE OPERATOR CTextRange2.LET (BYVAL pTextRange2 AS ITextRange2 PTR)
+   CTOM_DP("CTextRange2 LET Operator - m_pTextRange2 = " & WSTR(pTextRange2))
    m_Result = 0
    IF pTextRange2 = NULL THEN m_Result = E_INVALIDARG : EXIT OPERATOR
    ' // Release the interface
@@ -251,8 +252,17 @@ END FUNCTION
 ' ========================================================================================
 ' Sets the text in this range.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.SetText (BYVAL bstr AS AFX_BSTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetText(m_pTextRange2, bstr))
+PRIVATE FUNCTION CTextRange2.SetText (BYREF cbs AS CBSTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetText(m_pTextRange2, cbs))
+   FUNCTION = m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the text in this range.
+' ========================================================================================
+PRIVATE FUNCTION CTextRange2.SetText2 (BYVAL Flags AS LONG, BYREF cbs AS CBSTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetText2(m_pTextRange2, Flags, cbs))
    FUNCTION = m_Result
 END FUNCTION
 ' ========================================================================================
@@ -266,18 +276,28 @@ PRIVATE FUNCTION CTextRange2.GetChar () AS LONG
    RETURN Char
 END FUNCTION
 ' ========================================================================================
+' ========================================================================================
+' Gets the character at the specified offset from the end of this range.
+' ========================================================================================
+PRIVATE FUNCTION CTextRange2.GetChar2 (BYVAL Offset AS LONG) AS LONG
+   DIM Char AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetChar2(m_pTextRange2, @Char, Offset))
+   RETURN Char
+END FUNCTION
+' ========================================================================================
 
 ' ========================================================================================
 ' Sets the character at the starting position of the range.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.SetChar (BYVAL Char AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetChar(m_pTextRange2, Char))
+PRIVATE FUNCTION CTextRange2.SetChar (BYVAL char AS LONG) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetChar(m_pTextRange2, char))
    FUNCTION = m_Result
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
 ' Gets the character at the start position of the range.
+' In this implementation of the class, GetDuplicate and GetDuplicate2 are the same method.
 ' ========================================================================================
 PRIVATE FUNCTION CTextRange2.GetDuplicate () AS ITextRange2 PTR
    DIM pRange AS ITextRange2 PTR
@@ -285,23 +305,56 @@ PRIVATE FUNCTION CTextRange2.GetDuplicate () AS ITextRange2 PTR
    RETURN pRange
 END FUNCTION
 ' ========================================================================================
+' ========================================================================================
+' Gets a duplicate of a range object.
+' In this implementation of the class, GetDuplicate and GetDuplicate2 are the same method.
+' ========================================================================================
+PRIVATE FUNCTION CTextRange2.GetDuplicate2 () AS ITextRange2 PTR
+   DIM pRange AS ITextRange2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetDuplicate2(m_pTextRange2, @pRange))
+   RETURN pRange
+END FUNCTION
+' ========================================================================================
 
 ' ========================================================================================
 ' Gets an ITextRange2 object with the specified range's formatted text.
+' In this implementation of the class, GetFormattedText and GetFormattedText2 are the same method.
 ' ========================================================================================
 PRIVATE FUNCTION CTextRange2.GetFormattedText () AS ITextRange2 PTR
    DIM pRange AS ITextRange2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetFormattedText(m_pTextRange2, @pRange))
+   this.SetResult(m_pTextRange2->lpvtbl->GetFormattedText2(m_pTextRange2, @pRange))
    RETURN pRange
 END FUNCTION
 ' ========================================================================================
  
  ' ========================================================================================
+' Gets an ITextRange2 object with the current range's formatted text.
+' In this implementation of the class, GetFormattedText and GetFormattedText2 are the same method.
+' ========================================================================================
+PRIVATE FUNCTION CTextRange2.GetFormattedText2 () AS ITextRange2 PTR
+   DIM pRange AS ITextRange2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetFormattedText2(m_pTextRange2, @pRange))
+   RETURN pRange
+END FUNCTION
+' ========================================================================================
+
+ ' ========================================================================================
 ' Sets the character at the starting position of the range.
+' In this implementation of the class, SetFormattedText and SetFormattedText2 are the same method.
 ' ========================================================================================
 PRIVATE FUNCTION CTextRange2.SetFormattedText (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetFormattedText(m_pTextRange2, pRange))
    FUNCTION = m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets an ITextRange2 object with the current range's formatted text.
+' In this implementation of the class, SetFormattedText and SetFormattedText2 are the same method.
+' ========================================================================================
+PRIVATE FUNCTION CTextRange2.SetFormattedText2 (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetFormattedText2(m_pTextRange2, pRange))
+   RETURN m_Result
 END FUNCTION
 ' ========================================================================================
 
@@ -345,39 +398,78 @@ END FUNCTION
 
 ' ========================================================================================
 ' Gets an ITextFont2 object with the character attributes of the specified range.
+' In this implementation of the class, GetFont and GetFont2 are the same method.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.GetFont () AS ITextFont PTR
-   DIM pFont AS ITextFont PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetFont(m_pTextRange2, @pFont))
+PRIVATE FUNCTION CTextRange2.GetFont () AS ITextFont2 PTR
+   DIM pFont AS ITextFont2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetFont2(m_pTextRange2, @pFont))
+   RETURN pFont
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Gets an ITextFont2 object with the character attributes of the current range.
+' In this implementation of the class, GetFont and GetFont2 are the same method.
+' ========================================================================================
+PRIVATE FUNCTION CTextRange2.GetFont2 () AS ITextFont2 PTR
+   DIM pFont AS ITextFont2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetFont2(m_pTextRange2, @pFont))
    RETURN pFont
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Sets the new end character position of the range.
+' Sets the character formatting attributes of the range.
+' In this implementation of the class, SetFont and SetFont2 are the same method.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.SetFont (BYVAL pFont AS ITextFont PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetFont(m_pTextRange2, pFont))
+PRIVATE FUNCTION CTextRange2.SetFont (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetFont2(m_pTextRange2, pFont))
    FUNCTION = m_Result
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the character formatting attributes of the range.
+' ========================================================================================
+PRIVATE FUNCTION CTextRange2.SetFont2 (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetFont2(m_pTextRange2, pFont))
+   RETURN m_Result
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Gets an ITextPara object with the paragraph attributes of the specified range.
+' Gets an ITextPar2 object with the paragraph attributes of the specified range.
+' In this implementation of the class, GetPara and GetPara2 are the same method.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.GetPara () AS ITextPara PTR
-   DIM pPara AS ITextPara PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetPara(m_pTextRange2, @pPara))
+PRIVATE FUNCTION CTextRange2.GetPara () AS ITextPara2 PTR
+   DIM pPara AS ITextPara2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetPara2(m_pTextRange2, @pPara))
+   RETURN pPara
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Gets an ITextPara2 object with the paragraph attributes of a range.
+' ========================================================================================
+PRIVATE FUNCTION CTextRange2.GetPara2 () AS ITextPara2 PTR
+   DIM pPara AS ITextPara2 PTR
+   this.SetResult(m_pTextRange2->lpvtbl->GetPara2(m_pTextRange2, @pPara))
    RETURN pPara
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Sets the paragraph attributes of this range to those of the specified ITextPara object.
+' Sets the paragraph format attributes of a range.
+' In this implementation of the class, SetPara and SetPara2 are the same method.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.SetPara (BYVAL pPara AS ITextPara PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetPara(m_pTextRange2, pPara))
-   FUNCTION = m_Result
+PRIVATE FUNCTION CTextRange2.SetPara (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetPara2(m_pTextRange2, pPara))
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the paragraph format attributes of a range.
+' ========================================================================================
+PRIVATE FUNCTION CTextRange2.SetPara2 (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetPara2(m_pTextRange2, pPara))
+   RETURN m_Result
 END FUNCTION
 ' ========================================================================================
 
@@ -617,9 +709,9 @@ END FUNCTION
 ' Searches up to Count characters for the text given by bstr. The starting position and direction
 ' are also specified by Count, and the matching criteria are given by Flags.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.FindText (BYVAL bstr AS AFX_BSTR, BYVAL cch AS LONG, BYVAL Flags AS LONG) AS LONG
+PRIVATE FUNCTION CTextRange2.FindText (BYREF cbs AS CBSTR, BYVAL cch AS LONG, BYVAL Flags AS LONG) AS LONG
    DIM Length AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->FindText(m_pTextRange2, bstr, cch, Flags, @Length))
+   this.SetResult(m_pTextRange2->lpvtbl->FindText(m_pTextRange2, cbs, cch, Flags, @Length))
    RETURN Length
 END FUNCTION
 ' ========================================================================================
@@ -630,9 +722,9 @@ END FUNCTION
 ' Start cp is changed to the matched string, and pLength is set equal to the length of the
 ' string. If the string is not found, the range is unchanged, and pLength is set equal to zero.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.FindTextStart (BYVAL bstr AS AFX_BSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
+PRIVATE FUNCTION CTextRange2.FindTextStart (BYREF cbs AS CBSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
    DIM Length AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->FindTextStart(m_pTextRange2, bstr, Count, Flags, @Length))
+   this.SetResult(m_pTextRange2->lpvtbl->FindTextStart(m_pTextRange2, cbs, Count, Flags, @Length))
    RETURN Length
 END FUNCTION
 ' ========================================================================================
@@ -644,9 +736,9 @@ END FUNCTION
 ' length of the string. If the string is not found, the range is unchanged and pLength is
 ' set equal to zero.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.FindTextEnd (BYVAL bstr AS AFX_BSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
+PRIVATE FUNCTION CTextRange2.FindTextEnd (BYREF cbs AS CBSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
    DIM Length AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->FindTextEnd(m_pTextRange2, bstr, Count, Flags, @Length))
+   this.SetResult(m_pTextRange2->lpvtbl->FindTextEnd(m_pTextRange2, cbs, Count, Flags, @Length))
    RETURN Length
 END FUNCTION
 ' ========================================================================================
@@ -851,8 +943,8 @@ END FUNCTION
 ' to the underlying SetText method, but is sensitive to the Insert/Overtype key state and
 ' UI settings like AutoCorrect and smart quotes.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.TypeText (BYVAL bstr AS AFX_BSTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->TypeText(m_pTextRange2, bstr))
+PRIVATE FUNCTION CTextRange2.TypeText (BYREF cbs AS CBSTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->TypeText(m_pTextRange2, cbs))
    RETURN m_Result
 END FUNCTION
 ' ========================================================================================
@@ -898,54 +990,6 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Gets a duplicate of a range object.
-' ========================================================================================
-PRIVATE FUNCTION CTextRange2.GetDuplicate2 () AS ITextRange2 PTR
-   DIM pRange AS ITextRange2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetDuplicate2(m_pTextRange2, @pRange))
-   RETURN pRange
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Gets an ITextFont2 object with the character attributes of the current range.
-' ========================================================================================
-PRIVATE FUNCTION CTextRange2.GetFont2 () AS ITextFont2 PTR
-   DIM pFont AS ITextFont2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetFont2(m_pTextRange2, @pFont))
-   RETURN pFont
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Sets the character formatting attributes of the range.
-' ========================================================================================
-PRIVATE FUNCTION CTextRange2.SetFont2 (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetFont2(m_pTextRange2, pFont))
-   RETURN m_Result
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Gets an ITextRange2 object with the current range's formatted text.
-' ========================================================================================
-PRIVATE FUNCTION CTextRange2.GetFormattedText2 () AS ITextRange2 PTR
-   DIM pRange AS ITextRange2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetFormattedText2(m_pTextRange2, @pRange))
-   RETURN pRange
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Sets an ITextRange2 object with the current range's formatted text.
-' ========================================================================================
-PRIVATE FUNCTION CTextRange2.SetFormattedText2 (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetFormattedText2(m_pTextRange2, pRange))
-   RETURN m_Result
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
 ' Gets the gravity of this range.
 ' ========================================================================================
 PRIVATE FUNCTION CTextRange2.GetGravity () AS LONG
@@ -960,25 +1004,6 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextRange2.SetGravity (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetGravity(m_pTextRange2, Value))
-   RETURN m_Result
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Gets an ITextPara2 object with the paragraph attributes of a range.
-' ========================================================================================
-PRIVATE FUNCTION CTextRange2.GetPara2 () AS ITextPara2 PTR
-   DIM pPara AS ITextPara2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetPara2(m_pTextRange2, @pPara))
-   RETURN pPara
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Sets an ITextPara2 object with the paragraph attributes of a range.
-' ========================================================================================
-PRIVATE FUNCTION CTextRange2.SetPara2 (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetPara2(m_pTextRange2, pPara))
    RETURN m_Result
 END FUNCTION
 ' ========================================================================================
@@ -1027,8 +1052,8 @@ END FUNCTION
 ' ========================================================================================
 ' Sets the text in this range to that of the specified URL.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.SetURL (BYVAL bstr AS AFX_BSTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetURL(m_pTextRange2, bstr))
+PRIVATE FUNCTION CTextRange2.SetURL (BYREF cbs AS CBSTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->SetURL(m_pTextRange2, cbs))
    RETURN m_Result
 END FUNCTION
 ' ========================================================================================
@@ -1067,16 +1092,6 @@ PRIVATE FUNCTION CTextRange2.Find (BYVAL pRange AS ITextRange2 PTR, BYVAL Count 
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->Find(m_pTextRange2, pRange, Count, Flags, @Delta))
    RETURN Delta
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Gets the character at the specified offset from the end of this range.
-' ========================================================================================
-PRIVATE FUNCTION CTextRange2.GetChar2 (BYVAL Offset AS LONG) AS LONG
-   DIM Char AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetChar2(m_pTextRange2, @Char, Offset))
-   RETURN Char
 END FUNCTION
 ' ========================================================================================
 
@@ -1196,15 +1211,6 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Sets the text in this range.
-' ========================================================================================
-PRIVATE FUNCTION CTextRange2.SetText2 (BYVAL Flags AS LONG, BYVAL bstr AS AFX_BSTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetText2(m_pTextRange2, Flags, bstr))
-   FUNCTION = m_Result
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
 ' Converts the Unicode character(s) preceding the start position of this text range to a
 ' hexadecimal number, and selects it.
 ' ========================================================================================
@@ -1227,9 +1233,9 @@ END FUNCTION
 ' ========================================================================================
 ' Retrieves the math function type associated with the specified math function name.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.GetMathFunctionType (BYVAL bstr AS AFX_BSTR) AS LONG
+PRIVATE FUNCTION CTextRange2.GetMathFunctionType (BYREF cbs AS CBSTR) AS LONG
    DIM Value AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetMathFunctionType(m_pTextRange2, bstr, @Value))
+   this.SetResult(m_pTextRange2->lpvtbl->GetMathFunctionType(m_pTextRange2, cbs, @Value))
    RETURN Value
 END FUNCTION
 ' ========================================================================================
@@ -1238,8 +1244,8 @@ END FUNCTION
 ' Inserts an image into this range.
 ' ========================================================================================
 PRIVATE FUNCTION CTextRange2.InsertImage (BYVAL width_ AS LONG, BYVAL height AS LONG, BYVAL ascent AS LONG, _
-BYVAL nType AS LONG, BYVAL bstrAltText AS AFX_BSTR, BYVAL pStream AS IStream PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->InsertImage(m_pTextRange2, width_, height, ascent, nType, bstrAltText, pStream))
+BYVAL nType AS LONG, BYREF cbsAltText AS CBSTR, BYVAL pStream AS IStream PTR) AS HRESULT
+   this.SetResult(m_pTextRange2->lpvtbl->InsertImage(m_pTextRange2, width_, height, ascent, nType, cbsAltText, pStream))
    RETURN m_Result
 END FUNCTION
 ' ========================================================================================

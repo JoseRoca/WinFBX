@@ -20,6 +20,7 @@ Public:
    m_pTextRow AS ITextRow PTR
 
 Public:
+   DECLARE CONSTRUCTOR
    DECLARE CONSTRUCTOR (BYVAL pTextRow AS ITextRow PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    DECLARE DESTRUCTOR
    DECLARE OPERATOR LET (BYVAL pTextRow AS ITextRow PTR)
@@ -84,7 +85,14 @@ END TYPE
 ' ========================================================================================
 
 ' ========================================================================================
-' CTextRange2 constructor
+' CTextRow constructor
+' ========================================================================================
+PRIVATE CONSTRUCTOR CTextRow
+END CONSTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' CTextRow2 constructor
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTextRow (BYVAL pTextRow AS ITextRow PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
    ' // Store the pointer of ITextRow interface
