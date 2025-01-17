@@ -912,12 +912,22 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 # <a name="Collapse"></a>Collapse
 
+Collapses the specified text range into a degenerate point at either the beginning or end of the range.
+
 ```
 FUNCTION CTextRange2.Collapse (BYVAL bStart AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->Collapse(m_pTextRange2, bStart))
    RETURN m_Result
 END FUNCTION
 ```
+| Parameter | Description |
+| --------- | ----------- |
+| *bStart* | Flag specifying the end to collapse at. It can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomStart or tomTrue** | Range is collapsed to the start of the range. This is the default. |
+| **tomEnd or tomFalse** | Range is collapsed to the end of the range. |
 
 # <a name="Expand"></a>Expand
 
