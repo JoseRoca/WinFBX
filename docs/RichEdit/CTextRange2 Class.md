@@ -1196,12 +1196,24 @@ The **IsEqual** method returns **tomTrue** only if the range points at the same 
 
 # <a name="Select_"></a>Select_
 
+Sets the start and end positions, and story values of the active selection, to those of this range.
+
 ```
 FUNCTION CTextRange2.Select_ () AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->Select(m_pTextRange2))
    RETURN m_Result
 END FUNCTION
 ```
+
+#### Return value
+
+The method returns an **HRESULT** value. If the method succeeds, it returns **S_OK**. If the method fails, it returns **S_FALSE**.
+
+#### Remarks
+
+The active end of the new selection is at the end position.
+
+The caret for an ambiguous character position is displayed at the beginning of the line.
 
 # <a name="StartOf"></a>StartOf
 
