@@ -1136,7 +1136,7 @@ The following example shows how to walk one range with another.
 ```
 range2 = range1.GetDuplicate
 range2.SetEnd = range2.SetStart       ' Collapse range2 to its start position 
-While range2.InRange(range1)    ' Iterate so long as range2 remains within range1
+While range2.InRange(range1)          ' Iterate so long as range2 remains within range1
    ...   ' This code would change the range2 character positions 
 Wend
 ```
