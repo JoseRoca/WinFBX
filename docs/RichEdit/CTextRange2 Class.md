@@ -982,6 +982,8 @@ For example, if an insertion point is at the beginning, the end, or within a wor
 
 # <a name="GetIndex"></a>GetIndex
 
+Retrieves the story index of the *Unit* parameter at the specified range Start character position. The first *Unit* in a story has an index value of 1. The index of a *Unit* is the same for all character positions from that immediately preceding the *Unit* up to the last character in the *Unit*.
+
 ```
 FUNCTION CTextRange2.GetIndex (BYVAL Unit AS LONG) AS LONG
    DIM Index AS LONG
@@ -989,6 +991,40 @@ FUNCTION CTextRange2.GetIndex (BYVAL Unit AS LONG) AS LONG
    RETURN Index
 END FUNCTION
 ```
+| Parameter | Description |
+| --------- | ----------- |
+| *Unit* | Unit to include, if it is partially within the range. The default value is **tomWord**.<br> For a list of *Unit* values, see the table below. |
+
+| Unit | Value | Meaning |
+| ---- | ----- | ------- |
+| **tomCharacter** | 1 | Character. |
+| **tomWord** | 2 | Word. |
+| **tomSentence** | 3 | Sentence. |
+| **tomParagraph** | 4 | Paragraph. |
+| **tomLine** | 5 | Line (on display). |
+| **tomStory** | 6 | Story. |
+| **tomScreen** | 7 | Screen (as for PAGE UP/PAGE DOWN). |
+| **tomSection** | 8 | Section. |
+| **tomColumn** | 9 | Table column. |
+| **tomRow** | 10 | Table row. |
+| **tomWindow** | 11 | Upper-left or lower-right of the window. |
+| **tomCell** | 12 | Table cell. |
+| **tomCharFormat** | 13 | Run of constant character formatting. |
+| **tomParaFormat** | 14 | Run of constant paragraph formatting. |
+| **tomTable** | 15 | Table. |
+| **tomObject** | 16 | Embedded object. |
+
+#### Return value
+
+The index value. The value is zero if Unit does not exist.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_NOTIMPL** | Unit is not supported. |
 
 # <a name="SetIndex"></a>SetIndex
 
