@@ -2057,8 +2057,7 @@ END FUNCTION
 | *width_* | The width, in HIMETRIC units (0.01 mm), of the image. |
 | *height* | The height, in HIMETRIC units, of the image. |
 | *ascent* | If *nType* is TA_BASELINE, this parameter is the distance, in HIMETRIC units, that the top of the image extends above the text baseline. If *nType* is TA_BASELINE and ascent is zero, the bottom of the image is placed at the text baseline. |
-| *nType* | The vertical alignment of the image. It can be one of the following values. |
-| *nType* | The vertical alignment of the image. It can be one of the following values.<br>**TA_BASELINE**. Align the image relative to the text baseline.<br>**TA_BOTTOM**. Align the bottom of the image at the bottom of the text line.<br>**TA_TOP**. Align the top of the image at the top of the text line. |
+| *nType* | The vertical alignment of the image. It can be one of the following values:<br>**TA_BASELINE**. Align the image relative to the text baseline.<br>**TA_BOTTOM**. Align the bottom of the image at the bottom of the text line.<br>**TA_TOP**. Align the top of the image at the top of the text line. |
 | *bstrAltText* | The alternate text for the image. |
 | *pStream* | The stream that contains the image data. |
 
