@@ -942,7 +942,7 @@ END FUNCTION
 ```
 | Parameter | Description |
 | --------- | ----------- |
-| *Unit* | Unit to include, if it is partially within the range. The default value is **tomWord**. For a list of the other Unit values, see the discussion under **ITextRange**. |
+| *Unit* | Unit to include, if it is partially within the range. The default value is **tomWord**.<br> For a list of *Unit* values, see the table below. |
 
 | Unit | Value | Meaning |
 | ---- | ----- | ------- |
@@ -975,6 +975,10 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **E_NOTIMPL** | Unit is not supported. |
 | **S_FALSE** | Failure for some other reason. |
+
+#### Remarks
+
+For example, if an insertion point is at the beginning, the end, or within a word, **Expand** expands the range to include that word. If the range already includes one word and part of another, **Expand** expands the range to include both words. **Expand** expands the range to include the visible portion of the range's story.
 
 # <a name="GetIndex"></a>GetIndex
 
