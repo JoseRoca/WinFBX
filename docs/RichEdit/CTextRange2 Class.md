@@ -859,6 +859,8 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 # <a name="GetStoryLength"></a>GetStoryLength
 
+Gets the count of characters in the range's story.
+
 ```
 FUNCTION CTextRange2.GetStoryLength () AS LONG
    DIM Count AS LONG
@@ -876,6 +878,13 @@ FUNCTION CTextRange2.GetStoryType () AS LONG
    RETURN Value
 END FUNCTION
 ```
+#### Return value
+
+The count of characters in the range's story.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
 # <a name="Collapse"></a>Collapse
 
