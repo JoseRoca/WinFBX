@@ -1337,6 +1337,7 @@ For comparison, the **StartOf** method moves the range ends to the beginning of 
 
 # <a name="Move"></a>Move
 
+Moves the insertion point forward or backward a specified number of units. If the range is nondegenerate, the range is collapsed to an insertion point at either end, depending on *Count*, and then is moved.
 ```
 FUNCTION CTextRange2.Move (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
    DIM Delta AS LONG
@@ -1344,6 +1345,62 @@ FUNCTION CTextRange2.Move (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
    RETURN Delta
 END FUNCTION
 ```
+| Parameter | Description |
+| --------- | ----------- |
+| *Unit* | Unit to use. The default value is **tomCharacter**. For information on other values, For a list of *Unit* values, see the table below. |
+| *Count* | Number of *Units* to move past. The default value is 1. If *Count* is greater than zero, motion is forward—toward the end of the story—and if *Count* is less than zero, motion is backward—toward the beginning. If *Count* is zero, the range is unchanged. |
+
+| Unit | Value | Meaning |
+| ---- | ----- | ------- |
+| **tomCharacter** | 1 | Character. |
+| **tomWord** | 2 | Word. |
+| **tomSentence** | 3 | Sentence. |
+| **tomParagraph** | 4 | Paragraph. |
+| **tomLine** | 5 | Line (on display). |
+| **tomStory** | 6 | Story. |
+| **tomScreen** | 7 | Screen (as for PAGE UP/PAGE DOWN). |
+| **tomSection** | 8 | Section. |
+| **tomColumn** | 9 | Table column. |
+| **tomRow** | 10 | Table row. |
+| **tomWindow** | 11 | Upper-left or lower-right of the window. |
+| **tomCell** | 12 | Table cell. |
+| **tomCharFormat** | 13 | Run of constant character formatting. |
+| **tomParaFormat** | 14 | Run of constant paragraph formatting. |
+| **tomTable** | 15 | Table. |
+| **tomObject** | 16 | Embedded object. |
+
+#### Return value
+
+The actual number of *Units* the insertion point moves past. For more information, see the **Remarks** section.
+
+#### Result code
+
+If the method succeeds in moving the insertion point, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes:
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_NOTIMPL** | Unit is not supported. |
+| **S_FALSE** | Failure for some other reason. |
+
+#### Remarks
+
+If the range is degenerate (an insertion point), this method tries to move the insertion point *Count Units*.
+
+If the range is nondegenerate and *Count* is greater than zero, this method collapses the range at the end character position, moves the resulting insertion point forward to a *Unit* boundary (if it is not already at one), and then tries to move *Count* - 1 *Units* forward. If the range is nondegenerate and *Count* is less than zero, this method collapses the range at the start character position, moves the resulting insertion point backward to a *Unit* boundary (if it isn't already at one), and then tries to move *Count* - 1 *Units* backward. Thus, in both cases, collapsing a nondegenerate range to an insertion point, whether moving to the start or end of the Unit following the collapse, counts as a *Unit*.
+
+The **Move** method returns the number of *Units* actually moved. This method never moves the insertion point beyond the story of this range. If *Count Units* would move the insertion point before the beginning of the story, it is moved to the story beginning. Similarly, if *Count  Units* would move it beyond the end of the story, it is moved to the story end.
+
+The **Move** method works similarly to the UI-oriented **MoveLeft** and **MoveRight** methods, except that the direction of motion is logical rather than geometrical. That is, with **Move** the direction is either toward the end or toward the start of the story. Depending on the language, moving toward the end of the story could be moving to the left or to the right. To get a feel for *Count*, press Ctrl+Right Arrow in a Microsoft Word document for a variety of selections. In left-to-right text, this keystroke behaves the same as *Move(tomWord, 1)*, and *MoveRight(tomWord, 1)*. *Count* corresponds to the number of times you press Ctrl+Right Arrow.
+
+The return value is set equal to the number of *Units* that the insertion point is moved including one *Unit* for collapsing a nondegenerate range and moving it to a *Unit* boundary. So, if no motion and no collapse occur, as when the range is an insertion point at the end of the story, the return value is zero. This approach is useful for controlling program loops that process a whole story.
+
+In both of the cases mentioned above, calling *Move(tomWord, 1)* returns a value of 1 because the ranges were collapsed. Similarly, calling *Move(tomWord, -1)* returns a value of -1 for both cases. Collapsing, with or without moving part of a Unit to a *Unit* boundary, counts as a *Unit* moved.
+
+The direction of motion refers to the logical character ordering in the plain-text backing store. This approach avoids the problems of geometrical ordering, such as left versus right and up versus down, in international software. Such geometrical methods are still needed in the edit engine, of course, since keyboards have arrow keys to invoke them. If the range is really an **ITextSelection** object, then methods like **MoveLeft** and **MoveRight** can be used.
+
+If *Unit* specifies characters (**tomCharacter**), the Text Object Model (TOM) uses the Unicode character set. To convert between Unicode and multibyte character sets the **MultiByteToWideChar** and **WideCharToMultiByte** functions provide easy ways to convert between Unicode and multibyte character sets on import and export, respectively. For more information, see **Open**. In this connection, the use of a carriage return/line feed (CR/LF) to separate paragraphs is as problematic as double-byte character set (DBCS). The **ITextSelection** UI methods back up over a CR/LF as if it were a single character, but the **Move** methods count CR/LFs as two characters. It's clearly better to use a single character as a paragraph separator, which in TOM is represented by a character return, although the Unicode paragraph separator character, &h2029, is accepted. In general, TOM engines should support CR/LF, carriage return (CR), line feed (LF), vertical tab, form feed, and &h2029. Microsoft Rich Edit 2.0 also supports CR/CR/LF for backward compatibility.
+
+See also the **MoveStart** and **MoveEnd** methods, which move the range Start or End position *Count  Units*, respectively.
 
 # <a name="MoveStart"></a>MoveStart
 
