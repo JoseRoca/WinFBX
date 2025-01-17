@@ -1133,12 +1133,13 @@ For range2 to be contained in range1, both ranges must be in the same story, and
 
 The following example shows how to walk one range with another.
 
+```
 range2 = range1.GetDuplicate
 range2.SetEnd = range2.SetStart       ' Collapse range2 to its start position 
 While range2.InRange(range1)    ' Iterate so long as range2 remains within range1
    ...   ' This code would change the range2 character positions 
 Wend
-
+```
 When the **FindText**, **MoveWhile**, and **MoveUntil** method families are used, you can use one range to walk another by specifying the appropriate limit count of characters (for an example, see the Remarks in **Find**).
 
 **IsEqual** is a special case of **InRange** that returns **tomTrue** if the *pRange* has the same start and end character positions and belongs to the same story.
