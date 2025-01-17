@@ -1232,6 +1232,8 @@ END FUNCTION
 | *Unit* | *Unit* to use in the move operation. For a list of Unit values, see the table below. |
 | *Extend* | How to move the ends of the range. It can be one of the following values. |
 
+|           |             |
+| --------- | ----------- |
 | 0 (or tomMove) | Collapses a nondegenerate range to the start position by moving the insertion point. This is the default. |
 | 1 (or tomExtend) | Moves the start position to the beginning of the overlapping Unit. Does not move the end position. |
 
