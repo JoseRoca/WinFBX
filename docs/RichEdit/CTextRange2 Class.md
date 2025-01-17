@@ -1333,7 +1333,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 #### Remarks
 
-For comparison, the **StartOf** method moves the range ends to the beginning of the first overlapping *Unit* in the range. Note, the **StartOf** and **EndOf** methods differ from the **HomeKey** and **EndKey** methods in that the latter extend from the active end, whereas **StartOf** extends from Start and **EndOf** extends from End. If the range is an insertion point on a boundary between *Units*, **EndOf** does not change End. In particular, calling *EndOf (tomCharacter, *, *)* does not change End except for an insertion point at the beginning of a story.
+For comparison, the **StartOf** method moves the range ends to the beginning of the first overlapping *Unit* in the range. Note, the **StartOf** and **EndOf** methods differ from the **HomeKey** and **EndKey** methods in that the latter extend from the active end, whereas **StartOf** extends from Start and **EndOf** extends from End. If the range is an insertion point on a boundary between *Units*, **EndOf** does not change End. In particular, calling *EndOf (tomCharacter, 0)* does not change End except for an insertion point at the beginning of a story.
 
 # <a name="Move"></a>Move
 
