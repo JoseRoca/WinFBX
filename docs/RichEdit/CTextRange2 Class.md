@@ -1028,12 +1028,48 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 # <a name="SetIndex"></a>SetIndex
 
+Changes this range to the specified unit of the story.
+
 ```
 FUNCTION CTextRange2.SetIndex (BYVAL Unit AS LONG, BYVAL Index AS LONG, BYVAl Extend AS LONG) AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->SetIndex(m_pTextRange2, Unit, Index, Extend))
    RETURN m_Result
 END FUNCTION
 ```
+| Parameter | Description |
+| --------- | ----------- |
+| *Unit* | Unit used to index the range. For a list of *Unit* values, see the table below. |
+| *Index* | Index for the *Unit*. This range is relocated to the *Unit* that has this index number. If positive, the numbering of *Units* begins at the start of the story and proceeds forward. If negative, the numbering begins at the end of the story and proceeds backward. The start of the story corresponds to an *Index* of 1 for all units that exist, and the last unit in the story corresponds to an *Index* of -1. |
+| *Extend* | Flag that indicates the extent of the range. If zero (the default), the range is collapsed to an insertion point at the start position of the specified *Unit*. If nonzero, the range is set to the entire *Unit*. |
+
+| Unit | Value | Meaning |
+| ---- | ----- | ------- |
+| **tomCharacter** | 1 | Character. |
+| **tomWord** | 2 | Word. |
+| **tomSentence** | 3 | Sentence. |
+| **tomParagraph** | 4 | Paragraph. |
+| **tomLine** | 5 | Line (on display). |
+| **tomStory** | 6 | Story. |
+| **tomScreen** | 7 | Screen (as for PAGE UP/PAGE DOWN). |
+| **tomSection** | 8 | Section. |
+| **tomColumn** | 9 | Table column. |
+| **tomRow** | 10 | Table row. |
+| **tomWindow** | 11 | Upper-left or lower-right of the window. |
+| **tomCell** | 12 | Table cell. |
+| **tomCharFormat** | 13 | Run of constant character formatting. |
+| **tomParaFormat** | 14 | Run of constant paragraph formatting. |
+| **tomTable** | 15 | Table. |
+| **tomObject** | 16 | Embedded object. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Index is not valid. |
+| **E_NOTIMPL** | Unit is not supported. |
+| **S_FALSE** | Failure for some other reason. |
 
 # <a name="SetRange"></a>SetRange
 
