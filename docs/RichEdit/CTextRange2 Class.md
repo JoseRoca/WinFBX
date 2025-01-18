@@ -1595,7 +1595,7 @@ END FUNCTION
 | Parameter | Description |
 | --------- | ----------- |
 | *Cset* | The character set to use in the match. This could be an explicit string of characters or a character-set index. For more information, see [Character Match Sets](https://learn.microsoft.com/en-us/windows/win32/controls/about-text-object-model#character-match-sets). |
-| *Count* | Maximum number of characters to move past. The default value is **tomForward**, which searches to the end of the story. If *Count+ is greater than zero, the search moves forward (toward the end of the story). If *Count* is less than zero, the search moves backward (toward the beginning of the story). If *Count* is zero, the end position is unchanged. |
+| *Count* | Maximum number of characters to move past. The default value is **tomForward**, which searches to the end of the story. If *Count* is greater than zero, the search moves forward (toward the end of the story). If *Count* is less than zero, the search moves backward (toward the beginning of the story). If *Count* is zero, the end position is unchanged. |
 
 #### Return value
 
@@ -1620,12 +1620,69 @@ For more information, see **Move**.
 
 # <a name="MoveUntil"></a>MoveUntil
 
+Searches up to *Count* characters for the first character in the set of characters specified by Cset. If a character is found, the range is collapsed to that point. The start of the search and the direction are also specified by *Count*.
+
 ```
 FUNCTION CTextRange2.MoveUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveUntil(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
 END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Cset* | The character set used in the match. This could be an explicit string of characters or a character-set index. For more information, see [Character Match Sets](https://learn.microsoft.com/en-us/windows/win32/controls/about-text-object-model#character-match-sets). |
+| *Count* | Maximum number of characters to move past. The default value is **tomForward**, which searches to the end of the story. If *Count* is less than zero, the search is backward starting at the start position. If *Count* is greater than zero, the search is forward starting at the end. |
+
+#### Return value
+
+The number of characters the insertion point is moved, plus 1 for a match if *Count* is greater than zero, and –1 for a match if *Count* less than zero.
+
+#### Return code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_NOTIMPL** | Unit is not supported. |
+| **S_FALSE** | Failure for some other reason. |
+
+#### Remarks
+
+If no character is matched, the range is unchanged.
+
+The motion described by **MoveUntil** is logical rather than geometric. That is, motion is toward the end or toward the start of a story. Depending on the language, moving to the end of the story could be moving left or moving right.
+
+For more information, see the Remarks section of **Move**.
+
+The **MoveStartUntil** and **MoveEndUntil** methods move the start and end, respectively, until it finds the first character that is also in the set specified by the *Cset* parameter.
+
+The **MoveUntil** method is similar to **MoveWhile**, but there are two differences. First, **MoveUntil** moves an insertion point until it finds the first character that belongs to the character set specified by *Cset*. Second, in **MoveUntil** the character matched counts as an additional character in the value returned. This lets you know that the character at one end of the range or the other belongs to the *Cset* even though the insertion point stays at one of the range ends.
+
+For example, suppose the range, *pRange*, is an insertion point. To see if the character at *pRange* (that is, given by *pRange.GetChar()*) is in *Cset*, call
+
+```
+pRange.MoveUntil(Cset, 1)
+```
+If the character is in *Cset*, the return value is 1 and the insertion point does not move. Similarly, to see if the character preceding *pRange* is in Cset, call
+
+```
+pRange.MoveUntil(Cset, -1)
+```
+
+If the character is in *Cset*, the return value is –1.
+
+The following subroutine prints all numbers in the story identified by the range, *pRange*.
+
+```
+SUB PrintNumbers (BYVAL pRange AS ITextRange2 PTR)
+   pRange.SetRange(0, 0)   ' // pRange = insertion point at start of story
+   WHILE pRange.MoveUntil(C1_DIGIT, tomForward)   ' // Move r to 1st digit in next number
+      DIM Delta AS LONG = pRange.MoveEndWhile(C1_DIGIT, tomForward)   ' // Select number (span of digits)
+      PRINT Delta   ' // Print it
+   WEND
+END SUB
 ```
 
 # <a name="MoveStartUntil"></a>MoveStartUntil
