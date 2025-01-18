@@ -939,7 +939,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Expands this range so that any partial units it contains are completely contained.
 
 ```
-FUNCTION CTextRange2.Expand (BYVAL Unit AS LONG) AS LONG
+FUNCTION CTextRange2.Expand (BYVAL Unit AS LONG = tomWord) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->Expand(m_pTextRange2, Unit, @Delta))
    RETURN Delta
