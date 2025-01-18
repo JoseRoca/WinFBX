@@ -1221,7 +1221,7 @@ The caret for an ambiguous character position is displayed at the beginning of t
 Moves the range ends to the start of the first overlapping *Unit* in the range.
 
 ```
-FUNCTION CTextRange2.StartOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
+FUNCTION CTextRange2.StartOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->StartOf(m_pTextRange2, Unit, Extend, @Delta))
    RETURN Delta
