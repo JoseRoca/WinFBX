@@ -1,6 +1,6 @@
 # CTextRange2 Class
 
-Class that wraps all the methods of the **ITextRange** and **ITextRange2** interfaces.
+Class that wraps all the methods of the **ITextRange**, **ITextSelection** and **ITextRange2** interfaces.
 
 | Name       | Description |
 | ---------- | ----------- |
