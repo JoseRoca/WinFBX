@@ -916,7 +916,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Collapses the specified text range into a degenerate point at either the beginning or end of the range.
 
 ```
-FUNCTION CTextRange2.Collapse (BYVAL bStart AS LONG) AS HRESULT
+FUNCTION CTextRange2.Collapse (BYVAL bStart AS LONG = tomStart) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->Collapse(m_pTextRange2, bStart))
    RETURN m_Result
 END FUNCTION
