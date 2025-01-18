@@ -1935,6 +1935,8 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 # <a name="Delete_"></a>Delete_
 
+Mimics the DELETE and BACKSPACE keys, with and without the CTRL key depressed.
+
 ```
 FUNCTION CTextRange2.Delete_ (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
    DIM Delta AS LONG
@@ -1942,6 +1944,24 @@ FUNCTION CTextRange2.Delete_ (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
    RETURN Delta
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Unit* | Unit to use. *Unit* can be **tomCharacter** (the default value) or **tomWord**. |
+| *Count* | Number of *Units* to delete. If *Count*= zero, it deletes the text in the range only. If *Count* is greater than zero, **Delete_** acts as if the DELETE key was pressed *Count* times. If *Count* is less than zero, it acts as if the BACKSPACE key was pressed *Count* times. The default value is 1. For more information, see the **Remarks**. |
+
+#### Return value
+
+The count of units deleted. Deleting the text in a nondegenerate range counts as one Unit.
+
+#### Result code
+
+If successful, **GetLastResult** returns **S_OK**. Otherwise it returns one of the following values.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_ACCESSDENIED** | Text is write-protected. |
+| **S_FALSE** | Failure for some other reason. |
 
 # <a name="Cut"></a>Cut
 
