@@ -60,7 +60,7 @@ The **ITextRange** interface inherits from the **IDispatch** interface. **ITextR
 | [FindText](#FindText) | Searches up to *Count* characters for the text given by *bstr*. The starting position and direction are also specified by *Count*, and the matching criteria are given by *Flags*. |
 | [FindTextStart](#FindTextStart) | Searches up to *Count* characters for the string, *bstr*, starting at the range's Start *cp (cpFirst)*. The search is subject to the comparison parameter, *Flags*. |
 | [FindTextEnd](#FindTextEnd) | Searches up to *Count* characters for the string, *bstr*, starting from the range's End *cp*. The search is subject to the comparison parameter, *Flags*. |
-| [Delete](#Delete) | Mimics the DELETE and BACKSPACE keys, with and without the CTRL key depressed. |
+| [Delete_(#Delete_) | Mimics the DELETE and BACKSPACE keys, with and without the CTRL key depressed. |
 | [Cut](#Cut) | Cuts the plain or rich text to a data object or to the Clipboard, depending on the *pVar* parameter. |
 | [Copy](#Copy) | Copies the text to a data object. |
 | [Paste](#Paste) | Pastes text from a specified data object. |
