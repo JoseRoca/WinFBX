@@ -2024,12 +2024,31 @@ To copy and replace plain text, you can use the **GetText**  and **SetText**  me
 
 # <a name="Paste"></a>Paste
 
+Pastes text from a specified data object.
+
 ```
 FUNCTION CTextRange2.Paste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->Paste(m_pTextRange2, pVar, Format))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pVar* | The **IDataObject** to paste. However, the contents of the clipboard are used if any of the following are true.<br>*pVar* is null<br>*pVar* punkVal is null<br>*pVar* is not VT_UNKNOWN<br>*pVar* punkVal does not return an **IDataObject** when queried for one |
+| *Format* | The clipboard format to use in the paste operation. Zero is best format, which usually is RTF, but **CF_UNICODETEXT** and other formats are also possible. The default value is zero. For more information, see [Clipboard Formats](https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats). |
+
+#### Return value
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_ACCESSDENIED** | Desrination is write-protected. |
+| **E_OUTOFMEMORY** | Destination cannot contain the text to be pasted. |
+
+#### Remarks
+For more information, **Copy**.
 
 # <a name="CanPaste"></a>CanPaste
 
