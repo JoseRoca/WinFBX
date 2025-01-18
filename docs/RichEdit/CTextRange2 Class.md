@@ -179,7 +179,7 @@ END CONSTRUCTOR
 | Parameter | Description |
 | --------- | ----------- |
 | *pTextTextRange2* | An **ITextRange2** interface pointer. |
-| *fAddRef* | Optional. TRUE to increment the reference count of the passed **ITextDocument2** interface pointer; otherwise, FALSE. Default is FALSE. |
+| *fAddRef* | Optional. **TRUE** to increment the reference count of the passed **ITextDocument2** interface pointer; otherwise, **FALSE**. Default is **FALSE**. |
 
 #### Return value
 
@@ -310,7 +310,7 @@ END FUNCTION
 | Parameter | Description |
 | --------- | ----------- |
 | *pTextRange2* | The **ITextDocument2** interface pointer to attach. |
-| *fAddRef* | **TRUE** to increment the reference count of te object. Default is FALSE. |
+| *fAddRef* | **TRUE** to increment the reference count of te object; otherwise, **FALSE**. Default is **FALSE**. |
 
 # <a name="GetLastResult"></a>GetLastResult
 
