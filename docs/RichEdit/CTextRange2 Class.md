@@ -1680,7 +1680,7 @@ SUB PrintNumbers (BYVAL pRange AS ITextRange2 PTR)
    pRange.SetRange(0, 0)   ' // pRange = insertion point at start of story
    WHILE pRange.MoveUntil(C1_DIGIT, tomForward)   ' // Move pRange to 1st digit in next number
       DIM Delta AS LONG = pRange.MoveEndWhile(C1_DIGIT, tomForward)   ' // Select number (span of digits)
-      PRINT Delta   ' // Print it
+      ' PRINT ---   ' // Print it
    WEND
 END SUB
 ```
@@ -1786,6 +1786,89 @@ END FUNCTION
 | **tomMatchWord** | 2 | Matches whole words. |
 | **tomMatchCase** | 4 | Matches case. |
 | **tomMatchPattern** | 8 | Matches regular expressions. |
+
+#### Return value
+
+The length of string matched.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
+
+The **FindText** method can also match special characters by using a caret (^) followed by a special letter. For a list of special characters, see the Special list available in the Microsoft Word **Find and Replace** dialog box. For example, *^p* matches the next paragraph mark. Note, *^c* can be used to represent the Clipboard contents in the string to be replaced. Thus, using *^c* in the find string enables you to search for rich text. For more details, see the Word Help files.
+
+As a comparison with the **FindText** method, the **FindTextStart** method searches forward or backward from the range's Start *cp*, and the **FindTextEnd** method searches forward or backward from the range's End *cp*. For more details, see the descriptions of these methods.
+
+The following are several code snippets that show the **FindText** methods.
+
+Example #1. The following code prints all the /* ... */ comments in a story identified by the range *pRange*.
+
+...
+SUB PrintComments (pRange AS ITextRange PTR)
+    pRange.SetRange(0, 0)    ' pRange = insertion point at start of story
+    DO WHILE pRange.FindText("/\*") AND pRange.FindTextEnd("*/"   'Select comment
+        pRange.MoveStart(tomCharacter, 2)   ' But do not include the opening
+        pRange.MoveEnd(tomCharacter, -2)   '  or closing comment brackets
+        ' PRINT --- Print ' Show the folks
+    LOOP
+END SUB
+...
+
+Instead of these comments being printed, they could be inserted into another edit instance and saved to a file, or they could be inserted into separate cells in a table or spreadsheet.
+
+To print all lines containing one or more occurrences of the word "laser", replace the loop by the following code:
+
+...
+WHILE pRange.FindText("laser")   // Select next occurrence of "laser"
+   pRange.Expand(**tomLine)    ' // Select enclosing line
+   ' PRINT ---   ' // Print the line
+WEND
+...
+
+Example #2. The following code prints a telephone list, given a story that contains an address list. The address list entries are separated by two or more paragraph marks, and each entry has the following form.
+
+...
+Person/Business Name
+Address (one or more lines)
+(area code) telephone number 
+Note the use of the character ^p in the FindText string argument to locate a pair of consecutive paragraph marks.
+...
+
+...
+SUB PrintTelephoneList (pRange AS ITextRange PTR)
+    pRange.SetRange(0, 0)   ' // pRange = insertion point at start of story
+    pRange.MoveWhile(C1_WHITE)   ' // Bypass any initial white space
+    DO
+        pRange.EndOf tomParagraph, 1     // Select next para (line): has name
+        ' PRINT  ---   ' // Print it
+        DO
+            pRange.MoveWhile(C1_SPACE)   ' // Bypass possible space chars
+            IF pRange.Char = ASC("(") THEN EXIT DO   ' // Look for start of telephone #
+        LOOP WHILE pRange.Move(tomParagraph)   ' // Go to next paragraph
+        pRange.EndOf(tomParagraph, 1)   ' // Select line with telephone number
+        ' PRINT ---   ' // Print it
+    LOOP WHILE pRange.FindText("^p^p")   ' // Find two consecutive para marks
+END FUB
+...
+
+Example #3. The following subroutine replaces all occurrences of the string, *str1*, in a range by *str2*:
+
+```
+SUB Replace (BYVAL tr AS ITextRange PTR, BYREF str1 AS STRING, BYREF str2 AS STRING)
+    DIM r AS ITextRange PTR
+    r = tr.Duplicate   ' // Copy tr parameters to r
+    r.End = r.Start   ' // Convert to insertion point at Start
+    WHILE r.FindText(str1, tr.End - r.End)   ' // Match next occurrence of str1
+        pRange.SetText(str2)   ' // Replace it with str2
+    WEND   ' // Iterate till no more matches
+END SUB
+```
+
+Example #4. The following line of code inserts a blank before the first occurrence of a right parenthesis, "(", that follows an occurrence of HRESULT.
+```
+    If pRange.FindText("HRESULT") AND pRange.FindText("(") Then pRange.SetText(" (")
+```
+To do this for all such occurrences, change the IF into a WHILE/WEND loop in the above line of code.
 
 # <a name="FindTextStart"></a>FindTextStart
 
