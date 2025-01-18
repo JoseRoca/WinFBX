@@ -2184,12 +2184,28 @@ The **GetPoint** method gives **ITextRange** the ability to emulate UI-pointer c
 
 # <a name="SetPoint"></a>SetPoint
 
+Changes the range based on a specified point at or up through (depending on Extend) the point (x, y) aligned according to *nType*.
+
 ```
 FUNCTION CTextRange2.SetPoint (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG, BYVAL Extend AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetPoint(m_pTextRange2, x, y, nType, Extend))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *x* | Horizontal coordinate of the specified point, in absolute screen coordinates. |
+| *y* | Vertical coordinate of the specified point, in absolute screen coordinates. |
+| *nType* | The end to move to the specified point. It can be one of the following.<br>**tomStart**.	Move the start of range.<br>**tomEnd**. Move the end of range. |
+| *Extend* | How to set the endpoints of the range. If **Extend** is zero (the default), the range is an insertion point at the specified point (or at the nearest point with selectable text). If **Extend** is 1, the end specified by *nType* is moved to the point and the other end is left alone. |
+
+#### Return value
+
+The method returns **S_OK**.
+
+#### Remarks
+An application can use the specified point in the **WindowFromPoint** function to get the handle of the window, which usually can be used to find the client-rectangle coordinates (although a notable exception is with [Windowless Controls](https://learn.microsoft.com/en-us/windows/win32/api/tom/nf-tom-itextrange-setpoint)).
 
 # <a name="ScrollIntoView"></a>ScrollIntoView
 
