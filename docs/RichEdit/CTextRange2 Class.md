@@ -2035,7 +2035,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *pVar* | The **IDataObject** to paste. However, the contents of the clipboard are used if any of the following are true.<br>*pVar* is null<br>*pVar* punkVal is null<br>*pVar* is not VT_UNKNOWN<br>*pVar* punkVal does not return an **IDataObject** when queried for one |
+| *pVar* | The **IDataObject** to paste. However, the contents of the clipboard are used if any of the following are true.<br>- *pVar* is null<br>- *pVar* punkVal is null<br>- *pVar* is not VT_UNKNOWN<br>- *pVar* punkVal does not return an **IDataObject** when queried for one |
 | *Format* | The clipboard format to use in the paste operation. Zero is best format, which usually is RTF, but **CF_UNICODETEXT** and other formats are also possible. The default value is zero. For more information, see [Clipboard Formats](https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats). |
 
 #### Return value
