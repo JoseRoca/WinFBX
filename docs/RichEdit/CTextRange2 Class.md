@@ -1620,7 +1620,7 @@ For more information, see **Move**.
 
 # <a name="MoveUntil"></a>MoveUntil
 
-Searches up to *Count* characters for the first character in the set of characters specified by Cset. If a character is found, the range is collapsed to that point. The start of the search and the direction are also specified by *Count*.
+Searches up to *Count* characters for the first character in the set of characters specified by *Cset*. If a character is found, the range is collapsed to that point. The start of the search and the direction are also specified by *Count*.
 
 ```
 FUNCTION CTextRange2.MoveUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
