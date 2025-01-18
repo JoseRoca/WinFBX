@@ -2230,11 +2230,13 @@ END FUNCTION
 | **tomNoUpScroll** | &h10000 | Horizontal scrolling is disabled. |
 | **tomNoVpScroll** | &h40000 | Vertical scrolling is disabled. |
 
-# <a name="GetEmbeddedObject"></a>GetEmbeddedObject
-
 #### Return value
 
 The method returns an **HRESULT** value. If the method succeeds, it returns **S_OK**. If the method fails, it returns **S_FALSE**.
+
+# <a name="GetEmbeddedObject"></a>GetEmbeddedObject
+
+Retrieves a pointer to the embedded object at the start of the specified range, that is, at *cpFirst*. The range must either be an insertion point or it must select only the embedded object.
 
 ```
 FUNCTION CTextRange2.GetEmbeddedObject () AS IUnknown PTR
@@ -2243,6 +2245,15 @@ FUNCTION CTextRange2.GetEmbeddedObject () AS IUnknown PTR
    RETURN pObject
 END FUNCTION
 ```
+
+#### Return value
+
+The pointer to the object.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
+
 # <a name="GetFlags"></a>GetFlags
 
 ```
