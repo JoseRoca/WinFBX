@@ -1405,6 +1405,8 @@ See also the **MoveStart** and **MoveEnd** methods, which move the range Start o
 
 # <a name="MoveStart"></a>MoveStart
 
+Moves the start position of the range the specified number of units in the specified direction.
+
 ```
 FUNCTION CTextRange2.MoveStart (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
    DIM Delta AS LONG
@@ -1412,6 +1414,43 @@ FUNCTION CTextRange2.MoveStart (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
    RETURN Delta
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Unit* | Unit used in the move. The default value is **tomCharacter**. For information on other values, For a list of *Unit* values, see the table below. |
+| *Count* |Number of units to move. The default value is 1. If *Count* is greater than zero, motion is forward—toward the end of the story—and if *Count* is less than zero, motion is backward—toward the beginning. If *Count* is zero, the start position is unchanged. |
+
+| Unit | Value | Meaning |
+| ---- | ----- | ------- |
+| **tomCharacter** | 1 | Character. |
+| **tomWord** | 2 | Word. |
+| **tomSentence** | 3 | Sentence. |
+| **tomParagraph** | 4 | Paragraph. |
+| **tomLine** | 5 | Line (on display). |
+| **tomStory** | 6 | Story. |
+| **tomScreen** | 7 | Screen (as for PAGE UP/PAGE DOWN). |
+| **tomSection** | 8 | Section. |
+| **tomColumn** | 9 | Table column. |
+| **tomRow** | 10 | Table row. |
+| **tomWindow** | 11 | Upper-left or lower-right of the window. |
+| **tomCell** | 12 | Table cell. |
+| **tomCharFormat** | 13 | Run of constant character formatting. |
+| **tomParaFormat** | 14 | Run of constant paragraph formatting. |
+| **tomTable** | 15 | Table. |
+| **tomObject** | 16 | Embedded object. |
+
+#### Return value
+
+The actual number of units that the end is moved.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_NOTIMPL** | Unit is not supported. |
+| **S_FALSE** | Failure for some other reason. |
 
 # <a name="MoveEnd"></a>MoveEnd
 
