@@ -1765,13 +1765,27 @@ For more information, see **Move**.
 
 # <a name="FindText"></a>FindText
 
+Searches up to *Count* characters for the text given by bstr. The starting position and direction are also specified by *Count*, and the matching criteria are given by *Flags*.
+
 ```
-FUNCTION CTextRange2.FindText (BYREF cbs AS CBSTR, BYVAL cch AS LONG, BYVAL Flags AS LONG) AS LONG
+FUNCTION CTextRange2.FindText (BYREF cbs AS CBSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
    DIM Length AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->FindText(m_pTextRange2, cbs, cch, Flags, @Length))
+   this.SetResult(m_pTextRange2->lpvtbl->FindText(m_pTextRange2, cbs, Count, Flags, @Length))
    RETURN Length
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cbs* | String to find. |
+| *Count* | Maximum number of characters to search. It can be one of the following.<br>*tomForward*. Searches to the end of the story. This is the default value.<br>*n (greater than 0)*.	Searches forward for *n* chars, starting from *cpFirst*. If the range itself matches *cbs*, another search is attempted from *cpFirst* + 1.<br>*n(less than 0)*. Searches backward for *n* chars, starting from *cpLim*. If the range itself matches *cbs*, another search is attempted from *cpLim*– 1.<br>.*0 (degenerate range)*.	Search begins after the range.<br>.0 (nondegenerate range)*	Search is limited to the range.<br>In all cases, if a string is found, the range limits are changed to be those of the matched string and the method returns the length of the string. If the string is not found, the range remains unchanged and the method returns zero. |
+| *Flags* | Flags governing comparisons. It can be 0 (the default) or any combination of the following values. |
+
+| Unit | Value | Meaning |
+| ---- | ----- | ------- |
+| **tomMatchWord** | 2 | Matches whole words. |
+| **tomMatchCase** | 4 | Matches case. |
+| **tomMatchPattern** | 8 | Matches regular expressions. |
 
 # <a name="FindTextStart"></a>FindTextStart
 
