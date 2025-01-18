@@ -927,8 +927,8 @@ END FUNCTION
 
 | Value | Meaning |
 | ----- | ------- |
-| **tomStart OR tomTrue** | Range is collapsed to the start of the range. This is the default. |
-| **tomEnd OR tomFalse** | Range is collapsed to the end of the range. |
+| **tomStart or tomTrue** | Range is collapsed to the start of the range. This is the default. |
+| **tomEnd or tomFalse** | Range is collapsed to the end of the range. |
 
 #### Result code
 
