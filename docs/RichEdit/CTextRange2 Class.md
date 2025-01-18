@@ -1036,7 +1036,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Changes this range to the specified unit of the story.
 
 ```
-FUNCTION CTextRange2.SetIndex (BYVAL Unit AS LONG, BYVAL Index AS LONG, BYVAl Extend AS LONG) AS LONG
+FUNCTION CTextRange2.SetIndex (BYVAL Unit AS LONG, BYVAL Index AS LONG, BYVAl Extend AS LONG = 0) AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->SetIndex(m_pTextRange2, Unit, Index, Extend))
    RETURN m_Result
 END FUNCTION
