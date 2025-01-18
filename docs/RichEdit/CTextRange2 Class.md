@@ -1993,13 +1993,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *pVar* | The cut text. pVar->ppunkVal is the out parameter for an IDataObject object, provided that the following conditions exist: |
-
-- pVar->vt = (VT_UNKNOWN OR VT_BYREF)
-- pVar is not null
-- pVar->ppunkVal is not null
-
-Otherwise, the clipboard is used.
+| *pVar* | The cut text. pVar->ppunkVal is the out parameter for an IDataObject object, provided that the following conditions exist:<br>- pVar->vt = (VT_UNKNOWN OR VT_BYREF)<br>- pVar is not null<br>- pVar->ppunkVal is not null<br>Otherwise, the clipboard is used. |
 
 # <a name="Copy"></a>Copy
 
