@@ -1727,6 +1727,8 @@ For more information, see **Move**.
 
 # <a name="MoveEndUntil"></a>MoveEndUntil
 
+Moves the range's end to the character position of the first character found that is in the set of characters specified by *Cset*, provided that the character is found within *Count* characters of the range's end.
+
 ```
 FUNCTION CTextRange2.MoveEndUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
    DIM Delta AS LONG
@@ -1734,6 +1736,32 @@ FUNCTION CTextRange2.MoveEndUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LON
    RETURN Delta
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Cset* | The character set to use in the match. This could be an explicit string of characters or a character-set index. For more information, see [Character Match Sets](https://learn.microsoft.com/en-us/windows/win32/controls/about-text-object-model#character-match-sets). |
+| *Count* | Maximum number of characters to move past. The default value is **tomForward**, which searches to the end of the story. If *Count* is greater than zero, the search moves forward (toward the end of the story). If *Count* is less than zero, the search moves backward (toward the beginning of the story). If *Count* is zero, the end position is unchanged. |
+
+#### Return value
+
+The actual number of characters that the range end is moved, plus 1 for a match if *Count* is greater than zero, and –1 for a match if *Count* is less than zero.
+
+#### Return code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | *Cset* is not valid. |
+| **S_FALSE** | Failure for some other reason. |
+
+#### Remarks
+
+If no character from the set specified by *Cset* is found within *Count* positions of the range's end, the range is left unchanged. If the new end precedes the old start, the new start is set equal to the new end.
+
+The motion described by **MoveEndUntil** is logical rather than geometric. That is, motion is toward the end or toward the start of a story. Depending on the language, moving to the end of the story could be moving left or moving right.
+
+For more information, see **Move**.
 
 # <a name="FindText"></a>FindText
 
