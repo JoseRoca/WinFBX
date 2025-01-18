@@ -1803,7 +1803,7 @@ The following are several code snippets that show the **FindText** methods.
 
 **Example #1**. The following code prints all the /* ... */ comments in a story identified by the range *pRange*.
 
-...
+```
 SUB PrintComments (pRange AS ITextRange PTR)
     pRange.SetRange(0, 0)    ' pRange = insertion point at start of story
     DO WHILE pRange.FindText("/\*") AND pRange.FindTextEnd("*/"   'Select comment
@@ -1812,29 +1812,28 @@ SUB PrintComments (pRange AS ITextRange PTR)
         ' PRINT --- Print ' Show the folks
     LOOP
 END SUB
-...
-
+```
 Instead of these comments being printed, they could be inserted into another edit instance and saved to a file, or they could be inserted into separate cells in a table or spreadsheet.
 
 To print all lines containing one or more occurrences of the word "laser", replace the loop by the following code:
 
-...
+```
 WHILE pRange.FindText("laser")   // Select next occurrence of "laser"
    pRange.Expand(**tomLine)    ' // Select enclosing line
    ' PRINT ---   ' // Print the line
 WEND
-...
+```
 
 **Example #2**. The following code prints a telephone list, given a story that contains an address list. The address list entries are separated by two or more paragraph marks, and each entry has the following form.
 
-...
+```
 Person/Business Name
 Address (one or more lines)
 (area code) telephone number 
 Note the use of the character ^p in the FindText string argument to locate a pair of consecutive paragraph marks.
-...
+```
 
-...
+```
 SUB PrintTelephoneList (pRange AS ITextRange PTR)
     pRange.SetRange(0, 0)   ' // pRange = insertion point at start of story
     pRange.MoveWhile(C1_WHITE)   ' // Bypass any initial white space
@@ -1849,7 +1848,7 @@ SUB PrintTelephoneList (pRange AS ITextRange PTR)
         ' PRINT ---   ' // Print it
     LOOP WHILE pRange.FindText("^p^p")   ' // Find two consecutive para marks
 END FUB
-...
+```
 
 **Example #3**. The following subroutine replaces all occurrences of the string, *str1*, in a range by *str2*:
 
