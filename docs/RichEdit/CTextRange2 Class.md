@@ -2044,13 +2044,15 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 | Result code | Description |
 | ----------- | ----------- |
-| **E_ACCESSDENIED** | Desrination is write-protected. |
+| **E_ACCESSDENIED** | Destination is write-protected. |
 | **E_OUTOFMEMORY** | Destination cannot contain the text to be pasted. |
 
 #### Remarks
-For more information, **Copy**.
+For more information, see **Copy**.
 
 # <a name="CanPaste"></a>CanPaste
+
+Determines if a data object can be pasted, using a specified format, into the current range.
 
 ```
 FUNCTION CTextRange2.CanPaste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG) AS LONG
@@ -2059,6 +2061,24 @@ FUNCTION CTextRange2.CanPaste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG) 
    RETURN Value
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pVar* | The **IDataObject** to be pasted. However, the Clipboard contents are checked for pasting if any of the following are true:<br>- *pVar* is null<br>- *pVar->punkVal* is null<br>- *pVar->vt* is not VT_UNKNOWN<br>- *pVar->punkVal* does not return an **IDataObject** object when queried for one |
+| *Format* | Clipboard format that is used. Zero represents the best format, which usually is RTF, but **CF_UNICODETEXT** and other formats are also possible. The default value is zero. |
+
+#### Return value
+
+A **tomBool** value that is tomTrue only if the data object identified by pVar can be pasted, using the specified format, into the range.
+
+#### Result code
+
+The method returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **S_OK** | The clipboard contents or IDataObject can be pasted. |
+| **S_FALSE** | The clipboard contents or **IDataObject** cannot be pasted. |
 
 # <a name="CanEdit"></a>CanEdit
 
@@ -2069,6 +2089,7 @@ FUNCTION CTextRange2.CanEdit () AS LONG
    RETURN Value
 END FUNCTION
 ```
+
 
 # <a name="ChangeCase"></a>ChangeCase
 
