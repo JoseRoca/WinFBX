@@ -1511,7 +1511,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 | Result code | Description |
 | ----------- | ----------- |
-| **E_NOTIMPL** | Unit is not supported. |
+| **E_INVALIDARG** | *Cset* is not valid. |
 | **S_FALSE** | Failure for some other reason. |
 
 #### Remarks
@@ -1569,7 +1569,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 | Result code | Description |
 | ----------- | ----------- |
-| **E_NOTIMPL** | Unit is not supported. |
+| **E_INVALIDARG** | *Cset* is not valid. |
 | **S_FALSE** | Failure for some other reason. |
 
 #### Remarks
@@ -1607,7 +1607,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 | Result code | Description |
 | ----------- | ----------- |
-| **E_NOTIMPL** | Unit is not supported. |
+| **E_INVALIDARG** | *Cset* is not valid. |
 | **S_FALSE** | Failure for some other reason. |
 
 #### Remarks
@@ -1645,7 +1645,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 | Result code | Description |
 | ----------- | ----------- |
-| **E_NOTIMPL** | Unit is not supported. |
+| **E_INVALIDARG** | *Cset* is not valid. |
 | **S_FALSE** | Failure for some other reason. |
 
 #### Remarks
@@ -1678,7 +1678,7 @@ The following subroutine prints all numbers in the story identified by the range
 ```
 SUB PrintNumbers (BYVAL pRange AS ITextRange2 PTR)
    pRange.SetRange(0, 0)   ' // pRange = insertion point at start of story
-   WHILE pRange.MoveUntil(C1_DIGIT, tomForward)   ' // Move r to 1st digit in next number
+   WHILE pRange.MoveUntil(C1_DIGIT, tomForward)   ' // Move pRange to 1st digit in next number
       DIM Delta AS LONG = pRange.MoveEndWhile(C1_DIGIT, tomForward)   ' // Select number (span of digits)
       PRINT Delta   ' // Print it
    WEND
@@ -1687,6 +1687,8 @@ END SUB
 
 # <a name="MoveStartUntil"></a>MoveStartUntil
 
+Moves the start position of the range the position of the first character found that is in the set of characters specified by *Cset*, provided that the character is found within *Count* characters of the start position.
+
 ```
 FUNCTION CTextRange2.MoveStartUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
    DIM Delta AS LONG
@@ -1694,6 +1696,34 @@ FUNCTION CTextRange2.MoveStartUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS L
    RETURN Delta
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Cset* | The character set to use in the match. This could be an explicit string of characters or a character-set index. For more information, see [Character Match Sets](https://learn.microsoft.com/en-us/windows/win32/controls/about-text-object-model#character-match-sets). |
+| *Count* | Maximum number of characters to move past. The default value is **tomForward**, which searches to the end of the story. If *Count* is greater than zero, the search is forward—toward the end of the story—and if *Count* is less than zero, search is backward—toward the beginning. If *Count* is zero, the start position is unchanged. |
+
+#### Return value
+
+The actual number of characters the start of the range is moved, plus 1 for a match if *Count* is greater than zero, and –1 for a match if *Count* is less than zero. 
+
+#### Return code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | *Cset* is not valid. |
+| **S_FALSE** | Failure for some other reason. |
+
+#### Remarks
+
+If no character from *Cset* is found within *Count* positions of the start position, the range is left unchanged.
+
+If the new start follows the old end, the new end is set equal to the new start.
+
+The motion described by **MoveStartUntil** is logical rather than geometric. That is, motion is toward the end or toward the start of a story. Depending on the language, moving to the end of the story could be moving left or moving right.
+
+For more information, see **Move**.
 
 # <a name="MoveEndUntil"></a>MoveEndUntil
 
