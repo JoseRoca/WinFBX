@@ -1281,7 +1281,7 @@ The **StartOf** and **EndOf** methods differ from the **HomeKey** and **EndKey**
 Moves this range's ends to the end of the last overlapping Unit in the range.
 
 ```
-FUNCTION CTextRange2.EndOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
+FUNCTION CTextRange2.EndOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->EndOf(m_pTextRange2, Unit, Extend, @Delta))
    RETURN Delta
