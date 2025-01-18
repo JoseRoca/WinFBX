@@ -1417,7 +1417,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *Unit* | Unit used in the move. The default value is **tomCharacter**. For information on other values, For a list of *Unit* values, see the table below. |
+| *Unit* | Unit used in the move. The default value is **tomCharacter**. For a list of *Unit* values, see the table below. |
 | *Count* |Number of units to move. The default value is 1. If *Count* is greater than zero, motion is forward—toward the end of the story—and if *Count* is less than zero, motion is backward—toward the beginning. If *Count* is zero, the start position is unchanged. |
 
 | Unit | Value | Meaning |
@@ -1454,6 +1454,8 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 # <a name="MoveEnd"></a>MoveEnd
 
+Moves the end position of the range.
+
 ```
 FUNCTION CTextRange2.MoveEnd (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
    DIM Delta AS LONG
@@ -1462,7 +1464,27 @@ FUNCTION CTextRange2.MoveEnd (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
 END FUNCTION
 ```
 
+| Parameter | Description |
+| --------- | ----------- |
+| *Unit* | The units by which to move the end of the range. The default value is **tomCharacter**. For a list of *Unit* values, see the table below. |
+| *Count* | The number of units to move past. The default value is 1. If *Count* is greater than zero, motion is forward—toward the end of the story—and if *Count* is less than zero, motion is backward—toward the beginning. If *Count* is zero, the end position is unchanged. |
+
+#### Return value
+
+The actual number of units that the end position of the range is moved past.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_NOTIMPL** | Unit is not supported. |
+| **S_FALSE** | Failure for some other reason. |
+
 # <a name="MoveWhile"></a>MoveWhile
+
+Starts at a specified end of a range and searches while the characters belong to the set specified by *Cset* and while the number of characters is less than or equal to *Count*. The range is collapsed to an insertion point when a non-matching character is found.
 
 ```
 FUNCTION CTextRange2.MoveWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
@@ -1470,6 +1492,54 @@ FUNCTION CTextRange2.MoveWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) 
    this.SetResult(m_pTextRange2->lpvtbl->MoveWhile(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
 END FUNCTION
+```
+
+Starts at a specified end of a range and searches while the characters belong to the set specified by *Cset* and while the number of characters is less than or equal to *Count*. The range is collapsed to an insertion point when a non-matching character is found.
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Cset* | The character set to use in the match. This could be an explicit string of characters or a character-set index. For more information, see [Character Match Sets](https://learn.microsoft.com/en-us/windows/win32/controls/about-text-object-model#character-match-sets). |
+| *Count* | Maximum number of characters to move past. The default value is **tomForward**, which searches to the end of the story. If *Count* is less than zero, the search starts at the start position and goes backward — toward the beginning of the story. If *Count* is greater than zero, the search starts at the end position and goes forward — toward the end of the story. |
+
+#### Return value
+
+The actual count of characters end is moved. 
+
+#### Return code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_NOTIMPL** | Unit is not supported. |
+| **S_FALSE** | Failure for some other reason. |
+
+#### Remarks
+
+The motion described by **MoveUntil** is logical rather than geometric. That is, motion is toward the end or toward the start of a story. Depending on the language, moving to the end of the story could be moving left or moving right.
+
+For more information, see the discussion in **ITextRange** and the **Remarks** section of **Move**.
+
+The **MoveWhile** method is similar to **MoveUntil**, but **MoveWhile** searches as long as it finds members of the set specified by *Cset*, and there is no additional increment to the returned value.
+
+The **MoveStartWhile** and **MoveEndWhile** methods move the start and end, respectively, just past all contiguous characters that are found in set of characters specified by the *Cset* parameter.
+
+The following code illustrates how to initialize and use the **VARIANT** argument for matching a span of digits in the range *pRange*.
+
+```
+DIM varg AS VARIANT
+varg.vt = VT_I4
+varg.lVal = C1_DIGIT
+DIM Delta AS LONG = pRange.MoveWhile(@varg, tomForward)   ' // Move IP past span of digits
+```
+
+Alternatively, an explicit string could be used, as in the following sample.
+
+```
+DIM varg AS VARIANT
+varg.vt = VT_BSTR
+varg.bstr = SysAllocString("0123456789")
+DIM Delta AS LONG = pRange.MoveWhile(@varg, tomForward)   ' // Move IP past span of digits
 ```
 
 # <a name="MoveStartWhile"></a>MoveStartWhile
