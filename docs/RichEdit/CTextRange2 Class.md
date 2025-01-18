@@ -2100,12 +2100,29 @@ The range cannot be edited if any part of it is protected or if the document is 
 
 # <a name="ChangeCase"></a>ChangeCase
 
+Changes the case of letters in this range according to the *nType* parameter.
+
 ```
 FUNCTION CTextRange2.ChangeCase (BYVAL nType AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->ChangeCase(m_pTextRange2, nType))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *nType* | Type of case change. The default value is **tomLower**. |
+
+| Type | Value | Meaning |
+| ---- | ----- | ------- |
+| **tomLowerCase** | 0 | Sets all text to lowercase. |
+| **tomUpperCase** | 1 | Sets all text to uppercase. |
+| **tomTitleCase** | 2 | Capitalizes the first letter of each word. |
+| **tomSentenceCase** | 4 | Capitalizes the first letter of each sentence. |
+| **tomToggleCase** | 5 | Toggles the case of each letter. |
+
+#### Return value
+This method returns an **HRESULT** value. If successful, it returns **S_OK**. Otherwise, it returns **S_FALSE**.
 
 # <a name="GetPoint"></a>GetPoint
 
