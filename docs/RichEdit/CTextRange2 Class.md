@@ -1801,7 +1801,7 @@ As a comparison with the **FindText** method, the **FindTextStart** method searc
 
 The following are several code snippets that show the **FindText** methods.
 
-Example #1. The following code prints all the /* ... */ comments in a story identified by the range *pRange*.
+**Example #1**. The following code prints all the /* ... */ comments in a story identified by the range *pRange*.
 
 ...
 SUB PrintComments (pRange AS ITextRange PTR)
@@ -1825,7 +1825,7 @@ WHILE pRange.FindText("laser")   // Select next occurrence of "laser"
 WEND
 ...
 
-Example #2. The following code prints a telephone list, given a story that contains an address list. The address list entries are separated by two or more paragraph marks, and each entry has the following form.
+**Example #2**. The following code prints a telephone list, given a story that contains an address list. The address list entries are separated by two or more paragraph marks, and each entry has the following form.
 
 ...
 Person/Business Name
@@ -1851,7 +1851,7 @@ SUB PrintTelephoneList (pRange AS ITextRange PTR)
 END FUB
 ...
 
-Example #3. The following subroutine replaces all occurrences of the string, *str1*, in a range by *str2*:
+**Example #3**. The following subroutine replaces all occurrences of the string, *str1*, in a range by *str2*:
 
 ```
 SUB Replace (BYVAL tr AS ITextRange PTR, BYREF str1 AS STRING, BYREF str2 AS STRING)
@@ -1864,7 +1864,7 @@ SUB Replace (BYVAL tr AS ITextRange PTR, BYREF str1 AS STRING, BYREF str2 AS STR
 END SUB
 ```
 
-Example #4. The following line of code inserts a blank before the first occurrence of a right parenthesis, "(", that follows an occurrence of HRESULT.
+**Example #4**. The following line of code inserts a blank before the first occurrence of a right parenthesis, "(", that follows an occurrence of HRESULT.
 ```
     If pRange.FindText("HRESULT") AND pRange.FindText("(") Then pRange.SetText(" (")
 ```
