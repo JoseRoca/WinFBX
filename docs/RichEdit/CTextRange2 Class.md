@@ -2126,12 +2126,61 @@ This method returns an **HRESULT** value. If successful, it returns **S_OK**. Ot
 
 # <a name="GetPoint"></a>GetPoint
 
+Retrieves screen coordinates for the start or end character position in the text range, along with the intra-line position.
+
 ```
 FUNCTION CTextRange2.GetPoint (BYVAL nType AS LONG, BYVAL px AS LONG PTR, BYVAL py AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->GetPoint(m_pTextRange2, nType, px, py))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *nType* | Flag that indicates the position to retrieve. This parameter can include one value from each of the tables below. The default value is tomStart + TA_BASELINE + TA_LEFT. |
+| *px* | The x-coordinate. |
+| *py* | The y-coordinate. |
+
+| Constant | Value | Meaning |
+| -------- | ----- | ----------- |
+| **tomAllowOffClient** | 512 | Allow points outside of the client area. |
+| **tomClientCoord** | 256 | Use client coordinates instead of screen coordinates. |
+| **tomObjectArg** | 2048 | Get a point inside an inline object argument; for example, inside the numerator of a fraction. |
+| **tomTransform** | 1024 | Transform coordinates using a world transform (XFORM) supplied by the host application. |
+
+Use one of the following values to indicate the start or end of the range.
+
+| Constant | Value | Meaning |
+| -------- | ----- | ----------- |
+| **tomStart** | 32 | The start of text range. |
+| **tomEnd** | 0 | The end of a text range. |
+
+Use one of the following values to indicate the vertical position.
+
+| Constant | Value | Meaning |
+| -------- | ----- | ----------- |
+| **TA_TOP** | 0 | Top edge of the bounding rectangle. |
+| **TA_BASELINE** | 24 | Base line of the text. |
+| **TA_BOTTOM** | 8 | Bottom edge of the bounding rectangle. |
+
+Use one of the following values to indicate the horizontal position.
+
+| Constant | Value | Meaning |
+| -------- | ----- | ----------- |
+| **TA_LEFT** | 0 | Left edge of the bounding rectangle. |
+| **TA_CENTER** | 6 | Center of the bounding rectangle. |
+| **TA_RIGHT** | 2 | ight edge of the bounding rectangle. |
+
+The method returns an **HRESULT** value. If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Return code | Description |
+| --------- | ----------- |
+| **E_INVALIDARG** | Either px or py is null. |
+| **S_FALSE** | Failure for some other reason. |
+
+### Remarks
+
+The **GetPoint** method gives **ITextRange** the ability to emulate UI-pointer commands; it is also handy for accessibility purposes.
 
 # <a name="SetPoint"></a>SetPoint
 
