@@ -2076,6 +2076,8 @@ The method returns one of the following COM error codes.
 
 # <a name="CanEdit"></a>CanEdit
 
+Determines whether the specified range can be edited.
+
 ```
 FUNCTION CTextRange2.CanEdit () AS LONG
    DIM Value AS LONG
@@ -2084,6 +2086,17 @@ FUNCTION CTextRange2.CanEdit () AS LONG
 END FUNCTION
 ```
 
+#### Return value
+
+A tomBool value indicating whether the range can be edited. It is **tomTrue** only if the specified range can be edited.
+
+#### Result code
+
+If the range can be edited, the method succeeds and **GetLastREsult** returns S_OK. If the range cannot be edited, the method fails and  **GetLastREsult** returns **S_FALSE**.
+
+#### Remarks
+
+The range cannot be edited if any part of it is protected or if the document is read-only.
 
 # <a name="ChangeCase"></a>ChangeCase
 
