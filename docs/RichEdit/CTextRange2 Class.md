@@ -2205,7 +2205,7 @@ END FUNCTION
 The method returns **S_OK**.
 
 #### Remarks
-An application can use the specified point in the **WindowFromPoint** function to get the handle of the window, which usually can be used to find the client-rectangle coordinates (although a notable exception is with [Windowless Controls](https://learn.microsoft.com/en-us/windows/win32/api/tom/nf-tom-itextrange-setpoint)).
+An application can use the specified point in the **WindowFromPoint** function to get the handle of the window, which usually can be used to find the client-rectangle coordinates (although a notable exception is with [https://learn.microsoft.com/en-us/windows/win32/controls/windowless-rich-edit-controls)).
 
 # <a name="ScrollIntoView"></a>ScrollIntoView
 
