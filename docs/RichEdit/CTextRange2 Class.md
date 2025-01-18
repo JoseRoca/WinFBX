@@ -1765,7 +1765,7 @@ For more information, see **Move**.
 
 # <a name="FindText"></a>FindText
 
-Searches up to *Count* characters for the text given by bstr. The starting position and direction are also specified by *Count*, and the matching criteria are given by *Flags*.
+Searches up to *Count* characters for the text given by *cbs*. The starting position and direction are also specified by *Count*, and the matching criteria are given by *Flags*.
 
 ```
 FUNCTION CTextRange2.FindText (BYREF cbs AS CBSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
