@@ -1572,13 +1572,17 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_NOTIMPL** | Unit is not supported. |
 | **S_FALSE** | Failure for some other reason. |
 
+#### Remarks
+
 If the new start follows the old end, the new end is set equal to the new start.
 
 The motion described by **MoveStartWhile** is logical rather than geometric. That is, motion is toward the end or toward the start of a story. Depending on the language, moving to the end of the story could be moving left or moving right.
 
-For more information, see **ITextRange** and **Move**.
+For more information, see **Move**.
 
 # <a name="MoveEndWhile"></a>MoveEndWhile
+
+Moves the end of the range either *Count* characters or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less.
 
 ```
 FUNCTION CTextRange2.MoveEndWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
@@ -1587,6 +1591,32 @@ FUNCTION CTextRange2.MoveEndWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LON
    RETURN Delta
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Cset* | The character set to use in the match. This could be an explicit string of characters or a character-set index. For more information, see [Character Match Sets](https://learn.microsoft.com/en-us/windows/win32/controls/about-text-object-model#character-match-sets). |
+| *Count* | Maximum number of characters to move past. The default value is **tomForward**, which searches to the end of the story. If *Count+ is greater than zero, the search moves forward (toward the end of the story). If *Count* is less than zero, the search moves backward (toward the beginning of the story). If *Count* is zero, the end position is unchanged. |
+
+#### Return value
+
+The actual number of characters that the end is moved.
+
+#### Return code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_NOTIMPL** | Unit is not supported. |
+| **S_FALSE** | Failure for some other reason. |
+
+#### Remarks
+
+If the new end precedes the old start, the new start is set equal to the new end.
+
+The motion described by **MoveEndWhile** is logical rather than geometric. That is, motion is toward the end or toward the start of a story. Depending on the language, moving to the end of the story could be moving left or moving right.
+
+For more information, see **Move**.
 
 # <a name="MoveUntil"></a>MoveUntil
 
