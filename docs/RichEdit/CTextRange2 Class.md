@@ -1871,6 +1871,8 @@ To do this for all such occurrences, change the IF into a WHILE/WEND loop in the
 
 # <a name="FindTextStart"></a>FindTextStart
 
+Searches up to *Count* characters for the string, *cbs*, starting at the range's Start *cp (cpFirst)*. The search is subject to the comparison parameter, *Flags*. If the string is found, the Start *cp* is changed to the matched string, and the method returns the length of the string. If the string is not found, the range is unchanged, and the method returns zero.
+
 ```
 FUNCTION CTextRange2.FindTextStart (BYREF cbs AS CBSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
    DIM Length AS LONG
@@ -1878,6 +1880,26 @@ FUNCTION CTextRange2.FindTextStart (BYREF cbs AS CBSTR, BYVAL Count AS LONG, BYV
    RETURN Length
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cbs* | The string to search for. |
+| *Count* | Maximum number of characters to search. It can be one of the following.<br>- *tomForward*. Searches to the end of the story. This is the default value.<br>-*n* (greater than 0). Searches forward for *n* chars, starting from *cpFirst*. If the range itself matches *cbs*, another search is attempted from *cpFirst* + 1.<br>-*n* (less than 0). Searches backward for *n* chars, starting from *cpLim*. |
+| *Flags* | Flags governing the comparisons. It can be zero (the default) or any combination of the following values. |
+
+| Unit | Value | Meaning |
+| ---- | ----- | ------- |
+| **tomMatchWord** | 2 | Matches whole words. |
+| **tomMatchCase** | 4 | Matches case. |
+| **tomMatchPattern** | 8 | Matches regular expressions. |
+
+#### Return value
+
+The length of the matched string.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
 # <a name="FindTextEnd"></a>FindTextEnd
 
