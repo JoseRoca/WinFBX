@@ -1982,6 +1982,8 @@ Deleting the end-of-paragraph mark (CR) results in the special behavior of the M
 
 # <a name="Cut"></a>Cut
 
+Cuts the plain or rich text to a data object or to the Clipboard, depending on the *pVar* parameter.
+
 ```
 FUNCTION CTextRange2.Cut (BYVAL pVar AS VARIANT PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->Cut(m_pTextRange2, pVar))
@@ -1989,7 +1991,19 @@ FUNCTION CTextRange2.Cut (BYVAL pVar AS VARIANT PTR) AS HRESULT
 END FUNCTION
 ```
 
+| Parameter | Description |
+| --------- | ----------- |
+| *pVar* | The cut text. pVar->ppunkVal is the out parameter for an IDataObject object, provided that the following conditions exist: |
+
+- pVar->vt = (VT_UNKNOWN OR VT_BYREF)
+- pVar is not null
+- pVar->ppunkVal is not null
+
+Otherwise, the clipboard is used.
+
 # <a name="Copy"></a>Copy
+
+Copies the text to a data object.
 
 ```
 FUNCTION CTextRange2.Copy (BYVAL pVar AS VARIANT PTR) AS HRESULT
@@ -1997,6 +2011,16 @@ FUNCTION CTextRange2.Copy (BYVAL pVar AS VARIANT PTR) AS HRESULT
    RETURN m_Result
 END FUNCTION
 ```
+
+#### Return value
+
+If successful, it returns **S_OK**. Otherwise, it returns **E_OUTOFMEMORY**.
+
+#### Remarks
+
+The **Cut**, **Copy**, and **Paste** methods let you perform the usual **Cut**, **Copy**, and **Paste** operations on a range object using an **IDataObject**, thereby not changing the contents of the clipboard. Among clipboard formats typically supported are **CF_TEXT** and **CF_RTF**. In addition, private clipboard formats can be used to reference a text solution's own internal rich text formats.
+
+To copy and replace plain text, you can use the **GetText**  and **SetText**  methods. To copy formatted text from range r1 to range r2 without using the clipboard, you can use **Copy** and **Paste** and also the **GetFormattedText** and **SetFormattedText** methods.
 
 # <a name="Paste"></a>Paste
 
