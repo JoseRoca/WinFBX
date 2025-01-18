@@ -1806,7 +1806,7 @@ The following are several code snippets that show the **FindText** methods.
 ```
 SUB PrintComments (pRange AS ITextRange PTR)
     pRange.SetRange(0, 0)    ' pRange = insertion point at start of story
-    DO WHILE pRange.FindText("/\*") AND pRange.FindTextEnd("*/"   'Select comment
+    DO WHILE pRange.FindText("/*") AND pRange.FindTextEnd("*/"   'Select comment
         pRange.MoveStart(tomCharacter, 2)   ' But do not include the opening
         pRange.MoveEnd(tomCharacter, -2)   '  or closing comment brackets
         ' PRINT --- Print ' Show the folks
