@@ -990,7 +990,7 @@ For example, if an insertion point is at the beginning, the end, or within a wor
 Retrieves the story index of the *Unit* parameter at the specified range Start character position. The first *Unit* in a story has an index value of 1. The index of a *Unit* is the same for all character positions from that immediately preceding the *Unit* up to the last character in the *Unit*.
 
 ```
-FUNCTION CTextRange2.GetIndex (BYVAL Unit AS LONG) AS LONG
+FUNCTION CTextRange2.GetIndex (BYVAL Unit AS LONG = tomWord) AS LONG
    DIM Index AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->GetIndex(m_pTextRange2, Unit, @Index))
    RETURN Index
