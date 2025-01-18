@@ -1340,7 +1340,7 @@ For comparison, the **StartOf** method moves the range ends to the beginning of 
 
 Moves the insertion point forward or backward a specified number of units. If the range is nondegenerate, the range is collapsed to an insertion point at either end, depending on *Count*, and then is moved.
 ```
-FUNCTION CTextRange2.Move (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
+FUNCTION CTextRange2.Move (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->Move(m_pTextRange2, Unit, Count, @Delta))
    RETURN Delta
