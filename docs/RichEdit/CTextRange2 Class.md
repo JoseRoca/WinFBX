@@ -2202,12 +2202,14 @@ END FUNCTION
 
 #### Return value
 
-The method returns **S_OK**.
+The method returns an **HRESULT** value. If the method succeeds, it returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
 #### Remarks
 An application can use the specified point in the **WindowFromPoint** function to get the handle of the window, which usually can be used to find the client-rectangle coordinates (although a notable exception is with [Windowless Controls](https://learn.microsoft.com/en-us/windows/win32/controls/windowless-rich-edit-controls)).
 
 # <a name="ScrollIntoView"></a>ScrollIntoView
+
+Scrolls the specified range into view.
 
 ```
 FUNCTION CTextRange2.ScrollIntoView (BYVAL Value AS LONG) AS HRESULT
@@ -2215,7 +2217,24 @@ FUNCTION CTextRange2.ScrollIntoView (BYVAL Value AS LONG) AS HRESULT
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | Flag specifying the end to scroll into view. It can be one of the following. |
+
+
+| Flag     | Value | Meaning |
+| -------- | ----- | ----------- |
+| **tomEnd** | 0 | Scrolls the end character position to appear on the bottom line. |
+| **tomStart** | 32 | Scrolls the start character position to appear on the top line. (Default value). |
+| **tomNoUpScroll** | &h10000 | Horizontal scrolling is disabled. |
+| **tomNoVpScroll** | &h40000 | Vertical scrolling is disabled. |
+
 # <a name="GetEmbeddedObject"></a>GetEmbeddedObject
+
+#### Return value
+
+The method returns an **HRESULT** value. If the method succeeds, it returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
 ```
 FUNCTION CTextRange2.GetEmbeddedObject () AS IUnknown PTR
