@@ -1037,9 +1037,9 @@ Gets an object that provides the default paragraph format information for this i
 
 ```
 FUNCTION CTextDocument2.GetEastAsianFlags () AS LONG
-   DIM pFlags AS LONG
-   this.SetResult(m_pTextDocument2->lpvtbl->GetEastAsianFlags(m_pTextDocument2, @pFlags))
-   RETURN pFlags
+   DIM Flags AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->GetEastAsianFlags(m_pTextDocument2, @Flags))
+   RETURN Flags
 END FUNCTION
 ```
 
