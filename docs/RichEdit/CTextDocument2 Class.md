@@ -514,7 +514,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets the default tab stop, which is used when no tab exists beyond the current display position.
 
 ```
-FUNCTION CTextDocument2.SetDefaultTabStop (BYVAL Value AS SINGLE) AS HRESULT
+FUNCTION CTextDocument2.SetDefaultTabStop (BYVAL Value AS SINGLE = 36.0) AS HRESULT
    this.SetResult(m_pTextDocument2->lpvtbl->SetDefaultTabStop(m_pTextDocument2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -559,7 +559,7 @@ If another document is open, this method saves any current changes and closes th
 Opens a specified document. There are parameters to specify access and sharing privileges, creation and conversion of the file, as well as the code page for the file.
 
 ```
-FUNCTION CTextDocument2.Open (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG, BYVAL CodePage AS LONG) AS HRESULT
+FUNCTION CTextDocument2.Open (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = 0, BYVAL CodePage AS LONG = 0) AS HRESULT
    this.SetResult(m_pTextDocument2->lpvtbl->Open(m_pTextDocument2, pVar, Flags, CodePage))
    RETURN m_Result
 END FUNCTION
@@ -672,9 +672,9 @@ Increments the freeze count.
 
 ```
 FUNCTION CTextDocument2.Freeze () AS LONG
-   DIM nCount AS LONG
-   this.SetResult(m_pTextDocument2->lpvtbl->Freeze(m_pTextDocument2, @nCount))
-   RETURN nCount
+   DIM Count AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->Freeze(m_pTextDocument2, @Count))
+   RETURN Count
 END FUNCTION
 ```
 
@@ -823,7 +823,7 @@ If the method succeeds **GetLastResult** returns **S_OK**. If the method fails, 
 Retrieves a text range object for a specified range of content in the active story of the document.
 
 ```
-FUNCTION CTextDocument2.Range (BYVAL cpActive AS LONG, BYVAL cpAnchor AS LONG) AS ITextRange PTR
+FUNCTION CTextDocument2.Range (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange PTR
    DIM pTextRange AS ITextRange PTR
    this.SetResult(m_pTextDocument2->lpvtbl->Range(m_pTextDocument2, cpActive, cpAnchor, @pTextRange))
    RETURN pTextRange
@@ -1509,7 +1509,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Notifies the Text Object Model (TOM) engine client of particular Input Method Editor (IME) events.
 
 ```
-FUNCTION CTextDocument2.Range2 (BYVAL cpActive AS LONG, BYVAL cpAnchor AS LONG) AS ITextRange2 PTR
+FUNCTION CTextDocument2.Range2 (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange2 PTR
    DIM pRange2 AS ITextRange2 PTR
    this.SetResult(m_pTextDocument2->lpvtbl->Range2(m_pTextDocument2, cpActive, cpAnchor, @pRange2))
    RETURN pRange2
