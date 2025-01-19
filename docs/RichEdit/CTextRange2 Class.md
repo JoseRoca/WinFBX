@@ -2572,7 +2572,7 @@ END FUNCTION
 | Value | Meaning |
 | ----- | ------- |
 | **tomLine** | Depending on *Extend*, it moves either the insertion point or the active end to the beginning of the first line in the selection. This is the default. |
-| **tomStory** | Depending on *Extend*, it moves either the insertion point or the active end to the beginning of the first line in the story |
+| **tomStory** | Depending on *Extend*, it moves either the insertion point or the active end to the beginning of the first line in the story. |
 | **tomColumn** | Depending on *Extend*, it moves either the insertion point or the active end to the beginning of the first column in the selection. This is available only if the TOM engine supports tables. |
 | **tomRow** | Depending on *Extend*, it moves either the insertion point or the active end to the beginning of the first row in the selection. This is available only if the TOM engine supports tables. |
 
@@ -2599,13 +2599,50 @@ The **HomeKey** and **EndKey** methods are logical methods like the **Move** met
 
 # <a name="EndKey"></a>EndKey
 
+Mimics the functionality of the End key.
+
 ```
-FUNCTION CTextRange2.EndKey (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
+FUNCTION CTextRange2.EndKey (BYVAL Unit AS LONG = tomLine, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->EndKey(m_pTextRange2, Unit, Extend, @Delta))
    RETURN Delta
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Unit* | Unit to use in the End key operation. It can take on one of the following values (see table below). |
+| *Extend* | Flag that indicates how to change the selection. If *Extend* is zero (or **tomMove**), the method collapses the selection to an insertion point. If *Extend* is 1 (or **tomExtend**), the method moves the active end and leaves the other end alone. The default value is zero. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomLine** | Depending on *Extend*, it moves either the insertion point or the active end to the end of the last line in the selection. This is the default. |
+| **tomStory** | Depending on *Extend*, it moves either the insertion point or the active end to the end of the last line in the story. |
+| **tomColumn** | Depending on *Extend*, it moves either the insertion point or the active end to the end of the last column in the selection. This is available only if the TOM engine supports tables. |
+| **tomRow** | Depending on *Extend*, it moves either the insertion point or the active end to the end of the last row in the selection. This is available only if the TOM engine supports tables. |
+
+#### Return value
+
+The count of characters that the insertion point or the active end is moved. 
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Return code | Description |
+| -------------- | ----------- |
+| **E_INVALIDARG** | Unit is neither **tomLine** nor **tomStory**. |
+| **S_FALSE** | Failure for some other reason. |
+
+#### Remarks
+
+Setting *Extend* to **tomExtend** (or nonzero) corresponds to the Shift key being pressed. Setting *Unit* to **tomLine** corresponds to the Ctrl key not being pressed. Setting *Unit* to **tomStory** to Ctrl being pressed.
+
+The **HomeKey** and **EndKey** methods are used to mimic the standard Home/End key behavior.
+
+The **tomLine** value mimics the Home or End key behavior without the Ctrl key pressed, while **tomStory** mimics the behavior with the Ctrl key pressed. Similarly, **tomMove** mimics the Home or End key behavior without the Shift key pressed, while **tomExtend** mimics the behavior with the Shift key pressed. So EndKey(tomStory) converts the selection into an insertion point at the end of the associated story, while EndKey(tomStory, tomExtend) moves the active end of the selection to the end of the story and leaves the other end where it was.
+
+The **HomeKey** and **EndKey** methods are logical methods like the **Move** methods, rather than directional methods. Thus, they depend on the language that is involved. For example, in Arabic text, **HomeKey** moves to the right end of a line, whereas in English text, it moves to the left. Thus, **HomeKey** and **EndKey** are different than the **MoveLeft** and **MoveRight** methods. Also, note that the **EndKey** method is quite different from the **End** property, which is the cp at the end of the selection. **HomeKey** and **EndKey** also differ from the **StartOf** and **EndOf** methods in that they extend from the active end, whereas **StartOf** extends from Start and **EndOf** extends from End.
 
 # <a name="TypeText"></a>TypeText
 
