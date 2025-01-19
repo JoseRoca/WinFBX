@@ -89,7 +89,7 @@ The **ITextSelection** interface inherits from **ITextRange**. **ITextSelection*
 | [MoveDown](#MoveDown) | Mimics the functionality of the Down Arrow and Page Down keys. |
 | [HomeKey](#HomeKey) | Generalizes the functionality of the Home key. |
 | [EndKey](#EndKey) | Mimics the functionality of the End key. |
-| [TypeText](#TypeText) | Types the string given by *bstr* at this selection as if someone typed it.  |
+| [TypeText](#TypeText) | Types the string given by *cbs* at this selection as if someone typed it.  |
 
 ### ITextRange2 Interface
 
