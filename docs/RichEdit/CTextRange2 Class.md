@@ -2659,6 +2659,12 @@ END FUNCTION
 | --------- | ----------- |
 | *cbs* | String to type into this selection. |
 
+#### Remarks
+
+This method types the string given by *cbs* at this selection as if someone typed it. Using **TypeText** is faster than sending characters through the **SendMessage** function, but it is slower than using **SetText**.
+
+**TypeText** is similar to the underlying **SetText** method, however, it is sensitive to the Insert/Overtype key state and UI settings like AutoCorrect and smart quotes. For example, it deletes any nondegenerate selection and then inserts or overtypes (depending on the Insert/Overtype key state—see the SetFlags method) the string *cbs" at the insertion point, leaving this selection as an insertion point following the inserted text.
+
 #### Return value
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
