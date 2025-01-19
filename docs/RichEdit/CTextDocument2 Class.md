@@ -1490,7 +1490,6 @@ Notifies the Text Object Model (TOM) engine client of particular Input Method Ed
 
 ```
 FUNCTION CTextDocument2.Notify (BYVAL nNotify AS LONG) AS HRESULT
-   DIM pStrs AS ITextStrings PTR
    this.SetResult(m_pTextDocument2->lpvtbl->Notify(m_pTextDocument2, nNotify))
    RETURN m_Result
 END FUNCTION
