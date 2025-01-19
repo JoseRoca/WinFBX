@@ -2415,13 +2415,64 @@ When *Extend* is **tomExtend** (or is nonzero), **MoveLeft** moves only the acti
 
 # <a name="MoveRight"></a>MoveRight
 
+Generalizes the functionality of the Right Arrow key.
+
 ```
-FUNCTION CTextRange2.MoveRight (BYVAL Unit AS LONG, BYVAL Count AS LONG, BYVAL Extend AS LONG) AS LONG
+FUNCTION CTextRange2.MoveRight (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveRight(m_pTextRange2, Unit, Count, Extend, @Delta))
    RETURN Delta
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Unit* | Unit to use. It can be one of the following (sse table below). |
+| *Count* | Number of Units to move past. The default value is 1. If Count is less than zero, movement is to the left. |
+| *Extend* | Flag that indicates how to change the selection. If *Extend* is zero (or tomMove), the method collapses the selection to an insertion point at the active end and then moves it. If *Extend* is 1 (or tomExtend), the method moves the active end and leaves the other end alone. The default value is zero. A nonzero *Extend* value corresponds to the Shift key being pressed in addition to the key combination described in *Unit*. |
+
+| Value | Corresponding key combination | Meaning |
+| ----- | ----------------------------- | ------- |
+| **tomCharacter** | Right Arrow | Move one character position to the right. This is the default. |
+| **tomWord** | Ctrl+Right Arrow | Move one word to the right. |
+ 
+Note: If *Count* is less than zero, movement is to the left.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Return code | Description |
+| -------------- | ----------- |
+| **E_INVALIDARG** | Unit is not valid. |
+| **S_FALSE** | Failure for some other reason. |
+
+#### Remarks
+
+Microsoft WordBasic move methods like **CharRigh**t, **CharLeft**, **WordRight**, and **WordLeft** are hybrids that can do four things that are closely related to the standard arrow-key edit behavior:
+
+- Move the current insertion point if there's no selection.
+- Move the active end of the selection if there is a selection.
+- Turn an insertion point into a selection and vice versa.
+- Return a Boolean stating if movement occurred.
+
+The *Extend* argument of **MoveLeft** and **MoveRight** enables you to be consistent with the three items above. For example, given a selection, s, consisting of a single range, you have the following correspondences (for left-to-right characters).
+
+
+| ITextSelection | WordBasic | Function |
+| -------------- | --------- | -------- |
+| s.MoveRight tomWord, 1, 1 | WordRight 1,1 | Moves active end one word right. |
+| s.MoveLeft tomCharacter, 1, 1 | CharLeft 1,1 | Moves active end one character left. |
+
+As in WordBasic, if Count is less than zero, the meanings of left and right are interchanged, that is MoveLeft (Unit, Count, Extend) is equivalent to MoveRight(Unit, -Count, Extend).
+
+Similar to WordBasic and the Right Arrow key UI behavior, calling MoveRight(Unit, Count) on a degenerate selection moves the insertion point the specified number of units. On a degenerate range, calling MoveRight(Unit, Count, 1) where *Count* is greater than zero causes the range to become nondegenerate with the right end being the active end.
+
+When *Extend* is **tomExtend** (or is nonzero), **MoveRight** moves only the active end of the selection, leaving the other end where it is. However, if Extend equals zero and the selection starts as a nondegenerate range, MoveRight(Unit, Count) where Count is greater than zero moves the active end Count - 1 units right, and then moves the other end to the active end. In other words, it makes an insertion point at the active end. Collapsing the range counts as one unit. Thus, MoveRight(tomCharacter) converts a nondegenerate selection into a degenerate one at the selection's right end. Here, *Count* has the default value of 1 and *Extend* has the default value of zero. This example corresponds to pressing the Right Arrow key. **MoveLeft** and **MoveRight** are related to the **ITextRange** move methods, but differ in that they explicitly use the active end (the end moved by pressing the Shift key).
+
+#### Return value
+
+The actual count of units the insertion point or active end is moved left. Collapsing the selection, when *Extend* is 0, counts as one unit.
 
 # <a name="MoveUp"></a>MoveUp
 
