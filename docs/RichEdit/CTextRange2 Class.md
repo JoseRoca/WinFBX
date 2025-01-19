@@ -2574,7 +2574,7 @@ END FUNCTION
 | **tomLine** | Depending on *Extend*, it moves either the insertion point or the active end to the beginning of the first line in the selection. This is the default. |
 | **tomStory** | Depending on *Extend*, it moves either the insertion point or the active end to the beginning of the first line in the story |
 | **tomColumn** | Depending on *Extend*, it moves either the insertion point or the active end to the beginning of the first column in the selection. This is available only if the TOM engine supports tables. |
-| **tomRow** | it moves either the insertion point or the active end to the beginning of the first row in the selection. This is available only if the TOM engine supports tables. |
+| **tomRow** | Depending on *Extend*, it moves either the insertion point or the active end to the beginning of the first row in the selection. This is available only if the TOM engine supports tables. |
 
 #### Return value
 
