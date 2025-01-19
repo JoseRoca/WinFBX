@@ -2516,13 +2516,41 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 # <a name="MoveDown"></a>MoveDown
 
+Mimics the functionality of the Down Arrow and Page Down keys.
+
 ```
-FUNCTION CTextRange2.MoveDown (BYVAL Unit AS LONG, BYVAL Count AS LONG, BYVAL Extend AS LONG) AS LONG
+FUNCTION CTextRange2.MoveDown (BYVAL Unit AS LONG = tomLine, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveDown(m_pTextRange2, Unit, Count, Extend, @Delta))
    RETURN Delta
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Unit* | Unit to use. It can be one of the following (sse table below). |
+| *Count* | Number of *Units* to move past. The default value is 1. |
+| *Extend* | Flag that indicates how to change the selection. If *Extend* is zero (or **tomMove**), the method collapses the selection to an insertion point and then moves. If *Extend* is 1 (or **tomExtend**), the method moves the active end and leaves the other end alone. The default value is zero. A nonzero **Extend** value corresponds to the Shift key being pressed in addition to the key combination described in *Unit*. |
+
+| Value | Corresponding key combination | Meaning |
+| ----- | ----------------------------- | ------- |
+| **tomLine** | Down Arrow | Moves down one line. This is the default. |
+| **tomParagraph** | Ctrl+Down Arrow | Moves down one paragraph. |
+| **tomScreen** | Page Donw | Moves down one screen. |
+| **tomWindow** | Ctrl+Page Down | Moves to last character in window. |
+
+#### Return value
+
+The actual count of units the insertion point or active end is moved down. Collapsing the selection counts as one unit. 
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Return code | Description |
+| -------------- | ----------- |
+| **E_INVALIDARG** | Unit is not valid. |
+| **S_FALSE** | Failure for some other reason. |
 
 # <a name="HomeKey"></a>HomeKey
 
