@@ -2490,7 +2490,7 @@ END FUNCTION
 | --------- | ----------- |
 | *Unit* | Unit to use. It can be one of the following (sse table below). |
 | *Count* | Number of *Units* to move past. The default value is 1. If *Count* is less than zero, movement is to the left. |
-| *Extend* | Flag that indicates how to change the selection. If *Extend* is zero (or tomMove), the method collapses the selection to an insertion point at the active end and then moves it. If *Extend* is 1 (or tomExtend), the method moves the active end and leaves the other end alone. The default value is zero. A nonzero *Extend* value corresponds to the Shift key being pressed in addition to the key combination described in *Unit*. |
+| *Extend* | Flag that indicates how to change the selection. If *Extend* is zero (or **tomMove**), the method collapses the selection to an insertion point at the active end and then moves it. If *Extend* is 1 (or **tomExtend**), the method moves the active end and leaves the other end alone. The default value is zero. A nonzero *Extend* value corresponds to the Shift key being pressed in addition to the key combination described in *Unit*. |
 
 | Value | Corresponding key combination | Meaning |
 | ----- | ----------------------------- | ------- |
