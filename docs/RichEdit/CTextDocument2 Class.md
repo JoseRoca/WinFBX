@@ -771,9 +771,9 @@ Performs a specified number of undo operations.
 
 ```
 FUNCTION CTextDocument2.Undo (BYVAL Count AS LONG) AS LONG
-   DIM Count AS LONG
-   this.SetResult(m_pTextDocument2->lpvtbl->Undo(m_pTextDocument2, Count, @Count))
-   RETURN Count
+   DIM nCount AS LONG
+   this.SetResult(m_pTextDocument2->lpvtbl->Undo(m_pTextDocument2, Count, n@Count))
+   RETURN nCount
 END FUNCTION
 ```
 
