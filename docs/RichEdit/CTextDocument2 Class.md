@@ -1148,9 +1148,9 @@ Gets the active selection.
 
 ```
 FUNCTION CTextDocument2.GetSelection2 () AS ITextSelection2 PTR
-   DIM ppSel AS ITextSelection2 PTR
-   this.SetResult(m_pTextDocument2->lpvtbl->GetSelection2(m_pTextDocument2, @ppSel))
-   RETURN ppSel
+   DIM pSel AS ITextSelection2 PTR
+   this.SetResult(m_pTextDocument2->lpvtbl->GetSelection2(m_pTextDocument2, @pSel))
+   RETURN pSel
 END FUNCTION
 ```
 
