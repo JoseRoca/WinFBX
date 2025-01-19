@@ -2554,13 +2554,41 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 # <a name="HomeKey"></a>HomeKey
 
+Generalizes the functionality of the Home key.
+
 ```
-FUNCTION CTextRange2.HomeKey (BYVAL Unit AS LONG, BYVAL Extend AS LONG) AS LONG
+FUNCTION CTextRange2.HomeKey (BYVAL Unit AS LONG = tomLine, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->HomeKey(m_pTextRange2, Unit, Extend, @Delta))
    RETURN Delta
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Unit* | Unit to use in the Home key operation. It can take on one of the following values (see table below). |
+| *Extend* | Flag that indicates how to change the selection. If *Extend* is zero (or **tomMove**), the method collapses the selection to an insertion point. If **Extend** is 1 (or **tomExtend**), the method moves the active end and leaves the other end alone. The default value is zero. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomStory** | Depending on *Extend*, it moves either the insertion point or the active end to the beginning of the first line in the selection. This is the default. |
+| **tomLine** | Depending on *Extend*, it moves either the insertion point or the active end to the beginning of the first line in the story. |
+| **tomColumn** | Depending on *Extend*, it moves either the insertion point or the active end to the beginning of the first column in the selection. This is available only if the TOM engine supports tables. |
+| **tomRow** | it moves either the insertion point or the active end to the beginning of the first row in the selection. This is available only if the TOM engine supports tables. |
+
+#### Return value
+
+The count of characters that the insertion point or the active end is moved.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Return code | Description |
+| -------------- | ----------- |
+| **E_INVALIDARG** | Unit is not valid. |
+| **S_FALSE** | Failure for some other reason. |
+
 
 # <a name="EndKey"></a>EndKey
 
