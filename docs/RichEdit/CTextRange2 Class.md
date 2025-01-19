@@ -2021,7 +2021,7 @@ To copy and replace plain text, you can use the **GetText**  and **SetText**  me
 Pastes text from a specified data object.
 
 ```
-FUNCTION CTextRange2.Paste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG) AS HRESULT
+FUNCTION CTextRange2.Paste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG = 0) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->Paste(m_pTextRange2, pVar, Format))
    RETURN m_Result
 END FUNCTION
@@ -2049,7 +2049,7 @@ For more information, see **Copy**.
 Determines if a data object can be pasted, using a specified format, into the current range.
 
 ```
-FUNCTION CTextRange2.CanPaste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG) AS LONG
+FUNCTION CTextRange2.CanPaste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG = 0) AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->CanPaste(m_pTextRange2, pVar, Format, @Value))
    RETURN Value
@@ -2129,7 +2129,7 @@ This method returns an **HRESULT** value. If successful, it returns **S_OK**. Ot
 Retrieves screen coordinates for the start or end character position in the text range, along with the intra-line position.
 
 ```
-FUNCTION CTextRange2.GetPoint (BYVAL nType AS LONG, BYVAL px AS LONG PTR, BYVAL py AS LONG PTR) AS HRESULT
+FUNCTION CTextRange2.GetPoint (BYVAL nType AS LONG = tomStart + TA_BASELINE + TA_LEFT, BYVAL px AS LONG PTR, BYVAL py AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->GetPoint(m_pTextRange2, nType, px, py))
    RETURN m_Result
 END FUNCTION
@@ -2187,7 +2187,7 @@ The **GetPoint** method gives **ITextRange** the ability to emulate UI-pointer c
 Changes the range based on a specified point at or up through (depending on Extend) the point (x, y) aligned according to *nType*.
 
 ```
-FUNCTION CTextRange2.SetPoint (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG, BYVAL Extend AS LONG) AS HRESULT
+FUNCTION CTextRange2.SetPoint (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG, BYVAL Extend AS LONG = 0) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetPoint(m_pTextRange2, x, y, nType, Extend))
    RETURN m_Result
 END FUNCTION
@@ -2212,7 +2212,7 @@ An application can use the specified point in the **WindowFromPoint** function t
 Scrolls the specified range into view.
 
 ```
-FUNCTION CTextRange2.ScrollIntoView (BYVAL Value AS LONG) AS HRESULT
+FUNCTION CTextRange2.ScrollIntoView (BYVAL Value AS LONG = tomStart) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->ScrollIntoView(m_pTextRange2, Value))
    RETURN m_Result
 END FUNCTION
