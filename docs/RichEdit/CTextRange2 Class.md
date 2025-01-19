@@ -2589,6 +2589,13 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_INVALIDARG** | Unit is not valid. |
 | **S_FALSE** | Failure for some other reason. |
 
+#### Remarks
+
+The **HomeKey** and **EndKey** methods are used to mimic the standard Home/End key behavior.
+
+**tomLine** mimics the Home or End key behavior without the Ctrl key pressed, while **tomStory** mimics the behavior with the Ctrl key pressed. Similarly, **tomMove** mimics the Home or End key behavior without the Shift key pressed, while **tomExtend** mimics the behavior with the Shift key pressed. So HomeKey(tomStory) converts the selection into an insertion point at the beginning of the associated story, while HomeKey(tomStory, tomExtend) moves the active end of the selection to the beginning of the story and leaves the other end where it was.
+
+The **HomeKey** and **EndKey** methods are logical methods like the **Move** methods, rather than directional methods. Thus, they depend on the language that is involved. For example, in Arabic text, HomeKey moves to the right end of a line, whereas in English text, it moves to the left. Thus, **HomeKey** and **EndKey** methods are different than the **MoveLeft** and **MoveRight** methods. Also, note that the **HomeKey** method is quite different from the **Start** property, which is the cp at the beginning of the selection. **HomeKey** and **EndKey** also differ from the **StartOf** and **EndOf** methods in that they extend from the active end, whereas **StartOf** extends from Start and **EndOf** extends from End.
 
 # <a name="EndKey"></a>EndKey
 
