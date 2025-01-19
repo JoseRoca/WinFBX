@@ -2323,6 +2323,8 @@ The *Flags* property is useful because an **ITextRange** object can select itsel
 
 # <a name="GetType"></a>GetType
 
+Gets the type of text selection.
+
 ```
 FUNCTION CTextRange2.GetType () AS LONG
    DIM nType AS LONG
@@ -2330,6 +2332,26 @@ FUNCTION CTextRange2.GetType () AS LONG
    RETURN nType
 END FUNCTION
 ```
+
+#### Return value
+
+The selection type. Can be one of the values in the following table.
+
+| Selection type | Value | Meaning |
+| -------------- | ----- | ----------- |
+| **tomNoSelection** | 0 | No selection and no insertion point. |
+| **tomSelectionIP** | 1 | Insertion point. |
+| **tomSelectionNormal** | 2 | Single nondegenerate range. |
+| **tomSelectionFrame** | 3 | Frame. |
+| **tomSelectionColumn** | 4 | Table column. |
+| **tomSelectionRow** | 5 | Table rows. |
+| **tomSelectionBlock** | 6 | Block selection. |
+| **tomSelectionInlineShape** | 7 | Picture. |
+| **tomSelectionShape** | 8 | Shape. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**.
 
 # <a name="MoveLeft"></a>MoveLeft
 
