@@ -2464,7 +2464,7 @@ The *Extend* argument of **MoveLeft** and **MoveRight** enables you to be consis
 | s.MoveRight tomWord, 1, 1 | WordRight 1,1 | Moves active end one word right. |
 | s.MoveLeft tomCharacter, 1, 1 | CharLeft 1,1 | Moves active end one character left. |
 
-As in WordBasic, if Count is less than zero, the meanings of left and right are interchanged, that is MoveLeft (Unit, Count, Extend) is equivalent to MoveRight(Unit, -Count, Extend).
+As in WordBasic, if *Count* is less than zero, the meanings of left and right are interchanged, that is MoveLeft (Unit, Count, Extend) is equivalent to MoveRight(Unit, -Count, Extend).
 
 Similar to WordBasic and the Right Arrow key UI behavior, calling MoveRight(Unit, Count) on a degenerate selection moves the insertion point the specified number of units. On a degenerate range, calling MoveRight(Unit, Count, 1) where *Count* is greater than zero causes the range to become nondegenerate with the right end being the active end.
 
