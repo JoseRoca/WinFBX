@@ -2256,15 +2256,37 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 # <a name="GetFlags"></a>GetFlags
 
+Gets the text selection flags.
+
 ```
 FUNCTION CTextRange2.GetFlags () AS LONG
-   DIM pFlags AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetFlags(m_pTextRange2, @pFlags))
-   RETURN pFlags
+   DIM Flags AS LONG
+   this.SetResult(m_pTextRange2->lpvtbl->GetFlags(m_pTextRange2, @Flags))
+   RETURN Flags
 END FUNCTION
 ```
 
+#### Return value
+
+Any combination of the following selection flags.
+
+| Selection flag | Value | Meaning |
+| -------------- | ----- | ----------- |
+| **tomSelStartActive** | 1 | Start end is active. |
+| **tomSelAtEOL** | 2 | For degenerate selections, the ambiguous character position corresponding to both the beginning of a line and the end of the preceding line should have the caret displayed at the end of the preceding line. |
+| **tomSelOvertype** | 4 | Insert/Overtype mode is set to overtype. |
+| **tomSelActive** | 8 | Selection is active. |
+| **tomSelReplace** | 16 | Typing and pasting replaces selection. |
+
+Each of the table values is binary. Thus, if any value is not set, the text selection has the opposite property.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**.
+
 # <a name="SetFlags"></a>SetFlags
+
+Sets the text selection flags.
 
 ```
 FUNCTION CTextRange2.SetFlags (BYVAL Flags AS LONG) AS HRESULT
@@ -2272,6 +2294,32 @@ FUNCTION CTextRange2.SetFlags (BYVAL Flags AS LONG) AS HRESULT
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Flags* | Flag specifying the end to scroll into view. It can be one of the following. |
+
+| Selection flag | Value | Meaning |
+| -------------- | ----- | ----------- |
+| **tomSelStartActive** | 1 | Start end is active. |
+| **tomSelAtEOL** | 2 | For degenerate selections, the ambiguous character position corresponding to both the beginning of a line and the end of the preceding line should have the caret displayed at the end of the preceding line. |
+| **tomSelOvertype** | 4 | Insert/Overtype mode is set to overtype. |
+| **tomSelActive** | 8 | Selection is active. |
+| **tomSelReplace** | 16 | Typing and pasting replaces selection. |
+
+Each of the table values is binary. Thus, if any value is not set, the text selection has the opposite property.
+
+#### Return value
+
+The method returns **S_OK**.
+
+To make sure that the start end is active and that the ambiguous character position is displayed at the end of the line, execute the following code:
+
+```
+selection.Flags = tomSelStartActive + tomSelAtEOL
+```
+
+The *Flags* property is useful because an **ITextRange** object can select itself. With **SetFlags**, you can change the active end from the default value of End, select the caret position for an ambiguous character position, or change the Insert/Overtype mode.
 
 # <a name="GetType"></a>GetType
 
