@@ -2646,12 +2646,27 @@ The **HomeKey** and **EndKey** methods are logical methods like the **Move** met
 
 # <a name="TypeText"></a>TypeText
 
+Types the string given by *cbs* at this selection as if someone typed it. This is similar to the underlying **SetText** method, but is sensitive to the Insert/Overtype key state and UI settings like AutoCorrect and smart quotes.
+
 ```
 FUNCTION CTextRange2.TypeText (BYREF cbs AS CBSTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->TypeText(m_pTextRange2, cbs))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cbs* | String to type into this selection. |
+
+#### Return value
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following error codes.
+
+| Return code | Description |
+| -------------- | ----------- |
+| **E_ACCESSDENIED** | Text is write-protected. |
+| **E_OUTOFMEMORY** | Out of memory. |
 
 # <a name="GetCch"></a>GetCch
 
