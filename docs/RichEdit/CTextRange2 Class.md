@@ -1408,7 +1408,7 @@ See also the **MoveStart** and **MoveEnd** methods, which move the range Start o
 Moves the start position of the range the specified number of units in the specified direction.
 
 ```
-FUNCTION CTextRange2.MoveStart (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
+FUNCTION CTextRange2.MoveStart (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveStart(m_pTextRange2, Unit, Count, @Delta))
    RETURN Delta
@@ -1457,7 +1457,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Moves the end position of the range.
 
 ```
-FUNCTION CTextRange2.MoveEnd (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
+FUNCTION CTextRange2.MoveEnd (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveEnd(m_pTextRange2, Unit, Count, @Delta))
    RETURN Delta
@@ -1487,7 +1487,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Starts at a specified end of a range and searches while the characters belong to the set specified by *Cset* and while the number of characters is less than or equal to *Count*. The range is collapsed to an insertion point when a non-matching character is found.
 
 ```
-FUNCTION CTextRange2.MoveWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
+FUNCTION CTextRange2.MoveWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveWhile(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
@@ -1547,7 +1547,7 @@ DIM Delta AS LONG = pRange.MoveWhile(@varg, tomForward)   ' // Move IP past span
 Moves the start position of the range either *Count* characters, or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less.
 
 ```
-FUNCTION CTextRange2.MoveStartWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
+FUNCTION CTextRange2.MoveStartWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveStartWhile(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
@@ -1585,7 +1585,7 @@ For more information, see **Move**.
 Moves the end of the range either *Count* characters or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less.
 
 ```
-FUNCTION CTextRange2.MoveEndWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
+FUNCTION CTextRange2.MoveEndWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveEndWhile(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
@@ -1623,7 +1623,7 @@ For more information, see **Move**.
 Searches up to *Count* characters for the first character in the set of characters specified by *Cset*. If a character is found, the range is collapsed to that point. The start of the search and the direction are also specified by *Count*.
 
 ```
-FUNCTION CTextRange2.MoveUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
+FUNCTION CTextRange2.MoveUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveUntil(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
@@ -1690,7 +1690,7 @@ END SUB
 Moves the start position of the range the position of the first character found that is in the set of characters specified by *Cset*, provided that the character is found within *Count* characters of the start position.
 
 ```
-FUNCTION CTextRange2.MoveStartUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
+FUNCTION CTextRange2.MoveStartUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveStartUntil(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
@@ -1730,7 +1730,7 @@ For more information, see **Move**.
 Moves the range's end to the character position of the first character found that is in the set of characters specified by *Cset*, provided that the character is found within *Count* characters of the range's end.
 
 ```
-FUNCTION CTextRange2.MoveEndUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG) AS LONG
+FUNCTION CTextRange2.MoveEndUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveEndUntil(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
@@ -1768,7 +1768,7 @@ For more information, see **Move**.
 Searches up to *Count* characters for the text given by *cbs*. The starting position and direction are also specified by *Count*, and the matching criteria are given by *Flags*.
 
 ```
-FUNCTION CTextRange2.FindText (BYREF cbs AS CBSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
+FUNCTION CTextRange2.FindText (BYREF cbs AS CBSTR, BYVAL Count AS LONG = tomForward, BYVAL Flags AS LONG = 0) AS LONG
    DIM Length AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->FindText(m_pTextRange2, cbs, Count, Flags, @Length))
    RETURN Length
@@ -1874,7 +1874,7 @@ To do this for all such occurrences, change the IF into a WHILE/WEND loop in the
 Searches up to *Count* characters for the string, *cbs*, starting at the range's Start *cp (cpFirst)*. The search is subject to the comparison parameter, *Flags*. If the string is found, the Start *cp* is changed to the matched string, and the method returns the length of the string. If the string is not found, the range is unchanged, and the method returns zero.
 
 ```
-FUNCTION CTextRange2.FindTextStart (BYREF cbs AS CBSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
+FUNCTION CTextRange2.FindTextStart (BYREF cbs AS CBSTR, BYVAL Count AS LONG = tomForward, BYVAL Flags AS LONG = 0) AS LONG
    DIM Length AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->FindTextStart(m_pTextRange2, cbs, Count, Flags, @Length))
    RETURN Length
@@ -1906,7 +1906,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Searches up to *Count* characters for the string, *cbs*, starting from the range's End *cp*. The search is subject to the comparison parameter, *Flags*. If the string is found, the End *cp* is changed to be the end of the matched string, and the method returns the length of the string. If the string is not found, the range is unchanged and the method returns zero.
 
 ```
-FUNCTION CTextRange2.FindTextEnd (BYREF cbs AS CBSTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
+FUNCTION CTextRange2.FindTextEnd (BYREF cbs AS CBSTR, BYVAL Count AS LONG = tomForward, BYVAL Flags AS LONG = 0) AS LONG
    DIM Length AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->FindTextEnd(m_pTextRange2, cbs, Count, Flags, @Length))
    RETURN Length
@@ -1938,7 +1938,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Mimics the DELETE and BACKSPACE keys, with and without the CTRL key depressed.
 
 ```
-FUNCTION CTextRange2.Delete_ (BYVAL Unit AS LONG, BYVAL Count AS LONG) AS LONG
+FUNCTION CTextRange2.Delete_ (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->Delete_(m_pTextRange2, Unit, Count, @Delta))
    RETURN Delta
@@ -1993,7 +1993,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *pVar* | The cut text. pVar->ppunkVal is the out parameter for an IDataObject object, provided that the following conditions exist:<br>- pVar->vt = (VT_UNKNOWN OR VT_BYREF)<br>- pVar is not null<br>- pVar->ppunkVal is not null<br>Otherwise, the clipboard is used. |
+| *pVar* | The cut text. pVar->ppunkVal is the out parameter for an **IDataObject** object, provided that the following conditions exist:<br>- pVar->vt = (VT_UNKNOWN OR VT_BYREF)<br>- pVar is not null<br>- pVar->ppunkVal is not null<br>Otherwise, the clipboard is used. |
 
 # <a name="Copy"></a>Copy
 
