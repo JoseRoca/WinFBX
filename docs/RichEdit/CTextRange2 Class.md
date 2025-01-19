@@ -202,6 +202,7 @@ SCOPE
    ' // The CTextDocument2 class and the CTextRange2 class will be destroyed when the scope ends
 END SCOPE
 ```
+
 **Note**: The following lines of code:
 ```
 DIM pCTextDocument2 AS CTextDocument2 = hRichEdit
@@ -212,8 +213,6 @@ can be replaced with a compound syntax:
 ```
 DIM cbsText AS CBSTR = CTextRange2(CTextDocument2(hRichEdit).Range2(0, numChars)).GetText2(0)
 ```
-*CTextRange2(pCTextDocument2.Range2(0, numChars))* creates a temporary instance of the **CTextRange2** class that can be used to call its methods (in this example, *GetText2(0)*). The temporary instance of the class is destroyed automatically after its use.
-
 <ins>To use with the pointer syntax.</ins>
 
 ```
