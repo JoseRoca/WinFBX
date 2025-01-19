@@ -2103,7 +2103,7 @@ The range cannot be edited if any part of it is protected or if the document is 
 Changes the case of letters in this range according to the *nType* parameter.
 
 ```
-FUNCTION CTextRange2.ChangeCase (BYVAL nType AS LONG) AS HRESULT
+FUNCTION CTextRange2.ChangeCase (BYVAL nType AS LONG  = tomLowerCase) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->ChangeCase(m_pTextRange2, nType))
    RETURN m_Result
 END FUNCTION
