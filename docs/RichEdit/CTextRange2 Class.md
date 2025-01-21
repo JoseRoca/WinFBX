@@ -3366,7 +3366,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *Flags* | A combination of the following flags: **tomMathAlphabetics**, **tomMathBuildDownOutermost**, **tomMathBuildUpArgOrZone**, **tomMathRemoveOutermost**, **tomPlain**, **tomTeX** |
+| *Flags* | A combination of the following flags: **tomMathAlphabetics**, **tomMathBuildDownOutermost**, **tomMathBuildUpArgOrZone**, **tomMathRemoveOutermost**, **tomPlain**, **tomTeX**. |
 
 If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
@@ -3376,12 +3376,28 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 # <a name="SetActiveSubrange"></a>SetActiveSubrange
 
+Makes the specified subrange the active subrange of this range.
+
 ```
 FUNCTION CTextRange2.SetActiveSubrange (BYVAL cpAnchor AS LONG, BYVAL cpActive AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetActiveSubrange(m_pTextRange2, cpAnchor, cpActive))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cpAnchor* | The anchor end character position of the subrange to make active. |
+| *cpActive* | The active end character position of the subrange to make active. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The active subrange is the one affected by operations such as Shift+Arrow keys if this range is the selection.
+
 
 # <a name="SetDropCap"></a>SetDropCap
 
