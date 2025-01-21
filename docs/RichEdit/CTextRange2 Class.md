@@ -2936,8 +2936,8 @@ The following actions are possible:
 - If part of a link's friendly name is selected, the URL part is replaced with bstr.
 - If part of a regular URL is selected, it becomes the link's friendly name, with bstr as the URL.
 - If nonlink text is selected:
--- If the text immediately follows a link's friendly name and bstr matches the URL, the text is appended to the friendly name.
--- Otherwise, the text becomes the friendly name of a link, with bstr as the URL.
+  - If the text immediately follows a link's friendly name and bstr matches the URL, the text is appended to the friendly name.
+  - Otherwise, the text becomes the friendly name of a link, with bstr as the URL.
 The text range be adjusted to different character positions after calling SetURL.
 
 # <a name="AddSubrange"></a>AddSubrange
