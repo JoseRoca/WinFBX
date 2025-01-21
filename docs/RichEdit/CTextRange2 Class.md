@@ -2675,6 +2675,8 @@ This method types the string given by *cbs* at this selection as if someone type
 
 # <a name="GetCch"></a>GetCch
 
+Gets the count of characters in a range.
+
 ```
 FUNCTION CTextRange2.GetCch () AS LONG
    DIM cch AS LONG
@@ -2682,6 +2684,18 @@ FUNCTION CTextRange2.GetCch () AS LONG
    RETURN cch
 END FUNCTION
 ```
+
+#### Return value
+
+The signed count of characters.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The count of characters is the difference between the character position of the active end of the range, and the character position of the anchor end. Some Text Object Model (TOM) implementations might include active ends only for a selection (represented by the **ITextSelection** interface). The rich edit control's TOM implementation of a text range (represented by the **ITextRange** interface) also has active ends.
 
 # <a name="GetCells"></a>GetCells
 
