@@ -3401,12 +3401,28 @@ The active subrange is the one affected by operations such as Shift+Arrow keys i
 
 # <a name="SetDropCap"></a>SetDropCap
 
+Not implemented.
+
+Sets the drop-cap parameters for the paragraph that contains the current range.
+
 ```
 FUNCTION CTextRange2.SetDropCap (BYVAL cLine AS LONG, BYVAL Position AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetDropCap(m_pTextRange2, cLine, Position))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cLine* | The count of lines for drop cap. Zero means no drop cap. |
+| *Position* | The position of drop cap. It can be one of the following.<br>**tomDropMargin**,<br> **tomDropNone**, <br> **tomDropNormal** |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+The current range can be degenerate, or you can select up to the complete drop-cap paragraph. If the range contains more than one paragraph, this method returns **E_FAIL**.
 
 # <a name="SetProperty"></a>SetProperty
 
