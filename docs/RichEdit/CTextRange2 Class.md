@@ -2745,6 +2745,8 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 # <a name="GetCount"></a>GetCount
 
+Gets the count of subranges, including the active subrange in the current range.
+
 ```
 FUNCTION CTextRange2.GetCount () AS LONG
    DIM Count AS LONG
@@ -2752,6 +2754,21 @@ FUNCTION CTextRange2.GetCount () AS LONG
    RETURN Count
 END FUNCTION
 ```
+
+#### Return value
+
+The count of subranges not including the active one.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+If you select a range with no or one character, the count will be 1. But if you select a word and then move to a different location, and select a second word not touching the first, then the count is 2.
+
+See **AddSubrange** to add subranges programmatically.
+
 
 # <a name="GetGravity"></a>GetGravity
 
