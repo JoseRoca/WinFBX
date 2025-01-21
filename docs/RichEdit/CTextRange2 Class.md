@@ -3334,12 +3334,24 @@ Some Unicode surrogates for hex values from &h10000 up to &h10FFFF are for inter
 
 # <a name="InsertTable"></a>InsertTable
 
+Inserts a table in a range.
+
 ```
 FUNCTION CTextRange2.InsertTable (BYVAL cCol AS LONG, BYVAL cRow AS LONG, BYVAL AutoFit AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->InsertTable(m_pTextRange2, cCol, cRow, AutoFit))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cCol* | The number of columns in the table. |
+| *cRow* | The number of rows in the table. |
+| *AutoFit* | Specifies how the cells fit the target space. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns an **HRESULT** error code.
 
 # <a name="Linearize"></a>Linearize
 
