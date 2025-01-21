@@ -3310,12 +3310,27 @@ DIM cbsText AS CBSTR = pCRange2.GetText2(0)
 
 # <a name="HexToUnicode"></a>HexToUnicode
 
+Converts and replaces the hexadecimal number at the end of this range to a Unicode character.
+
 ```
 FUNCTION CTextRange2.HexToUnicode () AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->HexToUnicode(m_pTextRange2))
    RETURN m_Result
 END FUNCTION
 ```
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+Some Unicode surrogates for hex values from &h10000 up to &h10FFFF are for internal use:
+
+| Hex values | Available for use |
+| ---------- | ----------------- |
+| 7, 0xFDD0 — 0xFDEF, 0xFFF9 — 0xFFFF | Internal use only |
+| 0xA — 0xD in the C0 range (0-0x1F) | Available for use |
+| C1 range (0x80 — 0x9F) | Internal use only |
 
 # <a name="InsertTable"></a>InsertTable
 
