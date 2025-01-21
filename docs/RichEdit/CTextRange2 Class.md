@@ -3181,7 +3181,12 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *pType* | The type of rectangle to return. This parameter can include one value from each of the following tables. |
+| *pType* | The type of rectangle to return. This parameter can include one value from each of the tables below. |
+| *pLeft* | The left rectangle coordinate. |
+| *pTop* | The top rectangle coordinate. |
+| *pRight* | The right rectangle coordinate. |
+| *pBottom* | The bottom rectangle coordinate. |
+| *pHit* | The hit-test value for the range. |
 
 | Constant | Value | Meaning |
 | -------- | ----- | ----------- |
@@ -3205,14 +3210,6 @@ Use one of the following values to indicate the horizontal position.
 | **TA_LEFT** | 0 | Left edge of the bounding rectangle. |
 | **TA_CENTER** | 6 | Center of the bounding rectangle. |
 | **TA_RIGHT** | 2 | ight edge of the bounding rectangle. |
-
-| Parameter | Description |
-| --------- | ----------- |
-| *pLeft* | The left rectangle coordinate. |
-| *pTop* | The top rectangle coordinate. |
-| *pRight* | The right rectangle coordinate. |
-| *pBottom* | The bottom rectangle coordinate. |
-| *pHit* | The hit-test value for the range. |
 
 #### Return value
 
