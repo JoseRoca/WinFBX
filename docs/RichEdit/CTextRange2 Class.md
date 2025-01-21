@@ -2722,6 +2722,10 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 # <a name="GetColumn"></a>GetColumn
 
+Not implemented.
+
+Gets the column properties for the currently selected column.
+
 ```
 FUNCTION CTextRange2.GetColumn () AS IUnknown PTR
    DIM pColumn AS IUnknown PTR
@@ -2729,6 +2733,15 @@ FUNCTION CTextRange2.GetColumn () AS IUnknown PTR
    RETURN pColumn
 END FUNCTION
 ```
+
+#### Return value
+
+The column properties for the currently selected column.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
 
 # <a name="GetCount"></a>GetCount
 
