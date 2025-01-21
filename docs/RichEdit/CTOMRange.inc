@@ -116,13 +116,13 @@ Public:
    DECLARE FUNCTION AddSubrange (BYVAL cp1 AS LONG, BYVAL cp2 AS LONG, BYVAL Activate AS LONG) AS HRESULT
    DECLARE FUNCTION BuildUpMath (BYVAL Flags AS LONG) AS HRESULT
    DECLARE FUNCTION DeleteSubrange (BYVAL cpFirst AS LONG, BYVAL cpLim AS LONG) AS HRESULT
-   DECLARE FUNCTION Find (BYVAL pRange AS ITextRange2 PTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS HRESULT
+   DECLARE FUNCTION Find (BYVAL pRange AS ITextRange2 PTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
    DECLARE FUNCTION GetChar2 (BYVAL Offset AS LONG) AS LONG
    DECLARE FUNCTION GetDropCap (BYVAL pcLine AS LONG PTR, BYVAL pPosition AS LONG PTR) AS HRESULT
-   DECLARE FUNCTION GetInlineObject (BYVAL pcLine AS LONG PTR, BYVAL pType AS LONG PTR, BYVAL pAlign AS LONG PTR, BYVAL pChar AS LONG PTR, BYVAL pChar1 AS LONG PTR, _
+   DECLARE FUNCTION GetInlineObject (BYVAL pType AS LONG PTR, BYVAL pAlign AS LONG PTR, BYVAL pChar AS LONG PTR, BYVAL pChar1 AS LONG PTR, _
       BYVAL pChar2 AS LONG PTR, BYVAL pCount AS LONG PTR,  BYVAL pTeXStyle AS LONG PTR, BYVAL pcCol AS LONG PTR, BYVAL pLevel AS LONG PTR) AS HRESULT
    DECLARE FUNCTION GetProperty (BYVAL nType AS LONG) AS LONG
-   DECLARE FUNCTION GetRect (BYVAL Type AS LONG, BYVAL pLeft AS LONG PTR, BYVAL pTop AS LONG PTR, BYVAL pRight AS LONG PTR, _
+   DECLARE FUNCTION GetRect (BYVAL nType AS LONG, BYVAL pLeft AS LONG PTR, BYVAL pTop AS LONG PTR, BYVAL pRight AS LONG PTR, _
       BYVAL pBottom AS LONG PTR, BYVAL pHit AS LONG PTR) AS HRESULT
    DECLARE FUNCTION GetSubrange (BYVAL iSubrange AS LONG, BYVAL pcpFirst AS LONG PTR, BYVAL pcpLim AS LONG PTR) AS HRESULT
    DECLARE FUNCTION GetText2 (BYVAL Flags AS LONG) AS CBSTR
@@ -1172,7 +1172,7 @@ END FUNCTION
 ' ========================================================================================
 ' Searches for math inline functions in text as specified by a source range.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.Find (BYVAL pRange AS ITextRange2 PTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS HRESULT
+PRIVATE FUNCTION CTextRange2.Find (BYVAL pRange AS ITextRange2 PTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
    DIM Delta AS LONG
    IF m_pTextRange2 = NULL THEN m_Result = E_POINTER: RETURN Delta
    this.SetResult(m_pTextRange2->lpvtbl->Find(m_pTextRange2, pRange, Count, Flags, @Delta))
@@ -1193,10 +1193,10 @@ END FUNCTION
 ' ========================================================================================
 ' Gets the properties of the inline object at the range active end.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRange2.GetInlineObject (BYVAL pcLine AS LONG PTR, BYVAL pType AS LONG PTR, BYVAL pAlign AS LONG PTR, BYVAL pChar AS LONG PTR, BYVAL pChar1 AS LONG PTR, _
+PRIVATE FUNCTION CTextRange2.GetInlineObject (BYVAL pType AS LONG PTR, BYVAL pAlign AS LONG PTR, BYVAL pChar AS LONG PTR, BYVAL pChar1 AS LONG PTR, _
 BYVAL pChar2 AS LONG PTR, BYVAL pCount AS LONG PTR,  BYVAL pTeXStyle AS LONG PTR, BYVAL pcCol AS LONG PTR, BYVAL pLevel AS LONG PTR) AS HRESULT
    IF m_pTextRange2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
-   this.SetResult(m_pTextRange2->lpvtbl->GetInlineObject(m_pTextRange2, pcLine, pType, pAlign, pChar, pChar1, pChar2, pCount, pTeXStyle, pcCol))
+   this.SetResult(m_pTextRange2->lpvtbl->GetInlineObject(m_pTextRange2, pType, pAlign, pChar, pChar1, pChar2, pCount, pTeXStyle, pcCol, pLevel))
    RETURN m_Result
 END FUNCTION
 ' ========================================================================================
