@@ -2884,6 +2884,8 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 # <a name="GetURL"></a>GetURL
 
+Returns the URL text associated with a range.
+
 ```
 FUNCTION CTextRange2.GetURL () AS CBSTR
    DIM pbstr AS AFX_BSTR
@@ -2891,6 +2893,14 @@ FUNCTION CTextRange2.GetURL () AS CBSTR
    RETURN pbstr
 END FUNCTION
 ```
+
+#### Return value
+
+The URL text associated with the range.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetURL"></a>SetURL
 
