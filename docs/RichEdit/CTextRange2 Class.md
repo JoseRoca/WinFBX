@@ -3426,12 +3426,23 @@ The current range can be degenerate, or you can select up to the complete drop-c
 
 # <a name="SetProperty"></a>SetProperty
 
+Sets the value of the specified property.
+
 ```
 FUNCTION CTextRange2.SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetProperty(m_pTextRange2, nType, Value))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *nType* | The ID of the property to set. |
+| *Value* | The new property value. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetText2"></a>SetText2
 
