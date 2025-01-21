@@ -3041,12 +3041,23 @@ You should set the **tomNeedTermOp** flag should for formula autobuildup unless 
 
 # <a name="DeleteSubrange"></a>DeleteSubrange
 
+Deletes a subrange from a range.
+
 ```
 FUNCTION CTextRange2.DeleteSubrange (BYVAL cpFirst AS LONG, BYVAL cpLim AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->DeleteSubrange(m_pTextRange2, cpFirst, cpLim))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cpFirst* | The start character position of the subrange. |
+| *cpLim* | The end character position of the subrange. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="Find"></a>Find
 
