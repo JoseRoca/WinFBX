@@ -3169,6 +3169,8 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 # <a name="GetRect"></a>GetRect
 
+Retrieves a rectangle of the specified type for the current range.
+
 ```
 FUNCTION CTextRange2.GetRect (BYVAL nType AS LONG, BYVAL pLeft AS LONG PTR, BYVAL pTop AS LONG PTR, _
 BYVAL pRight AS LONG PTR, BYVAL pBottom AS LONG PTR, BYVAL pHit AS LONG PTR) AS HRESULT
@@ -3176,6 +3178,45 @@ BYVAL pRight AS LONG PTR, BYVAL pBottom AS LONG PTR, BYVAL pHit AS LONG PTR) AS 
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pType* | The type of rectangle to return. This parameter can include one value from each of the following tables. |
+
+| Constant | Value | Meaning |
+| -------- | ----- | ----------- |
+| **tomAllowOffClient** | 512 | Allow points outside of the client area. |
+| **tomClientCoord** | 256 | Use client coordinates instead of screen coordinates. |
+| **tomObjectArg** | 2048 | Get a point inside an inline object argument; for example, inside the numerator of a fraction. |
+| **tomTransform** | 1024 | Transform coordinates using a world transform (XFORM) supplied by the host application. |
+
+Use one of the following values to indicate the vertical position.
+
+| Constant | Value | Meaning |
+| -------- | ----- | ----------- |
+| **TA_TOP** | 0 | Top edge of the bounding rectangle. |
+| **TA_BASELINE** | 24 | Base line of the text. |
+| **TA_BOTTOM** | 8 | Bottom edge of the bounding rectangle. |
+
+Use one of the following values to indicate the horizontal position.
+
+| Constant | Value | Meaning |
+| -------- | ----- | ----------- |
+| **TA_LEFT** | 0 | Left edge of the bounding rectangle. |
+| **TA_CENTER** | 6 | Center of the bounding rectangle. |
+| **TA_RIGHT** | 2 | ight edge of the bounding rectangle. |
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pLeft* | The left rectangle coordinate. |
+| *pTop* | The top rectangle coordinate. |
+| *pRight* | The right rectangle coordinate. |
+| *pBottom* | The bottom rectangle coordinate. |
+| *pHit* | The hit-test value for the range. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetSubrange"></a>GetSubrange
 
