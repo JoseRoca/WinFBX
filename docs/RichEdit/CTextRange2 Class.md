@@ -101,7 +101,7 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | ---------- | ----------- |
 | [GetCch](#GetCch) | Gets the count of characters in a range. |
 | [GetCells](#GetCells) | Not implemented. Gets a cells object with the parameters of cells in the currently selected table row or column. |
-| [GetColumn](#GetColumn) | Gets the column properties for the currently selected column. |
+| [GetColumn](#GetColumn) | Not implemented. Gets the column properties for the currently selected column. |
 | [GetCount](#GetCount) | Gets the count of subranges, including the active subrange in the current range. |
 | [GetDuplicate2](#GetDuplicate) | Gets a duplicate of a range object. |
 | [GetFont2](#GetFont) | Gets an **ITextFont2** object with the character attributes of the current range. |
