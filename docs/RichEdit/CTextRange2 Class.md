@@ -3120,6 +3120,7 @@ BYVAL pChar2 AS LONG PTR, BYVAL pCount AS LONG PTR,  BYVAL pTeXStyle AS LONG PTR
    RETURN m_Result
 END FUNCTION
 ```
+
 | Parameter | Description |
 | --------- | ----------- |
 | *pType* | The inline object type. |
@@ -3144,6 +3145,8 @@ When that character is not a start delimiter, the character and column parameter
 
 # <a name="GetProperty"></a>GetProperty
 
+Gets the value of a property.
+
 ```
 FUNCTION CTextRange2.GetProperty (BYVAL nType AS LONG) AS LONG
    DIM Value AS LONG
@@ -3151,6 +3154,18 @@ FUNCTION CTextRange2.GetProperty (BYVAL nType AS LONG) AS LONG
    RETURN Value
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pType* | The property ID. |
+
+#### Return value
+
+The property value.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetRect"></a>GetRect
 
