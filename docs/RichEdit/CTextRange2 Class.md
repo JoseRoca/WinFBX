@@ -3018,6 +3018,10 @@ END FUNCTION
 | **tomPlain** | &h10 |
 | **tomShowEmptyArgPlaceholders** | &h4000000 |
 
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
 #### Remarks
 
 If the **BuildUpMath** method is called on a nondegenerate range, the method checks the text for math italic conversions (if **tomMathAlphabetics** is specified) and math autocorrect conversions (if **tomMathAutoCorrect** or **tomMathAutoCorrectExt** is specified). Then, the method attempts to build up the selected text. If successful, the method replaces the previous text in the range with the built-up text. If the method makes any changes to the range, the function returns **NOERROR** and the range selects the result. If the method does change the range, it returns **S_FALSE** or a Component Object Model (COM) error code.
@@ -3034,10 +3038,6 @@ If this full build-up attempt fails, the **BuildUpMath** method does a partial b
 If full and partial build-up attempts fail, the function returns as described previously for the cases where no build-up text was found. Other possible return values include **E_INVALIDARG** (if either interface pointer is **NULL**) and **E_OUTOFMEMORY**.
 
 You should set the **tomNeedTermOp** flag should for formula autobuildup unless autocorrection has occurred that deletes the terminating blank. Autocorrection can occur when correcting text like \alpha when the user types a blank to force autocorrection.
-
-#### Return value
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="DeleteSubrange"></a>DeleteSubrange
 
