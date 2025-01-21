@@ -2862,8 +2862,9 @@ The start of the paragraph that contains the range's start character position.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-
 # <a name="GetTable"></a>GetTable
+
+Gets the table properties in the currently selected table.
 
 ```
 FUNCTION CTextRange2.GetTable () AS IUnknown PTR
@@ -2872,6 +2873,14 @@ FUNCTION CTextRange2.GetTable () AS IUnknown PTR
    RETURN pTable
 END FUNCTION
 ```
+
+#### Return value
+
+The table properties.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetURL"></a>GetURL
 
