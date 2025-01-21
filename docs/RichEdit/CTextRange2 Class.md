@@ -3217,12 +3217,36 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 # <a name="GetSubrange"></a>GetSubrange
 
+Retrieves a subrange in a range.
+
 ```
 FUNCTION CTextRange2.GetSubrange (BYVAL iSubrange AS LONG, BYVAL pcpFirst AS LONG PTR, BYVAL pcpLim AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->GetSubrange(m_pTextRange2, iSubrange, pcpFirst, pcpLim))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *iSubrange* | The subrange index. |
+| *pcpFirst* | The character position for the start of the subrange. |
+| *pcpLim* | The character position for the end of the subrange. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+Subranges are selected as follows.
+
+| iSubrange value | Subrange |
+| --------------- | -------- |
+| Equals zero | Gets the current active subrange. |
+| Greater than zero | Gets the subrange at the index specified by iSubrange, in the order in which the subranges were added. This requires extra calculation. |
+| Less than zero | Gets the subrange at the index specified by *iSubrange*, in increasing character position order. |
+ 
+See **GetCount** for the count of subranges not including the active subrange.
 
 # <a name="GetText2"></a>GetText2
 
