@@ -3061,15 +3061,36 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 # <a name="Find"></a>Find
 
+Searches for math inline functions in text as specified by a source range.
+
 ```
-FUNCTION CTextRange2.Find (BYVAL pRange AS ITextRange2 PTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS HRESULT
+FUNCTION CTextRange2.Find (BYVAL pRange AS ITextRange2 PTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->Find(m_pTextRange2, pRange, Count, Flags, @Delta))
    RETURN Delta
 END FUNCTION
 ```
 
+| Parameter | Description |
+| --------- | ----------- |
+| *pRange* | The formatted text to find in the range's text. |
+| *Count* | The number of characters to search through. |
+| *Flags* | Flags that control the search as defined for **FindText**. |
+
+#### Return value
+
+A count of the number of characters bypassed.
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
 # <a name="GetDropCap"></a>GetDropCap
+
+Not implemented.
+
+Gets the drop-cap parameters of the paragraph that contains this range.
 
 ```
 FUNCTION CTextRange2.GetDropCap (BYVAL pcLine AS LONG PTR, BYVAL pPosition AS LONG PTR) AS HRESULT
@@ -3077,6 +3098,15 @@ FUNCTION CTextRange2.GetDropCap (BYVAL pcLine AS LONG PTR, BYVAL pPosition AS LO
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pcLine* | The count of lines for the drop cap. A value of 0 means no drop cap. |
+| *pPosition* | The position of the drop cap. The position can be one of the following:<br>**tomDropMargin**<br>**tomDropNone**<br>**tomDropNormal** |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetInlineObject"></a>GetInlineObject
 
