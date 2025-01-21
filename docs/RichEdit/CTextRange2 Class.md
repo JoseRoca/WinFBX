@@ -3523,6 +3523,8 @@ Some Unicode surrogates for hex values from &h10000 up to &h10FFFF are for inter
 
 # <a name="SetInlineObject"></a>SetInlineObject
 
+Sets or inserts the properties of an inline object for a degenerate range.
+
 ```
 FUNCTION CTextRange2.SetInlineObject (BYVAL nType AS Long, BYVAL Align AS LONG, BYVAL Char AS LONG, _
 BYVAL Char1 AS LONG, BYVAL Char2 AS LONG, BYVAL Count AS LONG, BYVAL TeXStyle AS LONG, BYVAL cCol AS LONG) AS HRESULT
@@ -3530,6 +3532,21 @@ BYVAL Char1 AS LONG, BYVAL Char2 AS LONG, BYVAL Count AS LONG, BYVAL TeXStyle AS
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *nType* | The object type as defined in **GetInlineObject**. |
+| *Align* | The object alignment as defined in **GetInlineObject**. |
+| *Char* | The object character as defined in **GetInlineObject**. |
+| *Char1* | The closing bracket (**tomBrackets**) character. See [Unicode Technical Note 28](https://www.unicode.org/notes/tn28/) for a list of characters. |
+| *Char2* | The separator character for **tomBracketsWithSeps**, which can be one of the following values. |
+| *Count* | The number of arguments in the inline object. |
+| *TeXStyle* | The TeX style, as defined in **GetInlineObject**. |
+| *cCol* | The number of columns in the inline object. For **tomMatrix** only. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetMathFunctionType"></a>GetMathFunctionType
 
