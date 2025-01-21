@@ -3355,12 +3355,24 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns an 
 
 # <a name="Linearize"></a>Linearize
 
+Translates the built-up math, ruby, and other inline objects in this range to linearized form.
+
 ```
 FUNCTION CTextRange2.Linearize (BYVAL Flags AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->Linearize(m_pTextRange2, Flags))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Flags* | A combination of the following flags: **tomMathAlphabetics**, **tomMathBuildDownOutermost**, **tomMathBuildUpArgOrZone**, **tomMathRemoveOutermost**, **tomPlain**, **tomTeX** |
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_OUTOFMEMORY** | Insufficient memory. |
 
 # <a name="SetActiveSubrange"></a>SetActiveSubrange
 
