@@ -3324,13 +3324,14 @@ END FUNCTION
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 #### Remarks
+
 Some Unicode surrogates for hex values from &h10000 up to &h10FFFF are for internal use:
 
 | Hex values | Available for use |
 | ---------- | ----------------- |
-| 7, 0xFDD0 — 0xFDEF, 0xFFF9 — 0xFFFF | Internal use only |
-| 0xA — 0xD in the C0 range (0-0x1F) | Available for use |
-| C1 range (0x80 — 0x9F) | Internal use only |
+| 7, &hFDD0 — &hFDEF, &hFFF9 — &hFFFF | Internal use only |
+| &hA — &hD in the C0 range (0-&h1F) | Available for use |
+| C1 range (&h80 — &h9F) | Internal use only |
 
 # <a name="InsertTable"></a>InsertTable
 
@@ -3497,12 +3498,28 @@ pCRange2.SetText2(0, "")
 
 # <a name="UnicodeToHex"></a>UnicodeToHex
 
+Converts the Unicode character(s) preceding the start position of this text range to a hexadecimal number, and selects it.
+
 ```
 FUNCTION CTextRange2.UnicodeToHex () AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->UnicodeToHex(m_pTextRange2))
    RETURN m_Result
 END FUNCTION
 ```
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+Some Unicode surrogates for hex values from &h10000 up to &h10FFFF are for internal use:
+
+| Hex values | Available for use |
+| ---------- | ----------------- |
+| 7, &hFDD0 — &hFDEF, &hFFF9 — &hFFFF | Internal use only |
+| &hA — &hD in the C0 range (0-&h1F) | Available for use |
+| C1 range (&h80 — &h9F) | Internal use only |
 
 # <a name="SetInlineObject"></a>SetInlineObject
 
