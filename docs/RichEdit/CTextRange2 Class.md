@@ -122,7 +122,7 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [DeleteSubrange](#DeleteSubrange) | Deletes a subrange from a range. |
 | [Find](#Find) | Searches for math inline functions in text as specified by a source range. |
 | [GetChar2](#GetChar2) | Gets the character at the specified offset from the end of this range. |
-| [GetDropCap](#GetDropCap) | Gets the drop-cap parameters of the paragraph that contains this range. |
+| [GetDropCap](#GetDropCap) | Not implemented. Gets the drop-cap parameters of the paragraph that contains this range. |
 | [GetInlineObject](#GetInlineObject) | Gets the properties of the inline object at the range active end. |
 | [GetProperty](#GetProperty) | Gets the value of a property. |
 | [GetRect](#GetRect) | Retrieves a rectangle of the specified type for the current range. |
