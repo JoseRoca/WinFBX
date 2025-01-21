@@ -3085,7 +3085,6 @@ A count of the number of characters bypassed.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-
 # <a name="GetDropCap"></a>GetDropCap
 
 Not implemented.
@@ -3110,13 +3109,38 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 # <a name="GetInlineObject"></a>GetInlineObject
 
+Gets the properties of the inline object at the range active end.
+
+See full MSDN documentation: [ITextRange2::GetInlineObject method](https://learn.microsoft.com/en-us/windows/win32/api/tom/nf-tom-itextrange2-getinlineobject)
+
 ```
-FUNCTION CTextRange2.GetInlineObject (BYVAL pcLine AS LONG PTR, BYVAL pType AS LONG PTR, BYVAL pAlign AS LONG PTR, BYVAL pChar AS LONG PTR, BYVAL pChar1 AS LONG PTR, _
+FUNCTION CTextRange2.GetInlineObject (BYVAL pType AS LONG PTR, BYVAL pAlign AS LONG PTR, BYVAL pChar AS LONG PTR, BYVAL pChar1 AS LONG PTR, _
 BYVAL pChar2 AS LONG PTR, BYVAL pCount AS LONG PTR,  BYVAL pTeXStyle AS LONG PTR, BYVAL pcCol AS LONG PTR, BYVAL pLevel AS LONG PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->GetInlineObject(m_pTextRange2, pcLine, pType, pAlign, pChar, pChar1, pChar2, pCount, pTeXStyle, pcCol))
+   this.SetResult(m_pTextRange2->lpvtbl->GetInlineObject(m_pTextRange2, pType, pAlign, pChar, pChar1, pChar2, pCount, pTeXStyle, pcCol))
    RETURN m_Result
 END FUNCTION
 ```
+| Parameter | Description |
+| --------- | ----------- |
+| *pType* | The inline object type. |
+| *pAlign* | The inline object alignment. |
+| *pChar* | The inline object character. |
+| *pChar1* | The closing **tomBrackets** character. |
+| *pChar2* | The separator character for **tomBracketsWithSep**. |
+| *pCount* | The inline object count of arguments. |
+| *pTeXStyle* | The inline object TeX style. |
+| *pcCol* | The inline object count of columns (**tomMatrix** only). |
+| *pLevel* | The inline object 0-based nesting level. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+[Unicode Technical Note 28](https://www.unicode.org/notes/tn28/) describes the alignment and character values in detail when the active end character is an inline object start delimiter.
+
+When that character is not a start delimiter, the character and column parameters are set to 0, the count is set to the 0-based argument index, and the other parameters are set according to the active-end character properties of the innermost inline object argument.
 
 # <a name="GetProperty"></a>GetProperty
 
