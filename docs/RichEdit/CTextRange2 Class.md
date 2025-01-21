@@ -2919,7 +2919,7 @@ END FUNCTION
 
 #### Result code
 
-If the method succeeds, it returns S_OK. If the method fails, it returns one of the following COM error codes.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
 | Return code | Description |
 | -------------- | ----------- |
@@ -2943,12 +2943,22 @@ The text range be adjusted to different character positions after calling SetURL
 
 # <a name="AddSubrange"></a>AddSubrange
 
+Adds a subrange to this range.
+
 ```
 FUNCTION CTextRange2.AddSubrange (BYVAL cp1 AS LONG, BYVAL cp2 AS LONG, BYVAL Activate AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->AddSubrange(m_pTextRange2, cp1, cp2, Activate))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cp1* | The active-end character position of the subrange. |
+| *cp2* | The anchor-end character position of the subrange. |
+| *Activate* | The activate parameter. If this parameter is **tomTrue**, the new subrange is the active subrange, with *cp1* as the active end, and *cp2* the anchor end. |
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="BuildUpMath"></a>BuildUpMath
 
