@@ -100,7 +100,7 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | Name       | Description |
 | ---------- | ----------- |
 | [GetCch](#GetCch) | Gets the count of characters in a range. |
-| [GetCells](#GetCells) | Gets a cells object with the parameters of cells in the currently selected table row or column. |
+| [GetCells](#GetCells) | Not implemented. Gets a cells object with the parameters of cells in the currently selected table row or column. |
 | [GetColumn](#GetColumn) | Gets the column properties for the currently selected column. |
 | [GetCount](#GetCount) | Gets the count of subranges, including the active subrange in the current range. |
 | [GetDuplicate2](#GetDuplicate) | Gets a duplicate of a range object. |
@@ -2699,6 +2699,10 @@ The count of characters is the difference between the character position of the 
 
 # <a name="GetCells"></a>GetCells
 
+Not implemented.
+
+Gets a cells object with the parameters of cells in the currently selected table row or column.
+
 ```
 FUNCTION CTextRange2.GetCells () AS IUnknown PTR
    DIM pCells AS IUnknown PTR
@@ -2706,6 +2710,15 @@ FUNCTION CTextRange2.GetCells () AS IUnknown PTR
    RETURN pCells
 END FUNCTION
 ```
+
+#### Return value
+
+The cells object.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
 
 # <a name="GetColumn"></a>GetColumn
 
