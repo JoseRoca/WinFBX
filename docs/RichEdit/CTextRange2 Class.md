@@ -3550,6 +3550,8 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 # <a name="GetMathFunctionType"></a>GetMathFunctionType
 
+Retrieves the math function type associated with the specified math function name.
+
 ```
 FUNCTION CTextRange2.GetMathFunctionType (BYREF cbs AS CBSTR) AS LONG
    DIM Value AS LONG
@@ -3557,6 +3559,27 @@ FUNCTION CTextRange2.GetMathFunctionType (BYREF cbs AS CBSTR) AS LONG
    RETURN Value
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cbs* | The math function name that is checked to determine the math function type. |
+
+#### Return value
+
+The math function type of the function name specified by bstr. It can be one of the following values.
+
+| Constant | Value | Description |
+| -------- | ----- | ----------- |
+| **tomFunctionTypeNone** | 0 | Not in the function list. |
+| **tomFunctionTypeTakesArg** | 1 | An ordinary math function that takes arguments. |
+| **tomFunctionTypeTakesLim** | 2 | Use the lower limit for _, and so on. |
+| **tomFunctionTypeTakesLim2** | 3 | Turn the preceding FA into an NBSP. |
+| **tomFunctionTypeIsLim** | 4 | A "lim" function. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
 
 # <a name="InsertImage"></a>InsertImage
 
