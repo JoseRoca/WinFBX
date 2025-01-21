@@ -69,7 +69,7 @@ TYPE CBSTR_ AS CBSTR
 ' // unicode characters, that is the value returned by the FreeBASIC LEN operator.
 ' // If the retrieved length if the same that the returned by LEN, then it must be an OLE string.
 ' ========================================================================================
-PRIVATE FUNCTION CBSTR_IsBstr (BYVAL pv aS ANY PTR) AS BOOLEAN
+PRIVATE FUNCTION CBSTR_IsBstr (BYVAL pv AS ANY PTR) AS BOOLEAN
    IF pv = NULL THEN RETURN FALSE
    DIM res AS DWORD = PEEK(DWORD, pv - 4) \ 2
    IF res = LEN(*cast(WSTRING PTR, pv)) THEN RETURN TRUE
