@@ -2772,6 +2772,8 @@ See **AddSubrange** to add subranges programmatically.
 
 # <a name="GetGravity"></a>GetGravity
 
+Gets the gravity of this range.
+
 ```
 FUNCTION CTextRange2.GetGravity () AS LONG
    DIM Value AS LONG
@@ -2779,8 +2781,25 @@ FUNCTION CTextRange2.GetGravity () AS LONG
    RETURN Value
 END FUNCTION
 ```
+#### Return value
+
+The gravity value, which can be one of the following:
+
+| Constant | Value | Meaning |
+| -------- | ----- | ------- |
+| **tomGravityUI** | 0 | Use selection user interface rules. |
+| **tomGravityBack** | 1 | Both ends have backward gravity. |
+| **tomGravityFore** | 2 | Both ends have forward gravity. |
+| **tomGravityIn** | 3 | Inward gravity; that is, the start is forward, and the end is backward. |
+| **tomGravityOut** | 4 | Outward gravity; that is, the start is backward, and the end is forward. |
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetGravity"></a>SetGravity
+
+Sets the gravity of this range.
 
 ```
 FUNCTION CTextRange2.SetGravity (BYVAL Value AS LONG) AS HRESULT
@@ -2788,6 +2807,22 @@ FUNCTION CTextRange2.SetGravity (BYVAL Value AS LONG) AS HRESULT
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new gravity value, which can be one of the following. |
+
+| Constant | Value | Meaning |
+| -------- | ----- | ------- |
+| **tomGravityUI** | 0 | Use selection user interface rules. |
+| **tomGravityBack** | 1 | Both ends have backward gravity. |
+| **tomGravityFore** | 2 | Both ends have forward gravity. |
+| **tomGravityIn** | 3 | Inward gravity; that is, the start is forward, and the end is backward. |
+| **tomGravityOut** | 4 | Outward gravity; that is, the start is backward, and the end is forward. |
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetRow"></a>GetRow
 
