@@ -2717,8 +2717,7 @@ The cells object.
 
 #### Result code
 
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetColumn"></a>GetColumn
 
@@ -2740,8 +2739,7 @@ The column properties for the currently selected column.
 
 #### Result code
 
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetCount"></a>GetCount
 
@@ -2761,7 +2759,7 @@ The count of subranges not including the active one.
 
 #### Result code
 
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 #### Remarks
 
@@ -2795,7 +2793,7 @@ The gravity value, which can be one of the following:
 
 #### Result code
 
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetGravity"></a>SetGravity
 
@@ -2826,6 +2824,8 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 # <a name="GetRow"></a>GetRow
 
+Gets the row properties in the currently selected row.
+
 ```
 FUNCTION CTextRange2.GetRow () AS ITextRow PTR
    DIM pRow AS ITextRow PTR
@@ -2834,7 +2834,17 @@ FUNCTION CTextRange2.GetRow () AS ITextRow PTR
 END FUNCTION
 ```
 
+#### Return value
+
+The row properties.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
 # <a name="GetStartPara"></a>GetStartPara
+
+Gets the character position of the start of the paragraph that contains the range's start character position.
 
 ```
 FUNCTION CTextRange2.GetStartPara () AS LONG
@@ -2843,6 +2853,15 @@ FUNCTION CTextRange2.GetStartPara () AS LONG
    RETURN Value
 END FUNCTION
 ```
+
+#### Return value
+
+The start of the paragraph that contains the range's start character position.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
 
 # <a name="GetTable"></a>GetTable
 
