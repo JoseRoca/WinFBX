@@ -138,27 +138,34 @@ END TYPE
 ' ========================================================================================
 
 ' ========================================================================================
-' CTextRange2 constructor
+' CTextFont2 constructor
+' Called when a class variable is created.
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTextFont2
+   CTOM_DP("CONSTRUCTOR")
 END CONSTRUCTOR
 ' ========================================================================================
 
 ' ========================================================================================
-' CTextRange2 constructor
+' CTextFont2 constructor
+' Called when a class variable is created.
 ' ========================================================================================
 PRIVATE CONSTRUCTOR CTextFont2 (BYVAL pTextFont2 AS ITextFont2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
+   CTOM_DP("BEGIN CTextFont2 CONSTRUCTOR - pTextFont2 = " & WSTR(m_pTextFont2)) 
    ' // Store the pointer of ITextFont2 interface
-   IF pTextFont2 = NULL THEN m_Result = E_INVALIDARG : EXIT CONSTRUCTOR
-   IF fAddRef THEN pTextFont2->lpvtbl->AddRef(pTextFont2)
+   IF pTextFont2 THEN
+      IF fAddRef THEN pTextFont2->lpvtbl->AddRef(pTextFont2)
+   END IF
    m_pTextFont2 = pTextFont2
+   CTOM_DP("END CTextFont2 CONSTRUCTOR - m_pTextFont2 = " & WSTR(m_pTextFont2))
 END CONSTRUCTOR
 ' ========================================================================================
 
 ' ========================================================================================
-' CTextRange2 destructor
+' CTextFont2 destructor
 ' ========================================================================================
 PRIVATE DESTRUCTOR CTextFont2
+   CTOM_DP("CTextFont2 DESTRUCTOR - m_pTextFont2 = " & WSTR(m_pTextFont2))
    ' // Release the ITextFont2 interface
    IF m_pTextFont2 THEN m_pTextFont2->lpvtbl->Release(m_pTextFont2)
 END DESTRUCTOR
@@ -168,6 +175,7 @@ END DESTRUCTOR
 ' Assignment operator
 ' ========================================================================================
 PRIVATE OPERATOR CTextFont2.LET (BYVAL pTextFont2 AS ITextFont2 PTR)
+   CTOM_DP("CTextFont2 LET Operator - m_pTextFont2 = " & WSTR(m_pTextFont2))
    m_Result = 0
    IF pTextFont2 = NULL THEN m_Result = E_INVALIDARG : EXIT OPERATOR
    ' // Release the interface
@@ -226,6 +234,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetDuplicate () AS ITextFont2 PTR
    DIM pFont AS ITextFont2 PTR
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN pFont
    this.SetResult(m_pTextFont2->lpvtbl->GetDuplicate(m_pTextFont2, @pFont))
    FUNCTION = pFont
 END FUNCTION
@@ -235,6 +244,7 @@ END FUNCTION
 ' Sets the character formatting by copying another text font object.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetDuplicate (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetDuplicate(m_pTextFont2, pFont))
    FUNCTION = m_Result
 END FUNCTION
@@ -245,6 +255,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.CanChange () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->CanChange(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -255,6 +266,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.IsEqual (BYVAL pFont AS ITextFont2 PTR) AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->IsEqual(m_pTextFont2, pFont, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -264,6 +276,7 @@ END FUNCTION
 ' Resets the character formatting to the specified values.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.Reset (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->Reset(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -274,6 +287,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetStyle () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetStyle(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -283,6 +297,7 @@ END FUNCTION
 ' Sets the character style handle of the characters in a range.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetStyle (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetStyle(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -293,6 +308,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetAllCaps () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetAllCaps(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -302,6 +318,7 @@ END FUNCTION
 ' Sets whether the characters are all uppercase.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetAllCaps (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetAllCaps(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -312,6 +329,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetAnimation () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetAnimation(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -321,6 +339,7 @@ END FUNCTION
 ' Sets the animation type.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetAnimation (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetAnimation(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -331,6 +350,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetBackColor () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetBackColor(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -340,6 +360,7 @@ END FUNCTION
 ' Sets the background color.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetBackColor (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetBackColor(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -350,6 +371,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetBold () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetBold(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -359,6 +381,7 @@ END FUNCTION
 ' Sets whether characters are bold.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetBold (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetBold(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -369,6 +392,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetEmboss () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetEmboss(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -378,6 +402,7 @@ END FUNCTION
 ' Sets whether characters are embossed.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetEmboss (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetEmboss(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -388,6 +413,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetForeColor () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetForeColor(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -397,6 +423,7 @@ END FUNCTION
 ' Sets the foreground (text) color.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetForeColor (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetForeColor(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -407,6 +434,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetHidden () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetHidden(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -416,6 +444,7 @@ END FUNCTION
 ' Sets whether characters are hidden.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetHidden (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetHidden(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -426,6 +455,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetEngrave () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetEngrave(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -435,6 +465,7 @@ END FUNCTION
 ' Sets whether characters are displayed as imprinted characters.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetEngrave (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetEngrave(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -445,6 +476,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetItalic () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetItalic(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -454,6 +486,7 @@ END FUNCTION
 ' Sets whether characters are in italics.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetItalic (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetItalic(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -464,6 +497,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetKerning () AS SINGLE
    DIM Value AS SINGLE
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetKerning(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -473,6 +507,7 @@ END FUNCTION
 ' Sets the minimum font size at which kerning occurs.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetKerning (BYVAL Value AS SINGLE) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetKerning(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -483,6 +518,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetLanguageID () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetLanguageID(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -492,6 +528,7 @@ END FUNCTION
 ' Sets the language ID or language code identifier (LCID).
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetLanguageID (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetLanguageID(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -502,6 +539,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetName () AS CBSTR
    DIM pName AS AFX_BSTR
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN pName
    this.SetResult(m_pTextFont2->lpvtbl->GetName(m_pTextFont2, @pName))
    RETURN pName
 END FUNCTION
@@ -511,6 +549,7 @@ END FUNCTION
 ' Sets the font name.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetName (BYVAL bstr AS BSTR) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetName(m_pTextFont2, bstr))
    FUNCTION = m_Result
 END FUNCTION
@@ -521,6 +560,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetOutline () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetOutline(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -530,6 +570,7 @@ END FUNCTION
 ' Sets whether characters are displayed as outlined characters.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetOutline (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetOutline(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -540,6 +581,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetPosition () AS SINGLE
    DIM Value AS SINGLE
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetPosition(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -549,6 +591,7 @@ END FUNCTION
 ' Sets the amount that characters are offset vertically relative to the baseline.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetPosition (BYVAL Value AS SINGLE) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetPosition(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -559,6 +602,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetProtected () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetProtected(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -568,6 +612,7 @@ END FUNCTION
 ' Sets whether characters are protected against attempts to modify them.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetProtected (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetProtected(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -578,6 +623,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetShadow () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetShadow(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -587,6 +633,7 @@ END FUNCTION
 ' Sets whether characters are displayed as shadowed characters.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetShadow (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetShadow(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -597,6 +644,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetSize () AS SINGLE
    DIM Value AS SINGLE
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetSize(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -606,6 +654,7 @@ END FUNCTION
 ' Sets the font size.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetSize (BYVAL Value AS SINGLE) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetSize(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -616,6 +665,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetSmallCaps () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetSmallCaps(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -625,6 +675,7 @@ END FUNCTION
 ' Sets whether characters are in small capital letters.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetSmallCaps (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetSmallCaps(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -635,6 +686,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetSpacing () AS SINGLE
    DIM Value AS SINGLE
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetSpacing(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -644,6 +696,7 @@ END FUNCTION
 ' Sets the amount of horizontal spacing between characters.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetSpacing (BYVAL Value AS SINGLE) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetSpacing(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -654,6 +707,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetStrikeThrough () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetStrikeThrough(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -663,6 +717,7 @@ END FUNCTION
 ' Sets whether characters are displayed with a horizontal line through the center.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetStrikeThrough (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetStrikeThrough(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -673,6 +728,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetSubscript () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetSubscript(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -682,6 +738,7 @@ END FUNCTION
 ' Sets whether characters are displayed as subscript.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetSubscript (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetSubscript(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -692,6 +749,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetSuperscript () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetSuperscript(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -701,6 +759,7 @@ END FUNCTION
 ' Sets whether characters are displayed as superscript.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetSuperscript (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetSuperscript(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -711,6 +770,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetUnderline () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetUnderline(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -720,6 +780,7 @@ END FUNCTION
 ' Sets whether characters are displayed as superscript.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetUnderline (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetUnderline(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -730,6 +791,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetWeight () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetWeight(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -739,6 +801,7 @@ END FUNCTION
 ' Sets the font weight for the characters in a range.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetWeight (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetWeight(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -749,6 +812,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetCount () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetCount(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -759,6 +823,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetAutoLigatures () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetAutoLigatures(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -768,6 +833,7 @@ END FUNCTION
 ' Sets whether support for automatic ligatures is active.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetAutoLigatures (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetAutoLigatures(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -778,6 +844,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetAutospaceAlpha () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetAutospaceAlpha(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -787,6 +854,7 @@ END FUNCTION
 ' Sets the East Asian "autospace alpha" state.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetAutospaceAlpha (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetAutospaceAlpha(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -797,6 +865,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetAutospaceNumeric () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetAutospaceNumeric(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -806,6 +875,7 @@ END FUNCTION
 ' Sets the East Asian "autospace numeric" state.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetAutospaceNumeric (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetAutospaceNumeric(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -816,6 +886,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetAutospaceParens () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetAutospaceParens(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -825,6 +896,7 @@ END FUNCTION
 ' Sets the East Asian "autospace parentheses" state.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetAutospaceParens (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetAutospaceParens(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -835,6 +907,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetCharRep () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetCharRep(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -844,6 +917,7 @@ END FUNCTION
 ' Sets the character repertoire (writing system).
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetCharRep (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetCharRep(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -854,6 +928,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetCompressionMode () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetCompressionMode(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -863,6 +938,7 @@ END FUNCTION
 ' Sets the East Asian compression mode.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetCompressionMode (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetCompressionMode(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -873,6 +949,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetCookie () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetCookie(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -882,6 +959,7 @@ END FUNCTION
 ' Sets the client cookie.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetCookie (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetCookie(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -892,6 +970,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetDoubleStrike () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetDoubleStrike(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -901,6 +980,7 @@ END FUNCTION
 ' Sets whether characters are displayed with double horizontal lines through the center.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetDoubleStrike (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetDoubleStrike(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -911,6 +991,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetDuplicate2 () AS ITextFont2 PTR
    DIM pFont AS ITextFont2 PTR
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN pFont
    this.SetResult(m_pTextFont2->lpvtbl->GetDuplicate2(m_pTextFont2, @pFont))
    FUNCTION = pFont
 END FUNCTION
@@ -920,6 +1001,7 @@ END FUNCTION
 ' Sets whether characters are displayed with double horizontal lines through the center.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetDuplicate2 (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetDuplicate2(m_pTextFont2, pFont))
    FUNCTION = m_Result
 END FUNCTION
@@ -930,6 +1012,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetLinkType () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetLinkType(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -940,6 +1023,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetMathZone () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetMathZone(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -949,6 +1033,7 @@ END FUNCTION
 ' Sets whether a math zone is active.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetMathZone (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetMathZone(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -959,6 +1044,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetModWidthPairs () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetModWidthPairs(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -968,6 +1054,7 @@ END FUNCTION
 ' Sets whether "decrease widths on pairs" is active.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetModWidthPairs (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetModWidthPairs(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -978,6 +1065,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetModWidthSpace () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetModWidthSpace(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -987,6 +1075,7 @@ END FUNCTION
 ' Sets whether "increase width of whitespace" is active.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetModWidthSpace (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetModWidthSpace(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -997,6 +1086,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetOldNumbers () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetOldNumbers(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -1006,6 +1096,7 @@ END FUNCTION
 ' Sets whether old-style numbers are active.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetOldNumbers (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetOldNumbers(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -1016,6 +1107,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetOverlapping () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetOverlapping(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -1025,6 +1117,7 @@ END FUNCTION
 ' Sets whether overlapping text is active.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetOverlapping (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetOverlapping(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -1035,6 +1128,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetPositionSubSuper () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetPositionSubSuper(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -1045,6 +1139,7 @@ END FUNCTION
 ' of the font height.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetPositionSubSuper (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetPositionSubSuper(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -1055,6 +1150,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetScaling () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetScaling(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -1064,6 +1160,7 @@ END FUNCTION
 ' Sets the font horizontal scaling percentage.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetScaling (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetScaling(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -1074,6 +1171,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetSpaceExtension () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetSpaceExtension(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -1083,6 +1181,7 @@ END FUNCTION
 ' Sets the East Asian space extension value.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetSpaceExtension (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetSpaceExtension(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -1093,6 +1192,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetUnderlinePositionMode () AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetUnderlinePositionMode(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -1102,6 +1202,7 @@ END FUNCTION
 ' Sets the underline position mode.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetUnderlinePositionMode (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetUnderlinePositionMode(m_pTextFont2, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -1111,6 +1212,7 @@ END FUNCTION
 ' Gets the character format effects.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetEffects (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->GetEffects(m_pTextFont2, pValue, pMask))
    FUNCTION = m_Result
 END FUNCTION
@@ -1120,6 +1222,7 @@ END FUNCTION
 ' Gets the additional character format effects.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetEffects2 (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->GetEffects2(m_pTextFont2, pValue, pMask))
    FUNCTION = m_Result
 END FUNCTION
@@ -1130,6 +1233,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetProperty (BYVAL nType AS LONG) AS LONG
    DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetProperty(m_pTextFont2, nType, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -1139,6 +1243,7 @@ END FUNCTION
 ' Gets the additional character format effects.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.GetPropertyInfo (BYVAL Index AS LONG, BYVAL pType AS LONG PTR, BYVAL pValue AS LONG PTR) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->GetPropertyInfo(m_pTextFont2, Index, pType, pValue))
    FUNCTION = m_Result
 END FUNCTION
@@ -1149,6 +1254,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.IsEqual2 (BYVAL pFont AS ITextFont2 PTR) AS LONG
    DIM B AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN B
    this.SetResult(m_pTextFont2->lpvtbl->IsEqual2(m_pTextFont2, pFont, @B))
    FUNCTION = B
 END FUNCTION
@@ -1158,6 +1264,7 @@ END FUNCTION
 ' Sets the character format effects.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetEffects (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetEffects(m_pTextFont2, Value, Mask))
    FUNCTION = m_Result
 END FUNCTION
@@ -1167,6 +1274,7 @@ END FUNCTION
 ' Sets the additional character format effects.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetEffects2 (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetEffects2(m_pTextFont2, Value, Mask))
    FUNCTION = m_Result
 END FUNCTION
@@ -1176,6 +1284,7 @@ END FUNCTION
 ' Sets the additional character format effects.
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetProperty(m_pTextFont2, nType, Value))
    FUNCTION = m_Result
 END FUNCTION
