@@ -2962,12 +2962,61 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 # <a name="BuildUpMath"></a>BuildUpMath
 
+Converts the linear-format math in a range to a built-up form, or modifies the current built-up form.
+
 ```
 FUNCTION CTextRange2.BuildUpMath (BYVAL Flags AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->BuildUpMath(m_pTextRange2, Flags))
    RETURN m_Result
 END FUNCTION
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Flags* | A combination of the following flags. |
+
+| Constant | Value |
+| -------- | ----- |
+| **tomChemicalFormula** | &h1000 |
+| **tomHaveDelimiter** | &h20 |
+| **tomMathAlphabetics** | &h4 |
+| **tomMathApplyTemplate** | &h4000 |
+| **tomMathArabicAlphabetics** | &h800000 |
+| **tomMathAutoCorrect** | &h100 |
+| **tomMathAutoCorrectExt** | &h2000000 |
+| **tomMathAutoCorrectOpPairs** | &h1000000 |
+| **tomMathBackspace** | &h100000 |
+| **tomMathBuildDown** | &h2000 |
+| **tomMathBuildDownOutermost** | &h800 |
+| **tomMathBuildUpArgOrZone** | &h200 |
+| **tomMathBuildUpRecurse** | &h400 |
+| **tomMathChangeMask** | &h1F0000 |
+| **tomMathCollapseSel** | &h80 |
+| **tomMathDeleteArg** | &h70000 |
+| **tomMathDeleteArg1** | &h80000 |
+| **tomMathDeleteArg2** | &h90000 |
+| **tomMathDeleteCol** | &h60000 |
+| **tomMathDeleteRow** | &h50000 |
+| **tomMathEnter** | &h110000 |
+| **tomMathInsColAfter** | &h40000 |
+| **tomMathInsColBefore** | &h30000 |
+| **tomMathInsRowAfter** | &h20000 |
+| **tomMathInsRowBefore** | &h10000 |
+| **tomMathMakeFracLinear** | &hA0000 |
+| **tomMathMakeFracSlashed** | &hC0000 |
+| **tomMathMakeFracStacked** | &hB0000 |
+| **tomMathMakeLeftSubSup** | &hD0000 |
+| **tomMathMakeSubSup** | &hE0000 |
+| **tomMathRemoveOutermost** | &h8000 |
+| **tomMathRichEdit** | &h40000000 |
+| **tomMathShiftTab** | &h120000 |
+| **tomMathSingleChar** | &h8 |
+| **tomMathSubscript** | &h170000 |
+| **tomMathSuperscript** | &h180000 |
+| **tomMathTab** | &h130000 |
+| **tomNeedTermOp** | &h2 |
+| **tomPlain** | &h10 |
+| **tomShowEmptyArgPlaceholders** | &h4000000 |
 
 # <a name="DeleteSubrange"></a>DeleteSubrange
 
