@@ -1,6 +1,6 @@
 # CDispInvoke Class
 
-**CDispInvoke** allows to call COM methods and properties with Free Basic.
+**CDispInvoke** allows calling COM methods and properties with Free Basic.
 
 **Include file**: CDispInvoke.inc
 
@@ -38,10 +38,10 @@
 | [GetHelpFile](#GetHelpFile) | Gets the fully qualified help file path. |
 | [GetLastResult](#GetLastResult) | Returns the last result code returned by the last executed method. of the class. |
 | [GetSource](#GetSource) | Gets the name of the exception source. |
-| [GetVarResult](#GetVarResult) | Returns the last result code returne by a call to the Invoke method. |
-| [GetLcid](#GetLcid) | Retrieves de locale identifier used by the class. |
+| [GetVarResult](#GetVarResult) | Returns the last result code returned by a call to the Invoke method. |
+| [GetLcid](#GetLcid) | Retrieves the locale identifier used by the class. |
 | [Invoke](#Invoke) | Calls a method or a get property. |
-| [SetLcid](#SetLcid) | Sets de locale identifier used by the class. |
+| [SetLcid](#SetLcid) | Sets the locale identifier used by the class. |
 | [Put](#Put) | Calls the specified property of an interface and sets the passed value. |
 | [PutRef](#PutRef) | Assigns a value to an interface member property that contains a reference to an object. |
 | [Set](#Set) | Calls the specified property of an interface and sets the passed value. |
@@ -162,7 +162,7 @@ CONSTRUCTOR CDispInvoke (BYVAL pdisp AS IDispatch PTR, BYVAL fAddRef AS BOOLEAN 
 | *pdisp* | Pointer to a Dispatch interface. |
 | *fAddRef* | If it is false, the object takes ownership of the interface pointer without calling AddRef. This is the usual case when we assign directly an already AddRefed pointer returned by a COM method. If it is true, then **AddRef is called**. This is needed when we pass a raw pointer. |
 
-#### Exaample
+#### Example
 
 The following example combines CDispInvoke and CWmiDisp to set the specified printer as the default one.
 
@@ -224,7 +224,7 @@ Not every component is a suitable candidate for use under this overloaded method
 * Components that are part of an application, such Microsoft Office, aren't supported.
 * Components intended for use as an add-in or a snap-in, such as an Office add-in or a control in a Web browser, aren't supported.
 * Components that manage a shared physical or virtual system resource aren't supported.
-* Visual ActiveX controls aren't supported because they need to be initilized and activated by the OLE container.
+* Visual ActiveX controls aren't supported because they need to be initialized and activated by the OLE container.
 
 #### Usage example
 
@@ -524,7 +524,7 @@ Returns a variant with the result of the call when the **Invoke** method is used
 
 For optional parameters, we must use a VT_ERROR VARIANT with a value of DISP_E_PARAMNOTFOUND. You can use the function **AfxCVarOptPrm** or the macro **CVAR_OPTPRM** for this purpose.
 
-To check for succes or failure, call the **GetLastResult** method. It will return S_OK (0) on succes or an HRESULT code on failure.
+To check for success or failure, call the **GetLastResult** method. It will return S_OK (0) on succes or an HRESULT code on failure.
 
 | HRESULT    | Description |
 | ---------- | ----------- |
@@ -624,7 +624,7 @@ FUNCTION Set (BYVAL pwszName AS WSTRING PTR, BYREF cvArg1 ... cvArg3 AS CVAR) AS
 | *cvArg* | CVAR. The value to set. |
 | *cvArg1...cvArg3* | CVAR. The last parameter is the value to set. cvArg1 and cvArg2 are the index values. |
 
-#### Returm value
+#### Return value
 
 S_OK (0) on success or an HRESULT code.
 
