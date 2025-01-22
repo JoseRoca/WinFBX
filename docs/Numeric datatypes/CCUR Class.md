@@ -40,7 +40,7 @@ DIM c AS CCUR = "77777.999"
 ```
 #### Remark
 
-The constructor that accepts a DOUBLE value is particulary useful, because it allows to set the integer and fractionary parts at the same time with just a number, e.g.
+The constructor that accepts a DOUBLE value is particularly useful, because it allows to set the integer and fractional parts at the same time with just a number, e.g.
 
 ```
 DIM c AS CCUR = 12345.1234
