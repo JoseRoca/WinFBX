@@ -2,7 +2,7 @@
 
 Collaboration Data Objects (CDO) is a Component Object Model (COM) component designed to simplify writing programs that create or manipulate Internet messages. It supports creating and managing messages formatted and sent using Internet standards such as the Multipurpose Internet Mail Extensions (MIME) standard. CDO supports sending messages using both the SMTP and NNTP protocols, as well as through a local SMTP/NNTP service pickup directory. CDO integrates with the Microsoft® ActiveX® Data Objects (ADO) component to present a consistent mechanism for managing data that comprises a message.
 
-**CCDOMessage** is a Free Basic class that allows to send messages using CDO.
+**CCDOMessage** is a Free Basic class that allows sending messages using CDO.
 
 **Include file:** CCDOMail.inc.
 
@@ -83,7 +83,7 @@ FUNCTION AddAttachment (BYREF cbsURL AS CBSTR, BYREF cbsUserName AS CBSTR = "", 
 | Parameter  | Description |
 | ---------- | ----------- |
 | *cbsURL* | The full path and file name of the message to be attached to this message. |
-| *cbsUserName* | An optional user name to use for authentication when retrieving the resource using Hypertext Tranfer Protocol (HTTP). Can be used to set the credentials for both the basic and NTLM authentication mechanisms. |
+| *cbsUserName* | An optional user name to use for authentication when retrieving the resource using Hypertext Transfer Protocol (HTTP). Can be used to set the credentials for both the basic and NTLM authentication mechanisms. |
 | *cbsPassword* | An optional password to use for authentication when retrieving the resource using the HTTP. Can be used to set the credentials for the basic and NTLM authentication mechanisms. |
 
 Return value
@@ -361,7 +361,7 @@ FUNCTION MDNRequested (BYVAL BYVAL pMDNRequested AS VARIANT_BOOL) AS HRESULT
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pMDNRequested* | A Message Disposition Notificationis a request for information to be returned on the status of this message. The message sender or an intermediary Message Transfer Agent may request Message Disposition Notifications. The message to be returned is nested in a message with a content type of multipart/report. Request for Comments (RFC) 2298 describes Message Disposition Notifications, their function, and their format. |
+| *pMDNRequested* | A Message Disposition Notification is a request for information to be returned on the status of this message. The message sender or an intermediary Message Transfer Agent may request Message Disposition Notifications. The message to be returned is nested in a message with a content type of multipart/report. Request for Comments (RFC) 2298 describes Message Disposition Notifications, their function, and their format. |
 
 #### Return value
 
