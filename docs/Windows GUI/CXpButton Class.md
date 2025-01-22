@@ -66,7 +66,7 @@ A pointer to the CXpButton class.
 | [IsThemed](#IsThemed) | Returns CTRUE if themes are enabled or FALSE otherwise. |
 | [Redraw](#Redraw) | Redraws the button. |
 | [SetBitmap](#SetBitmap) | Sets the bitmap for the button. |
-| [SetBitmapFromFile](#SetBitmapFromFile) | Loads an bitmap from file and sets it as the image of tbe button. |
+| [SetBitmapFromFile](#SetBitmapFromFile) | Loads an bitmap from file and sets it as the image of the button. |
 | [SetIcon](#SetIcon) | Sets the icon for the button. |
 | [SetIconFromFile](#SetIconFromFile) | Loads an icon from file and sets it as the image of tbe button. |
 | [SetImage](#SetImage) | Sets the image for the button. |
@@ -77,7 +77,7 @@ A pointer to the CXpButton class.
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| [AllowFocusRect](#AllowFocusRect) | Gets/sets wheter to display the button's focus rectangle. |
+| [AllowFocusRect](#AllowFocusRect) | Gets/sets whether to display the button's focus rectangle. |
 | [BkBrush](#BkBrush) | Returns the background color brush. |
 | [ButtonBkColor](#ButtonBkColor) | Gets/sets the background color of button. |
 | [ButtonBkColorDown](#ButtonBkColorDown) | Gets/sets the background color of button when it is down (pressed or toggled). |
@@ -87,7 +87,7 @@ A pointer to the CXpButton class.
 | [DisabledImageHandle](#DisabledImageHandle) | Returns the handle of the disabled image. |
 | [Font](#Font) | Gets/sets the handle of the font used by the button. |
 | [HotImageHandle](#HotImageHandle) | Returns the handle of the hot image. |
-| [ImageHeight](#ImageHeight) | Gets/sets the heigth of the image. |
+| [ImageHeight](#ImageHeight) | Gets/sets the height of the image. |
 | [ImageMargin](#ImageMargin) | Gets/sets the image margin. |
 | [ImagePos](#ImagePos) | Gets/sets the image position. |
 | [ImageType](#ImageType) | Returns the image type |
@@ -180,7 +180,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    pXpButton3.SetTextBkColorDown BGR(255, 0, 0)
    ' // Set the text background color when pressed to red
    pXpButton3.SetTextBkColorDown BGR(255, 0, 0)
-   ' // Set the text format (cnetered and single line)
+   ' // Set the text format (cenetered and single line)
    pXpButton3.TextFormat = DT_CENTER OR DT_VCENTER OR DT_SINGLELINE
 ' pXpButton3.SetToggle TRUE   ' make it a toggle button
 
@@ -303,7 +303,7 @@ SUB SetBitmap (BYVAL hBitmap AS HBITMAP, _
 
 # <a name="SetBitmapFromFile"></a>SetBitmapFromFile
 
-Loads a bitmap from file and sets it as the image of tbe button.
+Loads a bitmap from file and sets it as the image of the button.
 
 ```
 SUB SetBitmapFromFile (BYVAL pwszPath AS WSTRING PTR, _
@@ -333,7 +333,7 @@ SUB SetIcon (BYVAL hIcon AS HICON, _
 
 # <a name="SetIconFromFile"></a>SetIconFromFile
 
-Loads an icon from file and sets it as the image of tbe button.
+Loads an icon from file and sets it as the image of the button.
 
 ```
 SUB SetIconFromFile (BYVAL pwszPath AS WSTRING PTR, _
@@ -401,7 +401,7 @@ SUB SetImageFromRes (BYVAL hInstance AS HINSTANCE, BYREF wszImageName AS WSTRING
 
 # <a name="AllowFocusRect"></a>AllowFocusRect
 
-Gets/sets wheter to display the button's focus rectangle.
+Gets/sets whether to display the button's focus rectangle.
 
 ```
 PROPERTY AllowFocusRect () AS BOOLEAN
