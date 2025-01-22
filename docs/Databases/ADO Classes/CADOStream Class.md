@@ -243,7 +243,7 @@ FUNCTION LoadFromFile (BYREF cbsFileName AS CBSTR) AS HRESULT
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *cbsFileName* | An string value that contains the name of a file to be loaded into the **Stream**. *cbsFileName* can contain any valid path and name in UNC format. If the specified file does not exist, a run-time error occurs. |
+| *cbsFileName* | A string value that contains the name of a file to be loaded into the **Stream**. *cbsFileName* can contain any valid path and name in UNC format. If the specified file does not exist, a run-time error occurs. |
 
 #### Remarks
 
@@ -416,7 +416,7 @@ FUNCTION ReadText (BYVAL NumChars AS LONG = adReadAll, BYREF cbsText AS CBSTR) A
 | Parameter  | Description |
 | ---------- | ----------- |
 | *NumChars* | Optional. A Long value that specifies the number of characters to read from the file, or a **StreamReadEnum* value. The default value is **adReadAll**. |
-| *cbsText* | Reference to a **CBSTR** variable that will receive the charecters read. |
+| *cbsText* | Reference to a **CBSTR** variable that will receive the characters read. |
 
 #### Return value
 
@@ -438,7 +438,7 @@ FUNCTION SaveToFile (BYREF cbsFileName AS CBSTR, BYVAL Options AS LONG = adSaveC
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *cbsFileName* | Am string value that contains the fully-qualified name of the file to which the contents of the **Stream** will be saved. You can save to any valid local location, or any location you have access to via a UNC value. |
+| *cbsFileName* | A string value that contains the fully-qualified name of the file to which the contents of the **Stream** will be saved. You can save to any valid local location, or any location you have access to via a UNC value. |
 | *Options* | Optional. A **SaveOptionsEnum** value that specifies whether a new file should be created by **SaveToFile**, if it does not already exist. Default value is **adSaveCreateNotExists**. With these options you can specify that an error occurs if the specified file does not exist. You can also specify that **SaveToFile** overwrites the current contents of an existing file. **Note**: If you overwrite an existing file (when **adSaveCreateOverwrite** is set), **SaveToFile** truncates any bytes from the original existing file that follow the new **EOS**. |
 
 #### Return value
