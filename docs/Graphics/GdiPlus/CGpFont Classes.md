@@ -58,7 +58,7 @@ Extends **CGpFontCollection**. The **PrivateFontCollection** object is a collect
 The **CGpFontFamily** class encapsulates a set of fonts that make up a font family. A font family is a group of fonts that have the same typeface but different styles.
 
 **Inherits from**: CGpBase.
-**Imclude file**: CGpFont.inc.
+**Include file**: CGpFont.inc.
 
 | Name       | Description |
 | ---------- | ----------- |
