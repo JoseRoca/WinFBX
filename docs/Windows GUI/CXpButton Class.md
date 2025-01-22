@@ -68,7 +68,7 @@ A pointer to the CXpButton class.
 | [SetBitmap](#SetBitmap) | Sets the bitmap for the button. |
 | [SetBitmapFromFile](#SetBitmapFromFile) | Loads an bitmap from file and sets it as the image of the button. |
 | [SetIcon](#SetIcon) | Sets the icon for the button. |
-| [SetIconFromFile](#SetIconFromFile) | Loads an icon from file and sets it as the image of tbe button. |
+| [SetIconFromFile](#SetIconFromFile) | Loads an icon from file and sets it as the image of the button. |
 | [SetImage](#SetImage) | Sets the image for the button. |
 | [SetImageFromFile](#SetImageFromFile) | Loads an image from file and sets it as the image of the button. |
 | [SetImageFromRes](#SetImageFromRes) | Loads an image from a resource file and sets it as the image of the button. |
@@ -180,7 +180,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    pXpButton3.SetTextBkColorDown BGR(255, 0, 0)
    ' // Set the text background color when pressed to red
    pXpButton3.SetTextBkColorDown BGR(255, 0, 0)
-   ' // Set the text format (cenetered and single line)
+   ' // Set the text format (centered and single line)
    pXpButton3.TextFormat = DT_CENTER OR DT_VCENTER OR DT_SINGLELINE
 ' pXpButton3.SetToggle TRUE   ' make it a toggle button
 
