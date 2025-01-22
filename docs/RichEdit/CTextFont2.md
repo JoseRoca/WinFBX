@@ -31,7 +31,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetAllCaps](#SetAllCaps) | Sets whether the characters are all uppercase. |
 | [GetAnimation](#GetAnimation) | Gets the animation type. |
 | [SetAnimation](#SetAnimation) | Sets the animation type. |
-| [GetBackColor](#GetBackColor) |  |
+| [GetBackColor](#GetBackColor) | Gets the text background (highlight) color. |
 | [SetBackColor](#SetBackColor) |  |
 | [GetBold](#GetBold) |  |
 | [SetBold](#SetBold) |  |
@@ -655,3 +655,32 @@ The animation type. It can be one of the following values.
 #### Return value
 
 If the method succeeds, it returns **S_OK**. If the method fails, it returns an **HRESULT** COM error code.
+
+# <a name="GetBackColor"></a>GetBackColor
+
+Gets the text background (highlight) color.
+
+```
+FUNCTION CTextFont2.GetBackColor () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetBackColor(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The text background color. It can be one of the following values.
+
+| Value | Meaning |
+| ----- | ------- |
+| A COLORREF value | The high-order byte is zero, and the three low-order bytes specify an RGB color. |
+| A value returned by PALETTEINDEX | The high-order byte is 1, and the LOWORD specifies the index of a logical-color palette entry. |
+| **tomAutocolor** (-9999997) | Indicates the range uses the default system background color. |
+	
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
