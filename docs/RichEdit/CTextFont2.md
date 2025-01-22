@@ -32,7 +32,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [GetAnimation](#GetAnimation) | Gets the animation type. |
 | [SetAnimation](#SetAnimation) | Sets the animation type. |
 | [GetBackColor](#GetBackColor) | Gets the text background (highlight) color. |
-| [SetBackColor](#SetBackColor) |  |
+| [SetBackColor](#SetBackColor) | Sets the background color. |
 | [GetBold](#GetBold) |  |
 | [SetBold](#SetBold) |  |
 | [GetEmboss](#GetEmboss) |  |
@@ -684,3 +684,34 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | Result code | Description |
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+# <a name="SetBackColor"></a>SetBackColor
+
+Sets the background color.
+
+```
+FUNCTION CTextFont2.SetBackColor (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetBackColor(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new background color. It can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| A COLORREF value | An RGB color. |
+| A value returned by PALETTEINDEX | A palette index. |
+| **tomUndefined** | No change. |
+| **tomAutoColor** | Use the default background color. |
+
+If **Value** contains an RGB color, generate the COLORREF by using the RGB macro (BGR function in FreeBasic).
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
