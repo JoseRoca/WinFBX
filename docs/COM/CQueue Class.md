@@ -61,7 +61,7 @@ FUNCTION Count () AS UINT
 
 # <a name="Clear"></a>Clear
 
-Returns the number of elements in the collection.
+Removes all the elements in the collection.
 
 ```
 FUNCTION Clear () AS HRESULT
