@@ -28,7 +28,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [GetStyle](#GetStyle) | Gets the character style handle of the characters in a range. |
 | [SetStyle](#SetStyle) | Sets the character style handle of the characters in a range. |
 | [GetAllCaps](#GetAllCaps) | Gets whether the characters are all uppercase. |
-| [SetAllCaps](#SetAllCaps) |  |
+| [SetAllCaps](#SetAllCaps) | Sets whether the characters are all uppercase. |
 | [GetAnimation](#GetAnimation) |  |
 | [SetAnimation](#SetAnimation) |  |
 | [GetBackColor](#GetBackColor) |  |
@@ -553,3 +553,37 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 This property corresponds to the **CFE_ALLCAPS** effect described in the **CHARFORMAT2** structure.
+
+# <a name="SetAllCaps"></a>SetAllCaps
+
+Sets whether the characters are all uppercase.
+
+```
+FUNCTION CTextFont2.SetAllCaps (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetAllCaps(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are all uppercase. |
+| **tomFalse** | Characters are not all uppercase. |
+| **tomToggle** | Toggle the state of the AllCaps property. |
+| **tomUndefined** | The AllCaps property is undefined. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Return code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+
