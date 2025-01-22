@@ -25,10 +25,10 @@
 | [AfxStrRemainI](#AfxStrRemainI) | Returns the portion of a string following the first occurrence of a string. Case insensitive. |
 | [AfxStrRemainAny](#AfxStrRemainAny) | Returns the portion of a string following the first occurrence of a group of characters. Case sensitive. |
 | [AfxStrRemainAnyI](#AfxStrRemainAnyI) | Returns the portion of a string following the first occurrence of a group of characters. Case insensitive. |
-| [AfxStrRemove](#AfxStrRemove) | Returns a new string with substrings removed. Case sesnsitive. |
+| [AfxStrRemove](#AfxStrRemove) | Returns a new string with substrings removed. Case sensitive. |
 | [AfxStrRemoveI](#AfxStrRemoveI) | Returns a new string with substrings removed. Case insensitive. |
-| [AfxStrRemoveAny](#AfxStrRemoveAny) | Returns a new string with characters removed. Case sesnsitive. |
-| [AfxStrRemoveAnyI](#AfxStrRemoveAnyI) | Returns a new string with characters removed. Case insesnsitive. |
+| [AfxStrRemoveAny](#AfxStrRemoveAny) | Returns a new string with characters removed. Case sensitive. |
+| [AfxStrRemoveAnyI](#AfxStrRemoveAnyI) | Returns a new string with characters removed. Case insensitive. |
 | [AfxStrRepeat](#AfxStrRepeat) | Returns a string consisting of multiple copies of the specified string. |
 | [AfxStrReplace](#AfxStrReplace) | Replaces all the occurrences of a string with another string. Case sensitive. |
 | [AfxStrReplaceI](#AfxStrReplaceI) | Replaces all the occurrences of a string with another string. Case insensitive. |
@@ -658,14 +658,14 @@ DIM cws AS CWSTR = AfxStrRemove(cwsText, "(", ")", TRUE)   ' Returns "As Long va
 Returns a copy of a string with a substring enclosed between the specified delimiters removed. Case sensitive.
 
 ```
-FUNCTION AfxStrRemove (BYVAL nSart AS LONG = 1, BYREF wszMainStr AS CONST WSTRING, _
+FUNCTION AfxStrRemove (BYVAL nStart AS LONG = 1, BYREF wszMainStr AS CONST WSTRING, _
    BYREF wszDelim1 AS CONST WSTRING, BYREF wszDelim2 AS CONST WSTRING, _
    BYVAL fRemoveAll AS BOOLEAN = FALSE) AS CWSTR
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *nSart* | Optional. The one-based starting position where to start the search. |
+| *nStart* | Optional. The one-based starting position where to start the search. |
 | *wszMainStr* | The main string. |
 | *wszDelim1* | The first delimiter |
 | *wszDelim2* | The second delimiter |
