@@ -84,11 +84,11 @@ FUNCTION Append (BYREF cbsName AS CBSTR, BYVAL nType AS DataTypeEnum, _
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *cbsName* | An string value that contains the name of the new **Field** object, and must not be the same name as any other object in fields. |
+| *cbsName* | A string value that contains the name of the new **Field** object, and must not be the same name as any other object in fields. |
 | *nType* | A **DataTypeEnum** value, whose default value is **adEmpty**, that specifies the data type of the new field. The following data types are not supported by ADO, and should not be used when appending new fields to a Recordset: **adIDispatch**, **adIUnknown**, **adVariant**. |
 | *DefinedSize* | Optional. An ADO_LONGPTR value that represents the defined size, in characters or bytes, of the new field. The default value for this parameter is derived from Type. Fields with a **DefinedSize** greater than 255 bytes, and treated as variable length columns. (The default **DefinedSize** is unspecified.) |
 | *Attrib* | Optional. A **FieldAttributeEnum** value, whose default value is **adFldDefault**, that specifies attributes for the new field. If this value is not specified, the field will contain attributes derived from **Type_**. |
-| *FieldValue* | Optional. A Vaiant that represents the value for the new field. If not specified, then the field is appended with a null value. |
+| *FieldValue* | Optional. A Variant that represents the value for the new field. If not specified, then the field is appended with a null value. |
 
 #### Return value
 
