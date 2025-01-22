@@ -271,7 +271,7 @@ See: [IHTMLEventObj interface](https://docs.microsoft.com/en-us/previous-version
 USING Afx
 
 CONST IDC_WEBBROWSER = 1001
-CONST IDC_SATUSBAR = 1002
+CONST IDC_STATUSBAR = 1002
 
 DECLARE FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
                           BYVAL hPrevInstance AS HINSTANCE, _
@@ -314,7 +314,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    pWindow.Center
 
    ' // Add a status bar
-   DIM hStatusbar AS HWND = pWindow.AddControl("Statusbar", , IDC_SATUSBAR)
+   DIM hStatusbar AS HWND = pWindow.AddControl("Statusbar", , IDC_STATUSBAR)
 
    ' // Add a WebBrowser control
    DIM pwb AS CWebCtx = CWebCtx(@pWindow, IDC_WEBBROWSER, 0, 0, pWindow.ClientWidth, pWindow.ClientHeight)
@@ -373,7 +373,7 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
          ' // Optional resizing code
          IF wParam <> SIZE_MINIMIZED THEN
             ' // Resize the status bar
-            DIM hStatusBar AS HWND = GetDlgItem(hwnd, IDC_SATUSBAR)
+            DIM hStatusBar AS HWND = GetDlgItem(hwnd, IDC_STATUSBAR)
             SendMessage hStatusBar, uMsg, wParam, lParam
             ' // Calculate the size of the status bar
             DIM StatusBarHeight AS DWORD, rc AS RECT
@@ -403,7 +403,7 @@ END FUNCTION
 ' Process the WebBrowser StatusTextChange event.
 ' ========================================================================================
 SUB WebBrowser_StatusTextChangeProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pwszText AS WSTRING PTR)
-   IF pwszText THEN StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_SATUSBAR), 0, pwszText)
+   IF pwszText THEN StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_STATUSBAR), 0, pwszText)
 END SUB
 ' ========================================================================================
 
@@ -415,7 +415,7 @@ SUB WebBrowser_DocumentCompleteProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pdisp A
    ' // It can be a VT_BSTR variant or a VT_ARRAY OR VT_UI1 with a pidl
    DIM varUrl AS VARIANT
    VariantCopyInd(@varUrl, vUrl)
-   StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_SATUSBAR), 0, "Document complete: " & AfxVarToStr(@varUrl))
+   StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_STATUSBAR), 0, "Document complete: " & AfxVarToStr(@varUrl))
    VariantClear(@varUrl)
 END SUB
 ' ========================================================================================
@@ -542,7 +542,7 @@ END FUNCTION
 USING Afx
 
 CONST IDC_WEBBROWSER = 1001
-CONST IDC_SATUSBAR = 1002
+CONST IDC_STATUSBAR = 1002
 
 DECLARE FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
                           BYVAL hPrevInstance AS HINSTANCE, _
@@ -632,7 +632,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    pWindow.Center
 
    ' // Add a status bar
-   DIM hStatusbar AS HWND = pWindow.AddControl("Statusbar", , IDC_SATUSBAR)
+   DIM hStatusbar AS HWND = pWindow.AddControl("Statusbar", , IDC_STATUSBAR)
 
    ' // Add a WebBrowser control
    DIM pwb AS CWebCtx = CWebCtx(@pWindow, IDC_WEBBROWSER, 0, 0, pWindow.ClientWidth, pWindow.ClientHeight)
@@ -699,7 +699,7 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
          ' // Optional resizing code
          IF wParam <> SIZE_MINIMIZED THEN
             ' // Resize the status bar
-            DIM hStatusBar AS HWND = GetDlgItem(hwnd, IDC_SATUSBAR)
+            DIM hStatusBar AS HWND = GetDlgItem(hwnd, IDC_STATUSBAR)
             SendMessage hStatusBar, uMsg, wParam, lParam
             ' // Calculate the size of the status bar
             DIM StatusBarHeight AS DWORD, rc AS RECT
@@ -729,7 +729,7 @@ END FUNCTION
 ' Process the WebBrowser StatusTextChange event.
 ' ========================================================================================
 SUB WebBrowser_StatusTextChangeProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pwszText AS WSTRING PTR)
-   IF pwszText THEN StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_SATUSBAR), 0, pwszText)
+   IF pwszText THEN StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_STATUSBAR), 0, pwszText)
 END SUB
 ' ========================================================================================
 
@@ -741,7 +741,7 @@ SUB WebBrowser_DocumentCompleteProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pdisp A
    ' // It can be a VT_BSTR variant or a VT_ARRAY OR VT_UI1 with a pidl
    DIM varUrl AS VARIANT
    VariantCopyInd(@varUrl, vUrl)
-   StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_SATUSBAR), 0, "Document complete: " & AfxVarToStr(@varUrl))
+   StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_STATUSBAR), 0, "Document complete: " & AfxVarToStr(@varUrl))
    VariantClear(@varUrl)
 END SUB
 ' ========================================================================================
@@ -944,7 +944,7 @@ Example
 USING Afx
 
 CONST IDC_WEBBROWSER = 1001
-CONST IDC_SATUSBAR = 1002
+CONST IDC_STATUSBAR = 1002
 
 DECLARE FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
                           BYVAL hPrevInstance AS HINSTANCE, _
@@ -987,7 +987,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    pWindow.Center
 
    ' // Add a status bar
-   DIM hStatusbar AS HWND = pWindow.AddControl("Statusbar", , IDC_SATUSBAR)
+   DIM hStatusbar AS HWND = pWindow.AddControl("Statusbar", , IDC_STATUSBAR)
 
    ' // Add a WebBrowser control
    DIM pwb AS CWebCtx = CWebCtx(@pWindow, IDC_WEBBROWSER, 0, 0, pWindow.ClientWidth, pWindow.ClientHeight)
@@ -1046,7 +1046,7 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
          ' // Optional resizing code
          IF wParam <> SIZE_MINIMIZED THEN
             ' // Resize the status bar
-            DIM hStatusBar AS HWND = GetDlgItem(hwnd, IDC_SATUSBAR)
+            DIM hStatusBar AS HWND = GetDlgItem(hwnd, IDC_STATUSBAR)
             SendMessage hStatusBar, uMsg, wParam, lParam
             ' // Calculate the size of the status bar
             DIM StatusBarHeight AS DWORD, rc AS RECT
@@ -1076,7 +1076,7 @@ END FUNCTION
 ' Process the WebBrowser StatusTextChange event.
 ' ========================================================================================
 SUB WebBrowser_StatusTextChangeProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pwszText AS WSTRING PTR)
-   IF pwszText THEN StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_SATUSBAR), 0, pwszText)
+   IF pwszText THEN StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_STATUSBAR), 0, pwszText)
 END SUB
 ' ========================================================================================
 
@@ -1088,7 +1088,7 @@ SUB WebBrowser_DocumentCompleteProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pdisp A
    ' // It can be a VT_BSTR variant or a VT_ARRAY OR VT_UI1 with a pidl
    DIM varUrl AS VARIANT
    VariantCopyInd(@varUrl, vUrl)
-   StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_SATUSBAR), 0, "Document complete: " & AfxVarToStr(@varUrl))
+   StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_STATUSBAR), 0, "Document complete: " & AfxVarToStr(@varUrl))
    VariantClear(@varUrl)
 END SUB
 ' ========================================================================================
@@ -1214,7 +1214,7 @@ END FUNCTION
 USING Afx
 
 CONST IDC_WEBBROWSER = 1001
-CONST IDC_SATUSBAR = 1002
+CONST IDC_STATUSBAR = 1002
 
 DECLARE FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
                           BYVAL hPrevInstance AS HINSTANCE, _
@@ -1257,7 +1257,7 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    pWindow.Center
 
    ' // Add a status bar
-   DIM hStatusbar AS HWND = pWindow.AddControl("Statusbar", , IDC_SATUSBAR)
+   DIM hStatusbar AS HWND = pWindow.AddControl("Statusbar", , IDC_STATUSBAR)
 
    ' // Add a WebBrowser control
    DIM pwb AS CWebCtx = CWebCtx(@pWindow, IDC_WEBBROWSER, 0, 0, pWindow.ClientWidth, pWindow.ClientHeight)
@@ -1316,7 +1316,7 @@ FUNCTION WndProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM
          ' // Optional resizing code
          IF wParam <> SIZE_MINIMIZED THEN
             ' // Resize the status bar
-            DIM hStatusBar AS HWND = GetDlgItem(hwnd, IDC_SATUSBAR)
+            DIM hStatusBar AS HWND = GetDlgItem(hwnd, IDC_STATUSBAR)
             SendMessage hStatusBar, uMsg, wParam, lParam
             ' // Calculate the size of the status bar
             DIM StatusBarHeight AS DWORD, rc AS RECT
@@ -1346,7 +1346,7 @@ END FUNCTION
 ' Process the WebBrowser StatusTextChange event.
 ' ========================================================================================
 SUB WebBrowser_StatusTextChangeProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pwszText AS WSTRING PTR)
-   IF pwszText THEN StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_SATUSBAR), 0, pwszText)
+   IF pwszText THEN StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_STATUSBAR), 0, pwszText)
 END SUB
 ' ========================================================================================
 
@@ -1358,7 +1358,7 @@ SUB WebBrowser_DocumentCompleteProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pdisp A
    ' // It can be a VT_BSTR variant or a VT_ARRAY OR VT_UI1 with a pidl
    DIM varUrl AS VARIANT
    VariantCopyInd(@varUrl, vUrl)
-   StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_SATUSBAR), 0, "Document complete: " & AfxVarToStr(@varUrl))
+   StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_STATUSBAR), 0, "Document complete: " & AfxVarToStr(@varUrl))
    VariantClear(@varUrl)
 END SUB
 ' ========================================================================================
@@ -2169,7 +2169,7 @@ pwb.SetUIEventProc("TranslateAccelerator", @DocHostUI_TranslateAccelerator)
 ' Process the WebBrowser StatusTextChange event.
 ' ========================================================================================
 SUB WebBrowser_StatusTextChangeProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pwszText AS WSTRING PTR)
-   IF pwszText THEN StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_SATUSBAR), 0, pwszText)
+   IF pwszText THEN StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_STATUSBAR), 0, pwszText)
 END SUB
 ' ========================================================================================
 
@@ -2181,7 +2181,7 @@ SUB WebBrowser_DocumentCompleteProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pdisp A
    ' // It can be a VT_BSTR variant or a VT_ARRAY OR VT_UI1 with a pidl
    DIM varUrl AS VARIANT
    VariantCopyInd(@varUrl, vUrl)
-   StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_SATUSBAR), 0, "Document complete: " & AfxVarToStr(@varUrl))
+   StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_STATUSBAR), 0, "Document complete: " & AfxVarToStr(@varUrl))
    VariantClear(@varUrl)
 END SUB
 ' ========================================================================================
@@ -2319,7 +2319,7 @@ pwb.SetUIEventProc("TranslateAccelerator", @DocHostUI_TranslateAccelerator)
 ' Process the WebBrowser StatusTextChange event.
 ' ========================================================================================
 SUB WebBrowser_StatusTextChangeProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pwszText AS WSTRING PTR)
-   IF pwszText THEN StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_SATUSBAR), 0, pwszText)
+   IF pwszText THEN StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_STATUSBAR), 0, pwszText)
 END SUB
 ' ========================================================================================
 
@@ -2331,7 +2331,7 @@ SUB WebBrowser_DocumentCompleteProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL pdisp A
    ' // It can be a VT_BSTR variant or a VT_ARRAY OR VT_UI1 with a pidl
    DIM varUrl AS VARIANT
    VariantCopyInd(@varUrl, vUrl)
-   StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_SATUSBAR), 0, "Document complete: " & AfxVarToStr(@varUrl))
+   StatusBar_SetText(GetDlgItem(GetParent(pWebCtx->hWindow), IDC_STATUSBAR), 0, "Document complete: " & AfxVarToStr(@varUrl))
    VariantClear(@varUrl)
 END SUB
 ' ========================================================================================
