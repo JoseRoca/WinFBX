@@ -23,7 +23,7 @@ CFileTime_Week           CFileTime_Day * 7
 | [CAST Operator](#CastOp1) | Returns the **CFileTime** value as a long integer. |
 | [LET Operator](#LetOp1) | Assigns a value to a **CFileTime** object. |
 | [Operators](#Operators1) | Adds, subtracts or compares **CFileTime** objects. |
-| [DateString](#DateString) | Retuns the date as a string based on the specified mask, e.g. "dd-MM-yyyy". |
+| [DateString](#DateString) | Returns the date as a string based on the specified mask, e.g. "dd-MM-yyyy". |
 | [Day](#Day) | Returns the number of 100-nanosecond intervals that make up one day. |
 | [Format](#Format) | Converts a **CFileTime** object to a string. |
 | [GetAsFileTime](#GetAsFileTime) | Returns the time as a **FILETIME** structure. |
@@ -36,7 +36,7 @@ CFileTime_Week           CFileTime_Day * 7
 | [Minute](#Minute) | Returns the number of 100-nanosecond intervals that make up one minute. |
 | [Second](#Second) | Returns the number of 100-nanosecond intervals that make up one second. |
 | [SetTime](#SetTime) | Sets the date and time of this **CFileTime** object. |
-| [TimeString](#TimeString) | Retuns the time as a string based on the specified mask, e.g. "dd-MM-yyyy". |
+| [TimeString](#TimeString) | Returns the time as a string based on the specified mask, e.g. "dd-MM-yyyy". |
 | [UTCToLocal](#UTCToLocal) | Converts time based on the Coordinated Universal Time (UTC) to local file time. |
 | [Week](#Week) | Returns the number of 100-nanosecond intervals that make up one week. |
 
@@ -267,9 +267,9 @@ Returns the number of 100-nanosecond intervals that make up one week.
 FUNCTION Week () AS ULONGLONG
 ```
 
-# <a name="DsateString"></a>DateString
+# <a name="DateString"></a>DateString
 
-Retuns the date as a string based on the specified mask, e.g. "dd-MM-yyyy".
+Returns the date as a string based on the specified mask, e.g. "dd-MM-yyyy".
 
 ```
 FUNCTION DateString (BYREF wszMask AS WSTRING, BYVAL lcid AS LCID = LOCALE_USER_DEFAULT) AS CWSTR
@@ -314,7 +314,7 @@ The formatted date.
 
 # <a name="TimeString"></a>TimeString
 
-Retuns the time as a string based on the specified mask, e.g. "hh':'mm':'ss".
+Returns the time as a string based on the specified mask, e.g. "hh':'mm':'ss".
 
 ```
 FUNCTION TimeString (BYREF wszMask AS WSTRING, BYVAL lcid AS LCID = LOCALE_USER_DEFAULT) AS CWSTR
