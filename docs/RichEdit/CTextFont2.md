@@ -101,8 +101,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetCookie](#SetCookie) |  |
 | [GetDoubleStrike](#GetDoubleStrike) |  |
 | [SetDoubleStrike](#SetDoubleStrike) |  |
-| [GetDuplicate2](#GetDuplicate2) | Gets a duplicate of this character format object. |
-| [SetDuplicate2](#SetDuplicate2) | Sets the properties of this object by copying the properties of another text font object. |
+| [GetDuplicate2](#GetDuplicate) | Gets a duplicate of this character format object. |
+| [SetDuplicate2](#SetDuplicate) | Sets the properties of this object by copying the properties of another text font object. |
 | [GetLinkType](#GetLinkType) |  |
 | [GetMathZone](#GetMathZone) |  |
 | [SetMathZone](#SetMathZone) |  |
