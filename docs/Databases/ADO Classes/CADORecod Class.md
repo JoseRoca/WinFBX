@@ -12,13 +12,13 @@ Represents a row from a **Recordset** or the data provider, or an object returne
 | [Attach](#Attach) | Attaches a reference to an ADO **Record** object to the class. |
 | [Cancel](#Cancel) | Cancels execution of a pending, asynchronous method call. |
 | [Close](#Close) | Closes a **Record** object and any dependent objects. |
-| [CopyRecord](#CopyRecord) | Copies a entity represented by a Record to another location. |
-| [DeleteRecord](#DeleteRecord) | Deletes a the entity represented by a **Record**. |
+| [CopyRecord](#CopyRecord) | Copies an entity represented by a Record to another location. |
+| [DeleteRecord](#DeleteRecord) | Deletes the entity represented by a **Record**. |
 | [Fields](#Fields) | Gets a reference to the Fields collection of a **Record** object. |
 | [GetChildren](#GetChildren) | Returns a **Recordset** whose rows represent the children of a collection **Record**. |
 | [GetErrorInfo](#GetErrorInfo) | Returns information about ADO errors. |
 | [Mode](#Mode) | Sets or returns a **ConnectModeEnum** value. |
-| [MoveRecord](#MoveRecord) | Moves a entity represented by a **Record** to another location. |
+| [MoveRecord](#MoveRecord) | Moves an entity represented by a **Record** to another location. |
 | [Open](#Open) | Opens an existing **Record** object, or creates a new item represented by the **Record** (such as a file or directory). |
 | [ParentURL](#ParentURL) | Indicates an absolute URL string that points to the parent **Record** of the current **Record** object. |
 | [Properties](#Properties) | Returns a reference to the **Properties** collection. |
@@ -75,7 +75,7 @@ Each **Field** object corresponds to a column in the **Recordset**. You use the 
 With the collections, methods, and properties of a Field object, you can do the following:
 
 * Return the name of a field with the **Name** property.
-* View or change the data in the field with the **Value** property. **Valu**e is the default property of the **Field** object.
+* View or change the data in the field with the **Value** property. **Value** is the default property of the **Field** object.
 * Return the basic characteristics of a field with the **Type_**, **Precision**, and **NumericScale** properties.
 * Return the declared size of a field with the **DefinedSize** property.
 * Return the actual size of the data in a given field with the **ActualSize** property.
@@ -220,7 +220,7 @@ FUNCTION DeleteRecord (BYREF cbsSource CBSTR = "", BYVAL Async BOOLEAN = FALSE) 
 | Parameter  | Description |
 | ---------- | ----------- |
 | *cbsSource* | Optional. A string value that contains a URL identifying the entity (for example, the file or directory) to be deleted. If Source is omitted or specifies an empty string, the entity represented by the current **Record** is deleted. If the **Record** is a collection record (**RecordType** of **adCollectionRecord**, such as a directory) all children (for example, subdirectories) will also be deleted. |
-| *Async* | Optional. A Boolean value that, when True, specifies that the delete operation is asychronous. |
+| *Async* | Optional. A Boolean value that, when True, specifies that the delete operation is asynchronous. |
 
 #### Return value
 
