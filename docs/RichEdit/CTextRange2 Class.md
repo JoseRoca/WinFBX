@@ -163,7 +163,7 @@ Can be used, for example, when we have an **ITextRange2** interface pointer retu
 
 ```
 DIM DIM pCTextRange2 AS CTextRange2
-pCCTextRange2.Attach(pTextRange2)
+pCTextRange2.Attach(pTextRange2)
 ```
 ## CONSTRUCTOR (ITextRange2 PTR)
 
