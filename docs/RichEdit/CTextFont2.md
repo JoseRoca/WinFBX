@@ -22,7 +22,6 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | ---------- | ----------- |
 | [GetDuplicate](#GetDuplicate) | Gets a duplicate of this text font object. |
 | [SetDuplicate](#SetDuplicate) | Sets the character formatting by copying another text font object. |
-| [SetDuplicate](#SetDuplicate) |  |
 | [CanChange](#CanChange) |  |
 | [IsEqual](#IsEqual) |  |
 | [Reset](#Reset) |  |
@@ -102,8 +101,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetCookie](#SetCookie) |  |
 | [GetDoubleStrike](#GetDoubleStrike) |  |
 | [SetDoubleStrike](#SetDoubleStrike) |  |
-| [GetDuplicate2](#GetDuplicate2) |  |
-| [SetDuplicate2](#SetDuplicate2) |  |
+| [GetDuplicate2](#GetDuplicate2) | Gets a duplicate of this character format object. |
+| [SetDuplicate2](#SetDuplicate2) | Sets the properties of this object by copying the properties of another text font object. |
 | [GetLinkType](#GetLinkType) |  |
 | [GetMathZone](#GetMathZone) |  |
 | [SetMathZone](#SetMathZone) |  |
@@ -142,7 +141,7 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 
 # <a name="CONSTRUCTORS"></a>CONSTRUCTORS
 
-Called when a **CTextRange2** class variable is created.
+Called when a **CTextFont2** class variable is created.
 
 ```
 DECLARE CONSTRUCTOR
@@ -157,7 +156,7 @@ Can be used, for example, when we have an **pTextFont2** interface pointer retur
 DIM DIM pCTextFont2 AS CTextFont2
 pCTextFont2.Attach(pTextFont2)
 ```
-## CONSTRUCTOR (ITextRange2 PTR)
+## CONSTRUCTOR (ITextFont2 PTR)
 
 ```
 CONSTRUCTOR CTextFont2 (BYVAL pTextFont2 AS ITextFont2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
@@ -215,7 +214,7 @@ OPERATOR CTextFont2.CAST () AS ITextFont2 PTR
 END OPERATOR
 ```
 
-# <a name="TextRangePtr"></a>TextRangePtr
+# <a name="TextFontPtr"></a>TextFontPtr
 
 Returns a pointer to the underlying **ITextFont2** interface
 
@@ -300,4 +299,71 @@ FUNCTION CTOMBase.GetErrorInfo () AS CWSTR
    RETURN s
 END FUNCTION
 ```
+
+# <a name="GetDuplicate"></a>GetDuplicate
+
+Gets a duplicate of this range object. In this implementation of the class, **GetDuplicate** and **GetDuplicate2** are the same method.
+
+```
+FUNCTION CTextFont2.GetDuplicate () AS ITextFont2 PTR
+   DIM pFont AS ITextFont2 PTR
+   this.SetResult(m_pTextFont2->lpvtbl->GetDuplicate(m_pTextFont2, @pFont))
+   FUNCTION = pFont
+END FUNCTION
+```
+```
+FUNCTION CTextFont2.GetDuplicate2 () AS ITextFont2 PTR
+   DIM pFont AS ITextFont2 PTR
+   this.SetResult(m_pTextFont2->lpvtbl->GetDuplicate2(m_pTextFont2, @pFont))
+   FUNCTION = pFont
+END FUNCTION
+```
+
+#### Return value
+
+The duplicate text font object.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_OUTOFMEMORY** | Memory could not be allocated for the new object. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+# <a name="SetDuplicate"></a>SetDuplicate
+
+Sets the character formatting by copying another text font object. In this implementation of the class, **SetDuplicate** and **SetDuplicate2** are the same method.
+
+```
+FUNCTION CTextFont2.SetDuplicate (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetDuplicate(m_pTextFont2, pFont))
+   FUNCTION = m_Result
+END FUNCTION
+```
+```
+FUNCTION CTextFont2.SetDuplicate2 (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetDuplicate2(m_pTextFont2, pFont))
+   FUNCTION = m_Result
+END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *pFont* | The text font object to apply to this font object. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Return value | Description |
+| ------------ | ----------- |
+| **E_INVALIDARG** | Invalid argument |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+
+#### Remarks
+
+Values with the **tomUndefined** attribute have no effect.
 
