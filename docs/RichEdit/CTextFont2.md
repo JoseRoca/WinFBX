@@ -39,7 +39,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetEmboss](#SetEmboss) | Sets whether characters are embossed. |
 | [GetForeColor](#GetForeColor) | Gets the foreground, or text, color. |
 | [SetForeColor](#SetForeColor) | Sets the foreground (text) color. |
-| [GetHidden](#GetHidden) |  |
+| [GetHidden](#GetHidden) | Gets whether characters are hidden. |
 | [SetHidden](#SetHidden) |  |
 | [GetEngrave](#GetEngrave) |  |
 | [SetEngrave](#SetEngrave) |  |
@@ -552,7 +552,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 #### Remarks
 
-This property corresponds to the **CFE_ALLCAPS** effect described in the **CHARFORMAT2** structure.
+This property corresponds to the **CFE_ALLCAPS** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
 
 # <a name="SetAllCaps"></a>SetAllCaps
 
@@ -897,3 +897,35 @@ If **Value** contains an RGB color, generate the **COLORREF** by using the [RGB]
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
+# <a name="GetHidden"></a>GetHidden
+
+Gets whether characters are hidden.
+
+```
+FUNCTION CTextFont2.GetHidden () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetHidden(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are hidden. |
+| **tomFalse** | Characters are not hidden. |
+| **tomToggle** | Toggle the state of the Hidden property. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+#### Remarks
+
+This property corresponds to the **CFE_HIDDEN** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
