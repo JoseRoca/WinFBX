@@ -83,6 +83,8 @@ In the Text Object Model (TOM), applications access text-range attributes by usi
 
 The **ITextFont2** interface extends **ITextFont**, providing the programming equivalent of the Microsoft Word format-font dialog.
 
+| Name       | Description |
+| ---------- | ----------- |
 | [GetCount](#GetCount) |  |
 | [GetAutoLigatures](#GetAutoLigatures) |  |
 | [SetAutoLigatures](#SetAutoLigatures) |  |
