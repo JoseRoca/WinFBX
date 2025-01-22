@@ -38,7 +38,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [GetEmboss](#GetEmboss) | Gets whether characters are embossed. |
 | [SetEmboss](#SetEmboss) | Sets whether characters are embossed. |
 | [GetForeColor](#GetForeColor) | Gets the foreground, or text, color. |
-| [SetForeColor](#SetForeColor) |  |
+| [SetForeColor](#SetForeColor) | Sets the foreground (text) color. |
 | [GetHidden](#GetHidden) |  |
 | [SetHidden](#SetHidden) |  |
 | [GetEngrave](#GetEngrave) |  |
@@ -673,8 +673,8 @@ The text background color. It can be one of the following values.
 
 | Value | Meaning |
 | ----- | ------- |
-| A COLORREF value | The high-order byte is zero, and the three low-order bytes specify an RGB color. |
-| A value returned by PALETTEINDEX | The high-order byte is 1, and the **LOWORD** specifies the index of a logical-color palette entry. |
+| A **COLORREF** value | The high-order byte is zero, and the three low-order bytes specify an RGB color. |
+| A value returned by **PALETTEINDEX** | The high-order byte is 1, and the **LOWORD** specifies the index of a logical-color palette entry. |
 | **tomAutocolor** (-9999997) | Indicates the range uses the default system background color. |
 
 #### Result code
@@ -702,12 +702,12 @@ END FUNCTION
 
 | Value | Meaning |
 | ----- | ------- |
-| A COLORREF value | An RGB color. |
-| A value returned by PALETTEINDEX | A palette index. |
+| A **COLORREF** value | An RGB color. |
+| A value returned by **PALETTEINDEX** | A palette index. |
 | **tomUndefined** | No change. |
 | **tomAutoColor** | Use the default background color. |
 
-If **Value** contains an RGB color, generate the COLORREF by using the RGB macro (BGR function in FreeBasic).
+If **Value** contains an RGB color, generate the **COLORREF** by using the [RGB](https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-rgb) macro (BGR function in FreeBasic).
 
 | Result code | Description |
 | ----------- | ----------- |
@@ -854,8 +854,8 @@ The foreground color. It can be one of the following values.
 
 | Value | Meaning |
 | ----- | ------- |
-| A COLORREF value | The high-order byte is zero, and the three low-order bytes specify an RGB color. |
-| A value returned by PALETTEINDEX | The high-order byte is 1, and the **LOWORD** specifies the index of a logical-color palette entry. |
+| A **COLORREF** value | The high-order byte is zero, and the three low-order bytes specify an RGB color. |
+| A value returned by **PALETTEINDEX** | The high-order byte is 1, and the **LOWORD** specifies the index of a logical-color palette entry. |
 | **tomAutocolor** (-9999997) | Indicates the range uses the default system foreground color. |
 
 #### Result code
@@ -865,3 +865,35 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | Result code | Description |
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+# <a name="SetForeColor"></a>SetForeColor
+
+Sets the foreground (text) color.
+
+```
+FUNCTION CTextFont2.SetForeColor (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetForeColor(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new foreground color. It can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| A **COLORREF** value | An RGB color. |
+| A value returned by **PALETTEINDEX** | A palette index. |
+| **tomUndefined** | No change. |
+| **tomAutoColor** | Use the default background color. |
+
+If **Value** contains an RGB color, generate the **COLORREF** by using the [RGB](https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-rgb) macro (BGR function in FreeBasic).
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+
