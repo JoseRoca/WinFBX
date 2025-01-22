@@ -87,7 +87,7 @@ DIM int96 AS CInt96 = "1234567890"
 
 # <a name="Operator2"></a>CAST Operators
 
-Converts a `Cint16` into another data type.
+Converts a `CInt16` into another data type.
 
 ```
 OPERATOR CAST () AS DOUBLE
@@ -98,7 +98,7 @@ OPERATOR CAST () AS STRING
 
 #### Remarks
 
-These operators aren't called directly, They perform the conversion when the target is not a `CInt96` variable.
+These operators aren't called directly, they perform the conversion when the target is not a `CInt96` variable.
 
 # <a name="Operator3"></a>Operator *
 
@@ -181,7 +181,7 @@ FUNCTION IsUnsigned () AS BOOLEAN
 
 # <a name="Sign"></a>Sign
 
-Returns 0 if it is not signed of &h80 (128) if it is signed.
+Returns 0 if it is not signed or &h80 (128) if it is signed.
 
 ```
 FUNCTION Sign () AS UBYTE
@@ -200,6 +200,6 @@ FUNCTION ToVar () AS VARIANT
 Can be used to assign a currency directly to a CVAR variable.
 
 ```
-DIM it96 AS CInt95 = 1234567890
+DIM int96 AS CInt96 = 1234567890
 DIM cv AS CVAR = int96.ToVar
 ```
