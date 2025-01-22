@@ -5,7 +5,7 @@ Provides methods to manage **Regions**. **Regions** are used in clipping and hit
 The **Region** object describes an area of the display surface. The area can be any shape. In other words, the boundary of the area can be a combination of curved and straight lines. Regions can also be created from the interiors of rectangles, paths, or a combination of these. Regions are used in clipping and hit-testing operations.
 
 **Inherits from**: CGpBase.<br>
-**Imclude file**: CGpRegion.inc.
+**Include file**: CGpRegion.inc.
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -651,7 +651,6 @@ SUB Example_GetBoundsRect (BYVAL hdc AS HDC)
    DIM ryRatio AS SINGLE = graphics.GetDpiY / 96
    ' // Set the scale transform
    graphics.ScaleTransform(rxRatio, ryRatio)
-s
    DIM pts(0 TO 5) AS GpPoint = {GDIP_POINT(110, 20), GDIP_POINT(120, 30), GDIP_POINT(100, 60), GDIP_POINT(120, 70), GDIP_POINT(150, 60), GDIP_POINT(140, 10)}
 '#ifdef __FB_64BIT__
 '   DIM pts(0 TO 5) AS GpPoint = {(110, 20), (120, 30), (100, 60), (120, 70), (150, 60), (140, 10)}
