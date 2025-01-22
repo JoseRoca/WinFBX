@@ -77,7 +77,7 @@ There are four different cursor types defined in ADO:
 
 * **Static cursor** -- provides a static copy of a set of records for you to use to find data or generate reports; always allows bookmarks and therefore allows all types of movement through the Recordset. Additions, changes, or deletions by other users will not be visible. This is the only type of cursor allowed when you open a client-side **Recordset** object.
 
-* **Forward-only cursor** -- allows you to only scroll forward through the **Recordset++. Additions, changes, or deletions by other users will not be visible. This improves performance in situations where you need to make only a single pass through a **Recordset**.
+* **Forward-only cursor** -- allows you to only scroll forward through the **Recordset**. Additions, changes, or deletions by other users will not be visible. This improves performance in situations where you need to make only a single pass through a **Recordset**.
 
 Set the **CursorType** property prior to opening the **Recordset** to choose the cursor type, or pass a **CursorType** argument with the **Open** method. Some providers don't support all cursor types. Check the documentation for the provider. If you don't specify a cursor type, ADO opens a forward-only cursor by default.
 
@@ -263,7 +263,7 @@ To get a localized description of the last ADO error, call the wrapper function 
 #include "Afx/CADODB/CADODB.inc"
 USING Afx
 
-' // Create an instance of the CAdoRecorset class
+' // Create an instance of the CAdoRecordset class
 DIM pRecordset AS CAdoRecordset
 ' // Get a reference to the Fields collection
 DIM pFields AS CAdoFields = pRecordset.Fields
@@ -314,7 +314,7 @@ PRINT pRecordset.GetString
 #include "Afx/CADODB/CADODB.inc"
 using Afx
 
-' // Create an instance of the CAdoRecorset class
+' // Create an instance of the CAdoRecordset class
 DIM pRecordset AS CAdoRecordset
 ' // Get a reference to the Fields collection
 DIM pFields AS CAdoFields = pRecordset.Fields
