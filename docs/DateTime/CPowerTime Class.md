@@ -49,7 +49,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [IsLeapYear](#IsLeapYear) | Determines if a given year is a leap year or not. |
 | [JulianToGregorian](#JulianToGregorian) | Converts a Julian date to a Gregorian date. |
 | [Minute](#Minute) | Returns the Minute component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
-| [Month](#Month) | Returns the Month component of the **CPowerTime** object. It is a  value in the range of 1-12. |
+| [Month](#Month) | Returns the Month component of the **CPowerTime** object. It is a value in the range of 1-12. |
 | [MonthString](#MonthString) | Returns the Month component of the **CPowerTime** object as a string. |
 | [MSecond](#MSecond) | Returns the Millisecond component of the **CPowerTime** object.This is a numeric value in the range of 0-999. |
 | [NewDate](#NewDate) | Sets a new date to this **CPowerTime** object. |
@@ -58,7 +58,7 @@ CPowerTime_Week           CPowerTime_Day * 7
 | [NowUTC](#NowUTC) | Assigns the current Coordinated Universal date and time (UTC) to this **CPowerTime** object. |
 | [Second](#Second) | Returns the Second component of the **CPowerTime** object. This is a numeric value in the range of 0-59. |
 | [SetFileTime](#SetFileTime) | Sets the date and time of this **CPowerTime** object. |
-| [TimeString](#TimeString) | Retuns the time as a string based on the specified mask, e.g. "dd-MM-yyyy". |
+| [TimeString](#TimeString) | Returns the time as a string based on the specified mask, e.g. "dd-MM-yyyy". |
 | [ToUTC](#Toutc) | The **CPowerTime** object is converted to Coordinated Universal Time (UTC). |
 | [Today](#Today) | Assigns the current local date on this computer to this **CPowerTime** object. |
 | [UTCToLocal](#UTCToLocal) | Converts time based on the Coordinated Universal Time (UTC) to local file time. |
@@ -440,7 +440,7 @@ FUNCTION IsLastDayOfMonth () AS BOOLEAN
 
 Determines if a given year is a leap year or not.
 
-A leap year is defined as all years divisible by 4, except for years divisible by 100 that are not also divisible by 400. Years divisible by 400 are leap years. 2000 is a eap year. 1900 is not a leap year.
+A leap year is defined as all years divisible by 4, except for years divisible by 100 that are not also divisible by 400. Years divisible by 400 are leap years. 2000 is a leap year. 1900 is not a leap year.
 
 ```
 FUNCTION IsLeapYear (BYVAL nYear AS LONG = 0) AS BOOLEAN
@@ -760,7 +760,7 @@ SUB NewTime (BYVAL nHour AS LONG = 0, BYVAL nMinute AS LONG = 0, _
 | *nHour* | The new hour. The valid values for this member are 1 through 23. |
 | *nMinute* | The new minute. The valid values for this member are 1 through 59. |
 | *nSecond* | The new second. The valid values for this member are 1 through 59. |
-| *nMSecond* | The new milliseond. The valid values for this member are 1 through 999. |
+| *nMSecond* | The new millisecond. The valid values for this member are 1 through 999. |
 
 # <a name="Now"></a>Now
 
