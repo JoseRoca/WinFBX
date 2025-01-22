@@ -34,7 +34,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [GetBackColor](#GetBackColor) | Gets the text background (highlight) color. |
 | [SetBackColor](#SetBackColor) | Sets the background color. |
 | [GetBold](#GetBold) | Gets whether the characters are bold. |
-| [SetBold](#SetBold) |  |
+| [SetBold](#SetBold) | Sets whether characters are bold. |
 | [GetEmboss](#GetEmboss) |  |
 | [SetEmboss](#SetEmboss) |  |
 | [GetForeColor](#GetForeColor) |  |
@@ -744,3 +744,33 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | Result code | Description |
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+# <a name="SetBold"></a>SetBold
+
+Sets whether characters are bold.
+
+```
+FUNCTION CTextFont2.SetBold (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetBold(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are bold. |
+| **tomFalse** | Characters are not bold. |
+| **tomToggle** | Toggle the state of the Bold property. |
+| **tomUndefined** | The Bold property is undefined. |
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+
