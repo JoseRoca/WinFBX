@@ -186,7 +186,7 @@ Extracts the portion of a string following the occurrence of a specified delimit
 
 ```
 The following lines return "text between parentheses" (text delimited by "(" and ")")
-DIM cws AS CWSTR = "blah blah (text beween parentheses) blah blah"
+DIM cws AS CWSTR = "blah blah (text between parentheses) blah blah"
 PRINT AfxStrExtract(cws, "(", ")")
 ```
 
@@ -644,7 +644,7 @@ FUNCTION AfxStrRemove (BYREF wszMainStr AS CONST WSTRING, _
 #### Usage examples
 
 ```
-DIM cwsText AS CWSTR = "blah blah (text beween parentheses) blah blah"
+DIM cwsText AS CWSTR = "blah blah (text between parentheses) blah blah"
 DIM cws AS CWSTR = AfxStrRemove(cwsText, "(", ")")   ' Returns "blah blah  blah blah"
 ```
 
