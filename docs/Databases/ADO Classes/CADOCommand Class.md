@@ -11,14 +11,14 @@ Defines a specific command that you intend to execute against a data source.
 | [ActiveConnection](#ActiveConnection) | Determines the **Connection** object over which the specified **Command** object will execute. |
 | [Cancel](#Cancel) | Cancels execution of a pending, asynchronous method call. |
 | [CommandStream](#CommandStream) | Sets or returns the stream used as the input for a **Command** object. |
-| [CommandText](#CommandText) | Sets or returns an string value that contains a provider command, such as an SQL statement, a table name, a relative URL, or a stored procedure call. |
+| [CommandText](#CommandText) | Sets or returns a string value that contains a provider command, such as an SQL statement, a table name, a relative URL, or a stored procedure call. |
 | [CommandTimeout](#CommandTimeout) | Sets or returns a Long value that indicates, in seconds, how long to wait for a command to execute. |
 | [CommandType](#CommandType) | Sets or returns one or more **CommandTypeEnum** values. |
 | [CreateParameter](#CreateParameter) | Creates a new **Paramete**r object with the specified properties. |
 | [Dialect](#Dialect) | Indicates the dialect of the **CommandText** or **CommandStream** properties. |
 | [Execute](#Execute) | Executes the query, SQL statement, or stored procedure specified in the **CommandText** or **CommandStream** property. |
 | [GetErrorInfo](#GetErrorInfo) | Returns information about ADO errors. |
-| [Name](#Name) | Sets or returns an string value that indicates the name of a **Command** object. |
+| [Name](#Name) | Sets or returns a string value that indicates the name of a **Command** object. |
 | [NamedParameters](#NamedParameters) | Indicates whether parameter names should be passed to the provider. |
 | [Parameters](#Parameters) | Returns a reference to the **Parameters** collection. |
 | [Prepared](#Prepared) | Sets or returns a Boolean value that, if set to True, indicates that the command should be prepared. |
@@ -92,7 +92,7 @@ Represents a parameter or argument associated with a **Command** object based on
 | [Attach](#Attach) | Attaches a reference to an ADO **Parameter** object to the class. |
 | [Attributes](#Attributes) | Indicates one or more characteristics of an object. |
 | [Direction](#Direction) | Indicates whether the **Parameter** represents an input parameter, an output parameter, an input and an output parameter, or if the parameter is the return value from a stored procedure. |
-| [Name](#Name2) | Sets or returns an string value that indicates the name of a **Parameter** object. |
+| [Name](#Name2) | Sets or returns a string value that indicates the name of a **Parameter** object. |
 | [NumericScale](#NumericScale) | Indicates the scale of numeric values in a **Parameter** object. |
 | [Precision](#Precision) | Indicates the degree of precision for numeric values in a **Parameter** object. |
 | [Properties](#Properties2) | Returns a reference to the **Properties** collection. |
@@ -132,7 +132,7 @@ PROPERTY ActiveConnection () AS Afx_ADOCOnnection PTR
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pconn* | A reference to the **Connection** object or to the **CADOConnection** class. |
-| vConn | An string containing a definition for a connection if the connection is closed, or a VARIANT of type VT_DISPATCH containing the current **Connection** object if the connection is open. |
+| vConn | A string containing a definition for a connection if the connection is closed, or a VARIANT of type VT_DISPATCH containing the current **Connection** object if the connection is open. |
 
 #### Return value
 
@@ -187,8 +187,8 @@ For a **Command** object, the last asynchronous call to the **Execute** method i
 Sets or returns the stream used as the input for a **Command** object. The format for this stream is provider-specific, see your provider's documentation for details. This property is similar to the **CommandText** property, used to specify a string for the input of a **Command**.
 
 ```
-POPERTY CommandStream () AS Afx_AdoStream
-POPERTY CommandStream (BYVAL pStream AS Afx_AdoStream)
+PROPERTY CommandStream () AS Afx_AdoStream
+PROPERTY CommandStream (BYVAL pStream AS Afx_AdoStream)
 ```
 
 | Parameter  | Description |
@@ -211,7 +211,7 @@ When using a command stream (as specified by **CommandStream**), the only valid 
 
 # <a name="CommandText"></a>CommandText (CADOCommand)
 
-Sets or returns an string value that contains a provider command, such as an SQL statement, a table name, a relative URL, or a stored procedure call. Default is "" (zero-length string).
+Sets or returns a string value that contains a provider command, such as an SQL statement, a table name, a relative URL, or a stored procedure call. Default is "" (zero-length string).
 
 ```
 PROPERTY CommandText () AS CBSTR
@@ -552,7 +552,7 @@ A description of the error(s).
 
 # <a name="Name"></a>Name (CADOCommand)
 
-Sets or returns an string value that indicates the name of a **Command** object. 
+Sets or returns a string value that indicates the name of a **Command** object. 
 
 ```
 PROPERTY Name () AS CBSTR
@@ -874,7 +874,7 @@ Not all providers can determine the direction of parameters in their stored proc
 
 # <a name="Name2"></a>Name (CADOParameter)
 
-Sets or returns an string value that indicates the name of a **Parameter** object. 
+Sets or returns a string value that indicates the name of a **Parameter** object. 
 
 ```
 PROPERTY Name () AS CBSTR
