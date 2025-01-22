@@ -493,7 +493,7 @@ FUNCTION GetVarResult () AS CVAR
 
 # <a name="GetLcid"></a>GetLcid
 
-Returns de locale identifier used by the class.
+Returns the locale identifier used by the class.
 
 ```
 FUNCTION GetLcid () AS LCID
@@ -524,7 +524,7 @@ Returns a variant with the result of the call when the **Invoke** method is used
 
 For optional parameters, we must use a VT_ERROR VARIANT with a value of DISP_E_PARAMNOTFOUND. You can use the function **AfxCVarOptPrm** or the macro **CVAR_OPTPRM** for this purpose.
 
-To check for success or failure, call the **GetLastResult** method. It will return S_OK (0) on succes or an HRESULT code on failure.
+To check for success or failure, call the **GetLastResult** method. It will return S_OK (0) on success or an HRESULT code on failure.
 
 | HRESULT    | Description |
 | ---------- | ----------- |
@@ -647,6 +647,6 @@ FUNCTION SetRef (BYVAL pwszName AS WSTRING PTR, BYREF cvArg1 ... cvArg3 AS CVAR)
 | *pwszName* | The name of the property to call. |
 | *cvArg1...cvArg3* | CVAR. The last parameter is the value to set. cvArg1 and cvArg2 are the index values. |
 
-#### Returm value
+#### Return value
 
 S_OK (0) on success or an HRESULT code.
