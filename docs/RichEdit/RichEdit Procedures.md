@@ -1037,7 +1037,7 @@ END FUNCTION
 | *hRichEdit* | The handle of the rich edit control. |
 | *which* | The zero-based index of the line to retrieve from a multiline edit control. A value of zero specifies the topmost line. |
 
-#### Retuen value
+#### Return value
 
 A copy of the line.
 
