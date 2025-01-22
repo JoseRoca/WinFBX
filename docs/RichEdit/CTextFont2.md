@@ -33,7 +33,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetAnimation](#SetAnimation) | Sets the animation type. |
 | [GetBackColor](#GetBackColor) | Gets the text background (highlight) color. |
 | [SetBackColor](#SetBackColor) | Sets the background color. |
-| [GetBold](#GetBold) |  |
+| [GetBold](#GetBold) | Gets whether the characters are bold. |
 | [SetBold](#SetBold) |  |
 | [GetEmboss](#GetEmboss) |  |
 | [SetEmboss](#SetEmboss) |  |
@@ -676,7 +676,7 @@ The text background color. It can be one of the following values.
 | A COLORREF value | The high-order byte is zero, and the three low-order bytes specify an RGB color. |
 | A value returned by PALETTEINDEX | The high-order byte is 1, and the LOWORD specifies the index of a logical-color palette entry. |
 | **tomAutocolor** (-9999997) | Indicates the range uses the default system background color. |
-	
+
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
@@ -715,3 +715,32 @@ If **Value** contains an RGB color, generate the COLORREF by using the RGB macro
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+# <a name="GetBold"></a>GetBold
+
+Gets whether the characters are bold.
+
+```
+FUNCTION CTextFont2.GetBold () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetBold(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are bold. |
+| **tomFalse** | Characters are not bold. |
+| **tomUndefined** | The Bold property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
