@@ -137,7 +137,7 @@ The `CVAR` class implements a `VARIANT` data type. The variant data type is a ta
 
 # <a name="Constructors"></a>Constructors
 
-Creates a an instance of the CVAR class.
+Creates an instance of the CVAR class.
 
 ```
 CONSTRUCTOR
@@ -513,11 +513,11 @@ FUNCTION Attach (BYREF v AS VARIANT) AS HRESULT
 
 #### Remark
 
-Marks the source variant as VT_EMPTY instead of clearing it with VariantClear because we aren't making a duplicate of the contents, but transfering ownership.
+Marks the source variant as VT_EMPTY instead of clearing it with VariantClear because we aren't making a duplicate of the contents, but transferring ownership.
 
 #### Return value
 
-Returns S_OK (0) or an HRESULT error code.
+Returns S_OK (0) on success or an HRESULT error code on failure.
 
 # <a name="Detach"></a>Detach
 
@@ -894,7 +894,7 @@ SUB Put (BYVAL _pv AS ANY PTR, BYREF strType AS STRING)
 | *_pv* | Pointer to a variable. This will create a VT_BYREF variant of the specified type. |
 | *_vtype* | The variant type, e.g. VT_I4, VT_UI4. |
 | *strType* | The variant type as a string: "BOOL", "BYTE", "UBYTE", "SHORT", "USHORT, "INT", UINT", "LONG", "ULONG", "LONGINT", "SINGLE, "DOUBLE", "NULL". |
-| *fAddRef* | TRUE or FALSE. If TRUE, increases the reference count of the interface. |
+| *fAddRef* | TRUE or FALSE. If TRUE, increases the reference count of the passed interface. |
 
 # <a name="PutNull"></a>PutNull
 
