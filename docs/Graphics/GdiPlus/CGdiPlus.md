@@ -8,7 +8,7 @@ A graphics device interface, such as GDI+, allows application programmers to dis
 
 # CGpBase class
 
-Initializes the GDI+ library and keeps a reference count of it. The destructor shutdowns the library. All the other GDI+ classes inherit from **CGpBase**.
+Initializes the GDI+ library and keeps a reference count of it. The destructor shut downs the library. All the other GDI+ classes inherit from **CGpBase**.
 
 ### GetLastStatus method
 
@@ -190,7 +190,7 @@ END TYPE
 
 #### Remarks
 
-Because the FreeBasic 32-bit headers don't define the GDI+ **ColorMap** structure ad use the GDI **ColorMap** one, that has different member names, there is a conflict. To solve it, I have defined an union that can be used to replace **ColorMap** in both 32 and 64-bit.
+Because the FreeBasic 32-bit headers don't define the GDI+ **ColorMap** structure and use the GDI **ColorMap** one, that has different member names, there is a conflict. To solve it, I have defined an union that can be used to replace **ColorMap** in both 32 and 64-bit.
 
 ```
 UNION GDIP_COLORMAP
