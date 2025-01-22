@@ -24,7 +24,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetDuplicate](#SetDuplicate) | Sets the character formatting by copying another text font object. |
 | [CanChange](#CanChange) | Determines whether the font can be changed. |
 | [IsEqual](#IsEqual) | Determines whether this text font object has the same properties as the specified text font object. |
-| [Reset](#Reset) |  |
+| [Reset](#Reset) | Resets the character formatting to the specified values. |
 | [GetStyle](#GetStyle) |  |
 | [SetStyle](#SetStyle) |  |
 | [GetAllCaps](#GetAllCaps) |  |
@@ -356,9 +356,9 @@ END FUNCTION
 
 If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
-| Return value | Description |
-| ------------ | ----------- |
-| **E_INVALIDARG** | Invalid argument |
+| Return code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
@@ -418,3 +418,49 @@ If the text font objects have the same properties, the method succeeds and retur
 #### Remarks
 
 The text font objects are equal only if *pFont* belongs to the same Text Object Model (TOM) object as the current font object. The **IsEqual** method ignores entries for which either font object has an **tomUndefined**.
+
+# <a name="Reset"></a>Reset
+
+Resets the character formatting to the specified values.
+
+```
+FUNCTION CTextFont2.Reset (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->Reset(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The kind of reset. This parameter can be a combination of the following values. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomDefault** | Set to the document default character format if this font object is attached to a range; otherwise, set the defaults to the basic TOM engine defaults. |
+| **tomUndefined** | Sets all properties to undefined values. This value is valid only for a duplicate (clone) font object. |
+| **tomApplyLater** | Allow property values to be set, but don’t apply them to the attached range yet. |
+| **tomApplyNow** | Apply the current properties to attached range. |
+| **tomCacheParms** | Do not update the current font with the attached range properties. |
+| **tomTrackParms** | Update the current font with the attached range properties. |
+| **tomApplyTmp** | Apply temporary formatting. |
+| **tomDisableSmartFont** | Do not apply smart fonts. |
+| **tomEnableSmartFont** | Do apply smart fonts. |
+| **tomUsePoints** | Use points for floating-point measurements. |
+| **tomUseTwips** | Use twips for floating-point measurements. |
+
+Return value
+Type: HRESULT
+
+If the method succeeds, it returns S_OK. If the method fails, it returns one of the following COM error codes. For more information about COM error codes, see Error Handling in COM.
+
+#### Return value
+
+| Return code | Description |
+| ----------- | ----------- |
+| **S_FALSE** | Protected from change. |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+#### Remarks
+
+Calling **Reset** with **tomUndefined** sets all properties to undefined values. Thus, applying the font object to a range changes nothing. This applies to a font object that is obtained by the **GetDuplicate** method.
