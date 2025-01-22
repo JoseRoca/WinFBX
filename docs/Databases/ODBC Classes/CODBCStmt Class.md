@@ -8,7 +8,7 @@ Implements methods to create and manage statement objects. Inherits from CODBCBa
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#Constructors) | Allocates an statement handle. |
+| [Constructors](#Constructors) | Allocates a statement handle. |
 | [AddRecord](#AddRecord) | Adds a record to the database. |
 | [BindCol](#BindCol) | Binds application data buffers to columns in the result set. |
 | [BindParameter](#BindParameter) | Binds a buffer to a parameter marker in an SQL statement. |
@@ -47,7 +47,7 @@ Implements methods to create and manage statement objects. Inherits from CODBCBa
 | [ColUpdatable](#ColUpdatable) | SQL_TRUE if the column is updatable; SQL_FALSE otherwise. |
 | [DbcHandle](#DbcHandle) | Returns the connection handle. |
 | [DeleteByBookmark](#DeleteByBookmark) | Deletes a set of rows where each row is identified by a bookmark. |
-| [DeleteRecord](#DeleteRecord) | Deletes the sepcified row of data. |
+| [DeleteRecord](#DeleteRecord) | Deletes the specified row of data. |
 | [DescribeCol](#DescribeCol) | Returns the result descriptor for one column in the result set. |
 | [DescribeParam](#DescribeParam) | Returns the description of a parameter marker associated with a prepared SQL statement. |
 | [ExecDirect](#ExecDirect) | Executes a preparable statement. |
@@ -313,9 +313,9 @@ FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS LONGINT 
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS ULONGINT PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS ZSTRING PTR, _
-   BYVAL BufferLenght AS SQLLEN, BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
+   BYVAL BufferLength AS SQLLEN, BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS WSTRING PTR, _
-   BYVAL BufferLenght AS SQLLEN, BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
+   BYVAL BufferLength AS SQLLEN, BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
 FUNCTION BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS DATE_STRUCT PTR, _
    BYVAL StrLen_or_IndPtr AS ANY PTR) AS SQLRETURN
 FUNCTION  BindCol (BYVAL ColNumber AS SQLUSMALLINT, BYVAL TargetValue AS TIME_STRUCT PTR, _
