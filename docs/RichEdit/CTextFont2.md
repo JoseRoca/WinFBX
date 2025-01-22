@@ -36,7 +36,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [GetBold](#GetBold) | Gets whether the characters are bold. |
 | [SetBold](#SetBold) | Sets whether characters are bold. |
 | [GetEmboss](#GetEmboss) | Gets whether characters are embossed. |
-| [SetEmboss](#SetEmboss) |  |
+| [SetEmboss](#SetEmboss) | Sets whether characters are embossed. |
 | [GetForeColor](#GetForeColor) |  |
 | [SetForeColor](#SetForeColor) |  |
 | [GetHidden](#GetHidden) |  |
@@ -807,3 +807,32 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 This property corresponds to the **CFE_EMBOSS** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
+
+# <a name="SetEmboss"></a>SetEmboss
+
+Sets whether characters are embossed.
+
+```
+FUNCTION CTextFont2.SetEmboss (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetEmboss(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are embossed. |
+| **tomFalse** | Characters are not embossed. |
+| **tomToggle** | Toggle the state of the Emboss property. |
+| **tomUndefined** | The Emboss property is undefined. |
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
