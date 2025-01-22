@@ -37,7 +37,7 @@ When the class is destroyed, the array descriptor and all of the data in the arr
 | [AccessData](#AccessData) | Increments the lock count of an array, and retrieves a pointer to the array data. |
 | [Append](#Append) | Appends a value to the end of the one-dimensional safe array. |
 | [Attach](#Attach) | Attaches a safe array to a CSafeArray object. |
-| [Clear](#DestroyData) | Like DestroyData, destroys all the data in a safe array. It is the same that Erase and Reset. |
+| [Clear](#DestroyData) | Like DestroyData, destroys all the data in a safe array. It is the same as Erase and Reset. |
 | [Copy](#Copy) | Creates a copy of the safe array. |
 | [CopyData](#CopyData) | Copies the source array to the target array after releasing any resources in the target array. |
 | [CopyFrom](#CopyFrom) | Copies the contents of a safe array. |
@@ -52,10 +52,10 @@ When the class is destroyed, the array descriptor and all of the data in the arr
 | [DestroyData](#DestroyData) | Destroys all the data in a safe array. |
 | [Detach](#Detach) | Detaches the sage array descriptor from the CSafeArray. |
 | [ElemSize](#ElemSize) | Returns the size of an element. |
-| [Erase](#DestroyData) | Like DestroyData, destroys all the data in a safe array. It is the same that Clear and Reset. |
+| [Erase](#DestroyData) | Like DestroyData, destroys all the data in a safe array. It is the same as Clear and Reset. |
 | [Features](#Features) | Returns the flags used by the safe array. This is the same that the Flags method. |
 | [Find](#Find) | Scans the array to search for the specified string. |
-| [Flags](#Features) | Returns the flags used by the safe array. This is the same that the **Features** method. |
+| [Flags](#Features) | Returns the flags used by the safe array. This is the same as the **Features** method. |
 | [Get](#Get) | Retrieves a single element of the array. |
 | [GetIID](#GetIID) | Returns the GUID of the interface contained within a given safe array. |
 | [GetPtr](#Operator1) | Returns the address of the safe array. |
@@ -391,7 +391,7 @@ FUNCTION AfxXmlBase64Decode (BYREF strData AS STRING) AS STRING
 
 The decoded string on success, or a null string on failure.
 
-Remaks
+#### Remarks
 
 Base64 is a group of similar encoding schemes that represent binary data in an ASCII string format by translating it into a radix-64 representation. The Base64 term originates from a specific MIME content transfer encoding.
 
@@ -410,9 +410,9 @@ FUNCTION AfxXmlBase64Encode (BYREF strData AS STRING) AS STRING
 
 #### Return value
 
-The encoded string on succeess, or a null string on failure.
+The encoded string on success, or a null string on failure.
 
-Remaks
+#### Remarks
 
 Base64 is a group of similar encoding schemes that represent binary data in an ASCII string format by translating it into a radix-64 representation. The Base64 term originates from a specific MIME content transfer encoding.
 
@@ -835,7 +835,7 @@ FUNCTION Find (BYREF wszFind AS WSTRING, BYVAL bNoCase AS BOOLEAN = FALSE) AS LO
 
 #### Return value
 
-The index of the retrieved array element, or 0 on failue.
+The index of the retrieved array element, or 0 on failure.
 
 # <a name="Get"></a>Get / GetStr / GetVar
 
