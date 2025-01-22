@@ -14,7 +14,7 @@ The **WebBrowser** events sink class is provided in the file **CWebBrowserEvents
 
 | Name       | Description |
 | ---------- | ----------- |
-| [CAXHOST_AMBIENTDISP structure](#CAXHOST_AMBIENTDISP) | Contains information the ambient properties of the **CAxHost** control. |
+| [CAXHOST_AMBIENTDISP structure](#CAXHOST_AMBIENTDISP) | Contains information about the ambient properties of the **CAxHost** control. |
 | [Constructor](#Constructor) | Creates an instance of the OLE container using a ProgId. |
 
 ### Methods
@@ -34,7 +34,7 @@ The **WebBrowser** events sink class is provided in the file **CWebBrowserEvents
 | [GetBodyInnerText](#GetBodyInnerText) | Returns a string that represents the text between the start and end body tags without any associated HTML. |
 | [GoBack](#GoBack) | Navigates backward one item in the history list. |
 | [GetElementInnerHtmlById](#GetElementInnerHtmlById) | Retrieves the HTML between the start and end tags of the object. |
-| [GetElementValueById](#GetElementValueById) | Retrieves the value attribute of the specified attribute. |
+| [GetElementValueById](#GetElementValueById) | Retrieves the value attribute of the specified element by ID. |
 | [GoForward](#GoForward) | Navigates forward one item in the history list. |
 | [GoHome](#GoHome) | Navigates to the current home or start page. |
 | [GoSearch](#GoSearch) | Navigates to the current search page. |
@@ -42,7 +42,7 @@ The **WebBrowser** events sink class is provided in the file **CWebBrowserEvents
 | [InternetOptions](#InternetOptions) | Activates the Internet options dialog. |
 | [LocationName](#LocationName) | Retrieves the name of the resource that Microsoft Internet Explorer is currently displaying. |
 | [LocationURL](#LocationURL) | Retrieves the URL of the resource that Microsoft Internet Explorer is currently displaying. |
-| [Navigate](#Navigate) | Returns the handle of the OLE Container hosting window. |
+| [Navigate](#Navigate) | Navigates to the specified URL |
 | [PageProperties](#PageProperties) | Activates the properties dialog. |
 | [PageSetup](#PageSetup) | Activates the page setup dialog. |
 | [PrintPage](#PrintPage) | Activates the print dialog. |
@@ -65,7 +65,7 @@ The **WebBrowser** events sink class is provided in the file **CWebBrowserEvents
 | [Silent](#Silent) | Sets or gets a value that indicates whether the object can display dialog boxes. |
 | [Stop](#Stop) | Cancels any pending navigation or download operation and stops any dynamic page elements, such as background sounds and animations. |
 | [Unadvise](#Unadvise) | Releases the events connection. |
-| [WaitForPageLoad](#WaitForPageLoad) | Waits until the page had been fully downloaded or te timeout has expired. |
+| [WaitForPageLoad](#WaitForPageLoad) | Waits until the page had been fully downloaded or the timeout has expired. |
 | [WriteHtml](#WriteHtml) | Writes one or more HTML expressions to a document. |
 
 ### Helper Procedures
@@ -94,9 +94,9 @@ To set pointers to the callback functions of the events in which you are interes
 All these callback functions will receive a pointer to the **CwebCtx** class as the first parameter. With this pointer, we can get:
 
 * Access to all the methods of the CWebCtx class.
-* The handle of the container window calling pCWbCtx->hWindow.
+* The handle of the container window calling pCWebCtx->hWindow.
 * A pointer to the hosted WebBrowser control calling pWebCtx->BrowserPtr.
-* A pointer to the CAxHost class calling pWebCtx->HostPtr.
+* A pointer to the CAxHost class calling pWebCtx->AxHostPtr.
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -182,7 +182,6 @@ With *dispid* we can identify which event we are being notified:
 
 ```
 ' // DispIds of the events
-CONST DISPID_HTMLELEMENTEVENTS2_ONHELP             = -2147418102
 CONST DISPID_HTMLELEMENTEVENTS2_ONHELP             = -2147418102
 CONST DISPID_HTMLELEMENTEVENTS2_ONCLICK            = -600
 CONST DISPID_HTMLELEMENTEVENTS2_ONDBLCLICK         = -601
@@ -1099,7 +1098,7 @@ END SUB
 ' ========================================================================================
 FUNCTION DocHostUI_ShowContextMenuProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL dwID AS DWORD, BYVAL ppt AS POINT PTR, BYVAL pcmdtReserved AS IUnknown PTR, BYVAL pdispReserved AS IDispatch PTR) AS HRESULT
    ' // This event notifies that the user has clicked the right mouse button to show the
-   ' // context menu. We can anulate it returning %S_OK and show our context menu.
+   ' // context menu. We can annul it returning %S_OK and show our context menu.
    ' // Do not allow to show the context menu
 '   AfxMsg "Sorry! Context menu disabled"
 '   RETURN S_OK
