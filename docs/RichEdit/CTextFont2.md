@@ -44,7 +44,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [GetEngrave](#GetEngrave) | Gets whether characters are displayed as imprinted characters. |
 | [SetEngrave](#SetEngrave) | Sets whether characters are displayed as imprinted characters. |
 | [GetItalic](#GetItalic) | Gets whether characters are in italics. |
-| [SetItalic](#SetItalic) |  |
+| [SetItalic](#SetItalic) | Sets whether characters are in italics. |
 | [GetKerning](#GetKerning) |  |
 | [SetKerning](#SetKerning) |  |
 | [GetLanguageID](#GetLanguageID) |  |
@@ -1021,7 +1021,6 @@ END FUNCTION
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-
 # <a name="GetItalic"></a>GetItalic
 
 Gets whether characters are in italics.
@@ -1050,3 +1049,32 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | Result code | Description |
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+# <a name="SetItalic"></a>SetItalic
+
+Sets whether characters are in italics.
+
+```
+FUNCTION CTextFont2.SetItalic (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetItalic(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are in italics. |
+| **tomFalse** | Characters are not in italics. |
+| **tomToggle** | Toggle the state of the Italic property. |
+| **tomUndefined** | The Italic property is undefined. |
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
