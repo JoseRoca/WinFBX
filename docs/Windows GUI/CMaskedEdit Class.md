@@ -60,9 +60,9 @@ CONSTRUCTOR CMaskedEdit (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR,  _
 The following example demonstrates how to set up a mask (for example a phone number) by using the `EnableMask` method to create the mask for the masked edit control, and `SetText` method to display a prompt in the masked edit control.
 
 ```
-DIM pMakedEdit AS CMaskedEdit = CMaskedEdit(@pWindow, IDC_MASKED, 10, 30, 280, 23)
-pMakedEdit.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
-pMakedEdit.SetText("(123) 123-1212"), TRUE
+DIM pMaskedEdit AS CMaskedEdit = CMaskedEdit(@pWindow, IDC_MASKED, 10, 30, 280, 23)
+pMaskedEdit.EnableMask(" ddd  ddd dddd", "(___) ___-____", "_")
+pMaskedEdit.SetText("(123) 123-1212"), TRUE
 ```
 
 ### Full example
@@ -267,7 +267,7 @@ FUNCTION GetTextLength (BYVAL bGetMaskedCharsOnly AS BOOLEAN = FALSE) AS LONG
 ```  
 | Parameter  | Description |
 | ---------- | ----------- |
-| *bGetMaskedCharsOnly* | IF TRUE, returns the length of text with the input mask removed; if FALSE, returns the ñength text with the mask, as displayed in the control. |
+| *bGetMaskedCharsOnly* | IF TRUE, returns the length of text with the input mask removed; if FALSE, returns the length text with the mask, as displayed in the control. |
 
 ### Return Value  
 The length text from the masked edit control.
