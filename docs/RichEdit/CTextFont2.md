@@ -12,11 +12,11 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Attach](#Attach) | Attaches an **ITextFont2** interface pointer to the class. |
 | [Detach](#Detach) | Detaches the underlying **ITextFont2** interface pointer from the class. |
 
-### ITextFont2 Interface
+### ITextFont Interface
 
-In the Text Object Model (TOM), applications access text-range attributes by using a pair of dual interfaces, **ITextFont** and **ITextPara**.
+Text Object Model (TOM) rich text-range attributes are accessed through a pair of dual interfaces, **ITextFont** and **ITextPara**.
 
-The **ITextFont2** interface extends **ITextFont**, providing the programming equivalent of the Microsoft Word format-font dialog.
+The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFont** also has these methods.
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -76,6 +76,13 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetUnderline](#SetUnderline) |  |
 | [GetWeight](#GetWeight) |  |
 | [SetWeight](#SetWeight) |  |
+
+### ITextFont2 Interface
+
+In the Text Object Model (TOM), applications access text-range attributes by using a pair of dual interfaces, **ITextFont** and **ITextPara**.
+
+The **ITextFont2** interface extends **ITextFont**, providing the programming equivalent of the Microsoft Word format-font dialog.
+
 | [GetCount](#GetCount) |  |
 | [GetAutoLigatures](#GetAutoLigatures) |  |
 | [SetAutoLigatures](#SetAutoLigatures) |  |
@@ -291,3 +298,4 @@ FUNCTION CTOMBase.GetErrorInfo () AS CWSTR
    RETURN s
 END FUNCTION
 ```
+
