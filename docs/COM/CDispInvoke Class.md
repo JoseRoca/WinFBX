@@ -36,7 +36,7 @@
 | [GetDescription](#GetDescription) | Gets the exception description. |
 | [GetErrorCode](#GetErrorCode) | Returns the error code. |
 | [GetHelpFile](#GetHelpFile) | Gets the fully qualified help file path. |
-| [GetLastResult](#GetLastResult) | Returns the last result code returned by the last executed method. of the class. |
+| [GetLastResult](#GetLastResult) | Returns the last result code returned by the last executed method of the class. |
 | [GetSource](#GetSource) | Gets the name of the exception source. |
 | [GetVarResult](#GetVarResult) | Returns the last result code returned by a call to the Invoke method. |
 | [GetLcid](#GetLcid) | Retrieves the locale identifier used by the class. |
@@ -277,7 +277,7 @@ FUNCTION vptr () AS IDispatch PTR PTR
 
 To pass the class to an OUT BYVAL IDispatch PTR parameter.
 
-If we pass a **CDispInvoke** variable to a function with an OUT IDIspatch parameter without first clearing the contents of the class, we may have a memory leak.
+If we pass a **CDispInvoke** variable to a function with an OUT IDispatch parameter without first clearing the contents of the class, we may have a memory leak.
 
 # <a name="Attach"></a>Attach
 
