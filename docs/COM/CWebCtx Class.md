@@ -169,9 +169,9 @@ The **CHTMLDocumentEvents2** class implements the IHTMLDocumentEvents2 interface
 
 The **DocumentComplete** event of the **CWebBrowserEvents** class connects automatically with the **HTMLDocumentEvents2** interface of the loaded page if the user has set a pointer to a callback procedure using the SetEventProc method of the **CWebCtx** class.
 
-The callback procedure will receive three parameters, *pWebCtx*, *dispid* and *pEvetObj*.
+The callback procedure will receive three parameters, *pWebCtx*, *dispid* and *pEvtObj*.
 
-With *pWebCtx*, which is a pointer to the **CWebCtx** clas, we can get:
+With *pWebCtx*, which is a pointer to the **CWebCtx** class, we can get:
 
 * Access to all the methods of the CWebCtx class.
 * The handle of the container window calling pCWbCtx->hWindow.
@@ -425,7 +425,7 @@ END SUB
 ' ========================================================================================
 FUNCTION DocHostUI_ShowContextMenuProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL dwID AS DWORD, BYVAL ppt AS POINT PTR, BYVAL pcmdtReserved AS IUnknown PTR, BYVAL pdispReserved AS IDispatch PTR) AS HRESULT
    ' // This event notifies that the user has clicked the right mouse button to show the
-   ' // context menu. We can anulate it returning %S_OK and show our context menu.
+   ' // context menu. We can annul it returning %S_OK and show our context menu.
    ' // Do not allow to show the context menu
 '   AfxMsg "Sorry! Context menu disabled"
 '   RETURN S_OK
