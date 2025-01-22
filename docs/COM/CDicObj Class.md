@@ -65,7 +65,7 @@ SLEEP
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Add](#Add) | Adds a key and item pair to the associtive array. |
+| [Add](#Add) | Adds a key and item pair to the associative array. |
 | [Count](#Count) | Returns the number of items in the associative array. |
 | [DispPtr](#DispPtr) | Returns the underlying dispatch pointer. |
 | [Exists](#Exists) | Checks if a specified key exists in the associative array. |
@@ -76,7 +76,7 @@ SLEEP
 | [Key](#Key) | Sets or returns an item for a specified key in the associative array. |
 | [Keys](#Keys) | Returns an array containing all the keys in the associative array. |
 | [NewEnum](#NewEnum) | Returns a reference to the standard enumerator. |
-| [Remove](#Remove) | FUNCTION Remove (BYREF cvKey AS CVAR) AS HRESULT |
+| [Remove](#Remove) | Removes a key, item pair from the associative array. |
 | [RemoveAll](#RemoveAll) | Removes all key, item pairs from the associative array. |
 
 # <a name="Add"></a>Add
@@ -154,7 +154,7 @@ PROPERTY Item (BYREF cvKey AS CVAR, BYREF cvNewItem AS CVAR)
 | Parameter  | Description |
 | ---------- | ----------- |
 | *cvKey* | Key associated with the item being retrieved or added. |
-| *cvNewvItem* | The new value associated with the specified key. |
+| *cvNewItem* | The new value associated with the specified key. |
 
 #### Return value
 
@@ -162,7 +162,7 @@ The item value.
 
 #### Remarks
 
-If key is not found when changing an item, a new key is created with the specified *cvNewvItem*. Contrarily to the Dictionary object, if key is not found when attempting to return an existing item, it returns and empty variant and sets the last result code to E_INVALIDARG, instead of creating a new key with its corresponding item empty.
+If key is not found when changing an item, a new key is created with the specified *cvNewvItem*. Contrary to the Dictionary object, if key is not found when attempting to return an existing item, it returns and empty variant and sets the last result code to E_INVALIDARG, instead of creating a new key with its corresponding item empty.
 
 # <a name="Items"></a>Items
 
