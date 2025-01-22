@@ -218,7 +218,7 @@ OPERATOR = (BYREF z1 AS CComplex, BYREF z2 AS CComplex) AS BOOLEAN
 OPERATOR <> (BYREF z1 AS CComplex, BYREF z2 AS CComplex) AS BOOLEAN
 ```
 
-#### Exammple
+#### Example
 
 ```
 DIM cpx1 AS CComplex = CComplex(1, 2)
