@@ -490,7 +490,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 The Text Object Model (TOM) version 1.0 does not specify the meanings of the style handles. The meanings depend on other facilities of the text system that implements TOM.
 
-# <a name="GetStyle"></a>GetStyle
+# <a name="SetStyle"></a>SetStyle
 
 Sets the character style handle of the characters in a range.
 
