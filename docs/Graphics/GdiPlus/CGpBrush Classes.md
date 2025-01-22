@@ -57,7 +57,7 @@ Defines a brush that paints a color gradient in which the color changes evenly f
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructorss](#ConstructorsLGBrush) | Creates a **LinearGradientBrush** object. |
+| [Constructors](#ConstructorsLGBrush) | Creates a **LinearGradientBrush** object. |
 | [GetBlend](#GetBlendLGBrush) | Gets the blend factors and their corresponding blend positions. |
 | [GetBlendCount](#GetBlendCountLGBrush) | Gets the number of blend factors currently set. |
 | [GetGammaCorrection](#GetGammaCorrectionLGBrush) | Determines whether gamma correction is enabled for this brush. |
