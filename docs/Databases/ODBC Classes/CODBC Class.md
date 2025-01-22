@@ -2,7 +2,7 @@
 
 **CODBC** is a wrapper class on top of ODBC. 
 
-The main purpose of the class if to ease the use of the ODBC API, that is notoriously difficult to use.
+The main purpose of the class is to ease the use of the ODBC API, that is notoriously difficult to use.
 
 **Include files**: CODBC.inc, CODBCDb.inc, CODBCStmt.inc.
 
