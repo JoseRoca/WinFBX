@@ -10,9 +10,9 @@ Encapsulates a **Pen** object. A **Pen** object is a Windows GDI+ object used to
 | [Constructors](#Constructors) | Creates a **Pen** object. |
 | [Clone](#Clone) | Copies the contents of the existing **Pen** object into a new **Pen** object. |
 | [GetAlignment](#GetAlignment) | Gets the alignment currently set for this **Pen** object. |
-| [GetBrush](#GetBrush) | Gets the the **Brush** object that is currently set for this **Pen** object. |
+| [GetBrush](#GetBrush) | Gets the **Brush** object that is currently set for this **Pen** object. |
 | [GetColor](#GetColor) | Gets the color currently set for this **Pen** object. |
-| [GetCompoundArray](#GetCompoundArray) | Gets the the compound array currently set for this **Pen** object. |
+| [GetCompoundArray](#GetCompoundArray) | Gets the compound array currently set for this **Pen** object. |
 | [GetCompoundArrayCount](#GetCompoundArrayCount) | Gets the number of elements in a compound array. |
 | [GetCustomEndCap](#GetCustomEndCap) | Gets the custom end cap currently set for this **Pen** object. |
 | [GetCustomStartCap](#GetCustomStartCap) | Gets the custom end cap currently set for this **Pen** object. |
@@ -173,7 +173,7 @@ END SUB
 
 # <a name="GetBrush"></a>GetBrush
 
-Gets the the **Brush** object that is currently set for this **Pen** object.
+Gets the **Brush** object that is currently set for this **Pen** object.
 
 ```
 FUNCTION GetBrush (BYVAL pBrush AS CGpBrush PTR) AS GpStatus
@@ -274,7 +274,7 @@ END SUB
 
 # <a name="GetCompoundArray"></a>GetCompoundArray
 
-Gets the the compound array currently set for this **Pen** object.
+Gets the compound array currently set for this **Pen** object.
 
 ```
 FUNCTION GetCompoundArray (BYVAL compoundArray AS SINGLE PTR, BYVAL count AS INT_) AS GpStatus
