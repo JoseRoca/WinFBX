@@ -47,7 +47,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetItalic](#SetItalic) | Sets whether characters are in italics. |
 | [GetKerning](#GetKerning) | Gets the minimum font size at which kerning occurs. |
 | [SetKerning](#SetKerning) | Sets the minimum font size at which kerning occurs. |
-| [GetLanguageID](#GetLanguageID) |  |
+| [GetLanguageID](#GetLanguageID) | Gets the language ID or language code identifier (LCID). |
 | [SetLanguageID](#SetLanguageID) |  |
 | [GetName](#GetName) |  |
 | [SetName](#SetName) |  |
@@ -1094,12 +1094,6 @@ END FUNCTION
 
 The minimum font size at which kerning occurs, in floating-point points.
 
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are in italics. |
-| **tomFalse** | Characters are not in italics. |
-| **tomUndefined** | The Italic property is undefined. |
-
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
@@ -1123,10 +1117,35 @@ END FUNCTION
 | --------- | ----------- |
 | *Value* | The new value of the minimum kerning size, in floating-point points. |
 
+If thE value is zero, kerning is turned off. Positive values turn on pair kerning for font sizes greater than this kerning value. For example, the value 1 turns on kerning for all legible sizes, whereas 16 turns on kerning only for font sizes of 16 points and larger.
+
 | Result code | Description |
 | ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+# <a name="GetLanguageID"></a>GetLanguageID
+
+Gets the language ID or language code identifier (LCID).
+
+```
+FUNCTION CTextFont2.GetLanguageID () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetLanguageID(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The language ID or LCID. The low word contains the language identifier. The high word is either zero or it contains the high word of the LCID. To retrieve the language identifier, mask out the high word. For more information, see [Locale Identifiers](https://learn.microsoft.com/en-us/windows/win32/intl/locale-identifiers).
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 
