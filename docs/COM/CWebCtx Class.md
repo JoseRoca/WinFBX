@@ -54,7 +54,7 @@ The **WebBrowser** events sink class is provided in the file **CWebBrowserEvents
 | [RegisterAsBrowser](#RegisterAsBrowser) | Sets or retrieves a value that indicates whether the object is registered as a top-level browser for target name resolution. |
 | [RegisterAsDropTarget](#RegisterAsDropTarget) | Sets or retrieves a value that indicates whether the object is registered as a drop target for navigation. |
 | [SaveAs](#SaveAs) | Activates the save file dialog. |
-| [SetElementFocusById](#SetElementFocusById) | Sets the HTML between the start and end tags of the object. |
+| [SetElementFocusById](#SetElementFocusById) | Sets the focus on the specified element |
 | [SetElementInnerHtmlById](#SetElementInnerHtmlById) | Sets the HTML between the start and end tags of the object. |
 | [SetElementValueById](#SetElementValueById) | Sets the value attribute of the specified identifier. |
 | [SetEventProc](#SetEventProc) | Sets pointers to user implemented callback procedures to receive events of the hosted WebBrowser control. |
@@ -65,7 +65,7 @@ The **WebBrowser** events sink class is provided in the file **CWebBrowserEvents
 | [Silent](#Silent) | Sets or gets a value that indicates whether the object can display dialog boxes. |
 | [Stop](#Stop) | Cancels any pending navigation or download operation and stops any dynamic page elements, such as background sounds and animations. |
 | [Unadvise](#Unadvise) | Releases the events connection. |
-| [WaitForPageLoad](#WaitForPageLoad) | Waits until the page had been fully downloaded or the timeout has expired. |
+| [WaitForPageLoad](#WaitForPageLoad) | Waits until the page has been fully downloaded or the timeout has expired. |
 | [WriteHtml](#WriteHtml) | Writes one or more HTML expressions to a document. |
 
 ### Helper Procedures
@@ -80,7 +80,7 @@ The **WebBrowser** events sink class is provided in the file **CWebBrowserEvents
 | [AfxGetElementValueById](#AfxGetElementValueById) | Retrieves the value attribute of the specified attribute. |
 | [AfxSetElementFocusById](#AfxSetElementFocusById) | Sets the focus in the specified element. |
 | [AfxSetElementInnerHtmlById](#AfxSetElementInnerHtmlById) | Sets the HTML between the start and end tags of the object. |
-| [AfxSetElementValueById](#AfxSetElementValueById) | Sets the value attribute of the specified identifier. |
+| [AfxSetElementValueById](#AfxSetElementValueById) | Sets the value attribute of the specified element. |
 | [AfxWriteHtml](#AfxWriteHtml) | Writes one or more HTML expressions to a document. |
 
 # CWebBrowserEvents Class
@@ -865,7 +865,7 @@ END FUNCTION
 
 # <a name="CAXHOST_AMBIENTDISP"></a>CAXHOST_AMBIENTDISP Structure
 
-Contains information the ambient properties of the **CAxHost** control.
+Contains information about the ambient properties of the **CAxHost** control.
 
 ```
 TYPE CAXHOST_AMBIENTDISP
@@ -892,7 +892,7 @@ END TYPE
 | **UIDead** | Indicates whether the container wants the control to respond to user-interface actions. If TRUE, the control should not respond. Default value: FALSE. |
 | **DisplayAsDefault** | A flag that is TRUE if the container has marked the control in this site to be a default button, and therefore a button control should draw itself with a thicker frame. Default value: FALSE. |
 | **SupportMnemonics** | Indicates whether the container supports keyboard mnemonics. Default value: TRUE. |
-| **OffLineIfNotConnected** | WebBroser control. The control support offline browsing. |
+| **OffLineIfNotConnected** | WebBrowser control. The control support offline browsing. |
 | **DlCtFlags** | A combination of following flags, using the bitwise OR operator, to indicate your preferences. Most of the flag values have negative effects, that is, they prevent behavior that normally happens. For instance, scripts are normally executed by the WebBrowser Control if you don't customize its behavior. But if you set the DLCTL_NOSCRIPTS flag, no scripts will execute in that instance of the control. However, three flags—DLCTL_DLIMAGES, DLCTL_VIDEOS, and DLCTL_BGSOUNDS—work exactly opposite. If you set flags at all, you must set these three for the WebBrowser Control to behave in its default manner vis-a-vis images, videos and sounds. |
 
 **Flags**
@@ -1368,7 +1368,7 @@ END SUB
 ' ========================================================================================
 FUNCTION DocHostUI_ShowContextMenuProc (BYVAL pWebCtx AS CWebCtx PTR, BYVAL dwID AS DWORD, BYVAL ppt AS POINT PTR, BYVAL pcmdtReserved AS IUnknown PTR, BYVAL pdispReserved AS IDispatch PTR) AS HRESULT
    ' // This event notifies that the user has clicked the right mouse button to show the
-   ' // context menu. We can anulate it returning %S_OK and show our context menu.
+   ' // context menu. We can annul it returning %S_OK and show our context menu.
    ' // Do not allow to show the context menu
 '   AfxMsg "Sorry! Context menu disabled"
 '   RETURN S_OK
