@@ -9,7 +9,7 @@ Assorted COM procedures.
 | [AfxAcode](#AfxAcode) | Translates unicode bytes to ansi bytes. |
 | [AfxUcode](#AfxUcode) | Translates ansi bytes to unicode bytes. |
 | [AfxIsBstr](#AfxIsBstr) | Checks if the passed pointer is a BSTR. |
-| [AfxNewCOM(PROGID](#AfxNewCOM1) | Creates a single uninitialized object of the class associated with a specified ProgID or CLSID. |
+| [AfxNewCOM(PROGID)](#AfxNewCOM1) | Creates a single uninitialized object of the class associated with a specified ProgID or CLSID. |
 | [AfxNewCOM(CLSID)](#AfxNewCOM2) | Creates a single uninitialized object of the class associated with a specified CLSID. |
 | [AfxNewCOM(CLSID,IID)](#AfxNewCOM3) | Creates a single uninitialized object of the class associated with the specified CLSID and IID. |
 | [AfxNewCOM(LibName)](#AfxNewCOM4) | Loads the specified library from file and creates an instance of an object. |
@@ -50,7 +50,7 @@ FUNCTION AfxAcode (BYVAL pwszStr AS WSTRING PTR, BYVAL nCodePage AS LONG = 0) AS
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pwszStr* | The WSTRING or CWSTR to convert. |
-| *nCodePage* | Optional. The code page used in the conversion, e.g. 1251 for Russian. If you specify CP_UTF8, the returned string will be UTF8 encoded. If you don't pass an unicode page, the function will use CP_ACP (0), which is the system default Windows ANSI code page. |
+| *nCodePage* | Optional. The code page used in the conversion, e.g. 1251 for Russian. If you specify CP_UTF8, the returned string will be UTF8 encoded. If you don't pass a unicode page, the function will use CP_ACP (0), which is the system default Windows ANSI code page. |
 
 #### Return value
 
@@ -113,7 +113,7 @@ FUNCTION AfxIsBstr (BYVAL pv AS ANY PTR) AS BOOLEAN
 
 Will return FALSE if it is a null pointer.
 If it is an OLE string it must have a descriptor; otherwise, don't.
-Gets the length in bytes looking at the descriptor and divides by 2 to get the number of unicode characters, that is the value returned by the FreeBASIC LEN operator. If the retrieved length if the same that the returned by LEN, then it must be an OLE string.
+Gets the length in bytes looking at the descriptor and divides by 2 to get the number of unicode characters, that is the value returned by the FreeBASIC LEN operator. If the retrieved length is the same that the returned by LEN, then it must be an OLE string.
 
 # <a name="AfxNewCOM1"></a>AfxNewCOM (PROGID)
 
@@ -195,7 +195,7 @@ DIM pDic AS IDictionary PTR
 pDic = AfxNewCom(CLSID_Dictionary, IID_IDictionary)
 ```
 
-where CLSID_Dictionary has been declared asCONST CLSID_Dictionary = "{EE09B103-97E0-11CF-978F-00A02463E06F}"<br>
+where CLSID_Dictionary has been declared as CONST CLSID_Dictionary = "{EE09B103-97E0-11CF-978F-00A02463E06F}"<br>
 and IID_IDictionary as CONST IID_IDictionary = "{42C642C1-97E1-11CF-978F-00A02463E06F}"
 
 # <a name="AfxNewCOM4"></a>AfxNewCOM (LibName)
@@ -232,7 +232,7 @@ An interface pointer or NULL.
 * Components that are part of an application, such Microsoft Office, aren't supported.
 * Components intended for use as an add-in or a snap-in, such as an Office add-in or a control in a Web browser, aren't supported.
 * Components that manage a shared physical or virtual system resource aren't supported.
-* Visual ActiveX controls aren't supported because they need to be initilized and activated by the OLE container.
+* Visual ActiveX controls aren't supported because they need to be initialized and activated by the OLE container.
 
 # <a name="AfxGetCOM"></a>AfxGetCOM
 
@@ -248,7 +248,7 @@ FUNCTION AfxGetCom (BYREF classID AS CONST CLSID) AS IDispatch PTR
 | *wszProgID* | The ProgID of the object to retrieve. |
 | *classID* | The ClsID of the object to retrieve. |
 
-Be aware that **AfxGetCom** can fail under if Office is running but not registered in the ROT.
+Be aware that **AfxGetCom** can fail if Office is running but not registered in the ROT.
 
 When an Office application starts, it does not immediately register its running objects. This optimizes the application's startup process. Instead of registering at startup, an Office application registers its running objects in the ROT once it loses focus. Therefore, if you attempt to use **AfxGetCOM** to attach to a running instance of an Office application before the application has lost focus, you might receive an error.
 
@@ -272,7 +272,7 @@ FUNCTION AfxAnyCOM (BYREF classID AS CONST CLSID) AS IDispatch PTR
 
 Converts a string into a 16-byte (128-bit) Globally Unique Identifier (GUID). To be valid, the string must contain exactly 32 hexadecimal digits, delimited by hyphens and enclosed by curly braces. For example: {B09DE715-87C1-11D1-8BE3-0000F8754DA1}
 
-If *pwszGuidText* is omited, **AfxGuid** generates a new unique guid.
+If *pwszGuidText* is omitted, **AfxGuid** generates a new unique guid.
 
 ```
 FUNCTION AfxGuid (BYVAL pwszGuidText AS WSTRING PTR = NULL) AS GUID
@@ -581,7 +581,7 @@ FUNCTION AfxVarToStr (BYVAL pvarIn AS VARIANT PTR, BYVAL bClear AS BOOLEAN = FAL
 
 #### Return value
 
-If the function succeeds, it returns the contents of the variant in string form; if it fails, it returns an empty string and the contents of the variant aren't cleared.
+If the function succeeds, it returns the contents of the variant in string form; if it fails, it returns an empty string and the contents of the variant are not cleared.
 
 #### Remarks
 
@@ -620,7 +620,7 @@ Returns one of the following values:
 | HRESULT    | Description |
 | ---------- | ----------- |
 | S_OK | Data successfully extracted. |
-| E_INVALIDARG | The VARIANT was not of type VT_ARRRAY OR VT_UI1. |
+| E_INVALIDARG | The VARIANT was not of type VT_ARRAY OR VT_UI1. |
 | E_FAIL | The VARIANT buffer value had fewer than *cb* bytes. |
 
 # <a name="AfxVariantToString"></a>AfxVariantToString
