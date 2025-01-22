@@ -195,7 +195,7 @@ Because numbering for members of a collection begins with zero, you should alway
 
 If the **Count** property is zero, there are no objects in the collection.
 
-# <a name="CoDelete_unt"></a>Delete_ (CADOFields)
+# <a name="Delete_unt"></a>Delete_ (CADOFields)
 
 Deletes an object from the **Fields** collection.
 
@@ -814,7 +814,7 @@ Specifies the data type of a **Field**, **Parameter**, or **Property**. The corr
 
 #### Remarks
 
-For a new fields that have been appended to the **Fields** collection of a **Record**, **Type_** is read/write only after the Value property for the field has been specified and the data provider has successfully added the new field by calling the **Update** method of the **Fields** collection.
+For new fields that have been appended to the **Fields** collection of a **Record**, **Type_** is read/write only after the Value property for the field has been specified and the data provider has successfully added the new field by calling the **Update** method of the **Fields** collection.
 
 For all other objects, the **Type_** property is read-only.
 
