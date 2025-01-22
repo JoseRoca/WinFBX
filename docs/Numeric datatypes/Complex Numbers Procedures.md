@@ -71,15 +71,15 @@ END TYPE
 | [CCosH](#CCosH) | Returns the complex hyperbolic cosine of a complex number. |
 | [CCot](#CCot) | Returns the complex cotangent of a complex number. |
 | [CCotH](#CCotH) | Returns the complex hyperbolic cotangent of a complex number. |
-| [CCsc](#CCsc) | Returns the complex cosecant of thais complex number. |
+| [CCsc](#CCsc) | Returns the complex cosecant of this complex number. |
 | [CCscH](#CCscH) | Returns the complex hyperbolic cosecant of a complex number. |
 | [CDivImag](#CDivImag) | Divides by an imaginary number. |
 | [CDivReal](#CDivReal) | Divides by a real number. |
-| [CExp](#CExp) | Returns the complex exponential of s complex number. |
+| [CExp](#CExp) | Returns the complex exponential of this complex number. |
 | [CGetImag](#CGetImag) | Returns the imaginary part of a complex number. |
 | [CGetReal](#CGetReal) | Returns the real part of a complex number. |
 | [CInverse](#CReciprocal) | Returns the inverse, or reciprocal, of a complex number. |
-| [CLog](#CLog) | Returns the complex natural logarithm (base e) of s complex number. |
+| [CLog](#CLog) | Returns the complex natural logarithm (base e) of this complex number. |
 | [CLog10](#CLog10) | Returns the complex base-10 logarithm of a complex number. |
 | [CLogAbs](#CLogAbs) | Returns the natural logarithm of the magnitude of a complex number. |
 | [CMagnitude](#CAbs) | Returns the magnitude of a complex number. |
