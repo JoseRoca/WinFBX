@@ -8,7 +8,7 @@ A graphics device interface, such as GDI+, allows application programmers to dis
 
 # CGpBase class
 
-Initializes the GDI+ library and keeps a reference count of it. The destructor shutdowns the library. All the other GDI+ classes inherit frrom **CGpBase**.
+Initializes the GDI+ library and keeps a reference count of it. The destructor shutdowns the library. All the other GDI+ classes inherit from **CGpBase**.
 
 ### GetLastStatus method
 
@@ -72,7 +72,7 @@ For a detailed list of status codes see the **Status** enumeration.
 | [CustomLineCapType](#CustomLineCapType) | CustomLineCapTypeDefault = 0, CustomLineCapTypeAdjustableArrow = 1. |
 | [DashCap](#DashCap) | Specifies the type of graphic shape to use on both ends of each dash in a dashed line. |
 | [DashStyle](#DashStyle) | Specifies the line style of a line drawn with a Microsoft Windows GDI+ pen. |
-| [DriverStringOptions](#DriverStringOptions) | Sècifies the spacing, orientation, and quality of the rendering for driver strings. |
+| [DriverStringOptions](#DriverStringOptions) | Specifies the spacing, orientation, and quality of the rendering for driver strings. |
 | [EmfPlusRecordType](#EmfPlusRecordType) | Identifies metafile record types used in Microsoft Windows Metafile Format (WMF), Enhanced Metafile (EMF), and EMF+ files. |
 | [EmfToWmfBitsFlags](#EmfToWmfBitsFlags) | Specifies options for the **GdipEmfToWmfBits** method, which converts an Enhanced Metafile (EMF) metafile to a Microsoft Windows Metafile Format (WMF) metafile. |
 | [EmfType](#EmfType) | Specifies the nature of the records that are placed in an Enhanced Metafile (EMF) file. |
@@ -454,7 +454,7 @@ END TYPE
 | **x** | Specifies the x-coordinate of the upper-left corner of a rectangle. |
 | **y** | Specifies the y-coordinate of the upper-left corner of a rectangle. |
 | **width** | Specifies the width of a rectangle. |
-| **height** | Specifies the heigth of a rectangle. |
+| **height** | Specifies the height of a rectangle. |
 
 # <a name="GpRectF"></a>GpRectF Structure
 
@@ -474,7 +474,7 @@ END TYPE
 | **x** | Specifies the x-coordinate of the upper-left corner of a rectangle. |
 | **y** | Specifies the y-coordinate of the upper-left corner of a rectangle. |
 | **width** | Specifies the width of a rectangle. |
-| **height** | Specifies the heigth of a rectangle. |
+| **height** | Specifies the height of a rectangle. |
 
 # <a name="GpSize"></a>GpSize Structure
 
@@ -904,7 +904,7 @@ BlueShift = 0
 AlphaMask = &hFF000000
 RedMask = &h00FF0000
 GreenMask = &h0000FF00
-BlueMask = &hh000000FF
+BlueMask = &h000000FF
 ```
 
 # <a name="ColorAdjustType"></a>ColorAdjustType Enumeration
