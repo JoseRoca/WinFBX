@@ -26,7 +26,7 @@ Assorted date and time procedures.
 | [AfxJulianDayOfWeek](#AfxJulianDayOfWeek) | Given a Julian date, returns the day of week. |
 | [AfxJulianToGregorian](#AfxJulianToGregorian) | Converts a Julian date to a Gregorian date. |
 | [AfxJulianToGregorianStr](#AfxJulianToGregorianStr) | Converts a Julian date to a Gregorian date based on the specified mask, e.g. "dd-MM-yyyy". |
-| [AfxLocalDateStr](#AfxLocalDateStr) | Retuns the current local date based on the specified mask, e.g. "dd-MM-yyyy". |
+| [AfxLocalDateStr](#AfxLocalDateStr) | Returns the current local date based on the specified mask, e.g. "dd-MM-yyyy". |
 | [AfxLocalDay](#AfxLocalDay) | Returns the current local day. The valid values are 1 through 31. |
 | [AfxLocalDayName](#AfxLocalDayName) | Returns the localized name of today. |
 | [AfxLocalDayOfWeek](#AfxLocalDayOfWeek) | Returns the current day of week. It is a numeric value in the range of 0-6 representing Sunday through Saturday: 0 = Sunday, 1 = Monday, etc. |
@@ -35,12 +35,12 @@ Assorted date and time procedures.
 | [AfxLocalDayShortName](#AfxLocalDayShortName) | Returns the localized short name of today. |
 | [AfxLocalFileTime](#AfxLocalFileTime) | Returns the current local time as a FILETIME structure. |
 | [AfxLocalHour](#AfxLocalHour) | Returns the current local hour. The valid values are 0 through 23. |
-| [AfxLocalMonth](#AfxLocalMonth) | Returns the current local month. The valid values are 1 thorugh 12 (1 = January, etc.). |
+| [AfxLocalMonth](#AfxLocalMonth) | Returns the current local month. The valid values are 1 through 12 (1 = January, etc.). |
 | [AfxLocalMonthName](#AfxLocalMonthName) | Returns the localized name of today's local month. |
 | [AfxLocalShortMonthName](#AfxLocalShortMonthName) | Returns the localized short name of today's local month. |
 | [AfxLocalSystemTime](#AfxLocalSystemTime) | Returns the current local time as a SYSTEMTIME structure. |
 | [AfxLocalTime64](#AfxLocalTime64) | Converts a FILETIME to a \_\_time64_t (LONGLONG) value. |
-| [AfxLocalTimeStr](#AfxLocalTimeStr) | Retuns the current local time based on the specified mask, e.g. "hh':'mm':'ss". |
+| [AfxLocalTimeStr](#AfxLocalTimeStr) | Returns the current local time based on the specified mask, e.g. "hh':'mm':'ss". |
 | [AfxLocalVariantTime](#AfxLocalVariantTime) | Returns the local date and time as a DATE_ (double). |
 | [AfxLocalYear](#AfxLocalYear) | Returns the current local year. The valid values are 1601 through 30827. |
 | [AfxLongDate](#AfxLongDate) | Returns the current date in long format. |
@@ -57,7 +57,7 @@ Assorted date and time procedures.
 | [AfxSystemDayShortName](#AfxSystemDayShortName) | Returns the localized short name of today. |
 | [AfxSystemFileTime](#AfxSystemFileTime) | Returns the current system time as a FILETIME structure. |
 | [AfxSystemHour](#AfxSystemHour) | Returns the current system hour. The valid values are 0 through 23. |
-| [AfxSystemMonth](#AfxSystemMonth) | Returns the current system month. The valid values are 1 thorugh 12 (1 = January, etc.). |
+| [AfxSystemMonth](#AfxSystemMonth) | Returns the current system month. The valid values are 1 through 12 (1 = January, etc.). |
 | [AfxSystemMonthName](#AfxSystemMonthName) | Returns the localized name of today's system month. |
 | [AfxSystemShortMonthName](#AfxSystemShortMonthName) | Returns the localized short name of today's system month. |
 | [AfxSystemSystemTime](#AfxSystemSystemTime) | Returns the current system time as a SYSTEMTIME structure. |
@@ -74,16 +74,16 @@ Assorted date and time procedures.
 | [AfxTimeZoneDaylightDay](#AfxTimeZoneDaylightDay) | **DaylightDayOfWeek** of the **DaylightMonth** when the transition from standard time to daylight saving time occurs on this operating system. |
 | [AfxTimeZoneDaylightDayOfWeek](#AfxTimeZoneDaylightDayOfWeek) | Day of the week when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneDaylightHour](#AfxTimeZoneDaylightHour) | Hour of the day when the transition from standard time to daylight saving time occurs on an operating system. |
-| [AfxTimeZoneDaylightMinute](#AfxTimeZoneDaylightMinute) | Minute of of the **DaylightHour** when the transition from standard time to daylight saving time occurs on an operating system. |
+| [AfxTimeZoneDaylightMinute](#AfxTimeZoneDaylightMinute) | Minute of the **DaylightHour** when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneDaylightMonth](#AfxTimeZoneDaylightMonth) | Month when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneDaylightName](#AfxTimeZoneDaylightName) | A description for daylight saving time. For example, "EST" could indicate Eastern Standard Time. This string can be empty. |
 | [AfxTimeZoneId](#AfxTimeZoneId) | Returns the time zone identifier. |
-| [AfxTimeZoneIsDaylightSavingTime](#AfxTimeZoneIsDaylightSavingTime) | Indicates whether the the system is operating in the range covered by the DaylightDate member of the TIME_ZONE_INFORMATION structure. |
-| [AfxTimeZoneIsStandardSavingTime](#AfxTimeZoneIsStandardSavingTime) | Indicates whether the the system is operating in the range covered by the StandardDate member of the TIME_ZONE_INFORMATION structure. |
+| [AfxTimeZoneIsDaylightSavingTime](#AfxTimeZoneIsDaylightSavingTime) | Indicates whether the system is operating in the range covered by the DaylightDate member of the TIME_ZONE_INFORMATION structure. |
+| [AfxTimeZoneIsStandardSavingTime](#AfxTimeZoneIsStandardSavingTime) | Indicates whether the system is operating in the range covered by the StandardDate member of the TIME_ZONE_INFORMATION structure. |
 | [AfxTimeZoneStandardDay](#AfxTimeZoneStandardDay) | **StandardDayOfWeek** of the **StandardMonth** when the transition from daylight saving time to standard time occurs on an operating system. |
 | [AfxTimeZoneStandardDayOfWeek](#AfxTimeZoneStandardDayOfWeek) | Day of the week when the transition from daylight saving time to standard time occurs on an operating system. |
 | [AfxTimeZoneStandardHour](#AfxTimeZoneStandardHour) |Hour of the day when the transition from daylight saving time to standard time occurs on an operating system. |
-| [AfxTimeZoneStandardMinute](#AfxTimeZoneStandardMinute) | Minute of of the **StandardHour** when the transition from standard time to daylight saving time occurs on an operating system. |
+| [AfxTimeZoneStandardMinute](#AfxTimeZoneStandardMinute) | Minute of the **StandardHour** when the transition from standard time to daylight saving time occurs on an operating system. |
 | [AfxTimeZoneStandardMonth](#AfxTimeZoneStandardMonth) | Month when the transition from daylight saving time to standard time occurs on an operating system. |
 | [AfxTimeZoneStandardName](#AfxTimeZoneStandardName) | A description for standard time. For example, "EST" could indicate Eastern Standard Time. This string can be empty. |
 | [AfxVariantDateTimeToStr](#AfxVariantDateTimeToStr) | Converts a DATE_ type to a string. |
@@ -522,7 +522,7 @@ The formatted date.
 
 # <a name="AfxLocalDateStr"></a>AfxLocalDateStr
 
-Retuns the current local date based on the specified mask, e.g. "dd-MM-yyyy".
+Returns the current local date based on the specified mask, e.g. "dd-MM-yyyy".
 
 ```
 FUNCTION AfxLocalDateStr (BYREF wszMask AS WSTRING, BYVAL lcid AS LCID = LOCALE_USER_DEFAULT) AS CWSTR
@@ -650,7 +650,7 @@ FUNCTION AfxLocalHour () AS WORD
 
 # <a name="AfxLocalMonth"></a>AfxLocalMonth
 
-Returns the current local month. The valid values are 1 thorugh 12 (1 = January, etc.).
+Returns the current local month. The valid values are 1 through 12 (1 = January, etc.).
 
 ```
 FUNCTION AfxLocalMonth () AS WORD
@@ -706,7 +706,7 @@ Returns a tm structure. The fields of the returned structure hold the evaluated 
 
 # <a name="AfxLocalTimeStr"></a>AfxLocalTimeStr
 
-Retuns the current local time based on the specified mask, e.g. "hh':'mm':'ss".
+Retunrs the current local time based on the specified mask, e.g. "hh':'mm':'ss".
 
 ```
 FUNCTION AfxLocalTimeStr (BYREF wszMask AS WSTRING, BYVAL lcid AS LCID = LOCALE_USER_DEFAULT) AS CWSTR
@@ -961,7 +961,7 @@ The system time is expressed in Coordinated Universal Time (UTC).
 
 # <a name="AfxSystemMonth"></a>AfxSystemMonth
 
-Returns the current system month. The valid values are 1 thorugh 12 (1 = January, etc.).
+Returns the current system month. The valid values are 1 through 12 (1 = January, etc.).
 
 ```
 FUNCTION AfxSystemMonth () AS WORD
@@ -1274,7 +1274,7 @@ FUNCTION AfxTimeZoneDaylightName () AS CWSTR
 
 # <a name="AfxTimeZoneIsDaylightSavingTime"></a>AfxTimeZoneIsDaylightSavingTime
 
-Indicates whether the the system is operating in the range covered by the DaylightDate member of the TIME_ZONE_INFORMATION structure.
+Indicates whether the system is operating in the range covered by the DaylightDate member of the TIME_ZONE_INFORMATION structure.
 
 ```
 FUNCTION AfxTimeZoneIsDaylightSavingTime () AS BOOLEAN
@@ -1286,7 +1286,7 @@ TRUE or FALSE.
 
 # <a name="AfxTimeZoneIsStandardSavingTime"></a>AfxTimeZoneIsStandardSavingTime
 
-Indicates whether the the system is operating in the range covered by the StandardDate member of the TIME_ZONE_INFORMATION structure.
+Indicates whether the system is operating in the range covered by the StandardDate member of the TIME_ZONE_INFORMATION structure.
 
 ```
 FUNCTION AfxTimeZoneIsStandardSavingTime () AS BOOLEAN
