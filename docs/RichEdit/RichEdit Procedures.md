@@ -1990,7 +1990,7 @@ If the **Redo** operation fails, the return value is zero.
 
 To determine whether there are any actions in the control's redo queue, send the **RichEdit_CanRedo** message.
 
-# <a name="RichRichEdit_ReplaceSelEdit_Redo"></a>RichEdit_ReplaceSel
+# <a name="RichRichEdit_ReplaceSel"></a>RichEdit_ReplaceSel
 
 Replaces the current selection in a rich edit control with the specified text.
 
