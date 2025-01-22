@@ -1,6 +1,6 @@
 # CDSAudio Class
 
-The **CDSAudio** class allows to play audio files of a variety of formats using **Direct Show**.
+The **CDSAudio** class allows playing audio files of a variety of formats using **Direct Show**.
 
 **Include file**: CDSAudio.inc
 
@@ -39,7 +39,7 @@ CONSTRUCTOR CDSAudio (BYREF wszFileName AS WSTRING)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *wszFilename* | The file to load. |
+| *wszFileName* | The file to load. |
 
 You can create an instance of the class and load the file at the same time with:
 
@@ -247,7 +247,7 @@ FUNCTION SetBalance (BYVAL nBalance AS LONG) AS HRESULT
 
 # <a name="SetNotifyWindow"></a>SetNotifyWindow
 
-Sets the balance for the audio signal.
+The SetNotifyWindow method registers a window to process event notifications.
 
 ```
 FUNCTION SetNotifyWindow (BYVAL hwnd AS HWND, BYVAL lMsg AS LONG, BYVAL lParam AS LONG_PTR) AS HRESULT
@@ -276,7 +276,7 @@ FUNCTION SetPositions (BYREF pCurrent AS LONGLONG, BYREF pStop AS LONGLONG, _
 | ---------- | ----------- |
 | *pCurrent* | In/Out. Pointer to a variable that specifies the current position, in units of the current time format. |
 | *pStop* | In/Out. Pointer to a variable that specifies the stop time, in units of the current time format. |
-| *lInstanceData* | In. TRUE or FALSE. If TRUE, the specified position is absolute. If FALSE, the specified position is relative. |
+| *bAbsolutePositioning* | In. TRUE or FALSE. If TRUE, the specified position is absolute. If FALSE, the specified position is relative. |
 
 #### Return value
 
