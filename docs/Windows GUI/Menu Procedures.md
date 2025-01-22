@@ -10,7 +10,7 @@
 | [AfxGetMenuFontPointSize](#AfxGetMenuFontPointSize) | Retrieves the point size of the font used in menu bars. |
 | [AfxGetMenuItemState](#AfxGetMenuItemState) | Retrieves the state of the specified menu item. |
 | [AfxGetMenuItemText](#AfxGetMenuItemText) | Retrieves the text of the specified menu item. |
-| [AfxGetMenuItemTextLen](#AfxGetMenuItemTextLen) | Retrieves lenth of the of the specified menu item. |
+| [AfxGetMenuItemTextLen](#AfxGetMenuItemTextLen) | Retrieves length of the of the specified menu item. |
 | [AfxGetMenuRect](#AfxGetMenuRect) | Calculates the size of a menu bar or a drop-down menu. |
 | [AfxGrayMenuItem](#AfxGrayMenuItem) | Grays the specified menu item. |
 | [AfxHiliteMenuItem](#AfxHiliteMenuItem) | Highlights the specified menu item. |
@@ -195,7 +195,7 @@ MFS_ENABLED   The item is enabled.
 MFS_GRAYED    The item is grayed.
 MFS_HILITE    The item is highlighted
 MFS_UNCHECKED The item is unchecked.
-MFS_UNHILITE  The item is not highlighed.
+MFS_UNHILITE  The item is not highlighted.
 ```
 
 # <a name="AfxGetMenuItemText"></a>AfxGetMenuItemText
