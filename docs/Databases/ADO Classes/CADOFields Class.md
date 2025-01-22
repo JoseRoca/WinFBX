@@ -92,7 +92,7 @@ FUNCTION Append (BYREF cbsName AS CBSTR, BYVAL nType AS DataTypeEnum, _
 
 #### Return value
 
-S_OK (0) or an HESULT code.
+S_OK (0) or an HRESULT code.
 
 #### DataTypeEnum
 
@@ -358,7 +358,7 @@ LOOP
 
 # <a name="AppendChunk"></a>AppendChunk (CADOField)
 
-Appends data to a large text or binary data **Field*.
+Appends data to a large text or binary data **Field**.
 
 ```
 FUNCTION AppendChunk (BYREF cvData AS CVAR) AS HRESULT
@@ -664,7 +664,7 @@ PROPERTY Precision (BYVAL bPrecision AS BYTE)
 
 #### Return value
 
-The degress of precision. Returns -1 if it is not a numeric field.
+The degrees of precision. Returns -1 if it is not a numeric field.
 
 #### Remarks
 
