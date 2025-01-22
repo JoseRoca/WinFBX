@@ -45,7 +45,7 @@ Quirks in FreeBasic versions older than 1.07:
 | [ValLong](#ValLong) | Converts the string to a signed 32-bit integer (LONG). |
 | [ValLongInt](#ValLongInt) | Converts the string to a signed 64-bit integer (LONGINT). |
 | [Value](#Value) | Converts the string to a floating point number (DOUBLE). |
-| [ValUInt](#ValUInt) | Converts the string to a 32.bit unsigned integer (ULONG). |
+| [ValUInt](#ValUInt) | Converts the string to a 32-bit unsigned integer (ULONG). |
 | [ValULong](#ValULong) | Converts the string to a 32-bit unsigned integer (ULONG). |
 | [ValULongInt](#ValULongInt) | Converts the string to a 64-bit unsigned integer (ULONGINT). |
 
@@ -181,7 +181,7 @@ Assigns a string to the CBSTR.
 OPERATOR LET (BYREF wszStr AS CONST WSTRING)
 OPERATOR LET (BYREF cws AS CWStr)
 OPERATOR LET (BYREF cbs AS CBStr)
-OPERATOR LEY (BYREF ansiStr AS STRING)
+OPERATOR LET (BYREF ansiStr AS STRING)
 OPERATOR LET (BYVAL n AS LONGINT)
 OPERATOR LET (BYVAL n AS DOUBLE)
 OPERATOR LET (BYREF bstrHandle AS AFX_BSTR)
