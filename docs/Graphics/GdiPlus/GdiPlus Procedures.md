@@ -38,7 +38,7 @@ Assorted GDI+ helper procedures.
 | [GDIP_POINTF](#GDIP_POINTF) | Returns a GpPointF color value initialized with the specified values for the x and y coordinates. |
 | [GDIP_RGBA](#GDIP_RGBA) | Returns a RGBA color value initialized with the specified values for the red, green, blue and alpha components. |
 | [GDIP_RECT](#GDIP_RECT) | Returns a GpRect structure initialized with the specified values for the x, y, width, and height components. |
-| [GDIP_RECTF](#GDIP_RECTF) | Returns a GpRectF structrure initialized with the specified values for the x, y, width, and height components. |
+| [GDIP_RECTF](#GDIP_RECTF) | Returns a GpRectF structure initialized with the specified values for the x, y, width, and height components. |
 | [GDIP_XRGB](#GDIP_XRGB) | Returns a XRGB color value initialized with the specified values for the red, green, and blue components. |
 
 # <a name="AfxGdipAddIconFromFile"></a>AfxGdipAddIconFromFile
@@ -523,7 +523,7 @@ FUNCTION GDIP_ARGB (BYVAL a AS UBYTE, BYVAL r AS UBYTE, BYVAL g AS UBYTE, BYVAL 
 | *a* | The alpha component value. |
 | *r* | The red component value. |
 | *g* | The green component value. |
-| *b*| The bue ponent value. |
+| *b*| The blue component value. |
 
 #### Return value
 
@@ -539,7 +539,7 @@ FUNCTION GDIP_BGRA (BYVAL b AS UBYTE, BYVAL g AS UBYTE, BYVAL r AS UBYTE, BYVAL 
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *b*| The bue ponent value. |
+| *b*| The blue component value. |
 | *g* | The green component value. |
 | *r* | The red component value. |
 | *a* | The alpha component value. |
