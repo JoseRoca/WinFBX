@@ -71,11 +71,11 @@ FUNCTION AttachPrinter (BYREF wszPrinterName AS WSTRING) AS BOOLEAN
 
 #### Return value
 
-BOOLEAN. True of false.
+BOOLEAN. True or false.
 
 #### Example
 
-The following console example creates an instance of the CPrint class to attach the "Microsoft Print to PDF" driver, retrieves an handle to its device context and uses the WinFBX GDI+ classes to draw the contents of the page.
+The following console example creates an instance of the CPrint class to attach the "Microsoft Print to PDF" driver, retrieves a handle to its device context and uses the WinFBX GDI+ classes to draw the contents of the page.
 
 ```
 '#CONSOLE ON
@@ -337,7 +337,7 @@ FUNCTION PixelsToUnitsY (BYVAL pix AS LONG) AS LONG
 Converts world units to pixels (horizontal resolution).
 
 ```
-FUNCTION PixelsToUnitsX (BYVAL units AS LONG) AS LONG
+FUNCTION UnitsToPixelsX (BYVAL units AS LONG) AS LONG
 ```
 
 | Parameter  | Description |
