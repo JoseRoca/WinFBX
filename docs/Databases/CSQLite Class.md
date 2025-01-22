@@ -6,7 +6,7 @@ SQLite is an embedded SQL database engine. Unlike most other SQL databases, SQLi
 
 ### Constructor
 
-Creates a new instance of the **CSQlite** base class and loads the SQLite3 DLL.
+Creates a new instance of the **CSQLite** base class and loads the SQLite3 DLL.
 
 ```
 CONSTRUCTOR CSQLite (BYREF wszDllPath AS WSTRING = "sqlite3.dll")
@@ -129,7 +129,7 @@ USING Afx
 
 ' // Optional: Specify the DLL path and/or name
 ' // This allows to use a DLL with a different name that sqlite3.dll,
-' // located anywhere, avoiding the neeed to have multiple copies of the same dll.
+' // located anywhere, avoiding the need to have multiple copies of the same dll.
 DIM pSql AS CSQLite = "sqlite3_32.dll"
 print pSql.m_hLib
 
@@ -748,7 +748,7 @@ SQLITE_ERROR means that a run-time error (such as a constraint violation) has oc
 
 # <a name="ExtendedErrCode"></a>ExtendedErrCode
 
-Gets the extended error code associated with this dabatase connection.
+Gets the extended error code associated with this database connection.
 
 ```
 FUNCTION ExtendedErrCode () AS LONG
@@ -906,7 +906,7 @@ USING Afx
 
 ' // Optional: Specify the DLL path and/or name
 ' // This allows to use a DLL with a different name that sqlite3.dll,
-' // located anywhere, avoiding the neeed to have multiple copies of the same dll.
+' // located anywhere, avoiding the need to have multiple copies of the same dll.
 DIM pSql AS CSQLite = "sqlite3_32.dll"
 print pSql.m_hLib
 
@@ -998,7 +998,7 @@ USING Afx
 
 ' // Optional: Specify the DLL path and/or name
 ' // This allows to use a DLL with a different name that sqlite3.dll,
-' // located anywhere, avoiding the neeed to have multiple copies of the same dll.
+' // located anywhere, avoiding the need to have multiple copies of the same dll.
 DIM pSql AS CSQLite = "sqlite3_32.dll"
 print pSql.m_hLib
 
@@ -1214,7 +1214,7 @@ USING Afx
 
 ' // Optional: Specify the DLL path and/or name
 ' // This allows to use a DLL with a different name that sqlite3.dll,
-' // located anywhere, avoiding the neeed to have multiple copies of the same dll.
+' // located anywhere, avoiding the need to have multiple copies of the same dll.
 DIM pSql AS CSQLite = "sqlite3_32.dll"
 print pSql.m_hLib
 
@@ -1424,7 +1424,7 @@ USING Afx
 
 ' // Optional: Specify the DLL path and/or name
 ' // This allows to use a DLL with a different name that sqlite3.dll,
-' // located anywhere, avoiding the neeed to have multiple copies of the same dll.
+' // located anywhere, avoiding the need to have multiple copies of the same dll.
 DIM pSql AS CSQLite = "sqlite3_32.dll"
 print pSql.m_hLib
 
