@@ -1117,7 +1117,7 @@ END FUNCTION
 | --------- | ----------- |
 | *Value* | The new value of the minimum kerning size, in floating-point points. |
 
-If thE value is zero, kerning is turned off. Positive values turn on pair kerning for font sizes greater than this kerning value. For example, the value 1 turns on kerning for all legible sizes, whereas 16 turns on kerning only for font sizes of 16 points and larger.
+If the value is zero, kerning is turned off. Positive values turn on pair kerning for font sizes greater than this kerning value. For example, the value 1 turns on kerning for all legible sizes, whereas 16 turns on kerning only for font sizes of 16 points and larger.
 
 | Result code | Description |
 | ----------- | ----------- |
