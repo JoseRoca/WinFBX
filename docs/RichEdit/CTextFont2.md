@@ -22,7 +22,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | ---------- | ----------- |
 | [GetDuplicate](#GetDuplicate) | Gets a duplicate of this text font object. |
 | [SetDuplicate](#SetDuplicate) | Sets the character formatting by copying another text font object. |
-| [CanChange](#CanChange) |  |
+| [CanChange](#CanChange) | Determines whether the font can be changed. |
 | [IsEqual](#IsEqual) |  |
 | [Reset](#Reset) |  |
 | [GetStyle](#GetStyle) |  |
