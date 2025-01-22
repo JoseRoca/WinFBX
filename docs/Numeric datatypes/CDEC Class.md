@@ -57,7 +57,7 @@ By default, the locale user identifier is used. Therefore, in my Spanish compute
 DIM dec AS CDEC = "-79.228.162.514.264.337.593.543.950,335"
 ```
 
-But it can be overriden by passing an LCID value (1033 for US).
+But it can be overridden by passing an LCID value (1033 for US).
 
 ```
 DIM dec AS CDEC = CDEC("-79,228,162,514,264,337,593,543,950.335", 1033)
@@ -115,7 +115,7 @@ OPERATOR CAST () AS STRING
 
 #### Remarks
 
-These operators aren't called directly, They perform the conversion when the target is not a CDEC variable.
+These operators aren't called directly, they perform the conversion when the target is not a CDEC variable.
 
 # <a name="Operator3"></a>Operator *
 
