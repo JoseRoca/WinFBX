@@ -76,7 +76,7 @@ A pointer to the CImageCtx class.
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Clear](#Clear) | Clears the contents of the controlr. |
+| [Clear](#Clear) | Clears the contents of the control. |
 | [GetBkColor](#GetBkColor) | Gets the background RGB color used by the **CImageCtx** control. |
 | [GetBkColorHot](#GetBkColorHot) | Gets the background hot RGB color used by the **CImageCtx** control. |
 | [GetImageAdjustment](#GetImageAdjustment) | Gets the image adjustment setting used by the control. |
@@ -300,7 +300,7 @@ Don't dispose the returned pointer. The control keeps a copy of it and calls **G
 
 # <a name="GetImageWidth"></a>GetImageWidth
 
-Gets the with of the image, in pixels, currently loaded in the **CImageCtx** control.
+Gets the width of the image, in pixels, currently loaded in the **CImageCtx** control.
 
 ```
 FUNCTION GetImageWidth () AS LONG
@@ -413,7 +413,7 @@ FUNCTION SetBkColor (BYVAL clr AS LONG, BYVAL fRedraw AS BOOLEAN = FALSE) AS LON
 
 # <a name="SetBkColorHot"></a>SetBkColorHot
 
-Sets the background hot RGB color used by the **CImageCtx** control (when the mouse i over the control).
+Sets the background hot RGB color used by the **CImageCtx** control (when the mouse is over the control).
 
 ```
 FUNCTION SetBkColorHot (BYVAL clr AS LONG, BYVAL fRedraw AS BOOLEAN = FALSE) AS LONG
