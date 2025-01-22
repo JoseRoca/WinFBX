@@ -32,7 +32,7 @@ CONSTRUCTOR CSQLite (BYREF wszDllPath AS WSTRING = "sqlite3.dll")
 | [MemorySize](#MemorySize) | Returns the size of that memory allocation in bytes. |
 | [MemoryUsed](#MemoryUsed) | Returns the number of bytes of memory currently outstanding (malloced but not freed). |
 | [Randomness](#Randomness) | Pseudo-random number generator. |
-| [Realloc](#Realloc) | Attempts to resize a prior memory allocation to be at least the specfified number of bytes. |
+| [Realloc](#Realloc) | Attempts to resize a prior memory allocation to be at least the specified number of bytes. |
 | [ReleaseMemory](#ReleaseMemory) | Attempts to free the specified number of bytes of heap memory by deallocating non-essential memory allocations held by the database library. |
 | [Sleep](#Sleep) | Causes the current thread to suspend execution for at least a number of milliseconds specified in its parameter. |
 | [SoftHeapLimit64](#SoftHeapLimit64) | Sets and/or queries the soft limit on the amount of heap memory that may be allocated by SQLite. |
@@ -75,7 +75,7 @@ USING Afx
 
 ' // Optional: Specify the DLL path and/or name
 ' // This allows to use a DLL with a different name that sqlite3.dll,
-' // located anywhere, avoiding the neeed to have multiple copies of the same dll.
+' // located anywhere, avoiding the need to have multiple copies of the same dll.
 DIM pSql AS CSQLite = "sqlite3_32.dll"
 print pSql.m_hLib
 
@@ -172,7 +172,7 @@ SLEEP
 | [ErrCode](#ErrCode) | Returns the numeric result code for the most recent failed sqlite3 call associated with a database connection. |
 | [ErrMsg](#ErrMsg) | Returns English-language text that describes the error. |
 | [Exec](#Exec) | Convenience wrapper for **Prepare** and **Step_**. |
-| [ExtendedErrCode](#ExtendedErrCode) | Gets the extended error code associated with this dabatase connection. |
+| [ExtendedErrCode](#ExtendedErrCode) | Gets the extended error code associated with this database connection. |
 | [ExtendedResultCodes](#ExtendedResultCodes) | Enables or disables the extended result codes feature of SQLite. |
 | [hDbc](#hDbc) | Gets/sets the database handle. |
 | [Interrupt](#Interrupt) | This function causes any pending database operation to abort and return at its earliest opportunity. |
@@ -236,7 +236,7 @@ CONSTRUCTOR CSQLiteStmt (BYVAL pStmt AS sqlite3_stmt PTR)
 | [GetRow](#GetRow) | After a prepared statement has been prepared using either Prepare this method must be called one or more times to evaluate the statement. **GetRow** is an alias for **Step_**. |
 | [hStmt](#hStmt) | Gets/sets the connection handle. |
 | [IsColumnNull](#IsColumnNull) | Returns true is the column value is null or false otherwise. |
-| [ReadOnly](#ReadOnly) | Rreturns true if and only if the prepared statement makes no direct changes to the content of the database file. |
+| [ReadOnly](#ReadOnly) | Returns true if and only if the prepared statement makes no direct changes to the content of the database file. |
 | [Reset](#Reset) | Resets a prepared statement object back to its initial state, ready to be re-executed. |
 | [Sql](#Sql) | Retrieve a saved copy of the original SQL text used to create a prepared statement if that statement was compiled using **Prepare**. |
 | [Step_](#Step_) | After a prepared statement has been prepared using **Prepare** this method must be called one or more times to evaluate the statement. |
@@ -337,7 +337,7 @@ FUNCTION GetCompileOption (BYVAL nOption AS LONG) AS STRING
 | ---------- | ----------- |
 | *nOption* | The option number. |
 
-#### Uage example
+#### Usage example
 
 ```
 pSql.GetCompileOption(0)
@@ -570,7 +570,7 @@ FUNCTION Status64 (BYVAL op AS LONG, BYREF pCurrent AS sqlite3_int64, BYREF pHig
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *op* | An integer code for a specific satus parameter. |
+| *op* | An integer code for a specific status parameter. |
 | *pCurrent* | Pointer to a variable that receives the current value of the parameter. |
 | *pHighWater* | Pointer to a variable that receives the highest recorded value of the parameter. |
 | *resetFlag* | TRUE or FALSE. If true, then the counter is reset to zero after this interface call returns. |
@@ -744,7 +744,7 @@ SQLITE_BUSY means that the database engine was unable to acquire the database lo
 
 SQLITE_DONE means that the statement has finished executing successfully. **Step_** should not be called again on this virtual machine without first calling Reset to reset the virtual machine back to its initial state.
 
-SQLITE_ERROR means that a run-time error (such as a constraint violation) has occurred. Step should not be called again on the cirtual machine. More information may be found by calling **ErrMsg**.
+SQLITE_ERROR means that a run-time error (such as a constraint violation) has occurred. Step should not be called again on the virtual machine. More information may be found by calling **ErrMsg**.
 
 # <a name="ExtendedErrCode"></a>ExtendedErrCode
 
