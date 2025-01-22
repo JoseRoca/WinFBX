@@ -126,7 +126,7 @@ Determines the **Connection** object over which the specified **Command** object
 PROPERTY ActiveConnection (BYREF vConn AS CVAR)
 PROPERTY ActiveConnection (BYVAL pconn AS Afx_ADOConnection PTR)
 PROPERTY ActiveConnection (BYREF pconn AS CAdoConnection)
-PROPERTY ActiveConnection () AS Afx_ADOCOnnection PTR
+PROPERTY ActiveConnection () AS Afx_ADOConnection PTR
 ```
 
 | Parameter  | Description |
@@ -914,7 +914,7 @@ The number of decimal places.
 
 #### Remarks
 
-Use the **umericScale** property to determine how many digits to the right of the decimal point will be used to represent values for a numeric **Parameter** object.
+Use the **NumericScale** property to determine how many digits to the right of the decimal point will be used to represent values for a numeric **Parameter** object.
 
 For **Parameter** objects, the **NumericScale** property is read/write.
 
