@@ -87,7 +87,7 @@ All of the metadata properties (**Name**, **Type_**, **DefinedSize**, **Precisio
 
 # <a name="ActiveConnection"></a>ActiveConnection
 
-Sets or returns an string value that contains a definition for a connection if the connection is closed, or a Variant containing the current **Connection** object if the connection is open. Default is a null object reference.
+Sets or returns a string value that contains a definition for a connection if the connection is closed, or a Variant containing the current **Connection** object if the connection is open. Default is a null object reference.
 
 ```
 PROPERTY ActiveConnection (BYREF vConn AS CVAR)
@@ -98,7 +98,7 @@ PROPERTY ActiveConnection () AS Afx_ADOConnection
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *vConn* | An string value that contains a definition for a connection if the connection is closed, or a Variant containing the current **Connection** object if the connection is open. |
+| *vConn* | A string value that contains a definition for a connection if the connection is closed, or a Variant containing the current **Connection** object if the connection is open. |
 | *pconn* | A reference to the **Connection** object or to the **CAdoConnection** class. |
 
 #### Return value
@@ -175,10 +175,10 @@ FUNCTION CopyRecord (BYREF Source AS CBSTR = "", BYREF Destination AS CBSTR = ""
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *Source* | Optional. An string value that contains a URL specifying the entity to be copied (for example, a file or directory). If *Source* is omitted or specifies an empty string, the file or directory represented by the current **Record** will be copied. |
-| *Destination* | Optional. An string value that contains a URL specifying the location where *Source* will be copied. |
-| *UserName* | Optional. An string value that contains the user ID that, if needed, authorizes access to *Destination*. |
-| *Password* | Optional. An string value that contains the password that, if needed, verifies *UserName*. |
+| *Source* | Optional. A string value that contains a URL specifying the entity to be copied (for example, a file or directory). If *Source* is omitted or specifies an empty string, the file or directory represented by the current **Record** will be copied. |
+| *Destination* | Optional. A string value that contains a URL specifying the location where *Source* will be copied. |
+| *UserName* | Optional. A string value that contains the user ID that, if needed, authorizes access to *Destination*. |
+| *Password* | Optional. A string value that contains the password that, if needed, verifies *UserName*. |
 | *Options* | Optional. A **CopyRecordOptionsEnum** value that has a default value of **adCopyUnspecified**. Specifies the behavior of this method. |
 | *Async* | Optional. A Boolean value that, when True, specifies that this operation should be asynchronous. |
 
@@ -211,7 +211,7 @@ This method fails if *Destination* identifies an existing entity (for example, a
 
 # <a name="DeleteRecord"></a>DeleteRecord
 
-Deletes a the entity represented by a **Record**.
+Deletes the entity represented by a **Record**.
 
 ```
 FUNCTION DeleteRecord (BYREF cbsSource CBSTR = "", BYVAL Async BOOLEAN = FALSE) AS HRESULT
@@ -219,7 +219,7 @@ FUNCTION DeleteRecord (BYREF cbsSource CBSTR = "", BYVAL Async BOOLEAN = FALSE) 
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *cbsSource* | Optional. An string value that contains a URL identifying the entity (for example, the file or directory) to be deleted. If Source is omitted or specifies an empty string, the entity represented by the current **Record** is deleted. If the **Record** is a collection record (**RecordType** of **adCollectionRecord**, such as a directory) all children (for example, subdirectories) will also be deleted. |
+| *cbsSource* | Optional. A string value that contains a URL identifying the entity (for example, the file or directory) to be deleted. If Source is omitted or specifies an empty string, the entity represented by the current **Record** is deleted. If the **Record** is a collection record (**RecordType** of **adCollectionRecord**, such as a directory) all children (for example, subdirectories) will also be deleted. |
 | *Async* | Optional. A Boolean value that, when True, specifies that the delete operation is asychronous. |
 
 #### Return value
@@ -320,10 +320,10 @@ FUNCTION MoveRecord (BYREF Source AS CBSTR = "", BYREF Destination AS CBSTR = ""
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *Source* | Optional. An string value that contains a URL identifying the **Record to be moved**. If *Source* is omitted or specifies an empty string, the object represented by this **Record** is moved. For example, if the **Record** represents a file, the contents of the file are moved to the location specified by *Destination*. |
-| *Destination* | Optional. An string value that contains a URL specifying the location where *Source* will be moved. |
-| *UserName* | Optional. An string value that contains the user ID that, if needed, authorizes access to *Destination*. |
-| *Password* | Optional. An string value that contains the password that, if needed, verifies *UserName*. |
+| *Source* | Optional. A string value that contains a URL identifying the **Record** to be moved. If *Source* is omitted or specifies an empty string, the object represented by this **Record** is moved. For example, if the **Record** represents a file, the contents of the file are moved to the location specified by *Destination*. |
+| *Destination* | Optional. A string value that contains a URL specifying the location where *Source* will be moved. |
+| *UserName* | Optional. A string value that contains the user ID that, if needed, authorizes access to *Destination*. |
+| *Password* | Optional. A string value that contains the password that, if needed, verifies *UserName*. |
 | *Options* | Optional. A **MoveRecordOptionsEnum** value whose default value is **adMoveUnspecified**. Specifies the behavior of this method. |
 | *Async* | Optional. A Boolean value that, when True, specifies that this operation should be asynchronous. |
 
@@ -370,8 +370,8 @@ FUNCTION Open (BYREF cvSource AS CVAR = TYPE<VARIANT>(VT_ERROR,0,0,0,DISP_E_PARA
 | *cvActiveConnection* | Optional. A Variant that represents the connect string or open **Connection** object. |
 | *nMode* | Optional. A **ConnectModeEnum** value, whose default value is **adModeUnknown**, that specifies the access mode for the resultant **Record** object. |
 | *CreateOptions* | Optional. A **RecordCreateOptionsEnum** value, whose default value is **adFailIfNotExists**, that specifies whether an existing file or directory should be opened, or a new file or directory should be created. If set to the default value, the access mode is obtained from the **Mode** property. This parameter is ignored when the *cbsSource* parameter doesn't contain a URL. |
-| *cbsUserName* | Optional. An string value that contains the user ID that, if needed, authorizes access to *cbsSource*. |
-| *cbsPassword* | Optional. An string value that contains the password that, if needed, verifies *cbsUserName*. |
+| *cbsUserName* | Optional. A string value that contains the user ID that, if needed, authorizes access to *cbsSource*. |
+| *cbsPassword* | Optional. A string value that contains the password that, if needed, verifies *cbsUserName*. |
 
 #### Return value
 
