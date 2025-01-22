@@ -706,7 +706,7 @@ Returns a tm structure. The fields of the returned structure hold the evaluated 
 
 # <a name="AfxLocalTimeStr"></a>AfxLocalTimeStr
 
-Retunrs the current local time based on the specified mask, e.g. "hh':'mm':'ss".
+Returns the current local time based on the specified mask, e.g. "hh':'mm':'ss".
 
 ```
 FUNCTION AfxLocalTimeStr (BYREF wszMask AS WSTRING, BYVAL lcid AS LCID = LOCALE_USER_DEFAULT) AS CWSTR
