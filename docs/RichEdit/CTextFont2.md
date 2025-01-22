@@ -25,8 +25,8 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [CanChange](#CanChange) | Determines whether the font can be changed. |
 | [IsEqual](#IsEqual) | Determines whether this text font object has the same properties as the specified text font object. |
 | [Reset](#Reset) | Resets the character formatting to the specified values. |
-| [GetStyle](#GetStyle) |  |
-| [SetStyle](#SetStyle) |  |
+| [GetStyle](#GetStyle) | Gets the character style handle of the characters in a range. |
+| [SetStyle](#SetStyle) | Sets the character style handle of the characters in a range. |
 | [GetAllCaps](#GetAllCaps) |  |
 | [SetAllCaps](#SetAllCaps) |  |
 | [GetAnimation](#GetAnimation) |  |
@@ -461,3 +461,61 @@ If the method succeeds, it returns **S_OK^^. If the method fails, it returns one
 #### Remarks
 
 Calling **Reset** with **tomUndefined** sets all properties to undefined values. Thus, applying the font object to a range changes nothing. This applies to a font object that is obtained by the **GetDuplicate** method.
+
+# <a name="GetStyle"></a>GetStyle
+
+Gets the character style handle of the characters in a range.
+
+```
+FUNCTION CTextFont2.GetStyle () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetStyle(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The character style handle.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error code.
+
+| Return code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+#### Remarks
+
+The Text Object Model (TOM) version 1.0 does not specify the meanings of the style handles. The meanings depend on other facilities of the text system that implements TOM.
+
+# <a name="GetStyle"></a>GetStyle
+
+Sets the character style handle of the characters in a range.
+
+```
+FUNCTION CTextFont2.SetStyle (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetStyle(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new character style handle. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Return code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+
+#### Remarks
+
+The Text Object Model (TOM) version 1.0 does not specify the meanings of the style handles. The meanings depend on other facilities of the text system that implements TOM.
