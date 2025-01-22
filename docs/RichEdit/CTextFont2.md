@@ -23,7 +23,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [GetDuplicate](#GetDuplicate) | Gets a duplicate of this text font object. |
 | [SetDuplicate](#SetDuplicate) | Sets the character formatting by copying another text font object. |
 | [CanChange](#CanChange) | Determines whether the font can be changed. |
-| [IsEqual](#IsEqual) |  |
+| [IsEqual](#IsEqual) | Determines whether this text font object has the same properties as the specified text font object. |
 | [Reset](#Reset) |  |
 | [GetStyle](#GetStyle) |  |
 | [SetStyle](#SetStyle) |  |
@@ -391,4 +391,30 @@ If the font can change, the method returns **S_OK**. If the method fails, it ret
 
 This method returns **tomTrue** only if the font can be changed. That is, no part of an associated range is protected and an associated document is not read-only. If this **ITextFont** object is a duplicate, no protection rules apply.
 
+# <a name="IsEqual"></a>IsEqual
 
+Determines whether this text font object has the same properties as the specified text font object.
+
+```
+FUNCTION CTextFont2.IsEqual (BYVAL pFont AS ITextFont2 PTR) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->IsEqual(m_pTextFont2, pFont, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pFont* | The text font object to compare against. |
+
+#### Return value
+
+A variable that is **tomTrue** if the font objects have the same properties or **tomFalse** if they do not.
+
+#### Result code
+
+If the text font objects have the same properties, the method succeeds and returns **S_OK**. If the text font objects do not have the same properties, the method fails and returns **S_FALSE**.
+
+#### Remarks
+
+The text font objects are equal only if *pFont* belongs to the same Text Object Model (TOM) object as the current font object. The **IsEqual** method ignores entries for which either font object has an **tomUndefined**.
