@@ -67,7 +67,7 @@ END TYPE
 | **UIDead** | Indicates whether the container wants the control to respond to user-interface actions. If TRUE, the control should not respond. Default value: FALSE. |
 | **DisplayAsDefault** | A flag that is TRUE if the container has marked the control in this site to be a default button, and therefore a button control should draw itself with a thicker frame. Default value: FALSE. |
 | **SupportMnemonics** | Indicates whether the container supports keyboard mnemonics. Default value: TRUE. |
-| **OffLineIfNotConnected** | WebBroser control. The control support offline browsing. |
+| **OffLineIfNotConnected** | WebBrowser control. The control support offline browsing. |
 | **DlCtFlags** | A combination of following flags, using the bitwise OR operator, to indicate your preferences. Most of the flag values have negative effects, that is, they prevent behavior that normally happens. For instance, scripts are normally executed by the WebBrowser Control if you don't customize its behavior. But if you set the DLCTL_NOSCRIPTS flag, no scripts will execute in that instance of the control. However, three flags—DLCTL_DLIMAGES, DLCTL_VIDEOS, and DLCTL_BGSOUNDS—work exactly opposite. If you set flags at all, you must set these three for the WebBrowser Control to behave in its default manner vis-a-vis images, videos and sounds. |
 
 **Flags**
@@ -367,7 +367,7 @@ Terminates an advisory connection previously established by the **Advise** metho
 FUNCTION Unadvise () AS HRESULT
 ```
 
-#### Retgurn value
+#### Return value
 
 S_OK (0) or an error code.
 
@@ -381,7 +381,7 @@ FUNCTION AfxCAxHostDispObj (BYVAL hwnd AS HWND) AS IDispatch PTR
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *hwnd* | Handle of the window that hosts he ActiveX control. If you don't know the value of this handle, you can get it calling the **AfxCAxHostWindow** function. |
+| *hwnd* | Handle of the window that hosts the ActiveX control. If you don't know the value of this handle, you can get it calling the **AfxCAxHostWindow** function. |
 
 #### Return value
 
@@ -389,7 +389,7 @@ IDispatch. A reference to the ActiveX control's default interface.
 
 # <a name="AfxCAxHostDispPtr"></a>AfxCAxHostDispPtr
 
-Returns a reference to the OLE container class given the handle of its associated window. This is not and AddRefed pointer, so don't release it.
+Returns a reference to the OLE container class given the handle of its associated window. This is not an AddRefed pointer, so don't release it.
 
 ```
 FUNCTION AfxCAxHostDispPtr (BYVAL hwnd AS HWND) AS IDispatch PTR
@@ -397,7 +397,7 @@ FUNCTION AfxCAxHostDispPtr (BYVAL hwnd AS HWND) AS IDispatch PTR
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *hwnd* | Handle of the window that hosts he ActiveX control. If you don't know the value of this handle, you can get it calling the **AfxCAxHostWindow** function. |
+| *hwnd* | Handle of the window that hosts the ActiveX control. If you don't know the value of this handle, you can get it calling the **AfxCAxHostWindow** function. |
 
 #### Return value
 
@@ -414,7 +414,7 @@ FUNCTION AfxCAxHostPtr (BYVAL hwnd AS HWND, BYVAL cID AS WORD) AS CAxHost PTR
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *hwnd* | Handle of the window that hosts he ActiveX control. If you don't know the value of this handle, you can get it calling the **AfxCAxHostWindow** function. |
+| *hwnd* | Handle of the window that hosts the ActiveX control. If you don't know the value of this handle, you can get it calling the **AfxCAxHostWindow** function. |
 | *cID* | Identifier of the control, e.g. IDC_WEBBROWSER. |
 
 #### Return value
@@ -601,7 +601,7 @@ END FUNCTION
 
 # <a name="Example2"></a>Google Map
 
-The following example embeds an instance of the WebBrowser control and uses an script to gost Google Map:
+The following example embeds an instance of the WebBrowser control and uses an script to host Google Map:
 
 ```
 ' ########################################################################################
