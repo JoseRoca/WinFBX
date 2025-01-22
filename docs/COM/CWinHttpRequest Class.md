@@ -14,7 +14,7 @@ Wrapper class for Microsoft WinHTTP Services, version 5.1
 | [GetResponseBody](#GetResponseBody) | Retrieves the response entity body as an array of unsigned bytes. |
 | [GetResponseHeader](#GetResponseHeader) | Gets the specified HTTP response header. |
 | [GetResponseStream](#GetResponseStream) | Retrieves the response entity body as a stream. |
-| [GetResponseText](#GetResponseText) | Retrieves the response entity body as an string. |
+| [GetResponseText](#GetResponseText) | Retrieves the response entity body as a string. |
 | [GetStatus](#GetStatus) | Retrieves the HTTP status code from the last response. |
 | [GetStatusText](#GetStatusText) | Retrieves the HTTP status text. |
 | [Open](#Open) | Opens an HTTP connection to an HTTP resource. |
@@ -378,8 +378,8 @@ FUNCTION Open (BYREF cbsMethod AS CBSTR, BYREF cbsUrl AS CBSTR, BYVAL bAsync AS 
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *cbsMethod* | An unicode strring that specifies the HTTP verb used for the Open method, such as "GET" or "PUT". Always use uppercase as some servers ignore lowercase HTTP verbs. |
-| *cbsUrl* | An unicode string that contains the name of the resource. This must be an absolute URL. |
+| *cbsMethod* | A unicode strring that specifies the HTTP verb used for the Open method, such as "GET" or "PUT". Always use uppercase as some servers ignore lowercase HTTP verbs. |
+| *cbsUrl* | A unicode string that contains the name of the resource. This must be an absolute URL. |
 | *bAsync* | Optional. A value of type Boolean that specifies whether to open in asynchronous mode.<br>**TRUE**: Opens the HTTP connection in asynchronous mode.<br>**FALSE**: Opens the HTTP connection in synchronous mode. A call to Send does not return until WinHTTP has completely received the response. |
 
 #### Return value
@@ -485,8 +485,8 @@ FUNCTION SetCredentials (BYREF cbsUserName AS CBSTR, BYREF cbsPassword AS CBSTR,
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *cbsUserName* | An string that specifies the user name for authentication. |
-| *cwsPassword* | An string specifies the password for authentication. This parameter is ignored if *cbsUserName* is NULL or missing. |
+| *cbsUserName* | A string that specifies the user name for authentication. |
+| *cwsPassword* | A string specifies the password for authentication. This parameter is ignored if *cbsUserName* is NULL or missing. |
 | *Flags* | A value that specifies when **CWinHttpRequest** uses credentials. Can be one of the below values. |
 
 | Flag       | Meaning     |
