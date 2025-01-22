@@ -29,7 +29,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetStyle](#SetStyle) | Sets the character style handle of the characters in a range. |
 | [GetAllCaps](#GetAllCaps) | Gets whether the characters are all uppercase. |
 | [SetAllCaps](#SetAllCaps) | Sets whether the characters are all uppercase. |
-| [GetAnimation](#GetAnimation) |  |
+| [GetAnimation](#GetAnimation) | Gets the animation type. |
 | [SetAnimation](#SetAnimation) |  |
 | [GetBackColor](#GetBackColor) |  |
 | [SetBackColor](#SetBackColor) |  |
@@ -587,3 +587,38 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
+# <a name="GetAnimation"></a>GetAnimation
+
+Gets the animation type.
+
+```
+FUNCTION CTextFont2.GetAnimation () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetAnimation(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+One of the following animation types.
+
+| Constant | Value | Meaning |
+| -------- | ----- | ------- |
+| **tomNoAnimation** | 0 | Do not apply text animation. |
+| **tomLasVegasLights** | 1 | Text is bordered by marquee lights that blink between the colors red, yellow, green, and blue. |
+| **tomBlinkingBackground** | 2 | Text has a black background that blinks on and off. |
+| **tomSparkleText** | 3 | Text is overlaid with multicolored stars that blink on and off at regular intervals. |
+| **tomMarchingBlackAnts** | 4 | Text is surrounded by a black dashed-line border. The border is animated so that the individual dashes appear to move clockwise around the text. |
+| **tomMarchingRedAnts** | 5 | Text is surrounded by a red dashed-line border that is animated to appear to move clockwise around the text. |
+| **tomShimmer** | 6 | Text is alternately blurred and unblurred at regular intervals, to give the appearance of shimmering. |
+| **tomWipeDown** | 7 | Text appears gradually from the top down. |
+| **tomWipeRight** | 8 | Text appears gradually from the bottom up. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error codes.
+
+| Return code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
