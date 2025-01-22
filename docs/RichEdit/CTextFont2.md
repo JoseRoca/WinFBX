@@ -448,12 +448,9 @@ END FUNCTION
 | **tomUsePoints** | Use points for floating-point measurements. |
 | **tomUseTwips** | Use twips for floating-point measurements. |
 
-Return value
-Type: HRESULT
-
-If the method succeeds, it returns S_OK. If the method fails, it returns one of the following COM error codes. For more information about COM error codes, see Error Handling in COM.
-
 #### Return value
+
+If the method succeeds, it returns **S_OK^^. If the method fails, it returns one of the following COM error codes.
 
 | Return code | Description |
 | ----------- | ----------- |
