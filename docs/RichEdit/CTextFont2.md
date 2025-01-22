@@ -367,3 +367,28 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 Values with the **tomUndefined** attribute have no effect.
 
+# <a name="CanChange"></a>CanChange
+
+Determines whether the font can be changed.
+
+```
+FUNCTION CTextFont2.CanChange () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->CanChange(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+A variable that is **tomTrue** if the font can be changed or **tomFalse** if it cannot be changed.
+
+#### Result code
+
+If the font can change, the method returns **S_OK**. If the method fails, it returns **S_FALSE**.
+
+#### Remarks
+
+This method returns **tomTrue** only if the font can be changed. That is, no part of an associated range is protected and an associated document is not read-only. If this **ITextFont** object is a duplicate, no protection rules apply.
+
+
