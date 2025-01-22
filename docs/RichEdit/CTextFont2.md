@@ -43,7 +43,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetHidden](#SetHidden) | Sets whether characters are hidden. |
 | [GetEngrave](#GetEngrave) | Gets whether characters are displayed as imprinted characters. |
 | [SetEngrave](#SetEngrave) | Sets whether characters are displayed as imprinted characters. |
-| [GetItalic](#GetItalic) |  |
+| [GetItalic](#GetItalic) | Gets whether characters are in italics. |
 | [SetItalic](#SetItalic) |  |
 | [GetKerning](#GetKerning) |  |
 | [SetKerning](#SetKerning) |  |
@@ -1021,3 +1021,32 @@ END FUNCTION
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
+
+# <a name="GetItalic"></a>GetItalic
+
+Gets whether characters are in italics.
+
+```
+FUNCTION CTextFont2.GetItalic () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetItalic(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are in italics. |
+| **tomFalse** | Characters are not in italics. |
+| **tomUndefined** | The Italic property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
