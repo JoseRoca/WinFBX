@@ -2,7 +2,7 @@
 
 The **CMemBmp** class implements a memory bitmap.
 
-You can create an empty bitmap of the specified width an height, e.g.
+You can create an empty bitmap of the specified width and height, e.g.
 
 ```
 DIM pMemBmp AS CMemBmp = CMemBmp(500, 400)
@@ -53,8 +53,8 @@ As the **CGraphCtx** graphic control uses DIBs, to draw a **CMemBmp** memory bit
 | Name       | Description |
 | ---------- | ----------- |
 | [Constructor(Width,Height)](#Constructor1) | Creates an empty memory bitmap of the specified size. |
-| [Constructor(FileName)](#Constructor2) | Creates a memory bitmap of the same size that the specified image to load. |
-| [Constructor(ResourceFile)](#Constructor3) | Creates a memory bitmap of the same size that the specified image to load from a resource file. |
+| [Constructor(FileName)](#Constructor2) | Creates a memory bitmap of the same size as the specified image to load. |
+| [Constructor(ResourceFile)](#Constructor3) | Creates a memory bitmap of the same size as the specified image to load from a resource file. |
 
 # Methods
 
