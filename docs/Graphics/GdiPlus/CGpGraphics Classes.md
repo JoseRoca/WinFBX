@@ -3,7 +3,7 @@
 The **CGpGraphics** class provides methods for drawing lines, curves, figures, images, and text. A **Graphics** object stores attributes of the display device and attributes of the items to be drawn.
 
 **Inherits from**: CGpBase.<br>
-**Imclude file**: CGpGraphics.inc.
+**Include file**: CGpGraphics.inc.
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -99,7 +99,7 @@ The **CGpGraphics** class provides methods for drawing lines, curves, figures, i
 The **CGpGraphicsPath** allows the creation of **GraphicPath** objects. A **GraphicsPath** object stores a sequence of lines, curves, and shapes. You can draw the entire sequence by calling the **DrawPath** method of a **Graphics** object. You can partition the sequence of lines, curves, and shapes into figures, and with the help of a **GraphicsPathIterator** object, you can draw selected figures. You can also place markers in the sequence, so that you can draw selected portions of the path.
 
 **Inherits from**: CGpBase.<br>
-**Imclude file**: CGpPath.inc.
+**Include file**: CGpPath.inc.
 
 | Name       | Description |
 | ---------- | ----------- |
