@@ -2,7 +2,7 @@
 
 Microsoft ActiveX Data Objects (ADO) enable your client applications to access and manipulate data from a variety of sources through an OLE DB provider. Its primary benefits are ease of use, high speed, low memory overhead, and a small disk footprint. ADO supports key features for building client/server and Web-based applications. 
 
-`CADODB` are a collection of classes to allow to work with ADO using the FreeBasic compilers.
+`CADODB` are a collection of classes to allow working with ADO using the FreeBasic compilers.
 
 The `CADOBase` object, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derived classes to store the result codes of ADO calls.
 
@@ -19,7 +19,7 @@ The `CADOBase` object, from which the other ADO classes inherit, initializes and
 
 # <a name="CADOBase"></a>CADOBase Class
 
-The **CAdoBase** class, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derived classes to store the result codes of ADO calls.
+The **CADOBase** class, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derived classes to store the result codes of ADO calls.
 
 ### <a name="GetLastResult"></a>GetLastResult
 
@@ -223,7 +223,7 @@ Three forms of the error number are listed:
 | **adErrOpeningFile** | 3002<br>-2146825286<br>&H800A0BBA | File could not be opened. |
 | **adErrOperationCancelled** | 3712<br>-2146824576<br>&H800A0E80 | Operation has been cancelled by the user. |
 | **adErrOutOfSpace** | 3734<br>-2146824554<br>&H800A0E96 | Operation cannot be performed. Provider cannot obtain enough storage space. |
-| **adErrPermissionDenied** | 3720<br>-2146824568<br>&H800A0E88 | Insufficent permission prevents writing to the field. |
+| **adErrPermissionDenied** | 3720<br>-2146824568<br>&H800A0E88 | Insufficient permission prevents writing to the field. |
 | **adErrProviderFailed** | 3000<br>-2146825288<br>&H800A0BB8 | Provider failed to perform the requested operation. |
 | **adErrProviderNotFound** | 3706<br>-2146824582<br>&H800A0E7A | Provider cannot be found. It may not be properly installed. |
 | **adErrReadFile** | 3003<br>-2146825285<br>&H800A0BBB | File could not be read. |
