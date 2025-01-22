@@ -28,7 +28,7 @@ CONSTRUCTOR CXpButton (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, _
 | *y* | Optional. The initial y-coordinate of the upper-left corner of the button relative to the upper-left corner of the parent window's client area. |
 | *nWidth* | Optional. The width of the button. |
 | *nHeight* | Optional. The height of the button. |
-| *dwStyle* | Optional. The style of the button being created.<>Default styles: WS_VISIBLE OR WS_TABSTOP OR BS_PUSHBUTTON OR BS_CENTER OR BS_VCENTER. |
+| *dwStyle* | Optional. The style of the button being created.<br>Default styles: WS_VISIBLE OR WS_TABSTOP OR BS_PUSHBUTTON OR BS_CENTER OR BS_VCENTER. |
 | *dwExStyle* | Optional. The extended window style of the button being created. |
 | *lpParam* | Optional. Pointer to custom data. |
 
@@ -559,7 +559,7 @@ The font handle.
 
 # <a name="ImageHeight"></a>ImageHeight
 
-Gets/sets the heigth of the image.
+Gets/sets the height of the image.
 
 ```
 PROPERTY ImageHeight () AS LONG
@@ -615,7 +615,7 @@ PROPERTY ImagePos (BYVAL nPos AS LONG)
 | XPBI_BOTTOM | Bottom. |
 | XPBI_ABOVE | Above the text. |
 | XPBI_BELOW | Below the text. |
-| XPBI_CENTECENTER | Center-center (no text). |
+| XPBI_CENTERCENTER | Center-center (no text). |
 
 #### Return value
 
