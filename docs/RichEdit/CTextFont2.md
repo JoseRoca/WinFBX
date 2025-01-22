@@ -45,7 +45,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetEngrave](#SetEngrave) | Sets whether characters are displayed as imprinted characters. |
 | [GetItalic](#GetItalic) | Gets whether characters are in italics. |
 | [SetItalic](#SetItalic) | Sets whether characters are in italics. |
-| [GetKerning](#GetKerning) |  |
+| [GetKerning](#GetKerning) | Gets the minimum font size at which kerning occurs. |
 | [SetKerning](#SetKerning) |  |
 | [GetLanguageID](#GetLanguageID) |  |
 | [SetLanguageID](#SetLanguageID) |  |
@@ -1078,3 +1078,33 @@ END FUNCTION
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+# <a name="GetKerning"></a>GetKerning
+
+Gets the minimum font size at which kerning occurs.
+
+```
+FUNCTION CTextFont2.GetKerning () AS SINGLE
+   DIM Value AS SINGLE
+   this.SetResult(m_pTextFont2->lpvtbl->GetKerning(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The minimum font size at which kerning occurs, in floating-point points.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are in italics. |
+| **tomFalse** | Characters are not in italics. |
+| **tomUndefined** | The Italic property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
