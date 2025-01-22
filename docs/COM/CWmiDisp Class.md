@@ -4,7 +4,7 @@ Windows Management Instrumentation (WMI) is the infrastructure for management da
 
 **CWmiServices** is a wrapper class on top of the WMI scripting interfaces.
 
-**CWmiServices** supports three ways to retrieving information.
+**CWmiServices** supports three ways of retrieving information.
 
 * The first one uses an enumerator (the standard **IEnumVARIANT** interface).
 * The second way is to call the **GetNamedProperties** method after executing the query. **GetNamedProperties** generates a named collection of properties. This has the advantage of not having to use **CDispInvoke**.
@@ -36,7 +36,7 @@ Windows Management Instrumentation (WMI) is the infrastructure for management da
 | [ObjectSetPtr](#ObjectSetPtr) | Returns a pointer to the **ISWbemObjectSet** interface. Don't call **IUnknown_Release** on it. |
 | [PropertySetPtr](#PropertySetPtr) | Returns a pointer to the **ISWbemPropertySet** interface. Don't call **IUnknown_Release** on it. |
 | [PropsCount](#PropsCount) | Returns the number of objects in the property set collection. |
-| [PropValue](#PropValue) | Retrieves de variant value of the WMI property. |
+| [PropValue](#PropValue) | Retrieves the variant value of the WMI property. |
 | [ResetEnum](#ResetEnum) | Resets the enumeration sequence to the beginning. |
 | [ServicesObj](#ServicesObj) | Returns a counted reference of the underlying dispatch pointer. You must release it, e.g. calling call **IUnknown_Release** or the function **AfxSafeRelease** when no longer need it. |
 | [ServicesPtr](#ServicesPtr) | Returns a pointer to the ISWbemServices interface. Don't call **IUnknown_Release** on it. |
@@ -780,7 +780,7 @@ FUNCTION ServicesObj () AS ANY PTR
 
 #### Return value
 
-A counted reference to the **ISWbemServices** interface. Because it is a an addrefed pointer, you must release it when no longer needed.
+A counted reference to the **ISWbemServices** interface. Because it is a an addrefered pointer, you must release it when no longer needed.
 
 # <a name="ServicesPtr"></a>ServicesPtr
 
