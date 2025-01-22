@@ -37,7 +37,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetBold](#SetBold) | Sets whether characters are bold. |
 | [GetEmboss](#GetEmboss) | Gets whether characters are embossed. |
 | [SetEmboss](#SetEmboss) | Sets whether characters are embossed. |
-| [GetForeColor](#GetForeColor) |  |
+| [GetForeColor](#GetForeColor) | Gets the foreground, or text, color. |
 | [SetForeColor](#SetForeColor) |  |
 | [GetHidden](#GetHidden) |  |
 | [SetHidden](#SetHidden) |  |
@@ -674,7 +674,7 @@ The text background color. It can be one of the following values.
 | Value | Meaning |
 | ----- | ------- |
 | A COLORREF value | The high-order byte is zero, and the three low-order bytes specify an RGB color. |
-| A value returned by PALETTEINDEX | The high-order byte is 1, and the LOWORD specifies the index of a logical-color palette entry. |
+| A value returned by PALETTEINDEX | The high-order byte is 1, and the **LOWORD** specifies the index of a logical-color palette entry. |
 | **tomAutocolor** (-9999997) | Indicates the range uses the default system background color. |
 
 #### Result code
@@ -836,3 +836,32 @@ END FUNCTION
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+# <a name="GetForeColor"></a>GetForeColor
+
+Gets the foreground, or text, color.
+
+```
+FUNCTION CTextFont2.GetForeColor () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetForeColor(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The foreground color. It can be one of the following values.
+
+| Value | Meaning |
+| ----- | ------- |
+| A COLORREF value | The high-order byte is zero, and the three low-order bytes specify an RGB color. |
+| A value returned by PALETTEINDEX | The high-order byte is 1, and the **LOWORD** specifies the index of a logical-color palette entry. |
+| **tomAutocolor** (-9999997) | Indicates the range uses the default system foreground color. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
