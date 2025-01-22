@@ -40,7 +40,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [GetForeColor](#GetForeColor) | Gets the foreground, or text, color. |
 | [SetForeColor](#SetForeColor) | Sets the foreground (text) color. |
 | [GetHidden](#GetHidden) | Gets whether characters are hidden. |
-| [SetHidden](#SetHidden) |  |
+| [SetHidden](#SetHidden) | Sets whether characters are hidden. |
 | [GetEngrave](#GetEngrave) |  |
 | [SetEngrave](#SetEngrave) |  |
 | [GetItalic](#GetItalic) |  |
@@ -929,3 +929,32 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 This property corresponds to the **CFE_HIDDEN** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
+
+# <a name="SetHidden"></a>SetHidden
+
+Sets whether characters are hidden.
+
+```
+FUNCTION CTextFont2.SetHidden (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetHidden(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are hidden. |
+| **tomFalse** | Characters are not hidden. |
+| **tomToggle** | Toggle the state of the Hidden property. |
+| **tomUndefined** | The Hidden property is undefined. |
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
