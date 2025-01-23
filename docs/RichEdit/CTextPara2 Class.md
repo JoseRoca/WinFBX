@@ -718,3 +718,37 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 To set the first line indentation amount, call the **SetIndents** method.
 
 To get and set the indent for all other lines of the paragraph (that is, the left indent), use **GetLeftIndent** and **SetIndents**.
+
+# <a name="GetKeepTogether"></a>GetKeepTogether
+
+Determines whether page breaks are allowed within paragraphs.
+
+```
+FUNCTION CTextPara2.GetKeepTogether () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetKeepTogether(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+One of the following values.
+
+| Value | Description |
+| --------- | ----------- |
+| **tomTrue** | Page breaks are not allowed within a paragraph. |
+| **tomFalse** | Page breaks are allowed within a paragraph. |
+| **tomUndefined** | The property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+#### Remarks
+
+This property corresponds to the **PFE_KEEP** effect described in the [PARAFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat2) structure.
+
