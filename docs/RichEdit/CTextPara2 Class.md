@@ -41,8 +41,8 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [GetLineSpacingRule](#GetLineSpacingRule) | Retrieves the line-spacing rule for the text range. |
 | [GetListAlignment](#GetListAlignment) | Retrieves the kind of alignment to use for bulleted and numbered lists. |
 | [SetListAlignment](#SetListAlignment) | Sets the alignment of bulleted or numbered text used for paragraphs. |
-| [GetListLevelIndex](#GetListLevelIndex) |  |
-| [SetListLevelIndex](#SetListLevelIndex) |  |
+| [GetListLevelIndex](#GetListLevelIndex) | Retrieves the list level index used with paragraphs. |
+| [SetListLevelIndex](#SetListLevelIndex) | Sets the list level index used for paragraphs. |
 | [GetListStart](#GetListStart) |  |
 | [SetListStart](#SetListStart) |  |
 | [GetListTab](#GetListTab) |  |
@@ -997,4 +997,37 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 | **E_INVALIDARG** | Invalid argument. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetListLevelIndex"></a>GetListLevelIndex
+
+Retrieves the list level index used with paragraphs.
+
+```
+FUNCTION CTextPara2.GetListLevelIndex () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetListLevelIndex(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The list level index.
+
+| Value | Meaning |
+| ----- | ------- |
+| 0 | No list. |
+| 1 | First-level (outermost) list. |
+| 2 | Second-level (nested) list. This is nested under a level 1 list item. |
+| 3 | Third-level (nested) list. This is nested under a level 2 list item. |
+| and so forth | Nesting continues similarly. |
+
+Up to three levels are common in HTML documents.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
