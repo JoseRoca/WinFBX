@@ -2522,7 +2522,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *Value* | A tomBool value that can be one of the following. |
+| *Value* | A **tomBool** value that can be one of the following. |
 
 | Value | Meaning |
 | ----- | ------- |
