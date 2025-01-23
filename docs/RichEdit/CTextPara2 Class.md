@@ -38,7 +38,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetKeepWithNext](#SetKeepWithNext) | Controls whether page breaks are allowed between the paragraphs in a range. |
 | [GetLeftIndent](#GetLeftIndent) | Retrieves the distance used to indent all lines except the first line of a paragraph. The distance is relative to the left margin. |
 | [GetLineSpacing](#GetLineSpacing) | Retrieves the line-spacing value for the text range. |
-| [GetLineSpacingRule](#GetLineSpacingRule) |  |
+| [GetLineSpacingRule](#GetLineSpacingRule) | Retrieves the line-spacing rule for the text range. |
 | [GetListAlignment](#GetListAlignment) |  |
 | [SetListAlignment](#SetListAlignment) |  |
 | [GetListLevelIndex](#GetListLevelIndex) |  |
