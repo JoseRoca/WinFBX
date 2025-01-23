@@ -1679,3 +1679,35 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 This property corresponds to the **CFE_STRIKEOUT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
 
+# <a name="SetStrikeThrough"></a>SetStrikeThrough
+
+Sets whether characters are displayed with a horizontal line through the center.
+
+```
+FUNCTION CTextFont2.SetStrikeThrough (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetStrikeThrough(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters have a horizontal line through the center. |
+| **tomFalse** | Characters do not have a horizontal line through the center. |
+| **tomToggle** | Toggle the state of the StrikeThrough property. |
+| **tomUndefined** | The StrikeThrough property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
