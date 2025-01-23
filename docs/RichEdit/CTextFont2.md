@@ -91,8 +91,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetAutospaceAlpha](#SetAutospaceAlpha) | Sets the East Asian "autospace alphabetics" state. |
 | [GetAutospaceNumeric](#GetAutospaceNumeric) | Gets the East Asian "autospace numeric" state. |
 | [SetAutospaceNumeric](#SetAutospaceNumeric) | Sets the East Asian "autospace numeric" state. |
-| [GetAutospaceParens](#GetAutospaceParens) |  |
-| [SetAutospaceParens](#SetAutospaceParens) |  |
+| [GetAutospaceParens](#GetAutospaceParens) | Gets the East Asian "autospace parentheses" state. |
+| [SetAutospaceParens](#SetAutospaceParens) | Sets the East Asian "autospace parentheses" state. |
 | [GetCharRep](#GetCharRep) |  |
 | [SetCharRep](#SetCharRep) |  |
 | [GetCompressionMode](#GetCompressionMode) |  |
@@ -2184,3 +2184,29 @@ END FUNCTION
 #### Result code
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+
+# <a name="GetAutospaceParens"></a>GetAutospaceParens
+
+Gets the East Asian "autospace parentheses" state.
+
+```
+FUNCTION CTextFont2.GetAutospaceParens () AS LONG
+   DIM Value AS LONG
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
+   this.SetResult(m_pTextFont2->lpvtbl->GetAutospaceParens(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Use East Asian autospace parentheses. |
+| **tomFalse** | Do not use East Asian autospace parentheses. |
+| **tomUndefined** | The AutospaceParens property is undefined |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
