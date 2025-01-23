@@ -37,7 +37,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [GetKeepWithNext](#GetKeepWithNext) | Determines whether page breaks are allowed between paragraphs in the range. |
 | [SetKeepWithNext](#SetKeepWithNext) | Controls whether page breaks are allowed between the paragraphs in a range. |
 | [GetLeftIndent](#GetLeftIndent) | Retrieves the distance used to indent all lines except the first line of a paragraph. The distance is relative to the left margin. |
-| [GetLineSpacing](#GetLineSpacing) |  |
+| [GetLineSpacing](#GetLineSpacing) | Retrieves the line-spacing value for the text range. |
 | [GetLineSpacingRule](#GetLineSpacingRule) |  |
 | [GetListAlignment](#GetListAlignment) |  |
 | [SetListAlignment](#SetListAlignment) |  |
@@ -867,7 +867,39 @@ The left indentation, in floating-point points.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetLineSpacing"></a>GetLineSpacing
+
+Retrieves the line-spacing value for the text range.
+
+```
+FUNCTION CTextPara2.GetLineSpacing () AS SINGLE
+   DIM Value AS SINGLE
+   this.SetResult(m_pTextPara2->lpvtbl->GetLineSpacing(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The line-spacing value. The following table shows how this value is interpreted for the different line-spacing rules.
+
+| Line spacing rule | Meaning |
+| ----------------- | ------- |
+| **tomLineSpaceSingle** | The line-spacing value is ignored. |
+| **tomLineSpace1pt5** | The line-spacing value is ignored. |
+| **tomLineSpaceDouble** | The line-spacing value is ignored. |
+| **tomLineSpaceAtLeast** | The line-spacing value specifies the spacing, in floating-point points, from one line to the next. However, if the value is less than single spacing, the control displays single-spaced text. |
+| **tomLineSpaceExactly** | The line-spacing value specifies the exact spacing, in floating-point points, from one line to the next (even if the value is less than single spacing). |
+| **tomLineSpaceMultiple** | The line-spacing value specifies the line spacing, in lines.|
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
