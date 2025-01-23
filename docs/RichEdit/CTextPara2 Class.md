@@ -570,14 +570,14 @@ The paragraph alignment, which can be one of the following values.
 
 | Value | Description |
 | --------- | ----------- |
-| tomAlignLeft | Text aligns with the left margin. |
-| tomAlignCenter | Text is centered between the margins. |
-| tomAlignRight | Text aligns with the right margin. |
-| tomAlignJustify | Text starts at the left margin and, if the line extends beyond the right margin, all the spaces in the line are adjusted to be even. |
-| tomAlignInterWord | Same as **tomAlignJustify**. |
-| tomAlignNewspaper | Same as **tomAlignInterLetter**, but uses East Asian metrics. |
-| tomAlignInterLetter | The first and last characters of each line (except the last line) are aligned to the left and right margins, and lines are filled by adding or subtracting the same amount from each character. |
-| tomAlignScaled | Same as **tomAlignInterLetter**, but uses East Asian metrics, and scales the spacing by the width of characters. |
+| **tomAlignLeft** | Text aligns with the left margin. |
+| **tomAlignCenter** | Text is centered between the margins. |
+| **tomAlignRight** | Text aligns with the right margin. |
+| **tomAlignJustify** | Text starts at the left margin and, if the line extends beyond the right margin, all the spaces in the line are adjusted to be even. |
+| **tomAlignInterWord** | Same as **tomAlignJustify**. |
+| **tomAlignNewspaper** | Same as **tomAlignInterLetter**, but uses East Asian metrics. |
+| **tomAlignInterLetter** | The first and last characters of each line (except the last line) are aligned to the left and right margins, and lines are filled by adding or subtracting the same amount from each character. |
+| **tomAlignScaled** | Same as **tomAlignInterLetter**, but uses East Asian metrics, and scales the spacing by the width of characters. |
 
 #### Result code
 
@@ -605,14 +605,14 @@ END FUNCTION
 
 | Value | Description |
 | --------- | ----------- |
-| tomAlignLeft | Text aligns with the left margin. |
-| tomAlignCenter | Text is centered between the margins. |
-| tomAlignRight | Text aligns with the right margin. |
-| tomAlignJustify | Text starts at the left margin and, if the line extends beyond the right margin, all the spaces in the line are adjusted to be even. |
-| tomAlignInterWord | Same as **tomAlignJustify**. |
-| tomAlignNewspaper | Same as **tomAlignInterLetter**, but uses East Asian metrics. |
-| tomAlignInterLetter | The first and last characters of each line (except the last line) are aligned to the left and right margins, and lines are filled by adding or subtracting the same amount from each character. |
-| tomAlignScaled | Same as **tomAlignInterLetter**, but uses East Asian metrics, and scales the spacing by the width of characters. |
+| **tomAlignLeft** | Text aligns with the left margin. |
+| **tomAlignCenter** | Text is centered between the margins. |
+| **tomAlignRight** | Text aligns with the right margin. |
+| **tomAlignJustify** | Text starts at the left margin and, if the line extends beyond the right margin, all the spaces in the line are adjusted to be even. |
+| **tomAlignInterWord** | Same as **tomAlignJustify**. |
+| **tomAlignNewspaper** | Same as **tomAlignInterLetter**, but uses East Asian metrics. |
+| **tomAlignInterLetter** | The first and last characters of each line (except the last line) are aligned to the left and right margins, and lines are filled by adding or subtracting the same amount from each character. |
+| **tomAlignScaled** | Same as **tomAlignInterLetter**, but uses East Asian metrics, and scales the spacing by the width of characters. |
 
 #### Return value
 
