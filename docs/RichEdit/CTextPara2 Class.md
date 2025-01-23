@@ -77,8 +77,8 @@ The **ITextPara2** interface has these methods.
 | Name       | Description |
 | ---------- | ----------- |
 | [GetBorders](#GetBorders) |  |
-| [GetDuplicate2](#GetDuplicate2) |  |
-| [SetDuplicate2](#SetDuplicate2) |  |
+| [GetDuplicate2](#GetDuplicate) |  |
+| [SetDuplicate2](#SetDuplicate) |  |
 | [GetFontAlignment](#GetFontAlignment) |  |
 | [SetFontAlignment](#SetFontAlignment) |  |
 | [GetHangingPunctuation](#GetHangingPunctuation) |  |
@@ -260,3 +260,35 @@ FUNCTION CTOMBase.GetErrorInfo () AS CWSTR
    RETURN s
 END FUNCTION
 ```
+
+# <a name="GetDuplicate"></a>GetDuplicate
+
+Gets a duplicate of this range object. In this implementation of the class, **GetDuplicate** and **GetDuplicate2** are the same method.
+
+```
+FUNCTION CTextPara2.GetDuplicate () AS ITextPara2 PTR
+   DIM pPara AS ITextPara2 PTR
+   this.SetResult(m_pTextPara2->lpvtbl->GetDuplicate(m_pTextPara2, @pPara))
+   FUNCTION = pPara
+END FUNCTION
+```
+```
+FUNCTION CTextPara2.GetDuplicate2 () AS ITextPara2 PTR
+   DIM pPara AS ITextPara2 PTR
+   this.SetResult(m_pTextPara2->lpvtbl->GetDuplicate2(m_pTextPara2, @pPara))
+   FUNCTION = pPara
+END FUNCTION
+```
+
+#### Return value
+
+The duplicate of the range.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_OUTOFMEMORY** | Memory could not be allocated for the new object. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
