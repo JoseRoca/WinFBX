@@ -50,7 +50,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [GetLanguageID](#GetLanguageID) | Gets the language ID or language code identifier (LCID). |
 | [SetLanguageID](#SetLanguageID) | Sets the language ID or language code identifier (LCID). |
 | [GetName](#GetName) | Gets the font name. |
-| [SetName](#SetName) |  |
+| [SetName](#SetName) | Sets the font name. |
 | [GetOutline](#GetOutline) |  |
 | [SetOutline](#SetOutline) |  |
 | [GetPosition](#GetPosition) |  |
@@ -1204,3 +1204,26 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **E_OUTOFMEMORY** | Could not allocate memory for string. |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+# <a name="SetName"></a>SetName
+
+Sets the new font name.
+
+```
+FUNCTION CTextFont2.SetName (BYVAL bstr AS BSTR) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetName(m_pTextFont2, bstr))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *bstr* | The new font name. |
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+
