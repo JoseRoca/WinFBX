@@ -3005,27 +3005,27 @@ A combination of the following character format values.
 
 | Value | Meaning |
 | ----- | ------- |
-| **tomAllCaps** |  |
-| **tomBold** |  |
-| **tomDisabled** |  |
-| **tomEmboss** |  |
-| **tomHidden** |  |
-| **tomImprint** |  |
-| **tomInlineObjectStart** |  |
-| **tomItalic** |  |
-| **tomLink** |  |
-| **tomLinkProtected** |  |
-| **tomMathZone** |  |
-| **tomMathZoneDisplay** |  |
-| **tomMathZoneNoBuildUp** |  |
-| **tomMathZoneOrdinary** |  |
-| **tomOutline** |  |
-| **tomProtected** |  |
-| **tomRevised** |  |
-| **tomShadow** |  |
-| **tomSmallCaps** |  |
-| **tomStrikeout** |  |
-| **tomUnderline** |  |
+| **tomAllCaps** | All caps |
+| **tomBold** | Boldface |
+| **tomDisabled** | Disabled |
+| **tomEmboss** | Emboss |
+| **tomHidden** | Hidden |
+| **tomImprint** | Imprint |
+| **tomInlineObjectStart** | The start delimiter of an inline object |
+| **tomItalic** | Italic |
+| **tomLink** | Hyperlink |
+| **tomLinkProtected** | The link is protected (friendly name link). |
+| **tomMathZone** | Math zone |
+| **tomMathZoneDisplay** | Display math zone |
+| **tomMathZoneNoBuildUp** | Don't build up operator |
+| **tomMathZoneOrdinary** | Math zone ordinary text. |
+| **tomOutline** | Outline |
+| **tomProtected** | Protected |
+| **tomRevised** | Revised |
+| **tomShadow** | Shadow |
+| **tomSmallCaps** | Small caps |
+| **tomStrikeout** | Strikeout |
+| **tomUnderline** | Underline |
 
 If the **tomInlineObjectStart** flag is set, you might want to call **GetInlineObject** for more inline object properties.
 
