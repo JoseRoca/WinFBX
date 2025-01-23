@@ -1615,3 +1615,33 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | Result code | Description |
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+# <a name="SetSpacing"></a>SetSpacing
+
+Sets the amount of horizontal spacing between characters.
+
+```
+FUNCTION CTextFont2.SetSpacing (BYVAL Value AS SINGLE) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetSpacing(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new amount of horizontal spacing between characters, in floating-point points. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+
+#### Remarks
+
+Displayed text typically has an intercharacter spacing value of zero. Positive values expand the spacing, and negative values compress it.
