@@ -3001,7 +3001,9 @@ END FUNCTION
 ```
 #### Return value
 
-A combination of the following character format values.
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A combination of the following character format values. |
 
 | Value | Meaning |
 | ----- | ------- |
@@ -3029,6 +3031,10 @@ A combination of the following character format values.
 
 If the **tomInlineObjectStart** flag is set, you might want to call **GetInlineObject** for more inline object properties.
 
-#### Result code
+| Parameter | Description |
+| --------- | ----------- |
+| *pMask* | The differences in these flags over the range. A value of zero indicates that the properties are the same over the range. For an insertion point, this value is always zero. |
+
+#### Return code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
