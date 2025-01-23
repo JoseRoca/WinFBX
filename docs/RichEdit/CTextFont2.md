@@ -1559,3 +1559,36 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | Result code | Description |
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+# <a name="SetSmallCaps"></a>SetSmallCaps
+
+Sets whether characters are in small capital letters.
+
+```
+FUNCTION CTextFont2.SetSmallCaps (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetSmallCaps(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are in small capital letters. |
+| **tomFalse** | Characters are not in small capital letters. |
+| **tomToggle** | Toggle the state of the SmallCaps property. |
+| **tomUndefined** | The SmallCaps property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
