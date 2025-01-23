@@ -658,3 +658,34 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 This property corresponds to the **PFE_DONOTHYPHEN** effect described in the [PARAFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat2) structure.
+
+# <a name="SetHyphenation"></a>SetHyphenation
+
+Controls hyphenation for the paragraphs in the range.
+
+```
+FUNCTION CTextPara2.SetHyphenation (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetHyphenation(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | Indicates how hyphenation is controlled. It can be one of the following possible values. |
+
+| Value | Description |
+| --------- | ----------- |
+| **tomTrue** | Automatic hyphenation is enabled. |
+| **tomFalse** | Automatic hyphenation is disabled. |
+| **tomUndefined** | The hyphenation property is undefined. |
+
+#### Return value
+
+If **SetHyphenation** succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes. 
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
