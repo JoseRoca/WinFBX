@@ -93,8 +93,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetAutospaceNumeric](#SetAutospaceNumeric) | Sets the East Asian "autospace numeric" state. |
 | [GetAutospaceParens](#GetAutospaceParens) | Gets the East Asian "autospace parentheses" state. |
 | [SetAutospaceParens](#SetAutospaceParens) | Sets the East Asian "autospace parentheses" state. |
-| [GetCharRep](#GetCharRep) |  |
-| [SetCharRep](#SetCharRep) |  |
+| [GetCharRep](#GetCharRep) | Gets the character repertoire (writing system). |
+| [SetCharRep](#SetCharRep) | Sets the character repertoire (writing system). |
 | [GetCompressionMode](#GetCompressionMode) |  |
 | [SetCompressionMode](#SetCompressionMode) |  |
 | [GetCookie](#GetCookie) |  |
@@ -2236,3 +2236,78 @@ END FUNCTION
 #### Result code
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+
+# <a name="GetCharRep"></a>GetCharRep
+
+Gets the character repertoire (writing system).
+
+```
+FUNCTION CTextFont2.GetCharRep () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetCharRep(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The character repertoire. It can be one of the following values.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomAboriginal** | Aboriginal |
+| **tomAnsi** | Latin 1 |
+| **tomArabic** | Arabic |
+| **tomArmenian** | Armenian |
+| **tomBaltic** | From Latin 1 and 2 |
+| **tomBengali** | Bangla (formerly Bengali) |
+| **tomBIG5** | Traditional Chinese |
+| **tomBraille** | Braille |
+| **tomCherokee** | Cherokee |
+| **tomCyrillic** | Cyrillic |
+| **tomDefaultCharRep** | Default character repertoire |
+| **tomDevanagari** | Devanagari |
+| **tomEastEurope** | From Latin 1 and 2 |
+| **tomEmoji** | Emoji |
+| **tomEthiopic** | Ethiopic |
+| **tomGB2312** | Simplified Chinese |
+| **tomGeorgian** | Georgian |
+| **tomGreek** | Greek |
+| **tomGujarati** | Gujarati |
+| **tomGurmukhi** | Gurmukhi |
+| **tomHangul** | Hangul |
+| **tomHebrew** | Hebrew |
+| **tomJamo** | Jamo |
+| **tomKannada** | Kannada |
+| **tomKayahli** | Kayah Li |
+| **tomKharoshthi** | Kharoshthi |
+| **tomKhmer** | Khmer |
+| **tomLao** | Lao |
+| **tomLimbu** | Limbu |
+| **tomMac** | Main Macintosh character repertoire |
+| **tomMalayalam** | Malayalam |
+| **tomMongolian** | Mongolian |
+| **tomMyanmar** | Myanmar |
+| **tomNewTaiLu** | TaiLue |
+| **tomOEM** | OEM character set (original PC) |
+| **tomOriya** | Odia (formerly Oriya) |
+| **tomPC437** | PC437 character set (DOS) |
+| **tomRunic** | Runic |
+| **tomShiftJIS** | Japanese |
+| **tomSinhala** | Sinhala |
+| **tomSylotinagr** | Syloti Nagri |
+| **tomSymbol** | Symbol character set (not Unicode) |
+| **tomSyriac** | Syriac |
+| **tomTaiLe** | TaiLe |
+| **tomTamil** | Tamil |
+| **tomTelugu** | Telugu |
+| **tomThaana** | Thaana |
+| **tomThai** | Thai |
+| **tomTibetan** | Tibetan |
+| **tomTurkish** | Turkish (Latin 1 + dotless i, ...) |
+| **tomVietnamese** | Latin 1 with some combining marks |
+| **tomUsymbol** | Unicode symbol |
+| **tomYi** | Yi |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
