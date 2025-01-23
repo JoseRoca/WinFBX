@@ -87,8 +87,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [GetCount](#GetCount) | Gets the count of extra properties in this character formatting collection. |
 | [GetAutoLigatures](#GetAutoLigatures) | Gets whether support for automatic ligatures is active. |
 | [SetAutoLigatures](#SetAutoLigatures) | Sets whether support for automatic ligatures is active. |
-| [GetAutospaceAlpha](#GetAutospaceAlpha) |  |
-| [SetAutospaceAlpha](#SetAutospaceAlpha) |  |
+| [GetAutospaceAlpha](#GetAutospaceAlpha) | Gets the East Asian "autospace alphabetics" state. |
+| [SetAutospaceAlpha](#SetAutospaceAlpha) | Sets the East Asian "autospace alphabetics" state. |
 | [GetAutospaceNumeric](#GetAutospaceNumeric) |  |
 | [SetAutospaceNumeric](#SetAutospaceNumeric) |  |
 | [GetAutospaceParens](#GetAutospaceParens) |  |
@@ -2047,15 +2047,13 @@ END FUNCTION
 
 A **tomBool** value that can be one of the following.
 
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
 | Value | Meaning |
 | ----- | ------- |
 | **tomTrue** | Automatic ligature support is active. |
 | **tomFalse** | Automatic ligature support is not active. |
 | **tomUndefined** | The AutoLigatures property is undefined. |
+
+#### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
@@ -2084,3 +2082,28 @@ END FUNCTION
 #### Result code
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+
+# <a name="GetAutospaceAlpha"></a>GetAutospaceAlpha
+
+Gets the East Asian "autospace alphabetics" state.
+
+```
+FUNCTION CTextFont2.GetAutospaceAlpha () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetAutospaceAlpha(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | East Asian autospace alphabetics. |
+| **tomFalse** | Do not use East Asian autospace alphabetics. |
+| **tomUndefined** | The AutospaceAlpha property is undefined |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
