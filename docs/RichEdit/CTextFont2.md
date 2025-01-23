@@ -3012,24 +3012,22 @@ A combination of the following character format values.
 | **tomHidden** |  |
 | **tomImprint** |  |
 | **tomInlineObjectStart** |  |
+| **tomItalic** |  |
+| **tomLink** |  |
+| **tomLinkProtected** |  |
+| **tomMathZone** |  |
+| **tomMathZoneDisplay** |  |
+| **tomMathZoneNoBuildUp** |  |
+| **tomMathZoneOrdinary** |  |
+| **tomOutline** |  |
+| **tomProtected** |  |
+| **tomRevised** |  |
+| **tomShadow** |  |
+| **tomSmallCaps** |  |
+| **tomStrikeout** |  |
+| **tomUnderline** |  |
 
-
-tomItalic
-tomLink
-tomLinkProtected
-tomMathZone
-tomMathZoneDisplay
-tomMathZoneNoBuildUp
-tomMathZoneOrdinary
-tomOutline
-tomProtected
-tomRevised
-tomShadow
-tomSmallCaps
-tomStrikeout
-tomUnderline
-
-If the tomInlineObjectStart flag is set, you might want to call GetInlineObject for more inline object properties.
+If the **tomInlineObjectStart** flag is set, you might want to call **GetInlineObject** for more inline object properties.
 
 #### Result code
 
