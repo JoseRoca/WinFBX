@@ -57,7 +57,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetPosition](#SetPosition) | Sets the amount that characters are offset vertically relative to the baseline. |
 | [GetProtected](#GetProtected) | Gets whether characters are protected against attempts to modify them. |
 | [SetProtected](#SetProtected) | Sets whether characters are protected against attempts to modify them. |
-| [GetShadow](#GetShadow) |  |
+| [GetShadow](#GetShadow) | Gets whether characters are displayed as shadowed characters. |
 | [SetShadow](#SetShadow) |  |
 | [GetSize](#GetSize) |  |
 | [SetSize](#SetSize) |  |
@@ -1415,3 +1415,37 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+# <a name="GetShadow"></a>GetShadow
+
+Gets whether characters are displayed as shadowed characters.
+
+```
+FUNCTION CTextFont2.GetShadow () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetShadow(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are displayed as shadowed characters. |
+| **tomFalse** | Characters are not displayed as shadowed characters. |
+| **tomUndefined** | The Shadow property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+#### Remarks
+
+This property corresponds to the **CFE_SHADOW** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
+
