@@ -2508,3 +2508,29 @@ A **tomBool** value that can be one of the following.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetDoubleStrike"></a>SetDoubleStrike
+
+Sets whether characters are displayed with double horizontal lines through the center.
+
+```
+FUNCTION CTextFont2.SetDoubleStrike (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetDoubleStrike(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A tomBool value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are displayed with double horizontal lines. |
+| **tomFalse** | Characters are not displayed with double horizontal lines. |
+| **tomFalse** | Toggle the DoubleStrike property. |
+| **tomUndefined** | The DoubleStrike property is undefined. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
