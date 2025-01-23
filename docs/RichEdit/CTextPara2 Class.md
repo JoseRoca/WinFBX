@@ -923,13 +923,42 @@ One of the following values that indicates the line-spacing rule.
 
 | Line spacing rule | Meaning |
 | ----------------- | ------- |
-| **tomLineSpaceSingle** | Single space- The line-spacing value is ignored. |
+| **tomLineSpaceSingle** | Single space. The line-spacing value is ignored. |
 | **tomLineSpace1pt5** | One-and-a-half line spacing. The line-spacing value is ignored. |
 | **tomLineSpaceDouble** | Double line spacing. The line-spacing value is ignored. |
 | **tomLineSpaceAtLeast** | The line-spacing value specifies the spacing, in floating-point points, from one line to the next. However, if the value is less than single spacing, the control displays single-spaced text. |
 | **tomLineSpaceExactly** | The line-spacing value specifies the exact spacing, in floating-point points, from one line to the next (even if the value is less than single spacing). |
 | **tomLineSpaceMultiple** | The line-spacing value specifies the line spacing, in lines.|
 | **tomLineSpacePercent** | The line-spacing value specifies the line spacing by percent of line height. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetListAlignment"></a>GetListAlignment
+
+Retrieves the kind of alignment to use for bulleted and numbered lists.
+
+```
+FUNCTION CTextPara2.GetListAlignment () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetListAlignment(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+One of the following values that indicates the kind of bullet and numbering alignment.
+
+| Line spacing rule | Meaning |
+| ----------------- | ------- |
+| **tomAlignLeft** | Text is left aligned. |
+| **tomAlignCenter** | Text is centered in the line. |
+| **tomAlignRight** | Text is right aligned. |
 
 #### Result code
 
