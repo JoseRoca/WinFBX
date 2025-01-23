@@ -69,8 +69,8 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetStrikeThrough](#SetStrikeThrough) | Sets whether characters are displayed with a horizontal line through the center. |
 | [GetSubscript](#GetSubscript) | Gets whether characters are displayed as subscript. |
 | [SetSubscript](#SetSubscript) | Sets whether characters are displayed as subscript. |
-| [GetSuperscript](#GetSuperscript) |  |
-| [SetSuperscript](#SetSuperscript) |  |
+| [GetSuperscript](#GetSuperscript) | Gets whether characters are displayed as superscript. |
+| [SetSuperscript](#SetSuperscript) | Sets whether characters are displayed as superscript. |
 | [GetUnderline](#GetUnderline) |  |
 | [SetUnderline](#SetUnderline) |  |
 | [GetWeight](#GetWeight) |  |
@@ -1777,3 +1777,37 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+# <a name="GetSuperscript"></a>GetSuperscript
+
+Gets whether characters are displayed as superscript.
+
+```
+FUNCTION CTextFont2.GetSubscript () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetSubscript(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are displayed as superscript. |
+| **tomFalse** | Characters are not displayed as superscript. |
+| **tomUndefined** | The Superscript property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+#### Remarks
+
+This property corresponds to the **CFE_SUPERSCRIPT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
+
