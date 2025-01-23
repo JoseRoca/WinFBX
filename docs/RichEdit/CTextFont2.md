@@ -55,7 +55,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetOutline](#SetOutline) | Sets whether characters are displayed as outlined characters. |
 | [GetPosition](#GetPosition) | Gets the amount that characters are offset vertically relative to the baseline. |
 | [SetPosition](#SetPosition) | Sets the amount that characters are offset vertically relative to the baseline. |
-| [GetProtected](#GetProtected) |  |
+| [GetProtected](#GetProtected) | Gets whether characters are protected against attempts to modify them. |
 | [SetProtected](#SetProtected) |  |
 | [GetShadow](#GetShadow) |  |
 | [SetShadow](#SetShadow) |  |
@@ -1349,3 +1349,36 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 Displayed text typically has a zero value for this property. Positive values raise the text, and negative values lower it.
+
+# <a name="GetProtected"></a>GetProtected
+
+Gets whether characters are protected against attempts to modify them.
+
+```
+FUNCTION CTextFont2.GetProtected () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetProtected(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are protected. |
+| **tomFalse** | Characters are not protected. |
+| **tomUndefined** | The Protected property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+#### Remarks
+
+In general, Text Object Model (TOM) methods that attempt to change the formatting or content of a range fail with **E_ACCESSDENIED** if any part of that range is protected, or if the document is read only. To make a change in protected text, the TOM client should attempt to turn off the protection of the text to be modified. The owner of the document may permit this to happen. For example in rich edit controls, attempts to change protected text result in an **EN_PROTECTED** notification code to the creator of the document, who then can refuse or grant permission for the change. The creator is the client that created a windowed rich edit control through the **CreateWindowEx** function or the **ITextHost** object that called the **CreateTextServices** function to create a windowless rich edit control.
