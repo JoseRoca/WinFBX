@@ -23,7 +23,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [GetDuplicate](#GetDuplicate) | Gets a duplicate of this text paragraph format object. |
 | [SetDuplicate](#SetDuplicate) | Sets the formatting for an existing paragraph by copying a given format. |
 | [CanChange](#CanChange) | Determines whether the paragraph formatting can be changed. |
-| [IsEqual](#IsEqual) |  |
+| [IsEqual](#IsEqual) | Determines if the current range has the same properties as a specified range. |
 | [Reset](#Reset) |  |
 | [GetStyle](#GetStyle) |  |
 | [SetStyle](#SetStyle) |  |
@@ -89,7 +89,7 @@ The **ITextPara2** interface has these methods.
 | [SetTrimPunctuationAtStart](#SetTrimPunctuationAtStart) |  |
 | [GetEffects](#GetEffects) |  |
 | [GetProperty](#GetProperty) |  |
-| [IsEqual2](#IsEqual2) |  |
+| [IsEqual2](#IsEqual) | Determines if the current range has the same properties as a specified range. |
 | [SetEffects](#SetEffects) |  |
 | [SetProperty](#SetProperty) |  |
 
@@ -342,4 +342,36 @@ END FUNCTION
 
 #### Result code
 
-If paragraph formatting can change, **CanChange** succeeds and **GetLastResult** returns **S_OK**. If paragraph formatting cannot change, the method fails and returns **S_FALSE. **
+If paragraph formatting can change, **CanChange** succeeds and **GetLastResult** returns **S_OK**. If paragraph formatting cannot change, the method fails and returns **S_FALSE**.
+
+# <a name="IsEqual"></a>IsEqual
+
+Determines if the current range has the same properties as a specified range.
+
+```
+FUNCTION CTextPara2.IsEqual (BYVAL pPara AS ITextPara2 PTR) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->CanChange(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+```
+FUNCTION CTextPara2.IsEqual2 (BYVAL pPara AS ITextPara2 PTR) AS LONG
+   DIM B AS LONG
+   IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN B
+   this.SetResult(m_pTextPara2->lpvtbl->IsEqual2(m_pTextPara2, pPara, @B))
+   FUNCTION = B
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pPara* | The **ITextPara2** range that is compared to the current range. |
+
+#### Return value
+
+The comparison result.
+
+#### Result code
+
+If paragraph formatting can change, **IsEqual** succeeds and **GetLastResult** returns **S_OK**. If paragraph formatting cannot change, the method fails and returns **S_FALSE**.
