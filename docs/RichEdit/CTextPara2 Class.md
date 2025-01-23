@@ -27,8 +27,8 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [Reset](#Reset) | Resets the paragraph formatting to a choice of default values. |
 | [GetStyle](#GetStyle) | Retrieves the style handle to the paragraphs in the specified range. |
 | [SetStyle](#SetStyle) | Sets the paragraph style for the paragraphs in a range. |
-| [GetAlignment](#GetAlignment) |  |
-| [SetAlignment](#SetAlignment) |  |
+| [GetAlignment](#GetAlignment) | Retrieves the current paragraph alignment value. |
+| [SetAlignment](#SetAlignment) | Sets the paragraph alignment. |
 | [GetHyphenation](#GetHyphenation) |  |
 | [SetHyphenation](#SetHyphenation) |  |
 | [GetFirstLineIndent](#GetFirstLineIndent) |  |
@@ -549,6 +549,41 @@ The paragraph style handle.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetAlignment"></a>GetAlignment
+
+Retrieves the current paragraph alignment value.
+
+```
+FUNCTION CTextPara2.GetAlignment () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetAlignment(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The paragraph alignment, which can be one of the following values.
+
+| Parameter | Description |
+| --------- | ----------- |
+| tomAlignLeft | Text aligns with the left margin. |
+| tomAlignCenter | Text is centered between the margins. |
+| tomAlignRight | Text aligns with the right margin. |
+| tomAlignJustify | Text starts at the left margin and, if the line extends beyond the right margin, all the spaces in the line are adjusted to be even. |
+| tomAlignInterWord | Same as **tomAlignJustify**. |
+| tomAlignNewspaper | Same as **tomAlignInterLetter**, but uses East Asian metrics. |
+| tomAlignInterLetter | The first and last characters of each line (except the last line) are aligned to the left and right margins, and lines are filled by adding or subtracting the same amount from each character. |
+| tomAlignScaled | Same as **tomAlignInterLetter**, but uses East Asian metrics, and scales the spacing by the width of characters. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
 | Result code | Description |
 | ----------- | ----------- |
