@@ -2107,3 +2107,29 @@ A **tomBool** value that can be one of the following.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetAutospaceAlpha"></a>SetAutospaceAlpha
+
+Sets the East Asian "autospace alpha" state.
+
+```
+FUNCTION CTextFont2.SetAutospaceAlpha (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetAutospaceAlpha(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Use East Asian autospace alphabetics. |
+| **tomFalse** | Do not use East Asian autospace alphabetics. |
+| **tomToggle** | Toggle the AutospaceAlpha property. |
+| **tomUndefined** | The AutospaceAlpha property is undefined. |
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
