@@ -74,6 +74,8 @@ The **ITextPara2** interface extends ITextPara, providing the equivalent of the 
 
 The **ITextPara2** interface has these methods.
 
+| Name       | Description |
+| ---------- | ----------- |
 | [GetBorders](#GetBorders) |  |
 | [GetDuplicate2](#GetDuplicate2) |  |
 | [SetDuplicate2](#SetDuplicate2) |  |
