@@ -114,8 +114,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetOldNumbers](#SetOldNumbers) | Sets whether old-style numbers are active. |
 | [GetOverlapping](#GetOverlapping) | Gets whether overlapping text is active. |
 | [SetOverlapping](#SetOverlapping) | Sets whether overlapping text is active. |
-| [GetPositionSubSuper](#GetPositionSubSuper) |  |
-| [SetPositionSubSuper](#SetPositionSubSuper) |  |
+| [GetPositionSubSuper](#GetPositionSubSuper) | Gets the subscript or superscript position relative to the baseline. |
+| [SetPositionSubSuper](#SetPositionSubSuper) | Sets the subscript or superscript position relative to the baseline. |
 | [GetScaling](#GetScaling) |  |
 | [SetScaling](#SetScaling) |  |
 | [GetSpaceExtension](#GetSpaceExtension) |  |
@@ -2820,3 +2820,22 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetPositionSubSuper"></a>GetPositionSubSuper
+
+Gets the subscript or superscript position relative to the baseline.
+
+```
+FUNCTION CTextFont2.GetPositionSubSuper () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetPositionSubSuper(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The subscript or superscript position relative to the baseline.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
