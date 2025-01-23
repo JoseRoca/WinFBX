@@ -25,8 +25,8 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [CanChange](#CanChange) | Determines whether the paragraph formatting can be changed. |
 | [IsEqual](#IsEqual) | Determines if the current range has the same properties as a specified range. |
 | [Reset](#Reset) | Resets the paragraph formatting to a choice of default values. |
-| [GetStyle](#GetStyle) |  |
-| [SetStyle](#SetStyle) |  |
+| [GetStyle](#GetStyle) | Retrieves the style handle to the paragraphs in the specified range. |
+| [SetStyle](#SetStyle) | Sets the paragraph style for the paragraphs in a range. |
 | [GetAlignment](#GetAlignment) |  |
 | [SetAlignment](#SetAlignment) |  |
 | [GetHyphenation](#GetHyphenation) |  |
@@ -405,3 +405,27 @@ If **Reset** succeeds, it returns **S_OK**. If the method fails, it returns one 
 | E_ACCESSDENIED | Write access is denied. |
 | E_OUTOFMEMORY | Insufficient memory. |
 | CO_E_RELEASED | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetStyle"></a>GetStyle
+
+Retrieves the style handle to the paragraphs in the specified range.
+
+```
+FUNCTION CTextPara2.GetStyle () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetStyle(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The paragraph style handle.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
