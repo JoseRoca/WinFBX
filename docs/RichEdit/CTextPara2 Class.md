@@ -752,3 +752,33 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 This property corresponds to the **PFE_KEEP** effect described in the [PARAFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat2) structure.
 
+# <a name="SetKeepTogether"></a>SetKeepTogether
+
+Controls whether page breaks are allowed within a paragraph in a range.
+
+```
+FUNCTION CTextPara2.SetKeepTogether (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetKeepTogether(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | Indicates whether page breaks are allowed within a paragraph in a range. It can be one of the following possible values. |
+
+| Value | Description |
+| --------- | ----------- |
+| **tomTrue** | Page breaks are not allowed within a paragraph. |
+| **tomFalse** | Page breaks are allowed within a paragraph. |
+| **tomUndefined** | The property is undefined. |
+
+#### Return value
+
+If **SetKeepTogether** succeeds, it returns S_OK. If the method fails, it returns one of the following COM error codes. 
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
