@@ -1346,6 +1346,6 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-####Remarks
+#### Remarks
 
 Displayed text typically has a zero value for this property. Positive values raise the text, and negative values lower it.
