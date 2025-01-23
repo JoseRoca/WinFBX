@@ -52,7 +52,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [GetName](#GetName) | Gets the font name. |
 | [SetName](#SetName) | Sets the font name. |
 | [GetOutline](#GetOutline) | Gets whether characters are displayed as outlined characters. |
-| [SetOutline](#SetOutline) |  |
+| [SetOutline](#SetOutline) | Sets whether characters are displayed as outlined characters. |
 | [GetPosition](#GetPosition) |  |
 | [SetPosition](#SetPosition) |  |
 | [GetProtected](#GetProtected) |  |
@@ -1220,6 +1220,10 @@ END FUNCTION
 | --------- | ----------- |
 | *bstr* | The new font name. |
 
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
 | Result code | Description |
 | ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
@@ -1255,3 +1259,36 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | Result code | Description |
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+# <a name="SetOutline"></a>SetOutline
+
+Sets whether characters are displayed as outlined characters.
+
+```
+FUNCTION CTextFont2.SetOutline (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetOutline(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are outlined. |
+| **tomFalse** | Characters are not outlined. |
+| **tomToggle** | Toggle the state of the Outline property. |
+| **tomUndefined** | The Outline property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
