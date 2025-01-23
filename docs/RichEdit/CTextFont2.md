@@ -115,9 +115,9 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [GetOverlapping](#GetOverlapping) | Gets whether overlapping text is active. |
 | [SetOverlapping](#SetOverlapping) | Sets whether overlapping text is active. |
 | [GetPositionSubSuper](#GetPositionSubSuper) | Gets the subscript or superscript position relative to the baseline. |
-| [SetPositionSubSuper](#SetPositionSubSuper) | Sets the subscript or superscript position relative to the baseline. |
-| [GetScaling](#GetScaling) |  |
-| [SetScaling](#SetScaling) |  |
+| [SetPositionSubSuper](#SetPositionSubSuper) | Sets the position of a subscript or superscript relative to the baseline, as a percentage of the font height. |
+| [GetScaling](#GetScaling) | Gets the font horizontal scaling percentage. |
+| [SetScaling](#SetScaling) | Sets the font horizontal scaling percentage. |
 | [GetSpaceExtension](#GetSpaceExtension) |  |
 | [SetSpaceExtension](#SetSpaceExtension) |  |
 | [GetUnderlinePositionMode](#GetUnderlinePositionMode) |  |
@@ -2858,3 +2858,26 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetScaling"></a>GetScaling
+
+Gets the font horizontal scaling percentage.
+
+```
+FUNCTION CTextFont2.GetScaling () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetScaling(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The scaling percentage.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The font horizontal scaling percentage can range from 200, which doubles the widths of characters, to 0, where no scaling is performed. When the percentage is increased the height does not change.
