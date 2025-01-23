@@ -22,7 +22,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | ---------- | ----------- |
 | [GetDuplicate](#GetDuplicate) | Gets a duplicate of this text paragraph format object. |
 | [SetDuplicate](#SetDuplicate) | Sets the formatting for an existing paragraph by copying a given format. |
-| [CanChange](#CanChange) |  |
+| [CanChange](#CanChange) | Determines whether the paragraph formatting can be changed. |
 | [IsEqual](#IsEqual) |  |
 | [Reset](#Reset) |  |
 | [GetStyle](#GetStyle) |  |
@@ -323,3 +323,23 @@ If **SetDuplicate2** succeeds, it returns **S_OK**. If the method fails, it retu
 | **E_INVALIDARG** | Invalid argument. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+# <a name="CanChange"></a>CanChange
+
+Determines whether the paragraph formatting can be changed.
+
+```
+FUNCTION CTextPara2.CanChange (BYVAL pPara AS ITextPara2 PTR) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->CanChange(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+**tomTrue** if the paragraph formatting can be changed or **tomFalse** if it cannot be changed.
+
+#### Result code
+
+If paragraph formatting can change, **CanChange** succeeds and **GetLastResult** returns **S_OK**. If paragraph formatting cannot change, the method fails and returns **S_FALSE. **
