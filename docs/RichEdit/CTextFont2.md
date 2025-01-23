@@ -2158,3 +2158,29 @@ A **tomBool** value that can be one of the following.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetAutospaceNumeric"></a>SetAutospaceNumeric
+
+Sets the East Asian "autospace numeric" state.
+
+```
+FUNCTION CTextFont2.SetAutospaceNumeric (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetAutospaceNumeric(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Use East Asian autospace numerics. |
+| **tomFalse** | Do not use East Asian autospace numerics. |
+| **tomToggle** | Toggle the AutospaceNumeric property. |
+| **tomUndefined** | The AutospaceNumeric property is undefined. |
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
