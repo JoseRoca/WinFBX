@@ -370,7 +370,7 @@ END FUNCTION
 
 #### Return value
 
-The comparison result.
+A **tomBool** value that is **tomTrue** if the text paragraph objects have the same properties, or **tomFalse** if they don't. 
 
 #### Result code
 
