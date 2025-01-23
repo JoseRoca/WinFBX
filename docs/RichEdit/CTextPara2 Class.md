@@ -39,7 +39,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [GetLeftIndent](#GetLeftIndent) | Retrieves the distance used to indent all lines except the first line of a paragraph. The distance is relative to the left margin. |
 | [GetLineSpacing](#GetLineSpacing) | Retrieves the line-spacing value for the text range. |
 | [GetLineSpacingRule](#GetLineSpacingRule) | Retrieves the line-spacing rule for the text range. |
-| [GetListAlignment](#GetListAlignment) |  |
+| [GetListAlignment](#GetListAlignment) | Retrieves the kind of alignment to use for bulleted and numbered lists. |
 | [SetListAlignment](#SetListAlignment) |  |
 | [GetListLevelIndex](#GetListLevelIndex) |  |
 | [SetListLevelIndex](#SetListLevelIndex) |  |
@@ -352,7 +352,7 @@ Determines if the current range has the same properties as a specified range.  I
 ```
 FUNCTION CTextPara2.IsEqual (BYVAL pPara AS ITextPara2 PTR) AS LONG
    DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->CanChange(m_pTextPara2, @Value))
+   this.SetResult(m_pTextPara2->lpvtbl->CanChange(m_pTextPara2, pPara, @Value))
    FUNCTION = Value
 END FUNCTION
 ```
@@ -565,6 +565,7 @@ FUNCTION CTextPara2.GetAlignment () AS LONG
    FUNCTION = Value
 END FUNCTION
 ```
+
 #### Return value
 
 The paragraph alignment, which can be one of the following values.
@@ -896,6 +897,39 @@ The line-spacing value. The following table shows how this value is interpreted 
 | **tomLineSpaceAtLeast** | The line-spacing value specifies the spacing, in floating-point points, from one line to the next. However, if the value is less than single spacing, the control displays single-spaced text. |
 | **tomLineSpaceExactly** | The line-spacing value specifies the exact spacing, in floating-point points, from one line to the next (even if the value is less than single spacing). |
 | **tomLineSpaceMultiple** | The line-spacing value specifies the line spacing, in lines. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetLineSpacingRule"></a>GetLineSpacingRule
+
+Retrieves the line-spacing rule for the text range.
+
+```
+FUNCTION CTextPara2.GetLineSpacingRule () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetLineSpacingRule(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+One of the following values that indicates the line-spacing rule.
+
+| Line spacing rule | Meaning |
+| ----------------- | ------- |
+| **tomLineSpaceSingle** | The line-spacing value is ignored. |
+| **tomLineSpace1pt5** | The line-spacing value is ignored. |
+| **tomLineSpaceDouble** | The line-spacing value is ignored. |
+| **tomLineSpaceAtLeast** | The line-spacing value specifies the spacing, in floating-point points, from one line to the next. However, if the value is less than single spacing, the control displays single-spaced text. |
+| **tomLineSpaceExactly** | The line-spacing value specifies the exact spacing, in floating-point points, from one line to the next (even if the value is less than single spacing). |
+| **tomLineSpaceMultiple** | The line-spacing value specifies the line spacing, in lines.|
+| **tomLineSpacePercent** | The line-spacing value specifies the line spacing by percent of line height. |
 
 #### Result code
 
