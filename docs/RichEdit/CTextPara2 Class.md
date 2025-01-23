@@ -205,7 +205,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *pTextRange2* | The **ITextPara2** interface pointer to attach. |
+| *pTextPara2* | The **ITextPara2** interface pointer to attach. |
 | *fAddRef* | **TRUE** to increment the reference count of te object; otherwise, **FALSE**. Default is **FALSE**. |
 
 # <a name="GetLastResult"></a>GetLastResult
