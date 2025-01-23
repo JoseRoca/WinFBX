@@ -63,8 +63,8 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetSize](#SetSize) | Sets the font size. |
 | [GetSmallCaps](#GetSmallCaps) | Gets whether characters are in small capital letters. |
 | [SetSmallCaps](#SetSmallCaps) | Sets whether characters are in small capital letters. |
-| [GetSpacing](#GetSpacing) |  |
-| [SetSpacing](#SetSpacing) |  |
+| [GetSpacing](#GetSpacing) | Gets the amount of horizontal spacing between characters. |
+| [SetSpacing](#SetSpacing) | Sets the amount of horizontal spacing between characters. |
 | [GetStrikeThrough](#GetStrikeThrough) |  |
 | [SetStrikeThrough](#SetStrikeThrough) |  |
 | [GetSubscript](#GetSubscript) |  |
@@ -1592,3 +1592,26 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+# <a name="GetSpacing"></a>GetSpacing
+
+Gets the amount of horizontal spacing between characters.
+
+```
+FUNCTION CTextFont2.GetSpacing () AS SINGLE
+   DIM Value AS SINGLE
+   this.SetResult(m_pTextFont2->lpvtbl->GetSpacing(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The amount of horizontal spacing between characters, in floating-point points.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
