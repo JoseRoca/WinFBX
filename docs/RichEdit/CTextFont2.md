@@ -1972,3 +1972,43 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | Result code | Description |
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+# <a name="SetWeight"></a>SetWeight
+
+Sets the font weight for the characters in a range.
+
+```
+FUNCTION CTextFont2.SetWeight (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
+   this.SetResult(m_pTextFont2->lpvtbl->SetWeight(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new font weight. The Bold property is a binary version of the Weight property that sets the weight to **FW_BOLD**. The font weight exists in the [LOGFONT](https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-logfontw) structure and the [IFont](https://learn.microsoft.com/en-us/windows/win32/api/ocidl/nn-ocidl-ifont) interface. Windows defines the following degrees of font weight. |
+
+| Font weight | Value |
+| ----------- | ----- |
+| **FW_DONTCARE** | 0 |
+| **FW_THIN** | 100 |
+| **FW_EXTRALIGHT** | 200 |
+| **FW_LIGHT** | 300 |
+| **FW_NORMAL** | 400 |
+| **FW_MEDIUM** | 500 |
+| **FW_SEMIBOLD** | 600 |
+| **FW_BOLD** | 700 |
+| **FW_EXTRABOLD** | 800 |
+| **FW_HEAVY** | 900 |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
