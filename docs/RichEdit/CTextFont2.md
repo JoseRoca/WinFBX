@@ -118,8 +118,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetPositionSubSuper](#SetPositionSubSuper) | Sets the position of a subscript or superscript relative to the baseline, as a percentage of the font height. |
 | [GetScaling](#GetScaling) | Gets the font horizontal scaling percentage. |
 | [SetScaling](#SetScaling) | Sets the font horizontal scaling percentage. |
-| [GetSpaceExtension](#GetSpaceExtension) |  |
-| [SetSpaceExtension](#SetSpaceExtension) |  |
+| [GetSpaceExtension](#GetSpaceExtension) | Gets the East Asian space extension value. |
+| [SetSpaceExtension](#SetSpaceExtension) | Sets the East Asian space extension value. |
 | [GetUnderlinePositionMode](#GetUnderlinePositionMode) |  |
 | [SetUnderlinePositionMode](#SetUnderlinePositionMode) |  |
 | [GetEffects](#GetEffects) |  |
@@ -2900,3 +2900,22 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetSpaceExtension"></a>GetSpaceExtension
+
+Gets the East Asian space extension value.
+
+```
+FUNCTION CTextFont2.GetSpaceExtension () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetSpaceExtension(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The space extension, in floating-point points.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
