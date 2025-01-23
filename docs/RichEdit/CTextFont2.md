@@ -124,7 +124,7 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetUnderlinePositionMode](#SetUnderlinePositionMode) | Sets the underline position mode. |
 | [GetEffects](#GetEffects) | Gets the character format effects. |
 | [GetEffects2](#GetEffects2) | Gets the additional character format effects. |
-| [GetProperty](#GetProperty) |  |
+| [GetProperty](#GetProperty) | Gets the value of the specified property. |
 | [GetPropertyInfo](#GetPropertyInfo) |  |
 | [IsEqual2](#IsEqual2) |  |
 | [SetEffects](#SetEffects) |  |
@@ -3000,7 +3000,7 @@ FUNCTION CTextFont2.GetEffects (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PT
 END FUNCTION
 ```
 
-#### Return value
+#### Parameters
 
 | Parameter | Description |
 | --------- | ----------- |
@@ -3036,7 +3036,7 @@ If the **tomInlineObjectStart** flag is set, you might want to call **GetInlineO
 | --------- | ----------- |
 | *pMask* | The differences in these flags over the range. A value of zero indicates that the properties are the same over the range. For an insertion point, this value is always zero. |
 
-#### Return code
+#### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
@@ -3046,13 +3046,12 @@ Gets the additional character format effects.
 
 ```
 FUNCTION CTextFont2.GetEffects2 (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
-   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->GetEffects2(m_pTextFont2, pValue, pMask))
    FUNCTION = m_Result
 END FUNCTION
 ```
 
-#### Return value
+#### Parameters
 
 | Parameter | Description |
 | --------- | ----------- |
@@ -3073,6 +3072,32 @@ END FUNCTION
 | --------- | ----------- |
 | *pMask* | The differences in these flags over the range. Zero values indicate that the properties are the same over the range. For an insertion point, this value is always zero. |
 
-#### Return code
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetProperty"></a>GetProperty
+
+Gets the value of the specified property.
+
+```
+FUNCTION CTextFont2.GetProperty (BYVAL nType AS LONG) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetProperty(m_pTextFont2, nType, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| *nType* | The property ID of the value to return. See Remarks. |
+
+#### Return value
+
+The property value.
+
+#### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
