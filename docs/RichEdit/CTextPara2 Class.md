@@ -29,8 +29,8 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetStyle](#SetStyle) | Sets the paragraph style for the paragraphs in a range. |
 | [GetAlignment](#GetAlignment) | Retrieves the current paragraph alignment value. |
 | [SetAlignment](#SetAlignment) | Sets the paragraph alignment. |
-| [GetHyphenation](#GetHyphenation) |  |
-| [SetHyphenation](#SetHyphenation) |  |
+| [GetHyphenation](#GetHyphenation) | Determines whether automatic hyphenation is enabled for the range. |
+| [SetHyphenation](#SetHyphenation) | Controls hyphenation for the paragraphs in the range. |
 | [GetFirstLineIndent](#GetFirstLineIndent) |  |
 | [GetKeepTogether](#GetKeepTogether) |  |
 | [SetKeepTogether](#SetKeepTogether) |  |
@@ -624,3 +624,37 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetHyphenation"></a>GetHyphenation
+
+Determines whether automatic hyphenation is enabled for the range.
+
+```
+FUNCTION CTextPara2.GetHyphenation () AS LONG
+   DIM Value AS LONG
+   IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN Value
+   this.SetResult(m_pTextPara2->lpvtbl->GetHyphenation(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+One of the following values:
+
+| Value | Description |
+| --------- | ----------- |
+| **tomTrue** | Automatic hyphenation is enabled. |
+| **tomFalse** | Automatic hyphenation is disabled. |
+| **tomUndefined** | The hyphenation property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+#### Remarks
+
+This property corresponds to the **PFE_DONOTHYPHEN** effect described in the [PARAFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat2) structure.
