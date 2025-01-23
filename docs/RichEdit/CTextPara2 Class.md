@@ -939,35 +939,3 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetLineSpacingRule"></a>GetLineSpacingRule
-
-Retrieves the line-spacing rule for the text range.
-
-```
-FUNCTION CTextPara2.GetLineSpacingRule () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetLineSpacingRule(m_pTextPara2, @Value))
-   FUNCTION = Value
-END FUNCTION
-```
-#### Return value
-
-One of the following values that indicates the line-spacing rule.
-
-| Line spacing rule | Meaning |
-| ----------------- | ------- |
-| **tomLineSpaceSingle** | The line-spacing value is ignored. |
-| **tomLineSpace1pt5** | The line-spacing value is ignored. |
-| **tomLineSpaceDouble** | The line-spacing value is ignored. |
-| **tomLineSpaceAtLeast** | The line-spacing value specifies the spacing, in floating-point points, from one line to the next. However, if the value is less than single spacing, the control displays single-spaced text. |
-| **tomLineSpaceExactly** | The line-spacing value specifies the exact spacing, in floating-point points, from one line to the next (even if the value is less than single spacing). |
-| **tomLineSpaceMultiple** | The line-spacing value specifies the line spacing, in lines.|
-| **tomLineSpacePercent** | The line-spacing value specifies the line spacing by percent of line height. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
