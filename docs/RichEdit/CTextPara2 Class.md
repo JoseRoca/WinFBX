@@ -968,3 +968,33 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
+# <a name="SetListAlignment"></a>SetListAlignment
+
+Sets the alignment of bulleted or numbered text used for paragraphs.
+
+```
+FUNCTION CTextPara2.SetListAlignment (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetListAlignment(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+| Parameter | Description |
+| ----------------- | ------- |
+| **Value** | New list alignment value. |
+
+| Line spacing rule | Meaning |
+| ----------------- | ------- |
+| **tomAlignLeft** | Text is left aligned. |
+| **tomAlignCenter** | Text is centered in the line. |
+| **tomAlignRight** | Text is right aligned. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
