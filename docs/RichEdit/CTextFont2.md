@@ -97,8 +97,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetCharRep](#SetCharRep) | Sets the character repertoire (writing system). |
 | [GetCompressionMode](#GetCompressionMode) | Gets the East Asian compression mode. |
 | [SetCompressionMode](#SetCompressionMode) | Sets the East Asian compression mode. |
-| [GetCookie](#GetCookie) |  |
-| [SetCookie](#SetCookie) |  |
+| [GetCookie](#GetCookie) | Gets the client cookie. |
+| [SetCookie](#SetCookie) | Sets the client cookie. |
 | [GetDoubleStrike](#GetDoubleStrike) |  |
 | [SetDoubleStrike](#SetDoubleStrike) |  |
 | [GetDuplicate2](#GetDuplicate) | Gets a duplicate of this character format object. |
@@ -2437,3 +2437,26 @@ END FUNCTION
 #### Result code
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+
+# <a name="GetCookie"></a>GetCookie
+
+Gets the client cookie.
+
+```
+FUNCTION CTextFont2.GetCookie () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetCookie(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The client cookie.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+This value is purely for the use of the client and has no meaning to the Text Object Model (TOM) engine. There are exceptions where different values correspond to different character format runs.
