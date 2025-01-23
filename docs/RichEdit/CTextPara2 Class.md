@@ -34,7 +34,8 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [GetFirstLineIndent](#GetFirstLineIndent) | Retrieves the amount used to indent the first line of a paragraph relative to the left indent. The left indent is the indent for all lines of the paragraph except the first line. |
 | [GetKeepTogether](#GetKeepTogether) | Determines whether page breaks are allowed within paragraphs. |
 | [SetKeepTogether](#SetKeepTogether) | Controls whether page breaks are allowed within a paragraph in a range. |
-| [SetKeepWithNext](#SetKeepWithNext) |  |
+| [GetKeepWithNext](#GetKeepWithNext) | Determines whether page breaks are allowed between paragraphs in the range. |
+| [SetKeepWithNext](#SetKeepWithNext) | Controls whether page breaks are allowed between the paragraphs in a range. |
 | [GetLeftIndent](#GetLeftIndent) |  |
 | [GetLineSpacing](#GetLineSpacing) |  |
 | [GetLineSpacingRule](#GetLineSpacingRule) |  |
@@ -782,3 +783,37 @@ If **SetKeepTogether** succeeds, it returns S_OK. If the method fails, it return
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetKeepWithNext"></a>GetKeepWithNext
+
+Determines whether page breaks are allowed between paragraphs in the range.
+
+```
+FUNCTION CTextPara2.GetKeepWithNext () AS LONG
+   DIM Value AS LONG
+   IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN Value
+   this.SetResult(m_pTextPara2->lpvtbl->GetKeepWithNext(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+One of the following values.
+
+| Value | Description |
+| --------- | ----------- |
+| **tomTrue** | Page breaks are not allowed between a paragraph. |
+| **tomFalse** | Page breaks are allowed between a paragraph. |
+| **tomUndefined** | The property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+#### Remarks
+
+This property corresponds to the PFE_KEEPNEXT effect described in the [PARAFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat2) structure.
