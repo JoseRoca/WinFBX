@@ -2743,3 +2743,29 @@ A **tomBool** value that can be one of the following.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetOldNumbers"></a>SetOldNumbers
+
+Sets whether old-style numbers are active.
+
+```
+FUNCTION CTextFont2.SetOldNumbers (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetOldNumbers(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Old-style numbers are active. |
+| **tomFalse** | Old-style numbers are not active. |
+| **tomToggle** | Toggle the OldNumbers property. |
+| **tomUndefined** | The OldNumbers property is undefined. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
