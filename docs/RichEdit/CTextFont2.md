@@ -110,8 +110,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetModWidthPairs](#SetModWidthPairs) | Sets whether "decrease widths on pairs" is active. |
 | [GetModWidthSpace](#GetModWidthSpace) | Gets whether "increase width of whitespace" is active. |
 | [SetModWidthSpace](#SetModWidthSpace) | Sets whether "increase width of whitespace" is active. |
-| [GetOldNumbers](#GetOldNumbers) |  |
-| [SetOldNumbers](#SetOldNumbers) |  |
+| [GetOldNumbers](#GetOldNumbers) | Gets whether old-style numbers are active. |
+| [SetOldNumbers](#SetOldNumbers) | Sets whether old-style numbers are active. |
 | [GetOverlapping](#GetOverlapping) |  |
 | [SetOverlapping](#SetOverlapping) |  |
 | [GetPositionSubSuper](#GetPositionSubSuper) |  |
@@ -2718,3 +2718,28 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetOldNumbers"></a>GetOldNumbers
+
+Gets whether old-style numbers are active.
+
+```
+FUNCTION CTextFont2.GetOldNumbers () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetOldNumbers(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTIONN
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Old-style numbers are active. |
+| **tomFalse** | Old-style numbers are not active. |
+| **tomUndefined** | The OldNumbers property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
