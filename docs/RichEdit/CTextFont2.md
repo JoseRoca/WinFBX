@@ -1783,9 +1783,9 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets whether characters are displayed as superscript.
 
 ```
-FUNCTION CTextFont2.GetSubscript () AS LONG
+FUNCTION CTextFont2.GetSuperscript () AS LONG
    DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetSubscript(m_pTextFont2, @Value))
+   this.SetResult(m_pTextFont2->lpvtbl->GetSuperscript(m_pTextFont2, @Value))
    FUNCTION = Value
 END FUNCTION
 ```
@@ -1811,3 +1811,36 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 This property corresponds to the **CFE_SUPERSCRIPT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
 
+# <a name="SetSuperscript"></a>SetSuperscript
+
+Sets whether characters are displayed as superscript.
+
+```
+FUNCTION CTextFont2.SetSuperscript (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
+   this.SetResult(m_pTextFont2->lpvtbl->SetSuperscript(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are displayed as superscript. |
+| **tomFalse** | Characters are not displayed as superscript. |
+| **tomToggle** | Toggle the state of the Superscript property. |
+| **tomUndefined** | The Superscript property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
