@@ -122,7 +122,7 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetSpaceExtension](#SetSpaceExtension) | Sets the East Asian space extension value. |
 | [GetUnderlinePositionMode](#GetUnderlinePositionMode) | Gets the underline position mode. |
 | [SetUnderlinePositionMode](#SetUnderlinePositionMode) | Sets the underline position mode. |
-| [GetEffects](#GetEffects) |  |
+| [GetEffects](#GetEffects) | Gets the character format effects. |
 | [GetEffects2](#GetEffects2) |  |
 | [GetProperty](#GetProperty) |  |
 | [GetPropertyInfo](#GetPropertyInfo) |  |
@@ -2988,3 +2988,49 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetEffects"></a>GetEffects
+
+Gets the character format effects.
+
+```
+FUNCTION CTextFont2.GetEffects (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->GetEffects(m_pTextFont2, pValue, pMask))
+   FUNCTION = m_Result
+END FUNCTION
+```
+#### Return value
+
+A combination of the following character format values.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomAllCaps** |  |
+| **tomBold** |  |
+| **tomDisabled** |  |
+| **tomEmboss** |  |
+| **tomHidden** |  |
+| **tomImprint** |  |
+| **tomInlineObjectStart** |  |
+
+
+tomItalic
+tomLink
+tomLinkProtected
+tomMathZone
+tomMathZoneDisplay
+tomMathZoneNoBuildUp
+tomMathZoneOrdinary
+tomOutline
+tomProtected
+tomRevised
+tomShadow
+tomSmallCaps
+tomStrikeout
+tomUnderline
+
+If the tomInlineObjectStart flag is set, you might want to call GetInlineObject for more inline object properties.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
