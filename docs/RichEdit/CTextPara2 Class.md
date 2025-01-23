@@ -544,14 +544,13 @@ END FUNCTION
 
 #### Return value
 
-The paragraph style handle.
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If **SetStyle** succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
 | Result code | Description |
 | ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
 # <a name="GetAlignment"></a>GetAlignment
@@ -565,12 +564,11 @@ FUNCTION CTextPara2.GetAlignment () AS LONG
    FUNCTION = Value
 END FUNCTION
 ```
-
 #### Return value
 
 The paragraph alignment, which can be one of the following values.
 
-| Parameter | Description |
+| Value | Description |
 | --------- | ----------- |
 | tomAlignLeft | Text aligns with the left margin. |
 | tomAlignCenter | Text is centered between the margins. |
@@ -587,4 +585,42 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 | Result code | Description |
 | ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="SetAlignment"></a>SetAlignment
+
+Sets the paragraph alignment.
+
+```
+FUNCTION CTextPara2.SetAlignment (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
+   this.SetResult(m_pTextPara2->lpvtbl->SetStyle(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | New paragraph alignment. |
+
+| Value | Description |
+| --------- | ----------- |
+| tomAlignLeft | Text aligns with the left margin. |
+| tomAlignCenter | Text is centered between the margins. |
+| tomAlignRight | Text aligns with the right margin. |
+| tomAlignJustify | Text starts at the left margin and, if the line extends beyond the right margin, all the spaces in the line are adjusted to be even. |
+| tomAlignInterWord | Same as **tomAlignJustify**. |
+| tomAlignNewspaper | Same as **tomAlignInterLetter**, but uses East Asian metrics. |
+| tomAlignInterLetter | The first and last characters of each line (except the last line) are aligned to the left and right margins, and lines are filled by adding or subtracting the same amount from each character. |
+| tomAlignScaled | Same as **tomAlignInterLetter**, but uses East Asian metrics, and scales the spacing by the width of characters. |
+
+#### Return value
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
