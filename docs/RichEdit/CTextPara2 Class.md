@@ -802,8 +802,8 @@ One of the following values.
 
 | Value | Description |
 | --------- | ----------- |
-| **tomTrue** | Page breaks are not allowed between a paragraph. |
-| **tomFalse** | Page breaks are allowed between a paragraph. |
+| **tomTrue** | Page breaks are not allowed between paragraphs. |
+| **tomFalse** | Page breaks are allowed between paragraphs. |
 | **tomUndefined** | The property is undefined. |
 
 #### Result code
@@ -817,3 +817,36 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 This property corresponds to the PFE_KEEPNEXT effect described in the [PARAFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat2) structure.
+
+# <a name="SetKeepWithNext"></a>SetKeepWithNext
+
+Controls whether page breaks are allowed between the paragraphs in a range.
+
+```
+FUNCTION CTextPara2.SetKeepWithNext (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetKeepWithNext(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | Indicates if page breaks can be used between the paragraphs of a range. It can be one of the following possible values. |
+
+| **tomTrue** | Page breaks are not allowed between paragraphs. |
+| **tomFalse** | Page breaks are allowed between paragraphs. |
+| **tomUndefined** | The property is undefined. |
+
+#### Return value
+
+If **SetKeepWithNext** succeeds, it returns S_OK. If the method fails, it returns one of the following COM error codes. 
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+#### Remarks
+This property corresponds to the PFE_KEEPNEXT effect described in the [PARAFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat2) structure.
+
