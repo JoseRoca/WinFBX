@@ -263,12 +263,12 @@ END FUNCTION
 
 # <a name="GetDuplicate"></a>GetDuplicate
 
-Gets a duplicate of this range object.
+Gets a duplicate of this range object. In this implementation of the class, **GetDuplicate** and **GetDuplicate2** are the same method.
 
 ```
 FUNCTION CTextPara2.GetDuplicate () AS ITextPara2 PTR
    DIM pPara AS ITextPara2 PTR
-   this.SetResult(m_pTextPara2->lpvtbl->GetDuplicate(m_pTextPara2, @pPara))
+   this.SetResult(m_pTextPara2->lpvtbl->GetDuplicate2(m_pTextPara2, @pPara))
    FUNCTION = pPara
 END FUNCTION
 ```
@@ -295,7 +295,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 # <a name="SetDuplicate"></a>SetDuplicate
 
-Sets the properties of this object by copying the properties of another text paragraph object.
+Sets the properties of this object by copying the properties of another text paragraph object. In this implementation of the class, **SetDuplicate** and **SetDuplicate2** are the same method.
 
 ```
 FUNCTION CTextPara2.SetDuplicate (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
@@ -346,7 +346,7 @@ If paragraph formatting can change, **CanChange** succeeds and **GetLastResult**
 
 # <a name="IsEqual"></a>IsEqual
 
-Determines if the current range has the same properties as a specified range.
+Determines if the current range has the same properties as a specified range.  In this implementation of the class, **IsEqual** and **IsEqual2** are the same method.
 
 ```
 FUNCTION CTextPara2.IsEqual (BYVAL pPara AS ITextPara2 PTR) AS LONG
