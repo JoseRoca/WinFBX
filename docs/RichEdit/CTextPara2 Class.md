@@ -20,7 +20,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetDuplicate](#GetDuplicate) |  |
+| [GetDuplicate](#GetDuplicate) | Gets a duplicate of this text paragraph format object. |
 | [SetDuplicate](#SetDuplicate) |  |
 | [CanChange](#CanChange) |  |
 | [IsEqual](#IsEqual) |  |
@@ -77,7 +77,7 @@ The **ITextPara2** interface has these methods.
 | Name       | Description |
 | ---------- | ----------- |
 | [GetBorders](#GetBorders) |  |
-| [GetDuplicate2](#GetDuplicate) |  |
+| [GetDuplicate2](#GetDuplicate) | Gets a duplicate of this text paragraph format object. |
 | [SetDuplicate2](#SetDuplicate) |  |
 | [GetFontAlignment](#GetFontAlignment) |  |
 | [SetFontAlignment](#SetFontAlignment) |  |
