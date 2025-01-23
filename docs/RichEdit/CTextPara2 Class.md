@@ -36,7 +36,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetKeepTogether](#SetKeepTogether) | Controls whether page breaks are allowed within a paragraph in a range. |
 | [GetKeepWithNext](#GetKeepWithNext) | Determines whether page breaks are allowed between paragraphs in the range. |
 | [SetKeepWithNext](#SetKeepWithNext) | Controls whether page breaks are allowed between the paragraphs in a range. |
-| [GetLeftIndent](#GetLeftIndent) |  |
+| [GetLeftIndent](#GetLeftIndent) | Retrieves the distance used to indent all lines except the first line of a paragraph. The distance is relative to the left margin. |
 | [GetLineSpacing](#GetLineSpacing) |  |
 | [GetLineSpacingRule](#GetLineSpacingRule) |  |
 | [GetListAlignment](#GetListAlignment) |  |
@@ -850,3 +850,25 @@ If **SetKeepWithNext** succeeds, it returns S_OK. If the method fails, it return
 #### Remarks
 This property corresponds to the PFE_KEEPNEXT effect described in the [PARAFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat2) structure.
 
+# <a name="GetLeftIndent"></a>GetLeftIndent
+
+Retrieves the distance used to indent all lines except the first line of a paragraph. The distance is relative to the left margin.
+
+```
+FUNCTION CTextPara2.GetLeftIndent () AS SINGLE
+   DIM Value AS SINGLE
+   this.SetResult(m_pTextPara2->lpvtbl->GetLeftIndent(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The left indentation, in floating-point points.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
