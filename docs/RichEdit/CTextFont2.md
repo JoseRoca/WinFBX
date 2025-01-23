@@ -1745,3 +1745,35 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 This property corresponds to the **CFE_SUBSCRIPT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
 
+# <a name="SetSubscript"></a>SetSubscript
+
+Sets whether characters are displayed as subscript.
+
+```
+FUNCTION CTextFont2.SetSubscript (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetSubscript(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are displayed as subscript. |
+| **tomFalse** | Characters are not displayed as subscript. |
+| **tomToggle** | Toggle the state of the Subscript property. |
+| **tomUndefined** | The Subscript property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
