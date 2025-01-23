@@ -54,7 +54,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [GetOutline](#GetOutline) | Gets whether characters are displayed as outlined characters. |
 | [SetOutline](#SetOutline) | Sets whether characters are displayed as outlined characters. |
 | [GetPosition](#GetPosition) | Gets the amount that characters are offset vertically relative to the baseline. |
-| [SetPosition](#SetPosition) |  |
+| [SetPosition](#SetPosition) | Sets the amount that characters are offset vertically relative to the baseline. |
 | [GetProtected](#GetProtected) |  |
 | [SetProtected](#SetProtected) |  |
 | [GetShadow](#GetShadow) |  |
@@ -1317,5 +1317,35 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 
 #### Remarks
+
+Displayed text typically has a zero value for this property. Positive values raise the text, and negative values lower it.
+
+# <a name="SetPosition"></a>SetPosition
+
+Sets the amount that characters are offset vertically relative to the baseline.
+
+```
+FUNCTION CTextFont2.SetPosition (BYVAL Value AS SINGLE) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetPosition(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new amount of vertical offset, in floating-point points. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+
+####Remarks
 
 Displayed text typically has a zero value for this property. Positive values raise the text, and negative values lower it.
