@@ -31,7 +31,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetAlignment](#SetAlignment) | Sets the paragraph alignment. |
 | [GetHyphenation](#GetHyphenation) | Determines whether automatic hyphenation is enabled for the range. |
 | [SetHyphenation](#SetHyphenation) | Controls hyphenation for the paragraphs in the range. |
-| [GetFirstLineIndent](#GetFirstLineIndent) |  |
+| [GetFirstLineIndent](#GetFirstLineIndent) | Retrieves the amount used to indent the first line of a paragraph relative to the left indent. The left indent is the indent for all lines of the paragraph except the first line. |
 | [GetKeepTogether](#GetKeepTogether) |  |
 | [SetKeepTogether](#SetKeepTogether) |  |
 | [SetKeepWithNext](#SetKeepWithNext) |  |
@@ -689,3 +689,32 @@ If **SetHyphenation** succeeds, it returns **S_OK**. If the method fails, it ret
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetFirstLineIndent"></a>GetFirstLineIndent
+
+Retrieves the amount used to indent the first line of a paragraph relative to the left indent. The left indent is the indent for all lines of the paragraph except the first line.
+
+```
+FUNCTION CTextPara2.GetFirstLineIndent () AS SINGLE
+   DIM Value AS SINGLE
+   this.SetResult(m_pTextPara2->lpvtbl->GetFirstLineIndent(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The first-line indentation amount in floating-point points.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+#### Remarks
+
+To set the first line indentation amount, call the **SetIndents** method.
+
+To get and set the indent for all other lines of the paragraph (that is, the left indent), use **GetLeftIndent** and **SetIndents**.
