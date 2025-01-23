@@ -126,7 +126,7 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [GetEffects2](#GetEffects2) | Gets the additional character format effects. |
 | [GetProperty](#GetProperty) | Gets the value of the specified property. |
 | [GetPropertyInfo](#GetPropertyInfo) | Gets the property type and value of the specified extra property. |
-| [IsEqual2](#IsEqual2) |  |
+| [IsEqual2](#IsEqual2) | The text font object to compare against. |
 | [SetEffects](#SetEffects) |  |
 | [SetEffects2](#SetEffects2) |  |
 | [SetProperty](#SetProperty) |  |
