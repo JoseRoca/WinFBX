@@ -2401,7 +2401,6 @@ END FUNCTION
 ```
 #### Return value
 
-
 The compression mode, which can be one of these values:
 
 | Value | Meaning |
@@ -2414,3 +2413,27 @@ The compression mode, which can be one of these values:
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+# <a name="SetCompressionMode"></a>SetCompressionMode
+
+Sets the East Asian compression mode.
+
+```
+FUNCTION CTextFont2.SetCompressionMode (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetCompressionMode(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The compression mode, which can be one of these values: |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomCompressNone** (default) | No compression. |
+| **tomCompressPunctuation** | Compress punctuation. |
+| **tomCompressPunctuationAndKana** | Compress punctuation and kana. |
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
