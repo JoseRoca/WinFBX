@@ -120,8 +120,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetScaling](#SetScaling) | Sets the font horizontal scaling percentage. |
 | [GetSpaceExtension](#GetSpaceExtension) | Gets the East Asian space extension value. |
 | [SetSpaceExtension](#SetSpaceExtension) | Sets the East Asian space extension value. |
-| [GetUnderlinePositionMode](#GetUnderlinePositionMode) |  |
-| [SetUnderlinePositionMode](#SetUnderlinePositionMode) |  |
+| [GetUnderlinePositionMode](#GetUnderlinePositionMode) | Gets the underline position mode. |
+| [SetUnderlinePositionMode](#SetUnderlinePositionMode) | Sets the underline position mode. |
 | [GetEffects](#GetEffects) |  |
 | [GetEffects2](#GetEffects2) |  |
 | [GetProperty](#GetProperty) |  |
@@ -2938,3 +2938,28 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetUnderlinePositionMode"></a>GetUnderlinePositionMode
+
+Gets the underline position mode.
+
+```
+FUNCTION CTextFont2.GetUnderlinePositionMode () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetUnderlinePositionMode(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The underline position mode. It can be one of the following values.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomUnderlinePositionAuto** | Automatically set the underline position. |
+| **tomUnderlinePositionBelow** | Render underline below text. |
+| **tomUnderlinePositionAbove** | Render underline above text. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
