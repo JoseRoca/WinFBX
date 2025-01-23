@@ -2528,7 +2528,7 @@ END FUNCTION
 | ----- | ------- |
 | **tomTrue** | Characters are displayed with double horizontal lines. |
 | **tomFalse** | Characters are not displayed with double horizontal lines. |
-| **tomFalse** | Toggle the DoubleStrike property. |
+| **tomToggle** | Toggle the DoubleStrike property. |
 | **tomUndefined** | The DoubleStrike property is undefined. |
 
 #### Return value
@@ -2589,3 +2589,29 @@ A **tomBool** value that can be one of the following.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetMathZone"></a>SetMathZone
+
+Sets whether a math zone is active.
+
+```
+FUNCTION CTextFont2.SetMathZone (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetMathZone(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | A math zone is active. |
+| **tomFalse** | A math zone is not active. |
+| **tomToggle** | Toggle the MathZone property. |
+| **tomUndefined** | The MathZone property is undefined. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
