@@ -169,9 +169,9 @@ pCTextRange2.Attach(pTextRange2)
 
 ```
 CONSTRUCTOR CTextRange2 (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
-   IF pTextRange2 = NULL THEN m_Result = E_INVALIDARG : EXIT CONSTRUCTOR
-   IF fAddRef THEN pTextRange2->lpvtbl->AddRef(pTextRange2)
-   ' // Store the pointer of ITextRange2 interface
+   IF pTextRange2 THEN
+      IF fAddRef THEN pTextRange2->lpvtbl->AddRef(pTextRange2)
+   END IF
    m_pTextRange2 = pTextRange2
 END CONSTRUCTOR
 ```
@@ -294,7 +294,7 @@ END FUNCTION
 Attaches an **ITextRange2** interface pointer to the class.
 
 ```
-PRIVATE FUNCTION CTextRange2.Attach (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
+FUNCTION CTextRange2.Attach (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
    m_Result = 0
    IF pTextRange2 = NULL THEN m_Result = E_INVALIDARG : RETURN m_Result
    ' // Release the interface
@@ -308,7 +308,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *pTextRange2* | The **ITextDocument2** interface pointer to attach. |
+| *pTextRange2* | The **ITextRange2** interface pointer to attach. |
 | *fAddRef* | **TRUE** to increment the reference count of te object; otherwise, **FALSE**. Default is **FALSE**. |
 
 # <a name="GetLastResult"></a>GetLastResult
