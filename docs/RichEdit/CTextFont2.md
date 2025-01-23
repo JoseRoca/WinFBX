@@ -51,7 +51,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetLanguageID](#SetLanguageID) | Sets the language ID or language code identifier (LCID). |
 | [GetName](#GetName) | Gets the font name. |
 | [SetName](#SetName) | Sets the font name. |
-| [GetOutline](#GetOutline) |  |
+| [GetOutline](#GetOutline) | Gets whether characters are displayed as outlined characters. |
 | [SetOutline](#SetOutline) |  |
 | [GetPosition](#GetPosition) |  |
 | [SetPosition](#SetPosition) |  |
@@ -1227,3 +1227,31 @@ END FUNCTION
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
+# <a name="GetOutline"></a>GetOutline
+
+Gets whether characters are displayed as outlined characters.
+
+```
+FUNCTION CTextFont2.GetOutline () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetOutline(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are displayed as outlined characters. |
+| **tomFalse** | Characters are not displayed as outlined characters. |
+| **tomUndefined** | The Outline property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
