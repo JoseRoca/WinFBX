@@ -99,7 +99,7 @@ Public:
    DECLARE FUNCTION GetCharRep () AS LONG
    DECLARE FUNCTION SetCharRep (BYVAL Value AS LONG) AS HRESULT
    DECLARE FUNCTION GetCompressionMode () AS LONG
-   DECLARE FUNCTION SetCompressionMode (BYVAL Value AS LONG) AS HRESULT
+   DECLARE FUNCTION SetCompressionMode (BYVAL Value AS LONG = tomCompressNone) AS HRESULT
    DECLARE FUNCTION GetCookie () AS LONG
    DECLARE FUNCTION SetCookie (BYVAL Value AS LONG) AS HRESULT
    DECLARE FUNCTION GetDoubleStrike () AS LONG
@@ -124,7 +124,7 @@ Public:
    DECLARE FUNCTION GetSpaceExtension () AS LONG
    DECLARE FUNCTION SetSpaceExtension (BYVAL Value AS LONG) AS HRESULT
    DECLARE FUNCTION GetUnderlinePositionMode () AS LONG
-   DECLARE FUNCTION SetUnderlinePositionMode (BYVAL Value AS LONG) AS HRESULT
+   DECLARE FUNCTION SetUnderlinePositionMode (BYVAL Value AS LONG = tomUnderlinePositionAuto) AS HRESULT
    DECLARE FUNCTION GetEffects (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
    DECLARE FUNCTION GetEffects2 (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
    DECLARE FUNCTION GetProperty (BYVAL nType AS LONG) AS LONG
@@ -937,7 +937,7 @@ END FUNCTION
 ' ========================================================================================
 ' Sets the East Asian compression mode.
 ' ========================================================================================
-PRIVATE FUNCTION CTextFont2.SetCompressionMode (BYVAL Value AS LONG) AS HRESULT
+PRIVATE FUNCTION CTextFont2.SetCompressionMode (BYVAL Value AS LONG = tomCompressNone) AS HRESULT
    IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetCompressionMode(m_pTextFont2, Value))
    FUNCTION = m_Result
@@ -1201,7 +1201,7 @@ END FUNCTION
 ' ========================================================================================
 ' Sets the underline position mode.
 ' ========================================================================================
-PRIVATE FUNCTION CTextFont2.SetUnderlinePositionMode (BYVAL Value AS LONG) AS HRESULT
+PRIVATE FUNCTION CTextFont2.SetUnderlinePositionMode (BYVAL Value AS LONG = tomUnderlinePositionAuto) AS HRESULT
    IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetUnderlinePositionMode(m_pTextFont2, Value))
    FUNCTION = m_Result
