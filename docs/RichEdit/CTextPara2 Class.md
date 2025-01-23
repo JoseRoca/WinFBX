@@ -24,7 +24,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetDuplicate](#SetDuplicate) | Sets the formatting for an existing paragraph by copying a given format. |
 | [CanChange](#CanChange) | Determines whether the paragraph formatting can be changed. |
 | [IsEqual](#IsEqual) | Determines if the current range has the same properties as a specified range. |
-| [Reset](#Reset) |  |
+| [Reset](#Reset) | Resets the paragraph formatting to a choice of default values. |
 | [GetStyle](#GetStyle) |  |
 | [SetStyle](#SetStyle) |  |
 | [GetAlignment](#GetAlignment) |  |
@@ -375,3 +375,33 @@ A **tomBool** value that is **tomTrue** if the text paragraph objects have the s
 #### Result code
 
 If paragraph formatting can change, **IsEqual** succeeds and **GetLastResult** returns **S_OK**. If paragraph formatting cannot change, the method fails and returns **S_FALSE**.
+
+# <a name="Reset"></a>Reset
+
+Determines whether the paragraph formatting can be changed.
+
+```
+FUNCTION CTextPara2.Reset (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->Reset(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | Type of reset. It can be one of the following possible values. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomDefault** | Used for paragraph formatting that is defined by the RTF \pard, that is, the paragraph default control word. |
+| **tomUndefined** | Used for all undefined values. The tomUndefined value is only valid for duplicate (clone) ITextPara objects. |
+
+#### Return value
+
+If **Reset** succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Return code | Description |
+| ----------- | ----------- |
+| E_ACCESSDENIED | Write access is denied. |
+| E_OUTOFMEMORY | Insufficient memory. |
+| CO_E_RELEASED | The paragraph formatting object is attached to a range that has been deleted. |
