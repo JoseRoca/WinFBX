@@ -86,7 +86,7 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | ---------- | ----------- |
 | [GetCount](#GetCount) | Gets the count of extra properties in this character formatting collection. |
 | [GetAutoLigatures](#GetAutoLigatures) | Gets whether support for automatic ligatures is active. |
-| [SetAutoLigatures](#SetAutoLigatures) |  |
+| [SetAutoLigatures](#SetAutoLigatures) | Sets whether support for automatic ligatures is active. |
 | [GetAutospaceAlpha](#GetAutospaceAlpha) |  |
 | [SetAutospaceAlpha](#SetAutospaceAlpha) |  |
 | [GetAutospaceNumeric](#GetAutospaceNumeric) |  |
@@ -2055,7 +2055,32 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 | ----- | ------- |
 | **tomTrue** | Automatic ligature support is active. |
 | **tomFalse** | Automatic ligature support is not active. |
-| **tomToggle** | Toggle the state of the Superscript property. |
 | **tomUndefined** | The AutoLigatures property is undefined. |
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetAutoLigatures"></a>SetAutoLigatures
+
+Sets whether support for automatic ligatures is active.
+
+```
+FUNCTION CTextFont2.SetAutoLigatures (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetAutoLigatures(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Automatic ligature support is active. |
+| **tomFalse** | Automatic ligature support is not active. |
+| **tomToggle** | Toggle the AutoLigatures property. |
+| **tomUndefined** | The AutoLigatures property is undefined. |
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
