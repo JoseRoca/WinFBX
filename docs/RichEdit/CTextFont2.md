@@ -112,8 +112,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetModWidthSpace](#SetModWidthSpace) | Sets whether "increase width of whitespace" is active. |
 | [GetOldNumbers](#GetOldNumbers) | Gets whether old-style numbers are active. |
 | [SetOldNumbers](#SetOldNumbers) | Sets whether old-style numbers are active. |
-| [GetOverlapping](#GetOverlapping) |  |
-| [SetOverlapping](#SetOverlapping) |  |
+| [GetOverlapping](#GetOverlapping) | Gets whether overlapping text is active. |
+| [SetOverlapping](#SetOverlapping) | Sets whether overlapping text is active. |
 | [GetPositionSubSuper](#GetPositionSubSuper) |  |
 | [SetPositionSubSuper](#SetPositionSubSuper) |  |
 | [GetScaling](#GetScaling) |  |
@@ -2769,3 +2769,28 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetOverlapping"></a>GetOverlapping
+
+Gets whether overlapping text is active.
+
+```
+FUNCTION CTextFont2.GetOverlapping () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetOverlapping(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Overlapping text is active. |
+| **tomFalse** | Overlapping text is not active. |
+| **tomUndefined** | The Overlapping property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
