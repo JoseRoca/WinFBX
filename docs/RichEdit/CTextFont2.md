@@ -3124,3 +3124,28 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="IsEqual2"></a>IsEqual2
+
+Determines whether this text font object has the same properties as the specified text font object.
+
+```
+FUNCTION CTextFont2.IsEqual2 (BYVAL pFont AS ITextFont2 PTR) AS LONG
+   DIM B AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->IsEqual2(m_pTextFont2, pFont, @B))
+   FUNCTION = B
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pFont* | The text font object to compare against. |
+
+#### Return value
+
+A variable that is **tomTrue** if the font objects have the same properties or **tomFalse** if they do not.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
