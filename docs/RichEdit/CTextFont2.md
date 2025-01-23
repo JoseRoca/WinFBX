@@ -3201,3 +3201,43 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 #### Remarks
 
 Only effects with the corresponding mask flag set are modified.
+
+# <a name="SetEffects2"></a>SetEffects2
+
+Sets the additional character format effects.
+
+```
+FUNCTION CTextFont2.SetEffects2 (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetEffects2(m_pTextFont2, Value, Mask))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+#### Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A combination of the following character format values. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomAutoSpaceAlpha** | Use East Asian auto spacing between alphabetics. |
+| **tomAutoSpaceNumeric** | Use East Asian auto spacing for digits. |
+| **tomAutoSpaceParens** | Use East Asian automatic spacing for parentheses or brackets. |
+| **tomDoublestrike** | Double strikeout. |
+| **tomEmbeddedFont** | Embedded font (CLIP_EMBEDDED). |
+| **tomModWidthPairs** | Use East Asian character-pair-width modification. |
+| **tomModWidthSpace** | Use East Asian space-width modification. |
+| **tomOverlapping** | Run has overlapping text. |
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pMask* | The desired mask, which can be a combination of the Value flags. Only effects with the corresponding mask flag set are modified. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+Only effects with the corresponding mask flag set are modified.
