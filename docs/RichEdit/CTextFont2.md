@@ -59,8 +59,8 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetProtected](#SetProtected) | Sets whether characters are protected against attempts to modify them. |
 | [GetShadow](#GetShadow) | Gets whether characters are displayed as shadowed characters. |
 | [SetShadow](#SetShadow) | Sets whether characters are displayed as shadowed characters. |
-| [GetSize](#GetSize) |  |
-| [SetSize](#SetSize) |  |
+| [GetSize](#GetSize) | Gets the font size. |
+| [SetSize](#SetSize) | Sets the font size. |
 | [GetSmallCaps](#GetSmallCaps) |  |
 | [SetSmallCaps](#SetSmallCaps) |  |
 | [GetSpacing](#GetSpacing) |  |
@@ -1482,3 +1482,51 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
+# <a name="GetSize"></a>GetSize
+
+Gets the font size.
+
+```
+FUNCTION CTextFont2.GetSize () AS SINGLE
+   DIM Value AS SINGLE
+   this.SetResult(m_pTextFont2->lpvtbl->GetSize(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The font size, in floating-point points.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+# <a name="SetSize"></a>SetSize
+
+Sets the font size.
+
+```
+FUNCTION CTextFont2.SetSize (BYVAL Value AS SINGLE) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetSize(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new font size, in floating-point points. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
