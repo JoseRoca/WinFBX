@@ -99,8 +99,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetCompressionMode](#SetCompressionMode) | Sets the East Asian compression mode. |
 | [GetCookie](#GetCookie) | Gets the client cookie. |
 | [SetCookie](#SetCookie) | Sets the client cookie. |
-| [GetDoubleStrike](#GetDoubleStrike) |  |
-| [SetDoubleStrike](#SetDoubleStrike) |  |
+| [GetDoubleStrike](#GetDoubleStrike) | Gets whether characters are displayed with double horizontal lines through the center. |
+| [SetDoubleStrike](#SetDoubleStrike) | Sets whether characters are displayed with double horizontal lines through the center. |
 | [GetDuplicate2](#GetDuplicate) | Gets a duplicate of this character format object. |
 | [SetDuplicate2](#SetDuplicate) | Sets the properties of this object by copying the properties of another text font object. |
 | [GetLinkType](#GetLinkType) |  |
@@ -2483,3 +2483,28 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 #### Remarks
 
 This value is purely for the use of the client. It has no meaning to the Text Object Model (TOM) engine except that different values correspond to different character format runs.
+
+# <a name="GetDoubleStrike"></a>GetDoubleStrike
+
+Gets whether characters are displayed with double horizontal lines through the center.
+
+```
+FUNCTION CTextFont2.GetDoubleStrike () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetDoubleStrike(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are displayed with double horizontal lines. |
+| **tomFalse** | Characters are not displayed with double horizontal lines. |
+| **tomUndefined** | The DoubleStrike property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
