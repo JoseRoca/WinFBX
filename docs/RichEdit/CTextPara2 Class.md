@@ -891,9 +891,9 @@ The line-spacing value. The following table shows how this value is interpreted 
 
 | Line spacing rule | Meaning |
 | ----------------- | ------- |
-| **tomLineSpaceSingle** | The line-spacing value is ignored. |
-| **tomLineSpace1pt5** | The line-spacing value is ignored. |
-| **tomLineSpaceDouble** | The line-spacing value is ignored. |
+| **tomLineSpaceSingle** | Single spacing. The line-spacing value is ignored. |
+| **tomLineSpace1pt5** | One-and-a-half line spacing. The line-spacing value is ignored. |
+| **tomLineSpaceDouble** | Double line spacing. The line-spacing value is ignored. |
 | **tomLineSpaceAtLeast** | The line-spacing value specifies the spacing, in floating-point points, from one line to the next. However, if the value is less than single spacing, the control displays single-spaced text. |
 | **tomLineSpaceExactly** | The line-spacing value specifies the exact spacing, in floating-point points, from one line to the next (even if the value is less than single spacing). |
 | **tomLineSpaceMultiple** | The line-spacing value specifies the line spacing, in lines. |
@@ -923,9 +923,9 @@ One of the following values that indicates the line-spacing rule.
 
 | Line spacing rule | Meaning |
 | ----------------- | ------- |
-| **tomLineSpaceSingle** | The line-spacing value is ignored. |
-| **tomLineSpace1pt5** | The line-spacing value is ignored. |
-| **tomLineSpaceDouble** | The line-spacing value is ignored. |
+| **tomLineSpaceSingle** | Single space- The line-spacing value is ignored. |
+| **tomLineSpace1pt5** | One-and-a-half line spacing. The line-spacing value is ignored. |
+| **tomLineSpaceDouble** | Double line spacing. The line-spacing value is ignored. |
 | **tomLineSpaceAtLeast** | The line-spacing value specifies the spacing, in floating-point points, from one line to the next. However, if the value is less than single spacing, the control displays single-spaced text. |
 | **tomLineSpaceExactly** | The line-spacing value specifies the exact spacing, in floating-point points, from one line to the next (even if the value is less than single spacing). |
 | **tomLineSpaceMultiple** | The line-spacing value specifies the line spacing, in lines.|
