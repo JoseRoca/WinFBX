@@ -2478,7 +2478,7 @@ END FUNCTION
 
 #### Result code
 
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 #### Remarks
 
