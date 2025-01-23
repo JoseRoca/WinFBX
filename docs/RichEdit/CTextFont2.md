@@ -84,7 +84,7 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetCount](#GetCount) |  |
+| [GetCount](#GetCount) | Gets the count of extra properties in this character formatting collection. |
 | [GetAutoLigatures](#GetAutoLigatures) |  |
 | [SetAutoLigatures](#SetAutoLigatures) |  |
 | [GetAutospaceAlpha](#GetAutospaceAlpha) |  |
@@ -2012,3 +2012,22 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+# <a name="GetCount"></a>GetCount
+
+Gets the count of extra properties in this character formatting collection.
+
+```
+FUNCTION CTextFont2.GetCount () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetCount(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The count of extra properties in this collection.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
