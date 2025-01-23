@@ -49,7 +49,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetKerning](#SetKerning) | Sets the minimum font size at which kerning occurs. |
 | [GetLanguageID](#GetLanguageID) | Gets the language ID or language code identifier (LCID). |
 | [SetLanguageID](#SetLanguageID) | Sets the language ID or language code identifier (LCID). |
-| [GetName](#GetName) |  |
+| [GetName](#GetName) | Gets the font name. |
 | [SetName](#SetName) |  |
 | [GetOutline](#GetOutline) |  |
 | [SetOutline](#SetOutline) |  |
@@ -1180,3 +1180,27 @@ If the high nibble of *Value* is **tomCharset**, set the charrep from the charse
 If the high nibble of *Value* is **tomCharRepFromLcid**, set the *charrep* from the LCID and set the LCID as well. See **GetLanguageID** for more information.
 
 To set the BCP-47 language tag, such as "en-US", call **SetText2** and set the **tomLanguageTag** and *bstr* with the language tag.
+
+# <a name="GetName"></a>GetName
+
+Gets the font name.
+
+```
+FUNCTION CTextFont2.GetName () AS CBSTR
+   DIM pName AS AFX_BSTR
+   this.SetResult(m_pTextFont2->lpvtbl->GetName(m_pTextFont2, @pName))
+   RETURN pName
+END FUNCTION
+```
+#### Return value
+
+The font name.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_OUTOFMEMORY** | Could not allocate memory for string. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
