@@ -123,7 +123,7 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [GetUnderlinePositionMode](#GetUnderlinePositionMode) | Gets the underline position mode. |
 | [SetUnderlinePositionMode](#SetUnderlinePositionMode) | Sets the underline position mode. |
 | [GetEffects](#GetEffects) | Gets the character format effects. |
-| [GetEffects2](#GetEffects2) |  |
+| [GetEffects2](#GetEffects2) | Gets the additional character format effects. |
 | [GetProperty](#GetProperty) |  |
 | [GetPropertyInfo](#GetPropertyInfo) |  |
 | [IsEqual2](#IsEqual2) |  |
@@ -2999,6 +2999,7 @@ FUNCTION CTextFont2.GetEffects (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PT
    FUNCTION = m_Result
 END FUNCTION
 ```
+
 #### Return value
 
 | Parameter | Description |
@@ -3034,6 +3035,43 @@ If the **tomInlineObjectStart** flag is set, you might want to call **GetInlineO
 | Parameter | Description |
 | --------- | ----------- |
 | *pMask* | The differences in these flags over the range. A value of zero indicates that the properties are the same over the range. For an insertion point, this value is always zero. |
+
+#### Return code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetEffects2"></a>GetEffects2
+
+Gets the additional character format effects.
+
+```
+FUNCTION CTextFont2.GetEffects2 (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
+   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
+   this.SetResult(m_pTextFont2->lpvtbl->GetEffects2(m_pTextFont2, pValue, pMask))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+#### Return value
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A combination of the following character format flags. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomAutoSpaceAlpha** | Use East Asian auto spacing between alphabetics. |
+| **tomAutoSpaceNumeric** | Use East Asian auto spacing for digits. |
+| **tomAutoSpaceParens** | Use East Asian automatic spacing for parentheses or brackets. |
+| **tomDoublestrike** | Double strikeout. |
+| **tomEmbeddedFont** | Embedded font (CLIP_EMBEDDED). |
+| **tomModWidthPairs** | Use East Asian character-pair-width modification. |
+| **tomModWidthSpace** | Use East Asian space-width modification. |
+| **tomOverlapping** | Run has overlapping text. |
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pMask* | The differences in these flags over the range. Zero values indicate that the properties are the same over the range. For an insertion point, this value is always zero. |
 
 #### Return code
 
