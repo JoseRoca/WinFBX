@@ -2460,3 +2460,26 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 #### Remarks
 
 This value is purely for the use of the client and has no meaning to the Text Object Model (TOM) engine. There are exceptions where different values correspond to different character format runs.
+
+# <a name="SetCookie"></a>SetCookie
+
+Sets the client cookie.
+
+```
+FUNCTION CTextFont2.SetCookie (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetCookie(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The client cookie. |
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+
+#### Remarks
+
+This value is purely for the use of the client. It has no meaning to the Text Object Model (TOM) engine except that different values correspond to different character format runs.
