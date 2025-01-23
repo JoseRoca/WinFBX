@@ -104,8 +104,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [GetDuplicate2](#GetDuplicate) | Gets a duplicate of this character format object. |
 | [SetDuplicate2](#SetDuplicate) | Sets the properties of this object by copying the properties of another text font object. |
 | [GetLinkType](#GetLinkType) | Gets the link type. |
-| [GetMathZone](#GetMathZone) |  |
-| [SetMathZone](#SetMathZone) |  |
+| [GetMathZone](#GetMathZone) | Gets whether a math zone is active. |
+| [SetMathZone](#SetMathZone) | Sets whether a math zone is active. |
 | [GetModWidthPairs](#GetModWidthPairs) |  |
 | [SetModWidthPairs](#SetModWidthPairs) |  |
 | [GetModWidthSpace](#GetModWidthSpace) |  |
@@ -2561,6 +2561,31 @@ The link type. It can be one of the following values.
 | **tomAutoLinkPhone** | An automatic link to a phone number. |
 | **tomAutoLinkPath** | An automatic link to a storage location. |
 
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetMathZone"></a>GetMathZone
+
+Gets whether a math zone is active.
+
+```
+FUNCTION CTextFont2.GetMathZone () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetMathZone(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | A math zone is active. |
+| **tomFalse** | A math zone is not active. |
+| **tomUndefined** | The MathZone property is undefined. |
+	
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
