@@ -106,8 +106,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [GetLinkType](#GetLinkType) | Gets the link type. |
 | [GetMathZone](#GetMathZone) | Gets whether a math zone is active. |
 | [SetMathZone](#SetMathZone) | Sets whether a math zone is active. |
-| [GetModWidthPairs](#GetModWidthPairs) |  |
-| [SetModWidthPairs](#SetModWidthPairs) |  |
+| [GetModWidthPairs](#GetModWidthPairs) | Gets whether "decrease widths on pairs" is active. |
+| [SetModWidthPairs](#SetModWidthPairs) | Sets whether "decrease widths on pairs" is active. |
 | [GetModWidthSpace](#GetModWidthSpace) |  |
 | [SetModWidthSpace](#SetModWidthSpace) |  |
 | [GetOldNumbers](#GetOldNumbers) |  |
@@ -2615,3 +2615,28 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetModWidthPairs"></a>GetModWidthPairs
+
+Gets whether "decrease widths on pairs" is active.
+
+```
+FUNCTION CTextFont2.GetModWidthPairs () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetModWidthPairs(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Decrease widths on pairs is active. |
+| **tomFalse** | Decrease widths on pairs is not active. |
+| **tomUndefined** | The ModWidthPairs property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
