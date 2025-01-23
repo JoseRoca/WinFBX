@@ -61,8 +61,8 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [SetShadow](#SetShadow) | Sets whether characters are displayed as shadowed characters. |
 | [GetSize](#GetSize) | Gets the font size. |
 | [SetSize](#SetSize) | Sets the font size. |
-| [GetSmallCaps](#GetSmallCaps) |  |
-| [SetSmallCaps](#SetSmallCaps) |  |
+| [GetSmallCaps](#GetSmallCaps) | Gets whether characters are in small capital letters. |
+| [SetSmallCaps](#SetSmallCaps) | Sets whether characters are in small capital letters. |
 | [GetSpacing](#GetSpacing) |  |
 | [SetSpacing](#SetSpacing) |  |
 | [GetStrikeThrough](#GetStrikeThrough) |  |
@@ -1530,3 +1530,32 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+# <a name="GetSmallCaps"></a>GetSmallCaps
+
+Gets whether characters are in small capital letters.
+
+```
+FUNCTION CTextFont2.GetSmallCaps () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetSmallCaps(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are in small capital letters. |
+| **tomFalse** | Characters are not in small capital letters. |
+| **tomUndefined** | The SmallCaps property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
