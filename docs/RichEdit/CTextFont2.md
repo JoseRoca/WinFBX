@@ -48,7 +48,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [GetKerning](#GetKerning) | Gets the minimum font size at which kerning occurs. |
 | [SetKerning](#SetKerning) | Sets the minimum font size at which kerning occurs. |
 | [GetLanguageID](#GetLanguageID) | Gets the language ID or language code identifier (LCID). |
-| [SetLanguageID](#SetLanguageID) |  |
+| [SetLanguageID](#SetLanguageID) | Sets the language ID or language code identifier (LCID). |
 | [GetName](#GetName) |  |
 | [SetName](#SetName) |  |
 | [GetOutline](#GetOutline) |  |
@@ -1149,3 +1149,34 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 
+# <a name="SetLanguageID"></a>SetLanguageID
+
+Sets the language ID or language code identifier (LCID).
+
+```
+FUNCTION CTextFont2.SetLanguageID (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetLanguageID(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new value of the minimum kerning size, in floating-point points. |
+
+The new language identifier. The low word contains the language identifier. The high word is either zero or it contains the high word of the locale identifier LCID. For more information, see [Locale Identifiers](https://learn.microsoft.com/en-us/windows/win32/intl/locale-identifiers).
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+
+#### Remarks
+
+If the high nibble of *Value* is **tomCharset**, set the charrep from the charset in the low byte and the pitch and family from the next byte. See also **SetCharRep**.
+
+If the high nibble of *Value* is **tomCharRepFromLcid**, set the *charrep* from the LCID and set the LCID as well. See **GetLanguageID** for more information.
+
+To set the BCP-47 language tag, such as "en-US", call **SetText2** and set the **tomLanguageTag** and *bstr* with the language tag.
