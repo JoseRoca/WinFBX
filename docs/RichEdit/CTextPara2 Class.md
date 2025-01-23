@@ -33,7 +33,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetHyphenation](#SetHyphenation) | Controls hyphenation for the paragraphs in the range. |
 | [GetFirstLineIndent](#GetFirstLineIndent) | Retrieves the amount used to indent the first line of a paragraph relative to the left indent. The left indent is the indent for all lines of the paragraph except the first line. |
 | [GetKeepTogether](#GetKeepTogether) | Determines whether page breaks are allowed within paragraphs. |
-| [SetKeepTogether](#SetKeepTogether) |  |
+| [SetKeepTogether](#SetKeepTogether) | Controls whether page breaks are allowed within a paragraph in a range. |
 | [SetKeepWithNext](#SetKeepWithNext) |  |
 | [GetLeftIndent](#GetLeftIndent) |  |
 | [GetLineSpacing](#GetLineSpacing) |  |
