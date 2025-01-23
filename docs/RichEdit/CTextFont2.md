@@ -128,8 +128,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [GetPropertyInfo](#GetPropertyInfo) | Gets the property type and value of the specified extra property. |
 | [IsEqual2](#IsEqual2) | The text font object to compare against. |
 | [SetEffects](#SetEffects) | Sets the character format effects. |
-| [SetEffects2](#SetEffects2) |  |
-| [SetProperty](#SetProperty) |  |
+| [SetEffects2](#SetEffects2) | Sets the additional character format effects. |
+| [SetProperty](#SetProperty) | Sets the value of the specified property. |
 
 ### Methods inherited from CTOMBase Class
 
@@ -3241,3 +3241,25 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 #### Remarks
 
 Only effects with the corresponding mask flag set are modified.
+
+# <a name="SetProperty"></a>SetProperty
+
+Sets the value of the specified property.
+
+```
+FUNCTION CTextFont2.SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetProperty(m_pTextFont2, nType, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+#### Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| *nType* | The ID of the property value to set. |
+| *Value* | The new property value. |
+
+#### Return value
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
