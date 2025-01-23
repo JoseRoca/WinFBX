@@ -56,7 +56,7 @@ The **ITextFont** interface inherits from the **IDispatch** interface. **ITextFo
 | [GetPosition](#GetPosition) | Gets the amount that characters are offset vertically relative to the baseline. |
 | [SetPosition](#SetPosition) | Sets the amount that characters are offset vertically relative to the baseline. |
 | [GetProtected](#GetProtected) | Gets whether characters are protected against attempts to modify them. |
-| [SetProtected](#SetProtected) |  |
+| [SetProtected](#SetProtected) | Sets whether characters are protected against attempts to modify them. |
 | [GetShadow](#GetShadow) |  |
 | [SetShadow](#SetShadow) |  |
 | [GetSize](#GetSize) |  |
@@ -1382,3 +1382,36 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 In general, Text Object Model (TOM) methods that attempt to change the formatting or content of a range fail with **E_ACCESSDENIED** if any part of that range is protected, or if the document is read only. To make a change in protected text, the TOM client should attempt to turn off the protection of the text to be modified. The owner of the document may permit this to happen. For example in rich edit controls, attempts to change protected text result in an **EN_PROTECTED** notification code to the creator of the document, who then can refuse or grant permission for the change. The creator is the client that created a windowed rich edit control through the **CreateWindowEx** function or the **ITextHost** object that called the **CreateTextServices** function to create a windowless rich edit control.
+
+# <a name="SetProtected"></a>SetProtected
+
+Sets whether characters are protected against attempts to modify them.
+
+```
+FUNCTION CTextFont2.SetProtected (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetProtected(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are protected. |
+| **tomFalse** | Characters are not protected. |
+| **tomToggle** | Toggle the state of the Protected property. |
+| **tomUndefined** | The Protected property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
