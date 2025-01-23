@@ -40,7 +40,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [GetLineSpacing](#GetLineSpacing) | Retrieves the line-spacing value for the text range. |
 | [GetLineSpacingRule](#GetLineSpacingRule) | Retrieves the line-spacing rule for the text range. |
 | [GetListAlignment](#GetListAlignment) | Retrieves the kind of alignment to use for bulleted and numbered lists. |
-| [SetListAlignment](#SetListAlignment) |  |
+| [SetListAlignment](#SetListAlignment) | Sets the alignment of bulleted or numbered text used for paragraphs. |
 | [GetListLevelIndex](#GetListLevelIndex) |  |
 | [SetListLevelIndex](#SetListLevelIndex) |  |
 | [GetListStart](#GetListStart) |  |
