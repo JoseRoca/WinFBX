@@ -990,7 +990,7 @@ END FUNCTION
 
 #### Return value
 
-If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
 | Result code | Description |
 | ----------- | ----------- |
@@ -1030,4 +1030,37 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 | Result code | Description |
 | ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="SetListLevelIndex"></a>SetListLevelIndex
+
+Sets the list level index used for paragraphs.
+
+```
+FUNCTION CTextPara2.SetListLevelIndex (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetListLevelIndex(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new list level index value. |
+
+| Value | Meaning |
+| ----- | ------- |
+| 0 | No list. |
+| 1 | First-level (outermost) list. |
+| 2 | Second-level (nested) list. This is nested under a level 1 list item. |
+| 3 | Third-level (nested) list. This is nested under a level 2 list item. |
+| and so forth | Nesting continues similarly. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
