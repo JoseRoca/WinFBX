@@ -95,8 +95,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetAutospaceParens](#SetAutospaceParens) | Sets the East Asian "autospace parentheses" state. |
 | [GetCharRep](#GetCharRep) | Gets the character repertoire (writing system). |
 | [SetCharRep](#SetCharRep) | Sets the character repertoire (writing system). |
-| [GetCompressionMode](#GetCompressionMode) |  |
-| [SetCompressionMode](#SetCompressionMode) |  |
+| [GetCompressionMode](#GetCompressionMode) | Gets the East Asian compression mode. |
+| [SetCompressionMode](#SetCompressionMode) | Sets the East Asian compression mode. |
 | [GetCookie](#GetCookie) |  |
 | [SetCookie](#SetCookie) |  |
 | [GetDoubleStrike](#GetDoubleStrike) |  |
@@ -2387,3 +2387,30 @@ END FUNCTION
 #### Result code
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+
+# <a name="GetCompressionMode"></a>GetCompressionMode
+
+Gets the East Asian compression mode.
+
+```
+FUNCTION CTextFont2.GetCompressionMode () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetCompressionMode(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+
+The compression mode, which can be one of these values:
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomCompressNone** (default) | No compression. |
+| **tomCompressPunctuation** | Compress punctuation. |
+| **tomCompressPunctuationAndKana** | Compress punctuation and kana. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
