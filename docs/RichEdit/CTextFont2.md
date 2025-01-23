@@ -2963,3 +2963,28 @@ The underline position mode. It can be one of the following values.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetUnderlinePositionMode"></a>SetUnderlinePositionMode
+
+Sets the underline position mode.
+
+```
+FUNCTION CTextFont2.SetUnderlinePositionMode (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetUnderlinePositionMode(m_pTextFont2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new underline position mode. It can be one of the following values. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomUnderlinePositionAuto** (the default) | Automatically set the underline position. |
+| **tomUnderlinePositionBelow** | Render underline below text. |
+| **tomUnderlinePositionAbove** | Render underline above text. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
