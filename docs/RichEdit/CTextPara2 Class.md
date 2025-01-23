@@ -21,7 +21,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | Name       | Description |
 | ---------- | ----------- |
 | [GetDuplicate](#GetDuplicate) | Gets a duplicate of this text paragraph format object. |
-| [SetDuplicate](#SetDuplicate) |  |
+| [SetDuplicate](#SetDuplicate) | Sets the formatting for an existing paragraph by copying a given format. |
 | [CanChange](#CanChange) |  |
 | [IsEqual](#IsEqual) |  |
 | [Reset](#Reset) |  |
@@ -78,7 +78,7 @@ The **ITextPara2** interface has these methods.
 | ---------- | ----------- |
 | [GetBorders](#GetBorders) |  |
 | [GetDuplicate2](#GetDuplicate) | Gets a duplicate of this text paragraph format object. |
-| [SetDuplicate2](#SetDuplicate) |  |
+| [SetDuplicate2](#SetDuplicate) | Sets the formatting for an existing paragraph by copying a given format. |
 | [GetFontAlignment](#GetFontAlignment) |  |
 | [SetFontAlignment](#SetFontAlignment) |  |
 | [GetHangingPunctuation](#GetHangingPunctuation) |  |
@@ -263,7 +263,7 @@ END FUNCTION
 
 # <a name="GetDuplicate"></a>GetDuplicate
 
-Gets a duplicate of this range object. In this implementation of the class, **GetDuplicate** and **GetDuplicate2** are the same method.
+Gets a duplicate of this range object.
 
 ```
 FUNCTION CTextPara2.GetDuplicate () AS ITextPara2 PTR
@@ -292,3 +292,34 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **E_OUTOFMEMORY** | Memory could not be allocated for the new object. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="SetDuplicate"></a>SetDuplicate
+
+Sets the properties of this object by copying the properties of another text paragraph object.
+
+```
+FUNCTION CTextPara2.SetDuplicate (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetDuplicate(m_pTextPara2, pPara))
+   FUNCTION = m_Result
+END FUNCTION
+```
+```
+FUNCTION CTextPara2.SetDuplicate2 (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetDuplicate2(m_pTextPara2, pPara))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pPara* | The text paragraph object to copy from. |
+
+#### Return value
+
+If **SetDuplicate2** succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Return code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
