@@ -89,8 +89,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetAutoLigatures](#SetAutoLigatures) | Sets whether support for automatic ligatures is active. |
 | [GetAutospaceAlpha](#GetAutospaceAlpha) | Gets the East Asian "autospace alphabetics" state. |
 | [SetAutospaceAlpha](#SetAutospaceAlpha) | Sets the East Asian "autospace alphabetics" state. |
-| [GetAutospaceNumeric](#GetAutospaceNumeric) |  |
-| [SetAutospaceNumeric](#SetAutospaceNumeric) |  |
+| [GetAutospaceNumeric](#GetAutospaceNumeric) | Gets the East Asian "autospace numeric" state. |
+| [SetAutospaceNumeric](#SetAutospaceNumeric) | Sets the East Asian "autospace numeric" state. |
 | [GetAutospaceParens](#GetAutospaceParens) |  |
 | [SetAutospaceParens](#SetAutospaceParens) |  |
 | [GetCharRep](#GetCharRep) |  |
@@ -2133,3 +2133,28 @@ END FUNCTION
 #### Result code
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+
+# <a name="GetAutospaceNumeric"></a>GetAutospaceNumeric
+
+Gets the East Asian "autospace numeric" state.
+
+```
+FUNCTION CTextFont2.GetAutospaceNumeric () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetAutospaceNumeric(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Use East Asian autospace numerics. |
+| **tomFalse** | Do not use East Asian autospace numerics. |
+| **tomUndefined** | The AutospaceNumeric property is undefined |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
