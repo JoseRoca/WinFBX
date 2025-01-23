@@ -125,7 +125,7 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [GetEffects](#GetEffects) | Gets the character format effects. |
 | [GetEffects2](#GetEffects2) | Gets the additional character format effects. |
 | [GetProperty](#GetProperty) | Gets the value of the specified property. |
-| [GetPropertyInfo](#GetPropertyInfo) |  |
+| [GetPropertyInfo](#GetPropertyInfo) | Gets the property type and value of the specified extra property. |
 | [IsEqual2](#IsEqual2) |  |
 | [SetEffects](#SetEffects) |  |
 | [SetEffects2](#SetEffects2) |  |
@@ -3092,7 +3092,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *nType* | The property ID of the value to return. See Remarks. |
+| *nType* | The property ID of the value to return. |
 
 #### Return value
 
@@ -3101,3 +3101,26 @@ The property value.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetPropertyInfo"></a>GetPropertyInfo
+
+Gets the property type and value of the specified extra property.
+
+```
+FUNCTION CTextFont2.GetPropertyInfo (BYVAL Index AS LONG, BYVAL pType AS LONG PTR, BYVAL pValue AS LONG PTR) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->GetPropertyInfo(m_pTextFont2, Index, pType, pValue))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+#### Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Index* | The collection index of the extra property. |
+| *pType* | The property ID. |
+| *pType* | The property value. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
