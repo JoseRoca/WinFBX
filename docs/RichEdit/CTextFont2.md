@@ -127,7 +127,7 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [GetProperty](#GetProperty) | Gets the value of the specified property. |
 | [GetPropertyInfo](#GetPropertyInfo) | Gets the property type and value of the specified extra property. |
 | [IsEqual2](#IsEqual2) | The text font object to compare against. |
-| [SetEffects](#SetEffects) |  |
+| [SetEffects](#SetEffects) | Sets the character format effects. |
 | [SetEffects2](#SetEffects2) |  |
 | [SetProperty](#SetProperty) |  |
 
@@ -3149,3 +3149,55 @@ A variable that is **tomTrue** if the font objects have the same properties or *
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+# <a name="SetEffects"></a>SetEffects
+
+Sets the character format effects.
+
+```
+FUNCTION CTextFont2.SetEffects (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
+   this.SetResult(m_pTextFont2->lpvtbl->SetEffects(m_pTextFont2, Value, Mask))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+#### Parameters
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A combination of the following character format values. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomAllCaps** | All caps |
+| **tomBold** | Boldface |
+| **tomDisabled** | Disabled |
+| **tomEmboss** | Emboss |
+| **tomHidden** | Hidden |
+| **tomImprint** | Imprint |
+| **tomInlineObjectStart** | The start delimiter of an inline object |
+| **tomItalic** | Italic |
+| **tomLink** | Hyperlink |
+| **tomLinkProtected** | The link is protected (friendly name link). |
+| **tomMathZone** | Math zone |
+| **tomMathZoneDisplay** | Display math zone |
+| **tomMathZoneNoBuildUp** | Don't build up operator |
+| **tomMathZoneOrdinary** | Math zone ordinary text. |
+| **tomOutline** | Outline |
+| **tomProtected** | Protected |
+| **tomRevised** | Revised |
+| **tomShadow** | Shadow |
+| **tomSmallCaps** | Small caps |
+| **tomStrikeout** | Strikeout |
+| **tomUnderline** | Underline |
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pMask* | The desired mask, which can be a combination of the Value flags. Only effects with the corresponding mask flag set are modified. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+Only effects with the corresponding mask flag set are modified.
