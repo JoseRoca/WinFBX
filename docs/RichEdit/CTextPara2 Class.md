@@ -67,3 +67,26 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [ClearAllTabs](#ClearAllTabs) |  |
 | [DeleteTab](#DeleteTab) |  |
 | [GetTab](#GetTab) |  |
+
+### ITextPara2 Interface
+
+The **ITextPara2** interface extends ITextPara, providing the equivalent of the Microsoft Word format-paragraph dialog.
+
+The **ITextPara2** interface has these methods.
+
+| [GetBorders](#GetBorders) |  |
+| [GetDuplicate2](#GetDuplicate2) |  |
+| [SetDuplicate2](#SetDuplicate2) |  |
+| [GetFontAlignment](#GetFontAlignment) |  |
+| [SetFontAlignment](#SetFontAlignment) |  |
+| [GetHangingPunctuation](#GetHangingPunctuation) |  |
+| [SetHangingPunctuation](#SetHangingPunctuation) |  |
+| [GetSnapToGrid](#GetSnapToGrid) |  |
+| [SetSnapToGrid](#SetSnapToGrid) |  |
+| [GetTrimPunctuationAtStart](#GetTrimPunctuationAtStart) |  |
+| [SetTrimPunctuationAtStart](#SetTrimPunctuationAtStart) |  |
+| [GetEffects](#GetEffects) |  |
+| [GetProperty](#GetProperty) |  |
+| [IsEqual2](#IsEqual2) |  |
+| [SetEffects](#SetEffects) |  |
+| [SetProperty](#SetProperty) |  |
