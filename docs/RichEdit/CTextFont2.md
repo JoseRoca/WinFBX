@@ -103,7 +103,7 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetDoubleStrike](#SetDoubleStrike) | Sets whether characters are displayed with double horizontal lines through the center. |
 | [GetDuplicate2](#GetDuplicate) | Gets a duplicate of this character format object. |
 | [SetDuplicate2](#SetDuplicate) | Sets the properties of this object by copying the properties of another text font object. |
-| [GetLinkType](#GetLinkType) |  |
+| [GetLinkType](#GetLinkType) | Gets the link type. |
 | [GetMathZone](#GetMathZone) |  |
 | [SetMathZone](#SetMathZone) |  |
 | [GetModWidthPairs](#GetModWidthPairs) |  |
@@ -2534,3 +2534,33 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetLinkType"></a>GetLinkType
+
+Gets the link type.
+
+```
+FUNCTION CTextFont2.GetLinkType () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextFont2->lpvtbl->GetLinkType(m_pTextFont2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The link type. It can be one of the following values.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomNoLink** | Not a link. |
+| **tomClientLink** | The URL only; that is, no friendly name. |
+| **tomFriendlyLinkName** | The name of friendly name link. |
+| **tomFriendlyLinkAddress** | The URL of a friendly name link. |
+| **tomAutoLinkURL** | The URL of an automatic link. |
+| **tomAutoLinkEmail** | An automatic link to an email address. |
+| **tomAutoLinkPhone** | An automatic link to a phone number. |
+| **tomAutoLinkPath** | An automatic link to a storage location. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
