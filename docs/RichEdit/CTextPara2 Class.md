@@ -56,7 +56,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [GetRightIndent](#GetRightIndent) | Retrieves the size of the right margin indent of a paragraph. |
 | [SetRightIndent](#SetRightIndent) | Sets the right margin of paragraph. |
 | [SetIndents](#SetIndents) | Sets the first-line indent, the left indent, and the right indent for a paragraph. |
-| [SetLineSpacing](#SetLineSpacing) |  |
+| [SetLineSpacing](#SetLineSpacing) | Sets the paragraph line-spacing rule and the line spacing for a paragraph. |
 | [GetSpaceAfter](#GetSpaceAfter) |  |
 | [SetSpaceAfter](#SetSpaceAfter) |  |
 | [GetSpaceBefore](#GetSpaceBefore) |  |
