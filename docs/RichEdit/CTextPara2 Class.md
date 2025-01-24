@@ -55,7 +55,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetPageBreakBefore](#SetPageBreakBefore) | Controls whether there is a page break before each paragraph in a range. |
 | [GetRightIndent](#GetRightIndent) | Retrieves the size of the right margin indent of a paragraph. |
 | [SetRightIndent](#SetRightIndent) | Sets the right margin of paragraph. |
-| [SetIndents](#SetIndents) |  |
+| [SetIndents](#SetIndents) | Sets the first-line indent, the left indent, and the right indent for a paragraph. |
 | [SetLineSpacing](#SetLineSpacing) |  |
 | [GetSpaceAfter](#GetSpaceAfter) |  |
 | [SetSpaceAfter](#SetSpaceAfter) |  |
@@ -1508,3 +1508,35 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="SetIndents"></a>SetIndents
+
+Sets the first-line indent, the left indent, and the right indent for a paragraph.
+
+```
+FUNCTION CTextPara2.SetIndents (BYVAL First AS SINGLE, BYVAL Left AS SINGLE, BYVAL Right AS SINGLE) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetIndents(m_pTextPara2, First, Left, Right))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *First* | Indent of the first line in a paragraph, relative to the left indent. The value is in floating-point points and can be positive or negative. |
+| *Left* | Left indent of all lines except the first line in a paragraph, relative to left margin. The value is in floating-point points and can be positive or negative. |
+| *Right* | Right indent of all lines in paragraph, relative to the right margin. The value is in floating-point points and can be positive or negative. This value is optional. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+#### Remarks
+
+Line indents are not allowed to position text in the margins. If the first-line indent is set to a negative value (for an outdented paragraph) while the left indent is zero, the first-line indent is reset to zero. To avoid this problem while retaining property sets, set the first-line indent value equal to zero either explicitly or by calling the **Reset** method. Then, call **SetIndents** to set a nonnegative, left-indent value and set the desired first-line indent.
