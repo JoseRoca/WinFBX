@@ -2130,3 +2130,29 @@ A **tomBool** value that can be one of the following.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetTrimPunctuationAtStart"></a>SetTrimPunctuationAtStart
+
+Sets whether to trim the leading space of a punctuation symbol at the start of a line.
+
+```
+FUNCTION CTextPara2.SetTrimPunctuationAtStart (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetTrimPunctuationAtStart(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| ----- | ------- |
+| **Value** | A **tomBool** that indicates whether to trim the leading space of a punctuation symbol. It can be one of the following values. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Trim the leading space of a punctuation symbol at the start of a line. |
+| **tomFalse** | Do not trim the leading space of a punctuation symbol at the start of a line. |
+| **tomToggle** | Toggle the TrimPunctuationAtStart property. |
+| **tomUndefined** | The TrimPunctuationAtStart property is undefined. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
