@@ -571,28 +571,6 @@ END FUNCTION
 | *Flags* | The file creation, open, share, and conversion flags. Default value is zero, which gives read/write access and read/write sharing, open always, and automatic recognition of the file format (unrecognized file formats are treated as text). Other values are defined in the following groups (see table below). |
 | *CodePage* | The code page to use for the file. Zero (the default value) means **CP_ACP** (ANSI code page) unless the file begins with a Unicode BOM 0xfeff, in which case the file is considered to be Unicode. Note that code page 1200 is Unicode, **CP_UTF8** is UTF-8. |
 
-Any combination of these values may be used:
-
-| Constant | Value | Description |
-| -------- | ----- | ----------- |
-| **tomReadOnly** | &h100 | Read only. |
-| **tomShareDenyRead** | &h200 | Other programs cannot read. |
-| **tomShareDenyWrite** | &h400 | Other programs cannot write. |
-| **tomPasteFile** | &h1000 | Replace the selection with a file. |
-
-These values are mutually exclusive:
-
-| Constant | Value | Description |
-| ---- | ----- | ----------- |
-| **tomCreateNew** | &h10 | Create a new file. Fail if the file already exists. |
-| **tomCreateAlways** | &h20 | Create a new file. Destroy the existing file if it exists. |
-| **tomOpenExisting** | &h30 | Open an existing file. Fail if the file does not exist. |
-| **tomOpenAlways** | &h40 | Open an existing file. Create a new file if the file does not exist. |
-| **tomTruncateExisting** | &h50 | Open an existing file, but truncate it to zero length. |
-| **tomRTF** | &h1 | Open as RTF. |
-| **tomText** | &h2 | Open as text ANSI or Unicode. |
-| **tomHTML** | &h3 | Open as HTML. |
-| **tomWordDocument** | &h4 | Open as Word document. |
 
 #### Return value
 
@@ -618,32 +596,9 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *pVar* | The save target. This parameter is a **VARIANT**, which can be a file name, or NULL. |
-| *Flags* | File creation, open, share, and conversion flags. For a list of possible values, see table below. |
+| *pVar* | The save target. This parameter is a **VARIANT**, which can be a file name, or **NULL**. |
+| *Flags* | File creation, open, share, and conversion flags. For a list of possible values, see **Open**. |
 | *CodePage* | The specified code page. Common values are **CP_ACP** (zero: system ANSI code page), 1200 (Unicode), and 1208 (UTF-8). |
-
-Any combination of these values may be used:
-
-| Constant | Value | Description |
-| -------- | ----- | ----------- |
-| **tomReadOnly** | &h100 | Read only. |
-| **tomShareDenyRead** | &h200 | Other programs cannot read. |
-| **tomShareDenyWrite** | &h400 | Other programs cannot write. |
-| **tomPasteFile** | &h1000 | Replace the selection with a file. |
-
-These values are mutually exclusive:
-
-| Constant | Value | Description |
-| -------- | ----- | ----------- |
-| **tomCreateNew** | &h10 | Create a new file. Fail if the file already exists. |
-| **tomCreateAlways** | &h20 | Create a new file. Destroy the existing file if it exists. |
-| **tomOpenExisting** | &h30 | Open an existing file. Fail if the file does not exist. |
-| **tomOpenAlways** | &h40 | Open an existing file. Create a new file if the file does not exist. |
-| **tomTruncateExisting** | &h50 | Open an existing file, but truncate it to zero length. |
-| **tomRTF** | &h1 | Open as RTF. |
-| **tomText** | &h2 | Open as text ANSI or Unicode. |
-| **tomHTML** | &h3 | Open as HTML. |
-| **tomWordDocument* | &h4 | Open as Word document. |
 
 #### Return value
 
