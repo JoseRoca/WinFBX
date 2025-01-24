@@ -84,8 +84,8 @@ The **ITextPara2** interface has these methods.
 | [SetFontAlignment](#SetFontAlignment) | Sets the paragraph font alignment for Chinese, Japanese, Korean text. |
 | [GetHangingPunctuation](#GetHangingPunctuation) | Gets whether to hang punctuation symbols on the right margin when the paragraph is justified. |
 | [SetHangingPunctuation](#SetHangingPunctuation) | Sets whether to hang punctuation symbols on the right margin when the paragraph is justified. |
-| [GetSnapToGrid](#GetSnapToGrid) |  |
-| [SetSnapToGrid](#SetSnapToGrid) |  |
+| [GetSnapToGrid](#GetSnapToGrid) | Gets whether paragraph lines snap to a vertical grid that could be defined for the whole document. |
+| [SetSnapToGrid](#SetSnapToGrid) | Sets whether paragraph lines snap to a vertical grid that could be defined for the whole document. |
 | [GetTrimPunctuationAtStart](#GetTrimPunctuationAtStart) |  |
 | [SetTrimPunctuationAtStart](#SetTrimPunctuationAtStart) |  |
 | [GetEffects](#GetEffects) |  |
@@ -2052,3 +2052,29 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetSnapToGrid"></a>GetSnapToGrid
+
+Gets whether paragraph lines snap to a vertical grid that could be defined for the whole document.
+
+```
+FUNCTION CTextPara2.GetSnapToGrid () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetSnapToGrid(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Paragraph lines snap to a vertical grid. |
+| **tomFalse** | Paragraph lines do not snap to a grid. |
+| **tomUndefined** | The SnapToGrid property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
