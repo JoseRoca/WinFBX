@@ -53,8 +53,8 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetNoLineNumber](#SetNoLineNumber) | Determines whether to suppress line numbering of paragraphs in a range. |
 | [GetPageBreakBefore](#GetPageBreakBefore) | Determines whether each paragraph in the range must begin on a new page. |
 | [SetPageBreakBefore](#SetPageBreakBefore) | Controls whether there is a page break before each paragraph in a range. |
-| [GetRightIndent](#GetRightIndent) |  |
-| [SetRightIndent](#SetRightIndent) |  |
+| [GetRightIndent](#GetRightIndent) | Retrieves the size of the right margin indent of a paragraph. |
+| [SetRightIndent](#SetRightIndent) | Sets the right margin of paragraph. |
 | [SetIndents](#SetIndents) |  |
 | [SetLineSpacing](#SetLineSpacing) |  |
 | [GetSpaceAfter](#GetSpaceAfter) |  |
@@ -1459,3 +1459,26 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 #### Remarks
 
 This method is included for compatibility with Microsoft Word; it does not affect how the rich edit control displays text.
+
+# <a name="GetRightIndent"></a>GetRightIndent
+
+Retrieves the size of the right margin indent of a paragraph.
+
+```
+FUNCTION CTextPara2.GetRightIndent () AS SINGLE
+   DIM Value AS SINGLE
+   this.SetResult(m_pTextPara2->lpvtbl->GetRightIndent(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The right indentation, in floating-point points.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
