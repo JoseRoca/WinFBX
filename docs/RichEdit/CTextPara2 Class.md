@@ -77,7 +77,7 @@ The **ITextPara2** interface has these methods.
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetBorders](#GetBorders) |  |
+| [GetBorders](#GetBorders) | Not implemented. Gets the borders collection. |
 | [GetDuplicate2](#GetDuplicate) | Gets a duplicate of this text paragraph format object. |
 | [SetDuplicate2](#SetDuplicate) | Sets the formatting for an existing paragraph by copying a given format. |
 | [GetFontAlignment](#GetFontAlignment) |  |
@@ -1922,3 +1922,23 @@ If **GetTab** succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_INVALIDARG** | Invalid argument. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 | **S_FALSE** | There is no tab corresponding to iTab. |
+
+# <a name="GetBorders"></a>GetBorders
+
+Not implemented. Gets the borders collection.
+
+```
+FUNCTION CTextPara2.GetBorders () AS IUnknown PTR
+   DIM pBorders AS IUnknown PTR
+   this.SetResult(m_pTextPara2->lpvtbl->GetBorders(m_pTextPara2, @pBorders))
+   FUNCTION = pBorders
+END FUNCTION
+```
+
+#### Return value
+
+The borders collection.
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
