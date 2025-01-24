@@ -1460,7 +1460,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 # <a name="Range2"></a>Range2
 
-Notifies the Text Object Model (TOM) engine client of particular Input Method Editor (IME) events.
+Retrieves a new text range for the active story of the document.
 
 ```
 FUNCTION CTextDocument2.Range2 (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange2 PTR
