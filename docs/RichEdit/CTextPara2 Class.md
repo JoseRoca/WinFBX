@@ -1708,3 +1708,36 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | Result code | Description |
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="SetWidowControl"></a>SetWidowControl
+
+Controls the suppression of widows and orphans.
+
+```
+FUNCTION CTextPara2.SetWidowControl (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetWidowControl(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A tomBool value that controls the suppression of widows and orphans. It can be one of the following possible values. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Prevents printing of widows and orphans. |
+| **tomFalse** | Allows printing of widows and orphans. |
+| **tomToggle** | The value is toggled. |
+| **tomUndefined** | No change. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
