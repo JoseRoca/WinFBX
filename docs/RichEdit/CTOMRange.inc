@@ -308,7 +308,7 @@ END FUNCTION
 PRIVATE FUNCTION CTextRange2.GetDuplicate () AS ITextRange2 PTR
    DIM pRange AS ITextRange2 PTR
    IF m_pTextRange2 = NULL THEN m_Result = E_POINTER: RETURN pRange
-   this.SetResult(m_pTextRange2->lpvtbl->GetDuplicate(m_pTextRange2, @pRange))
+   this.SetResult(m_pTextRange2->lpvtbl->GetDuplicate2(m_pTextRange2, @pRange))
    RETURN pRange
 END FUNCTION
 ' ========================================================================================

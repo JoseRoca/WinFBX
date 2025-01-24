@@ -34,7 +34,7 @@ Public:
    DECLARE FUNCTION SetDuplicate (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
    DECLARE FUNCTION CanChange (BYVAL pPara AS ITextPara2 PTR) AS LONG
    DECLARE FUNCTION IsEqual (BYVAL pPara AS ITextPara2 PTR) AS LONG
-   DECLARE FUNCTION Reset (BYVAL Value AS LONG) AS HRESULT
+   DECLARE FUNCTION Reset (BYVAL Value AS LONG = tomDefault) AS HRESULT
    DECLARE FUNCTION GetStyle () AS LONG
    DECLARE FUNCTION SetStyle (BYVAL Value AS LONG) AS HRESULT
    DECLARE FUNCTION GetAlignment () AS LONG
@@ -74,7 +74,7 @@ Public:
    DECLARE FUNCTION GetWidowControl () AS LONG
    DECLARE FUNCTION SetWidowControl (BYVAL Value AS LONG) AS HRESULT
    DECLARE FUNCTION GetTabCount () AS LONG
-   DECLARE FUNCTION AddTab (BYVAL tbPos AS SINGLE, BYVAL tbAlign AS LONG, BYVAL tbLeader AS LONG) AS HRESULT
+   DECLARE FUNCTION AddTab (BYVAL tbPos AS SINGLE, BYVAL tbAlign AS LONG = tomALignLeft, BYVAL tbLeader AS LONG = tomSpaces) AS HRESULT
    DECLARE FUNCTION ClearAllTabs () AS HRESULT
    DECLARE FUNCTION DeleteTab (BYVAL tbPos AS SINGLE) AS HRESULT
    DECLARE FUNCTION GetTab (BYVAL iTab AS LONG, BYVAL ptbPos AS SINGLE PTR, BYVAL ptbAlign AS LONG PTR, BYVAL ptbLeader AS LONG PTR) AS HRESULT
@@ -193,13 +193,12 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Creates a duplicate of the specified paragraph format object. The duplicate property is
-' the default property of an ITextPara object.
+' Creates a duplicate of the specified paragraph format object.
 ' ========================================================================================
 PRIVATE FUNCTION CTextPara2.GetDuplicate () AS ITextPara2 PTR
    DIM pPara AS ITextPara2 PTR
    IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN pPara
-   this.SetResult(m_pTextPara2->lpvtbl->GetDuplicate(m_pTextPara2, @pPara))
+   this.SetResult(m_pTextPara2->lpvtbl->GetDuplicate2(m_pTextPara2, @pPara))
    FUNCTION = pPara
 END FUNCTION
 ' ========================================================================================
@@ -210,7 +209,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextPara2.SetDuplicate (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
    IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
-   this.SetResult(m_pTextPara2->lpvtbl->SetDuplicate(m_pTextPara2, pPara))
+   this.SetResult(m_pTextPara2->lpvtbl->SetDuplicate2(m_pTextPara2, pPara))
    FUNCTION = m_Result
 END FUNCTION
 ' ========================================================================================
@@ -232,7 +231,7 @@ END FUNCTION
 PRIVATE FUNCTION CTextPara2.IsEqual (BYVAL pPara AS ITextPara2 PTR) AS LONG
    DIM Value AS LONG
    IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN Value
-   this.SetResult(m_pTextPara2->lpvtbl->CanChange(m_pTextPara2, @Value))
+   this.SetResult(m_pTextPara2->lpvtbl->IsEqual2(m_pTextPara2, pPara, @Value))
    FUNCTION = Value
 END FUNCTION
 ' ========================================================================================
@@ -240,7 +239,7 @@ END FUNCTION
 ' ========================================================================================
 ' Resets the paragraph formatting to a choice of default values.
 ' ========================================================================================
-PRIVATE FUNCTION CTextPara2.Reset (BYVAL Value AS LONG) AS HRESULT
+PRIVATE FUNCTION CTextPara2.Reset (BYVAL Value AS LONG = tomDefault) AS HRESULT
    IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextPara2->lpvtbl->Reset(m_pTextPara2, Value))
    FUNCTION = m_Result
@@ -395,6 +394,27 @@ PRIVATE FUNCTION CTextPara2.GetLineSpacingRule () AS LONG
    IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextPara2->lpvtbl->GetLineSpacingRule(m_pTextPara2, @Value))
    FUNCTION = Value
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the kind of alignment to use for bulleted and numbered lists.
+' ========================================================================================
+PRIVATE FUNCTION CTextPara2.GetListAlignment () AS LONG
+   DIM Value AS LONG
+   IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN Value
+   this.SetResult(m_pTextPara2->lpvtbl->GetListAlignment(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the alignment of bulleted or numbered text used for paragraphs.
+' ========================================================================================
+PRIVATE FUNCTION CTextPara2.SetListAlignment (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
+   this.SetResult(m_pTextPara2->lpvtbl->SetListAlignment(m_pTextPara2, Value))
+   FUNCTION = m_Result
 END FUNCTION
 ' ========================================================================================
 
@@ -643,7 +663,7 @@ END FUNCTION
 ' ========================================================================================
 ' Adds a tab at the displacement tbPos, with type tbAlign, and leader style, tbLeader.
 ' ========================================================================================
-PRIVATE FUNCTION CTextPara2.AddTab (BYVAL tbPos AS SINGLE, BYVAL tbAlign AS LONG, BYVAL tbLeader AS LONG) AS HRESULT
+PRIVATE FUNCTION CTextPara2.AddTab (BYVAL tbPos AS SINGLE, BYVAL tbAlign AS LONG = tomALignLeft, BYVAL tbLeader AS LONG = tomSpaces) AS HRESULT
    IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextPara2->lpvtbl->AddTab(m_pTextPara2, tbPos, tbAlign, tbLeader))
    FUNCTION = m_Result

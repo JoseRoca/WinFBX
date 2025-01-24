@@ -235,7 +235,7 @@ END FUNCTION
 PRIVATE FUNCTION CTextFont2.GetDuplicate () AS ITextFont2 PTR
    DIM pFont AS ITextFont2 PTR
    IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN pFont
-   this.SetResult(m_pTextFont2->lpvtbl->GetDuplicate(m_pTextFont2, @pFont))
+   this.SetResult(m_pTextFont2->lpvtbl->GetDuplicate2(m_pTextFont2, @pFont))
    FUNCTION = pFont
 END FUNCTION
 ' ========================================================================================
@@ -245,7 +245,7 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextFont2.SetDuplicate (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
    IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
-   this.SetResult(m_pTextFont2->lpvtbl->SetDuplicate(m_pTextFont2, pFont))
+   this.SetResult(m_pTextFont2->lpvtbl->SetDuplicate2(m_pTextFont2, pFont))
    FUNCTION = m_Result
 END FUNCTION
 ' ========================================================================================
