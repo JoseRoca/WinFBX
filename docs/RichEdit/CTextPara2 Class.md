@@ -80,8 +80,8 @@ The **ITextPara2** interface has these methods.
 | [GetBorders](#GetBorders) | Not implemented. Gets the borders collection. |
 | [GetDuplicate2](#GetDuplicate) | Gets a duplicate of this text paragraph format object. |
 | [SetDuplicate2](#SetDuplicate) | Sets the formatting for an existing paragraph by copying a given format. |
-| [GetFontAlignment](#GetFontAlignment) |  |
-| [SetFontAlignment](#SetFontAlignment) |  |
+| [GetFontAlignment](#GetFontAlignment) | Gets the paragraph font alignment state. |
+| [SetFontAlignment](#SetFontAlignment) | Sets the paragraph font alignment for Chinese, Japanese, Korean text. |
 | [GetHangingPunctuation](#GetHangingPunctuation) |  |
 | [SetHangingPunctuation](#SetHangingPunctuation) |  |
 | [GetSnapToGrid](#GetSnapToGrid) |  |
@@ -1939,6 +1939,34 @@ END FUNCTION
 
 The borders collection.
 
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetFontAlignment"></a>GetFontAlignment
+
+Gets the paragraph font alignment state.
+
+```
+FUNCTION CTextPara2.GetFontAlignment () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetFontAlignment(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
 #### Return value
 
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+The paragraph font alignment state. It can be one of the following values.
+
+| Font Alignment | States |
+| -------------- | ------ |
+| **tomFontAlignmentAuto** (default) | For horizontal layout, align CJK characters on the baseline. For vertical layout, center align CJK characters. |
+| **tomFontAlignmentTop** | For horizontal layout, top align CJK characters. For vertical layout, right align CJK characters. |
+| **tomFontAlignmentBaseline** | For horizontal or vertical layout, align CJK characters on the baseline. |
+| **tomFontAlignmentBottom** | For horizontal layout, bottom align CJK characters. For vertical layout, left align CJK characters. |
+| **tomFontAlignmentCenter** | For horizontal layout, center CJK characters vertically. For vertical layout, center align CJK characters horizontally. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
