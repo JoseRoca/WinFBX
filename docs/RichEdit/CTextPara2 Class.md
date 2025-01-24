@@ -88,7 +88,7 @@ The **ITextPara2** interface has these methods.
 | [SetSnapToGrid](#SetSnapToGrid) | Sets whether paragraph lines snap to a vertical grid that could be defined for the whole document. |
 | [GetTrimPunctuationAtStart](#GetTrimPunctuationAtStart) | Gets whether to trim the leading space of a punctuation symbol at the start of a line. |
 | [SetTrimPunctuationAtStart](#SetTrimPunctuationAtStart) | Sets whether to trim the leading space of a punctuation symbol at the start of a line. |
-| [GetEffects](#GetEffects) |  |
+| [GetEffects](#GetEffects) | Gets the paragraph format effects. |
 | [GetProperty](#GetProperty) |  |
 | [IsEqual2](#IsEqual) | Determines if the current range has the same properties as a specified range. |
 | [SetEffects](#SetEffects) |  |
@@ -2156,3 +2156,45 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetEffects"></a>GetEffects
+
+Gets the paragraph format effects.
+
+```
+FUNCTION CTextPara2.GetEffects (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->GetEffects(m_pTextPara2, pValue, pMask))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| ----- | ------- |
+| **pValue** | The paragraph effects. This value can be a combination of the following flags. |
+
+| Flag | Meaning |
+| ---- | ------- |
+| **tomParaEffectRTL** | Right-to-left paragraph. |
+| **tomParaEffectKeep** | Keep the paragraph together. |
+| **tomParaEffectPageBreakBefore** | Put a page break before this paragraph. |
+| **tomParaEffectNoLineNumber** | No line number for this paragraph. |
+| **tomParaEffectNoWidowControl** | No widow control. |
+| **tomParaEffectDoNotHyphen** | Don't hyphenate this paragraph. |
+| **tomParaEffectSideBySide** | Side by side. |
+| **tomParaEffectCollapsed** | Heading contents are collapsed (in outline view). |
+| **tomParaEffectOutlineLevel** | Outline view nested level. |
+| **tomParaEffectBox** | Paragraph has boxed effect (is not displayed). |
+| **tomParaEffectTableRowDelimiter** | At or inside table delimiter. |
+| **tomParaEffectTable** | Inside or at the start of a table. |
+
+| Parameter | Description |
+| ----- | ------- |
+| **pMask** | The differences in the flags over the range. A value of 1 indicates that the corresponding effect is the same over the range. For an insertion point, the values equal 1 for all defined effects. |
+
+#### Return value
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+If the **tomTable** flag is set, you can use the **GetTable** method to get more table properties.
