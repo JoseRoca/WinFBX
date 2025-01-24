@@ -63,7 +63,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetSpaceBefore](#SetSpaceBefore) | Sets the amount of space preceding a paragraph. |
 | [GetWidowControl](#GetWidowControl) | Retrieves the widow and orphan control state for the paragraphs in a range. |
 | [SetWidowControl](#SetWidowControl) | Controls the suppression of widows and orphans. |
-| [GetTabCount](#GetTabCount) |  |
+| [GetTabCount](#GetTabCount) | Retrieves the tab count. |
 | [AddTab](#AddTab) |  |
 | [ClearAllTabs](#ClearAllTabs) |  |
 | [DeleteTab](#DeleteTab) |  |
@@ -1693,7 +1693,7 @@ END FUNCTION
 ```
 #### Return value
 
-A **tomBoo** value that indicates the state of widow and orphan control. It can be one of the following values.
+A **tomBool** value that indicates the state of widow and orphan control. It can be one of the following values.
 
 | Value | Meaning |
 | ----- | ------- |
@@ -1741,3 +1741,36 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetTabCount"></a>GetTabCount
+
+Retrieves the tab count.
+
+```
+FUNCTION CTextPara2.GetTabCount () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetTabCount(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The tab count.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Prevents the printing of a widow or orphan |
+| **tomFalse** | Allows the printing of a widow or orphan. |
+| **tomUndefined** | The widow-control property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+#### Remarks
+
+The tab count of a new instance can be nonzero, depending on the underlying text engine. For example, Microsoft Word stories begin with no explicit tabs defined, while rich edit instances start with a single explicit tab. To be sure there are no explicit tabs (that is, to set the tab count to zero), call **ClearAllTabs**.
