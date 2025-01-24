@@ -2022,8 +2022,33 @@ A **tomBool** value that can be one of the following.
 | ----- | ------- |
 | **tomTrue** | Hang punctuation symbols on the right margin. |
 | **tomFalse** | Do not hang punctuation symbols on the right margin. |
-| **tomUndefined** | The **HangingPunctuation** property is undefined. |
+| **tomUndefined** | The HangingPunctuation property is undefined. |
 
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetHangingPunctuation"></a>SetHangingPunctuation
+
+Sets whether to hang punctuation symbols on the right margin when the paragraph is justified.
+
+```
+FUNCTION CTextPara2.SetHangingPunctuation (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetHangingPunctuation(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+| Parameter | Description |
+| ----- | ------- |
+| **Value** | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Hang punctuation symbols on the right margin. |
+| **tomFalse** | Do not hang punctuation symbols on the right margin. |
+| **tomToggle** | Toggle the HangingPunctuation property. |
+| **tomUndefined** | The HangingPunctuation property is undefined. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
