@@ -1890,7 +1890,7 @@ END FUNCTION
 | **tomTabHere** | -1 | Get tab at * *ptbPos* |
 |  | >= 0 | Get tab with index of iTab (and ignore *ptbPos*). |
 
-| Value | Meaning |
+| Parameter | Description |
 | ----- | ------- |
 | **ptbPos** | The tab displacement, in floating-point points. The value of * *ptbPos* is zero if the tab does not exist and the value of * *ptbPos* is tomUndefined if there are multiple values in the associated range. |
 | **ptbAlign** | The tab alignment. |
