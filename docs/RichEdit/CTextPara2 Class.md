@@ -49,8 +49,8 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetListTab](#SetListTab) | Sets the list tab setting, which is the distance between the first indent and the start of the text on the first line. |
 | [GetListType](#GetListType) | Retrieves the kind of numbering to use with paragraphs. |
 | [SetListType](#SetListType) | Sets the type of list to be used for paragraphs. |
-| [GetNoLineNumber](#GetNoLineNumber) |  |
-| [SetNoLineNumber](#SetNoLineNumber) |  |
+| [GetNoLineNumber](#GetNoLineNumber) | Determines whether paragraph numbering is enabled. |
+| [SetNoLineNumber](#SetNoLineNumber) | Determines whether to suppress line numbering of paragraphs in a range. |
 | [GetPageBreakBefore](#GetPageBreakBefore) |  |
 | [SetPageBreakBefore](#SetPageBreakBefore) |  |
 | [GetRightIndent](#GetRightIndent) |  |
@@ -1328,3 +1328,36 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetListType"></a>GetListType
+
+One of the following values:
+
+```
+FUNCTION CTextPara2.GetNoLineNumber () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetNoLineNumber(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+One of the following values to indicate the kind of list numbering.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Line numbering is disabled. |
+| **tomFalse** | Line numbering is enabled. |
+| **tomUndefined** | The property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+#### Remarks
+
+Paragraph numbering is when the paragraphs of a range are numbered. The number appears on the first line of a paragraph.
