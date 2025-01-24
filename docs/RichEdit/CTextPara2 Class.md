@@ -91,7 +91,7 @@ The **ITextPara2** interface has these methods.
 | [GetEffects](#GetEffects) | Gets the paragraph format effects. |
 | [GetProperty](#GetProperty) | Gets the value of the specified property. |
 | [IsEqual2](#IsEqual) | Determines if the current range has the same properties as a specified range. |
-| [SetEffects](#SetEffects) |  |
+| [SetEffects](#SetEffects) | Sets the paragraph format effects. |
 | [SetProperty](#SetProperty) |  |
 
 ### Methods inherited from CTOMBase Class
