@@ -1581,3 +1581,26 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 #### Remarks
 
 The line-spacing rule and line spacing work together, and as a result, they must be set together, much as the first and left indents need to be set together.
+
+# <a name="GetSpaceAfter"></a>GetSpaceAfter
+
+Retrieves the amount of vertical space below a paragraph.
+
+```
+FUNCTION CTextPara2.GetSpaceAfter () AS SINGLE
+   DIM Value AS SINGLE
+   this.SetResult(m_pTextPara2->lpvtbl->GetSpaceAfter(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The space-after value, in floating-point points.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
