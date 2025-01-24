@@ -92,7 +92,7 @@ The **ITextPara2** interface has these methods.
 | [GetProperty](#GetProperty) | Gets the value of the specified property. |
 | [IsEqual2](#IsEqual) | Determines if the current range has the same properties as a specified range. |
 | [SetEffects](#SetEffects) | Sets the paragraph format effects. |
-| [SetProperty](#SetProperty) |  |
+| [SetProperty](#SetProperty) | Sets the property value. |
 
 ### Methods inherited from CTOMBase Class
 
@@ -2219,7 +2219,7 @@ END FUNCTION
 
 The property value.
 
-#### Return code
+#### Result code
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
@@ -2270,3 +2270,35 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetProperty"></a>SetProperty
+
+Sets the value of the specified property.
+
+```
+FUNCTION CTextPara2.SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetProperty(m_pTextPara2, nType, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| ----- | ------- |
+| **nType** | The ID of the property value to set. |
+| **nType** | The property value to set. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The **tomParaPropMathAlign** property sets the math alignment for math paragraphs in a text paragraph. It can have one of the following values.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomMathParaAlignDefault** | The default alignment for math paragraphs. |
+| **tomMathParaAlignCenterGroup** | Center math paragraphs as a group. |
+| **tomMathParaAlignCenter** | Center math paragraphs. |
+| **tomMathParaAlignLeft** | Left-align math paragraphs. |
+| **tomMathParaAlignRight** | Right-align math paragraphs. |
