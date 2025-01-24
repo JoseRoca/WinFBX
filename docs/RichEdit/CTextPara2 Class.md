@@ -66,7 +66,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [GetTabCount](#GetTabCount) | Retrieves the tab count. |
 | [AddTab](#AddTab) | Adds a tab at the displacement *tbPos*, with type *tbAlign*, and leader style, *tbLeader*. |
 | [ClearAllTabs](#ClearAllTabs) | Clears all tabs, reverting to equally spaced tabs with the default tab spacing. |
-| [DeleteTab](#DeleteTab) |  |
+| [DeleteTab](#DeleteTab) | Deletes a tab at a specified displacement. |
 | [GetTab](#GetTab) |  |
 
 ### ITextPara2 Interface
@@ -1831,6 +1831,32 @@ FUNCTION CTextPara2.ClearAllTabs () AS HRESULT
    FUNCTION = m_Result
 END FUNCTION
 ```
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="DeleteTab"></a>DeleteTab
+
+Deletes a tab at a specified displacement.
+
+```
+FUNCTION CTextPara2.DeleteTab (BYVAL tbPos AS SINGLE) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->DeleteTab(m_pTextPara2, tbPos))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| ----- | ------- |
+| **tbPos** | Displacement, in floating-point points, at which a tab should be deleted. |
+
 #### Return value
 
 If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
