@@ -2078,3 +2078,29 @@ A **tomBool** value that can be one of the following.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetSnapToGrid"></a>SetSnapToGrid
+
+Sets whether paragraph lines snap to a vertical grid that could be defined for the whole document.
+
+```
+FUNCTION CTextPara2.SetSnapToGrid (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetSnapToGrid(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| ----- | ------- |
+| **Value** | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Paragraph lines snap to a vertical grid. |
+| **tomFalse** | Paragraph lines do not snap to a grid. |
+| **tomToggle** | Toggle the SnapToGrid property. |
+| **tomUndefined** | The SnapToGrid property is undefined. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
