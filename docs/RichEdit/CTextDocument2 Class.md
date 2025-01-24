@@ -592,7 +592,7 @@ These values are mutually exclusive:
 | **tomRTF** | &h1 | Open as RTF. |
 | **tomText** | &h2 | Open as text ANSI or Unicode. |
 | **tomHTML** | &h3 | Open as HTML. |
-| **tomWordDocument* | &h4 | Open as Word document. |
+| **tomWordDocument** | &h4 | Open as Word document. |
 
 #### Return value
 
