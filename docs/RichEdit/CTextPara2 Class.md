@@ -2235,3 +2235,38 @@ The **tomParaPropMathAlign** property sets the math alignment for math paragraph
 | **tomMathParaAlignLeft** | Left-align math paragraphs. |
 | **tomMathParaAlignRight** | Right-align math paragraphs. |
 
+# <a name="SetEffects"></a>SetEffects
+
+Sets the paragraph format effects.
+
+```
+FUNCTION CTextPara2.SetEffects (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
+   IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
+   this.SetResult(m_pTextPara2->lpvtbl->SetEffects(m_pTextPara2, Value, Mask))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| ----- | ------- |
+| **Value** | The paragraph effects value. This value can be a combination of the flags defined in the table below. |
+| **Mask** | The desired mask. This value can be a combination of the flags defined in the table below. Only effects with the corresponding mask flag set are modified. |
+
+| Flag | Meaning |
+| ---- | ------- |
+| **tomParaEffectRTL** | Right-to-left paragraph. |
+| **tomParaEffectKeep** | Keep the paragraph together. |
+| **tomParaEffectPageBreakBefore** | Put a page break before this paragraph. |
+| **tomParaEffectNoLineNumber** | No line number for this paragraph. |
+| **tomParaEffectNoWidowControl** | No widow control. |
+| **tomParaEffectDoNotHyphen** | Don't hyphenate this paragraph. |
+| **tomParaEffectSideBySide** | Side by side. |
+| **tomParaEffectCollapsed** | Heading contents are collapsed (in outline view). |
+| **tomParaEffectOutlineLevel** | Outline view nested level. |
+| **tomParaEffectBox** | Paragraph has boxed effect (is not displayed). |
+| **tomParaEffectTableRowDelimiter** | At or inside table delimiter. |
+| **tomParaEffectTable** | Inside or at the start of a table. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
