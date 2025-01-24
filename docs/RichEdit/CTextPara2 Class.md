@@ -395,7 +395,7 @@ END FUNCTION
 | Value | Meaning |
 | ----- | ------- |
 | **tomDefault** | Used for paragraph formatting that is defined by the RTF \pard, that is, the paragraph default control word. |
-| **tomUndefined** | Used for all undefined values. The tomUndefined value is only valid for duplicate (clone) ITextPara objects. |
+| **tomUndefined** | Used for all undefined values. The **tomUndefined** value is only valid for duplicate (clone) **ITextPara2** objects. |
 
 #### Return value
 
