@@ -1540,3 +1540,44 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 #### Remarks
 
 Line indents are not allowed to position text in the margins. If the first-line indent is set to a negative value (for an outdented paragraph) while the left indent is zero, the first-line indent is reset to zero. To avoid this problem while retaining property sets, set the first-line indent value equal to zero either explicitly or by calling the **Reset** method. Then, call **SetIndents** to set a nonnegative, left-indent value and set the desired first-line indent.
+
+# <a name="SetLineSpacing"></a>SetLineSpacing
+
+Sets the paragraph line-spacing rule and the line spacing for a paragraph.
+
+```
+FUNCTION CTextPara2.SetLineSpacing (BYVAL Rule AS LONG, BYVAL Spacing AS SINGLE) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetLineSpacing(m_pTextPara2, Rule, Spacing))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Rule* | Value of new line-spacing rule.  |
+| *Spacing* | Value of new line spacing. If the line-spacing rule treats the *Spacing* value as a linear dimension, then *Spacing* is given in floating-point points. |
+
+| Line spacing rule | Meaning |
+| ----------------- | ------- |
+| **tomLineSpaceSingle** | Single spacing. The line-spacing value is ignored. |
+| **tomLineSpace1pt5** | One-and-a-half line spacing. The line-spacing value is ignored. |
+| **tomLineSpaceDouble** | Double line spacing. The line-spacing value is ignored. |
+| **tomLineSpaceAtLeast** | The line-spacing value specifies the spacing, in floating-point points, from one line to the next. However, if the value is less than single spacing, the control displays single-spaced text. |
+| **tomLineSpaceExactly** | The line-spacing value specifies the exact spacing, in floating-point points, from one line to the next (even if the value is less than single spacing). |
+| **tomLineSpaceMultiple** | The line-spacing value specifies the line spacing, in lines. |
+| **tomLineSpacePercent** | The line-spacing value specifies the line spacing by percent of line height. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+#### Remarks
+
+The line-spacing rule and line spacing work together, and as a result, they must be set together, much as the first and left indents need to be set together.
