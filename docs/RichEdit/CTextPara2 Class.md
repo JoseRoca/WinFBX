@@ -82,8 +82,8 @@ The **ITextPara2** interface has these methods.
 | [SetDuplicate2](#SetDuplicate) | Sets the formatting for an existing paragraph by copying a given format. |
 | [GetFontAlignment](#GetFontAlignment) | Gets the paragraph font alignment state. |
 | [SetFontAlignment](#SetFontAlignment) | Sets the paragraph font alignment for Chinese, Japanese, Korean text. |
-| [GetHangingPunctuation](#GetHangingPunctuation) |  |
-| [SetHangingPunctuation](#SetHangingPunctuation) |  |
+| [GetHangingPunctuation](#GetHangingPunctuation) | Gets whether to hang punctuation symbols on the right margin when the paragraph is justified. |
+| [SetHangingPunctuation](#SetHangingPunctuation) | Sets whether to hang punctuation symbols on the right margin when the paragraph is justified. |
 | [GetSnapToGrid](#GetSnapToGrid) |  |
 | [SetSnapToGrid](#SetSnapToGrid) |  |
 | [GetTrimPunctuationAtStart](#GetTrimPunctuationAtStart) |  |
@@ -2001,3 +2001,29 @@ The paragraph font alignment state. It can be one of the following values.
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetHangingPunctuation"></a>GetHangingPunctuation
+
+Gets whether to hang punctuation symbols on the right margin when the paragraph is justified.
+
+```
+FUNCTION CTextPara2.GetHangingPunctuation () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetHangingPunctuation(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Hang punctuation symbols on the right margin. |
+| **tomFalse** | Do not hang punctuation symbols on the right margin. |
+| **tomUndefined** | The **HangingPunctuation** property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
