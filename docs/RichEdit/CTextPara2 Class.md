@@ -1281,7 +1281,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *Value* | New list type.  |
+| *Value* | New list type. |
 
 | Value | Meaning |
 | ----- | ------- |
@@ -1361,3 +1361,35 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 Paragraph numbering is when the paragraphs of a range are numbered. The number appears on the first line of a paragraph.
+
+# <a name="SetNoLineNumber"></a>SetNoLineNumber
+
+Determines whether to suppress line numbering of paragraphs in a range.
+
+```
+FUNCTION CTextPara2.SetNoLineNumber (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetNoLineNumber(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | Indicates if line numbering is suppressed. It can be one of the following possible values. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Line numbering is disabled. |
+| **tomFalse** | Line numbering is enabled. |
+| **tomUndefined** | The property is undefined. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
