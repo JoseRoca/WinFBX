@@ -1267,3 +1267,64 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 Values above 32 correspond to Unicode values for bullets.
+
+# <a name="SetListType"></a>SetListType
+
+Sets the type of list to be used for paragraphs.
+
+```
+FUNCTION CTextPara2.SetListType (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetListTab(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | New list type.  |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomListNone** | Not a list paragraph. |
+| **tomListBullet** | List uses bullets (&h2022); other bullets are given by > 32. |
+| **tomListNumberAsArabic** | List is numbered with Arabic numerals (0, 1, 2, ...). |
+| **tomListNumberAsLCLetter** | List is ordered with lowercase letters (a, b, c, ...). |
+| **tomListNumberAsUCLetter** | List is ordered with uppercase Arabic letters (A, B, C, ...). |
+| **tomListNumberAsLCRoman** | List is ordered with lowercase Roman letters (i, ii, iii, ...). |
+| **tomListNumberAsUCRoman** | List is ordered with uppercase Roman letters (I, II, III, ...). |
+| **tomListNumberAsSequence** | The value returned by **GetListStart** is treated as the first code in a Unicode sequence. |
+| **tomListNumberedCircle** | List is ordered with Unicode circled numbers. |
+| **tomListNumberedBlackCircleWingding** | List is ordered with Wingdings black circled digits. |
+| **tomListNumberedArabicWide** | Full-width ASCII (０, １, ２, ３, …). |
+| **tomListNumberedChS** | Chinese with 十 only in items 10 through 99. (一, 二, 三, 四…). |
+| **tomListNumberedChT** | Chinese with 十 only in items 10 through 19. |
+| **tomListNumberedJpnChs** | Chinese with a full-width period, no 十. |
+| **tomListNumberedJpnKor** | Chinese with no 十. |
+| **tomListNumberedArabic1** | Arabic alphabetic ( أ ,ب ,ت ,ث ,…). |
+| **tomListNumberedArabic2** | Arabic abjadi ( أ ,ب ,ج ,د ,…). |
+| **tomListNumberedHebrew** | Hebrew alphabet (א, ב, ג, ד, …). |
+| **tomListNumberedThaiAlpha** | Thai alphabetic (ก, ข,ค, ง, …). |
+| **tomListNumberedThaiNum** | Thai numbers (๑, ๒,๓, ๔…). |
+| **tomListNumberedHindiAlpha** | Hindi vowels (अ, आ, इ, ई, …). |
+| **tomListNumberedHindiAlpha1** | Hindi consonants (क, ख, ग, घ, …). |
+| **tomListNumberedHindiNum** | Hindi numbers (१, २, ३, ४, …). |
+
+By default, numbers are followed by a right parenthesis, for example: 1). However, the returnes value can include one of the following flags to indicate a different formatting.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomListMinus** | Follows the number with a hyphen (-). |
+| **tomListParentheses** | Encloses the number in parentheses, as in: (1). |
+| **tomListPeriod** | Follows the number with a period. |
+| **tomListPlain** | Uses the number alone. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
