@@ -1970,3 +1970,34 @@ The paragraph font alignment state. It can be one of the following values.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="SetFontAlignment"></a>SetFontAlignment
+
+Sets the paragraph font alignment for Chinese, Japanese, Korean text.
+
+```
+FUNCTION CTextPara2.SetFontAlignment (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetFontAlignment(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| ----- | ------- |
+| **Value** | The paragraph font alignment. It can be one of the following values. |
+
+#### Return value
+
+The paragraph font alignment state. It can be one of the following values.
+
+| Font Alignment | States |
+| -------------- | ------ |
+| **tomFontAlignmentAuto** (default) | For horizontal layout, align CJK characters on the baseline. For vertical layout, center align CJK characters. |
+| **tomFontAlignmentTop** | For horizontal layout, top align CJK characters. For vertical layout, right align CJK characters. |
+| **tomFontAlignmentBaseline** | For horizontal or vertical layout, align CJK characters on the baseline. |
+| **tomFontAlignmentBottom** | For horizontal layout, bottom align CJK characters. For vertical layout, left align CJK characters. |
+| **tomFontAlignmentCenter** | For horizontal layout, center CJK characters vertically. For vertical layout, center align CJK characters horizontally. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
