@@ -1902,7 +1902,7 @@ END FUNCTION
 | **tomAlignDecimal** | The decimal point is set at the tab position. This is useful for aligning a column of decimal numbers. |
 | **tomAlignBar** | A vertical bar is positioned at the tab position. Text is not affected. Alignment bars on nearby lines at the same position form a continuous vertical line. |
 
-| Value | Meaning |
+| Parameter | Description |
 | ----- | ------- |
 | **ptbLeader** | The tab leader-character style. |
 
