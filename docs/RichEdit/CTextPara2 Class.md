@@ -45,8 +45,8 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetListLevelIndex](#SetListLevelIndex) | Sets the list level index used for paragraphs. |
 | [GetListStart](#GetListStart) | Retrieves the starting value or code of a list numbering sequence. |
 | [SetListStart](#SetListStart) | Sets the starting number or Unicode value for a numbered list. |
-| [GetListTab](#GetListTab) |  |
-| [SetListTab](#SetListTab) |  |
+| [GetListTab](#GetListTab) | Retrieves the list tab setting, which is the distance between the first-line indent and the text on the first line. The numbered or bulleted text is left-justified, centered, or right-justified at the first-line indent value. |
+| [SetListTab](#SetListTab) | Sets the list tab setting, which is the distance between the first indent and the start of the text on the first line. |
 | [GetListType](#GetListType) |  |
 | [SetListType](#SetListType) |  |
 | [GetNoLineNumber](#GetNoLineNumber) |  |
@@ -1178,4 +1178,30 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 | Result code | Description |
 | ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="SetListTab"></a>SetListTab
+
+Sets the list tab setting, which is the distance between the first indent and the start of the text on the first line.
+
+```
+FUNCTION CTextPara2.SetListTab (BYVAL Value AS SINGLE) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetListTab(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | New list tab value, in floating-point points. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
