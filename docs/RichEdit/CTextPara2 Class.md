@@ -61,8 +61,8 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetSpaceAfter](#SetSpaceAfter) | Sets the amount of space that follows a paragraph. |
 | [GetSpaceBefore](#GetSpaceBefore) | Retrieves the amount of vertical space above a paragraph. |
 | [SetSpaceBefore](#SetSpaceBefore) | Sets the amount of space preceding a paragraph. |
-| [GetWidowControl](#GetWidowControl) |  |
-| [SetWidowControl](#SetWidowControl) |  |
+| [GetWidowControl](#GetWidowControl) | Retrieves the widow and orphan control state for the paragraphs in a range. |
+| [SetWidowControl](#SetWidowControl) | Controls the suppression of widows and orphans. |
 | [GetTabCount](#GetTabCount) |  |
 | [AddTab](#AddTab) |  |
 | [ClearAllTabs](#ClearAllTabs) |  |
@@ -1678,4 +1678,33 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_INVALIDARG** | Invalid argument. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetWidowControl"></a>GetWidowControl
+
+Retrieves the widow and orphan control state for the paragraphs in a range.
+
+```
+FUNCTION CTextPara2.GetWidowControl () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetWidowControl(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+A **tomBoo** value that indicates the state of widow and orphan control. It can be one of the following values.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Prevents the printing of a widow or orphan |
+| **tomFalse** | Allows the printing of a widow or orphan. |
+| **tomUndefined** | The widow-control property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
