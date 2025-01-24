@@ -59,8 +59,8 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetLineSpacing](#SetLineSpacing) | Sets the paragraph line-spacing rule and the line spacing for a paragraph. |
 | [GetSpaceAfter](#GetSpaceAfter) | The space-after value, in floating-point points. |
 | [SetSpaceAfter](#SetSpaceAfter) | Sets the amount of space that follows a paragraph. |
-| [GetSpaceBefore](#GetSpaceBefore) |  |
-| [SetSpaceBefore](#SetSpaceBefore) |  |
+| [GetSpaceBefore](#GetSpaceBefore) | Retrieves the amount of vertical space above a paragraph. |
+| [SetSpaceBefore](#SetSpaceBefore) | Sets the amount of space preceding a paragraph. |
 | [GetWidowControl](#GetWidowControl) |  |
 | [SetWidowControl](#SetWidowControl) |  |
 | [GetTabCount](#GetTabCount) |  |
@@ -1619,6 +1619,55 @@ END FUNCTION
 | Parameter | Description |
 | --------- | ----------- |
 | *Value* | New space-after value, in floating-point points. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetSpaceBefore"></a>GetSpaceBefore
+
+Retrieves the amount of vertical space above a paragraph.
+
+```
+FUNCTION CTextPara2.GetSpaceBefore () AS SINGLE
+   DIM Value AS SINGLE
+   this.SetResult(m_pTextPara2->lpvtbl->GetSpaceBefore(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The space-before value, in floating-point points.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="SetSpaceBefore"></a>SetSpaceBefore
+
+Sets the amount of space preceding a paragraph.
+
+```
+FUNCTION CTextPara2.SetSpaceBefore (BYVAL Value AS SINGLE) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetSpaceBefore(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | New space-before value, in floating-point points. |
 
 #### Return value
 
