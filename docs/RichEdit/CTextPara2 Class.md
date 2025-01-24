@@ -64,7 +64,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [GetWidowControl](#GetWidowControl) | Retrieves the widow and orphan control state for the paragraphs in a range. |
 | [SetWidowControl](#SetWidowControl) | Controls the suppression of widows and orphans. |
 | [GetTabCount](#GetTabCount) | Retrieves the tab count. |
-| [AddTab](#AddTab) |  |
+| [AddTab](#AddTab) | Adds a tab at the displacement *tbPos*, with type *tbAlign*, and leader style, *tbLeader*. |
 | [ClearAllTabs](#ClearAllTabs) |  |
 | [DeleteTab](#DeleteTab) |  |
 | [GetTab](#GetTab) |  |
@@ -1759,7 +1759,7 @@ The tab count.
 
 | Value | Meaning |
 | ----- | ------- |
-| **tomTrue** | Prevents the printing of a widow or orphan |
+| **tomTrue** | Prevents the printing of a widow or orphan. |
 | **tomFalse** | Allows the printing of a widow or orphan. |
 | **tomUndefined** | The widow-control property is undefined. |
 
@@ -1774,3 +1774,49 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 The tab count of a new instance can be nonzero, depending on the underlying text engine. For example, Microsoft Word stories begin with no explicit tabs defined, while rich edit instances start with a single explicit tab. To be sure there are no explicit tabs (that is, to set the tab count to zero), call **ClearAllTabs**.
+
+# <a name="AddTab"></a>AddTab
+
+Adds a tab at the displacement tbPos, with type tbAlign, and leader style, tbLeader.
+
+```
+FUNCTION CTextPara2.AddTab (BYVAL tbPos AS SINGLE, BYVAL tbAlign AS LONG, BYVAL tbLeader AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->AddTab(m_pTextPara2, tbPos, tbAlign, tbLeader))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| ----- | ------- |
+| **tbPos** | New tab displacement, in floating-point points. |
+| **tbAlign** | Alignment options for the tab position. It can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomAlignLeft** | Text is left justified from the tab position. This is the default. |
+| **tomAlignCenter** | Text is centered on the tab position. |
+| **tomAlignDecimal** | The decimal point is set at the tab position. This is useful for aligning a column of decimal numbers. |
+| **tomAlignBar**. A vertical bar is positioned at the tab position. Text is not affected. Alignment bars on nearby lines at the same position form a continuous vertical line. |
+
+| Parameter | Description |
+| ----- | ------- |
+| **tbLeader** | Leader character style. A leader character is the character that is used to fill the space taken by a tab character. It can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomSpaces** | Spaces are used. This is the default. |
+| **tomDots** | Dots are used. |
+| **tomDashes** | A dashed line is used. |
+| **tomLines** | A solid line is used. |
+
+#### Return value
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+#### Remarks
+
+It is assumed that there is never a tab at position zero. If multiple paragraphs are described, the common subset of tabs will be returned with &h8000 in the upper word of the tab type.
