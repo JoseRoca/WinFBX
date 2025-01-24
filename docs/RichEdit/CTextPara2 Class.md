@@ -1329,9 +1329,9 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetListType"></a>GetListType
+# <a name="GetNoLineNumber"></a>GetNoLineNumber
 
-One of the following values:
+Determines whether paragraph numbering is enabled.
 
 ```
 FUNCTION CTextPara2.GetNoLineNumber () AS LONG
