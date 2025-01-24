@@ -89,7 +89,7 @@ The **ITextPara2** interface has these methods.
 | [GetTrimPunctuationAtStart](#GetTrimPunctuationAtStart) | Gets whether to trim the leading space of a punctuation symbol at the start of a line. |
 | [SetTrimPunctuationAtStart](#SetTrimPunctuationAtStart) | Sets whether to trim the leading space of a punctuation symbol at the start of a line. |
 | [GetEffects](#GetEffects) | Gets the paragraph format effects. |
-| [GetProperty](#GetProperty) |  |
+| [GetProperty](#GetProperty) | Gets the value of the specified property. |
 | [IsEqual2](#IsEqual) | Determines if the current range has the same properties as a specified range. |
 | [SetEffects](#SetEffects) |  |
 | [SetProperty](#SetProperty) |  |
@@ -2198,3 +2198,40 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 #### Remarks
 
 If the **tomTable** flag is set, you can use the **GetTable** method to get more table properties.
+
+# <a name="GetProperty"></a>GetProperty
+
+Gets the value of the specified property.
+
+```
+FUNCTION CTextPara2.GetProperty (BYVAL nType AS LONG) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetProperty(m_pTextPara2, nType, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+| Parameter | Description |
+| ----- | ------- |
+| **nType** | The ID of the property value to retrieve. |
+
+#### Return value
+
+The property value.
+
+#### Return code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The **tomParaPropMathAlign** property sets the math alignment for math paragraphs in a text paragraph. It can have one of the following values.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomMathParaAlignDefault** | The default alignment for math paragraphs. |
+| **tomMathParaAlignCenterGroup** | Center math paragraphs as a group. |
+| **tomMathParaAlignCenter** | Center math paragraphs. |
+| **tomMathParaAlignLeft** | Left-align math paragraphs. |
+| **tomMathParaAlignRight** | Right-align math paragraphs. |
+
