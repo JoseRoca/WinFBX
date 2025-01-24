@@ -1156,3 +1156,26 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 #### Remarks
 
 Other characteristics of a list are specified by **SetListType**.
+
+# <a name="GetListTab"></a>GetListTab
+
+Retrieves the list tab setting, which is the distance between the first-line indent and the text on the first line. The numbered or bulleted text is left-justified, centered, or right-justified at the first-line indent value.
+
+```
+FUNCTION CTextPara2.GetListTab () AS SINGLE
+   DIM Value AS SINGLE
+   this.SetResult(m_pTextPara2->lpvtbl->GetListTab(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+The list tab setting. The list tab value is in floating-point points.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
