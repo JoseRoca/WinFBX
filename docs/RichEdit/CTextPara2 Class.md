@@ -67,7 +67,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [AddTab](#AddTab) | Adds a tab at the displacement *tbPos*, with type *tbAlign*, and leader style, *tbLeader*. |
 | [ClearAllTabs](#ClearAllTabs) | Clears all tabs, reverting to equally spaced tabs with the default tab spacing. |
 | [DeleteTab](#DeleteTab) | Deletes a tab at a specified displacement. |
-| [GetTab](#GetTab) |  |
+| [GetTab](#GetTab) | Retrieves tab parameters (displacement, alignment, and leader style) for a specified tab. |
 
 ### ITextPara2 Interface
 
@@ -1867,3 +1867,58 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetTab"></a>GetTab
+
+Retrieves tab parameters (displacement, alignment, and leader style) for a specified tab.
+
+```
+FUNCTION CTextPara2.GetTab (BYVAL iTab AS LONG, BYVAL ptbPos AS SINGLE PTR, BYVAL ptbAlign AS LONG PTR, BYVAL ptbLeader AS LONG PTR) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->GetTab(m_pTextPara2, iTab, ptbPos, ptbAlign, ptbLeader))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| ----- | ------- |
+| **iTab** | Index of tab for which to retrieve info. It can be either a numerical index or a special value (see the following table). Since tab indexes are zero-based, *iTab* = zero gets the first tab defined, *iTab = 1 gets the second tab defined, and so forth. The following table summarizes all of the possible values of ^*iTab*. |
+
+| iTab | Value | Meaning |
+| ---- | ----- | ------- |
+| **tomTabBack** | -3 | Get tab previous to * *ptbPos* |
+| **tomTabNext** | -2 | Get tab following * *ptbPos* |
+| **tomTabHere** | -1 | Get tab at * *ptbPos* |
+|  | >= 0 | Get tab with index of iTab (and ignore *ptbPos*). |
+
+| iTab | Value | Meaning |
+| ---- | ----- | ------- |
+| **ptbPos** | The tab displacement, in floating-point points. The value of * *ptbPos* is zero if the tab does not exist and the value of * *ptbPos* is tomUndefined if there are multiple values in the associated range. |
+| **ptbAlign** | The tab alignment. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomAlignLeft** | Text is left justified from the tab position. This is the default. |
+| **tomAlignCenter** | Text is centered on the tab position. |
+| **tomAlignDecimal** | The decimal point is set at the tab position. This is useful for aligning a column of decimal numbers. |
+| **tomAlignBar** | A vertical bar is positioned at the tab position. Text is not affected. Alignment bars on nearby lines at the same position form a continuous vertical line. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **ptbLeader** | The tab leader-character style. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomSpaces** | Spaces are used. This is the default. |
+| **tomDots** | Dots are used. |
+| **tomDashes** | A dashed line is used. |
+| **tomLines** | A solid line is used. |
+
+#### Return value
+
+If **GetTab** succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+| **S_FALSE** | There is no tab corresponding to iTab. |
