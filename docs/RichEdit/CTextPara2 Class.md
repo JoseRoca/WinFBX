@@ -1422,3 +1422,40 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | Result code | Description |
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="SetPageBreakBefore"></a>SetPageBreakBefore
+
+Controls whether there is a page break before each paragraph in a range.
+
+```
+FUNCTION CTextPara2.SetPageBreakBefore (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetPageBreakBefore(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that controls page breaks before paragraphs. It can be one of the following values. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Paragraphs in this range must begin on a new page. |
+| **tomFalse** | Paragraphs in this range do not need to begin on a new page. |
+| **tomToggle** | Toggle the property value. |
+| **tomUndefined** | The property is undefined. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+#### Remarks
+
+This method is included for compatibility with Microsoft Word; it does not affect how the rich edit control displays text.
