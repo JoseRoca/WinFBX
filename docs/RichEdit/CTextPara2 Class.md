@@ -51,8 +51,8 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetListType](#SetListType) | Sets the type of list to be used for paragraphs. |
 | [GetNoLineNumber](#GetNoLineNumber) | Determines whether paragraph numbering is enabled. |
 | [SetNoLineNumber](#SetNoLineNumber) | Determines whether to suppress line numbering of paragraphs in a range. |
-| [GetPageBreakBefore](#GetPageBreakBefore) |  |
-| [SetPageBreakBefore](#SetPageBreakBefore) |  |
+| [GetPageBreakBefore](#GetPageBreakBefore) | Determines whether each paragraph in the range must begin on a new page. |
+| [SetPageBreakBefore](#SetPageBreakBefore) | Controls whether there is a page break before each paragraph in a range. |
 | [GetRightIndent](#GetRightIndent) |  |
 | [SetRightIndent](#SetRightIndent) |  |
 | [SetIndents](#SetIndents) |  |
@@ -1392,4 +1392,33 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_INVALIDARG** | Invalid argument. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="GetPageBreakBefore"></a>GetPageBreakBefore
+
+Determines whether each paragraph in the range must begin on a new page.
+
+```
+FUNCTION CTextPara2.GetPageBreakBefore () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetPageBreakBefore(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+#### Return value
+
+One of the following values:
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Each paragraph in this range must begin on a new page. |
+| **tomFalse** | The paragraphs in this range do not need to begin on a new page. |
+| **tomUndefined** | The property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+
+| Result code | Description |
+| ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
