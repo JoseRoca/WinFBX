@@ -65,7 +65,7 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetWidowControl](#SetWidowControl) | Controls the suppression of widows and orphans. |
 | [GetTabCount](#GetTabCount) | Retrieves the tab count. |
 | [AddTab](#AddTab) | Adds a tab at the displacement *tbPos*, with type *tbAlign*, and leader style, *tbLeader*. |
-| [ClearAllTabs](#ClearAllTabs) |  |
+| [ClearAllTabs](#ClearAllTabs) | Clears all tabs, reverting to equally spaced tabs with the default tab spacing. |
 | [DeleteTab](#DeleteTab) |  |
 | [GetTab](#GetTab) |  |
 
@@ -1820,3 +1820,24 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 It is assumed that there is never a tab at position zero. If multiple paragraphs are described, the common subset of tabs will be returned with &h8000 in the upper word of the tab type.
+
+# <a name="ClearAllTabs"></a>ClearAllTabs
+
+Clears all tabs, reverting to equally spaced tabs with the default tab spacing.
+
+```
+FUNCTION CTextPara2.ClearAllTabs () AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->ClearAllTabs(m_pTextPara2))
+   FUNCTION = m_Result
+END FUNCTION
+```
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
