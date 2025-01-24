@@ -57,8 +57,8 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 | [SetRightIndent](#SetRightIndent) | Sets the right margin of paragraph. |
 | [SetIndents](#SetIndents) | Sets the first-line indent, the left indent, and the right indent for a paragraph. |
 | [SetLineSpacing](#SetLineSpacing) | Sets the paragraph line-spacing rule and the line spacing for a paragraph. |
-| [GetSpaceAfter](#GetSpaceAfter) |  |
-| [SetSpaceAfter](#SetSpaceAfter) |  |
+| [GetSpaceAfter](#GetSpaceAfter) | The space-after value, in floating-point points. |
+| [SetSpaceAfter](#SetSpaceAfter) | Sets the amount of space that follows a paragraph. |
 | [GetSpaceBefore](#GetSpaceBefore) |  |
 | [SetSpaceBefore](#SetSpaceBefore) |  |
 | [GetWidowControl](#GetWidowControl) |  |
@@ -1603,4 +1603,30 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 | Result code | Description |
 | ----------- | ----------- |
+| **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+# <a name="SetSpaceAfter"></a>SetSpaceAfter
+
+Sets the amount of space that follows a paragraph.
+
+```
+FUNCTION CTextPara2.SetSpaceAfter (BYVAL Value AS SINGLE) AS HRESULT
+   this.SetResult(m_pTextPara2->lpvtbl->SetSpaceAfter(m_pTextPara2, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | New space-after value, in floating-point points. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
