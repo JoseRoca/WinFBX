@@ -86,8 +86,8 @@ The **ITextPara2** interface has these methods.
 | [SetHangingPunctuation](#SetHangingPunctuation) | Sets whether to hang punctuation symbols on the right margin when the paragraph is justified. |
 | [GetSnapToGrid](#GetSnapToGrid) | Gets whether paragraph lines snap to a vertical grid that could be defined for the whole document. |
 | [SetSnapToGrid](#SetSnapToGrid) | Sets whether paragraph lines snap to a vertical grid that could be defined for the whole document. |
-| [GetTrimPunctuationAtStart](#GetTrimPunctuationAtStart) |  |
-| [SetTrimPunctuationAtStart](#SetTrimPunctuationAtStart) |  |
+| [GetTrimPunctuationAtStart](#GetTrimPunctuationAtStart) | Gets whether to trim the leading space of a punctuation symbol at the start of a line. |
+| [SetTrimPunctuationAtStart](#SetTrimPunctuationAtStart) | Sets whether to trim the leading space of a punctuation symbol at the start of a line. |
 | [GetEffects](#GetEffects) |  |
 | [GetProperty](#GetProperty) |  |
 | [IsEqual2](#IsEqual) | Determines if the current range has the same properties as a specified range. |
@@ -2104,3 +2104,29 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetTrimPunctuationAtStart"></a>GetTrimPunctuationAtStart
+
+Gets whether to trim the leading space of a punctuation symbol at the start of a line.
+
+```
+FUNCTION CTextPara2.GetTrimPunctuationAtStart () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextPara2->lpvtbl->GetTrimPunctuationAtStart(m_pTextPara2, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Trim the leading space of a punctuation symbol at the start of a line. |
+| **tomFalse** | Do not trim the leading space of a punctuation symbol at the start of a line. |
+| **tomUndefined** | The TrimPunctuationAtStart property is undefined. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
