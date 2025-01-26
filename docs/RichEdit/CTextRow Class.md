@@ -926,3 +926,42 @@ The shading is given in hundredths of a percent, so full shading is given by the
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="GetCellVerticalText"></a>GetCellVerticalText
+
+Sets the vertical-text setting of the active cell.
+
+This property is not currently implemented.
+
+```
+FUNCTION CTextRow.GetCellVerticalText () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetCellVerticalText(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The vertical setting.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetCellVerticalText"></a>SetCellVerticalText
+
+Sets the shading of the active cell.
+
+```
+FUNCTION CTextRow.SetCellVerticalText (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetCellVerticalText(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The vertical setting. |
