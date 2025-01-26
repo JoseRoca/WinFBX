@@ -930,7 +930,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 # <a name="GetCellVerticalText"></a>GetCellVerticalText
 
-Sets the vertical-text setting of the active cell.
+Gets the vertical-text setting of the active cell.
 
 This property is not currently implemented.
 
@@ -944,7 +944,7 @@ END FUNCTION
 
 #### Return value
 
-The vertical setting.
+The vertical-text setting.
 
 #### Result code
 
@@ -953,7 +953,9 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 # <a name="SetCellVerticalText"></a>SetCellVerticalText
 
-Sets the shading of the active cell.
+Sets the vertical-text setting of the active cell.
+
+This property is not currently implemented.
 
 ```
 FUNCTION CTextRow.SetCellVerticalText (BYVAL Value AS LONG) AS HRESULT
@@ -964,4 +966,4 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *Value* | The vertical setting. |
+| *Value* | The vertical-text setting. |
