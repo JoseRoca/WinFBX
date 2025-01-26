@@ -51,10 +51,10 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetCellMergeFlags](#SetCellMergeFlags) | Sets the merge flags of the active cell. |
 | [GetCellShading](#GetCellShading) | Gets the shading of the active cell. |
 | [SetCellShading](#SetCellShading) | Sets the shading of the active cell. |
-| [GetCellVerticalText](#GetCellVerticalText) |  |
-| [SetCellVerticalText](#SetCellVerticalText) |  |
-| [GetCellWidth](#GetCellWidth) |  |
-| [SetCellWidth](#SetCellWidth) |  |
+| [GetCellVerticalText](#GetCellVerticalText) | Gets the vertical-text setting of the active cell. |
+| [SetCellVerticalText](#SetCellVerticalText) | Sets the vertical-text setting of the active cell. |
+| [GetCellWidth](#GetCellWidth) | Gets the width of the active cell. |
+| [SetCellWidth](#SetCellWidth) | Sets the width of the active cell. |
 | [GetCellBorderColors](#GetCellBorderColors) |  |
 | [GetCellBorderWidths](#GetCellBorderWidths) |  |
 | [SetCellBorderColors](#SetCellBorderColors) |  |
@@ -967,3 +967,28 @@ END FUNCTION
 | Parameter | Description |
 | --------- | ----------- |
 | *Value* | The vertical-text setting. |
+
+
+# <a name="GetCellWidth"></a>GetCellWidth
+
+Gets the width of the active cell.
+
+```
+FUNCTION CTextRow.GetCellWidth () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetCellWidth(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The width of the active cell, in twips.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The width of the cell, and/or the entire row, must be less than 22 inches (1440 x 22).
