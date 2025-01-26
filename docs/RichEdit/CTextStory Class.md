@@ -216,3 +216,30 @@ FUNCTION CTOMBase.GetErrorInfo () AS CWSTR
    RETURN s
 END FUNCTION
 ```
+
+# <a name="GetActive"></a>GetActive
+
+Gets the active state of a story.
+
+```
+FUNCTION CTextStory.GetActive () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextStory->lpvtbl->GetActive(m_pTextStory, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+#### Return value
+
+The active state. It can be one of the following values.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomDisplayActive** | The story has no UI or display (fast and lightweight). |
+| **tomDisplayUIActive** | The story is UI active; that is, gets keyboard and mouse interactions. |
+| **tomInactive** | The story has display, but no UI. |
+| **tomUIActive** | The story has display and UI activity. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
