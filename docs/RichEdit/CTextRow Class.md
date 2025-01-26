@@ -8,7 +8,7 @@ Class that wraps all the methods of the **ITextRow** interface.
 | [DESTRUCTOR](#DESTRUCTOR) | Called automatically when a class variable goes out of scope or is destroyed. |
 | [LET](#LET) | Assignment operator. |
 | [CAST](#CAST) | Cast operator. |
-| [TextDocumentPtr](#TextDocumentPtr) | Returns a pointer to the underlying **ITextRow** interface. |
+| [TextRowPtr](#TextRowPtr) | Returns a pointer to the underlying **ITextRow** interface. |
 | [Attach](#Attach) | Attaches an **ITextRow** interface pointer to the class. |
 | [Detach](#Detach) | Detaches the underlying **ITextRow** interface pointer from the class. |
 
@@ -151,7 +151,7 @@ OPERATOR CTextRow.CAST () AS ITextRow PTR
 END OPERATOR
 ```
 
-# <a name="TextRangePtr"></a>TextRangePtr
+# <a name="TextRowPtr"></a>TextRowPtr
 
 Returns a pointer to the underlying **ITextRow** interface
 
