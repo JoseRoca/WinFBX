@@ -62,8 +62,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [Apply](#Apply) | Applies the formatting attributes of this text row object to the specified rows in the associated **ITextRange2**. |
 | [CanChange](#CanChange) | Determines whether changes can be made to this row. |
 | [GetProperty](#GetProperty) | Gets the value of the specified property. |
-| [Insert](#Insert) |  |
-| [IsEqual](#IsEqual) |  |
+| [Insert](#Insert) | Inserts a row, or rows, at the location identified by the associated **ITextRange2** object. |
+| [IsEqual](#IsEqual) | Compares two table rows to determine if they have the same properties. |
 | [Reset](#Reset) |  |
 | [SetProperty](#SetProperty) |  |
 
@@ -1196,5 +1196,30 @@ END FUNCTION
 ```
 
 #### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="IsEqual"></a>IsEqual
+
+Compares two table rows to determine if they have the same properties.
+
+```
+FUNCTION CTextRow.IsEqual (BYVAL pRow AS ITextRow PTR) AS LONG
+   DIM B AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->IsEqual(m_pTextRow, pRow, @B))
+   FUNCTION = B
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pRow* | The row to compare to. |
+
+#### Return value
+
+The comparison result: **tomTrue** if equal, and **tomFalse** if not.
+
+#### Result code
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
