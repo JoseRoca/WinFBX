@@ -39,8 +39,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [GetKeepWithNext](#GetKeepWithNext) | Gets whether this row should appear on the same page as the row that follows it. |
 | [SetKeepWithNext](#SetKeepWithNext) | Sets whether this row should appear on the same page as the row that follows it. |
 | [GetNestLevel](#GetNestLevel) | Gets the nest level of a table. |
-| [GetRTL](#GetRTL) |  |
-| [SetRTL](#SetRTL) |  |
+| [GetRTL](#GetRTL) | Gets whether this row has right-to-left orientation. |
+| [SetRTL](#SetRTL) | Sets whether this row has right-to-left orientation. |
 | [GetCellAlignment](#GetCellAlignment) |  |
 | [SetCellAlignment](#SetCellAlignment) |  |
 | [GetCellColorBack](#GetCellColorBack) |  |
@@ -645,3 +645,23 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 The nest level of the table is identified by the associated **ITextRange2** object. If there is only a single table, the nest level is 1. If there is no table, the nest level is 0.
 
+
+# <a name="GetRTL"></a>GetRTL
+
+Gets whether this row has right-to-left orientation.
+
+```
+FUNCTION CTextRow.GetRTL () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetRTL(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+A **tomBool** value that indicates whether this row has right-to-left orientation.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
