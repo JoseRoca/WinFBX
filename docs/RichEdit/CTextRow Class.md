@@ -41,8 +41,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [GetNestLevel](#GetNestLevel) | Gets the nest level of a table. |
 | [GetRTL](#GetRTL) | Gets whether this row has right-to-left orientation. |
 | [SetRTL](#SetRTL) | Sets whether this row has right-to-left orientation. |
-| [GetCellAlignment](#GetCellAlignment) |  |
-| [SetCellAlignment](#SetCellAlignment) |  |
+| [GetCellAlignment](#GetCellAlignment) | Gets the vertical alignment of the active cell. |
+| [SetCellAlignment](#SetCellAlignment) | Sets the vertical alignment of the active cell. |
 | [GetCellColorBack](#GetCellColorBack) |  |
 | [SetCellColorBack](#SetCellColorBack) |  |
 | [GetCellColorFore](#GetCellColorFore) |  |
@@ -691,3 +691,24 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="GetCellAlignment"></a>GetCellAlignment
+
+Gets the vertical alignment of the active cell.
+
+```
+FUNCTION CTextRow.GetCellAlignment () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetCellAlignment(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The vertical alignment.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
