@@ -57,8 +57,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetCellWidth](#SetCellWidth) | Sets the width of the active cell. |
 | [GetCellBorderColors](#GetCellBorderColors) | Gets the border colors of the active cell. |
 | [GetCellBorderWidths](#GetCellBorderWidths) | Gets the border widths of the active cell. |
-| [SetCellBorderColors](#SetCellBorderColors) |  |
-| [SetCellBorderWidths](#SetCellBorderWidths) |  |
+| [SetCellBorderColors](#SetCellBorderColors) | Sets the border colors of the active cell. |
+| [SetCellBorderWidths](#SetCellBorderWidths) | Sets the border widths of the active cell. |
 | [Apply](#Apply) |  |
 | [GetProperty](#GetProperty) |  |
 | [Insert](#Insert) |  |
@@ -1104,6 +1104,32 @@ END FUNCTION
 | *duTop* | The top border width. |
 | *duRight* | The right border width. |
 | *duBottom* | The bottom border width. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="Apply"></a>Apply
+
+Applies the formatting attributes of this text row object to the specified rows in the associated **ITextRange2**.
+
+```
+FUNCTION CTextRow.Apply (BYVAL cRow AS LONG, BYVAL Flags AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->Apply(m_pTextRow, cRow, Flags))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cRow* | The number of rows to apply this text row object to. |
+| *Flags* | A flag that controls how the formatting attributes are applied. It can be one of the following values. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomCellStructureChangeOnly** | Apply formatting attributes only to cell widths or the cell count (enables you to change column widths or insert/delete columns without changing other properties, such as cell borders). |
+| **tomRowApplyDefault** | Apply formatting attributes to the full application, not just cell widths and count. |
 
 #### Return value
 
