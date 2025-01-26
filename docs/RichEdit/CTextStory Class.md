@@ -411,9 +411,13 @@ FUNCTION CTextStory.GetProperty (BYVAL nType AS LONG) AS LONG
 END FUNCTION
 ```
 
+| Parameter | Description |
+| --------- | ----------- |
+| *nType* | The ID of the property. Currently, no extra properties are defined. |
+
 #### Return value
 
-The ID of the property. Currently, no extra properties are defined.
+The property value.
 
 #### Result code
 
