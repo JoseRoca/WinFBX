@@ -24,8 +24,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetAlignment](#SetAlignment) | Sets the horizontal alignment of a row. |
 | [GetCellCount](#GetCellCount) | Gets the count of cells in a row. |
 | [SetCellCount](#SetCellCount) | Sets the count of cells in a row. |
-| [GetCellCountCache](#GetCellCountCache) |  |
-| [SetCellCountCache](#SetCellCountCache) |  |
+| [GetCellCountCache](#GetCellCountCache) | Gets the count of cells cached for this row. |
+| [SetCellCountCache](#SetCellCountCache) | Sets the count of cells cached for this row. |
 | [GetCellIndex](#GetCellIndex) |  |
 | [SetCellIndex](#SetCellIndex) |  |
 | [GetCellMargin](#GetCellMargin) |  |
@@ -256,7 +256,6 @@ Gets the horizontal alignment of a row.
 ```
 FUNCTION CTextRow.GetAlignment () AS LONG
    DIM Value AS LONG
-   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN Value
    this.SetResult(m_pTextRow->lpvtbl->GetAlignment(m_pTextRow, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -283,7 +282,6 @@ Sets the horizontal alignment of a row.
 
 ```
 FUNCTION CTextRow.SetAlignment (BYVAL Value AS LONG) AS HRESULT
-   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN m_Result
    this.SetResult(m_pTextRow->lpvtbl->SetAlignment(m_pTextRow, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -311,7 +309,6 @@ Gets the count of cells in this row.
 ```
 FUNCTION CTextRow.GetCellCount () AS LONG
    DIM Value AS LONG
-   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN Value
    this.SetResult(m_pTextRow->lpvtbl->GetCellCount(m_pTextRow, @Value))
    FUNCTION = Value
 END FUNCTION
@@ -332,7 +329,6 @@ Sets the count of cells in a row.
 
 ```
 FUNCTION CTextRow.SetCellCount (BYVAL Value AS LONG) AS HRESULT
-   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN m_Result
    this.SetResult(m_pTextRow->lpvtbl->SetCellCount(m_pTextRow, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -345,3 +341,72 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="GetCellCountCache"></a>GetCellCountCache
+
+Gets the count of cells cached for this row.
+
+```
+FUNCTION CTextRow.GetCellCountCache () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetCellCountCache(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The cached cell count.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetCellCountCache"></a>SetCellCountCache
+
+Sets the count of cells cached for a row.
+
+```
+FUNCTION CTextRow.SetCellCountCache (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN m_Result
+   this.SetResult(m_pTextRow->lpvtbl->SetCellCountCache(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- |  ---------- |
+| *Value* | The row cell count. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetCellCountCache"></a>SetCellCountCache
+
+Sets the count of cells cached for a row.
+
+```
+FUNCTION CTextRow.SetCellCountCache (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetCellCountCache(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- |  ---------- |
+| *Value* | The cell count. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+####Remarks
+
+If all cells are identical, properties need to be cached only for the cell with index 0. If the cached count is less than the cell count, the cell parameters for index CellCountCache – 1 are used for cells with larger indices.
+
+
+
