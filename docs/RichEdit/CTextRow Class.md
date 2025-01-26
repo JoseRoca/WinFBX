@@ -992,3 +992,23 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 #### Remarks
 
 The width of the cell, and/or the entire row, must be less than 22 inches (1440 x 22).
+
+
+# <a name="SetCellWidth"></a>SetCellWidth
+
+Sets the active cell width in twips.
+
+```
+FUNCTION CTextRow.SetCellWidth (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetCellWidth(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The width of the active cell. |
+
+#### Remarks
+
+The total width of the entire row must be less than 22 inches, or 1440×22.
