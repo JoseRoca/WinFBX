@@ -290,15 +290,57 @@ END FUNCTION
 ```
 
 | Parameter | Description |
-| --------- |  ---------- |
-
-The new horizontal alignment. It can be one of the following values.
+| --------- | ----------- |
+| *Value* | The new horizontal alignment. It can be one of the following values. |
 
 | Constant | Value | Meaning |
 | -------- | ----- | ------- |
 | **tomAlignLeft** | 0 | Text aligns with the left margin. |
 | **tomAlignCenter** | 1 | Text is centered between the margins. |
 | **tomAlignRight** | 2 | Text aligns with the right margin. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="GetCellCount"></a>GetCellCount
+
+Gets the count of cells in this row.
+
+```
+FUNCTION CTextRow.GetCellCount () AS LONG
+   DIM Value AS LONG
+   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN Value
+   this.SetResult(m_pTextRow->lpvtbl->GetCellCount(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The cell count for this row.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetCellCount"></a>SetCellCount
+
+Sets the count of cells in a row.
+
+```
+FUNCTION CTextRow.SetCellCount (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN m_Result
+   this.SetResult(m_pTextRow->lpvtbl->SetCellCount(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- |  ---------- |
+| *Value* | The row cell count. |
 
 #### Return value
 
