@@ -43,8 +43,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetRTL](#SetRTL) | Sets whether this row has right-to-left orientation. |
 | [GetCellAlignment](#GetCellAlignment) | Gets the vertical alignment of the active cell. |
 | [SetCellAlignment](#SetCellAlignment) | Sets the vertical alignment of the active cell. |
-| [GetCellColorBack](#GetCellColorBack) |  |
-| [SetCellColorBack](#SetCellColorBack) |  |
+| [GetCellColorBack](#GetCellColorBack) | Gets the background color of the active cell. |
+| [SetCellColorBack](#SetCellColorBack) | Sets the background color of the active cell. |
 | [GetCellColorFore](#GetCellColorFore) |  |
 | [SetCellColorFore](#SetCellColorFore) |  |
 | [GetCellMergeFlags](#GetCellMergeFlags) |  |
@@ -734,3 +734,22 @@ END FUNCTION
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 
+# <a name="GetCellColorBack"></a>GetCellColorBack
+
+Gets the background color of the active cell.
+
+```
+FUNCTION CTextRow.GetCellColorBack () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetCellColorBack(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The background color.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
