@@ -28,8 +28,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetCellCountCache](#SetCellCountCache) | Sets the count of cells cached for this row. |
 | [GetCellIndex](#GetCellIndex) | Gets the index of the active cell to get or set parameters for. |
 | [SetCellIndex](#SetCellIndex) | Sets the index of the active cell to get or set parameters for. |
-| [GetCellMargin](#GetCellMargin) |  |
-| [SetCellMargin](#SetCellMargin) |  |
+| [GetCellMargin](#GetCellMargin) | Gets the cell margin of this row. |
+| [SetCellMargin](#SetCellMargin) | Sets the cell margin of this row. |
 | [GetHeight](#GetHeight) |  |
 | [SetHeight](#SetHeight) |  |
 | [GetIndent](#GetIndent) |  |
@@ -434,3 +434,25 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 You can get or set parameters for an active cell.
 
 If the cell index is greater than the cell count, and the cell index is less that 63 (the maximum cell count), then the cell count is increased to cell index + 1.
+
+
+# <a name="GetCellMargin"></a>GetCellMargin
+
+ets the cell margin of this row.
+
+```
+FUNCTION CTextRow.GetCellMargin () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetCellMargin(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The cell margin.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
