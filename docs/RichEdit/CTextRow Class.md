@@ -1036,3 +1036,27 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="GetCellBorderWidths"></a>GetCellBorderWidths
+
+Gets the border widths of the active cell.
+
+```
+FUNCTION CTextRow.GetCellBorderWidths (BYVAL pduLeft AS LONG PTR, BYVAL pduTop AS LONG PTR, _
+BYVAL pduRight AS LONG PTR, BYVAL pduBottom AS LONG PTR) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->GetCellBorderWidths(m_pTextRow, pduLeft, pduTop, pduRight, pduBottom))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pduLeft* | The active-cell left border width. |
+| *pduTop* | The active-cell top border width. |
+| *pduRight* | The active-cell right border width. |
+| *pduBottom* | The active-cell bottom border width. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
