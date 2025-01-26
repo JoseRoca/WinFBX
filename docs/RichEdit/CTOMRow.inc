@@ -76,9 +76,9 @@ Public:
    DECLARE FUNCTION Apply (BYVAL cRow AS LONG, BYVAL Flags AS LONG) AS HRESULT
    DECLARE FUNCTION CanChange () AS LONG
    DECLARE FUNCTION GetProperty (BYVAL nType AS LONG) AS LONG
-   DECLARE FUNCTION Insert () AS LONG
+   DECLARE FUNCTION Insert (BYVAL cRow AS LONG) AS HRESULT
    DECLARE FUNCTION IsEqual (BYVAL pRow AS ITextRow PTR) AS LONG
-   DECLARE FUNCTION Reset (BYVAL Value AS LONG) AS HRESULT
+   DECLARE FUNCTION Reset (BYVAL Value AS LONG = tomRowUpdate) AS HRESULT
    DECLARE FUNCTION SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
 
 END TYPE
@@ -623,13 +623,13 @@ END FUNCTION
 ' ========================================================================================
 ' Inserts a row, or rows, at the location identified by the associated ITextRange2 object.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRow.Insert () AS LONG
-   DIM cRow AS LONG
-   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN cRow
-   this.SetResult(m_pTextRow->lpvtbl->Insert(m_pTextRow, @cRow))
-   FUNCTION = cRow
+PRIVATE FUNCTION CTextRow.Insert (BYVAL cRow AS LONG) AS HRESULT
+   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN m_Result
+   this.SetResult(m_pTextRow->lpvtbl->Insert(m_pTextRow, cRow))
+   FUNCTION = m_Result
 END FUNCTION
 ' ========================================================================================
+   DECLARE FUNCTION Insert (BYVAL cRow AS LONG) AS HRESULT
 
 ' ========================================================================================
 ' Compares two table rows to determine if they have the same properties.
@@ -645,7 +645,7 @@ END FUNCTION
 ' ========================================================================================
 ' Resets a row.
 ' ========================================================================================
-PRIVATE FUNCTION CTextRow.Reset (BYVAL Value AS LONG) AS HRESULT
+PRIVATE FUNCTION CTextRow.Reset (BYVAL Value AS LONG = tomRowUpdate) AS HRESULT
    IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN m_Result
    this.SetResult(m_pTextRow->lpvtbl->Reset(m_pTextRow, Value))
    FUNCTION = m_Result
