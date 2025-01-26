@@ -517,3 +517,24 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="GetIndent"></a>GetIndent
+
+Gets the indent of this row.
+
+```
+FUNCTION CTextRow.GetIndent () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetIndent(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The indent of the row.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
