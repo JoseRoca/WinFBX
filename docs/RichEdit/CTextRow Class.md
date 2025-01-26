@@ -1223,3 +1223,28 @@ The comparison result: **tomTrue** if equal, and **tomFalse** if not.
 #### Result code
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="Reset"></a>Reset
+
+Resets a row.
+
+```
+FUNCTION CTextRow.Reset (BYVAL Value AS LONG = tomRowUpdate) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->Reset(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The **tomRowUpdate reset value: Update the row to have the properties of the table row identified by the associated text range. |
+
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_ACCESSDENIED** | Write access is denied. | 
+| **E_OUTOFMEMORY** | Insufficient memory. | 
