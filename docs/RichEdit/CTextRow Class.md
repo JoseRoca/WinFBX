@@ -843,9 +843,37 @@ The merge flag of the active cell. The flag can be one of the following:
 | Flag | Meaning |
 | --------- | ----------- |
 | **tomHContCell** | Any cell except the start in a horizontally merged cell set. |
+| **tomHStartCell** | The top cell in vertically merged cell set. |
 | **tomVLowCell** | Any cell except the top cell in a vertically merged cell set. |
 | **tomVTopCell** | The top cell in vertically merged cell set. |
 
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetCellMergeFlags"></a>SetCellMergeFlags
+
+Sets the merge flags of the active cell.
+
+```
+FUNCTION CTextRow.SetCellMergeFlags (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetCellMergeFlags(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The merge flag. It can be one of these values. |
+
+| Flag | Meaning |
+| --------- | ----------- |
+| **tomHContCell** | Any cell except the start in a horizontally merged cell set. |
+| **tomHStartCell** | The top cell in vertically merged cell set. |
+| **tomVLowCell** | Any cell except the top cell in a vertically merged cell set. |
+| **tomVTopCell** | The top cell in vertically merged cell set. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
