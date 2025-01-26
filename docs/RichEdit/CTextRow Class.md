@@ -258,7 +258,7 @@ Gets the horizontal alignment of a row.
 FUNCTION CTextRow.GetAlignment () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetAlignment(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -284,7 +284,7 @@ Sets the horizontal alignment of a row.
 ```
 FUNCTION CTextRow.SetAlignment (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetAlignment(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -311,7 +311,7 @@ Gets the count of cells in this row.
 FUNCTION CTextRow.GetCellCount () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetCellCount(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -331,7 +331,7 @@ Sets the count of cells in a row.
 ```
 FUNCTION CTextRow.SetCellCount (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetCellCount(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -352,7 +352,7 @@ Gets the count of cells cached for this row.
 FUNCTION CTextRow.GetCellCountCache () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetCellCountCache(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -372,7 +372,7 @@ Sets the count of cells cached for a row.
 ```
 FUNCTION CTextRow.SetCellCountCache (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetCellCountCache(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -397,7 +397,7 @@ Gets the index of the active cell to get or set parameters for.
 FUNCTION CTextRow.GetCellIndex () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetCellIndex(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -418,7 +418,7 @@ Sets the index of the active cell.
 ```
 FUNCTION CTextRow.SetCellIndex (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetCellIndex(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -445,7 +445,7 @@ ets the cell margin of this row.
 FUNCTION CTextRow.GetCellMargin () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetCellMargin(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -465,7 +465,7 @@ Sets the cell margin of a row.
 ```
 FUNCTION CTextRow.SetCellMargin (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetCellMargin(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -486,7 +486,7 @@ Gets the height of the row.
 FUNCTION CTextRow.GetHeight () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetHeight(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -507,7 +507,7 @@ Sets the cell margin of a row.
 ```
 FUNCTION CTextRow.SetHeight (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetHeight(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -528,7 +528,7 @@ Gets the indent of this row.
 FUNCTION CTextRow.GetIndent () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetIndent(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -548,7 +548,7 @@ Sets the indent of a row.
 ```
 FUNCTION CTextRow.SetIndent (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetIndent(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -569,7 +569,7 @@ Gets whether this row is allowed to be broken across pages.
 FUNCTION CTextRow.GetKeepTogether () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetKeepTogether(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -589,7 +589,7 @@ Sets whether this row is allowed to be broken across pages.
 ```
 FUNCTION CTextRow.SetKeepTogether (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetKeepTogether(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -610,7 +610,7 @@ Gets whether this row is allowed to be broken across pages.
 FUNCTION CTextRow.GetKeepWithNext () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetKeepWithNext(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -630,7 +630,7 @@ Gets the nest level of a table.
 FUNCTION CTextRow.GetNestLevel () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetNestLevel(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -655,7 +655,7 @@ Gets whether this row has right-to-left orientation.
 FUNCTION CTextRow.GetRTL () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetRTL(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -675,7 +675,7 @@ Sets whether this row has right-to-left orientation.
 ```
 FUNCTION CTextRow.SetRTL (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetRTL(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -702,7 +702,7 @@ Gets the vertical alignment of the active cell.
 FUNCTION CTextRow.GetCellAlignment () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetCellAlignment(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -722,7 +722,7 @@ Sets the vertical alignment of the active cell.
 ```
 FUNCTION CTextRow.SetCellAlignment (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetCellAlignment(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -743,7 +743,7 @@ Gets the background color of the active cell.
 FUNCTION CTextRow.GetCellColorBack () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetCellColorBack(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -763,7 +763,7 @@ Sets the background color of the active cell.
 ```
 FUNCTION CTextRow.SetCellColorBack (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetCellColorBack(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -788,7 +788,7 @@ FUNCTION CTextRow.GetCellColorFore () AS LONG
    DIM Value AS LONG
    IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN Value
    this.SetResult(m_pTextRow->lpvtbl->GetCellColorFore(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -808,7 +808,7 @@ Sets the foreground color of the active cell.
 ```
 FUNCTION CTextRow.SetCellColorFore (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetCellColorFore(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -833,7 +833,7 @@ Gets the merge flags of the active cell.
 FUNCTION CTextRow.GetCellMergeFlags () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetCellMergeFlags(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -860,7 +860,7 @@ Sets the merge flags of the active cell.
 ```
 FUNCTION CTextRow.SetCellMergeFlags (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetCellMergeFlags(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -888,7 +888,7 @@ Gets the shading of the active cell.
 FUNCTION CTextRow.GetCellShading () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetCellShading(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -912,7 +912,7 @@ Sets the shading of the active cell.
 ```
 FUNCTION CTextRow.SetCellShading (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetCellShading(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -939,7 +939,7 @@ This property is not currently implemented.
 FUNCTION CTextRow.GetCellVerticalText () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetCellVerticalText(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -961,7 +961,7 @@ This property is not currently implemented.
 ```
 FUNCTION CTextRow.SetCellVerticalText (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetCellVerticalText(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -978,7 +978,7 @@ Gets the width of the active cell.
 FUNCTION CTextRow.GetCellWidth () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetCellWidth(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -1002,7 +1002,7 @@ Sets the active cell width in twips.
 ```
 FUNCTION CTextRow.SetCellWidth (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetCellWidth(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1023,7 +1023,7 @@ Gets the border colors of the active cell.
 FUNCTION CTextRow.GetCellBorderColors (BYVAL pcrLeft AS LONG PTR, BYVAL pcrTop AS LONG PTR, _
 BYVAL pcrRight AS LONG PTR, BYVAL pcrBottom AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->GetCellBorderColors(m_pTextRow, pcrLeft, pcrTop, pcrRight, pcrBottom))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1047,7 +1047,7 @@ Gets the border widths of the active cell.
 FUNCTION CTextRow.GetCellBorderWidths (BYVAL pduLeft AS LONG PTR, BYVAL pduTop AS LONG PTR, _
 BYVAL pduRight AS LONG PTR, BYVAL pduBottom AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->GetCellBorderWidths(m_pTextRow, pduLeft, pduTop, pduRight, pduBottom))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1071,7 +1071,7 @@ Sets the border colors of the active cell.
 FUNCTION CTextRow.SetCellBorderColors (BYVAL crLeft AS LONG, BYVAL crTop AS LONG, _
 BYVAL crRight AS LONG, BYVAL crBottom AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetCellBorderColors(m_pTextRow, crLeft, crTop, crRight, crBottom))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1095,7 +1095,7 @@ Sets the border widths of the active cell.
 FUNCTION CTextRow.SetCellBorderWidths (BYVAL duLeft AS LONG, BYVAL duTop AS LONG, _
 BYVAL duRight AS LONG, BYVAL duBottom AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetCellBorderWidths(m_pTextRow, duLeft, duTop, duRight, duBottom))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1118,7 +1118,7 @@ Applies the formatting attributes of this text row object to the specified rows 
 ```
 FUNCTION CTextRow.Apply (BYVAL cRow AS LONG, BYVAL Flags AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->Apply(m_pTextRow, cRow, Flags))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1145,7 +1145,7 @@ Determines whether changes can be made to this row.
 FUNCTION CTextRow.CanChange () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->CanChange(m_pTextRow, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -1166,7 +1166,7 @@ Gets the value of the specified property.
 FUNCTION CTextRow.GetProperty (BYVAL nType AS LONG) AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRow->lpvtbl->GetProperty(m_pTextRow, nType, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -1191,7 +1191,7 @@ Inserts a row, or rows, at the location identified by the associated **ITextRang
 FUNCTION CTextRow.Insert (BYVAL cRow AS LONG) AS HRESULT
    IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN m_Result
    this.SetResult(m_pTextRow->lpvtbl->Insert(m_pTextRow, cRow))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1208,7 +1208,7 @@ Compares two table rows to determine if they have the same properties.
 FUNCTION CTextRow.IsEqual (BYVAL pRow AS ITextRow PTR) AS LONG
    DIM B AS LONG
    this.SetResult(m_pTextRow->lpvtbl->IsEqual(m_pTextRow, pRow, @B))
-   FUNCTION = B
+   RETURN B
 END FUNCTION
 ```
 
@@ -1232,7 +1232,7 @@ Resets a row.
 ```
 FUNCTION CTextRow.Reset (BYVAL Value AS LONG = tomRowUpdate) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->Reset(m_pTextRow, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1257,7 +1257,7 @@ Sets the value of the specified property.
 ```
 FUNCTION CTextRow.SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRow->lpvtbl->SetProperty(m_pTextRow, nType, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
