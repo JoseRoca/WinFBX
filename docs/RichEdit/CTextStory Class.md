@@ -296,3 +296,29 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 #### Remarks
 
 A story can be displayed by calling **SetActive(tomDisplayActive)**. The **GetDisplay** method is included, in case it might be advantageous to have more than one display for a set of **ITextStory** interfaces.
+
+
+# <a name="GetIndex"></a>GetIndex
+
+Gets the index of a story.
+
+```
+FUNCTION CTextStory.GetIndex () AS LONG
+   DIM Value AS LONG
+   IF m_pTextStory = NULL THEN m_Result = E_POINTER: RETURN Value
+   this.SetResult(m_pTextStory->lpvtbl->GetIndex(m_pTextStory, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+#### Return value
+
+The index of thye story.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The index is used with the **GetStory** method of the **ITextDocument2** interface.
