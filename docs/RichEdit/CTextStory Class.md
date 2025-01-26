@@ -363,7 +363,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 # <a name="SetType"></a>SetType
 
-Gets this story's type.
+Sets this story's type.
 
 ```
 FUNCTION CTextStory.SetType (BYVAL Value AS LONG) AS HRESULT
@@ -397,3 +397,24 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="GetProperty"></a>GetProperty
+
+Gets the value of the specified property.
+
+```
+FUNCTION CTextStory.GetProperty (BYVAL nType AS LONG) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextStory->lpvtbl->GetProperty(m_pTextStory, nType, @Value))
+   RETURN Value
+END FUNCTION
+```
+
+#### Return value
+
+The ID of the property. Currently, no extra properties are defined.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
