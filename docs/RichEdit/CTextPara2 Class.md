@@ -270,14 +270,14 @@ Gets a duplicate of this range object. In this implementation of the class, **Ge
 FUNCTION CTextPara2.GetDuplicate () AS ITextPara2 PTR
    DIM pPara AS ITextPara2 PTR
    this.SetResult(m_pTextPara2->lpvtbl->GetDuplicate2(m_pTextPara2, @pPara))
-   FUNCTION = pPara
+   RETURN pPara
 END FUNCTION
 ```
 ```
 FUNCTION CTextPara2.GetDuplicate2 () AS ITextPara2 PTR
    DIM pPara AS ITextPara2 PTR
    this.SetResult(m_pTextPara2->lpvtbl->GetDuplicate2(m_pTextPara2, @pPara))
-   FUNCTION = pPara
+   RETURN pPara
 END FUNCTION
 ```
 
@@ -301,13 +301,13 @@ Sets the properties of this object by copying the properties of another text par
 ```
 FUNCTION CTextPara2.SetDuplicate (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetDuplicate(m_pTextPara2, pPara))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 ```
 FUNCTION CTextPara2.SetDuplicate2 (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetDuplicate2(m_pTextPara2, pPara))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -333,7 +333,7 @@ Determines whether the paragraph formatting can be changed.
 FUNCTION CTextPara2.CanChange (BYVAL pPara AS ITextPara2 PTR) AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->CanChange(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -353,7 +353,7 @@ Determines if the current range has the same properties as a specified range.  I
 FUNCTION CTextPara2.IsEqual (BYVAL pPara AS ITextPara2 PTR) AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->CanChange(m_pTextPara2, pPara, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 ```
@@ -361,7 +361,7 @@ FUNCTION CTextPara2.IsEqual2 (BYVAL pPara AS ITextPara2 PTR) AS LONG
    DIM B AS LONG
    IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN B
    this.SetResult(m_pTextPara2->lpvtbl->IsEqual2(m_pTextPara2, pPara, @B))
-   FUNCTION = B
+   RETURN B
 END FUNCTION
 ```
 
@@ -384,7 +384,7 @@ Determines whether the paragraph formatting can be changed.
 ```
 FUNCTION CTextPara2.Reset (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->Reset(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -415,7 +415,7 @@ Retrieves the style handle to the paragraphs in the specified range.
 FUNCTION CTextPara2.GetStyle () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetStyle(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -488,7 +488,7 @@ Sets the paragraph style for the paragraphs in a range.
 ```
 FUNCTION CTextPara2.SetStyle (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetStyle(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -562,7 +562,7 @@ Retrieves the current paragraph alignment value.
 FUNCTION CTextPara2.GetAlignment () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetAlignment(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -597,7 +597,7 @@ Sets the paragraph alignment.
 FUNCTION CTextPara2.SetAlignment (BYVAL Value AS LONG) AS HRESULT
    IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextPara2->lpvtbl->SetStyle(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -636,7 +636,7 @@ FUNCTION CTextPara2.GetHyphenation () AS LONG
    DIM Value AS LONG
    IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextPara2->lpvtbl->GetHyphenation(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -668,7 +668,7 @@ Controls hyphenation for the paragraphs in the range.
 ```
 FUNCTION CTextPara2.SetHyphenation (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetHyphenation(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 | Parameter | Description |
@@ -700,7 +700,7 @@ Retrieves the amount used to indent the first line of a paragraph relative to th
 FUNCTION CTextPara2.GetFirstLineIndent () AS SINGLE
    DIM Value AS SINGLE
    this.SetResult(m_pTextPara2->lpvtbl->GetFirstLineIndent(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -729,7 +729,7 @@ Determines whether page breaks are allowed within paragraphs.
 FUNCTION CTextPara2.GetKeepTogether () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetKeepTogether(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -761,7 +761,7 @@ Controls whether page breaks are allowed within a paragraph in a range.
 ```
 FUNCTION CTextPara2.SetKeepTogether (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetKeepTogether(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 | Parameter | Description |
@@ -794,7 +794,7 @@ FUNCTION CTextPara2.GetKeepWithNext () AS LONG
    DIM Value AS LONG
    IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextPara2->lpvtbl->GetKeepWithNext(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -826,7 +826,7 @@ Controls whether page breaks are allowed between the paragraphs in a range.
 ```
 FUNCTION CTextPara2.SetKeepWithNext (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetKeepWithNext(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 | Parameter | Description |
@@ -859,7 +859,7 @@ Retrieves the distance used to indent all lines except the first line of a parag
 FUNCTION CTextPara2.GetLeftIndent () AS SINGLE
    DIM Value AS SINGLE
    this.SetResult(m_pTextPara2->lpvtbl->GetLeftIndent(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -882,7 +882,7 @@ Retrieves the line-spacing value for the text range.
 FUNCTION CTextPara2.GetLineSpacing () AS SINGLE
    DIM Value AS SINGLE
    this.SetResult(m_pTextPara2->lpvtbl->GetLineSpacing(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -914,7 +914,7 @@ Retrieves the line-spacing rule for the text range.
 FUNCTION CTextPara2.GetLineSpacingRule () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetLineSpacingRule(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -947,7 +947,7 @@ Retrieves the kind of alignment to use for bulleted and numbered lists.
 FUNCTION CTextPara2.GetListAlignment () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetListAlignment(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -975,7 +975,7 @@ Sets the alignment of bulleted or numbered text used for paragraphs.
 ```
 FUNCTION CTextPara2.SetListAlignment (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetListAlignment(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 | Parameter | Description |
@@ -1007,7 +1007,7 @@ Retrieves the list level index used with paragraphs.
 FUNCTION CTextPara2.GetListLevelIndex () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetListLevelIndex(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -1039,7 +1039,7 @@ Sets the list level index used for paragraphs.
 ```
 FUNCTION CTextPara2.SetListLevelIndex (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetListLevelIndex(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 | Parameter | Description |
@@ -1073,7 +1073,7 @@ Retrieves the starting value or code of a list numbering sequence.
 FUNCTION CTextPara2.GetListStart () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetListStart(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -1134,7 +1134,7 @@ Sets the starting number or Unicode value for a numbered list.
 ```
 FUNCTION CTextPara2.SetListStart (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetListStart(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1165,7 +1165,7 @@ Retrieves the list tab setting, which is the distance between the first-line ind
 FUNCTION CTextPara2.GetListTab () AS SINGLE
    DIM Value AS SINGLE
    this.SetResult(m_pTextPara2->lpvtbl->GetListTab(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -1187,7 +1187,7 @@ Sets the list tab setting, which is the distance between the first indent and th
 ```
 FUNCTION CTextPara2.SetListTab (BYVAL Value AS SINGLE) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetListTab(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1214,7 +1214,7 @@ Retrieves the kind of numbering to use with paragraphs.
 FUNCTION CTextPara2.GetListType () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetListType(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -1275,7 +1275,7 @@ Sets the type of list to be used for paragraphs.
 ```
 FUNCTION CTextPara2.SetListType (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetListTab(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1337,7 +1337,7 @@ Determines whether paragraph numbering is enabled.
 FUNCTION CTextPara2.GetNoLineNumber () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetNoLineNumber(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -1369,7 +1369,7 @@ Determines whether to suppress line numbering of paragraphs in a range.
 ```
 FUNCTION CTextPara2.SetNoLineNumber (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetNoLineNumber(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1402,7 +1402,7 @@ Determines whether each paragraph in the range must begin on a new page.
 FUNCTION CTextPara2.GetPageBreakBefore () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetPageBreakBefore(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -1430,7 +1430,7 @@ Controls whether there is a page break before each paragraph in a range.
 ```
 FUNCTION CTextPara2.SetPageBreakBefore (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetPageBreakBefore(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1468,7 +1468,7 @@ Retrieves the size of the right margin indent of a paragraph.
 FUNCTION CTextPara2.GetRightIndent () AS SINGLE
    DIM Value AS SINGLE
    this.SetResult(m_pTextPara2->lpvtbl->GetRightIndent(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -1490,7 +1490,7 @@ Sets the right margin of paragraph.
 ```
 FUNCTION CTextPara2.SetRightIndent (BYVAL Value AS SINGLE) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetRightIndent(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1516,7 +1516,7 @@ Sets the first-line indent, the left indent, and the right indent for a paragrap
 ```
 FUNCTION CTextPara2.SetIndents (BYVAL First AS SINGLE, BYVAL Left AS SINGLE, BYVAL Right AS SINGLE) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetIndents(m_pTextPara2, First, Left, Right))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1548,7 +1548,7 @@ Sets the paragraph line-spacing rule and the line spacing for a paragraph.
 ```
 FUNCTION CTextPara2.SetLineSpacing (BYVAL Rule AS LONG, BYVAL Spacing AS SINGLE) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetLineSpacing(m_pTextPara2, Rule, Spacing))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1590,7 +1590,7 @@ Retrieves the amount of vertical space below a paragraph.
 FUNCTION CTextPara2.GetSpaceAfter () AS SINGLE
    DIM Value AS SINGLE
    this.SetResult(m_pTextPara2->lpvtbl->GetSpaceAfter(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -1612,7 +1612,7 @@ Sets the amount of space that follows a paragraph.
 ```
 FUNCTION CTextPara2.SetSpaceAfter (BYVAL Value AS SINGLE) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetSpaceAfter(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1639,7 +1639,7 @@ Retrieves the amount of vertical space above a paragraph.
 FUNCTION CTextPara2.GetSpaceBefore () AS SINGLE
    DIM Value AS SINGLE
    this.SetResult(m_pTextPara2->lpvtbl->GetSpaceBefore(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -1661,7 +1661,7 @@ Sets the amount of space preceding a paragraph.
 ```
 FUNCTION CTextPara2.SetSpaceBefore (BYVAL Value AS SINGLE) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetSpaceBefore(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1688,7 +1688,7 @@ Retrieves the widow and orphan control state for the paragraphs in a range.
 FUNCTION CTextPara2.GetWidowControl () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetWidowControl(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -1716,7 +1716,7 @@ Controls the suppression of widows and orphans.
 ```
 FUNCTION CTextPara2.SetWidowControl (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetWidowControl(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1750,7 +1750,7 @@ Retrieves the tab count.
 FUNCTION CTextPara2.GetTabCount () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetTabCount(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 #### Return value
@@ -1782,7 +1782,7 @@ Adds a tab at the displacement *tbPos*, with type *tbAlign*, and leader style, *
 ```
 FUNCTION CTextPara2.AddTab (BYVAL tbPos AS SINGLE, BYVAL tbAlign AS LONG, BYVAL tbLeader AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->AddTab(m_pTextPara2, tbPos, tbAlign, tbLeader))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1828,7 +1828,7 @@ Clears all tabs, reverting to equally spaced tabs with the default tab spacing.
 ```
 FUNCTION CTextPara2.ClearAllTabs () AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->ClearAllTabs(m_pTextPara2))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 #### Return value
@@ -1849,7 +1849,7 @@ Deletes a tab at a specified displacement.
 ```
 FUNCTION CTextPara2.DeleteTab (BYVAL tbPos AS SINGLE) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->DeleteTab(m_pTextPara2, tbPos))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1875,7 +1875,7 @@ Retrieves tab parameters (displacement, alignment, and leader style) for a speci
 ```
 FUNCTION CTextPara2.GetTab (BYVAL iTab AS LONG, BYVAL ptbPos AS SINGLE PTR, BYVAL ptbAlign AS LONG PTR, BYVAL ptbLeader AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->GetTab(m_pTextPara2, iTab, ptbPos, ptbAlign, ptbLeader))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -1931,7 +1931,7 @@ Not implemented. Gets the borders collection.
 FUNCTION CTextPara2.GetBorders () AS IUnknown PTR
    DIM pBorders AS IUnknown PTR
    this.SetResult(m_pTextPara2->lpvtbl->GetBorders(m_pTextPara2, @pBorders))
-   FUNCTION = pBorders
+   RETURN pBorders
 END FUNCTION
 ```
 
@@ -1951,7 +1951,7 @@ Gets the paragraph font alignment state.
 FUNCTION CTextPara2.GetFontAlignment () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetFontAlignment(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -1978,7 +1978,7 @@ Sets the paragraph font alignment for Chinese, Japanese, Korean text.
 ```
 FUNCTION CTextPara2.SetFontAlignment (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetFontAlignment(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -2010,7 +2010,7 @@ Gets whether to hang punctuation symbols on the right margin when the paragraph 
 FUNCTION CTextPara2.GetHangingPunctuation () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetHangingPunctuation(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -2035,7 +2035,7 @@ Sets whether to hang punctuation symbols on the right margin when the paragraph 
 ```
 FUNCTION CTextPara2.SetHangingPunctuation (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetHangingPunctuation(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 | Parameter | Description |
@@ -2061,7 +2061,7 @@ Gets whether paragraph lines snap to a vertical grid that could be defined for t
 FUNCTION CTextPara2.GetSnapToGrid () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetSnapToGrid(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -2086,7 +2086,7 @@ Sets whether paragraph lines snap to a vertical grid that could be defined for t
 ```
 FUNCTION CTextPara2.SetSnapToGrid (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetSnapToGrid(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -2113,7 +2113,7 @@ Gets whether to trim the leading space of a punctuation symbol at the start of a
 FUNCTION CTextPara2.GetTrimPunctuationAtStart () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetTrimPunctuationAtStart(m_pTextPara2, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -2138,7 +2138,7 @@ Sets whether to trim the leading space of a punctuation symbol at the start of a
 ```
 FUNCTION CTextPara2.SetTrimPunctuationAtStart (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetTrimPunctuationAtStart(m_pTextPara2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -2164,7 +2164,7 @@ Gets the paragraph format effects.
 ```
 FUNCTION CTextPara2.GetEffects (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->GetEffects(m_pTextPara2, pValue, pMask))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -2207,7 +2207,7 @@ Gets the value of the specified property.
 FUNCTION CTextPara2.GetProperty (BYVAL nType AS LONG) AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextPara2->lpvtbl->GetProperty(m_pTextPara2, nType, @Value))
-   FUNCTION = Value
+   RETURN Value
 END FUNCTION
 ```
 
@@ -2243,7 +2243,7 @@ Sets the paragraph format effects.
 FUNCTION CTextPara2.SetEffects (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
    IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextPara2->lpvtbl->SetEffects(m_pTextPara2, Value, Mask))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -2278,7 +2278,7 @@ Sets the value of the specified property.
 ```
 FUNCTION CTextPara2.SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextPara2->lpvtbl->SetProperty(m_pTextPara2, nType, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
