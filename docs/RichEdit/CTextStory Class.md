@@ -422,3 +422,31 @@ The property value.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="GetRange"></a>GetRange
+
+Gets a text range object for the story.
+
+```
+FUNCTION CTextStory.GetRange (BYVAL cpActive AS LONG, BYVAL cpAnchor AS LONG) AS ITextRange2 PTR
+   DIM pRange AS ITextRange2 PTR
+   IF m_pTextStory = NULL THEN m_Result = E_POINTER: RETURN pRange
+   this.SetResult(m_pTextStory->lpvtbl->GetRange(m_pTextStory, cpActive, cpAnchor, @pRange))
+   RETURN pRange
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *cpActive* | The active end of the range. |
+| *cpAnchor* | The anchor end of the range. |
+
+#### Return value
+
+The text range object.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
