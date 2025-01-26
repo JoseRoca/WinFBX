@@ -272,3 +272,27 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+
+# <a name="GetDisplay"></a>GetDisplay
+
+Gets a new display for a story.
+
+```
+FUNCTION CTextStory.GetDisplay () AS IUnknown PTR
+   DIM pUnk AS IUnknown PTR
+   this.SetResult(m_pTextStory->lpvtbl->GetDisplay(m_pTextStory, @pUnk))
+   RETURN pUnk
+END FUNCTION
+```
+
+#### Return value
+
+The IUnknown interface for a display.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+A story can be displayed by calling **SetActive(tomDisplayActive)**. The **GetDisplay** method is included, in case it might be advantageous to have more than one display for a set of **ITextStory** interfaces.
