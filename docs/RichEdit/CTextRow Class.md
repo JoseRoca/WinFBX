@@ -32,8 +32,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetCellMargin](#SetCellMargin) | Sets the cell margin of this row. |
 | [GetHeight](#GetHeight) | Gets the height of the row. |
 | [SetHeight](#SetHeight) | Sets the height of the row. |
-| [GetIndent](#GetIndent) |  |
-| [SetIndent](#SetIndent) |  |
+| [GetIndent](#GetIndent) | Gets the indent of this row. |
+| [SetIndent](#SetIndent) | Sets the indent of this row. |
 | [GetKeepTogether](#GetKeepTogether) |  |
 | [SetKeepTogether](#SetKeepTogether) |  |
 | [GetKeepWithNext](#GetKeepWithNext) |  |
