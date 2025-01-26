@@ -156,7 +156,7 @@ END OPERATOR
 Returns a pointer to the underlying **ITextRow** interface
 
 ```
-FUNCTION CTextRow.TextRangePtr () AS ITextRow PTR
+FUNCTION CTextRow.TextRowPtr () AS ITextRow PTR
    m_Result = 0
    RETURN m_pTextRow
 END FUNCTION
