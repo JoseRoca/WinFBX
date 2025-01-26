@@ -26,8 +26,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetCellCount](#SetCellCount) | Sets the count of cells in a row. |
 | [GetCellCountCache](#GetCellCountCache) | Gets the count of cells cached for this row. |
 | [SetCellCountCache](#SetCellCountCache) | Sets the count of cells cached for this row. |
-| [GetCellIndex](#GetCellIndex) |  |
-| [SetCellIndex](#SetCellIndex) |  |
+| [GetCellIndex](#GetCellIndex) | Gets the index of the active cell to get or set parameters for. |
+| [SetCellIndex](#SetCellIndex) | Sets the index of the active cell to get or set parameters for. |
 | [GetCellMargin](#GetCellMargin) |  |
 | [SetCellMargin](#SetCellMargin) |  |
 | [GetHeight](#GetHeight) |  |
@@ -388,4 +388,49 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 If all cells are identical, properties need to be cached only for the cell with index 0. If the cached count is less than the cell count, the cell parameters for index CellCountCache – 1 are used for cells with larger indices.
 
 
+# <a name="GetCellIndex"></a>GetCellIndex
 
+Gets the index of the active cell to get or set parameters for.
+
+```
+FUNCTION CTextRow.GetCellIndex () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetCellIndex(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The cell index.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+
+# <a name="SetCellIndex"></a>SetCellIndex
+
+Sets the index of the active cell.
+
+```
+FUNCTION CTextRow.SetCellIndex (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetCellIndex(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- |  ---------- |
+| *Value* | The cell index. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+You can get or set parameters for an active cell.
+
+If the cell index is greater than the cell count, and the cell index is less that 63 (the maximum cell count), then the cell count is increased to cell index + 1.
