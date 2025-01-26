@@ -251,7 +251,6 @@ Sets the active state of a story.
 
 ```
 FUNCTION CTextStory.SetActive (BYVAL Value AS LONG) AS HRESULT
-   IF m_pTextStory = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextStory->lpvtbl->SetActive(m_pTextStory, Value))
    RETURN m_Result
 END FUNCTION
@@ -360,3 +359,41 @@ This story's type. It can be any of the following values, or a custom client val
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetType"></a>SetType
+
+Gets this story's type.
+
+```
+FUNCTION CTextStory.SetType (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextStory->lpvtbl->SetType(m_pTextStory, Value))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | This story's type. It can be any of the following values, or a custom client value from 100 to 65535. |
+
+| Type | Description |
+| ---- | ----------- |
+| **tomCommentsStory** | The story used for comments. |
+| **tomEndnotesStory** | The story used for endnotes. |
+| **tomEvenPagesFooterStory** | The story containing footers for even pages. |
+| **tomEvenPagesHeaderStory** |The story containing headers for even pages.|
+| **tomFindStory** | The story used for a Find dialog. |
+| **tomFirstPageFooterStory** | The story containing the footer for the first page. |
+| **tomFirstPageHeaderStory** | The story containing the header for the first page. |
+| **tomFootnotesStory** | The story used for footnotes. |
+| **tomMainTextStory** | The main story always exists for a rich edit control. |
+| **tomPrimaryFooterStory** | The story containing footers for odd pages. |
+| **tomPrimaryHeaderStory** | The story containing headers for odd pages. |
+| **tomReplaceStory** | The story used for a Replace dialog. |
+| **tomScratchStory** | The scratch story. |
+| **tomTextFrameStory** | The story used for a text box. |
+| **tomUnknownStory** | No special type. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
