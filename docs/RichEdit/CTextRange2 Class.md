@@ -311,6 +311,19 @@ END FUNCTION
 | *pTextRange2* | The **ITextRange2** interface pointer to attach. |
 | *fAddRef* | **TRUE** to increment the reference count of te object; otherwise, **FALSE**. Default is **FALSE**. |
 
+# <a name="Detach"></a>Detach
+
+Detaches the interface pointer from the class
+
+```
+FUNCTION CTextRange2.Detach () AS ITextRange2 PTR
+   m_Result = 0
+   DIM pTextRange2 AS ITextRange2 PTR = m_pTextRange2
+   m_pTextRange2 = NULL
+   RETURN pTextRange2
+END FUNCTION
+```
+
 # <a name="GetLastResult"></a>GetLastResult
 
 Returns the last result code
