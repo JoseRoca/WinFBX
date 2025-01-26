@@ -64,8 +64,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [GetProperty](#GetProperty) | Gets the value of the specified property. |
 | [Insert](#Insert) | Inserts a row, or rows, at the location identified by the associated **ITextRange2** object. |
 | [IsEqual](#IsEqual) | Compares two table rows to determine if they have the same properties. |
-| [Reset](#Reset) |  |
-| [SetProperty](#SetProperty) |  |
+| [Reset](#Reset) | Resets a row. |
+| [SetProperty](#SetProperty) | Sets the value of the specified property. |
 
 ### Methods inherited from CTOMBase Class
 
@@ -1248,3 +1248,24 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | ----------- | ----------- |
 | **E_ACCESSDENIED** | Write access is denied. | 
 | **E_OUTOFMEMORY** | Insufficient memory. | 
+
+
+# <a name="SetProperty"></a>SetProperty
+
+Sets the value of the specified property.
+
+```
+FUNCTION CTextRow.SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetProperty(m_pTextRow, nType, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *nType* | The ID of the property to set. |
+| *Value* | The value to set. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
