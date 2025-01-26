@@ -36,9 +36,9 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetIndent](#SetIndent) | Sets the indent of this row. |
 | [GetKeepTogether](#GetKeepTogether) | Gets whether this row is allowed to be broken across pages. |
 | [SetKeepTogether](#SetKeepTogether) | Sets whether this row is allowed to be broken across pages. |
-| [GetKeepWithNext](#GetKeepWithNext) |  |
-| [SetKeepWithNext](#SetKeepWithNext) |  |
-| [GetNestLevel](#GetNestLevel) |  |
+| [GetKeepWithNext](#GetKeepWithNext) | Gets whether this row should appear on the same page as the row that follows it. |
+| [SetKeepWithNext](#SetKeepWithNext) | Sets whether this row should appear on the same page as the row that follows it. |
+| [GetNestLevel](#GetNestLevel) | Gets the nest level of a table. |
 | [GetRTL](#GetRTL) |  |
 | [SetRTL](#SetRTL) |  |
 | [GetCellAlignment](#GetCellAlignment) |  |
@@ -599,3 +599,49 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="GetKeepWithNext"></a>GetKeepWithNext
+
+Gets whether this row is allowed to be broken across pages.
+
+```
+FUNCTION CTextRow.GetKeepWithNext () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetKeepWithNext(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+A **tomBool** value that indicates whether this row can be broken across pages.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+# <a name="GetNestLevel"></a>GetNestLevel
+
+Gets the nest level of a table.
+
+```
+FUNCTION CTextRow.GetNestLevel () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetNestLevel(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- |  ---------- |
+| *Value* | The nest level. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+####Remarks
+
+The nest level of the table is identified by the associated **ITextRange2** object. If there is only a single table, the nest level is 1. If there is no table, the nest level is 0.
+
