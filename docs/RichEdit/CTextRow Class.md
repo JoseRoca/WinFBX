@@ -49,8 +49,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetCellColorFore](#SetCellColorFore) | Sets the foreground color of the active cell. |
 | [GetCellMergeFlags](#GetCellMergeFlags) | Gets the merge flags of the active cell. |
 | [SetCellMergeFlags](#SetCellMergeFlags) | Sets the merge flags of the active cell. |
-| [GetCellShading](#GetCellShading) |  |
-| [SetCellShading](#SetCellShading) |  |
+| [GetCellShading](#GetCellShading) | Gets the shading of the active cell. |
+| [SetCellShading](#SetCellShading) | Sets the shading of the active cell. |
 | [GetCellVerticalText](#GetCellVerticalText) |  |
 | [SetCellVerticalText](#SetCellVerticalText) |  |
 | [GetCellWidth](#GetCellWidth) |  |
@@ -902,3 +902,27 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 #### Remarks
 
 The shading is given in hundredths of a percent, so full shading is given by the value 10000. The shading percentage determines the mix of the cell foreground and background colors to be used for the cell background. A shading of 0 uses the cell background color alone. A shading of 10000 (100%) uses the foreground color alone. Values in between mix the foreground and background colors, weighting the background with (10000 – CellShading)/1000 and the foreground with CellShading/1000. These ratios are applied to the red, green, and blue channels independently of one another.
+
+
+# <a name="SetCellShading"></a>SetCellShading
+
+Sets the shading of the active cell.
+
+```
+FUNCTION CTextRow.SetCellShading (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetCellShading(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The shading of the active cell. |
+
+#### Remarks
+
+The shading is given in hundredths of a percent, so full shading is given by the value 10000. The shading percentage determines the mix of the cell foreground and background colors to be used for the cell background. A shading of 0 uses the cell background color alone. A shading of 10000 (100%) uses the foreground color alone. Values in between mix the foreground and background colors, weighting the background with (10000 – CellShading)/1000 and the foreground with CellShading/1000. These ratios are applied to the red, green, and blue channels independently of one another.
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
