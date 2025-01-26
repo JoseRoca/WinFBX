@@ -55,8 +55,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetCellVerticalText](#SetCellVerticalText) | Sets the vertical-text setting of the active cell. |
 | [GetCellWidth](#GetCellWidth) | Gets the width of the active cell. |
 | [SetCellWidth](#SetCellWidth) | Sets the width of the active cell. |
-| [GetCellBorderColors](#GetCellBorderColors) |  |
-| [GetCellBorderWidths](#GetCellBorderWidths) |  |
+| [GetCellBorderColors](#GetCellBorderColors) | Gets the border colors of the active cell. |
+| [GetCellBorderWidths](#GetCellBorderWidths) | Gets the border widths of the active cell. |
 | [SetCellBorderColors](#SetCellBorderColors) |  |
 | [SetCellBorderWidths](#SetCellBorderWidths) |  |
 | [Apply](#Apply) |  |
@@ -1012,3 +1012,27 @@ END FUNCTION
 #### Remarks
 
 The total width of the entire row must be less than 22 inches, or 1440×22.
+
+
+# <a name="GetCellBorderColors"></a>GetCellBorderColors
+
+Gets the border colors of the active cell.
+
+```
+FUNCTION CTextRow.GetCellBorderColors (BYVAL pcrLeft AS LONG PTR, BYVAL pcrTop AS LONG PTR, _
+BYVAL pcrRight AS LONG PTR, BYVAL pcrBottom AS LONG PTR) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->GetCellBorderColors(m_pTextRow, pcrLeft, pcrTop, pcrRight, pcrBottom))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pcrLeft* | The active-cell left border color. |
+| *pcrTop* | The active-cell top border color. |
+| *pcrRight* | The active-cell right border color. |
+| *pcrBottom* | The active-cell bottom border color. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
