@@ -370,7 +370,6 @@ Sets the count of cells cached for a row.
 
 ```
 FUNCTION CTextRow.SetCellCountCache (BYVAL Value AS LONG) AS HRESULT
-   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN m_Result
    this.SetResult(m_pTextRow->lpvtbl->SetCellCountCache(m_pTextRow, Value))
    FUNCTION = m_Result
 END FUNCTION
@@ -384,27 +383,7 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-
-# <a name="SetCellCountCache"></a>SetCellCountCache
-
-Sets the count of cells cached for a row.
-
-```
-FUNCTION CTextRow.SetCellCountCache (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextRow->lpvtbl->SetCellCountCache(m_pTextRow, Value))
-   FUNCTION = m_Result
-END FUNCTION
-```
-
-| Parameter | Description |
-| --------- |  ---------- |
-| *Value* | The cell count. |
-
-#### Return value
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-####Remarks
+#### Remarks
 
 If all cells are identical, properties need to be cached only for the cell with index 0. If the cached count is less than the cell count, the cell parameters for index CellCountCache – 1 are used for cells with larger indices.
 
