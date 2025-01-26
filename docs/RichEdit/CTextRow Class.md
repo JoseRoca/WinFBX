@@ -22,8 +22,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | ---------- | ----------- |
 | [GetAlignment](#GetAlignment) | Gets the horizontal alignment of a row. |
 | [SetAlignment](#SetAlignment) | Sets the horizontal alignment of a row. |
-| [GetCellCount](#GetCellCount) |  |
-| [SetCellCount](#SetCellCount) |  |
+| [GetCellCount](#GetCellCount) | Gets the count of cells in a row. |
+| [SetCellCount](#SetCellCount) | Sets the count of cells in a row. |
 | [GetCellCountCache](#GetCellCountCache) |  |
 | [SetCellCountCache](#SetCellCountCache) |  |
 | [GetCellIndex](#GetCellIndex) |  |
