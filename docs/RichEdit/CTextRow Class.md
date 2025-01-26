@@ -538,3 +538,23 @@ The indent of the row.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetIndent"></a>SetIndent
+
+Sets the indent of a row.
+
+```
+FUNCTION CTextRow.SetIndent (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetIndent(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- |  ---------- |
+| *Value* | The row indent. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
