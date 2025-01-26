@@ -335,7 +335,7 @@ END FUNCTION
 ```
 
 | Parameter | Description |
-| --------- |  ---------- |
+| --------- | ----------- |
 | *Value* | The row cell count. |
 
 #### Return value
@@ -376,7 +376,7 @@ END FUNCTION
 ```
 
 | Parameter | Description |
-| --------- |  ---------- |
+| --------- | ----------- |
 | *Value* | The row cell count. |
 
 #### Return value
@@ -422,7 +422,7 @@ END FUNCTION
 ```
 
 | Parameter | Description |
-| --------- |  ---------- |
+| --------- | ----------- |
 | *Value* | The cell index. |
 
 #### Return value
@@ -469,7 +469,7 @@ END FUNCTION
 ```
 
 | Parameter | Description |
-| --------- |  ---------- |
+| --------- | ----------- |
 | *Value* | The cell margin. The cell margin is used for all cells in the row and is typically about 108 twips or 0.075 inches. |
 
 #### Return value
@@ -511,7 +511,7 @@ END FUNCTION
 ```
 
 | Parameter | Description |
-| --------- |  ---------- |
+| --------- | ----------- |
 | *Value* | The row height. A value of 0 indicates autoheight. |
 
 #### Return value
@@ -552,7 +552,7 @@ END FUNCTION
 ```
 
 | Parameter | Description |
-| --------- |  ---------- |
+| --------- | ----------- |
 | *Value* | The row indent. |
 
 #### Return value
@@ -593,7 +593,7 @@ END FUNCTION
 ```
 
 | Parameter | Description |
-| --------- |  ---------- |
+| --------- | ----------- |
 | *Value* | A **tomBool** value that indicates whether this row can be broken across pages. |
 
 #### Return value
@@ -634,7 +634,7 @@ END FUNCTION
 ```
 
 | Parameter | Description |
-| --------- |  ---------- |
+| --------- | ----------- |
 | *Value* | The nest level. |
 
 #### Return value
@@ -665,3 +665,29 @@ A **tomBool** value that indicates whether this row has right-to-left orientatio
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetRTL"></a>SetRTL
+
+Sets whether this row has right-to-left orientation.
+
+```
+FUNCTION CTextRow.SetRTL (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetRTL(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | A **tomBool** value that can be one of the following. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Right-to-left orientation. |
+| **tomFalse** | Left-to-right orientation. |
+| **tomToggle** | Toggles the orientation. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
