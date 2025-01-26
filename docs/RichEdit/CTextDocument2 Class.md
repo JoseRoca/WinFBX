@@ -516,7 +516,7 @@ Sets the default tab stop, which is used when no tab exists beyond the current d
 ```
 FUNCTION CTextDocument2.SetDefaultTabStop (BYVAL Value AS SINGLE = 36.0) AS HRESULT
    this.SetResult(m_pTextDocument2->lpvtbl->SetDefaultTabStop(m_pTextDocument2, Value))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -542,7 +542,7 @@ Opens a new document.
 ```
 FUNCTION CTextDocument2.New_ () AS HRESULT
    this.SetResult(m_pTextDocument2->lpvtbl->New_(m_pTextDocument2))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
