@@ -30,8 +30,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetCellIndex](#SetCellIndex) | Sets the index of the active cell to get or set parameters for. |
 | [GetCellMargin](#GetCellMargin) | Gets the cell margin of this row. |
 | [SetCellMargin](#SetCellMargin) | Sets the cell margin of this row. |
-| [GetHeight](#GetHeight) |  |
-| [SetHeight](#SetHeight) |  |
+| [GetHeight](#GetHeight) | Gets the height of the row. |
+| [SetHeight](#SetHeight) | Sets the height of the row. |
 | [GetIndent](#GetIndent) |  |
 | [SetIndent](#SetIndent) |  |
 | [GetKeepTogether](#GetKeepTogether) |  |
@@ -471,6 +471,48 @@ END FUNCTION
 | Parameter | Description |
 | --------- |  ---------- |
 | *Value* | The cell margin. The cell margin is used for all cells in the row and is typically about 108 twips or 0.075 inches. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="GetHeight"></a>GetHeight
+
+Gets the height of the row.
+
+```
+FUNCTION CTextRow.GetHeight () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetHeight(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The row height. A value of 0 indicates autoheight.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+
+# <a name="SetHeight"></a>SetHeight
+
+Sets the cell margin of a row.
+
+```
+FUNCTION CTextRow.SetHeight (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetHeight(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- |  ---------- |
+| *Value* | The row height. A value of 0 indicates autoheight. |
 
 #### Return value
 
