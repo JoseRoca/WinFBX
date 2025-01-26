@@ -275,3 +275,31 @@ The horizontal alignment. It can be one of the following values.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetAlignment"></a>SetAlignment
+
+Sets the horizontal alignment of a row.
+
+```
+FUNCTION CTextRow.SetAlignment (BYVAL Value AS LONG) AS HRESULT
+   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN m_Result
+   this.SetResult(m_pTextRow->lpvtbl->SetAlignment(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- |  ---------- |
+
+The new horizontal alignment. It can be one of the following values.
+
+| Constant | Value | Meaning |
+| -------- | ----- | ------- |
+| **tomAlignLeft** | 0 | Text aligns with the left margin. |
+| **tomAlignCenter** | 1 | Text is centered between the margins. |
+| **tomAlignRight** | 2 | Text aligns with the right margin. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
