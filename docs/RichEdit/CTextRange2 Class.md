@@ -431,7 +431,7 @@ Sets the text in this range.
 ```
 FUNCTION CTextRange2.SetText (BYREF cbs AS CBSTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetText(m_pTextRange2, cbs))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -547,7 +547,7 @@ Sets the character at the starting position of the range.
 ```
 FUNCTION CTextRange2.SetChar (BYVAL char AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetChar(m_pTextRange2, char))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 | Parameter | Description |
@@ -646,7 +646,7 @@ In this implementation of the class, **SetFormattedText** and **SetFormattedText
 ```
 FUNCTION CTextRange2.SetFormattedText (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetFormattedText(m_pTextRange2, pRange))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
@@ -695,7 +695,7 @@ Sets the character position for the start of this range.
 ```
 FUNCTION CTextRange2.SetStart (BYVAL cpFirst AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetStart(m_pTextRange2, cpFirst))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 | Parameter | Description |
@@ -738,7 +738,7 @@ Sets the end position of the range.
 ```
 FUNCTION CTextRange2.SetEnd (BYVAL cpLim AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetEnd(m_pTextRange2, cpLim))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 | Parameter | Description |
@@ -790,7 +790,7 @@ Sets the character formatting attributes of the range. In this implementation of
 ```
 FUNCTION CTextRange2.SetFont (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetFont2(m_pTextRange2, pFont))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 ```
@@ -847,7 +847,7 @@ Sets the paragraph format attributes of a range. In this implementation of the c
 ```
 FUNCTION CTextRange2.SetPara (BYVAL pPara AS ITextPara PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetPara(m_pTextRange2, pPara))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 ```
@@ -3465,7 +3465,7 @@ Sets the text of this range.
 ```
 FUNCTION CTextRange2.SetText2 (BYVAL Flags AS LONG, BYREF cbs AS CBSTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetText2(m_pTextRange2, Flags, cbs))
-   FUNCTION = m_Result
+   RETURN m_Result
 END FUNCTION
 ```
 
