@@ -20,8 +20,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetAlignment](#GetAlignment) |  |
-| [SetAlignment](#SetAlignment) |  |
+| [GetAlignment](#GetAlignment) | Gets the horizontal alignment of a row. |
+| [SetAlignment](#SetAlignment) | Sets the horizontal alignment of a row. |
 | [GetCellCount](#GetCellCount) |  |
 | [SetCellCount](#SetCellCount) |  |
 | [GetCellCountCache](#GetCellCountCache) |  |
@@ -249,3 +249,29 @@ FUNCTION CTOMBase.GetErrorInfo () AS CWSTR
 END FUNCTION
 ```
 
+# <a name="GetAlignment"></a>GetAlignment
+
+Gets the horizontal alignment of a row.
+
+```
+FUNCTION CTextRow.GetAlignment () AS LONG
+   DIM Value AS LONG
+   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN Value
+   this.SetResult(m_pTextRow->lpvtbl->GetAlignment(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The horizontal alignment. It can be one of the following values.
+
+| Constant | Value | Meaning |
+| -------- | ----- | ------- |
+| **tomAlignLeft** | 0 | Text aligns with the left margin. |
+| **tomAlignCenter** | 1 | Text is centered between the margins. |
+| **tomAlignRight** | 2 | Text aligns with the right margin. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
