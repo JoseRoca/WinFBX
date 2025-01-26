@@ -1060,3 +1060,51 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetCellBorderColors"></a>SetCellBorderColors
+
+Sets the border colors of the active cell.
+
+```
+FUNCTION CTextRow.SetCellBorderColors (BYVAL crLeft AS LONG, BYVAL crTop AS LONG, _
+BYVAL crRight AS LONG, BYVAL crBottom AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetCellBorderColors(m_pTextRow, crLeft, crTop, crRight, crBottom))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *crLeft* | The left border color. |
+| *crTop* | The top border color. |
+| *crRight* | The right border color. |
+| *crBottom* | The bottom border color. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetCellBorderWidths"></a>SetCellBorderWidths
+
+Sets the border widths of the active cell.
+
+```
+FUNCTION CTextRow.SetCellBorderWidths (BYVAL duLeft AS LONG, BYVAL duTop AS LONG, _
+BYVAL duRight AS LONG, BYVAL duBottom AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetCellBorderWidths(m_pTextRow, duLeft, duTop, duRight, duBottom))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *duLeft* | The left border width. |
+| *duTop* | The top border width. |
+| *duRight* | The right border width. |
+| *duBottom* | The bottom border width. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
