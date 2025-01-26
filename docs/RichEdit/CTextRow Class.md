@@ -59,8 +59,9 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [GetCellBorderWidths](#GetCellBorderWidths) | Gets the border widths of the active cell. |
 | [SetCellBorderColors](#SetCellBorderColors) | Sets the border colors of the active cell. |
 | [SetCellBorderWidths](#SetCellBorderWidths) | Sets the border widths of the active cell. |
-| [Apply](#Apply) |  |
-| [GetProperty](#GetProperty) |  |
+| [Apply](#Apply) | Applies the formatting attributes of this text row object to the specified rows in the associated **ITextRange2**. |
+| [CanChange](#CanChange) | Determines whether changes can be made to this row. |
+| [GetProperty](#GetProperty) | Gets the value of the specified property. |
 | [Insert](#Insert) |  |
 | [IsEqual](#IsEqual) |  |
 | [Reset](#Reset) |  |
@@ -1134,3 +1135,49 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="CanChange"></a>CanChange
+
+Determines whether changes can be made to this row.
+
+```
+FUNCTION CTextRow.CanChange () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->CanChange(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+A **tomBool** indicating whether the row can be edited. It is **tomTrue** only if the row can be edited.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="GetProperty"></a>GetProperty
+
+Gets the value of the specified property.
+
+```
+FUNCTION CTextRow.GetProperty (BYVAL nType AS LONG) AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetProperty(m_pTextRow, nType, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *nType* | The ID of the property to retrieve. |
+
+#### Return value
+
+The value for the property.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
