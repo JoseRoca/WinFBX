@@ -456,3 +456,22 @@ The cell margin.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+
+# <a name="SetCellMargin"></a>SetCellMargin
+
+Sets the cell margin of a row.
+
+```
+FUNCTION CTextRow.SetCellMargin (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetCellMargin(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- |  ---------- |
+| *Value* | The cell margin. The cell margin is used for all cells in the row and is typically about 108 twips or 0.075 inches. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
