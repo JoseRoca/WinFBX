@@ -47,8 +47,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetCellColorBack](#SetCellColorBack) | Sets the background color of the active cell. |
 | [GetCellColorFore](#GetCellColorFore) | Gets the foreground color of the active cell. |
 | [SetCellColorFore](#SetCellColorFore) | Sets the foreground color of the active cell. |
-| [GetCellMergeFlags](#GetCellMergeFlags) |  |
-| [SetCellMergeFlags](#SetCellMergeFlags) |  |
+| [GetCellMergeFlags](#GetCellMergeFlags) | Gets the merge flags of the active cell. |
+| [SetCellMergeFlags](#SetCellMergeFlags) | Sets the merge flags of the active cell. |
 | [GetCellShading](#GetCellShading) |  |
 | [SetCellShading](#SetCellShading) |  |
 | [GetCellVerticalText](#GetCellVerticalText) |  |
@@ -822,3 +822,30 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 #### Remarks
 
 See **GetCellShading** to see how the foreground color is used together with the background color.
+
+
+# <a name="GetCellMergeFlags"></a>GetCellMergeFlags
+
+Gets the merge flags of the active cell.
+
+```
+FUNCTION CTextRow.GetCellMergeFlags () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetCellMergeFlags(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+The merge flag of the active cell. The flag can be one of the following:
+
+| Flag | Meaning |
+| --------- | ----------- |
+| **tomHContCell** | Any cell except the start in a horizontally merged cell set. |
+| **tomVLowCell** | Any cell except the top cell in a vertically merged cell set. |
+| **tomVTopCell** | The top cell in vertically merged cell set. |
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
