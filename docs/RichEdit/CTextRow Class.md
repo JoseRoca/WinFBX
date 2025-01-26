@@ -753,3 +753,26 @@ The background color.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetCellColorBack"></a>SetCellColorBack
+
+Sets the background color of the active cell.
+
+```
+FUNCTION CTextRow.SetCellColorBack (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetCellColorBack(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The background color. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+See **GetCellShading** to see how the background color is used together with the foreground color.
