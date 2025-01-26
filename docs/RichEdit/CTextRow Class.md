@@ -34,8 +34,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetHeight](#SetHeight) | Sets the height of the row. |
 | [GetIndent](#GetIndent) | Gets the indent of this row. |
 | [SetIndent](#SetIndent) | Sets the indent of this row. |
-| [GetKeepTogether](#GetKeepTogether) |  |
-| [SetKeepTogether](#SetKeepTogether) |  |
+| [GetKeepTogether](#GetKeepTogether) | Gets whether this row is allowed to be broken across pages. |
+| [SetKeepTogether](#SetKeepTogether) | Sets whether this row is allowed to be broken across pages. |
 | [GetKeepWithNext](#GetKeepWithNext) |  |
 | [SetKeepWithNext](#SetKeepWithNext) |  |
 | [GetNestLevel](#GetNestLevel) |  |
@@ -554,6 +554,47 @@ END FUNCTION
 | Parameter | Description |
 | --------- |  ---------- |
 | *Value* | The row indent. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="GetKeepTogether"></a>GetKeepTogether
+
+Gets whether this row is allowed to be broken across pages.
+
+```
+FUNCTION CTextRow.GetKeepTogether () AS LONG
+   DIM Value AS LONG
+   this.SetResult(m_pTextRow->lpvtbl->GetKeepTogether(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+A **tomBool** value that indicates whether this row can be broken across pages.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetKeepTogether"></a>SetKeepTogether
+
+Sets whether this row is allowed to be broken across pages.
+
+```
+FUNCTION CTextRow.SetKeepTogether (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetKeepTogether(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- |  ---------- |
+| *Value* | A **tomBool** value that indicates whether this row can be broken across pages. |
 
 #### Return value
 
