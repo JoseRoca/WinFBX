@@ -121,7 +121,7 @@ Called automatically when a class variable goes out of scope or is destroyed.
 ```
 DESTRUCTOR CTextRow
    ' // Release the ITextRow interface
-   IF m_pTextRow THEN m_pTextRRow->lpvtbl->Release(m_pTextRow)
+   IF m_pTextRow THEN m_pTextRow->lpvtbl->Release(m_pTextRow)
 END DESTRUCTOR
 ```
 
