@@ -1181,3 +1181,20 @@ The value for the property.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="Insert"></a>Insert
+
+Inserts a row, or rows, at the location identified by the associated **ITextRange2** object.
+
+```
+FUNCTION CTextRow.Insert (BYVAL cRow AS LONG) AS HRESULT
+   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN m_Result
+   this.SetResult(m_pTextRow->lpvtbl->Insert(m_pTextRow, cRow))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
