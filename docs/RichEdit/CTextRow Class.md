@@ -93,7 +93,7 @@ Can be used, for example, when we have an **ITextRow** interface pointer returne
 DIM DIM pCTextRow AS CTextRow
 pCTextRow.Attach(pTextRow)
 ```
-## CONSTRUCTOR (ITextRange2 PTR)
+## CONSTRUCTOR (ITextRow PTR)
 
 ```
 CONSTRUCTOR CTextRow (BYVAL pTextRow AS ITextRow PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
@@ -108,7 +108,7 @@ END CONSTRUCTOR
 | Parameter | Description |
 | --------- | ----------- |
 | *pTextRow* | An **ITextRow** interface pointer. |
-| *fAddRef* | Optional. **TRUE** to increment the reference count of the passed **ITextRange2** interface pointer; otherwise, **FALSE**. Default is **FALSE**. |
+| *fAddRef* | Optional. **TRUE** to increment the reference count of the passed **ITextRow** interface pointer; otherwise, **FALSE**. Default is **FALSE**. |
 
 #### Return value
 
@@ -153,7 +153,7 @@ END OPERATOR
 
 # <a name="TextRangePtr"></a>TextRangePtr
 
-Returns a pointer to the underlying **ITextRange2** interface
+Returns a pointer to the underlying **ITextRow** interface
 
 ```
 FUNCTION CTextRow.TextRangePtr () AS ITextRow PTR
