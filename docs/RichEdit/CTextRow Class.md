@@ -45,8 +45,8 @@ The **ITextRow** interface inherits from the **IDispatch** interface. **ITextRow
 | [SetCellAlignment](#SetCellAlignment) | Sets the vertical alignment of the active cell. |
 | [GetCellColorBack](#GetCellColorBack) | Gets the background color of the active cell. |
 | [SetCellColorBack](#SetCellColorBack) | Sets the background color of the active cell. |
-| [GetCellColorFore](#GetCellColorFore) |  |
-| [SetCellColorFore](#SetCellColorFore) |  |
+| [GetCellColorFore](#GetCellColorFore) | Gets the foreground color of the active cell. |
+| [SetCellColorFore](#SetCellColorFore) | Sets the foreground color of the active cell. |
 | [GetCellMergeFlags](#GetCellMergeFlags) |  |
 | [SetCellMergeFlags](#SetCellMergeFlags) |  |
 | [GetCellShading](#GetCellShading) |  |
@@ -776,3 +776,49 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 #### Remarks
 See **GetCellShading** to see how the background color is used together with the foreground color.
+
+
+# <a name="GetCellColorFore"></a>GetCellColorFore
+
+Gets the foreground color of the active cell.
+
+```
+FUNCTION CTextRow.GetCellColorFore () AS LONG
+   DIM Value AS LONG
+   IF m_pTextRow = NULL THEN m_Result = E_POINTER : RETURN Value
+   this.SetResult(m_pTextRow->lpvtbl->GetCellColorFore(m_pTextRow, @Value))
+   FUNCTION = Value
+END FUNCTION
+```
+
+#### Return value
+
+Gets the foreground color of the active cell.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetCellColorFore"></a>SetCellColorFore
+
+Sets the foreground color of the active cell.
+
+```
+FUNCTION CTextRow.SetCellColorFore (BYVAL Value AS LONG) AS HRESULT
+   this.SetResult(m_pTextRow->lpvtbl->SetCellColorFore(m_pTextRow, Value))
+   FUNCTION = m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The foreground color. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+See **GetCellShading** to see how the foreground color is used together with the background color.
