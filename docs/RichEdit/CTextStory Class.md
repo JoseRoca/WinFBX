@@ -512,3 +512,24 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 This method calls **IUnknown.QueryInterface** for an **ITextRange2** interface.
+
+
+# <a name="SetProperty"></a>SetProperty
+
+Sets the value of the specified property.
+
+```
+FUNCTION CTextStory.SetProperty (BYVAL nType AS LONG, BYVAL VaLue AS LONG) AS HRESULT
+   this.SetResult(m_pTextStory->lpvtbl->SetProperty(m_pTextStory, nType, Value))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *nType* | The Microsoft accountID that identifies the property. Currently, no extra properties are defined. |
+| *Value* | The new property value. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
