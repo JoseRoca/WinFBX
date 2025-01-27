@@ -116,7 +116,7 @@ DECLARE CONSTRUCTOR (BYVAL pTextPara2 AS ITextPara2 PTR, BYVAL fAddRef AS BOOLEA
 Can be used, for example, when we have an **ITextPara2** interface pointer returned by a function and we want to attach it to a new instance of the **CTextPara2** class.
 
 ```
-DIM DIM pCTextPara2 AS CTextPara2
+DIM pCTextPara2 AS CTextPara2
 pCTextPara2.Attach(pTextPara2)
 ```
 ## CONSTRUCTOR (ITextPara2 PTR)
@@ -207,7 +207,7 @@ END FUNCTION
 | Parameter | Description |
 | --------- | ----------- |
 | *pTextPara2* | The **ITextPara2** interface pointer to attach. |
-| *fAddRef* | **TRUE** to increment the reference count of te object; otherwise, **FALSE**. Default is **FALSE**. |
+| *fAddRef* | **TRUE** to increment the reference count of the object; otherwise, **FALSE**. Default is **FALSE**. |
 
 # <a name="GetLastResult"></a>GetLastResult
 
