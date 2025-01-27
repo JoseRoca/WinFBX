@@ -466,7 +466,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *Flags* | The conversion flags. A *Flags* value of 0 retrieves text the same as **ITextRange.GetText**. Other values include the following.<br>tomAdjustCRLF, tomAllowFinalEOP, tomFoldMathAlpha, tomIncludeNumbering, tomNoHidden, tomNoMathZoneBrackets, tomLanguageTag, tomTextize, tomTranslateTableCell, tomUseCRLF |
+| *Flags* | The conversion flags. A *Flags* value of 0 retrieves text the same as **ITextRange.GetText**. Other values include the following:<br>**tomAdjustCRLF, tomAllowFinalEOP, tomFoldMathAlpha, tomIncludeNumbering, tomNoHidden, tomNoMathZoneBrackets, tomLanguageTag, tomTextize, tomTranslateTableCell, tomUseCRLF**. |
 
 #### Return value
 
