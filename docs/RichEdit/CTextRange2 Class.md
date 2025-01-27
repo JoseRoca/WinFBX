@@ -162,7 +162,7 @@ DECLARE CONSTRUCTOR (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOL
 Can be used, for example, when we have an **ITextRange2** interface pointer returned by a function and we want to attach it to a new instance of the **CTextRange2** class.
 
 ```
-DIM DIM pCTextRange2 AS CTextRange2
+DIM pCTextRange2 AS CTextRange2
 pCTextRange2.Attach(pTextRange2)
 ```
 ## CONSTRUCTOR (ITextRange2 PTR)
@@ -309,7 +309,7 @@ END FUNCTION
 | Parameter | Description |
 | --------- | ----------- |
 | *pTextRange2* | The **ITextRange2** interface pointer to attach. |
-| *fAddRef* | **TRUE** to increment the reference count of te object; otherwise, **FALSE**. Default is **FALSE**. |
+| *fAddRef* | **TRUE** to increment the reference count of the object; otherwise, **FALSE**. Default is **FALSE**. |
 
 # <a name="Detach"></a>Detach
 
@@ -723,7 +723,7 @@ The end character position.
 
 #### Result code
 
-If the method succeeds, **GetLastREsult** returns **S_OK**. If method fails, it returns **S_FALSE**.
+If the method succeeds, **GetLastResult** returns **S_OK**. If method fails, it returns **S_FALSE**.
 
 #### Remarks
 
