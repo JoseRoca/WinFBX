@@ -533,3 +533,30 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+
+# <a name="SetText"></a>SetText
+
+Replaces the text in a story with the specified text.
+
+```
+FUNCTION CTextStory.SetText (BYVAL Flags AS LONG, BYREF cbs AS CBSTR) AS HRESULT
+   this.SetResult(m_pTextStory->lpvtbl->SetText(m_pTextStory, Flags, cbs))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Flags* | Flags controlling how the text is inserted as defined in the following table: **tomCheckTextLimit, tomMathCFCheck, tomUnhide, tomUnicodeBiDi, tomUnlink. |
+| *cbs* | The new text for this story. If this parameter is **NULL**, the text in the story is deleted. |
+
+#### Return value
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
