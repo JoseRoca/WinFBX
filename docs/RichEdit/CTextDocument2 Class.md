@@ -131,7 +131,7 @@ DECLARE CONSTRUCTOR (BYVAL pTextDocument2 AS ITextDocument2 PTR, BYVAL fAddRef A
 Can be used, for example, when we have an **ITextDocument2** interface pointer returned by a function and we want to attach it to a new instance of the **CTextDocument2** class.
 
 ```
-DIM DIM pCTextDocument2 AS CTextDocument2
+DIM pCTextDocument2 AS CTextDocument2
 pCTextDocument2.Attach(pTextDocument2)
 ```
 
@@ -168,7 +168,7 @@ END CONSTRUCTOR
 | Parameter | Description |
 | --------- | ----------- |
 | *pTextDocument2* | An **ITextDocument2** interface pointer. |
-| *fAddRef* | Optional. TRUE to increment the reference count of the passed **ITextDocument2** interface pointer; otherise, FALSE. Default is FALSE. |
+| *fAddRef* | Optional. TRUE to increment the reference count of the passed **ITextDocument2** interface pointer; otherwise, FALSE. Default is FALSE. |
 
 #### Return value
 
@@ -277,7 +277,7 @@ END FUNCTION
 | Parameter | Description |
 | --------- | ----------- |
 | *pTextDocument2* | The **ITextDocument2** interface pointer to attach. |
-| *fAddRef* | **TRUE** to increment the reference count of te object. Default is FALSE. |
+| *fAddRef* | **TRUE** to increment the reference count of the object. Default is FALSE. |
 
 # <a name="Detach"></a>Detach
 
@@ -288,7 +288,7 @@ FUNCTION CTextDocument2.Detach () AS ITextDocument2 PTR
    m_Result = 0
    DIM pTextDocument2 AS ITextDocument2 PTR = m_pTextDocument2
    m_pTextDocument2 = NULL
-   RETURN pTextDOcument2
+   RETURN pTextDocument2
 END FUNCTION
 ```
 
@@ -357,7 +357,7 @@ END FUNCTION
 ```
 #### Return value
 
-The filename of this document, or an empty setring if there is not a filename associated with this object.
+The filename of this document, or an empty string if there is not a filename associated with this object.
 
 #### Result code
 
@@ -799,7 +799,7 @@ Pointer to a **ITextRange** interface to the specified text range.
 Retrieves a range for the content at or nearest to the specified point on the screen.
 
 ```
-UNCTION CTextDocument2.RangeFromPoint (BYVAL x AS LONG, BYVAL y AS LONG) AS ITextRange PTR
+FUNCTION CTextDocument2.RangeFromPoint (BYVAL x AS LONG, BYVAL y AS LONG) AS ITextRange PTR
    DIM pTextRange AS ITextRange PTR
    this.SetResult(m_pTextDocument2->lpvtbl->RangeFromPoint(m_pTextDocument2, x, y, @pTextRange))
    RETURN pTextRange
