@@ -451,9 +451,9 @@ The text range object.
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 
-# <a name="GetRange"></a>GetRange
+# <a name="GetText"></a>GetText
 
-Gets a text range object for the story.
+Gets the text in a story according to the specified conversion flags.
 
 ```
 FUNCTION CTextStory.GetText (BYVAL Flags AS LONG) AS CBSTR
