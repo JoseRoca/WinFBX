@@ -90,7 +90,7 @@ DECLARE CONSTRUCTOR (BYVAL pTextRow AS ITextRow PTR, BYVAL fAddRef AS BOOLEAN = 
 Can be used, for example, when we have an **ITextRow** interface pointer returned by a function and we want to attach it to a new instance of the **CTextRow** class.
 
 ```
-DIM DIM pCTextRow AS CTextRow
+DIM pCTextRow AS CTextRow
 pCTextRow.Attach(pTextRow)
 ```
 ## CONSTRUCTOR (ITextRow PTR)
@@ -182,7 +182,7 @@ END FUNCTION
 | Parameter | Description |
 | --------- | ----------- |
 | *pTextRow* | The **ITextRow** interface pointer to attach. |
-| *fAddRef* | **TRUE** to increment the reference count of te object; otherwise, **FALSE**. Default is **FALSE**. |
+| *fAddRef* | **TRUE** to increment the reference count of the object; otherwise, **FALSE**. Default is **FALSE**. |
 
 # <a name="Detach"></a>Detach
 
@@ -439,7 +439,7 @@ If the cell index is greater than the cell count, and the cell index is less tha
 
 # <a name="GetCellMargin"></a>GetCellMargin
 
-ets the cell margin of this row.
+Gets the cell margin of this row.
 
 ```
 FUNCTION CTextRow.GetCellMargin () AS LONG
