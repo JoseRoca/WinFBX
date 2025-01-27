@@ -548,7 +548,7 @@ END FUNCTION
 
 | Parameter | Description |
 | --------- | ----------- |
-| *Flags* | Flags controlling how the text is inserted as defined in the following table: **tomCheckTextLimit, tomMathCFCheck, tomUnhide, tomUnicodeBiDi, tomUnlink. |
+| *Flags* | Flags controlling how the text is inserted as defined in the following table: **tomCheckTextLimit, tomMathCFCheck, tomUnhide, tomUnicodeBiDi, tomUnlink**. |
 | *cbs* | The new text for this story. If this parameter is **NULL**, the text in the story is deleted. |
 
 #### Return value
