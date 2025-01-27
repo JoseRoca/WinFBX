@@ -484,3 +484,31 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 This method is similar to using **ITextRange2.GetText2** for a whole story, but it doesn’t require a range.
+
+
+# <a name="SetFormattedText"></a>SetFormattedText
+
+Replaces a story’s text with specified formatted text.
+
+```
+FUNCTION CTextStory.SetFormattedText (BYVAL pUnk AS IUnknown PTR) AS HRESULT
+   this.SetResult(m_pTextStory->lpvtbl->SetFormattedText(m_pTextStory, pUnk))
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pUnk* | The formatted text to replace the story’s text. |
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+
+#### Remarks
+
+This method calls **IUnknown.QueryInterface** for an **ITextRange2** interface.
