@@ -458,7 +458,6 @@ Gets the text in a story according to the specified conversion flags.
 ```
 FUNCTION CTextStory.GetText (BYVAL Flags AS LONG) AS CBSTR
    DIM pText AS AFX_BSTR
-   IF m_pTextStory = NULL THEN m_Result = E_POINTER: RETURN pText
    this.SetResult(m_pTextStory->lpvtbl->GetText(m_pTextStory, Flags, @pText))
    RETURN pText
 END FUNCTION
