@@ -57,7 +57,7 @@ DECLARE CONSTRUCTOR (BYVAL pTextStory AS ITextStory PTR, BYVAL fAddRef AS BOOLEA
 Can be used, for example, when we have an **ITextStory** interface pointer returned by a function and we want to attach it to a new instance of the **CTextStory** class.
 
 ```
-DIM DIM pCTextStory AS CTextStory
+DIM pCTextStory AS CTextStory
 pCTextStory.Attach(pTextStory)
 ```
 ## CONSTRUCTOR (ITextStory PTR)
@@ -149,7 +149,7 @@ END FUNCTION
 | Parameter | Description |
 | --------- | ----------- |
 | *pTextStory* | The **ITextStory** interface pointer to attach. |
-| *fAddRef* | **TRUE** to increment the reference count of te object; otherwise, **FALSE**. Default is **FALSE**. |
+| *fAddRef* | **TRUE** to increment the reference count of the object; otherwise, **FALSE**. Default is **FALSE**. |
 
 # <a name="Detach"></a>Detach
 
@@ -469,7 +469,7 @@ END FUNCTION
 
 #### Return value
 
-The text inthe story.
+The text in the story.
 
 #### Result code
 
