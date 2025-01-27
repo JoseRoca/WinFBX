@@ -8,7 +8,7 @@ Class that wraps all the methods of the **ITextRange**, **ITextSelection** and *
 | [DESTRUCTOR](#DESTRUCTOR) | Called automatically when a class variable goes out of scope or is destroyed. |
 | [LET](#LET) | Assignment operator. |
 | [CAST](#CAST) | Cast operator. |
-| [TextDocumentPtr](#TextDocumentPtr) | Returns a pointer to the underlying **ITextRange2** interface. |
+| [TextRangePtr](#TextRangePtr) | Returns a pointer to the underlying **ITextRange2** interface. |
 | [Attach](#Attach) | Attaches an **ITextRange2** interface pointer to the class. |
 | [Detach](#Detach) | Detaches the underlying **ITextRange2** interface pointer from the class. |
 
