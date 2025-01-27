@@ -153,7 +153,7 @@ DECLARE CONSTRUCTOR (BYVAL pTextFont2 AS ITextFont2 PTR, BYVAL fAddRef AS BOOLEA
 Can be used, for example, when we have an **pTextFont2** interface pointer returned by a function and we want to attach it to a new instance of the **CTextFont2** class.
 
 ```
-DIM DIM pCTextFont2 AS CTextFont2
+DIM pCTextFont2 AS CTextFont2
 pCTextFont2.Attach(pTextFont2)
 ```
 ## CONSTRUCTOR (ITextFont2 PTR)
@@ -245,7 +245,7 @@ END FUNCTION
 | Parameter | Description |
 | --------- | ----------- |
 | *pTextFont2* | The **ITextFont2** interface pointer to attach. |
-| *fAddRef* | **TRUE** to increment the reference count of te object; otherwise, **FALSE**. Default is **FALSE**. |
+| *fAddRef* | **TRUE** to increment the reference count of the object; otherwise, **FALSE**. Default is **FALSE**. |
 
 # <a name="GetLastResult"></a>GetLastResult
 
@@ -450,7 +450,7 @@ END FUNCTION
 
 #### Return value
 
-If the method succeeds, it returns **S_OK^^. If the method fails, it returns one of the following COM error codes.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
 | Return code | Description |
 | ----------- | ----------- |
@@ -640,7 +640,7 @@ END FUNCTION
 
 The animation type. It can be one of the following values.
 
-| Abimation type | Value | Meaning |
+| Animation type | Value | Meaning |
 | -------------- | ----- | ------- |
 | **tomNoAnimation** | 0 | Do not apply text animation. |
 | **tomLasVegasLights** | 1 | Text is bordered by marquee lights that blink between the colors red, yellow, green, and blue. |
