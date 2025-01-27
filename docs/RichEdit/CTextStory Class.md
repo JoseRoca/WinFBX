@@ -450,3 +450,38 @@ The text range object.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+
+# <a name="GetRange"></a>GetRange
+
+Gets a text range object for the story.
+
+```
+FUNCTION CTextStory.GetText (BYVAL Flags AS LONG) AS CBSTR
+   DIM pText AS AFX_BSTR
+   IF m_pTextStory = NULL THEN m_Result = E_POINTER: RETURN pText
+   this.SetResult(m_pTextStory->lpvtbl->GetText(m_pTextStory, Flags, @pText))
+   RETURN pText
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Flags* | The conversion flags. A *Flags* value of 0 retrieves text the same as **ITextRange.GetText**. Other values include the following.<br>tomAdjustCRLF, tomAllowFinalEOP, tomFoldMathAlpha, tomIncludeNumbering, tomNoHidden, tomNoMathZoneBrackets, tomLanguageTag, tomTextize, tomTranslateTableCell, tomUseCRLF |
+
+#### Return value
+
+The text inthe story.
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+
+#### Remarks
+
+This method is similar to using **ITextRange2.GetText2** for a whole story, but it doesn’t require a range.
