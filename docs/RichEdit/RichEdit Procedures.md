@@ -759,7 +759,7 @@ Retrieves the current ellipsis mode. When enabled, an ellipsis ( ) is displayed 
 
 ```
 FUNCTION RichEdit_GetEllipsisMode (BYVAL hRichEdit AS HWND, BYVAL pmode AS DWORD PTR) AS DWORD
-   FUNCTION = SendMessageW(hRichEdit, EM_GETELLIPSISMODE, 0, cast(LPARAM, @pMode))
+   FUNCTION = SendMessageW(hRichEdit, EM_GETELLIPSISMODE, 0, cast(LPARAM, pMode))
 END FUNCTION
 ```
 | Parameter  | Description |
