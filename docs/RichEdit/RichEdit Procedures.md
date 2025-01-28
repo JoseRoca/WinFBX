@@ -1093,7 +1093,7 @@ Retrieves an **IRichEditOle** object that a client can use to access a rich edit
 
 ```
 FUNCTION RichEdit_GetOleInterface (BYVAL hRichEdit AS HWND, BYVAL ppObject AS IUnknown PTR PTR) AS LONG
-   FUNCTION = SendMessageW(hRichEdit, EM_GETOLEINTERFACE, 0, cast(LPARAM, @ppObject))
+   FUNCTION = SendMessageW(hRichEdit, EM_GETOLEINTERFACE, 0, cast(LPARAM, ppObject))
 END FUNCTION
 ```
 | Parameter  | Description |
