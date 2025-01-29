@@ -1532,7 +1532,7 @@ The return value is one or more values from the [TEXTMODE](https://learn.microso
 Retrieves a specified range of characters from a rich edit control.
 
 ```
-FUNCTION RichEdit_GetTextRange (BYVAL hRichEdit AS HWND, BYVAL lptrg AS TEXTRANGE PTR) AS DWORD
+FUNCTION RichEdit_GetTextRange (BYVAL hRichEdit AS HWND, BYVAL lptrg AS TEXTRANGEW PTR) AS DWORD
    FUNCTION = SendMessageW(hRichEdit, EM_GETTEXTRANGE, 0, cast(LPARAM, lptrg))
 END FUNCTION
 ```
@@ -1540,7 +1540,7 @@ END FUNCTION
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
-| *lptrg* | Pointer to a [TEXTRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-textrangea) structure that specifies the range of characters to retrieve and a buffer to copy the characters to. |
+| *lptrg* | Pointer to a [TEXTRANGEW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-textrangew) structure that specifies the range of characters to retrieve and a buffer to copy the characters to. |
 
 #### Return value
 
