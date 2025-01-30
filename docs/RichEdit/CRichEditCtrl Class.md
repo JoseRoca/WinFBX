@@ -264,9 +264,27 @@ A rich edit control sends the [EN_LINK](https://learn.microsoft.com/en-us/window
 
 Gets/sets the current state of the bidirectional options in the rich edit control.
 ```
-PROPERTY BidiOptions () AS .BIDIOPTIONS
-PROPERTY BidiOptions (BYREF _Options AS .BIDIOPTIONS)
+(GET) PROPERTY BidiOptions () AS .BIDIOPTIONS
+(SET) PROPERTY BidiOptions (BYREF _Options AS .BIDIOPTIONS)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *_Options* | A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure that indicates how to set the state of the bidirectional options in the rich edit control. |
+
+#### Return value
+
+(GET) A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure with the current state of the bidirectional options in the rich edit control. The values of the **wMask** and **wEffects** contain the current state of the bidirectional options in the rich edit control.
+
+(SET) This property does not return a result.
+
+#### Remarks (SET property)
+
+The rich edit control must be in plain text mode or **BidiOptions** will not do anything.
+
+In plain text controls, **BidiOptions** automatically determines the paragraph direction and/or alignment based on the context rules. These rules state that the direction and/or alignment is derived from the first strong character in the control. A strong character is one from which text direction can be determined (see Unicode Standard version 2.0). The paragraph direction and/or alignment is applied to the default format.
+
+**BidiOptions** only switches the default paragraph format to RTL (right to left) if it finds an RTL character.
+
 
 # <a name="CharFormat"></a>CharFormat
 
