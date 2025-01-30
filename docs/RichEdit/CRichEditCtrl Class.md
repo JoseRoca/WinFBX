@@ -456,11 +456,22 @@ Gets/sets the extended edit style flags.
 
 # <a name="EllipsisMode"></a>EllipsisMode
 
-Gets/sets the current ellipsis mode.
+Gets/sets the current ellipsis mode. When enabled, an ellipsis ( ) is displayed for text that doesn't fit in the display window. The ellipsis is only used when the control isn't active. When active, scroll bars are used to reveal text that doesn't fit into the display window.
 ```
-PROPERTY EllipsisMode () AS DWORD
-PROPERTY EllipsisMode (BYVAL fMode AS DWORD)
+(GET) PROPERTY EllipsisMode () AS DWORD
+(SET) PROPERTY EllipsisMode (BYVAL fMode AS DWORD)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fMode* | (SET) One of the values listed below. |
+
+| Value  | Meaning |
+| ------ | ----------- |
+| **ELLIPSIS_NONE** | No ellipsis is used. |
+| **ELLIPSIS_END** | Ellipsis at the end (forced break). |
+| **ELLIPSIS_WORD** | Ellipsis at the end (word break). |
+
+The bits for these values all fit in the **ELLIPSIS_MASK**.
 
 # <a name="EventMask"></a>EventMask
 
