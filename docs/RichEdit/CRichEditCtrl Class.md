@@ -164,6 +164,22 @@ Returns the handle of the rich edit control.
 | [RequestResize](#RequestResize) | Forces a rich edit control to send an EN_REQUESTRESIZE notification message to its parent window. |
 | [Reconversion](#Reconversion) | Invokes the Input Method Editor (IME) reconversion dialog box. |
 | [Scroll](#Scroll) | Scrolls the text vertically in a multiline rich edit control. |
+| [ScrollCaret](#ScrollCaret) | Scrolls the caret into view in a rich edit control. |
+| [SelectionType](#SelectionType) | Determines the selection type for a rich edit control. |
+| [SetBkgndColor](#SetBkgndColor) | Sets the background color for a rich edit control. |
+| [SetFontSize](#SetFontSize) | Sets the font size for the selected text. |
+| [SetMargins](#SetMargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
+| [SetOleCallback](#SetOleCallback) | Gives a rich edit control an IRichEditOleCallback object that the control uses to get OLE-related resources and information from the client. |
+| [SetPalette](#SetPalette) | Changes the palette that a rich edit control uses for its display window. |
+| [SetReadOnly](#SetReadOnly) | Changes the palette that a rich edit control uses for its display window. |
+| [SetTabStops](#SetTabStops) | Sets the tab stops in a multiline rich edit control. |
+| [SetTargetDevice](#SetTargetDevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
+| [SetUIAName](#SetUIAName) | Sets the maximum number of actions that can stored in the undo queue. |
+| [SetUndoLimit](#SetUndoLimit) | Sets the maximum number of actions that can stored in the undo queue. |
+| [ShowScrollBar](#ShowScrollBar) | Shows or hides one of the scroll bars in the Text Host window. |
+| [StopGroupTyping](#StopGroupTyping) | Stops the control from collecting additional typing actions into the current undo action. |
+| [StreamIn](#StreamIn) | Replaces the contents of a rich edit control with a stream of data provided by an application defined EditStreamCallback callback function. |
+| [StreamOut](#StreamOut) | Causes a rich edit control to pass its contents to an application defined EditStreamCallback callback function. |
 
 
 
