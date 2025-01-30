@@ -1,6 +1,6 @@
 # RichEdit Procedures
 
-The RichEdit procedures provides detailed descriptions of various procedures related to Rich Edit controls in Windows. It includes a table with procedure names and their descriptions, followed by detailed explanations of each procedure, including their parameters, return values, and usage examples. The procedures cover a wide range of functionalities such as URL detection, autocorrect, clipboard operations, undo/redo actions, character formatting, and various other features and settings for Rich Edit controls.
+The RichEdit procedures provides detailed descriptions of various procedures related to Rich Edit controls in Windows. It includes a table with procedure names and their descriptions, followed by detailed explanations of each procedure, including their parameters, return values, and usage examples. The procedures cover a wide range of functionalities such as URL detection, autocorrect, clEM_GETAUTOURLDETECTipboard operations, undo/redo actions, character formatting, and various other features and settings for Rich Edit controls.
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -653,6 +653,7 @@ END FUNCTION
 | *hRichEdit* | The handle of the rich edit control. |
 
 #### Return value
+
 The current Text Services Framework mode bias value.
 
 #### Remarks
@@ -2244,7 +2245,7 @@ If successful, the return value is the new TSF mode bias value. If unsuccessful,
 
 When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
 
-To set the mode bias for the Input Method Editor (IME), use **RichEdit_setModeBias**.
+To set the mode bias for the Input Method Editor (IME), use **RichEdit_SetModeBias**.
 
 # <a name="RichEdit_SetCTFOpenStatus"></a>RichEdit_SetCTFOpenStatus
 
