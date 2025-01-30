@@ -60,7 +60,7 @@ DIM hRichEdit AS HWND = pWindow.AddControl("RichEdit", , IDC_RICHEDIT, "RichEdit
 DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 ```
 
-### CRichEditCtrl Properties
+# CRichEditCtrl Properties
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -97,7 +97,7 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [TouchOptions](#TouchOptions) | Gets/sets the touch options that are associated with a rich edit control. |
 | [TypographyOptions](#TypographyOptions) | Gets/sets the current state of the typography options of a rich edit control. |
 
-### CRichEditCtrl Methods
+# CRichEditCtrl Methods
 
 | Name       | Description |
 | ---------- | ----------- |
