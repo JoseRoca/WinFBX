@@ -108,38 +108,38 @@ Returns the handle of the rich edit control.
 
 | Name       | Description |
 | ---------- | ----------- |
-| [CanPaste)](#CanPaste) | Determines whether a rich edit control can paste a specified clipboard format. |
-| [CanRedo)](#CanRedo) | Determines whether there are any actions in the control redo queue. |
-| [CanUndo)](#CanUndo) | Determines whether there are any actions in an edit control's undo queue. |
-| [CallAutocorrectProc)](#CallAutocorrectProc) | Calls the autocorrect callback function that is stored by the **CRichEditCtrl.SetAutocorrectProc** message, provided that the text preceding the insertion point is a candidate for autocorrection. |
-| [DisplayBand)](#DisplayBand) | Displays a portion of the contents of a rich edit control, as previously formatted for a device using the EM_FORMATRANGE message. |
-| [EmptyUndoBuffer)](#EmptyUndoBuffer) | Resets the undo flag of a rich edit control. The undo flag is set whenever an operation within the rich edit control can be undone. |
-| [ExGetSel)](#ExGetSel) | Retrieves the starting and ending character positions of the selection in a rich edit control. |
-| [ExLimitText)](#ExLimitText) | Sets an upper limit to the amount of text the user can type or paste into a rich edit control. |
-| [ExLineFromChar)](#ExLineFromChar) | Determines which line contains the specified character in a rich edit control. |
-| [ExSetSel)](#ExSetSel) | Selects a range of characters and/or Component Object Model (COM) objects in a Microsoft Rich Edit control. |
-| [FindText)](#FindText) | Finds text within a rich edit control. |
-| [FindTextEx)](#FindTextEx) | Finds text within a rich edit control. |
-| [FindWordBreak)](#FindWordBreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
-| [GetFirstVisibleLine)](#GetFirstVisibleLine) | Gets the zero-based index of the uppermost visible line in a multiline rich edit control. |
-| [FormatRange)](#FormatRange) | Formats a range of text in a rich edit control for a specific device. |
-| [GetCharFromPos)](#GetCharFromPos) | Gets information about the character closest to a specified point in the client area of an edit control. |
-| [GetEllipsisState)](#GetEllipsisState) | Retrieves the current ellipsis state. |
-| [GetIMECompMode)](#GetIMECompMode) | Gets the current IME mode for a rich edit control. |
-| [GetIMEProperty)](#GetIMEProperty) | Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
-| [GetLine)](#GetLine) | Copies a line of text from a rich edit control. |
-| [GetOleInterface)](#GetOleInterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
-| [GetRedoName)](#GetRedoName) | Retrieves the type of the next action, if any, in the control's redo queue. |
-| [GetSel)](#GetSel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
-| [SetSel)](#SetSel) | Selects a range of characters in a rich edit control. |
-| [GetSelText)](#GetSelText) | Retrieves the currently selected text in a rich edit control. |
-| [GetUndoName)](#GetUndoName) | Retrieves the type of the next undo action, if any. |
-| [GetWordWrapMode)](#GetWordWrapMode) | Gets the current word wrap and word-break options for the rich edit control. |
-| [SetWordWrapMode)](#SetWordWrapMode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
-| [GetZoom)](#GetZoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
-| [SetZoom)](#SetZoom) | Sets the zoom ratio anywhere between 1/64 and 64. |
-| [GetTableParams)](#GetTableParams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
-| [SetTableParams)](#SetTableParams) | Changes the parameters of rows in a table. |
+| [CanPaste](#CanPaste) | Determines whether a rich edit control can paste a specified clipboard format. |
+| [CanRedo](#CanRedo) | Determines whether there are any actions in the control redo queue. |
+| [CanUndo](#CanUndo) | Determines whether there are any actions in an edit control's undo queue. |
+| [CallAutocorrectProc](#CallAutocorrectProc) | Calls the autocorrect callback function that is stored by the **CRichEditCtrl.SetAutocorrectProc** message, provided that the text preceding the insertion point is a candidate for autocorrection. |
+| [DisplayBand](#DisplayBand) | Displays a portion of the contents of a rich edit control, as previously formatted for a device using the EM_FORMATRANGE message. |
+| [EmptyUndoBuffer](#EmptyUndoBuffer) | Resets the undo flag of a rich edit control. The undo flag is set whenever an operation within the rich edit control can be undone. |
+| [ExGetSel](#ExGetSel) | Retrieves the starting and ending character positions of the selection in a rich edit control. |
+| [ExLimitText](#ExLimitText) | Sets an upper limit to the amount of text the user can type or paste into a rich edit control. |
+| [ExLineFromChar](#ExLineFromChar) | Determines which line contains the specified character in a rich edit control. |
+| [ExSetSel](#ExSetSel) | Selects a range of characters and/or Component Object Model (COM) objects in a Microsoft Rich Edit control. |
+| [FindText](#FindText) | Finds text within a rich edit control. |
+| [FindTextEx](#FindTextEx) | Finds text within a rich edit control. |
+| [FindWordBreak](#FindWordBreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
+| [GetFirstVisibleLine](#GetFirstVisibleLine) | Gets the zero-based index of the uppermost visible line in a multiline rich edit control. |
+| [FormatRange](#FormatRange) | Formats a range of text in a rich edit control for a specific device. |
+| [GetCharFromPos](#GetCharFromPos) | Gets information about the character closest to a specified point in the client area of an edit control. |
+| [GetEllipsisState](#GetEllipsisState) | Retrieves the current ellipsis state. |
+| [GetIMECompMode](#GetIMECompMode) | Gets the current IME mode for a rich edit control. |
+| [GetIMEProperty](#GetIMEProperty) | Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
+| [GetLine](#GetLine) | Copies a line of text from a rich edit control. |
+| [GetOleInterface](#GetOleInterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
+| [GetRedoName](#GetRedoName) | Retrieves the type of the next action, if any, in the control's redo queue. |
+| [GetSel](#GetSel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
+| [SetSel](#SetSel) | Selects a range of characters in a rich edit control. |
+| [GetSelText](#GetSelText) | Retrieves the currently selected text in a rich edit control. |
+| [GetUndoName](#GetUndoName) | Retrieves the type of the next undo action, if any. |
+| [GetWordWrapMode](#GetWordWrapMode) | Gets the current word wrap and word-break options for the rich edit control. |
+| [SetWordWrapMode](#SetWordWrapMode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
+| [GetZoom](#GetZoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
+| [SetZoom](#SetZoom) | Sets the zoom ratio anywhere between 1/64 and 64. |
+| [GetTableParams](#GetTableParams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
+| [SetTableParams](#SetTableParams) | Changes the parameters of rows in a table. |
 
 
 
