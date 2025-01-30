@@ -499,11 +499,11 @@ Gets/sets the event mask for a rich edit control. The event mask specifies which
 | **ENM_OBJECTPOSITIONS** | Sends **EN_OBJECTPOSITIONS** notifications. |
 | **ENM_PARAGRAPHEXPANDED** | Sends **EN_PARAGRAPHEXPANDED** notifications. |
 | **ENM_PROTECTED** | Sends **EN_PROTECTED** notifications. |
-| **ENM_REQUESTRESIZE** | Sends EN_REQUESTRESIZE notifications. |
-| **ENM_SCROLL** | Sends EN_HSCROLL and EN_VSCROLL notifications. |
+| **ENM_REQUESTRESIZE** | Sends **EN_REQUESTRESIZE** notifications. |
+| **ENM_SCROLL** | Sends **EN_HSCROLL** and **EN_VSCROLL** notifications. |
 | **ENM_SCROLLEVENTS** | Sends **EN_MSGFILTER** notifications for mouse wheel events. |
 | **ENM_SELCHANGE** | Sends **EN_SELCHANGE** notifications. |
-| **ENM_UPDATE** | Sends EN_UPDATE notifications.<br>**Rich Edit 2.0 and later**: this flag is ignored and the **EN_UPDATE** notifications are always sent. However, if Rich Edit 3.0 emulates Microsoft Rich Edit 1.0, you must use this flag to send **EN_UPDATE** notifications. |
+| **ENM_UPDATE** | Sends **EN_UPDATE** notifications.<br>**Rich Edit 2.0 and later**: this flag is ignored and the **EN_UPDATE** notifications are always sent. However, if Rich Edit 3.0 emulates Microsoft Rich Edit 1.0, you must use this flag to send **EN_UPDATE** notifications. |
 
 #### Return value
 
