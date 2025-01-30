@@ -519,9 +519,16 @@ The default event mask is **ENM_NONE** in which case no notifications are sent t
 
 Gets/sets information about hyphenation for a Microsoft Rich Edit control.
 ```
-PROPERTY HyphenateInfo () AS .HYPHENATEINFO
-PROPERTY HyphenateInfo (BYREF hinfo AS .HYPHENATEINFO)
+(GET) PROPERTY HyphenateInfo () AS .HYPHENATEINFO
+(SET) PROPERTY HyphenateInfo (BYREF hinfo AS .HYPHENATEINFO)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hinfo* | (SET) A [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure. |
+
+#### Return value
+
+(GET) A [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure.
 
 # <a name="IMEColor"></a>IMEColor
 
