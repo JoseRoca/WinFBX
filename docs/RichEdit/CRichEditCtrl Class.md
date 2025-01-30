@@ -41,10 +41,24 @@ DIM hRichEdit AS HWND = pWindow.AddControl("RichEdit", , IDC_RICHEDIT, "RichEdit
 # <a name="DESTRUCTOR"></a>DESTRUCTOR
 
 Called automatically when a class variable goes out of scope or is destroyed.
+```
+DESTRUCTOR CRichEditCtrl
+```
 
 # <a name="hRichEdit"></a>hRichEdit
 
 Returns the handle of the rich edit control.
+
+```
+FUNCTION CRichEditCtrl.hRichEdit () AS HWND
+```
+#### Usage example
+```
+' // Add a rich edit control without coordinates (it will be resized in WM_SIZE)
+DIM hRichEdit AS HWND = pWindow.AddControl("RichEdit", , IDC_RICHEDIT, "RichEdit box test")
+'...
+DIM hRichEdit AS HWND = pRichEdit.hRichEdit
+```
 
 ### CRichEditCtrl Properties
 
