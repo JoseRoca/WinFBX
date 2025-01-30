@@ -106,6 +106,8 @@ Returns the handle of the rich edit control.
 
 ### CRichEditCtrl Methods
 
+| Name       | Description |
+| ---------- | ----------- |
 | [CanPaste)](#CanPaste) | Determines whether a rich edit control can paste a specified clipboard format. |
 | [CanRedo)](#CanRedo) | Determines whether there are any actions in the control redo queue. |
 | [CanUndo)](#CanUndo) | Determines whether there are any actions in an edit control's undo queue. |
