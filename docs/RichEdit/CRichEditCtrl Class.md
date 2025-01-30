@@ -140,6 +140,25 @@ Returns the handle of the rich edit control.
 | [SetZoom](#SetZoom) | Sets the zoom ratio anywhere between 1/64 and 64. |
 | [GetTableParams](#GetTableParams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
 | [SetTableParams](#SetTableParams) | Changes the parameters of rows in a table. |
+| [GetTextEx](#GetTextEx) | Gets all of the text from the rich edit control in any particular code base you want. |
+| [SetTextExW](#SetTextExW) | Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text. |
+| [GetThumb](#GetThumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
+| [GetWordBreakProc](#GetWordBreakProc) | Gets the address of the current Wordwrap function. |
+| [SetWordBreakProc](#SetWordBreakProc) | Replaces a rich edit control's default Wordwrap function with an application-defined Wordwrap function. |
+| [GetWordBreakProcEx](#GetWordBreakProcEx) | Retrieves the address of the currently registered extended word-break procedure. |
+| [SetWordBreakProcEx](#SetWordBreakProcEx) | Sets the extended word-break procedure. |
+| [HideSelection](#HideSelection) | Hides or shows the selection in a rich edit control. |
+| [GetIMECompText](#GetIMECompText) | Gets the Input Method Editor (IME) composition text. |
+| [InsertImage](#InsertImage) | Replaces the selection with a blob that displays an image. |
+| [InsertTable](#InsertTable) | Inserts one or more identical table rows with empty cells. |
+| [IsIME](#IsIME) | Determines if current input locale is an East Asian locale. |
+| [GetLineCount](#GetLineCount) | Gets the number of lines in a multiline rich edit control. |
+| [LineFromChar](#LineFromChar) | Gets the index of the line that contains the specified character index in a multiline rich edit control. |
+| [LineIndex](#LineIndex) | Gets the character index of the first character of a specified line in a multiline rich edit control. |
+| [LineLength](#LineLength) | Retrieves the length, in characters, of a line in a rich edit control. |
+| [LineScroll](#LineScroll) | Scrolls the text in a multiline rich edit control. |
+| [PasteSpecial](#PasteSpecial) | Pastes a specific clipboard format in a rich edit control. |
+| [PosFromChar](#PosFromChar) | Retrieves the client area coordinates of a specified character in a rich edit control. |
 
 
 
