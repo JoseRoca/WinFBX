@@ -126,33 +126,29 @@ Returns the handle of the rich edit control.
 | [GetCharFromPos](#GetCharFromPos) | Gets information about the character closest to a specified point in the client area of an edit control. |
 | [GetEllipsisState](#GetEllipsisState) | Retrieves the current ellipsis state. |
 | [GetIMECompMode](#GetIMECompMode) | Gets the current IME mode for a rich edit control. |
+| [GetIMECompText](#GetIMECompText) | Gets the Input Method Editor (IME) composition text. |
 | [GetIMEProperty](#GetIMEProperty) | Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
 | [GetLine](#GetLine) | Copies a line of text from a rich edit control. |
+| [GetLineCount](#GetLineCount) | Gets the number of lines in a multiline rich edit control. |
 | [GetOleInterface](#GetOleInterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [GetRedoName](#GetRedoName) | Retrieves the type of the next action, if any, in the control's redo queue. |
 | [GetSel](#GetSel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
-| [SetSel](#SetSel) | Selects a range of characters in a rich edit control. |
 | [GetSelText](#GetSelText) | Retrieves the currently selected text in a rich edit control. |
 | [GetUndoName](#GetUndoName) | Retrieves the type of the next undo action, if any. |
 | [GetWordWrapMode](#GetWordWrapMode) | Gets the current word wrap and word-break options for the rich edit control. |
-| [SetWordWrapMode](#SetWordWrapMode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
 | [GetZoom](#GetZoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
-| [SetZoom](#SetZoom) | Sets the zoom ratio anywhere between 1/64 and 64. |
 | [GetTableParams](#GetTableParams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
-| [SetTableParams](#SetTableParams) | Changes the parameters of rows in a table. |
 | [GetTextEx](#GetTextEx) | Gets all of the text from the rich edit control in any particular code base you want. |
-| [SetTextExW](#SetTextExW) | Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text. |
+| [GetTextLength](#GetTextLength) | Retrieves the length of all text in a rich edit control. |
+| [GetTextLengthEx](#GetTextLengthEx) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
+| [GetTextRange](#GetTextRange) | Retrieves a specified range of characters from a rich edit control. |
 | [GetThumb](#GetThumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
 | [GetWordBreakProc](#GetWordBreakProc) | Gets the address of the current Wordwrap function. |
-| [SetWordBreakProc](#SetWordBreakProc) | Replaces a rich edit control's default Wordwrap function with an application-defined Wordwrap function. |
 | [GetWordBreakProcEx](#GetWordBreakProcEx) | Retrieves the address of the currently registered extended word-break procedure. |
-| [SetWordBreakProcEx](#SetWordBreakProcEx) | Sets the extended word-break procedure. |
 | [HideSelection](#HideSelection) | Hides or shows the selection in a rich edit control. |
-| [GetIMECompText](#GetIMECompText) | Gets the Input Method Editor (IME) composition text. |
 | [InsertImage](#InsertImage) | Replaces the selection with a blob that displays an image. |
 | [InsertTable](#InsertTable) | Inserts one or more identical table rows with empty cells. |
 | [IsIME](#IsIME) | Determines if current input locale is an East Asian locale. |
-| [GetLineCount](#GetLineCount) | Gets the number of lines in a multiline rich edit control. |
 | [LineFromChar](#LineFromChar) | Gets the index of the line that contains the specified character index in a multiline rich edit control. |
 | [LineIndex](#LineIndex) | Gets the character index of the first character of a specified line in a multiline rich edit control. |
 | [LineLength](#LineLength) | Retrieves the length, in characters, of a line in a rich edit control. |
@@ -172,17 +168,21 @@ Returns the handle of the rich edit control.
 | [SetOleCallback](#SetOleCallback) | Gives a rich edit control an IRichEditOleCallback object that the control uses to get OLE-related resources and information from the client. |
 | [SetPalette](#SetPalette) | Changes the palette that a rich edit control uses for its display window. |
 | [SetReadOnly](#SetReadOnly) | Changes the palette that a rich edit control uses for its display window. |
+| [SetSel](#SetSel) | Selects a range of characters in a rich edit control. |
+| [SetTableParams](#SetTableParams) | Changes the parameters of rows in a table. |
 | [SetTabStops](#SetTabStops) | Sets the tab stops in a multiline rich edit control. |
 | [SetTargetDevice](#SetTargetDevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
+| [SetTextExW](#SetTextExW) | Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text. |
 | [SetUIAName](#SetUIAName) | Sets the maximum number of actions that can stored in the undo queue. |
 | [SetUndoLimit](#SetUndoLimit) | Sets the maximum number of actions that can stored in the undo queue. |
+| [SetWordWrapMode](#SetWordWrapMode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
+| [SetWordBreakProc](#SetWordBreakProc) | Replaces a rich edit control's default Wordwrap function with an application-defined Wordwrap function. |
+| [SetWordBreakProcEx](#SetWordBreakProcEx) | Sets the extended word-break procedure. |
+| [SetZoom](#SetZoom) | Sets the zoom ratio anywhere between 1/64 and 64. |
 | [ShowScrollBar](#ShowScrollBar) | Shows or hides one of the scroll bars in the Text Host window. |
 | [StopGroupTyping](#StopGroupTyping) | Stops the control from collecting additional typing actions into the current undo action. |
 | [StreamIn](#StreamIn) | Replaces the contents of a rich edit control with a stream of data provided by an application defined EditStreamCallback callback function. |
 | [StreamOut](#StreamOut) | Causes a rich edit control to pass its contents to an application defined EditStreamCallback callback function. |
-| [GetTextLength](#GetTextLength) | Retrieves the length of all text in a rich edit control. |
-| [GetTextLengthEx](#GetTextLengthEx) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
-| [GetTextRange](#GetTextRange) | Retrieves a specified range of characters from a rich edit control. |
 | [Undo](#Undo) | This message undoes the last edit control operation in the control's undo queue. |
 
 
