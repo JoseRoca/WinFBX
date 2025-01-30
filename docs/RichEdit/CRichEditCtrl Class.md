@@ -221,51 +221,51 @@ Gets a pointer to the application-defined AutoCorrectProc callback function.
 
 Sets a pointer to the application-defined AutoCorrectProc callback function.
 
-# <a name="AutoUrlDetect (Get)"></a>AutoUrlDetect1
+# <a name="AutoUrlDetect1"></a>AutoUrlDetect (Get)
 
 Indicates whether the auto URL detection is turned on in the rich edit control.
 
-# <a name="AutoUrlDetect (Set)"></a>AutoUrlDetect2
+# <a name="AutoUrlDetect2"></a>AutoUrlDetect (Set)
 
 Enables or disables automatic detection of URLs by a rich edit control.
 
-# <a name="BidiOptions (Get)"></a>BidiOptions1
+# <a name="BidiOptions1"></a>BidiOptions (Get)
 
 Indicates the current state of the bidirectional options in the rich edit control.
 
-# <a name="BidiOptions (Set)"></a>BidiOptions2
+# <a name="BidiOptions2"></a>BidiOptions (Set)
 
 Sets the current state of the bidirectional options in the rich edit control.
 
-# <a name="CharFormat (Get)"></a>CharFormat1
+# <a name="CharFormat1"></a>CharFormat (Get)
 
 Determines the current character formatting in a rich edit control.
 
-# <a name="CharFormat (Set)"></a>CharFormat2
+# <a name="CharFormat2"></a>CharFormat (Set)
 
 Sets character formatting in a rich edit control.
 
-# <a name="CTFModeBias (Get)"></a>CTFModeBias1
+# <a name="CTFModeBias1"></a>CTFModeBias (Get)
 
 Gets the Text Services Framework mode bias values for a Microsoft Rich Edit control.
 
-# <a name="CTFModeBias (Set)"></a>CTFModeBias2
+# <a name="CTFModeBias2"></a>CTFModeBias (Set)
 
 Sets the Text Services Framework mode bias values for a Microsoft Rich Edit control.
 
-# <a name="CTFOpenStatus (Get)"></a>CTFOpenStatus1
+# <a name="CTFOpenStatus1"></a>CTFOpenStatus (Get)
 
 Determines if the Text Services Framework (TSF) keyboard is open or closed.
 
-# <a name="CTFOpenStatus (Set)"></a>CTFOpenStatus2
+# <a name="CTFOpenStatus2"></a>CTFOpenStatus (Set)
 
 Opens or closes the Text Services Framework (TSF) keyboard.
 
-# <a name="EditStyle (Get)"></a>EditStyle1
+# <a name="EditStyle1"></a>EditStyle (Get)
 
 Retrieves the current edit style flags.
 
-# <a name="EditStyle (Set)"></a>EditStyle2
+# <a name="EditStyle2"></a>EditStyle (Set)
 
 Sets the current edit style flags.
 
