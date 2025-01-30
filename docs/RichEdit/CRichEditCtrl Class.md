@@ -581,7 +581,7 @@ PROPERTY IMEModeBias (BYVAL nModeBias AS LONG)
 
 #### Return value
 
-(GET This message returns the current IME mode bias setting.
+(GET) This message returns the current IME mode bias setting.
 
 (SET) If successful, the return value is the new TSF mode bias value. If unsuccessful, the return value is the old TSF mode bias value. Call the (GET) **IMEModeBias** property to check if the value has changed.
 
@@ -598,9 +598,19 @@ The application should call he **IsIME** function before calling these propertie
 
 Gets/sets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system.
 ```
-PROPERTY IMEOptions () AS DWORD
-PROPERTY IMEOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG)
+(GET) PROPERTY IMEOptions () AS DWORD
+(SET) PROPERTY IMEOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fCoop* | (SET) Specifies one of the following values.<br>**ECOOP_SET**. Sets the options to those specified by *fOptions*.<br>**COOP_OR**. Combines the specified options with the current options.<br>**ECOOP_AND**. Retains only those current options that are also specified by *fOptions*.<br>**ECOOP_XOR**. Logically exclusive OR the current options with those specified by *fOptions*. |
+| *fOptions* | (SET) Specifies one of more of the following values.<br>**IMF_CLOSESTATUSWINDOW**. Closes the IME status window when the control receives the input focus.<br>**IMF_FORCEACTIVE**. Activates the IME when the control receives the input focus.<br>**IMF_FORCEDISABLE**. Disables the IME when the control receives the input focus.<br>**IMF_FORCEENABLE**. Enables the IME when the control receives the input focus.<br>**IMF_FORCEINACTIVE**. Inactivates the IME when the control receives the input focus.<br>**IMF_FORCENONE**. Disables IME handling.<br>**IMF_FORCEREMEMBER**. Restores the previous IME status when the control receives the input focus.<br>**IMF_MULTIPLEEDIT**. Specifies that the composition string will not be canceled or determined by focus changes. This allows an application to have separate composition strings on each rich edit control.<br>**IMF_VERTICAL**. Note: used in Rich Edit 2.0 and later. |
+
+#### Return value
+
+(GET) Returns one or more of the IME option flag values described in the *fOptions* parameter of the SET property.
+
+(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call the (GET) **ImeOptions** property to check if the value has changed.
 
 # <a name="LangOptions"></a>LangOptions
 
