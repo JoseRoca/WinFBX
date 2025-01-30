@@ -159,6 +159,11 @@ Returns the handle of the rich edit control.
 | [LineScroll](#LineScroll) | Scrolls the text in a multiline rich edit control. |
 | [PasteSpecial](#PasteSpecial) | Pastes a specific clipboard format in a rich edit control. |
 | [PosFromChar](#PosFromChar) | Retrieves the client area coordinates of a specified character in a rich edit control. |
+| [Redo](#Redo) | Redoes the next action in the control's redo queue. |
+| [ReplaceSel](#ReplaceSel) | Replaces the current selection in a rich edit control with the specified text. |
+| [RequestResize](#RequestResize) | Forces a rich edit control to send an EN_REQUESTRESIZE notification message to its parent window. |
+| [Reconversion](#Reconversion) | Invokes the Input Method Editor (IME) reconversion dialog box. |
+| [Scroll](#Scroll) | Scrolls the text vertically in a multiline rich edit control. |
 
 
 
