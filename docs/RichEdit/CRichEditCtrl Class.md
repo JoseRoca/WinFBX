@@ -538,6 +538,20 @@ PROPERTY IMEColor () AS .COMPCOLOR
 PROPERTY IMEColor (BYREF cmpcolor AS .COMPCOLOR)
 ```
 
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cmpcolor* | (SET) A [COMPCOLOR](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-compcolor) structure that contains the composition color to be set. |
+
+#### Return value
+
+(GET) A four-element array of [COMPCOLOR](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-compcolor) structures.
+
+(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+#### Note
+
+This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions.
+
 # <a name="IMEModeBias"></a>IMEModeBias
 
 Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
