@@ -674,9 +674,23 @@ Gets/sets the current text limit for a rich edit control. The text limit is the 
 
 Gets/sets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified.
 ```
-PROPERTY Modify () AS LONG
-PROPERTY Modify (BYVAL fModify AS LONG)
+(GET) PROPERTY Modify () AS LONG
+(SET) PROPERTY Modify (BYVAL fModify AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fModify* | (SET) The new value for the modification flag. A value of **TRUE** indicates the text has been modified, and a value of **FALSE** indicates it has not been modified. |
+
+#### Return value
+
+(GET) If the contents of edit control have been modified, the return value is nonzero; otherwise, it is zero.
+
+(SET) The set property does not return a value.
+
+### Remarks
+
+The system automatically clears the modification flag to zero when the control is created. If the user changes the control's text, the system sets the flag to nonzero. You can use the (SET) **Modify** property to set or clear the flag.
+
 
 # <a name="Options"></a>Options
 
