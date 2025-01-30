@@ -210,7 +210,7 @@ PROPERTY BidiOptions () AS .BIDIOPTIONS
 PROPERTY BidiOptions (BYREF _Options AS .BIDIOPTIONS)
 ```
 
-# <a name="CharFormat"></a>CharForma
+# <a name="CharFormat"></a>CharFormat
 
 Gets/sets the current character formatting in a rich edit control.
 ```
