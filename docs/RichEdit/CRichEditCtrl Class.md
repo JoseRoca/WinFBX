@@ -213,11 +213,11 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [SetResult](#SetResult) | Sets the last result code. |
 | [GetErrorInfo](#GetErrorInfo) | Returns a localized description of the last result code. |
 
-# <a name="AutoCorrectProc (Get)"></a>AutoCorrectProc1
+# <a name="AutoCorrectProc1"></a>AutoCorrectProc (Get)
 
 Gets a pointer to the application-defined AutoCorrectProc callback function.
 
-# <a name="AutoCorrectProc (Set)"></a>AutoCorrectProc2
+# <a name="AutoCorrectProc2"></a>AutoCorrectProc (Set)
 
 Sets a pointer to the application-defined AutoCorrectProc callback function.
 
