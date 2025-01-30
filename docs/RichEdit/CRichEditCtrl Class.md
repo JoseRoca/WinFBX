@@ -32,9 +32,14 @@ CONSTRUCTOR CRichEditCtrl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, 
 | *dwExStyle* | Optional. The extended window styles of the control being created.<br>Default extended style: WS_EX_CLIENTEDGE |
 | *lParam* | Optional. Pointer to custom data. |
 
-#### Usage example
+#### Usage example (dotted syntax)
 ```
 DIM pRichEdit AS CRichEditCtrl = CRichEditCtrl(@pWindow, IDC_RICHEDIT, "RichEditbox", 100, 50, 300, 200)
+```
+#### Usage example (pointer syntax)
+```
+DIM pRichEdit AS CRichEditCtrl PTR = NEW CRichEditCtrl(@pWindow, IDC_RICHEDIT, "RichEditbox", 100, 50, 300, 200)
+
 ```
 
 # <a name="DESTRUCTOR"></a>DESTRUCTOR
