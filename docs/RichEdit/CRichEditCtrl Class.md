@@ -701,147 +701,258 @@ FUNCTION InsertImage (BYREF ip AS RICHEDIT_IMAGE_PARAMETERS) AS DWORD
 # <a name="InsertTable"></a>InsertTable
 
 Inserts one or more identical table rows with empty cells.
+```
+FUNCTION InsertTable (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
+```
 
 # <a name="IsIME"></a>IsIME
 
 Determines if current input locale is an East Asian locale.
+```
+FUNCTION IsIME () AS LONG
+```
 
 # <a name="LineFromChar"></a>LineFromChar
 
 Gets the index of the line that contains the specified character index in a multiline rich edit control.
+```
+FUNCTION LineFromChar (BYVAL index AS DWORD) AS LONG
+```
 
 # <a name="LineIndex"></a>LineIndex
 
 Gets the character index of the first character of a specified line in a multiline rich edit control.
+```
+FUNCTION LineIndex (BYVAL nLine AS LONG) AS LONG
+```
 
 # <a name="LineLength"></a>LineLength
 
 Retrieves the length, in characters, of a line in a rich edit control.
+```
+FUNCTION LineLength (BYVAL index AS DWORD) AS LONG
+```
 
 # <a name="LineScroll"></a>LineScroll
 
 Scrolls the text in a multiline rich edit control.
+```
+FUNCTION LineScroll (BYVAL y AS LONG) AS LONG
+```
 
 # <a name="PasteSpecial"></a>PasteSpecial
 
 Pastes a specific clipboard format in a rich edit control.
+```
+SUB PasteSpecial (BYVAL clpfmt AS DWORD, BYREF rps AS REPASTESPECIAL)
+```
 
 # <a name="PosFromChar"></a>PosFromChar
 
 Retrieves the client area coordinates of a specified character in a rich edit control.
-
-# <a name="Redo"></a>Redo
-
-Redoes the next action in the control's redo queue.
-
-# <a name="ReplaceSel"></a>ReplaceSel
-
-Replaces the current selection in a rich edit control with the specified text.
-
-# <a name="RequestResize"></a>RequestResize
-
-Forces a rich edit control to send an EN_REQUESTRESIZE notification message to its parent window.
+```
+FUNCTION PosFromChar (BYVAL index as DWORD) AS .POINTL
+```
 
 # <a name="Reconversion"></a>Reconversion
 
 Invokes the Input Method Editor (IME) reconversion dialog box.
+```
+SUB Reconversion ()
+```
+
+# <a name="Redo"></a>Redo
+
+Redoes the next action in the control's redo queue.
+```
+FUNCTION Redo () AS LONG
+```
+
+# <a name="ReplaceSel"></a>ReplaceSel
+
+Replaces the current selection in a rich edit control with the specified text.
+```
+SUB ReplaceSel (BYVAL bCanBeUndone AS LONG, BYVAL pwszText AS WSTRING PTR)
+```
+
+# <a name="RequestResize"></a>RequestResize
+
+Forces a rich edit control to send an EN_REQUESTRESIZE notification message to its parent window.
+```
+SUB RequestResize ()
+```
 
 # <a name="Scroll"></a>Scroll
 
 Scrolls the text vertically in a multiline rich edit control.
+```
+FUNCTION Scroll (BYVAL nAction AS LONG) AS LONG
+```
 
 # <a name="ScrollCaret"></a>ScrollCaret
 
 Scrolls the caret into view in a rich edit control.
+```
+SUB ScrollCaret ()
+```
 
 # <a name="SelectionType"></a>SelectionType
 
 Determines the selection type for a rich edit control.
+```
+FUNCTION SelectionType () AS LONG
+```
 
 # <a name="SetBkgndColor"></a>SetBkgndColor
 
 Sets the background color for a rich edit control.
+```
+FUNCTION SetBkgndColor (BYVAL pSysColor AS DWORD, BYVAL pBkColor AS DWORD) AS DWORD
+```
 
 # <a name="SetFontSize"></a>SetFontSize
 
 Sets the font size for the selected text.
+```
+FUNCTION SetFontSize (BYVAL ptsize AS LONG) AS LONG
+```
 
 # <a name="SetMargins"></a>SetMargins
 
 Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins.
+```
+SUB SetMargins (BYVAL nMargins AS LONG, BYVAL nWidth AS LONG)
+```
 
 # <a name="SetOleCallback"></a>SetOleCallback
 
 Gives a rich edit control an IRichEditOleCallback object that the control uses to get OLE-related resources and information from the client.
+```
+FUNCTION SetOleCallback (BYVAL pCallback AS ANY PTR) AS LONG
+```
 
 # <a name="SetPalette"></a>SetPalette
 
 Changes the palette that a rich edit control uses for its display window.
+```
+SUB SetPalette (BYVAL newPalette AS HPALETTE)
+```
 
 # <a name="SetReadOnly"></a>SetReadOnly
 
 Changes the palette that a rich edit control uses for its display window.
+```
+FUNCTION SetReadOnly (BYVAL fReadOnly AS LONG) AS LONG
+```
 
 # <a name="SetSel"></a>SetSel
 
 Selects a range of characters in a rich edit control.
+```
+SUB SetSel (BYVAL nStart AS LONG, BYVAL nEnd AS LONG)
+```
 
 # <a name="SetTableParams"></a>SetTableParams
 
 Changes the parameters of rows in a table.
+```
+FUNCTION SetTableParams (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
+```
 
 # <a name="SetTabStops"></a>SetTabStops
 
 Sets the tab stops in a multiline rich edit control.
+```
+FUNCTION SetTabStops (BYVAL nTabs AS LONG, BYVAL rgTabStops AS LONG_PTR) AS LONG
+```
 
 # <a name="SetTargetDevice"></a>SetTargetDevice
 
 Sets the target device and line width used for WYSIWYG formatting in a rich edit control.
+```
+FUNCTION SetTargetDevice (BYVAL hDC AS HDC, BYVAL lnwidth AS LONG) AS LONG
+```
 
 # <a name="SetTextExW"></a>SetTextExW
 
 Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text.
+```
+FUNCTION SetTextExW (BYREF stex AS SETTEXTEX, BYVAL pwszText AS WSTRING PTR) AS DWORD
+```
 
 # <a name="SetUIAName"></a>SetUIAName
 
 Sets the maximum number of actions that can stored in the undo queue.
+```
+FUNCTION SetUIAName (BYVAL bstrName AS AFX_BSTR) AS DWORD
+```
 
 # <a name="SetUndoLimit"></a>SetUndoLimit
 
 Sets the maximum number of actions that can stored in the undo queue.
-
-# <a name="SetWordWrapMode"></a>SetWordWrapMode
-
-Sets the word-wrapping and word-breaking options for the rich edit control.
+```
+FUNCTION SetUndoLimit (BYVAL maxactions AS DWORD) AS DWORD
+```
 
 # <a name="SetWordBreakProc"></a>SetWordBreakProc
 
 Replaces a rich edit control's default Wordwrap function with an application-defined Wordwrap function.
+```
+SUB SetWordBreakProc (BYVAL pfn AS LONG_PTR)
+```
 
 # <a name="SetWordBreakProcEx"></a>SetWordBreakProcEx
 
 Sets the extended word-break procedure.
+```
+FUNCTION SetWordBreakProcEx (BYVAL pfn AS LONG_PTR) AS LONG_PTR
+```
+
+# <a name="SetWordWrapMode"></a>SetWordWrapMode
+
+Sets the word-wrapping and word-breaking options for the rich edit control.
+```
+FUNCTION SetWordWrapMode (BYVAL pvalues AS LONG) AS LONG
+```
 
 # <a name="SetZoom"></a>SetZoom
 
 Sets the zoom ratio anywhere between 1/64 and 64.
+```
+FUNCTION SetZoom (BYVAL zNum AS DWORD, BYVAL zDen AS DWORD) AS LONG
+```
 
 # <a name="ShowScrollBar"></a>ShowScrollBar
 
 Shows or hides one of the scroll bars in the Text Host window.
+```
+SUB ShowScrollBar (BYVAL nScrollBar AS DWORD, BYVAL fShow AS LONG)
+```
 
 # <a name="StopGroupTyping"></a>StopGroupTyping
 
 Stops the control from collecting additional typing actions into the current undo action.
+```
+FUNCTION StopGroupTyping () AS DWORD
+```
 
 # <a name="StreamIn"></a>StreamIn
 
 Replaces the contents of a rich edit control with a stream of data provided by an application defined EditStreamCallback callback function.
+```
+FUNCTION StreamIn (BYVAL psf AS LONG, BYREF edst AS EDITSTREAM) AS DWORD
+```
 
 # <a name="StreamOut"></a>StreamOut
 
 Causes a rich edit control to pass its contents to an application defined EditStreamCallback callback function.
+```
+FUNCTION StreamOut (BYVAL psf AS LONG, BYREF edst AS EDITSTREAM) AS DWORD
+```
 
 # <a name="Undo"></a>Undo
 
 This message undoes the last edit control operation in the control's undo queue.
+```
+FUNCTION Undo () AS LONG
+```
