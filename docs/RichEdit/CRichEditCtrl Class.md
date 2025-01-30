@@ -186,241 +186,129 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [SetResult](#SetResult) | Sets the last result code. |
 | [GetErrorInfo](#GetErrorInfo) | Returns a localized description of the last result code. |
 
-# <a name="AutoCorrectProc1"></a>AutoCorrectProc (Get)
+# <a name="AutoCorrectProc"></a>AutoCorrectProc
 
-Gets a pointer to the application-defined AutoCorrectProc callback function.
+Gets/sets a pointer to the application-defined AutoCorrectProc callback function.
 
-# <a name="AutoCorrectProc2"></a>AutoCorrectProc (Set)
+# <a name="AutoUrlDetect"></a>AutoUrlDetect
 
-Sets a pointer to the application-defined AutoCorrectProc callback function.
+Gets/sets whether the auto URL detection is turned on in the rich edit control.
 
-# <a name="AutoUrlDetect1"></a>AutoUrlDetect (Get)
+# <a name="BidiOptions"></a>BidiOptions
 
-Indicates whether the auto URL detection is turned on in the rich edit control.
+Gets/sets the current state of the bidirectional options in the rich edit control.
 
-# <a name="AutoUrlDetect2"></a>AutoUrlDetect (Set)
+# <a name="CharFormat"></a>CharForma
 
-Enables or disables automatic detection of URLs by a rich edit control.
+Gets/sets the current character formatting in a rich edit control.
 
-# <a name="BidiOptions1"></a>BidiOptions (Get)
+# <a name="CTFModeBias"></a>CTFModeBias
 
-Indicates the current state of the bidirectional options in the rich edit control.
+Gets/sets the Text Services Framework mode bias values for a Microsoft Rich Edit control.
 
-# <a name="BidiOptions2"></a>BidiOptions (Set)
+# <a name="CTFOpenStatus"></a>CTFOpenStatus
 
-Sets the current state of the bidirectional options in the rich edit control.
+Gets/sets if the Text Services Framework (TSF) keyboard is open or closed.
 
-# <a name="CharFormat1"></a>CharFormat (Get)
+# <a name="EditStyle"></a>EditStyle
 
-Determines the current character formatting in a rich edit control.
+Gets/sets the current edit style flags.
 
-# <a name="CharFormat2"></a>CharFormat (Set)
+# <a name="EditStyleEx"></a>EditStyleEx
 
-Sets character formatting in a rich edit control.
+Gets/sets the extended edit style flags.
 
-# <a name="CTFModeBias1"></a>CTFModeBias (Get)
+# <a name="EllipsisMode"></a>EllipsisMode
 
-Gets the Text Services Framework mode bias values for a Microsoft Rich Edit control.
+Gets/sets the current ellipsis mode.
 
-# <a name="CTFModeBias2"></a>CTFModeBias (Set)
+# <a name="EventMask"></a>EventMask
 
-Sets the Text Services Framework mode bias values for a Microsoft Rich Edit control.
+Gets/sets the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window.
 
-# <a name="CTFOpenStatus1"></a>CTFOpenStatus (Get)
+# <a name="HyphenateInfo"></a>HyphenateInfo
 
-Determines if the Text Services Framework (TSF) keyboard is open or closed.
+Gets/sets information about hyphenation for a Microsoft Rich Edit control.
 
-# <a name="CTFOpenStatus2"></a>CTFOpenStatus (Set)
+# <a name="IMEColor"></a>IMEColor
 
-Opens or closes the Text Services Framework (TSF) keyboard.
+Gets/sets the Input Method Editor (IME) composition color. This message is available only in Asian-language versions of the operating system.
 
-# <a name="EditStyle1"></a>EditStyle (Get)
+# <a name="IMEModeBias"></a>IMEModeBias
 
-Retrieves the current edit style flags.
+Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
 
-# <a name="EditStyle2"></a>EditStyle (Set)
+# <a name="IMEOptions"></a>IMEOptions
 
-Sets the current edit style flags.
+Gets/sets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system.
 
-# <a name="EditStyleEx (Get)"></a>EditStyleEx1
+# <a name="LangOptions"></a>LangOptions
 
-Returns the extended edit style flags.
+Gets/sets a rich edit control's option settings for Input Method Editor (IME) and Asian language support.
 
-# <a name="EditStyleEx (Set)"></a>EditStyleEx2
+# <a name="LimitText"></a>LimitText
 
-Sets the current extended edit style flags.
+Gets/sets the current text limit for a rich edit control. The text limit is the maximum amount of text, in TCHARs, that the user can type into the edit control.
 
-# <a name="EllipsisMode (Get)"></a>EllipsisMode1
+# <a name="Modify"></a>Modify
 
-Retrieves the current ellipsis mode.
+Gets/sets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified.
 
-# <a name="EllipsisMode (Set)"></a>EllipsisMode2
+# <a name="Options"></a>Options
 
-Sets the current ellipsis mode.
+Gets/sets the options for a rich edit control.
 
-# <a name="EventMask (Get)"></a>EventMask1
+# <a name="PageRotate"></a>PageRotate
 
-Retrieves the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window.
+Deprecated. Gets/sets the text layout for a Microsoft Rich Edit control.
 
-# <a name="EventMask (Set)"></a>EventMask2
+# <a name="ParaFormat"></a>ParaFormat
 
-Sets the event mask for a rich edit control.
+Gets/sets the paragraph formatting of the current selection in a rich edit control.
 
-# <a name="HyphenateInfo (Get)"></a>HyphenateInfo1
+# <a name="PasswordChar"></a>PasswordChar
 
-Gets information about hyphenation for a Microsoft Rich Edit control.
+Gets/sets the password character that a rich edit control displays when the user enters text.
 
-# <a name="HyphenateInfo (Set)"></a>HyphenateInfo2
+# <a name="Punctuation"></a>Punctuation
 
-Sets the way a Microsoft Rich Edit control does hyphenation.|
+Gets/sets the current punctuation characters for the rich edit control.
 
-# <a name="IMEColor (Get)"></a>IMEColor1
+# <a name="Rect"></a>Rect
 
-Retrieves the Input Method Editor (IME) composition color. This message is available only in Asian-language versions of the operating system.
+Gets/sets the formatting rectangle of a rich edit control.
 
-# <a name="IMEColor (Set)"></a>IMEColor2
-
-Sets the Input Method Editor (IME) composition color.
-
-# <a name="IMEModeBias (Get)"></a>IMEModeBias1
-
-Gets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
-
-# <a name="IMEModeBias (Set)"></a>IMEModeBias2
-
-Sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
-
-# <a name="IMEOptions (Get)"></a>IMEOptions1
-
-Retrieves the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system.
-
-# <a name="IMEOptions (Set)"></a>IMEOptions2
-
-Sets the Input Method Editor (IME) options.
-
-# <a name="LangOptions (Get)"></a>LangOptions1
-
-Gets a rich edit control's option settings for Input Method Editor (IME) and Asian language support.
-
-# <a name="LangOptions (Set)"></a>LangOptions2
-
-Sets options for Input Method Editor (IME) and Asian language support in a rich edit control.
-
-# <a name="LimitText (Get)"></a>LimitText1
-
-Gets the current text limit for a rich edit control.
-
-# <a name="LimitText (Set)"></a>LimitText2
-
-Sets the text limit of a rich edit control. The text limit is the maximum amount of text, in TCHARs, that the user can type into the edit control.
-
-# <a name="Modify (Get)"></a>Modify1
-
-Gets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified.
-
-# <a name="Modify (Set)"></a>Modify2
-
-Sets or clears the modification flag for a rich edit control. The modification flag indicates whether the text within the rich edit control has been modified.
-
-# <a name="Options (Get)"></a>Options1
-
-Retrieves the options for a rich edit control.
-
-# <a name="Options (Set)"></a>Options2
-
-Sets the options for a rich edit control.
-
-# <a name="PageRotate (Get)"></a>PageRotate1
-
-Deprecated. Gets the text layout for a Microsoft Rich Edit control.
-
-# <a name="PageRotate (Set)"></a>PageRotate2
-
-Deprecated. Sets the text layout for a Microsoft Rich Edit control.
-
-# <a name="ParaFormat (Get)"></a>ParaFormat1
-
-Retrieves the paragraph formatting of the current selection in a rich edit control.
-
-# <a name="ParaFormat (Set)"></a>ParaFormat2
-
-Sets the paragraph formatting for the current selection in a rich edit control.
-
-# <a name="PasswordChar (Get)"></a>PasswordChar1
-
-Gets the password character that a rich edit control displays when the user enters text.
-
-# <a name="PasswordChar (Set)"></a>PasswordChar2
-
-Sets or removes the password character for a rich edit control. When a password character is set, that character is displayed in place of the characters typed by the user.
-
-# <a name="Punctuation (Get)"></a>Punctuation1
-
-Gets the current punctuation characters for the rich edit control.
-
-# <a name="Punctuation (Set)"></a>Punctuation2
-
-Sets the punctuation characters for a rich edit control.
-
-# <a name="Rect (Get)"></a>Rect1
-
-Gets the formatting rectangle of a rich edit control.
-
-# <a name="Rect (Set)"></a>Rect2
+# <a name="RectNP"></a>RectNP
 
 Sets the formatting rectangle of a multiline rich edit control.
 
-# <a name="RectNP (Set)"></a>RectNP
+# <a name="ScrollPos"></a>ScrollPos
 
-Sets the formatting rectangle of a multiline rich edit control.
+Gets/sets the current scroll position of the edit control.
 
-# <a name="ScrollPos (Get)"></a>ScrollPos1
+# <a name="StoryType"></a>StoryType
 
-Obtains the current scroll position of the edit control.
+Gets/sets the story type.
 
-# <a name="ScrollPos (Set)"></a>ScrollPos2
+# <a name="Text"></a>Text
 
-Tells the rich edit control to scroll to a particular point.
+Gets/sets the text from a rich edit control.
 
-# <a name="StoryType (Get)"></a>StoryType1
+# <a name="TextMode"></a>TextMode
 
-Gets the story type.
+Gets/sets the current text mode and undo level of a rich edit control.
 
-# <a name="StoryType (Set)"></a>StoryType2
+# <a name="TouchOptions"></a>TouchOptions
 
-Sets the story type.
+Gets/sets the touch options that are associated with a rich edit control.
 
-# <a name="Text (Get)"></a>Text1
+# <a name="TypographyOptions"></a>TypographyOptions
 
-Retrieves the text from a rich edit control.
-
-# <a name="Text (Set)"></a>Text2
-
-Sets the text of an edit control.
-
-# <a name="TextMode (Get)"></a>TextMode1
-
-Gets the current text mode and undo level of a rich edit control.
-
-# <a name="TextMode (Set)"></a>TextMode2
-
-Sets the text mode or undo level of a rich edit control.
-
-# <a name="TouchOptions (Get)"></a>TouchOptions1
-
-Retrieves the touch options that are associated with a rich edit control.
-
-# <a name="TouchOptions (Set)"></a>TouchOptions2
-
-Sets the touch options associated with a rich edit control.
-
-# <a name="TypographyOptions (Get)"></a>TypographyOptions1
-
-Returns the current state of the typography options of a rich edit control.
+Gets/sets the current state of the typography options of a rich edit control.
 
 # <a name="TypographyOptions (Set)"></a>TypographyOptions2
 
-Sets the current state of the typography options of a rich edit control.
+Gets/sets the current state of the typography options of a rich edit control.
 
 
 ### CRichEditCtrl Methods
