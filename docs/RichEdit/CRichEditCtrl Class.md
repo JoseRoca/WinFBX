@@ -204,6 +204,7 @@ PROPERTY AutoCorrectProc (BYVAL pfn AS LONG_PTR)
 #### Return value
 
 (GET) A pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
+
 (SET) If the operation succeeds, the return value is zero. If the operation fails, the return value is a nonzero value. Call GetLastResult and/or GetErrorInfo to get information.
 
 # <a name="AutoUrlDetect"></a>AutoUrlDetect
