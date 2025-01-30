@@ -386,8 +386,8 @@ PROPERTY EditStyle (BYVAL fStyle AS LONG, BYVAL fMask AS LONG)
 | *fStyle* | Specifies one or more edit style flags. For a list of possible values, see the table below. |
 | *fMask* | A mask consisting of one or more of the *fStyle* values. Only the values specified in this mask will be set or cleared. This allows a single flag to be set or cleared without reading the current flag states. |
 
-| Flag  | Description |
-| ----- | ----------- |
+| Edit Style Flag  | Description |
+| ---------------- | ----------- |
 | **SES_BEEPONMAXTEXT** | Rich Edit will call the system beeper if the user attempts to enter more than the maximum characters. |
 | **SES_BIDI** | Turns on bidirectional processing. This is automatically turned on by Rich Edit if any of the following window styles are active: WS_EX_RIGHT, WS_EX_RTLREADING, WS_EX_LEFTSCROLLBAR. However, this setting is useful for handling these window styles when using a custom implementation of ITextHost (default: 0). |
 | **SES_CTFALLOWEMBED** | **Windows XP with SP1**: Allow embedded objects to be inserted using TSF (default: 0). |
@@ -429,9 +429,31 @@ PROPERTY EditStyle (BYVAL fStyle AS LONG, BYVAL fMask AS LONG)
 
 Gets/sets the extended edit style flags.
 ```
-PROPERTY EditStyleEx () AS DWORD
-PROPERTY EditStyleEx (BYVAL fStyle AS LONG, BYVAL fMask AS LONG)
+(GET) PROPERTY EditStyleEx () AS DWORD
+(SET) PROPERTY EditStyleEx (BYVAL fStyle AS LONG, BYVAL fMask AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fStyle* | Specifies one or more edit style flags. For a list of possible values, see table below. |
+| *fMask* | A mask consisting of one or more of the *fStyle* values. Only the values specified in this mask will be set or cleared. This allows a single flag to be set or cleared without reading the current flag states. |
+
+| Edit style flag | Description |
+| --------------- | ----------- |
+| **SES_EX_HANDLEFRIENDLYURL** | Display friendly name links with the same text color and underlining as automatic links, provided that temporary formatting isn't used or uses text autocolor (default: 0). |
+| **SES_EX_MULTITOUCH** | Enable touch support in Rich Edit. This includes selection, caret placement, and context-menu invocation. When this flag is not set, touch is emulated by mouse commands, which do not take touch-mode specifics into account (default: 0). |
+| **SES_EX_NOACETATESELECTION** | Display selected text using classic Windows selection text and background colors instead of background acetate color (default: 0). |
+| **SES_EX_NOMATH** | Disable insertion of math zones (default: 1). To enable math editing and display, send the **RichEdit_SetEditStyleEx** message with *fStyle* set to 0, and *fMask* set to SES_EX_NOMATH. |
+| **SES_EX_NOTABLE** | Disable insertion of tables. The **RichEdit_InsertTable** message returns **E_FAIL** and RTF tables are skipped (default: 0). |
+| **SES_EX_USESINGLELINE** | Enable a multiline control to act like a single-line control with the ability to scroll vertically when the single-line height is greater than the window height (default: 0). |
+| **SES_HIDETEMPFORMAT** | Hide temporary formatting that is created when **ITextFont.Reset** is called with **tomApplyTmp**. For example, such formatting is used by spell checkers to display a squiggly underline under possibly misspelled words. |
+| **SES_EX_USEMOUSEWPARAM** | Use *wParam* when handling the **WM_MOUSEMOVE** message and do not call **GetAsyncKeyState**. |
+
+#### Return value
+
+(GET) Returns the state of the edit style flags.
+
+(SET) The return value is the state of the edit style flags after the rich edit control has attempted to implement your edit style changes. The edit style flags are a set of flags that indicate the current edit style. Call the (GET) **EditStyleEx** property to check if the value has changed.
+
 
 # <a name="EllipsisMode"></a>EllipsisMode
 
