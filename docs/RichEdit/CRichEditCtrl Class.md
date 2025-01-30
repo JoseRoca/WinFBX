@@ -209,7 +209,7 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetLastResult](#GetLastResult) | Returns the last result code- |
+| [GetLastResult](#GetLastResult) | Returns the last result code. |
 | [SetResult](#SetResult) | Sets the last result code. |
 | [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
 
