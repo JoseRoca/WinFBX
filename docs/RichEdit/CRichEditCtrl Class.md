@@ -559,6 +559,40 @@ Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit cont
 PROPERTY IMEModeBias () AS DWORD
 PROPERTY IMEModeBias (BYVAL nModeBias AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nModeBias* | Mode bias value. This can be one of the following values below. |
+
+| Mode bias value  | Meaning |
+| ---------------- | ------- |
+| **CTFMODEBIAS_DEFAULT** | There is no mode bias. |
+| **CTFMODEBIAS_FILENAME** | The bias is to a filename. |
+| **CTFMODEBIAS_NAME** | The bias is to a name. |
+| **CTFMODEBIAS_READING** | The bias is to the reading. |
+| **CTFMODEBIAS_DATETIME** | The bias is to a date or time. |
+| **CTFMODEBIAS_CONVERSATION** | The bias is to a conversation. |
+| **CTFMODEBIAS_NUMERIC** | The bias is to a number. |
+| **CTFMODEBIAS_HIRAGANA** | The bias is to hiragana strings. |
+| **CTFMODEBIAS_KATAKANA** | The bias is to katakana strings. |
+| **CTFMODEBIAS_HANGUL** | The bias is to Hangul characters. |
+| **CTFMODEBIAS_HALFWIDTHKATAKANA** | The bias is to half-width katakana strings. |
+| **CTFMODEBIAS_FULLWIDTHALPHANUMERIC** | The bias is to full-width alphanumeric characters. |
+| **CTFMODEBIAS_HALFWIDTHALPHANUMERIC** | The bias is to half-width alphanumeric characters. |
+
+#### Return value
+
+(GET This message returns the current IME mode bias setting.
+
+(SET) If successful, the return value is the new TSF mode bias value. If unsuccessful, the return value is the old TSF mode bias value. Call the (GET) **IMEModeBias** property to check if the value has changed.
+
+#### Remarks
+
+(GET) To get the Text Services Framework mode bias, usethe **CTFModeBias** property.
+
+(SET) When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
+
+The application should call he **IsIME** function before calling these properties.
+
 
 # <a name="IMEOptions"></a>IMEOptions
 
