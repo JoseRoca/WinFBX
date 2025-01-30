@@ -578,6 +578,7 @@ END FUNCTION
 | *hRichEdit* | The handle of the rich edit control. |
 
 #### Return value
+
 If auto-URL detection is active, the return value is 1.
 
 If auto-URL detection is inactive, the return value is 0.
