@@ -205,119 +205,225 @@ PROPERTY AutoUrlDetect (BYVAL fUrlDetect AS LONG)
 # <a name="BidiOptions"></a>BidiOptions
 
 Gets/sets the current state of the bidirectional options in the rich edit control.
+```
+PROPERTY BidiOptions () AS .BIDIOPTIONS
+PROPERTY BidiOptions (BYREF _Options AS .BIDIOPTIONS)
+```
 
 # <a name="CharFormat"></a>CharForma
 
 Gets/sets the current character formatting in a rich edit control.
+```
+CharFormat (BYVAL fOption AS DWORD) AS CHARFORMATW
+PROPERTY CharFormat (BYVAL chfmt AS DWORD, BYREF cf AS CHARFORMATW)
+```
 
 # <a name="CTFModeBias"></a>CTFModeBias
 
 Gets/sets the Text Services Framework mode bias values for a Microsoft Rich Edit control.
+```
+CTFModeBias () AS LONG
+PROPERTY CTFModeBias (BYVAL nModeBias AS LONG)
+```
 
 # <a name="CTFOpenStatus"></a>CTFOpenStatus
 
 Gets/sets if the Text Services Framework (TSF) keyboard is open or closed.
+```
+PROPERTY CTFOpenStatus () AS LONG
+PROPERTY CTFOpenStatus (BYVAL fTSFkbd AS LONG)
+```
 
 # <a name="EditStyle"></a>EditStyle
 
 Gets/sets the current edit style flags.
+```
+PROPERTY EditStyle () AS DWORD
+PROPERTY EditStyle (BYVAL fStyle AS LONG, BYVAL fMask AS LONG)
+```
 
 # <a name="EditStyleEx"></a>EditStyleEx
 
 Gets/sets the extended edit style flags.
+```
+PROPERTY EditStyleEx () AS DWORD
+PROPERTY EditStyleEx (BYVAL fStyle AS LONG, BYVAL fMask AS LONG)
+```
 
 # <a name="EllipsisMode"></a>EllipsisMode
 
 Gets/sets the current ellipsis mode.
+```
+PROPERTY EllipsisMode () AS DWORD
+PROPERTY EllipsisMode (BYVAL fMode AS DWORD)
+```
 
 # <a name="EventMask"></a>EventMask
 
 Gets/sets the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window.
+```
+PROPERTY EventMask () AS DWORD
+PROPERTY EventMask (BYVAL fMask AS LONG)
+```
 
 # <a name="HyphenateInfo"></a>HyphenateInfo
 
 Gets/sets information about hyphenation for a Microsoft Rich Edit control.
+```
+PROPERTY HyphenateInfo () AS .HYPHENATEINFO
+PROPERTY HyphenateInfo (BYREF hinfo AS .HYPHENATEINFO)
+```
 
 # <a name="IMEColor"></a>IMEColor
 
 Gets/sets the Input Method Editor (IME) composition color. This message is available only in Asian-language versions of the operating system.
+```
+PROPERTY IMEColor () AS .COMPCOLOR
+PROPERTY IMEColor (BYREF cmpcolor AS .COMPCOLOR)
+```
 
 # <a name="IMEModeBias"></a>IMEModeBias
 
 Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
+```
+PROPERTY IMEModeBias () AS DWORD
+PROPERTY IMEModeBias (BYVAL nModeBias AS LONG)
+```
 
 # <a name="IMEOptions"></a>IMEOptions
 
 Gets/sets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system.
+```
+PROPERTY IMEOptions () AS DWORD
+PROPERTY IMEOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG)
+```
 
 # <a name="LangOptions"></a>LangOptions
 
 Gets/sets a rich edit control's option settings for Input Method Editor (IME) and Asian language support.
+```
+PROPERTY LangOptions () AS DWORD
+PROPERTY LangOptions (BYVAL lgoptions AS LONG)
+```
 
 # <a name="LimitText"></a>LimitText
 
-Gets/sets the current text limit for a rich edit control. The text limit is the maximum amount of text, in TCHARs, that the user can type into the edit control.
+Gets/sets the current text limit for a rich edit control. The text limit is the maximum amount of text that the user can type into the edit control.
+```
+PROPERTY LimitText () AS LONG
+PROPERTY LimitText (BYVAL chMax AS DWORD)
+```
 
 # <a name="Modify"></a>Modify
 
 Gets/sets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified.
+```
+PROPERTY Modify () AS LONG
+PROPERTY Modify (BYVAL fModify AS LONG)
+```
 
 # <a name="Options"></a>Options
 
 Gets/sets the options for a rich edit control.
+```
+PROPERTY Options () AS DWORD
+PROPERTY Options (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG)
+```
 
 # <a name="PageRotate"></a>PageRotate
 
 Deprecated. Gets/sets the text layout for a Microsoft Rich Edit control.
+```
+PROPERTY PageRotate () AS DWORD
+PROPERTY PageRotate (BYVAL txtlayout AS LONG)
+```
 
 # <a name="ParaFormat"></a>ParaFormat
 
 Gets/sets the paragraph formatting of the current selection in a rich edit control.
+```
+PROPERTY ParaFormat () AS .PARAFORMAT
+PROPERTY ParaFormat (BYREF pfmt AS .PARAFORMAT)
+```
 
 # <a name="PasswordChar"></a>PasswordChar
 
 Gets/sets the password character that a rich edit control displays when the user enters text.
+```
+PROPERTY PasswordChar () AS LONG
+PROPERTY PasswordChar (BYVAL dwchar AS DWORD)
+```
 
 # <a name="Punctuation"></a>Punctuation
 
 Gets/sets the current punctuation characters for the rich edit control.
+```
+PROPERTY Punctuation (BYVAL punctp AS DWORD) AS .PUNCTUATION
+PROPERTY Punctuation (BYVAL ptype AS LONG, BYREF punct AS .PUNCTUATION)
+```
 
 # <a name="Rect"></a>Rect
 
 Gets/sets the formatting rectangle of a rich edit control.
+```
+PROPERTY Rect () AS .RECT
+PROPERTY Rect (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
+```
 
 # <a name="RectNP"></a>RectNP
 
 Sets the formatting rectangle of a multiline rich edit control.
+```
+PROPERTY RectNP (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
+```
 
 # <a name="ScrollPos"></a>ScrollPos
 
 Gets/sets the current scroll position of the edit control.
+```
+PROPERTY ScrollPos () AS .POINT
+PROPERTY ScrollPos (BYREF pt AS .POINT)
+```
 
 # <a name="StoryType"></a>StoryType
 
 Gets/sets the story type.
+```
+PROPERTY StoryType (BYVAL Index AS DWORD) AS DWORD
+PROPERTY StoryType (BYVAL Index AS LONG, BYVAL dwType AS DWORD)
+```
 
 # <a name="Text"></a>Text
 
 Gets/sets the text from a rich edit control.
+```
+PROPERTY Text () AS CWSTR
+DECLARE PROPERTY Text (BYVAL pwszText AS WSTRING PTR)
+```
 
 # <a name="TextMode"></a>TextMode
 
 Gets/sets the current text mode and undo level of a rich edit control.
+```
+PROPERTY TextMode () AS DWORD
+PROPERTY TextMode (BYVAL pvalues AS LONG)
+```
 
 # <a name="TouchOptions"></a>TouchOptions
 
 Gets/sets the touch options that are associated with a rich edit control.
+```
+PROPERTY TouchOptions (BYVAL _Options AS LONG PTR) AS DWORD
+PROPERTY TouchOptions (BYVAL _Options AS LONG, BYVAL fEnable AS LONG)
+```
 
 # <a name="TypographyOptions"></a>TypographyOptions
 
 Gets/sets the current state of the typography options of a rich edit control.
-
-# <a name="TypographyOptions (Set)"></a>TypographyOptions2
-
-Gets/sets the current state of the typography options of a rich edit control.
-
+```
+PROPERTY TypographyOptions () AS DWORD
+PROPERTY TypographyOptions (BYVAL pto AS LONG, BYVAL fMask AS LONG)
+```
 
 ### CRichEditCtrl Methods
 
