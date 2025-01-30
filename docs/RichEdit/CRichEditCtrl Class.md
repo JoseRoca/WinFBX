@@ -425,161 +425,278 @@ PROPERTY TypographyOptions () AS DWORD
 PROPERTY TypographyOptions (BYVAL pto AS LONG, BYVAL fMask AS LONG)
 ```
 
+# <a name="CallAutocorrectProc"></a>CallAutocorrectProc
+
+Calls the autocorrect callback function that is stored by the **CRichEditCtrl.SetAutocorrectProc** message, provided that the text preceding the insertion point is a candidate for autocorrection.
+```
+FUNCTION CallAutocorrectProc (BYVAL char AS WCHAR) AS LONG
+```
+
 # <a name="CanPaste"></a>CanPaste
 
 Determines whether a rich edit control can paste a specified clipboard format.
+```
+FUNCTION CanPaste (BYVAL clipformat AS LONG) AS BOOLEAN
+```
 
 # <a name="CanRedo"></a>CanRedo
 
 Determines whether there are any actions in the control redo queue.
+```
+FUNCTION CanRedo () AS BOOLEAN
+```
 
 # <a name="CanUndo"></a>CanUndo
 
 Determines whether there are any actions in an edit control's undo queue.
-
-# <a name="CallAutocorrectProc"></a>CallAutocorrectProc
-
-Calls the autocorrect callback function that is stored by the **CRichEditCtrl.SetAutocorrectProc** message, provided that the text preceding the insertion point is a candidate for autocorrection.
+```
+FUNCTION CanUndo () AS BOOLEAN
+```
 
 # <a name="DisplayBand"></a>DisplayBand
 
 Displays a portion of the contents of a rich edit control, as previously formatted for a device using the EM_FORMATRANGE message.
+```
+FUNCTION DisplayBand (BYREF rc AS .RECT) AS LONG
+```
 
 # <a name="EmptyUndoBuffer"></a>EmptyUndoBuffer
 
 Resets the undo flag of a rich edit control. The undo flag is set whenever an operation within the rich edit control can be undone.
+```
+SUB EmptyUndoBuffer ()
+```
 
 # <a name="ExGetSel"></a>ExGetSel
 
 Retrieves the starting and ending character positions of the selection in a rich edit control.
+```
+FUNCTION ExGetSel () AS CHARRANGE
+```
 
 # <a name="ExLimitText"></a>ExLimitText
 
 Sets an upper limit to the amount of text the user can type or paste into a rich edit control.
+```
+SUB ExLimitText (BYVAL dwLimit AS DWORD)
+```
 
 # <a name="ExLineFromChar"></a>ExLineFromChar
 
 Determines which line contains the specified character in a rich edit control.
+```
+FUNCTION ExLineFromChar (BYVAL iIndex AS LONG) AS LONG
+```
 
 # <a name="ExSetSel"></a>ExSetSel
 
 Selects a range of characters and/or Component Object Model (COM) objects in a Microsoft Rich Edit control.
+```
+FUNCTION ExSetSel (BYREF cr AS CHARRANGE) AS DWORD
+```
 
 # <a name="FindText"></a>FindText
 
 Finds text within a rich edit control.
+```
+FUNCTION FindText (BYVAL fOptions AS DWORD, BYREF ft AS FINDTEXTW) AS LONG
+```
 
 # <a name="FindTextEx"></a>FindTextEx
 
 Finds text within a rich edit control.
+```
+FUNCTION FindTextEx (BYVAL fOptions AS DWORD, BYREF ftexw AS FINDTEXTEXW) AS LONG
+```
 
 # <a name="FindWordBreak"></a>FindWordBreak
 
 Finds the next word break before or after the specified character position or retrieves information about the character at that position.
-
-# <a name="GetFirstVisibleLine"></a>GetFirstVisibleLine
-
-Gets the zero-based index of the uppermost visible line in a multiline rich edit control.
+```
+FUNCTION FindWordBreak (BYVAL fOperation AS DWORD, BYVAL dwStartPos AS DWORD) AS DWORD
+```
 
 # <a name="FormatRange"></a>FormatRange
 
 Formats a range of text in a rich edit control for a specific device.
+```
+FUNCTION FormatRange (BYVAL fRender AS LONG, BYREF fr AS FORMATRANGE) AS DWORD
+```
 
 # <a name="GetCharFromPos"></a>GetCharFromPos
 
 Gets information about the character closest to a specified point in the client area of an edit control.
+```
+FUNCTION GetCharFromPos (BYREF ptl AS .POINTL) AS LONG
+```
 
 # <a name="GetEllipsisState"></a>GetEllipsisState
 
 Retrieves the current ellipsis state.
+```
+FUNCTION GetEllipsisState () AS BOOLEAN
+```
+
+# <a name="GetFirstVisibleLine"></a>GetFirstVisibleLine
+
+Gets the zero-based index of the uppermost visible line in a multiline rich edit control.
+```
+FUNCTION GetFirstVisibleLine () AS LONG
+```
 
 # <a name="GetIMECompMode"></a>GetIMECompMode
 
 Gets the current IME mode for a rich edit control.
+```
+FUNCTION GetIMECompMode () AS DWORD
+```
 
 # <a name="GetIMECompText"></a>GetIMECompText
 
 Gets the Input Method Editor (IME) composition text.
+```
+FUNCTION GetIMECompText (BYREF ict AS .IMECOMPTEXT, BYVAL buffer AS ANY PTR) AS DWORD
+```
 
 # <a name="GetIMEProperty"></a>GetIMEProperty
 
 Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale.
+```
+FUNCTION GetIMEProperty (BYVAL figp AS DWORD) AS DWORD
+```
 
 # <a name="GetLine"></a>GetLine
 
 Copies a line of text from a rich edit control.
+```
+FUNCTION GetLine (BYVAL which AS DWORD) AS CWSTR
+```
 
 # <a name="GetLineCount"></a>GetLineCount
 
 Gets the number of lines in a multiline rich edit control.
+```
+FUNCTION GetLineCount () AS LONG
+```
 
 # <a name="GetOleInterface"></a>GetOleInterface
 
 Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality.
+```
+FUNCTION GetOleInterface () AS IRichEditOle PTR
+```
 
 # <a name="GetRedoName"></a>GetRedoName
 
 Retrieves the type of the next action, if any, in the control's redo queue.
+```
+FUNCTION GetRedoName () AS LONG
+```
 
 # <a name="GetSel"></a>GetSel
 
 Gets the starting and ending character positions of the current selection in a rich edit control.
+```
+FUNCTION GetSel (BYREF dwStartPos AS DWORD, BYREF dwEndPos AS DWORD) AS LONG
+```
 
 # <a name="GetSelText"></a>GetSelText
 
 Retrieves the currently selected text in a rich edit control.
-
-# <a name="GetUndoName"></a>GetUndoName
-
-Retrieves the type of the next undo action, if any.
-
-# <a name="GetWordWrapMode"></a>GetWordWrapMode
-
-Gets the current word wrap and word-break options for the rich edit control.
-
-# <a name="GetZoom"></a>GetZoom
-
-Gets the current zoom ratio, which is always between 1/64 and 64.
+```
+FUNCTION GetSelText () AS CWSTR
+```
 
 # <a name="GetTableParams"></a>GetTableParams
 
 Retrieves the table parameters for a table row and the cell parameters for the specified number of cells.
+```
+FUNCTION GetTableParams (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
+```
 
 # <a name="GetTextEx"></a>GetTextEx
 
 Gets all of the text from the rich edit control in any particular code base you want.
+```
+FUNCTION GetTextEx (BYREF gtex AS GETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
+```
 
 # <a name="GetTextLength"></a>GetTextLength
 
 Retrieves the length of all text in a rich edit control.
+```
+FUNCTION GetTextLength () AS LONG
+```
 
 # <a name="GetTextLengthEx"></a>GetTextLengthEx
 
 Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control.
+```
+FUNCTION GetTextLengthEx (BYREF gtex AS .GETTEXTLENGTHEX) AS LONG
+```
 
 # <a name="GetTextRange"></a>GetTextRange
 
 Retrieves a specified range of characters from a rich edit control.
+```
+FUNCTION GetTextRange (BYREF trg AS .TEXTRANGEW) AS DWORD
+```
 
 # <a name="GetThumb"></a>GetThumb
 
 Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control.
+```
+FUNCTION GetThumb () AS LONG
+```
+
+# <a name="GetUndoName"></a>GetUndoName
+
+Retrieves the type of the next undo action, if any.
+```
+FUNCTION GetUndoName () AS DWORD
+```
 
 # <a name="GetWordBreakProc"></a>GetWordBreakProc
 
 Gets the address of the current Wordwrap function.
+```
+FUNCTION GetWordBreakProc () AS LONG_PTR
+```
 
 # <a name="GetWordBreakProcEx"></a>GetWordBreakProcEx
 
 Retrieves the address of the currently registered extended word-break procedure.
+```
+FUNCTION GetWordBreakProcEx () AS LONG_PTR
+```
+
+# <a name="GetWordWrapMode"></a>GetWordWrapMode
+
+Gets the current word wrap and word-break options for the rich edit control.
+```
+FUNCTION GetWordWrapMode () AS DWORD
+```
+
+# <a name="GetZoom"></a>GetZoom
+
+Gets the current zoom ratio, which is always between 1/64 and 64.
+```
+FUNCTION GetZoom (BYVAL pzNum AS DWORD PTR, BYVAL pzDen AS DWORD PTR) AS LONG
+```
 
 # <a name="HideSelection"></a>HideSelection
 
 Hides or shows the selection in a rich edit control.
+```
+SUB HideSelection (BYVAL fHide AS DWORD)
+```
 
 # <a name="InsertImage"></a>InsertImage
 
 Replaces the selection with a blob that displays an image.
+```
+FUNCTION InsertImage (BYREF ip AS RICHEDIT_IMAGE_PARAMETERS) AS DWORD
+```
 
 # <a name="InsertTable"></a>InsertTable
 
