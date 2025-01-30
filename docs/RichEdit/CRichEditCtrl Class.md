@@ -34,8 +34,7 @@ CONSTRUCTOR CRichEditCtrl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, 
 
 #### Usage example
 ```
-' // Add a rich edit control without coordinates (it will be resized in WM_SIZE)
-DIM hRichEdit AS HWND = pWindow.AddControl("RichEdit", , IDC_RICHEDIT, "RichEdit box test")
+DIM pRichEdit AS CRichEditCtrl = CRichEditCtrl(@pWindow, IDC_RICHEDIT, "RichEditbox", 100, 50, 300, 200)
 ```
 
 # <a name="DESTRUCTOR"></a>DESTRUCTOR
@@ -54,9 +53,9 @@ FUNCTION CRichEditCtrl.hRichEdit () AS HWND
 ```
 #### Usage example
 ```
-' // Add a rich edit control without coordinates (it will be resized in WM_SIZE)
-DIM hRichEdit AS HWND = pWindow.AddControl("RichEdit", , IDC_RICHEDIT, "RichEdit box test")
-'...
+' // Create an instance of the CRichEditCtrl class
+DIM pRichEdit AS CRichEditCtrl = CRichEditCtrl(@pWindow, IDC_RICHEDIT, "RichEditbox", 100, 50, 300, 200)
+' // Set the focus inthe control
 DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 ```
 
