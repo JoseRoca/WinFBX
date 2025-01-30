@@ -194,8 +194,8 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 
 Gets/sets a pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
 ```
-PROPERTY AutoCorrectProc () AS LONG_PTR
-PROPERTY AutoCorrectProc (BYVAL pfn AS LONG_PTR)
+(GET) PROPERTY AutoCorrectProc () AS LONG_PTR
+(SET) PROPERTY AutoCorrectProc (BYVAL pfn AS LONG_PTR)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
