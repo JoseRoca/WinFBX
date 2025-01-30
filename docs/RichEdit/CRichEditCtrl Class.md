@@ -189,10 +189,18 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 # <a name="AutoCorrectProc"></a>AutoCorrectProc
 
 Gets/sets a pointer to the application-defined AutoCorrectProc callback function.
-
+```
+PROPERTY AutoCorrectProc () AS LONG_PTR
+PROPERTY AutoCorrectProc (BYVAL pfn AS LONG_PTR)
+```
+      
 # <a name="AutoUrlDetect"></a>AutoUrlDetect
 
 Gets/sets whether the auto URL detection is turned on in the rich edit control.
+```
+PROPERTY AutoUrlDetect () AS LONG
+PROPERTY AutoUrlDetect (BYVAL fUrlDetect AS LONG)
+```
 
 # <a name="BidiOptions"></a>BidiOptions
 
