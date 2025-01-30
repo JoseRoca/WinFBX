@@ -205,10 +205,12 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [StreamOut](#StreamOut) | Causes a rich edit control to pass its contents to an application defined EditStreamCallback callback function. |
 | [Undo](#Undo) | This message undoes the last edit control operation in the control's undo queue. |
 
-
+### Methods inherited from CTextObjectBase
 
 | Name       | Description |
 | ---------- | ----------- |
-| [](#) |  |
+| [GetLastResult](#GetLastResult) | Returns the last result code- |
+| [SetResult](#SetResult) | Sets the last result code. |
+| [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
 
 
