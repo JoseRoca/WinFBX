@@ -998,7 +998,7 @@ Returns the IME and Asian language settings, which can be zero or more of the fo
 | **IMF_TKBPREDICTION** | **Windows 10**: Ignored.<br>**Windows 8**: If this flag is set, the rich edit control enables touch keyboard prediction. This option is turned off by default (0). |
 | **IMF_UIFONTS** | Use user-interface default fonts. This option is turned off by default (0). |
 
-**Remarks**
+#### Remarks
 
 The **IMF_AUTOFONT** flag is set by default. The **IMF_AUTOKEYBOARD** and **IMF_IMECANCELCOMPLETE** flags are cleared by default.
 
@@ -1826,6 +1826,10 @@ END SUB
 | *hRichEdit* | The handle of the rich edit control. |
 | *chMax* | The maximum number of characters the user can enter. If this parameter is zero, the text length is set to 64,000 characters. |
 
+#### Return value
+
+This message does not return a value.
+
 #### Remarks
 
 The **RichEdit_LimitText** message limits only the text the user can enter. It does not affect any text already in the edit control when the message is sent, nor does it affect the length of the text copied to the edit control by the **RichEdit_SetText** message. If an application uses the **RichEdit_SetTExt** message to place more text into an edit control than is specified in the **RichEdit_LimitText** message, the user can edit the entire contents of the edit control.
@@ -2586,7 +2590,7 @@ END SUB
 
 #### Remarks
 
-The **RichEdit_SetLimitText** message limits only the text the user can enter. It does not affect any text already in the edit control when the message is sent, nor does it affect the length of the text copied to the edit control by the **RichEdit_SetText** message. If an application uses the **RichEdit_SetTExt** message to place more text into an edit control than is specified in the **RichEdit_SetLimitText** message, the user can edit the entire contents of the edit control.
+The **RichEdit_SetLimitText** message limits only the text the user can enter. It does not affect any text already in the edit control when the message is sent, nor does it affect the length of the text copied to the edit control by the **RichEdit_SetText** message. If an application uses the **RichEdit_SetText** message to place more text into an edit control than is specified in the **RichEdit_SetLimitText** message, the user can edit the entire contents of the edit control.
 
 #### Note
 
