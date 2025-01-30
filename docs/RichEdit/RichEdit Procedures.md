@@ -178,6 +178,12 @@ END FUNCTION
 
 #### Return value
 
+If the message succeeds, the return value is zero.
+
+If the message fails, the return value is a nonzero value. For example, the message might fail due to insufficient memory or an invalid detection option.
+
+#### Remarks
+
 If automatic URL detection is enabled (that is, *fUrlDetect* includes **AURL_ENABLEURL**), the rich edit control scans any modified text to determine whether the text matches the format of a URL (or more generally in Windows 8 or later an IRI International Resource Identifier). The control detects URLs that begin with the following scheme names:
 
 - callto
@@ -201,12 +207,6 @@ If automatic URL detection is enabled (that is, *fUrlDetect* includes **AURL_ENA
 When automatic link detection is enabled, the rich edit control removes the **CFE_LINK** effect from modified text that does not have a format recognized by the control. If your application uses the **CFE_LINK** effect to mark other types of text, do not enable automatic link detection. The rich edit control does not check whether a detected link exists; that responsibility belongs to the client.
 
 A rich edit control sends the [EN_LINK](https://learn.microsoft.com/en-us/windows/win32/controls/en-link) notification when it receives various messages while the mouse pointer is over text that has the **CFE_LINK** effect. 
-
-#### Return value
-
-If the message succeeds, the return value is zero.
-
-If the message fails, the return value is a nonzero value. For example, the message might fail due to insufficient memory or an invalid detection option.
 
 # <a name="RichEdit_CallAutocorrectProc"></a>RichEdit_CallAutocorrectProc
 
