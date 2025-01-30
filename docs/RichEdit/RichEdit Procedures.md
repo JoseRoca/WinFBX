@@ -2264,7 +2264,7 @@ END FUNCTION
 
 #### Return value
 
-f successful, this message returns **TRUE**. If unsuccessful, this message returns **FALSE**.
+If successful, this message returns **TRUE**. If unsuccessful, this message returns **FALSE**.
 
 # <a name="RichEdit_SetEditStyle"></a>RichEdit_SetEditStyle
 
