@@ -2245,7 +2245,7 @@ If successful, the return value is the new TSF mode bias value. If unsuccessful,
 
 When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
 
-To set the mode bias for the Input Method Editor (IME), use **RichEdit_SetModeBias**.
+To get the mode bias for the Input Method Editor (IME), use **RichEdit_GetModeBias**.
 
 # <a name="RichEdit_SetCTFOpenStatus"></a>RichEdit_SetCTFOpenStatus
 
@@ -2279,7 +2279,7 @@ END FUNCTION
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
-| *fTSFkbd* | Specifies one or more edit style flags. For a list of possible values, see **RichEdit_GetEditStyle**. |
+| *fStyle* | Specifies one or more edit style flags. For a list of possible values, see **RichEdit_GetEditStyle**. |
 | *fMask* | A mask consisting of one or more of the *fTSFkbd* values. Only the values specified in this mask will be set or cleared. This allows a single flag to be set or cleared without reading the current flag states. |
 
 #### Return value
@@ -2356,20 +2356,12 @@ END FUNCTION
 | *fMask* | New event mask for the rich edit control. For a list of event masks, see **Rich Edit Control Event Mask Flags** below. |
 
 
-#### Return value
-
-This message returns the previous event mask.
-
-#### Remarks
-
-The default event mask (before any is set) is ENM_NONE.
-
 #### Rich Edit Control Event Mask Flags
 
 The event mask specifies which notification codes a rich edit control sends to its parent window. The event mask can be none or a combination of these values.
 
-| Constant  | Description |
-| --------- | ----------- |
+| Flag  | Description |
+| ----- | ----------- |
 | **ENM_CHANGE** | Sends **EN_CHANGE** notifications. |
 | **ENM_CLIPFORMAT** | Sends **EN_CLIPFORMAT** notifications. |
 | **ENM_CORRECTTEXT** | Sends **EN_CORRECTTEXT** notifications. |
@@ -2388,6 +2380,10 @@ The event mask specifies which notification codes a rich edit control sends to i
 | **ENM_SCROLLEVENTS** | Sends **EN_MSGFILTER** notifications for mouse wheel events. |
 | **ENM_SELCHANGE** | Sends **EN_SELCHANGE** notifications. |
 | **ENM_UPDATE** | Sends EN_UPDATE notifications.<br>**Rich Edit 2.0 and later**: this flag is ignored and the **EN_UPDATE** notifications are always sent. However, if Rich Edit 3.0 emulates Microsoft Rich Edit 1.0, you must use this flag to send **EN_UPDATE** notifications. |
+
+#### Return value
+
+This message returns the previous event mask.
 
 #### Remarks
 
