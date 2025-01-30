@@ -220,9 +220,9 @@ Gets/sets whether the auto URL detection is turned on in the rich edit control.
 
 | fUrlDetect value  | Description |
 | --------------- | ----------- |
-| AURL_DISABLEMIXEDLGC | **Windows 8**: Disable recognition of domain names that contain labels with characters belonging to more than one of the following scripts: Latin, Greek, and Cyrillic. |
-| AURL_ENABLEDRIVELETTERS | **Windows 8**: Recognize file names that have a leading drive specification, such as c:\temp. |
-| AURL_ENABLEEA | This value is deprecated; use **AURL_ENABLEEAURLS** instead. |
+| **AURL_DISABLEMIXEDLGC** | **Windows 8**: Disable recognition of domain names that contain labels with characters belonging to more than one of the following scripts: Latin, Greek, and Cyrillic. |
+| **AURL_ENABLEDRIVELETTERS** | **Windows 8**: Recognize file names that have a leading drive specification, such as c:\temp. |
+| **AURL_ENABLEEA** | This value is deprecated; use **AURL_ENABLEEAURLS** instead. |
 | AURL_ENABLEEAURLS | Recognize URLs that contain East Asian characters. |
 | AURL_ENABLEEMAILADDR | **Windows 8**: Recognize email addresses. |
 | AURL_ENABLETELNO | **Windows 8**: Recognize telephone numbers. |
