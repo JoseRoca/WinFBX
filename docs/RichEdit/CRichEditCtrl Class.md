@@ -357,17 +357,22 @@ Gets/sets the Text Services Framework mode bias values for a Microsoft Rich Edit
 
 When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
 
-#### Remarks
-
-To get the IME mode bias, call **RichEdit_GetIMEModeBias**.
-
 # <a name="CTFOpenStatus"></a>CTFOpenStatus
 
 Gets/sets if the Text Services Framework (TSF) keyboard is open or closed.
 ```
-PROPERTY CTFOpenStatus () AS LONG
-PROPERTY CTFOpenStatus (BYVAL fTSFkbd AS LONG)
+(GET) PROPERTY CTFOpenStatus () AS BOOLEAN
+(SET) PROPERTY CTFOpenStatus (BYVAL fTSFkbd AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fTSFkbd* | To turn on the TSF keyboard, use **TRUE**. To turn off the TSF keyboard, use **FALSE**. |
+
+#### Return value
+
+(GET) If the TSF keyboard is open, the return value is **TRUE**. Otherwise, it is **FALSE**.
+
+(SET) If successful, it returns **TRUE**. If unsuccessful, it returns **FALSE**. Call the (GET) **CTFOpenStatus** property to check if the value has changed.
 
 # <a name="EditStyle"></a>EditStyle
 
