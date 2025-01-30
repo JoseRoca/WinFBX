@@ -32,6 +32,12 @@ CONSTRUCTOR CRichEditCtrl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, 
 | *dwExStyle* | Optional. The extended window styles of the control being created.<br>Default extended style: WS_EX_CLIENTEDGE |
 | *lParam* | Optional. Pointer to custom data. |
 
+#### Usage example
+```
+' // Add a rich edit control without coordinates (it will be resized in WM_SIZE)
+DIM hRichEdit AS HWND = pWindow.AddControl("RichEdit", , IDC_RICHEDIT, "RichEdit box test")
+```
+
 # <a name="DESTRUCTOR"></a>DESTRUCTOR
 
 Called automatically when a class variable goes out of scope or is destroyed.
