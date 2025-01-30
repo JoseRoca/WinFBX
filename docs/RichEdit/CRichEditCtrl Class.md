@@ -422,7 +422,7 @@ PROPERTY EditStyle (BYVAL fStyle AS LONG, BYVAL fMask AS LONG)
 
 (GET) Returns the current edit style flags, which can include one or more of the following values (see table above).
 
-(SET) The return value is the state of the edit style flags after the rich edit control has attempted to implement your edit style changes. The edit style flags are a set of flags that indicate the current edit style. Call the (GET **EditStyle** property to check if the value has changed.
+(SET) The return value is the state of the edit style flags after the rich edit control has attempted to implement your edit style changes. The edit style flags are a set of flags that indicate the current edit style. Call the (GET) **EditStyle** property to check if the value has changed.
 
 # <a name="EditStyleEx"></a>EditStyleEx
 
