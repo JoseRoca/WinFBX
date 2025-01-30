@@ -223,10 +223,10 @@ Gets/sets whether the auto URL detection is turned on in the rich edit control.
 | **AURL_DISABLEMIXEDLGC** | **Windows 8**: Disable recognition of domain names that contain labels with characters belonging to more than one of the following scripts: Latin, Greek, and Cyrillic. |
 | **AURL_ENABLEDRIVELETTERS** | **Windows 8**: Recognize file names that have a leading drive specification, such as c:\temp. |
 | **AURL_ENABLEEA** | This value is deprecated; use **AURL_ENABLEEAURLS** instead. |
-| AURL_ENABLEEAURLS | Recognize URLs that contain East Asian characters. |
-| AURL_ENABLEEMAILADDR | **Windows 8**: Recognize email addresses. |
-| AURL_ENABLETELNO | **Windows 8**: Recognize telephone numbers. |
-| AURL_ENABLEURL | **Windows 8**: Recognize URLs that include the path. |
+| **AURL_ENABLEEAURLS** | Recognize URLs that contain East Asian characters. |
+| **AURL_ENABLEEMAILADDR** | **Windows 8**: Recognize email addresses. |
+| **AURL_ENABLETELNO** | **Windows 8**: Recognize telephone numbers. |
+| **AURL_ENABLEUR** | **Windows 8**: Recognize URLs that include the path. |
 
 #### Return value
 
@@ -324,9 +324,42 @@ Gets/sets the current character formatting in a rich edit control.
 
 Gets/sets the Text Services Framework mode bias values for a Microsoft Rich Edit control.
 ```
-CTFModeBias () AS LONG
-PROPERTY CTFModeBias (BYVAL nModeBias AS LONG)
+(GET) PROPERTY CTFModeBias () AS LONG
+(SET) PROPERTY CTFModeBias (BYVAL nModeBias AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nModeBias* | (SET) Mode bias value. This can be one of the following values below. |
+
+| Mode bias value  | Meaning |
+| ---------------- | ------- |
+| **CTFMODEBIAS_DEFAULT** | There is no mode bias. |
+| **CTFMODEBIAS_FILENAME** | The bias is to a filename. |
+| **CTFMODEBIAS_NAME** | The bias is to a name. |
+| **CTFMODEBIAS_READING** | The bias is to the reading. |
+| **CTFMODEBIAS_DATETIME** | The bias is to a date or time. |
+| **CTFMODEBIAS_CONVERSATION** | The bias is to a conversation. |
+| **CTFMODEBIAS_NUMERIC** | The bias is to a number. |
+| **CTFMODEBIAS_HIRAGANA** | The bias is to hiragana strings. |
+| **CTFMODEBIAS_KATAKANA** | The bias is to katakana strings. |
+| **CTFMODEBIAS_HANGUL** | The bias is to Hangul characters. |
+| **CTFMODEBIAS_HALFWIDTHKATAKANA** | The bias is to half-width katakana strings. |
+| **CTFMODEBIAS_FULLWIDTHALPHANUMERIC** | The bias is to full-width alphanumeric characters. |
+| **CTFMODEBIAS_HALFWIDTHALPHANUMERIC** | The bias is to half-width alphanumeric characters. |
+
+#### Return value
+
+(GET) The current Text Services Framework mode bias value.
+
+(SET) If successful, the return value is the new TSF mode bias value. If unsuccessful, the return value is the old TSF mode bias value. Call the (GET) **CTFModeBias** property to check if the value has changed.
+
+#### Remarks
+
+When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
+
+#### Remarks
+
+To get the IME mode bias, call **RichEdit_GetIMEModeBias**.
 
 # <a name="CTFOpenStatus"></a>CTFOpenStatus
 
