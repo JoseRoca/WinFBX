@@ -290,9 +290,35 @@ In plain text controls, **BidiOptions** automatically determines the paragraph d
 
 Gets/sets the current character formatting in a rich edit control.
 ```
-CharFormat (BYVAL fOption AS DWORD) AS CHARFORMATW
-PROPERTY CharFormat (BYVAL chfmt AS DWORD, BYREF cf AS CHARFORMATW)
+(GET) PROPERTY CharFormat (BYVAL fOption AS DWORD) AS CHARFORMATW
+(SET) PROPERTY CharFormat (BYVAL chfmt AS DWORD, BYREF cf AS CHARFORMATW)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fOption* | (GET) Specifies the range of text from which to retrieve formatting. It can be one of the following values.<br>**SCF_DEFAULT** The default character formatting.<br>**SCF_SELECTION** The current selection's character formatting. |
+| *chfmt* | (SET) Character formatting that applies to the control. If this parameter is zero, the default character format is set. Otherwise, it can be one of the following values (see Formatting values below). |
+| *cf* | (SET) A [CHARFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformata) structure specifying the character formatting to use. Only the formatting attributes specified by the **dwMask** member are changed. The **szFaceName** and **bCharSet** members may be overruled when invalid for characters, for example: Arial on kanji characters. |
+
+| Formatting value  | Meaning |
+| ----------------- | ------- |
+| **SCF_ALL** | Applies the formatting to all text in the control. Not valid with **SCF_SELECTION** or **SCF_WORD**. |
+| **SCF_ASSOCIATEFONT** | **RichEdit 4.1**: Associates a font to a given script, thus changing the default font for that script. To specify the font, use the following members of **CHARFORMAT2**: yHeight, bCharSet, bPitchAndFamily, szFaceName, and lcid. |
+| **SCF_ASSOCIATEFONT2** | **RichEdit 4.1**: Associates a surrogate (plane-2) font to a given script, thus changing the default font for that script. To specify the font, use the following members of **CHARFORMAT2**: yHeight, bCharSet, bPitchAndFamily, szFaceName, and lcid. |
+| **SCF_CHARREPFROMLCID** | Gets the character repertoire from the LCID. |
+| **SCF_DEFAULT** | **RichEdit 4.1**: Sets the default font for the control. |
+| **SPF_DONTSETDEFAULT** | Prevents setting the default paragraph format when the rich edit control is empty. |
+| **SCF_NOKBUPDATE** | **RichEdit 4.1**: Prevents keyboard switching to match the font. For example, if an Arabic font is set, normally the automatic keyboard feature for Bidi languages changes the keyboard to an Arabic keyboard. |
+| **SCF_SELECTION** | Applies the formatting to the current selection. If the selection is empty, the character formatting is applied to the insertion point, and the new character format is in effect only until the insertion point changes. |
+| **SPF_SETDEFAULT** | Sets the default paragraph formatting attributes. |
+| **SCF_SMARTFONT** | Apply the font only if it can handle script. |
+| **SCF_USEUIRULES** | **RichEdit 4.1**: Used with **SCF_SELECTION**. Indicates that format came from a toolbar or other UI tool, so UI formatting rules should be used instead of literal formatting. |
+| **SCF_WORD** | Applies the formatting to the selected word or words. If the selection is empty but the insertion point is inside a word, the formatting is applied to the word. The **SCF_WORD** value must be used in conjunction with the **SCF_SELECTION** value. |
+
+#### Return value
+
+(GET) Returns the value of the **dwMask** member of the [CHARFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformata) structure.
+
+(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
 
 # <a name="CTFModeBias"></a>CTFModeBias
 
