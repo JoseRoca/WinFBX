@@ -180,6 +180,10 @@ Returns the handle of the rich edit control.
 | [StopGroupTyping](#StopGroupTyping) | Stops the control from collecting additional typing actions into the current undo action. |
 | [StreamIn](#StreamIn) | Replaces the contents of a rich edit control with a stream of data provided by an application defined EditStreamCallback callback function. |
 | [StreamOut](#StreamOut) | Causes a rich edit control to pass its contents to an application defined EditStreamCallback callback function. |
+| [GetTextLength](#GetTextLength) | Retrieves the length of all text in a rich edit control. |
+| [GetTextLengthEx](#GetTextLengthEx) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
+| [GetTextRange](#GetTextRange) | Retrieves a specified range of characters from a rich edit control. |
+| [Undo](#Undo) | This message undoes the last edit control operation in the control's undo queue. |
 
 
 
