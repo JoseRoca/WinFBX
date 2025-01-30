@@ -653,9 +653,22 @@ The **IMF_AUTOFONT** flag is set by default. The **IMF_AUTOKEYBOARD** and **IMF_
 
 Gets/sets the current text limit for a rich edit control. The text limit is the maximum amount of text that the user can type into the edit control.
 ```
-PROPERTY LimitText () AS LONG
-PROPERTY LimitText (BYVAL chMax AS DWORD)
+(GET) PROPERTY LimitText () AS LONG
+(SET) PROPERTY LimitText (BYVAL chMax AS DWORD)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *chMax* | (SET) The maximum number of characters the user can enter. If this parameter is zero, the text length is set to 64,000 characters. |
+
+#### Return value
+
+(GET) The return value is the text limit.
+
+(SET) The set property does not return a value.
+
+#### Remarks
+
+(SET) **LimitText** limits only the text the user can enter. It does not affect any text already in the edit control when the message is sent, nor does it affect the length of the text copied to the edit control by the **Text** property. If an application uses the **Text** property to place more text into an edit control than is specified by the **LimitText** property, the user can edit the entire contents of the edit control.
 
 # <a name="Modify"></a>Modify
 
