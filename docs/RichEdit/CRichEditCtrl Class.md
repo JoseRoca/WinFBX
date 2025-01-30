@@ -477,9 +477,43 @@ The bits for these values all fit in the **ELLIPSIS_MASK**.
 
 Gets/sets the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window.
 ```
-PROPERTY EventMask () AS DWORD
-PROPERTY EventMask (BYVAL fMask AS LONG)
+(GET) PROPERTY EventMask () AS DWORD
+(SET) PROPERTY EventMask (BYVAL fMask AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fMask* | New event mask for the rich edit control. For a list of event masks, see the following table. |
+
+| Flag  | Description |
+| ----- | ----------- |
+| **ENM_CHANGE** | Sends **EN_CHANGE** notifications. |
+| **ENM_CLIPFORMAT** | Sends **EN_CLIPFORMAT** notifications. |
+| **ENM_CORRECTTEXT** | Sends **EN_CORRECTTEXT** notifications. |
+| **ENM_DRAGDROPDONE** | Sends **EN_DRAGDROPDONE** notifications. |
+| **ENM_DROPFILES** | Sends **EN_DROPFILES** notifications. |
+| **ENM_IMECHANGE** | **Microsoft Rich Edit 1.0 only**: Sends **EN_IMECHANGE** notifications when the IME conversion status has changed. Only for Asian-language versions of the operating system. |
+| **ENM_KEYEVENTS** | Sends **EN_MSGFILTER** notifications for keyboard events. |
+| **ENM_LINK** | **Rich Edit 2.0 and later**: Sends **EN_LINK** notifications when the mouse pointer is over text that has the CFE_LINK and one of several mouse actions is performed. |
+| **ENM_LOWFIRTF** | Sends **EN_LOWFIRTF** notifications. |
+| **ENM_MOUSEEVENTS** | Sends **EN_MSGFILTER** notifications for mouse events. |
+| **ENM_OBJECTPOSITIONS** | Sends **EN_OBJECTPOSITIONS** notifications. |
+| **ENM_PARAGRAPHEXPANDED** | Sends **EN_PARAGRAPHEXPANDED** notifications. |
+| **ENM_PROTECTED** | Sends **EN_PROTECTED** notifications. |
+| **ENM_REQUESTRESIZE** | Sends EN_REQUESTRESIZE notifications. |
+| **ENM_SCROLL** | Sends EN_HSCROLL and EN_VSCROLL notifications. |
+| **ENM_SCROLLEVENTS** | Sends **EN_MSGFILTER** notifications for mouse wheel events. |
+| **ENM_SELCHANGE** | Sends **EN_SELCHANGE** notifications. |
+| **ENM_UPDATE** | Sends EN_UPDATE notifications.<br>**Rich Edit 2.0 and later**: this flag is ignored and the **EN_UPDATE** notifications are always sent. However, if Rich Edit 3.0 emulates Microsoft Rich Edit 1.0, you must use this flag to send **EN_UPDATE** notifications. |
+
+#### Return value
+
+(GET)The event mask for this rich edit control.
+
+(SET) Returns the previous event mask. Call the (GET) **EventMask** property to check if the value has changed.
+
+#### Remarks
+
+The default event mask is **ENM_NONE** in which case no notifications are sent to the parent window.
 
 # <a name="HyphenateInfo"></a>HyphenateInfo
 
