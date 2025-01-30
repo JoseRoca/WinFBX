@@ -425,8 +425,6 @@ PROPERTY TypographyOptions () AS DWORD
 PROPERTY TypographyOptions (BYVAL pto AS LONG, BYVAL fMask AS LONG)
 ```
 
-### CRichEditCtrl Methods
-
 # <a name="CanPaste"></a>CanPaste
 
 Determines whether a rich edit control can paste a specified clipboard format.
