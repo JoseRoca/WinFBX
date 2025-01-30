@@ -211,6 +211,6 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | ---------- | ----------- |
 | [GetLastResult](#GetLastResult) | Returns the last result code. |
 | [SetResult](#SetResult) | Sets the last result code. |
-| [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
+| [GetErrorInfo](#GetErrorInfo) | Returns a localized description of the last result code. |
 
 
