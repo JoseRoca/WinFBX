@@ -75,7 +75,6 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [CTFModeBias](#CTFModeBias) | Gets/sets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [CTFOpenStatus](#CTFOpenStatus) | Gets/sets if the Text Services Framework (TSF) keyboard is open or closed. |
 | [EditStyle](#EditStyle) | Gets/sets the current edit style flags. |
-| [EditStyle](#EditStyle) | Gets/sets the current edit style flags. |
 | [EditStyleEx](#EditStyleEx) | Gets/sets the extended edit style flags. |
 | [EllipsisMode](#EllipsisMode) | Gets/sets the current ellipsis mode. |
 | [EventMask](#EventMask) | Gets/sets the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window. |
