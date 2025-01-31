@@ -788,7 +788,8 @@ END FUNCTION
 | *hRichEdit* | The handle of the rich edit control. |
 
 #### Return value
-The return value is TRUE if an ellipsis is being displayed and FALSE otherwise.
+
+The return value is **TRUE** if an ellipsis is being displayed and **FALSE** otherwise.
 
 # <a name="RichEdit_GetEventMask"></a>RichEdit_GetEventMask
 
