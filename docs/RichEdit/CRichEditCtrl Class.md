@@ -131,16 +131,16 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [GetSel](#GetSel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
 | [GetSelText](#GetSelText) | Retrieves the currently selected text in a rich edit control. |
 | [GetTableParams](#GetTableParams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
-| [GetUndoName](#GetUndoName) | Retrieves the type of the next undo action, if any. |
-| [GetWordWrapMode](#GetWordWrapMode) | Gets the current word wrap and word-break options for the rich edit control. |
-| [GetZoom](#GetZoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
 | [GetTextEx](#GetTextEx) | Gets all of the text from the rich edit control in any particular code base you want. |
 | [GetTextLength](#GetTextLength) | Retrieves the length of all text in a rich edit control. |
 | [GetTextLengthEx](#GetTextLengthEx) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
 | [GetTextRange](#GetTextRange) | Retrieves a specified range of characters from a rich edit control. |
 | [GetThumb](#GetThumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
+| [GetUndoName](#GetUndoName) | Retrieves the type of the next undo action, if any. |
 | [GetWordBreakProc](#GetWordBreakProc) | Gets the address of the current Wordwrap function. |
 | [GetWordBreakProcEx](#GetWordBreakProcEx) | Retrieves the address of the currently registered extended word-break procedure. |
+| [GetWordWrapMode](#GetWordWrapMode) | Gets the current word wrap and word-break options for the rich edit control. |
+| [GetZoom](#GetZoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
 | [HideSelection](#HideSelection) | Hides or shows the selection in a rich edit control. |
 | [InsertImage](#InsertImage) | Replaces the selection with a blob that displays an image. |
 | [InsertTable](#InsertTable) | Inserts one or more identical table rows with empty cells. |
