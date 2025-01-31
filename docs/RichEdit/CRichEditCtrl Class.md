@@ -2244,6 +2244,19 @@ Sets the maximum number of actions that can stored in the undo queue.
 ```
 FUNCTION SetUndoLimit (BYVAL maxactions AS DWORD) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *maxactions* | Specifies the maximum number of actions that can be stored in the undo queue. |
+
+#### Return value
+
+The return value is the new maximum number of undo actions for the rich edit control. This value may be less than *maxactions* if memory is limited.
+
+#### Remarks
+
+By default, the maximum number of actions in the undo queue is 100. If you increase this number, there must be enough available memory to accommodate the new number. For better performance, set the limit to the smallest possible value.
+
+Setting the limit to zero disables the **Undo** feature.
 
 # <a name="SetWordBreakProc"></a>SetWordBreakProc
 
@@ -2251,6 +2264,15 @@ Replaces a rich edit control's default Wordwrap function with an application-def
 ```
 SUB SetWordBreakProc (BYVAL pfn AS LONG_PTR)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pfn* | The address of the application-defined Wordwrap function. For more information about breaking lines, see the description of the [EditWordBreakProc](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nc-winuser-editwordbreakprocw) callback function. |
+
+#### Remarks
+
+A Wordwrap function scans a text buffer that contains text to be sent to the screen, looking for the first word that does not fit on the current screen line. The Wordwrap function places this word at the beginning of the next line on the screen.
+
+A Wordwrap function defines the point at which the system should break a line of text for multiline edit controls, usually at a space character that separates two words. Either a multiline or a single-line edit control might call this function when the user presses arrow keys in combination with the CTRL key to move the caret to the next word or previous word. The default Wordwrap function breaks a line of text at a space character. The application-defined function may define the Wordwrap to occur at a hyphen or a character other than the space character.
 
 # <a name="SetWordBreakProcEx"></a>SetWordBreakProcEx
 
@@ -2258,20 +2280,61 @@ Sets the extended word-break procedure.
 ```
 FUNCTION SetWordBreakProcEx (BYVAL pfn AS LONG_PTR) AS LONG_PTR
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pfn* | Pointer to an [EditWordBreakProcEx](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-editwordbreakprocex) function, or **NULL** to use the default procedure. |
+
+#### Return value
+
+This method returns the address of the previous extended word-break procedure.
 
 # <a name="SetWordWrapMode"></a>SetWordWrapMode
 
 Sets the word-wrapping and word-breaking options for the rich edit control.
 ```
-FUNCTION SetWordWrapMode (BYVAL pvalues AS LONG) AS LONG
+FUNCTION SetWordWrapMode (BYVAL values AS LONG) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *values* | Specifies one or more of the following values. |
+
+| Value  | Meaning |
+| ------ | ------- |
+| **WBF_WORDWRAP** | Enables Asian-specific word wrap operations, such as kinsoku in Japanese. |
+| **WBF_WORDBREAK** | Enables English word-breaking operations in Japanese and Chinese. Enables Hangeul word-breaking operation. |
+| **WBF_OVERFLOW** | Recognizes overflow punctuation. (Not currently supported.) |
+| **WBF_LEVEL1** | Sets the Level 1 punctuation table as the default. |
+| **WBF_LEVEL2** | Sets the Level 2 punctuation table as the default. |
+| **WBF_CUSTOM** | Sets the application-defined punctuation table. |
+
+#### Return value
+
+This method returns the current word-wrapping and word-breaking options.
+
+#### Remarks
+
+This method must not be sent by the application defined word breaking procedure.
 
 # <a name="SetZoom"></a>SetZoom
 
-Sets the zoom ratio anywhere between 1/64 and 64.
+Sets the zoom ratio for a multiline edit control or a rich edit control. The ratio must be a value between 1/64 and 64. The edit control needs to have the **ES_EX_ZOOMABLE** extended style set, for this message to have an effect, see [Edit Control Extended Styles](https://learn.microsoft.com/en-us/windows/win32/controls/edit-control-window-extended-styles).
+
 ```
 FUNCTION SetZoom (BYVAL zNum AS DWORD, BYVAL zDen AS DWORD) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *zNum* | Numerator of the zoom ratio. |
+| *zDen* | Denominator of the zoom ratio. These parameters can have the following values. |
+
+| Value  | Meaning |
+| ------ | ------- |
+| **Both 0** | Turns off zooming by using the **EM_SETZOOM** message (zooming may still occur using [TxGetExtent](https://learn.microsoft.com/en-us/windows/win32/api/textserv/nf-textserv-itexthost-txgetextent). |
+| **1/64 < (wParam / lParam) < 64** | Zooms display by the zoom ratio numerator/denominator |
+
+#### Return value
+
+If the new zoom setting is accepted, the return value is **TRUE**. If the new zoom setting is not accepted, the return value is **FALSE**.
 
 # <a name="ShowScrollBar"></a>ShowScrollBar
 
@@ -2279,6 +2342,14 @@ Shows or hides one of the scroll bars in the Text Host window.
 ```
 SUB ShowScrollBar (BYVAL nScrollBar AS DWORD, BYVAL fShow AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nScrollBar* | Identifies which scroll bar to display: horizontal or vertical. This parameter must be **SB_VERT** or **SB_HORZ**. |
+| *fShow* | Specifies whether to show the scroll bar or hide it. Specify **TRUE** to show the scroll bar and **FALSE** to hide it. |
+
+#### Remarks
+
+This method is only valid when the control is in-place active. Calls made while the control is inactive may fail.
 
 # <a name="StopGroupTyping"></a>StopGroupTyping
 
@@ -2286,20 +2357,95 @@ Stops the control from collecting additional typing actions into the current und
 ```
 FUNCTION StopGroupTyping () AS DWORD
 ```
+#### Return value
+
+The return value is zero. This message cannot fail.
+
+#### Remarks
+A rich edit control groups consecutive typing actions, including characters deleted by using the BackSpace key, into a single undo action until one of the following events occurs:
+
+- The control receives an **EM_STOPGROUPTYPING** message.
+- The control loses focus.
+- The user moves the current selection, either by using the arrow keys or by clicking the mouse.
+- The user presses the **Delete** key.
+- The user performs any other action, such as a paste operation that does not involve typing.
+
+You can send the **RichEdit_StopGroupTyping** message to break consecutive typing actions into smaller undo groups. For example, you could send **RichEdit_StopGroupTyping** after each character or at each word break.
 
 # <a name="StreamIn"></a>StreamIn
 
-Replaces the contents of a rich edit control with a stream of data provided by an application defined EditStreamCallback callback function.
+Replaces the contents of a rich edit control with a stream of data provided by an application defined [EditStreamCallback](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-editstreamcallback) callback function.
 ```
 FUNCTION StreamIn (BYVAL psf AS LONG, BYREF edst AS EDITSTREAM) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *psf* | Specifies the data format and replacement options. This value must be one of the following values (see table below). |
+| *pedst* | A [EDITSTREAM](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-editstream) structure. On input, the **pfnCallback** member of this structure must point to an application defined **EditStreamCallback** function. On output, the **dwError** member can contain a nonzero error code if an error occurred. |
+
+#### Data format and replacement options
+
+| Value  | Meaning |
+| ------ | ------- |
+| **SF_RTF** | RTF |
+| **SF_TEXT** | Text |
+
+In addition, you can specify the following flags.
+
+| Value  | Meaning |
+| ------ | ------- |
+| **SFF_PLAINRTF** | If specified, only keywords common to all languages are streamed in. Language-specific RTF keywords in the stream are ignored. If not specified, all keywords are streamed in. You can combine this flag with the **SF_RTF** flag. |
+| **SFF_SELECTION** | If specified, the data stream replaces the contents of the current selection. If not specified, the data stream replaces the entire contents of the control. You can combine this flag with the **SF_TEXT** or **SF_RTF** flags. |
+| **SF_UNICODE** | **Rich Edit 2.0 and later**: Indicates Unicode text. You can combine this flag with the **SF_TEXT** flag. |
+| **SF_USECODEPAGE** | **Rich Edit 3.0 and later**: Reads UTF-8 RTF and text using other code pages. The code page is set in the high word of *psf*. For example, for UTF-8 RTF, set *psf* to (CP_UTF8 << 16) | SF_USECODEPAGE | SF_RTF. |
+
+#### Return value
+
+This message returns the number of characters read.
+
+#### Remarks
+
+When you call the **StreamIn** methos, the rich edit control makes repeated calls to the **EditStreamCallback** function specified by the **pfnCallback** member of the [EDITSTREAM](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-editstream) structure. Each time the callback function is called, it fills a buffer with data to read into the control. This continues until the callback function indicates that the stream-in operation has been completed or an error occurs.
 
 # <a name="StreamOut"></a>StreamOut
 
-Causes a rich edit control to pass its contents to an application defined EditStreamCallback callback function.
+Causes a rich edit control to pass its contents to an application defined [EditStreamCallback](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-editstreamcallback) callback function. The callback function can then write the stream of data to a file or any other location that it chooses.
+
 ```
 FUNCTION StreamOut (BYVAL psf AS LONG, BYREF edst AS EDITSTREAM) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *psf* | Specifies the data format and replacement options. This value must be one of the following values (see table below). |
+| *pedst* | A [EDITSTREAM](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-editstream) structure. On input, the **pfnCallback** member of this structure must point to an application defined **EditStreamCallback** function. On output, the **dwError** member can contain a nonzero error code if an error occurred. |
+
+#### Data format and replacement options
+
+| Value  | Meaning |
+| ------ | ------- |
+| **SF_RTF** | RTF |
+| **SF_RTFNOOBJS** | RTF with spaces in place of COM objects. |
+| **SF_TEXT** | Text |
+| **SF_TEXTIZED** | Text with a text representation of COM objects. |
+
+The **SF_RTFNOOBJS** option is useful if an application stores COM objects itself, as RTF representation of COM objects is not very compact. The control word, \objattph, followed by a space denotes the object position.
+
+In addition, you can specify the following flags.
+
+| Value  | Meaning |
+| ------ | ------- |
+| **SFF_PLAINRTF** | If specified, the rich edit control streams out only the keywords common to all languages, ignoring language-specific keywords. If not specified, the rich edit control streams out all keywords. You can combine this flag with the SF_RTF or **SF_RTFNOOBJS** flag. |
+| **SFF_SELECTION** | If specified, the rich edit control streams out only the contents of the current selection. If not specified, the control streams out the entire contents. You can combine this flag with any of data format values. |
+| **SF_UNICODE** | **Rich Edit 2.0 and later**: Indicates Unicode text. You can combine this flag with the **SF_TEXT** flag. |
+| **SF_USECODEPAGE** | **Rich Edit 3.0 and later**: Reads UTF-8 RTF and text using other code pages. The code page is set in the high word of *psf*. For example, for UTF-8 RTF, set *psf* to (CP_UTF8 << 16) | SF_USECODEPAGE | SF_RTF. |
+
+#### Return value
+
+This message returns the number of characters written to the data stream.
+
+#### Remarks
+
+When you call the **StreamOut** method, the rich edit control makes repeated calls to the **EditStreamCallback** function specified by the **pfnCallback** member of the [EDITSTREAM](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-editstream) structure.  Each time it calls the callback function, the control passes a buffer containing a portion of the contents of the control. This process continues until the control has passed all its contents to the callback function, or until an error occurs.
 
 # <a name="Undo"></a>Undo
 
@@ -2307,3 +2453,14 @@ This message undoes the last edit control operation in the control's undo queue.
 ```
 FUNCTION Undo () AS LONG
 ```
+#### Return value
+
+For a single-line edit control, the return value is always **TRUE**.
+
+For a multiline edit control, the return value is **TRUE** if the undo operation is successful, or **FALSE** if the undo operation fails.
+
+#### Remarks
+
+**Edit controls and Rich Edit 1.0**: An undo operation can also be undone. For example, you can restore deleted text with the first **EM_UNDO** message, and remove the text again with a second **EM_UNDO** message as long as there is no intervening edit operation.
+
+**Rich Edit 2.0 and later**: The undo feature is multilevel so sending two **EM_UNDO** messages will undo the last two operations in the undo queue. To redo an operation, send the **EM_REDO** message.
