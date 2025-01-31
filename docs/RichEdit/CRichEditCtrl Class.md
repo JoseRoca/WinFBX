@@ -827,7 +827,7 @@ If the edit control contains a border, the formatting rectangle is reduced by th
 
 # <a name="RectNP"></a>RectNP
 
-Sets the formatting rectangle of a multiline rich edit control. It is identical to the **Rect** property, except that **RtectNP** does not redraw the edit control window.
+Sets the formatting rectangle of a multiline rich edit control. It is identical to the **Rect** property, except that **RectNP** does not redraw the edit control window.
 
 The formatting rectangle is the limiting rectangle into which the control draws the text. The limiting rectangle is independent of the size of the edit control window.
 
