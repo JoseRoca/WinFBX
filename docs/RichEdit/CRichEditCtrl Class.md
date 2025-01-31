@@ -1496,6 +1496,22 @@ Gets the starting and ending character positions of the current selection in a r
 ```
 FUNCTION GetSel (BYREF dwStartPos AS DWORD, BYREF dwEndPos AS DWORD) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwStartPos* | A **DWORD** variable that receives the starting position of the selection. This parameter can be **NULL**. |
+| *dwEndPos* | A **DWORD** variable that receives the position of the first unselected character after the end of the selection. This parameter can be **NULL**. |
+
+#### Return value
+
+The return value is a zero-based value with the starting position of the selection in the **LOWORD** and the position of the first character after the last selected character in the **HIWORD**. If either of these values exceeds 65,535, the return value is -1.
+
+It is better to use the values returned in *dwStartPos* and *dwEndPos* because they are full 32-bit values.
+
+#### Remarks
+
+If there is no selection, the starting and ending values are both the position of the caret.
+
+You can also use the **ExtGetSel** method to retrieve the same information. **ExtGetSel** also returns starting and ending character positions as 32-bit values. A combination of the use of **ExtGetSel** and **GetSelText** are used in the **GetSelText** method to retrieve the selected text as a **CWSTR**.
 
 # <a name="GetSelText"></a>GetSelText
 
