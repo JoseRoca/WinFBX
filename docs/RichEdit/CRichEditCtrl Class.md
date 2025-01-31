@@ -1294,6 +1294,8 @@ Retrieves the current ellipsis state.
 ```
 FUNCTION GetEllipsisState () AS BOOLEAN
 ```
+#### Return value
+The return value is **TRUE** if an ellipsis is being displayed and **FALSE** otherwise.
 
 # <a name="GetFirstVisibleLine"></a>GetFirstVisibleLine
 
@@ -1301,6 +1303,12 @@ Gets the zero-based index of the uppermost visible line in a multiline rich edit
 ```
 FUNCTION GetFirstVisibleLine () AS LONG
 ```
+#### Return value
+
+The return value is the zero-based index of the uppermost visible line in a multiline edit control.
+
+For single-line rich edit controls, the return value is zero.
+
 
 # <a name="GetIMECompMode"></a>GetIMECompMode
 
