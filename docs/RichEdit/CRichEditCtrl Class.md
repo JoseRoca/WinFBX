@@ -696,9 +696,19 @@ The system automatically clears the modification flag to zero when the control i
 
 Gets/sets the options for a rich edit control.
 ```
-PROPERTY Options () AS DWORD
-PROPERTY Options (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG)
+(GET) PROPERTY Options () AS DWORD
+(SET) PROPERTY Options (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fCoop* | Specifies the operation, which can be one of these values.<br>**ECOOP_SET**. Sets the options to those specified by *fOptions*.<br>**ECOOP_OR**. Combines the specified options with the current options.<br>**ECOOP_AND**. Retains only those current options that are also specified by *fOptions*.<br>**ECOOP_XOR**. Logically exclusive OR the current options with those specified by *fOptions*. |
+| *fOptions* | Specifies one or more of the following values.<br>**ECO_AUTOWORDSELECTION**- Automatic selection of word on double-click.<br>**ECO_AUTOVSCROLL**. Same as **ES_AUTOVSCROLL** style.<br>**ECO_AUTOHSCROLL**. Same as **ES_AUTOHSCROLL** style.<br>**ECO_NOHIDESEL**. Same as **ES_NOHIDESEL** style.<br>**ECO_READONLY**. Same as **ES_READONLY** style.<br>**ECO_WANTRETURN**. Same as **ES_WANTRETURN** style.<br>**ECO_SELECTIONBAR**. Same as **ES_SELECTIONBAR** style.<br>**ECO_VERTICAL**. Same as **ES_VERTICAL** style. Available in Asian-language versions only. |
+
+#### Return value
+
+(GET) This message returns a combination of the current option flag values described in the *fOptions* parameter of the (SET) **Options** property.
+
+(SET) This message returns the current options of the edit control. Call the (GET) **Options** property to get the values.
 
 # <a name="PageRotate"></a>PageRotate
 
