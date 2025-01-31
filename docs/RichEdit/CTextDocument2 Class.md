@@ -322,7 +322,7 @@ END FUNCTION
 Returns a description of the last result code.
 
 ```
-PRIVATE FUNCTION CTextObjectBase.GetErrorInfo (BYVAL nError AS LONG = -1) AS CWSTR
+PRIVATE FUNCTION CTOMBase.GetErrorInfo (BYVAL nError AS LONG = -1) AS CWSTR
    IF nError = -1 THEN nError = m_Result
    DIM cbLen AS DWORD, pBuffer AS WSTRING PTR, cwsMsg AS CWSTR
    cbLen = FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER OR _
