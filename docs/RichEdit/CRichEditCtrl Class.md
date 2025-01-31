@@ -188,9 +188,9 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | Name       | Description |
 | ---------- | ----------- |
 | [AfxCRichEditCtrlPtr](#AfxCRichEditCtrlPtr) | Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or fromthe handle of its parent window and the identifier of the control. |
-| [CRichEditCtrl_GetRtfText](#CRichEditCtrl_GetRtfText) | Retrieves formatted text from a Rich Edit control |
-| [CRichEditCtrl_LoadRtfFromFileW](#CRichEditCtrl_LoadRtfFromFileW) | Loads a Rich Text File into a Rich Edit control. |
-| [CRichEditCtrl_LoadRtfFromResourceW](#CRichEditCtrl_LoadRtfFromResourceW) | Loads a Rich Text Resource File into a Rich Edit control. |
+| [CRichEditCtrl_GetRtfText](#CRichEditCtrl_GetRtfText) | Retrieves formatted text from a rich edit control |
+| [CRichEditCtrl_LoadRtfFromFileW](#CRichEditCtrl_LoadRtfFromFileW) | Loads a rich text file into a rich edit control. |
+| [CRichEditCtrl_LoadRtfFromResourceW](#CRichEditCtrl_LoadRtfFromResourceW) | Loads a rich text resource file into a rich edit control. |
 | [CRichEditCtrl_SetFontW](#CRichEditCtrl_SetFontW) | Sets the font used by a rich edit control. |
 
 # Methods inherited from CTextObjectBase
@@ -2544,7 +2544,7 @@ END FUNCTION
 
 # <a name="AfxCRichEditCtrlPtr"></a>AfxCRichEditCtrlPtr
 
-Retrieves a pointer to the **CRichEditCtrl** class from the handle of the Rich Edit control.
+Retrieves a pointer to the `CRichEditCtrl`class from the handle of the Rich Edit control.
 ```
 FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
    DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(hRichEdit, WM_USER + 100, 0, 0))
@@ -2557,7 +2557,7 @@ END FUNCTION
 
 #### Return value
 
-A pointer to the **CRichEditCtrl** class.
+A pointer to the `CRichEditCtrl` class.
 
 ---
 
@@ -2575,7 +2575,7 @@ END FUNCTION
 
 #### Return value
 
-A pointer to the **CRichEditCtrl** class.
+A pointer to the `CRichEditCtrl` class.
 
 # <a name="CRichEditCtrl_SetFontW"></a>CRichEditCtrl_SetFontW
 
