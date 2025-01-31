@@ -1031,6 +1031,13 @@ Determines whether a rich edit control can paste a specified clipboard format.
 ```
 FUNCTION CanPaste (BYVAL clipformat AS LONG) AS BOOLEAN
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *clipformat* | Specifies the [Clipboard Formats](https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats) to try. To try any format currently on the clipboard, set this parameter to zero. |
+
+#### Return value
+
+If the clipboard format can be pasted, the return value is a nonzero value. If the clipboard format cannot be pasted, the return value is zero.
 
 # <a name="CanRedo"></a>CanRedo
 
@@ -1038,6 +1045,9 @@ Determines whether there are any actions in the control redo queue.
 ```
 FUNCTION CanRedo () AS BOOLEAN
 ```
+#### Return value
+
+If there are actions in the control redo queue, the return value is a nonzero value. If the redo queue is empty, the return value is zero.
 
 # <a name="CanUndo"></a>CanUndo
 
@@ -1045,6 +1055,9 @@ Determines whether there are any actions in an edit control's undo queue.
 ```
 FUNCTION CanUndo () AS BOOLEAN
 ```
+#### Return value
+
+If there are actions in the control's undo queue, the return value is nonzero. If the undo queue is empty, the return value is zero.
 
 # <a name="DisplayBand"></a>DisplayBand
 
