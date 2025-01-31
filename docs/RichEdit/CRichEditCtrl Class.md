@@ -62,7 +62,7 @@ FUNCTION CRichEditCtrl.hRichEdit () AS HWND
 ```
 ' // Create an instance of the CRichEditCtrl class
 DIM pRichEdit AS CRichEditCtrl = CRichEditCtrl(@pWindow, IDC_RICHEDIT, "RichEditbox", 100, 50, 300, 200)
-' // Set the focus inthe control
+' // Set the focus in the control
 DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 ```
 
