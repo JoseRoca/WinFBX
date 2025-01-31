@@ -2615,12 +2615,12 @@ END FUNCTION
 ' ========================================================================================
 ```
 
-# <a name="RichEdit_LoadRtfFromResourceW"></a>RichEdit_LoadRtfFromResourceW
+# <a name="CRichEditCtrl_LoadRtfFromResourceW"></a>CRichEditCtrl_LoadRtfFromResourceW
 
 Loads a RTF resource file into a Rich Edit control.
 
 ```
-FUNCTION RichEdit_LoadRtfFromResourceW (BYVAL hRichEdit AS HWND, BYVAL hInstance AS HINSTANCE, BYREF wszResourceName AS WSTRING) AS BOOLEAN
+FUNCTION CRichEditCtrl_LoadRtfFromResourceW (BYVAL hRichEdit AS HWND, BYVAL hInstance AS HINSTANCE, BYREF wszResourceName AS WSTRING) AS BOOLEAN
 ```
 
 | Parameter  | Description |
@@ -2639,7 +2639,7 @@ If the operation fails, the return value is **FALSE**.
 
 ```
 ' ========================================================================================
-' Custom structure used by the RichEdit_LoadRtfFromResourceW function.
+' Custom structure used by the CRichEditCtrl_LoadRtfFromResourceW function.
 ' ========================================================================================
 TYPE AFX_CRICHEDITCTRL_CUSTOMDATA
    pData  AS BYTE PTR
