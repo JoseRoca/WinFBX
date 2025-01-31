@@ -978,9 +978,23 @@ In rich text mode, a rich edit control has standard rich edit functionality. How
 
 Gets/sets the touch options that are associated with a rich edit control.
 ```
-PROPERTY TouchOptions (BYVAL _Options AS LONG PTR) AS DWORD
-PROPERTY TouchOptions (BYVAL _Options AS LONG, BYVAL fEnable AS LONG)
+(GET) PROPERTY TouchOptions (BYVAL _Options AS LONG PTR) AS DWORD
+(SET) PROPERTY TouchOptions (BYVAL _Options AS LONG, BYVAL fEnable AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *_Options* | (GET/SET)The touch options to set. It can be one of the following values:<br>**RTO_SHOWHANDLES**. Show or hide the touch gripper handles, depending on the value of *_Options*.<br>**RTO_DISABLEHANDLES**. Enable or disable the touch gripper handles, depending on the value of *_Options*. When handles are disabled, they are hidden if they are visible and remain hidden until **TouchOptions** changes their status. |
+| *fEnable* | (SET) Set to **TRUE** to show/enable the touch selection handles, or **FALSE** to hide/disable the touch selection handles. |
+
+#### Return value
+
+(GET) Returns the value of the option specified by the *_Options* parameter. It is nonzero if *_Options* is **RTO_SHOWHANDLES** and the touch grippers are visible; zero, otherwise.
+
+(SET) Returns **TRUE** if *pto* is valid, otherwise **FALSE**.
+
+#### Remarks
+
+Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
 
 # <a name="TypographyOptions"></a>TypographyOptions
 
