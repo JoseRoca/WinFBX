@@ -2475,6 +2475,35 @@ For a multiline edit control, the return value is **TRUE** if the undo operation
 
 **Rich Edit 2.0 and later**: The undo feature is multilevel so sending two **EM_UNDO** messages will undo the last two operations in the undo queue. To redo an operation, send the **EM_REDO** message.
 
+# <a name="GetLastResult"></a>GetLastResult
+
+Returns the last result code
+
+```
+FUNCTION CTextObjectBase.GetLastResult () AS HRESULT
+   RETURN m_Result
+END FUNCTION
+```
+
+# <a name="SetResult"></a>SetResult
+
+Sets the last result code.
+
+```
+FUNCTION CTextObjectBase.SetResult (BYVAL Result AS HRESULT) AS HRESULT
+   m_Result = Result
+   RETURN m_Result
+END FUNCTION
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Result* | The **HRESULT** error code returned by the methods. |
+
+# <a name="GetErrorInfo"></a>GetErrorInfo
+
+Returns a description of the last result code.
+
 # <a name="CRichEditCtrl_SetFontW"></a>CRichEditCtrl_SetFontW
 
 Sets the font used by a rich edit control.
