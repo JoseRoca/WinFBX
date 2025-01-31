@@ -2115,6 +2115,7 @@ END FUNCTION
 | *nAction* | The action the scroll bar is to take. This parameter can be one of the following values:<br>**SB_LINEDOWN**. Scrolls down one line.<br>**SB_LINEUP**. Scrolls up one line.<br>**SB_PAGEDOWN**. Scrolls down one page.<br>**SB_PAGEUP**. Scrolls up one page. |
 
 #### Return value
+
 If the message is successful, the **HIWORD** of the return value is **TRUE**, and the **LOWORD** is the number of lines that the command scrolls. The number returned may not be the same as the actual number of lines scrolled if the scrolling moves to the beginning or the end of the text. If the *nAction* parameter specifies an invalid value, the return value is **FALSE**.
 
 #### Remarks
@@ -2134,6 +2135,10 @@ END SUB
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
+
+#### Return value
+
+The return value is not meaningful.
 
 # <a name="RichEdit_SelectionType"></a>RichEdit_SelectionType
 
@@ -2155,10 +2160,10 @@ If the selection is not empty, the return value is a set of flags containing one
 
 | Return code  | Description |
 | ------------ | ----------- |
-| SEL_TEXT | Text.|
-| SEL_OBJECT | At least one COM object. |
-| SEL_MULTICHAR | More than one character of text. |
-| SEL_MULTIOBJECT | More than one COM object. |
+| **SEL_TEXT** | Text.|
+| **SEL_OBJECT** | At least one COM object. |
+| **SEL_MULTICHAR** | More than one character of text. |
+| **SEL_MULTIOBJECT** | More than one COM object. |
 
 #### Remarks
 
@@ -2467,12 +2472,14 @@ END FUNCTION
 | *hRichEdit* | The handle of the rich edit control. |
 | *ptsize* | Change in point size of the selected text. The result will be rounded according to values shown in the following table. This parameter should be in the range of -1637 to 1638. The resulting font size will be within the range of 1 to 1638. |
 
-Return value
+#### Return value
+
 If no error occurred, the return value is TRUE.
 
 If an error occurred, the return value is FALSE.
 
-Remarks
+#### Remarks
+
 You can easily get the font size by sending the **RichdEdit_GetCharFormat** message.
 
 Rich Edit first adds *ptsize* to the current font size and then uses the resulting size and the following table to determine the rounding value.
