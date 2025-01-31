@@ -117,10 +117,10 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [FindText](#FindText) | Finds text within a rich edit control. |
 | [FindTextEx](#FindTextEx) | Finds text within a rich edit control. |
 | [FindWordBreak](#FindWordBreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
-| [GetFirstVisibleLine](#GetFirstVisibleLine) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
 | [FormatRange](#FormatRange) | Formats a range of text in a rich edit control for a specific device. |
 | [GetCharFromPos](#GetCharFromPos) | Gets information about the character closest to a specified point in the client area of an edit control. |
 | [GetEllipsisState](#GetEllipsisState) | Retrieves the current ellipsis state. |
+| [GetFirstVisibleLine](#GetFirstVisibleLine) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
 | [GetIMECompMode](#GetIMECompMode) | Gets the current IME mode for a rich edit control. |
 | [GetIMECompText](#GetIMECompText) | Gets the Input Method Editor (IME) composition text. |
 | [GetIMEProperty](#GetIMEProperty) | Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
@@ -1280,6 +1280,13 @@ Gets information about the character closest to a specified point in the client 
 ```
 FUNCTION GetCharFromPos (BYREF ptl AS .POINTL) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ptl* | A [POINTL](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-pointl) structure that contains the horizontal and vertical coordinates of a point in the control's client area. The coordinates are in screen units and are relative to the upper-left corner of the control's client area. |
+
+#### Return value
+
+The return value specifies the zero-based character index of the character nearest the specified point. The return value indicates the last character in the edit control if the specified point is beyond the last character in the control.
 
 # <a name="GetEllipsisState"></a>GetEllipsisState
 
