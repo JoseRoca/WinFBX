@@ -591,8 +591,7 @@ PROPERTY IMEModeBias (BYVAL nModeBias AS LONG)
 
 (SET) When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
 
-The application should call he **IsIME** function before calling these properties.
-
+The application should call he **IsIME** method before calling these properties.
 
 # <a name="IMEOptions"></a>IMEOptions
 
@@ -1356,6 +1355,68 @@ Gets the property and capabilities of the Input Method Editor (IME) associated w
 ```
 FUNCTION GetIMEProperty (BYVAL figp AS DWORD) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *figp* | Specifies the type of property information to retrieve. This parameter can be one of the following values. |
+
+| Value  | Meaning |
+| ------ | ----------- |
+| **IGP_PROPERTY** | Property information. |
+| **IGP_CONVERSION** | Conversion capabilities. |
+| **IGP_SENTENCE** | Sentence mode capabilities. |
+| **IGP_UI** | User interface capabilities. |
+| **IGP_SETCOMPSTR** | Composition string capabilities. |
+| **IGP_SELECT** | Selection inheritance capabilities. |
+| **IGP_GETIMEVERSION** | Retrieves the system version number for which the specified IME was created. |
+
+#### Return value
+
+Returns the property or capability value, depending on the value of the *figp* parameter.
+
+#### Remarks
+
+If *figp* is **IGP_PROPERTY**, it returns one or more of the following values.
+
+| Requirement  | Meaning |
+| ------------ | ----------- |
+| **IME_PROP_AT_CARET** | If set, conversion window is at the caret position. If clear, the window is near caret position. |
+| **IME_PROP_SPECIAL_UI** | If set, IME has a nonstandard user interface. The application should not draw in the IME window. |
+| **IME_PROP_CANDLIST_START_FROM_1** | If set, strings in the candidate list are numbered starting at 1. If clear, strings start at zero. |
+| **IME_PROP_UNICODE** | If set, the IME is viewed as a UnicodeIME. The system and the IME will communicate through the UnicodeIME interface. If clear, IME will use the ANSI interface to communicate with the system. |
+| **IME_PROP_COMPLETE_ON_UNSELECT** | If set, conversion window is at the caret position. If clear, the window is near caret position. |
+| **IME_PROP_ACCEPT_WIDE_VKEY** | If set, the IME processes the injected Unicode that came from the **SendInput** function by using VK_PACKET. If clear, the IME might not process the injected Unicode, and the injected Unicode might be sent to the application directly. |
+
+If *figp* is **IGP_UI**, it returns one or more of the following values.
+
+| Requirement  | Meaning |
+| ------------ | ----------- |
+| **UI_CAP_2700** | Supports text escapement values of 0 or 2700. For more information, see **lfEscapement**. |
+| **UI_CAP_ROT90** | Supports text escapement values of 0, 900, 1800, or 2700. For more information, see **lfEscapement**. |
+| **UI_CAP_ROTANY** | Supports any text escapement value. For more information, see **lfEscapement**. |
+	
+If *figp* is **IGP_SETCOMPSTR**, it returns one or more of the following values.
+
+| Requirement  | Meaning |
+| ------------ | ----------- |
+| **SCS_CAP_COMPSTR** | Can create the composition string by calling the **ImmSetCompositionString** function with the SCS_SETSTR value. |
+| **SCS_CAP_MAKEREAD** | Can create the reading string from corresponding composition string when using the **ImmSetCompositionString** function with SCS_SETSTR and without setting *lpRead*. |
+| **SCS_CAP_SETRECONVERTSTRING** | This IME can support reconversion. Use ImmSetCompositionString to do the reconversion. |
+
+If *figp* is **IGP_SELECT**, it returns one or more of the following values.
+
+| Requirement  | Meaning |
+| ------------ | ----------- |
+| **SELECT_CAP_CONVMODE** | Inherits conversion mode when a new IME is selected. |
+| **SELECT_CAP_SENTENCE** | Inherits sentence mode when a new IME is selected. |
+
+If *figp* is **IGP_GETIMEVERSION**, it returns one or more of the following values.
+
+| Requirement  | Meaning |
+| ------------ | ----------- |
+| **IMEVER_0310** | The IME was created for Windows 3.1. |
+| **IMEVER_0400** | The IME was created for Windows 95 or later. |
+
+This message is similar to **ImmGetProperty**, except that it uses the current input locale. The application should call **IsIME** method before calling this function.
 
 # <a name="GetLine"></a>GetLine
 
