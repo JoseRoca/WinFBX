@@ -1438,6 +1438,15 @@ Gets the number of lines in a multiline rich edit control.
 ```
 FUNCTION GetLineCount () AS LONG
 ```
+#### Return value
+
+The return value is an integer specifying the total number of text lines in the multiline edit control or rich edit control. If the control has no text, the return value is 1. The return value will never be less than 1.
+
+### Remarks
+
+The **GetLineCount** method retrieves the total number of text lines, not just the number of lines that are currently visible.
+
+If the Wordwrap feature is enabled, the number of lines can change when the dimensions of the editing window change.
 
 # <a name="GetOleInterface"></a>GetOleInterface
 
