@@ -19,7 +19,7 @@ NAMESPACE Afx
 ' Macro for debug
 ' To allow debugging, define _CREC_DEBUG_ 1 in your application before including this file.
 ' ========================================================================================
-#ifndef _CREF_DEBUG_
+#ifndef _CREC_DEBUG_
    #define _CREC_DEBUG_ 0
 #ENDIF
 #ifndef _CREC_DP_
@@ -62,7 +62,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE PROPERTY CharFormat (BYVAL chfmt AS DWORD, BYREF cf AS CHARFORMATW)
       DECLARE PROPERTY CTFModeBias () AS LONG
       DECLARE PROPERTY CTFModeBias (BYVAL nModeBias AS LONG)
-      DECLARE PROPERTY CTFOpenStatus () AS LONG
+      DECLARE PROPERTY CTFOpenStatus () AS BOOLEAN
       DECLARE PROPERTY CTFOpenStatus (BYVAL fTSFkbd AS LONG)
       DECLARE PROPERTY EditStyle () AS DWORD
       DECLARE PROPERTY EditStyle (BYVAL fStyle AS LONG, BYVAL fMask AS LONG)
@@ -74,8 +74,6 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE PROPERTY EventMask (BYVAL fMask AS LONG)
       DECLARE PROPERTY HyphenateInfo () AS .HYPHENATEINFO
       DECLARE PROPERTY HyphenateInfo (BYREF hinfo AS .HYPHENATEINFO)
-      DECLARE PROPERTY IMEColor () AS .COMPCOLOR
-      DECLARE PROPERTY IMEColor (BYREF cmpcolor AS .COMPCOLOR)
       DECLARE PROPERTY IMEModeBias () AS DWORD
       DECLARE PROPERTY IMEModeBias (BYVAL nModeBias AS LONG)
       DECLARE PROPERTY IMEOptions () AS DWORD
@@ -90,7 +88,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE PROPERTY Options (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG)
       DECLARE PROPERTY PageRotate () AS DWORD
       DECLARE PROPERTY PageRotate (BYVAL txtlayout AS LONG)
-      DECLARE PROPERTY ParaFormat () AS .PARAFORMAT
+      DECLARE PROPERTY ParaFormat () AS DWORD
       DECLARE PROPERTY ParaFormat (BYREF pfmt AS .PARAFORMAT)
       DECLARE PROPERTY PasswordChar () AS LONG
       DECLARE PROPERTY PasswordChar (BYVAL dwchar AS DWORD)
@@ -101,7 +99,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE PROPERTY RectNP (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
       DECLARE PROPERTY ScrollPos () AS .POINT
       DECLARE PROPERTY ScrollPos (BYREF pt AS .POINT)
-      DECLARE PROPERTY StoryTpe (BYVAL Index AS DWORD) AS DWORD
+      DECLARE PROPERTY StoryType (BYVAL Index AS DWORD) AS DWORD
       DECLARE PROPERTY StoryType (BYVAL Index AS LONG, BYVAL dwType AS DWORD)
       DECLARE PROPERTY Text () AS CWSTR
       DECLARE PROPERTY Text (BYVAL pwszText AS WSTRING PTR)
@@ -117,12 +115,12 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION CanPaste (BYVAL clipformat AS LONG) AS BOOLEAN
       DECLARE FUNCTION CanRedo () AS BOOLEAN
       DECLARE FUNCTION CanUndo () AS BOOLEAN
-      DECLARE FUNCTION DisplayBand (BYREF rc AS .RECT) AS LONG
+      DECLARE FUNCTION DisplayBand (BYREF rc AS .RECT) AS BOOLEAN
       DECLARE SUB EmptyUndoBuffer ()
       DECLARE FUNCTION ExGetSel () AS CHARRANGE
       DECLARE SUB ExLimitText (BYVAL dwLimit AS DWORD)
-      DECLARE FUNCTION ExSetSel (BYREF cr AS CHARRANGE) AS DWORD
       DECLARE FUNCTION ExLineFromChar (BYVAL iIndex AS LONG) AS LONG
+      DECLARE FUNCTION ExSetSel (BYREF cr AS CHARRANGE) AS DWORD
       DECLARE FUNCTION FindText (BYVAL fOptions AS DWORD, BYREF ft AS FINDTEXTW) AS LONG
       DECLARE FUNCTION FindTextEx (BYVAL fOptions AS DWORD, BYREF ftexw AS FINDTEXTEXW) AS LONG
       DECLARE FUNCTION FindWordBreak (BYVAL fOperation AS DWORD, BYVAL dwStartPos AS DWORD) AS DWORD
@@ -130,6 +128,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION GetCharFromPos (BYREF ptl AS .POINTL) AS LONG
       DECLARE FUNCTION GetEllipsisState () AS BOOLEAN
       DECLARE FUNCTION GetFirstVisibleLine () AS LONG
+      DECLARE FUNCTION GetIMEColor (BYVAL rgCmpclr AS .COMPCOLOR PTR) AS LONG
       DECLARE FUNCTION GetIMECompMode () AS DWORD
       DECLARE FUNCTION GetIMECompText (BYREF ict AS .IMECOMPTEXT, BYVAL buffer AS ANY PTR) AS DWORD
       DECLARE FUNCTION GetIMEProperty (BYVAL figp AS DWORD) AS DWORD
@@ -149,7 +148,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION GetWordBreakProc () AS LONG_PTR
       DECLARE FUNCTION GetWordBreakProcEx () AS LONG_PTR
       DECLARE FUNCTION GetWordWrapMode () AS DWORD
-      DECLARE FUNCTION GetZoom (BYVAL pzNum AS DWORD PTR, BYVAL pzDen AS DWORD PTR) AS LONG
+      DECLARE FUNCTION GetZoom (BYREF pzNum AS DWORD, BYREF pzDen AS DWORD) AS LONG
       DECLARE SUB HideSelection (BYVAL fHide AS DWORD)
       DECLARE FUNCTION InsertImage (BYREF ip AS RICHEDIT_IMAGE_PARAMETERS) AS DWORD
       DECLARE FUNCTION InsertTable (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
@@ -167,15 +166,16 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION Scroll (BYVAL nAction AS LONG) AS LONG
       DECLARE SUB ScrollCaret ()
       DECLARE FUNCTION SelectionType () AS LONG
-      DECLARE SUB SetMargins (BYVAL nMargins AS LONG, BYVAL nWidth AS LONG)
-      DECLARE SUB SetSel (BYVAL nStart AS LONG, BYVAL nEnd AS LONG)
       DECLARE FUNCTION SetBkgndColor (BYVAL pSysColor AS DWORD, BYVAL pBkColor AS DWORD) AS DWORD
       DECLARE FUNCTION SetFontSize (BYVAL ptsize AS LONG) AS LONG
+      DECLARE FUNCTION SetIMEColor (BYVAL pcompcolor AS .COMPCOLOR PTR) AS LONG
+      DECLARE SUB SetMargins (BYVAL nMargins AS LONG, BYVAL nWidth AS LONG)
       DECLARE FUNCTION SetOleCallback (BYVAL pCallback AS ANY PTR) AS LONG
       DECLARE SUB SetPalette (BYVAL newPalette AS HPALETTE)
       DECLARE FUNCTION SetReadOnly (BYVAL fReadOnly AS LONG) AS LONG
-      DECLARE FUNCTION SetTabStops (BYVAL nTabs AS LONG, BYVAL rgTabStops AS LONG_PTR) AS LONG
+      DECLARE SUB SetSel (BYVAL nStart AS LONG, BYVAL nEnd AS LONG)
       DECLARE FUNCTION SetTableParams (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
+      DECLARE FUNCTION SetTabStops (BYVAL nTabs AS LONG, BYVAL rgTabStops AS LONG_PTR) AS LONG
       DECLARE FUNCTION SetTargetDevice (BYVAL hDC AS HDC, BYVAL lnwidth AS LONG) AS LONG
       DECLARE FUNCTION SetTextExW (BYREF stex AS SETTEXTEX, BYVAL pwszText AS WSTRING PTR) AS DWORD
       DECLARE FUNCTION SetUIAName (BYVAL bstrName AS AFX_BSTR) AS DWORD
@@ -206,10 +206,8 @@ FUNCTION CRichEditCtrl.CRichEditCtrlProc ( _
 
    SELECT CASE uMsg
 
-      CASE WM_CREATE
-         EXIT FUNCTION
-
       CASE WM_DESTROY
+         CREC_DP("CRichEditCtrlProc WM_DESTROY")
          ' // REQUIRED: Remove control subclassing
          RemoveWindowSubclass hwnd, @CRichEditCtrlProc, uIdSubclass
          EXIT FUNCTION
@@ -248,6 +246,10 @@ END CONSTRUCTOR
 ' CRichEditCtrl class destructor
 ' ========================================================================================
 PRIVATE DESTRUCTOR CRichEditCtrl
+   CREC_DP("CRichEditCtrl DESTRUCTOR")
+   ' // Destroy the Rich Edit control
+   DestroyWindow m_hRichEdit
+   m_hRichEdit = NULL
 END DESTRUCTOR
 ' ========================================================================================
 
@@ -355,9 +357,9 @@ END PROPERTY
 ' ========================================================================================
 ' Determines if the Text Services Framework (TSF) keyboard is open or closed.
 ' ========================================================================================
-PRIVATE PROPERTY CRichEditCtrl.CTFOpenStatus () AS LONG
+PRIVATE PROPERTY CRichEditCtrl.CTFOpenStatus () AS BOOLEAN
    this.SetResult(0)
-   RETURN SendMessageW(m_hRichEdit, EM_GETCTFOPENSTATUS, 0, 0)
+   RETURN CBOOL(SendMessageW(m_hRichEdit, EM_GETCTFOPENSTATUS, 0, 0))
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
@@ -454,24 +456,6 @@ END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
-' Retrieves the Input Method Editor (IME) composition color. This message is available
-' only in Asian-language versions of the operating system.
-' ========================================================================================
-PRIVATE PROPERTY CRichEditCtrl.IMEColor () AS .COMPCOLOR
-   DIM _compcolor AS .COMPCOLOR
-   this.SetResult(SendMessageW(m_hRichEdit, EM_GETIMECOLOR, 0, cast(LPARAM, @_compcolor)))
-   RETURN _compcolor
-END PROPERTY
-' ========================================================================================
-' ========================================================================================
-' Sets the Input Method Editor (IME) composition color.
-' ========================================================================================
-PRIVATE PROPERTY CRichEditCtrl.IMEColor (BYREF cmpcolor AS .COMPCOLOR)
-   this.SetResult(SendMessageW(m_hRichEdit, EM_SETIMECOLOR, 0, cast(LPARAM, @cmpcolor)))
-END PROPERTY
-' ========================================================================================
-
-' ========================================================================================
 ' Gets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
 ' ========================================================================================
 PRIVATE PROPERTY CRichEditCtrl.IMEModeBias () AS DWORD
@@ -557,7 +541,7 @@ END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
-' Retrieves rich edit control options.
+' Retrieves the options for a rich edit control.
 ' ========================================================================================
 PRIVATE PROPERTY CRichEditCtrl.Options () AS DWORD
    this.SetResult(0)
@@ -591,11 +575,11 @@ END PROPERTY
 ' ========================================================================================
 ' Retrieves the paragraph formatting of the current selection in a rich edit control.
 ' ========================================================================================
-PRIVATE PROPERTY CRichEditCtrl.ParaFormat () AS .PARAFORMAT
+PRIVATE PROPERTY CRichEditCtrl.ParaFormat () AS DWORD
    DIM pfmt AS .PARAFORMAT
    pfmt.cbSize = SIZEOF(.PARAFORMAT)
    this.SetResult(SendMessageW(m_hRichEdit, EM_GETPARAFORMAT, 0, cast(LPARAM, @pfmt)))
-   RETURN pfmt
+   RETURN pfmt.dwMask
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
@@ -686,11 +670,13 @@ END PROPERTY
 ' ========================================================================================
 ' Gets the story type.
 ' ========================================================================================
-PRIVATE PROPERTY CRichEditCtrl.StoryTpe (BYVAL Index AS DWORD) AS DWORD
+PRIVATE PROPERTY CRichEditCtrl.StoryType (BYVAL Index AS DWORD) AS DWORD
    this.SetResult(0)
    RETURN SendMessageW(m_hRichEdit, EM_GETSTORYTYPE, Index, 0)
 END PROPERTY
 ' ========================================================================================
+' ========================================================================================
+' Sets the story type.
 ' ========================================================================================
 PRIVATE PROPERTY CRichEditCtrl.StoryType (BYVAL Index AS LONG, BYVAL dwType AS DWORD)
    this.SetResult(SendMessageW(m_hRichEdit, EM_SETSTORYTYPE, Index, dwType))
@@ -730,8 +716,8 @@ END PROPERTY
 ' ========================================================================================
 ' Sets the text mode or undo level of a rich edit control.
 ' ========================================================================================
-PRIVATE PROPERTY CRichEditCtrl.TextMode (BYVAL pvalues AS LONG)
-   this.SetResult(SendMessageW(m_hRichEdit, EM_SETTEXTMODE, 0, pvalues))
+PRIVATE PROPERTY CRichEditCtrl.TextMode (BYVAL values AS LONG)
+   this.SetResult(SendMessageW(m_hRichEdit, EM_SETTEXTMODE, 0, values))
 END PROPERTY
 ' ========================================================================================
 
@@ -810,9 +796,9 @@ END FUNCTION
 ' Displays a portion of the contents of a rich edit control, as previously formatted for a
 ' device using the EM_FORMATRANGE message.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.DisplayBand (BYREF rc AS .RECT) AS LONG
+PRIVATE FUNCTION CRichEditCtrl.DisplayBand (BYREF rc AS .RECT) AS BOOLEAN
    this.SetResult(0)
-   RETURN SendMessageW(m_hRichEdit, EM_DISPLAYBAND, 0, cast(LPARAM, @rc))
+   RETURN CBOOL(SendMessageW(m_hRichEdit, EM_DISPLAYBAND, 0, cast(LPARAM, @rc)))
 END FUNCTION
 ' ========================================================================================
 
@@ -891,15 +877,6 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Gets the zero-based index of the uppermost visible line in a multiline rich edit control.
-' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.GetFirstVisibleLine () AS LONG
-   this.SetResult(0)
-   RETURN SendMessageW(m_hRichEdit, EM_GETFIRSTVISIBLELINE, 0, 0)
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
 ' Formats a range of text in a rich edit control for a specific device.
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl.FormatRange (BYVAL fRender AS LONG, BYREF fr AS .FORMATRANGE) AS DWORD
@@ -928,11 +905,36 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Gets the zero-based index of the uppermost visible line in a multiline rich edit control.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetFirstVisibleLine () AS LONG
+   this.SetResult(0)
+   RETURN SendMessageW(m_hRichEdit, EM_GETFIRSTVISIBLELINE, 0, 0)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Gets the current IME mode for a rich edit control.
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl.GetIMECompMode () AS DWORD
    this.SetResult(0)
    RETURN SendMessageW(m_hRichEdit, EM_GETIMECOMPMODE, 0, 0)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the Input Method Editor (IME) composition color. This message is available
+' only in Asian-language versions of the operating system.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetIMEColor (BYVAL rgCmpclr AS .COMPCOLOR PTR) AS LONG
+   RETURN this.SetResult(SendMessageW(m_hRichEdit, EM_GETIMECOLOR, 0, cast(LPARAM, rgCmpclr)))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the Input Method Editor (IME) composition color.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetIMEColor (BYVAL pcompcolor AS .COMPCOLOR PTR) AS LONG
+   RETURN this.SetResult(SendMessageW(m_hRichEdit, EM_SETIMECOLOR, 0, cast(LPARAM, pcompcolor)))
 END FUNCTION
 ' ========================================================================================
 
@@ -1040,9 +1042,9 @@ END FUNCTION
 ' ========================================================================================
 ' Gets the current zoom ratio, which is always between 1/64 and 64.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.GetZoom (BYVAL pzNum AS DWORD PTR, BYVAL pzDen AS DWORD PTR) AS LONG
+PRIVATE FUNCTION CRichEditCtrl.GetZoom (BYREF pzNum AS DWORD, BYREF pzDen AS DWORD) AS LONG
    this.SetResult(0)
-   RETURN SendMessageW(m_hRichEdit, EM_GETZOOM, cast(WPARAM, pzNum), cast(LPARAM, pzDen))
+   RETURN SendMessageW(m_hRichEdit, EM_GETZOOM, cast(WPARAM, @pzNum), cast(LPARAM, @pzDen))
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
@@ -1244,6 +1246,14 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Invokes the Input Method Editor (IME) reconversion dialog box.
+' ========================================================================================
+PRIVATE SUB CRichEditCtrl.Reconversion
+   this.SetResult(SendMessageW(m_hRichEdit, EM_RECONVERSION, 0, 0))
+END SUB
+' ========================================================================================
+
+' ========================================================================================
 ' Redoes the next action in the control's redo queue.
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl.Redo () AS LONG
@@ -1266,14 +1276,6 @@ END SUB
 ' ========================================================================================
 PRIVATE SUB CRichEditCtrl.RequestResize ()
    this.SetResult(SendMessageW(m_hRichEdit, EM_REQUESTRESIZE, 0, 0))
-END SUB
-' ========================================================================================
-
-' ========================================================================================
-' Invokes the Input Method Editor (IME) reconversion dialog box.
-' ========================================================================================
-PRIVATE SUB CRichEditCtrl.Reconversion
-   this.SetResult(SendMessageW(m_hRichEdit, EM_RECONVERSION, 0, 0))
 END SUB
 ' ========================================================================================
 
@@ -1306,9 +1308,9 @@ END FUNCTION
 ' ========================================================================================
 ' Sets the background color for a rich edit control.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.SetBkgndColor (BYVAL pSysColor AS DWORD, BYVAL pBkColor AS DWORD) AS DWORD
+PRIVATE FUNCTION CRichEditCtrl.SetBkgndColor (BYVAL SysColor AS DWORD, BYVAL BkColor AS DWORD) AS DWORD
    this.SetResult(0)
-   RETURN SendMessageW(m_hRichEdit, EM_SETBKGNDCOLOR, pSysColor, pBkColor)
+   RETURN SendMessageW(m_hRichEdit, EM_SETBKGNDCOLOR, SysColor, BkColor)
 END FUNCTION
 ' ========================================================================================
 
@@ -1378,9 +1380,9 @@ END FUNCTION
 ' ========================================================================================
 ' Sets the maximum number of actions that can stored in the undo queue.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.SetUIAName (BYVAL bstrName AS AFX_BSTR) AS DWORD
+PRIVATE FUNCTION CRichEditCtrl.SetUIAName (BYVAL pwszName AS WSTRING PTR) AS DWORD
    this.SetResult(0)
-   RETURN SendMessageW(m_hRichEdit, EM_SETUIANAME, 0, cast(LPARAM, bstrName))
+   RETURN SendMessageW(m_hRichEdit, EM_SETUIANAME, 0, cast(LPARAM, pwszName))
 END FUNCTION
 ' ========================================================================================
 
@@ -1477,8 +1479,17 @@ END FUNCTION
 ' Usage example:
 ' DIM pRichEdit AS CRichEditCtrl PTR = AfxCRichEditCtrlPtr(CAST(HWND, lParam))
 ' ========================================================================================
-PRIVATE FUNCTION AfxCRichEditCtrlPtr (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
+PRIVATE FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
    DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(hRichEdit, WM_USER + 100, 0, 0))
+   RETURN pRichEditCtrl
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' hParent = Handle of the parent window of the rich edit control.
+' cID = Identifier of the rich edit control.
+' ========================================================================================
+PRIVATE FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CRichEditCtrl PTR
+   DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(GetDlgItem(hParent, cID), WM_USER + 100, 0, 0))
    RETURN pRichEditCtrl
 END FUNCTION
 ' ========================================================================================
@@ -1576,7 +1587,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Custom structure used by the RichEdit_LoadRtfFromResourceW function.
+' Custom structure used by the CRichEditCtrl_LoadRtfFromResourceW function.
 ' ========================================================================================
 TYPE AFX_CRICHEDITCTRL_CUSTOMDATA
    pData  AS BYTE PTR
@@ -1586,7 +1597,7 @@ END TYPE
 ' ========================================================================================
 
 ' ========================================================================================
-' Callback function used by the RichEdit_LoadRtfFromResourceW function.
+' Callback function used by the CRichEditCtrl_LoadRtfFromResourceW function.
 ' Transfers a stream of data into a rich edit control.
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl_LoadRtfFromResourceCallback ( _
@@ -1657,7 +1668,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Callback used by the RichEdit_GetRtfText function.
+' Callback used by the CRichEditCtrl_GetRtfText function.
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl_GetTextCallback ( _
    BYVAL dwCookie AS DWORD_PTR _                      ' // Value of the dwCookie member of the EDITSTREAM structure.
