@@ -3047,7 +3047,7 @@ END FUNCTION
 
 #### Return value
 
-Returns S_OK if successful, or one of the following error codes.
+Returns **S_OK** if successful, or one of the following error codes.
 
 | Return code  | Description |
 | ------------ | ----------- |
@@ -3087,7 +3087,7 @@ The **EM_SETTABSTOPS** message does not automatically redraw the edit control wi
 
 The values specified in the array are in dialog template units, which are the device-independent units used in dialog box templates. To convert measurements from dialog template units to screen units (pixels), use the Windows API **MapDialogRect** function.
 
-**Rich Edit**: Supported in Microsoft Rich Edit 3.0 and later. A rich edit control can have the maximum number of tab stops specified by MAX_TAB_STOPS.
+**Rich Edit**: Supported in Microsoft Rich Edit 3.0 and later. A rich edit control can have the maximum number of tab stops specified by **MAX_TAB_STOPS**.
 
 # <a name="RichEdit_SetTargetDevice"></a>RichEdit_SetTargetDevice
 
@@ -3270,8 +3270,8 @@ Advanced line breaking is turned on automatically by the rich edit control when 
 Sets the name of a rich edit control for UI Automation (UIA).
 
 ```
-FUNCTION RichEdit_SetUIAName (BYVAL hRichEdit AS HWND, BYVAL bstrName AS AFX_BSTR) AS DWORD
-   FUNCTION = SendMessageW(hRichEdit, EM_SETUIANAME, 0, cast(LPARAM, bstrName))
+FUNCTION RichEdit_SetUIAName (BYVAL hRichEdit AS HWND, BYVAL pwszName AS WTRING PTR) AS DWORD
+   FUNCTION = SendMessageW(hRichEdit, EM_SETUIANAME, 0, cast(LPARAM, pwszName))
 END FUNCTION
 ```
 
@@ -3282,7 +3282,7 @@ END FUNCTION
 
 #### Return value
 
-TRUE if the name for UIA is successfully set, otherwise FALSE.
+**TRUE** if the name for UIA is successfully set, otherwise **FALSE**.
 
 # <a name="RichEdit_SetUndoLimit"></a>RichEdit_SetUndoLimit
 
