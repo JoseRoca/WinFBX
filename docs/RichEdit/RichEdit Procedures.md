@@ -1584,7 +1584,7 @@ The return value is one or more values from the [TEXTMODE](https://learn.microso
 | **TM_PLAINTEXT**  |   1   | Indicates plain-text mode, in which the control is similar to a standard edit control. |
 | **TM_RICHTEXT**   |   2   | Indicates rich-text mode, in which the control has the standard rich edit functionality. Rich-text mode is the default setting. |
 | **TM_SINGLELEVELUNDO**  |   4   | The control allows the user to undo only the last action in the undo queue. |
-| **TM_MULTILEVELUNDO**       |   8   | The control supports multiple undo actions. This is the default setting. Use the *RichEdit_SetUndoLimit* message to set the maximum number of undo actions. |
+| **TM_MULTILEVELUNDO** |   8   | The control supports multiple undo actions. This is the default setting. Use the *RichEdit_SetUndoLimit* message to set the maximum number of undo actions. |
 | **TM_SINGLECODEPAGE** |  16   | The control only allows the English keyboard and a keyboard corresponding to the default character set. For example, you could have Greek and English. Note that this prevents Unicode text from entering the control. For example, use this value if a Rich Edit control must be restricted to ANSI text. |
 | **TM_MULTICODEPAGE** |  32   | The control allows multiple code pages and Unicode text into the control. This is the default setting. |
 
@@ -3356,8 +3356,8 @@ This message returns the address of the previous extended word-break procedure.
 Sets the word-wrapping and word-breaking options for a rich edit control.
 
 ```
-FUNCTION RichEdit_SetWordWrapMode (BYVAL hRichEdit AS HWND, BYVAL pvalues AS LONG) AS LONG
-   FUNCTION = SendMessageW(hRichEdit, EM_SETWORDWRAPMODE, pvalues, 0)
+FUNCTION RichEdit_SetWordWrapMode (BYVAL hRichEdit AS HWND, BYVAL values AS LONG) AS LONG
+   FUNCTION = SendMessageW(hRichEdit, EM_SETWORDWRAPMODE, values, 0)
 END FUNCTION
 ```
 
@@ -3385,7 +3385,7 @@ This message must not be sent by the application defined word breaking procedure
 
 # <a name="RichEdit_SetZoom"></a>RichEdit_SetZoom
 
-Sets the zoom ratio for a multiline edit control or a rich edit control. The ratio must be a value between 1/64 and 64. The edit control needs to have the ES_EX_ZOOMABLE extended style set, for this message to have an effect, see [Edit Control Extended Styles](https://learn.microsoft.com/en-us/windows/win32/controls/edit-control-window-extended-styles).
+Sets the zoom ratio for a multiline edit control or a rich edit control. The ratio must be a value between 1/64 and 64. The edit control needs to have the **ES_EX_ZOOMABLE** extended style set, for this message to have an effect, see [Edit Control Extended Styles](https://learn.microsoft.com/en-us/windows/win32/controls/edit-control-window-extended-styles).
 
 ```
 FUNCTION RichEdit_SetZoom (BYVAL hRichEdit AS HWND, BYVAL zNum AS DWORD, BYVAL zDen AS DWORD) AS LONG
@@ -3428,7 +3428,7 @@ END SUB
 
 #### Remarks
 
-This method is only valid when the control is in-place active. Calls made while the control is inactive may fail.
+This message is only valid when the control is in-place active. Calls made while the control is inactive may fail.
 
 # <a name="RichEdit_StopGroupTyping"></a>RichEdit_StopGroupTyping
 
@@ -3557,8 +3557,9 @@ END FUNCTION
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
 
-Return value
-#### For a single-line edit control, the return value is always **TRUE**.
+#### Return value
+
+For a single-line edit control, the return value is always **TRUE**.
 
 For a multiline edit control, the return value is **TRUE** if the undo operation is successful, or **FALSE** if the undo operation fails.
 
