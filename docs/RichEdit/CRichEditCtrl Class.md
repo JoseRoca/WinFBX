@@ -182,7 +182,7 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [Undo](#Undo) | This message undoes the last edit control operation in the control's undo queue. |
 
 
-# RichEdit Helper Procedures
+# CRichEdit Helper Procedures
 
 | Name       | Description |
 | ---------- | ----------- |
