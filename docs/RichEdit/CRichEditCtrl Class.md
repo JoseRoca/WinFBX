@@ -1556,6 +1556,18 @@ Gets all of the text from the rich edit control in any particular code base you 
 ```
 FUNCTION GetTextEx (BYREF gtex AS GETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *gtex* | A [GETTEXTEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextex) structure which indicates how to translate the text before putting it into the output buffer. |
+| *buffer* | Pointer to the buffer to receive the text. The size of this buffer, in bytes, is specified by the *cb* member of the [GETTEXTEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextex) structure. Use the **GetTextLength** method to get the required size of the buffer. |
+
+#### Return value
+
+The return value is the number of characters copied into the output buffer, not including the null terminator.
+
+#### Remarks
+
+If the size of the output buffer is less than the size of the text in the control, the edit control will copy text from its beginning and place it in the buffer until the buffer is full. A terminating null character will still be placed at the end of the buffer.
 
 # <a name="GetTextLength"></a>GetTextLength
 
@@ -1563,6 +1575,15 @@ Retrieves the length of all text in a rich edit control.
 ```
 FUNCTION GetTextLength () AS LONG
 ```
+#### Return value
+
+The return value is the length of the text in characters, not including the terminating null character.
+
+#### Remarks
+
+When the **GetTextLength** method is called, the **DefWindowProc** function returns the length, in characters, of the text. Under certain conditions, the **DefWindowProc** function returns a value that is larger than the actual length of the text. This occurs with certain mixtures of ANSI and Unicode, and is due to the system allowing for the possible existence of double-byte character set (DBCS) characters within the text. The return value, however, will always be at least as large as the actual length of the text; you can thus always use it to guide buffer allocation. This behavior can occur when an application uses both ANSI functions and common dialogs, which use Unicode.
+
+To retrieve the text, you can also use the **AfxGetWindowText** function, the **WM_GETTEXT** message, or the Windows API **GetWindowTextW** function.
 
 # <a name="GetTextLengthEx"></a>GetTextLengthEx
 
@@ -1570,6 +1591,17 @@ Calculates text length in various ways. It is usually called before creating a b
 ```
 FUNCTION GetTextLengthEx (BYREF gtex AS .GETTEXTLENGTHEX) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *gtex* | A [GETTEXTLENGTHEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextlengthex) structure that receives the text length information. |
+
+#### Return value
+
+The method returns the number of characters in the edit control, depending on the setting of the flags in the [GETTEXTLENGTHEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextlengthex) structure. If incompatible flags were set in the *flags* member, the message returns **E_INVALIDARG**.
+
+#### Remarks
+
+This message is a fast and easy way to determine the number of characters in the Unicode version of the rich edit control. However, for a non-Unicode target code page you will potentially be converting to a combination of single-byte and double-byte characters.
 
 # <a name="GetTextRange"></a>GetTextRange
 
