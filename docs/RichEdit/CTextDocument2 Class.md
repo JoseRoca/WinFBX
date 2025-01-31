@@ -322,26 +322,19 @@ END FUNCTION
 Returns a description of the last result code.
 
 ```
-FUNCTION CTOMBase.GetErrorInfo () AS CWSTR
-   IF SUCCEEDED(m_Result) THEN RETURN "Success"
-   DIM s AS CWSTR = "Error &h" & HEX(m_Result, 8)
-   SELECT CASE m_Result
-      CASE E_POINTER : s += ": E_POINTER - Null pointer"
-      CASE S_OK : s += ": S_OK - Success"
-      CASE S_FALSE : s += ": S_FALSE - Failure"
-      CASE E_NOTIMPL : s += ": E_NOTIMPL - Not implemented."
-      CASE E_INVALIDARG : s += ": E_INVALIDARG - Invalid argument"
-      CASE E_OUTOFMEMORY : s += ": E_OUTOFMEMORY - Insufficient memory"
-'      CASE E_FILENOTFOUND : s += "E_FILENOTFOUND - File not found"
-      CASE &h80070002 : s += "E_FILENOTFOUND - File not found"
-      CASE E_ACCESSDENIED : s += "E_ACCESSDENIED - Access denied"
-      CASE E_FAIL : s += ": E_FAIL - Access denied"
-      CASE NOERROR : s += ": NOERROR - Success" '' (same as S_OK)
-      CASE CO_E_RELEASED:  : s += ": CO_E_RELEASED: - The object has been released"
-      CASE ELSE
-         s += "Unknown error"
-   END SELECT
-   RETURN s
+PRIVATE FUNCTION CTextObjectBase.GetErrorInfo (BYVAL nError AS LONG = -1) AS CWSTR
+   IF nError = -1 THEN nError = m_Result
+   DIM cbLen AS DWORD, pBuffer AS WSTRING PTR, cwsMsg AS CWSTR
+   cbLen = FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER OR _
+           FORMAT_MESSAGE_FROM_SYSTEM OR FORMAT_MESSAGE_IGNORE_INSERTS, _
+           NULL, nError, BYVAL MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), _
+           cast(LPWSTR, @pBuffer), 0, NULL)
+   IF cbLen THEN
+      cwsMsg = *pBuffer
+      LocalFree pBuffer
+   END IF
+   IF nError THEN cwsMsg = "Error &h" & HEX(nError) & CHR(13, 10) & cwsMsg
+   RETURN cwsMsg
 END FUNCTION
 ```
 # <a name="GetName"></a>GetName
