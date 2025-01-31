@@ -983,7 +983,7 @@ Gets/sets the touch options that are associated with a rich edit control.
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *_Options* | (GET/SET)The touch options to set. It can be one of the following values:<br>**RTO_SHOWHANDLES**. Show or hide the touch gripper handles, depending on the value of *_Options*.<br>**RTO_DISABLEHANDLES**. Enable or disable the touch gripper handles, depending on the value of *_Options*. When handles are disabled, they are hidden if they are visible and remain hidden until **TouchOptions** changes their status. |
+| *_Options* | (GET/SET) The touch options to set. It can be one of the following values:<br>**RTO_SHOWHANDLES**. Show or hide the touch gripper handles, depending on the value of *_Options*.<br>**RTO_DISABLEHANDLES**. Enable or disable the touch gripper handles, depending on the value of *_Options*. When handles are disabled, they are hidden if they are visible and remain hidden until **TouchOptions** changes their status. |
 | *fEnable* | (SET) Set to **TRUE** to show/enable the touch selection handles, or **FALSE** to hide/disable the touch selection handles. |
 
 #### Return value
