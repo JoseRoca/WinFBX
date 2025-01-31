@@ -34,7 +34,8 @@ CONSTRUCTOR CRichEditCtrl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, 
 
 #### Usage example (dotted syntax)
 ```
-DIM pRichEdit AS CRichEditCtrl = CRichEditCtrl(@pWindow, IDC_RICHEDIT, "RichEditbox", 100, 50, 300, 200)
+DIM pRichEdit AS CRichEditCtrl = CRichEditCtrl(@pWindow, IDC_RICHEDIT, _
+    "Rich Edit box", 100, 50, 300, 200)
 ```
 #### Usage example (pointer syntax)
 ```
