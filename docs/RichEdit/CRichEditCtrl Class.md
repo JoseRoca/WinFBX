@@ -797,9 +797,33 @@ This message is supported only in Asian-language versions of Microsoft Rich Edit
 
 Gets/sets the formatting rectangle of a rich edit control.
 ```
-PROPERTY Rect () AS .RECT
-PROPERTY Rect (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
+(GET) PROPERTY Rect () AS .RECT
+(SET) PROPERTY Rect (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fCoord* | **Rich Edit 2.0 and later**: Indicates whether *rc* specifies absolute or relative coordinates. A value of zero indicates absolute coordinates. A value of 1 indicates offsets relative to the current formatting rectangle. (The offsets can be positive or negative.)<br>**Edit controls and Rich Edit 1.0**: This parameter is not used and must be zero. |
+| *rc* | A [RECT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect) structure that specifies the new dimensions of the rectangle. If this parameter is **NULL**, the formatting rectangle is set to its default values. |
+
+#### Return value
+
+(GET) A **RECT** structure with the formatting rectangle.
+
+(SET) The set property does not return a value.
+
+#### Remarks
+
+Setting *rc* to **NULL** has no effect if a touch device is installed, or if the message is sent from a thread that has a hook installed (see [SetWindowsHookEx](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexw)). In these cases, *rc* should contain a valid pointer to a [RECT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect) structure.
+
+The (SET) **Rect** property causes the text of the edit control to be redrawn. To change the size of the formatting rectangle without redrawing the text, use the **RectNP** property.
+
+When an edit control is first created, the formatting rectangle is set to a default size. You can use the (SET) **Rect** message to make the formatting rectangle larger or smaller than the edit control window.
+
+If the edit control does not have a horizontal scroll bar, and the formatting rectangle is set to be larger than the edit control window, lines of text exceeding the width of the edit control window (but smaller than the width of the formatting rectangle) are clipped instead of wrapped.
+
+If the edit control contains a border, the formatting rectangle is reduced by the size of the border. If you are adjusting the rectangle returned by the (GET) **Rect** property, you must remove the size of the border before using the rectangle with the (SET) **Rect** property.
+
+**Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later. The formatting rectangle does not include the selection bar, which is an unmarked area to the left of each paragraph. When the user clicks in the selection bar, the corresponding line is selected.
 
 # <a name="RectNP"></a>RectNP
 
