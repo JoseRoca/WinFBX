@@ -2722,12 +2722,12 @@ END FUNCTION
 ' ========================================================================================
 ```
 
-# <a name="RichEdit_GetRtfText"></a>RichEdit_GetRtfText
+# <a name="CRichEditCtrl_GetRtfText"></a>CRichEditCtrl_GetRtfText
 
 Retrieves RTF formatted text from a Rich Edit control.
 
 ```
-FUNCTION RichEdit_GetRtfText (BYVAL hRichEdit AS HWND) AS STRING
+FUNCTION CRichEditCtrl_GetRtfText (BYVAL hRichEdit AS HWND) AS STRING
 ```
 
 | Parameter  | Description |
