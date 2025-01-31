@@ -777,9 +777,21 @@ If an edit control is created with the **ES_PASSWORD** style, the default passwo
 
 Gets/sets the current punctuation characters for the rich edit control.
 ```
-PROPERTY Punctuation (BYVAL punctp AS DWORD) AS .PUNCTUATION
-PROPERTY Punctuation (BYVAL ptype AS LONG, BYREF punct AS .PUNCTUATION)
+(GET) PROPERTY Punctuation (BYVAL punctype AS DWORD) AS .PUNCTUATION
+(SET) PROPERTY Punctuation (BYVAL punctype AS LONG, BYREF punct AS .PUNCTUATION)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *punctype* | Specifies the punctuation type, which can be one of the following values.<br>**PC_LEADING**. Leading punctuation characters.<br>**PC_FOLLOWING**. Following punctuation characters.<br>**PC_DELIMITER**. Delimiter.<br>**PC_OVERFLOW**. Not supported. |
+| *punct* | A [PUNCTUATION](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-punctuation) structure that contains the punctuation characters. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+### Note
+
+This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions.
 
 # <a name="Rect"></a>Rect
 
