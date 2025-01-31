@@ -2503,6 +2503,22 @@ END FUNCTION
 # <a name="GetErrorInfo"></a>GetErrorInfo
 
 Returns a description of the last result code.
+```
+PRIVATE FUNCTION CTextObjectBase.GetErrorInfo (BYVAL nError AS LONG = -1) AS CWSTR
+   IF nError = -1 THEN nError = m_Result
+   DIM cbLen AS DWORD, pBuffer AS WSTRING PTR, cwsMsg AS CWSTR
+   cbLen = FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER OR _
+           FORMAT_MESSAGE_FROM_SYSTEM OR FORMAT_MESSAGE_IGNORE_INSERTS, _
+           NULL, nError, BYVAL MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), _
+           cast(LPWSTR, @pBuffer), 0, NULL)
+   IF cbLen THEN
+      cwsMsg = *pBuffer
+      LocalFree pBuffer
+   END IF
+   IF nError THEN cwsMsg = "Error &h" & HEX(nError) & CHR(13, 10) & cwsMsg
+   RETURN cwsMsg
+END FUNCTION
+```
 
 # <a name="CRichEditCtrl_SetFontW"></a>CRichEditCtrl_SetFontW
 
