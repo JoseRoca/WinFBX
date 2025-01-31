@@ -1526,7 +1526,7 @@ END FUNCTION
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
 
-####Return value
+#### Return value
 
 The return value is the length of the text in characters, not including the terminating null character.
 
@@ -1553,7 +1553,7 @@ END FUNCTION
 
 #### Return value
 
-The message returns the number of characters in the edit control, depending on the setting of the flags in the [GETTEXTLENGTHEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextlengthex) structure. If incompatible flags were set in the *flags* member, the message returns E_INVALIDARG .
+The message returns the number of characters in the edit control, depending on the setting of the flags in the [GETTEXTLENGTHEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextlengthex) structure. If incompatible flags were set in the *flags* member, the message returns **E_INVALIDARG**.
 
 #### Remarks
 
