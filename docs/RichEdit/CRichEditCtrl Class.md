@@ -735,7 +735,7 @@ Deprecated. Gets/sets the text layout for a Microsoft Rich Edit control.
 
 Gets/sets the paragraph formatting of the current selection in a rich edit control.
 ```
-(GET) PROPERTY ParaFormat () AS .PARAFORMAT
+(GET) PROPERTY ParaFormat () AS DWORD
 (SET) PROPERTY ParaFormat (BYREF pfmt AS .PARAFORMAT)
 ```
 | Parameter  | Description |
@@ -752,9 +752,26 @@ Gets/sets the paragraph formatting of the current selection in a rich edit contr
 
 Gets/sets the password character that a rich edit control displays when the user enters text.
 ```
-PROPERTY PasswordChar () AS LONG
-PROPERTY PasswordChar (BYVAL dwchar AS DWORD)
+(GET) PROPERTY PasswordChar () AS LONG
+(SET) PROPERTY PasswordChar (BYVAL dwchar AS DWORD)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwchar* | (SET) The character to be displayed in place of the characters typed by the user. If this parameter is zero, the control removes the current password character and displays the characters typed by the user. |
+
+#### Return value
+
+(GET) The return value specifies the character to be displayed in place of any characters typed by the user. If the return value is **NULL**, there is no password character, and the control displays the characters typed by the user.
+
+(SET) The set property does not return a value.
+
+#### Remarks
+
+When an edit control receives the **EM_SETPASSWORDCHAR** message, the control redraws all visible characters using the character specified by the dwchar parameter. If *dwchar* is zero, the control redraws all visible characters using the characters typed by the user.
+
+If an edit control is created with the **ES_PASSWORD** style, the default password character is set to an asterisk (*). If an edit control is created without the **ES_PASSWORD** style, there is no password character. The **ES_PASSWORD** style is removed if an **EM_SETPASSWORDCHAR** is sent with the *dwchar* parameter set to zero.
+
+**Edit controls**: Multiline edit controls do not support the password style or messages.
 
 # <a name="Punctuation"></a>Punctuation
 
