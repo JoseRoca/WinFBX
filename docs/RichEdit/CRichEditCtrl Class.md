@@ -107,7 +107,7 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [CanPaste](#CanPaste) | Determines whether a rich edit control can paste a specified clipboard format. |
 | [CanRedo](#CanRedo) | Determines whether there are any actions in the control redo queue. |
 | [CanUndo](#CanUndo) | Determines whether there are any actions in an edit control's undo queue. |
-| [CallAutocorrectProc](#CallAutocorrectProc) | Calls the autocorrect callback function that is stored by the **CRichEditCtrl.SetAutocorrectProc** message, provided that the text preceding the insertion point is a candidate for autocorrection. |
+| [CallAutocorrectProc](#CallAutocorrectProc) | Calls the autocorrect callback function that is stored by the (SET) **AutocorrectProc** property, provided that the text preceding the insertion point is a candidate for autocorrection. |
 | [DisplayBand](#DisplayBand) | Displays a portion of the contents of a rich edit control, as previously formatted for a device using the EM_FORMATRANGE message. |
 | [EmptyUndoBuffer](#EmptyUndoBuffer) | Resets the undo flag of a rich edit control. The undo flag is set whenever an operation within the rich edit control can be undone. |
 | [ExGetSel](#ExGetSel) | Retrieves the starting and ending character positions of the selection in a rich edit control. |
@@ -1020,10 +1020,17 @@ You can turn on advanced line breaking by sending calling the (SET) **Typography
 
 # <a name="CallAutocorrectProc"></a>CallAutocorrectProc
 
-Calls the autocorrect callback function that is stored by the **CRichEditCtrl.SetAutocorrectProc** message, provided that the text preceding the insertion point is a candidate for autocorrection.
+Calls the autocorrect callback function that is stored by the (SET) **AutocorrectProc** property, provided that the text preceding the insertion point is a candidate for autocorrection.
 ```
 FUNCTION CallAutocorrectProc (BYVAL char AS WCHAR) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *char* | A character of type **WCHAR**. If this character is a tab (U+0009), and the character preceding the insertion point isn't a tab, then the character preceding the insertion point is treated as part of the autocorrect candidate string instead of as a string delimiter; otherwise, it has no effect. |
+
+#### Return value
+
+The return value is zero if the message succeeds, or nonzero if an error occurs.
 
 # <a name="CanPaste"></a>CanPaste
 
