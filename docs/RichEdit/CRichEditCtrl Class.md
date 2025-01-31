@@ -1239,7 +1239,7 @@ FUNCTION FindWordBreak (BYVAL fOperation AS DWORD, BYVAL dwStartPos AS DWORD) AS
 
 #### Return value
 
-The message returns a value based on the *fOperation* parameter.
+The method returns a value based on the *fOperation* parameter.
 
 | Return code  | Description |
 | ------------ | ----------- |
@@ -1259,6 +1259,20 @@ Formats a range of text in a rich edit control for a specific device.
 ```
 FUNCTION FormatRange (BYVAL fRender AS LONG, BYREF fr AS FORMATRANGE) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fRender* | Specifies whether to render the text. If this parameter is not zero, the text is rendered. Otherwise, the text is just measured. |
+| *fr* | A [FORMATRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-formatrange) structure containing information about the output device, or **NULL** to free information cached by the control. |
+
+#### Return value
+
+This method returns the index of the last character that fits in the region, plus 1.
+
+#### Remarks
+
+This method is typically used to format the content of rich edit control for an output device such as a printer.
+
+After using this method to format a range of text, it is important that you free cached information by sending **FormatRange** again, but with *fr* set to **NULL**; otherwise, a memory leak will occur. Also, after using this message for one device, you must free cached information before using it again for a different device.
 
 # <a name="GetCharFromPos"></a>GetCharFromPos
 
