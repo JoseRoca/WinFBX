@@ -1162,7 +1162,7 @@ END FUNCTION
 
 #### Return value
 
-This message returns the value of the dwMask member of the [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure.
+This message returns the value of the **dwMask** member of the [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure.
 
 # <a name="RichEdit_GetPasswordChar"></a>RichEdit_GetPasswordChar
 
@@ -2616,7 +2616,7 @@ END SUB
 
 # <a name="RichEdit_SetModify"></a>RichEdit_SetModify
 
-Sets or clears the modification flag for a rich edit control. The modification flag indicates whether the text within the rich edit control has been modified
+Sets or clears the modification flag for a rich edit control. The modification flag indicates whether the text within the rich edit control has been modified.
 
 ```
 SUB RichEdit_SetModify (BYVAL hRichEdit AS HWND, BYVAL fModify AS LONG)
@@ -2731,7 +2731,7 @@ END FUNCTION
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
-| *pfmt* | pointer to a [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure specifying the new paragraph formatting attributes. Only the attributes specified by the dwMask member are changed. |
+| *pfmt* | pointer to a [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure specifying the new paragraph formatting attributes. Only the attributes specified by the **dwMask** member are changed. |
 
 #### Return value
 
