@@ -899,9 +899,10 @@ END FUNCTION
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
 | *lpict* | A pointer to the [IMECOMPTEXT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-imecomptext) structure. |
-| *buffer* | The buffer that receives the composition text. The size of this buffer is contained in the *cb* member of the IMECOMPTEXT structure. |
+| *buffer* | The buffer that receives the composition text. The size of this buffer is contained in the *cb* member of the **IMECOMPTEXT** structure. |
 
 #### Return value
+
 If successful, the return value is the number of Unicode characters copied to the buffer. Otherwise, it is zero.
 
 #### Remarks
