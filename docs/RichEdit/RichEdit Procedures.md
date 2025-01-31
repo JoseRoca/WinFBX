@@ -1371,7 +1371,7 @@ It is better to use the values returned in *pdwStartPos* and *pdwEndPos* because
 
 If there is no selection, the starting and ending values are both the position of the caret.
 
-You can also use the **EM_EXGETSEL** message to retrieve the same information. **EM_EXGETSEL** also returns starting and ending character positions as 32-bit values. A combination of the use of **EM_EXGETSEL** and **EM_GETSELTEXT** are used ine the **RichEdit_GetSelText** function to retrieve the selected text as a **CWSTR**.
+You can also use the **EM_EXGETSEL** message to retrieve the same information. **EM_EXGETSEL** also returns starting and ending character positions as 32-bit values. A combination of the use of **EM_EXGETSEL** and **EM_GETSELTEXT** are used in the **RichEdit_GetSelText** function to retrieve the selected text as a **CWSTR**.
 
 # <a name="RichEdit_GetSelText"></a>RichEdit_GetSelText
 
