@@ -1728,6 +1728,8 @@ PRIVATE FUNCTION AfxCXpButtonPtr OVERLOAD (BYVAL hCtl AS HWND) AS CXpButton PTR
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
+' Returns a pointer to the class given the handle of the parent window of the control and
+' the identifier of the control.
 ' hParent = Handle of the parent window of the image control.
 ' cID = Identifier of the button control.
 ' ========================================================================================
