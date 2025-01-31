@@ -130,10 +130,10 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [GetRedoName](#GetRedoName) | Retrieves the type of the next action, if any, in the control's redo queue. |
 | [GetSel](#GetSel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
 | [GetSelText](#GetSelText) | Retrieves the currently selected text in a rich edit control. |
+| [GetTableParams](#GetTableParams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
 | [GetUndoName](#GetUndoName) | Retrieves the type of the next undo action, if any. |
 | [GetWordWrapMode](#GetWordWrapMode) | Gets the current word wrap and word-break options for the rich edit control. |
 | [GetZoom](#GetZoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
-| [GetTableParams](#GetTableParams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
 | [GetTextEx](#GetTextEx) | Gets all of the text from the rich edit control in any particular code base you want. |
 | [GetTextLength](#GetTextLength) | Retrieves the length of all text in a rich edit control. |
 | [GetTextLengthEx](#GetTextLengthEx) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
@@ -1540,7 +1540,7 @@ Returns S_OK if successful, or one of the following error codes.
 
 | Return code  | Description |
 | ------------ | ----------- |
-| **E_FAIL** | Changes cannot be made. This can occur if the control is a plain-text or single-line control, or if the insertion point is inside a math object. It also occurs if tables are disabled if the **RichEdit_SetEditStyleEx** message sets the **SES_EX_NOTABLE** value. |
+| **E_FAIL** | Changes cannot be made. This can occur if the control is a plain-text or single-line control, or if the insertion point is inside a math object. It also occurs if tables are disabled if the **EditStyleEx** property sets the **SES_EX_NOTABLE** value. |
 | **E_INVALIDARG** | The *lptp* or *lptcp* parameters are NULL or point to an invalid structure. The **cbRow** member of the **TABLEROWPARMS** structure must equal sizeof(TABLEROWPARMS) or sizeof(TABLEROWPARMS) 2*sizeof(long). The latter value is the size of the RichEdit 4.1 **TABLEROWPARMS** structure. The **cbCell** member of the **TABLEROWPARMS** structure must equal sizeof(TABLECELLPARMS). The query character position must be at a table row delimiter. |
 | **E_OUTOFMEMORY** | Insufficient memory is available. |
 
