@@ -188,7 +188,7 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | ---------- | ----------- |
 | [CRichEditCtrl_GetRtfText](#CRichEditCtrl_GetRtfText) | Retrieves formatted text from a Rich Edit control |
 | [CRichEditCtrl_LoadRtfFromFileW](#CRichEditCtrl_LoadRtfFromFileW) | Loads a Rich Text File into a Rich Edit control. |
-| [CRichEditCrl_LoadRtfFromResourceW](#CRichEditCrl_LoadRtfFromResourceW) | Loads a Rich Text Resource File into a Rich Edit control. |
+| [CRichEditCtrl_LoadRtfFromResourceW](#CRichEditCtrl_LoadRtfFromResourceW) | Loads a Rich Text Resource File into a Rich Edit control. |
 | [CRichEditCtrl_SetFontW](#CRichEditCtrl_SetFontW) | Sets the font used by a rich edit control. |
 
 # Methods inherited from CTextObjectBase
