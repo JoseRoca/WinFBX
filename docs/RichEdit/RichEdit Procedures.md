@@ -1745,7 +1745,7 @@ END FUNCTION
 
 #### Return value
 
-The message returns the address of the current procedure.
+The message returns the address of the currently registered extended word-break procedure.
 
 # <a name="RichEdit_GetWordWrapMode"></a>RichEdit_GetWordWrapMode
 
@@ -1844,7 +1844,7 @@ END FUNCTION
 
 #### Return value
 
-Returns S_OK if the table is inserted, or an error code if not.
+Returns **S_OK** if the table is inserted, or an error code if not.
 
 #### Remarks
 
@@ -1914,7 +1914,7 @@ END FUNCTION
 
 #### Return value
 
-The return value is the zero-based line number of the line containing the character index specified by wParam.
+The return value is the zero-based line number of the line containing the character index specified by *index*.
 
 # <a name="RichEdit_LineIndex"></a>RichEdit_LineIndex
 
