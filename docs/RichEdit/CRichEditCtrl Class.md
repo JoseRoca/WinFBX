@@ -187,6 +187,7 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 
 | Name       | Description |
 | ---------- | ----------- |
+| [AfxCRichEditCtrlPtr](#AfxCRichEditCtrlPtr) | Retrieves a pointer to the CRichEditCtrl class from the handle |
 | [CRichEditCtrl_GetRtfText](#CRichEditCtrl_GetRtfText) | Retrieves formatted text from a Rich Edit control |
 | [CRichEditCtrl_LoadRtfFromFileW](#CRichEditCtrl_LoadRtfFromFileW) | Loads a Rich Text File into a Rich Edit control. |
 | [CRichEditCtrl_LoadRtfFromResourceW](#CRichEditCtrl_LoadRtfFromResourceW) | Loads a Rich Text Resource File into a Rich Edit control. |
@@ -2540,6 +2541,39 @@ PRIVATE FUNCTION CTextObjectBase.GetErrorInfo (BYVAL nError AS LONG = -1) AS CWS
    RETURN cwsMsg
 END FUNCTION
 ```
+
+# <a name="AfxCRichEditCtrlPtr"></a>AfxCRichEditCtrlPtr
+
+Retrieves a pointer to the CRichEditCtrl class from the handle of the RichEdit control.
+```
+FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
+   DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(hRichEdit, WM_USER + 100, 0, 0))
+   RETURN pRichEditCtrl
+END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *hRichEdit* | Handle of the Rich Edit control. |
+
+#### Return value
+
+a pointer to the CRichEditCtrl class.
+
+Returns a pointer to the class given the handle of the parent window of the control and the identifier of the control.
+```
+FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CRichEditCtrl PTR
+   DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(GetDlgItem(hParent, cID), WM_USER + 100, 0, 0))
+   RETURN pRichEditCtrl
+END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *hParent* | Handle of the parent window of the rich edit control. |
+| *cID* | Identifier of the rich edit control. |
+
+#### Return value
+
+A pointer to the CRichEditCtrl class.
 
 # <a name="CRichEditCtrl_SetFontW"></a>CRichEditCtrl_SetFontW
 
