@@ -2039,6 +2039,14 @@ Sets the widths of the left and right margins for a rich edit control. The messa
 ```
 SUB SetMargins (BYVAL nMargins AS LONG, BYVAL nWidth AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nMargins* | TThe margins to set. This parameter can be one or more of the following values.<br>**EC_LEFTMARGIN**. Sets the left margin.<br>**EC_RIGHTMARGIN**. Sets the right margin.<br>**EC_USEFONTINFO**. Sets the left and right margins to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margins are set to zero. The *nWidth* parameter is ignored. |
+| *nWidth* | The **LOWORD** specifies the new width of the left margin, in pixels. This value is ignored if *nMargins* does not include **EC_LEFTMARGIN**.<br>**Rich Edit 3.0 and later**: The **LOWORD** can specify the **EC_USEFONTINFO** value to set the left margin to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margin is set to zero.<br>The **HIWORD** specifies the new width of the right margin, in pixels. This value is ignored if *nMargins* does not include **EC_RIGHTMARGIN**.<br>**Rich Edit 3.0 and later**: The **HIWORD** can specify the **EC_USEFONTINFO** value to set the right margin to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margin is set to zero |
+
+#### Return value
+
+This method does not return a value.
 
 # <a name="SetOleCallback"></a>SetOleCallback
 
@@ -2046,6 +2054,13 @@ Gives a rich edit control an IRichEditOleCallback object that the control uses t
 ```
 FUNCTION SetOleCallback (BYVAL pCallback AS ANY PTR) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pCallback* | Pointer to an **IRichEditOleCallback** object. The control calls the **AddRef** method for the object before returning. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero.
 
 # <a name="SetPalette"></a>SetPalette
 
@@ -2053,6 +2068,17 @@ Changes the palette that a rich edit control uses for its display window.
 ```
 SUB SetPalette (BYVAL newPalette AS HPALETTE)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *newPalette* | Handle to the new palette used by the rich edit control. |
+
+#### Return value
+
+This method does notreturn a value.
+
+#### Remarks
+
+The rich edit control does not check whether the new palette is valid.
 
 # <a name="SetReadOnly"></a>SetReadOnly
 
@@ -2060,6 +2086,19 @@ Changes the palette that a rich edit control uses for its display window.
 ```
 FUNCTION SetReadOnly (BYVAL fReadOnly AS LONG) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fReadOnly* | Specifies whether to set or remove the **ES_READONLY** style. A value of **TRUE** sets the **ES_READONLY+* style; a value of **FALSE** removes the **ES_READONLY** style. |
+
+#### Return value
+
+If the operation succeeds, the return value is nonzero. If the operation fails, the return value is zero.
+
+#### Remarks
+
+When an edit control has the **ES_READONLY** style, the user cannot change the text within the edit control.
+
+To determine whether an edit control has the **ES_READONLY** style, use the Windows API **GetWindowLong** function with the **GWL_STYLE** flag.
 
 # <a name="SetSel"></a>SetSel
 
@@ -2067,6 +2106,22 @@ Selects a range of characters in a rich edit control.
 ```
 SUB SetSel (BYVAL nStart AS LONG, BYVAL nEnd AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nStart* | The starting character position of the selection. |
+| *nEnd* | The ending character position of the selection. |
+
+#### Remarks
+
+The start value can be greater than the end value. The lower of the two values specifies the character position of the first character in the selection. The higher value specifies the position of the first character beyond the selection.
+
+The start value is the anchor point of the selection, and the end value is the active end. If the user uses the SHIFT key to adjust the size of the selection, the active end can move but the anchor point remains the same.
+
+If the start is 0 and the end is -1, all the text in the edit control is selected. If the start is -1, any current selection is deselected.
+
+**Edit controls**: The control displays a flashing caret at the end position regardless of the relative values of start and end.
+
+If the edit control has the **ES_NOHIDESEL** style, the selected text is highlighted regardless of whether the control has focus. Without the **ES_NOHIDESEL** style, the selected text is highlighted only when the edit control has the focus.
 
 # <a name="SetTableParams"></a>SetTableParams
 
@@ -2074,6 +2129,25 @@ Changes the parameters of rows in a table.
 ```
 FUNCTION SetTableParams (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *lptp* | A pointer to a [TABLEROWPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablerowparms) structure. |
+| *lptcp* | A pointer to a [TABLECELLPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablecellparms) structure. |
+
+#### Return value
+
+Returns **S_OK** if successful, or one of the following error codes.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **E_FAIL** | Changes cannot be made. This can occur if the control is a plain-text or single-line control, or if the insertion point is inside a math object. It also occurs if tables are disabled if the **EditStyleEx** property sets the **SES_EX_NOTABLE** value. |
+| **E_INVALIDARG** | The *lptp* or *lptcp* parameters are NULL or point to an invalid structure. The **cbRow** member of the **TABLEROWPARMS** structure must equal sizeof(TABLEROWPARMS) or sizeof(TABLEROWPARMS) 2*sizeof(long). The latter value is the size of the RichEdit 4.1 **TABLEROWPARMS** structure. The **cbCell** member of the **TABLEROWPARMS** structure must equal sizeof(TABLECELLPARMS). The query character position must be at a table row delimiter. |
+| **E_OUTOFMEMORY** | Insufficient memory is available. |
+
+#### Remarks
+
+This message changes the parameters of the number of rows specified by the **cRow** member of the **TABLEROWPARMS** structure, if the table has that many consecutive rows. If **cRow** is less than 0, the message iterates until the end of the table. If the new cell count differs from the current cell count by +1 or 1, it inserts or deletes the cell at the index specified by the **iCell** member of **TABLEROWPARMS**. The starting table row is identified by a character position. This position is specified by **cpStartRow** members with values that are greater than or equal to zero. The position should be inside the table row, but not inside a nested table, unless you want to change that table s parameters. If the **cpStartRow** member is 1, the character position is given by the current selection. For this, position the selection anywhere inside the table row, or select the row with the active end of the selection at the end of the table row.
 
 # <a name="SetTabStops"></a>SetTabStops
 
@@ -2081,6 +2155,24 @@ Sets the tab stops in a multiline rich edit control.
 ```
 FUNCTION SetTabStops (BYVAL nTabs AS LONG, BYVAL rgTabStops AS LONG_PTR) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nTabs* | The number of tab stops contained in the array. If this parameter is zero, the *rgTabStops* parameter is ignored and default tab stops are set at every 32 dialog template units. If this parameter is 1, tab stops are set at every n dialog template units, where n is the distance pointed to by the *rgTabStops* parameter. If this parameter is greater than 1, *rgTabStops* is a pointer to an array of tab stops. |
+| *rgTabStops* | A pointer to an array of unsigned integers specifying the tab stops, in dialog template units. If the *nTabs* parameter is 1, this parameter is a pointer to an unsigned integer containing the distance between all tab stops, in dialog template units. |
+
+#### Return value
+
+If all the tabs are set, the return value is *TRUE*.
+
+If all the tabs are not set, the return value is *FALSE*.
+
+#### Remarks
+
+The **EM_SETTABSTOPS** message does not automatically redraw the edit control window. If the application is changing the tab stops for text already in the edit control, it should call the Windows API **InvalidateRect** function to redraw the edit control window.
+
+The values specified in the array are in dialog template units, which are the device-independent units used in dialog box templates. To convert measurements from dialog template units to screen units (pixels), use the Windows API **MapDialogRect** function.
+
+**Rich Edit**: Supported in Microsoft Rich Edit 3.0 and later. A rich edit control can have the maximum number of tab stops specified by **MAX_TAB_STOPS**.
 
 # <a name="SetTargetDevice"></a>SetTargetDevice
 
@@ -2088,6 +2180,30 @@ Sets the target device and line width used for WYSIWYG formatting in a rich edit
 ```
 FUNCTION SetTargetDevice (BYVAL hDC AS HDC, BYVAL lnwidth AS LONG) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hDC* | HDC [Handle to a Device Context] for the target device. |
+| *lnwidth* | Line width to use for formatting. |
+
+#### Return value
+
+The return value is zero if the operation fails, or nonzero if it succeeds.
+
+#### Remarks
+
+The HDC for the default printer can be obtained as follows.
+
+```
+DIM hdc AS HDC
+DIM pd AS PRINTDLGW
+pd.lStructSize = SIZEOF(pd)
+pd.flags = PD_RETURNDC OR PD_RETURNDEFAULT
+IF PrintDlgW(@pd) THEN
+   hdc =  = pd.hDC
+END IF
+```
+
+If *lnwidth* is zero, no line breaks are created.
 
 # <a name="SetTextExW"></a>SetTextExW
 
@@ -2095,13 +2211,32 @@ Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability 
 ```
 FUNCTION SetTextExW (BYREF stex AS SETTEXTEX, BYVAL pwszText AS WSTRING PTR) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *stex* | A [SETTEXTEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-settextex) structure that specifies flags and an optional code page to use in translating to Unicode. |
+| *pwszText* | Pointer to the null-terminated text to insert. This text is an ANSI string, unless the code page is 1200 (Unicode). If *pwszText* starts with a valid RTF ASCII sequence for example, "{\rtf" or "{urtf" the text is read in using the RTF reader. |
+
+#### Return value
+
+If the operation is setting all of the text and succeeds, the return value is 1.
+
+If the operation is setting the selection and succeeds, the return value is the number of bytes or characters copied.
+
+If the operation fails, the return value is zero.
 
 # <a name="SetUIAName"></a>SetUIAName
 
 Sets the maximum number of actions that can stored in the undo queue.
 ```
-FUNCTION SetUIAName (BYVAL bstrName AS AFX_BSTR) AS DWORD
+FUNCTION SetUIAName (BYVAL pwszName AS WSTRING PTR) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *bstrName* | A pointer to the null-terminated name string. |
+
+#### Return value
+
+**TRUE** if the name for UIA is successfully set, otherwise **FALSE**.
 
 # <a name="SetUndoLimit"></a>SetUndoLimit
 
