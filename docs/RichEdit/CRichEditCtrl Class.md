@@ -1609,6 +1609,13 @@ Retrieves a specified range of characters from a rich edit control.
 ```
 FUNCTION GetTextRange (BYREF trg AS .TEXTRANGEW) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *trg* | A [TEXTRANGEW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-textrangew) structure that specifies the range of characters to retrieve and a buffer to copy the characters to. |
+
+#### Return value
+
+The message returns the number of characters copied, not including the terminating null character.
 
 # <a name="GetThumb"></a>GetThumb
 
@@ -1616,6 +1623,9 @@ Gets the position of the scroll box (thumb) in the vertical scroll bar of a mult
 ```
 FUNCTION GetThumb () AS LONG
 ```
+#### Return value
+
+The return value is the position of the scroll box.
 
 # <a name="GetUndoName"></a>GetUndoName
 
@@ -1624,12 +1634,41 @@ Retrieves the type of the next undo action, if any.
 FUNCTION GetUndoName () AS DWORD
 ```
 
+#### Return value
+
+If there is an undo action, the value returned is an [UNDONAMEID](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-undonameid) enumeration value that indicates the type of the next action in the control's undo queue.
+
+If there are no actions that can be undone or the type of the next undo action is unknown, the return value is zero.
+
+#### UNDONAMEID enumeration
+
+| Name              | Value | Description |
+| ----------------- | ----- | ----------- |
+| **UID_UNKNOWN**   |   0   | The type of undo action is unknown. |
+| **UID_TYPING**    |   1   | Typing operation. |
+| **UID_DELETE**    |   2   | Delete operation. |
+| **UID_DRAGDROP**  |   3   | Drag-and-drop operation. |
+| **UID_CUT**       |   4   | Cut operation. |
+| **UID_PASTE**     |   5   | Paste operation. |
+| **UID_AUTOTABLE** |   6   | Automatic table insertion; for example, typing +---+---+<Enter> to insert a table row. |
+
+#### Remarks
+
+The types of actions that can be undone or redone include typing, delete, drag, drop, cut, and paste operations. This information can be useful for applications that provide an extended user interface for undo and redo operations, such as a drop-down list box of actions that can be undone.
+
 # <a name="GetWordBreakProc"></a>GetWordBreakProc
 
 Gets the address of the current Wordwrap function.
 ```
 FUNCTION GetWordBreakProc () AS LONG_PTR
 ```
+#### Return value
+
+The return value specifies the address of the application-defined Wordwrap function. The return value is **NULL** if no Wordwrap function exists.
+
+#### Remarks
+
+A Wordwrap function scans a text buffer that contains text to be sent to the display, looking for the first word that does not fit on the current display line. The wordwrap function places this word at the beginning of the next line on the display. A Wordwrap function defines the point at which the system should break a line of text for multiline edit controls, usually at a space character that separates two words.
 
 # <a name="GetWordBreakProcEx"></a>GetWordBreakProcEx
 
@@ -1637,6 +1676,9 @@ Retrieves the address of the currently registered extended word-break procedure.
 ```
 FUNCTION GetWordBreakProcEx () AS LONG_PTR
 ```
+#### Return value
+
+The message returns the address of the currently registered extended word-break procedure.
 
 # <a name="GetWordWrapMode"></a>GetWordWrapMode
 
@@ -1644,13 +1686,27 @@ Gets the current word wrap and word-break options for the rich edit control.
 ```
 FUNCTION GetWordWrapMode () AS DWORD
 ```
+#### Return value
+
+The message returns the current word wrap and word-break options.
+
+#### Remarks
+
+This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions of Rich Edit. This message must not be sent by the application-defined, word-break procedure.
 
 # <a name="GetZoom"></a>GetZoom
 
 Gets the current zoom ratio, which is always between 1/64 and 64.
 ```
-FUNCTION GetZoom (BYVAL pzNum AS DWORD PTR, BYVAL pzDen AS DWORD PTR) AS LONG
+FUNCTION GetZoom (BYREF pzNum AS DWORD, BYREF pzDen AS DWORD) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| zNum* | A **DWORD** variable that receives the numerator of the zoom ratio. |
+| zDen* | A **DWORD** variable that receives the denominator of the zoom ratio.. |
+
+#### Return value
+The message returns **TRUE** if message is processed, which it will be if both *pzNum* and *pzDen* are not **NULL**.
 
 # <a name="HideSelection"></a>HideSelection
 
@@ -1658,6 +1714,13 @@ Hides or shows the selection in a rich edit control.
 ```
 SUB HideSelection (BYVAL fHide AS DWORD)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fHide* | Value specifying whether to hide or show the selection. If this parameter is zero, the selection is shown. Otherwise, the selection is hidden. |
+
+#### Return value
+
+This message does not return a value.
 
 # <a name="InsertImage"></a>InsertImage
 
@@ -1665,6 +1728,20 @@ Replaces the selection with a blob that displays an image.
 ```
 FUNCTION InsertImage (BYREF ip AS RICHEDIT_IMAGE_PARAMETERS) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hRichEdit* | The handle of the rich edit control. |
+| *ip* | A [RICHEDIT_IMAGE_PARAMETERS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-richedit_image_parameters) structure that contains the image blob. |
+
+#### Return value
+
+Returns S_OK if successful, or one of the following error codes.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **E_FAIL** | Cannot insert the image. |
+| **E_INVALIDARG** | The *ip* parameter is NULL or points to an invalid image. |
+| **E_OUTOFMEMORY** | Insufficient memory is available. |
 
 # <a name="InsertTable"></a>InsertTable
 
@@ -1672,6 +1749,20 @@ Inserts one or more identical table rows with empty cells.
 ```
 FUNCTION InsertTable (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *tp* | A [TABLEROWPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablerowparms) structure. |
+| *tcp* | A [TABLECELLPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablecellparms) structure. |
+
+#### Return value
+
+Returns **S_OK** if the table is inserted, or an error code if not.
+
+#### Remarks
+
+If the **cpStartRow** member of the **TABLEROWPARMS** is –1, this message deletes the selected text (if any), and then inserts empty table rows with the row and cell parameters given by *lptp^* and *lptcp*. It leaves the selection pointing to the start of the first cell in the first row. The client can then populate the table cells by pointing the selection (or an **ITextRange**) to the various cell end marks and inserting and formatting the desired text. Such text can include nested table rows. Alternatively, if the **cpStartRow** member of the **TABLEROWPARMS** is 0 or greater, table rows are inserted at the character position given by **cpStartRow**. This only changes the current selection if the table is inserted inside the selected text.
+
+A Microsoft Rich Edit table consists of a sequence of table rows which, in turn, consist of sequences of paragraphs. A table row starts with the special two-character delimiter paragraph U+FFF9 U+000D and ends with the two-character delimiter paragraph U+FFFB U+000D. Each cell is terminated by the cell mark U+0007, which is treated as a hard end-of-paragraph mark just as U+000D (CR) is. The table row and cell parameters are treated as special paragraph formatting of the table-row delimiters. The formatting contains the information in the **TABLEROWPARMS** structure. The cell parameters given by the **TABLECELLPARMS** structure are stored in an expanded version of the tabs array. This format allows tables to be nested within other tables, up to fifteen levels deep.
 
 # <a name="IsIME"></a>IsIME
 
@@ -1679,6 +1770,9 @@ Determines if current input locale is an East Asian locale.
 ```
 FUNCTION IsIME () AS LONG
 ```
+#### Return value
+
+Returns **TRUE** if it is an East Asian locale. Otherwise, it returns **FALSE**.
 
 # <a name="LineFromChar"></a>LineFromChar
 
@@ -1686,6 +1780,13 @@ Gets the index of the line that contains the specified character index in a mult
 ```
 FUNCTION LineFromChar (BYVAL index AS DWORD) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *index* | The character index of the character contained in the line whose number is to be retrieved. If this parameter is -1, **LineFromChar** retrieves either the line number of the current line (the line containing the caret) or, if there is a selection, the line number of the line containing the beginning of the selection. |
+
+#### Return value
+
+The return value is the zero-based line number of the line containing the character index specified by *index*.
 
 # <a name="LineIndex"></a>LineIndex
 
@@ -1693,6 +1794,13 @@ Gets the character index of the first character of a specified line in a multili
 ```
 FUNCTION LineIndex (BYVAL nLine AS LONG) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nLine* | The zero-based line number. A value of -1 specifies the current line number (the line that contains the caret). |
+
+#### Return value
+
+The return value is the character index of the line specified in the *nLine* parameter, or it is -1 if the specified line number is greater than the number of lines in the edit control.
 
 # <a name="LineLength"></a>LineLength
 
@@ -1700,6 +1808,13 @@ Retrieves the length, in characters, of a line in a rich edit control.
 ```
 FUNCTION LineLength (BYVAL index AS DWORD) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *index* | The character index of a character in the line whose length is to be retrieved. If this parameter is greater than the number of characters in the control, the return value is zero.<br>This parameter can be -1. In this case, the message returns the number of unselected characters on lines containing selected characters. For example, if the selection extended from the fourth character of one line through the eighth character from the end of the next line, the return value would be 10 (three characters on the first line and seven on the next). |
+
+#### Return value
+
+If *index* is greater than the number of characters in the control, the return value is zero.
 
 # <a name="LineScroll"></a>LineScroll
 
@@ -1707,6 +1822,17 @@ Scrolls the text in a multiline rich edit control.
 ```
 FUNCTION LineScroll (BYVAL y AS LONG) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *y* | The number of lines to scroll vertically. |
+
+#### Return value
+
+**TRUE** or **FALSE**.
+
+#### Remarks
+
+The control does not scroll vertically past the last line of text in the edit control. If the current line plus the number of lines specified by the *y* parameter exceeds the total number of lines in the edit control, the value is adjusted so that the last line of the edit control is scrolled to the top of the edit-control window.
 
 # <a name="PasteSpecial"></a>PasteSpecial
 
