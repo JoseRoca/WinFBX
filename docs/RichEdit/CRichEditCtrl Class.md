@@ -1150,12 +1150,46 @@ Determines which line contains the specified character in a rich edit control.
 ```
 FUNCTION ExLineFromChar (BYVAL iIndex AS LONG) AS LONG
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *iIndex* | Zero-based index of the character. |
+
+#### Return value
+
+Returns the zero-based index of the line.
 
 # <a name="ExSetSel"></a>ExSetSel
 
 Selects a range of characters and/or Component Object Model (COM) objects in a Microsoft Rich Edit control.
 ```
 FUNCTION ExSetSel (BYREF cr AS CHARRANGE) AS DWORD
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cr* | A [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) structure that specifies the selection range. |
+
+#### CHARRANGE structure
+```
+type _charrange field = 4
+	cpMin as LONG
+	cpMax as LONG
+end type
+
+type CHARRANGE as _charrange
+```
+| Member  | Description |
+| ------- | ----------- |
+| *cpMin* | Character position index immediately preceding the first character in the range. |
+| *cpMax* | Character position immediately following the last character in the range. |
+
+#### Return value
+
+The return value is the selection that is actually set.
+
+#### Usage example
+```
+DIM chrRange AS CHARRANGE = TYPE<CHARRANGE>(3, 12)
+pRichEditCtro.ExSetSel(@chrRange)
 ```
 
 # <a name="FindText"></a>FindText
