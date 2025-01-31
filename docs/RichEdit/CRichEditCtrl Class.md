@@ -187,8 +187,7 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 
 | Name       | Description |
 | ---------- | ----------- |
-| [AfxCRichEditCtrlPtr](#AfxCRichEditCtrlPtr) | Overloaded function that retrieves a pointer to 
-the `CRichEditCtrl`class from the handle of the rich edit control or fromthe handle of its parent window and the identifier of the control. |
+| [AfxCRichEditCtrlPtr](#AfxCRichEditCtrlPtr) | Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or fromthe handle of its parent window and the identifier of the control. |
 | [CRichEditCtrl_GetRtfText](#CRichEditCtrl_GetRtfText) | Retrieves formatted text from a Rich Edit control |
 | [CRichEditCtrl_LoadRtfFromFileW](#CRichEditCtrl_LoadRtfFromFileW) | Loads a Rich Text File into a Rich Edit control. |
 | [CRichEditCtrl_LoadRtfFromResourceW](#CRichEditCtrl_LoadRtfFromResourceW) | Loads a Rich Text Resource File into a Rich Edit control. |
