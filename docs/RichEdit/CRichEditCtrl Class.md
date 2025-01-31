@@ -2544,7 +2544,7 @@ END FUNCTION
 
 # <a name="AfxCRichEditCtrlPtr"></a>AfxCRichEditCtrlPtr
 
-Retrieves a pointer to the CRichEditCtrl class from the handle of the RichEdit control.
+Retrieves a pointer to the **CRichEditCtrl** class from the handle of the Rich Edit control.
 ```
 FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
    DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(hRichEdit, WM_USER + 100, 0, 0))
@@ -2557,7 +2557,9 @@ END FUNCTION
 
 #### Return value
 
-a pointer to the CRichEditCtrl class.
+A pointer to the **CRichEditCtrl** class.
+
+---
 
 Returns a pointer to the class given the handle of the parent window of the control and the identifier of the control.
 ```
@@ -2573,7 +2575,7 @@ END FUNCTION
 
 #### Return value
 
-A pointer to the CRichEditCtrl class.
+A pointer to the **CRichEditCtrl** class.
 
 # <a name="CRichEditCtrl_SetFontW"></a>CRichEditCtrl_SetFontW
 
