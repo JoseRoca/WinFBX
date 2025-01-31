@@ -38,7 +38,8 @@ DIM pRichEdit AS CRichEditCtrl = CRichEditCtrl(@pWindow, IDC_RICHEDIT, "RichEdit
 ```
 #### Usage example (pointer syntax)
 ```
-DIM pRichEdit AS CRichEditCtrl PTR = NEW CRichEditCtrl(@pWindow, IDC_RICHEDIT, "Rich Edit box", 100, 50, 300, 200)
+DIM pRichEdit AS CRichEditCtrl PTR = NEW CRichEditCtrl(@pWindow, IDC_RICHEDIT, _
+    "Rich Edit box", 100, 50, 300, 200)
 
 ```
 
