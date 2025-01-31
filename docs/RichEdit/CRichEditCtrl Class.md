@@ -1061,10 +1061,23 @@ If there are actions in the control's undo queue, the return value is nonzero. I
 
 # <a name="DisplayBand"></a>DisplayBand
 
-Displays a portion of the contents of a rich edit control, as previously formatted for a device using the EM_FORMATRANGE message.
+Displays a portion of the contents of a rich edit control, as previously formatted for a device using the **FormatRange** method.
 ```
-FUNCTION DisplayBand (BYREF rc AS .RECT) AS LONG
+FUNCTION DisplayBand (BYREF rc AS .RECT) AS BOOLEAN
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *rc* | A [RECT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect) structure specifying the display area of the device. |
+
+#### Return value
+
+If the operation succeeds, the return value is **TRUE**. If the operation fails, the return value is **FALSE**.
+
+#### Remarks
+
+Text and Component Object Model (COM) objects are clipped by the rectangle. The application does not need to set the clipping region.
+
+Banding is the process by which a single page of output is generated using one or more separate rectangles, or bands. When all bands are placed on the page, a complete image results. This approach is often used by raster printers that do not have sufficient memory or ability to image a full page at one time. Banding devices include most dot matrix printers as well as some laser printers.
 
 # <a name="EmptyUndoBuffer"></a>EmptyUndoBuffer
 
@@ -1072,6 +1085,13 @@ Resets the undo flag of a rich edit control. The undo flag is set whenever an op
 ```
 SUB EmptyUndoBuffer ()
 ```
+#### Return value
+
+This method does not return a value.
+
+#### Remarks
+
+The undo flag is automatically reset whenever the edit control receives a **WM_SETTEXT** or **EM_SETHANDLE** message.
 
 # <a name="ExGetSel"></a>ExGetSel
 
@@ -1079,6 +1099,23 @@ Retrieves the starting and ending character positions of the selection in a rich
 ```
 FUNCTION ExGetSel () AS CHARRANGE
 ```
+#### Return value
+
+A [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) structure with the selection range.
+
+#### CHARRANGE structure
+```
+type _charrange field = 4
+	cpMin as LONG
+	cpMax as LONG
+end type
+
+type CHARRANGE as _charrange
+```
+| Member  | Description |
+| ------- | ----------- |
+| *cpMin* | Character position index immediately preceding the first character in the range. |
+| *cpMax* | Character position immediately following the last character in the range. |
 
 # <a name="ExLimitText"></a>ExLimitText
 
