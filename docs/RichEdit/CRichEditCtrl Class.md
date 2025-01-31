@@ -79,7 +79,6 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [EllipsisMode](#EllipsisMode) | Gets/sets the current ellipsis mode. |
 | [EventMask](#EventMask) | Gets/sets the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window. |
 | [HyphenateInfo](#HyphenateInfo) | Gets/sets information about hyphenation for a Microsoft Rich Edit control. |
-| [IMEColor](#IMEColor) | Gets/sets the Input Method Editor (IME) composition color. This message is available only in Asian-language versions of the operating system. |
 | [IMEModeBias](#IMEModeBias) | Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [IMEOptions](#IMEOptions) | Gets/sets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system. |
 | [LangOptions](#LangOptions) | Gets/sets a rich edit control's option settings for Input Method Editor (IME) and Asian language support. |
@@ -121,6 +120,7 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [GetCharFromPos](#GetCharFromPos) | Gets information about the character closest to a specified point in the client area of an edit control. |
 | [GetEllipsisState](#GetEllipsisState) | Retrieves the current ellipsis state. |
 | [GetFirstVisibleLine](#GetFirstVisibleLine) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
+| [GetIMEColor](#GetIMEColor) | Retrieves the Input Method Editor (IME) composition color. |
 | [GetIMECompMode](#GetIMECompMode) | Gets the current IME mode for a rich edit control. |
 | [GetIMECompText](#GetIMECompText) | Gets the Input Method Editor (IME) composition text. |
 | [GetIMEProperty](#GetIMEProperty) | Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
@@ -160,6 +160,7 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [SelectionType](#SelectionType) | Determines the selection type for a rich edit control. |
 | [SetBkgndColor](#SetBkgndColor) | Sets the background color for a rich edit control. |
 | [SetFontSize](#SetFontSize) | Sets the font size for the selected text. |
+| [SetIMEColor](#SetIMEColor) | Sets the Input Method Editor (IME) composition color. |
 | [SetMargins](#SetMargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
 | [SetOleCallback](#SetOleCallback) | Gives a rich edit control an IRichEditOleCallback object that the control uses to get OLE-related resources and information from the client. |
 | [SetPalette](#SetPalette) | Changes the palette that a rich edit control uses for its display window. |
@@ -540,27 +541,6 @@ Gets/sets information about hyphenation for a Microsoft Rich Edit control.
 
 (GET) A [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure.
 
-# <a name="IMEColor"></a>IMEColor
-
-Gets/sets the Input Method Editor (IME) composition color. This message is available only in Asian-language versions of the operating system.
-```
-PROPERTY IMEColor () AS .COMPCOLOR
-PROPERTY IMEColor (BYREF cmpcolor AS .COMPCOLOR)
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *cmpcolor* | (SET) A [COMPCOLOR](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-compcolor) structure that contains the composition color to be set. |
-
-#### Return value
-
-(GET) A four-element array of [COMPCOLOR](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-compcolor) structures.
-
-(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
-
-#### Note
-
-This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions.
 
 # <a name="IMEModeBias"></a>IMEModeBias
 
@@ -1318,6 +1298,26 @@ The return value is the zero-based index of the uppermost visible line in a mult
 
 For single-line rich edit controls, the return value is zero.
 
+# <a name="GetIMEColor"></a>GetIMEColor
+
+Gets the Input Method Editor (IME) composition color. This message is available only in Asian-language versions of the operating system.
+```
+FUNCTION CRichEditCtrl.GetIMEColor (BYVAL rgCmpclr AS .COMPCOLOR PTR) AS LONG
+   RETURN this.SetResult(SendMessageW(m_hRichEdit, EM_GETIMECOLOR, 0, cast(LPARAM, rgCmpclr)))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *rgCmpclr* | A pointer to a four-element array of [COMPCOLOR](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-compcolor) structures. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+#### Note
+
+This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions.
 
 # <a name="GetIMECompMode"></a>GetIMECompMode
 
@@ -2042,6 +2042,27 @@ Additional examples are shown in the following table.
 | 28 | 3 | 36 |
 | 80 | 1 | 90 |
 | 80 | -1 | 72 |
+
+# <a name="SetIMEColor"></a>SetIMEColor
+
+Sets the Input Method Editor (IME) composition color. This message is available only in Asian-language versions of the operating system.
+```
+FUNCTION CRichEditCtrl.SetIMEColor (BYVAL pcompcolor AS .COMPCOLOR PTR) AS LONG
+   RETURN this.SetResult(SendMessageW(m_hRichEdit, EM_SETIMECOLOR, 0, cast(LPARAM, pcompcolor)))
+END FUNCTION
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pcompcolor* | Pointer to a [COMPCOLOR](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-compcolor) structure that contains the composition color to be set.. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+#### Note
+
+This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions.
 
 # <a name="SetMargins"></a>SetMargins
 
