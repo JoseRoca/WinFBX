@@ -714,9 +714,22 @@ Gets/sets the options for a rich edit control.
 
 Deprecated. Gets/sets the text layout for a Microsoft Rich Edit control.
 ```
-PROPERTY PageRotate () AS DWORD
-PROPERTY PageRotate (BYVAL txtlayout AS LONG)
+(GET) PROPERTY PageRotate () AS DWORD
+(SET) PROPERTY PageRotate (BYVAL txtlayout AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *txtlayout* | Text layout value. This can be one of the following values.<br>**EPR_0**. Text flows from left to right and from top to bottom.<br>**EPR_90**. Text flows from bottom to top and from left to right.<br>**EPR_180**. Text flows from right to left and from bottom to top.<br>**EPR_270**. Text flows from top to bottom and from right to left.<br>**EPR_SE**. Windows 8: Text flows top to bottom and left to right (Mongolian text layout). |
+
+#### Return value
+
+(GET) The current text layout. For a list of possible text layout values, see the *txtlayout* parameter above.
+
+(SET) Return value is the new text layout value. Call the (GET) **PageRotate" property to get the value.
+
+#### Remarks
+
+(SET) This message sets the text layout for the entire document. However, embedded contents are not rotated and must be rotated separately by the application.
 
 # <a name="ParaFormat"></a>ParaFormat
 
