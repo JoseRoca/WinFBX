@@ -1991,7 +1991,7 @@ END SUB
 | ---------- | ----------- |
 | *hRichEdit* | The handle of the rich edit control. |
 | *clpfmt* | Specifies the [ Clipboard Formats](https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats). |
-| *lprps* | Pointer to a [REPASTESPECIAL](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-repastespecial) structure or **NULL**. If an object is being pasted, the REPASTESPECIAL structure is filled in with the desired display aspect. If *clpfmt* is **NULL** or the *dwAspect* member is zero, the display aspect used will be the contents of the object descriptor. |
+| *lprps* | Pointer to a [REPASTESPECIAL](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-repastespecial) structure or **NULL**. If an object is being pasted, the [REPASTESPECIAL](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-repastespecial) structure is filled in with the desired display aspect. If *clpfmt* is **NULL** or the *dwAspect* member is zero, the display aspect used will be the contents of the object descriptor. |
 
 # <a name="RichEdit_PosFromChar"></a>RichEdit_PosFromChar
 
