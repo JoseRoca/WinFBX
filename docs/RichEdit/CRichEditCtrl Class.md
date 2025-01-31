@@ -1130,6 +1130,19 @@ Sets an upper limit to the amount of text the user can type or paste into a rich
 ```
 SUB ExLimitText (BYVAL dwLimit AS DWORD)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwLimit* | Specifies the maximum amount of text that can be entered. If this parameter is zero, the default maximum is used, which is 64K characters. A COM object counts as a single character. |
+
+#### Remarks
+
+The text limit set by the **ExLimitText** method does not limit the amount of text that you can stream into a rich edit control using the **StreamIn** method with the *pedst* parameter set to **SF_TEXT**. However, it does limit the amount of text that you can stream into a rich edit control using the **StreamIn** method with the *pedst* parameter set set to **SF_RTF**.
+
+Before **ExLimitText** is called, the default limit to the amount of text a user can enter is 32,767 characters.
+
+#### Return value
+
+This method does not return a value.
 
 # <a name="ExLineFromChar"></a>ExLineFromChar
 
