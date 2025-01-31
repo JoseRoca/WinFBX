@@ -990,7 +990,7 @@ Gets/sets the touch options that are associated with a rich edit control.
 
 (GET) Returns the value of the option specified by the *_Options* parameter. It is nonzero if *_Options* is **RTO_SHOWHANDLES** and the touch grippers are visible; zero, otherwise.
 
-(SET) Returns **TRUE** if *pto* is valid, otherwise **FALSE**.
+(SET) Returns **TRUE** if *pto* is valid, otherwise **FALSE**. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
 
 #### Remarks
 
@@ -1000,9 +1000,23 @@ Advanced line breaking is turned on automatically by the rich edit control when 
 
 Gets/sets the current state of the typography options of a rich edit control.
 ```
-PROPERTY TypographyOptions () AS DWORD
-PROPERTY TypographyOptions (BYVAL pto AS LONG, BYVAL fMask AS LONG)
+(GET) PROPERTY TypographyOptions () AS DWORD
+(SET) PROPERTY TypographyOptions (BYVAL pto AS LONG, BYVAL fMask AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pto* | Specifies one or both of the following values.<br>**TO_ADVANCEDTYPOGRAPHY**. Advanced line breaking and line formatting is turned on.<br>**TO_SIMPLELINEBREAK**. Faster line breaking for simple text (requires **TO_ADVANCEDTYPOGRAPHY**). |
+| *fMask* | A mask consisting of one or more of the flags in *pto*. Only the flags that are set in this mask will be set or cleared. This allows a single flag to be set or cleared without reading the current flag states. |
+
+#### Return value
+
+(GET Returns the current typography options.
+
+(SET) Returns **TRUE** if *pto* is valid, otherwise **FALSE**. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+#### Remarks
+
+You can turn on advanced line breaking by sending calling the (SET) **TypographyOPtions** property. Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
 
 # <a name="CallAutocorrectProc"></a>CallAutocorrectProc
 
