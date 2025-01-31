@@ -153,7 +153,7 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [PosFromChar](#PosFromChar) | Retrieves the client area coordinates of a specified character in a rich edit control. |
 | [Redo](#Redo) | Redoes the next action in the control's redo queue. |
 | [ReplaceSel](#ReplaceSel) | Replaces the current selection in a rich edit control with the specified text. |
-| [RequestResize](#RequestResize) | Forces a rich edit control to send an EN_REQUESTRESIZE notification message to its parent window. |
+| [RequestResize](#RequestResize) | Forces a rich edit control to send an **EN_REQUESTRESIZE** notification message to its parent window. |
 | [Reconversion](#Reconversion) | Invokes the Input Method Editor (IME) reconversion dialog box. |
 | [Scroll](#Scroll) | Scrolls the text vertically in a multiline rich edit control. |
 | [ScrollCaret](#ScrollCaret) | Scrolls the caret into view in a rich edit control. |
@@ -1852,6 +1852,19 @@ Retrieves the client area coordinates of a specified character in a rich edit co
 ```
 FUNCTION PosFromChar (BYVAL index as DWORD) AS .POINTL
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *index* | The zero-based index of the character. |
+
+#### Return value
+
+A [POINTL](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-pointl) structure with receives the client area coordinates of the character. The coordinates are in screen units and are relative to the upper-left corner of the control's client area.
+
+#### Remarks
+
+A returned coordinate can be a negative value if the specified character is not displayed in the edit control's client area. The coordinates are truncated to integer values.
+
+If the character is a line delimiter, the returned coordinates indicate a point just beyond the last visible character in the line. If the specified index is greater than the index of the last character in the control, the control returns -1.
 
 # <a name="Reconversion"></a>Reconversion
 
@@ -1859,6 +1872,9 @@ Invokes the Input Method Editor (IME) reconversion dialog box.
 ```
 SUB Reconversion ()
 ```
+#### Return value
+
+Thismethod does not return a value.
 
 # <a name="Redo"></a>Redo
 
@@ -1866,6 +1882,13 @@ Redoes the next action in the control's redo queue.
 ```
 FUNCTION Redo () AS LONG
 ```
+#### Return value
+
+If the **Redo** operation succeeds, the return value is a nonzero value. If the **Redo** operation fails, the return value is zero.
+
+#### Remarks
+
+To determine whether there are any actions in the control's redo queue, call the **CanRedo** method.
 
 # <a name="ReplaceSel"></a>ReplaceSel
 
@@ -1873,13 +1896,28 @@ Replaces the current selection in a rich edit control with the specified text.
 ```
 SUB ReplaceSel (BYVAL bCanBeUndone AS LONG, BYVAL pwszText AS WSTRING PTR)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *bCanBeUndone* | Specifies whether the replacement operation can be undone. If this is **TRUE**, the operation can be undone. If this is **FALSE**, the operation cannot be undone. |
+| *pwszText* | A pointer to a null-terminated string containing the replacement text. |
+
+#### Remarks
+
+Use the **ReplaceSel** method to replace only a portion of the text in an edit control. To replace all of the text, use the **SetText** method.
+
+If there is no selection, the replacement text is inserted at the caret.
+
+In a rich edit control, the replacement text takes the formatting of the character at the caret or, if there is a selection, of the first character in the selection.
 
 # <a name="RequestResize"></a>RequestResize
 
-Forces a rich edit control to send an EN_REQUESTRESIZE notification message to its parent window.
+Forces a rich edit control to send an **EN_REQUESTRESIZE** notification message to its parent window.
 ```
 SUB RequestResize ()
 ```
+#### Remarks
+
+This message is useful during **WM_SIZE** processing for the parent of a bottomless rich edit control.
 
 # <a name="Scroll"></a>Scroll
 
