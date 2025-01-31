@@ -1232,6 +1232,26 @@ Finds the next word break before or after the specified character position or re
 ```
 FUNCTION FindWordBreak (BYVAL fOperation AS DWORD, BYVAL dwStartPos AS DWORD) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fOperation* | Specifies the find operation. This parameter can be one of the following values.<br>**WB_CLASSIFY**. Returns the character class and word-break flags of the character at the specified position.<br>**WB_ISDELIMITER**. Returns **TRUE** if the character at the specified position is a delimiter, or **FALSE** otherwise.<br>**WB_LEFT**. Finds the nearest character before the specified position that begins a word.<br>**WB_LEFTBREAK**. Finds the next word end before the specified position. This value is the same as WB_PREVBREAK.<br>**WB_MOVEWORDLEFT**. Finds the next character that begins a word before the specified position. This value is used during CTRL+LEFT ARROW key processing. This value is the similar to WB_MOVEWORDPREV. See Remarks for more information.<br>**WB_MOVEWORDRIGHT**. Finds the next character that begins a word after the specified position. This value is used during CTRL+right key processing. This value is similar to WB_MOVEWORDNEXT. See Remarks for more information.<br>**WB_RIGHT**. Finds the next character that begins a word after the specified position.<br>**WB_RIGHTBREAK**. Finds the next end-of-word delimiter after the specified position. This value is the same as WB_NEXTBREAK. |
+| *dwStartPos* | Zero-based character starting position. |
+
+#### Return value
+
+The message returns a value based on the *fOperation* parameter.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **WB_CLASSIFY** | Returns the character class and word-break flags of the character at the specified position. |
+| **WB_ISDELIMITER** | Returns **TRUE** if the character at the specified position is a delimiter; otherwise it returns **FALSE**. |
+| **Others** | Returns the character index of the word break. |
+
+#### Remarks
+
+If *fOperation* is **WB_LEFT** and **WB_RIGHT**, the word-break procedure finds word breaks only after delimiters. This matches the functionality of an edit control. If *fOperation* is **WB_MOVEWORDLEFT** or **WB_MOVEWORDRIGHT**, the word-break procedure also compares character classes and word-break flags.
+
+For information about character classes and word-break flags, see [Word and Line Breaks](https://learn.microsoft.com/en-us/windows/win32/controls/use-word-and-line-break-information).
 
 # <a name="FormatRange"></a>FormatRange
 
