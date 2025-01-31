@@ -1424,6 +1424,13 @@ Copies a line of text from a rich edit control.
 ```
 FUNCTION GetLine (BYVAL which AS DWORD) AS CWSTR
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *which* | The zero-based index of the line to retrieve from a multiline edit control. A value of zero specifies the topmost line. |
+
+#### Return value
+
+A copy of the line.
 
 # <a name="GetLineCount"></a>GetLineCount
 
