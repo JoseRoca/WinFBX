@@ -1519,6 +1519,9 @@ Retrieves the currently selected text in a rich edit control.
 ```
 FUNCTION GetSelText () AS CWSTR
 ```
+#### Return value
+
+The selected text as a **CWSTR** (dynamic unicode string).
 
 # <a name="GetTableParams"></a>GetTableParams
 
