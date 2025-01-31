@@ -1316,6 +1316,17 @@ Gets the current IME mode for a rich edit control.
 ```
 FUNCTION GetIMECompMode () AS DWORD
 ```
+#### Return value
+
+The return value is one of the following values.
+
+| Return code | Description |
+| ----------- | ----------- |
+| **ICM_NOTOPEN** | IME is not open. |
+| **ICM_LEVEL3** | True inline mode. |
+| **ICM_LEVEL2** | Level 2. |
+| **ICM_LEVEL2_5** | Level 2.5. |
+| **ICM_LEVEL2_SUI** | Special UI. |
 
 # <a name="GetIMECompText"></a>GetIMECompText
 
