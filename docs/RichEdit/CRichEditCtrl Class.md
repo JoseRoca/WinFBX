@@ -441,10 +441,10 @@ Gets/sets the extended edit style flags.
 | **SES_EX_HANDLEFRIENDLYURL** | Display friendly name links with the same text color and underlining as automatic links, provided that temporary formatting isn't used or uses text autocolor (default: 0). |
 | **SES_EX_MULTITOUCH** | Enable touch support in Rich Edit. This includes selection, caret placement, and context-menu invocation. When this flag is not set, touch is emulated by mouse commands, which do not take touch-mode specifics into account (default: 0). |
 | **SES_EX_NOACETATESELECTION** | Display selected text using classic Windows selection text and background colors instead of background acetate color (default: 0). |
-| **SES_EX_NOMATH** | Disable insertion of math zones (default: 1). To enable math editing and display, send the **RichEdit_SetEditStyleEx** message with *fStyle* set to 0, and *fMask* set to SES_EX_NOMATH. |
-| **SES_EX_NOTABLE** | Disable insertion of tables. The **RichEdit_InsertTable** message returns **E_FAIL** and RTF tables are skipped (default: 0). |
+| **SES_EX_NOMATH** | Disable insertion of math zones (default: 1). To enable math editing and display, call the **EditStyleEx** property with *fStyle* set to 0, and *fMask* set to SES_EX_NOMATH. |
+| **SES_EX_NOTABLE** | Disable insertion of tables. The **InsertTable** method returns **E_FAIL** and RTF tables are skipped (default: 0). |
 | **SES_EX_USESINGLELINE** | Enable a multiline control to act like a single-line control with the ability to scroll vertically when the single-line height is greater than the window height (default: 0). |
-| **SES_HIDETEMPFORMAT** | Hide temporary formatting that is created when **ITextFont.Reset** is called with **tomApplyTmp**. For example, such formatting is used by spell checkers to display a squiggly underline under possibly misspelled words. |
+| **SES_HIDETEMPFORMAT** | Hide temporary formatting that is created when **Reset** method of the **ITextFont** is called with **tomApplyTmp**. For example, such formatting is used by spell checkers to display a squiggly underline under possibly misspelled words. |
 | **SES_EX_USEMOUSEWPARAM** | Use *wParam* when handling the **WM_MOUSEMOVE** message and do not call **GetAsyncKeyState**. |
 
 #### Return value
@@ -1529,6 +1529,26 @@ Retrieves the table parameters for a table row and the cell parameters for the s
 ```
 FUNCTION GetTableParams (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *tp* | A [TABLEROWPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablerowparms) structure. |
+| *tcp* | A [TABLECELLPARMS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-tablecellparms) structure. |
+
+#### Return value
+
+Returns S_OK if successful, or one of the following error codes.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **E_FAIL** | Changes cannot be made. This can occur if the control is a plain-text or single-line control, or if the insertion point is inside a math object. It also occurs if tables are disabled if the **RichEdit_SetEditStyleEx** message sets the **SES_EX_NOTABLE** value. |
+| **E_INVALIDARG** | The *lptp* or *lptcp* parameters are NULL or point to an invalid structure. The **cbRow** member of the **TABLEROWPARMS** structure must equal sizeof(TABLEROWPARMS) or sizeof(TABLEROWPARMS) 2*sizeof(long). The latter value is the size of the RichEdit 4.1 **TABLEROWPARMS** structure. The **cbCell** member of the **TABLEROWPARMS** structure must equal sizeof(TABLECELLPARMS). The query character position must be at a table row delimiter. |
+| **E_OUTOFMEMORY** | Insufficient memory is available. |
+
+#### Remarks
+
+This method gets the table parameters for the row at the character position specified by the **cpStartRow** member of the **TABLEROWPARMS** structure, and the number of cells specified by the **cCells** member of the **TABLECELLPARMS** structure.
+
+The character position specified by the **cpStartRow** member of the **TABLEROWPARMS** structure should be at the start of the table row, or at the end delimiter of the table row. If **cpStartRow** is set to 1, the character position is given by the current selection. In this case, position the selection at the end of the row (between the cell mark and the end delimiter of the table row), or select the row.
 
 # <a name="GetTextEx"></a>GetTextEx
 
