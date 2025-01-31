@@ -907,9 +907,22 @@ PROPERTY StoryType (BYVAL Index AS LONG, BYVAL dwType AS DWORD)
 
 Gets/sets the text from a rich edit control.
 ```
-PROPERTY Text () AS CWSTR
-DECLARE PROPERTY Text (BYVAL pwszText AS WSTRING PTR)
+(GET) PROPERTY Text () AS CWSTR
+(SET) PROPERTY Text (BYVAL pwszText AS WSTRING PTR)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pwszText* | A pointer to a null-terminated string that is the window text. |
+
+#### Return value
+
+(GET) The retrieved text.
+
+(SET) The return value is **TRUE** if the text is set. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+#### Remarks
+
+The Windows API function **GetWindowTextW** can also be used to retrive the text of a rich edit control, but it cannot retrieve the text of a control in another application.
 
 # <a name="TextMode"></a>TextMode
 
