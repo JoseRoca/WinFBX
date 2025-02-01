@@ -96,7 +96,6 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [ScrollPos](#ScrollPos) | Gets/sets the current scroll position of the edit control. |
 | [StoryType](#StoryType) | Gets/sets the story type. |
 | [Text](#Text) | Gets/sets the text from a rich edit control. |
-| [Text](#Text) | Gets/sets the text of an edit control. |
 | [TextMode](#TextMode) | Gets/sets the current text mode and undo level of a rich edit control. |
 | [TouchOptions](#TouchOptions) | Gets/sets the touch options that are associated with a rich edit control. |
 | [TypographyOptions](#TypographyOptions) | Gets/sets the current state of the typography options of a rich edit control. |
@@ -914,7 +913,7 @@ Gets/sets the text from a rich edit control.
 
 #### Remarks
 
-The Windows API function **GetWindowTextW** can also be used to retrive the text of a rich edit control, but it cannot retrieve the text of a control in another application.
+The Windows API function **GetWindowTextW** can also be used to retrieve the text of a rich edit control, but it cannot retrieve the text of a control in another application.
 
 # <a name="TextMode"></a>TextMode
 
@@ -925,7 +924,6 @@ Gets/sets the current text mode and undo level of a rich edit control.
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *hRichEdit* | The handle of the rich edit control. |
 | *values* | One or more values from the [TEXTMODE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-textmode) enumeration type. The values specify the new settings for the control's text mode and undo level parameters. |
 
 #### TextMode enumeration type
@@ -1743,7 +1741,6 @@ FUNCTION InsertImage (BYREF ip AS RICHEDIT_IMAGE_PARAMETERS) AS DWORD
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *hRichEdit* | The handle of the rich edit control. |
 | *ip* | A [RICHEDIT_IMAGE_PARAMETERS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-richedit_image_parameters) structure that contains the image blob. |
 
 #### Return value
@@ -1855,7 +1852,6 @@ SUB PasteSpecial (BYVAL clpfmt AS DWORD, BYREF rps AS REPASTESPECIAL)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *hRichEdit* | The handle of the rich edit control. |
 | *clpfmt* | Specifies the [ Clipboard Formats](https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats). |
 | *rps* | A [REPASTESPECIAL](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-repastespecial) structure or **NULL**. If an object is being pasted, the [REPASTESPECIAL](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-repastespecial) structure is filled in with the desired display aspect. If *clpfmt* is **NULL** or the *dwAspect* member is zero, the display aspect used will be the contents of the object descriptor. |
 
