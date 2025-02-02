@@ -1656,17 +1656,47 @@ This message is a fast and easy way to determine the number of characters in the
 
 # <a name="GetTextRange"></a>GetTextRange
 
-Retrieves a specified range of characters from a rich edit control.
+Overloaded method that retrieves a specified range of characters from a rich edit control.
 ```
 FUNCTION GetTextRange (BYREF trg AS .TEXTRANGEW) AS DWORD
+FUNCTION GetTextRange (BYVAL cpMin AS LONG = 0, BYVAL cpMax AS LONG = -1) AS CWSTR
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
 | *trg* | A [TEXTRANGEW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-textrangew) structure that specifies the range of characters to retrieve and a buffer to copy the characters to. |
+| *cpMin* | Character position index immediately preceding the first character in the range. |
+| *cpMax* | Character position immediately following the last character in the range. If the *cpMin* and *cpMax* members are equal, the range is empty. The range includes everything if *cpMin* is 0 and *cpMax* is –1. |
 
 #### Return value
 
-The message returns the number of characters copied, not including the terminating null character.
+The first overloades method returns the number of characters copied, not including the terminating null character.
+
+The second overloaded method returns the retrieved text.
+
+#### Usage examples
+
+Retrieve all the text using the first overloaded method:
+
+```
+DIM cbLen AS LONG = pRichEdit.GetTextLEngth
+DIM wstrText AS CWSTR = WSPACE(cbLen + 1)
+DIM trg AS TEXTRANGEW
+trg.chrg.cpMin = 0
+trg.chrg.cpMax = -1
+trg.lpstrText = wstrtext
+pRichEdit.GetTextRange(trg)
+AfxMsg wstrtext
+```
+Retrieve all the text using the second overloaded method:
+```
+DIM cws AS CWSTR = pRichEdit.GetTextRange
+AfxMsg cws
+```
+Retrieve a range of text.
+```
+DIM cws AS CWSTR = pRichEdit.GetTextRange(5, 15)
+AfxMsg cws
+```
 
 # <a name="GetThumb"></a>GetThumb
 
