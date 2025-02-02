@@ -1244,6 +1244,33 @@ FUNCTION FindText OVERLOAD (BYVAL fOptions AS DWORD = FR_DOWN, BYVAL cpMin AS LO
 
 If the target string is found, the return value is the zero-based position of the first character of the match. If the target is not found, the return value is -1.
 
+Search in a range:
+```
+DIM cws AS CWSTR = "box"
+DIM cbStart AS LONG = pRichEdit.FindText(FR_DOWN, 5, 20, cws)
+pRichEdit.ExSetSel(cbStart, cbStart + LEN(cws))
+```
+Search in the entire document:
+```
+DIM cws AS CWSTR = "box"
+DIM cbStart AS LONG = pRichEdit.FindText(FR_DOWN, 0, -1, cws)
+--or--
+DIM cbStart AS LONG = pRichEdit.FindText(FR_DOWN, , , cws)
+pRichEdit.ExSetSel(cbStart, cbStart + LEN(cws))
+```
+Case sensitive search:
+```
+DIM cws AS CWSTR = "box"
+DIM cbStart AS LONG = pRichEdit.FindText(FR_DOWN OR FR_MATCHCASE, 5, 20, cws)
+pRichEdit.ExSetSel(cbStart, cbStart + LEN(cws))
+```
+Search backwards from the end of the document to the beginning:
+```
+DIM cbStart AS LONG = pRichEdit.GetTextLength
+DIM cbStart AS LONG = pRichEdit.FindText(0, cbStart, 0, cws)
+pRichEdit.ExSetSel(cbStart, cbStart + LEN(cws))
+```
+
 # <a name="FindTextEx"></a>FindTextEx
 
 Overloaded method to find text within a rich edit control.
@@ -1270,6 +1297,28 @@ Second overloaded function: A **CHARRANGE** structure. The range of characters i
 
 **FindTextEx** uses the [FINDTEXTEXW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-findtextexw) structure, while **FindTex** uses the [FINDTEXTW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-findtextw) structure. The difference is that **FindTextEx** reports the range of text that was found.
 
+#### Usage examples
+
+Search in a range:
+```
+DIM cws AS CWSTR =  "box"
+DIM chrg AS CHARRANGE = pRichEdit.FindTextEx(FR_DOWN, 5, 20, cws)
+pRichEdit.ExSetSel(chrg.cpMin, chrg.cpMax)
+```
+Search in the entire document:
+```
+DIM cws AS CWSTR =  "box"
+DIM chrg AS CHARRANGE = pRichEdit.FindTextEx(FR_DOWN, 0, -1, cws)
+--or--
+DIM chrg AS CHARRANGE = pRichEdit.FindTextEx(FR_DOWN, , , cws)
+pRichEdit.ExSetSel(chrg.cpMin, chrg.cpMax)
+```
+Search backwards from the end of the document to the beginning:
+```
+DIM cbStart AS LONG = pRichEdit.GetTextLength
+DIM chrg AS CHARRANGE = pRichEdit.FindTextEx(0, cbStart, 0, cws)
+pRichEdit.ExSetSel(chrg.cpMin, chrg.cpMax)
+```
 # <a name="FindWordBreak"></a>FindWordBreak
 
 Finds the next word break before or after the specified character position or retrieves information about the character at that position.
