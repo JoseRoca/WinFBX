@@ -18,30 +18,15 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 # <a name="AfxCRichEditCtrlPtr"></a>AfxCRichEditCtrlPtr
 
-Retrieves a pointer to the `CRichEditCtrl`class from the handle of the Rich Edit control.
+Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or from the handle of its parent window and the control's identifier.
 ```
-FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
-   DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(hRichEdit, WM_USER + 100, 0, 0))
-   RETURN pRichEditCtrl
-END FUNCTION
+FUNCTION AfxCRichEditCtrlPtr (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
+FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CRichEditCtrl PTR
 ```
 | Parameter | Description |
 | --------- | ----------- |
-| *hRichEdit* | Handle of the Rich Edit control. |
+| *hRichEdit* | Handle of the rich edit control. |
 
-#### Return value
-
-A pointer to the `CRichEditCtrl` class.
-
----
-
-Returns a pointer to the class given the handle of the parent window of the control and the identifier of the control.
-```
-FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CRichEditCtrl PTR
-   DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(GetDlgItem(hParent, cID), WM_USER + 100, 0, 0))
-   RETURN pRichEditCtrl
-END FUNCTION
-```
 | Parameter | Description |
 | --------- | ----------- |
 | *hParent* | Handle of the parent window of the rich edit control. |
