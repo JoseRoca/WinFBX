@@ -1664,6 +1664,9 @@ FUNCTION GetTextRange (BYVAL cpMin AS LONG = 0, BYVAL cpMax AS LONG = -1) AS CWS
 | Parameter  | Description |
 | ---------- | ----------- |
 | *trg* | A [TEXTRANGEW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-textrangew) structure that specifies the range of characters to retrieve and a buffer to copy the characters to. |
+
+| Parameter  | Description |
+| ---------- | ----------- |
 | *cpMin* | Character position index immediately preceding the first character in the range. |
 | *cpMax* | Character position immediately following the last character in the range. If the *cpMin* and *cpMax* members are equal, the range is empty. The range includes everything if *cpMin* is 0 and *cpMax* is –1. |
 
