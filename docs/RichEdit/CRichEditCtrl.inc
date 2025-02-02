@@ -1671,8 +1671,6 @@ PRIVATE FUNCTION CRichEditctrl.SetFont ( _
    tcf.bPitchAndFamily = tlf.lfPitchAndFamily
    tcf.szFaceName = tlf.lfFaceName
    hResult = SendMessageW(hRichEdit, EM_SETCHARFORMAT, SCF_ALL, cast(LPARAM, @tcf))
-   ' // Specify which notifications the control sends to its parent window
-   IF hResult <> 0 THEN hResult = SendMessageW(m_hRichEdit, EM_SETEVENTMASK, 0, ENM_CHANGE)
    this.SetResult(hResult)
    RETURN hResult
 

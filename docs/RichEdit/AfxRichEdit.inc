@@ -1171,7 +1171,7 @@ END FUNCTION
 ' ========================================================================================
 ' Sets the font used by a rich edit control.
 ' ========================================================================================
-PRIVATE FUNCTION RichEdit_SetFontW ( _
+PRIVATE FUNCTION RichEdit_SetFont ( _
    BYVAL hRichEdit AS HWND, _             ' // Handle to the RichEdit control
    BYREF wszFaceName AS WSTRING, _        ' // Font name
    BYVAL ptsize AS LONG _                 ' // Font size in points
@@ -1217,7 +1217,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-PRIVATE FUNCTION RichEdit_LoadRtfFromFileW ( _
+PRIVATE FUNCTION RichEdit_LoadRtfFromFile ( _
    BYVAL hRichEdit AS HWND _                ' // Handle of the Rich Edit control
  , BYREF wszFileName AS WSTRING _           ' // Name of the file to load
  ) AS BOOLEAN                               ' // TRUE or FALSE
@@ -1281,7 +1281,7 @@ END FUNCTION
 ' The EM_STREAMIN message replaces the contents of a rich edit control with a stream of
 ' data provided by an application defined EditStreamCallback callback function.
 ' ========================================================================================
-PRIVATE FUNCTION RichEdit_LoadRtfFromResourceW ( _
+PRIVATE FUNCTION RichEdit_LoadRtfFromResource ( _
    BYVAL hRichEdit AS HWND _                ' // Handle of the Rich Edit control
  , BYVAL hInstance AS HINSTANCE _           ' // Instance handle
  , BYREF wszResourceName AS WSTRING _       ' // Name of the resource to load
