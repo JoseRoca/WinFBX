@@ -120,7 +120,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE PROPERTY StoryType (BYVAL Index AS DWORD) AS DWORD
       DECLARE PROPERTY StoryType (BYVAL Index AS LONG, BYVAL dwType AS DWORD)
       DECLARE PROPERTY Text () AS CWSTR
-      DECLARE PROPERTY Text (BYVAL pwszText AS WSTRING PTR)
+      DECLARE PROPERTY Text (BYREF wszText AS WSTRING)
       DECLARE PROPERTY TextMode () AS DWORD
       DECLARE PROPERTY TextMode (BYVAL pvalues AS LONG)
       DECLARE PROPERTY TouchOptions (BYVAL _Options AS LONG PTR) AS DWORD
@@ -135,12 +135,18 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION CanUndo () AS BOOLEAN
       DECLARE FUNCTION DisplayBand (BYREF rc AS .RECT) AS BOOLEAN
       DECLARE SUB EmptyUndoBuffer ()
-      DECLARE FUNCTION ExGetSel () AS CHARRANGE
+      DECLARE FUNCTION ExGetSel OVERLOAD () AS CHARRANGE
+      DECLARE SUB ExGetSel OVERLOAD (BYREF cpMin AS LONG, BYVAL cpMax AS LONG)
       DECLARE SUB ExLimitText (BYVAL dwLimit AS DWORD)
       DECLARE FUNCTION ExLineFromChar (BYVAL iIndex AS LONG) AS LONG
-      DECLARE FUNCTION ExSetSel (BYREF cr AS CHARRANGE) AS DWORD
-      DECLARE FUNCTION FindText (BYVAL fOptions AS DWORD, BYREF ft AS FINDTEXTW) AS LONG
-      DECLARE FUNCTION FindTextEx (BYVAL fOptions AS DWORD, BYREF ftexw AS FINDTEXTEXW) AS LONG
+      DECLARE FUNCTION ExSetSel OVERLOAD (BYREF cr AS CHARRANGE) AS DWORD
+      DECLARE SUB ExSetSel OVERLOAD (BYVAL cpMin AS LONG = 0, BYVAL cpMax AS LONG = -1)
+      DECLARE FUNCTION FindText OVERLOAD (BYVAL fOptions AS DWORD, BYREF ftw AS FINDTEXTW) AS LONG
+      DECLARE FUNCTION FindText OVERLOAD (BYVAL fOptions AS DWORD = FR_DOWN, _
+         BYVAL cpMin AS LONG = 0, BYVAL cpMax AS LONG = -1, BYREF wszText AS WSTRING) AS LONG
+      DECLARE FUNCTION FindTextEx OVERLOAD (BYVAL fOptions AS DWORD, BYREF ftexw AS FINDTEXTEXW) AS LONG
+      DECLARE FUNCTION FindTextEx OVERLOAD (BYVAL fOptions AS DWORD = FR_DOWN, BYVAL cpMin AS LONG = 0, _
+         BYVAL cpMax AS LONG = -1, BYREF wszText AS WSTRING) AS CHARRANGE
       DECLARE FUNCTION FindWordBreak (BYVAL fOperation AS DWORD, BYVAL dwStartPos AS DWORD) AS DWORD
       DECLARE FUNCTION FormatRange (BYVAL fRender AS LONG, BYREF fr AS FORMATRANGE) AS DWORD
       DECLARE FUNCTION GetCharFromPos (BYREF ptl AS .POINTL) AS LONG
@@ -160,7 +166,8 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION GetTextEx (BYREF gtex AS GETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
       DECLARE FUNCTION GetTextLength () AS LONG
       DECLARE FUNCTION GetTextLengthEx (BYREF gtex AS .GETTEXTLENGTHEX) AS LONG
-      DECLARE FUNCTION GetTextRange (BYREF trg AS .TEXTRANGEW) AS DWORD
+      DECLARE FUNCTION GetTextRange OVERLOAD (BYREF trg AS .TEXTRANGEW) AS DWORD
+      DECLARE FUNCTION GetTextRange OVERLOAD (BYVAL cpMin AS LONG = 0, BYVAL cpMax AS LONG = -1) AS CWSTR
       DECLARE FUNCTION GetThumb () AS LONG
       DECLARE FUNCTION GetUndoName () AS DWORD
       DECLARE FUNCTION GetWordBreakProc () AS LONG_PTR
@@ -175,11 +182,12 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION LineIndex (BYVAL nLine AS LONG) AS LONG
       DECLARE FUNCTION LineLength (BYVAL index AS DWORD) AS LONG
       DECLARE FUNCTION LineScroll (BYVAL y AS LONG) AS LONG
-      DECLARE SUB PasteSpecial (BYVAL clpfmt AS DWORD, BYREF rps AS REPASTESPECIAL)
+      DECLARE SUB PasteSpecial OVERLOAD (BYVAL clpfmt AS DWORD, BYREF rps AS REPASTESPECIAL)
+      DECLARE SUB PasteSpecial OVERLOAD (BYVAL clpfmt AS DWORD, BYVAL dwAspect AS DWORD, BYVAL dwParam AS DWORD)
       DECLARE FUNCTION PosFromChar (BYVAL index as DWORD) AS .POINTL
       DECLARE SUB Reconversion ()
       DECLARE FUNCTION Redo () AS LONG
-      DECLARE SUB ReplaceSel (BYVAL bCanBeUndone AS LONG, BYVAL pwszText AS WSTRING PTR)
+      DECLARE SUB ReplaceSel (BYVAL bCanBeUndone AS LONG = TRUE, BYREF wszText AS WSTRING)
       DECLARE SUB RequestResize ()
       DECLARE FUNCTION Scroll (BYVAL nAction AS LONG) AS LONG
       DECLARE SUB ScrollCaret ()
@@ -195,8 +203,8 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION SetTableParams (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
       DECLARE FUNCTION SetTabStops (BYVAL nTabs AS LONG, BYVAL rgTabStops AS LONG_PTR) AS LONG
       DECLARE FUNCTION SetTargetDevice (BYVAL hDC AS HDC, BYVAL lnwidth AS LONG) AS LONG
-      DECLARE FUNCTION SetTextExW (BYREF stex AS SETTEXTEX, BYVAL pwszText AS WSTRING PTR) AS DWORD
-      DECLARE FUNCTION SetUIAName (BYVAL bstrName AS AFX_BSTR) AS DWORD
+      DECLARE FUNCTION SetTextEx (BYREF stex AS .SETTEXTEX, BYREF wszText AS WSTRING) AS DWORD
+      DECLARE FUNCTION SetUIAName (BYREF wszName AS WSTRING) AS DWORD
       DECLARE FUNCTION SetUndoLimit (BYVAL maxactions AS DWORD) AS DWORD
       DECLARE SUB SetWordBreakProc (BYVAL pfn AS LONG_PTR)
       DECLARE FUNCTION SetWordBreakProcEx (BYVAL pfn AS LONG_PTR) AS LONG_PTR
@@ -736,7 +744,7 @@ PRIVATE PROPERTY CRichEditCtrl.Text () AS CWSTR
    this.SetResult(0)
    DIM cbLen AS DWORD = SendMessageW(m_hRichEdit, WM_GETTEXTLENGTH, 0, 0)
    IF cbLen < 1 THEN RETURN ""
-   DIM cwsText AS CWSTR = cbLen + 1
+   DIM cwsText AS CWSTR = WSPACE(cbLen + 1)
    cbLen = SendMessageW(m_hRichEdit, WM_GETTEXT, cbLen + 1, cast(LPARAM, *cwsText))
    RETURN LEFT(**cwsText, cbLen)
 END PROPERTY
@@ -745,8 +753,8 @@ END PROPERTY
 ' Sets the text of an edit control.
 ' Note: SetWindowText cannot change the text of a control in another application.
 ' ========================================================================================
-PRIVATE PROPERTY CRichEditCtrl.Text (BYVAL pwszText AS WSTRING PTR)
-   this.SetResult(SendMessageW(m_hRichEdit, WM_SETTEXT, 0, cast(LPARAM, pwszText)))
+PRIVATE PROPERTY CRichEditCtrl.Text (BYREF wszText AS WSTRING)
+   this.SetResult(SendMessageW(m_hRichEdit, WM_SETTEXT, 0, cast(LPARAM, @wszText)))
 END PROPERTY
 ' ========================================================================================
 
@@ -865,6 +873,12 @@ PRIVATE FUNCTION CRichEditCtrl.ExGetSel () AS CHARRANGE
    RETURN cr
 END FUNCTION
 ' ========================================================================================
+' ========================================================================================
+PRIVATE SUB CRichEditCtrl.ExGetSel (BYREF cpMin AS LONG, BYVAL cpMax AS LONG)
+   DIM cr AS CHARRANGE = TYPE<CHARRANGE>(cpMin, cpMax)
+   this.SetResult(SendMessageW(m_hRichEdit, EM_EXGETSEL, 0, cast(LPARAM, @cr)))
+END SUB
+' ========================================================================================
 
 ' ========================================================================================
 ' Sets an upper limit to the amount of text the user can type or paste into a rich edit control.
@@ -892,13 +906,31 @@ PRIVATE FUNCTION CRichEditCtrl.ExSetSel (BYREF cr AS CHARRANGE) AS DWORD
    RETURN SendMessageW(m_hRichEdit, EM_EXSETSEL, 0, cast(LPARAM, @cr))
 END FUNCTION
 ' ========================================================================================
+' ========================================================================================
+PRIVATE SUB CRichEditCtrl.ExSetSel (BYVAL cpMin AS LONG = 0, BYVAL cpMax AS LONG = -1)
+   this.SetResult(0)
+   DIM cr AS CHARRANGE = TYPE<CHARRANGE>(cpMin, cpMax)
+   this.SetResult(SendMessageW(m_hRichEdit, EM_EXSETSEL, 0, cast(LPARAM, @cr)))
+END SUB
+' ========================================================================================
 
 ' ========================================================================================
 ' Finds text within a rich edit control.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.FindText (BYVAL fOptions AS DWORD, BYREF ft AS FINDTEXTW) AS LONG
+PRIVATE FUNCTION CRichEditCtrl.FindText (BYVAL fOptions AS DWORD, BYREF ftw AS FINDTEXTW) AS LONG
    this.SetResult(0)
-   RETURN SendMessageW(m_hRichEdit, EM_FINDTEXTW, fOptions, cast(LPARAM, @ft))
+   RETURN SendMessageW(m_hRichEdit, EM_FINDTEXTW, fOptions, cast(LPARAM, @ftw))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.FindText (BYVAL fOptions AS DWORD = FR_DOWN, _
+   BYVAL cpMin AS LONG = 0, BYVAL cpMax AS LONG = -1, BYREF wszText AS WSTRING) AS LONG
+   this.SetResult(0)
+   DIM ftw AS FINDTEXTW
+   ftw.chrg.cpMin = cpMin
+   ftw.chrg.cpMax = cpMax
+   ftw.lpstrText = @wszText
+   RETURN SendMessageW(m_hRichEdit, EM_FINDTEXTW, fOptions, cast(LPARAM, @ftw))
 END FUNCTION
 ' ========================================================================================
 
@@ -908,6 +940,18 @@ END FUNCTION
 PRIVATE FUNCTION CRichEditCtrl.FindTextEx (BYVAL fOptions AS DWORD, BYREF ftexw AS FINDTEXTEXW) AS LONG
    this.SetResult(0)
    RETURN SendMessageW(m_hRichEdit, EM_FINDTEXTEXW, fOptions, cast(LPARAM, @ftexw))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.FindTextEx (BYVAL fOptions AS DWORD = FR_DOWN, _
+   BYVAL cpMin AS LONG = 0, BYVAL cpMax AS LONG = -1, BYREF wszText AS WSTRING) AS CHARRANGE
+   this.SetResult(0)
+   DIM ftexw AS FINDTEXTEXW
+   ftexw.chrg.cpMin = cpMin
+   ftexw.chrg.cpMax = cpMax
+   ftexw.lpstrText = @wszText
+   this.SetResult(SendMessageW(m_hRichEdit, EM_FINDTEXTEXW, fOptions, cast(LPARAM, @ftexw)))
+   RETURN ftexw.chrgText
 END FUNCTION
 ' ========================================================================================
 
@@ -1131,9 +1175,9 @@ END FUNCTION
 ' Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set
 ' text using a code page and to use either Rich Text Format (RTF) rich text or plain text.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.SetTextExW (BYREF stex AS SETTEXTEX, BYVAL pwszText AS WSTRING PTR) AS DWORD
+PRIVATE FUNCTION CRichEditCtrl.SetTextEx (BYREF stex AS .SETTEXTEX, BYREF wszText AS WSTRING) AS DWORD
    this.SetResult(0)
-   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, pwszText))
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, @wszText))
 END FUNCTION
 ' ========================================================================================
 
@@ -1274,8 +1318,16 @@ END FUNCTION
 ' ========================================================================================
 ' Pastes a specific clipboard format in a rich edit control.
 ' ========================================================================================
+' ========================================================================================
 PRIVATE SUB CRichEditCtrl.PasteSpecial (BYVAL clpfmt AS DWORD, BYREF rps AS REPASTESPECIAL)
    this.SetResult(0)
+   SendMessageW(m_hRichEdit, EM_PASTESPECIAL, clpfmt, cast(LPARAM, @rps))
+END SUB
+' ========================================================================================
+' ========================================================================================
+PRIVATE SUB CRichEditCtrl.PasteSpecial (BYVAL clpfmt AS DWORD, BYVAL dwAspect AS DWORD, BYVAL dwParam AS DWORD)
+   this.SetResult(0)
+   DIM rps AS REPASTESPECIAL= TYPE<REPASTESPECIAL>(dwAspect, dwParam)
    SendMessageW(m_hRichEdit, EM_PASTESPECIAL, clpfmt, cast(LPARAM, @rps))
 END SUB
 ' ========================================================================================
@@ -1310,8 +1362,8 @@ END FUNCTION
 ' ========================================================================================
 ' Replaces the current selection in a rich edit control with the specified text.
 ' ========================================================================================
-PRIVATE SUB CRichEditCtrl.ReplaceSel (BYVAL bCanBeUndone AS LONG, BYVAL pwszText AS WSTRING PTR)
-   this.SetResult(SendMessageW(m_hRichEdit, EM_REPLACESEL, bCanBeUndone, cast(LPARAM, pwszText)))
+PRIVATE SUB CRichEditCtrl.ReplaceSel (BYVAL bCanBeUndone AS LONG = TRUE, BYREF wszText AS WSTRING)
+   this.SetResult(SendMessageW(m_hRichEdit, EM_REPLACESEL, bCanBeUndone, cast(LPARAM, @wszText)))
 END SUB
 ' ========================================================================================
 
@@ -1423,11 +1475,11 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Sets the maximum number of actions that can stored in the undo queue.
+' Sets the name of a rich edit control for UI Automation (UIA).
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.SetUIAName (BYVAL pwszName AS WSTRING PTR) AS DWORD
+PRIVATE FUNCTION CRichEditCtrl.SetUIAName (BYREF wszName AS WSTRING) AS DWORD
    this.SetResult(0)
-   RETURN SendMessageW(m_hRichEdit, EM_SETUIANAME, 0, cast(LPARAM, pwszName))
+   RETURN SendMessageW(m_hRichEdit, EM_SETUIANAME, 0, cast(LPARAM, @wszName))
 END FUNCTION
 ' ========================================================================================
 
@@ -1502,6 +1554,32 @@ END FUNCTION
 PRIVATE FUNCTION CRichEditCtrl.GetTextRange (BYREF trg AS .TEXTRANGEW) AS DWORD
    this.SetResult(0)
    RETURN SendMessageW(m_hRichEdit, EM_GETTEXTRANGE, 0, cast(LPARAM, @trg))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Retrieves a specified range of characters from a rich edit control.
+' If the cpMin and cpMax members are equal, the range is empty.
+' The range includes everything if cpMin is 0 and cpMax is –1.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetTextRange (BYVAL cpMin AS LONG = 0, BYVAL cpMax AS LONG = -1) AS CWSTR
+   this.SetResult(0)
+   ' // Calculate the length of the buffer
+   DIM cbLen As LONG
+   DIM wstrText AS CWSTR
+   IF cpMin = cpMax THEN RETURN ""
+   IF cpMin = 0 AND cpMax = -1 THEN
+      cbLen = SendMessageW(m_hRichEdit, WM_GETTEXTLENGTH, 0, 0)
+      IF cbLen = 0 THEN RETURN ""
+   ELSE
+      cbLen = cpMax - cpMin
+      wstrText = WSPACE(cbLen + 1)
+   END IF
+   DIM trg AS TEXTRANGEW
+   trg.chrg.cpMin = cpMin
+   trg.chrg.cpMax = cpMax
+   trg.lpstrText = wstrtext
+   cbLen = SendMessageW(m_hRichEdit, EM_GETTEXTRANGE, 0, cast(LPARAM, @trg))
+   RETURN LEFT(wstrtext, cbLen)
 END FUNCTION
 ' ========================================================================================
 
