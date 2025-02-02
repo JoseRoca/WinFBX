@@ -10,6 +10,47 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [DESTRUCTOR](#DESTRUCTOR) | Called automatically when a class variable goes out of scope or is destroyed. |
 | [hRichEdit](#hRichEdit) | Returns the handle of the rich edit control. |
 
+#### Helper procedure
+
+| Name       | Description |
+| ---------- | ----------- |
+| [AfxCRichEditCtrlPtr](#AfxCRichEditCtrlPtr) | Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or from the handle of its parent window and the identifier of the control. |
+
+# <a name="AfxCRichEditCtrlPtr"></a>AfxCRichEditCtrlPtr
+
+Retrieves a pointer to the `CRichEditCtrl`class from the handle of the Rich Edit control.
+```
+FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
+   DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(hRichEdit, WM_USER + 100, 0, 0))
+   RETURN pRichEditCtrl
+END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *hRichEdit* | Handle of the Rich Edit control. |
+
+#### Return value
+
+A pointer to the `CRichEditCtrl` class.
+
+---
+
+Returns a pointer to the class given the handle of the parent window of the control and the identifier of the control.
+```
+FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CRichEditCtrl PTR
+   DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(GetDlgItem(hParent, cID), WM_USER + 100, 0, 0))
+   RETURN pRichEditCtrl
+END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *hParent* | Handle of the parent window of the rich edit control. |
+| *cID* | Identifier of the rich edit control. |
+
+#### Return value
+
+A pointer to the `CRichEditCtrl` class.
+
 # <a name="CONSTRUCTOR"></a>CONSTRUCTOR
 
 Creates an instance of the rich edit control.
@@ -188,7 +229,6 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 
 | Name       | Description |
 | ---------- | ----------- |
-| [AfxCRichEditCtrlPtr](#AfxCRichEditCtrlPtr) | Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or fromthe handle of its parent window and the identifier of the control. |
 | [CRichEditCtrl_GetRtfText](#CRichEditCtrl_GetRtfText) | Retrieves formatted text from a rich edit control |
 | [CRichEditCtrl_LoadRtfFromFileW](#CRichEditCtrl_LoadRtfFromFileW) | Loads a rich text file into a rich edit control. |
 | [CRichEditCtrl_LoadRtfFromResourceW](#CRichEditCtrl_LoadRtfFromResourceW) | Loads a rich text resource file into a rich edit control. |
@@ -2539,41 +2579,6 @@ PRIVATE FUNCTION CTextObjectBase.GetErrorInfo (BYVAL nError AS LONG = -1) AS CWS
    RETURN cwsMsg
 END FUNCTION
 ```
-
-# <a name="AfxCRichEditCtrlPtr"></a>AfxCRichEditCtrlPtr
-
-Retrieves a pointer to the `CRichEditCtrl`class from the handle of the Rich Edit control.
-```
-FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
-   DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(hRichEdit, WM_USER + 100, 0, 0))
-   RETURN pRichEditCtrl
-END FUNCTION
-```
-| Parameter | Description |
-| --------- | ----------- |
-| *hRichEdit* | Handle of the Rich Edit control. |
-
-#### Return value
-
-A pointer to the `CRichEditCtrl` class.
-
----
-
-Returns a pointer to the class given the handle of the parent window of the control and the identifier of the control.
-```
-FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CRichEditCtrl PTR
-   DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(GetDlgItem(hParent, cID), WM_USER + 100, 0, 0))
-   RETURN pRichEditCtrl
-END FUNCTION
-```
-| Parameter | Description |
-| --------- | ----------- |
-| *hParent* | Handle of the parent window of the rich edit control. |
-| *cID* | Identifier of the rich edit control. |
-
-#### Return value
-
-A pointer to the `CRichEditCtrl` class.
 
 # <a name="CRichEditCtrl_SetFontW"></a>CRichEditCtrl_SetFontW
 
