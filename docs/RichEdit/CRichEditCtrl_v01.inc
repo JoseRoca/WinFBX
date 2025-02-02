@@ -33,16 +33,6 @@ NAMESPACE Afx
 ' ========================================================================================
 
 ' ========================================================================================
-' Custom structure used by the CRichEditCtrl.LoadRtfFromResource method.
-' ========================================================================================
-TYPE AFX_CRICHEDITCTRL_CUSTOMDATA
-   pData  AS BYTE PTR
-   nLen   AS LONG
-   curPos AS LONG
-END TYPE
-' ========================================================================================
-
-' ========================================================================================
 ' CRichEditCtrl class
 ' ========================================================================================
 TYPE CRichEditCtrl EXTENDS CTextObjectBase
@@ -50,7 +40,6 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
    Private:
       DIM m_Result AS HRESULT           ' // Last result code
       DIM m_hRichEdit AS HWND           ' // Rich Edit cotroll handle
-      DIM m_hInstance AS HINSTANCE      ' // Instance handle
 
    Public:
       DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszTitle AS WSTRING = "", _
@@ -61,13 +50,6 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
 
       ' // Static callback procedure
       DECLARE STATIC FUNCTION CRichEditCtrlProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM, BYVAL uIdSubclass AS UINT_PTR, BYVAL dwRefData AS DWORD_PTR) AS LRESULT
-      DECLARE STATIC FUNCTION CRichEditCtrlGetTextCallback (BYVAL dwCookie AS DWORD_PTR, BYVAL pbBuff AS BYTE PTR, BYVAL cb AS LONG, BYVAL pcb AS LONG PTR) AS DWORD
-      DECLARE STATIC FUNCTION CRichEditCtrlEnumFontFamProcW (BYVAL lpelf AS ENUMLOGFONTW PTR, BYVAL lpntm AS NEWTEXTMETRICW PTR, _
-         BYVAL FontType AS LONG, BYVAL lplf AS LOGFONTW PTR) AS LONG
-      DECLARE STATIC FUNCTION CRichEditCtrlLoadRtfFromFileCallback (BYVAL hFile AS HANDLE, BYVAL lpBuff AS BYTE PTR, _
-         BYVAL cb AS LONG, BYVAL pcb AS LONG PTR) AS UINT
-      DECLARE STATIC FUNCTION CRichEditCtrlLoadRtfFromResourceCallback (BYVAL pCustData AS AFX_CRICHEDITCTRL_CUSTOMDATA PTR, _
-         BYVAL lpBuff AS BYTE PTR, BYVAL cb AS LONG, BYVAL pcb AS LONG PTR) AS DWORD
 
       ' // Propereties
       DECLARE PROPERTY AutoCorrectProc () AS LONG_PTR
@@ -208,12 +190,6 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION StreamOut (BYVAL psf AS LONG, BYREF edst AS EDITSTREAM) AS DWORD
       DECLARE FUNCTION Undo () AS LONG
 
-      ' // Helper functions
-      DECLARE FUNCTION SetFont (BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS HRESULT
-      DECLARE FUNCTION GetRtfText () AS STRING
-      DECLARE FUNCTION LoadRtfFromFile (BYREF wszFileName AS WSTRING) AS BOOLEAN
-      DECLARE FUNCTION LoadRtfFromResource (BYREF wszResourceName AS WSTRING) AS BOOLEAN
-
 END TYPE
 
 ' ========================================================================================
@@ -229,26 +205,6 @@ FUNCTION CRichEditCtrl.CRichEditCtrlProc ( _
    ) AS LRESULT
 
    SELECT CASE uMsg
-
-      CASE WM_KEYDOWN
-         ' // Keyboard navigation
-         SELECT CASE LOWORD(wParam)
-            ' // Rich Edit multiline controls send a WM_CLOSE message to its parent window,
-            ' // when the ESC key is pressed, causing the application to shut down.
-            ' // Avoid it by cancelling the message.
-            CASE VK_ESCAPE
-               CREC_DP("CRichEditCtrlProc VK_ESCAPE")
-               RETURN 0
-            CASE VK_TAB
-               CREC_DP("CRichEditCtrlProc VK_TAB")
-               IF HIWORD(.GetKeyState(VK_SHIFT)) = 0 THEN
-                  '// Set the focus in the previous control that has the WS_TABSTOP style
-                  .SetFocus .GetNextDlgTabItem(GetParent(hwnd), hwnd, 0)
-               ELSE
-                  '// Set the focus in the next control that has the WS_TABSTOP style
-                  .SetFocus .GetNextDlgTabItem(GetParent(hwnd), hwnd, -1)
-               END IF
-         END SELECT
 
       CASE WM_DESTROY
          CREC_DP("CRichEditCtrlProc WM_DESTROY")
@@ -281,7 +237,6 @@ PRIVATE CONSTRUCTOR CRichEditCtrl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LO
       x, y, nWidth, nHeight, WS_VISIBLE OR WS_CHILD OR WS_TABSTOP OR ES_LEFT OR WS_HSCROLL OR WS_VSCROLL OR _
          ES_AUTOHSCROLL OR ES_AUTOVSCROLL OR ES_MULTILINE OR ES_WANTRETURN OR ES_NOHIDESEL OR ES_SAVESEL, WS_EX_CLIENTEDGE, _
          NULL, CAST(SUBCLASSPROC, @CRichEditCtrlProc), cID, CAST(DWORD_PTR, @this))
-      m_hInstance = pWindow->InstanceHandle
    END IF
 
 END CONSTRUCTOR
@@ -1514,46 +1469,35 @@ PRIVATE FUNCTION CRichEditCtrl.Undo () AS LONG
 END FUNCTION
 ' ========================================================================================
 
-' ========================================================================================
-' Callback used by the GetRtfText method.
-' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.CRichEditCtrlGetTextCallback ( _
-   BYVAL dwCookie AS DWORD_PTR _                      ' // Value of the dwCookie member of the EDITSTREAM structure.
- , BYVAL pbBuff AS BYTE PTR _                         ' // Pointer to the buffer to read from.
- , BYVAL cb AS LONG _                                 ' // Number of bytes to read.
- , BYVAL pcb AS LONG PTR _                            ' // Number of bytes actually read.
- ) AS DWORD                                           ' // 0 for success, or an error code
 
-   DIM pcws AS CWSTR PTR = cast(CWSTR PTR, dwCookie)
-   pcws->AppendBuffer(pbBuff, cb)
-   *pcb = cb
-   RETURN 0
+' ########################################################################################
+'                          H E L P E R    F U N C T I O N S
+' ########################################################################################
 
+' ========================================================================================
+' Retrieves a pointer to the CRichEditCtrl class from the handle of the RichEdit control.
+' Usage example:
+' DIM pRichEdit AS CRichEditCtrl PTR = AfxCRichEditCtrlPtr(CAST(HWND, lParam))
+' ========================================================================================
+PRIVATE FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
+   DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(hRichEdit, WM_USER + 100, 0, 0))
+   RETURN pRichEditCtrl
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' hParent = Handle of the parent window of the rich edit control.
+' cID = Identifier of the rich edit control.
+' ========================================================================================
+PRIVATE FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CRichEditCtrl PTR
+   DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(GetDlgItem(hParent, cID), WM_USER + 100, 0, 0))
+   RETURN pRichEditCtrl
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Retrieves RTF formatted text from a Rich Edit control
-' Returns the retrieved text or a null string.
+' Enumerates font families. Used by the CRichEditCtrl_SetFontW function.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.GetRtfText () AS STRING
-
-   DIM eds AS EDITSTREAM, cws AS CWSTR
-   eds.dwCookie = cast(DWORD_PTR, @cws)
-   eds.pfnCallBack = cast(EDITSTREAMCALLBACK, @CRichEditCtrl.CRichEditCtrlGetTextCallback)
-   this.SetResult(SendMessageW(m_hRichEdit, EM_STREAMOUT, SF_RTF, cast(LPARAM, @eds)))
-   ' // Copy the ansi contents of the CWSTR to a STRING
-   DIM s AS STRING = SPACE(cws.m_BufferLen - 2)   ' // -2 to remove the ending nulls
-   IF LEN(s) THEN CopyMemory(STRPTR(s), cws.m_pBuffer, cws.m_BufferLen - 2)
-   RETURN s
-
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Enumerates font families. Used by the SetFont method.
-' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.CRichEditCtrlEnumFontFamProcW ( _
+PRIVATE FUNCTION CRichEditCtrl_EnumFontFamProcW ( _
    BYVAL lpelf    AS ENUMLOGFONTW PTR, _     ' // Address of ENUMLOGFONT structure
    BYVAL lpntm    AS NEWTEXTMETRICW PTR, _   ' // Address of NEWTEXTMETRIC structure
    BYVAL FontType AS LONG, _                 ' // Font type
@@ -1564,7 +1508,7 @@ PRIVATE FUNCTION CRichEditCtrl.CRichEditCtrlEnumFontFamProcW ( _
    lplf->lfPitchAndFamily = lpelf->elfLogFont.lfPitchAndFamily
    lplf->lfFaceName       = lpelf->elfLogFont.lfFaceName
 
-   RETURN FALSE
+   FUNCTION = FALSE
 
 END FUNCTION
 ' ========================================================================================
@@ -1572,18 +1516,19 @@ END FUNCTION
 ' ========================================================================================
 ' Sets the font used by a rich edit control.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditctrl.SetFont ( _
+PRIVATE FUNCTION CRichEditctrl_SetFontW ( _
+   BYVAL hRichEdit AS HWND, _             ' // Handle to the RichEdit control
    BYREF wszFaceName AS WSTRING, _        ' // Font name
    BYVAL ptsize AS LONG _                 ' // Font size in points
-   ) AS HRESULT
+   ) AS LRESULT
 
-   DIM hResult AS HRESULT                 ' // Result code
+   DIM lResult AS LRESULT                 ' // Result code
    DIM hDC AS HDC                         ' // Handle of the device context
    DIM tlf AS LOGFONTW                    ' // LOGFONT structure
    DIM tcf AS CHARFORMATW                 ' // CHARFORMATW structure
 
    hDC = GetDC(NULL)
-   EnumFontFamiliesW(hDC, wszFaceName, cast(FONTENUMPROCW, @CRichEditCtrlEnumFontFamProcW), cast(LPARAM, @tlf))
+   EnumFontFamiliesW(hDC, wszFaceName, cast(FONTENUMPROCW, @CRichEditCtrl_EnumFontFamProcW), cast(LPARAM, @tlf))
    ReleaseDC NULL, hDC
    tcf.cbSize = SIZEOF(tcf)
    tcf.dwMask = CFM_BOLD OR CFM_ITALIC OR CFM_UNDERLINE OR CFM_STRIKEOUT OR _
@@ -1592,20 +1537,19 @@ PRIVATE FUNCTION CRichEditctrl.SetFont ( _
    tcf.bCharSet = tlf.lfCharSet
    tcf.bPitchAndFamily = tlf.lfPitchAndFamily
    tcf.szFaceName = tlf.lfFaceName
-   hResult = SendMessageW(hRichEdit, EM_SETCHARFORMAT, SCF_ALL, cast(LPARAM, @tcf))
+   lResult = SendMessageW(hRichEdit, EM_SETCHARFORMAT, SCF_ALL, cast(LPARAM, @tcf))
    ' // Specify which notifications the control sends to its parent window
-   IF hResult <> 0 THEN hResult = SendMessageW(m_hRichEdit, EM_SETEVENTMASK, 0, ENM_CHANGE)
-   this.SetResult(hResult)
-   RETURN hResult
+   IF lResult <> 0 THEN lResult = SendMessageW(hRichEdit, EM_SETEVENTMASK, 0, ENM_CHANGE)
+   FUNCTION = lResult
 
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Callback function used by the CRichEditCtrl.LoadRtfFromFile method.
+' Callback function used by the CRichEditCtrl_LoadRtfFromFileW function.
 ' Transfers a stream of data into a rich edit control.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.CRichEditCtrlLoadRtfFromFileCallback ( _
+FUNCTION CRichEditCtrl_LoadRtfFromFileCallback ( _
    BYVAL hFile AS HANDLE _                  ' // Value of the dwCookie member of the EDITSTREAM structure.
  , BYVAL lpBuff AS BYTE PTR _               ' // Pointer to a buffer to write to
  , BYVAL cb AS LONG _                       ' // Maximum number of bytes to read
@@ -1618,43 +1562,50 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Loads an RTF file.
-' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.LoadRtfFromFile ( _
-   BYREF wszFileName AS WSTRING _           ' // Name of the file to load
+PRIVATE FUNCTION CRichEditCtrl_LoadRtfFromFileW ( _
+   BYVAL hRichEdit AS HWND _                ' // Handle of the Rich Edit control
+ , BYREF wszFileName AS WSTRING _           ' // Name of the file to load
  ) AS BOOLEAN                               ' // TRUE or FALSE
 
    DIM hFile AS HANDLE                      ' // File handle
    DIM eds AS EDITSTREAM                    ' // EDITSTREAM structure
 
    ' // Checks the validity of the parameters
-   IF m_hRichEdit = 0 THEN this.SetResult(E_HANDLE) : RETURN FALSE
-   IF LEN(wszFileName) = 0 THEN this.SetResult(E_INVALIDARG) : RETURN FALSE
-   this.SetResult(0)
+   IF hRichEdit = 0 THEN EXIT FUNCTION
+   IF LEN(wszFileName) = 0 THEN EXIT FUNCTION
 
    ' // Opens the file and sends the message
    hFile = CreateFileW(wszFileName, GENERIC_READ, FILE_SHARE_READ, _
                        NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL)
-   IF hFile = INVALID_HANDLE_VALUE THEN SetResult(E_HANDLE): RETURN FALSE
+   IF hFile = INVALID_HANDLE_VALUE THEN EXIT FUNCTION
    eds.dwCookie = cast(DWORD_PTR, hFile)
-   eds.pfnCallback = cast(EDITSTREAMCALLBACK, @CRichEditCtrlLoadRtfFromFileCallback)
+   eds.pfnCallback = cast(EDITSTREAMCALLBACK, @CRichEditCtrl_LoadRtfFromFileCallback)
    IF SendMessageW(hRichEdit, EM_STREAMIN, SF_RTF, cast(LPARAM, @eds)) > 0 AND eds.dwError = 0 THEN FUNCTION = TRUE
-   this.SetResult(eds.dwError)
    CloseHandle hFile
 
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Callback function used by the CRichEditCtrl.LoadRtfFromResource method.
+' Custom structure used by the CRichEditCtrl_LoadRtfFromResourceW function.
+' ========================================================================================
+TYPE AFX_CRICHEDITCTRL_CUSTOMDATA
+   pData  AS BYTE PTR
+   nLen   AS LONG
+   curPos AS LONG
+END TYPE
+' ========================================================================================
+
+' ========================================================================================
+' Callback function used by the CRichEditCtrl_LoadRtfFromResourceW function.
 ' Transfers a stream of data into a rich edit control.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.CRichEditCtrlLoadRtfFromResourceCallback ( _
+PRIVATE FUNCTION CRichEditCtrl_LoadRtfFromResourceCallback ( _
    BYVAL pCustData AS AFX_CRICHEDITCTRL_CUSTOMDATA PTR _   ' // Value of the dwCookie member of the EDITSTREAM structure.
- , BYVAL lpBuff AS BYTE PTR _                              ' // Pointer to a buffer to write to.
- , BYVAL cb AS LONG _                                      ' // Number of bytes to write.
- , BYVAL pcb AS LONG PTR _                                 ' // Number of bytes actually written.
- ) AS DWORD                                                ' // 0 for success, or an error code
+ , BYVAL lpBuff AS BYTE PTR _                         ' // Pointer to a buffer to write to.
+ , BYVAL cb AS LONG _                                 ' // Number of bytes to write.
+ , BYVAL pcb AS LONG PTR _                            ' // Number of bytes actually written.
+ ) AS DWORD                                           ' // 0 for success, or an error code
 
    DIM nBytes AS LONG
    IF pCustData->nLen - pCustData->curPos > cb THEN nBytes = cb ELSE nBytes = pCustData->nLen - pCustData->curPos
@@ -1675,8 +1626,10 @@ END FUNCTION
 ' The EM_STREAMIN message replaces the contents of a rich edit control with a stream of
 ' data provided by an application defined EditStreamCallback callback function.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.LoadRtfFromResource ( _
-   BYREF wszResourceName AS WSTRING _                ' // Name of the resource to load
+PRIVATE FUNCTION CRichEditCtrl_LoadRtfFromResourceW ( _
+   BYVAL hRichEdit AS HWND _                         ' // Handle of the Rich Edit control
+ , BYVAL hInstance AS HINSTANCE _                    ' // Instance handle
+ , BYREF wszResourceName AS WSTRING _                ' // Name of the resource to load
  ) AS BOOLEAN                                        ' // TRUE or FALSE
 
    DIM hResInfo AS HRSRC                             ' // Resource handle
@@ -1685,20 +1638,19 @@ PRIVATE FUNCTION CRichEditCtrl.LoadRtfFromResource ( _
    DIM rtfCustData AS AFX_CRICHEDITCTRL_CUSTOMDATA   ' // AFX_CRICHEDITCTRL_CUSTOMDATA structure
 
    ' // Checks the validity of the parameters
-   IF m_hRichEdit = 0 THEN this.SetResult(E_HANDLE) : RETURN FALSE
-   IF LEN(wszResourceName) = 0 THEN this.SetResult(E_INVALIDARG) : RETURN FALSE
-   this.SetResult(0)
+   IF hRichEdit = NULL OR hInstance = NULL THEN EXIT FUNCTION
+   IF LEN(wszResourceName) = 0 THEN EXIT FUNCTION
 
    ' // Loads the resource
-   hResInfo = FindResourceW(m_hInstance, wszResourceName, RT_RCDATA)
-   IF hResInfo = NULL THEN this.SetResult(GetLastError) : RETURN FALSE
+   hResInfo = FindResourceW(hInstance, wszResourceName, RT_RCDATA)
+   IF hResInfo = NULL THEN EXIT FUNCTION
 
    ' // Loads and locks the resource
    ' // Note  LockResource does not actually lock memory; it is just used to obtain
    ' // a pointer to the memory containing the resource data.
-   pResData = LockResource(LoadResource(m_hInstance, hResInfo))
-   IF pResData = NULL THEN this.SetResult(GetLastError) : RETURN FALSE
-   DIM cbSize AS LONG = SizeofResource(m_hInstance, hResInfo)
+   pResData = LockResource(LoadResource(hInstance, hResInfo))
+   IF pResData = NULL THEN EXIT FUNCTION
+   DIM cbSize AS LONG = SizeofResource(hInstance, hResInfo)
    DIM buffer AS STRING = SPACE(cbSize)
    CopyMemory(STRPTR(buffer), pResData, cbSize)
 
@@ -1707,42 +1659,48 @@ PRIVATE FUNCTION CRichEditCtrl.LoadRtfFromResource ( _
    rtfCustData.nLen = cbSize
    rtfCustData.curPos = 0
    eds.dwCookie = cast(DWORD_PTR, @rtfCustData)
-   eds.pfnCallback = cast(EDITSTREAMCALLBACK, @CRichEditCtrlLoadRtfFromResourceCallback)
+   eds.pfnCallback = cast(EDITSTREAMCALLBACK, @CRichEditCtrl_LoadRtfFromResourceCallback)
    IF SendMessageW(hRichEdit, EM_STREAMIN, SF_RTF, cast(LPARAM, @eds)) > 0 AND eds.dwError = 0 THEN
-      RETURN TRUE
-   ELSE
-      this.SetResult(eds.dwError)
-      RETURN FALSE
+      FUNCTION = TRUE
    END IF
 
 END FUNCTION
 ' ========================================================================================
 
-
-' ########################################################################################
-'                          H E L P E R    F U N C T I O N S
-' ########################################################################################
-
 ' ========================================================================================
-' Retrieves a pointer to the CRichEditCtrl class from the handle of the RichEdit control.
-' hRichEdit = Handle of the Rich Edit control.
-' Usage example:
-' DIM pRichEdit AS CRichEditCtrl PTR = AfxCRichEditCtrlPtr(CAST(HWND, lParam))
+' Callback used by the CRichEditCtrl_GetRtfText function.
 ' ========================================================================================
-PRIVATE FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
-   DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(hRichEdit, WM_USER + 100, 0, 0))
-   RETURN pRichEditCtrl
+PRIVATE FUNCTION CRichEditCtrl_GetTextCallback ( _
+   BYVAL dwCookie AS DWORD_PTR _                      ' // Value of the dwCookie member of the EDITSTREAM structure.
+ , BYVAL pbBuff AS BYTE PTR _                         ' // Pointer to the buffer to read from.
+ , BYVAL cb AS LONG _                                 ' // Number of bytes to read.
+ , BYVAL pcb AS LONG PTR _                            ' // Number of bytes actually read.
+ ) AS DWORD                                           ' // 0 for success, or an error code
+
+   DIM pcws AS CWSTR PTR = cast(CWSTR PTR, dwCookie)
+   pcws->AppendBuffer(pbBuff, cb)
+   *pcb = cb
+   FUNCTION = 0
+
 END FUNCTION
 ' ========================================================================================
+
 ' ========================================================================================
-' Returns a pointer to the class given the handle of the parent window of the control and
-' the identifier of the control.
-' hParent = Handle of the parent window of the rich edit control.
-' cID = Identifier of the rich edit control.
+' Retrieves RTF formatted text from a Rich Edit control
+' - hRichEdit = Handle of the Rich Edit control.
+' Returns the retrieved text or a null string.
 ' ========================================================================================
-PRIVATE FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CRichEditCtrl PTR
-   DIM pRichEditCtrl AS CRichEditCtrl PTR = CAST(CRichEditCtrl PTR, SendMessageW(GetDlgItem(hParent, cID), WM_USER + 100, 0, 0))
-   RETURN pRichEditCtrl
+PRIVATE FUNCTION CRichEditCtrl_GetRtfText (BYVAL hRichEdit AS HWND) AS STRING
+
+   DIM eds AS EDITSTREAM, cws AS CWSTR
+   eds.dwCookie = cast(DWORD_PTR, @cws)
+   eds.pfnCallBack = cast(EDITSTREAMCALLBACK, @CRichEditCtrl_GetTextCallback)
+   SendMessageW hRichEdit, EM_STREAMOUT, SF_RTF, cast(LPARAM, @eds)
+   ' // Copy the ansi contents of the CWSTR to a STRING
+   DIM s AS STRING = SPACE(cws.m_BufferLen - 2)   ' // -2 to remove the ending nulls
+   IF LEN(s) THEN CopyMemory(STRPTR(s), cws.m_pBuffer, cws.m_BufferLen - 2)
+   RETURN s
+
 END FUNCTION
 ' ========================================================================================
 
