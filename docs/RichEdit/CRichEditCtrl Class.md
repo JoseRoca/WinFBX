@@ -1996,7 +1996,7 @@ The control does not scroll vertically past the last line of text in the edit co
 Pastes a specific clipboard format in a rich edit control.
 ```
 SUB PasteSpecial OVERLOAD (BYVAL clpfmt AS DWORD, BYREF rps AS REPASTESPECIAL)
-SUB PasteSpecial (BYVAL clpfmt AS DWORD, BYVAL dwAspect AS DWORD, BYVAL dwParam AS DWORD)
+SUB PasteSpecial OVERLOAD (BYVAL clpfmt AS DWORD, BYVAL dwAspect AS DWORD, BYVAL dwParam AS DWORD)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
