@@ -236,7 +236,7 @@ Gets/sets a pointer to the application-defined [AutoCorrectProc](https://learn.m
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pfn* | Pointer to an [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) function. |
+| *pfn* | Pointer to the [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) application-defined callback function. |
 
 #### Return value
 
