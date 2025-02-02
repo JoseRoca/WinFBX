@@ -1226,11 +1226,11 @@ pRichEditCtro.ExSetSel(@chrRange)
 
 # <a name="FindText"></a>FindText
 
-Finds text within a rich edit control.
+Overloaded method to find text within a rich edit control.
 ```
 FUNCTION FindText OVERLOAD (BYVAL fOptions AS DWORD, BYREF ft AS FINDTEXTW) AS LONG
 FUNCTION FindText OVERLOAD (BYVAL fOptions AS DWORD = FR_DOWN, BYVAL cpMin AS LONG = 0, _
-   BYVAL cpMax AS LONG = -1, BYVAL pwszText AS WSTRING PTR) AS LONG
+   BYVAL cpMax AS LONG = -1, BYREF wszText AS WSTRING) AS LONG
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -1238,19 +1238,21 @@ FUNCTION FindText OVERLOAD (BYVAL fOptions AS DWORD = FR_DOWN, BYVAL cpMin AS LO
 | *ft* | A [FINDTEXTW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-findtextw) structure containing information about the find operation. |
 | *cpMin* | Character position index immediately preceding the first character in the range. |
 | *cpMax* | Character position immediately following the last character in the range. If the *cpMin* and *cpMax* members are equal, the range is empty. The range includes everything if *cpMin* is 0 and *cpMax* is –1. |
-| *pwszText* | A pointer to a null-terminated string containing the text to find. |
-
-If the cpMin and cpMax members are equal, the range is empty. The range includes everything if cpMin is 0 and cpMax is –1. |
+| *pwszText* | A **WSTRING** containing the text to find. |
 
 #### Return value
 
-If the target string is found, the return value is the zero-based position of the first character of the match. If the target is not found, the return value is -1.
+First overloaded function: If the target string is found, the return value is the zero-based position of the first character of the match. If the target is not found, the return value is -1.
+
+Second overloaded function: A **CHARRANGE** structure. The range of characters in which the text was found. If the text was not found, *cpMin* and *cpMax* are -1.
 
 # <a name="FindTextEx"></a>FindTextEx
 
-Finds text within a rich edit control.
+Overloaded method to find text within a rich edit control.
 ```
-FUNCTION FindTextEx (BYVAL fOptions AS DWORD, BYREF ftexw AS FINDTEXTEXW) AS LONG
+FUNCTION FindTextEx OVERLOAD (BYVAL fOptions AS DWORD, BYREF ftexw AS FINDTEXTEXW) AS LONG
+FUNCTION FindTextEx OVERLOAD (BYVAL fOptions AS DWORD = FR_DOWN, BYVAL cpMin AS LONG = 0, _
+   BYVAL cpMax AS LONG = -1, BYREF wszText AS WSTRING) AS CHARRANGE
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
