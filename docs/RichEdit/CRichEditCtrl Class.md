@@ -20,7 +20,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or from the handle of its parent window and the control's identifier.
 ```
-FUNCTION AfxCRichEditCtrlPtr (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
+FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
 FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CRichEditCtrl PTR
 ```
 | Parameter | Description |
