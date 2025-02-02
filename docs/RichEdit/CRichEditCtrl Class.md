@@ -1120,13 +1120,21 @@ The undo flag is automatically reset whenever the edit control receives a **WM_S
 
 # <a name="ExGetSel"></a>ExGetSel
 
-Retrieves the starting and ending character positions of the selection in a rich edit control.
+Oveloaded method to retrieve the starting and ending character positions of the selection in a rich edit control.
 ```
-FUNCTION ExGetSel () AS CHARRANGE
+FUNCTION ExGetSel OVERLOAD () AS CHARRANGE
+FUNCTION ExGetSel OVERLOAD (BYREF cpMin AS LONG, BYVAL cpMax AS LONG)
 ```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cpMin* | Character position index immediately preceding the first character in the range. |
+| *cpMaz* | Character position immediately following the last character in the range. |
+
 #### Return value
 
-A [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) structure with the selection range.
+The first overloaded method returns a [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) structure with the selection range.
+
+The second overloades method does not return a value. The values are filled in the passed parameters.
 
 #### CHARRANGE structure
 ```
@@ -1178,19 +1186,25 @@ Returns the zero-based index of the line.
 
 # <a name="ExSetSel"></a>ExSetSel
 
-Selects a range of characters and/or Component Object Model (COM) objects in a Microsoft Rich Edit control.
+Overloaded method that selects a range of characters and/or Component Object Model (COM) objects in a Microsoft Rich Edit control.
 ```
-FUNCTION ExSetSel (BYREF cr AS CHARRANGE) AS DWORD
+FUNCTION ExSetSel OVERLOAD (BYREF cr AS CHARRANGE) AS DWORD
+SUB ExSetSel OVERLOAD (BYVAL cpMin AS LONG = 0, BYVAL cpMax AS LONG = -1)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
 | *cr* | A [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) structure that specifies the selection range. |
 
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cpMin* | Character position index immediately preceding the first character in the range. |
+| *cpMax* | Character position immediately following the last character in the range. |
+
 #### CHARRANGE structure
 ```
 type _charrange field = 4
-	cpMin as LONG
-	cpMax as LONG
+   pMin as LONG
+   cpMax as LONG
 end type
 
 type CHARRANGE as _charrange
