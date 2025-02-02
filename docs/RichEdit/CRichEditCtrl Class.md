@@ -1242,9 +1242,7 @@ FUNCTION FindText OVERLOAD (BYVAL fOptions AS DWORD = FR_DOWN, BYVAL cpMin AS LO
 
 #### Return value
 
-First overloaded function: If the target string is found, the return value is the zero-based position of the first character of the match. If the target is not found, the return value is -1.
-
-Second overloaded function: A **CHARRANGE** structure. The range of characters in which the text was found. If the text was not found, *cpMin* and *cpMax* are -1.
+If the target string is found, the return value is the zero-based position of the first character of the match. If the target is not found, the return value is -1.
 
 # <a name="FindTextEx"></a>FindTextEx
 
@@ -1258,10 +1256,15 @@ FUNCTION FindTextEx OVERLOAD (BYVAL fOptions AS DWORD = FR_DOWN, BYVAL cpMin AS 
 | ---------- | ----------- |
 | *fOptions* | Specifies the parameters of the search operation. This parameter can be one or more of the following values.<br>**FR_DOWN**. If set, the operation searches from the end of the current selection to the end of the document. If not set, the operation searches from the end of the current selection to the beginning of the document.<br>**FR_MATCHALEFHAMZA**. By default, Arabic and Hebrew alefs with different accents are all matched by the alef character. Set this flag if you want the search to differentiate between alefs with different accents.<br>**FR_MATCHCASE**. If set, the search operation is case-sensitive. If not set, the search operation is case-insensitive.<br>**FR_MATCHDIAC**. By default, Arabic and Hebrew diacritical marks are ignored. Set this flag if you want the search operation to consider diacritical marks.<br>**FR_MATCHKASHIDA**. By default, Arabic and Hebrew kashidas are ignored. Set this flag if you want the search operation to consider kashidas.<br>**FR_WHOLEWORD**. If set, the operation searches only for whole words that match the search string. If not set, the operation also searches for word fragments that match the search string.|
 | *ftexw* | A [FINDTEXTEXW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-findtextexw) structure containing information about the find operation. |
+| *cpMin* | Character position index immediately preceding the first character in the range. |
+| *cpMax* | Character position immediately following the last character in the range. If the *cpMin* and *cpMax* members are equal, the range is empty. The range includes everything if *cpMin* is 0 and *cpMax* is –1. |
+| *pwszText* | A **WSTRING** containing the text to find. |
 
 #### Return value
 
-If the target string is found, the return value is the zero-based position of the first character of the match. If the target is not found, the return value is -1.
+First overloaded function: If the target string is found, the return value is the zero-based position of the first character of the match. If the target is not found, the return value is -1.
+
+Second overloaded function: A **CHARRANGE** structure. The range of characters in which the text was found. If the text was not found, *cpMin* and *cpMax* are -1.
 
 #### Remarks
 
