@@ -14,7 +14,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 | Name       | Description |
 | ---------- | ----------- |
-| [AfxCRichEditCtrlPtr](#AfxCRichEditCtrlPtr) | Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or from the handle of its parent window and the identifier of the control. |
+| [AfxCRichEditCtrlPtr](#AfxCRichEditCtrlPtr) | Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or from the handle of its parent window and the control's identifier. |
 
 # <a name="AfxCRichEditCtrlPtr"></a>AfxCRichEditCtrlPtr
 
