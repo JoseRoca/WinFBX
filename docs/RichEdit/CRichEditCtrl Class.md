@@ -1131,8 +1131,8 @@ A [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-ri
 #### CHARRANGE structure
 ```
 type _charrange field = 4
-	cpMin as LONG
-	cpMax as LONG
+   cpMin as LONG
+   cpMax as LONG
 end type
 
 type CHARRANGE as _charrange
