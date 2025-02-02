@@ -1669,7 +1669,7 @@ FUNCTION GetTextRange (BYVAL cpMin AS LONG = 0, BYVAL cpMax AS LONG = -1) AS CWS
 
 #### Return value
 
-The first overloades method returns the number of characters copied, not including the terminating null character.
+The first overloaded method returns the number of characters copied, not including the terminating null character.
 
 The second overloaded method returns the retrieved text.
 
