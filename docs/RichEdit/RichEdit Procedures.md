@@ -147,9 +147,9 @@ The RichEdit procedures provides detailed descriptions of various procedures rel
 | Name       | Description |
 | ---------- | ----------- |
 | [RichEdit_GetRtfText](#RichEdit_GetRtfText) | Retrieves formatted text from a Rich Edit control |
-| [RichEdit_LoadRtfFromFileW](#RichEdit_LoadRtfFromFileW) | Loads a Rich Text File into a Rich Edit control. |
-| [RichEdit_LoadRtfFromResourceW](#RichEdit_LoadRtfFromResourceW) | Loads a Rich Text Resource File into a Rich Edit control. |
-| [RichEdit_SetFontW](#RichEdit_SetFontW) | Sets the font used by a rich edit control. |
+| [RichEdit_LoadRtfFromFile](#RichEdit_LoadRtfFromFile) | Loads a Rich Text File into a Rich Edit control. |
+| [RichEdit_LoadRtfFromResource](#RichEdit_LoadRtfFromResource) | Loads a Rich Text Resource File into a Rich Edit control. |
+| [RichEdit_SetFont](#RichEdit_SetFont) | Sets the font used by a rich edit control. |
 
 # <a name="RichEdit_AutoUrlDetect"></a>RichEdit_AutoUrlDetect
 
@@ -3571,12 +3571,12 @@ For a multiline edit control, the return value is **TRUE** if the undo operation
 
 **Rich Edit**: Supported in Microsoft Rich Edit 1.0 and later.
 
-# <a name="RichEdit_SetFontW"></a>RichEdit_SetFontW
+# <a name="RichEdit_SetFont"></a>RichEdit_SetFont
 
 Sets the font used by a rich edit control.
 
 ```
-FUNCTION RichEdit_SetFontW (BYVAL hRichEdit AS HWND, BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS LRESULT
+FUNCTION RichEdit_SetFont (BYVAL hRichEdit AS HWND, BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS LRESULT
 ```
 
 | Parameter  | Description |
@@ -3595,7 +3595,7 @@ If the operation fails, the return value is zero.
 
 ```
 ' ========================================================================================
-' Enumerates font families. Used by the RichEdit_SetFontW function.
+' Enumerates font families. Used by the RichEdit_SetFont function.
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_EnumFontFamProcW ( _
    BYVAL lpelf    AS ENUMLOGFONTW PTR, _     ' // Address of ENUMLOGFONT structure
@@ -3616,7 +3616,7 @@ END FUNCTION
 ' ========================================================================================
 ' Sets the font used by a rich edit control.
 ' ========================================================================================
-PRIVATE FUNCTION RichEdit_SetFontW ( _
+PRIVATE FUNCTION RichEdit_SetFont ( _
    BYVAL hRichEdit AS HWND, _             ' // Handle to the RichEdit control
    BYREF wszFaceName AS WSTRING, _        ' // Font name
    BYVAL ptsize AS LONG _                 ' // Font size in points
@@ -3646,12 +3646,12 @@ END FUNCTION
 ' ========================================================================================
 ```
 
-# <a name="RichEdit_LoadRtfFromFileW"></a>RichEdit_LoadRtfFromFileW
+# <a name="RichEdit_LoadRtfFromFile"></a>RichEdit_LoadRtfFromFile
 
 Loads the contents of a RTF file into a Rich Edit control.
 
 ```
-FUNCTION RichEdit_LoadRtfFromFileW (BYVAL hRichEdit AS HWND, BYREF wszFileName AS WSTRING) AS BOOLEAN
+FUNCTION RichEdit_LoadRtfFromFile (BYVAL hRichEdit AS HWND, BYREF wszFileName AS WSTRING) AS BOOLEAN
 ```
 
 | Parameter  | Description |
@@ -3710,7 +3710,7 @@ END FUNCTION
 ' ========================================================================================
 ```
 
-# <a name="RichEdit_LoadRtfFromResourceW"></a>RichEdit_LoadRtfFromResourceW
+# <a name="RichEdit_LoadRtfFromResource"></a>RichEdit_LoadRtfFromResource
 
 Loads a RTF resource file into a Rich Edit control.
 
@@ -3734,7 +3734,7 @@ If the operation fails, the return value is **FALSE**.
 
 ```
 ' ========================================================================================
-' Custom structure used by the RichEdit_LoadRtfFromResourceW function.
+' Custom structure used by the RichEdit_LoadRtfFromResource function.
 ' ========================================================================================
 TYPE AFX_RICHEDIT_CUSTOMDATA
    pData  AS BYTE PTR
@@ -3744,7 +3744,7 @@ END TYPE
 ' ========================================================================================
 
 ' ========================================================================================
-' Callback function used by the RichEdit_LoadRtfFromResourceW function.
+' Callback function used by the RichEdit_LoadRtfFromResource function.
 ' Transfers a stream of data into a rich edit control.
 ' ========================================================================================
 PRIVATE FUNCTION RichEdit_LoadRtfFromResourceCallback ( _
@@ -3773,7 +3773,7 @@ END FUNCTION
 ' The EM_STREAMIN message replaces the contents of a rich edit control with a stream of
 ' data provided by an application defined EditStreamCallback callback function.
 ' ========================================================================================
-PRIVATE FUNCTION RichEdit_LoadRtfFromResourceW ( _
+PRIVATE FUNCTION RichEdit_LoadRtfFromResource ( _
    BYVAL hRichEdit AS HWND _                ' // Handle of the Rich Edit control
  , BYVAL hInstance AS HINSTANCE _           ' // Instance handle
  , BYREF wszResourceName AS WSTRING _       ' // Name of the resource to load
