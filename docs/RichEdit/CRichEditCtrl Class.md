@@ -2050,16 +2050,16 @@ To determine whether there are any actions in the control's redo queue, call the
 
 Replaces the current selection in a rich edit control with the specified text.
 ```
-SUB ReplaceSel (BYVAL bCanBeUndone AS LONG, BYVAL pwszText AS WSTRING PTR)
+SUB ReplaceSel (BYVAL bCanBeUndone AS LONG = TRUE, BYREF wszText AS WSTRING)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
 | *bCanBeUndone* | Specifies whether the replacement operation can be undone. If this is **TRUE**, the operation can be undone. If this is **FALSE**, the operation cannot be undone. |
-| *pwszText* | A pointer to a null-terminated string containing the replacement text. |
+| *wszText* | A **WSTRING** containing the replacement text. |
 
 #### Remarks
 
-Use the **ReplaceSel** method to replace only a portion of the text in an edit control. To replace all of the text, use the **SetText** method.
+Use the **ReplaceSel** method to replace only a portion of the text in an edit control. To replace all of the text, use the **Text** property.
 
 If there is no selection, the replacement text is inserted at the caret.
 
