@@ -2406,13 +2406,13 @@ If the operation fails, the return value is zero.
 
 # <a name="SetUIAName"></a>SetUIAName
 
-Sets the maximum number of actions that can stored in the undo queue.
+Sets the name of a rich edit control for UI Automation (UIA).
 ```
-FUNCTION SetUIAName (BYVAL pwszName AS WSTRING PTR) AS DWORD
+FUNCTION SetUIAName (BYREF wszName AS WSTRING) AS DWORD
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *bstrName* | A pointer to the null-terminated name string. |
+| *wszName* | A **WSTRING** with the name. |
 
 #### Return value
 
