@@ -196,7 +196,7 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 | [SetTableParams](#SetTableParams) | Changes the parameters of rows in a table. |
 | [SetTabStops](#SetTabStops) | Sets the tab stops in a multiline rich edit control. |
 | [SetTargetDevice](#SetTargetDevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
-| [SetTextExW](#SetTextExW) | Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text. |
+| [SetTextEx](#SetTextEx) | Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text. |
 | [SetUIAName](#SetUIAName) | Sets the maximum number of actions that can stored in the undo queue. |
 | [SetUndoLimit](#SetUndoLimit) | Sets the maximum number of actions that can stored in the undo queue. |
 | [SetWordWrapMode](#SetWordWrapMode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
@@ -2385,11 +2385,11 @@ END IF
 
 If *lnwidth* is zero, no line breaks are created.
 
-# <a name="SetTextExW"></a>SetTextExW
+# <a name="SetTextEx"></a>SetTextEx
 
 Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text.
 ```
-FUNCTION SetTextExW (BYREF stex AS SETTEXTEX, BYVAL pwszText AS WSTRING PTR) AS DWORD
+FUNCTION SetTextExW (BYREF stex AS SETTEXTEX, BYREF wszText AS WSTRING) AS DWORD
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
