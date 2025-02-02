@@ -990,7 +990,7 @@ In rich text mode, a rich edit control has standard rich edit functionality. How
 - The text in a plain text control can have only one format (such as Bold, 10pt Arial).
 - The user cannot paste rich text formats, such as Rich Text Format (RTF) or embedded objects into a plain text control.
 - Rich text mode controls always have a default end-of-document marker or carriage return, to format paragraphs. Plain text controls, on the other hand, do not need the default, end-of-document marker, so it is omitted.
-- The control must contain no text when it receives the **EM_SETTEXTMODE** message. To ensure there is no text, call the (SET) **Text" property with an empty string ("").
+- The control must contain no text when it receives the **EM_SETTEXTMODE** message. To ensure there is no text, call the (SET) **Text** property with an empty string ("").
 
 # <a name="TouchOptions"></a>TouchOptions
 
