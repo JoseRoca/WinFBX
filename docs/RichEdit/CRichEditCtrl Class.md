@@ -2573,22 +2573,6 @@ FUNCTION GetRtfText () AS STRING
 #### Return value
 
 Returns the retrieved text or a null string.
-
-# <a name="SetFont"></a>SetFont
-
-Sets the font used by a rich edit control.
-```
-FUNCTION SetFont (BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS HRESULT
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *wszFaceName* | The font name. |
-| *ptsize* | The font size in points. |
-
-#### Return value
-
-If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero.
-
 # <a name="LoadRtfFromFile"></a>LoadRtfFromFile
 
 Loads the contents of a RTF file into a Rich Edit control.
@@ -2616,3 +2600,19 @@ FUNCTION LoadRtfFromResource (BYREF wszResourceName AS WSTRING) AS BOOLEAN
 #### Return value
 
 If the operation succeeds, the return value is **TRUE**. If the operation fails, the return value is **FALSE**.
+
+# <a name="SetFont"></a>SetFont
+
+Sets the font used by a rich edit control.
+```
+FUNCTION SetFont (BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszFaceName* | The font name. |
+| *ptsize* | The font size in points. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero.
+
