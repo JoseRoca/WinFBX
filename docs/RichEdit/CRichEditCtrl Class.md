@@ -2538,9 +2538,8 @@ For a multiline edit control, the return value is **TRUE** if the undo operation
 # <a name="GetLastResult"></a>GetLastResult
 
 Returns the last result code
-
 ```
-FUNCTION CTextObjectBase.GetLastResult () AS HRESULT
+FUNCTION GetLastResult () AS HRESULT
    RETURN m_Result
 END FUNCTION
 ```
@@ -2548,14 +2547,12 @@ END FUNCTION
 # <a name="SetResult"></a>SetResult
 
 Sets the last result code.
-
 ```
-FUNCTION CTextObjectBase.SetResult (BYVAL Result AS HRESULT) AS HRESULT
+FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
    m_Result = Result
    RETURN m_Result
 END FUNCTION
 ```
-
 | Parameter | Description |
 | --------- | ----------- |
 | *Result* | The **HRESULT** error code returned by the methods. |
@@ -2564,27 +2561,14 @@ END FUNCTION
 
 Returns a description of the last result code.
 ```
-PRIVATE FUNCTION CTextObjectBase.GetErrorInfo (BYVAL nError AS LONG = -1) AS CWSTR
-   IF nError = -1 THEN nError = m_Result
-   DIM cbLen AS DWORD, pBuffer AS WSTRING PTR, cwsMsg AS CWSTR
-   cbLen = FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER OR _
-           FORMAT_MESSAGE_FROM_SYSTEM OR FORMAT_MESSAGE_IGNORE_INSERTS, _
-           NULL, nError, BYVAL MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), _
-           cast(LPWSTR, @pBuffer), 0, NULL)
-   IF cbLen THEN
-      cwsMsg = *pBuffer
-      LocalFree pBuffer
-   END IF
-   IF nError THEN cwsMsg = "Error &h" & HEX(nError) & CHR(13, 10) & cwsMsg
-   RETURN cwsMsg
-END FUNCTION
+PRIVATE FUNCTION GetErrorInfo (BYVAL nError AS LONG = -1) AS CWSTR
 ```
 
 # <a name="CGetRtfText"></a>GetRtfText
 
 Retrieves RTF formatted text from a Rich Edit control.
 ```
-FUNCTION CRichEditCtrl.GetRtfText () AS STRING
+FUNCTION GetRtfText () AS STRING
 ```
 #### Return value
 
@@ -2594,7 +2578,7 @@ Returns the retrieved text or a null string.
 
 Sets the font used by a rich edit control.
 ```
-FUNCTION CRichEditCtrl.SetFont (BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS HRESULT
+FUNCTION SetFont (BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS HRESULT
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -2608,11 +2592,9 @@ If the operation succeeds, the return value is a nonzero value. If the operation
 # <a name="LoadRtfFromFile"></a>LoadRtfFromFile
 
 Loads the contents of a RTF file into a Rich Edit control.
-
 ```
-FUNCTION CRichEditCtrl.LoadRtfFromFile (BYREF wszFileName AS WSTRING) AS BOOLEAN
+FUNCTION LoadRtfFromFile (BYREF wszFileName AS WSTRING) AS BOOLEAN
 ```
-
 | Parameter  | Description |
 | ---------- | ----------- |
 | *wszFileName* | The name of the RTF file to load. |
@@ -2625,7 +2607,7 @@ If the operation succeeds, the return value is **TRUE**. If the operation fails,
 
 Loads a RTF resource file into a Rich Edit control.
 ```
-FUNCTION CRichEditCtrl.LoadRtfFromResource (BYREF wszResourceName AS WSTRING) AS BOOLEAN
+FUNCTION LoadRtfFromResource (BYREF wszResourceName AS WSTRING) AS BOOLEAN
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
