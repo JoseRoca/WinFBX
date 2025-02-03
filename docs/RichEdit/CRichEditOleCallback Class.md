@@ -1,6 +1,6 @@
 # CRichEditOleCallback Class
 
-Implements the IRichEditOleCallback interface.
+Implements the `IRichEditOleCallback`interface.
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -25,3 +25,18 @@ The `IRichEditOleCallback`interface inherits from the **IUnknown** interface. `I
 | [GetClipboardData](#GetClipboardData) | Allows the client to supply its own clipboard object. |
 | [GetDragDropEffect](#GetDragDropEffect) | Allows the client to specify the effects of a drop operation. |
 | [GetContextMenu](#GetContextMenu) | Queries the application for a context menu to use on a right-click event. |
+
+# <a name="CONSTRUCTOR"></a>CONSTRUCTOR
+
+Creates an instance of the `CRichEditOleCallback`.
+
+```
+CONSTRUCTOR CRichEditOLeCallback
+```
+
+# <a name="DESTRUCTOR"></a>DESTRUCTOR
+
+Called automatically when a class variable goes out of scope or is destroyed.
+```
+DESTRUCTOR CRichEditOLeCallback
+```
