@@ -213,8 +213,7 @@ FUNCTION GetClipboardData (BYVAL lpchrg AS CHARRANGE PTR, BYVAL reco AS DWORD, _
 | Parameter  | Description |
 | ---------- | ----------- |
 | *lpchrg* | The clipboard object range. |
-| *reco* | The clipboard operation flag can be one of these values.<br>**ECO_COPY**. Copy to the clipboard.
-**RECO_CUT**. Cut to the clipboard. |
+| *reco* | The clipboard operation flag can be one of these values.<br>**ECO_COPY**. Copy to the clipboard.<br>**RECO_CUT**. Cut to the clipboard. |
 | *lplpdataobj* | Pointer to the pointer variable that receives the address of the [IDataObject](https://learn.microsoft.com/en-us/windows/win32/api/objidl/nn-objidl-idataobject) implementation representing the range specified in the *lpchrg* parameter. The value of **lplpdataobj** is ignored if an error is returned. |
 
 #### Return value
