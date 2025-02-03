@@ -160,6 +160,8 @@ Returns **S_OK**.
 
 During a paste operation or a drag event, determines if the data that is pasted or dragged should be accepted.
 
+**QueryAcceptData** is called when the user attempts to drag or paste an object into the control. If your application can accept the data, your implementation of the method returns **S_OK**; otherwise, it returns an error code. The method might also take some other action, such as warning the user that files of that type cannot be placed in the control.
+
 ```
 FUNCTION QueryAcceptData (BYVAL lpdataobj AS LPDATAOBJECT, BYVAL lpcfFormat AS CLIPFORMAT PTR, _
    BYVAL reco AS DWORD, BYVAL fReally AS WINBOOL, BYVAL hMetaPict AS HGLOBAL) AS HRESULT
