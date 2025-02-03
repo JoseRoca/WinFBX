@@ -152,6 +152,6 @@ FUNCTION DeleteObject (BYVAL lpoleobj AS LPOLEOBJECT) AS HRESULT
 | ---------- | ----------- |
 | *lpoleobj* | The object that is being deleted. |
 
-####Return value
+#### Return value
 
 Returns **S_OK**.
