@@ -40,3 +40,40 @@ Called automatically when a class variable goes out of scope or is destroyed.
 ```
 DESTRUCTOR CRichEditOLeCallback
 ```
+
+# <a name="GetNewStorage"></a>GetNewStorage
+
+Provides storage for a new object pasted from the clipboard or read in from an Rich Text Format (RTF) stream.
+```
+FUNCTION GetNewStorage (BYVAL lplpstg AS LPSTORAGE PTR) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lplpstg* | The address of the **IStorage** interface created for the new object. |
+
+#### Return value
+
+Returns **S_OK** on success. If the method fails, it can return one of the following values.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **E_INVALIDARG** | There was an invalid argument. |
+| **E_OUTOFMEMORY** | There was not enough memory to do the operation. |
+
+#### Remarks
+
+This method must be implemented to allow cut, copy, paste, drag, and drop operations of Component Object Model (COM) objects.
+
+#### Implementation
+```
+FUNCTION CRichEditOleCallback.GetNewStorage (BYVAL lplpstg AS LPSTORAGE PTR) AS HRESULT
+   DIM hr AS HRESULT
+   DIM pILockBytes AS ILockBytes PTR
+   hr = CreateILockBytesOnHGlobal(NULL, TRUE, @pILockBytes)
+   IF FAILED(hr) THEN RETURN hr
+   hr = StgCreateDocfileOnILockBytes(pILockBytes, _
+        STGM_SHARE_EXCLUSIVE OR STGM_READWRITE OR STGM_CREATE, 0, lplpstg)
+   RETURN hr
+END FUNCTION
+```
+
