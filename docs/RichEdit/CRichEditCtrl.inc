@@ -59,7 +59,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE DESTRUCTOR
       DECLARE FUNCTION hRichEdit () AS HWND
 
-      ' // Static callback procedure
+      ' // Static callback procedures
       DECLARE STATIC FUNCTION CRichEditCtrlProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM, BYVAL uIdSubclass AS UINT_PTR, BYVAL dwRefData AS DWORD_PTR) AS LRESULT
       DECLARE STATIC FUNCTION CRichEditCtrlGetTextCallback (BYVAL dwCookie AS DWORD_PTR, BYVAL pbBuff AS BYTE PTR, BYVAL cb AS LONG, BYVAL pcb AS LONG PTR) AS DWORD
       DECLARE STATIC FUNCTION CRichEditCtrlEnumFontFamProcW (BYVAL lpelf AS ENUMLOGFONTW PTR, BYVAL lpntm AS NEWTEXTMETRICW PTR, _
@@ -1094,7 +1094,7 @@ PRIVATE FUNCTION CRichEditCtrl.GetSelText () AS CWSTR
    this.SetResult(0)
    DIM dwStartPos AS DWORD, dwEndPos AS DWORD, cr AS CHARRANGE
    SendMessageW(m_hRichEdit, EM_EXGETSEL, 0, cast(LPARAM, @cr))
-   DIM cbLen AS DWORD = ABS(cr.cpMax - cr.cpMin)
+   DIM cbLen AS DWORD = cr.cpMax - cr.cpMin
    IF cbLen < 1 THEN RETURN ""
    DIM cwsText AS CWSTR = WSPACE(cbLen + 1)
    cbLen = SendMessageW(m_hRichEdit, EM_GETSELTEXT, 0, cast(LPARAM, *cwsText))
