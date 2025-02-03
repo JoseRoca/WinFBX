@@ -77,3 +77,22 @@ FUNCTION CRichEditOleCallback.GetNewStorage (BYVAL lplpstg AS LPSTORAGE PTR) AS 
 END FUNCTION
 ```
 
+# <a name="GetInPlaceContext"></a>GetInPlaceContext
+
+Provides the application and document-level interfaces and information required to support in-place activation.
+```
+GetInPlaceContext (BYVAL lplpFrame AS LPOLEINPLACEFRAME PTR, BYVAL lplpDoc AS LPOLEINPLACEUIWINDOW PTR, _
+   BYVAL lpFrameInfo AS LPOLEINPLACEFRAMEINFO) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lplpFrame* | The address of the [IOleInPlaceFrame](https://learn.microsoft.com/en-us/windows/win32/api/oleidl/nn-oleidl-ioleinplaceframe) interface that represents the frame window of a rich edit control client. Use the **AddRef** method to increment the reference count. The rich edit control releases the interface when it is no longer needed. |
+| *lplpDoc* | The address of the [IOleInPlaceUIWindow(https://learn.microsoft.com/en-us/windows/win32/api/oleidl/nn-oleidl-ioleinplaceuiwindow) interface that represents the document window of the rich edit control client. An interface need not be returned if the frame and document windows are the same. Use the AddRef method to increment the reference count. The rich edit control releases the interface when it is no longer needed. |
+| *lpFrameInfo* | The accelerator information. [OLEINPLACEFRAMEINFO](https://learn.microsoft.com/en-us/windows/win32/api/oleidl/ns-oleidl-oleinplaceframeinfo) |
+
+#### Return value
+
+Returns **S_OK** on success. If the method fails, it can return the following value.
+| Return code  | Description |
+| ------------ | ----------- |
+| **E_INVALIDARG** | There was an invalid argument. |
