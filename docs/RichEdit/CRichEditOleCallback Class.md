@@ -93,6 +93,7 @@ GetInPlaceContext (BYVAL lplpFrame AS LPOLEINPLACEFRAME PTR, BYVAL lplpDoc AS LP
 #### Return value
 
 Returns **S_OK** on success. If the method fails, it can return the following value.
+
 | Return code  | Description |
 | ------------ | ----------- |
 | **E_INVALIDARG** | There was an invalid argument. |
@@ -111,9 +112,29 @@ FUNCTION ShowContainerUI (BYVAL fShow AS WINBOOL) AS HRESULT
 #### Return value
 
 Returns **S_OK** on success. If the method fails, it can return the following value.
+
 | Return code  | Description |
 | ------------ | ----------- |
 | **E_INVALIDARG** | There was an invalid argument. |
 
 #### Remarks
 The **ShowContainerUI** method is called by the [IOleInPlaceSite.OnUIActivate](https://learn.microsoft.com/en-us/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-onuiactivate) and [IOleInPlaceSite.OnUIDeactivate](https://learn.microsoft.com/en-us/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-onuideactivate) methods of the [IOleInPlaceSite](https://learn.microsoft.com/en-us/windows/win32/api/oleidl/nn-oleidl-ioleinplacesite) interface.
+
+# <a name="QueryInsertObject"></a>QueryInsertObject
+
+Queries the application as to whether an object should be inserted. The member is called when pasting and when reading Rich Text Format (RTF).
+```
+FUNCTION QueryInsertObject (BYVAL lpclsid AS LPCLSID, BYVAL lpstg AS LPSTORAGE, BYVAL cp AS LONG) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lpclsid* | Class identifier of the object to be inserted. |
+| *lpstg* | Storage containing the object. |
+| *cp* | Character position, at which the object will be inserted. |
+#### Return value
+
+Returns **S_OK** on success. If the return value is not S_OK, the object was not inserted. If the method fails, it can return the following value.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **E_INVALIDARG** | There was an invalid argument. |
