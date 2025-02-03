@@ -155,3 +155,28 @@ FUNCTION DeleteObject (BYVAL lpoleobj AS LPOLEOBJECT) AS HRESULT
 #### Return value
 
 Returns **S_OK**.
+
+# <a name="QueryAcceptData"></a>QueryAcceptData
+
+During a paste operation or a drag event, determines if the data that is pasted or dragged should be accepted.
+
+```
+FUNCTION QueryAcceptData (BYVAL lpdataobj AS LPDATAOBJECT, BYVAL lpcfFormat AS CLIPFORMAT PTR, _
+   BYVAL reco AS DWORD, BYVAL fReally AS WINBOOL, BYVAL hMetaPict AS HGLOBAL) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lpdataobj* | The data object being pasted or dragged. |
+| *lpcfFormat* | The clipboard format that will be used for the paste or drop operation. If the value pointed to by *lpcfFormat* is zero, the best available format will be used. If the callback changes the value pointed to by *lpcfFormat*, the rich edit control only uses that format and the operation will fail if the format is not available. |
+| *reco* | A clipboard operation flag, which can be one of these values:<br>**RECO_DROP**. Drop operation (drag-and-drop).<br>**RECO_PASTE**. Paste from the clipboard. |
+| *fReally* | Indicates whether the drag-drop is actually happening or if it is just a query. A nonzero value indicates the paste or drop is actually happening. A zero value indicates the operation is just a query, such as for **EM_CANPASTE**. |
+| *hMetaPict* | Handle to a metafile containing the icon view of an object if **DVASPECT_ICON** is being imposed on an object by a paste special operation. |
+
+#### Return value
+
+Returns **S_OK** on success. See **Remarks**.
+
+#### Remarks
+
+On failure, the rich edit control refuses the data and terminates the operation. Otherwise, the control checks the data itself for acceptable formats. A success code other than **S_OK** means that the callback either checked the data itself (if *fReally* is **FALSE**) or imported the data itself (if *fReally* is **TRUE**). If the application returns a success code other than **S_OK**, the control does not check the read-only state of the edit control.
