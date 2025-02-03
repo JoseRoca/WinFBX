@@ -1096,7 +1096,7 @@ PRIVATE FUNCTION CRichEditCtrl.GetSelText () AS CWSTR
    SendMessageW(m_hRichEdit, EM_EXGETSEL, 0, cast(LPARAM, @cr))
    DIM cbLen AS DWORD = ABS(cr.cpMax - cr.cpMin)
    IF cbLen < 1 THEN RETURN ""
-   DIM cwsText AS CWSTR = cbLen + 1
+   DIM cwsText AS CWSTR = WSPACE(cbLen + 1)
    cbLen = SendMessageW(m_hRichEdit, EM_GETSELTEXT, 0, cast(LPARAM, *cwsText))
    RETURN LEFT(**cwsText, cbLen)
 END FUNCTION

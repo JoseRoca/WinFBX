@@ -440,7 +440,7 @@ PRIVATE FUNCTION RichEdit_GetSelText (BYVAL hRichEdit AS HWND) AS CWSTR
    SendMessageW(hRichEdit, EM_EXGETSEL, 0, cast(LPARAM, @cr))
    DIM cbLen AS DWORD = ABS(cr.cpMax - cr.cpMin)
    IF cbLen < 1 THEN RETURN ""
-   DIM cwsText AS CWSTR = cbLen + 1
+   DIM cwsText AS CWSTR = WSPACE(cbLen + 1)
    cbLen = SendMessageW(hRichEdit, EM_GETSELTEXT, 0, cast(LPARAM, *cwsText))
    RETURN LEFT(**cwsText, cbLen)
 END FUNCTION
