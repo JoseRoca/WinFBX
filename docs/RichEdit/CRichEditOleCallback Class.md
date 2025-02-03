@@ -200,3 +200,23 @@ Returns **S_OK** on success. If the method fails, it can return the following va
 | Return code  | Description |
 | ------------ | ----------- |
 | **E_INVALIDARG** | There was an invalid argument. |
+
+# <a name="GetClipboardData"></a>GetClipboardData
+
+Allows the client to supply its own clipboard object.
+
+```
+FUNCTION GetClipboardData (BYVAL lpchrg AS CHARRANGE PTR, BYVAL reco AS DWORD, _
+   BYVAL lplpdataobj AS LPDATAOBJECT PTR) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lpchrg* | The clipboard object range. |
+| *reco* | The clipboard operation flag can be one of these values.<br>**ECO_COPY**. Copy to the clipboard.
+**RECO_CUT**. Cut to the clipboard. |
+| *lplpdataobj* | Pointer to the pointer variable that receives the address of the [IDataObject](https://learn.microsoft.com/en-us/windows/win32/api/objidl/nn-objidl-idataobject) implementation representing the range specified in the *lpchrg* parameter. The value of **lplpdataobj** is ignored if an error is returned. |
+
+#### Return value
+
+Returns **S_OK** on success. If the return value is **E_NOTIMPL**, the rich edit control created its own clipboard object. If the return value is a failure other than **E_NOTIMPL**, the operation failed.
