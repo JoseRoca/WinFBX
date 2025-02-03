@@ -219,3 +219,44 @@ FUNCTION GetClipboardData (BYVAL lpchrg AS CHARRANGE PTR, BYVAL reco AS DWORD, _
 #### Return value
 
 Returns **S_OK** on success. If the return value is **E_NOTIMPL**, the rich edit control created its own clipboard object. If the return value is a failure other than **E_NOTIMPL**, the operation failed.
+
+# <a name="GetDragDropEffect"></a>GetDragDropEffect
+
+Allows the client to specify the effects of a drop operation.
+
+```
+FUNCTION GetDragDropEffect (BYVAL fDrag AS WINBOOL, BYVAL grfKeyState AS DWORD, _
+   BYVAL pdwEffect AS LPDWORD) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fDrag* | **TRUE** if the query is for a [IDropTarget.DragEnter](https://learn.microsoft.com/en-us/windows/win32/api/oleidl/nf-oleidl-idroptarget-dragenter) or [IDropTarget.DragOver](https://learn.microsoft.com/en-us/windows/win32/api/oleidl/nf-oleidl-idroptarget-dragover). **FALSE** if the query is for [IDropTarget.Drop](https://learn.microsoft.com/en-us/windows/win32/api/oleidl/nf-oleidl-idroptarget-drop). |
+| *grfKeyState* | Key state as defined by OLE. |
+| *pdwEffect* | The effect used by a rich edit control. When *fDrag* is **TRUE**, on return, its content is set to the effect allowable by the rich edit control. When *fDrag* is **FALSE**, on return, the variable is set to the effect to use. |
+
+#### Return value
+
+This method returns **S_OK**.
+
+# <a name="GetContextMenu"></a>GetContextMenu
+
+Queries the application for a context menu to use on a right-click event.
+
+```
+FUNCTION GetContextMenu (BYVAL seltype AS WORD, BYVAL lpoleobj AS LPOLEOBJECT, _
+   BYVAL lpchrg AS CHARRANGE PTR, BYVAL lphmenu AS HMENU PTR) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *seltype* | Selection type. The value, which specifies the contents of the new selection, can be one or more of the following values.<br>**SEL_EMPTY**. The selection is empty.<br>**SEL_TEXT**. Text.<br>**SEL_OBJECT**. At least one COM object.<br>**SEL_MULTICHAR**. More than one character of text.<br>**SEL_MULTIOBJECT**. More than one COM object.<br>**GCM_RIGHTMOUSEDROP**. Indicates that a context menu for a right-mouse drag drop should be generated. The *lpoleobj* parameter is a pointer to the [IDataObject](https://learn.microsoft.com/en-us/windows/win32/api/objidl/nn-objidl-idataobject) interface for the object being dropped. |
+| *lpoleobj* | Pointer to an interface. If the *seltype* parameter includes the **SEL_OBJECT** flag, *lpoleobj* is a pointer to the [IOleObject](https://learn.microsoft.com/en-us/windows/win32/api/oleidl/nn-oleidl-ioleobject) interface for the first selected COM object. If seltype includes the **GCM_RIGHTMOUSEDROP** flag, *lpoleobj* is a pointer to an [IDataObject](https://learn.microsoft.com/en-us/windows/win32/api/objidl/nn-objidl-idataobject) interface. Otherwise, *lpoleobj* is NULL. If you hold on to the interface pointer, you must call the AddRef method to increment the object's reference count. |
+| *lpchrg* | Pointer to a [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) structure containing the current selection. |
+| *lphmenu* | The handle of a context menu to use. This parameter is ignored if an error is returned. A rich edit control destroys the menu when it is finished with it so the client should not. |
+
+Returns **S_OK** on success. If the method fails, it can return the following value.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **E_INVALIDARG** | There was an invalid argument. |
