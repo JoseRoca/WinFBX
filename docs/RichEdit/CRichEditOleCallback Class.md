@@ -131,6 +131,7 @@ FUNCTION QueryInsertObject (BYVAL lpclsid AS LPCLSID, BYVAL lpstg AS LPSTORAGE, 
 | *lpclsid* | Class identifier of the object to be inserted. |
 | *lpstg* | Storage containing the object. |
 | *cp* | Character position, at which the object will be inserted. |
+
 #### Return value
 
 Returns **S_OK** on success. If the return value is not S_OK, the object was not inserted. If the method fails, it can return the following value.
@@ -138,3 +139,19 @@ Returns **S_OK** on success. If the return value is not S_OK, the object was not
 | Return code  | Description |
 | ------------ | ----------- |
 | **E_INVALIDARG** | There was an invalid argument. |
+
+# <a name="DeleteObject"></a>DeleteObject
+
+Sends notification that an object is about to be deleted from a rich edit control. The object is not necessarily being released when this member is called.
+
+```
+FUNCTION DeleteObject (BYVAL lpoleobj AS LPOLEOBJECT) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *lpoleobj* | The object that is being deleted. |
+
+####Return value
+
+Returns **S_OK**.
