@@ -180,3 +180,23 @@ Returns **S_OK** on success. See **Remarks**.
 #### Remarks
 
 On failure, the rich edit control refuses the data and terminates the operation. Otherwise, the control checks the data itself for acceptable formats. A success code other than **S_OK** means that the callback either checked the data itself (if *fReally* is **FALSE**) or imported the data itself (if *fReally* is **TRUE**). If the application returns a success code other than **S_OK**, the control does not check the read-only state of the edit control.
+
+# <a name="ContextSensitiveHelp"></a>ContextSensitiveHelp
+
+Indicates if the application should transition into or out of context-sensitive help mode. This method should implement the functionality described for [IOleWindow.ContextSensitiveHelp](https://learn.microsoft.com/en-us/windows/win32/api/oleidl/nf-oleidl-iolewindow-contextsensitivehelp).
+
+```
+FUNCTION ContextSensitiveHelp (BYVAL fEnterMode AS WINBOOL) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fEnterMode* | If **TRUE**, the application should enter context-sensitive help mode. If **FALSE**, the application should leave context-sensitive help mode. |
+
+#### Return value
+
+Returns **S_OK** on success. If the method fails, it can return the following value.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **E_INVALIDARG** | There was an invalid argument. |
