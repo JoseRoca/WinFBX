@@ -10,7 +10,7 @@ The **CGpGraphics** class provides methods for drawing lines, curves, figures, i
 | [Constructors (CGpGrapics)](#ConstructorsGraphics) | Creates a **Graphics** object. |
 | [AddMetafileComment (CGpGrapics)](#AddMetafileComment) | Adds a text comment to an existing metafile. |
 | [BeginContainer](#BeginContainer) | Begins a new graphics container. |
-| [Clear (CGpGraphics)](#Clear) | Clears a **Graphics** object to a specified color. |
+| [Clear](#Clear) | Clears a **Graphics** object to a specified color. |
 | [DrawArc](#DrawArc) | Draws an arc. The arc is part of an ellipse. |
 | [DrawBezier](#DrawBezier) | Draws a Bézier spline. |
 | [DrawBeziers](#DrawBeziers) | Draws a sequence of connected Bézier splines. |
@@ -268,7 +268,7 @@ Calls to the **Save** method place information blocks on the same stack as calls
 For more information about graphics containers, see [Nested Graphics Containers](https://docs.microsoft.com/en-us/windows/desktop/gdiplus/-gdiplus-nested-graphics-containers-use)
 
 
-# <a name="Clear"></a>Clear (CGpGraphics)
+<a name="Clear"></a>Clear (CGpGraphics)
 
 Clears a **Graphics** object to a specified color.
 
