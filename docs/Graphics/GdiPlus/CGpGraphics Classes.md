@@ -287,7 +287,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="DrawArc"></a>DrawArc (CGpGraphics)
+# <a name="DrawArc"></a>DrawArc
 
 Draws an arc. The arc is part of an ellipse.
 
