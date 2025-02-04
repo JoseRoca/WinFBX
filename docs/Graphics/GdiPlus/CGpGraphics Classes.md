@@ -268,7 +268,7 @@ Calls to the **Save** method place information blocks on the same stack as calls
 For more information about graphics containers, see [Nested Graphics Containers](https://docs.microsoft.com/en-us/windows/desktop/gdiplus/-gdiplus-nested-graphics-containers-use)
 
 
-<a name="Clear"></a>Clear (CGpGraphics)
+#<a name="Clear"></a>Clear (CGpGraphics)
 
 Clears a **Graphics** object to a specified color.
 
