@@ -10,7 +10,7 @@ The **CGpGraphics** class provides methods for drawing lines, curves, figures, i
 | [Constructors](#ConstructorsGraphics) | Creates a **Graphics** object. |
 | [AddMetafileComment](#AddMetafileComment) | Adds a text comment to an existing metafile. |
 | [BeginContainer](#BeginContainer) | Begins a new graphics container. |
-| [Clear](#Clear) | Clears a **Graphics** object to a specified color. |
+| [Clear (CGpGraphics)](#Clear) | Clears a **Graphics** object to a specified color. |
 | [DrawArc](#DrawArc) | Draws an arc. The arc is part of an ellipse. |
 | [DrawBezier](#DrawBezier) | Draws a Bézier spline. |
 | [DrawBeziers](#DrawBeziers) | Draws a sequence of connected Bézier splines. |
