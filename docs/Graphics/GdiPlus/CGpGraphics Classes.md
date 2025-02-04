@@ -7,7 +7,7 @@ The **CGpGraphics** class provides methods for drawing lines, curves, figures, i
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorsGraphics) | Creates a **Graphics** object. |
+| [Constructors (CGpGrapics)](#ConstructorsGraphics) | Creates a **Graphics** object. |
 | [AddMetafileComment](#AddMetafileComment) | Adds a text comment to an existing metafile. |
 | [BeginContainer](#BeginContainer) | Begins a new graphics container. |
 | [Clear (CGpGraphics)](#Clear) | Clears a **Graphics** object to a specified color. |
