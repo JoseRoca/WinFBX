@@ -162,7 +162,7 @@ The **CGpGraphicsPathIterator** class provides methods for isolating selected su
 | [NextSubpath](#NextSubpath) | Gets the starting index and the ending index of the next subpath (figure) in this iterator's associated path. |
 | [Rewind](#Rewind) | Rewinds this iterator to the beginning of its associated path. |
 
-# <a name="ConstructorsGraphics"></a>Constructors (CGpGraphics)
+# <a name="Constructors"></a>Constructors
 
 Creates a **Graphics** object that is associated with a specified device context. When you use this method to create a **Graphics** object, make sure that the **Graphics** object is deleted before the device context is released.
 
@@ -210,7 +210,7 @@ CONSTRUCTOR CGpGraphics (BYVAL pImage AS CGpImage PTR)
 | *pImage* | Pointer to an **Image** object that will be associated with the new **Graphics** object. |
 
 
-# <a name="AddMetafileComment"></a>AddMetafileComment (CGpGraphics)
+# <a name="AddMetafileComment"></a>AddMetafileComment
 
 Adds a text comment to an existing metafile.
 
@@ -230,7 +230,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="BeginContainer"></a>BeginContainer (CGpGraphics)
+# <a name="BeginContainer"></a>BeginContainer
 
 Begins a new graphics container.
 
@@ -268,7 +268,7 @@ Calls to the **Save** method place information blocks on the same stack as calls
 For more information about graphics containers, see [Nested Graphics Containers](https://docs.microsoft.com/en-us/windows/desktop/gdiplus/-gdiplus-nested-graphics-containers-use)
 
 
-# <a name="Clear"></a>Clear (CGpGraphics)
+# <a name="Clear"></a>Clear
 
 Clears a **Graphics** object to a specified color.
 
@@ -344,7 +344,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="DrawBezier"></a>DrawBezier (CGpGraphics)
+# <a name="DrawBezier"></a>DrawBezier
 
 Draws a Bézier spline.
 
@@ -410,7 +410,7 @@ END SUB
 ```
 
 
-# <a name="DrawBeziers"></a>DrawBeziers (CGpGraphics)
+# <a name="DrawBeziers"></a>DrawBeziers
 
 Draws a sequence of connected Bézier splines.
 
@@ -487,7 +487,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="DrawCachedBitmap"></a>DrawCachedBitmap (CGpGraphics)
+# <a name="DrawCachedBitmap"></a>DrawCachedBitmap
 
 Draws the image stored in a **CachedBitmap** object.
 
@@ -517,7 +517,7 @@ Cached bitmaps will not work with any transformations other than translation.
 When you construct a **CachedBitmap** object, you must pass the address of a **Graphics** object to the constructor. If the screen associated with that Graphics object has its bit depth changed after the cached bitmap is constructed, then the **DrawCachedBitmap** method will fail, and you should reconstruct the cached bitmap. Alternatively, you can hook the display change notification message and reconstruct the cached bitmap at that time.
 
 
-# <a name="DrawClosedCurve"></a>DrawClosedCurve (CGpGraphics)
+# <a name="DrawClosedCurve"></a>DrawClosedCurve
 
 Draws a closed cardinal spline.
 
@@ -600,7 +600,7 @@ END SUB
 ```
 
 
-# <a name="DrawCurve"></a>DrawCurve (CGpGraphics)
+# <a name="DrawCurve"></a>DrawCurve
 
 Draws a cardinal spline.
 
@@ -682,7 +682,7 @@ END SUB
 ```
 
 
-# <a name="DrawDriverString"></a>DrawDriverString (CGpGraphics)
+# <a name="DrawDriverString"></a>DrawDriverString
 
 Draws characters at the specified positions. The method gives the client complete control over the appearance of text. The method assumes that the client has already set up the format and layout to be applied.
 
@@ -713,7 +713,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 A segment is defined as a curve that connects two consecutive points in the cardinal spline. The ending point of each segment is the starting point for the next. The numberOfSegments parameter must not be greater than the count parameter minus the offset parameter plus one.
 
 
-# <a name="DrawEllipse"></a>DrawEllipse (CGpGraphics)
+# <a name="DrawEllipse"></a>DrawEllipse
 
 Draws an ellipse.
 
@@ -765,7 +765,7 @@ END SUB
 ```
 
 
-# <a name="DrawImage"></a>DrawImage (CGpGraphics)
+# <a name="DrawImage"></a>DrawImage
 
 Draws an image.
 
@@ -1015,7 +1015,7 @@ END SUB
 ```
 
 
-# <a name="DrawImageFX"></a>DrawImageFX (CGpGraphics)
+# <a name="DrawImageFX"></a>DrawImageFX
 
 Draws a portion of an image after applying a specified effect.
 
@@ -1043,7 +1043,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="DrawLine"></a>DrawLine (CGpGraphics)
+# <a name="DrawLine"></a>DrawLine
 
 Draws a line that connects two points.
 
@@ -1095,7 +1095,7 @@ END SUB
 ```
 
 
-# <a name="DrawLines"></a>DrawLines (CGpGraphics)
+# <a name="DrawLines"></a>DrawLines
 
 Draws a sequence of connected lines.
 
@@ -1155,7 +1155,7 @@ END SUB
 ```
 
 
-# <a name="DrawPath"></a>DrawPath (CGpGraphics)
+# <a name="DrawPath"></a>DrawPath
 
 Draws a sequence of lines and curves defined by a **GraphicsPath** object.
 
@@ -1205,7 +1205,7 @@ END SUB
 ```
 
 
-# <a name="DrawPie"></a>DrawPie (CGpGraphics)
+# <a name="DrawPie"></a>DrawPie
 
 Draws a pie.
 
@@ -1263,7 +1263,7 @@ END SUB
 ```
 
 
-# <a name="DrawPolygon"></a>DrawPolygon (CGpGraphics)
+# <a name="DrawPolygon"></a>DrawPolygon
 
 Draws a polygon.
 
@@ -1325,7 +1325,7 @@ END SUB
 ```
 
 
-# <a name="DrawRectangle"></a>DrawRectangle (CGpGraphics)
+# <a name="DrawRectangle"></a>DrawRectangle
 
 Draws a rectangle.
 
@@ -1378,7 +1378,7 @@ END SUB
 ```
 
 
-# <a name="DrawRectangles"></a>DrawRectangles (CGpGraphics)
+# <a name="DrawRectangles"></a>DrawRectangles
 
 Draws a sequence of rectangles.
 
@@ -1435,7 +1435,7 @@ END SUB
 ```
 
 
-# <a name="DrawString"></a>DrawString (CGpGraphics)
+# <a name="DrawString"></a>DrawString
 
 Draws a string based on a font and an origin for the string.
 
@@ -1503,7 +1503,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="EndContainer"></a>EndContainer (CGpGraphics)
+# <a name="EndContainer"></a>EndContainer
 
 Closes a graphics container that was previously opened by the **BeginContainer** method.
 
@@ -1532,7 +1532,7 @@ Calls to the **Save** method place information blocks on the same stack as calls
 Caution  When you call **EndContainer**, all information blocks placed on the stack (by **Save** or by **BeginContainer**) after the corresponding call to **BeginContainer** are removed from the stack. Likewise, when you call **Restore**, all information blocks placed on the stack (by **Save** or by **BeginContainer**) after the corresponding call to **Save** are removed from the stack.
 
 
-# <a name="EnumerateMetafile"></a>EnumerateMetafile (CGpGraphics)
+# <a name="EnumerateMetafile"></a>EnumerateMetafile
 
 Calls an application-defined callback function for each record in a specified metafile. You can use this method to display a metafile by calling **PlayRecord** in the callback function.
 
@@ -1581,7 +1581,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="ExcludeClip"></a>ExcludeClip (CGpGraphics)
+# <a name="ExcludeClip"></a>ExcludeClip
 
 Updates the clipping region to the portion of itself that does not intersect the specified rectangle.
 
@@ -1639,7 +1639,7 @@ END SUB
 ```
 
 
-# <a name="FillClosedCurve"></a>FillClosedCurve (CGpGraphics)
+# <a name="FillClosedCurve"></a>FillClosedCurve
 
 Creates a closed cardinal spline from an array of points and uses a brush to fill the interior of the spline.
 
@@ -1703,7 +1703,7 @@ END SUB
 ```
 
 
-# <a name="FillEllipse"></a>FillEllipse (CGpGraphics)
+# <a name="FillEllipse"></a>FillEllipse
 
 Uses a brush to fill the interior of an ellipse that is specified by coordinates and dimensions.
 
@@ -1757,7 +1757,7 @@ END SUB
 ```
 
 
-# <a name="FillPath"></a>FillPath (CGpGraphics)
+# <a name="FillPath"></a>FillPath
 
 Uses a brush to fill the interior of a path. If a figure in the path is not closed, this method treats the nonclosed figure as if it were closed by a straight line that connects the figure's starting and ending points.
 
@@ -1808,7 +1808,7 @@ END SUB
 ```
 
 
-# <a name="FillPie"></a>FillPie (CGpGraphics)
+# <a name="FillPie"></a>FillPie
 
 Uses a brush to fill the interior of a pie.
 
@@ -1870,7 +1870,7 @@ END SUB
 ```
 
 
-# <a name="FillPolygon"></a>FillPolygon (CGpGraphics)
+# <a name="FillPolygon"></a>FillPolygon
 
 Uses a brush to fill the interior of a polygon.
 
@@ -1929,7 +1929,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="FillRectangle"></a>FillRectangle (CGpGraphics)
+# <a name="FillRectangle"></a>FillRectangle
 
 Uses a brush to fill the interior of a rectangle.
 
@@ -1983,7 +1983,7 @@ END SUB
 ```
 
 
-# <a name="FillRectangles"></a>FillRectangles (CGpGraphics)
+# <a name="FillRectangles"></a>FillRectangles
 
 Uses a brush to fill the interior of a sequence of rectangles.
 
@@ -2037,7 +2037,7 @@ END SUB
 ```
 
 
-# <a name="FillRegion"></a>FillRegion (CGpGraphics)
+# <a name="FillRegion"></a>FillRegion
 
 Uses a brush to fill a specified region.
 
@@ -2090,7 +2090,7 @@ END SUB
 ```
 
 
-# <a name="Flush"></a>Flush (CGpGraphics)
+# <a name="Flush"></a>Flush
 
 Flushes all pending graphics operations.
 
@@ -2103,7 +2103,7 @@ SUB Flush (BYVAL intention AS FlushIntention = FlushIntentionFlush)
 | *intention* | Element of the **FlushIntention** enumeration that specifies whether pending operations are flushed immediately (not executed) or executed as soon as possible. |
 
 
-# <a name="FromHDC"></a>FromHDC (CGpGraphics)
+# <a name="FromHDC"></a>FromHDC
 
 Creates a **Graphics** object that is associated with a specified device context.
 
@@ -2152,7 +2152,7 @@ END SUB
 ```
 
 
-# <a name="FromHWND"></a>FromHWND (CGpGraphics)
+# <a name="FromHWND"></a>FromHWND
 
 Creates a **Graphics** object that is associated with a specified window.
 
@@ -2172,7 +2172,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="FromImage"></a>FromImage (CGpGraphics)
+# <a name="FromImage"></a>FromImage
 
 Creates a **Graphics** object that is associated with a specified device context.
 
@@ -2203,7 +2203,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="GetClip"></a>GetClip (CGpGraphics)
+# <a name="GetClip"></a>GetClip
 
 Gets the clipping region of this **Graphics** object.
 
@@ -2253,7 +2253,7 @@ END SUB
 ```
 
 
-# <a name="GetClipBounds"></a>GetClipBounds (CGpGraphics)
+# <a name="GetClipBounds"></a>GetClipBounds
 
 Gets a rectangle that encloses the clipping region of this **Graphics** object.
 
@@ -2323,7 +2323,7 @@ END SUB
 ```
 
 
-# <a name="GetCompositingMode"></a>GetCompositingMode (CGpGraphics)
+# <a name="GetCompositingMode"></a>GetCompositingMode
 
 Gets the compositing mode currently set for this **Graphics** object.
 
@@ -2384,7 +2384,7 @@ END SUB
 ```
 
 
-# <a name="GetCompositingQuality"></a>GetCompositingQuality (CGpGraphics)
+# <a name="GetCompositingQuality"></a>GetCompositingQuality
 
 Gets the compositing quality currently set for this **Graphics** object.
 
@@ -2443,7 +2443,7 @@ END SUB
 ```
 
 
-# <a name="GetDpiX"></a>GetDpiX (CGpGraphics)
+# <a name="GetDpiX"></a>GetDpiX
 
 Gets the horizontal resolution, in dots per inch, of the display device associated with this **Graphics** object.
 
@@ -2493,7 +2493,7 @@ END SUB
 ```
 
 
-# <a name="GetDpiY"></a>GetDpiY (CGpGraphics)
+# <a name="GetDpiY"></a>GetDpiY
 
 Gets the vertical resolution, in dots per inch, of the display device associated with this Graphics object.
 
@@ -2544,7 +2544,7 @@ END SUB
 ```
 
 
-# <a name="GetHalftonePalette"></a>GetHalftonePalette (CGpGraphics)
+# <a name="GetHalftonePalette"></a>GetHalftonePalette
 
 Gets a Windows halftone palette.
 
@@ -2598,7 +2598,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="GetHDC"></a>GetHDC (CGpGraphics)
+# <a name="GetHDC"></a>GetHDC
 
 Gets a handle to the device context associated with this **Graphics** object.
 
@@ -2653,7 +2653,7 @@ END SUB
 ```
 
 
-# <a name="GetInterpolationMode"></a>GetInterpolationMode (CGpGraphics)
+# <a name="GetInterpolationMode"></a>GetInterpolationMode
 
 Gets the interpolation mode currently set for this Graphics object. The interpolation mode determines the algorithm that is used when images are scaled or rotated.
 
@@ -2662,7 +2662,7 @@ FUNCTION GetInterpolationMode () AS InterpolationMode
 ```
 
 
-# <a name="GetNearestColor"></a>GetNearestColor (CGpGraphics)
+# <a name="GetNearestColor"></a>GetNearestColor
 
 Gets the nearest color to the color that is passed in. This method works on 8-bits per pixel or lower display devices for which there is an 8-bit color palette.
 
@@ -2710,7 +2710,7 @@ END SUB
 ```
 
 
-# <a name="GetPageScale"></a>GetPageScale (CGpGraphics)
+# <a name="GetPageScale"></a>GetPageScale
 
 Gets the scaling factor currently set for the page transformation of this **Graphics** object. The page transformation converts page coordinates to device coordinates.
 
@@ -2753,7 +2753,7 @@ END SUB
 ```
 
 
-# <a name="GetPageUnit"></a>GetPageUnit (CGpGraphics)
+# <a name="GetPageUnit"></a>GetPageUnit
 
 Gets the unit of measure currently set for this **Graphics** object.
 
@@ -2800,7 +2800,7 @@ END SUB
 ```
 
 
-# <a name="GetPixelOffsetMode"></a>GetPixelOffsetMode (CGpGraphics)
+# <a name="GetPixelOffsetMode"></a>GetPixelOffsetMode
 
 Gets the pixel offset mode currently set for this **Graphics** object.
 
@@ -2826,7 +2826,7 @@ The **PixelOffsetMode** enumeration specifies the pixel offset mode. This enumer
 Consider the pixel in the upper-left corner of an image with address (0, 0). With **PixelOffsetModeNone**, the pixel covers the area between 0.5 and 0.5 in both the x and y directions; that is, the pixel center is at (0, 0). With **PixelOffsetModeHalf**, the pixel covers the area between 0 and 1 in both the x and y directions; that is, the pixel center is at (0.5, 0.5).
 
 
-# <a name="GetRenderingOrigin"></a>GetRenderingOrigin (CGpGraphics)
+# <a name="GetRenderingOrigin"></a>GetRenderingOrigin
 
 Gets the rendering origin currently set for this **Graphics** object. The rendering origin is used to set the dither origin for 8-bits per pixel and 16-bits per pixel dithering and is also used to set the origin for hatch brushes.
 
@@ -2847,7 +2847,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 
 
-# <a name="GetSmoothingMode"></a>GetSmoothingMode (CGpGraphics)
+# <a name="GetSmoothingMode"></a>GetSmoothingMode
 
 Determines whether smoothing (antialiasing) is applied to the **Graphics** object.
 
@@ -2880,7 +2880,7 @@ Smoothing performed by an 8 X 4 box filter gives better results for nearly verti
 If smoothing (antialiasing) is applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias**. If smoothing (antialiasing) is not applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias** and **SmoothingModeNone** are elements of the **SmoothingMode** enumeration.
 
 
-# <a name="GetTextContrast"></a>GetTextContrast (CGpGraphics)
+# <a name="GetTextContrast"></a>GetTextContrast
 
 Gets the contrast value currently set for this **Graphics** object. The contrast value is used for antialiasing text.
 
@@ -2889,7 +2889,7 @@ FUNCTION GetTextContrast () AS UINT
 ```
 
 
-# <a name="GetTextRenderingHint"></a>GetTextRenderingHint (CGpGraphics)
+# <a name="GetTextRenderingHint"></a>GetTextRenderingHint
 
 Returns the text rendering mode currently set for this **Graphics** object.
 
@@ -2915,7 +2915,7 @@ Specifies the process used to render text. The process affects the quality of th
 The quality associated with each process varies according to the circumstances. **TextRenderingHintClearTypeGridFit** provides the best quality for most LCD monitors and relatively small font sizes. **TextRenderingHintAntiAlias** provides the best quality for rotated text. Generally, a process that produces higher quality text is slower than a process that produces lower quality text.
 
 
-# <a name="GetTransform"></a>GetTransform (CGpGraphics)
+# <a name="GetTransform"></a>GetTransform
 
 Gets the world transformation matrix of this **Graphics** object.
 
@@ -2935,7 +2935,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 
 
-# <a name="GetVisibleClipBounds"></a>GetVisibleClipBounds (CGpGraphics)
+# <a name="GetVisibleClipBounds"></a>GetVisibleClipBounds
 
 Gets a rectangle that encloses the visible clipping region of this **Graphics** object. The visible clipping region is the intersection of the clipping region of this **Graphics** object and the clipping region of the window.
 
@@ -2987,7 +2987,7 @@ END SUB
 ```
 
 
-# <a name="IntersectClip"></a>IntersectClip (CGpGraphics)
+# <a name="IntersectClip"></a>IntersectClip
 
 Updates the clipping region of this **Graphics** object to the portion of the specified rectangle that intersects with the current clipping region of this **Graphics** object.
 
@@ -3054,7 +3054,7 @@ END SUB
 ```
 
 
-# <a name="IsClipEmpty"></a>IsClipEmpty (CGpGraphics)
+# <a name="IsClipEmpty"></a>IsClipEmpty
 
 Determines whether the clipping region of this **Graphics** object is empty.
 
@@ -3097,7 +3097,7 @@ END SUB
 ```
 
 
-# <a name="IsVisible"></a>IsVisible (CGpGraphics)
+# <a name="IsVisible"></a>IsVisible
 
 Determines whether the specified point is inside the visible clipping region of this **Graphics** object. The visible clipping region is the intersection of the clipping region of this **Graphics** object and the clipping region of the window.
 
@@ -3150,7 +3150,7 @@ END SUB
 ```
 
 
-# <a name="IsVisibleClipEmpty"></a>IsVisibleClipEmpty (CGpGraphics)
+# <a name="IsVisibleClipEmpty"></a>IsVisibleClipEmpty
 
 Determines whether the visible clipping region of this **Graphics** object is empty. The visible clipping region is the intersection of the clipping region of this **Graphics** object and the clipping region of the window.
 
@@ -3193,7 +3193,7 @@ END SUB
 ```
 
 
-# <a name="MeasureCharacterRanges"></a>MeasureCharacterRanges (CGpGraphics)
+# <a name="MeasureCharacterRanges"></a>MeasureCharacterRanges
 
 Gets a set of regions each of which bounds a range of character positions within a string.
 
@@ -3220,7 +3220,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="MeasureDriverString"></a>MeasureDriverString (CGpGraphics)
+# <a name="MeasureDriverString"></a>MeasureDriverString
 
 Measures the bounding box for the specified characters and their corresponding positions.
 
@@ -3247,7 +3247,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="MeasureString"></a>MeasureString (CGpGraphics)
+# <a name="MeasureString"></a>MeasureString
 
 Measures the extent of the string in the specified font, format, and layout rectangle.
 
@@ -3292,7 +3292,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="MultiplyTransform"></a>MultiplyTransform (CGpGraphics)
+# <a name="MultiplyTransform"></a>MultiplyTransform
 
 Updates this **Graphics** object's world transformation matrix with the product of itself and another matrix.
 
@@ -3347,7 +3347,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ReleaseHDC"></a>ReleaseHDC (CGpGraphics)
+# <a name="ReleaseHDC"></a>ReleaseHDC
 
 Releases a device context handle obtained by a previous call to the **GetHDC** method of this **Graphics** object.
 
@@ -3360,7 +3360,7 @@ SUB ReleaseHDC (BYVAL hdc AS HDC)
 | *hdc* | Handle to a device context obtained by a previous call to the **GetHDC** method of this **Graphics** object. |
 
 
-# <a name="ResetClip"></a>ResetClip (CGpGraphics)
+# <a name="ResetClip"></a>ResetClip
 
 Sets the clipping region of this **Graphics** object to an infinite region.
 
@@ -3376,7 +3376,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 
 
-# <a name="ResetTransform"></a>ResetTransform (CGpGraphics)
+# <a name="ResetTransform"></a>ResetTransform
 
 Sets the world transformation matrix of this **Graphics** object to the identity matrix.
 
@@ -3395,7 +3395,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 The identity matrix represents a transformation that does nothing. If the world transformation matrix of a **Graphics** object is the identity matrix, then no world transformation is applied to items drawn by that **Graphics** object.
 
 
-# <a name="Restore"></a>Restore (CGpGraphics)
+# <a name="Restore"></a>Restore
 
 Sets the state of this **Graphics** object to the state stored by a previous call to the **Save** method of this **Graphics** object.
 
@@ -3414,7 +3414,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="RotateTransform"></a>RotateTransform (CGpGraphics)
+# <a name="RotateTransform"></a>RotateTransform
 
 Updates the world transformation matrix of this **Graphics** object with the product of itself and a rotation matrix.
 
@@ -3434,7 +3434,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="Save"></a>Save (CGpGraphics)
+# <a name="Save"></a>Save
 
 Saves the current state (transformations, clipping region, and quality settings) of this **Graphics** object. You can restore the state later by calling the **Restore** method.
 
@@ -3447,7 +3447,7 @@ FUNCTION Save () AS GraphicsState
 This method returns a value that identifies the saved state. Pass this value to the **Restore** method when you want to restore the state. The **GraphicsState** data type is defined in Gdiplusenums.bi.
 
 
-# <a name="ScaleTransform"></a>ScaleTransform (CGpGraphics)
+# <a name="ScaleTransform"></a>ScaleTransform
 
 Updates this **Graphics** object's world transformation matrix with the product of itself and a scaling matrix.
 
@@ -3469,7 +3469,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="SetClip"></a>SetClip (CGpGraphics)
+# <a name="SetClip"></a>SetClip
 
 Updates the clipping region of this **Graphics** object to a region that is the combination of itself and the clipping region of another **Graphics** object.
 
@@ -3536,7 +3536,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="SetCompositingMode"></a>SetCompositingMode (CGpGraphics)
+# <a name="SetCompositingMode"></a>SetCompositingMode
 
 Sets the compositing mode of this **Graphics** object.
 
@@ -3599,7 +3599,7 @@ END SUB
 ```
 
 
-# <a name="SetCompositingQuality"></a>SetCompositingQuality (CGpGraphics)
+# <a name="SetCompositingQuality"></a>SetCompositingQuality
 
 Sets the compositing quality of this **Graphics** object.
 
@@ -3662,7 +3662,7 @@ END SUB
 ```
 
 
-# <a name="SetInterpolationMode"></a>SetInterpolationMode (CGpGraphics)
+# <a name="SetInterpolationMode"></a>SetInterpolationMode
 
 Sets the interpolation mode of this **Graphics** object. The interpolation mode determines the algorithm that is used when images are scaled or rotated.
 
@@ -3681,7 +3681,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="SetPageScale"></a>SetPageScale (CGpGraphics)
+# <a name="SetPageScale"></a>SetPageScale
 
 Sets the scaling factor for the page transformation of this **Graphics** object. The page transformation converts page coordinates to device coordinates.
 
@@ -3731,7 +3731,7 @@ END SUB
 ```
 
 
-# <a name="SetPageUnit"></a>SetPageUnit (CGpGraphics)
+# <a name="SetPageUnit"></a>SetPageUnit
 
 Sets the unit of measure for this **Graphics** object. The page unit belongs to the page transformation, which converts page coordinates to device coordinates.
 
@@ -3778,7 +3778,7 @@ END SUB
 ```
 
 
-# <a name="SetPixelOffsetMode"></a>SetPixelOffsetMode (CGpGraphics)
+# <a name="SetPixelOffsetMode"></a>SetPixelOffsetMode
 
 Sets the pixel offset mode of this **Graphics** object.
 
@@ -3814,7 +3814,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="SetRenderingOrigin"></a>SetRenderingOrigin (CGpGraphics)
+# <a name="SetRenderingOrigin"></a>SetRenderingOrigin
 
 Sets the rendering origin of this **Graphics** object. The rendering origin is used to set the dither origin for 8-bits-per-pixel and 16-bits-per-pixel dithering and is also used to set the origin for hatch brushes.
 
@@ -3861,7 +3861,7 @@ END SUB
 ```
 
 
-# <a name="SetSmoothingMode"></a>SetSmoothingMode (CGpGraphics)
+# <a name="SetSmoothingMode"></a>SetSmoothingMode
 
 Sets the rendering quality of the **Graphics** object.
 
@@ -3939,7 +3939,7 @@ END SUB
 ```
 
 
-# <a name="SetTextContrast"></a>SetTextContrast (CGpGraphics)
+# <a name="SetTextContrast"></a>SetTextContrast
 
 Sets the contrast value of this **Graphics** object. The contrast value is used for antialiasing text.
 
@@ -3958,7 +3958,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="SetTextRenderingHint"></a>SetTextRenderingHint (CGpGraphics)
+# <a name="SetTextRenderingHint"></a>SetTextRenderingHint
 
 Sets the text rendering mode of this **Graphics** object.
 
@@ -3995,7 +3995,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="SetTransform"></a>SetTransform (CGpGraphics)
+# <a name="SetTransform"></a>SetTransform
 
 Sets the world transformation of this **Graphics** object.
 
@@ -4047,7 +4047,7 @@ END SUB
 ```
 
 
-# <a name="TransformPoints"></a>TransformPoints (CGpGraphics)
+# <a name="TransformPoints"></a>TransformPoints
 
 Converts an array of points from one coordinate space to another. The conversion is based on the current world and page transformations of this **Graphics** object.
 
@@ -4125,7 +4125,7 @@ END SUB
 ```
 
 
-# <a name="TranslateClip"></a>TranslateClip (CGpGraphics)
+# <a name="TranslateClip"></a>TranslateClip
 
 Translates the clipping region of this **Graphics** object.
 
@@ -4181,7 +4181,7 @@ END SUB
 ```
 
 
-# <a name="TranslateTransform"></a>TranslateTransform (CGpGraphics)
+# <a name="TranslateTransform"></a>TranslateTransform
 
 Updates this **Graphics** object's world transformation matrix with the product of itself and a translation matrix.
 
