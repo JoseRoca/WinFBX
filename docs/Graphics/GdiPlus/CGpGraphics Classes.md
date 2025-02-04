@@ -7,92 +7,92 @@ The **CGpGraphics** class provides methods for drawing lines, curves, figures, i
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorsGraphics) | Creates a **Graphics** object. |
-| [AddMetafileComment](#AddMetafileComment) | Adds a text comment to an existing metafile. |
-| [BeginContainer](#BeginContainer) | Begins a new graphics container. |
+| [Constructors](#constructorsgraphics) | Creates a **Graphics** object. |
+| [AddMetafileComment](#addmetafilecomment) | Adds a text comment to an existing metafile. |
+| [BeginContainer](#begincontainer) | Begins a new graphics container. |
 | [Clear](#clear) | Clears a **Graphics** object to a specified color. |
-| [DrawArc](#DrawArc) | Draws an arc. The arc is part of an ellipse. |
-| [DrawBezier](#DrawBezier) | Draws a Bézier spline. |
-| [DrawBeziers](#DrawBeziers) | Draws a sequence of connected Bézier splines. |
-| [DrawCachedBitmap](#DrawCachedBitmap) | Draws the image stored in a **CachedBitmap** object. |
-| [DrawClosedCurve](#DrawClosedCurve) | Draws a closed cardinal spline. |
-| [DrawCurve](#DrawCurve) | Draws a cardinal spline. |
-| [DrawDriverString](#DrawDriverString) | Draws characters at the specified positions. |
-| [DrawEllipse](#DrawEllipse) | Draws an ellipse. |
-| [DrawImage](#DrawImage) | Draws an image. |
-| [DrawImageFX](#DrawImageFX) | Draws a portion of an image after applying a specified effect. |
-| [DrawLine](#DrawLine) | Draws a line that connects two points. |
-| [DrawLines](#DrawLines) | Draws a sequence of connected lines. |
-| [DrawPath](#DrawPath) | Draws a sequence of lines and curves defined by a **GraphicsPath** object. |
-| [DrawPie](#DrawPie) | Draws a pie. |
-| [DrawPolygon](#DrawPolygon) | Draws a polygon. |
-| [DrawRectangle](#DrawRectangle) | Draws a rectangle. |
-| [DrawRectangles](#DrawRectangles) | Draws a sequence of rectangles. |
-| [DrawString](#DrawString) | Draws a string based on a font and an origin for the string. |
-| [EndContainer](#EndContainer) | Closes a graphics container that was previously opened by the **BeginContainer** method. |
-| [EnumerateMetafile](#EnumerateMetafile) | Calls an application-defined callback function for each record in a specified metafile. |
-| [ExcludeClip](#ExcludeClip) | Updates the clipping region to the portion of itself that does not intersect the specified rectangle. |
-| [FillClosedCurve](#FillClosedCurve) | Creates a closed cardinal spline from an array of points and uses a brush to fill the interior of the spline. |
-| [FillEllipse](#FillEllipse) | Uses a brush to fill the interior of an ellipse that is specified by coordinates and dimensions. |
-| [FillPath](#FillPath) | Uses a brush to fill the interior of a path. |
-| [FillPie](#FillPie) | Uses a brush to fill the interior of a pie. |
-| [FillPolygon](#FillPolygon) | Uses a brush to fill the interior of a polygon. |
-| [FillRectangle](#FillRectangle) | Uses a brush to fill the interior of a rectangle. |
-| [FillRectangles](#FillRectangles) | Uses a brush to fill the interior of a sequence of rectangles. |
-| [FillRegion](#FillRegion) | Uses a brush to fill a specified region. |
-| [Flush](#Flush) | Flushes all pending graphics operations. |
-| [FromHDC](#FromHDC) | Creates a **Graphics** object that is associated with a specified device context. |
-| [FromHWND](#FromHWND) | Creates a **Graphics** object that is associated with a specified window. |
-| [FromImage](#FromImage) | Creates a **Graphics** object that is associated with a specified device context. |
-| [GetClip](#GetClip) | Gets the clipping region of this **Graphics** object. |
-| [GetClipBounds](#GetClipBounds) | Gets a rectangle that encloses the clipping region of this **Graphics** object. |
-| [GetCompositingMode](#GetCompositingMode) | Gets the compositing mode currently set for this **Graphics** object. |
-| [GetCompositingQuality](#GetCompositingQuality) | Gets the compositing quality currently set for this **Graphics** object. |
-| [GetDpiX](#GetDpiX) | Gets the horizontal resolution, in dots per inch, of the display device associated with this **Graphics** object. |
-| [GetDpiY](#GetDpiY) | Gets the vertical resolution, in dots per inch, of the display device associated with this **Graphics** object. |
-| [GetHalftonePalette](#GetHalftonePalette) | Gets a Windows halftone palette. |
+| [DrawArc](#drawarc) | Draws an arc. The arc is part of an ellipse. |
+| [DrawBezier](#drawbezier) | Draws a Bézier spline. |
+| [DrawBeziers](#drawbeziers) | Draws a sequence of connected Bézier splines. |
+| [DrawCachedBitmap](#drawcachedbitmap) | Draws the image stored in a **CachedBitmap** object. |
+| [DrawClosedCurve](#drawclosedcurve) | Draws a closed cardinal spline. |
+| [DrawCurve](#drawcurve) | Draws a cardinal spline. |
+| [DrawDriverString](#drawdriverstring) | Draws characters at the specified positions. |
+| [DrawEllipse](#drawellipse) | Draws an ellipse. |
+| [DrawImage](#drawimage) | Draws an image. |
+| [DrawImageFX](#drawimagefx) | Draws a portion of an image after applying a specified effect. |
+| [DrawLine](#drawline) | Draws a line that connects two points. |
+| [DrawLines](#drawlines) | Draws a sequence of connected lines. |
+| [DrawPath](#drawpath) | Draws a sequence of lines and curves defined by a **GraphicsPath** object. |
+| [DrawPie](#drawpie) | Draws a pie. |
+| [DrawPolygon](#drawpolygon) | Draws a polygon. |
+| [DrawRectangle](#drawrectangle) | Draws a rectangle. |
+| [DrawRectangles](#drawrectangles) | Draws a sequence of rectangles. |
+| [DrawString](#drawstring) | Draws a string based on a font and an origin for the string. |
+| [EndContainer](#endcontainer) | Closes a graphics container that was previously opened by the **BeginContainer** method. |
+| [EnumerateMetafile](#enumeratemetafile) | Calls an application-defined callback function for each record in a specified metafile. |
+| [ExcludeClip](#excludeclip) | Updates the clipping region to the portion of itself that does not intersect the specified rectangle. |
+| [FillClosedCurve](#fillclosedcurve) | Creates a closed cardinal spline from an array of points and uses a brush to fill the interior of the spline. |
+| [FillEllipse](#fillellipse) | Uses a brush to fill the interior of an ellipse that is specified by coordinates and dimensions. |
+| [FillPath](#fillpath) | Uses a brush to fill the interior of a path. |
+| [FillPie](#fillpie) | Uses a brush to fill the interior of a pie. |
+| [FillPolygon](#fillpolygon) | Uses a brush to fill the interior of a polygon. |
+| [FillRectangle](#fillrectangle) | Uses a brush to fill the interior of a rectangle. |
+| [FillRectangles](#fillrectangles) | Uses a brush to fill the interior of a sequence of rectangles. |
+| [FillRegion](#fillregion) | Uses a brush to fill a specified region. |
+| [Flush](#flush) | Flushes all pending graphics operations. |
+| [FromHDC](#fromhdc) | Creates a **Graphics** object that is associated with a specified device context. |
+| [FromHWND](#fromhwnd) | Creates a **Graphics** object that is associated with a specified window. |
+| [FromImage](#fromimage) | Creates a **Graphics** object that is associated with a specified device context. |
+| [GetClip](#getclip) | Gets the clipping region of this **Graphics** object. |
+| [GetClipBounds](#getclipbounds) | Gets a rectangle that encloses the clipping region of this **Graphics** object. |
+| [GetCompositingMode](#getcompositingmode) | Gets the compositing mode currently set for this **Graphics** object. |
+| [GetCompositingQuality](#getcompositingquality) | Gets the compositing quality currently set for this **Graphics** object. |
+| [GetDpiX](#getdpix) | Gets the horizontal resolution, in dots per inch, of the display device associated with this **Graphics** object. |
+| [GetDpiY](#getdpiy) | Gets the vertical resolution, in dots per inch, of the display device associated with this **Graphics** object. |
+| [GetHalftonePalette](#gethalftonepalette) | Gets a Windows halftone palette. |
 | [GetHDC](#GetHDC) | Gets a handle to the device context associated with this **Graphics** object. |
-| [GetInterpolationMode](#GetInterpolationMode) | Gets the interpolation mode currently set for this **Graphics** object. |
-| [GetNearestColor](#GetNearestColor) | Gets the nearest color to the color that is passed in. |
-| [GetPageScale](#GetPageScale) | Gets the scaling factor currently set for the page transformation of this **Graphics** object. |
-| [GetPageUnit](#GetPageUnit) | Gets the unit of measure currently set for this **Graphics** object. |
-| [GetPixelOffsetMode](#GetPixelOffsetMode) | Gets the pixel offset mode currently set for this **Graphics** object. |
-| [GetRenderingOrigin](#GetRenderingOrigin) | Gets the rendering origin currently set for this **Graphics** object. |
-| [GetSmoothingMode](#GetSmoothingMode) | Determines whether smoothing (antialiasing) is applied to the **Graphics** object. |
-| [GetTextContrast](#GetTextContrast) | Gets the contrast value currently set for this **Graphics** object. |
-| [GetTextRenderingHint](#GetTextRenderingHint) | Returns the text rendering mode currently set for this **Graphics** object. |
-| [GetTransform](#GetTransform) | Gets the world transformation matrix of this **Graphics** object. |
-| [GetVisibleClipBounds](#GetVisibleClipBounds) | Gets a rectangle that encloses the visible clipping region of this **Graphics** object. |
-| [IntersectClip](#IntersectClip) | Updates the clipping region of this **Graphics** object to the portion of the specified rectangle that intersects with the current clipping region of this **Graphics** object. |
-| [IsClipEmpty](#IsClipEmpty) | Determines whether the clipping region of this **Graphics** object is empty. |
-| [IsVisible](#IsVisible) | Determines whether the specified point is inside the visible clipping region of this **Graphics** object. |
-| [IsVisibleClipEmpty](#IsVisibleClipEmpty) | Determines whether the visible clipping region of this **Graphics** object is empty. |
-| [MeasureCharacterRanges](#MeasureCharacterRanges) | Gets a set of regions each of which bounds a range of character positions within a string. |
-| [MeasureDriverString](#MeasureDriverString) | Measures the bounding box for the specified characters and their corresponding positions. |
-| [MeasureString](#MeasureString) | Measures the extent of the string in the specified font, format, and layout rectangle. |
-| [MultiplyTransform](#MultiplyTransform) | Updates this **Graphics** object's world transformation matrix with the product of itself and another matrix. |
-| [ReleaseHDC](#ReleaseHDC) | Releases a device context handle obtained by a previous call to the **GetHDC** method of this **Graphics** object. |
-| [ResetClip](#ResetClip) | Sets the clipping region of this **Graphics** object to an infinite region. |
-| [ResetTransform](#ResetTransform) | Sets the world transformation matrix of this Graphics object to the identity matrix. |
-| [Restore](#Restore) | Sets the state of this **Graphics** object to the state stored by a previous call to the **Save** method of this Graphics object. |
-| [RotateTransform](#RotateTransform) | Updates the world transformation matrix of this **Graphics** object with the product of itself and a rotation matrix. |
-| [Save](#Save) | Saves the current state (transformations, clipping region, and quality settings) of this **Graphics** object. |
-| [ScaleTransform](#ScaleTransform) | Updates this **Graphics** object's world transformation matrix with the product of itself and a scaling matrix. |
-| [SetClip](#SetClip) | Updates the clipping region of this **Graphics** object to a region that is the combination of itself and the clipping region of another **Graphics** object. |
-| [SetCompositingMode](#SetCompositingMode) | Sets the compositing mode of this **Graphics** object. |
-| [SetCompositingQuality](#SetCompositingQuality) | Sets the compositing quality of this **Graphics** object. |
-| [SetInterpolationMode](#SetInterpolationMode) | Sets the interpolation mode of this **Graphics** object. |
-| [SetPageScale](#SetPageScale) | Sets the scaling factor for the page transformation of this **Graphics** object. |
-| [SetPageUnit](#SetPageUnit) | Sets the unit of measure for this **Graphics** object. |
-| [SetPixelOffsetMode](#SetPixelOffsetMode) | Sets the pixel offset mode of this **Graphics** object. |
-| [SetRenderingOrigin](#SetRenderingOrigin) | Sets the rendering origin of this **Graphics** object. |
-| [SetSmoothingMode](#SetSmoothingMode) | Sets the rendering quality of the **Graphics** object. |
-| [SetTextContrast](#SetTextContrast) | Sets the contrast value of this **Graphics** object. |
-| [SetTextRenderingHint](#SetTextRenderingHint) | Sets the text rendering mode of this **Graphics** object. |
-| [SetTransform](#SetTransform) | Sets the world transformation of this **Graphics** object. |
-| [TransformPoints](#TransformPoints) | Converts an array of points from one coordinate space to another. |
-| [TranslateClip](#TranslateClip) | Translates the clipping region of this **Graphics** object. |
-| [TranslateTransform](#TranslateTransform) | Updates this **Graphics** object's world transformation matrix with the product of itself and a translation matrix. |
+| [GetInterpolationMode](#getinterpolationmode) | Gets the interpolation mode currently set for this **Graphics** object. |
+| [GetNearestColor](#getnearestcolor) | Gets the nearest color to the color that is passed in. |
+| [GetPageScale](#getpagescale) | Gets the scaling factor currently set for the page transformation of this **Graphics** object. |
+| [GetPageUnit](#getpageunit) | Gets the unit of measure currently set for this **Graphics** object. |
+| [GetPixelOffsetMode](#getpixeloffsetmode) | Gets the pixel offset mode currently set for this **Graphics** object. |
+| [GetRenderingOrigin](#getrenderingorigin) | Gets the rendering origin currently set for this **Graphics** object. |
+| [GetSmoothingMode](#getsmoothingmode) | Determines whether smoothing (antialiasing) is applied to the **Graphics** object. |
+| [GetTextContrast](#gettextcontrast) | Gets the contrast value currently set for this **Graphics** object. |
+| [GetTextRenderingHint](#gettextrenderinghint) | Returns the text rendering mode currently set for this **Graphics** object. |
+| [GetTransform](#gettransform) | Gets the world transformation matrix of this **Graphics** object. |
+| [GetVisibleClipBounds](#getvisibleclipbounds) | Gets a rectangle that encloses the visible clipping region of this **Graphics** object. |
+| [IntersectClip](#intersectclip) | Updates the clipping region of this **Graphics** object to the portion of the specified rectangle that intersects with the current clipping region of this **Graphics** object. |
+| [IsClipEmpty](#isclipempty) | Determines whether the clipping region of this **Graphics** object is empty. |
+| [IsVisible](#isvisible) | Determines whether the specified point is inside the visible clipping region of this **Graphics** object. |
+| [IsVisibleClipEmpty](#isvisibleclipempty) | Determines whether the visible clipping region of this **Graphics** object is empty. |
+| [MeasureCharacterRanges](#measurecharacterranges) | Gets a set of regions each of which bounds a range of character positions within a string. |
+| [MeasureDriverString](#measuredriverstring) | Measures the bounding box for the specified characters and their corresponding positions. |
+| [MeasureString](#measurestring) | Measures the extent of the string in the specified font, format, and layout rectangle. |
+| [MultiplyTransform](#multiplytransform) | Updates this **Graphics** object's world transformation matrix with the product of itself and another matrix. |
+| [ReleaseHDC](#releasehdc) | Releases a device context handle obtained by a previous call to the **GetHDC** method of this **Graphics** object. |
+| [ResetClip](#resetclip) | Sets the clipping region of this **Graphics** object to an infinite region. |
+| [ResetTransform](#resettransform) | Sets the world transformation matrix of this Graphics object to the identity matrix. |
+| [Restore](#restore) | Sets the state of this **Graphics** object to the state stored by a previous call to the **Save** method of this Graphics object. |
+| [RotateTransform](#rotatetransform) | Updates the world transformation matrix of this **Graphics** object with the product of itself and a rotation matrix. |
+| [Save](#save) | Saves the current state (transformations, clipping region, and quality settings) of this **Graphics** object. |
+| [ScaleTransform](#scaletransform) | Updates this **Graphics** object's world transformation matrix with the product of itself and a scaling matrix. |
+| [SetClip](#setclip) | Updates the clipping region of this **Graphics** object to a region that is the combination of itself and the clipping region of another **Graphics** object. |
+| [SetCompositingMode](#setcompositingmode) | Sets the compositing mode of this **Graphics** object. |
+| [SetCompositingQuality](#setcompositingquality) | Sets the compositing quality of this **Graphics** object. |
+| [SetInterpolationMode](#setinterpolationmode) | Sets the interpolation mode of this **Graphics** object. |
+| [SetPageScale](#setpagescale) | Sets the scaling factor for the page transformation of this **Graphics** object. |
+| [SetPageUnit](#setpageunit) | Sets the unit of measure for this **Graphics** object. |
+| [SetPixelOffsetMode](#setpixeloffsetmode) | Sets the pixel offset mode of this **Graphics** object. |
+| [SetRenderingOrigin](#setrenderingorigin) | Sets the rendering origin of this **Graphics** object. |
+| [SetSmoothingMode](#setsmoothingmode) | Sets the rendering quality of the **Graphics** object. |
+| [SetTextContrast](#settextcontrast) | Sets the contrast value of this **Graphics** object. |
+| [SetTextRenderingHint](#settextrenderinghint) | Sets the text rendering mode of this **Graphics** object. |
+| [SetTransform](#settransform) | Sets the world transformation of this **Graphics** object. |
+| [TransformPoints](#transformpoints) | Converts an array of points from one coordinate space to another. |
+| [TranslateClip](#translateclip) | Translates the clipping region of this **Graphics** object. |
+| [TranslateTransform](#translatetransform) | Updates this **Graphics** object's world transformation matrix with the product of itself and a translation matrix. |
 
 # CGpGraphicsPath Class
 
@@ -103,44 +103,44 @@ The **CGpGraphicsPath** allows the creation of **GraphicPath** objects. A **Grap
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#ConstructorsGraphicsPath) | Creates a **Graphics** object. |
-| [AddArc](#AddArc) | Adds an elliptical arc to the current figure of this path. |
-| [AddBezier](#AddBezier) | Adds a Bézier spline to the current figure of this path. |
-| [AddBeziers](#AddBeziers) | Adds a sequence of connected Bézier splines to the current figure of this path. |
-| [AddClosedCurve](#AddClosedCurve) | Adds a closed cardinal spline to this path. |
-| [AddCurve](#AddCurve) | Adds a cardinal spline to this path. |
-| [AddEllipse](#AddEllipse) | Adds an ellipse to this path. |
-| [AddLine](#AddLine) | Adds a line to the current figure of this path. |
-| [AddLines](#AddLines) | Adds a sequence of connected lines to the current figure of this path. |
-| [AddPath](#AddPath) | Adds a path to this path. |
-| [AddPie](#AddPie) | Adds a pie to this path. An arc is a portion of an ellipse, and a pie is a portion of the area enclosed by an ellipse. |
-| [AddPolygon](#AddPolygon) | Adds a polygon to this path. |
-| [AddRectangle](#AddRectangle) | Adds a rectangle to this path. |
-| [AddRectangles](#AddRectangles) | Adds a sequence of rectangles to this path. |
-| [AddString](#AddString) | Adds the outline of a string to this path. |
-| [ClearMarkers](#ClearMarkers) | Clears the markers from this path. |
-| [Clone](#Clone) | Copies the contents of the existing **GraphicsPath** object into a new **GraphicsPath** object. |
-| [CloseAllFigures](#CloseAllFigures) | Clears the markers from this path. |
-| [CloseFigure](#CloseFigure) | Clears the current figure of this path. |
-| [Flatten](#Flatten) | Applies a transformation to this path and converts each curve in the path to a sequence of connected lines. |
-| [GetBounds](#GetBounds) | Gets a bounding rectangle for this path. |
-| [GetFillMode](#GetFillMode) | Gets the fill mode of this path. |
-| [GetLastPoint](#GetLastPoint) | Gets the ending point of the last figure in this path. |
-| [GetPathData](#GetPathData) | Gets an array of points and an array of point types from this path. |
-| [GetPathPoints](#GetPathPoints) | Gets this path's array of points. |
-| [GetPathTypes](#GetPathTypes) | Gets this path's array of point types. |
-| [GetPointCount](#GetPointCount) | Gets the number of points in this path's array of data points. |
-| [IsOutlineVisible](#IsOutlineVisible) | Determines whether a specified point touches the outline of this path when the path is drawn by a specified Graphics object and a specified pen. |
-| [IsVisible](#IsVisible) | Determines whether a specified point lies in the area that is filled when this path is filled by a specified **Graphics** object. |
-| [Outline](#Outline) | Transforms and flattens this path, and then converts this path's data points so that they represent only the outline of the path. |
-| [Reset](#Reset) | Empties the path and sets the fill mode to **FillModeAlternate**. |
-| [Reverse](#Reverse) | Reverses the order of the points that define this path's lines and curves. |
-| [SetFillMode](#SetFillMode) | Sets the fill mode of this path. |
-| [SetMarker](#SetMarker) | Designates the last point in this path as a marker point. |
-| [StartFigure](#StartFigure) | Starts a new figure without closing the current figure. |
-| [Transform](#Transform) | Multiplies each of this path's data points by a specified matrix. |
-| [Warp](#Warp) | Applies a warp transformation to this path. |
-| [Widen](#Widen) | Replaces this path with curves that enclose the area that is filled when this path is drawn by a specified pen. |
+| [Constructors](#constructorsgraphicspath) | Creates a **Graphics** object. |
+| [AddArc](#addarc) | Adds an elliptical arc to the current figure of this path. |
+| [AddBezier](#addbezier) | Adds a Bézier spline to the current figure of this path. |
+| [AddBeziers](#addbeziers) | Adds a sequence of connected Bézier splines to the current figure of this path. |
+| [AddClosedCurve](#addclosedcurve) | Adds a closed cardinal spline to this path. |
+| [AddCurve](#addcurve) | Adds a cardinal spline to this path. |
+| [AddEllipse](#addellipse) | Adds an ellipse to this path. |
+| [AddLine](#addline) | Adds a line to the current figure of this path. |
+| [AddLines](#addlines) | Adds a sequence of connected lines to the current figure of this path. |
+| [AddPath](#addpath) | Adds a path to this path. |
+| [AddPie](#addpie) | Adds a pie to this path. An arc is a portion of an ellipse, and a pie is a portion of the area enclosed by an ellipse. |
+| [AddPolygon](#addpolygon) | Adds a polygon to this path. |
+| [AddRectangle](#addrectangle) | Adds a rectangle to this path. |
+| [AddRectangles](#addrectangles) | Adds a sequence of rectangles to this path. |
+| [AddString](#addstring) | Adds the outline of a string to this path. |
+| [ClearMarkers](#clearmarkers) | Clears the markers from this path. |
+| [Clone](#clone) | Copies the contents of the existing **GraphicsPath** object into a new **GraphicsPath** object. |
+| [CloseAllFigures](#closeallfigures) | Clears the markers from this path. |
+| [CloseFigure](#closefigure) | Clears the current figure of this path. |
+| [Flatten](#flatten) | Applies a transformation to this path and converts each curve in the path to a sequence of connected lines. |
+| [GetBounds](#getbounds) | Gets a bounding rectangle for this path. |
+| [GetFillMode](#getfillmode) | Gets the fill mode of this path. |
+| [GetLastPoint](#getlastpoint) | Gets the ending point of the last figure in this path. |
+| [GetPathData](#getpathdata) | Gets an array of points and an array of point types from this path. |
+| [GetPathPoints](#getpathpoints) | Gets this path's array of points. |
+| [GetPathTypes](#getpathtypes) | Gets this path's array of point types. |
+| [GetPointCount](#getpointcount) | Gets the number of points in this path's array of data points. |
+| [IsOutlineVisible](#isoutlinevisible) | Determines whether a specified point touches the outline of this path when the path is drawn by a specified Graphics object and a specified pen. |
+| [IsVisible](#isvisible) | Determines whether a specified point lies in the area that is filled when this path is filled by a specified **Graphics** object. |
+| [Outline](#outline) | Transforms and flattens this path, and then converts this path's data points so that they represent only the outline of the path. |
+| [Reset](#reset) | Empties the path and sets the fill mode to **FillModeAlternate**. |
+| [Reverse](#reverse) | Reverses the order of the points that define this path's lines and curves. |
+| [SetFillMode](#setfillmode) | Sets the fill mode of this path. |
+| [SetMarker](#setmarker) | Designates the last point in this path as a marker point. |
+| [StartFigure](#startfigure) | Starts a new figure without closing the current figure. |
+| [Transform](#transform) | Multiplies each of this path's data points by a specified matrix. |
+| [Warp](#warp) | Applies a warp transformation to this path. |
+| [Widen](#widen) | Replaces this path with curves that enclose the area that is filled when this path is drawn by a specified pen. |
 
 # CGpGraphicsPathIterator Class
 
@@ -151,19 +151,18 @@ The **CGpGraphicsPathIterator** class provides methods for isolating selected su
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructor](#ConstructorGraphicsPathIterator) | Creates a new **GraphicsPathIterator** object and associates it with a **GraphicsPath** object. |
-| [CopyData](#CopyData) | Copies a subset of the path's data points to a **GpPointF** array and copies a subset of the path's point types to a byte array. |
-| [Enumerate](#Enumerate) | Copies the path's data points to a **GpPointF** array and copies the path's point types to a byte array. |
-| [GetCount](#GetCount) | Returns the number of data points in the path. |
-| [GetSubpathCount](#GetSubpathCount) | Returns the number of subpaths (also called figures) in the path. |
-| [HasCurve](#HasCurve) | Determines whether the path has any curves. |
-| [NextMarker](#NextMarker) | Gets the starting index and the ending index of the next marker-delimited section in this iterator's associated path. |
-| [NextPathType](#NextPathType) | Gets the starting index and the ending index of the next group of data points that all have the same type. |
-| [NextSubpath](#NextSubpath) | Gets the starting index and the ending index of the next subpath (figure) in this iterator's associated path. |
-| [Rewind](#Rewind) | Rewinds this iterator to the beginning of its associated path. |
+| [Constructor](#constructorgraphicspathiterator) | Creates a new **GraphicsPathIterator** object and associates it with a **GraphicsPath** object. |
+| [CopyData](#copydata) | Copies a subset of the path's data points to a **GpPointF** array and copies a subset of the path's point types to a byte array. |
+| [Enumerate](#enumerate) | Copies the path's data points to a **GpPointF** array and copies the path's point types to a byte array. |
+| [GetCount](#getcount) | Returns the number of data points in the path. |
+| [GetSubpathCount](#getsubpathcount) | Returns the number of subpaths (also called figures) in the path. |
+| [HasCurve](#hascurve) | Determines whether the path has any curves. |
+| [NextMarker](#nextmarker) | Gets the starting index and the ending index of the next marker-delimited section in this iterator's associated path. |
+| [NextPathType](#nextpathtype) | Gets the starting index and the ending index of the next group of data points that all have the same type. |
+| [NextSubpath](#nextsubpath) | Gets the starting index and the ending index of the next subpath (figure) in this iterator's associated path. |
+| [Rewind](#rewind) | Rewinds this iterator to the beginning of its associated path. |
 
-<a name="ConstructorsGraphics"></a>
-# Constructors (CGpGraphics)
+# <a name="constructorsgraphics"></a>Constructors (CGpGraphics)
 
 Creates a **Graphics** object that is associated with a specified device context. When you use this method to create a **Graphics** object, make sure that the **Graphics** object is deleted before the device context is released.
 
@@ -210,8 +209,7 @@ CONSTRUCTOR CGpGraphics (BYVAL pImage AS CGpImage PTR)
 | *icm* | Optional. Boolean value that specifies whether the new **Graphics** object applies color adjustment according to the ICC profile associated with the display device. TRUE specifies that color adjustment is applied, and FALSE specifies that color adjustment is not applied. The default value is FALSE. |
 | *pImage* | Pointer to an **Image** object that will be associated with the new **Graphics** object. |
 
-<a name="AddMetafileComment"></a>
-# AddMetafileComment (CGpGraphics)
+# <a name="addmetafilecomment"></a>AddMetafileComment (CGpGraphics)
 
 Adds a text comment to an existing metafile.
 
@@ -231,8 +229,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-<a name="BeginContainer"></a>
-# BeginContainer (CGpGraphics)
+# <a name="begincontainer"></a>BeginContainer (CGpGraphics)
 
 Begins a new graphics container.
 
@@ -288,8 +285,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-<a name="DrawArc"></a>
-# DrawArc (CGpGraphics)
+# <a name="drawarc"></a>DrawArc (CGpGraphics)
 
 Draws an arc. The arc is part of an ellipse.
 
@@ -346,8 +342,7 @@ END SUB
 ' ========================================================================================
 ```
 
-<a name="DrawBezier"></a>
-# DrawBezier (CGpGraphics)
+# <a name="drawbezier"></a>DrawBezier (CGpGraphics)
 
 Draws a Bézier spline.
 
@@ -412,8 +407,7 @@ END SUB
 ' ========================================================================================
 ```
 
-<a name="DrawBeziers"></a>
-# DrawBeziers (CGpGraphics)
+# <a name="drawbeziers"></a>DrawBeziers (CGpGraphics)
 
 Draws a sequence of connected Bézier splines.
 
@@ -490,8 +484,7 @@ END SUB
 ' ========================================================================================
 ```
 
-<a name="DrawCachedBitmap"></a>
-# DrawCachedBitmap (CGpGRaphics)
+# <a name="drawcachedbitmap"></a>DrawCachedBitmap (CGpGRaphics)
 
 Draws the image stored in a **CachedBitmap** object.
 
@@ -520,8 +513,7 @@ Cached bitmaps will not work with any transformations other than translation.
 
 When you construct a **CachedBitmap** object, you must pass the address of a **Graphics** object to the constructor. If the screen associated with that Graphics object has its bit depth changed after the cached bitmap is constructed, then the **DrawCachedBitmap** method will fail, and you should reconstruct the cached bitmap. Alternatively, you can hook the display change notification message and reconstruct the cached bitmap at that time.
 
-<a name="DrawClosedCurve"></a>
-# DrawClosedCurve (CGpGraphics)
+# <a name="drawclosedcurve"></a>DrawClosedCurve (CGpGraphics)
 
 Draws a closed cardinal spline.
 
@@ -603,8 +595,7 @@ END SUB
 ' ========================================================================================
 ```
 
-<a name="DrawCurve"></a>
-# DrawCurve (CGpGraphics)
+# <a name="drawcurve"></a>DrawCurve (CGpGraphics)
 
 Draws a cardinal spline.
 
@@ -685,8 +676,7 @@ END SUB
 ' ========================================================================================
 ```
 
-<a name="DrawDriverString"></a>
-# DrawDriverString (CGpGraphics)
+# <a name="drawdriverstring"></a>DrawDriverString (CGpGraphics)
 
 Draws characters at the specified positions. The method gives the client complete control over the appearance of text. The method assumes that the client has already set up the format and layout to be applied.
 
@@ -716,8 +706,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 A segment is defined as a curve that connects two consecutive points in the cardinal spline. The ending point of each segment is the starting point for the next. The numberOfSegments parameter must not be greater than the count parameter minus the offset parameter plus one.
 
-<a name="DrawEllipse"></a>
-# DrawEllipse (CGpGraphics)
+# <a name="drawellipse"></a>DrawEllipse (CGpGraphics)
 
 Draws an ellipse.
 
@@ -768,8 +757,7 @@ END SUB
 ' ========================================================================================
 ```
 
-<a name="DrawImage"></a>
-# DrawImage (CGpGraphics)
+# <a name="drawimage"></a>DrawImage (CGpGraphics)
 
 Draws an image.
 
@@ -1018,8 +1006,7 @@ END SUB
 ' ========================================================================================
 ```
 
-<a name="DrawImageFX"></a>
-# DrawImageFX (CGpGraphics)
+# <a name="drawimagefx"></a>DrawImageFX (CGpGraphics)
 
 Draws a portion of an image after applying a specified effect.
 
@@ -1046,8 +1033,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
-<a name="DrawLine"></a>
-# DrawLine (CGpGraphics)
+# <a name="drawline"></a>DrawLine (CGpGraphics)
 
 Draws a line that connects two points.
 
@@ -1098,8 +1084,7 @@ END SUB
 ' ========================================================================================
 ```
 
-<a name="DrawLines"></a>
-# DrawLines (CGpGraphics)
+# <a name="drawlines"></a>DrawLines (CGpGraphics)
 
 Draws a sequence of connected lines.
 
@@ -1159,7 +1144,7 @@ END SUB
 ```
 
 
-# <a name="DrawPath"></a>DrawPath
+# <a name="drawpath"></a>DrawPath
 
 Draws a sequence of lines and curves defined by a **GraphicsPath** object.
 
@@ -1267,7 +1252,7 @@ END SUB
 ```
 
 
-# <a name="DrawPolygon"></a>DrawPolygon
+# <a name="drawpolygon"></a>DrawPolygon (CGpGRaphics)
 
 Draws a polygon.
 
@@ -1329,7 +1314,7 @@ END SUB
 ```
 
 
-# <a name="DrawRectangle"></a>DrawRectangle
+# <a name="drawrectangle"></a>DrawRectangle (CGpGRaphics)
 
 Draws a rectangle.
 
@@ -1382,7 +1367,7 @@ END SUB
 ```
 
 
-# <a name="DrawRectangles"></a>DrawRectangles
+# <a name="drawrectangles"></a>DrawRectangles (CGpGRaphics)
 
 Draws a sequence of rectangles.
 
@@ -1439,7 +1424,7 @@ END SUB
 ```
 
 
-# <a name="DrawString"></a>DrawString
+# <a name="drawstring"></a>DrawString (CGpGRaphics)
 
 Draws a string based on a font and an origin for the string.
 
@@ -1507,7 +1492,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="EndContainer"></a>EndContainer
+# <a name="endcontainer"></a>EndContainer (CGpGRaphics)
 
 Closes a graphics container that was previously opened by the **BeginContainer** method.
 
@@ -1585,7 +1570,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="ExcludeClip"></a>ExcludeClip
+# <a name="excludeclip"></a>ExcludeClip (CGpGRaphics)
 
 Updates the clipping region to the portion of itself that does not intersect the specified rectangle.
 
@@ -1643,7 +1628,7 @@ END SUB
 ```
 
 
-# <a name="FillClosedCurve"></a>FillClosedCurve
+# <a name="fillclosedcurve"></a>FillClosedCurve (CGpGRaphics)
 
 Creates a closed cardinal spline from an array of points and uses a brush to fill the interior of the spline.
 
@@ -1707,7 +1692,7 @@ END SUB
 ```
 
 
-# <a name="FillEllipse"></a>FillEllipse
+# <a name="fillellipse"></a>FillEllipse (CGpGRaphics)
 
 Uses a brush to fill the interior of an ellipse that is specified by coordinates and dimensions.
 
@@ -1761,7 +1746,7 @@ END SUB
 ```
 
 
-# <a name="FillPath"></a>FillPath
+# <a name="fillpath"></a>FillPath (CGpGRaphics)
 
 Uses a brush to fill the interior of a path. If a figure in the path is not closed, this method treats the nonclosed figure as if it were closed by a straight line that connects the figure's starting and ending points.
 
@@ -1812,7 +1797,7 @@ END SUB
 ```
 
 
-# <a name="FillPie"></a>FillPie
+# <a name="fillpie"></a>FillPie (CGpGRaphics)
 
 Uses a brush to fill the interior of a pie.
 
@@ -1874,7 +1859,7 @@ END SUB
 ```
 
 
-# <a name="FillPolygon"></a>FillPolygon
+# <a name="fillpolygon"></a>FillPolygon (CGpGRaphics)
 
 Uses a brush to fill the interior of a polygon.
 
@@ -1933,7 +1918,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="FillRectangle"></a>FillRectangle
+# <a name="fillrectangle"></a>FillRectangle (CGpGRaphics)
 
 Uses a brush to fill the interior of a rectangle.
 
@@ -1987,7 +1972,7 @@ END SUB
 ```
 
 
-# <a name="FillRectangles"></a>FillRectangles
+# <a name="fillrectangles"></a>FillRectangles (CGpGRaphics)
 
 Uses a brush to fill the interior of a sequence of rectangles.
 
@@ -2041,7 +2026,7 @@ END SUB
 ```
 
 
-# <a name="FillRegion"></a>FillRegion
+# <a name="fillregion"></a>FillRegion (CGpGRaphics)
 
 Uses a brush to fill a specified region.
 
@@ -2094,7 +2079,7 @@ END SUB
 ```
 
 
-# <a name="Flush"></a>Flush
+# <a name="flush"></a>Flush (CGpGRaphics)
 
 Flushes all pending graphics operations.
 
@@ -2107,7 +2092,7 @@ SUB Flush (BYVAL intention AS FlushIntention = FlushIntentionFlush)
 | *intention* | Element of the **FlushIntention** enumeration that specifies whether pending operations are flushed immediately (not executed) or executed as soon as possible. |
 
 
-# <a name="FromHDC"></a>FromHDC
+# <a name="fromhdc"></a>FromHDC (CGpGRaphics)
 
 Creates a **Graphics** object that is associated with a specified device context.
 
@@ -2156,7 +2141,7 @@ END SUB
 ```
 
 
-# <a name="FromHWND"></a>FromHWND
+# <a name="fromhwnd"></a>FromHWND (CGpGRaphics)
 
 Creates a **Graphics** object that is associated with a specified window.
 
@@ -2176,7 +2161,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="FromImage"></a>FromImage
+# <a name="fromimage"></a>FromImage (CGpGRaphics)
 
 Creates a **Graphics** object that is associated with a specified device context.
 
@@ -2207,7 +2192,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="GetClip"></a>GetClip
+# <a name="getclip"></a>GetClip (CGpGRaphics)
 
 Gets the clipping region of this **Graphics** object.
 
@@ -2257,7 +2242,7 @@ END SUB
 ```
 
 
-# <a name="GetClipBounds"></a>GetClipBounds
+# <a name="getclipbounds"></a>GetClipBounds (CGpGRaphics)
 
 Gets a rectangle that encloses the clipping region of this **Graphics** object.
 
@@ -2327,7 +2312,7 @@ END SUB
 ```
 
 
-# <a name="GetCompositingMode"></a>GetCompositingMode
+# <a name="getcompositingmode"></a>GetCompositingMode (CGpGRaphics)
 
 Gets the compositing mode currently set for this **Graphics** object.
 
@@ -2388,7 +2373,7 @@ END SUB
 ```
 
 
-# <a name="GetCompositingQuality"></a>GetCompositingQuality
+# <a name="getcompositingquality"></a>GetCompositingQuality (CGpGRaphics)
 
 Gets the compositing quality currently set for this **Graphics** object.
 
@@ -2447,7 +2432,7 @@ END SUB
 ```
 
 
-# <a name="GetDpiX"></a>GetDpiX
+# <a name="getdpix"></a>GetDpiX (CGpGRaphics)
 
 Gets the horizontal resolution, in dots per inch, of the display device associated with this **Graphics** object.
 
@@ -2497,7 +2482,7 @@ END SUB
 ```
 
 
-# <a name="GetDpiY"></a>GetDpiY
+# <a name="getdpiy"></a>GetDpiY (CGpGRaphics)
 
 Gets the vertical resolution, in dots per inch, of the display device associated with this Graphics object.
 
@@ -2548,7 +2533,7 @@ END SUB
 ```
 
 
-# <a name="GetHalftonePalette"></a>GetHalftonePalette
+# <a name="gethalftonepalette"></a>GetHalftonePalette (CGpGRaphics)
 
 Gets a Windows halftone palette.
 
@@ -2602,7 +2587,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="GetHDC"></a>GetHDC
+# <a name="gethdc"></a>GetHDC (CGpGRaphics)
 
 Gets a handle to the device context associated with this **Graphics** object.
 
@@ -2657,7 +2642,7 @@ END SUB
 ```
 
 
-# <a name="GetInterpolationMode"></a>GetInterpolationMode
+# <a name="getinterpolationmode"></a>GetInterpolationMode (CGpGRaphics)
 
 Gets the interpolation mode currently set for this Graphics object. The interpolation mode determines the algorithm that is used when images are scaled or rotated.
 
@@ -2666,7 +2651,7 @@ FUNCTION GetInterpolationMode () AS InterpolationMode
 ```
 
 
-# <a name="GetNearestColor"></a>GetNearestColor
+# <a name="getnearestcolor"></a>GetNearestColor (CGpGRaphics)
 
 Gets the nearest color to the color that is passed in. This method works on 8-bits per pixel or lower display devices for which there is an 8-bit color palette.
 
@@ -2714,7 +2699,7 @@ END SUB
 ```
 
 
-# <a name="GetPageScale"></a>GetPageScale
+# <a name="gepagescale"></a>GetPageScale (CGpGRaphics)
 
 Gets the scaling factor currently set for the page transformation of this **Graphics** object. The page transformation converts page coordinates to device coordinates.
 
@@ -2757,7 +2742,7 @@ END SUB
 ```
 
 
-# <a name="GetPageUnit"></a>GetPageUnit
+# <a name="getpageunit"></a>GetPageUnit (CGpGRaphics)
 
 Gets the unit of measure currently set for this **Graphics** object.
 
@@ -2804,7 +2789,7 @@ END SUB
 ```
 
 
-# <a name="GetPixelOffsetMode"></a>GetPixelOffsetMode
+# <a name="getpixeloffsetmode"></a>GetPixelOffsetMode (CGpGRaphics)
 
 Gets the pixel offset mode currently set for this **Graphics** object.
 
@@ -2830,7 +2815,7 @@ The **PixelOffsetMode** enumeration specifies the pixel offset mode. This enumer
 Consider the pixel in the upper-left corner of an image with address (0, 0). With **PixelOffsetModeNone**, the pixel covers the area between 0.5 and 0.5 in both the x and y directions; that is, the pixel center is at (0, 0). With **PixelOffsetModeHalf**, the pixel covers the area between 0 and 1 in both the x and y directions; that is, the pixel center is at (0.5, 0.5).
 
 
-# <a name="GetRenderingOrigin"></a>GetRenderingOrigin
+# <a name="getrenderingorigin"></a>GetRenderingOrigin (CGpGRaphics)
 
 Gets the rendering origin currently set for this **Graphics** object. The rendering origin is used to set the dither origin for 8-bits per pixel and 16-bits per pixel dithering and is also used to set the origin for hatch brushes.
 
@@ -2851,7 +2836,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 
 
-# <a name="GetSmoothingMode"></a>GetSmoothingMode
+# <a name="getsmoothingmode"></a>GetSmoothingMode (CGpGRaphics)
 
 Determines whether smoothing (antialiasing) is applied to the **Graphics** object.
 
@@ -2884,7 +2869,7 @@ Smoothing performed by an 8 X 4 box filter gives better results for nearly verti
 If smoothing (antialiasing) is applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias**. If smoothing (antialiasing) is not applied to this **Graphics** object, this method returns **SmoothingModeAntiAlias** and **SmoothingModeNone** are elements of the **SmoothingMode** enumeration.
 
 
-# <a name="GetTextContrast"></a>GetTextContrast
+# <a name="gettextcontrast"></a>GetTextContrast (CGpGRaphics)
 
 Gets the contrast value currently set for this **Graphics** object. The contrast value is used for antialiasing text.
 
@@ -2893,7 +2878,7 @@ FUNCTION GetTextContrast () AS UINT
 ```
 
 
-# <a name="GetTextRenderingHint"></a>GetTextRenderingHint
+# <a name="gettextrenderinghint"></a>GetTextRenderingHint (CGpGRaphics)
 
 Returns the text rendering mode currently set for this **Graphics** object.
 
@@ -2919,7 +2904,7 @@ Specifies the process used to render text. The process affects the quality of th
 The quality associated with each process varies according to the circumstances. **TextRenderingHintClearTypeGridFit** provides the best quality for most LCD monitors and relatively small font sizes. **TextRenderingHintAntiAlias** provides the best quality for rotated text. Generally, a process that produces higher quality text is slower than a process that produces lower quality text.
 
 
-# <a name="GetTransform"></a>GetTransform
+# <a name="gettransform"></a>GetTransform (CGpGRaphics)
 
 Gets the world transformation matrix of this **Graphics** object.
 
@@ -2939,7 +2924,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 
 
-# <a name="GetVisibleClipBounds"></a>GetVisibleClipBounds
+# <a name="getvisibleclipbounds"></a>GetVisibleClipBounds (CGpGRaphics)
 
 Gets a rectangle that encloses the visible clipping region of this **Graphics** object. The visible clipping region is the intersection of the clipping region of this **Graphics** object and the clipping region of the window.
 
@@ -2991,7 +2976,7 @@ END SUB
 ```
 
 
-# <a name="IntersectClip"></a>IntersectClip
+# <a name="intersectclip"></a>IntersectClip (CGpGRaphics)
 
 Updates the clipping region of this **Graphics** object to the portion of the specified rectangle that intersects with the current clipping region of this **Graphics** object.
 
@@ -3058,7 +3043,7 @@ END SUB
 ```
 
 
-# <a name="IsClipEmpty"></a>IsClipEmpty
+# <a name="isclipempty"></a>IsClipEmpty (CGpGRaphics)
 
 Determines whether the clipping region of this **Graphics** object is empty.
 
@@ -3101,7 +3086,7 @@ END SUB
 ```
 
 
-# <a name="IsVisible"></a>IsVisible
+# <a name="isvisible"></a>IsVisible (CGpGRaphics)
 
 Determines whether the specified point is inside the visible clipping region of this **Graphics** object. The visible clipping region is the intersection of the clipping region of this **Graphics** object and the clipping region of the window.
 
@@ -3154,7 +3139,7 @@ END SUB
 ```
 
 
-# <a name="IsVisibleClipEmpty"></a>IsVisibleClipEmpty
+# <a name="isvisibleclipempty"></a>IsVisibleClipEmpty (CGpGRaphics)
 
 Determines whether the visible clipping region of this **Graphics** object is empty. The visible clipping region is the intersection of the clipping region of this **Graphics** object and the clipping region of the window.
 
@@ -3197,7 +3182,7 @@ END SUB
 ```
 
 
-# <a name="MeasureCharacterRanges"></a>MeasureCharacterRanges
+# <a name="measurecharacterranges"></a>MeasureCharacterRanges (CGpGRaphics)
 
 Gets a set of regions each of which bounds a range of character positions within a string.
 
@@ -3224,7 +3209,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="MeasureDriverString"></a>MeasureDriverString
+# <a name="measuredriverstring"></a>MeasureDriverString (CGpGRaphics)
 
 Measures the bounding box for the specified characters and their corresponding positions.
 
@@ -3251,7 +3236,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="MeasureString"></a>MeasureString
+# <a name="measurestring"></a>MeasureString (CGpGRaphics)
 
 Measures the extent of the string in the specified font, format, and layout rectangle.
 
@@ -3296,7 +3281,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="MultiplyTransform"></a>MultiplyTransform
+# <a name="multiplytransform"></a>MultiplyTransform (CGpGRaphics)
 
 Updates this **Graphics** object's world transformation matrix with the product of itself and another matrix.
 
@@ -3351,7 +3336,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ReleaseHDC"></a>ReleaseHDC
+# <a name="releasehdc"></a>ReleaseHDC (CGpGRaphics)
 
 Releases a device context handle obtained by a previous call to the **GetHDC** method of this **Graphics** object.
 
@@ -3364,7 +3349,7 @@ SUB ReleaseHDC (BYVAL hdc AS HDC)
 | *hdc* | Handle to a device context obtained by a previous call to the **GetHDC** method of this **Graphics** object. |
 
 
-# <a name="ResetClip"></a>ResetClip
+# <a name="resetclip"></a>ResetClip (CGpGRaphics)
 
 Sets the clipping region of this **Graphics** object to an infinite region.
 
@@ -3380,7 +3365,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 
 
-# <a name="ResetTransform"></a>ResetTransform
+# <a name="resettransform"></a>ResetTransform (CGpGRaphics)
 
 Sets the world transformation matrix of this **Graphics** object to the identity matrix.
 
@@ -3399,7 +3384,7 @@ If the function fails, it returns one of the other elements of the **Status** en
 The identity matrix represents a transformation that does nothing. If the world transformation matrix of a **Graphics** object is the identity matrix, then no world transformation is applied to items drawn by that **Graphics** object.
 
 
-# <a name="Restore"></a>Restore
+# <a name="restore"></a>Restore (CGpGRaphics)
 
 Sets the state of this **Graphics** object to the state stored by a previous call to the **Save** method of this **Graphics** object.
 
@@ -3418,7 +3403,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="RotateTransform"></a>RotateTransform
+# <a name="rotatetransform"></a>RotateTransform (CGpGRaphics)
 
 Updates the world transformation matrix of this **Graphics** object with the product of itself and a rotation matrix.
 
@@ -3438,7 +3423,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="Save"></a>Save
+# <a name="save"></a>Save (CGpGRaphics)
 
 Saves the current state (transformations, clipping region, and quality settings) of this **Graphics** object. You can restore the state later by calling the **Restore** method.
 
@@ -3451,7 +3436,7 @@ FUNCTION Save () AS GraphicsState
 This method returns a value that identifies the saved state. Pass this value to the **Restore** method when you want to restore the state. The **GraphicsState** data type is defined in Gdiplusenums.bi.
 
 
-# <a name="ScaleTransform"></a>ScaleTransform
+# <a name="scaletransform"></a>ScaleTransform (CGpGRaphics)
 
 Updates this **Graphics** object's world transformation matrix with the product of itself and a scaling matrix.
 
@@ -3473,7 +3458,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="SetClip"></a>SetClip
+# <a name="setclip"></a>SetClip (CGpGRaphics)
 
 Updates the clipping region of this **Graphics** object to a region that is the combination of itself and the clipping region of another **Graphics** object.
 
@@ -3540,7 +3525,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="SetCompositingMode"></a>SetCompositingMode
+# <a name="setcompositingmode"></a>SetCompositingMode (CGpGRaphics)
 
 Sets the compositing mode of this **Graphics** object.
 
@@ -3603,7 +3588,7 @@ END SUB
 ```
 
 
-# <a name="SetCompositingQuality"></a>SetCompositingQuality
+# <a name="setcompositingquality"></a>SetCompositingQuality (CGpGRaphics)
 
 Sets the compositing quality of this **Graphics** object.
 
@@ -3666,7 +3651,7 @@ END SUB
 ```
 
 
-# <a name="SetInterpolationMode"></a>SetInterpolationMode
+# <a name="setinterpolationmode"></a>SetInterpolationMode (CGpGRaphics)
 
 Sets the interpolation mode of this **Graphics** object. The interpolation mode determines the algorithm that is used when images are scaled or rotated.
 
@@ -3685,7 +3670,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="SetPageScale"></a>SetPageScale
+# <a name="setpagescale"></a>SetPageScale (CGpGRaphics)
 
 Sets the scaling factor for the page transformation of this **Graphics** object. The page transformation converts page coordinates to device coordinates.
 
@@ -3735,7 +3720,7 @@ END SUB
 ```
 
 
-# <a name="SetPageUnit"></a>SetPageUnit
+# <a name="setpageunit"></a>SetPageUnit (CGpGRaphics)
 
 Sets the unit of measure for this **Graphics** object. The page unit belongs to the page transformation, which converts page coordinates to device coordinates.
 
@@ -3782,7 +3767,7 @@ END SUB
 ```
 
 
-# <a name="SetPixelOffsetMode"></a>SetPixelOffsetMode
+# <a name="setpixeloffsetmode"></a>SetPixelOffsetMode (CGpGRaphics)
 
 Sets the pixel offset mode of this **Graphics** object.
 
@@ -3818,7 +3803,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="SetRenderingOrigin"></a>SetRenderingOrigin
+# <a name="setrenderingorigin"></a>SetRenderingOrigin (CGpGRaphics)
 
 Sets the rendering origin of this **Graphics** object. The rendering origin is used to set the dither origin for 8-bits-per-pixel and 16-bits-per-pixel dithering and is also used to set the origin for hatch brushes.
 
@@ -3865,7 +3850,7 @@ END SUB
 ```
 
 
-# <a name="SetSmoothingMode"></a>SetSmoothingMode
+# <a name="setsmoothingmode"></a>SetSmoothingMode (CGpGRaphics)
 
 Sets the rendering quality of the **Graphics** object.
 
@@ -3943,7 +3928,7 @@ END SUB
 ```
 
 
-# <a name="SetTextContrast"></a>SetTextContrast
+# <a name="settextcontrast"></a>SetTextContrast (CGpGRaphics)
 
 Sets the contrast value of this **Graphics** object. The contrast value is used for antialiasing text.
 
@@ -3962,7 +3947,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="SetTextRenderingHint"></a>SetTextRenderingHint
+# <a name="settextrenderinghint"></a>SetTextRenderingHint (CGpGRaphics)
 
 Sets the text rendering mode of this **Graphics** object.
 
@@ -3999,7 +3984,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="SetTransform"></a>SetTransform
+# <a name="settransform"></a>SetTransform (CGpGRaphics)
 
 Sets the world transformation of this **Graphics** object.
 
@@ -4051,7 +4036,7 @@ END SUB
 ```
 
 
-# <a name="TransformPoints"></a>TransformPoints
+# <a name="transformpoints"></a>TransformPoints (CGpGRaphics)
 
 Converts an array of points from one coordinate space to another. The conversion is based on the current world and page transformations of this **Graphics** object.
 
@@ -4129,7 +4114,7 @@ END SUB
 ```
 
 
-# <a name="TranslateClip"></a>TranslateClip
+# <a name="translateclip"></a>TranslateClip (CGpGRaphics)
 
 Translates the clipping region of this **Graphics** object.
 
@@ -4185,7 +4170,7 @@ END SUB
 ```
 
 
-# <a name="TranslateTransform"></a>TranslateTransform
+# <a name="translatetransform"></a>TranslateTransform (CGpGRaphics)
 
 Updates this **Graphics** object's world transformation matrix with the product of itself and a translation matrix.
 
@@ -4241,7 +4226,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ConstructorsGraphicsPath"></a>Constructors (CGpGraphicsPath)
+# <a name="constructorsgraphicspath"></a>Constructors (CGpGraphicsPath)
 
 Creates a **GraphicsPath** object.
 
@@ -4262,7 +4247,7 @@ CONSTRUCTOR CGpGraphicsPath (BYVAL pts AS GpPoint PTR, _
 | *fillMode* | Optional. Element of the **FillMode** enumeration that specifies how areas are filled if the path intersects itself. The default value is **FillModeAlternate**. |
 
 
-# <a name="AddArc"></a>AddArc (CGpGraphicsPath)
+# <a name="AddArc"></a>addarc (CGpGraphicsPath)
 
 Adds an elliptical arc to the current figure of this path.
 
@@ -4321,7 +4306,7 @@ END SUB
 ```
 
 
-# <a name="AddBezier"></a>AddBezier (CGpGraphicsPath)
+# <a name="addbezier"></a>AddBezier (CGpGraphicsPath)
 
 Adds a Bézier spline to the current figure of this path.
 
@@ -4352,7 +4337,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="AddBeziers"></a>AddBeziers (CGpGraphicsPath)
+# <a name="addbeziers"></a>AddBeziers (CGpGraphicsPath)
 
 Adds a sequence of connected Bézier splines to the current figure of this path.
 
@@ -4403,7 +4388,7 @@ END SUB
 ```
 
 
-# <a name="AddClosedCurve"></a>AddClosedCurve (CGpGraphicsPath)
+# <a name="addclosedcurve"></a>AddClosedCurve (CGpGraphicsPath)
 
 Adds a closed cardinal spline to this path.
 
@@ -4459,7 +4444,7 @@ END SUB
 ```
 
 
-# <a name="AddCurve"></a>AddCurve (CGpGraphicsPath)
+# <a name="addcurve"></a>AddCurve (CGpGraphicsPath)
 
 Adds a cardinal spline to this path.
 
@@ -4552,7 +4537,7 @@ END SUB
 ```
 
 
-# <a name="AddEllipse"></a>AddEllipse (CGpGraphicsPath)
+# <a name="addellipse"></a>AddEllipse (CGpGraphicsPath)
 
 Adds an ellipse to this path.
 
@@ -4607,7 +4592,7 @@ END SUB
 ```
 
 
-# <a name="AddLine"></a>AddLine (CGpGraphicsPath)
+# <a name="addline"></a>AddLine (CGpGraphicsPath)
 
 Adds a line to the current figure of this path.
 
@@ -4658,7 +4643,7 @@ END SUB
 ```
 
 
-# <a name="AddLines"></a>AddLines (CGpGraphicsPath)
+# <a name="addlines"></a>AddLines (CGpGraphicsPath)
 
 Adds a sequence of connected lines to the current figure of this path.
 
@@ -4708,7 +4693,7 @@ END SUB
 ```
 
 
-# <a name="AddPath"></a>AddPath (CGpGraphicsPath)
+# <a name="addpath"></a>AddPath (CGpGraphicsPath)
 
 Adds a path to this path.
 
@@ -4768,7 +4753,7 @@ END SUB
 ```
 
 
-# <a name="AddPie"></a>AddPie (CGpGraphicsPath)
+# <a name="addpie"></a>AddPie (CGpGraphicsPath)
 
 Adds a pie to this path. An arc is a portion of an ellipse, and a pie is a portion of the area enclosed by an ellipse. A pie is bounded by an arc and two lines (edges) that go from the center of the ellipse to the endpoints of the arc.
 
@@ -4827,7 +4812,7 @@ END SUB
 ```
 
 
-# <a name="AddPolygon"></a>AddPolygon (CGpGraphicsPath)
+# <a name="addpolygon"></a>AddPolygon (CGpGraphicsPath)
 
 Adds a polygon to this path.
 
@@ -4875,7 +4860,7 @@ END SUB
 ```
 
 
-# <a name="AddRectangle"></a>AddRectangle (CGpGraphicsPath)
+# <a name="addrectangle"></a>AddRectangle (CGpGraphicsPath)
 
 Adds a rectangle to this path.
 
@@ -4929,7 +4914,7 @@ END SUB
 ```
 
 
-# <a name="AddRectangles"></a>AddRectangles (CGpGraphicsPath)
+# <a name="addrectangles"></a>AddRectangles (CGpGraphicsPath)
 
 Adds a sequence of rectangles to this path.
 
@@ -4976,7 +4961,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="AddString"></a>AddString (CGpGraphicsPath)
+# <a name="addstring"></a>AddString (CGpGraphicsPath)
 
 Adds the outline of a string to this path.
 
@@ -5043,7 +5028,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ClearMarkers"></a>ClearMarkers (CGpGraphicsPath)
+# <a name="clearmarkers"></a>ClearMarkers (CGpGraphicsPath)
 
 Clears the markers from this path.
 
@@ -5058,7 +5043,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="Clone"></a>Clone (CGpGraphicsPath)
+# <a name="clone"></a>Clone (CGpGraphicsPath)
 
 Copies the contents of the existing **GraphicsPath** object into a new **GraphicsPath** object.
 
@@ -5077,7 +5062,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="CloseAllFigures"></a>CloseAllFigures (CGpGraphicsPath)
+# <a name="closeallfigures"></a>CloseAllFigures (CGpGraphicsPath)
 
 Closes all open figures in this path.
 
@@ -5124,7 +5109,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="CloseFigure"></a>CloseFigure (CGpGraphicsPath)
+# <a name="closefigure"></a>CloseFigure (CGpGraphicsPath)
 
 Clears the current figure of this path.
 
@@ -5170,7 +5155,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="Flatten"></a>Flatten (CGpGraphicsPath)
+# <a name="flatten"></a>Flatten (CGpGraphicsPath)
 
 Applies a transformation to this path and converts each curve in the path to a sequence of connected lines.
 
@@ -5239,7 +5224,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="GetBounds"></a>GetBounds (CGpGraphicsPath)
+# <a name="getbounds"></a>GetBounds (CGpGraphicsPath)
 
 Gets a bounding rectangle for this path.
 
@@ -5304,7 +5289,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="GetFillMode"></a>GetFillMode (CGpGraphicsPath)
+# <a name="getfillmode"></a>GetFillMode (CGpGraphicsPath)
 
 Gets the fill mode of this path.
 
@@ -5317,7 +5302,7 @@ FUNCTION GetFillMode () AS FillMode
 This method returns an element of the **FillMode** enumeration.
 
 
-# <a name="GetLastPoint"></a>GetLastPoint (CGpGraphicsPath)
+# <a name="getlastpoint"></a>GetLastPoint (CGpGraphicsPath)
 
 Gets the ending point of the last figure in this path.
 
@@ -5336,7 +5321,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="GetPathData"></a>GetPathData (CGpGraphicsPath)
+# <a name="getpathdata"></a>GetPathData (CGpGraphicsPath)
 
 Gets an array of points and an array of point types from this path. Together, these two arrays define the lines, curves, figures, and markers of this path.
 
@@ -5399,7 +5384,7 @@ END SUB
 ```
 
 
-# <a name="GetPathPoints"></a>GetPathPoints (CGpGraphicsPath)
+# <a name="getpatpoints"></a>GetPathPoints (CGpGraphicsPath)
 
 Gets this path's array of points. The array contains the endpoints and control points of the lines and Bézier splines that are used to draw the path.
 
@@ -5471,7 +5456,7 @@ END SUB
 ```
 
 
-# <a name="GetPathTypes"></a>GetPathTypes (CGpGraphicsPath)
+# <a name="getpathtypes"></a>GetPathTypes (CGpGraphicsPath)
 
 Gets this path's array of point types.
 
@@ -5495,7 +5480,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="GetPointCount"></a>GetPointCount (CGpGraphicsPath)
+# <a name="getpointcount"></a>GetPointCount (CGpGraphicsPath)
 
 Gets the number of points in this path's array of data points. This is the same as the number of types in the path's array of point types.
 
@@ -5547,7 +5532,7 @@ END SUB
 ```
 
 
-# <a name="IsOutlineVisible"></a>IsOutlineVisible (CGpGraphicsPath)
+# <a name="isoutlinevisible"></a>IsOutlineVisible (CGpGraphicsPath)
 
 Determines whether a specified point touches the outline of this path when the path is drawn by a specified **Graphics** object and a specified pen.
 
@@ -5618,7 +5603,7 @@ END SUB
 ```
 
 
-# <a name="IsVisible"></a>IsVisible (CGpGraphicsPath)
+# <a name="isvisible"></a>IsVisible (CGpGraphicsPath)
 
 Determines whether a specified point lies in the area that is filled when this path is filled by a specified **Graphics** object.
 
@@ -5684,7 +5669,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="Outline"></a>Outline (CGpGraphicsPath)
+# <a name="outline"></a>Outline (CGpGraphicsPath)
 
 Transforms and flattens this path, and then converts this path's data points so that they represent only the outline of the path.
 
@@ -5741,7 +5726,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="Reset"></a>Reset (CGpGraphicsPath)
+# <a name="reset"></a>Reset (CGpGraphicsPath)
 
 Empties the path and sets the fill mode to **FillModeAlternate**.
 
@@ -5755,7 +5740,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
-# <a name="Reverse"></a>Reverse (CGpGraphicsPath)
+# <a name="reverse"></a>Reverse (CGpGraphicsPath)
 
 Reverses the order of the points that define this path's lines and curves.
 
@@ -5769,7 +5754,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
-# <a name="SetFillMode"></a>SetFillMode (CGpGraphicsPath)
+# <a name="setfillmode"></a>SetFillMode (CGpGraphicsPath)
 
 Sets the fill mode of this path.
 
@@ -5787,7 +5772,7 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
-# <a name="SetMarker"></a>SetMarker (CGpGraphicsPath)
+# <a name="setmarker"></a>SetMarker (CGpGraphicsPath)
 
 Designates the last point in this path as a marker point.
 
@@ -5810,7 +5795,7 @@ Each time you add a line, curve, or shape to a path, the point array and the typ
 Markers divide a path into sections. You can use a **GraphicsPathIterator** object to draw selected sections of a path.
 
 
-# <a name="StartFigure"></a>StartFigure (CGpGraphicsPath)
+# <a name="startfigure"></a>StartFigure (CGpGraphicsPath)
 
 Starts a new figure without closing the current figure. Subsequent points added to this path are added to the new figure.
 
@@ -5863,7 +5848,7 @@ END SUB
 ```
 
 
-# <a name="Transform"></a>Transform (CGpGraphicsPath)
+# <a name="transform"></a>Transform (CGpGraphicsPath)
 
 Multiplies each of this path's data points by a specified matrix.
 
@@ -5918,7 +5903,7 @@ END SUB
 ```
 
 
-# <a name="Warp"></a>Warp (CGpGraphicsPath)
+# <a name="warp"></a>Warp (CGpGraphicsPath)
 
 Applies a warp transformation to this path. The **Warp** method also flattens (converts to a sequence of straight lines) the path.
 
@@ -5995,7 +5980,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="Widen"></a>Widen (CGpGraphicsPath)
+# <a name="widen"></a>Widen (CGpGraphicsPath)
 
 Replaces this path with curves that enclose the area that is filled when this path is drawn by a specified pen. The **Widen** method also flattens the path.
 
@@ -6047,7 +6032,7 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="ConstructorGraphicsPathIterator"></a>Constructor (CGpGraphicsPathIterator)
+# <a name="constructorgraphicspathiterator"></a>Constructor (CGpGraphicsPathIterator)
 
 Creates a new **GraphicsPathIterator** object and associates it with a **GraphicsPath** object.
 
@@ -6060,7 +6045,7 @@ CONSTRUCTOR CGpGraphicsPathIterator (BYVAL pPath AS CGpGraphicsPath PTR)
 | *pPath* | Pointer to a **GraphicsPath** object that will be associated with this **GraphicsPathIterator** object. |
 
 
-# <a name="CopyData"></a>CopyData (CGpGraphicsPathIterator)
+# <a name="copydata"></a>CopyData (CGpGraphicsPathIterator)
 
 Copies a subset of the path's data points to a **GpPointF** array and copies a subset of the path's point types to a byte array.
 
@@ -6080,7 +6065,7 @@ FUNCTION CopyData (BYVAL pts AS GpPointF PTR, BYVAL types AS BYTE PTR, _
 
 This method returns the number of points copied. This is the same as the number of types copied.
 
-# <a name="Enumerate"></a>Enumerate (CGpGraphicsPathIterator)
+# <a name="enumerate"></a>Enumerate (CGpGraphicsPathIterator)
 
 Copies the path's data points to a **GpPointF** array and copies the path's point types to a byte array.
 
@@ -6104,7 +6089,7 @@ This **GraphicsPathIterator** object is associated with a **GraphicsPath** objec
 
 You can call the **GetCount** method to determine the number of data points in the path. The points parameter points to a buffer that receives the data points, and the types parameter points to a buffer that receives the types. Before you call the **Enumerate** method, you must allocate memory for those buffers. The size of the points buffer should be the return value of **GetCount** multiplied by **SIZEOF(GpPointF)**. The size of the types buffer should be the  return value of **GetCount**.
 
-# <a name="GetCount"></a>GetCount (CGpGraphicsPathIterator)
+# <a name="getcount"></a>GetCount (CGpGraphicsPathIterator)
 
 Returns the number of data points in the path.
 
@@ -6116,7 +6101,7 @@ FUNCTION GetCount () AS INT_
 
 This **GraphicsPathIterator** object is associated with a **GraphicsPath** object. That **GraphicsPath** object has an array of points and an array of types. Each element in the array of types is a byte that specifies the point type and a set of flags for the corresponding element in the array of points. Possible point types and flags are listed in the **PathPointType** enumeration.
 
-# <a name="GetSubpathCount"></a>GetSubpathCount (CGpGraphicsPathIterator)
+# <a name="getsubpathcount"></a>GetSubpathCount (CGpGraphicsPathIterator)
 
 Returns the number of subpaths (also called figures) in the path.
 
@@ -6124,7 +6109,7 @@ Returns the number of subpaths (also called figures) in the path.
 FUNCTION GetSubpathCount () AS INT_
 ```
 
-# <a name="HasCurve"></a>HasCurve (CGpGraphicsPathIterator)
+# <a name="hascurve"></a>HasCurve (CGpGraphicsPathIterator)
 
 Determines whether the path has any curves.
 
@@ -6145,7 +6130,7 @@ A path stores an array of data points, each of which belongs to a line or a Béz
 Certain methods flatten a path, which means that all the curves in the path are converted to sequences of lines. After a path has been flattened, **HasCurve** will always return FALSE. Flattening happens when you call the **Flatten**, **Widen**, or **Warp** method of the **GraphicsPath** class.
 
 
-# <a name="NextMarker"></a>NextMarker (CGpGraphicsPathIterator)
+# <a name="nextmarker"></a>NextMarker (CGpGraphicsPathIterator)
 
 Gets the starting index and the ending index of the next marker-delimited section in this iterator's associated path.
 
@@ -6175,7 +6160,7 @@ A path has an array of data points that define its lines and curves. You can cal
 
 The first time you call the **NextMarker** method of an iterator, it gets the first marker-delimited section of that iterator's associated path. The second time, it gets the second section, and so on. Each time you call **NextSubpath**, it returns the number of data points in the retrieved section. When there are no sections remaining, it returns 0.
 
-# <a name="NextPathType"></a>NextPathType (CGpGraphicsPathIterator)
+# <a name="nexpathtype"></a>NextPathType (CGpGraphicsPathIterator)
 
 Gets the starting index and the ending index of the next group of data points that all have the same type.
 
@@ -6200,7 +6185,7 @@ A path has an array of data points that define its lines and curves. All curves 
 
 The first time you call the **NextSubpath** method of an iterator, it gets the starting and ending indices of the first group of points that all have the same type. The second time, it gets the second group, and so on. Each time you call **NextSubpath**, it returns the number of data points in the obtained group. When there are no groups remaining, it returns 0.
 
-# <a name="NextSubpath"></a>NextSubpath (CGpGraphicsPathIterator)
+# <a name="nextsubpath"></a>NextSubpath (CGpGraphicsPathIterator)
 
 Gets the starting index and the ending index of the next subpath (figure) in this iterator's associated path.
 
@@ -6225,7 +6210,7 @@ This method returns the number of data points in the next figure. If there are n
 
 The first time you call the **NextSubpath** method of an iterator, it gets the starting and ending indices of the first group of points that all have the same type. The second time, it gets the second group, and so on. Each time you call **NextSubpath**, it returns the number of data points in the obtained group. When there are no groups remaining, it returns 0.
 
-# <a name="Rewind"></a>Rewind (CGpGraphicsPathIterator)
+# <a name="rewind"></a>Rewind (CGpGraphicsPathIterator)
 
 Rewinds this iterator to the beginning of its associated path.
 
