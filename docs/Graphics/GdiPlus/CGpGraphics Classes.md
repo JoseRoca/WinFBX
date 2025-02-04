@@ -162,7 +162,7 @@ The **CGpGraphicsPathIterator** class provides methods for isolating selected su
 | [NextSubpath](#NextSubpath) | Gets the starting index and the ending index of the next subpath (figure) in this iterator's associated path. |
 | [Rewind](#Rewind) | Rewinds this iterator to the beginning of its associated path. |
 
-# <a name="Constructors"></a>Constructors
+# <a name="ConstructorsGraphics"></a>Constructors
 
 Creates a **Graphics** object that is associated with a specified device context. When you use this method to create a **Graphics** object, make sure that the **Graphics** object is deleted before the device context is released.
 
