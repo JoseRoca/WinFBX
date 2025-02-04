@@ -189,8 +189,7 @@ pRichEdit.ScalingRatio = ratio
 | [GetWordWrapMode](#GetWordWrapMode) | Gets the current word wrap and word-break options for the rich edit control. |
 | [GetZoom](#GetZoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
 | [HideSelection](#HideSelection) | Hides or shows the selection in a rich edit control. |
-| [InsertImage](#InsertImage) | Replaces the selection with a blob that displays an image. Uses HIMETRIC units for the width and height. |
-| [InsertImage2](#InsertImage) | Replaces the selection with a blob that displays an image. This overloaded method is DPI aware and allows to use pixels instead of HIMETRIC units. |
+| [InsertImage](#InsertImage) | Replaces the selection with a blob that displays an image. |
 | [InsertTable](#InsertTable) | Inserts one or more identical table rows with empty cells. |
 | [IsIME](#IsIME) | Determines if current input locale is an East Asian locale. |
 | [LineFromChar](#LineFromChar) | Gets the index of the line that contains the specified character index in a multiline rich edit control. |
@@ -1903,26 +1902,6 @@ This message does not return a value.
 
 # <a name="InsertImage"></a>InsertImage
 
-Overloaded method that replaces the selection with a blob that displays an image.
-```
-FUNCTION InsertImage OVERLOAD (BYREF ip AS RICHEDIT_IMAGE_PARAMETERS) AS DWORD
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *ip* | A [RICHEDIT_IMAGE_PARAMETERS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-richedit_image_parameters) structure that contains the image blob. |
-
-#### Return value
-
-Returns S_OK if successful, or one of the following error codes.
-
-| Return code  | Description |
-| ------------ | ----------- |
-| **E_FAIL** | Cannot insert the image. |
-| **E_INVALIDARG** | The *ip* parameter is NULL or points to an invalid image. |
-| **E_OUTOFMEMORY** | Insufficient memory is available. |
-
-# <a name="InsertImage2"></a>InsertImage
-
 Overloaded method that replaces the selection with a blob that displays an image. Allows to use pixels instead of HIMETRIC units and it is DPI aware.
 ```
 FUNCTION InsertImage OVERLOAD (BYREF wszFileName AS WSTRING, BYVAL xWidth AS LONG, BYVAL yHeight AS LONG, _
@@ -1945,6 +1924,26 @@ Returns a boolean value: 0 for success and -1 for failure. To get extended error
 | ------------ | ----------- |
 | **E_FAIL** | Cannot insert the image. |
 | **E_INVALIDARG** | Invaid argument |
+| **E_OUTOFMEMORY** | Insufficient memory is available. |
+
+---
+
+Overloaded method that replaces the selection with a blob that displays an image. Uses HIMETRIC units.
+```
+FUNCTION InsertImage OVERLOAD (BYREF ip AS RICHEDIT_IMAGE_PARAMETERS) AS DWORD
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ip* | A [RICHEDIT_IMAGE_PARAMETERS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-richedit_image_parameters) structure that contains the image blob. |
+
+#### Return value
+
+Returns S_OK if successful, or one of the following error codes.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **E_FAIL** | Cannot insert the image. |
+| **E_INVALIDARG** | The *ip* parameter is NULL or points to an invalid image. |
 | **E_OUTOFMEMORY** | Insufficient memory is available. |
 
 # <a name="InsertTable"></a>InsertTable
