@@ -413,7 +413,6 @@ END SUB
 ' ========================================================================================
 ```
 
-
 <a name="DrawBeziers"></a>
 # DrawBeziers (CGpGraphics)
 
@@ -492,7 +491,8 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="DrawCachedBitmap"></a>DrawCachedBitmap
+<a name="DrawCachedBitmap"></a>
+# DrawCachedBitmap (CGpGRaphics)
 
 Draws the image stored in a **CachedBitmap** object.
 
@@ -521,8 +521,8 @@ Cached bitmaps will not work with any transformations other than translation.
 
 When you construct a **CachedBitmap** object, you must pass the address of a **Graphics** object to the constructor. If the screen associated with that Graphics object has its bit depth changed after the cached bitmap is constructed, then the **DrawCachedBitmap** method will fail, and you should reconstruct the cached bitmap. Alternatively, you can hook the display change notification message and reconstruct the cached bitmap at that time.
 
-
-# <a name="DrawClosedCurve"></a>DrawClosedCurve
+<a name="DrawClosedCurve"></a>
+# DrawClosedCurve (CGpGraphics)
 
 Draws a closed cardinal spline.
 
@@ -604,8 +604,8 @@ END SUB
 ' ========================================================================================
 ```
 
-
-# <a name="DrawCurve"></a>DrawCurve
+<a name="DrawCurve"></a>
+# DrawCurve (CGpGraphics)
 
 Draws a cardinal spline.
 
@@ -686,8 +686,8 @@ END SUB
 ' ========================================================================================
 ```
 
-
-# <a name="DrawDriverString"></a>DrawDriverString
+<a name="DrawDriverString"></a>
+# DrawDriverString (CGpGraphics)
 
 Draws characters at the specified positions. The method gives the client complete control over the appearance of text. The method assumes that the client has already set up the format and layout to be applied.
 
@@ -717,8 +717,8 @@ If the function fails, it returns one of the other elements of the **Status** en
 
 A segment is defined as a curve that connects two consecutive points in the cardinal spline. The ending point of each segment is the starting point for the next. The numberOfSegments parameter must not be greater than the count parameter minus the offset parameter plus one.
 
-
-# <a name="DrawEllipse"></a>DrawEllipse
+<a name="DrawEllipse"></a>
+# DrawEllipse (CGpGraphics)
 
 Draws an ellipse.
 
@@ -769,8 +769,8 @@ END SUB
 ' ========================================================================================
 ```
 
-
-# <a name="DrawImage"></a>DrawImage
+<a name="DrawImage"></a>
+# DrawImage (CGpGraphics)
 
 Draws an image.
 
@@ -1019,8 +1019,8 @@ END SUB
 ' ========================================================================================
 ```
 
-
-# <a name="DrawImageFX"></a>DrawImageFX
+<a name="DrawImageFX"></a>
+# DrawImageFX (CGpGraphics)
 
 Draws a portion of an image after applying a specified effect.
 
@@ -1047,8 +1047,8 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
-
-# <a name="DrawLine"></a>DrawLine
+<a name="DrawLine"></a>
+# DrawLine (CGpGraphics)
 
 Draws a line that connects two points.
 
@@ -1099,8 +1099,8 @@ END SUB
 ' ========================================================================================
 ```
 
-
-# <a name="DrawLines"></a>DrawLines
+<a name="DrawLines"></a>
+# DrawLines (CGpGraphics)
 
 Draws a sequence of connected lines.
 
