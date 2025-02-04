@@ -162,7 +162,8 @@ The **CGpGraphicsPathIterator** class provides methods for isolating selected su
 | [NextSubpath](#NextSubpath) | Gets the starting index and the ending index of the next subpath (figure) in this iterator's associated path. |
 | [Rewind](#Rewind) | Rewinds this iterator to the beginning of its associated path. |
 
-# <a name="ConstructorsGraphics"></a>Constructors (CGpGraphics)
+<a name="ConstructorsGraphics"></a>
+# Constructors (CGpGraphics)
 
 Creates a **Graphics** object that is associated with a specified device context. When you use this method to create a **Graphics** object, make sure that the **Graphics** object is deleted before the device context is released.
 
@@ -209,8 +210,8 @@ CONSTRUCTOR CGpGraphics (BYVAL pImage AS CGpImage PTR)
 | *icm* | Optional. Boolean value that specifies whether the new **Graphics** object applies color adjustment according to the ICC profile associated with the display device. TRUE specifies that color adjustment is applied, and FALSE specifies that color adjustment is not applied. The default value is FALSE. |
 | *pImage* | Pointer to an **Image** object that will be associated with the new **Graphics** object. |
 
-
-# <a name="AddMetafileComment"></a>AddMetafileComment
+<a name="AddMetafileComment"></a>
+# AddMetafileComment (CGpGraphics)
 
 Adds a text comment to an existing metafile.
 
@@ -230,7 +231,8 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="BeginContainer"></a>BeginContainer
+<a name="BeginContainer"></a>
+# BeginContainer (CGpGraphics)
 
 Begins a new graphics container.
 
@@ -287,7 +289,8 @@ If the function succeeds, it returns **Ok**, which is an element of the **Status
 If the function fails, it returns one of the other elements of the **Status** enumeration.
 
 
-# <a name="DrawArc"></a>DrawArc
+<a name="DrawArc"></a>
+# DrawArc (CGpGraphics)
 
 Draws an arc. The arc is part of an ellipse.
 
@@ -344,7 +347,8 @@ END SUB
 ' ========================================================================================
 ```
 
-# <a name="DrawBezier"></a>DrawBezier
+<a name="DrawBezier"></a>
+# DrawBezier (CGpGraphics)
 
 Draws a Bézier spline.
 
@@ -410,7 +414,8 @@ END SUB
 ```
 
 
-# <a name="DrawBeziers"></a>DrawBeziers
+<a name="DrawBeziers"></a>
+# DrawBeziers (CGpGraphics)
 
 Draws a sequence of connected Bézier splines.
 
