@@ -9,6 +9,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [CONSTRUCTOR](#CONSTRUCTOR) | Called when a class variable is created. |
 | [DESTRUCTOR](#DESTRUCTOR) | Called automatically when a class variable goes out of scope or is destroyed. |
 | [hRichEdit](#hRichEdit) | Returns the handle of the rich edit control. |
+| [ScalingRatio](#ScalingRatio) | Gets/sets the scaling ratio. |
 
 #### Helper procedure
 
@@ -90,6 +91,25 @@ FUNCTION CRichEditCtrl.hRichEdit () AS HWND
 DIM pRichEdit AS CRichEditCtrl = CRichEditCtrl(@pWindow, IDC_RICHEDIT, "RichEditbox", 100, 50, 300, 200)
 ' // Set the focus in the control
 DIM hRichEdit AS HWND = pRichEdit.hRichEdit
+```
+
+# <a name="ScalingRatio"></a>ScalingRatio
+
+Gets/sets the scaling ratio.
+
+```
+PROPERTY ScalingRatio () AS SINGLE
+PROPERTY ScalingRatio (BYVAL Ratio AS SINGLE)
+```
+#### Remarks
+
+The scaling ratio is used by the **InsertImage** method to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
+
+#### Usage examples
+
+```
+DIM ratio AS LONG = pRichEdit.ScalingRatio
+pRichEdit.ScalingRatio = ratio
 ```
 
 # CRichEditCtrl Properties
