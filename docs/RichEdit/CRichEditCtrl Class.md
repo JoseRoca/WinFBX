@@ -189,7 +189,8 @@ pRichEdit.ScalingRatio = ratio
 | [GetWordWrapMode](#GetWordWrapMode) | Gets the current word wrap and word-break options for the rich edit control. |
 | [GetZoom](#GetZoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
 | [HideSelection](#HideSelection) | Hides or shows the selection in a rich edit control. |
-| [InsertImage](#InsertImage) | Replaces the selection with a blob that displays an image. |
+| [InsertImage](#InsertImage) | Replaces the selection with a blob that displays an image. Uses HIMETRIC units for the width and height. |
+| [InsertImage](#InsertImage2) | Replaces the selection with a blob that displays an image. This overloaded method is DPI aware and allows to use pixels instead of HIMETRIC units. |
 | [InsertTable](#InsertTable) | Inserts one or more identical table rows with empty cells. |
 | [IsIME](#IsIME) | Determines if current input locale is an East Asian locale. |
 | [LineFromChar](#LineFromChar) | Gets the index of the line that contains the specified character index in a multiline rich edit control. |
@@ -1902,9 +1903,9 @@ This message does not return a value.
 
 # <a name="InsertImage"></a>InsertImage
 
-Replaces the selection with a blob that displays an image.
+Overloaded method that replaces the selection with a blob that displays an image.
 ```
-FUNCTION InsertImage (BYREF ip AS RICHEDIT_IMAGE_PARAMETERS) AS DWORD
+FUNCTION InsertImage OVERLOAD (BYREF ip AS RICHEDIT_IMAGE_PARAMETERS) AS DWORD
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -1918,6 +1919,32 @@ Returns S_OK if successful, or one of the following error codes.
 | ------------ | ----------- |
 | **E_FAIL** | Cannot insert the image. |
 | **E_INVALIDARG** | The *ip* parameter is NULL or points to an invalid image. |
+| **E_OUTOFMEMORY** | Insufficient memory is available. |
+
+# <a name="InsertImage2"></a>InsertImage
+
+Overloaded method that replaces the selection with a blob that displays an image. Allows to use pixels instead of HIMETRIC units and it is DPI aware.
+```
+FUNCTION InsertImage OVERLOAD (BYREF wszFileName AS WSTRING, BYVAL xWidth AS LONG, BYVAL yHeight AS LONG, _
+BYVAL Ascent AS LONG = 0, BYVAL nType AS LONG = TA_BASELINE, BYREF wszAlternateText AS WSTRING = "") AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszFileName* | Path and name of the image file to load. |
+| *xWidth* | Image width in pixels. |
+| *yHeight* | Image heigh in pixelst. |
+| *Ascent* | If *nType* is TA_BASELINE (the default value), this parameter is the distance, in pixels, that the top of the image extends above the text baseline. If *nType* is TA_BASELINE and ascent is zero, the bottom of the image is placed at the text baseline. |
+| *nType* | The vertical alignment of the image. It can be one of the following values.<br>**TA_BASELINE**. Align the image relative to the text baseline.<br>**TA_BOTTOM**. Align the bottom of the image at the bottom of the text line.<br>**TA_TOP**. Align the top of the image at the top of the text line |
+| *wszAlternateText* | The alternate text for the image. |
+
+#### Return value
+
+Returns a boolean value: 0 for success and -1 for failure. To get extended error information call **GetLastREsult** and/or **GetErrorInfo**, which can return **S_OK** if successful, or one of the following error codes.
+
+| Return code  | Description |
+| ------------ | ----------- |
+| **E_FAIL** | Cannot insert the image. |
+| **E_INVALIDARG** | Invaid argument |
 | **E_OUTOFMEMORY** | Insufficient memory is available. |
 
 # <a name="InsertTable"></a>InsertTable
