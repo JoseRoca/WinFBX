@@ -1921,7 +1921,7 @@ Returns S_OK if successful, or one of the following error codes.
 | **E_INVALIDARG** | The *ip* parameter is NULL or points to an invalid image. |
 | **E_OUTOFMEMORY** | Insufficient memory is available. |
 
-# <a name="InsertImage2"></a>InsertImage
+# <a name="InsertImage"></a>InsertImage2
 
 Overloaded method that replaces the selection with a blob that displays an image. Allows to use pixels instead of HIMETRIC units and it is DPI aware.
 ```
