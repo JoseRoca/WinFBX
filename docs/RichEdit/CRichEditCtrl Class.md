@@ -2276,6 +2276,23 @@ SUB SetMargins (BYVAL nMargins AS LONG, BYVAL nWidth AS LONG)
 
 This method does not return a value.
 
+#### Usage examples
+
+Set the left margin
+```
+pRichEdit.SetMargins(EC_LEFTMARGIN, MAKELONG(50, 0))
+--or--
+pRichEdit.SetMargins(EC_LEFTMARGIN, MAKELONG(50))
+```
+Set the right margin
+```
+pRichEdit.SetMargins(EC_RIGHTMARGIN, MAKELONG(0, 50))
+```
+Set both margins
+```
+pRichEdit.SetMargins(EC_LEFTMARGIN OR EC_RIGHTMARGIN, MAKELONG(50, 50))
+```
+
 # <a name="setolecallback"></a>SetOleCallback
 
 Gives a rich edit control an IRichEditOleCallback object that the control uses to get OLE-related resources and information from the client.
