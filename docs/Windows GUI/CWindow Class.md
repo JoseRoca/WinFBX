@@ -2331,7 +2331,7 @@ Adds a control to the window.
 
 ```
 FUNCTION AddControl (BYREF wszClassName AS WSTRING, BYVAL hParent AS HWND = NULL, _
-   BYVAL cID AS LONG_PTR = 0,    BYREF wszTitle AS WSTRING = "", BYVAL x AS LONG = 0, _
+   BYVAL cID AS LONG_PTR = 0, BYREF wszTitle AS WSTRING = "", BYVAL x AS LONG = 0, _
    BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
    BYVAL dwStyle AS LONG = -1, BYVAL dwExStyle AS LONG = -1, _
    BYVAL lpParam AS LONG_PTR = 0, BYVAL pWndProc AS WNDPROC = NULL, _
