@@ -1193,7 +1193,7 @@ SUB ExLimitText (BYVAL dwLimit AS DWORD)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *dwLimit* | Specifies the maximum amount of text that can be entered. If this parameter is zero, the default maximum is used, which is 64K characters. A COM object counts as a single character. |
+| *dwLimit* | Specifies the maximum amount of text that can be entered. If this parameter is zero, the default maximum is used, which is 64K characters. If this parameter is -1 (&hFFFFFFFF), raises the the 32,767 default characters limit to no limit. A COM object counts as a single character. |
 
 #### Remarks
 
