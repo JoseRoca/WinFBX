@@ -1343,7 +1343,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 ### Remarks
 
-The first 16 index values are for special underline colors. If an index between 1 and 16 hasn't been defined by a call to the **etEffectColor** method, **GetEffectColor** returns the corresponding Microsoft Word default color.
+The first 16 index values are for special underline colors. If an index between 1 and 16 hasn't been defined by a call to the **GetEffectColor** method, **GetEffectColor** returns the corresponding Microsoft Word default color.
 
 # <a name="GetPreferredFont"></a>GetPreferredFont
 
