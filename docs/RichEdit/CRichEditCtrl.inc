@@ -51,6 +51,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DIM m_Result AS HRESULT           ' // Last result code
       DIM m_hRichEdit AS HWND           ' // Rich Edit cotroll handle
       DIM m_hInstance AS HINSTANCE      ' // Instance handle
+      DIM m_ScalingRatio AS SINGLE      ' // Scaling ratio
 
    Public:
       DECLARE CONSTRUCTOR (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszTitle AS WSTRING = "", _
@@ -58,6 +59,8 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
          BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL lpParam AS LONG_PTR = 0)
       DECLARE DESTRUCTOR
       DECLARE FUNCTION hRichEdit () AS HWND
+      DECLARE PROPERTY ScalingRatio (BYVAL ratio AS SINGLE)
+      DECLARE PROPERTY ScalingRatio () AS SINGLE
 
       ' // Static callback procedures
       DECLARE STATIC FUNCTION CRichEditCtrlProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM, BYVAL uIdSubclass AS UINT_PTR, BYVAL dwRefData AS DWORD_PTR) AS LRESULT
@@ -98,6 +101,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE PROPERTY IMEOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG)
       DECLARE PROPERTY LangOptions () AS DWORD
       DECLARE PROPERTY LangOptions (BYVAL lgoptions AS LONG)
+      DECLARE PROPERTY LeftMargin (BYVAL nWidth AS LONG)
       DECLARE PROPERTY LimitText () AS LONG
       DECLARE PROPERTY LimitText (BYVAL chMax AS DWORD)
       DECLARE PROPERTY Modify () AS LONG
@@ -115,6 +119,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE PROPERTY Rect () AS .RECT
       DECLARE PROPERTY Rect (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
       DECLARE PROPERTY RectNP (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
+      DECLARE PROPERTY RightMargin (BYVAL nWidth AS LONG)
       DECLARE PROPERTY ScrollPos () AS .POINT
       DECLARE PROPERTY ScrollPos (BYREF pt AS .POINT)
       DECLARE PROPERTY StoryType (BYVAL Index AS DWORD) AS DWORD
@@ -175,7 +180,9 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION GetWordWrapMode () AS DWORD
       DECLARE FUNCTION GetZoom (BYREF pzNum AS DWORD, BYREF pzDen AS DWORD) AS LONG
       DECLARE SUB HideSelection (BYVAL fHide AS DWORD)
-      DECLARE FUNCTION InsertImage (BYREF ip AS RICHEDIT_IMAGE_PARAMETERS) AS DWORD
+      DECLARE FUNCTION InsertImage OVERLOAD (BYREF ip AS RICHEDIT_IMAGE_PARAMETERS) AS DWORD
+      DECLARE FUNCTION InsertImage OVERLOAD (BYREF wszFileName AS WSTRING, BYVAL xWidth AS LONG, BYVAL yHeight AS LONG, _
+         BYVAL Ascent AS LONG = 0, BYVAL nType AS LONG = TA_BASELINE, BYREF wszAlternateText AS WSTRING = "") AS BOOLEAN
       DECLARE FUNCTION InsertTable (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
       DECLARE FUNCTION IsIME () AS LONG
       DECLARE FUNCTION LineFromChar (BYVAL index AS DWORD) AS LONG
@@ -202,7 +209,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE SUB SetSel (BYVAL nStart AS LONG, BYVAL nEnd AS LONG)
       DECLARE FUNCTION SetTableParams (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
       DECLARE FUNCTION SetTabStops (BYVAL nTabs AS LONG, BYVAL rgTabStops AS LONG_PTR) AS LONG
-      DECLARE FUNCTION SetTargetDevice (BYVAL hDC AS HDC, BYVAL lnwidth AS LONG) AS LONG
+      DECLARE FUNCTION SetTargetDevice (BYVAL hDC AS HDC, BYVAL lnwidth AS LONG) AS BOOLEAN
       DECLARE FUNCTION SetTextEx (BYREF stex AS .SETTEXTEX, BYREF wszText AS WSTRING) AS DWORD
       DECLARE FUNCTION SetUIAName (BYREF wszName AS WSTRING) AS DWORD
       DECLARE FUNCTION SetUndoLimit (BYVAL maxactions AS DWORD) AS DWORD
@@ -216,13 +223,17 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION StreamOut (BYVAL psf AS LONG, BYREF edst AS EDITSTREAM) AS DWORD
       DECLARE FUNCTION Undo () AS LONG
 
-      ' // Helper functions
+      ' // Helper methods and properties
+      DECLARE FUNCTION EnableWordWrap () AS BOOLEAN
+      DECLARE FUNCTION DisableWordWrap (BYVAL LineWidth AS LONG = 32767) AS BOOLEAN
       DECLARE FUNCTION SetFont (BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS HRESULT
       DECLARE FUNCTION GetRtfText () AS STRING
       DECLARE FUNCTION LoadRtfFromFile (BYREF wszFileName AS WSTRING) AS BOOLEAN
       DECLARE FUNCTION LoadRtfFromResource (BYREF wszResourceName AS WSTRING) AS BOOLEAN
-
+      DECLARE FUNCTION InsertObject (BYREF wszFileName AS WSTRING) AS BOOLEAN
+ 
 END TYPE
+' ========================================================================================
 
 ' ========================================================================================
 ' Subclassed window procedure
@@ -290,6 +301,7 @@ PRIVATE CONSTRUCTOR CRichEditCtrl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LO
          ES_AUTOHSCROLL OR ES_AUTOVSCROLL OR ES_MULTILINE OR ES_WANTRETURN OR ES_NOHIDESEL OR ES_SAVESEL, WS_EX_CLIENTEDGE, _
          NULL, CAST(SUBCLASSPROC, @CRichEditCtrlProc), cID, CAST(DWORD_PTR, @this))
       m_hInstance = pWindow->InstanceHandle
+      m_ScalingRatio = pWindow->rxRatio
    END IF
 
 END CONSTRUCTOR
@@ -312,6 +324,20 @@ END DESTRUCTOR
 PRIVATE FUNCTION CRichEditCtrl.hRichEdit () AS HWND
    FUNCTION = m_hRichEdit
 END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets/sets the width scaling ratio
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.ScalingRatio (BYVAL ratio AS SINGLE)
+   m_ScalingRatio = ratio
+   IF m_ScalingRatio = 0 THEN m_ScalingRatio = 1
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.ScalingRatio () AS SINGLE
+   PROPERTY = m_ScalingRatio
+END PROPERTY
 ' ========================================================================================
 
 
@@ -1251,6 +1277,54 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Inserts an image from file
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.InsertImage (BYREF wszFileName AS WSTRING, BYVAL xWidth AS LONG, BYVAL yHeight AS LONG, _
+BYVAL Ascent AS LONG = 0, BYVAL nType AS LONG = TA_BASELINE, BYREF wszAlternateText AS WSTRING = "") AS BOOLEAN
+   this.SetResult(0)
+   ' // Opens the file and creates an stream
+   ' // See if the library is already loaded in the address space
+   DIM AS ANY PTR pLib = GetModuleHandleW("shlwapi.dll")
+   ' // If it is not loaded, load it
+   IF pLib = NULL THEN pLib = DyLibLoad("shlwapi.dll")
+   IF pLib = NULL THEN this.SetResult(E_FAIL) : RETURN FALSE
+   DIM pShCreateStreamOnFileEx AS FUNCTION (BYVAL pwszFile AS WSTRING PTR, BYVAL grfMode AS DWORD, BYVAL dwAttributes AS DWORD, _
+       BYVAL fCreate AS WINBOOL, BYVAL pstmTemplate AS IStream PTR, BYVAL ppStream AS IStream PTR PTR) AS HRESULT
+   pShCreateStreamOnFileEx = DyLibSymbol(pLib, "SHCreateStreamOnFileEx")
+   IF pShCreateStreamOnFileEx = NULL THEN this.SetResult(E_FAIL) : RETURN FALSE
+   DIM pStream AS IStream PTR
+   DIM hr AS HRESULT = pShCreateStreamOnFileEx(@wszFileName, STGM_READ, FILE_ATTRIBUTE_NORMAL, FALSE, NULL, @pStream)
+   ' For some reason, if we free the library, calling the methods that use the returned
+   ' IStream pointer will GPF if compiled with the -O switch.
+'   DyLibFree(pLib)
+   this.SetResult(hr)
+   IF hr <> S_OK OR pStream = NULL THEN RETURN FALSE
+   ' // Fill the RICHEDIT_IMAGE_PARAMETERS structure
+   DIM ip AS RICHEDIT_IMAGE_PARAMETERS
+   ip.xWidth = AfxPixelsToHiMetricX(xWidth * m_ScalingRatio)
+   ip.yHeight = AfxPixelsToHiMetricY(yHeight * m_ScalingRatio)
+   ip.Ascent = IIF(Ascent = 0, 0, AfxPixelsToHiMetricY(Ascent * m_ScalingRatio))
+   ip.Type = nType
+   ip.pwszAlternateText = @wszAlternateText
+   ip.pIStream = pStream
+   ' // Insert the image
+   this.SetResult(SendMessageW(m_hRichEdit, EM_INSERTIMAGE, 0, cast(LPARAM, @ip)))
+   ' // Move the caret to the end of the text and add a new line
+   SendMessageW(m_hRichEdit, EM_SETSEL, 0, -1)
+   DIM dwStart AS DWORD, dwEnd AS DWORD
+   SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStart), cast(LPARAM, @dwEnd))
+   SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 1))
+   SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @!"\n"))
+   ' // Release the stream
+   IF pStream THEN pStream->lpvtbl->Release(pStream)
+   ' // Return TRUE for success or FALSE for failure
+   IF this.GetLastResult <> S_OK THEN RETURN FALSE
+   RETURN TRUE
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Inserts one or more identical table rows with empty cells.
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl.InsertTable (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
@@ -1428,6 +1502,20 @@ PRIVATE SUB CRichEditCtrl.SetMargins (BYVAL nMargins AS LONG, BYVAL nWidth AS LO
    this.SetResult(SendMessageW(m_hRichEdit, EM_SETMARGINS, nMargins, nWidth))
 END SUB
 ' ========================================================================================
+' ========================================================================================
+' Sets the width of the left margin.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.LeftMargin (BYVAL nWidth AS LONG)
+   this.SetResult(SendMessageW(m_hRichEdit, EM_SETMARGINS, EC_LEFTMARGIN, MAKELONG(nWidth, 0)))
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Sets the width of the right margin.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.RightMargin (BYVAL nWidth AS LONG)
+   this.SetResult(SendMessageW(m_hRichEdit, EM_SETMARGINS, EC_RIGHTMARGIN, MAKELONG(0, nWidth)))
+END PROPERTY
+' ========================================================================================
 
 ' ========================================================================================
 ' Gives a rich edit control an IRichEditOleCallback object that the control uses to get
@@ -1468,9 +1556,16 @@ END FUNCTION
 ' ========================================================================================
 ' Sets the target device and line width used for WYSIWYG formatting in a rich edit control.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.SetTargetDevice (BYVAL hDC AS HDC, BYVAL lnwidth AS LONG) AS LONG
-   this.SetResult(0)
-   RETURN SendMessageW(m_hRichEdit, EM_SETTARGETDEVICE, cast(WPARAM, hDC), lnwidth)
+PRIVATE FUNCTION CRichEditCtrl.SetTargetDevice (BYVAL hDC AS HDC, BYVAL lnwidth AS LONG) AS BOOLEAN
+   DIM hr AS HRESULT = SendMessageW(m_hRichEdit, EM_SETTARGETDEVICE, cast(WPARAM, hDC), lnwidth)
+   ' // This method returns 0 for failure and <>0 for success
+   IF hr <> 0 THEN
+      this.SetResult(S_OK)
+      RETURN TRUE
+   ELSE
+      this.SetResult(S_FALSE)
+      RETURN FALSE
+   END IF
 END FUNCTION
 ' ========================================================================================
 
@@ -1589,6 +1684,47 @@ END FUNCTION
 PRIVATE FUNCTION CRichEditCtrl.Undo () AS LONG
    this.SetResult(0)
    RETURN SendMessageW(m_hRichEdit, EM_UNDO, 0, 0)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+'                                    HELPER PROCEDURES
+' ========================================================================================
+
+' ========================================================================================
+' Enables word wrap.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.EnableWordWrap () AS BOOLEAN
+   DIM hDC AS HDC = GetDC(m_hRichEdit)
+   IF hDC = NULL THEN this.SetResult(E_FAIL) : RETURN FALSE
+   DIM hr AS HRESULT = SendMessageW(m_hRichEdit, EM_SETTARGETDEVICE, cast(WPARAM, hDC), 0)
+   ReleaseDC(m_hRichEdit, hdc)
+   IF hr <> 0 THEN
+      this.SetResult(S_OK)
+      RETURN TRUE
+   ELSE
+      this.SetResult(S_FALSE)
+      RETURN FALSE
+   END IF
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Disables word wrap.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.DisableWordWrap (BYVAL LineWidth AS LONG = 32767) AS BOOLEAN
+   this.SetResult(0)
+   DIM hDC AS HDC = GetDC(m_hRichEdit)
+   IF hDC = NULL THEN this.SetResult(E_FAIL) : RETURN FALSE
+   DIM hr AS HRESULT = SendMessageW(m_hRichEdit, EM_SETTARGETDEVICE, cast(WPARAM, hDC), LineWidth)
+   ReleaseDC(m_hRichEdit, hdc)
+   IF hr <> 0 THEN
+      this.SetResult(S_OK)
+      RETURN TRUE
+   ELSE
+      this.SetResult(S_FALSE)
+      RETURN FALSE
+   END IF
 END FUNCTION
 ' ========================================================================================
 
@@ -1790,6 +1926,118 @@ PRIVATE FUNCTION CRichEditCtrl.LoadRtfFromResource ( _
       this.SetResult(eds.dwError)
       RETURN FALSE
    END IF
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Deprecated. Use the InsertImage method.
+' Inserts an object in the rich edit control.
+' See MSDN: https://learn.microsoft.com/en-us/windows/win32/controls/using-rich-edit-com
+' This old method has some problems, like not displaying the real image, but an icon, when
+' the image is not a bitmap, or not inserting the image at the position of the cursor.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
+   BYREF wszFileName AS WSTRING _                    ' // Name of the file to load
+ ) AS BOOLEAN                                        ' // TRUE or FALSE
+
+   CREC_DP("#### BEGIN - CRichEditCtrl.InsertObject")
+
+   DIM pRichEditOle AS IRichEditOle PTR
+   DIM pLockBytes AS ILockBytes PTR
+   DIM pStorage AS IStorage PTR
+   DIM pClientSite AS IOleClientSite PTR
+   DIM pUnk AS IUnknown PTR
+   DIM pObject AS IOleObject PTR
+
+   ' // Get the IRichEditOle interface
+   CREC_DP("#### CRichEditCtrl.InsertObject - GetOleInterface")
+   this.SetResult(SendMessageW(m_hRichEdit, EM_GETOLEINTERFACE, 0, cast(LPARAM, @pRichEditOle)))
+   IF pRichEditOle = NULL THEN RETURN FALSE
+
+   ' // Use a DO/LOOP to avoid an excess of IF's and a GOTO
+   DO
+      ' // Create structures storage
+      CREC_DP("#### CRichEditCtrl.InsertObject - CreateILockBytesOnHGlobal")
+      this.SetResult(CreateILockBytesOnHGlobal(NULL, TRUE, @pLockBytes))
+      IF FAILED(this.GetLastResult) THEN EXIT DO
+
+      CREC_DP("#### CRichEditCtrl.InsertObject - StgCreateDocfileOnILockBytes")
+      this.SetResult(StgCreateDocfileOnILockBytes(pLockBytes, _
+         STGM_SHARE_EXCLUSIVE OR STGM_CREATE OR STGM_READWRITE, 0, @pStorage))
+      IF FAILED(this.GetLastResult) THEN EXIT DO
+
+      ' // Set up the data format
+      DIM formatEtc AS FORMATETC
+      formatEtc.cfFormat = 0
+      formatEtc.ptd = NULL
+      formatEtc.dwAspect = DVASPECT_CONTENT
+      formatEtc.lindex = -1
+      formatEtc.tymed = TYMED_NULL
+
+      ' // Get a pointer to the display site
+      CREC_DP("#### CRichEditCtrl.InsertObject - GetClientSIte")
+      this.SetResult(pRichEditOle->lpvtbl->GetClientSite(pRichEditOle, @pClientSite))
+      IF FAILED(this.GetLastResult) THEN EXIT DO
+
+      ' // Create the object and retrieve its IUnknown interface
+      CREC_DP("#### CRichEditCtrl.InsertObject - OleCreateFromFile")
+      this.SetResult(OleCreateFromFile(@CLSID_NULL, @wszFileName, @IID_IUnknown, OLERENDER_DRAW, _
+              @formatEtc, pCLientSite, pStorage, @pUnk))
+      IF FAILED(this.GetLastResult) THEN EXIT DO
+
+      ' // Get the IOleObject interface to the object
+      CREC_DP("#### CRichEditCtrl.InsertObject - IOleObject")
+      this.SetResult(pUnk->lpvtbl->QueryInterface(pUnk, @IID_IOleObject, @pObject))
+      IF FAILED(this.GetLastResult) THEN EXIT DO
+
+      ' // To ensure that references are counted correctly, notify the object that it is contained
+      CREC_DP("#### CRichEditCtrl.InsertObject - GetUserClassID")
+      DIM clsid AS CLSID
+      OleSetContainedObject(cast(IUnknown PTR, pObject), TRUE)
+      DIM reobject AS REOBJECT
+      reobject.cbStruct = SIZEOF(REOBJECT)
+      this.SetResult(pObject->lpvtbl->GetUserClassID(pObject, @clsid))
+      IF FAILED(this.GetLastResult) THEN EXIT DO
+
+      ' // Set up object info
+      reobject.clsid = clsid
+      reobject.cp = REO_CP_SELECTION
+      reobject.dvaspect = DVASPECT_CONTENT
+      reobject.dwFlags = REO_RESIZABLE OR REO_BELOWBASELINE OR REO_WRAPTEXTAROUND
+      reobject.dwUser = 0
+      reobject.poleobj = pObject
+      reobject.polesite = pClientSite
+      reobject.pstg = pStorage
+      DIM sizel AS SIZEL
+      reobject.sizel = sizel
+
+      ' // Move the caret to the end of the text and add a new line
+      SendMessageW(m_hRichEdit, EM_SETSEL, 0, -1)
+      DIM dwStart AS DWORD, dwEnd AS DWORD
+      SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStart), cast(LPARAM, @dwEnd))
+      SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 1))
+      SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @!"\n"))
+
+      ' // Insert the object
+      CREC_DP("#### CRichEditCtrl.InsertObject - InsertObject")
+      this.SetResult(pRichEditOle->lpvtbl->InsertObject(pRichEditOle, @reobject))
+      CREC_DP("#### END - CRichEditCtrl.InsertObject hr = " & WSTR(this.GetLastResult))
+      EXIT DO
+   LOOP
+
+   ' // Clean up
+   CREC_DP("#### CRichEditCtrl.InsertObject - Clean up")
+   IF pObject THEN pObject->lpvtbl->Release(pObject)
+   IF pUnk THEN pUnk->lpvtbl->Release(pUnk)
+   IF pClientSite THEN pClientSite->lpvtbl->Release(pClientSite)
+   IF pStorage THEN pStorage->lpvtbl->Release(pStorage)
+   IF pLockBytes THEN pLockBytes->lpvtbl->Release(pLockBytes)
+   IF pRichEditOle THEN pRichEditOle->lpvtbl->Release(pRichEditOle)
+
+   ' // Return success or failure
+   IF FAILED(this.GetLastResult) THEN RETURN FALSE
+   RETURN TRUE
 
 END FUNCTION
 ' ========================================================================================
