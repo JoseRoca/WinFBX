@@ -130,6 +130,7 @@ pRichEdit.ScalingRatio = ratio
 | [IMEModeBias](#imemodebias) | Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [IMEOptions](#imeoptions) | Gets/sets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system. |
 | [LangOptions](#langoptions) | Gets/sets a rich edit control's option settings for Input Method Editor (IME) and Asian language support. |
+| [LeftMargin](#leftmargin) | Sets the width of the left margin. |
 | [LimitText](#limittext) | Gets/sets the current text limit for a rich edit control. |
 | [Modify](#modify) | Gets/sets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
 | [Options](#options) | Gets/sets the options for a rich edit control. |
@@ -139,6 +140,7 @@ pRichEdit.ScalingRatio = ratio
 | [Punctuation](#punctuation) | Gets/sets the current punctuation characters for the rich edit control. |
 | [Rect](#rect) | Gets/sets the formatting rectangle of a rich edit control. |
 | [RectNP](#rectnp) | Sets the formatting rectangle of a multiline rich edit control. |
+| [RightMargin](#rightmargin) | Sets the width of the right margin. |
 | [ScrollPos](#scrollpos) | Gets/sets the current scroll position of the edit control. |
 | [StoryType](#storytype) | Gets/sets the story type. |
 | [Text](#text) | Gets/sets the text from a rich edit control. |
@@ -2292,6 +2294,26 @@ Set both margins
 ```
 pRichEdit.SetMargins(EC_LEFTMARGIN OR EC_RIGHTMARGIN, MAKELONG(50, 50))
 ```
+
+# <a name="leftmargin"></a>LeftMargin
+
+Sets the width of the left margin for a rich edit control. The message redraws the control to reflect the new margin.
+```
+PROPERTY LeftMargin (BYVAL nWidth AS LONG)
+```
+#### Usage example
+
+pRichEdit.LeftMargin = 50
+
+# <a name="rightmargin"></a>RightMargin
+
+Sets the width of the right margin for a rich edit control. The message redraws the control to reflect the new margin.
+```
+PROPERTY RightMargin (BYVAL nWidth AS LONG)
+```
+#### Usage example
+
+pRichEdit.RightMargin = 50
 
 # <a name="setolecallback"></a>SetOleCallback
 
