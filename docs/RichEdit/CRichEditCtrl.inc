@@ -1309,12 +1309,6 @@ BYVAL Ascent AS LONG = 0, BYVAL nType AS LONG = TA_BASELINE, BYREF wszAlternateT
    ip.pIStream = pStream
    ' // Insert the image
    this.SetResult(SendMessageW(m_hRichEdit, EM_INSERTIMAGE, 0, cast(LPARAM, @ip)))
-   ' // Move the caret to the end of the text and add a new line
-   SendMessageW(m_hRichEdit, EM_SETSEL, 0, -1)
-   DIM dwStart AS DWORD, dwEnd AS DWORD
-   SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStart), cast(LPARAM, @dwEnd))
-   SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 1))
-   SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @!"\n"))
    ' // Release the stream
    IF pStream THEN pStream->lpvtbl->Release(pStream)
    ' // Return TRUE for success or FALSE for failure
@@ -1937,106 +1931,205 @@ END FUNCTION
 ' This old method has some problems, like not displaying the real image, but an icon, when
 ' the image is not a bitmap, or not inserting the image at the position of the cursor.
 ' ========================================================================================
+'PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
+'   BYREF wszFileName AS WSTRING _                    ' // Name of the file to load
+' ) AS BOOLEAN                                        ' // TRUE or FALSE
+
+'   CREC_DP("#### BEGIN - CRichEditCtrl.InsertObject")
+
+'   DIM pRichEditOle AS IRichEditOle PTR
+'   DIM pLockBytes AS ILockBytes PTR
+'   DIM pStorage AS IStorage PTR
+'   DIM pClientSite AS IOleClientSite PTR
+'   DIM pUnk AS IUnknown PTR
+'   DIM pObject AS IOleObject PTR
+
+'   ' // Get the IRichEditOle interface
+'   CREC_DP("#### CRichEditCtrl.InsertObject - GetOleInterface")
+'   this.SetResult(SendMessageW(m_hRichEdit, EM_GETOLEINTERFACE, 0, cast(LPARAM, @pRichEditOle)))
+'   IF pRichEditOle = NULL THEN RETURN FALSE
+
+'   ' // Use a DO/LOOP to avoid an excess of IF's and a GOTO
+'   DO
+'      ' // Create structures storage
+'      CREC_DP("#### CRichEditCtrl.InsertObject - CreateILockBytesOnHGlobal")
+'      this.SetResult(CreateILockBytesOnHGlobal(NULL, TRUE, @pLockBytes))
+'      IF FAILED(this.GetLastResult) THEN EXIT DO
+
+'      CREC_DP("#### CRichEditCtrl.InsertObject - StgCreateDocfileOnILockBytes")
+'      this.SetResult(StgCreateDocfileOnILockBytes(pLockBytes, _
+'         STGM_SHARE_EXCLUSIVE OR STGM_CREATE OR STGM_READWRITE, 0, @pStorage))
+'      IF FAILED(this.GetLastResult) THEN EXIT DO
+
+'      ' // Set up the data format
+'      DIM formatEtc AS FORMATETC
+'      formatEtc.cfFormat = 0
+'      formatEtc.ptd = NULL
+'      formatEtc.dwAspect = DVASPECT_CONTENT
+'      formatEtc.lindex = -1
+'      formatEtc.tymed = TYMED_NULL
+
+'      ' // Get a pointer to the display site
+'      CREC_DP("#### CRichEditCtrl.InsertObject - GetClientSIte")
+'      this.SetResult(pRichEditOle->lpvtbl->GetClientSite(pRichEditOle, @pClientSite))
+'      IF FAILED(this.GetLastResult) THEN EXIT DO
+
+'      ' // Create the object and retrieve its IUnknown interface
+'      CREC_DP("#### CRichEditCtrl.InsertObject - OleCreateFromFile")
+'      this.SetResult(OleCreateFromFile(@CLSID_NULL, @wszFileName, @IID_IUnknown, OLERENDER_DRAW, _
+'              @formatEtc, pCLientSite, pStorage, @pUnk))
+'      IF FAILED(this.GetLastResult) THEN EXIT DO
+
+'      ' // Get the IOleObject interface to the object
+'      CREC_DP("#### CRichEditCtrl.InsertObject - IOleObject")
+'      this.SetResult(pUnk->lpvtbl->QueryInterface(pUnk, @IID_IOleObject, @pObject))
+'      IF FAILED(this.GetLastResult) THEN EXIT DO
+
+'      ' // To ensure that references are counted correctly, notify the object that it is contained
+'      CREC_DP("#### CRichEditCtrl.InsertObject - GetUserClassID")
+'      DIM clsid AS CLSID
+'      OleSetContainedObject(cast(IUnknown PTR, pObject), TRUE)
+'      DIM reobject AS REOBJECT
+'      reobject.cbStruct = SIZEOF(REOBJECT)
+'      this.SetResult(pObject->lpvtbl->GetUserClassID(pObject, @clsid))
+'      IF FAILED(this.GetLastResult) THEN EXIT DO
+
+'      ' // Set up object info
+'      reobject.clsid = clsid
+'      reobject.cp = REO_CP_SELECTION
+'      reobject.dvaspect = DVASPECT_CONTENT
+'      reobject.dwFlags = REO_RESIZABLE OR REO_BELOWBASELINE OR REO_WRAPTEXTAROUND
+'      reobject.dwUser = 0
+'      reobject.poleobj = pObject
+'      reobject.polesite = pClientSite
+'      reobject.pstg = pStorage
+'      DIM sizel AS SIZEL
+'      reobject.sizel = sizel
+
+'      ' // Move the caret to the end of the text and add a new line
+'      SendMessageW(m_hRichEdit, EM_SETSEL, 0, -1)
+'      DIM dwStart AS DWORD, dwEnd AS DWORD
+'      SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStart), cast(LPARAM, @dwEnd))
+'      SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 1))
+'      SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @!"\n"))
+
+'      ' // Insert the object
+'      CREC_DP("#### CRichEditCtrl.InsertObject - InsertObject")
+'      this.SetResult(pRichEditOle->lpvtbl->InsertObject(pRichEditOle, @reobject))
+'      CREC_DP("#### END - CRichEditCtrl.InsertObject hr = " & WSTR(this.GetLastResult))
+'      EXIT DO
+'   LOOP
+
+'   ' // Clean up
+'   CREC_DP("#### CRichEditCtrl.InsertObject - Clean up")
+'   IF pObject THEN pObject->lpvtbl->Release(pObject)
+'   IF pUnk THEN pUnk->lpvtbl->Release(pUnk)
+'   IF pClientSite THEN pClientSite->lpvtbl->Release(pClientSite)
+'   IF pStorage THEN pStorage->lpvtbl->Release(pStorage)
+'   IF pLockBytes THEN pLockBytes->lpvtbl->Release(pLockBytes)
+'   IF pRichEditOle THEN pRichEditOle->lpvtbl->Release(pRichEditOle)
+
+'   ' // Return success or failure
+'   IF FAILED(this.GetLastResult) THEN RETURN FALSE
+'   RETURN TRUE
+
+'END FUNCTION
+' ========================================================================================
+
 PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    BYREF wszFileName AS WSTRING _                    ' // Name of the file to load
  ) AS BOOLEAN                                        ' // TRUE or FALSE
 
    CREC_DP("#### BEGIN - CRichEditCtrl.InsertObject")
 
-   DIM pRichEditOle AS IRichEditOle PTR
-   DIM pLockBytes AS ILockBytes PTR
-   DIM pStorage AS IStorage PTR
-   DIM pClientSite AS IOleClientSite PTR
-   DIM pUnk AS IUnknown PTR
-   DIM pObject AS IOleObject PTR
-
    ' // Get the IRichEditOle interface
    CREC_DP("#### CRichEditCtrl.InsertObject - GetOleInterface")
+   DIM pRichEditOle AS IRichEditOle PTR
    this.SetResult(SendMessageW(m_hRichEdit, EM_GETOLEINTERFACE, 0, cast(LPARAM, @pRichEditOle)))
    IF pRichEditOle = NULL THEN RETURN FALSE
 
-   ' // Use a DO/LOOP to avoid an excess of IF's and a GOTO
-   DO
-      ' // Create structures storage
-      CREC_DP("#### CRichEditCtrl.InsertObject - CreateILockBytesOnHGlobal")
-      this.SetResult(CreateILockBytesOnHGlobal(NULL, TRUE, @pLockBytes))
-      IF FAILED(this.GetLastResult) THEN EXIT DO
+   ' // Create structured storage
+   CREC_DP("#### CRichEditCtrl.InsertObject - CreateILockBytesOnHGlobal")
+   DIM pLockBytes AS ILockBytes PTR
+   this.SetResult(CreateILockBytesOnHGlobal(NULL, TRUE, @pLockBytes))
+   IF FAILED(this.GetLastResult)THEN RETURN FALSE
 
-      CREC_DP("#### CRichEditCtrl.InsertObject - StgCreateDocfileOnILockBytes")
-      this.SetResult(StgCreateDocfileOnILockBytes(pLockBytes, _
-         STGM_SHARE_EXCLUSIVE OR STGM_CREATE OR STGM_READWRITE, 0, @pStorage))
-      IF FAILED(this.GetLastResult) THEN EXIT DO
-
-      ' // Set up the data format
-      DIM formatEtc AS FORMATETC
-      formatEtc.cfFormat = 0
-      formatEtc.ptd = NULL
-      formatEtc.dwAspect = DVASPECT_CONTENT
-      formatEtc.lindex = -1
-      formatEtc.tymed = TYMED_NULL
-
-      ' // Get a pointer to the display site
-      CREC_DP("#### CRichEditCtrl.InsertObject - GetClientSIte")
-      this.SetResult(pRichEditOle->lpvtbl->GetClientSite(pRichEditOle, @pClientSite))
-      IF FAILED(this.GetLastResult) THEN EXIT DO
-
-      ' // Create the object and retrieve its IUnknown interface
-      CREC_DP("#### CRichEditCtrl.InsertObject - OleCreateFromFile")
-      this.SetResult(OleCreateFromFile(@CLSID_NULL, @wszFileName, @IID_IUnknown, OLERENDER_DRAW, _
-              @formatEtc, pCLientSite, pStorage, @pUnk))
-      IF FAILED(this.GetLastResult) THEN EXIT DO
-
-      ' // Get the IOleObject interface to the object
-      CREC_DP("#### CRichEditCtrl.InsertObject - IOleObject")
-      this.SetResult(pUnk->lpvtbl->QueryInterface(pUnk, @IID_IOleObject, @pObject))
-      IF FAILED(this.GetLastResult) THEN EXIT DO
-
-      ' // To ensure that references are counted correctly, notify the object that it is contained
-      CREC_DP("#### CRichEditCtrl.InsertObject - GetUserClassID")
-      DIM clsid AS CLSID
-      OleSetContainedObject(cast(IUnknown PTR, pObject), TRUE)
-      DIM reobject AS REOBJECT
-      reobject.cbStruct = SIZEOF(REOBJECT)
-      this.SetResult(pObject->lpvtbl->GetUserClassID(pObject, @clsid))
-      IF FAILED(this.GetLastResult) THEN EXIT DO
-
-      ' // Set up object info
-      reobject.clsid = clsid
-      reobject.cp = REO_CP_SELECTION
-      reobject.dvaspect = DVASPECT_CONTENT
-      reobject.dwFlags = REO_RESIZABLE OR REO_BELOWBASELINE OR REO_WRAPTEXTAROUND
-      reobject.dwUser = 0
-      reobject.poleobj = pObject
-      reobject.polesite = pClientSite
-      reobject.pstg = pStorage
-      DIM sizel AS SIZEL
-      reobject.sizel = sizel
-
-      ' // Move the caret to the end of the text and add a new line
-      SendMessageW(m_hRichEdit, EM_SETSEL, 0, -1)
-      DIM dwStart AS DWORD, dwEnd AS DWORD
-      SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStart), cast(LPARAM, @dwEnd))
-      SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 1))
-      SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @!"\n"))
-
-      ' // Insert the object
-      CREC_DP("#### CRichEditCtrl.InsertObject - InsertObject")
-      this.SetResult(pRichEditOle->lpvtbl->InsertObject(pRichEditOle, @reobject))
-      CREC_DP("#### END - CRichEditCtrl.InsertObject hr = " & WSTR(this.GetLastResult))
-      EXIT DO
-   LOOP
-
-   ' // Clean up
-   CREC_DP("#### CRichEditCtrl.InsertObject - Clean up")
-   IF pObject THEN pObject->lpvtbl->Release(pObject)
-   IF pUnk THEN pUnk->lpvtbl->Release(pUnk)
-   IF pClientSite THEN pClientSite->lpvtbl->Release(pClientSite)
-   IF pStorage THEN pStorage->lpvtbl->Release(pStorage)
-   IF pLockBytes THEN pLockBytes->lpvtbl->Release(pLockBytes)
-   IF pRichEditOle THEN pRichEditOle->lpvtbl->Release(pRichEditOle)
-
-   ' // Return success or failure
+   CREC_DP("#### CRichEditCtrl.InsertObject - StgCreateDocfileOnILockBytes")
+   DIM pStorage AS IStorage PTR
+   this.SetResult(StgCreateDocfileOnILockBytes(pLockBytes, _
+      STGM_SHARE_EXCLUSIVE OR STGM_CREATE OR STGM_READWRITE, 0, @pStorage))
    IF FAILED(this.GetLastResult) THEN RETURN FALSE
+
+   ' // Set up the data format
+   DIM formatEtc AS FORMATETC
+   formatEtc.cfFormat = 0
+   formatEtc.ptd = NULL
+   formatEtc.dwAspect = DVASPECT_CONTENT
+   formatEtc.lindex = -1
+   formatEtc.tymed = TYMED_NULL
+
+   ' // Get a pointer to the display site
+   CREC_DP("#### CRichEditCtrl.InsertObject - GetClientSIte")
+   DIM pClientSite AS IOleClientSite PTR
+   this.SetResult(pRichEditOle->lpvtbl->GetClientSite(pRichEditOle, @pClientSite))
+   IF FAILED(this.GetLastResult) THEN RETURN FALSE
+
+   ' // Create the object and retrieve its IUnknown interface
+   CREC_DP("#### CRichEditCtrl.InsertObject - OleCreateFromFile")
+   DIM pUnk AS IUnknown PTR
+   this.SetResult(OleCreateFromFile(@CLSID_NULL, @wszFileName, @IID_IUnknown, OLERENDER_DRAW, _
+           @formatEtc, pClientSite, pStorage, @pUnk))
+   pClientSite->lpvtbl->Release(pClientSite)
+   IF FAILED(this.GetLastResult) THEN RETURN FALSE
+
+   ' // Get the IOleObject interface to the object
+   CREC_DP("#### CRichEditCtrl.InsertObject - IOleObject")
+   DIM pObject AS IOleObject PTR
+   this.SetResult(pUnk->lpvtbl->QueryInterface(pUnk, @IID_IOleObject, @pObject))
+   pUnk->lpvtbl->Release(pUnk)
+   IF FAILED(this.GetLastResult) THEN RETURN FALSE
+
+   ' // To ensure that references are counted correctly, notify the object that it is contained
+   CREC_DP("#### CRichEditCtrl.InsertObject - GetUserClassID")
+   DIM clsid AS CLSID
+   OleSetContainedObject(cast(IUnknown PTR, pObject), TRUE)
+   DIM reobject AS REOBJECT
+   reobject.cbStruct = SIZEOF(REOBJECT)
+   this.SetResult(pObject->lpvtbl->GetUserClassID(pObject, @clsid))
+   IF FAILED(this.GetLastResult) THEN
+      pObject->lpvtbl->Release(pObject)
+      RETURN FALSE
+   END IF
+
+   ' // Set up object info
+   reobject.clsid = clsid
+   reobject.cp = REO_CP_SELECTION
+   reobject.dvaspect = DVASPECT_CONTENT
+   reobject.dwFlags = REO_RESIZABLE OR REO_BELOWBASELINE
+   reobject.dwUser = 0
+   reobject.poleobj = pObject
+   reobject.polesite = pClientSite
+   reobject.pstg = pStorage
+   DIM sizel AS SIZEL
+   reobject.sizel = sizel
+
+   ' // Move the caret to the end of the text and add a new line
+'   SendMessageW(m_hRichEdit, EM_SETSEL, 0, -1)
+'   DIM dwStart AS DWORD, dwEnd AS DWORD
+'   SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStart), cast(LPARAM, @dwEnd))
+'   SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 1))
+'   DIM wsz AS WSTRING * 2 = !"\n"
+'   SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @wsz))
+
+   ' // Insert the object
+   CREC_DP("#### CRichEditCtrl.InsertObject - InsertObject")
+   this.SetResult(pRichEditOle->lpvtbl->InsertObject(pRichEditOle, @reobject))
+   pObject->lpvtbl->Release(pObject)
+   pRichEditOle->lpvtbl->Release(pRichEditOle)
+   IF FAILED(this.GetLastResult) THEN RETURN FALSE
+   
+   CREC_DP("#### END - CRichEditCtrl.InsertObject hr = " & WSTR(this.GetLastResult))
+   ' // Return success
    RETURN TRUE
 
 END FUNCTION
