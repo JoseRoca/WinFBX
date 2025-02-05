@@ -27,8 +27,8 @@ Allows to attach/choose a printer and get/set its setting values.
 | [GetMarginPixels](#GetMarginPixels) | Retrieves the margins (the non-printable area) of the printer page, in pixels. |
 | [PixelsToUnitsX](#PixelsToUnitsX) | Converts pixels to world units. (horizontal resolution). |
 | [PixelsToUnitsY](#PixelsToUnitsY) | Converts pixels to world units. (vertical resolution). |
-| [UnitsToPixelsX](#UnitsToPixelsX) | Converts word units to pixels (horizontal resolution). |
-| [UnitsToPixelsY](#UnitsToPixelsY) | Converts word units to pixels (vertical resolution). |
+| [UnitsToPixelsX](#UnitsToPixelsX) | Converts world units to pixels (horizontal resolution). |
+| [UnitsToPixelsY](#UnitsToPixelsY) | Converts world units to pixels (vertical resolution). |
 | [PixelsToPointsX](#PixelsToPointsX) | Converts pixels to point size (1/72 of an inch) (horizontal resolution). |
 | [PixelsToPointsY](#PixelsToPointsY) | Converts pixels to point size (1/72 of an inch) (vertical resolution). |
 | [PointsToPixelsX](#PointsToPixelsX) | Converts a point size (1/72 of an inch) to pixels (horizontal resolution). |
