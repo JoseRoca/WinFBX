@@ -2793,7 +2793,7 @@ First you have to create an instance of the `CRichEditOleCallback` class and pas
 DIM pRichEditOleCallback AS CRichEditOleCallback = CRichEditOleCallback
 pRichEdit.SetOleCallback(@pRichEditOleCallback)
 ```
-Then load the .rtf file using the LoadRtfFromFile method.
+Then load the .rtf file using the **LoadRtfFromFile** method.
 ```
 pRichEdit.LoadRtfFromFile(<path and name of the RTF file>)
 e.g. pRichEdit->LoadRtfFromFile(AfxGetExePath & "\Test.rtf")
@@ -2821,7 +2821,7 @@ First you have to create an instance of the `CRichEditOleCallback` class and pas
 DIM pRichEditOleCallback AS CRichEditOleCallback = CRichEditOleCallback
 pRichEdit.SetOleCallback(@pRichEditOleCallback)
 ```
-Then load the .rtf file using the LoadRtfFromResource method.
+Then load the .rtf file using the **LoadRtfFromResource** method.
 ```
 pRichEdit.LoadRtfFromResource(<resource name>, e.g. RTFILE)
 ```
