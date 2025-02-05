@@ -230,11 +230,13 @@ pRichEdit.ScalingRatio = ratio
 | [Undo](#undo) | This message undoes the last edit control operation in the control's undo queue. |
 
 
-# CRichEdit Helper Procedures
+# CRichEdit Helper Methods
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetRtfText](#getrtftext) | Retrieves formatted text from a rich edit control |
+| [EnableWordWrap](#enablewordwrap) | Enables word wrap. |
+| [DisableWordWrap](#disablewordwrap) | Disables word wrap. |
+| [GetRtfText](#getrtftext) | Retrieves formatted text from a rich edit control. |
 | [LoadRtfFromFile](#loadrtffromfile) | Loads a rich text file into a rich edit control. |
 | [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
@@ -2404,7 +2406,7 @@ The values specified in the array are in dialog template units, which are the de
 
 Sets the target device and line width used for WYSIWYG formatting in a rich edit control.
 ```
-FUNCTION SetTargetDevice (BYVAL hDC AS HDC, BYVAL lnwidth AS LONG) AS LONG
+FUNCTION SetTargetDevice (BYVAL hDC AS HDC, BYVAL lnwidth AS LONG) AS BOOLEAN
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -2413,7 +2415,7 @@ FUNCTION SetTargetDevice (BYVAL hDC AS HDC, BYVAL lnwidth AS LONG) AS LONG
 
 #### Return value
 
-The return value is zero if the operation fails, or nonzero if it succeeds.
+If the method succeeds it returns the boolean value true (-1); if it fails, it returns false (0).
 
 #### Remarks
 
@@ -2772,3 +2774,26 @@ FUNCTION SetFont (BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS HRESULT
 
 If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero.
 
+# <a name="enablewordwrap"></a>EnableWordWrap
+
+Enables word wrap.
+```
+FUNCTION EnableWordWrap () AS BOOLEAN
+```
+#### Return value
+
+If the method succeeds it returns the boolean value true (-1); if it fails, it returns false (0).
+
+# <a name="disablewordwrap"></a>DisableWordWrap
+
+Disables word wrap.
+```
+DisableWordWrap (BYVAL LineWidth AS LONG = 32767) AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *LineWidth* | The line width. Default value: 32767 characters. |
+
+#### Return value
+
+If the method succeeds it returns the boolean value true (-1); if it fails, it returns false (0).
