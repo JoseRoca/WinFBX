@@ -2784,6 +2784,22 @@ FUNCTION LoadRtfFromFile (BYREF wszFileName AS WSTRING) AS BOOLEAN
 
 If the operation succeeds, the return value is **TRUE**. If the operation fails, the return value is **FALSE**.
 
+#### Remarks
+
+#### Remarks
+
+First you have to create an instance of the `CRichEditOleCallback` class and pass a pointer to it to the rich edit control using the **SetOleCallback** method.
+```
+DIM pRichEditOleCallback AS CRichEditOleCallback = CRichEditOleCallback
+pRichEdit.SetOleCallback(@pRichEditOleCallback)
+```
+Then load the .rtf file using the LoadRtfFromFile method.
+```
+pRichEdit.LoadRtfFromFile(<path and name of the RTF file>)
+e.g. pRichEdit->LoadRtfFromFile(AfxGetExePath & "\Test.rtf")
+```
+
+
 # <a name="loadrtffromresource"></a>LoadRtfFromResource
 
 Loads a RTF resource file into a Rich Edit control.
@@ -2797,6 +2813,21 @@ FUNCTION LoadRtfFromResource (BYREF wszResourceName AS WSTRING) AS BOOLEAN
 #### Return value
 
 If the operation succeeds, the return value is **TRUE**. If the operation fails, the return value is **FALSE**.
+
+#### Remarks
+
+First you have to create an instance of the `CRichEditOleCallback` class and pass a pointer to it to the rich edit control using the **SetOleCallback** method.
+```
+DIM pRichEditOleCallback AS CRichEditOleCallback = CRichEditOleCallback
+pRichEdit.SetOleCallback(@pRichEditOleCallback)
+```
+Then load the .rtf file using the LoadRtfFromResource method.
+```
+pRichEdit.LoadRtfFromResource(<resource name>, e.g. RTFILE)
+```
+**Resource file**
+1 24 ".\Resources\Manifest.xml"
+RTFFILE       RCDATA ".\Resources\<title of the rtf file>.rtf"
 
 # <a name="setfont"></a>SetFont
 
