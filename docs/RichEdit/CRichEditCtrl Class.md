@@ -637,7 +637,7 @@ PROPERTY IMEModeBias (BYVAL nModeBias AS LONG)
 
 (SET) When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
 
-The application should call he **IsIME** method before calling these properties.
+The application should call the **IsIME** method before calling these properties.
 
 # <a name="imeoptions"></a>IMEOptions
 
@@ -688,7 +688,7 @@ Gets/sets a rich edit control's option settings for Input Method Editor (IME) an
 
 (GET) Returns the IME and Asian language settings, which can be zero or more of the above flags.
 
-(SET) Returns a value of 1. Call the (GET) **LangOptions" property to check the value.
+(SET) Returns a value of 1. Call the (GET) **LangOptions** property to check the value.
 
 #### Remarks
 
@@ -770,7 +770,7 @@ Deprecated. Gets/sets the text layout for a Microsoft Rich Edit control.
 
 (GET) The current text layout. For a list of possible text layout values, see the *txtlayout* parameter above.
 
-(SET) Return value is the new text layout value. Call the (GET) **PageRotate" property to get the value.
+(SET) Return value is the new text layout value. Call the (GET) **PageRotate** property to get the value.
 
 #### Remarks
 
@@ -946,7 +946,7 @@ PROPERTY StoryType (BYVAL Index AS LONG, BYVAL dwType AS DWORD)
 
 (GET) Returns the story type, which can be a client-defined custom value, or one of the values listed in the table above.
 
-(SET) The story type that was set. Call the (GET) StoryType property to get the value.
+(SET) The story type that was set. Call the (GET) **StoryType** property to get the value.
 
 # <a name="text"></a>Text
 
