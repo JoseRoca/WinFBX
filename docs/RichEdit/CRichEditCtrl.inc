@@ -117,7 +117,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE PROPERTY Options (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG)
       DECLARE PROPERTY PageRotate () AS DWORD
       DECLARE PROPERTY PageRotate (BYVAL txtlayout AS LONG)
-      DECLARE PROPERTY ParaFormat () AS DWORD
+      DECLARE PROPERTY ParaFormat () AS .PARAFORMAT
       DECLARE PROPERTY ParaFormat (BYREF pfmt AS .PARAFORMAT)
       DECLARE PROPERTY PasswordChar () AS LONG
       DECLARE PROPERTY PasswordChar (BYVAL dwchar AS DWORD)
@@ -177,7 +177,8 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION GetTableParams (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
       DECLARE FUNCTION GetTextEx (BYREF gtex AS GETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
       DECLARE FUNCTION GetTextLength () AS LONG
-      DECLARE FUNCTION GetTextLengthEx (BYREF gtex AS .GETTEXTLENGTHEX) AS LONG
+      DECLARE FUNCTION GetTextLengthEx OVERLOAD (BYREF gtex AS .GETTEXTLENGTHEX) AS LONG
+      DECLARE FUNCTION GetTextLengthEx OVERLOAD (BYVAL dwFlags AS DWORD = GTL_DEFAULT) AS LONG
       DECLARE FUNCTION GetTextRange OVERLOAD (BYREF trg AS .TEXTRANGEW) AS DWORD
       DECLARE FUNCTION GetTextRange OVERLOAD (BYVAL cpMin AS LONG = 0, BYVAL cpMax AS LONG = -1) AS CWSTR
       DECLARE FUNCTION GetThumb () AS LONG
@@ -721,11 +722,11 @@ END PROPERTY
 ' ========================================================================================
 ' Retrieves the paragraph formatting of the current selection in a rich edit control.
 ' ========================================================================================
-PRIVATE PROPERTY CRichEditCtrl.ParaFormat () AS DWORD
+PRIVATE PROPERTY CRichEditCtrl.ParaFormat () AS .PARAFORMAT
    DIM pfmt AS .PARAFORMAT
    pfmt.cbSize = SIZEOF(.PARAFORMAT)
    this.SetResult(SendMessageW(m_hRichEdit, EM_GETPARAFORMAT, 0, cast(LPARAM, @pfmt)))
-   RETURN pfmt.dwMask
+   RETURN pfmt
 END PROPERTY
 ' ========================================================================================
 ' ========================================================================================
@@ -1706,7 +1707,21 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl.GetTextLengthEx (BYREF gtex AS .GETTEXTLENGTHEX) AS LONG
    this.SetResult(0)
-   RETURN SendMessageW(m_hRichEdit, EM_GETTEXTLENGTHEX, cast(WPARAM, @gtex), 0)
+   DIM hr AS HRESULT = SendMessageW(m_hRichEdit, EM_GETTEXTLENGTHEX, cast(WPARAM, @gtex), 0)
+   this.SetResult(hr)
+   RETURN hr
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Uses the unicode code page (1200).
+' Returns the number of characters in the rich edit control.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetTextLengthEx (BYVAL dwFlags AS DWORD = GTL_DEFAULT) AS LONG
+   this.SetResult(0)
+   DIM gtex AS .GETTEXTLENGTHEX = TYPE<.GETTEXTLENGTHEX>(dwFlags, 1200)
+   DIM hr AS HRESULT = SendMessageW(m_hRichEdit, EM_GETTEXTLENGTHEX, cast(WPARAM, @gtex), 0)
+   IF hr = E_INVALIDARG THEN this.SetResult(hr)
+   RETURN hr
 END FUNCTION
 ' ========================================================================================
 
@@ -1727,15 +1742,19 @@ PRIVATE FUNCTION CRichEditCtrl.GetTextRange (BYVAL cpMin AS LONG = 0, BYVAL cpMa
    this.SetResult(0)
    ' // Calculate the length of the buffer
    DIM cbLen As LONG
-   DIM wstrText AS CWSTR
    IF cpMin = cpMax THEN RETURN ""
    IF cpMin = 0 AND cpMax = -1 THEN
       cbLen = SendMessageW(m_hRichEdit, WM_GETTEXTLENGTH, 0, 0)
       IF cbLen = 0 THEN RETURN ""
    ELSE
       cbLen = cpMax - cpMin
-      wstrText = WSPACE(cbLen + 1)
+      IF cbLen < 1 THEN
+         this.SetResult(E_INVALIDARG)
+         RETURN ""
+      END IF
    END IF
+   DIM wstrText AS CWSTR
+   wstrText = WSPACE(cbLen + 1)
    DIM trg AS TEXTRANGEW
    trg.chrg.cpMin = cpMin
    trg.chrg.cpMax = cpMax
