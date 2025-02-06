@@ -138,7 +138,7 @@ pRichEdit.ScalingRatio = ratio
 | [Modify](#modify) | Gets/sets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
 | [Options](#options) | Gets/sets the options for a rich edit control. |
 | [PageRotate](#pagerotate) | Deprecated. Gets/sets the text layout for a Microsoft Rich Edit control. |
-| [ParaFormat](paraformat) | Gets/sets the paragraph formatting of the current selection in a rich edit control. |
+| [ParaFormat](#paraformat) | Gets/sets the paragraph formatting of the current selection in a rich edit control. |
 | [PasswordChar](#passwordchar) | Gets/sets the password character that a rich edit control displays when the user enters text. |
 | [Punctuation](#punctuation) | Gets/sets the current punctuation characters for the rich edit control. |
 | [Rect](#rect) | Gets/sets the formatting rectangle of a rich edit control. |
