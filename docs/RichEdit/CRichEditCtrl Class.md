@@ -851,16 +851,16 @@ Deprecated. Gets/sets the text layout for a Microsoft Rich Edit control.
 
 Gets/sets the paragraph formatting of the current selection in a rich edit control.
 ```
-(GET) PROPERTY ParaFormat () AS DWORD
+(GET) PROPERTY ParaFormat () AS .PARAFORMAT
 (SET) PROPERTY ParaFormat (BYREF pfmt AS .PARAFORMAT)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pfmt* | A [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure specifying the new paragraph formatting attributes. Only the attributes specified by the **dwMask** member are changed. |
+| *pfmt* | (SET) A [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure specifying the new paragraph formatting attributes. Only the attributes specified by the **dwMask** member are changed. |
 
 #### Return value
 
-(GET) This property returns the value of the **dwMask** member of the [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure.
+(GET) Returns a [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure.
 
 (SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
 
