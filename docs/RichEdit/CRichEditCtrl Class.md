@@ -1840,18 +1840,20 @@ FUNCTION GetTextLengthEx OVERLOAD (BYVAL dwFlags AS DWORD = GTL_DEFAULT) AS LONG
 This message is a fast and easy way to determine the number of characters in the Unicode version of the rich edit control. However, for a non-Unicode target code page you will potentially be converting to a combination of single-byte and double-byte characters.
 
 #### Usage examples
-
+```
 **First overloaded method:**
 DIM gtex AS .GETTEXTLENGTHEX = TYPE<.GETTEXTLENGTHEX>(dwFlags, 1200)
 DIM Result AS LONG = pRichEdit.GetTextLEngthEx(gtex)
 DIM cbLen AS LONG
 IF Result <> E_INVALIDARG THEN cbLen = Result
-
+```
+```
 **Second overloaded method:**
 DIM Result AS LONG = pRichEdit.GetTextLEngthEx                 ' // Uses the GTL_DEFAULT flag
 DIM Result AS LONG = pRichEdit.GetTextLEngthEx(GTL_NUMCHARS)   ' // Uses the GTL_NUMCHARS flag
 DIM cbLen AS LONG
 IF Result <> E_INVALIDARG THEN cbLen = Result
+```
 
 # <a name="gettextrange"></a>GetTextRange
 
