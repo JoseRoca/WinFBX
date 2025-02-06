@@ -12,6 +12,7 @@
 #include once "Afx/CWindow.inc"
 #include once "win/richedit.bi"
 #include once "win/richole.bi"
+#include once "Afx/AfxGdiPlus.inc"
 #include once "Afx/CTextObjectBase.inc"
 
 NAMESPACE Afx
@@ -181,7 +182,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION GetZoom (BYREF pzNum AS DWORD, BYREF pzDen AS DWORD) AS LONG
       DECLARE SUB HideSelection (BYVAL fHide AS DWORD)
       DECLARE FUNCTION InsertImage OVERLOAD (BYREF ip AS RICHEDIT_IMAGE_PARAMETERS) AS DWORD
-      DECLARE FUNCTION InsertImage OVERLOAD (BYREF wszFileName AS WSTRING, BYVAL xWidth AS LONG, BYVAL yHeight AS LONG, _
+      DECLARE FUNCTION InsertImage OVERLOAD (BYREF wszFileName AS WSTRING, BYVAL xWidth AS LONG = 0, BYVAL yHeight AS LONG = 0, _
          BYVAL Ascent AS LONG = 0, BYVAL nType AS LONG = TA_BASELINE, BYREF wszAlternateText AS WSTRING = "") AS BOOLEAN
       DECLARE FUNCTION InsertTable (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
       DECLARE FUNCTION IsIME () AS LONG
@@ -231,6 +232,9 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION LoadRtfFromFile (BYREF wszFileName AS WSTRING) AS BOOLEAN
       DECLARE FUNCTION LoadRtfFromResource (BYREF wszResourceName AS WSTRING) AS BOOLEAN
       DECLARE FUNCTION InsertObject (BYREF wszFileName AS WSTRING) AS BOOLEAN
+      DECLARE SUB AddLF (BYVAL atEnd AS BOOLEAN = FALSE)
+      DECLARE SUB AddCR (BYVAL atEnd AS BOOLEAN = FALSE)
+      DECLARE SUB AddCRLF (BYVAL atEnd AS BOOLEAN = FALSE)
  
 END TYPE
 ' ========================================================================================
@@ -1279,9 +1283,15 @@ END FUNCTION
 ' ========================================================================================
 ' Inserts an image from file
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.InsertImage (BYREF wszFileName AS WSTRING, BYVAL xWidth AS LONG, BYVAL yHeight AS LONG, _
+PRIVATE FUNCTION CRichEditCtrl.InsertImage (BYREF wszFileName AS WSTRING, BYVAL xWidth AS LONG = 0, BYVAL yHeight AS LONG = 0, _
 BYVAL Ascent AS LONG = 0, BYVAL nType AS LONG = TA_BASELINE, BYREF wszAlternateText AS WSTRING = "") AS BOOLEAN
    this.SetResult(0)
+   ' // Retrieve the size of the image
+   IF xWidth = 0 AND yHeight = 0 THEN
+      DIM dwWidth AS DWORD, dwHeight AS DWORD
+      DIM nStatus AS LONG = AfxGdipGetImageSizeFromFile(wszFileName, @dwWidth, @dwHeight)
+      IF nStatus = 0 THEN xWidth = dwWidth : yHeight = dwHeight
+   END IF
    ' // Opens the file and creates an stream
    ' // See if the library is already loaded in the address space
    DIM AS ANY PTR pLib = GetModuleHandleW("shlwapi.dll")
@@ -1925,117 +1935,11 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Deprecated. Use the InsertImage method.
-' Inserts an object in the rich edit control.
+' Inserts an image or an Ole object in the rich edit control.
 ' See MSDN: https://learn.microsoft.com/en-us/windows/win32/controls/using-rich-edit-com
-' This old method has some problems, like not displaying the real image, but an icon, when
-' the image is not a bitmap, or not inserting the image at the position of the cursor.
+' Remarks: To insert images, use the InsertImage method, because the InsertObject method
+' won't display the image, but an icon, when the image type is not a bitmap.
 ' ========================================================================================
-'PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
-'   BYREF wszFileName AS WSTRING _                    ' // Name of the file to load
-' ) AS BOOLEAN                                        ' // TRUE or FALSE
-
-'   CREC_DP("#### BEGIN - CRichEditCtrl.InsertObject")
-
-'   DIM pRichEditOle AS IRichEditOle PTR
-'   DIM pLockBytes AS ILockBytes PTR
-'   DIM pStorage AS IStorage PTR
-'   DIM pClientSite AS IOleClientSite PTR
-'   DIM pUnk AS IUnknown PTR
-'   DIM pObject AS IOleObject PTR
-
-'   ' // Get the IRichEditOle interface
-'   CREC_DP("#### CRichEditCtrl.InsertObject - GetOleInterface")
-'   this.SetResult(SendMessageW(m_hRichEdit, EM_GETOLEINTERFACE, 0, cast(LPARAM, @pRichEditOle)))
-'   IF pRichEditOle = NULL THEN RETURN FALSE
-
-'   ' // Use a DO/LOOP to avoid an excess of IF's and a GOTO
-'   DO
-'      ' // Create structures storage
-'      CREC_DP("#### CRichEditCtrl.InsertObject - CreateILockBytesOnHGlobal")
-'      this.SetResult(CreateILockBytesOnHGlobal(NULL, TRUE, @pLockBytes))
-'      IF FAILED(this.GetLastResult) THEN EXIT DO
-
-'      CREC_DP("#### CRichEditCtrl.InsertObject - StgCreateDocfileOnILockBytes")
-'      this.SetResult(StgCreateDocfileOnILockBytes(pLockBytes, _
-'         STGM_SHARE_EXCLUSIVE OR STGM_CREATE OR STGM_READWRITE, 0, @pStorage))
-'      IF FAILED(this.GetLastResult) THEN EXIT DO
-
-'      ' // Set up the data format
-'      DIM formatEtc AS FORMATETC
-'      formatEtc.cfFormat = 0
-'      formatEtc.ptd = NULL
-'      formatEtc.dwAspect = DVASPECT_CONTENT
-'      formatEtc.lindex = -1
-'      formatEtc.tymed = TYMED_NULL
-
-'      ' // Get a pointer to the display site
-'      CREC_DP("#### CRichEditCtrl.InsertObject - GetClientSIte")
-'      this.SetResult(pRichEditOle->lpvtbl->GetClientSite(pRichEditOle, @pClientSite))
-'      IF FAILED(this.GetLastResult) THEN EXIT DO
-
-'      ' // Create the object and retrieve its IUnknown interface
-'      CREC_DP("#### CRichEditCtrl.InsertObject - OleCreateFromFile")
-'      this.SetResult(OleCreateFromFile(@CLSID_NULL, @wszFileName, @IID_IUnknown, OLERENDER_DRAW, _
-'              @formatEtc, pCLientSite, pStorage, @pUnk))
-'      IF FAILED(this.GetLastResult) THEN EXIT DO
-
-'      ' // Get the IOleObject interface to the object
-'      CREC_DP("#### CRichEditCtrl.InsertObject - IOleObject")
-'      this.SetResult(pUnk->lpvtbl->QueryInterface(pUnk, @IID_IOleObject, @pObject))
-'      IF FAILED(this.GetLastResult) THEN EXIT DO
-
-'      ' // To ensure that references are counted correctly, notify the object that it is contained
-'      CREC_DP("#### CRichEditCtrl.InsertObject - GetUserClassID")
-'      DIM clsid AS CLSID
-'      OleSetContainedObject(cast(IUnknown PTR, pObject), TRUE)
-'      DIM reobject AS REOBJECT
-'      reobject.cbStruct = SIZEOF(REOBJECT)
-'      this.SetResult(pObject->lpvtbl->GetUserClassID(pObject, @clsid))
-'      IF FAILED(this.GetLastResult) THEN EXIT DO
-
-'      ' // Set up object info
-'      reobject.clsid = clsid
-'      reobject.cp = REO_CP_SELECTION
-'      reobject.dvaspect = DVASPECT_CONTENT
-'      reobject.dwFlags = REO_RESIZABLE OR REO_BELOWBASELINE OR REO_WRAPTEXTAROUND
-'      reobject.dwUser = 0
-'      reobject.poleobj = pObject
-'      reobject.polesite = pClientSite
-'      reobject.pstg = pStorage
-'      DIM sizel AS SIZEL
-'      reobject.sizel = sizel
-
-'      ' // Move the caret to the end of the text and add a new line
-'      SendMessageW(m_hRichEdit, EM_SETSEL, 0, -1)
-'      DIM dwStart AS DWORD, dwEnd AS DWORD
-'      SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStart), cast(LPARAM, @dwEnd))
-'      SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 1))
-'      SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @!"\n"))
-
-'      ' // Insert the object
-'      CREC_DP("#### CRichEditCtrl.InsertObject - InsertObject")
-'      this.SetResult(pRichEditOle->lpvtbl->InsertObject(pRichEditOle, @reobject))
-'      CREC_DP("#### END - CRichEditCtrl.InsertObject hr = " & WSTR(this.GetLastResult))
-'      EXIT DO
-'   LOOP
-
-'   ' // Clean up
-'   CREC_DP("#### CRichEditCtrl.InsertObject - Clean up")
-'   IF pObject THEN pObject->lpvtbl->Release(pObject)
-'   IF pUnk THEN pUnk->lpvtbl->Release(pUnk)
-'   IF pClientSite THEN pClientSite->lpvtbl->Release(pClientSite)
-'   IF pStorage THEN pStorage->lpvtbl->Release(pStorage)
-'   IF pLockBytes THEN pLockBytes->lpvtbl->Release(pLockBytes)
-'   IF pRichEditOle THEN pRichEditOle->lpvtbl->Release(pRichEditOle)
-
-'   ' // Return success or failure
-'   IF FAILED(this.GetLastResult) THEN RETURN FALSE
-'   RETURN TRUE
-
-'END FUNCTION
-' ========================================================================================
-
 PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    BYREF wszFileName AS WSTRING _                    ' // Name of the file to load
  ) AS BOOLEAN                                        ' // TRUE or FALSE
@@ -2093,8 +1997,6 @@ PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    CREC_DP("#### CRichEditCtrl.InsertObject - GetUserClassID")
    DIM clsid AS CLSID
    OleSetContainedObject(cast(IUnknown PTR, pObject), TRUE)
-   DIM reobject AS REOBJECT
-   reobject.cbStruct = SIZEOF(REOBJECT)
    this.SetResult(pObject->lpvtbl->GetUserClassID(pObject, @clsid))
    IF FAILED(this.GetLastResult) THEN
       pObject->lpvtbl->Release(pObject)
@@ -2102,10 +2004,12 @@ PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    END IF
 
    ' // Set up object info
+   DIM reobject AS REOBJECT
+   reobject.cbStruct = SIZEOF(REOBJECT)
    reobject.clsid = clsid
    reobject.cp = REO_CP_SELECTION
    reobject.dvaspect = DVASPECT_CONTENT
-   reobject.dwFlags = REO_RESIZABLE OR REO_BELOWBASELINE
+   reobject.dwFlags = 0' REO_RESIZABLE OR REO_BELOWBASELINE
    reobject.dwUser = 0
    reobject.poleobj = pObject
    reobject.polesite = pClientSite
@@ -2133,6 +2037,56 @@ PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    RETURN TRUE
 
 END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Inserts a line feed at the cursor position.
+' ========================================================================================
+PRIVATE SUB CRichEditCtrl.AddLF (BYVAL atEnd AS BOOLEAN = FALSE)
+   IF atEnd THEN
+      ' // Move the caret to the end of the text
+      SendMessageW(m_hRichEdit, EM_SETSEL, 0, -1)
+      DIM dwStart AS DWORD, dwEnd AS DWORD
+      SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStart), cast(LPARAM, @dwEnd))
+      SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 1))
+   END IF
+   ' // Insert a line feed
+   DIM wsz AS WSTRING * 2 = !"\l"
+   SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @wsz))
+END SUB
+' ========================================================================================
+' ========================================================================================
+' Inserts a carriage return at the cursor position.
+' ========================================================================================
+PRIVATE SUB CRichEditCtrl.AddCR (BYVAL atEnd AS BOOLEAN = FALSE)
+   
+   IF atEnd THEN
+      ' // Move the caret to the end of the text
+      SendMessageW(m_hRichEdit, EM_SETSEL, 0, -1)
+      DIM dwStart AS DWORD, dwEnd AS DWORD
+      SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStart), cast(LPARAM, @dwEnd))
+      SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 1))
+   END IF
+   ' // Insert a carriage return
+   DIM wsz AS WSTRING * 2 = !"\r"
+   SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @wsz))
+END SUB
+' ========================================================================================
+' ========================================================================================
+' Inserts a carriage return and a line feed at the cursor position.
+' ========================================================================================
+PRIVATE SUB CRichEditCtrl.AddCRLF (BYVAL atEnd AS BOOLEAN = FALSE)
+   IF atEnd THEN
+      ' // Move the caret to the end of the text
+      SendMessageW(m_hRichEdit, EM_SETSEL, 0, -1)
+      DIM dwStart AS DWORD, dwEnd AS DWORD
+      SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStart), cast(LPARAM, @dwEnd))
+      SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 2))
+   END IF
+   ' // Insert a carriage return and a line feed
+   DIM wsz AS WSTRING * 3 = !"\r\l"
+   SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @wsz))
+END SUB
 ' ========================================================================================
 
 
