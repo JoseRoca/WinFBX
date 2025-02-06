@@ -243,7 +243,7 @@ pRichEdit.ScalingRatio = ratio
 | [LoadRtfFromFile](#loadrtffromfile) | Loads a rich text file into a rich edit control. |
 | [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
 | [InsertObject](#insertobject) | Inserts an image or an Ole object in the rich edit control. |
-| [AddLF/AddCR/AddCRLF](#addlfcr) | Inserts a line feed, a carriage return or a carriage return and line feed at the cursor position. |
+| [AddLF/AddCR/AddCRLF](#addlfcr) | Inserts a line feed, a carriage return or a carriage return and line feed at the cursor position or at the end of the text. |
 
 # Methods inherited from CTextObjectBase
 
