@@ -2068,14 +2068,14 @@ The control does not scroll vertically past the last line of text in the edit co
 Pastes a specific clipboard format in a rich edit control.
 ```
 SUB PasteSpecial OVERLOAD (BYVAL clpfmt AS DWORD, BYREF rps AS REPASTESPECIAL)
-SUB PasteSpecial OVERLOAD (BYVAL clpfmt AS DWORD, BYVAL dwAspect AS DWORD, BYVAL dwParam AS DWORD)
+SUB PasteSpecial OVERLOAD (BYVAL clpfmt AS DWORD, BYVAL dwAspect AS DWORD, BYVAL hMF AS HMETAFILE)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
 | *clpfmt* | Specifies the [ Clipboard Formats](https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats). |
 | *rps* | A [REPASTESPECIAL](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-repastespecial) structure or **NULL**. If an object is being pasted, the [REPASTESPECIAL](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-repastespecial) structure is filled in with the desired display aspect. If *clpfmt* is **NULL** or the *dwAspect* member is zero, the display aspect used will be the contents of the object descriptor. |
 | *dwAspect* | Display aspect. It can be one of the following values.<br>**DVASPECT_CONTENT**. Aspect is based on the content of the object.<br>**DVASPECT_ICON**. Aspect is based on the icon view of the object. |
-| *dwParam* | Aspect data. If *dwAspect* is **DVASPECT_ICON**, this member contains the handle to the metafile with the icon view of the object. |
+| *hMF* | Aspect data. If *dwAspect* is **DVASPECT_ICON**, this member contains the handle to the metafile with the icon view of the object. |
 
 # <a name="posfromchar"></a>PosFromChar
 
