@@ -1951,7 +1951,7 @@ Returns S_OK if successful, or one of the following error codes.
 | **E_INVALIDARG** | The *ip* parameter is NULL or points to an invalid image. |
 | **E_OUTOFMEMORY** | Insufficient memory is available. |
 
-# <a name="insertimage"></a>InsertImage
+# <a name="insertobject"></a>InsertObject
 
 Inserts an image or an Ole object in the rich edit control.
 See MSDN: https://learn.microsoft.com/en-us/windows/win32/controls/using-rich-edit-com
