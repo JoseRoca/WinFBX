@@ -120,6 +120,9 @@ pRichEdit.ScalingRatio = ratio
 | [AutoUrlDetect](#autourldetect) | Gets/sets whether the auto URL detection is turned on in the rich edit control. |
 | [BidiOptions](#bidioptions) | Gets/sets the current state of the bidirectional options in the rich edit control. |
 | [CharFormat](#charformat) | Gets/sets the current character formatting in a rich edit control. |
+| [DefaultCharFormat](#defaultcharformat) | Gets/sets the default character formatting in a rich edit control. |
+| [SelectionCharFormat](#selectioncharformat) | Gets/sets the character formatting attributes for the text in the current selection. |
+| [WordCharFormat](#wordcharformat) | Gets/sets the character formatting attributes for the currently selected word. |
 | [CTFModeBias](#ctfmodebias) | Gets/sets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [CTFOpenStatus](#ctfopenstatus) | Gets/sets if the Text Services Framework (TSF) keyboard is open or closed. |
 | [EditStyle](#editstyle) | Gets/sets the current edit style flags. |
@@ -379,6 +382,74 @@ Gets/sets the current character formatting in a rich edit control.
 | **SCF_SMARTFONT** | Apply the font only if it can handle script. |
 | **SCF_USEUIRULES** | **RichEdit 4.1**: Used with **SCF_SELECTION**. Indicates that format came from a toolbar or other UI tool, so UI formatting rules should be used instead of literal formatting. |
 | **SCF_WORD** | Applies the formatting to the selected word or words. If the selection is empty but the insertion point is inside a word, the formatting is applied to the word. The **SCF_WORD** value must be used in conjunction with the **SCF_SELECTION** value. |
+
+#### Return value
+
+(GET) Returns the value of the **dwMask** member of the [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
+
+(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+# <a name="defaultcharformat"></a>DefaultCharFormat
+
+Gets/sets the default character formatting in a rich edit control.
+```
+(GET) PROPERTY DefaultCharFormat () AS CHARFORMATW
+(SET) PROPERTY DefaultCharFormat (BYREF cf AS CHARFORMATW)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cf* | (SET) A [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure specifying the character formatting to use. Only the formatting attributes specified by the **dwMask** member are changed. The **szFaceName** and **bCharSet** members may be overruled when invalid for characters, for example: Arial on kanji characters. |
+
+#### Return value
+
+(GET) Returns the value of the **dwMask** member of the [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
+
+(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+# <a name="selectioncharformat"></a>SelectionCharFormat
+
+Gets the character formatting attributes of the current selection.
+```
+(GET) PROPERTY SelectionCharFormat () AS CHARFORMATW
+(SET) PROPERTY SelectionCharFormat (BYREF cf AS CHARFORMATW)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cf* | (SET) A [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure specifying the character formatting to use. Only the formatting attributes specified by the **dwMask** member are changed. The **szFaceName** and **bCharSet** members may be overruled when invalid for characters, for example: Arial on kanji characters. |
+
+#### Return value
+
+(GET) Returns the value of the **dwMask** member of the [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
+
+(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+# <a name="selectioncharformat"></a>SelectionCharFormat
+
+Gets/sets the character formatting attributes of the current selection.
+```
+(GET) PROPERTY SelectionCharFormat () AS CHARFORMATW
+(SET) PROPERTY SelectionCharFormat (BYREF cf AS CHARFORMATW)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cf* | (SET) A [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure specifying the character formatting to use. Only the formatting attributes specified by the **dwMask** member are changed. The **szFaceName** and **bCharSet** members may be overruled when invalid for characters, for example: Arial on kanji characters. |
+
+#### Return value
+
+(GET) Returns the value of the **dwMask** member of the [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
+
+(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+# <a name="wordcharformat"></a>WordCharFormat
+
+Gets/sets the character formatting attributes for the currently selected word.
+```
+(GET) PROPERTY WordCharFormat () AS CHARFORMATW
+(SET) PROPERTY WordCharFormat (BYREF cf AS CHARFORMATW)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cf* | (SET) A [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure specifying the character formatting to use. Only the formatting attributes specified by the **dwMask** member are changed. The **szFaceName** and **bCharSet** members may be overruled when invalid for characters, for example: Arial on kanji characters. |
 
 #### Return value
 
