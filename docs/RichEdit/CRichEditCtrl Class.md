@@ -2074,8 +2074,8 @@ SUB PasteSpecial OVERLOAD (BYVAL clpfmt AS DWORD, BYVAL dwAspect AS DWORD, BYVAL
 | ---------- | ----------- |
 | *clpfmt* | Specifies the [ Clipboard Formats](https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats). |
 | *rps* | A [REPASTESPECIAL](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-repastespecial) structure or **NULL**. If an object is being pasted, the [REPASTESPECIAL](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-repastespecial) structure is filled in with the desired display aspect. If *clpfmt* is **NULL** or the *dwAspect* member is zero, the display aspect used will be the contents of the object descriptor. |
-| *dwAspect* | Aspecto de la pantalla. Puede ser uno de los siguientes valores.<br>**DVASPECT_CONTENT**. El aspecto se basa en el contenido del objeto.<br>**DVASPECT_ICON**. El aspecto se basa en la vista de icono del objeto. |
-| *dwParam* | Datos de aspecto. Si *dwAspect* es **DVASPECT_ICON**, este miembro contiene el identificador del metarchivo con la vista de icono del objeto. |
+| *dwAspect* | Display aspect. It can be one of the following values.<br>**DVASPECT_CONTENT**. Aspect is based on the content of the object.<br>**DVASPECT_ICON**. Aspect is based on the icon view of the object. |
+| *dwParam* | Aspect data. If *dwAspect* is **DVASPECT_ICON**, this member contains the handle to the metafile with the icon view of the object. |
 
 # <a name="posfromchar"></a>PosFromChar
 
