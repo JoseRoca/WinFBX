@@ -1809,21 +1809,49 @@ To retrieve the text, you can also use the **AfxGetWindowText** function, the **
 
 # <a name="gettextlengthex"></a>GetTextLengthEx
 
-Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control.
+Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. Since this `CRichEditCtrl` class uses unicode, it is easier to use the simplified second overloaded function.
 ```
-FUNCTION GetTextLengthEx (BYREF gtex AS .GETTEXTLENGTHEX) AS LONG
+FUNCTION GetTextLengthEx OVERLOAD (BYREF gtex AS .GETTEXTLENGTHEX) AS LONG
+FUNCTION GetTextLengthEx OVERLOAD (BYVAL dwFlags AS DWORD = GTL_DEFAULT) AS LONG
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
 | *gtex* | A [GETTEXTLENGTHEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextlengthex) structure that receives the text length information. |
+| *dwFlags* | Value specifying the method to be used in determining the text length. This member can be one or more of the following values (some values are mutually exclusive). |
+
+| Flag  | Meaning |
+| ----- | ------- |
+| **GTL_DEFAULT** | Returns the number of characters. This is the default. |
+| **GTL_USECRLF** | Computes the answer by using CR/LFs at the end of paragraphs. |
+| **GTL_PRECISE** | Computes a precise answer. This approach could necessitate a conversion and thereby take longer. This flag cannot be used with the **GTL_CLOSE** flag. **E_INVALIDARG** will be returned if both are used. |
+| **GTL_PRECISE** | Computes a precise answer. This approach could necessitate a conversion and thereby take longer. This flag cannot be used with the GTL_CLOSE flag. E_INVALIDARG will be returned if both are used. |
+| **GTL_CLOSE** | Computes an approximate (close) answer. It is obtained quickly and can be used to set the buffer size. This flag cannot be used with the **GTL_PRECISE** flag. **E_INVALIDARG** will be returned if both are used. |
+| **GTL_NUMCHARS** | Returns the number of characters. This flag cannot be used with the **GTL_NUMBYTES** flag. **E_INVALIDARG** will be returned if both are used. |
+| **GTL_NUMBYTES** | Returns the number of bytes. This flag cannot be used with the **GTL_NUMCHARS** flag. **E_INVALIDARG** will be returned if both are used |
 
 #### Return value
 
-The method returns the number of characters in the edit control, depending on the setting of the flags in the [GETTEXTLENGTHEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextlengthex) structure. If incompatible flags were set in the *flags* member, the message returns **E_INVALIDARG**.
+**First overloaded method**: The method returns the number of characters in the edit control, depending on the setting of the flags in the [GETTEXTLENGTHEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextlengthex) structure. If incompatible flags were set in the **flags** member, the message returns **E_INVALIDARG**.
+
+**Second overloaded method**: The method returns the number of characters in the edit control, depending on the setting of the flags in the *dwFlags* parameter. If incompatible flags were set in the **flags** member, the message returns **E_INVALIDARG**.
 
 #### Remarks
 
 This message is a fast and easy way to determine the number of characters in the Unicode version of the rich edit control. However, for a non-Unicode target code page you will potentially be converting to a combination of single-byte and double-byte characters.
+
+#### Usage examples
+
+**First overloaded method:**
+DIM gtex AS .GETTEXTLENGTHEX = TYPE<.GETTEXTLENGTHEX>(dwFlags, 1200)
+DIM Result AS LONG = pRichEdit.GetTextLEngthEx(gtex)
+DIM cbLen AS LONG
+IF Result <> E_INVALIDARG THEN cbLen = Result
+
+**Second overloaded method:**
+DIM Result AS LONG = pRichEdit.GetTextLEngthEx                 ' // Uses the GTL_DEFAULT flag
+DIM Result AS LONG = pRichEdit.GetTextLEngthEx(GTL_NUMCHARS)   ' // Uses the GTL_NUMCHARS flag
+DIM cbLen AS LONG
+IF Result <> E_INVALIDARG THEN cbLen = Result
 
 # <a name="gettextrange"></a>GetTextRange
 
