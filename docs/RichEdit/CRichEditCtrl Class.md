@@ -1908,7 +1908,7 @@ This message does not return a value.
 
 # <a name="insertimage"></a>InsertImage
 
-Overloaded method that replaces the selection with a blob that displays an image. It uses pixels instead of HIMETRIC units and it is DPI aware. Caninsert and display .bmp, .jpg, .png and .gif files.
+Overloaded method that replaces the selection with a blob that displays an image. It uses pixels instead of HIMETRIC units and it is DPI aware. Can insert and display .bmp, .jpg, .png and .gif files.
 ```
 FUNCTION InsertImage OVERLOAD (BYREF wszFileName AS WSTRING, BYVAL xWidth AS LONG = 0, BYVAL yHeight AS LONG = 0, _
 BYVAL Ascent AS LONG = 0, BYVAL nType AS LONG = TA_BASELINE, BYREF wszAlternateText AS WSTRING = "") AS BOOLEAN
@@ -1924,13 +1924,17 @@ BYVAL Ascent AS LONG = 0, BYVAL nType AS LONG = TA_BASELINE, BYREF wszAlternateT
 
 #### Return value
 
-Returns a boolean value: 0 for success and -1 for failure. To get extended error information call **GetLastREsult** and/or **GetErrorInfo**, which can return **S_OK** if successful, or one of the following error codes.
+Returns a boolean value: 0 for success and -1 for failure. To get extended error information call **GetLastResult** and/or **GetErrorInfo**, which can return **S_OK** if successful, or one of the following error codes.
 
 | Return code  | Description |
 | ------------ | ----------- |
 | **E_FAIL** | Cannot insert the image. |
 | **E_INVALIDARG** | Invaid argument |
 | **E_OUTOFMEMORY** | Insufficient memory is available. |
+
+#### Remarks
+
+There is an curious problem: In my computer, the scaling ratio is 1.75, and **InsertImage** uses that ratio by default. **InsertObject** scales the image, but using a ratio of 1.68, and **drag and drop** scales the image, but using a ratio of 1.24. So you get different image sizes depending of the method that you use.
 
 ---
 
@@ -1966,7 +1970,7 @@ FUNCTION InsertObject (BYREF wszFileName AS WSTRING) AS BOOLEAN
 
 #### Return value
 
-Returns a boolean true (-1) for success of false (0) for failure. To get extended information call the **GEtLAstResult** and/or the **GetErrorInfo** methods.
+Returns a boolean true (-1) for success of false (0) for failure. To get extended information call the **GetLastResult** and/or the **GetErrorInfo** methods.
 
 # <a name="inserttable"></a>InsertTable
 
