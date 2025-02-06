@@ -1907,7 +1907,7 @@ This message does not return a value.
 
 # <a name="insertimage"></a>InsertImage
 
-Overloaded method that replaces the selection with a blob that displays an image. Allows to use pixels instead of HIMETRIC units and it is DPI aware.Caninsert .bmp, .jpg, .png and .gif files.
+Overloaded method that replaces the selection with a blob that displays an image. It uses pixels instead of HIMETRIC units and it is DPI aware. Caninsert and display .bmp, .jpg, .png and .gif files.
 ```
 FUNCTION InsertImage OVERLOAD (BYREF wszFileName AS WSTRING, BYVAL xWidth AS LONG = 0, BYVAL yHeight AS LONG = 0, _
 BYVAL Ascent AS LONG = 0, BYVAL nType AS LONG = TA_BASELINE, BYREF wszAlternateText AS WSTRING = "") AS BOOLEAN
