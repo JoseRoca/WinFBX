@@ -154,9 +154,9 @@ Implements methods to create and manage statement objects. Inherits from CODBCBa
 | [SetPos](#SetPos) | Sets the cursor position in a rowset and allows an application to refresh data in the rowset or to update or delete data in the result set. |
 | [SetPosition](#SetPosition) | Sets the cursor position in a rowset. |
 | [SetReadOnlyConcurrency](#SetReadOnlyConcurrency) | Cursor is read-only. No updates are allowed. |
-| [SetRelativePosition](#SetRelativePosition) | Fetches the rowset from from the start of the current rowset. |
+| [SetRelativePosition](#SetRelativePosition) | Fetches the rowset from the start of the current rowset. |
 | [SetRowVerConcurrency](#SetRowVerConcurrency) | Cursor uses optimistic concurrency control, comparing row versions such as SQLBase ROWID or Sybase TIMESTAMP. |
-| [SetStaticCursor](#SetStaticCursor) | Specifies an static cursor. |
+| [SetStaticCursor](#SetStaticCursor) | Specifies a static cursor. |
 | [SetStmtAppParamDesc](#SetStmtAppParamDesc) | Sets the handle to the APD for subsequent calls to **Execute** and **ExecDirect** on the statement handle. |
 | [SetStmtAppRowDesc](#SetStmtAppRowDesc) | Sets the handle to the ARD for subsequent fetches on the statement handle. |
 | [SetStmtAttr](#SetStmtAttr) | Sets attributes related to a statement. |
@@ -189,7 +189,7 @@ Implements methods to create and manage statement objects. Inherits from CODBCBa
 
 # <a name="Constructors"></a>Constructors
 
-Allocates an statement handle. A statement handle provides access to statement information, such as error messages, the cursor name, and status information for SQL statement processing.
+Allocates a statement handle. A statement handle provides access to statement information, such as error messages, the cursor name, and status information for SQL statement processing.
 
 ```
 CONSTRUCTOR COdbcStmt (BYVAL pDbc AS COdbc PTR)
