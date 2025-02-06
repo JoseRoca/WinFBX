@@ -238,10 +238,11 @@ pRichEdit.ScalingRatio = ratio
 | ---------- | ----------- |
 | [EnableWordWrap](#enablewordwrap) | Enables word wrap. |
 | [DisableWordWrap](#disablewordwrap) | Disables word wrap. |
+| [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [GetRtfText](#getrtftext) | Retrieves formatted text from a rich edit control. |
 | [LoadRtfFromFile](#loadrtffromfile) | Loads a rich text file into a rich edit control. |
 | [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
-| [SetFont](#setfont) | Sets the font used by a rich edit control. |
+| [InsertObject](#insertobject) | Inserts an image or an Ole object in the rich edit control. |
 
 # Methods inherited from CTextObjectBase
 
@@ -1949,6 +1950,22 @@ Returns S_OK if successful, or one of the following error codes.
 | **E_FAIL** | Cannot insert the image. |
 | **E_INVALIDARG** | The *ip* parameter is NULL or points to an invalid image. |
 | **E_OUTOFMEMORY** | Insufficient memory is available. |
+
+# <a name="insertimage"></a>InsertImage
+
+Inserts an image or an Ole object in the rich edit control.
+See MSDN: https://learn.microsoft.com/en-us/windows/win32/controls/using-rich-edit-com
+Remarks: To insert images, use the **InsertImage** method, because the **InsertObject** method won't display the image, but an icon, when the image type is not a bitmap.
+```
+FUNCTION InsertObject (BYREF wszFileName AS WSTRING) AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszFileName* | The path and file name of the image file. |
+
+#### Return value
+
+Returns a boolean true (-1) for success of false (0) for failure. To get extended information call the **GEtLAstResult** and/or the **GetErrorInfo** methods.
 
 # <a name="inserttable"></a>InsertTable
 
