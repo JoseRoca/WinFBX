@@ -14,7 +14,7 @@ Defines a specific command that you intend to execute against a data source.
 | [CommandText](#CommandText) | Sets or returns a string value that contains a provider command, such as an SQL statement, a table name, a relative URL, or a stored procedure call. |
 | [CommandTimeout](#CommandTimeout) | Sets or returns a Long value that indicates, in seconds, how long to wait for a command to execute. |
 | [CommandType](#CommandType) | Sets or returns one or more **CommandTypeEnum** values. |
-| [CreateParameter](#CreateParameter) | Creates a new **Paramete**r object with the specified properties. |
+| [CreateParameter](#CreateParameter) | Creates a new **Parameter** object with the specified properties. |
 | [Dialect](#Dialect) | Indicates the dialect of the **CommandText** or **CommandStream** properties. |
 | [Execute](#Execute) | Executes the query, SQL statement, or stored procedure specified in the **CommandText** or **CommandStream** property. |
 | [GetErrorInfo](#GetErrorInfo) | Returns information about ADO errors. |
@@ -109,7 +109,7 @@ Many providers support parameterized commands. These are commands in which the d
 With the collections, methods, and properties of a **Parameter** object, you can do the following:
 
 * Set or return the name of a parameter with the **Name** property.
-+ Set or return the value of a parameter with the **Value** property. **Value** is the default property of the **Parameter** object.
+* Set or return the value of a parameter with the **Value** property. **Value** is the default property of the **Parameter** object.
 * Set or return parameter characteristics with the **Attributes**, **Direction**, **Precision**, **NumericScale**, **Size**, and **Type_** properties.
 * Pass long binary or character data to a parameter with the **AppendChunk** method.
 * Access provider-specific attributes with the **Properties** collection.
@@ -887,7 +887,7 @@ PROPERTY Name (BYVAL cbsName AS CBSTR)
 
 #### Return value
 
-The name of the **Parameter" object.
+The name of the **Parameter** object.
 
 #### Remarks
 
@@ -935,7 +935,7 @@ PROPERTY Precision (BYVAL bPrecision AS BYTE)
 
 #### Return value
 
-The degress of precision.
+The degree of precision.
 
 #### Remarks
 
