@@ -79,7 +79,7 @@ The table below is a cross-index of the ADO and OLE DB names for each standard O
 | Location | DBPROP_INIT_LOCATION |
 | Maximum Index Size | DBPROP_MAXINDEXSIZE |
 | Maximum Row Size | DBPROP_MAXROWSIZE |
-| Maximum Row Size Includes BLOB | BPROP_MAXROWSIZEINCLUDESBLOB |
+| Maximum Row Size Includes BLOB | DBPROP_MAXROWSIZEINCLUDESBLOB |
 | Maximum Tables in SELECT | DBPROP_MAXTABLESINSELECT |
 | Mode | DBPROP_INIT_MODE |
 | Multiple Parameter Sets | DBPROP_MULTIPLEPARAMSETS |
