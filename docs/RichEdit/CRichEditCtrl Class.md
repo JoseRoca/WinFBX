@@ -243,6 +243,7 @@ pRichEdit.ScalingRatio = ratio
 | [LoadRtfFromFile](#loadrtffromfile) | Loads a rich text file into a rich edit control. |
 | [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
 | [InsertObject](#insertobject) | Inserts an image or an Ole object in the rich edit control. |
+| [AddLF/AddCR/AddCRLF](#addlfcr) | Inserts a line feed, a carriage return or a carriage return and line feed at the cursor position. |
 
 # Methods inherited from CTextObjectBase
 
@@ -2884,3 +2885,16 @@ DisableWordWrap (BYVAL LineWidth AS LONG = 32767) AS BOOLEAN
 #### Return value
 
 If the method succeeds it returns the boolean value true (-1); if it fails, it returns false (0).
+
+# <a name="addlfcr"></a>AddLF/AddCR/AddCRLF
+
+Inserts a line feed, a carriage return or a carriage return and line feed at the cursor position or at the end of the text.
+```
+SUB AddLF (BYVAL atEnd AS BOOLEAN = FALSE)
+SUB AddCR (BYVAL atEnd AS BOOLEAN = FALSE)
+SUB AddCRLF (BYVAL atEnd AS BOOLEAN = FALSE)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *atEnd* | Optional. Boolean true (-1) or false (0). If true, the character is added at the end of the text; if false, it is added at the cursor position. |
+
