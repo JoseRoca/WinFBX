@@ -1909,17 +1909,17 @@ This message does not return a value.
 
 Overloaded method that replaces the selection with a blob that displays an image. Allows to use pixels instead of HIMETRIC units and it is DPI aware.Caninsert .bmp, .jpg, .png and .gif files.
 ```
-FUNCTION InsertImage OVERLOAD (BYREF wszFileName AS WSTRING, BYVAL xWidth AS LONG, BYVAL yHeight AS LONG, _
+FUNCTION InsertImage OVERLOAD (BYREF wszFileName AS WSTRING, BYVAL xWidth AS LONG = 0, BYVAL yHeight AS LONG = 0, _
 BYVAL Ascent AS LONG = 0, BYVAL nType AS LONG = TA_BASELINE, BYREF wszAlternateText AS WSTRING = "") AS BOOLEAN
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
 | *wszFileName* | Path and name of the image file to load. |
-| *xWidth* | Image width in pixels. |
-| *yHeight* | Image heigh in pixelst. |
-| *Ascent* | If *nType* is TA_BASELINE (the default value), this parameter is the distance, in pixels, that the top of the image extends above the text baseline. If *nType* is TA_BASELINE and ascent is zero, the bottom of the image is placed at the text baseline. |
-| *nType* | The vertical alignment of the image. It can be one of the following values.<br>**TA_BASELINE**. Align the image relative to the text baseline.<br>**TA_BOTTOM**. Align the bottom of the image at the bottom of the text line.<br>**TA_TOP**. Align the top of the image at the top of the text line |
-| *wszAlternateText* | The alternate text for the image. |
+| *xWidth* | Optional. Image width in pixels. If both *xWidth* and *yWidth* parameters are 0, the method retrieves the size of the image using GDI+. |
+| *yHeight* | Optional. Image heigh in pixels. If both *xWidth* and *yWidth* parameters are 0, the method retrieves the size of the image using GDI+. |
+| *Ascent* | Optional. If *nType* is TA_BASELINE (the default value), this parameter is the distance, in pixels, that the top of the image extends above the text baseline. If *nType* is TA_BASELINE and ascent is zero, the bottom of the image is placed at the text baseline. |
+| *nType* | Optional. The vertical alignment of the image. It can be one of the following values.<br>**TA_BASELINE**. Align the image relative to the text baseline.<br>**TA_BOTTOM**. Align the bottom of the image at the bottom of the text line.<br>**TA_TOP**. Align the top of the image at the top of the text line. |
+| *wszAlternateText* | Optional. The alternate text for the image. |
 
 #### Return value
 
