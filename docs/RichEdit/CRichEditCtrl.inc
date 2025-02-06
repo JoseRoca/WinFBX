@@ -82,6 +82,12 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE PROPERTY BidiOptions (BYREF _Options AS .BIDIOPTIONS)
       DECLARE PROPERTY CharFormat (BYVAL fOption AS DWORD) AS CHARFORMATW
       DECLARE PROPERTY CharFormat (BYVAL chfmt AS DWORD, BYREF cf AS CHARFORMATW)
+      DECLARE PROPERTY DefaultCharFormat () AS CHARFORMATW
+      DECLARE PROPERTY DefaultCharFormat (BYREF cf AS CHARFORMATW)
+      DECLARE PROPERTY SelectionCharFormat () AS CHARFORMATW
+      DECLARE PROPERTY SelectionCharFormat (BYREF cf AS CHARFORMATW)
+      DECLARE PROPERTY WordCharFormat () AS CHARFORMATW
+      DECLARE PROPERTY WordCharFormat (BYREF cf AS CHARFORMATW)
       DECLARE PROPERTY CTFModeBias () AS LONG
       DECLARE PROPERTY CTFModeBias (BYVAL nModeBias AS LONG)
       DECLARE PROPERTY CTFOpenStatus () AS BOOLEAN
@@ -191,7 +197,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION LineLength (BYVAL index AS DWORD) AS LONG
       DECLARE FUNCTION LineScroll (BYVAL y AS LONG) AS LONG
       DECLARE SUB PasteSpecial OVERLOAD (BYVAL clpfmt AS DWORD, BYREF rps AS REPASTESPECIAL)
-      DECLARE SUB PasteSpecial OVERLOAD (BYVAL clpfmt AS DWORD, BYVAL dwAspect AS DWORD, BYVAL dwParam AS DWORD)
+      DECLARE SUB PasteSpecial OVERLOAD (BYVAL clpfmt AS DWORD, BYVAL dwAspect AS DWORD, BYVAL hMF AS HMETAFILE)
       DECLARE FUNCTION PosFromChar (BYVAL index as DWORD) AS .POINTL
       DECLARE SUB Reconversion ()
       DECLARE FUNCTION Redo () AS LONG
@@ -403,7 +409,7 @@ END PROPERTY
 ' ========================================================================================
 
 ' ========================================================================================
-' Determines the current character formatting in a rich edit control.
+' Gets the current character formatting in a rich edit control.
 ' ========================================================================================
 PRIVATE PROPERTY CRichEditCtrl.CharFormat (BYVAL fOption AS DWORD) AS CHARFORMATW
    DIM cf AS CHARFORMATW
@@ -418,6 +424,63 @@ END PROPERTY
 PRIVATE PROPERTY CRichEditCtrl.CharFormat (BYVAL chfmt AS DWORD, BYREF cf AS CHARFORMATW)
    IF cf.cbSize = 0 THEN cf.cbSize = SIZEOF (cf)
    this.SetResult(SendMessageW(m_hRichEdit, EM_SETCHARFORMAT, chfmt, cast (LPARAM, @cf)))
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets the default character formatting in a rich edit control.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.DefaultCharFormat () AS CHARFORMATW
+   DIM cf AS CHARFORMATW
+   cf.cbSize = SIZEOF (cf)
+   this.SetResult(SendMessageW(m_hRichEdit, EM_GETCHARFORMAT, SCF_DEFAULT, cast(LPARAM, @cf)))
+   RETURN cf
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Sets the default character formatting in a rich edit control.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.DefaultCharFormat (BYREF cf AS CHARFORMATW)
+   IF cf.cbSize = 0 THEN cf.cbSize = SIZEOF (cf)
+   this.SetResult(SendMessageW(m_hRichEdit, EM_SETCHARFORMAT, SCF_DEFAULT, cast (LPARAM, @cf)))
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets the selection character formatting in a rich edit control.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.SelectionCharFormat () AS CHARFORMATW
+   DIM cf AS CHARFORMATW
+   cf.cbSize = SIZEOF (cf)
+   this.SetResult(SendMessageW(m_hRichEdit, EM_GETCHARFORMAT, SCF_SELECTION, cast(LPARAM, @cf)))
+   RETURN cf
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Sets the selection character formatting in a rich edit control.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.SelectionCharFormat (BYREF cf AS CHARFORMATW)
+   IF cf.cbSize = 0 THEN cf.cbSize = SIZEOF (cf)
+   this.SetResult(SendMessageW(m_hRichEdit, EM_SETCHARFORMAT, SCF_SELECTION, cast (LPARAM, @cf)))
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets the word character formatting in a rich edit control.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.WordCharFormat () AS CHARFORMATW
+   DIM cf AS CHARFORMATW
+   cf.cbSize = SIZEOF (cf)
+   this.SetResult(SendMessageW(m_hRichEdit, EM_GETCHARFORMAT, SCF_SELECTION OR SCF_WORD, cast(LPARAM, @cf)))
+   RETURN cf
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Sets the word character formatting in a rich edit control.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.WordCharFormat (BYREF cf AS CHARFORMATW)
+   IF cf.cbSize = 0 THEN cf.cbSize = SIZEOF (cf)
+   this.SetResult(SendMessageW(m_hRichEdit, EM_SETCHARFORMAT, SCF_SELECTION OR SCF_WORD, cast (LPARAM, @cf)))
 END PROPERTY
 ' ========================================================================================
 
@@ -1403,9 +1466,9 @@ PRIVATE SUB CRichEditCtrl.PasteSpecial (BYVAL clpfmt AS DWORD, BYREF rps AS REPA
 END SUB
 ' ========================================================================================
 ' ========================================================================================
-PRIVATE SUB CRichEditCtrl.PasteSpecial (BYVAL clpfmt AS DWORD, BYVAL dwAspect AS DWORD, BYVAL dwParam AS DWORD)
+PRIVATE SUB CRichEditCtrl.PasteSpecial (BYVAL clpfmt AS DWORD, BYVAL dwAspect AS DWORD, BYVAL hMF AS HMETAFILE)
    this.SetResult(0)
-   DIM rps AS REPASTESPECIAL= TYPE<REPASTESPECIAL>(dwAspect, dwParam)
+   DIM rps AS REPASTESPECIAL= TYPE<REPASTESPECIAL>(dwAspect, cast(DWORD_PTR, hMF))
    SendMessageW(m_hRichEdit, EM_PASTESPECIAL, clpfmt, cast(LPARAM, @rps))
 END SUB
 ' ========================================================================================
