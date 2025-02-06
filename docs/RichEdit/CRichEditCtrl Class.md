@@ -1841,14 +1841,14 @@ This message is a fast and easy way to determine the number of characters in the
 
 #### Usage examples
 ```
-**First overloaded method:**
-DIM gtex AS .GETTEXTLENGTHEX = TYPE<.GETTEXTLENGTHEX>(dwFlags, 1200)
+--- First overloaded method:
+DIM gtex AS GETTEXTLENGTHEX = TYPE<GETTEXTLENGTHEX>(GTL_NUMCHARS, 1200)
 DIM Result AS LONG = pRichEdit.GetTextLEngthEx(gtex)
 DIM cbLen AS LONG
 IF Result <> E_INVALIDARG THEN cbLen = Result
 ```
 ```
-**Second overloaded method:**
+--- Second overloaded method:
 DIM Result AS LONG = pRichEdit.GetTextLEngthEx                 ' // Uses the GTL_DEFAULT flag
 DIM Result AS LONG = pRichEdit.GetTextLEngthEx(GTL_NUMCHARS)   ' // Uses the GTL_NUMCHARS flag
 DIM cbLen AS LONG
