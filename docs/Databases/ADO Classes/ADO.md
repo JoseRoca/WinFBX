@@ -11,17 +11,17 @@ The `CADOBase` object, from which the other ADO classes inherit, initializes and
 
 | Name       | Description |
 | ---------- | ----------- |
-| [CADOBase Class](#CADOBase) | Base class for all the other ADO classes. |
-| [ADO Object Model](#ADOObjectModel) | ADO objects and their collections. |
-| [ADO Identifiers](#ADOIdentifiers) | PROGIDs, CLSIDs and IIDs. |
-| [ADO Errors](#ADOErrors) | ADO errors. |
-| [ADO Properties](#ADOProperties) | Represents a dynamic characteristic of an ADO object that is defined by the provider. |
+| [CADOBase Class](#cadobase) | Base class for all the other ADO classes. |
+| [ADO Object Model](#adoobjectmodel) | ADO objects and their collections. |
+| [ADO Identifiers](#adoidentifiers) | PROGIDs, CLSIDs and IIDs. |
+| [ADO Errors](#adoerrors) | ADO errors. |
+| [ADO Properties](#adoproperties) | Represents a dynamic characteristic of an ADO object that is defined by the provider. |
 
-# <a name="CADOBase"></a>CADOBase Class
+# <a name="cadobase"></a>CADOBase Class
 
 The **CADOBase** class, from which the other ADO classes inherit, initializes and uninitializes the COM library and implements two methods, **GetLastResult** and **SetResult** used by the derived classes to store the result codes of ADO calls.
 
-### <a name="GetLastResult"></a>GetLastResult
+### <a name="getlastresult"></a>GetLastResult
 
 Returns the last result code.
 
@@ -29,7 +29,7 @@ Returns the last result code.
 FUNCTION GetLastResult () AS HRESULT
 ```
 
-### <a name="SetResult"></a>SetResult
+### <a name="setresult"></a>SetResult
 
 Sets the last result code.
 
@@ -41,7 +41,7 @@ FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
 
 The result code returned by the last executed method.
 
-# <a name="ADOObjectModel"></a>ADO Object Model
+# <a name="adoobjectmodel"></a>ADO Object Model
 
 ADO objects and their collections:
 
@@ -64,7 +64,7 @@ Record
 Stream
 ```
 
-# <a name="ADOIdentifiers"></a>ADO Identifiers
+# <a name="adoidentifiers"></a>ADO Identifiers
 
 ```
 ' ========================================================================================
@@ -144,7 +144,7 @@ CONST AFX_IID_RecordsetEvents = "{00001266-0000-0010-8000-00AA006D2EA4}"
 CONST AFX_IID_RecordsetEventsVt = "{00001403-0000-0010-8000-00AA006D2EA4}"
 ```
 
-# <a name="ADOErrors"></a>ADO Errors
+# <a name="adoerrors"></a>ADO Errors
 
 Any operation involving ADO objects can generate one or more provider errors. As each error occurs, one or more **Error** objects can be placed in the **Errors collection** of the **Connection object**. When another ADO operation generates an error, the **Errors** collection is cleared, and the new set of **Error** objects can be placed in the **Errors** collection.
 
@@ -244,7 +244,7 @@ Three forms of the error number are listed:
 | **adWrnSecurityDialog** | 3717<br>-2146824571<br>&H800A0E85 | For internal use only. Don't use. |
 | **adWrnSecurityDialogHeader** | 3718<br>-2146824570<br>&H800A0E86 | For internal use only. Don't use. |
 
-# <a name="ADOProperties"></a>ADO Properties
+# <a name="adoproperties"></a>ADO Properties
 
 Represents a dynamic characteristic of an ADO object that is defined by the provider.
 
