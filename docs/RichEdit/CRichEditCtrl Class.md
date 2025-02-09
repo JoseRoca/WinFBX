@@ -2888,8 +2888,30 @@ PRIVATE FUNCTION GetErrorInfo (BYVAL nError AS LONG = -1) AS CWSTR
 
 Retrieves RTF formatted text from a Rich Edit control.
 ```
-FUNCTION GetRtfText () AS STRING
+FUNCTION GetRtfText (BYVAL dwOptionsAndFlags AS DWORD = SF_RTF) AS STRING
 ```
+| Parameter | Description |
+| --------- | ----------- |
+| *dwOptionsAndFlags* | Specifies the data format and replacement options. |
+
+| Value | Meaning |
+| ----- | ------- |
+| **SF_RTF** | RTF. |
+| **SF_RTFNOOBJS** | RTF with spaces in place of COM objects. |
+| **SF_TEXT** | Text with spaces in place of COM objects. |
+| **SF_TEXTIZED** | Text with a text representation of COM objects. |
+
+The **SF_RTFNOOBJS** option is useful if an application stores COM objects itself, as RTF representation of COM objects is not very compact. The control word, \objattph, followed by a space denotes the object position.
+
+In addition, you can specify the following flags.
+
+| Value | Meaning |
+| ----- | ------- |
+| **SFF_PLAINRTF** | If specified, the rich edit control streams out only the keywords common to all languages, ignoring language-specific keywords. If not specified, the rich edit control streams out all keywords. You can combine this flag with the **SF_RTF** or **SF_RTFNOOBJS** flag. |
+| **SFF_SELECTION** | If specified, the rich edit control streams out only the contents of the current selection. If not specified, the control streams out the entire contents. You can combine this flag with any of data format values. |
+| **SF_UNICODE** | Microsoft Rich Edit 2.0 and later: Indicates Unicode text. You can combine this flag with the **SF_TEXT** flag. |
+| **SF_USECODEPAGE** | Rich Edit 3.0 and later: Generates UTF-8 RTF and text using other code pages. The code page is set in the high word of *dwOptionsAndFlags*. For example, for UTF-8 RTF, set *dwOptionsAndFlags* to (CP_UTF8 << 16) OR SF_USECODEPAGE OR SF_RTF. |
+
 #### Return value
 
 Returns the retrieved text or a null string.
