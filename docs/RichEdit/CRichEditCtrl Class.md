@@ -429,6 +429,8 @@ Gets/sets the character formatting attributes of the current selection.
 (SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
 
 #### Usage examples
+
+Select text and change color
 ```
 pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
 DIM cf AS CHARFORMAT
@@ -437,15 +439,25 @@ cf.crTextColor = BGR(255, 0, 0)       ' // Red color
 pRichEdit->SelectionCharFormat = cf   ' // Set the color
 pRichEdit->HideSelection(TRUE)        ' // Hide selection
 ```
+Select text and make it bold
 ```
 pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
 DIM cf AS CHARFORMAT
 cf.dwMask = CFM_BOLD                  ' // The CFE_BOLD value of the dwEffects member is valid.
 cf.dwEffects = CFE_BOLD               ' // Characters are bold
-cf.crTextColor = BGR(255, 0, 0)       ' // Red color
-pRichEdit->SelectionCharFormat = cf   ' // Set the color
+pRichEdit->SelectionCharFormat = cf   ' // Set the format
 pRichEdit->HideSelection(TRUE)        ' // Hide selection
 ```
+Select text and change the font height
+```
+pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
+DIM cf AS CHARFORMAT
+cf.dwMask = CFM_SIZE                  ' // The yHeight member is valid.
+cf.yHeight = 10 * 20                  ' // Character height, in twips (1/1440 of an inch or 1/20 of a printer's point)
+pRichEdit->SelectionCharFormat = cf   ' // Set the format
+pRichEdit->HideSelection(TRUE)        ' // Hide selection
+```
+
 # <a name="wordcharformat"></a>WordCharFormat
 
 Gets/sets the character formatting attributes for the currently selected word.
