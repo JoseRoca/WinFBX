@@ -242,7 +242,7 @@ pRichEdit.ScalingRatio = ratio
 | [EnableWordWrap](#enablewordwrap) | Enables word wrap. |
 | [DisableWordWrap](#disablewordwrap) | Disables word wrap. |
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
-| [GetRtfText](#getrtftext) | Retrieves formatted text from a rich edit control. |
+| [GetRtf](#getrtf) | Retrieves formatted text from a rich edit control. |
 | [LoadRtfFromFile](#loadrtffromfile) | Loads a rich text file into a rich edit control. |
 | [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
 | [InsertObject](#insertobject) | Inserts an image or an Ole object in the rich edit control. |
@@ -2884,11 +2884,11 @@ Returns a description of the last result code.
 PRIVATE FUNCTION GetErrorInfo (BYVAL nError AS LONG = -1) AS CWSTR
 ```
 
-# <a name="getrtftext"></a>GetRtfText
+# <a name="getrtf"></a>GetRtf
 
 Retrieves RTF formatted text from a Rich Edit control.
 ```
-FUNCTION GetRtfText (BYVAL dwOptionsAndFlags AS DWORD = SF_RTF) AS STRING
+FUNCTION GetRtf (BYVAL dwOptionsAndFlags AS DWORD = SF_RTF) AS STRING
 ```
 | Parameter | Description |
 | --------- | ----------- |
