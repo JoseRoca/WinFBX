@@ -453,7 +453,7 @@ Select text and change the font height
 pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
 DIM cf AS CHARFORMAT
 cf.dwMask = CFM_SIZE                  ' // The yHeight member is valid.
-cf.yHeight = 10 * 20                  ' // Character height, in twips (1/1440 of an inch or 1/20 of a printer's point)
+cf.yHeight = 12 * 20                  ' // Character height, in twips (1/1440 of an inch or 1/20 of a printer's point)
 pRichEdit->SelectionCharFormat = cf   ' // Set the format
 pRichEdit->HideSelection(TRUE)        ' // Hide selection
 ```
