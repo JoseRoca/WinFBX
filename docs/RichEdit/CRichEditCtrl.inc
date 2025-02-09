@@ -8,14 +8,6 @@
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 ' ########################################################################################
 
-#pragma once
-#include once "Afx/CWindow.inc"
-#include once "win/richedit.bi"
-#include once "win/richole.bi"
-#include once "Afx/AfxGdiPlus.inc"
-#include once "Afx/CTextObjectBase.inc"
-
-NAMESPACE Afx
 ' ========================================================================================
 ' Macro for debug
 ' To allow debugging, define _CREC_DEBUG_ 1 in your application before including this file.
@@ -32,6 +24,16 @@ NAMESPACE Afx
    #ENDMACRO
 #ENDIF
 ' ========================================================================================
+
+#pragma once
+#include once "Afx/CWindow.inc"
+#include once "win/richedit.bi"
+#include once "win/richole.bi"
+#include once "Afx/AfxCom.inc"
+#include once "Afx/AfxGdiPlus.inc"
+#include once "Afx/CTextObjectBase.inc"
+
+NAMESPACE Afx
 
 ' ========================================================================================
 ' Custom structure used by the CRichEditCtrl.LoadRtfFromResource method.
@@ -235,10 +237,22 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION EnableWordWrap () AS BOOLEAN
       DECLARE FUNCTION DisableWordWrap (BYVAL LineWidth AS LONG = 32767) AS BOOLEAN
       DECLARE FUNCTION SetFont (BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS HRESULT
-      DECLARE FUNCTION GetRtfText () AS STRING
+      DECLARE FUNCTION GetRtf (BYVAL dwOptionsAndFlags AS DWORD = SF_RTF) AS STRING
       DECLARE FUNCTION LoadRtfFromFile (BYREF wszFileName AS WSTRING) AS BOOLEAN
       DECLARE FUNCTION LoadRtfFromResource (BYREF wszResourceName AS WSTRING) AS BOOLEAN
       DECLARE FUNCTION InsertObject (BYREF wszFileName AS WSTRING) AS BOOLEAN
+      DECLARE FUNCTION SaveRtf (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+         BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+      DECLARE FUNCTION SaveSelRtf (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+         BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+      DECLARE FUNCTION SaveRtfNoObjs (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+         BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+      DECLARE FUNCTION SaveSelRtfNoObjs (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+         BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+      DECLARE FUNCTION SaveText (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+         BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+      DECLARE FUNCTION SaveSelText (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+         BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
       DECLARE SUB AddLF (BYVAL atEnd AS BOOLEAN = FALSE)
       DECLARE SUB AddCR (BYVAL atEnd AS BOOLEAN = FALSE)
       DECLARE SUB AddCRLF (BYVAL atEnd AS BOOLEAN = FALSE)
@@ -1815,7 +1829,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Callback used by the GetRtfText method.
+' Callback used by the GetRtf method.
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl.CRichEditCtrlGetTextCallback ( _
    BYVAL dwCookie AS DWORD_PTR _                      ' // Value of the dwCookie member of the EDITSTREAM structure.
@@ -1836,17 +1850,16 @@ END FUNCTION
 ' Retrieves RTF formatted text from a Rich Edit control
 ' Returns the retrieved text or a null string.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.GetRtfText () AS STRING
-
+PRIVATE FUNCTION CRichEditCtrl.GetRtf (BYVAL dwOptionsAndFlags AS DWORD = SF_RTF) AS STRING
    DIM eds AS EDITSTREAM, cws AS CWSTR
    eds.dwCookie = cast(DWORD_PTR, @cws)
    eds.pfnCallBack = cast(EDITSTREAMCALLBACK, @CRichEditCtrl.CRichEditCtrlGetTextCallback)
-   this.SetResult(SendMessageW(m_hRichEdit, EM_STREAMOUT, SF_RTF, cast(LPARAM, @eds)))
+   SendMessageW(m_hRichEdit, EM_STREAMOUT, dwOptionsAndFlags, cast(LPARAM, @eds))
    ' // Copy the ansi contents of the CWSTR to a STRING
    DIM s AS STRING = SPACE(cws.m_BufferLen - 2)   ' // -2 to remove the ending nulls
    IF LEN(s) THEN CopyMemory(STRPTR(s), cws.m_pBuffer, cws.m_BufferLen - 2)
+   this.SetResult(0)
    RETURN s
-
 END FUNCTION
 ' ========================================================================================
 
@@ -2055,7 +2068,7 @@ PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    formatEtc.tymed = TYMED_NULL
 
    ' // Get a pointer to the display site
-   CREC_DP("#### CRichEditCtrl.InsertObject - GetClientSIte")
+   CREC_DP("#### CRichEditCtrl.InsertObject - GetClientSite")
    DIM pClientSite AS IOleClientSite PTR
    this.SetResult(pRichEditOle->lpvtbl->GetClientSite(pRichEditOle, @pClientSite))
    IF FAILED(this.GetLastResult) THEN RETURN FALSE
@@ -2079,6 +2092,7 @@ PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    CREC_DP("#### CRichEditCtrl.InsertObject - GetUserClassID")
    DIM clsid AS CLSID
    OleSetContainedObject(cast(IUnknown PTR, pObject), TRUE)
+   ' // Get the object class identifier
    this.SetResult(pObject->lpvtbl->GetUserClassID(pObject, @clsid))
    IF FAILED(this.GetLastResult) THEN
       pObject->lpvtbl->Release(pObject)
@@ -2091,21 +2105,19 @@ PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    reobject.clsid = clsid
    reobject.cp = REO_CP_SELECTION
    reobject.dvaspect = DVASPECT_CONTENT
-   reobject.dwFlags = 0' REO_RESIZABLE OR REO_BELOWBASELINE
+   reobject.dwFlags = 0 'REO_RESIZABLE OR REO_BELOWBASELINE
    reobject.dwUser = 0
    reobject.poleobj = pObject
    reobject.polesite = pClientSite
    reobject.pstg = pStorage
    DIM sizel AS SIZEL
+   DIM dwWidth AS DWORD, dwHeight AS DWORD
+   DIM nStatus AS LONG = AfxGdipGetImageSizeFromFile(wszFileName, @dwWidth, @dwHeight)
+   IF nStatus = 0 THEN
+      sizel.cx = AfxPixelsToHiMetricX(dwWidth * m_ScalingRatio)
+      sizel.cy = AfxPixelsToHiMetricY(dwHeight * m_ScalingRatio)
+   END IF
    reobject.sizel = sizel
-
-   ' // Move the caret to the end of the text and add a new line
-'   SendMessageW(m_hRichEdit, EM_SETSEL, 0, -1)
-'   DIM dwStart AS DWORD, dwEnd AS DWORD
-'   SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStart), cast(LPARAM, @dwEnd))
-'   SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 1))
-'   DIM wsz AS WSTRING * 2 = !"\n"
-'   SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @wsz))
 
    ' // Insert the object
    CREC_DP("#### CRichEditCtrl.InsertObject - InsertObject")
@@ -2141,7 +2153,6 @@ END SUB
 ' Inserts a carriage return at the cursor position.
 ' ========================================================================================
 PRIVATE SUB CRichEditCtrl.AddCR (BYVAL atEnd AS BOOLEAN = FALSE)
-   
    IF atEnd THEN
       ' // Move the caret to the end of the text
       SendMessageW(m_hRichEdit, EM_SETSEL, 0, -1)
@@ -2169,6 +2180,138 @@ PRIVATE SUB CRichEditCtrl.AddCRLF (BYVAL atEnd AS BOOLEAN = FALSE)
    DIM wsz AS WSTRING * 3 = !"\r\l"
    SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @wsz))
 END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Saves the contents of the rich edit control to a file in rtf format
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SaveRtf (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+   ' // Get the Rtf text
+   DIM strRTFData AS STRING = this.GetRTF(SF_RTF)
+   ' // Create the file
+   this.SetResult(0)
+   DIM dwCreationFlag AS DWORD
+   IF Overwrite THEN dwCreationFlag = CREATE_ALWAYS ELSE dwCreationFlag = CREATE_NEW
+   DIM hFile AS HANDLE = CreateFileW(wszFileName, GENERIC_WRITE, 0, NULL, dwCreationFlag, dwFlagsAndAttributes, NULL)
+   IF hFile = INVALID_HANDLE_VALUE THEN this.SetResult(GetLastError) : RETURN FALSE
+   ' // Save the rtf text
+   DIM dwBytesWritten AS DWORD
+   DIM bSuccess AS BOOLEAN = WriteFile(hFile, STRPTR(strRTFData), LEN(strRTFData), @dwBytesWritten, NULL)
+   IF bSuccess = FALSE THEN this.SetResult(GetLastError)
+   CloseHandle(hFile)
+   RETURN bSuccess
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Saves the contents of the rich edit control to file in rtf format
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SaveRtfNoObjs (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+   ' // Get the Rtf text
+   DIM strRTFData AS STRING = this.GetRTF(SF_RTFNOOBJS)
+   ' // Create the file
+   this.SetResult(0)
+   DIM dwCreationFlag AS DWORD
+   IF Overwrite THEN dwCreationFlag = CREATE_ALWAYS ELSE dwCreationFlag = CREATE_NEW
+   DIM hFile AS HANDLE = CreateFileW(wszFileName, GENERIC_WRITE, 0, NULL, dwCreationFlag, dwFlagsAndAttributes, NULL)
+   IF hFile = INVALID_HANDLE_VALUE THEN this.SetResult(GetLastError) : RETURN FALSE
+   ' // Save the rtf text
+   DIM dwBytesWritten AS DWORD
+   DIM bSuccess AS BOOLEAN = WriteFile(hFile, STRPTR(strRTFData), LEN(strRTFData), @dwBytesWritten, NULL)
+   IF bSuccess = FALSE THEN this.SetResult(GetLastError)
+   CloseHandle(hFile)
+   RETURN bSuccess
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Saves selection of the rich edit control to a file in rtf format
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SaveSelRtf (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+   ' // Get the Rtf text
+   DIM strRTFData AS STRING = this.GetRTF(SF_RTF OR SFF_SELECTION)
+   ' // Create the file
+   this.SetResult(0)
+   DIM dwCreationFlag AS DWORD
+   IF Overwrite THEN dwCreationFlag = CREATE_ALWAYS ELSE dwCreationFlag = CREATE_NEW
+   DIM hFile AS HANDLE = CreateFileW(wszFileName, GENERIC_WRITE, 0, NULL, dwCreationFlag, dwFlagsAndAttributes, NULL)
+   IF hFile = INVALID_HANDLE_VALUE THEN this.SetResult(GetLastError) : RETURN FALSE
+   ' // Save the rtf text
+   DIM dwBytesWritten AS DWORD
+   DIM bSuccess AS BOOLEAN = WriteFile(hFile, STRPTR(strRTFData), LEN(strRTFData), @dwBytesWritten, NULL)
+   IF bSuccess = FALSE THEN this.SetResult(GetLastError)
+   CloseHandle(hFile)
+   RETURN bSuccess
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Saves selection of the rich edit control to file in rtf format
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SaveSelRtfNoObjs (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+   ' // Get the Rtf text
+   DIM strRTFData AS STRING = this.GetRTF(SF_RTFNOOBJS OR SFF_SELECTION)
+   ' // Create the file
+   this.SetResult(0)
+   DIM dwCreationFlag AS DWORD
+   IF Overwrite THEN dwCreationFlag = CREATE_ALWAYS ELSE dwCreationFlag = CREATE_NEW
+   DIM hFile AS HANDLE = CreateFileW(wszFileName, GENERIC_WRITE, 0, NULL, dwCreationFlag, dwFlagsAndAttributes, NULL)
+   IF hFile = INVALID_HANDLE_VALUE THEN this.SetResult(GetLastError) : RETURN FALSE
+   ' // Save the rtf text
+   DIM dwBytesWritten AS DWORD
+   DIM bSuccess AS BOOLEAN = WriteFile(hFile, STRPTR(strRTFData), LEN(strRTFData), @dwBytesWritten, NULL)
+   IF bSuccess = FALSE THEN this.SetResult(GetLastError)
+   CloseHandle(hFile)
+   RETURN bSuccess
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Saves the contents of the rich edit control in text format.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SaveText (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+   ' // Get the Rtf text
+   DIM strText AS STRING = this.Text
+   ' // Create the file
+   this.SetResult(0)
+   DIM dwCreationFlag AS DWORD
+   IF Overwrite THEN dwCreationFlag = CREATE_ALWAYS ELSE dwCreationFlag = CREATE_NEW
+   DIM hFile AS HANDLE = CreateFileW(wszFileName, GENERIC_WRITE, 0, NULL, dwCreationFlag, dwFlagsAndAttributes, NULL)
+   IF hFile = INVALID_HANDLE_VALUE THEN this.SetResult(GetLastError) : RETURN FALSE
+   ' // Save the text
+   DIM dwBytesWritten AS DWORD
+   DIM bSuccess AS BOOLEAN = WriteFile(hFile, STRPTR(strText), LEN(strText), @dwBytesWritten, NULL)
+   IF bSuccess = FALSE THEN this.SetResult(GetLastError)
+   CloseHandle(hFile)
+   RETURN bSuccess
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Saves the selected text of the rich edit control.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SaveSelText (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+   ' // Get the Rtf text
+   DIM strText AS STRING = this.GetSelText
+   ' // Create the file
+   this.SetResult(0)
+   DIM dwCreationFlag AS DWORD
+   IF Overwrite THEN dwCreationFlag = CREATE_ALWAYS ELSE dwCreationFlag = CREATE_NEW
+   DIM hFile AS HANDLE = CreateFileW(wszFileName, GENERIC_WRITE, 0, NULL, dwCreationFlag, dwFlagsAndAttributes, NULL)
+   IF hFile = INVALID_HANDLE_VALUE THEN this.SetResult(GetLastError) : RETURN FALSE
+   ' // Save the text
+   DIM dwBytesWritten AS DWORD
+   DIM bSuccess AS BOOLEAN = WriteFile(hFile, STRPTR(strText), LEN(strText), @dwBytesWritten, NULL)
+   IF bSuccess = FALSE THEN this.SetResult(GetLastError)
+   CloseHandle(hFile)
+   RETURN bSuccess
+END FUNCTION
 ' ========================================================================================
 
 

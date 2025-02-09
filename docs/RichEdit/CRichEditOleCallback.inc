@@ -17,6 +17,8 @@
 #pragma once
 #include once "win/richole.bi"
 
+NAMESPACE Afx
+
 ' ========================================================================================
 ' CRichEditOleCallback class
 ' Implements the IRichEditOleCallback interface
@@ -42,6 +44,8 @@ Public:
    DECLARE DESTRUCTOR
 
 Private:
+   ' // The reference count of this object must start at 0 because
+   ' // the EM_SETOLECALLBACK calls AddRef.
    cRef AS ULONG = 0
 
 END TYPE
@@ -77,14 +81,15 @@ FUNCTION CRichEditOleCallback.QueryInterface (BYVAL riid AS REFIID, BYVAL ppvObj
 END FUNCTION
 ' ========================================================================================
 
+' ========================================================================================
 ' Increments the reference count for an interface on an object. This method should be called
 ' for every new copy of a pointer to an interface on an object.
 ' ========================================================================================
 FUNCTION CRichEditOleCallback.AddRef () AS ULONG
 '   this.cRef += 1
-'   CREC_DP("CRichEditOleCallback AddRef = " & WSTR(this.cRef))
-'   RETURN this.cRef
-   RETURN 2
+   InterlockedIncrement(@cRef)
+   CREC_DP("CRichEditOleCallback AddRef = " & WSTR(this.cRef))
+   RETURN this.cRef
 END FUNCTION
 ' ========================================================================================
 
@@ -94,10 +99,10 @@ END FUNCTION
 ' ========================================================================================
 FUNCTION CRichEditOleCallback.Release () AS DWORD
 '   this.cRef -= 1
-'   CREC_DP("CRichEditOleCallback Release = " & WSTR(this.cRef))
-'   FUNCTION = this.cRef
-'   IF this.cRef = 0 THEN DELETE @this
-   RETURN 1
+   InterlockedDecrement(@cRef)
+   CREC_DP("CRichEditOleCallback Release = " & WSTR(this.cRef))
+   FUNCTION = this.cRef
+   IF this.cRef = 0 THEN DELETE @this
 END FUNCTION
 ' ========================================================================================
 
@@ -213,3 +218,5 @@ BYVAL lpchrg AS CHARRANGE PTR, BYVAL lphmenu AS HMENU PTR) AS HRESULT
    RETURN E_NOTIMPL
 END FUNCTION
 ' ========================================================================================
+
+END NAMESPACE
