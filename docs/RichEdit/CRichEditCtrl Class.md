@@ -246,6 +246,11 @@ pRichEdit.ScalingRatio = ratio
 | [LoadRtfFromFile](#loadrtffromfile) | Loads a rich text file into a rich edit control. |
 | [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
 | [InsertObject](#insertobject) | Inserts an image or an Ole object in the rich edit control. |
+| [SaveRtf](#savertf) | Saves the contents of the rich edit control to a file in rtf format. |
+| [SaveRtfNoObjs](#savertfnoobjs) | Saves the contents of the rich edit control to a file in rtf format with spaces in place of COM objects. |
+| [SaveSelRtf](#saveselrtf) | Saves selection of the rich edit control to a file in rtf format. |
+| [SaveText](#savetext) | Saves the contents of the rich edit control in text format. |
+| [SaveSelText](#saveseltext) | Saves selection of the rich edit control in text format. |
 | [AddLF/AddCR/AddCRLF](#addlfcr) | Inserts a line feed, a carriage return or a carriage return and line feed at the cursor position or at the end of the text. |
 
 # Methods inherited from CTextObjectBase
@@ -3025,3 +3030,44 @@ SUB AddCRLF (BYVAL atEnd AS BOOLEAN = FALSE)
 | ---------- | ----------- |
 | *atEnd* | Optional. Boolean true (-1) or false (0). If true, the character is added at the end of the text; if false, it is added at the cursor position. |
 
+# <a name="savertf"></a>SaveRtf
+
+Saves the contents of the rich edit control to a file in rtf format.
+```
+FUNCTION SaveRtf (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszFilename* | Path and file name of the file where the RTF content will be saved. |
+| *Overwrite* | If true, the file will be overwritten if it already exists and the function will return true; if false, the file will not be overwritten, the function will return false and **GetLastResult" will return the **ERROR_ALREADY_EXISTS** error. |
+| *dwFlagsAndAttributes* | The file or device attributes and flags. Default is **FILE_ATTRIBUTE_NORMAL**, which is the most common default value for files. To see more options see [CreateFileW](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew) |
+
+#### Return value
+
+Boolean true on success or false on failure.
+
+# <a name="savertfnoobjs"></a>SaveRtfNoObjs
+
+Saves the contents of the rich edit control to a file in rtf format with spaces in place of COM objects.
+
+For parameters and return values see the **SaveRtf** method.
+
+# <a name="saveselrtf"></a>SaveSelRtf
+
+Saves selection of the rich edit control to a file in rtf format.
+
+For parameters and return values see the **SaveRtf** method.
+
+# <a name="savetext"></a>SaveText
+
+Saves the contents of the rich edit control in text format.
+
+For parameters and return values see the **SaveRtf** method.
+
+# <a name="saveseltext"></a>SaveSelText
+
+Saves selection of the rich edit control in text format.
+
+For parameters and return values see the **SaveRtf** method.
