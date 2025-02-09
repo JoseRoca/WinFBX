@@ -445,6 +445,16 @@ Gets/sets the character formatting attributes of the current selection.
 
 (SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
 
+#### Usage example
+```
+pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
+DIM cf AS CHARFORMAT
+cf.dwMask = CFM_COLOR                 ' // Let's set the color
+cf.crTextColor = BGR(255, 0, 0)       ' // Red color
+pRichEdit->SelectionCharFormat = cf   ' // Set the color
+pRichEdit->HideSelection(TRUE)        ' // Hide selection
+```
+
 # <a name="wordcharformat"></a>WordCharFormat
 
 Gets/sets the character formatting attributes for the currently selected word.
