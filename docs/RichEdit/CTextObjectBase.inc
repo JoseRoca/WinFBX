@@ -17,15 +17,15 @@ NAMESPACE Afx
 
 ' ========================================================================================
 ' Macro for debug
-' To allow debugging, define _CTOM_DEBUG_ 1 in your application before including this file.
+' To allow debugging, define _CREC_DEBUG_ 1 in your application before including this file.
 ' ========================================================================================
-#ifndef _CTOM_DEBUG_
-   #define _CTOM_DEBUG_ 0
+#ifndef _CREC_DEBUG_
+   #define _CREC_DEBUG_ 0
 #ENDIF
-#ifndef _CTOM_DP_
-   #define _CTOM_DP_ 1
-   #MACRO CTOM_DP(st)
-      #IF (_CTOM_DEBUG_ = 1)
+#ifndef _CREC_DP_
+   #define _CREC_DP_ 1
+   #MACRO CREC_DP(st)
+      #IF (_CREC_DEBUG_ = 1)
          OutputDebugStringW(st)
       #ENDIF
    #ENDMACRO

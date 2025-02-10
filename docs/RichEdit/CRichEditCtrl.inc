@@ -8,23 +8,6 @@
 ' MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 ' ########################################################################################
 
-' ========================================================================================
-' Macro for debug
-' To allow debugging, define _CREC_DEBUG_ 1 in your application before including this file.
-' ========================================================================================
-#ifndef _CREC_DEBUG_
-   #define _CREC_DEBUG_ 0
-#ENDIF
-#ifndef _CREC_DP_
-   #define _CREC_DP_ 1
-   #MACRO CREC_DP(st)
-      #IF (_CREC_DEBUG_ = 1)
-         OutputDebugStringW(st)
-      #ENDIF
-   #ENDMACRO
-#ENDIF
-' ========================================================================================
-
 #pragma once
 #include once "Afx/CWindow.inc"
 #include once "win/richedit.bi"
@@ -256,7 +239,23 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE SUB AddLF (BYVAL atEnd AS BOOLEAN = FALSE)
       DECLARE SUB AddCR (BYVAL atEnd AS BOOLEAN = FALSE)
       DECLARE SUB AddCRLF (BYVAL atEnd AS BOOLEAN = FALSE)
- 
+      DECLARE PROPERTY TextColor () AS COLORREF
+      DECLARE PROPERTY TextColor (BYVAL crTxtColor AS COLORREF)
+      DECLARE PROPERTY TextHeight () AS LONG
+      DECLARE PROPERTY TextHeight (BYVAL ptSize AS LONG)
+      DECLARE PROPERTY TextOffset () AS LONG
+      DECLARE PROPERTY TextOffset (BYVAL offset AS LONG)
+      DECLARE PROPERTY TextFontName () AS CWSTR
+      DECLARE PROPERTY TextFontName (BYREF wszFaceName AS WSTRING)
+      DECLARE FUNCTION IsTextBold () AS BOOLEAN
+      DECLARE SUB SetTextBold ()
+      DECLARE FUNCTION IsTextItalic () AS BOOLEAN
+      DECLARE SUB SetTextItalic ()
+      DECLARE FUNCTION IsTextStrikeout () AS BOOLEAN
+      DECLARE SUB SetTextStrikeout ()
+      DECLARE FUNCTION IsTextUnderline () AS BOOLEAN
+      DECLARE SUB SetTextUnderline ()
+
 END TYPE
 ' ========================================================================================
 
@@ -2313,6 +2312,187 @@ BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
    RETURN bSuccess
 END FUNCTION
 ' ========================================================================================
+
+' ========================================================================================
+' Gets the color of the selected word or text
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.TextColor () AS COLORREF
+   DIM cf AS CHARFORMATW = this.WordCharFormat
+   RETURN cf.crTextColor
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Sets the color of the selected word or text
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.TextColor (BYVAL crTxtColor AS COLORREF)
+   DIM cf AS CHARFORMATW
+   cf.cbSize = SIZEOF (cf)
+   cf.dwMask = CFM_COLOR
+   cf.crTextColor = crTxtColor
+   this.WordCharFormat = cf
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Checks if the text is bold
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.IsTextBold () AS BOOLEAN
+   DIM cf AS CHARFORMATW = this.WordCharFormat
+   RETURN IIF((cf.dwEffects AND CFE_BOLD) = CFE_BOLD, TRUE, FALSE)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Changes the selected text to bold.
+' If it is already set, removes it.
+' ========================================================================================
+PRIVATE SUB CRichEditCtrl.SetTextBold
+   DIM cf AS CHARFORMATW
+   cf.cbSize = SIZEOF (cf)
+   cf.dwMask = CFM_BOLD
+   cf.dwEffects = CFE_BOLD
+   ' // if it is already set, remove it
+   IF this.IsTextBold = TRUE THEN cf.dwEffects = 0
+   this.WordCharFormat = cf
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Checks if the text is italic
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.IsTextItalic () AS BOOLEAN
+   DIM cf AS CHARFORMATW = this.WordCharFormat
+   RETURN IIF((cf.dwEffects AND CFE_ITAlIC) = CFE_ITAlIc, TRUE, FALSE)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Changes the selected text to italic
+' If it is already set, removes it.
+' ========================================================================================
+PRIVATE SUB CRichEditCtrl.SetTextItalic
+   DIM cf AS CHARFORMATW
+   cf.cbSize = SIZEOF (cf)
+   cf.dwMask = CFM_ITALIC
+   cf.dwEffects = CFE_ITALIC
+   ' // if it is already set, remove it
+   IF this.IsTextItalic = TRUE THEN cf.dwEffects = 0
+   this.WordCharFormat = cf
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Checks if the text is striked out
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.IsTextStrikeOut () AS BOOLEAN
+   DIM cf AS CHARFORMATW = this.WordCharFormat
+   RETURN IIF((cf.dwEffects AND CFE_STRIKEOUT) = CFE_STRIKEOUT, TRUE, FALSE)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Changes the selected text to striked out
+' ========================================================================================
+PRIVATE SUB CRichEditCtrl.SetTextStrikeOut
+   DIM cf AS CHARFORMATW
+   cf.cbSize = SIZEOF (cf)
+   cf.dwMask = CFM_STRIKEOUT
+   cf.dwEffects = CFE_STRIKEOUT
+   ' // if it is already set, remove it
+   IF this.IsTextStrikeOut = TRUE THEN cf.dwEffects = 0
+   this.WordCharFormat = cf
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Checks if the text is underlined
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.IsTextUnderline () AS BOOLEAN
+   DIM cf AS CHARFORMATW = this.WordCharFormat
+   RETURN IIF((cf.dwEffects AND CFE_UNDERLINE) = CFE_UNDERLINE, TRUE, FALSE)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Changes the selected text to underlined
+' ========================================================================================
+PRIVATE SUB CRichEditCtrl.SetTextUnderline
+   DIM cf AS CHARFORMATW
+   cf.cbSize = SIZEOF (cf)
+   cf.dwMask = CFM_UNDERLINE
+   cf.dwEffects = CFE_UNDERLINE
+   ' // if it is already set, remove it
+   IF this.IsTextUnderline = TRUE THEN cf.dwEffects = 0
+   this.WordCharFormat = cf
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Gets the font height of selected text in points
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.TextHeight () As LONG
+   DIM cf AS CHARFORMATW = this.WordCharFormat
+   RETURN cf.yHeight / 20
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Changes the font height of selected text
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.TextHeight (BYVAL ptSize AS LONG)
+   DIM cf AS CHARFORMATW
+   cf.cbSize = SIZEOF (cf)
+   cf.dwMask = CFM_SIZE
+   ' Character height, in twips (1/1440 of an inch or 1/20 of a printer's point)
+   cf.yHeight = ptSize * 20
+   this.WordCharFormat = cf
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets the font offset of selected text
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.TextOffset () AS LONG
+   DIM cf AS CHARFORMATW = this.WordCharFormat
+   RETURN cf.yOffset / 20
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Changes the offset of selected text
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.TextOffset (BYVAL offset AS LONG)
+   DIM cf AS CHARFORMATW
+   cf.cbSize = SIZEOF (cf)
+   cf.dwMask = CFM_OFFSET
+   ' Character offset, in twips, from the baseline
+   cf.yOffset = offset * 20
+   this.WordCharFormat = cf
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Gets the font face name of selected text
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.TextFontName () AS CWSTR
+   DIM cf AS CHARFORMATW = this.WordCharFormat
+   RETURN cf.szFaceName
+END PROPERTY
+' ========================================================================================
+
+' ========================================================================================
+' Changes the font face name of selected text
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.TextFontName (BYREF wszFaceName AS WSTRING)
+   DIM cf AS CHARFORMATW
+   cf.cbSize = SIZEOF (cf)
+   cf.dwMask = CFM_FACE
+   cf.szFaceName = wszFaceName
+   this.WordCharFormat = cf
+END PROPERTY
+' ========================================================================================
+
 
 
 ' ########################################################################################
