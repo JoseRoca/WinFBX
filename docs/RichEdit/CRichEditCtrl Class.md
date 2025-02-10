@@ -135,13 +135,9 @@ pRichEdit.ScalingRatio = ratio
 | [IMEModeBias](#imemodebias) | Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [IMEOptions](#imeoptions) | Gets/sets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system. |
 | [IsTextBold](#istextbold) | Checks if the selected text or the word under the cursor is bolded. |
-| [SetTextBold](#settextbold) | Sets the attribute of selected text or word to bold. |
 | [IsTextItalic](#istextitalic) | Checks if the selected text or word under the cursor is italicised. |
-| [SetTextItalic](#settextitalic) | Sets the attribute of selected text or word to italic. |
 | [IsTextStrikeOut](#istextstrikeout) | Checks if the selected text or word under the cursor is striked out. |
-| [SetTextStrikeOut](#settextstrikeout) | Sets the attribute of selected text or word to strike out. |
 | [IsTextInderline](#istextunderline) | Checks if the selected text or word under the cursor is underlined. |
-| [SetTextUnderline](#settextunderline) | Sets the attribute of selected text or word to underline. |
 | [LangOptions](#langoptions) | Gets/sets a rich edit control's option settings for Input Method Editor (IME) and Asian language support. |
 | [LeftMargin](#leftmargin) | Sets the width of the left margin. |
 | [LimitText](#limittext) | Gets/sets the current text limit for a rich edit control. |
@@ -157,7 +153,11 @@ pRichEdit.ScalingRatio = ratio
 | [ScrollPos](#scrollpos) | Gets/sets the current scroll position of the edit control. |
 | [StoryType](#storytype) | Gets/sets the story type. |
 | [Text](#text) | Gets/sets the text from a rich edit control. |
+| [TextColor](#textcolor) | Gets/sets the text color of the selected text or word under the cursor. |
+| [TextFontName](#textfontname) | Gets/sets the font name of the selected text or word under the cursor. |
+| [TextHeight](#textheight) | Gets/sets the text height of the selected text or word under the cursor. |
 | [TextMode](#textmode) | Gets/sets the current text mode and undo level of a rich edit control. |
+| [TextOffset](#textoffset) | Gets/sets the text offset of the selected text or word under the cursor. |
 | [TouchOptions](#touchoptions) | Gets/sets the touch options that are associated with a rich edit control. |
 | [TypographyOptions](#typographyoptions) | Gets/sets the current state of the typography options of a rich edit control. |
 
@@ -233,6 +233,10 @@ pRichEdit.ScalingRatio = ratio
 | [SetTabStops](#settabstops) | Sets the tab stops in a multiline rich edit control. |
 | [SetTargetDevice](#settargetdevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
 | [SetTextEx](#settextex) | Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text. |
+| [SetTextBold](#settextbold) | Sets the attribute of selected text or word to bold. |
+| [SetTextItalic](#settextitalic) | Sets the attribute of selected text or word to italic. |
+| [SetTextStrikeOut](#settextstrikeout) | Sets the attribute of selected text or word to strike out. |
+| [SetTextUnderline](#settextunderline) | Sets the attribute of selected text or word to underline. |
 | [SetUIAName](#setuianame) | Sets the maximum number of actions that can stored in the undo queue. |
 | [SetUndoLimit](#setundolimit) | Sets the maximum number of actions that can stored in the undo queue. |
 | [SetWordWrapMode](#setwordwrapmode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
