@@ -3132,3 +3132,28 @@ FUNCTION IsTextUnderlined () AS BOOLEAN
 #### Return value
 
 Boolean true (-1) or false (0).
+
+# <a name="settextbold"></a>SetTextBold
+
+Changes the selected text or word under the cursor to bold. If it is already set, it removes it.
+```
+SUB SetTextBold ()
+```
+# <a name="settextitalic"></a>SetTextItalic
+
+Changes the selected text or word under the cursor to italic. If it is already set, it removes it.
+```
+SUB SetTextItalic ()
+```
+# <a name="settextstrikeout"></a>SetTextStrikeOut
+
+Changes the selected text or word under the cursor to strike out. If it is already set, it removes it.
+```
+SUB SetTextStrikeOut ()
+```
+# <a name="settextunderline"></a>SetTextUnderline
+
+Changes the selected text or word under the cursor to underline. If it is already set, it removes it.
+```
+SUB SetTextUderline ()
+```
