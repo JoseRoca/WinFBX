@@ -128,10 +128,20 @@ pRichEdit.ScalingRatio = ratio
 | [EditStyle](#editstyle) | Gets/sets the current edit style flags. |
 | [EditStyleEx](#editstyleex) | Gets/sets the extended edit style flags. |
 | [EllipsisMode](#ellipsismode) | Gets/sets the current ellipsis mode. |
+| [EnableWordWrap](#enablewordwrap) | Enables word wrap. |
+| [DisableWordWrap](#disablewordwrap) | Disables word wrap. |
 | [EventMask](#eventmask) | Gets/sets the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window. |
 | [HyphenateInfo](#hyphenateinfo) | Gets/sets information about hyphenation for a Microsoft Rich Edit control. |
 | [IMEModeBias](#imemodebias) | Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [IMEOptions](#imeoptions) | Gets/sets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system. |
+| [IsTextBold](#istextbold) | Checks if the selected text or the word under the cursor is bolded. |
+| [SetTextBold](#settextbold) | Sets the attribute of selected text or word to bold. |
+| [IsTextItalic](#istextitalic) | Checks if the selected text or word under the cursor is italicised. |
+| [SetTextItalic](#settextitalic) | Sets the attribute of selected text or word to italic. |
+| [IsTextStrikeOut](#istextstrikeout) | Checks if the selected text or word under the cursor is striked out. |
+| [SetTextStrikeOut](#settextstrikeout) | Sets the attribute of selected text or word to strike out. |
+| [IsTextInderline](#istextunderline) | Checks if the selected text or word under the cursor is underlined. |
+| [SetTextUnderline](#settextunderline) | Sets the attribute of selected text or word to underline. |
 | [LangOptions](#langoptions) | Gets/sets a rich edit control's option settings for Input Method Editor (IME) and Asian language support. |
 | [LeftMargin](#leftmargin) | Sets the width of the left margin. |
 | [LimitText](#limittext) | Gets/sets the current text limit for a rich edit control. |
@@ -211,6 +221,7 @@ pRichEdit.ScalingRatio = ratio
 | [ScrollCaret](#scrollcaret) | Scrolls the caret into view in a rich edit control. |
 | [SelectionType](#selectiontype) | Determines the selection type for a rich edit control. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
+| [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [SetFontSize](#setfontsize) | Sets the font size for the selected text. |
 | [SetIMEColor](#setimecolor) | Sets the Input Method Editor (IME) composition color. |
 | [SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
@@ -235,13 +246,10 @@ pRichEdit.ScalingRatio = ratio
 | [Undo](#undo) | This message undoes the last edit control operation in the control's undo queue. |
 
 
-# CRichEdit Helper Methods
+# CRichEdit Helper Methods and Properties
 
 | Name       | Description |
 | ---------- | ----------- |
-| [EnableWordWrap](#enablewordwrap) | Enables word wrap. |
-| [DisableWordWrap](#disablewordwrap) | Disables word wrap. |
-| [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [GetRtf](#getrtf) | Retrieves formatted text from a rich edit control. |
 | [LoadRtfFromFile](#loadrtffromfile) | Loads a rich text file into a rich edit control. |
 | [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
@@ -3084,3 +3092,43 @@ For parameters and return values see the **SaveRtf** method.
 Saves selection of the rich edit control in text format.
 
 For parameters and return values see the **SaveRtf** method.
+
+# <a name="istextbold"></a>IsTextBold
+
+Checks if the selected text or the word under the cursor is bolded.
+```
+FUNCTION IsTextBold () AS BOOLEAN
+```
+#### Return value
+
+Boolean true (-1) or false (0).
+
+# <a name="istextitalic"></a>IsTextItalic
+
+Checks if the selected text or the word under the cursor is italicised.
+```
+FUNCTION IsTextItalic () AS BOOLEAN
+```
+#### Return value
+
+Boolean true (-1) or false (0).
+
+# <a name="istextstrikeout"></a>IsTextStrikeOut
+
+Checks if the selected text or the word under the cursor is striked out.
+```
+FUNCTION IsTextStrikeOut () AS BOOLEAN
+```
+#### Return value
+
+Boolean true (-1) or false (0).
+
+# <a name="istextuderlined"></a>IsTextUnderlined
+
+Checks if the selected text or the word under the cursor is underlined.
+```
+FUNCTION IsTextUnderlined () AS BOOLEAN
+```
+#### Return value
+
+Boolean true (-1) or false (0).
