@@ -153,11 +153,11 @@ pRichEdit.ScalingRatio = ratio
 | [ScrollPos](#scrollpos) | Gets/sets the current scroll position of the edit control. |
 | [StoryType](#storytype) | Gets/sets the story type. |
 | [Text](#text) | Gets/sets the text from a rich edit control. |
-| [TextColor](#textcolor) | Gets/sets the text color of the selected text or word under the cursor. |
-| [TextFontName](#textfontname) | Gets/sets the font name of the selected text or word under the cursor. |
-| [TextHeight](#textheight) | Gets/sets the text height of the selected text or word under the cursor. |
+| [TextColor](#textcolor) | Gets/sets the text color of the selected text or the word under the cursor. |
+| [TextFontName](#textfontname) | Gets/sets the font name of the selected text or the word under the cursor. |
+| [TextHeight](#textheight) | Gets/sets the text height of the selected text or the word under the cursor. |
 | [TextMode](#textmode) | Gets/sets the current text mode and undo level of a rich edit control. |
-| [TextOffset](#textoffset) | Gets/sets the text offset of the selected text or word under the cursor. |
+| [TextOffset](#textoffset) | Gets/sets the text offset of the selected text or the word under the cursor. |
 | [TouchOptions](#touchoptions) | Gets/sets the touch options that are associated with a rich edit control. |
 | [TypographyOptions](#typographyoptions) | Gets/sets the current state of the typography options of a rich edit control. |
 
@@ -3161,3 +3161,18 @@ Changes the selected text or word under the cursor to underline. If it is alread
 ```
 SUB SetTextUderline ()
 ```
+
+# <a name="textcolor"></a>TextColor
+
+Gets/sets the color of the selected text or the word under the cursor.
+```
+(GET) PROPERTY TextColor () AS COLORREF
+(SET) PROPERTY TextColor (BYVAL crTxtColor AS COLORREF)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *crTxtColor* | The new text color. Use the macro RGB (BGR in FreeBasic), e.g. BGR(255,0,0). |
+
+#### Return value
+
+(GET) The text color of the selected text or the word under the cursor if there is not selection.
