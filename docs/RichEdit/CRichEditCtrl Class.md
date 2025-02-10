@@ -3177,6 +3177,10 @@ Gets/sets the color of the selected text or the word under the cursor.
 
 (GET) The color of the selected text or the word under the cursor if there is not selection.
 
+#### Remarks
+
+To select text programatically, use the **SetSel** method.
+
 # <a name="textheight"></a>TextHeight
 
 Gets/sets the height of the selected text or the word under the cursor.
@@ -3191,6 +3195,10 @@ Gets/sets the height of the selected text or the word under the cursor.
 #### Return value
 
 (GET) The height of the selected text or the word under the cursor if there is not selection.
+
+#### Remarks
+
+To select text programatically, use the **SetSel** method.
 
 # <a name="textheight"></a>TextHeight
 
@@ -3211,6 +3219,8 @@ Gets/sets the offset of the selected text or the word under the cursor.
 
 The property converts the pixels to twips internally.
 
+To select text programatically, use the **SetSel** method.
+
 # <a name="textfontname"></a>TextFontName
 
 Gets/sets the font face name of the selected text or the word under the cursor if there is not selection.
@@ -3225,3 +3235,7 @@ Gets/sets the font face name of the selected text or the word under the cursor i
 #### Return value
 
 (GET) The offset of the selected text or the word under the cursor if there is not selection.
+
+#### Remarks
+
+To select text programatically, use the **SetSel** method.
