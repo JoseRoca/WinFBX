@@ -280,6 +280,7 @@ Retrieves the margins (the non-printable area) of the printer page, in world uni
 
 ```
 SUB GetMarginUnits (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
+FUNCTION GetMarginUnits () AS RECT
 ```
 
 | Parameter  | Description |
@@ -288,6 +289,8 @@ SUB GetMarginUnits (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LON
 | *nTop* | Top margin. |
 | *nRight* | Right margin. |
 | *nBottom* | Bottom margin. |
+
+The overloaded function returns a **RECT** structure.
 
 # <a name="GetMarginPixels"></a>GetMarginPixels
 
@@ -295,6 +298,7 @@ Retrieves the margins (the non-printable area) of the printer page, in pixels.
 
 ```
 SUB GetMarginPixels (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
+FUNCTION GetMarginPixels () AS RECT
 ```
 
 | Parameter  | Description |
@@ -303,6 +307,8 @@ SUB GetMarginPixels (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LO
 | *nTop* | Top margin. |
 | *nRight* | Right margin. |
 | *nBottom* | Bottom margin. |
+
+The overloaded function returns a **RECT** structure.
 
 #### Return value
 
