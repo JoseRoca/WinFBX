@@ -2,7 +2,7 @@
 
 Allows to attach/choose a printer and get/set its setting values.
 
-<span style="color:red;">your text here > </span>
+<span style="color:red;">your text here </span>
 
 **Include file**: CPrint.inc
 
