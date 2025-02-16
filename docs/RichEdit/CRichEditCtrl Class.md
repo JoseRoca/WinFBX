@@ -1548,6 +1548,8 @@ FUNCTION SetHyphenateInfo (BYREF info AS .HYPHENATEINFO) AS HRESULT
 | ---------- | ----------- |
 | *hinfo* | A [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure. |
 
+---
+
 # <a name="imemodebias"></a>IMEModeBias
 
 Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
