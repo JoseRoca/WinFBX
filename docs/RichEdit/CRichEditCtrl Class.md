@@ -222,6 +222,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetBidiOptions](#getbidioptions) | Gets the current state of the bidirectional options in the rich edit control. |
 | [GetCharFormat](#getcharformat) | Gets the current character formatting in a rich edit control. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
+| [GetDefaultCharFormat](#getdefaultcharformat) | Gets the default character formatting in a rich e
 | [GetEllipsisState](#getellipsisstate) | Retrieves the current ellipsis state. |
 | [GetFirstVisibleLine](#getfirstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
 | [GetIMEColor](#getimecolor) | Retrieves the Input Method Editor (IME) composition color. |
@@ -267,6 +268,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetBidiOptions](#setbidioptions) | Sets the current state of the bidirectional options in the rich edit control. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
 | [SetCharFormat](#setcharformat) | Sets the current character formatting in a rich edit control. |
+| [SetDefaultCharFormat](#setdefaultcharformat) | Sets the default character formatting in a rich e
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [SetFontSize](#setfontsize) | Sets the font size for the selected text. |
 | [SetIMEColor](#setimecolor) | Sets the Input Method Editor (IME) composition color. |
@@ -693,6 +695,29 @@ Gets/sets the default character formatting in a rich edit control.
 
 (SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
 
+# <a name="getdefaultcharformat"></a>GetDefaultCharFormat
+
+Gets the default character formatting in a rich edit control.
+```
+FUNCTION GetDefaultCharFormat () AS CHARFORMATW
+```
+
+#### Return value
+
+Returns a [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
+
+# <a name="setdefaultcharformat"></a>SetDefaultCharFormat
+
+Sets the default character formatting in a rich edit control.
+```
+FUNCTION SetDefaultCharFormat (BYREF cf AS CHARFORMATW) AS BOOLEAN
+```
+
+#### Return value
+
+If the operation succeeds, the return value is true (-1). If the operation fails, the return value is false (0).
+
+
 # <a name="selectioncharformat"></a>SelectionCharFormat
 
 Gets/sets the character formatting attributes of the current selection.
@@ -739,6 +764,58 @@ cf.yHeight = 12 * 20                  ' // Character height, in twips (1/1440 of
 pRichEdit->SelectionCharFormat = cf   ' // Set the format
 pRichEdit->HideSelection(TRUE)        ' // Hide selection
 ```
+
+# <a name="getselectioncharformat"></a>GetSelectionCharFormat
+
+Gets the selection character formatting in a rich edit control.
+```
+GetSelectionCharFormat () AS CHARFORMATW
+```
+
+#### Return value
+
+Returns a [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
+
+# <a name="setselectioncharformat"></a>SetSelectionCharFormat
+
+Sets the selection character formatting in a rich edit control.
+```
+FUNCTION SetSelectionCharFormat (BYREF cf AS CHARFORMATW) AS BOOLEAN
+```
+
+#### Usage examples
+
+Select text and change color
+```
+pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
+DIM cf AS CHARFORMAT
+cf.dwMask = CFM_COLOR                 ' // Let's set the color
+cf.crTextColor = BGR(255, 0, 0)       ' // Red color
+pRichEdit->SetSelectionCharFormat(cf) ' // Set the color
+pRichEdit->HideSelection(TRUE)        ' // Hide selection
+```
+Select text and make it bold
+```
+pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
+DIM cf AS CHARFORMAT
+cf.dwMask = CFM_BOLD                  ' // The CFE_BOLD value of the dwEffects member is valid.
+cf.dwEffects = CFE_BOLD               ' // Characters are bold
+pRichEdit->SetSelectionCharFormat(cf) ' // Set the format
+pRichEdit->HideSelection(TRUE)        ' // Hide selection
+```
+Select text and change the font height
+```
+pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
+DIM cf AS CHARFORMAT
+cf.dwMask = CFM_SIZE                  ' // The yHeight member is valid.
+cf.yHeight = 12 * 20                  ' // Character height, in twips (1/1440 of an inch or 1/20 of a printer's point)
+pRichEdit->SetSelectionCharFormat(cf) ' // Set the format
+pRichEdit->HideSelection(TRUE)        ' // Hide selection
+```
+
+#### Return value
+
+If the operation succeeds, the return value is true (-1). If the operation fails, the return value is false (0).
 
 # <a name="wordcharformat"></a>WordCharFormat
 
