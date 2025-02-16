@@ -350,7 +350,7 @@ FUNCTION SetAutoCorrectProc (BYVAL pfn AS LONG_PTR) AS HRESULT
 
 #### Return value
 
-(SET) If the operation succeeds, the return value is zero. If the operation fails, the return value is a nonzero value. Call **GetErrorInfo** to get information about the result.
+If the operation succeeds, the return value is zero. If the operation fails, the return value is a nonzero value. Call **GetErrorInfo** to get information about the result.
 
 # <a name="autourldetect"></a>AutoUrlDetect
 
