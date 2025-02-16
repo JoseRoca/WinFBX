@@ -225,6 +225,9 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetCTFModeBias](#getctfmodebias) | Gets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [GetCTFOpenStatus](#getctfopenstatus) | Gets if the Text Services Framework (TSF) keyboard is open or closed. |
 | [GetDefaultCharFormat](#getdefaultcharformat) | Gets the default character formatting in a rich edit control. |
+| [GetEditStyle](#geteditstyle) | Gets the current edit style flags. |
+| [GetEditStyleEx](#geteditstyleex) | Gets the extended edit style flags. |
+| [GetEllipsisMode](#getellipsismode) | Gets the current ellipsis mode. |
 | [GetEllipsisState](#getellipsisstate) | Retrieves the current ellipsis state. |
 | [GetFirstVisibleLine](#getfirstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
 | [GetIMEColor](#getimecolor) | Retrieves the Input Method Editor (IME) composition color. |
@@ -275,7 +278,9 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetCTFModeBias](#setctfmodebias) | Sets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [SetCTFOpenStatus](#setctfopenstatus) | Sets if the Text Services Framework (TSF) keyboard is open or closed. |
 | [SetDefaultCharFormat](#setdefaultcharformat) | Sets the default character formatting in a rich edit control. |
-| [SetSelectionCharFormat](#setselectioncharformat) | Sets the selection character formatting in a rich edit control. |
+| [SetEditStyle](#seteditstyle) | Sets the current edit style flags. |
+| [SetEditStyleEx](#seteditstyleex) | Sets the extended edit style flags. |
+| [SetEllipsisMode](#setellipsismode) | Sets the current ellipsis mode. |
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [SetFontSize](#setfontsize) | Sets the font size for the selected text. |
 | [SetIMEColor](#setimecolor) | Sets the Input Method Editor (IME) composition color. |
@@ -284,6 +289,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
 | [SetReadOnly](#setreadonly) | Changes the palette that a rich edit control uses for its display window. |
 | [SetSel](#setsel) | Selects a range of characters in a rich edit control. |
+| [SetSelectionCharFormat](#setselectioncharformat) | Sets the selection character formatting in a rich edit control. |
 | [SetTableParams](#settableparams) | Changes the parameters of rows in a table. |
 | [SetTabStops](#settabstops) | Sets the tab stops in a multiline rich edit control. |
 | [SetTargetDevice](#settargetdevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
@@ -1062,6 +1068,98 @@ PROPERTY EditStyle (BYVAL fStyle AS LONG, BYVAL fMask AS LONG)
 
 (SET) The return value is the state of the edit style flags after the rich edit control has attempted to implement your edit style changes. The edit style flags are a set of flags that indicate the current edit style. Call the (GET) **EditStyle** property to check if the value has changed.
 
+# <a name="geteditstyle"></a>GetEditStyle
+
+Gets the current edit style flags.
+```
+FUNCTION GetEditStyle () AS DWORD
+```
+
+| Edit Style Flag  | Description |
+| ---------------- | ----------- |
+| **SES_BEEPONMAXTEXT** | Rich Edit will call the system beeper if the user attempts to enter more than the maximum characters. |
+| **SES_BIDI** | Turns on bidirectional processing. This is automatically turned on by Rich Edit if any of the following window styles are active: WS_EX_RIGHT, WS_EX_RTLREADING, WS_EX_LEFTSCROLLBAR. However, this setting is useful for handling these window styles when using a custom implementation of ITextHost (default: 0). |
+| **SES_CTFALLOWEMBED** | **Windows XP with SP1**: Allow embedded objects to be inserted using TSF (default: 0). |
+| **SES_CTFALLOWPROOFING** | **Windows XP with SP1**: Allows TSF proofing tips (default: 0). |
+| **SES_CTFALLOWSMARTTAG** | **Windows XP with SP1**: Allows TSF SmartTag tips (default: 0). |
+| **SES_CTFNOLOCK** | **Windows 8**: Do not allow the TSF lock read/write access. This pauses TSF input. |
+| **SES_DEFAULTLATINLIGA** | **Windows 8**: Fonts with an fi ligature are displayed with default OpenType features resulting in improved typography (default: 0). |
+| **SES_DRAFTMODE** | **Windows XP with SP1**: Use draft mode fonts to display text. Draft mode is an accessibility option where the control displays the text with a single font; the font is determined by the system setting for the font used in message boxes. For example, accessible users may read text easier if it is uniform, rather than a mix of fonts and styles (default: 0). |
+| **SES_EMULATE10** | **Windows 8**: Emulate RichEdit 1.0 behavior.<br>**Note**: If you really want this behavior, use the Windows riched32.dll instead of riched20.dll or msftedit.dll. Riched32.dll had more functionality. |
+| **SES_EMULATESYSEDIT** | When this bit is on, rich edit attempts to emulate the system edit control (default: 0). |
+| **SES_EXTENDBACKCOLOR** | Extends the background color all the way to the edges of the client rectangle (default: 0). |
+| **SES_HIDEGRIDLINES** | **Windows XP with SP1**: If the width of table gridlines is zero, gridlines are not displayed. This is equivalent to the hide gridlines feature in Word's table menu (default: 0). |
+| **SES_HYPERLINKTOOLTIPS** | **Windows 8**: When the cursor is over a link, display a tooltip with the target link address (default: 0). |
+| **SES_LOGICALCARET** | **Windows 8**: Provide logical caret information instead of a caret bitmap as described in [ITextHost::TxSetCaretPos]([url](https://learn.microsoft.com/en-us/windows/win32/api/textserv/nf-textserv-itexthost-txsetcaretpos))(default: 0). |
+| **SES_LOWERCASE** | Converts all input characters to lowercase (default: 0). |
+| **SES_MAPCPS** | Obsolete. Do not use. |
+| **SES_MULTISELECT** | **Windows 8**: Enable multiselection with individual mouse selections made while the Ctrl key is pressed (default: 0). |
+| **SES_NOEALINEHEIGHTADJUST** | **Windows 8**: Do not adjust line height for East Asian text (default: 0 which adjusts the line height by 15%). |
+| **SES_NOFOCUSLINKNOTIFY** | Sends EN_LINK notification from links that do not have focus. |
+| **SES_NOIME** | Disallows IMEs for this instance of the rich edit control (default: 0). |
+| **SES_NOINPUTSEQUENCECHK** | When this bit is on, rich edit does not verify the sequence of typed text. Some languages (such as Thai and Vietnamese) require verifying the input sequence order before submitting it to the backing store (default: 0). |
+| **SES_SCROLLONKILLFOCUS** | When KillFocus occurs, scroll to the beginning of the text (character position equal to 0) (default: 0). |
+| **SES_SMARTDRAGDROP** | **Windows 8**: Add or delete a space according to the context when dropping text (default: 0). |
+| **SES_USECRLF** | Obsolete. Do not use. |
+| **SES_WORDDRAGDROP** | **Windows 8**: If word select is active, ensure that the drop location is at a word boundary (default: 0). |
+| **SES_UPPERCASE** | Converts all input characters to uppercase (default: 0). |
+| **SES_USEAIMM** | Uses the Active IMM input method component that ships with Internet Explorer 4.0 or later (default: 0). |
+| **SES_USEATFONT** | **Windows XP with SP1**: Uses an @ font, which is designed for vertical text; this is used with the ES_VERTICAL window style. The name of an @ font begins with the @ symbol, for example, "@Batang" (default: 0, but is automatically turned on for vertical text layout). |
+| **SES_USECTF** | **Windows XP with SP1**: Turns on TSF support. (default: 0). |
+| **SES_XLTCRCRLFTOCR** | Turns on translation of CRCRLFs to CRs. When this bit is on and a file is read in, all instances of CRCRLF will be converted to hard CRs internally. This will affect the text wrapping. Note that if such a file is saved as plain text, the CRs will be replaced by CRLFs. This is the .txt standard for plain text (default: 0, which deletes CRCRLFs on input). |
+
+#### Return value
+
+Returns the current edit style flags, which can include one or more of the following values (see table above).
+
+# <a name="seteditstyle"></a>SetEditStyle
+
+Sets the current edit style flags.
+```
+FUNCTION SetEditStyle (BYVAL fStyle AS LONG, BYVAL fMask AS LONG) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fStyle* | Specifies one or more edit style flags. For a list of possible values, see the table below. |
+| *fMask* | A mask consisting of one or more of the *fStyle* values. Only the values specified in this mask will be set or cleared. This allows a single flag to be set or cleared without reading the current flag states. |
+
+| Edit Style Flag  | Description |
+| ---------------- | ----------- |
+| **SES_BEEPONMAXTEXT** | Rich Edit will call the system beeper if the user attempts to enter more than the maximum characters. |
+| **SES_BIDI** | Turns on bidirectional processing. This is automatically turned on by Rich Edit if any of the following window styles are active: WS_EX_RIGHT, WS_EX_RTLREADING, WS_EX_LEFTSCROLLBAR. However, this setting is useful for handling these window styles when using a custom implementation of ITextHost (default: 0). |
+| **SES_CTFALLOWEMBED** | **Windows XP with SP1**: Allow embedded objects to be inserted using TSF (default: 0). |
+| **SES_CTFALLOWPROOFING** | **Windows XP with SP1**: Allows TSF proofing tips (default: 0). |
+| **SES_CTFALLOWSMARTTAG** | **Windows XP with SP1**: Allows TSF SmartTag tips (default: 0). |
+| **SES_CTFNOLOCK** | **Windows 8**: Do not allow the TSF lock read/write access. This pauses TSF input. |
+| **SES_DEFAULTLATINLIGA** | **Windows 8**: Fonts with an fi ligature are displayed with default OpenType features resulting in improved typography (default: 0). |
+| **SES_DRAFTMODE** | **Windows XP with SP1**: Use draft mode fonts to display text. Draft mode is an accessibility option where the control displays the text with a single font; the font is determined by the system setting for the font used in message boxes. For example, accessible users may read text easier if it is uniform, rather than a mix of fonts and styles (default: 0). |
+| **SES_EMULATE10** | **Windows 8**: Emulate RichEdit 1.0 behavior.<br>**Note**: If you really want this behavior, use the Windows riched32.dll instead of riched20.dll or msftedit.dll. Riched32.dll had more functionality. |
+| **SES_EMULATESYSEDIT** | When this bit is on, rich edit attempts to emulate the system edit control (default: 0). |
+| **SES_EXTENDBACKCOLOR** | Extends the background color all the way to the edges of the client rectangle (default: 0). |
+| **SES_HIDEGRIDLINES** | **Windows XP with SP1**: If the width of table gridlines is zero, gridlines are not displayed. This is equivalent to the hide gridlines feature in Word's table menu (default: 0). |
+| **SES_HYPERLINKTOOLTIPS** | **Windows 8**: When the cursor is over a link, display a tooltip with the target link address (default: 0). |
+| **SES_LOGICALCARET** | **Windows 8**: Provide logical caret information instead of a caret bitmap as described in [ITextHost::TxSetCaretPos]([url](https://learn.microsoft.com/en-us/windows/win32/api/textserv/nf-textserv-itexthost-txsetcaretpos))(default: 0). |
+| **SES_LOWERCASE** | Converts all input characters to lowercase (default: 0). |
+| **SES_MAPCPS** | Obsolete. Do not use. |
+| **SES_MULTISELECT** | **Windows 8**: Enable multiselection with individual mouse selections made while the Ctrl key is pressed (default: 0). |
+| **SES_NOEALINEHEIGHTADJUST** | **Windows 8**: Do not adjust line height for East Asian text (default: 0 which adjusts the line height by 15%). |
+| **SES_NOFOCUSLINKNOTIFY** | Sends EN_LINK notification from links that do not have focus. |
+| **SES_NOIME** | Disallows IMEs for this instance of the rich edit control (default: 0). |
+| **SES_NOINPUTSEQUENCECHK** | When this bit is on, rich edit does not verify the sequence of typed text. Some languages (such as Thai and Vietnamese) require verifying the input sequence order before submitting it to the backing store (default: 0). |
+| **SES_SCROLLONKILLFOCUS** | When KillFocus occurs, scroll to the beginning of the text (character position equal to 0) (default: 0). |
+| **SES_SMARTDRAGDROP** | **Windows 8**: Add or delete a space according to the context when dropping text (default: 0). |
+| **SES_USECRLF** | Obsolete. Do not use. |
+| **SES_WORDDRAGDROP** | **Windows 8**: If word select is active, ensure that the drop location is at a word boundary (default: 0). |
+| **SES_UPPERCASE** | Converts all input characters to uppercase (default: 0). |
+| **SES_USEAIMM** | Uses the Active IMM input method component that ships with Internet Explorer 4.0 or later (default: 0). |
+| **SES_USEATFONT** | **Windows XP with SP1**: Uses an @ font, which is designed for vertical text; this is used with the ES_VERTICAL window style. The name of an @ font begins with the @ symbol, for example, "@Batang" (default: 0, but is automatically turned on for vertical text layout). |
+| **SES_USECTF** | **Windows XP with SP1**: Turns on TSF support. (default: 0). |
+| **SES_XLTCRCRLFTOCR** | Turns on translation of CRCRLFs to CRs. When this bit is on and a file is read in, all instances of CRCRLF will be converted to hard CRs internally. This will affect the text wrapping. Note that if such a file is saved as plain text, the CRs will be replaced by CRLFs. This is the .txt standard for plain text (default: 0, which deletes CRCRLFs on input). |
+
+#### Return value
+
+The return value is the state of the edit style flags after the rich edit control has attempted to implement your edit style changes. The edit style flags are a set of flags that indicate the current edit style. Call the **GetEditStyle** function to check if the value has changed.
+
 # <a name="editstyleex"></a>EditStyleEx
 
 Gets/sets the extended edit style flags.
@@ -1091,6 +1189,52 @@ Gets/sets the extended edit style flags.
 
 (SET) The return value is the state of the edit style flags after the rich edit control has attempted to implement your edit style changes. The edit style flags are a set of flags that indicate the current edit style. Call the (GET) **EditStyleEx** property to check if the value has changed.
 
+# <a name="geteditstyleex"></a>GetEditStyleEx
+
+Gets the extended edit style flags.
+```
+FUNCTION GetEditStyleEx () AS DWORD
+```
+| Edit style flag | Description |
+| --------------- | ----------- |
+| **SES_EX_HANDLEFRIENDLYURL** | Display friendly name links with the same text color and underlining as automatic links, provided that temporary formatting isn't used or uses text autocolor (default: 0). |
+| **SES_EX_MULTITOUCH** | Enable touch support in Rich Edit. This includes selection, caret placement, and context-menu invocation. When this flag is not set, touch is emulated by mouse commands, which do not take touch-mode specifics into account (default: 0). |
+| **SES_EX_NOACETATESELECTION** | Display selected text using classic Windows selection text and background colors instead of background acetate color (default: 0). |
+| **SES_EX_NOMATH** | Disable insertion of math zones (default: 1). To enable math editing and display, call the **EditStyleEx** property with *fStyle* set to 0, and *fMask* set to SES_EX_NOMATH. |
+| **SES_EX_NOTABLE** | Disable insertion of tables. The **InsertTable** method returns **E_FAIL** and RTF tables are skipped (default: 0). |
+| **SES_EX_USESINGLELINE** | Enable a multiline control to act like a single-line control with the ability to scroll vertically when the single-line height is greater than the window height (default: 0). |
+| **SES_HIDETEMPFORMAT** | Hide temporary formatting that is created when **Reset** method of the **ITextFont** is called with **tomApplyTmp**. For example, such formatting is used by spell checkers to display a squiggly underline under possibly misspelled words. |
+| **SES_EX_USEMOUSEWPARAM** | Use *wParam* when handling the **WM_MOUSEMOVE** message and do not call **GetAsyncKeyState**. |
+
+#### Return value
+
+Returns the state of the edit style flags.
+
+# <a name="seteditstyleex"></a>SetEditStyleEx
+
+Sets the extended edit style flags.
+```
+FUNCTION SetEditStyleEx (BYVAL fStyle AS LONG, BYVAL fMask AS LONG) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fStyle* | Specifies one or more edit style flags. For a list of possible values, see table below. |
+| *fMask* | A mask consisting of one or more of the *fStyle* values. Only the values specified in this mask will be set or cleared. This allows a single flag to be set or cleared without reading the current flag states. |
+
+| Edit style flag | Description |
+| --------------- | ----------- |
+| **SES_EX_HANDLEFRIENDLYURL** | Display friendly name links with the same text color and underlining as automatic links, provided that temporary formatting isn't used or uses text autocolor (default: 0). |
+| **SES_EX_MULTITOUCH** | Enable touch support in Rich Edit. This includes selection, caret placement, and context-menu invocation. When this flag is not set, touch is emulated by mouse commands, which do not take touch-mode specifics into account (default: 0). |
+| **SES_EX_NOACETATESELECTION** | Display selected text using classic Windows selection text and background colors instead of background acetate color (default: 0). |
+| **SES_EX_NOMATH** | Disable insertion of math zones (default: 1). To enable math editing and display, call the **EditStyleEx** property with *fStyle* set to 0, and *fMask* set to SES_EX_NOMATH. |
+| **SES_EX_NOTABLE** | Disable insertion of tables. The **InsertTable** method returns **E_FAIL** and RTF tables are skipped (default: 0). |
+| **SES_EX_USESINGLELINE** | Enable a multiline control to act like a single-line control with the ability to scroll vertically when the single-line height is greater than the window height (default: 0). |
+| **SES_HIDETEMPFORMAT** | Hide temporary formatting that is created when **Reset** method of the **ITextFont** is called with **tomApplyTmp**. For example, such formatting is used by spell checkers to display a squiggly underline under possibly misspelled words. |
+| **SES_EX_USEMOUSEWPARAM** | Use *wParam* when handling the **WM_MOUSEMOVE** message and do not call **GetAsyncKeyState**. |
+
+#### Return value
+
+The return value is the state of the edit style flags after the rich edit control has attempted to implement your edit style changes. The edit style flags are a set of flags that indicate the current edit style. Call the **GetEditStyleEx** property to check if the value has changed.
 
 # <a name="ellipsismode"></a>EllipsisMode
 
@@ -1110,6 +1254,42 @@ Gets/sets the current ellipsis mode. When enabled, an ellipsis ( ) is displayed 
 | **ELLIPSIS_WORD** | Ellipsis at the end (word break). |
 
 The bits for these values all fit in the **ELLIPSIS_MASK**.
+
+# <a name="getellipsismode"></a>GetEllipsisMode
+
+Gets the current ellipsis mode. When enabled, an ellipsis ( ) is displayed for text that doesn't fit in the display window. The ellipsis is only used when the control isn't active. When active, scroll bars are used to reveal text that doesn't fit into the display window.
+```
+FUNCTION GetEllipsisMode () AS DWORD
+```
+| Value  | Meaning |
+| ------ | ----------- |
+| **ELLIPSIS_NONE** | No ellipsis is used. |
+| **ELLIPSIS_END** | Ellipsis at the end (forced break). |
+| **ELLIPSIS_WORD** | Ellipsis at the end (word break). |
+
+The bits for these values all fit in the **ELLIPSIS_MASK**.
+
+# <a name="setellipsismode"></a>SetEllipsisMode
+
+Sets the current ellipsis mode. When enabled, an ellipsis ( ) is displayed for text that doesn't fit in the display window. The ellipsis is only used when the control isn't active. When active, scroll bars are used to reveal text that doesn't fit into the display window.
+```
+FUNCTION SetEllipsisMode (BYVAL fMode AS DWORD) AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fMode* | One of the values listed below. |
+
+| Value  | Meaning |
+| ------ | ----------- |
+| **ELLIPSIS_NONE** | No ellipsis is used. |
+| **ELLIPSIS_END** | Ellipsis at the end (forced break). |
+| **ELLIPSIS_WORD** | Ellipsis at the end (word break). |
+
+The bits for these values all fit in the **ELLIPSIS_MASK**.
+
+#### Return value
+
+A boolean true(-1) or false (0)
 
 # <a name="eventmask"></a>EventMask
 
