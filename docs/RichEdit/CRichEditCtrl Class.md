@@ -1802,7 +1802,7 @@ FUNCTION SetLangOptions (BYVAL lgoptions AS LONG) AS HRESULT
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *lgoptions* | (SET) Specifies the language options. For a list of possible values, see table below. |
+| *lgoptions* | Specifies the language options. For a list of possible values, see table below. |
 
 | Flag  | Description |
 | ----- | ----------- |
