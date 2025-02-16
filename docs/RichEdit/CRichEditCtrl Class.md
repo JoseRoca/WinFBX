@@ -254,7 +254,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetIMECompText](#getimecompText) | Gets the Input Method Editor (IME) composition text. |
 | [GetIMEModeBias](#getimemodebias) | Gets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [GetIMEProperty](#getimeproperty) | Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
-| [GetLine](#getline) | Copies a line of text from a rich edit control. |
+| [GetIMEOptions](#getimeoptions) | Gets the current Input Method Editor (IME) options. This message is available only in Asian-| [GetLine](#getline) | Copies a line of text from a rich edit control. |
 | [GetLineCount](#getlinecount) | Gets the number of lines in a multiline rich edit control. |
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
@@ -307,7 +307,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetHyphenateInfo](#sethyphenateinfo) | Sets information about hyphenation for a Microsoft Rich Edit control. |
 | [SetIMEColor](#setimecolor) | Sets the Input Method Editor (IME) composition color. |
 | [SetIMEModeBias](#setimemodebias) | Sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
-| [SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
+| [SetIMEOptions](#setimeoptions) | Sets the current Input Method Editor (IME) options. This message is available only in Asian-| [SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
 | [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
 | [SetReadOnly](#setreadonly) | Changes the palette that a rich edit control uses for its display window. |
@@ -1686,6 +1686,36 @@ Gets/sets the current Input Method Editor (IME) options. This message is availab
 (GET) Returns one or more of the IME option flag values described in the *fOptions* parameter of the SET property.
 
 (SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call the (GET) **ImeOptions** property to check if the value has changed.
+
+---
+
+# <a name="getimeoptions"></a>GetIMEOptions
+
+Gets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system.
+```
+FUNCTION GetIMEOptions () AS DWORD
+```
+
+#### Return value
+
+Returns one or more of the IME option flag values described in the *fOptions* parameter of the SET property.
+
+---
+
+# <a name="setimeoptions"></a>SetIMEOptions
+
+Sets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system.
+```
+FUNCTION SetIMEOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fCoop* | (SET) Specifies one of the following values.<br>**ECOOP_SET**. Sets the options to those specified by *fOptions*.<br>**COOP_OR**. Combines the specified options with the current options.<br>**ECOOP_AND**. Retains only those current options that are also specified by *fOptions*.<br>**ECOOP_XOR**. Logically exclusive OR the current options with those specified by *fOptions*. |
+| *fOptions* | (SET) Specifies one of more of the following values.<br>**IMF_CLOSESTATUSWINDOW**. Closes the IME status window when the control receives the input focus.<br>**IMF_FORCEACTIVE**. Activates the IME when the control receives the input focus.<br>**IMF_FORCEDISABLE**. Disables the IME when the control receives the input focus.<br>**IMF_FORCEENABLE**. Enables the IME when the control receives the input focus.<br>**IMF_FORCEINACTIVE**. Inactivates the IME when the control receives the input focus.<br>**IMF_FORCENONE**. Disables IME handling.<br>**IMF_FORCEREMEMBER**. Restores the previous IME status when the control receives the input focus.<br>**IMF_MULTIPLEEDIT**. Specifies that the composition string will not be canceled or determined by focus changes. This allows an application to have separate composition strings on each rich edit control.<br>**IMF_VERTICAL**. Note: used in Rich Edit 2.0 and later. |
+
+#### Return value
+
+If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call the **GetImeOptions** property to check if the value has changed.
 
 ---
 
