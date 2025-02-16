@@ -247,6 +247,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetEllipsisState](#getellipsisstate) | Retrieves the current ellipsis state. |
 | [GetEventMask](#geteventmask) | Gets the event mask for a rich edit control. |
 | [GetFirstVisibleLine](#getfirstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
+| [GetHyphenateInfo](#gethyphenateinfo) | Gets information about hyphenation for a Microsoft Rich Edit control. |
 | [GetIMEColor](#getimecolor) | Retrieves the Input Method Editor (IME) composition color. |
 | [GetIMECompMode](#getimecompmode) | Gets the current IME mode for a rich edit control. |
 | [GetIMECompText](#getimecompText) | Gets the Input Method Editor (IME) composition text. |
@@ -301,6 +302,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetEventMask](#seteventmask) | Sets the event mask for a rich edit control. |
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [SetFontSize](#setfontsize) | Sets the font size for the selected text. |
+| [SetHyphenateInfo](#sethyphenateinfo) | Sets information about hyphenation for a Microsoft Rich Edit control. |
 | [SetIMEColor](#setimecolor) | Sets the Input Method Editor (IME) composition color. |
 | [SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
 | [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
@@ -1522,6 +1524,29 @@ Gets/sets information about hyphenation for a Microsoft Rich Edit control.
 (GET) A [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure.
 
 ---
+
+# <a name="gethyphenateinfo"></a>GetHyphenateInfo
+
+Gets information about hyphenation for a Microsoft Rich Edit control.
+```
+FUNCTION GetHyphenateInfo () AS .HYPHENATEINFO
+```
+
+#### Return value
+
+A [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure.
+
+---
+
+# <a name="sethyphenateinfo"></a>SetHyphenateInfo
+
+Sets information about hyphenation for a Microsoft Rich Edit control.
+```
+FUNCTION SetHyphenateInfo (BYREF info AS .HYPHENATEINFO) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hinfo* | A [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure. |
 
 # <a name="imemodebias"></a>IMEModeBias
 
