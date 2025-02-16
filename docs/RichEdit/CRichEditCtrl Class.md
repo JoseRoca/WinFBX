@@ -10,6 +10,8 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [DESTRUCTOR](#destructor) | Called automatically when a class variable goes out of scope or is destroyed. |
 | [hRichEdit](#hrichedit) | Returns the handle of the rich edit control. |
 | [ScalingRatio](#scalingratio) | Gets/sets the scaling ratio. |
+| [GetScalingRatio](#getscalingratio) | Gets the scaling ratio. |
+| [SetScalingRatio](#setscalingratio) | Sets the scaling ratio. |
 
 #### Helper procedure
 
@@ -110,6 +112,40 @@ The scaling ratio is used by the **InsertImage** method to scale images accordin
 ```
 DIM ratio AS LONG = pRichEdit.ScalingRatio
 pRichEdit.ScalingRatio = ratio
+```
+
+# <a name="getscalingratio"></a>GetScalingRatio
+
+Gets the scaling ratio.
+
+```
+FUNCTION CRichEditCtrl.GetScalingRatio () AS SINGLE
+```
+#### Remarks
+
+The scaling ratio is used by the **InsertImage** method to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
+
+#### Usage example
+
+```
+DIM ratio AS LONG = pRichEdit.GetScalingRatio
+```
+
+# <a name="setscalingratio"></a>SetScalingRatio
+
+Sets the scaling ratio.
+
+```
+SUB CRichEditCtrl.SetScalingRatio (BYVAL ratio AS SINGLE)
+```
+#### Remarks
+
+The scaling ratio is used by the **InsertImage** method to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
+
+#### Usage example
+
+```
+pRichEdit.SetScalingRatio(ratio)
 ```
 
 # CRichEditCtrl Properties
