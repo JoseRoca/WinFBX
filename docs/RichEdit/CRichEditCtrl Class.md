@@ -183,6 +183,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [EnableWordWrap](#enablewordwrap) | Enables word wrap. |
 | [EllipsisState](#ellipsisstate) | Returns the current ellipsis state. |
 | [EventMask](#eventmask) | Gets/sets the event mask for a rich edit control. |
+| [FirstVisibleLine](#firstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
 | [HyphenateInfo](#hyphenateinfo) | Gets/sets information about hyphenation for a Microsoft Rich Edit control. |
 | [IMEModeBias](#imemodebias) | Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [IMEOptions](#imeoptions) | Gets/sets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system. |
@@ -2407,6 +2408,34 @@ For information about character classes and word-break flags, see [Word and Line
 
 ---
 
+# <a name="firstvisibleline"></a>FirstVisibleLine
+
+Gets the zero-based index of the uppermost visible line in a multiline rich edit control.
+```
+PROPERTY FirstVisibleLine () AS LONG
+```
+#### Return value
+
+The return value is the zero-based index of the uppermost visible line in a multiline edit control.
+
+For single-line rich edit controls, the return value is zero.
+
+---
+
+# <a name="getfirstvisibleline"></a>GetFirstVisibleLine
+
+Gets the zero-based index of the uppermost visible line in a multiline rich edit control.
+```
+FUNCTION GetFirstVisibleLine () AS LONG
+```
+#### Return value
+
+The return value is the zero-based index of the uppermost visible line in a multiline edit control.
+
+For single-line rich edit controls, the return value is zero.
+
+---
+
 # <a name="formatrange"></a>FormatRange
 
 Formats a range of text in a rich edit control for a specific device.
@@ -2455,20 +2484,6 @@ FUNCTION GetEllipsisState () AS BOOLEAN
 #### Return value
 
 Returns a boolean true (-1) if an ellipsis is being displayed of false (0) otherwise.
-
----
-
-# <a name="getfirstvisibleline"></a>GetFirstVisibleLine
-
-Gets the zero-based index of the uppermost visible line in a multiline rich edit control.
-```
-FUNCTION GetFirstVisibleLine () AS LONG
-```
-#### Return value
-
-The return value is the zero-based index of the uppermost visible line in a multiline edit control.
-
-For single-line rich edit controls, the return value is zero.
 
 ---
 
