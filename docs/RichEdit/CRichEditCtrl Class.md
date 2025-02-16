@@ -105,7 +105,7 @@ PROPERTY ScalingRatio (BYVAL Ratio AS SINGLE)
 ```
 #### Remarks
 
-The scaling ratio is used by the **InsertImage** method to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
+The scaling ratio is used by the **InsertImage** and **InsertObject** methods to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
 
 #### Usage examples
 
@@ -123,7 +123,7 @@ FUNCTION CRichEditCtrl.GetScalingRatio () AS SINGLE
 ```
 #### Remarks
 
-The scaling ratio is used by the **InsertImage** method to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
+The scaling ratio is used by the **InsertImage** and **InsertObject** methods to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
 
 #### Usage example
 
@@ -140,7 +140,7 @@ SUB CRichEditCtrl.SetScalingRatio (BYVAL ratio AS SINGLE)
 ```
 #### Remarks
 
-The scaling ratio is used by the **InsertImage** method to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
+The scaling ratio is used by the **InsertImage** and **InsertObject** methods to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
 
 #### Usage example
 
