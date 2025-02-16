@@ -3969,18 +3969,6 @@ If the operation succeeds, the return value is a nonzero value. If the operation
 
 ---
 
-# <a name="enablewordwrap"></a>EnableWordWrap
-
-Enables word wrap.
-```
-FUNCTION EnableWordWrap () AS BOOLEAN
-```
-#### Return value
-
-If the method succeeds it returns the boolean value true (-1); if it fails, it returns false (0).
-
----
-
 # <a name="disablewordwrap"></a>DisableWordWrap
 
 Disables word wrap.
@@ -3991,6 +3979,18 @@ DisableWordWrap (BYVAL LineWidth AS LONG = 32767) AS BOOLEAN
 | ---------- | ----------- |
 | *LineWidth* | The line width. Default value: 32767 characters. |
 
+#### Return value
+
+If the method succeeds it returns the boolean value true (-1); if it fails, it returns false (0).
+
+---
+
+# <a name="enablewordwrap"></a>EnableWordWrap
+
+Enables word wrap.
+```
+FUNCTION EnableWordWrap () AS BOOLEAN
+```
 #### Return value
 
 If the method succeeds it returns the boolean value true (-1); if it fails, it returns false (0).
