@@ -352,6 +352,8 @@ Gets/sets a pointer to the application-defined [AutoCorrectProc](https://learn.m
 
 (SET) If the operation succeeds, the return value is zero. If the operation fails, the return value is a nonzero value. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
 
+---
+
 # <a name="getautocorrectproc"></a>GetAutoCorrectProc
 
 Gets a pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
@@ -361,6 +363,8 @@ FUNCTION GetAutoCorrectProc () AS LONG_PTR
 #### Return value
 
 A pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
+
+---
 
 # <a name="setautocorrectproc"></a>SetAutoCorrectProc
 
@@ -375,6 +379,8 @@ FUNCTION SetAutoCorrectProc (BYVAL pfn AS LONG_PTR) AS HRESULT
 #### Return value
 
 If the operation succeeds, the return value is zero. If the operation fails, the return value is a nonzero value. Call **GetErrorInfo** to get information about the result.
+
+---
 
 # <a name="autourldetect"></a>AutoUrlDetect
 
