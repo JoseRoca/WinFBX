@@ -313,10 +313,12 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetIMEModeBias](#setimemodebias) | Sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [SetIMEOptions](#setimeoptions) | Sets the current Input Method Editor (IME) options. This message is available only in Asian-language support. |
 | [SetLangOptions](#setlangoptions) | Sets options for Input Method Editor (IME) and Asian language support in a rich edit control.|
+| [SetLeftMargin](#setleftmargin) | Sets the width of the left margin. |
 [SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
 | [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
 | [SetReadOnly](#setreadonly) | Changes the palette that a rich edit control uses for its display window. |
+| [SetRightMargin](#setrightmargin) | Sets the width of the right margin. |
 | [SetSel](#setsel) | Selects a range of characters in a rich edit control. |
 | [SetSelectionCharFormat](#setselectioncharformat) | Sets the selection character formatting in a rich edit control. |
 | [SetTableParams](#settableparams) | Changes the parameters of rows in a table. |
