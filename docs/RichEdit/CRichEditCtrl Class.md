@@ -318,7 +318,7 @@ pRichEdit.SetScalingRatio(ratio)
 [SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
 | [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
-| [SetReadOnly](#setreadonly) | Changes the palette that a rich edit control uses for its display window. |
+| [SetReadOnly](#setreadonly) | Sets or removes the read-only style (ES_READONLY) of a rich edit control. |
 | [SetRect](#setrect) | Sets the formatting rectangle of a rich edit control. |
 | [SetRectNP](#setrectNP) | Sets the formatting rectangle of a rich edit control. |
 | [SetRightMargin](#setrightmargin) | Sets the width of the right margin. |
