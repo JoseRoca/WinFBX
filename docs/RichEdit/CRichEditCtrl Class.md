@@ -3802,7 +3802,7 @@ The rich edit control does not check whether the new palette is valid.
 
 Changes the palette that a rich edit control uses for its display window.
 ```
-FUNCTION SetReadOnly (BYVAL fReadOnly AS LONG) AS LONG
+FUNCTION SetReadOnly (BYVAL fReadOnly AS LONG) AS BOOLEAN
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -3810,7 +3810,7 @@ FUNCTION SetReadOnly (BYVAL fReadOnly AS LONG) AS LONG
 
 #### Return value
 
-If the operation succeeds, the return value is nonzero. If the operation fails, the return value is zero.
+Returns the boolean true (-1) or false (0).
 
 #### Remarks
 
