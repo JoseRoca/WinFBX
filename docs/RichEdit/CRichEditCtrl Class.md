@@ -222,7 +222,8 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetBidiOptions](#getbidioptions) | Gets the current state of the bidirectional options in the rich edit control. |
 | [GetCharFormat](#getcharformat) | Gets the current character formatting in a rich edit control. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
-| [GetDefaultCharFormat](#getdefaultcharformat) | Gets the default character formatting in a rich e
+| [GetDefaultCharFormat](#getdefaultcharformat) | Gets the default character formatting in a rich edit control. |
+| [GetSelectionCharFormat](#getselectioncharformat) | Gets the selection character formatting in a rich edit control. |
 | [GetEllipsisState](#getellipsisstate) | Retrieves the current ellipsis state. |
 | [GetFirstVisibleLine](#getfirstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
 | [GetIMEColor](#getimecolor) | Retrieves the Input Method Editor (IME) composition color. |
@@ -268,7 +269,8 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetBidiOptions](#setbidioptions) | Sets the current state of the bidirectional options in the rich edit control. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
 | [SetCharFormat](#setcharformat) | Sets the current character formatting in a rich edit control. |
-| [SetDefaultCharFormat](#setdefaultcharformat) | Sets the default character formatting in a rich e
+| [SetDefaultCharFormat](#setdefaultcharformat) | Sets the default character formatting in a rich edit control. |
+| [SetSelectionCharFormat](#setselectioncharformat) | Sets the selection character formatting in a rich edit control. |
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [SetFontSize](#setfontsize) | Sets the font size for the selected text. |
 | [SetIMEColor](#setimecolor) | Sets the Input Method Editor (IME) composition color. |
