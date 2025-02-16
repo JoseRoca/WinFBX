@@ -675,7 +675,7 @@ Gets/sets the event mask for a rich edit control. The event mask specifies which
 
 #### Return value
 
-(GET)The event mask for this rich edit control.
+(GET) The event mask for this rich edit control.
 
 (SET) Returns the previous event mask. Call the (GET) **EventMask** property to check if the value has changed.
 
