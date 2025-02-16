@@ -223,6 +223,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetCharFormat](#getcharformat) | Gets the current character formatting in a rich edit control. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
 | [GetCTFModeBias](#getctfmodebias) | Gets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
+| [GetCTFOpenStatus](#getctfopenstatus) | Gets if the Text Services Framework (TSF) keyboard is open or closed. |
 | [GetDefaultCharFormat](#getdefaultcharformat) | Gets the default character formatting in a rich edit control. |
 | [GetEllipsisState](#getellipsisstate) | Retrieves the current ellipsis state. |
 | [GetFirstVisibleLine](#getfirstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
@@ -272,6 +273,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
 | [SetCharFormat](#setcharformat) | Sets the current character formatting in a rich edit control. |
 | [SetCTFModeBias](#setctfmodebias) | Sets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
+| [SetCTFOpenStatus](#setctfopenstatus) | Sets if the Text Services Framework (TSF) keyboard is open or closed. |
 | [SetDefaultCharFormat](#setdefaultcharformat) | Sets the default character formatting in a rich edit control. |
 | [SetSelectionCharFormat](#setselectioncharformat) | Sets the selection character formatting in a rich edit control. |
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
@@ -960,7 +962,7 @@ FUNCTION SetCTFModeBias (BYVAL nModeBias AS LONG) AS HRESULT
 
 #### Return value
 
-If successful, the return value is the new TSF mode bias value. If unsuccessful, the return value is the old TSF mode bias value. Call **GetCTFModeBias** property to check if the value has changed.
+If successful, the return value is the new TSF mode bias value. If unsuccessful, the return value is the old TSF mode bias value. Call the **GetCTFModeBias** function to check if the value has changed.
 
 #### Remarks
 
@@ -982,6 +984,32 @@ Gets/sets if the Text Services Framework (TSF) keyboard is open or closed.
 (GET) If the TSF keyboard is open, the return value is **TRUE**. Otherwise, it is **FALSE**.
 
 (SET) If successful, it returns **TRUE**. If unsuccessful, it returns **FALSE**. Call the (GET) **CTFOpenStatus** property to check if the value has changed.
+
+# <a name="getctfopenstatus"></a>GetCTFOpenStatus
+
+Gets if the Text Services Framework (TSF) keyboard is open or closed.
+```
+FUNCTION GetCTFOpenStatus () AS BOOLEAN
+```
+
+#### Return value
+
+If the TSF keyboard is open, the return value is **TRUE**. Otherwise, it is **FALSE**.
+
+
+# <a name="setctfopenstatus"></a>SetCTFOpenStatus
+
+Sets if the Text Services Framework (TSF) keyboard is open or closed.
+```
+FUNCTION SetCTFOpenStatus (BYVAL fTSFkbd AS LONG) AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fTSFkbd* | To turn on the TSF keyboard, use **TRUE**. To turn off the TSF keyboard, use **FALSE**. |
+
+#### Return value
+
+If successful, it returns true (-1). If unsuccessful, it returns false (0). Call the **GetCTFOpenStatus** function to check if the value has changed.
 
 # <a name="editstyle"></a>EditStyle
 
