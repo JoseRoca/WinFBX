@@ -256,10 +256,12 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetIMEProperty](#getimeproperty) | Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
 | [GetIMEOptions](#getimeoptions) | Gets the current Input Method Editor (IME) options. This message is available only in Asian-language support. |
 | [GetLangOptions](#getlangoptions) | Gets a rich edit control's option settings for Input Method Editor (IME) and Asian language support.
+| [GetLeftMargin](#getleftmargin) | Sets the width of the left margin. |
 | [GetLine](#getline) | Copies a line of text from a rich edit control. |
 | [GetLineCount](#getlinecount) | Gets the number of lines in a multiline rich edit control. |
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
+| [GetRightMargin](#getrightmargin) | Sets the width of the right margin. |
 | [GetSel](#getsel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
 | [GetSelectionCharFormat](#getselectioncharformat) | Gets the selection character formatting in a rich edit control. |
 | [GetSelText](#getseltext) | Retrieves the currently selected text in a rich edit control. |
