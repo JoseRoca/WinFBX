@@ -254,7 +254,8 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetIMECompText](#getimecompText) | Gets the Input Method Editor (IME) composition text. |
 | [GetIMEModeBias](#getimemodebias) | Gets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [GetIMEProperty](#getimeproperty) | Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
-| [GetIMEOptions](#getimeoptions) | Gets the current Input Method Editor (IME) options. This message is available only in Asian-| [GetLine](#getline) | Copies a line of text from a rich edit control. |
+| [GetIMEOptions](#getimeoptions) | Gets the current Input Method Editor (IME) options. This message is available only in Asian-| [GetLangOptions](#getlangoptions) | Gets a rich edit control's option settings for Input Method Editor (IME) and Asian language support. |
+| [GetLine](#getline) | Copies a line of text from a rich edit control. |
 | [GetLineCount](#getlinecount) | Gets the number of lines in a multiline rich edit control. |
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
@@ -307,7 +308,8 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetHyphenateInfo](#sethyphenateinfo) | Sets information about hyphenation for a Microsoft Rich Edit control. |
 | [SetIMEColor](#setimecolor) | Sets the Input Method Editor (IME) composition color. |
 | [SetIMEModeBias](#setimemodebias) | Sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
-| [SetIMEOptions](#setimeoptions) | Sets the current Input Method Editor (IME) options. This message is available only in Asian-| [SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
+| [SetIMEOptions](#setimeoptions) | Sets the current Input Method Editor (IME) options. This message is available only in Asian-| [SetLangOptions](#setlangoptions) | Sets a rich edit control's option settings for Input Method Editor (IME) and Asian language support. |
+| [SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
 | [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
 | [SetReadOnly](#setreadonly) | Changes the palette that a rich edit control uses for its display window. |
