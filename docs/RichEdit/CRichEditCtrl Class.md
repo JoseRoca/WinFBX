@@ -2106,6 +2106,19 @@ Text and Component Object Model (COM) objects are clipped by the rectangle. The 
 
 Banding is the process by which a single page of output is generated using one or more separate rectangles, or bands. When all bands are placed on the page, a complete image results. This approach is often used by raster printers that do not have sufficient memory or ability to image a full page at one time. Banding devices include most dot matrix printers as well as some laser printers.
 
+
+---
+
+# <a name="ellipsisstate"></a>EllipsisState
+
+Retrieves the current ellipsis state.
+```
+PROPERTY EllipsisState () AS BOOLEAN
+```
+#### Return value
+
+Returns a boolean true (-1) if an ellipsis is being displayed of false (0) otherwise.
+
 ---
 
 # <a name="emptyundobuffer"></a>EmptyUndoBuffer
@@ -2403,18 +2416,6 @@ FUNCTION GetCharFromPos (BYREF ptl AS .POINTL) AS LONG
 #### Return value
 
 The return value specifies the zero-based character index of the character nearest the specified point. The return value indicates the last character in the edit control if the specified point is beyond the last character in the control.
-
----
-
-# <a name="ellipsisstate"></a>EllipsisState
-
-Retrieves the current ellipsis state.
-```
-PROPERTY EllipsisState () AS BOOLEAN
-```
-#### Return value
-
-Returns a boolean true (-1) if an ellipsis is being displayed of false (0) otherwise.
 
 ---
 
