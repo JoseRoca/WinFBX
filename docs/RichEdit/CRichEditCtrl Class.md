@@ -152,7 +152,7 @@ pRichEdit.SetScalingRatio(ratio)
 
 | Name       | Description |
 | ---------- | ----------- |
-| [AutoCorrectProc](#autocorrectproc) | Gets/sets a pointer to the application-defined AutoCorrectProc callback function. |
+| [AutoCorrectProc](#autocorrectproc) | Gets/sets a pointer to the application-defined **AutoCorrectProc** callback function. |
 | [AutoUrlDetect](#autourldetect) | Gets/sets whether the auto URL detection is turned on in the rich edit control. |
 | [BidiOptions](#bidioptions) | Gets/sets the current state of the bidirectional options in the rich edit control. |
 | [CharFormat](#charformat) | Gets/sets the current character formatting in a rich edit control. |
@@ -215,6 +215,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [FindTextEx](#findtextex) | Finds text within a rich edit control. |
 | [FindWordBreak](#findwordbreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [FormatRange](#formatrange) | Formats a range of text in a rich edit control for a specific device. |
+| [GetAutoCorrectProc](#getautocorrectproc) | Gets a pointer to the application-defined **AutoCorrectProc** callback function. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
 | [GetEllipsisState](#getellipsisstate) | Retrieves the current ellipsis state. |
 | [GetFirstVisibleLine](#getfirstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
@@ -256,12 +257,13 @@ pRichEdit.SetScalingRatio(ratio)
 | [Scroll](#scroll) | Scrolls the text vertically in a multiline rich edit control. |
 | [ScrollCaret](#scrollcaret) | Scrolls the caret into view in a rich edit control. |
 | [SelectionType](#selectiontype) | Determines the selection type for a rich edit control. |
+| [SetAutoCorrectProc](#setautocorrectproc) | Sets a pointer to the application-defined **AutoCorrectProc** callback function. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [SetFontSize](#setfontsize) | Sets the font size for the selected text. |
 | [SetIMEColor](#setimecolor) | Sets the Input Method Editor (IME) composition color. |
 | [SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
-| [SetOleCallback](#setolecallback) | Gives a rich edit control an IRichEditOleCallback object that the control uses to get OLE-related resources and information from the client. |
+| [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
 | [SetReadOnly](#setreadonly) | Changes the palette that a rich edit control uses for its display window. |
 | [SetSel](#setsel) | Selects a range of characters in a rich edit control. |
@@ -325,6 +327,30 @@ Gets/sets a pointer to the application-defined [AutoCorrectProc](https://learn.m
 (GET) A pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
 
 (SET) If the operation succeeds, the return value is zero. If the operation fails, the return value is a nonzero value. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+# <a name="getautocorrectproc"></a>GetAutoCorrectProc
+
+Gets a pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
+```
+FUNCTION GetAutoCorrectProc () AS LONG_PTR
+```
+#### Return value
+
+A pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
+
+# <a name="setautocorrectproc"></a>SetAutoCorrectProc
+
+Sets a pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
+```
+FUNCTION SetAutoCorrectProc (BYVAL pfn AS LONG_PTR) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pfn* | Pointer to the [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) application-defined callback function. |
+
+#### Return value
+
+(SET) If the operation succeeds, the return value is zero. If the operation fails, the return value is a nonzero value. Call **GetErrorInfo** to get information about the result.
 
 # <a name="autourldetect"></a>AutoUrlDetect
 
