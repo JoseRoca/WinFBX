@@ -223,7 +223,6 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetCharFormat](#getcharformat) | Gets the current character formatting in a rich edit control. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
 | [GetDefaultCharFormat](#getdefaultcharformat) | Gets the default character formatting in a rich edit control. |
-| [GetSelectionCharFormat](#getselectioncharformat) | Gets the selection character formatting in a rich edit control. |
 | [GetEllipsisState](#getellipsisstate) | Retrieves the current ellipsis state. |
 | [GetFirstVisibleLine](#getfirstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
 | [GetIMEColor](#getimecolor) | Retrieves the Input Method Editor (IME) composition color. |
@@ -235,6 +234,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
 | [GetSel](#getsel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
+| [GetSelectionCharFormat](#getselectioncharformat) | Gets the selection character formatting in a rich edit control. |
 | [GetSelText](#getseltext) | Retrieves the currently selected text in a rich edit control. |
 | [GetTableParams](#gettableparams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
 | [GetTextEx](#gettextex) | Gets all of the text from the rich edit control in any particular code base you want. |
@@ -245,6 +245,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetUndoName](#getundoname) | Retrieves the type of the next undo action, if any. |
 | [GetWordBreakProc](#getwordbreakproc) | Gets the address of the current Wordwrap function. |
 | [GetWordBreakProcEx](#getwordbreakprocex) | Retrieves the address of the currently registered extended word-break procedure. |
+| [GetWordCharFormat](#getwordcharformat) | Gets the word character formatting in a rich edit control. |
 | [GetWordWrapMode](#getwordwrapmode) | Gets the current word wrap and word-break options for the rich edit control. |
 | [GetZoom](#getzoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
 | [HideSelection](#hideselection) | Hides or shows the selection in a rich edit control. |
@@ -292,6 +293,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetWordWrapMode](#setwordwrapmode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
 | [SetWordBreakProc](#setwordbreakproc) | Replaces a rich edit control's default Wordwrap function with an application-defined Wordwrap function. |
 | [SetWordBreakProcEx](#setwordbreakprocex) | Sets the extended word-break procedure. |
+| [SetWordCharFormat](#setwordcharformat) | Sets the word character formatting in a rich edit control. |
 | [SetZoom](#setzoom) | Sets the zoom ratio anywhere between 1/64 and 64. |
 | [ShowScrollBar](#showscrollbar) | Shows or hides one of the scroll bars in the Text Host window. |
 | [StopGroupTyping](#stopgrouptyping) | Stops the control from collecting additional typing actions into the current undo action. |
@@ -785,6 +787,10 @@ Sets the selection character formatting in a rich edit control.
 FUNCTION SetSelectionCharFormat (BYREF cf AS CHARFORMATW) AS BOOLEAN
 ```
 
+#### Return value
+
+If the operation succeeds, the return value is true (-1). If the operation fails, the return value is false (0).
+
 #### Usage examples
 
 Select text and change color
@@ -815,10 +821,6 @@ pRichEdit->SetSelectionCharFormat(cf) ' // Set the format
 pRichEdit->HideSelection(TRUE)        ' // Hide selection
 ```
 
-#### Return value
-
-If the operation succeeds, the return value is true (-1). If the operation fails, the return value is false (0).
-
 # <a name="wordcharformat"></a>WordCharFormat
 
 Gets/sets the character formatting attributes for the currently selected word.
@@ -835,6 +837,31 @@ Gets/sets the character formatting attributes for the currently selected word.
 (GET) Returns the value of the **dwMask** member of the [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
 
 (SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+# <a name="getwordcharformat"></a>GetWordCharFormat
+
+Gets the character formatting attributes for the currently selected word.
+```
+FUNCTION GetWordCharFormat () AS CHARFORMATW
+```
+
+#### Return value
+
+Returns a [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
+
+# <a name="wordcharformat"></a>WordCharFormat
+
+Setss the character formatting attributes for the currently selected word.
+```
+FUNCTION SetWordCharFormat (BYREF cf AS CHARFORMATW) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cf* | A [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure specifying the character formatting to use. Only the formatting attributes specified by the **dwMask** member are changed. The **szFaceName** and **bCharSet** members may be overruled when invalid for characters, for example: Arial on kanji characters. |
+
+#### Return value
+
+If the operation succeeds, the return value is true (-1). If the operation fails, the return value is false (0).
 
 # <a name="ctfmodebias"></a>CTFModeBias
 
