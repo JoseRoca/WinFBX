@@ -219,6 +219,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [FormatRange](#formatrange) | Formats a range of text in a rich edit control for a specific device. |
 | [GetAutoCorrectProc](#getautocorrectproc) | Gets a pointer to the application-defined **AutoCorrectProc** callback function. |
 | [GetAutoUrlDetect](#getautourldetect) | Gets whether the auto URL detection is turned on in the rich edit control. |
+| [GetBidiOptions](#getbidioptions) | Gets the current state of the bidirectional options in the rich edit control. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
 | [GetEllipsisState](#getellipsisstate) | Retrieves the current ellipsis state. |
 | [GetFirstVisibleLine](#getfirstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
@@ -262,6 +263,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SelectionType](#selectiontype) | Determines the selection type for a rich edit control. |
 | [SetAutoCorrectProc](#setautocorrectproc) | Sets a pointer to the application-defined **AutoCorrectProc** callback function. |
 | [SetAutoUrlDetect](#setautourldetect) | Enables or disables automatic detection of URLs by a rich edit control. |
+| [SetBidiOptions](#setbidioptions) | Sets the current state of the bidirectional options in the rich edit control. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [SetFontSize](#setfontsize) | Sets the font size for the selected text. |
@@ -556,6 +558,38 @@ In plain text controls, **BidiOptions** automatically determines the paragraph d
 
 **BidiOptions** only switches the default paragraph format to RTL (right to left) if it finds an RTL character.
 
+# <a name="getbidioptions"></a>GetBidiOptions
+
+Gets the current state of the bidirectional options in the rich edit control.
+```
+GetBidiOptions () AS .BIDIOPTIONS
+```
+
+#### Return value
+
+A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure with the current state of the bidirectional options in the rich edit control. The values of the **wMask** and **wEffects** contain the current state of the bidirectional options in the rich edit control.
+
+# <a name="setbidioptions"></a>SetBidiOptions
+
+Sets the current state of the bidirectional options in the rich edit control.
+```
+SUB SetBidiOptions (BYREF _Options AS .BIDIOPTIONS)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *_Options* | A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure that indicates how to set the state of the bidirectional options in the rich edit control. |
+
+#### Return value
+
+This message does not return a result.
+
+#### Remarks
+
+The rich edit control must be in plain text mode or **BidiOptions** will not do anything.
+
+In plain text controls, **BidiOptions** automatically determines the paragraph direction and/or alignment based on the context rules. These rules state that the direction and/or alignment is derived from the first strong character in the control. A strong character is one from which text direction can be determined (see Unicode Standard version 2.0). The paragraph direction and/or alignment is applied to the default format.
+
+**BidiOptions** only switches the default paragraph format to RTL (right to left) if it finds an RTL character.
 
 # <a name="charformat"></a>CharFormat
 
