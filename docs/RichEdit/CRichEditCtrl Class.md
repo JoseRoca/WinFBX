@@ -1289,7 +1289,7 @@ The bits for these values all fit in the **ELLIPSIS_MASK**.
 
 #### Return value
 
-A boolean true(-1) or false (0)
+A boolean true(-1) or false (0).
 
 # <a name="eventmask"></a>EventMask
 
