@@ -176,11 +176,12 @@ pRichEdit.SetScalingRatio(ratio)
 | [WordCharFormat](#wordcharformat) | Gets/sets the character formatting attributes for the currently selected word. |
 | [CTFModeBias](#ctfmodebias) | Gets/sets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [CTFOpenStatus](#ctfopenstatus) | Gets/sets if the Text Services Framework (TSF) keyboard is open or closed. |
+| [DisableWordWrap](#disablewordwrap) | Disables word wrap. |
 | [EditStyle](#editstyle) | Gets/sets the current edit style flags. |
 | [EditStyleEx](#editstyleex) | Gets/sets the extended edit style flags. |
 | [EllipsisMode](#ellipsismode) | Gets/sets the current ellipsis mode. |
 | [EnableWordWrap](#enablewordwrap) | Enables word wrap. |
-| [DisableWordWrap](#disablewordwrap) | Disables word wrap. |
+| [EllipsisState](#ellipsisstate) | Returns the current ellipsis state. |
 | [EventMask](#eventmask) | Gets/sets the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window. |
 | [HyphenateInfo](#hyphenateinfo) | Gets/sets information about hyphenation for a Microsoft Rich Edit control. |
 | [IMEModeBias](#imemodebias) | Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
@@ -2325,6 +2326,18 @@ The return value specifies the zero-based character index of the character neare
 
 ---
 
+# <a name="ellipsisstate"></a>EllipsisState
+
+Retrieves the current ellipsis state.
+```
+PROPERTY EllipsisState () AS BOOLEAN
+```
+#### Return value
+
+Returns a boolean true (-1) if an ellipsis is being displayed of false (0) otherwise.
+
+---
+
 # <a name="getellipsisstate"></a>GetEllipsisState
 
 Retrieves the current ellipsis state.
@@ -2332,7 +2345,8 @@ Retrieves the current ellipsis state.
 FUNCTION GetEllipsisState () AS BOOLEAN
 ```
 #### Return value
-The return value is **TRUE** if an ellipsis is being displayed and **FALSE** otherwise.
+
+Returns a boolean true (-1) if an ellipsis is being displayed of false (0) otherwise.
 
 ---
 
