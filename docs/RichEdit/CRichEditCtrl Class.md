@@ -222,6 +222,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetBidiOptions](#getbidioptions) | Gets the current state of the bidirectional options in the rich edit control. |
 | [GetCharFormat](#getcharformat) | Gets the current character formatting in a rich edit control. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
+| [GetCTFModeBias](#getctfmodebias) | Gets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [GetDefaultCharFormat](#getdefaultcharformat) | Gets the default character formatting in a rich edit control. |
 | [GetEllipsisState](#getellipsisstate) | Retrieves the current ellipsis state. |
 | [GetFirstVisibleLine](#getfirstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
@@ -270,6 +271,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetBidiOptions](#setbidioptions) | Sets the current state of the bidirectional options in the rich edit control. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
 | [SetCharFormat](#setcharformat) | Sets the current character formatting in a rich edit control. |
+| [SetCTFModeBias](#setctfmodebias) | Sets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [SetDefaultCharFormat](#setdefaultcharformat) | Sets the default character formatting in a rich edit control. |
 | [SetSelectionCharFormat](#setselectioncharformat) | Sets the selection character formatting in a rich edit control. |
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
@@ -895,6 +897,70 @@ Gets/sets the Text Services Framework mode bias values for a Microsoft Rich Edit
 (GET) The current Text Services Framework mode bias value.
 
 (SET) If successful, the return value is the new TSF mode bias value. If unsuccessful, the return value is the old TSF mode bias value. Call the (GET) **CTFModeBias** property to check if the value has changed.
+
+#### Remarks
+
+When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
+
+# <a name="getctfmodebias"></a>GetCTFModeBias
+
+Gets the Text Services Framework mode bias values for a Microsoft Rich Edit control.
+```
+FUNCTION GetCTFModeBias () AS LONG
+```
+| Mode bias value  | Meaning |
+| ---------------- | ------- |
+| **CTFMODEBIAS_DEFAULT** | There is no mode bias. |
+| **CTFMODEBIAS_FILENAME** | The bias is to a filename. |
+| **CTFMODEBIAS_NAME** | The bias is to a name. |
+| **CTFMODEBIAS_READING** | The bias is to the reading. |
+| **CTFMODEBIAS_DATETIME** | The bias is to a date or time. |
+| **CTFMODEBIAS_CONVERSATION** | The bias is to a conversation. |
+| **CTFMODEBIAS_NUMERIC** | The bias is to a number. |
+| **CTFMODEBIAS_HIRAGANA** | The bias is to hiragana strings. |
+| **CTFMODEBIAS_KATAKANA** | The bias is to katakana strings. |
+| **CTFMODEBIAS_HANGUL** | The bias is to Hangul characters. |
+| **CTFMODEBIAS_HALFWIDTHKATAKANA** | The bias is to half-width katakana strings. |
+| **CTFMODEBIAS_FULLWIDTHALPHANUMERIC** | The bias is to full-width alphanumeric characters. |
+| **CTFMODEBIAS_HALFWIDTHALPHANUMERIC** | The bias is to half-width alphanumeric characters. |
+
+#### Return value
+
+The current Text Services Framework mode bias value.
+
+#### Remarks
+
+When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
+
+# <a name="setctfmodebias"></a>SetCTFModeBias
+
+Sets the Text Services Framework mode bias values for a Microsoft Rich Edit control.
+```
+FUNCTION SetCTFModeBias (BYVAL nModeBias AS LONG) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nModeBias* | Mode bias value. This can be one of the following values below. |
+
+| Mode bias value  | Meaning |
+| ---------------- | ------- |
+| **CTFMODEBIAS_DEFAULT** | There is no mode bias. |
+| **CTFMODEBIAS_FILENAME** | The bias is to a filename. |
+| **CTFMODEBIAS_NAME** | The bias is to a name. |
+| **CTFMODEBIAS_READING** | The bias is to the reading. |
+| **CTFMODEBIAS_DATETIME** | The bias is to a date or time. |
+| **CTFMODEBIAS_CONVERSATION** | The bias is to a conversation. |
+| **CTFMODEBIAS_NUMERIC** | The bias is to a number. |
+| **CTFMODEBIAS_HIRAGANA** | The bias is to hiragana strings. |
+| **CTFMODEBIAS_KATAKANA** | The bias is to katakana strings. |
+| **CTFMODEBIAS_HANGUL** | The bias is to Hangul characters. |
+| **CTFMODEBIAS_HALFWIDTHKATAKANA** | The bias is to half-width katakana strings. |
+| **CTFMODEBIAS_FULLWIDTHALPHANUMERIC** | The bias is to full-width alphanumeric characters. |
+| **CTFMODEBIAS_HALFWIDTHALPHANUMERIC** | The bias is to half-width alphanumeric characters. |
+
+#### Return value
+
+If successful, the return value is the new TSF mode bias value. If unsuccessful, the return value is the old TSF mode bias value. Call **GetCTFModeBias** property to check if the value has changed.
 
 #### Remarks
 
