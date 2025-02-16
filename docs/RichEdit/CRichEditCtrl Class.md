@@ -3660,6 +3660,18 @@ pRichEdit.LeftMargin = 50
 
 ---
 
+# <a name="setleftmargin"></a>SetLeftMargin
+
+Sets the width of the left margin for a rich edit control. The message redraws the control to reflect the new margin.
+```
+SUB SetLeftMargin (BYVAL nWidth AS LONG)
+```
+#### Usage example
+
+pRichEdit.SetLeftMargin(50)
+
+---
+
 # <a name="rightmargin"></a>RightMargin
 
 Sets the width of the right margin for a rich edit control. The message redraws the control to reflect the new margin.
@@ -3669,6 +3681,18 @@ PROPERTY RightMargin (BYVAL nWidth AS LONG)
 #### Usage example
 
 pRichEdit.RightMargin = 50
+
+---
+
+# <a name="setrightmargin"></a>SetRightMargin
+
+Sets the width of the right margin for a rich edit control. The message redraws the control to reflect the new margin.
+```
+SUB SetRightMargin (BYVAL nWidth AS LONG)
+```
+#### Usage example
+
+pRichEdit.SetRightMargin(50)
 
 ---
 
