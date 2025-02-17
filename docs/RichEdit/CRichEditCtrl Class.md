@@ -2107,7 +2107,7 @@ FUNCTION SetParaFormat (BYREF pfmt AS .PARAFORMAT) AS BOOLEAN
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *pfmt* | (SET) A [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure specifying the new paragraph formatting attributes. Only the attributes specified by the **dwMask** member are changed. |
+| *pfmt* | A [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure specifying the new paragraph formatting attributes. Only the attributes specified by the **dwMask** member are changed. |
 
 #### Return value
 
