@@ -1883,7 +1883,7 @@ SUB SetLimitText (BYVAL chMax AS DWORD)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *chMax* | (SET) The maximum number of characters the user can enter. If this parameter is zero, the text length is set to 64,000 characters. |
+| *chMax* | The maximum number of characters the user can enter. If this parameter is zero, the text length is set to 64,000 characters. |
 
 #### Return value
 
