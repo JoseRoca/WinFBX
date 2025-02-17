@@ -286,6 +286,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetTextRange](#gettextrange) | Retrieves a specified range of characters from a rich edit control. |
 | [GetThumb](#getthumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
 | [GetTouchOptions](#gettouchoptions) | Gets the touch options that are associated with a rich edit control. |
+| [GetTypographyOptions](#gettypographyoptions) | Gets the current state of the typography options of a rich edit control. |
 | [GetUndoName](#getundoname) | Retrieves the type of the next undo action, if any. |
 | [GetWordBreakProc](#getwordbreakproc) | Gets the address of the current Wordwrap function. |
 | [GetWordBreakProcEx](#getwordbreakprocex) | Retrieves the address of the currently registered extended word-break procedure. |
@@ -360,6 +361,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetTextStrikeOut](#settextstrikeout) | Sets the attribute of selected text or word to strike out. |
 | [SetTextUnderline](#settextunderline) | Sets the attribute of selected text or word to underline. |
 | [SetTouchOptions](#settouchoptions) | Sets the touch options that are associated with a rich edit control. |
+| [SetTypographyOptions](#settypographyoptions) | Sets the current state of the typography options of a rich edit control. |
 | [SetUIAName](#setuianame) | Sets the maximum number of actions that can stored in the undo queue. |
 | [SetUndoLimit](#setundolimit) | Sets the maximum number of actions that can stored in the undo queue. |
 | [SetWordWrapMode](#setwordwrapmode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
@@ -2730,11 +2732,46 @@ Gets/sets the current state of the typography options of a rich edit control.
 
 (GET Returns the current typography options.
 
-(SET) Returns **TRUE** if *pto* is valid, otherwise **FALSE**. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
-
 #### Remarks
 
 You can turn on advanced line breaking by sending calling the (SET) **TypographyOPtions** property. Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
+
+---
+
+# <a name="gettypographyoptions"></a>GetTypographyOptions
+
+Gets the current state of the typography options of a rich edit control.
+```
+FUNCTION GetTypographyOptions () AS DWORD
+```
+#### Return value
+
+Returns the current typography options.
+
+#### Remarks
+
+You can turn on advanced line breaking by sending calling the **SetTypographyOPtions** property. Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
+
+---
+
+# <a name="settypographyoptions"></a>SetTypographyOptions
+
+Sets the current state of the typography options of a rich edit control.
+```
+FUNCTION SetTypographyOptions (BYVAL pto AS LONG, BYVAL fMask AS LONG) AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pto* | Specifies one or both of the following values.<br>**TO_ADVANCEDTYPOGRAPHY**. Advanced line breaking and line formatting is turned on.<br>**TO_SIMPLELINEBREAK**. Faster line breaking for simple text (requires **TO_ADVANCEDTYPOGRAPHY**). |
+| *fMask* | A mask consisting of one or more of the flags in *pto*. Only the flags that are set in this mask will be set or cleared. This allows a single flag to be set or cleared without reading the current flag states. |
+
+#### Return value
+
+A boollean true (-1) or false (0).
+
+#### Remarks
+
+You can turn on advanced line breaking by sending calling the **SetTypographyOPtions** property. Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
 
 ---
 
