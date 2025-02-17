@@ -278,6 +278,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetTextColor](#gettextcolor) | Gets the text color of the selected text or the word under the cursor. |
 | [GetTextEx](#gettextex) | Gets all of the text from the rich edit control in any particular code base you want. |
 | [GetTextFontName](#gettextfontname) | Gets the font name of the selected text or the word under the cursor. |
+| [GetTextHeight](#gettextheight) | Gets the text height of the selected text or the word under the cursor. |
 | [GetTextLength](#gettextlength) | Retrieves the length of all text in a rich edit control. |
 | [GetTextLengthEx](#gettextlengthex) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
 | [GetTextRange](#gettextrange) | Retrieves a specified range of characters from a rich edit control. |
@@ -349,6 +350,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetTextEx](#settextex) | Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text. |
 | [SetTextBold](#settextbold) | Sets the attribute of selected text or word to bold. |
 | [SetTextFontName](#settextfontname) | Sets the font name of the selected text or the word under the cursor. |
+| [SetTextHeight](#settextheight) | Sets the text height of the selected text or the word under the cursor. |
 | [SetTextItalic](#settextitalic) | Sets the attribute of selected text or word to italic. |
 | [SetTextStrikeOut](#settextstrikeout) | Sets the attribute of selected text or word to strike out. |
 | [SetTextUnderline](#settextunderline) | Sets the attribute of selected text or word to underline. |
@@ -4946,6 +4948,23 @@ To select text programatically, use the **SetSel** method.
 
 ---
 
+# <a name="gettextheight"></a>GetTextHeight
+
+Gets the height of the selected text or the word under the cursor.
+```
+FUNCTION GetTextHeight () AS LONG
+```
+
+#### Return value
+
+The height of the selected text or the word under the cursor if there is not selection.
+
+#### Remarks
+
+To select text programatically, use the **SetSel** method.
+
+---
+
 # <a name="textheight"></a>TextHeight
 
 Gets/sets the offset of the selected text or the word under the cursor.
@@ -4969,12 +4988,11 @@ To select text programatically, use the **SetSel** method.
 
 ---
 
-# <a name="textfontname"></a>TextFontName
+# <a name="settextfontname"></a>SetTextFontName
 
-Gets/sets the font face name of the selected text or the word under the cursor if there is not selection.
+Sets the font face name of the selected text or the word under the cursor if there is not selection.
 ```
-(GET) PROPERTY TextFontName () AS CWSTR
-(SET) PROPERTY TextFontName (BYREF wszFaceName AS WSTRING)
+FUNCTION SetTextHeight (BYVAL ptSize AS LONG) AS BOOLEAN
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -4982,7 +5000,7 @@ Gets/sets the font face name of the selected text or the word under the cursor i
 
 #### Return value
 
-(GET) The offset of the selected text or the word under the cursor if there is not selection.
+A boolean true (-1) of false (0).
 
 #### Remarks
 
