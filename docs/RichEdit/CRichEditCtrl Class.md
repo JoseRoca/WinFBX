@@ -277,6 +277,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetText](#gettext) | Gets the text from a rich edit control. |
 | [GetTextColor](#gettextcolor) | Gets the text color of the selected text or the word under the cursor. |
 | [GetTextEx](#gettextex) | Gets all of the text from the rich edit control in any particular code base you want. |
+| [GetTextFontName](#gettextfontname) | Gets the font name of the selected text or the word under the cursor. |
 | [GetTextLength](#gettextlength) | Retrieves the length of all text in a rich edit control. |
 | [GetTextLengthEx](#gettextlengthex) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
 | [GetTextRange](#gettextrange) | Retrieves a specified range of characters from a rich edit control. |
@@ -347,6 +348,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetTextColor](#settextcolor) | Sets the text color of the selected text or the word under the cursor. |
 | [SetTextEx](#settextex) | Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text. |
 | [SetTextBold](#settextbold) | Sets the attribute of selected text or word to bold. |
+| [SetTextFontName](#settextfontname) | Sets the font name of the selected text or the word under the cursor. |
 | [SetTextItalic](#settextitalic) | Sets the attribute of selected text or word to italic. |
 | [SetTextStrikeOut](#settextstrikeout) | Sets the attribute of selected text or word to strike out. |
 | [SetTextUnderline](#settextunderline) | Sets the attribute of selected text or word to underline. |
@@ -4985,3 +4987,43 @@ Gets/sets the font face name of the selected text or the word under the cursor i
 #### Remarks
 
 To select text programatically, use the **SetSel** method.
+
+---
+
+# <a name="gettextfontname"></a>GetTextFontName
+
+Gets the font face name of the selected text or the word under the cursor if there is not selection.
+```
+FUNCTION GetTextFontName () AS CWSTR
+```
+
+#### Return value
+
+The offset of the selected text or the word under the cursor if there is not selection.
+
+#### Remarks
+
+To select text programatically, use the **SetSel** method.
+
+---
+
+# <a name="settextfontname"></a>SetTextFontName
+
+Sets the font face name of the selected text or the word under the cursor if there is not selection.
+```
+FUNCTION SetTextFontName (BYREF wszFaceName AS WSTRING) AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszFaceName* | The new font face name, e.g. "Times New Roman". |
+
+#### Return value
+
+A boolean true (-1) or false (0).
+
+#### Remarks
+
+To select text programatically, use the **SetSel** method.
+
+---
+
