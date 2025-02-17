@@ -260,6 +260,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetLimitText](#getlimittext) | Gets the current text limit for a rich edit control. |
 | [GetLine](#getline) | Copies a line of text from a rich edit control. |
 | [GetLineCount](#getlinecount) | Gets the number of lines in a multiline rich edit control. |
+| [GetModify](#getmodify) | Gets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [GetRect](#getrect) | Gets the formatting rectangle of a rich edit control. |
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
@@ -318,6 +319,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetLeftMargin](#setleftmargin) | Sets the width of the left margin. |
 | [SetLimitText](#setlimittext) | Sets the current text limit for a rich edit control. |
 | [SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
+| [SetModify](#setmodify) | Sets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
 | [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
 | [SetReadOnly](#setreadonly) | Sets or removes the read-only style (ES_READONLY) of a rich edit control. |
@@ -1915,6 +1917,42 @@ Gets/sets the state of a rich edit control's modification flag. The flag indicat
 ### Remarks
 
 The system automatically clears the modification flag to zero when the control is created. If the user changes the control's text, the system sets the flag to nonzero. You can use the (SET) **Modify** property to set or clear the flag.
+
+---
+
+# <a name="getmodify"></a>GetModify
+
+Gets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified.
+```
+FUNCTION GetModify () AS LONG
+```
+#### Return value
+
+If the contents of edit control have been modified, the return value is nonzero; otherwise, it is zero.
+
+### Remarks
+
+The system automatically clears the modification flag to zero when the control is created. If the user changes the control's text, the system sets the flag to nonzero. You can use the **SetModify** method to set or clear the flag.
+
+---
+
+# <a name="setmodify"></a>SetModify
+
+Sets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified.
+```
+SUB SetModify (BYVAL fModify AS LONG)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fModify* | (SET) The new value for the modification flag. A value of **TRUE** indicates the text has been modified, and a value of **FALSE** indicates it has not been modified. |
+
+#### Return value
+
+The set property does not return a value.
+
+### Remarks
+
+The system automatically clears the modification flag to zero when the control is created. If the user changes the control's text, the system sets the flag to nonzero. You can use the **SetModify** method to set or clear the flag.
 
 ---
 
