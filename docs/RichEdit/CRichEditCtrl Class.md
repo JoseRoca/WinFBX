@@ -285,6 +285,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetTextOffset](#gettextoffset) | Gets the text offset of the selected text or the word under the cursor. |
 | [GetTextRange](#gettextrange) | Retrieves a specified range of characters from a rich edit control. |
 | [GetThumb](#getthumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
+| [GetTouchOptions](#gettouchoptions) | Gets the touch options that are associated with a rich edit control. |
 | [GetUndoName](#getundoname) | Retrieves the type of the next undo action, if any. |
 | [GetWordBreakProc](#getwordbreakproc) | Gets the address of the current Wordwrap function. |
 | [GetWordBreakProcEx](#getwordbreakprocex) | Retrieves the address of the currently registered extended word-break procedure. |
@@ -358,6 +359,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetTextOffset](#settextoffset) | Sets the text offset of the selected text or the word under the cursor. |
 | [SetTextStrikeOut](#settextstrikeout) | Sets the attribute of selected text or word to strike out. |
 | [SetTextUnderline](#settextunderline) | Sets the attribute of selected text or word to underline. |
+| [SetTouchOptions](#settouchoptions) | Sets the touch options that are associated with a rich edit control. |
 | [SetUIAName](#setuianame) | Sets the maximum number of actions that can stored in the undo queue. |
 | [SetUndoLimit](#setundolimit) | Sets the maximum number of actions that can stored in the undo queue. |
 | [SetWordWrapMode](#setwordwrapmode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
@@ -634,11 +636,11 @@ A rich edit control sends the [EN_LINK](https://learn.microsoft.com/en-us/window
 Gets/sets the current state of the bidirectional options in the rich edit control.
 ```
 (GET) PROPERTY BidiOptions () AS .BIDIOPTIONS
-(SET) PROPERTY BidiOptions (BYREF _Options AS .BIDIOPTIONS)
+(SET) PROPERTY BidiOptions (BYREF opt AS .BIDIOPTIONS)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *_Options* | A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure that indicates how to set the state of the bidirectional options in the rich edit control. |
+| *opt* | A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure that indicates how to set the state of the bidirectional options in the rich edit control. |
 
 #### Return value
 
@@ -673,11 +675,11 @@ A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-
 
 Sets the current state of the bidirectional options in the rich edit control.
 ```
-SUB SetBidiOptions (BYREF _Options AS .BIDIOPTIONS)
+SUB SetBidiOptions (BYREF opt AS .BIDIOPTIONS)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *_Options* | A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure that indicates how to set the state of the bidirectional options in the rich edit control. |
+| *opt* | A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure that indicates how to set the state of the bidirectional options in the rich edit control. |
 
 #### Return value
 
@@ -2655,19 +2657,19 @@ In rich text mode, a rich edit control has standard rich edit functionality. How
 
 Gets/sets the touch options that are associated with a rich edit control.
 ```
-(GET) PROPERTY TouchOptions (BYVAL _Options AS LONG PTR) AS DWORD
-(SET) PROPERTY TouchOptions (BYVAL _Options AS LONG, BYVAL fEnable AS LONG)
+(GET) PROPERTY TouchOptions (BYVAL opt AS LONG PTR) AS DWORD
+(SET) PROPERTY TouchOptions (BYVAL opt AS LONG, BYVAL fEnable AS LONG)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *_Options* | (GET/SET) The touch options to set. It can be one of the following values:<br>**RTO_SHOWHANDLES**. Show or hide the touch gripper handles, depending on the value of *_Options*.<br>**RTO_DISABLEHANDLES**. Enable or disable the touch gripper handles, depending on the value of *_Options*. When handles are disabled, they are hidden if they are visible and remain hidden until **TouchOptions** changes their status. |
+| *opt* | (GET/SET) The touch options to set. It can be one of the following values:<br>**RTO_SHOWHANDLES**. Show or hide the touch gripper handles, depending on the value of *opt*.<br>**RTO_DISABLEHANDLES**. Enable or disable the touch gripper handles, depending on the value of *opt*. When handles are disabled, they are hidden if they are visible and remain hidden until **TouchOptions** changes their status. |
 | *fEnable* | (SET) Set to **TRUE** to show/enable the touch selection handles, or **FALSE** to hide/disable the touch selection handles. |
 
 #### Return value
 
-(GET) Returns the value of the option specified by the *_Options* parameter. It is nonzero if *_Options* is **RTO_SHOWHANDLES** and the touch grippers are visible; zero, otherwise.
+(GET) Returns the value of the option specified by the *opt* parameter. It is nonzero if *opt* is **RTO_SHOWHANDLES** and the touch grippers are visible; zero, otherwise.
 
-(SET) Returns **TRUE** if *pto* is valid, otherwise **FALSE**. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+(SET) Returns **TRUE** if *opt* is valid, otherwise **FALSE**.
 
 #### Remarks
 
@@ -2675,23 +2677,36 @@ Advanced line breaking is turned on automatically by the rich edit control when 
 
 ---
 
-# <a name="touchoptions"></a>TouchOptions
+# <a name="gettouchoptions"></a>GetTouchOptions
 
-Gets/sets the touch options that are associated with a rich edit control.
+Gets the touch options that are associated with a rich edit control.
 ```
-(GET) PROPERTY TouchOptions (BYVAL _Options AS LONG PTR) AS DWORD
-(SET) PROPERTY TouchOptions (BYVAL _Options AS LONG, BYVAL fEnable AS LONG)
+FUNCTION GetTouchOptions (BYVAL opt AS LONG PTR) AS DWORD
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *_Options* | (GET/SET) The touch options to set. It can be one of the following values:<br>**RTO_SHOWHANDLES**. Show or hide the touch gripper handles, depending on the value of *_Options*.<br>**RTO_DISABLEHANDLES**. Enable or disable the touch gripper handles, depending on the value of *_Options*. When handles are disabled, they are hidden if they are visible and remain hidden until **TouchOptions** changes their status. |
-| *fEnable* | (SET) Set to **TRUE** to show/enable the touch selection handles, or **FALSE** to hide/disable the touch selection handles. |
+| *opt* | The touch options to set. It can be one of the following values:<br>**RTO_SHOWHANDLES**. Show or hide the touch gripper handles, depending on the value of *opt*.<br>**RTO_DISABLEHANDLES**. Enable or disable the touch gripper handles, depending on the value of *opt*. When handles are disabled, they are hidden if they are visible and remain hidden until **TouchOptions** changes their status. |
 
 #### Return value
 
-(GET) Returns the value of the option specified by the *_Options* parameter. It is nonzero if *_Options* is **RTO_SHOWHANDLES** and the touch grippers are visible; zero, otherwise.
+Returns the value of the option specified by the *opt* parameter. It is nonzero if *opt* is **RTO_SHOWHANDLES** and the touch grippers are visible; zero, otherwise.
 
-(SET) Returns **TRUE** if *pto* is valid, otherwise **FALSE**. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+#### Remarks
+
+Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
+
+---
+
+# <a name="settouchoptions"></a>SetTouchOptions
+
+Sets the touch options that are associated with a rich edit control.
+```
+FUNCTION SetTouchOptions (BYVAL opt AS LONG, BYVAL fEnable AS LONG) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *opt* | The touch options to set. It can be one of the following values:<br>**RTO_SHOWHANDLES**. Show or hide the touch gripper handles, depending on the value of *opt*.<br>**RTO_DISABLEHANDLES**. Enable or disable the touch gripper handles, depending on the value of *opt*. When handles are disabled, they are hidden if they are visible and remain hidden until **TouchOptions** changes their status. |
+| *fEnable* | Set to **TRUE** to show/enable the touch selection handles, or **FALSE** to hide/disable the touch selection handles. |
 
 #### Remarks
 
@@ -4218,7 +4233,7 @@ The rich edit control does not check whether the new palette is valid.
 
 # <a name="setreadonly"></a>SetReadOnly
 
-Changes the palette that a rich edit control uses for its display window.
+Sets or removes the read-only style (ES_READONLY) of a rich edit control.
 ```
 FUNCTION SetReadOnly (BYVAL fReadOnly AS LONG) AS BOOLEAN
 ```
