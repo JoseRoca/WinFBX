@@ -961,11 +961,11 @@ Returns a [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/rich
 
 ---
 
-# <a name="wordcharformat"></a>WordCharFormat
+# <a name="setwordcharformat"></a>SetWordCharFormat
 
 Setss the character formatting attributes for the currently selected word.
 ```
-FUNCTION SetWordCharFormat (BYREF cf AS CHARFORMATW) AS HRESULT
+FUNCTION SetWordCharFormat (BYREF cf AS CHARFORMATW) AS BOOLEAN
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
