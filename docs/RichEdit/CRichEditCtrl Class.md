@@ -274,6 +274,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetSelText](#getseltext) | Retrieves the currently selected text in a rich edit control. |
 | [GetStoryType](#getstorytype) | Gets the story type. |
 | [GetTableParams](#gettableparams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
+| [GetText](#gettext) | Gets the text from a rich edit control. |
 | [GetTextEx](#gettextex) | Gets all of the text from the rich edit control in any particular code base you want. |
 | [GetTextLength](#gettextlength) | Retrieves the length of all text in a rich edit control. |
 | [GetTextLengthEx](#gettextlengthex) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
@@ -341,6 +342,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetTableParams](#settableparams) | Changes the parameters of rows in a table. |
 | [SetTabStops](#settabstops) | Sets the tab stops in a multiline rich edit control. |
 | [SetTargetDevice](#settargetdevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
+| [SetText](#settext) | Sets the text from a rich edit control. |
 | [SetTextEx](#settextex) | Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text. |
 | [SetTextBold](#settextbold) | Sets the attribute of selected text or word to bold. |
 | [SetTextItalic](#settextitalic) | Sets the attribute of selected text or word to italic. |
