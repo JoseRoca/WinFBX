@@ -282,6 +282,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetTextLength](#gettextlength) | Retrieves the length of all text in a rich edit control. |
 | [GetTextLengthEx](#gettextlengthex) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
 | [GetTextMode](#gettextmode) | Gets the current text mode and undo level of a rich edit control. |
+| [GetTextOffset](#gettextoffset) | Gets the text offset of the selected text or the word under the cursor. |
 | [GetTextRange](#gettextrange) | Retrieves a specified range of characters from a rich edit control. |
 | [GetThumb](#getthumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
 | [GetUndoName](#getundoname) | Retrieves the type of the next undo action, if any. |
@@ -354,6 +355,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetTextHeight](#settextheight) | Sets the text height of the selected text or the word under the cursor. |
 | [SetTextItalic](#settextitalic) | Sets the attribute of selected text or word to italic. |
 | [SetTextMode](#settextmode) | Sets the current text mode and undo level of a rich edit control. |
+| [SetTextOffset](#settextoffset) | Sets the text offset of the selected text or the word under the cursor. |
 | [SetTextStrikeOut](#settextstrikeout) | Sets the attribute of selected text or word to strike out. |
 | [SetTextUnderline](#settextunderline) | Sets the attribute of selected text or word to underline. |
 | [SetUIAName](#setuianame) | Sets the maximum number of actions that can stored in the undo queue. |
@@ -5094,19 +5096,22 @@ To select text programatically, use the **SetSel** method.
 
 ---
 
-# <a name="settextfontname"></a>SetTextFontName
+# <a name="textfontname"></a>TextFontName
 
-Sets the font face name of the selected text or the word under the cursor if there is not selection.
+Gets/sets the font face name of the selected text or the word under the cursor if there is not selection.
 ```
-FUNCTION SetTextHeight (BYVAL ptSize AS LONG) AS BOOLEAN
+(GET) PROPERTY TextFontName () AS CWSTR
+(SET) PROPERTY TextFontName (BYREF wszFaceName AS WSTRING)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *wszFaceName* | The new font face name, e.g. "Times New Roman". |
+| *wszFaceName* | (SET) The new font face name, e.g. "Times New Roman". |
 
 #### Return value
 
-A boolean true (-1) of false (0).
+(GET) The font face name.
+
+(SET) A boolean true (-1) or false (0).
 
 #### Remarks
 
@@ -5123,7 +5128,7 @@ FUNCTION GetTextFontName () AS CWSTR
 
 #### Return value
 
-The offset of the selected text or the word under the cursor if there is not selection.
+The font face name.
 
 #### Remarks
 
