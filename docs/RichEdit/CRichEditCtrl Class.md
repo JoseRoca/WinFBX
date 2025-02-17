@@ -281,6 +281,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetTextHeight](#gettextheight) | Gets the text height of the selected text or the word under the cursor. |
 | [GetTextLength](#gettextlength) | Retrieves the length of all text in a rich edit control. |
 | [GetTextLengthEx](#gettextlengthex) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
+| [GetTextMode](#gettextmode) | Gets the current text mode and undo level of a rich edit control. |
 | [GetTextRange](#gettextrange) | Retrieves a specified range of characters from a rich edit control. |
 | [GetThumb](#getthumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
 | [GetUndoName](#getundoname) | Retrieves the type of the next undo action, if any. |
@@ -352,6 +353,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetTextFontName](#settextfontname) | Sets the font name of the selected text or the word under the cursor. |
 | [SetTextHeight](#settextheight) | Sets the text height of the selected text or the word under the cursor. |
 | [SetTextItalic](#settextitalic) | Sets the attribute of selected text or word to italic. |
+| [SetTextMode](#settextmode) | Sets the current text mode and undo level of a rich edit control. |
 | [SetTextStrikeOut](#settextstrikeout) | Sets the attribute of selected text or word to strike out. |
 | [SetTextUnderline](#settextunderline) | Sets the attribute of selected text or word to underline. |
 | [SetUIAName](#setuianame) | Sets the maximum number of actions that can stored in the undo queue. |
@@ -2535,7 +2537,6 @@ pRichEdit.SetText(cws)
 
 ---
 
-
 # <a name="textmode"></a>TextMode
 
 Gets/sets the current text mode and undo level of a rich edit control.
@@ -2584,6 +2585,93 @@ In rich text mode, a rich edit control has standard rich edit functionality. How
 - The user cannot paste rich text formats, such as Rich Text Format (RTF) or embedded objects into a plain text control.
 - Rich text mode controls always have a default end-of-document marker or carriage return, to format paragraphs. Plain text controls, on the other hand, do not need the default, end-of-document marker, so it is omitted.
 - The control must contain no text when it receives the **EM_SETTEXTMODE** message. To ensure there is no text, call the (SET) **Text** property with an empty string ("").
+
+---
+
+# <a name="gettextmode"></a>GetTextMode
+
+Gets the current text mode and undo level of a rich edit control.
+```
+FUNCTION GetTextMode () AS DWORD
+```
+
+#### Return value
+
+(GET) The return value is one or more values from the [TEXTMODE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-textmode) enumeration type. The values indicate the current text mode and undo level of the control.
+
+---
+
+# <a name="settextmode"></a>SetTextMode
+
+Sets the current text mode and undo level of a rich edit control.
+```
+FUNCTION SetTextMode (BYVAL values AS LONG) AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *values* | One or more values from the [TEXTMODE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-textmode) enumeration type. The values specify the new settings for the control's text mode and undo level parameters. |
+
+#### TextMode enumeration type
+
+Specify one of the following values to set the text mode parameter. If you do not specify a text mode value, the text mode remains at its current setting.
+
+| Value  | Meaning |
+| ------ | ----------- |
+| **TM_PLAINTEXT** | Indicates plain text mode, in which the control is similar to a standard edit control. For more information about plain text mode, see the **Remarks** section. |
+| **TM_RICHTEXT** | Indicates rich text mode, in which the control has standard rich edit functionality. Rich text mode is the default setting. |
+
+Specify one of the following values to set the undo level parameter. If you do not specify an undo level value, the undo level remains at its current setting.
+
+| Value  | Meaning |
+| ------ | ----------- |
+| **TM_SINGLELEVELUNDO** | The control allows the user to undo only the last action that can be undone. |
+| **TM_MULTILEVELUNDO** | The control supports multiple undo operations. This is the default setting. Use the **RichEdit_SetUndoLimit** message to set the maximum number of undo actions. |
+
+Specify one of the following values to set the code page parameter. If you do not specify an code page value, the code page remains at its current setting.
+
+| Value  | Meaning |
+| ------ | ----------- |
+| **TM_SINGLECODEPAGE** | The control only allows the English keyboard and a keyboard corresponding to the default character set. For example, you could have Greek and English. Note that this prevents Unicode text from entering the control. For example, use this value if a Rich Edit control must be restricted to ANSI text. |
+| **TM_MULTICODEPAGE** | The control allows multiple code pages and Unicode text into the control. This is the default setting. |
+
+#### Return value
+
+(GET) The return value is one or more values from the [TEXTMODE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-textmode) enumeration type. The values indicate the current text mode and undo level of the control.
+
+(SET) If the message succeeds, the return value is zero. If the message fails, the return value is a nonzero value. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+#### Remarks
+
+In rich text mode, a rich edit control has standard rich edit functionality. However, in plain text mode, the control is similar to a standard edit control:
+
+- The text in a plain text control can have only one format (such as Bold, 10pt Arial).
+- The user cannot paste rich text formats, such as Rich Text Format (RTF) or embedded objects into a plain text control.
+- Rich text mode controls always have a default end-of-document marker or carriage return, to format paragraphs. Plain text controls, on the other hand, do not need the default, end-of-document marker, so it is omitted.
+- The control must contain no text when it receives the **EM_SETTEXTMODE** message. To ensure there is no text, call the **SetText** method with an empty string ("").
+
+---
+
+# <a name="touchoptions"></a>TouchOptions
+
+Gets/sets the touch options that are associated with a rich edit control.
+```
+(GET) PROPERTY TouchOptions (BYVAL _Options AS LONG PTR) AS DWORD
+(SET) PROPERTY TouchOptions (BYVAL _Options AS LONG, BYVAL fEnable AS LONG)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *_Options* | (GET/SET) The touch options to set. It can be one of the following values:<br>**RTO_SHOWHANDLES**. Show or hide the touch gripper handles, depending on the value of *_Options*.<br>**RTO_DISABLEHANDLES**. Enable or disable the touch gripper handles, depending on the value of *_Options*. When handles are disabled, they are hidden if they are visible and remain hidden until **TouchOptions** changes their status. |
+| *fEnable* | (SET) Set to **TRUE** to show/enable the touch selection handles, or **FALSE** to hide/disable the touch selection handles. |
+
+#### Return value
+
+(GET) Returns the value of the option specified by the *_Options* parameter. It is nonzero if *_Options* is **RTO_SHOWHANDLES** and the touch grippers are visible; zero, otherwise.
+
+(SET) Returns **TRUE** if *pto* is valid, otherwise **FALSE**. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+
+#### Remarks
+
+Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
 
 ---
 
