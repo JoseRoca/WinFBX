@@ -4965,7 +4965,27 @@ To select text programatically, use the **SetSel** method.
 
 ---
 
-# <a name="textheight"></a>TextHeight
+# <a name="settextheight"></a>SetTextHeight
+
+Sets the height of the selected text or the word under the cursor.
+```
+FUNCTION SetTextHeight (BYVAL ptSize AS LONG) AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *ptSize* | The new text height in points. |
+
+#### Return value
+
+(GET) The height of the selected text or the word under the cursor if there is not selection.
+
+#### Remarks
+
+To select text programatically, use the **SetSel** method.
+
+---
+
+# <a name="textoffset"></a>TextOffset
 
 Gets/sets the offset of the selected text or the word under the cursor.
 ```
