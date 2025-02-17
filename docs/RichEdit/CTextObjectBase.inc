@@ -12,6 +12,12 @@
 #pragma once
 #include once "windows.bi"
 #include once "win/ole2.bi"
+#include once "win/richedit.bi"
+#include once "win/richole.bi"
+#include once "Afx/AfxRichEdit.inc"
+#include once "Afx/AfxTOM.bi"
+#include once "Afx/CVAR.inc"
+#include once "Afx/AfxGdiPlus.inc"
 
 NAMESPACE Afx
 
