@@ -262,6 +262,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetLineCount](#getlinecount) | Gets the number of lines in a multiline rich edit control. |
 | [GetModify](#getmodify) | Gets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
+| [GetOptions](#getoptions) | Gets the options for a rich edit control. |
 | [GetRect](#getrect) | Gets the formatting rectangle of a rich edit control. |
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
 | [GetRightMargin](#getrightmargin) | Sets the width of the right margin. |
@@ -321,6 +322,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
 | [SetModify](#setmodify) | Sets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
 | [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
+| [SetOptions](#setoptions) | Sets the options for a rich edit control. |
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
 | [SetReadOnly](#setreadonly) | Sets or removes the read-only style (ES_READONLY) of a rich edit control. |
 | [SetRect](#setrect) | Sets the formatting rectangle of a rich edit control. |
@@ -1973,6 +1975,36 @@ Gets/sets the options for a rich edit control.
 (GET) This message returns a combination of the current option flag values described in the *fOptions* parameter of the (SET) **Options** property.
 
 (SET) This message returns the current options of the edit control. Call the (GET) **Options** property to get the values.
+
+---
+
+# <a name="getoptions"></a>GetOptions
+
+Gets the options for a rich edit control.
+```
+FUNCTION GetOptions () AS DWORD
+```
+
+#### Return value
+
+This message returns a combination of the current option flag values described in the *fOptions* parameter of the **SetOptions** property.
+
+---
+
+# <a name="setoptions"></a>SetOptions
+
+Sets the options for a rich edit control.
+```
+FUNCTION SetOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG) AS DWORD
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *fCoop* | Specifies the operation, which can be one of these values.<br>**ECOOP_SET**. Sets the options to those specified by *fOptions*.<br>**ECOOP_OR**. Combines the specified options with the current options.<br>**ECOOP_AND**. Retains only those current options that are also specified by *fOptions*.<br>**ECOOP_XOR**. Logically exclusive OR the current options with those specified by *fOptions*. |
+| *fOptions* | Specifies one or more of the following values.<br>**ECO_AUTOWORDSELECTION**- Automatic selection of word on double-click.<br>**ECO_AUTOVSCROLL**. Same as **ES_AUTOVSCROLL** style.<br>**ECO_AUTOHSCROLL**. Same as **ES_AUTOHSCROLL** style.<br>**ECO_NOHIDESEL**. Same as **ES_NOHIDESEL** style.<br>**ECO_READONLY**. Same as **ES_READONLY** style.<br>**ECO_WANTRETURN**. Same as **ES_WANTRETURN** style.<br>**ECO_SELECTIONBAR**. Same as **ES_SELECTIONBAR** style.<br>**ECO_VERTICAL**. Same as **ES_VERTICAL** style. Available in Asian-language versions only. |
+
+#### Return value
+
+This method returns the current options of the edit control. Call the **GetOptions** method to get the values.
 
 ---
 
