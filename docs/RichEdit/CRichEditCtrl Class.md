@@ -2575,7 +2575,7 @@ Specify one of the following values to set the code page parameter. If you do no
 
 (GET) The return value is one or more values from the [TEXTMODE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-textmode) enumeration type. The values indicate the current text mode and undo level of the control.
 
-(SET) If the message succeeds, the return value is zero. If the message fails, the return value is a nonzero value. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+(SET) If the message succeeds, the result code is zero. If the message fails, the result code is a nonzero value. Call **GetLastResult** to get the result code.
 
 #### Remarks
 
@@ -2597,7 +2597,7 @@ FUNCTION GetTextMode () AS DWORD
 
 #### Return value
 
-(GET) The return value is one or more values from the [TEXTMODE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-textmode) enumeration type. The values indicate the current text mode and undo level of the control.
+The return value is one or more values from the [TEXTMODE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-textmode) enumeration type. The values indicate the current text mode and undo level of the control.
 
 ---
 
@@ -2636,9 +2636,7 @@ Specify one of the following values to set the code page parameter. If you do no
 
 #### Return value
 
-(GET) The return value is one or more values from the [TEXTMODE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-textmode) enumeration type. The values indicate the current text mode and undo level of the control.
-
-(SET) If the message succeeds, the return value is zero. If the message fails, the return value is a nonzero value. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+A boolean true (-1) or false (0).
 
 #### Remarks
 
