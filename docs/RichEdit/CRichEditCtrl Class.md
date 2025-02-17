@@ -5090,11 +5090,50 @@ Gets/sets the offset of the selected text or the word under the cursor.
 
 #### Remarks
 
-The property converts the pixels to twips internally.
+This property converts the pixels to twips internally.
 
 To select text programatically, use the **SetSel** method.
 
 ---
+
+# <a name="gettextoffset"></a>GetTextOffset
+
+Gets the offset of the selected text or the word under the cursor.
+```
+FUNCTION GetTextOffset () AS LONG
+```
+
+#### Return value
+
+The offset of the selected text or the word under the cursor if there is not selection.
+
+#### Remarks
+
+This method converts the pixels to twips internally.
+
+To select text programatically, use the **SetSel** method.
+
+---
+
+# <a name="settextoffset"></a>SetTextOffset
+
+Sets the offset of the selected text or the word under the cursor.
+```
+FUNCTION SetTextOffset (BYVAL offset AS LONG) AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *offset* | Character offset, in pixels, from the baseline. If the value of this member is positive, the character is a superscript; if it is negative, the character is a subscript. |
+
+#### Return value
+
+A boolean true (-1) or false (0).
+
+#### Remarks
+
+This method converts the pixels to twips internally.
+
+To select text programatically, use the **SetSel** method.
 
 # <a name="textfontname"></a>TextFontName
 
