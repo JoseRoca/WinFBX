@@ -342,7 +342,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetTableParams](#settableparams) | Changes the parameters of rows in a table. |
 | [SetTabStops](#settabstops) | Sets the tab stops in a multiline rich edit control. |
 | [SetTargetDevice](#settargetdevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
-| [SetText](#settext) | Sets the text from a rich edit control. |
+| [SetText](#settext) | Sets the text of a rich edit control. |
 | [SetTextEx](#settextex) | Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text. |
 | [SetTextBold](#settextbold) | Sets the attribute of selected text or word to bold. |
 | [SetTextItalic](#settextitalic) | Sets the attribute of selected text or word to italic. |
@@ -2484,6 +2484,51 @@ pRichEdit.Text = cws
 ```
 
 ---
+
+# <a name="gettext"></a>GetText
+
+Gets the text from a rich edit control.
+```
+FUNCTION GetText () AS CWSTR
+```
+
+#### Return value
+
+The retrieved text.
+
+#### Remarks
+
+The Windows API function **GetWindowTextW** can also be used to retrieve the text of a rich edit control, but it cannot retrieve the text of a control in another application.
+
+#### Usage example (GET)
+```
+DIM cws AS CWSTR = pRichEdit.GetText
+```
+
+---
+
+# <a name="settext"></a>SetText
+
+Sets the text of a rich edit control.
+```
+FUNCTION SetText (BYREF wszText AS WSTRING) AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszText* | A **WSTRING** with the new text. |
+
+#### Return value
+
+A boolean true (-1) if the text is set, or false (0),otherwise.
+
+#### Usage example
+```
+DIM cws AS CWSTR = "New text"
+pRichEdit.SetText(cws)
+```
+
+---
+
 
 # <a name="textmode"></a>TextMode
 
@@ -4791,29 +4836,29 @@ SUB SetTextBold ()
 
 ---
 
-# <a name="settextitalic"></a>SetTextItalic
+# <a name="settextitalic"></a>Italic
 
 Changes the selected text or word under the cursor to italic. If it is already set, it removes it.
 ```
-SUB SetTextItalic ()
+SUB Italic ()
 ```
 
 ---
 
-# <a name="settextstrikeout"></a>SetTextStrikeOut
+# <a name="strikeout"></a>StrikeOut
 
 Changes the selected text or word under the cursor to strike out. If it is already set, it removes it.
 ```
-SUB SetTextStrikeOut ()
+SUB StrikeOut ()
 ```
 
 ---
 
-# <a name="settextunderline"></a>SetTextUnderline
+# <a name="underline"></a>Underline
 
 Changes the selected text or word under the cursor to underline. If it is already set, it removes it.
 ```
-SUB SetTextUderline ()
+SUB Uderline ()
 ```
 
 ---
