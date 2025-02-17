@@ -257,6 +257,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetIMEOptions](#getimeoptions) | Gets the current Input Method Editor (IME) options. This message is available only in Asian-language support. |
 | [GetLangOptions](#getlangoptions) | Gets a rich edit control's option settings for Input Method Editor (IME) and Asian language support.
 | [GetLeftMargin](#getleftmargin) | Sets the width of the left margin. |
+| [GetLimitText](#getlimittext) | Gets the current text limit for a rich edit control. |
 | [GetLine](#getline) | Copies a line of text from a rich edit control. |
 | [GetLineCount](#getlinecount) | Gets the number of lines in a multiline rich edit control. |
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
@@ -315,7 +316,8 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetIMEOptions](#setimeoptions) | Sets the current Input Method Editor (IME) options. This message is available only in Asian-language support. |
 | [SetLangOptions](#setlangoptions) | Sets options for Input Method Editor (IME) and Asian language support in a rich edit control.|
 | [SetLeftMargin](#setleftmargin) | Sets the width of the left margin. |
-[SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
+| [SetLimitText](#setlimittext) | Sets the current text limit for a rich edit control. |
+| [SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
 | [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
 | [SetReadOnly](#setreadonly) | Sets or removes the read-only style (ES_READONLY) of a rich edit control. |
@@ -1857,6 +1859,39 @@ Gets/sets the current text limit for a rich edit control. The text limit is the 
 #### Remarks
 
 (SET) **LimitText** limits only the text the user can enter. It does not affect any text already in the edit control when the message is sent, nor does it affect the length of the text copied to the edit control by the **Text** property. If an application uses the **Text** property to place more text into an edit control than is specified by the **LimitText** property, the user can edit the entire contents of the edit control.
+
+---
+
+# <a name="getlimittext"></a>GetLimitText
+
+Gets the current text limit for a rich edit control. The text limit is the maximum amount of text that the user can type into the edit control.
+```
+FUNCTION GetLimitText () AS LONG
+```
+
+#### Return value
+
+The return value is the text limit.
+
+---
+
+# <a name="setlimittext"></a>SetLimitText
+
+Sets the current text limit for a rich edit control. The text limit is the maximum amount of text that the user can type into the edit control.
+```
+SUB SetLimitText (BYVAL chMax AS DWORD)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *chMax* | (SET) The maximum number of characters the user can enter. If this parameter is zero, the text length is set to 64,000 characters. |
+
+#### Return value
+
+The set property does not return a value.
+
+#### Remarks
+
+**SetLimitText** limits only the text the user can enter. It does not affect any text already in the edit control when the message is sent, nor does it affect the length of the text copied to the edit control by the **SetText** method. If an application uses the **SetText** method to place more text into an edit control than is specified by the **SetLimitText** method, the user can edit the entire contents of the edit control.
 
 ---
 
