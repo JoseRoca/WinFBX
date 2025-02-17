@@ -263,6 +263,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetModify](#getmodify) | Gets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [GetOptions](#getoptions) | Gets the options for a rich edit control. |
+| [GetPageRotate](#getpagerotate) | Deprecated. Gets the text layout for a Microsoft Rich Edit control. |
 | [GetRect](#getrect) | Gets the formatting rectangle of a rich edit control. |
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
 | [GetRightMargin](#getrightmargin) | Sets the width of the right margin. |
@@ -323,6 +324,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetModify](#setmodify) | Sets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
 | [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
 | [SetOptions](#setoptions) | Sets the options for a rich edit control. |
+| [SetPageRotate](#setpagerotate) | Deprecated. Sets the text layout for a Microsoft Rich Edit control. |
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
 | [SetReadOnly](#setreadonly) | Sets or removes the read-only style (ES_READONLY) of a rich edit control. |
 | [SetRect](#setrect) | Sets the formatting rectangle of a rich edit control. |
