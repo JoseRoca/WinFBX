@@ -2111,7 +2111,7 @@ FUNCTION SetParaFormat (BYREF pfmt AS .PARAFORMAT) AS BOOLEAN
 
 #### Return value
 
-a boolean true (-1) or false (0).
+A boolean true (-1) or false (0).
 
 ---
 
