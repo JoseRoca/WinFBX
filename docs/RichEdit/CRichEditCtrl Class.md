@@ -2273,7 +2273,7 @@ A **RECT** structure with the formatting rectangle.
 
 Sets the formatting rectangle of a rich edit control.
 ```
-FUNCTION GetRect () AS .RECT
+SUB SetRect (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
 ```
 
 | Parameter  | Description |
