@@ -3422,7 +3422,8 @@ The types of actions that can be undone or redone include typing, delete, drag-d
 
 Gets the starting and ending character positions of the current selection in a rich edit control.
 ```
-FUNCTION GetSel (BYREF dwStartPos AS DWORD, BYREF dwEndPos AS DWORD) AS LONG
+FUNCTION GetSel OVERLOAD (BYREF dwStartPos AS DWORD, BYREF dwEndPos AS DWORD) AS LONG
+FUNCTION GetSel OVERLOAD () AS .POINTL
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
@@ -3431,9 +3432,9 @@ FUNCTION GetSel (BYREF dwStartPos AS DWORD, BYREF dwEndPos AS DWORD) AS LONG
 
 #### Return value
 
-The return value is a zero-based value with the starting position of the selection in the **LOWORD** and the position of the first character after the last selected character in the **HIWORD**. If either of these values exceeds 65,535, the return value is -1.
+The return value is a zero-based value with the starting position of the selection in the **LOWORD** and the position of the first character after the last selected character in the **HIWORD**. If either of these values exceeds 65,535, the return value is -1. It is better to use the values returned in *dwStartPos* and *dwEndPos* because they are full 32-bit values.
 
-It is better to use the values returned in *dwStartPos* and *dwEndPos* because they are full 32-bit values.
+The second overloaded method returns a [POINTL](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-pointl) structure. The **x** and **y** members of this structure receive the starting and ending positions of the selection.
 
 #### Remarks
 
