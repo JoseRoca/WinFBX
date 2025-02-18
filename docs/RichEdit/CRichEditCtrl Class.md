@@ -4315,8 +4315,6 @@ The start value is the anchor point of the selection, and the end value is the a
 
 If the start is 0 and the end is -1, all the text in the edit control is selected. If the start is -1, any current selection is deselected.
 
-**Edit controls**: The control displays a flashing caret at the end position regardless of the relative values of start and end.
-
 If the edit control has the **ES_NOHIDESEL** style, the selected text is highlighted regardless of whether the control has focus. Without the **ES_NOHIDESEL** style, the selected text is highlighted only when the edit control has the focus.
 
 ---
