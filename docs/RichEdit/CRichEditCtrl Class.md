@@ -3826,10 +3826,6 @@ Returns a boolean value: 0 for success and -1 for failure. To get extended error
 | **E_INVALIDARG** | Invaid argument |
 | **E_OUTOFMEMORY** | Insufficient memory is available. |
 
-#### Remarks
-
-There is an curious problem: In my computer, the scaling ratio is 1.75, and **InsertImage** uses that ratio by default. **InsertObject** scales the image, but using a ratio of 1.68, and **drag and drop** scales the image, but using a ratio of 1.24. So you get different image sizes depending of the method that you use.
-
 ---
 
 Overloaded method that replaces the selection with a blob that displays an image. Uses HIMETRIC units.
