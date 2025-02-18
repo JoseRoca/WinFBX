@@ -4021,7 +4021,7 @@ If the method is successful, the **HIWORD** of the return value is **TRUE**, and
 
 #### Remarks
 
-To scroll to a specific line or character position, use the **RichEdit_LineScroll** message. To scroll the caret into view, use the **RichEdit_ScrollCaret** message.
+To scroll to a specific line or character position, use the **RichEdit_LineScroll** message. To scroll the caret into view, use the **ScrollCaret** method.
 
 ---
 
