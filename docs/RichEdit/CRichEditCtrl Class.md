@@ -3588,7 +3588,6 @@ FUNCTION GetTextLengthEx OVERLOAD (BYVAL dwFlags AS DWORD = GTL_DEFAULT) AS LONG
 | **GTL_DEFAULT** | Returns the number of characters. This is the default. |
 | **GTL_USECRLF** | Computes the answer by using CR/LFs at the end of paragraphs. |
 | **GTL_PRECISE** | Computes a precise answer. This approach could necessitate a conversion and thereby take longer. This flag cannot be used with the **GTL_CLOSE** flag. **E_INVALIDARG** will be returned if both are used. |
-| **GTL_PRECISE** | Computes a precise answer. This approach could necessitate a conversion and thereby take longer. This flag cannot be used with the GTL_CLOSE flag. E_INVALIDARG will be returned if both are used. |
 | **GTL_CLOSE** | Computes an approximate (close) answer. It is obtained quickly and can be used to set the buffer size. This flag cannot be used with the **GTL_PRECISE** flag. **E_INVALIDARG** will be returned if both are used. |
 | **GTL_NUMCHARS** | Returns the number of characters. This flag cannot be used with the **GTL_NUMBYTES** flag. **E_INVALIDARG** will be returned if both are used. |
 | **GTL_NUMBYTES** | Returns the number of bytes. This flag cannot be used with the **GTL_NUMCHARS** flag. **E_INVALIDARG** will be returned if both are used |
