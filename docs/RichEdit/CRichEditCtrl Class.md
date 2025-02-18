@@ -725,7 +725,7 @@ Gets/sets the caret position.
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *dwPos* | (SET) The caret position. |
+| *dwPos* | (SET) The caret position. If you pass a value of -1, the caret will be positioned at the end of the document. |
 
 #### Return value
 
@@ -754,7 +754,7 @@ SUB SetCaretPos (BYVAL dwPos AS DWORD)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *dwPos* | The caret position. |
+| *dwPos* | The caret position. If you pass a value of -1, the caret will be positioned at the end of the document. |
 
 #### Return value
 
