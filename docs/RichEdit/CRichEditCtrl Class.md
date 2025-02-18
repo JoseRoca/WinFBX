@@ -4295,12 +4295,17 @@ To determine whether an edit control has the **ES_READONLY** style, use the Wind
 
 Selects a range of characters in a rich edit control.
 ```
-SUB SetSel (BYVAL nStart AS LONG, BYVAL nEnd AS LONG)
+SUB SetSel OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG)
+SUB SetSel OVERLOAD (BYREF pt AS POINTL)
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
 | *nStart* | The starting character position of the selection. |
 | *nEnd* | The ending character position of the selection. |
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pt* | A [POINTL](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-pointl) structure with its **x** and **y** members set to the starting and ending characters positions of the selection. |
 
 #### Remarks
 
