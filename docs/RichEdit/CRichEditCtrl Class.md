@@ -2461,7 +2461,7 @@ FUNCTION SetStoryType (BYVAL Index AS LONG, BYVAL dwType AS DWORD) AS DWORD
 
 #### Return value
 
-The story type that was set. Call the **GetStoryType** method to get the value.
+The story type that was set.
 
 ---
 
