@@ -170,7 +170,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [AutoCorrectProc](#autocorrectproc) | Gets/sets a pointer to the application-defined **AutoCorrectProc** callback function. |
 | [AutoUrlDetect](#autourldetect) | Gets/sets whether the auto URL detection is turned on in the rich edit control. |
 | [BidiOptions](#bidioptions) | Gets/sets the current state of the bidirectional options in the rich edit control. |
-| [CaretPos](#caretpos) | Gets/sets the caret position |
+| [CaretPos](#caretpos) | Gets/sets the caret position. |
 | [CharFormat](#charformat) | Gets/sets the current character formatting in a rich edit control. |
 | [DefaultCharFormat](#defaultcharformat) | Gets/sets the default character formatting in a rich edit control. |
 | [SelectionCharFormat](#selectioncharformat) | Gets/sets the character formatting attributes for the text in the current selection. |
