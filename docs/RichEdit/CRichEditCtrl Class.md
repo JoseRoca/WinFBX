@@ -12,6 +12,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [ScalingRatio](#scalingratio) | Gets/sets the scaling ratio. |
 | [GetScalingRatio](#getscalingratio) | Gets the scaling ratio. |
 | [SetScalingRatio](#setscalingratio) | Sets the scaling ratio. |
+| [SetWysiwygPrint](#setwysiwygprint) | Sets the target printer device and line width used for "what you see is what you get" (WYSIWYG) formatting in a rich edit control. |
 
 #### Helper procedure
 
@@ -162,6 +163,21 @@ pRichEdit.SetScalingRatio(ratio)
 ```
 
 ---
+
+# <a name="setwysiwygprint"></a>SetWysiwygPrint
+
+Sets the target printer device and line width used for "what you see is what you get" (WYSIWYG) formatting in a rich edit control.
+
+```
+FUNCTION SetWysiwygPrint (BYREF wszPrinterName AS WSTRING = "") AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszPrinterName* | The printer name, e.g. "OKI B410d" or the "Microsoft Print to PDF" virtual printer. If wszPrinterName is empty, the control will use the default printer. |
+
+#### Return value
+
+A boolean true (-1) or false (0).
 
 # CRichEditCtrl Properties
 
