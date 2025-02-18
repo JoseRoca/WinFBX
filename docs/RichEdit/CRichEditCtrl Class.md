@@ -170,6 +170,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [AutoCorrectProc](#autocorrectproc) | Gets/sets a pointer to the application-defined **AutoCorrectProc** callback function. |
 | [AutoUrlDetect](#autourldetect) | Gets/sets whether the auto URL detection is turned on in the rich edit control. |
 | [BidiOptions](#bidioptions) | Gets/sets the current state of the bidirectional options in the rich edit control. |
+| [CaretPos](#caretpos) | Gets/sets the caret position |
 | [CharFormat](#charformat) | Gets/sets the current character formatting in a rich edit control. |
 | [DefaultCharFormat](#defaultcharformat) | Gets/sets the default character formatting in a rich edit control. |
 | [SelectionCharFormat](#selectioncharformat) | Gets/sets the character formatting attributes for the text in the current selection. |
@@ -237,6 +238,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [GetAutoCorrectProc](#getautocorrectproc) | Gets a pointer to the application-defined **AutoCorrectProc** callback function. |
 | [GetAutoUrlDetect](#getautourldetect) | Gets whether the auto URL detection is turned on in the rich edit control. |
 | [GetBidiOptions](#getbidioptions) | Gets the current state of the bidirectional options in the rich edit control. |
+| [GetCaretPos](#getcaretpos) | Gets the caret position |
 | [GetCharFormat](#getcharformat) | Gets the current character formatting in a rich edit control. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
 | [GetCTFModeBias](#getctfmodebias) | Gets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
@@ -314,6 +316,7 @@ pRichEdit.SetScalingRatio(ratio)
 | [SetAutoUrlDetect](#setautourldetect) | Enables or disables automatic detection of URLs by a rich edit control. |
 | [SetBidiOptions](#setbidioptions) | Sets the current state of the bidirectional options in the rich edit control. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
+| [SetCaretPos](#setcaretpos) | Sets the caret position |
 | [SetCharFormat](#setcharformat) | Sets the current character formatting in a rich edit control. |
 | [SetCTFModeBias](#setctfmodebias) | Sets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [SetCTFOpenStatus](#setctfopenstatus) | Sets if the Text Services Framework (TSF) keyboard is open or closed. |
@@ -694,6 +697,52 @@ The rich edit control must be in plain text mode or **BidiOptions** will not do 
 In plain text controls, **BidiOptions** automatically determines the paragraph direction and/or alignment based on the context rules. These rules state that the direction and/or alignment is derived from the first strong character in the control. A strong character is one from which text direction can be determined (see Unicode Standard version 2.0). The paragraph direction and/or alignment is applied to the default format.
 
 **BidiOptions** only switches the default paragraph format to RTL (right to left) if it finds an RTL character.
+
+---
+
+# <a name="caretpos"></a>CaretPos
+
+Gets/sets the caret position.
+```
+(GET) PROPERTY CaretPos () AS DWORD
+(SET) PROPERTY CaretPos (BYVAL dwPos AS DWORD)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwPos* | (SET) The caret position. |
+
+#### Return value
+
+(GET) The caret position.
+
+---
+
+# <a name="getcaretpos"></a>GetCaretPos
+
+Gets the caret position.
+```
+FUNCTION GetCaretPos () AS DWORD
+```
+
+#### Return value
+
+The caret position.
+
+---
+
+# <a name="setcaretpos"></a>SetCaretPos
+
+Sets the caret position.
+```
+SUB SetCaretPos (BYVAL dwPos AS DWORD)
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *dwPos* | The caret position. |
+
+#### Return value
+
+This method does not return a value.
 
 ---
 
