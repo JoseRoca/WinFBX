@@ -4471,12 +4471,30 @@ If *lnwidth* is zero, no line breaks are created.
 
 Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text.
 ```
-FUNCTION SetTextExW (BYREF stex AS SETTEXTEX, BYREF wszText AS WSTRING) AS DWORD
+FUNCTION SetTextExW (BYREF stex AS SETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
 | *stex* | A [SETTEXTEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-settextex) structure that specifies flags and an optional code page to use in translating to Unicode. |
-| *pwszText* | Pointer to the null-terminated text to insert. This text is an ANSI string, unless the code page is 1200 (Unicode). If *pwszText* starts with a valid RTF ASCII sequence for example, "{\rtf" or "{urtf" the text is read in using the RTF reader. |
+| *buffer* | Pointer to the null-terminated text to insert. This text is an ANSI string, unless the code page is 1200 (Unicode). If *pwszText* starts with a valid RTF ASCII sequence for example, "{\rtf" or "{urtf" the text is read in using the RTF reader. |
+
+**SETTEXTEX flags**
+
+Option flags. It can be any reasonable combination of the following flags.
+
+| Flag  | Value | Description |
+| ----- | ----- | ----------- |
+| **ST_DEFAULT** | &h00 | Deletes the undo stack, discards rich-text formatting, replaces all text. |
+| **ST_KEEPUNDO** | &h01 | Keeps the undo stack. |
+| **ST_SELECTION** | &h02 | Replaces selection and keeps rich-text formatting. |
+| **ST_NEWCHARS** | &h04 | Act as if new characters are being entered. |
+| **ST_UNICODE** | &h08 | The text is UTF-16 (the WCHAR data type). |
+| **ST_PLACEHOLDERTEXT** | &h10 | Placeholder text that is visible only when focus is not on the RichEdit control and the control does not contain any user-specified text. |
+| **ST_PLAINTEXTONLY** | &h20 | RichEdit control supports plain text only. |
+
+**SETTEXTEX codepage**
+
+The code page used to translate the text to Unicode. If codepage is 1200 (Unicode code page), no translation is done. If codepage is CP_ACP, the system code page is used.
 
 #### Return value
 
