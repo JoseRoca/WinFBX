@@ -44,6 +44,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION hRichEdit () AS HWND
       DECLARE PROPERTY ScalingRatio (BYVAL ratio AS SINGLE)
       DECLARE PROPERTY ScalingRatio () AS SINGLE
+      DECLARE FUNCTION SetWysiwygPrint (BYREF wszPrinterName AS WSTRING = "") AS BOOLEAN
 
       ' // Static callback procedures
       DECLARE STATIC FUNCTION CRichEditCtrlProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM, BYVAL uIdSubclass AS UINT_PTR, BYVAL dwRefData AS DWORD_PTR) AS LRESULT
@@ -62,6 +63,8 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE PROPERTY AutoUrlDetect (BYVAL fUrlDetect AS LONG)
       DECLARE PROPERTY BidiOptions () AS .BIDIOPTIONS
       DECLARE PROPERTY BidiOptions (BYREF opt AS .BIDIOPTIONS)
+      DECLARE PROPERTY CaretPos () AS DWORD
+      DECLARE PROPERTY CaretPos (BYVAL dwPos AS DWORD)
       DECLARE PROPERTY CharFormat (BYVAL fOption AS DWORD) AS CHARFORMATW
       DECLARE PROPERTY CharFormat (BYVAL chfmt AS DWORD, BYREF cf AS CHARFORMATW)
       DECLARE PROPERTY CharFromPos (BYREF ptl AS .POINTL) AS LONG
@@ -169,6 +172,8 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION SetAutoUrlDetect (BYVAL fUrlDetect AS LONG) AS HRESULT
       DECLARE FUNCTION GetBidiOptions () AS .BIDIOPTIONS
       DECLARE SUB SetBidiOptions (BYREF opt AS .BIDIOPTIONS)
+      DECLARE FUNCTION GetCaretPos () AS DWORD
+      DECLARE SUB SetCaretPos (BYVAL dwPos AS DWORD)
       DECLARE FUNCTION GetCharFormat (BYVAL fOption AS DWORD) AS CHARFORMATW
       DECLARE FUNCTION SetCharFormat (BYVAL chfmt AS DWORD, BYREF cf AS CHARFORMATW) AS BOOLEAN
       DECLARE FUNCTION GetDefaultCharFormat () AS CHARFORMATW
@@ -230,6 +235,8 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION SetText (BYREF wszText AS WSTRING) AS BOOLEAN
       DECLARE FUNCTION GetTextColor () AS COLORREF
       DECLARE FUNCTION SetTextColor (BYVAL crTxtColor AS COLORREF) AS BOOLEAN
+      DECLARE FUNCTION GetTextEx (BYREF gtex AS GETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
+      DECLARE FUNCTION SetTextEx (BYREF stex AS .SETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
       DECLARE FUNCTION GetTextFontName () AS CWSTR
       DECLARE FUNCTION SetTextFontName (BYREF wszFaceName AS WSTRING) AS BOOLEAN
       DECLARE FUNCTION GetTextHeight () AS LONG
@@ -247,10 +254,10 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION GetLineCount () AS LONG
       DECLARE FUNCTION GetOleInterface () AS IRichEditOle PTR
       DECLARE FUNCTION GetRedoName () AS LONG
-      DECLARE FUNCTION GetSel (BYREF dwStartPos AS DWORD, BYREF dwEndPos AS DWORD) AS LONG
+      DECLARE FUNCTION GetSel OVERLOAD (BYREF dwStartPos AS DWORD, BYREF dwEndPos AS DWORD) AS LONG
+      DECLARE FUNCTION GetSel OVERLOAD () AS .POINTL
       DECLARE FUNCTION GetSelText () AS CWSTR
       DECLARE FUNCTION GetTableParams (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
-      DECLARE FUNCTION GetTextEx (BYREF gtex AS GETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
       DECLARE FUNCTION GetTextLength () AS LONG
       DECLARE FUNCTION GetTextLengthEx OVERLOAD (BYREF gtex AS .GETTEXTLENGTHEX) AS LONG
       DECLARE FUNCTION GetTextLengthEx OVERLOAD (BYVAL dwFlags AS DWORD = GTL_DEFAULT) AS LONG
@@ -303,11 +310,11 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION SetOleCallback (BYVAL pCallback AS ANY PTR) AS LONG
       DECLARE SUB SetPalette (BYVAL newPalette AS HPALETTE)
       DECLARE FUNCTION SetReadOnly (BYVAL fReadOnly AS LONG) AS BOOLEAN
-      DECLARE SUB SetSel (BYVAL nStart AS LONG, BYVAL nEnd AS LONG)
+      DECLARE SUB SetSel OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG)
+      DECLARE SUB SetSel OVERLOAD (BYREF pt AS POINTL)
       DECLARE FUNCTION SetTableParams (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
       DECLARE FUNCTION SetTabStops (BYVAL nTabs AS LONG, BYVAL rgTabStops AS LONG_PTR) AS LONG
       DECLARE FUNCTION SetTargetDevice (BYVAL hDC AS HDC, BYVAL lnwidth AS LONG) AS BOOLEAN
-      DECLARE FUNCTION SetTextEx (BYREF stex AS .SETTEXTEX, BYREF wszText AS WSTRING) AS DWORD
       DECLARE FUNCTION SetUIAName (BYREF wszName AS WSTRING) AS DWORD
       DECLARE FUNCTION SetUndoLimit (BYVAL maxactions AS DWORD) AS DWORD
       DECLARE FUNCTION SetZoom (BYVAL zNum AS DWORD, BYVAL zDen AS DWORD) AS LONG
@@ -322,6 +329,9 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION GetRtf (BYVAL dwOptionsAndFlags AS DWORD = SF_RTF) AS STRING
       DECLARE FUNCTION LoadRtfFromFile (BYREF wszFileName AS WSTRING) AS BOOLEAN
       DECLARE FUNCTION LoadRtfFromResource (BYREF wszResourceName AS WSTRING) AS BOOLEAN
+      DECLARE FUNCTION GetRtfFromFile (BYREF wszFileName AS WSTRING) AS STRING
+      DECLARE FUNCTION AppendRtfFile (BYREF wszFileName AS WSTRING) AS DWORD
+      DECLARE FUNCTION InsertRtfFile (BYREF wszFileName AS WSTRING, BYVAL nPos AS DWORD) AS DWORD
       DECLARE FUNCTION InsertObject (BYREF wszFileName AS WSTRING) AS BOOLEAN
       DECLARE FUNCTION SaveRtf (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
          BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
@@ -346,6 +356,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE PROPERTY Saved (BYVAL value AS BOOLEAN)
       DECLARE FUNCTION Freeze () AS LONG
       DECLARE FUNCTION Unfreeze () AS LONG
+      DECLARE FUNCTION Update (BYVAL Value AS LONG) AS HRESULT
       DECLARE FUNCTION ChangeCase (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0, BYVAL nType AS LONG = tomLowerCase) AS HRESULT
       DECLARE FUNCTION LowerCase (BYVAL nStart AS LONG, BYVAL nLen AS LONG) AS HRESULT
       DECLARE FUNCTION UpperCase (BYVAL nStart AS LONG, BYVAL nLen AS LONG) AS HRESULT
@@ -475,6 +486,30 @@ PRIVATE SUB CRichEditCtrl.SetScalingRatio (BYVAL ratio AS SINGLE)
    m_ScalingRatio = ratio
    IF m_ScalingRatio = 0 THEN m_ScalingRatio = 1
 END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Sets the target printer device and line width used for "what you see is what you get" (WYSIWYG)
+' formatting in a rich edit control.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetWysiwygPrint (BYREF wszPrinterName AS WSTRING = "") AS BOOLEAN
+   DIM _wszPrinterName AS WSTRING * MAX_PATH = wszPrinterName
+   IF LEN(_wszPrinterName) = 0 THEN
+      ' // Get the default printer
+      DIM buffer AS WSTRING * MAX_PATH
+      GetProfileStringW "WINDOWS", "DEVICE", "", buffer, SIZEOF(buffer)
+      _wszPrinterName = AfxStrParse(buffer, 1, ",")
+   END IF
+   ' // Create a device context for the printer
+   DIM hDCPrinter AS HDC = CreateDCW(NULL, _wszPrinterName, NULL, NULL)
+   ' // Calculate the width in twips
+   DIM cx AS LONG, cy AS LONG
+   cx = (GetDeviceCaps(hDCPrinter, HORZRES) * 1440) \ GetDeviceCaps(hDCPrinter, LOGPIXELSX)
+   ' // Set the target device and line width
+   m_Result = SendMessageW(m_hRichEdit, EM_SETTARGETDEVICE, cast(WPARAM, hDCPrinter), cx)
+   IF m_Result THEN m_Result = 0 : RETURN TRUE
+   IF m_Result = 0 THEN m_Result = E_FAIL: RETURN FALSE
+END FUNCTION
 ' ========================================================================================
 
 
@@ -1894,11 +1929,80 @@ PRIVATE FUNCTION CRichEditCtrl.GetSel (BYREF dwStartPos AS DWORD, BYREF dwEndPos
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetSel () AS .POINTL
+   m_Result = 0
+   DIM dwStartPos AS DWORD, dwEndPos AS DWORD, pt AS .POINTL
+   SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStartPos), cast(LPARAM, @dwEndPos))
+   pt.x = dwStartPos
+   pt.y = dwEndPos
+   RETURN pt
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Selects a range of characters in a rich edit control.
 ' ========================================================================================
 PRIVATE SUB CRichEditCtrl.SetSel (BYVAL nStart AS LONG, BYVAL nEnd AS LONG)
    m_Result = SendMessageW(m_hRichEdit, EM_SETSEL, nStart, nEnd)
 END SUB
+' ========================================================================================
+' ========================================================================================
+PRIVATE SUB CRichEditCtrl.SetSel (BYREF pt AS POINTL)
+   m_Result = SendMessageW(m_hRichEdit, EM_SETSEL, pt.x, pt.y)
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Gets the caret position
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.CaretPos () AS DWORD
+   m_Result = 0
+   DIM dwStartPos AS DWORD, dwEndPos AS DWORD
+   SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStartPos), cast(LPARAM, @dwEndPos))
+   RETURN dwStartPos
+END PROPERTY   
+' ========================================================================================
+' ========================================================================================
+' Sets the caret position
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.CaretPos (BYVAL dwPos AS DWORD)
+   m_Result = 0
+   IF CLNG(dwPos) = -1 THEN
+      this.SetSel(0, -1)
+      DIM dwStartPos AS DWORD, dwEndPos AS DWORD
+      this.GetSel(dwStartPos, dwEndPos)
+      this.SetSel(dwEndPos + 1, dwEndPos + 1)
+      this.ReplaceSel(TRUE, BYVAL NULL)
+   ELSE
+      SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, dwPos), cast(LPARAM, dwPos))
+   END IF
+END PROPERTY   
+' ========================================================================================
+' ========================================================================================
+' Gets the caret position
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetCaretPos () AS DWORD
+   m_Result = 0
+   DIM dwStartPos AS DWORD, dwEndPos AS DWORD
+   SendMessageW(m_hRichEdit, EM_GETSEL, cast(WPARAM, @dwStartPos), cast(LPARAM, @dwEndPos))
+   RETURN dwStartPos
+END FUNCTION   
+' ========================================================================================
+' ========================================================================================
+' Sets the caret position
+' ========================================================================================
+PRIVATE SUB CRichEditCtrl.SetCaretPos (BYVAL dwPos AS DWORD)
+   m_Result = 0
+   IF CLNG(dwPos) = -1 THEN
+      this.SetSel(0, -1)
+      DIM dwStartPos AS DWORD, dwEndPos AS DWORD
+      this.GetSel(dwStartPos, dwEndPos)
+      this.SetSel(dwEndPos + 1, dwEndPos + 1)
+      this.ReplaceSel(TRUE, BYVAL NULL)
+   ELSE
+      SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, dwPos), cast(LPARAM, dwPos))
+   END IF
+END SUB   
 ' ========================================================================================
 
 ' ========================================================================================
@@ -1991,9 +2095,9 @@ END FUNCTION
 ' Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set
 ' text using a code page and to use either Rich Text Format (RTF) rich text or plain text.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.SetTextEx (BYREF stex AS .SETTEXTEX, BYREF wszText AS WSTRING) AS DWORD
+PRIVATE FUNCTION CRichEditCtrl.SetTextEx (BYREF stex AS .SETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
    m_Result = 0
-   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, @wszText))
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, buffer))
 END FUNCTION
 ' ========================================================================================
 
@@ -2552,41 +2656,6 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Callback used by the GetRtf method.
-' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.CRichEditCtrlGetTextCallback ( _
-   BYVAL dwCookie AS DWORD_PTR _                      ' // Value of the dwCookie member of the EDITSTREAM structure.
- , BYVAL pbBuff AS BYTE PTR _                         ' // Pointer to the buffer to read from.
- , BYVAL cb AS LONG _                                 ' // Number of bytes to read.
- , BYVAL pcb AS LONG PTR _                            ' // Number of bytes actually read.
- ) AS DWORD                                           ' // 0 for success, or an error code
-
-   DIM pcws AS CWSTR PTR = cast(CWSTR PTR, dwCookie)
-   pcws->AppendBuffer(pbBuff, cb)
-   *pcb = cb
-   RETURN 0
-
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
-' Retrieves RTF formatted text from a Rich Edit control
-' Returns the retrieved text or a null string.
-' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.GetRtf (BYVAL dwOptionsAndFlags AS DWORD = SF_RTF) AS STRING
-   DIM eds AS EDITSTREAM, cws AS CWSTR
-   eds.dwCookie = cast(DWORD_PTR, @cws)
-   eds.pfnCallBack = cast(EDITSTREAMCALLBACK, @CRichEditCtrl.CRichEditCtrlGetTextCallback)
-   SendMessageW(m_hRichEdit, EM_STREAMOUT, dwOptionsAndFlags, cast(LPARAM, @eds))
-   ' // Copy the ansi contents of the CWSTR to a STRING
-   DIM s AS STRING = SPACE(cws.m_BufferLen - 2)   ' // -2 to remove the ending nulls
-   IF LEN(s) THEN CopyMemory(STRPTR(s), cws.m_pBuffer, cws.m_BufferLen - 2)
-   m_Result = 0
-   RETURN s
-END FUNCTION
-' ========================================================================================
-
-' ========================================================================================
 ' Enumerates font families. Used by the SetFont method.
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl.CRichEditCtrlEnumFontFamProcW ( _
@@ -2631,6 +2700,41 @@ PRIVATE FUNCTION CRichEditctrl.SetFont ( _
    m_Result = SendMessageW(hRichEdit, EM_SETCHARFORMAT, SCF_ALL, cast(LPARAM, @tcf))
    RETURN m_Result
 
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Callback used by the GetRtf method.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.CRichEditCtrlGetTextCallback ( _
+   BYVAL dwCookie AS DWORD_PTR _                      ' // Value of the dwCookie member of the EDITSTREAM structure.
+ , BYVAL pbBuff AS BYTE PTR _                         ' // Pointer to the buffer to read from.
+ , BYVAL cb AS LONG _                                 ' // Number of bytes to read.
+ , BYVAL pcb AS LONG PTR _                            ' // Number of bytes actually read.
+ ) AS DWORD                                           ' // 0 for success, or an error code
+
+   DIM pcws AS CWSTR PTR = cast(CWSTR PTR, dwCookie)
+   pcws->AppendBuffer(pbBuff, cb)
+   *pcb = cb
+   RETURN 0
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves RTF formatted text from a Rich Edit control
+' Returns the retrieved text or a null string.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetRtf (BYVAL dwOptionsAndFlags AS DWORD = SF_RTF) AS STRING
+   DIM eds AS EDITSTREAM, cws AS CWSTR
+   eds.dwCookie = cast(DWORD_PTR, @cws)
+   eds.pfnCallBack = cast(EDITSTREAMCALLBACK, @CRichEditCtrl.CRichEditCtrlGetTextCallback)
+   SendMessageW(m_hRichEdit, EM_STREAMOUT, dwOptionsAndFlags, cast(LPARAM, @eds))
+   ' // Copy the ansi contents of the CWSTR to a STRING
+   DIM s AS STRING = SPACE(cws.m_BufferLen - 2)   ' // -2 to remove the ending nulls
+   IF LEN(s) THEN CopyMemory(STRPTR(s), cws.m_pBuffer, cws.m_BufferLen - 2)
+   m_Result = 0
+   RETURN s
 END FUNCTION
 ' ========================================================================================
 
@@ -2752,6 +2856,96 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Gets RTF text from the specified file
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetRtfFromFile (BYREF wszFileName AS WSTRING) AS STRING
+   DIM cb AS LONG                           ' // Length of the file
+   DIM pcb AS LONG PTR                      ' // Bytes read
+   DIM hFile AS HANDLE                      ' // File handle
+   DIM buffer AS STRING                     ' // Buffer
+
+   ' // Checks the validity of the parameters
+   IF m_hRichEdit = 0 THEN m_Result = E_HANDLE : RETURN buffer
+   IF LEN(wszFileName) = 0 THEN m_Result = E_INVALIDARG : RETURN buffer
+   m_Result = 0
+   ' // Opens the file and sends the message
+   hFile = CreateFileW(wszFileName, GENERIC_READ, FILE_SHARE_READ, _
+                       NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL)
+   IF hFile = INVALID_HANDLE_VALUE THEN m_Result = E_HANDLE: RETURN buffer
+   ' // Get the
+   cb = GetFileSize(hFile, NULL)
+   buffer = SPACE(cb)
+   IF ReadFile(hFile, STRPTR(buffer), cb, pcb, NULL) = 0 THEN m_Result = GetLastError
+   CloseHandle hFile
+   RETURN buffer
+
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Appends the contents of the specified RTF file
+' Usage example:
+' DIM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.rtf"
+' pRichEdit->AppendRtfFile(wszFileName)
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.AppendRtfFile (BYREF wszFileName AS WSTRING) AS DWORD
+   ' // Checks the validity of the parameters
+   IF m_hRichEdit = 0 THEN m_Result = E_HANDLE : RETURN 0
+   IF LEN(wszFileName) = 0 THEN m_Result = E_INVALIDARG : RETURN 0
+   m_Result = 0
+   ' // Gets all the text from the file
+   DIM strRtf AS STRING = this.GetRtfFromFile(wszFileName)
+   IF LEN(strRtf) = 0 THEN RETURN 0
+   ' // Fills the SETTEXTEX structure
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = CP_ACP
+   ' // Moves the caret at the end
+   this.SetCaretPos(-1)
+   ' // Gets the caret position
+   DIM dwPos AS DWORD = this.GetCaretPos
+   ' // Set the selection at the end
+   this.SetSel(dwPos, dwPos)
+   ' // Sets the Rtf text
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(strRtf)))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Inserts the contents of the specified RTF file
+' wszFilename : The name of the rtf file to append.
+' dwPos : The position where to insert the contents of the rtf file.
+'         If dwPos = -1, the rtf contentes are inserted at the caret position.
+' Usage example:
+' DIM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.rtf"
+' pRichEdit->InsertRtfFile(wszFileName, 500)
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.InsertRtfFile (BYREF wszFileName AS WSTRING, BYVAL dwPos AS DWORD) AS DWORD
+   ' // Checks the validity of the parameters
+   IF m_hRichEdit = 0 THEN m_Result = E_HANDLE : RETURN 0
+   IF LEN(wszFileName) = 0 THEN m_Result = E_INVALIDARG : RETURN 0
+   m_Result = 0
+   ' // Gets all the text from the file
+   DIM strRtf AS STRING = this.GetRtfFromFile(wszFileName)
+   IF LEN(strRtf) = 0 THEN RETURN 0
+   ' // Fills the SETTEXTEX structure
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = CP_ACP
+   ' // Moves the caret at the specified location
+   IF CLNG(dwPos) = -1 THEN
+      dwPos = this.GetCaretPos
+   ELSE
+      this.SetCaretPos(dwPos)
+   END IF
+   ' // Set the selection at the specified location
+   this.SetSel(dwPos, dwPos)
+   ' // Sets the Rtf text
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(strRtf)))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Inserts an image or an Ole object in the rich edit control.
 ' See MSDN: https://learn.microsoft.com/en-us/windows/win32/controls/using-rich-edit-com
 ' Remarks: To insert images, use the InsertImage method, because the InsertObject method
@@ -2827,7 +3021,7 @@ PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    reobject.clsid = clsid
    reobject.cp = REO_CP_SELECTION
    reobject.dvaspect = DVASPECT_CONTENT
-   reobject.dwFlags = 0 'REO_RESIZABLE OR REO_BELOWBASELINE
+   reobject.dwFlags = REO_RESIZABLE 'OR REO_BELOWBASELINE
    reobject.dwUser = 0
    reobject.poleobj = pObject
    reobject.polesite = pClientSite
@@ -2867,7 +3061,7 @@ PRIVATE SUB CRichEditCtrl.AddLF (BYVAL atEnd AS BOOLEAN = FALSE)
       SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 1))
    END IF
    ' // Insert a line feed
-   DIM wsz AS WSTRING * 2 = !"\l"
+   DIM wsz AS WSTRING * 2 = CHR(10)
    SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @wsz))
 END SUB
 ' ========================================================================================
@@ -2883,7 +3077,7 @@ PRIVATE SUB CRichEditCtrl.AddCR (BYVAL atEnd AS BOOLEAN = FALSE)
       SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 1))
    END IF
    ' // Insert a carriage return
-   DIM wsz AS WSTRING * 2 = !"\r"
+   DIM wsz AS WSTRING * 2 = CHR(13)
    SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @wsz))
 END SUB
 ' ========================================================================================
@@ -2899,7 +3093,7 @@ PRIVATE SUB CRichEditCtrl.AddCRLF (BYVAL atEnd AS BOOLEAN = FALSE)
       SendMessageW(m_hRichEdit, EM_SETSEL, cast(WPARAM, @dwEnd + 1), cast(LPARAM, @dwEnd + 2))
    END IF
    ' // Insert a carriage return and a line feed
-   DIM wsz AS WSTRING * 3 = !"\r\l"
+   DIM wsz AS WSTRING * 3 = CHR(13, 10)
    SendMessageW(m_hRichEdit, EM_REPLACESEL, TRUE, cast(LPARAM, @wsz))
 END SUB
 ' ========================================================================================
@@ -3369,10 +3563,10 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Saves the document to a file in text format.
+' Saves the document to a file in the specified format.
 ' pVar = Path and file name, e.g. 
-'    DIM cv AS CVAR = AfxGetExePath & $"\Test3.txt"
-'    pRichEdit->SaveDoc(cv)
+'    DIM cv AS CVAR = AfxGetExePath & $"\Test3.rtf"
+'    pRichEdit->SaveDoc(cv, tomCreateAlways OR tomRTF)
 ' Pass NULL to overwrite the file if it already exists.
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl.SaveDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = 0, BYVAL CodePage AS LONG = CP_ACP) AS HRESULT
@@ -3447,6 +3641,18 @@ PRIVATE FUNCTION CRichEditCtrl.Unfreeze () AS LONG
    m_Result = pTextDocument2->lpvtbl->Unfreeze(pTextDocument2, @nCount)
    IUnknown_Release(pTextDocument2)
    RETURN nCount
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Updates the selection and caret.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.Update (BYVAL Value AS LONG) AS HRESULT
+   DIM pTextDocument2 AS ITextDocument2 PTR = this.GetDocInterface
+   IF pTextDocument2 = NULL THEN m_Result = E_POINTER : EXIT FUNCTION
+   m_Result = pTextDocument2->lpvtbl->Update(pTextDocument2, Value)
+   IUnknown_Release(pTextDocument2)
+   RETURN m_Result
 END FUNCTION
 ' ========================================================================================
 
@@ -3535,40 +3741,3 @@ END FUNCTION
 ' ========================================================================================
 
 END NAMESPACE
-
-
-'      ' // You can use the SetTargetDevice member function to specify the target device for
-'      ' //  which a rich edit control formats its text. This function is useful for WYSIWYG
-'      ' // (what you see is what you get) formatting, in which an application positions text
-'      ' // using the default printer's font metrics instead of the screen's.
-'      DIM hDCPrinter AS HDC = AfxGetPrinterDC
-'      IF hDCPrinter THEN
-'         ' // Get the physical offsets of the printing device
-'         DIM cxPhysOffset AS LONG = GetDeviceCaps(hDCPrinter, PHYSICALOFFSETX)
-'         DIM cyPhysOffset AS LONG = GetDeviceCaps(hDCPrinter, PHYSICALOFFSETY)
-'         ' // Get the width and height of the physical page in device units
-'         DIM cxPhys AS LONG = GetDeviceCaps(hDCPRinter, PHYSICALWIDTH) * m_ScalingRatio
-'         DIM cyPhys As LONG = GetDeviceCaps(hDCPrinter, PHYSICALHEIGHT) * m_ScalingRatio
-'         ' // Set the target device and line width
-'         SendMessageW(hRichEdit, EM_SETTARGETDEVICE, cast(WPARAM, hDCPrinter), cxPhys)
-'         ' // Fill a FORMATRANGE structure
-'         DIM fr AS .FORMATRANGE
-'         fr.hdc       = hDCPrinter
-'         fr.hdcTarget = hDCPrinter
-'         ' // Set page rect to physical page size in twips.
-'         fr.rcPage.top    = 0
-'         fr.rcPage.left   = 0
-'         fr.rcPage.right  = MulDiv(cxPhys, 1440, GetDeviceCaps(hDCPrinter, LOGPIXELSX))
-'         fr.rcPage.bottom = MulDiv(cyPhys, 1440, GetDeviceCaps(hDCPrinter, LOGPIXELSY))
-'         ' // Set the rendering rectangle to the printable area of the page.
-'         fr.rc.left   = cxPhysOffset
-'         fr.rc.right  = (cxPhysOffset + cxPhys)
-'         fr.rc.top    = cyPhysOffset
-'         fr.rc.bottom = (cyPhysOffset + cyPhys)
-'         ' // Select the entire contents
-'         SendMessageW(hRichEdit, EM_SETSEL, 0, cast(LPARAM, -1))
-'         ' // Get the selection into a CHARRANGE
-'         SendMessageW(hRichEdit, EM_EXGETSEL, 0, cast(LPARAM, @fr.chrg))   
-'         SendMessageW(hRichEdit, EM_FORMATRANGE, TRUE, cast(LPARAM, @fr))
-''         ReleaseDC(hRichEdit, hDCPrinter)
-'      END IF
