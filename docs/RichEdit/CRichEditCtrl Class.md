@@ -22,163 +22,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 ---
 
-# <a name="afxcricheditctrlptr"></a>AfxCRichEditCtrlPtr
-
-Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or from the handle of its parent window and the control's identifier.
-```
-FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
-FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CRichEditCtrl PTR
-```
-| Parameter | Description |
-| --------- | ----------- |
-| *hRichEdit* | Handle of the rich edit control. |
-
-| Parameter | Description |
-| --------- | ----------- |
-| *hParent* | Handle of the parent window of the rich edit control. |
-| *cID* | Identifier of the rich edit control. |
-
-#### Return value
-
-A pointer to the `CRichEditCtrl` class.
-
----
-
-# <a name="constructor"></a>CONSTRUCTOR
-
-Creates an instance of the rich edit control.
-
-```
-CONSTRUCTOR CRichEditCtrl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszTitle AS WSTRING = "", _
-   BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
-   BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL lpParam AS LONG_PTR = 0)
-```
-| Parameter | Description |
-| --------- | ----------- |
-| *pWindow* | Pointer to the parent `CWindow`class. |
-| *cID* | The control identifier, an integer value used to notify its parent about events. The application determines the control identifier; it must be unique for all controls with the same parent window. |
-| *wszTitle* | Optional. The text of the control. |
-| *x* | Optional. The x-coordinate of the upper-left corner of the window relative to the upper-left corner of the parent window's client area. |
-| *y* | Optional. The initial y-coordinate of the upper-left corner of the window relative to the upper-left corner of the parent window's client area. |
-| *nWidth* | Optional. The width of the control. |
-| *nHeight* | Optional. The height of the control. |
-| *dwStyle* | Optional. The window styles of the control being created.<br>Default styles: WS_VISIBLE OR WS_CHILD OR WS_TABSTOP OR ES_LEFT OR WS_HSCROLL OR WS_VSCROLL OR ES_AUTOHSCROLL OR ES_AUTOVSCROLL OR ES_MULTILINE OR ES_WANTRETURN OR ES_NOHIDESEL OR ES_SAVESEL |
-| *dwExStyle* | Optional. The extended window styles of the control being created.<br>Default extended style: WS_EX_CLIENTEDGE |
-| *lParam* | Optional. Pointer to custom data. |
-
-#### Usage example (dotted syntax)
-```
-DIM pRichEdit AS CRichEditCtrl = CRichEditCtrl(@pWindow, IDC_RICHEDIT, _
-    "Rich Edit box", 100, 50, 300, 200)
-```
-#### Usage example (pointer syntax)
-```
-DIM pRichEdit AS CRichEditCtrl PTR = NEW CRichEditCtrl(@pWindow, IDC_RICHEDIT, _
-    "Rich Edit box", 100, 50, 300, 200)
-
-```
-
----
-
-# <a name="destructor"></a>DESTRUCTOR
-
-Called automatically when a class variable goes out of scope or is destroyed.
-```
-DESTRUCTOR CRichEditCtrl
-```
-
----
-
-# <a name="hrichedit"></a>hRichEdit
-
-Returns the handle of the rich edit control.
-
-```
-FUNCTION CRichEditCtrl.hRichEdit () AS HWND
-```
-#### Usage example
-```
-' // Create an instance of the CRichEditCtrl class
-DIM pRichEdit AS CRichEditCtrl = CRichEditCtrl(@pWindow, IDC_RICHEDIT, "RichEditbox", 100, 50, 300, 200)
-' // Set the focus in the control
-DIM hRichEdit AS HWND = pRichEdit.hRichEdit
-```
----
-
-# <a name="scalingratio"></a>ScalingRatio
-
-Gets/sets the scaling ratio.
-
-```
-PROPERTY ScalingRatio () AS SINGLE
-PROPERTY ScalingRatio (BYVAL Ratio AS SINGLE)
-```
-#### Remarks
-
-The scaling ratio is used by the **InsertImage** and **InsertObject** methods to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
-
-#### Usage examples
-
-```
-DIM ratio AS LONG = pRichEdit.ScalingRatio
-pRichEdit.ScalingRatio = ratio
-```
-
----
-
-# <a name="getscalingratio"></a>GetScalingRatio
-
-Gets the scaling ratio.
-
-```
-FUNCTION CRichEditCtrl.GetScalingRatio () AS SINGLE
-```
-#### Remarks
-
-The scaling ratio is used by the **InsertImage** and **InsertObject** methods to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
-
-#### Usage example
-
-```
-DIM ratio AS LONG = pRichEdit.GetScalingRatio
-```
-
----
-
-# <a name="setscalingratio"></a>SetScalingRatio
-
-Sets the scaling ratio.
-
-```
-SUB CRichEditCtrl.SetScalingRatio (BYVAL ratio AS SINGLE)
-```
-#### Remarks
-
-The scaling ratio is used by the **InsertImage** and **InsertObject** methods to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
-
-#### Usage example
-
-```
-pRichEdit.SetScalingRatio(ratio)
-```
-
----
-
-# <a name="setwysiwygprint"></a>SetWysiwygPrint
-
-Sets the target printer device and line width used for "what you see is what you get" (WYSIWYG) formatting in a rich edit control.
-
-```
-FUNCTION SetWysiwygPrint (BYREF wszPrinterName AS WSTRING = "") AS BOOLEAN
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *wszPrinterName* | The printer name, e.g. "OKI B410d" or the "Microsoft Print to PDF" virtual printer. If wszPrinterName is empty, the control will use the default printer. |
-
-#### Return value
-
-A boolean true (-1) or false (0).
-
 # CRichEditCtrl Properties
 
 | Name       | Description |
@@ -421,6 +264,163 @@ A boolean true (-1) or false (0).
 | [GetErrorInfo](#geterrorinfo) | Returns a localized description of the last result code. |
 
 ---
+
+# <a name="afxcricheditctrlptr"></a>AfxCRichEditCtrlPtr
+
+Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or from the handle of its parent window and the control's identifier.
+```
+FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hRichEdit AS HWND) AS CRichEditCtrl PTR
+FUNCTION AfxCRichEditCtrlPtr OVERLOAD (BYVAL hParent AS HWND, BYVAL cID AS LONG) AS CRichEditCtrl PTR
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *hRichEdit* | Handle of the rich edit control. |
+
+| Parameter | Description |
+| --------- | ----------- |
+| *hParent* | Handle of the parent window of the rich edit control. |
+| *cID* | Identifier of the rich edit control. |
+
+#### Return value
+
+A pointer to the `CRichEditCtrl` class.
+
+---
+
+# <a name="constructor"></a>CONSTRUCTOR
+
+Creates an instance of the rich edit control.
+
+```
+CONSTRUCTOR CRichEditCtrl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LONG_PTR, BYREF wszTitle AS WSTRING = "", _
+   BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL nWidth AS LONG = 0, BYVAL nHeight AS LONG = 0, _
+   BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL lpParam AS LONG_PTR = 0)
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *pWindow* | Pointer to the parent `CWindow`class. |
+| *cID* | The control identifier, an integer value used to notify its parent about events. The application determines the control identifier; it must be unique for all controls with the same parent window. |
+| *wszTitle* | Optional. The text of the control. |
+| *x* | Optional. The x-coordinate of the upper-left corner of the window relative to the upper-left corner of the parent window's client area. |
+| *y* | Optional. The initial y-coordinate of the upper-left corner of the window relative to the upper-left corner of the parent window's client area. |
+| *nWidth* | Optional. The width of the control. |
+| *nHeight* | Optional. The height of the control. |
+| *dwStyle* | Optional. The window styles of the control being created.<br>Default styles: WS_VISIBLE OR WS_CHILD OR WS_TABSTOP OR ES_LEFT OR WS_HSCROLL OR WS_VSCROLL OR ES_AUTOHSCROLL OR ES_AUTOVSCROLL OR ES_MULTILINE OR ES_WANTRETURN OR ES_NOHIDESEL OR ES_SAVESEL |
+| *dwExStyle* | Optional. The extended window styles of the control being created.<br>Default extended style: WS_EX_CLIENTEDGE |
+| *lParam* | Optional. Pointer to custom data. |
+
+#### Usage example (dotted syntax)
+```
+DIM pRichEdit AS CRichEditCtrl = CRichEditCtrl(@pWindow, IDC_RICHEDIT, _
+    "Rich Edit box", 100, 50, 300, 200)
+```
+#### Usage example (pointer syntax)
+```
+DIM pRichEdit AS CRichEditCtrl PTR = NEW CRichEditCtrl(@pWindow, IDC_RICHEDIT, _
+    "Rich Edit box", 100, 50, 300, 200)
+
+```
+
+---
+
+# <a name="destructor"></a>DESTRUCTOR
+
+Called automatically when a class variable goes out of scope or is destroyed.
+```
+DESTRUCTOR CRichEditCtrl
+```
+
+---
+
+# <a name="hrichedit"></a>hRichEdit
+
+Returns the handle of the rich edit control.
+
+```
+FUNCTION CRichEditCtrl.hRichEdit () AS HWND
+```
+#### Usage example
+```
+' // Create an instance of the CRichEditCtrl class
+DIM pRichEdit AS CRichEditCtrl = CRichEditCtrl(@pWindow, IDC_RICHEDIT, "RichEditbox", 100, 50, 300, 200)
+' // Set the focus in the control
+DIM hRichEdit AS HWND = pRichEdit.hRichEdit
+```
+---
+
+# <a name="scalingratio"></a>ScalingRatio
+
+Gets/sets the scaling ratio.
+
+```
+PROPERTY ScalingRatio () AS SINGLE
+PROPERTY ScalingRatio (BYVAL Ratio AS SINGLE)
+```
+#### Remarks
+
+The scaling ratio is used by the **InsertImage** and **InsertObject** methods to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
+
+#### Usage examples
+
+```
+DIM ratio AS LONG = pRichEdit.ScalingRatio
+pRichEdit.ScalingRatio = ratio
+```
+
+---
+
+# <a name="getscalingratio"></a>GetScalingRatio
+
+Gets the scaling ratio.
+
+```
+FUNCTION CRichEditCtrl.GetScalingRatio () AS SINGLE
+```
+#### Remarks
+
+The scaling ratio is used by the **InsertImage** and **InsertObject** methods to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
+
+#### Usage example
+
+```
+DIM ratio AS LONG = pRichEdit.GetScalingRatio
+```
+
+---
+
+# <a name="setscalingratio"></a>SetScalingRatio
+
+Sets the scaling ratio.
+
+```
+SUB CRichEditCtrl.SetScalingRatio (BYVAL ratio AS SINGLE)
+```
+#### Remarks
+
+The scaling ratio is used by the **InsertImage** and **InsertObject** methods to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
+
+#### Usage example
+
+```
+pRichEdit.SetScalingRatio(ratio)
+```
+
+---
+
+# <a name="setwysiwygprint"></a>SetWysiwygPrint
+
+Sets the target printer device and line width used for "what you see is what you get" (WYSIWYG) formatting in a rich edit control.
+
+```
+FUNCTION SetWysiwygPrint (BYREF wszPrinterName AS WSTRING = "") AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszPrinterName* | The printer name, e.g. "OKI B410d" or the "Microsoft Print to PDF" virtual printer. If wszPrinterName is empty, the control will use the default printer. |
+
+#### Return value
+
+A boolean true (-1) or false (0).
 
 # <a name="autocorrectproc"></a>AutoCorrectProc
 
