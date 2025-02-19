@@ -399,7 +399,9 @@ A boolean true (-1) or false (0).
 
 | Name       | Description |
 | ---------- | ----------- |
+| [AppendRtfFile](#appendrtffile) | Appends the contents of the specified RTF file. |
 | [GetRtf](#getrtf) | Retrieves formatted text from a rich edit control. |
+| [InsertRtfFile](#insertrtffile) | Inserts the contents of the specified RTF file. |
 | [LoadRtfFromFile](#loadrtffromfile) | Loads a rich text file into a rich edit control. |
 | [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
 | [InsertObject](#insertobject) | Inserts an image or an Ole object in the rich edit control. |
@@ -4798,6 +4800,47 @@ END FUNCTION
 Returns a description of the last result code.
 ```
 PRIVATE FUNCTION GetErrorInfo (BYVAL nError AS LONG = -1) AS CWSTR
+```
+
+---
+
+# <a name="appendrtfFile"></a>AppendRtfFile
+
+Appends the contents of the specified RTF file.
+```
+FUNCTION AppendRtfFile (BYREF wszFileName AS WSTRING) AS DWORD
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *wszFileName* | Path and name of the RTF file to append. |
+
+#### Usage example
+
+```
+IM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.rtf"
+RichEdit->AppendRtfFile(wszFileName)
+```
+
+---
+
+# <a name="insertrtfFile"></a>InsertRtfFile
+
+Inserts the contents of the specified RTF file at the specified location.
+```
+FUNCTION InsertRtfFile (BYREF wszFileName AS WSTRING, BYVAL dwPos AS DWORD) AS DWORD
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *wszFileName* | Path and name of the RTF file to insert. |
+| *dwPos* | Location where to insert the RTF file. If dwPos = -1, the contents of the RTF file are inserted at the caret position. |
+
+#### Usage examples
+
+```
+IM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.rtf"
+RichEdit->InsertRtfFile(wszFileName, 500)
+-- or --
+RichEdit->InsertRtfFile(wszFileName, -1)
 ```
 
 ---
