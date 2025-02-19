@@ -381,6 +381,11 @@ FUNCTION CRichEditCtrl.CRichEditCtrlProc ( _
 
    SELECT CASE uMsg
 
+      CASE WM_GETDLGCODE
+         CREC_DP("CRichEditCtrlProc WM_GETDLGCODE " & WSTR(wParam))
+         ' // Needed for VK_TAB to work
+         RETURN DLGC_WANTALLKEYS
+
       CASE WM_KEYDOWN
          ' // Keyboard navigation
          SELECT CASE LOWORD(wParam)
@@ -392,13 +397,13 @@ FUNCTION CRichEditCtrl.CRichEditCtrlProc ( _
                RETURN 0
             CASE VK_TAB
                CREC_DP("CRichEditCtrlProc VK_TAB")
-               IF HIWORD(.GetKeyState(VK_SHIFT)) = 0 THEN
-                  '// Set the focus in the previous control that has the WS_TABSTOP style
-                  .SetFocus .GetNextDlgTabItem(GetParent(hwnd), hwnd, 0)
-               ELSE
-                  '// Set the focus in the next control that has the WS_TABSTOP style
-                  .SetFocus .GetNextDlgTabItem(GetParent(hwnd), hwnd, -1)
-               END IF
+'               IF HIWORD(.GetKeyState(VK_SHIFT)) = 0 THEN
+'                  '// Set the focus in the previous control that has the WS_TABSTOP style
+'                  .SetFocus .GetNextDlgTabItem(GetParent(hwnd), hwnd, 0)
+'               ELSE
+'                  '// Set the focus in the next control that has the WS_TABSTOP style
+'                  .SetFocus .GetNextDlgTabItem(GetParent(hwnd), hwnd, -1)
+'               END IF
          END SELECT
 
       CASE WM_DESTROY
@@ -2915,7 +2920,7 @@ END FUNCTION
 ' Inserts the contents of the specified RTF file
 ' wszFilename : The name of the rtf file to append.
 ' dwPos : The position where to insert the contents of the rtf file.
-'         If dwPos = -1, the rtf contentes are inserted at the caret position.
+'         If dwPos = -1, the rtf contents are inserted at the caret position.
 ' Usage example:
 ' DIM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.rtf"
 ' pRichEdit->InsertRtfFile(wszFileName, 500)
