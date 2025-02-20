@@ -69,6 +69,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [TouchOptions](#touchoptions) | Gets/sets the touch options that are associated with a rich edit control. |
 | [TypographyOptions](#typographyoptions) | Gets/sets the current state of the typography options of a rich edit control. |
 | [WordWrap](#wordwrap) | Enables/disables word wrap. |
+| [WordWrapMode](#wordwrapmode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
 
 # CRichEditCtrl Methods
 
@@ -136,7 +137,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetUndoName](#getundoname) | Retrieves the type of the next undo action, if any. |
 | [GetWordBreakProc](#getwordbreakproc) | Gets the address of the current Wordwrap function. |
 | [GetWordBreakProcEx](#getwordbreakprocex) | Retrieves the address of the currently registered extended word-break procedure. |
-| [GetWordWrapMode](#getwordwrapmode) | Gets the current word wrap and word-break options for the rich edit control. |
 | [GetZoom](#getzoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
 | [HideSelection](#hideselection) | Hides or shows the selection in a rich edit control. |
 | [InsertImage](#insertimage) | Replaces the selection with a blob that displays an image. |
@@ -201,7 +201,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetTypographyOptions](#settypographyoptions) | Sets the current state of the typography options of a rich edit control. |
 | [SetUIAName](#setuianame) | Sets the maximum number of actions that can stored in the undo queue. |
 | [SetUndoLimit](#setundolimit) | Sets the maximum number of actions that can stored in the undo queue. |
-| [SetWordWrapMode](#setwordwrapmode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
 | [SetWordBreakProc](#setwordbreakproc) | Replaces a rich edit control's default Wordwrap function with an application-defined Wordwrap function. |
 | [SetWordBreakProcEx](#setwordbreakprocex) | Sets the extended word-break procedure. |
 | [SetZoom](#setzoom) | Sets the zoom ratio anywhere between 1/64 and 64. |
@@ -2384,6 +2383,44 @@ If the method succeeds it returns the boolean value true (-1); if it fails, it r
 
 ---
 
+# <a name="wordwrapmode"></a>WordWrapMode
+
+Gets/sets the current word wrap and word-break options for the rich edit control.
+
+```
+(GET) PROPERTY WordWrapMode () AS DWORD
+(SET) PROPERTY WordWrapMode (BYVAL values AS DWORD) AS DWORD
+```
+```
+FUNCTION GetWordWrapMode () AS DWORD
+FUNCTION SetWordWrapMode (BYVAL values AS LONG) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *values* | Specifies one or more of the following values. |
+
+| Value  | Meaning |
+| ------ | ------- |
+| **WBF_WORDWRAP** | Enables Asian-specific word wrap operations, such as kinsoku in Japanese. |
+| **WBF_WORDBREAK** | Enables English word-breaking operations in Japanese and Chinese. Enables Hangeul word-breaking operation. |
+| **WBF_OVERFLOW** | Recognizes overflow punctuation. (Not currently supported.) |
+| **WBF_LEVEL1** | Sets the Level 1 punctuation table as the default. |
+| **WBF_LEVEL2** | Sets the Level 2 punctuation table as the default. |
+| **WBF_CUSTOM** | Sets the application-defined punctuation table. |
+
+#### Return value
+
+(GET) The the current word wrap and word-break options.
+
+(SET) This method returns the current word-wrapping and word-breaking options.
+
+#### Remarks
+
+This property is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions of Rich Edit. This message must not be sent by the application-defined, word-break procedure.
+
+---
+
 # <a name="callautocorrectproc"></a>CallAutocorrectProc
 
 Calls the autocorrect callback function that is stored by the (SET) **AutocorrectProc** property, provided that the text preceding the insertion point is a candidate for autocorrection.
@@ -3251,7 +3288,7 @@ If there is an undo action, the value returned is an [UNDONAMEID](https://learn.
 If there are no actions that can be undone or the type of the next undo action is unknown, the return value is zero.
 
 #### UNDONAMEID enumeration
-
+4
 | Name              | Value | Description |
 | ----------------- | ----- | ----------- |
 | **UID_UNKNOWN**   |   0   | The type of undo action is unknown. |
@@ -3293,22 +3330,6 @@ FUNCTION GetWordBreakProcEx () AS LONG_PTR
 #### Return value
 
 The message returns the address of the currently registered extended word-break procedure.
-
----
-
-# <a name="getwordwrapmode"></a>GetWordWrapMode
-
-Gets the current word wrap and word-break options for the rich edit control.
-```
-FUNCTION GetWordWrapMode () AS DWORD
-```
-#### Return value
-
-The message returns the current word wrap and word-break options.
-
-#### Remarks
-
-This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions of Rich Edit. This message must not be sent by the application-defined, word-break procedure.
 
 ---
 
@@ -4119,35 +4140,6 @@ FUNCTION SetWordBreakProcEx (BYVAL pfn AS LONG_PTR) AS LONG_PTR
 #### Return value
 
 This method returns the address of the previous extended word-break procedure.
-
----
-
-# <a name="setwordwrapmode"></a>SetWordWrapMode
-
-Sets the word-wrapping and word-breaking options for the rich edit control.
-```
-FUNCTION SetWordWrapMode (BYVAL values AS LONG) AS LONG
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *values* | Specifies one or more of the following values. |
-
-| Value  | Meaning |
-| ------ | ------- |
-| **WBF_WORDWRAP** | Enables Asian-specific word wrap operations, such as kinsoku in Japanese. |
-| **WBF_WORDBREAK** | Enables English word-breaking operations in Japanese and Chinese. Enables Hangeul word-breaking operation. |
-| **WBF_OVERFLOW** | Recognizes overflow punctuation. (Not currently supported.) |
-| **WBF_LEVEL1** | Sets the Level 1 punctuation table as the default. |
-| **WBF_LEVEL2** | Sets the Level 2 punctuation table as the default. |
-| **WBF_CUSTOM** | Sets the application-defined punctuation table. |
-
-#### Return value
-
-This method returns the current word-wrapping and word-breaking options.
-
-#### Remarks
-
-This method must not be sent by the application defined word breaking procedure.
 
 ---
 
