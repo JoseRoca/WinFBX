@@ -103,7 +103,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetSel](#getsel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
 | [GetSelText](#getseltext) | Retrieves the currently selected text in a rich edit control. |
 | [GetTableParams](#gettableparams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
-| [GetTextColor](#gettextcolor) | Gets the text color of the selected text or the word under the cursor. |
 | [GetTextEx](#gettextex) | Gets all of the text from the rich edit control in any particular code base you want. |
 | [GetTextFontName](#gettextfontname) | Gets the font name of the selected text or the word under the cursor. |
 | [GetTextHeight](#gettextheight) | Gets the text height of the selected text or the word under the cursor. |
@@ -145,7 +144,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetTableParams](#settableparams) | Changes the parameters of rows in a table. |
 | [SetTabStops](#settabstops) | Sets the tab stops in a multiline rich edit control. |
 | [SetTargetDevice](#settargetdevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
-| [SetTextColor](#settextcolor) | Sets the text color of the selected text or the word under the cursor. |
 | [SetTextEx](#settextex) | Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text. |
 | [SetTextBold](#settextbold) | Sets the attribute of selected text or word to bold. |
 | [SetTextFontName](#settextfontname) | Sets the font name of the selected text or the word under the cursor. |
@@ -3697,7 +3695,7 @@ SUB SetTextBold ()
 
 Changes the selected text or word under the cursor to italic. If it is already set, it removes it.
 ```
-SUB Italic ()
+SUB SetTextItalic ()
 ```
 
 ---
@@ -3706,7 +3704,7 @@ SUB Italic ()
 
 Changes the selected text or word under the cursor to strike out. If it is already set, it removes it.
 ```
-SUB StrikeOut ()
+SUB SetTextStrikeOut ()
 ```
 
 ---
@@ -3715,7 +3713,7 @@ SUB StrikeOut ()
 
 Changes the selected text or word under the cursor to underline. If it is already set, it removes it.
 ```
-SUB Uderline ()
+SUB SetTextUderline ()
 ```
 
 ---
@@ -3723,10 +3721,16 @@ SUB Uderline ()
 # <a name="textcolor"></a>TextColor
 
 Gets/sets the color of the selected text or the word under the cursor.
+
 ```
 (GET) PROPERTY TextColor () AS COLORREF
 (SET) PROPERTY TextColor (BYVAL crTxtColor AS COLORREF)
 ```
+```
+FUNCTION GetTextColor () AS COLORREF
+FUNCTION SetTextColor (BYVAL crTxtColor AS COLORREF) AS BOOLEAN
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *crTxtColor* | The new text color. Use the macro RGB (BGR in FreeBasic), e.g. BGR(255,0,0). |
@@ -3735,42 +3739,7 @@ Gets/sets the color of the selected text or the word under the cursor.
 
 (GET) The color of the selected text or the word under the cursor if there is not selection.
 
-#### Remarks
-
-To select text programatically, use the **SetSel** method.
-
----
-
-# <a name="gettextcolor"></a>GetTextColor
-
-Gets the color of the selected text or the word under the cursor.
-```
-FUNCTION GetTextColor () AS COLORREF
-```
-
-#### Return value
-
-The color of the selected text or the word under the cursor if there is not selection.
-
-#### Remarks
-
-To select text programatically, use the **SetSel** method.
-
----
-
-# <a name="settextcolor"></a>SetTextColor
-
-Sets the color of the selected text or the word under the cursor.
-```
-FUNCTION SetTextColor (BYVAL crTxtColor AS COLORREF) AS BOOLEAN
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *crTxtColor* | The new text color. Use the macro RGB (BGR in FreeBasic), e.g. BGR(255,0,0). |
-
-#### Return value
-
-A boolean true (-1) or false (0).
+(SET) A boolean true (-1) or false (0).
 
 #### Remarks
 
