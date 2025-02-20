@@ -3743,6 +3743,35 @@ To select text programatically, use the **SetSel** method.
 
 ---
 
+# <a name="textfontname"></a>TextFontName
+
+Gets/sets the font face name of the selected text or the word under the cursor if there is not selection.
+
+```
+(GET) PROPERTY TextFontName () AS CWSTR
+(SET) PROPERTY TextFontName (BYREF wszFaceName AS WSTRING)
+```
+```
+FUNCTION GetTextFontName () AS CWSTR
+FUNCTION SetTextFontName (BYREF wszFaceName AS WSTRING) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszFaceName* | (SET) The new font face name, e.g. "Times New Roman". |
+
+#### Return value
+
+(GET) The font face name.
+
+(SET) A boolean true (-1) or false (0).
+
+#### Remarks
+
+To select text programatically, use the **SetSel** method.
+
+---
+
 # <a name="textheight"></a>TextHeight
 
 Gets/sets the height of the selected text or the word under the cursor.
@@ -3796,35 +3825,6 @@ FUNCTION SetTextOffset (BYVAL offset AS LONG) AS BOOLEAN
 #### Remarks
 
 This property converts the pixels to twips internally.
-
-To select text programatically, use the **SetSel** method.
-
----
-
-# <a name="textfontname"></a>TextFontName
-
-Gets/sets the font face name of the selected text or the word under the cursor if there is not selection.
-
-```
-(GET) PROPERTY TextFontName () AS CWSTR
-(SET) PROPERTY TextFontName (BYREF wszFaceName AS WSTRING)
-```
-```
-FUNCTION GetTextFontName () AS CWSTR
-FUNCTION SetTextFontName (BYREF wszFaceName AS WSTRING) AS BOOLEAN
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *wszFaceName* | (SET) The new font face name, e.g. "Times New Roman". |
-
-#### Return value
-
-(GET) The font face name.
-
-(SET) A boolean true (-1) or false (0).
-
-#### Remarks
 
 To select text programatically, use the **SetSel** method.
 
