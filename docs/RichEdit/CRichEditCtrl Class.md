@@ -3687,7 +3687,7 @@ SUB SetTextBold ()
 
 ---
 
-# <a name="settextitalic"></a>Italic
+# <a name="settextitalic"></a>SetTextItalic
 
 Changes the selected text or word under the cursor to italic. If it is already set, it removes it.
 ```
