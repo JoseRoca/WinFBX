@@ -36,7 +36,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [EditStyle](#editstyle) | Gets/sets the current edit style flags. |
 | [EditStyleEx](#editstyleex) | Gets/sets the extended edit style flags. |
 | [EllipsisMode](#ellipsismode) | Gets/sets the current ellipsis mode. |
-| [EllipsisState](#ellipsisstate) | Returns the current ellipsis state. |
+| [EllipsisState](#ellipsisstate) | Gets the current ellipsis state. |
 | [EventMask](#eventmask) | Gets/sets the event mask for a rich edit control. |
 | [FirstVisibleLine](#firstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
 | [HyphenateInfo](#hyphenateinfo) | Gets/sets information about hyphenation for a Microsoft Rich Edit control. |
