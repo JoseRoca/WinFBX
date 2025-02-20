@@ -2197,10 +2197,6 @@ FUNCTION GetOleInterface () AS IRichEditOle PTR
 
 A pointer to the **IRichEditOle** interface. The control calls the **AddRef** method for the object before returning, so the calling application must call the **Release** method when it is done with the object. |
 
-#### Return value
-
-If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero.  Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
-
 ---
 
 # <a name="getredoname"></a>GetRedoName
