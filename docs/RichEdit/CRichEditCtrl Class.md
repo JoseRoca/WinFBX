@@ -68,7 +68,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [TextOffset](#textoffset) | Gets/sets the text offset of the selected text or the word under the cursor. |
 | [TouchOptions](#touchoptions) | Gets/sets the touch options that are associated with a rich edit control. |
 | [TypographyOptions](#typographyoptions) | Gets/sets the current state of the typography options of a rich edit control. |
-| [WordBreakProc](#worbreakproc) | Gets/sets the address of the currently registered word-break procedure. |
+| [WordBreakProc](#wordbreakproc) | Gets/sets the address of the currently registered word-break procedure. |
 | [WordWrap](#wordwrap) | Enables/disables word wrap. |
 | [WordWrapMode](#wordwrapmode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
 
