@@ -49,6 +49,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [LangOptions](#langoptions) | Gets/sets a rich edit control's option settings for Input Method Editor (IME) and Asian language support. |
 | [LeftMargin](#leftmargin) | Sets the width of the left margin. |
 | [LimitText](#limittext) | Gets/sets the current text limit for a rich edit control. |
+| [Margins](#margins) | Sets the width of the specified margin. |
 | [Modify](#modify) | Gets/sets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
 | [Options](#options) | Gets/sets the options for a rich edit control. |
 | [PageRotate](#pagerotate) | Deprecated. Gets/sets the text layout for a Microsoft Rich Edit control. |
@@ -3087,6 +3088,53 @@ FUNCTION LineScroll (BYVAL y AS LONG) AS LONG
 The control does not scroll vertically past the last line of text in the edit control. If the current line plus the number of lines specified by the *y* parameter exceeds the total number of lines in the edit control, the value is adjusted so that the last line of the edit control is scrolled to the top of the edit-control window.
 
 ---
++++++++++++++++++
+# <a name="margins"></a>Margins
+
+Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins.
+
+```
+FUNCTION Margins (BYVAL nMargins AS LONG, BYVAL nWidth AS LONG)
+SUB SetMargins (BYVAL nMargins AS LONG, BYVAL nWidth AS LONG)
+PROPERTY LeftMargin (BYVAL nWidth AS LONG)
+PROPERTY RightMargin (BYVAL nWidth AS LONG)
+SUB SetLeftMargin (BYVAL nWidth AS LONG)
+SUB SetRightMargin (BYVAL nWidth AS LONG)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nMargins* | The margins to set. This parameter can be one or more of the following values.<br>**EC_LEFTMARGIN**. Sets the left margin.<br>**EC_RIGHTMARGIN**. Sets the right margin.<br>**EC_USEFONTINFO**. Sets the left and right margins to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margins are set to zero. The *nWidth* parameter is ignored. |
+| *nWidth* | The **LOWORD** specifies the new width of the left margin, in pixels. This value is ignored if *nMargins* does not include **EC_LEFTMARGIN**.<br>**Rich Edit 3.0 and later**: The **LOWORD** can specify the **EC_USEFONTINFO** value to set the left margin to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margin is set to zero.<br>The **HIWORD** specifies the new width of the right margin, in pixels. This value is ignored if *nMargins* does not include **EC_RIGHTMARGIN**.<br>**Rich Edit 3.0 and later**: The **HIWORD** can specify the **EC_USEFONTINFO** value to set the right margin to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margin is set to zero |
+
+#### Usage examples
+
+Set the left margin
+```
+pRichEdit.SetMargins(EC_LEFTMARGIN, MAKELONG(50, 0))
+--or--
+pRichEdit.SetMargins(EC_LEFTMARGIN, MAKELONG(50))
+--or--
+pRichEdit.Margins(EC_LEFTMARGIN) = MAKELONG(50, 0)
+--or--
+pRichEdit.LeftMargin = 50
+```
+Set the right margin
+```
+pRichEdit.SetMargins(EC_RIGHTMARGIN, MAKELONG(0, 50))
+--or--
+pRichEdit.Margins(EC_RIGHTMARGIN) = MAKELONG(0, 50)
+--or--
+pRichEdit.RightMargin = 50
+```
+Set both margins
+```
+pRichEdit.SetMargins(EC_LEFTMARGIN OR EC_RIGHTMARGIN, MAKELONG(50, 50))
+--or--
+pRichEdit.Margins(EC_LEFTMARGIN OR EC_RIGHTMARGIN) = MAKELONG(50, 50)
+```
+
+---
 
 # <a name="pastespecial"></a>PasteSpecial
 
@@ -3329,88 +3377,6 @@ If the operation succeeds, the return value is a nonzero value. If the operation
 #### Note
 
 This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions.
-
----
-
-# <a name="setmargins"></a>SetMargins
-
-Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins.
-```
-SUB SetMargins (BYVAL nMargins AS LONG, BYVAL nWidth AS LONG)
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *nMargins* | TThe margins to set. This parameter can be one or more of the following values.<br>**EC_LEFTMARGIN**. Sets the left margin.<br>**EC_RIGHTMARGIN**. Sets the right margin.<br>**EC_USEFONTINFO**. Sets the left and right margins to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margins are set to zero. The *nWidth* parameter is ignored. |
-| *nWidth* | The **LOWORD** specifies the new width of the left margin, in pixels. This value is ignored if *nMargins* does not include **EC_LEFTMARGIN**.<br>**Rich Edit 3.0 and later**: The **LOWORD** can specify the **EC_USEFONTINFO** value to set the left margin to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margin is set to zero.<br>The **HIWORD** specifies the new width of the right margin, in pixels. This value is ignored if *nMargins* does not include **EC_RIGHTMARGIN**.<br>**Rich Edit 3.0 and later**: The **HIWORD** can specify the **EC_USEFONTINFO** value to set the right margin to a narrow width calculated using the text metrics of the control's current font. If no font has been set for the control, the margin is set to zero |
-
-#### Return value
-
-This method does not return a value.
-
-#### Usage examples
-
-Set the left margin
-```
-pRichEdit.SetMargins(EC_LEFTMARGIN, MAKELONG(50, 0))
---or--
-pRichEdit.SetMargins(EC_LEFTMARGIN, MAKELONG(50))
-```
-Set the right margin
-```
-pRichEdit.SetMargins(EC_RIGHTMARGIN, MAKELONG(0, 50))
-```
-Set both margins
-```
-pRichEdit.SetMargins(EC_LEFTMARGIN OR EC_RIGHTMARGIN, MAKELONG(50, 50))
-```
-
----
-
-# <a name="leftmargin"></a>LeftMargin
-
-Sets the width of the left margin for a rich edit control. The message redraws the control to reflect the new margin.
-```
-PROPERTY LeftMargin (BYVAL nWidth AS LONG)
-```
-#### Usage example
-
-pRichEdit.LeftMargin = 50
-
----
-
-# <a name="setleftmargin"></a>SetLeftMargin
-
-Sets the width of the left margin for a rich edit control. The message redraws the control to reflect the new margin.
-```
-SUB SetLeftMargin (BYVAL nWidth AS LONG)
-```
-#### Usage example
-
-pRichEdit.SetLeftMargin(50)
-
----
-
-# <a name="rightmargin"></a>RightMargin
-
-Sets the width of the right margin for a rich edit control. The message redraws the control to reflect the new margin.
-```
-PROPERTY RightMargin (BYVAL nWidth AS LONG)
-```
-#### Usage example
-
-pRichEdit.RightMargin = 50
-
----
-
-# <a name="setrightmargin"></a>SetRightMargin
-
-Sets the width of the right margin for a rich edit control. The message redraws the control to reflect the new margin.
-```
-SUB SetRightMargin (BYVAL nWidth AS LONG)
-```
-#### Usage example
-
-pRichEdit.SetRightMargin(50)
 
 ---
 
