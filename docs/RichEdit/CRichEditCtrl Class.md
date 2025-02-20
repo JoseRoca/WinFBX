@@ -269,7 +269,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | ---------- | ----------- |
 | [NewDoc](#newdoc) | Opens a new document. |
 | [OpenDoc](#opendoc) | Opens a new document. |
-| [SaveDoc](#davedoc) | Saves the document. |
+| [SaveDoc](#savedoc) | Saves the document. |
 
 ---
 
