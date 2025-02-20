@@ -47,7 +47,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [IsTextStrikeOut](#istextstrikeout) | Checks if the selected text or word under the cursor is striked out. |
 | [IsTextInderline](#istextunderline) | Checks if the selected text or word under the cursor is underlined. |
 | [LangOptions](#langoptions) | Gets/sets a rich edit control's option settings for Input Method Editor (IME) and Asian language support. |
-| [LeftMargin](#leftmargin) | Sets the width of the left margin. |
 | [LimitText](#limittext) | Gets/sets the current text limit for a rich edit control. |
 | [Margins](#margins) | Sets the width of the specified margin. |
 | [Modify](#modify) | Gets/sets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
@@ -58,7 +57,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Punctuation](#punctuation) | Gets/sets the current punctuation characters for the rich edit control. |
 | [Rect](#rect) | Gets/sets the formatting rectangle of a rich edit control. |
 | [RectNP](#rectnp) | Sets the formatting rectangle of a multiline rich edit control. |
-| [RightMargin](#rightmargin) | Sets the width of the right margin. |
 | [ScrollPos](#scrollpos) | Gets/sets the current scroll position of the edit control. |
 | [StoryType](#storytype) | Gets/sets the story type. |
 | [Text](#text) | Gets/sets the text from a rich edit control. |
@@ -96,7 +94,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetIMECompMode](#getimecompmode) | Gets the current IME mode for a rich edit control. |
 | [GetIMECompText](#getimecompText) | Gets the Input Method Editor (IME) composition text. |
 | [GetIMEProperty](#getimeproperty) | Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
-| [GetLeftMargin](#getleftmargin) | Gets the width of the left margin. |
 | [GetLimitText](#getlimittext) | Gets the current text limit for a rich edit control. |
 | [GetLine](#getline) | Copies a line of text from a rich edit control. |
 | [GetLineCount](#getlinecount) | Gets the number of lines in a multiline rich edit control. |
@@ -108,7 +105,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetPunctuation](#getpunctuation) | Gets the current punctuation characters for the rich edit control. |
 | [GetRect](#getrect) | Gets the formatting rectangle of a rich edit control. |
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
-| [GetRightMargin](#getrightmargin) | Gets the width of the right margin. |
 | [GetSel](#getsel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
 | [GetSelText](#getseltext) | Retrieves the currently selected text in a rich edit control. |
 | [GetStoryType](#getstorytype) | Gets the story type. |
@@ -149,9 +145,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [SetFontSize](#setfontsize) | Sets the font size for the selected text. |
 | [SetIMEColor](#setimecolor) | Sets the Input Method Editor (IME) composition color. |
-| [SetLeftMargin](#setleftmargin) | Sets the width of the left margin. |
 | [SetLimitText](#setlimittext) | Sets the current text limit for a rich edit control. |
-| [SetMargins](#setmargins) | Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins. |
 | [SetModify](#setmodify) | Sets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified. |
 | [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
 | [SetOptions](#setoptions) | Sets the options for a rich edit control. |
@@ -162,7 +156,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetReadOnly](#setreadonly) | Sets or removes the read-only style (ES_READONLY) of a rich edit control. |
 | [SetRect](#setrect) | Sets the formatting rectangle of a rich edit control. |
 | [SetRectNP](#setrectNP) | Sets the formatting rectangle of a rich edit control. |
-| [SetRightMargin](#setrightmargin) | Sets the width of the right margin. |
 | [SetSel](#setsel) | Selects a range of characters in a rich edit control. |
 | [SetStoryType](#setstorytype) | Sets the story type. |
 | [SetTableParams](#settableparams) | Changes the parameters of rows in a table. |
@@ -3088,7 +3081,7 @@ FUNCTION LineScroll (BYVAL y AS LONG) AS LONG
 The control does not scroll vertically past the last line of text in the edit control. If the current line plus the number of lines specified by the *y* parameter exceeds the total number of lines in the edit control, the value is adjusted so that the last line of the edit control is scrolled to the top of the edit-control window.
 
 ---
-+++++++++++++++++
+
 # <a name="margins"></a>Margins
 
 Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins.
