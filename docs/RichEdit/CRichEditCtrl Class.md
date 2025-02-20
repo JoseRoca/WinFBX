@@ -94,7 +94,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetIMEColor](#getimecolor) | Retrieves the Input Method Editor (IME) composition color. |
 | [GetIMECompMode](#getimecompmode) | Gets the current IME mode for a rich edit control. |
 | [GetIMECompText](#getimecompText) | Gets the Input Method Editor (IME) composition text. |
-| [GetIMEModeBias](#getimemodebias) | Gets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [GetIMEProperty](#getimeproperty) | Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
 | [GetIMEOptions](#getimeoptions) | Gets the current Input Method Editor (IME) options. This message is available only in Asian-language support. |
 | [GetLangOptions](#getlangoptions) | Gets a rich edit control's option settings for Input Method Editor (IME) and Asian language support.
@@ -151,7 +150,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [SetFontSize](#setfontsize) | Sets the font size for the selected text. |
 | [SetIMEColor](#setimecolor) | Sets the Input Method Editor (IME) composition color. |
-| [SetIMEModeBias](#setimemodebias) | Sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [SetIMEOptions](#setimeoptions) | Sets the current Input Method Editor (IME) options. This message is available only in Asian-language support. |
 | [SetLangOptions](#setlangoptions) | Sets options for Input Method Editor (IME) and Asian language support in a rich edit control.|
 | [SetLeftMargin](#setleftmargin) | Sets the width of the left margin. |
@@ -944,10 +942,16 @@ FUNCTION SetHyphenateInfo (BYREF info AS .HYPHENATEINFO) AS HRESULT
 # <a name="imemodebias"></a>IMEModeBias
 
 Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
+
 ```
 PROPERTY IMEModeBias () AS DWORD
 PROPERTY IMEModeBias (BYVAL nModeBias AS LONG)
 ```
+```
+FUNCTION GetIMEModeBias () AS DWORD
+FUNCTION SetIMEModeBias (BYVAL nModeBias AS LONG) AS HRESULT
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *nModeBias* | Mode bias value. This can be one of the following values below. |
@@ -979,79 +983,6 @@ PROPERTY IMEModeBias (BYVAL nModeBias AS LONG)
 (GET) To get the Text Services Framework mode bias, usethe **CTFModeBias** property.
 
 (SET) When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
-
-The application should call the **IsIME** method before calling these properties.
-
----
-
-# <a name="getimemodebias"></a>GetIMEModeBias
-
-Gets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
-```
-FUNCTION GetIMEModeBias () AS DWORD
-```
-
-| Mode bias value  | Meaning |
-| ---------------- | ------- |
-| **CTFMODEBIAS_DEFAULT** | There is no mode bias. |
-| **CTFMODEBIAS_FILENAME** | The bias is to a filename. |
-| **CTFMODEBIAS_NAME** | The bias is to a name. |
-| **CTFMODEBIAS_READING** | The bias is to the reading. |
-| **CTFMODEBIAS_DATETIME** | The bias is to a date or time. |
-| **CTFMODEBIAS_CONVERSATION** | The bias is to a conversation. |
-| **CTFMODEBIAS_NUMERIC** | The bias is to a number. |
-| **CTFMODEBIAS_HIRAGANA** | The bias is to hiragana strings. |
-| **CTFMODEBIAS_KATAKANA** | The bias is to katakana strings. |
-| **CTFMODEBIAS_HANGUL** | The bias is to Hangul characters. |
-| **CTFMODEBIAS_HALFWIDTHKATAKANA** | The bias is to half-width katakana strings. |
-| **CTFMODEBIAS_FULLWIDTHALPHANUMERIC** | The bias is to full-width alphanumeric characters. |
-| **CTFMODEBIAS_HALFWIDTHALPHANUMERIC** | The bias is to half-width alphanumeric characters. |
-
-#### Return value
-
-This message returns the current IME mode bias setting.
-
-#### Remarks
-
-To get the Text Services Framework mode bias, usethe **CTFModeBias** property.
-
-The application should call the **IsIME** method before calling this method.
-
----
-
-# <a name="setimemodebias"></a>SetIMEModeBias
-
-Sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
-```
-FUNCTION SetIMEModeBias (BYVAL nModeBias AS LONG) AS HRESULT
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *nModeBias* | Mode bias value. This can be one of the following values below. |
-
-| Mode bias value  | Meaning |
-| ---------------- | ------- |
-| **CTFMODEBIAS_DEFAULT** | There is no mode bias. |
-| **CTFMODEBIAS_FILENAME** | The bias is to a filename. |
-| **CTFMODEBIAS_NAME** | The bias is to a name. |
-| **CTFMODEBIAS_READING** | The bias is to the reading. |
-| **CTFMODEBIAS_DATETIME** | The bias is to a date or time. |
-| **CTFMODEBIAS_CONVERSATION** | The bias is to a conversation. |
-| **CTFMODEBIAS_NUMERIC** | The bias is to a number. |
-| **CTFMODEBIAS_HIRAGANA** | The bias is to hiragana strings. |
-| **CTFMODEBIAS_KATAKANA** | The bias is to katakana strings. |
-| **CTFMODEBIAS_HANGUL** | The bias is to Hangul characters. |
-| **CTFMODEBIAS_HALFWIDTHKATAKANA** | The bias is to half-width katakana strings. |
-| **CTFMODEBIAS_FULLWIDTHALPHANUMERIC** | The bias is to full-width alphanumeric characters. |
-| **CTFMODEBIAS_HALFWIDTHALPHANUMERIC** | The bias is to half-width alphanumeric characters. |
-
-#### Return value
-
-If successful, the return value is the new TSF mode bias value. If unsuccessful, the return value is the old TSF mode bias value. Call the (GET) **IMEModeBias** property to check if the value has changed.
-
-#### Remarks
-
-When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
 
 The application should call the **IsIME** method before calling these properties.
 
