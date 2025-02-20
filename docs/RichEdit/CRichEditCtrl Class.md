@@ -109,7 +109,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetTextHeight](#gettextheight) | Gets the text height of the selected text or the word under the cursor. |
 | [GetTextLength](#gettextlength) | Retrieves the length of all text in a rich edit control. |
 | [GetTextLengthEx](#gettextlengthex) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
-| [GetTextOffset](#gettextoffset) | Gets the text offset of the selected text or the word under the cursor. |
 | [GetTextRange](#gettextrange) | Retrieves a specified range of characters from a rich edit control. |
 | [GetThumb](#getthumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
 | [GetTouchOptions](#gettouchoptions) | Gets the touch options that are associated with a rich edit control. |
@@ -153,7 +152,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetTextFontName](#settextfontname) | Sets the font name of the selected text or the word under the cursor. |
 | [SetTextHeight](#settextheight) | Sets the text height of the selected text or the word under the cursor. |
 | [SetTextItalic](#settextitalic) | Sets the attribute of selected text or word to italic. |
-| [SetTextOffset](#settextoffset) | Sets the text offset of the selected text or the word under the cursor. |
 | [SetTextStrikeOut](#settextstrikeout) | Sets the attribute of selected text or word to strike out. |
 | [SetTextUnderline](#settextunderline) | Sets the attribute of selected text or word to underline. |
 | [SetTouchOptions](#settouchoptions) | Sets the touch options that are associated with a rich edit control. |
@@ -3898,10 +3896,16 @@ To select text programatically, use the **SetSel** method.
 # <a name="textoffset"></a>TextOffset
 
 Gets/sets the offset of the selected text or the word under the cursor.
+
 ```
 (GET) PROPERTY TextOffset () AS LONG
 (SET) PROPERTY TextOffset (BYVAL offset AS LONG)
 ```
+```
+FUNCTION GetTextOffset () AS LONG
+FUNCTION SetTextOffset (BYVAL offset AS LONG) AS BOOLEAN
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *offset* | Character offset, in pixels, from the baseline. If the value of this member is positive, the character is a superscript; if it is negative, the character is a subscript. |
@@ -3909,6 +3913,8 @@ Gets/sets the offset of the selected text or the word under the cursor.
 #### Return value
 
 (GET) The offset of the selected text or the word under the cursor if there is not selection.
+
+(SET) A boollean true (-1) or false (0).
 
 #### Remarks
 
