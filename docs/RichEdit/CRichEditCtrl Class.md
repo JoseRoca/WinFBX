@@ -268,6 +268,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | Name       | Description |
 | ---------- | ----------- |
 | [NewDoc](#newdoc) | Opens a new document. |
+| [OpenDoc](#opendoc) | Opens a new document. |
 
 ---
 
@@ -5380,7 +5381,7 @@ To select text programatically, use the **SetSel** method.
 
 # <a name="newdoc"></a>NewDoc
 
-Opens a new document.
+Opens a new document. If another document is open, this method saves any current changes and closes the current document before opening a new one.
 ```
 FUNCTION NewDoc () AS HRESULT
 ```
@@ -5392,4 +5393,37 @@ If this method succeeds, it returns **S_OK**.
 
 pRichEdit.NewDoc
 
+---
+
+# <a name="opendoc"></a>OpenDoc
+
+Opens a new document. If another document is open, this method saves any current changes and closes the current document before opening a new one. There are parameters to specify access and sharing privileges, creation and conversion of the file, as well as the code page for the file.
+```
+FUNCTION OpenDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = 0, _
+   BYVAL CodePage AS LONG = CP_ACP) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pVar* | A VARIANT that specifies the name of the file to open. |
+| *Flags* | **tomRTF**: Open as RTF. **tomText**: Open as text ANSI or Unicode. |
+| *CodePage* | The code page to use for the file. Zero (the default value) means **CP_ACP** (ANSI code page) unless the file begins with a Unicode BOM &hfeff, in which case the file is considered to be Unicode. Note that code page 1200 is Unicode, **CP_UTF8** is UTF-8. |
+
+#### Return value
+
+The return value can be an **HRESULT** value that corresponds to a system error or COM error code, including one of the following values.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **S_OK** | Method succeeds. |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **E_NOTIMPL** | Feature not implemented. |
+
+#### Usage example
+
+```
+DIM cv AS CVAR = AfxGetExePath & $"\Test.rtf"
+pRichEdit.OpenDoc(cv)
+```
 ---
