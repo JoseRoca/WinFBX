@@ -91,7 +91,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [FindWordBreak](#findwordbreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [FormatRange](#formatrange) | Formats a range of text in a rich edit control for a specific device. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
-| [GetEllipsisState](#getellipsisstate) | Retrieves the current ellipsis state. |
 | [GetEventMask](#geteventmask) | Gets the event mask for a rich edit control. |
 | [GetFirstVisibleLine](#getfirstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
 | [GetHyphenateInfo](#gethyphenateinfo) | Gets information about hyphenation for a Microsoft Rich Edit control. |
@@ -842,6 +841,19 @@ The bits for these values all fit in the **ELLIPSIS_MASK**.
 #### Return value
 
 A boolean true(-1) or false (0).
+
+---
+
+# <a name="ellipsisstate"></a>EllipsisState
+
+Gets the current ellipsis state.
+```
+PROPERTY EllipsisState () AS BOOLEAN
+FUNCTION GetEllipsisState () AS BOOLEAN
+```
+#### Return value
+
+Returns a boolean true (-1) if an ellipsis is being displayed of false (0) otherwise.
 
 ---
 
@@ -2359,19 +2371,6 @@ Text and Component Object Model (COM) objects are clipped by the rectangle. The 
 
 Banding is the process by which a single page of output is generated using one or more separate rectangles, or bands. When all bands are placed on the page, a complete image results. This approach is often used by raster printers that do not have sufficient memory or ability to image a full page at one time. Banding devices include most dot matrix printers as well as some laser printers.
 
-
----
-
-# <a name="ellipsisstate"></a>EllipsisState
-
-Retrieves the current ellipsis state.
-```
-PROPERTY EllipsisState () AS BOOLEAN
-```
-#### Return value
-
-Returns a boolean true (-1) if an ellipsis is being displayed of false (0) otherwise.
-
 ---
 
 # <a name="emptyundobuffer"></a>EmptyUndoBuffer
@@ -2697,18 +2696,6 @@ FUNCTION GetCharFromPos (BYREF ptl AS .POINTL) AS LONG
 #### Return value
 
 The return value specifies the zero-based character index of the character nearest the specified point. The return value indicates the last character in the edit control if the specified point is beyond the last character in the control.
-
----
-
-# <a name="getellipsisstate"></a>GetEllipsisState
-
-Retrieves the current ellipsis state.
-```
-FUNCTION GetEllipsisState () AS BOOLEAN
-```
-#### Return value
-
-Returns a boolean true (-1) if an ellipsis is being displayed of false (0) otherwise.
 
 ---
 
