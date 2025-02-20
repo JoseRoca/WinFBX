@@ -99,7 +99,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetLineCount](#getlinecount) | Gets the number of lines in a multiline rich edit control. |
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [GetOptions](#getoptions) | Gets the options for a rich edit control. |
-| [GetPageRotate](#getpagerotate) | Deprecated. Gets the text layout for a Microsoft Rich Edit control. |
 | [GetParaFormat](#getparaformat) | Gets the paragraph formatting of the current selection in a rich edit control. |
 | [GetPunctuation](#getpunctuation) | Gets the current punctuation characters for the rich edit control. |
 | [GetRect](#getrect) | Gets the formatting rectangle of a rich edit control. |
@@ -147,7 +146,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetLimitText](#setlimittext) | Sets the current text limit for a rich edit control. |
 | [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
 | [SetOptions](#setoptions) | Sets the options for a rich edit control. |
-| [SetPageRotate](#setpagerotate) | Deprecated. Sets the text layout for a Microsoft Rich Edit control. |
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
 | [SetParaFormat](#setparaformat) | Sets the paragraph formatting of the current selection in a rich edit control. |
 | [SetPunctuation](#setpunctuation) | Sets the current punctuation characters for the rich edit control. |
@@ -1161,10 +1159,16 @@ FUNCTION SetOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG) AS DWORD
 # <a name="pagerotate"></a>PageRotate
 
 Deprecated. Gets/sets the text layout for a Microsoft Rich Edit control.
+
 ```
 (GET) PROPERTY PageRotate () AS DWORD
 (SET) PROPERTY PageRotate (BYVAL txtlayout AS LONG)
 ```
+```
+FUNCTION GetPageRotate () AS DWORD
+FUNCTION SetPageRotate (BYVAL txtlayout AS LONG) AS DWORD
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *txtlayout* | Text layout value. This can be one of the following values.<br>**EPR_0**. Text flows from left to right and from top to bottom.<br>**EPR_90**. Text flows from bottom to top and from left to right.<br>**EPR_180**. Text flows from right to left and from bottom to top.<br>**EPR_270**. Text flows from top to bottom and from right to left.<br>**EPR_SE**. Windows 8: Text flows top to bottom and left to right (Mongolian text layout). |
@@ -1178,38 +1182,6 @@ Deprecated. Gets/sets the text layout for a Microsoft Rich Edit control.
 #### Remarks
 
 (SET) This message sets the text layout for the entire document. However, embedded contents are not rotated and must be rotated separately by the application.
-
----
-
-# <a name="getpagerotate"></a>GetPageRotate
-
-Deprecated. Gets the text layout for a Microsoft Rich Edit control.
-```
-FUNCTION GetPageRotate () AS DWORD
-```
-
-#### Return value
-
-The current text layout. For a list of possible text layout values, see the *txtlayout* parameter above.
-
----
-
-# <a name="setpagerotate"></a>SetPageRotate
-
-Deprecated. Sets the text layout for a Microsoft Rich Edit control.
-```
-FUNCTION SetPageRotate (BYVAL txtlayout AS LONG) AS DWORD
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *txtlayout* | Text layout value. This can be one of the following values.<br>**EPR_0**. Text flows from left to right and from top to bottom.<br>**EPR_90**. Text flows from bottom to top and from left to right.<br>**EPR_180**. Text flows from right to left and from bottom to top.<br>**EPR_270**. Text flows from top to bottom and from right to left.<br>**EPR_SE**. Windows 8: Text flows top to bottom and left to right (Mongolian text layout). |
-
-#### Return value
-Return value is the new text layout value. Call the (GET) **PageRotate** property to get the value.
-
-#### Remarks
-
-This message sets the text layout for the entire document. However, embedded contents are not rotated and must be rotated separately by the application.
 
 ---
 
