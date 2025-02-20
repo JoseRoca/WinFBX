@@ -59,49 +59,49 @@ A pointer to the CXpButton class.
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| [DisableTheming](#DisableTheming) | Disables theming. |
-| [EnableTheming](#EnableTheming) | Enables theming. |
-| [GetImage](#GetImage) | Returns the handle of the image. |
-| [hWindow](#hWindow) | Returns the handle of the button. |
-| [IsThemed](#IsThemed) | Returns CTRUE if themes are enabled or FALSE otherwise. |
-| [Redraw](#Redraw) | Redraws the button. |
-| [SetBitmap](#SetBitmap) | Sets the bitmap for the button. |
-| [SetBitmapFromFile](#SetBitmapFromFile) | Loads an bitmap from file and sets it as the image of the button. |
-| [SetIcon](#SetIcon) | Sets the icon for the button. |
-| [SetIconFromFile](#SetIconFromFile) | Loads an icon from file and sets it as the image of the button. |
-| [SetImage](#SetImage) | Sets the image for the button. |
-| [SetImageFromFile](#SetImageFromFile) | Loads an image from file and sets it as the image of the button. |
-| [SetImageFromRes](#SetImageFromRes) | Loads an image from a resource file and sets it as the image of the button. |
+| [DisableTheming](#disabletheming) | Disables theming. |
+| [EnableTheming](#enabletheming) | Enables theming. |
+| [GetImage](#getimage) | Returns the handle of the image. |
+| [hWindow](#hwindow) | Returns the handle of the button. |
+| [IsThemed](#isthemed) | Returns CTRUE if themes are enabled or FALSE otherwise. |
+| [Redraw](#redraw) | Redraws the button. |
+| [SetBitmap](#setbitmap) | Sets the bitmap for the button. |
+| [SetBitmapFromFile](#setbitmapfromfile) | Loads an bitmap from file and sets it as the image of the button. |
+| [SetIcon](#seticon) | Sets the icon for the button. |
+| [SetIconFromFile](#seticonfromfile) | Loads an icon from file and sets it as the image of the button. |
+| [SetImage](#setimage) | Sets the image for the button. |
+| [SetImageFromFile](#setimagefromfile) | Loads an image from file and sets it as the image of the button. |
+| [SetImageFromRes](#setimagefromres) | Loads an image from a resource file and sets it as the image of the button. |
 
 ### Properties
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| [AllowFocusRect](#AllowFocusRect) | Gets/sets whether to display the button's focus rectangle. |
-| [BkBrush](#BkBrush) | Returns the background color brush. |
-| [ButtonBkColor](#ButtonBkColor) | Gets/sets the background color of button. |
-| [ButtonBkColorDown](#ButtonBkColorDown) | Gets/sets the background color of button when it is down (pressed or toggled). |
-| [ButtonBkColorHot](#ButtonBkColorHot) | Gets/sets the background color of button when it is hot (the mouse is over it). |
-| [ButtonState](#ButtonState) | Returns the button state. |
-| [Cursor](#Cursor) | Gets/sets the cursor for the button. |
-| [DisabledImageHandle](#DisabledImageHandle) | Returns the handle of the disabled image. |
-| [Font](#Font) | Gets/sets the handle of the font used by the button. |
-| [HotImageHandle](#HotImageHandle) | Returns the handle of the hot image. |
-| [ImageHeight](#ImageHeight) | Gets/sets the height of the image. |
-| [ImageMargin](#ImageMargin) | Gets/sets the image margin. |
-| [ImagePos](#ImagePos) | Gets/sets the image position. |
-| [ImageType](#ImageType) | Returns the image type |
-| [ImageWidth](#ImageWidth) | Gets/sets the width of the image. |
-| [NormalImageHandle](#NormalImageHandle) | Returns the handle of the normal image. |
-| [TextBkColor](#TextBkColor) | Gets/sets the text background color of the button. |
-| [TextBkColorDown](#TextBkColorDown) | Gets/sets the text background color of the button when it is down (pressed). |
-| [TextForeColor](#TextForeColor) | Gets/sets the text foreground color of the button. |
-| [TextForeColorDown](#TextForeColorDown) | Gets/sets the text foreground color of the button when it is down (pressed). |
-| [TextForeColorHot](#TextForeColorHot) | Gets/sets the text foreground hot color of the button. |
-| [TextFormat](#TextFormat) | Gets/sets the method of formatting the text. |
-| [TextMargin](#TextMargin) | Gets/sets the margin of the text of the button. |
-| [Toggle](#Toggle) | Gets/sets button to toggle state (CTRUE) or to pushbutton state (FALSE). |
-| [ToggleState](#ToggleState) | Gets/sets the toggle state: pushed (CTRUE) or unpushed (FALSE). |
+| [AllowFocusRect](#allowfocusrect) | Gets/sets whether to display the button's focus rectangle. |
+| [BkBrush](#bkbrush) | Returns the background color brush. |
+| [ButtonBkColor](#buttonbkcolor) | Gets/sets the background color of button. |
+| [ButtonBkColorDown](#buttonbkcolordown) | Gets/sets the background color of button when it is down (pressed or toggled). |
+| [ButtonBkColorHot](#buttonbkcolorhot) | Gets/sets the background color of button when it is hot (the mouse is over it). |
+| [ButtonState](#buttonstate) | Returns the button state. |
+| [Cursor](#cursor) | Gets/sets the cursor for the button. |
+| [DisabledImageHandle](#disabledimagehandle) | Returns the handle of the disabled image. |
+| [Font](#font) | Gets/sets the handle of the font used by the button. |
+| [HotImageHandle](#hotimagehandle) | Returns the handle of the hot image. |
+| [ImageHeight](#imageheight) | Gets/sets the height of the image. |
+| [ImageMargin](#imagemargin) | Gets/sets the image margin. |
+| [ImagePos](#imagepos) | Gets/sets the image position. |
+| [ImageType](#imagetype) | Returns the image type |
+| [ImageWidth](#imagewidth) | Gets/sets the width of the image. |
+| [NormalImageHandle](#normalimagehandle) | Returns the handle of the normal image. |
+| [TextBkColor](#textbkcolor) | Gets/sets the text background color of the button. |
+| [TextBkColorDown](#textbkcolordown) | Gets/sets the text background color of the button when it is down (pressed). |
+| [TextForeColor](#textforecolor) | Gets/sets the text foreground color of the button. |
+| [TextForeColorDown](#textforecolordown) | Gets/sets the text foreground color of the button when it is down (pressed). |
+| [TextForeColorHot](#textforecolorhot) | Gets/sets the text foreground hot color of the button. |
+| [TextFormat](#textformat) | Gets/sets the method of formatting the text. |
+| [TextMargin](#textmargin) | Gets/sets the margin of the text of the button. |
+| [Toggle](#toggle) | Gets/sets button to toggle state (CTRUE) or to pushbutton state (FALSE). |
+| [ToggleState](#togglestate) | Gets/sets the toggle state: pushed (CTRUE) or unpushed (FALSE). |
 
 ### Example
 
@@ -230,7 +230,7 @@ END FUNCTION
 ' ========================================================================================
 ```
 
-# <a name="DisableTheming"></a>DisableTheming
+# <a name="disabletheming"></a>DisableTheming
 
 Disables theming.
 
@@ -238,7 +238,7 @@ Disables theming.
 SUB DisableTheming
 ```
 
-# <a name="EnableTheming"></a>EnableTheming
+# <a name="enabletheming"></a>EnableTheming
 
 Enables theming.
 
@@ -246,7 +246,7 @@ Enables theming.
 SUB EnableTheming
 ```
 
-# <a name="GetImage"></a>GetImage
+# <a name="getimage"></a>GetImage
 
 Returns the handle of the image.
 
@@ -262,7 +262,7 @@ FUNCTION GetImage (BYVAL ImageState AS LONG) AS HANDLE
 
 Returns the handle of the requested image.
 
-# <a name="hWindow"></a>hWindow
+# <a name="hwindow"></a>hWindow
 
 Returns the handle of the button.
 
@@ -270,7 +270,7 @@ Returns the handle of the button.
 FUNCTION hWindow () AS HWND
 ```
 
-# <a name="IsThemed"></a>IsThemed
+# <a name="isthemed"></a>IsThemed
 
 Returns CTRUE if themes are enabled or FALSE otherwise.
 
@@ -278,7 +278,7 @@ Returns CTRUE if themes are enabled or FALSE otherwise.
 FUNCTION IsThemed () AS LONG
 ```
 
-# <a name="Redraw"></a>Redraw
+# <a name="redraw"></a>Redraw
 
 Redraws the button.
 
@@ -286,7 +286,7 @@ Redraws the button.
 SUB Redraw
 ```
 
-# <a name="SetBitmap"></a>SetBitmap
+# <a name="setbitmap"></a>SetBitmap
 
 Sets the bitmap for the button.
 
@@ -301,7 +301,7 @@ SUB SetBitmap (BYVAL hBitmap AS HBITMAP, _
 | *ImageState* | One of the following values:<br>XPBI_NORMAL = 1, XPBI_HOT = 2, XPBI_DISABLED = 3 |
 | *fRedraw* | Optional. CTRUE or FALSE (redraws the button to reflect the changes). |
 
-# <a name="SetBitmapFromFile"></a>SetBitmapFromFile
+# <a name="setbitmapfromfile"></a>SetBitmapFromFile
 
 Loads a bitmap from file and sets it as the image of the button.
 
@@ -316,7 +316,7 @@ SUB SetBitmapFromFile (BYVAL pwszPath AS WSTRING PTR, _
 | *ImageState* | One of the following values:<br>XPBI_NORMAL = 1, XPBI_HOT = 2, XPBI_DISABLED = 3 |
 | *fRedraw* | Optional. CTRUE or FALSE (redraws the button to reflect the changes). |
 
-# <a name="SetIcon"></a>SetIcon
+# <a name="seticon"></a>SetIcon
 
 Sets the icon for the button.
 
@@ -331,7 +331,7 @@ SUB SetIcon (BYVAL hIcon AS HICON, _
 | *ImageState* | One of the following values:<br>XPBI_NORMAL = 1, XPBI_HOT = 2, XPBI_DISABLED = 3 |
 | *fRedraw* | Optional. CTRUE or FALSE (redraws the button to reflect the changes). |
 
-# <a name="SetIconFromFile"></a>SetIconFromFile
+# <a name="seticonfromfile"></a>SetIconFromFile
 
 Loads an icon from file and sets it as the image of the button.
 
@@ -346,7 +346,7 @@ SUB SetIconFromFile (BYVAL pwszPath AS WSTRING PTR, _
 | *ImageState* | One of the following values:<br>XPBI_NORMAL = 1, XPBI_HOT = 2, XPBI_DISABLED = 3 |
 | *fRedraw* | Optional. CTRUE or FALSE (redraws the button to reflect the changes). |
 
-# <a name="SetImage"></a>SetImage
+# <a name="setimage"></a>SetImage
 
 Sets the image for the button.
 
@@ -362,7 +362,7 @@ SUB SetImage (BYVAL hImage AS HANDLE, BYVAL ImageType AS LONG, _
 | *ImageState* | One of the following values:<br>XPBI_NORMAL = 1, XPBI_HOT = 2, XPBI_DISABLED = 3 |
 | *fRedraw* | Optional. CTRUE or FALSE (redraws the button to reflect the changes). |
 
-# <a name="SetImageFromFile"></a>SetImageFromFile
+# <a name="setimagefromfile"></a>SetImageFromFile
 
 Loads an image from file and sets it as the image of the button.
 
@@ -380,7 +380,7 @@ SUB SetImageFromFile (BYREF wszPath AS WSTRING, BYVAL ImageState AS LONG, _
 | *bGrayScale* | CTRUE or FALSE. Convert to gray scale. |
 | *fRedraw* | Optional. CTRUE or FALSE (redraws the button to reflect the changes). |
 
-# <a name="SetImageFromRes"></a>SetImageFromRes
+# <a name="setimagefromres"></a>SetImageFromRes
 
 Loads an image from file and sets it as the image of the button.
 
@@ -399,7 +399,7 @@ SUB SetImageFromRes (BYVAL hInstance AS HINSTANCE, BYREF wszImageName AS WSTRING
 | *bGrayScale* | CTRUE or FALSE. Convert to gray scale. |
 | *fRedraw* | Optional. CTRUE or FALSE (redraws the button to reflect the changes). |
 
-# <a name="AllowFocusRect"></a>AllowFocusRect
+# <a name="allowfocusrect"></a>AllowFocusRect
 
 Gets/sets whether to display the button's focus rectangle.
 
@@ -416,7 +416,7 @@ PROPERTY AllowFocusRect (BYVAL bAllowFocusRect AS BOOLEAN)
 
 TRUE or FALSE.
 
-# <a name="BkBrush"></a>BkBrush
+# <a name="bkbrush"></a>BkBrush
 
 Returns the background color brush.
 
@@ -424,7 +424,7 @@ Returns the background color brush.
 PROPERTY BkBrush () AS HBRUSH
 ```
 
-# <a name="ButtonBkColor"></a>ButtonBkColor
+# <a name="buttonbkcolor"></a>ButtonBkColor
 
 Gets/sets the background color of button.
 
@@ -445,7 +445,7 @@ The background color of the button as a COLORREF value.
 
 Only available if the button is not themed. Call **DisableTheming** to disable theming.
 
-# <a name="ButtonBkColorDown"></a>ButtonBkColorDown
+# <a name="buttonbkcolordown"></a>ButtonBkColorDown
 
 Gets/sets the background color of button when it is down (pressed or toggled).
 
@@ -466,7 +466,7 @@ The background color of button when it is down (pressed or toggled).
 
 Only available if the button is not themed. Call **DisableTheming** to disable theming.
 
-# <a name="ButtonBkColorHot"></a>ButtonBkColorHot
+# <a name="buttonbkcolorhot"></a>ButtonBkColorHot
 
 Gets/sets the background color of button when it is hot (the mouse is over it).
 
@@ -487,7 +487,7 @@ The background color of button when it is hot (the mouse is over it).
 
 Only available if the button is not themed. Call **DisableTheming** to disable theming.
 
-# <a name="ButtonState"></a>ButtonState
+# <a name="buttonstate"></a>ButtonState
 
 Returns the button state.
 
@@ -499,7 +499,7 @@ PROPERTY ButtonState () AS LONG
 
 The button state: Pushed (BST_PUSHED) or unpushed.
 
-# <a name="Cursor"></a>Cursor
+# <a name="cursor"></a>Cursor
 
 Gets/sets the cursor for the button.
 
@@ -517,14 +517,14 @@ PROPERTY Cursor (BYVAL hCursor AS HCURSOR)
 The cursor handle.
 
 
-# <a name="NormalImageHandle"></a>NormalImageHandle
+# <a name="normalimagehandle"></a>NormalImageHandle
 
 Returns the handle of the normal image.
 
 ```
 PROPERTY NormalImageHandle () AS HANDLE
 ```
-# <a name="DisabledImageHandle"></a>DisabledImageHandle
+# <a name="disabledimagehandle"></a>DisabledImageHandle
 
 Returns the handle of the disabled image.
 
@@ -532,7 +532,7 @@ Returns the handle of the disabled image.
 PROPERTY DisabledImageHandle () AS HANDLE
 ```
 
-# <a name="HotImageHandle"></a>HotImageHandle
+# <a name="hotimagehandle"></a>HotImageHandle
 
 Returns the handle of the hot image.
 
@@ -540,7 +540,7 @@ Returns the handle of the hot image.
 PROPERTY HotImageHandle () AS HANDLE
 ```
 
-# <a name="Font"></a>Font
+# <a name="font"></a>Font
 
 Gets/sets the handle of the font used by the button.
 
@@ -557,7 +557,7 @@ PROPERTY Font (BYVAL hFont AS HFONT)
 
 The font handle.
 
-# <a name="ImageHeight"></a>ImageHeight
+# <a name="imageheight"></a>ImageHeight
 
 Gets/sets the height of the image.
 
@@ -574,7 +574,7 @@ PROPERTY ImageHeight (BYVAL nHeight AS LONG)
 
 The height of the image, in pixels.
 
-# <a name="ImageMargin"></a>ImageMargin
+# <a name="imagemargin"></a>ImageMargin
 
 Gets/sets the image margin.
 
@@ -591,7 +591,7 @@ PROPERTY ImageMargin (BYVAL nMargin AS LONG)
 
 The margin of the image, in pixels.
 
-# <a name="ImagePos"></a>ImagePos
+# <a name="imagepos"></a>ImagePos
 
 Gets/sets the image position.
 
@@ -621,7 +621,7 @@ PROPERTY ImagePos (BYVAL nPos AS LONG)
 
 The position of th image.
 
-# <a name="ImageType"></a>ImageType
+# <a name="imagetype"></a>ImageType
 
 Returns the image type
 
@@ -633,7 +633,7 @@ PROPERTY ImageType () AS LONG
 
 The image type: IMAGE_ICON or IMAGE_BITMAP.
 
-# <a name="ImageWidth"></a>ImageWidth
+# <a name="imagewidth"></a>ImageWidth
 
 Gets/sets the width of the image.
 
@@ -650,7 +650,7 @@ PROPERTY ImageWidth (BYVAL nWidth AS LONG)
 
 The width of the image, in pixels.
 
-# <a name="TextBkColor"></a>TextBkColor
+# <a name="textbkcolor"></a>TextBkColor
 
 Gets/sets the text background color of the button.
 
@@ -667,7 +667,7 @@ PROPERTY TextBkColor (BYVAL textColor AS COLORREF)
 
 The text background color of the button as a COLORREF value.
 
-# <a name="TextBkColorDown"></a>TextBkColorDown
+# <a name="textbkcolordown"></a>TextBkColorDown
 
 Gets/sets the text background color of the button when it is down (pressed).
 
@@ -684,7 +684,7 @@ PROPERTY TextBkColorDown (BYVAL textColor AS COLORREF)
 
 The text background color of the button when it is down (pressed) as a COLORREF value.
 
-# <a name="TextForeColor"></a>TextForeColor
+# <a name="textforecolor"></a>TextForeColor
 
 Gets/sets the text foreground color of the button.
 
@@ -701,7 +701,7 @@ PROPERTY TextForeColor (BYVAL textColor AS COLORREF)
 
 The text foreground color of the button as a COLORREF value.
 
-# <a name="TextForeColorDown"></a>TextForeColorDown
+# <a name="textforecolordown"></a>TextForeColorDown
 
 Gets/sets the text foreground color of the button when it is down (pressed).
 
@@ -718,7 +718,7 @@ PROPERTY TextForeColorDown (BYVAL textColor AS COLORREF)
 
 The text foreground color of the button when it is down (pressed) as a COLORREF value.
 
-# <a name="TextForeColorHot"></a>TextForeColorHot
+# <a name="textforecolorhot"></a>TextForeColorHot
 
 Gets/sets the text foreground hot color of the button.
 
@@ -735,7 +735,7 @@ PROPERTY TextForeColorHot (BYVAL textColor AS COLORREF)
 
 The text foreground hot color of the button.
 
-# <a name="TextFormat"></a>TextFormat
+# <a name="textformat"></a>TextFormat
 
 Gets/sets the method of formatting the text.
 
@@ -781,7 +781,7 @@ PROPERTY TextFormat (BYVAL dwTextFlags AS DWORD)
 
 The method of formatting the text.
 
-# <a name="TextMargin"></a>TextMargin
+# <a name="textmargin"></a>TextMargin
 
 Gets/sets the the margin of the text of the button.
 
@@ -798,7 +798,7 @@ PROPERTY TextMargin (BYVAL nMargin AS LONG)
 
 The text margin.
 
-# <a name="Toggle"></a>Toggle
+# <a name="toggle"></a>Toggle
 
 Gets/sets button to toggle state (TRUE) or to pushbutton state (FALSE).
 
@@ -815,7 +815,7 @@ PROPERTY Toggle (BYVAL fToggle AS LONG)
 
 Returns CTRUE if the button is toggled or FALSE otherwise.
 
-# <a name="ToggleState"></a>ToggleState
+# <a name="togglestate"></a>ToggleState
 
 Gets/sets the toggle state: pushed (CTRUE) or unpushed (FALSE).
 
