@@ -33,11 +33,9 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [CharFormat](#charformat) | Gets/sets the current character formatting in a rich edit control. |
 | [CTFModeBias](#ctfmodebias) | Gets/sets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [CTFOpenStatus](#ctfopenstatus) | Gets/sets if the Text Services Framework (TSF) keyboard is open or closed. |
-| [DisableWordWrap](#disablewordwrap) | Disables word wrap. |
 | [EditStyle](#editstyle) | Gets/sets the current edit style flags. |
 | [EditStyleEx](#editstyleex) | Gets/sets the extended edit style flags. |
 | [EllipsisMode](#ellipsismode) | Gets/sets the current ellipsis mode. |
-| [EnableWordWrap](#enablewordwrap) | Enables word wrap. |
 | [EllipsisState](#ellipsisstate) | Returns the current ellipsis state. |
 | [EventMask](#eventmask) | Gets/sets the event mask for a rich edit control. |
 | [FirstVisibleLine](#firstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
@@ -70,6 +68,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [TextOffset](#textoffset) | Gets/sets the text offset of the selected text or the word under the cursor. |
 | [TouchOptions](#touchoptions) | Gets/sets the touch options that are associated with a rich edit control. |
 | [TypographyOptions](#typographyoptions) | Gets/sets the current state of the typography options of a rich edit control. |
+| [WordWrap](#wordwrap) | Enables/disables word wrap. |
 
 # CRichEditCtrl Methods
 
@@ -2366,6 +2365,25 @@ You can turn on advanced line breaking by sending calling the **SetTypographyOPt
 
 ---
 
+# <a name="wordwrap"></a>WordWrap
+
+Enables/disables word wrap.
+
+```
+FUNCTION DisableWordWrap (BYVAL LineWidth AS LONG = 32767) AS BOOLEAN
+FUNCTION EnableWordWrap () AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *LineWidth* | The line width. Default value: 32767 characters. |
+
+#### Return value
+
+If the method succeeds it returns the boolean value true (-1); if it fails, it returns false (0).
+
+---
+
 # <a name="callautocorrectproc"></a>CallAutocorrectProc
 
 Calls the autocorrect callback function that is stored by the (SET) **AutocorrectProc** property, provided that the text preceding the insertion point is a candidate for autocorrection.
@@ -4477,34 +4495,6 @@ FUNCTION SetFont (BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS HRESULT
 #### Return value
 
 If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero.
-
----
-
-# <a name="disablewordwrap"></a>DisableWordWrap
-
-Disables word wrap.
-```
-DisableWordWrap (BYVAL LineWidth AS LONG = 32767) AS BOOLEAN
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *LineWidth* | The line width. Default value: 32767 characters. |
-
-#### Return value
-
-If the method succeeds it returns the boolean value true (-1); if it fails, it returns false (0).
-
----
-
-# <a name="enablewordwrap"></a>EnableWordWrap
-
-Enables word wrap.
-```
-FUNCTION EnableWordWrap () AS BOOLEAN
-```
-#### Return value
-
-If the method succeeds it returns the boolean value true (-1); if it fails, it returns false (0).
 
 ---
 
