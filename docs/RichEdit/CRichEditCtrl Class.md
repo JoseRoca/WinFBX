@@ -5410,8 +5410,10 @@ FUNCTION OpenDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = 0, _
 | *Flags* | **tomRTF**: Open as RTF. **tomText**: Open as text ANSI or Unicode. |
 | *CodePage* | The code page to use for the file. Zero (the default value) means **CP_ACP** (ANSI code page) unless the file begins with a Unicode BOM &hfeff, in which case the file is considered to be Unicode. Note that code page 1200 is Unicode, **CP_UTF8** is UTF-8. |
 
-tomOpenExisting
-tomOpenAlways
+| Flag | Description |
+| ---- | ----------- |
+| *tomOpenExisting* | Open an existing file. Fail if the file does not exist. |
+| *tomOpenAlways* | Open an existing file. Create a new file if the file does not exist. |
 | *tomTruncateExisting* | Open an existing file, but truncate it to zero length. |
 
 #### Return value
