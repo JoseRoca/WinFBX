@@ -5391,8 +5391,9 @@ FUNCTION NewDoc () AS HRESULT
 If this method succeeds, it returns **S_OK**.
 
 #### Usage example
-
+```
 pRichEdit.NewDoc
+```
 
 ---
 
