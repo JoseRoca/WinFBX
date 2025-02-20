@@ -5507,7 +5507,7 @@ pRichEdit->SaveDoc(BYVAL NULL, tomText, 1200)
 Saves the current document in RTF format:
 ```
 DIM cv AS CVAR = AfxGetExePath & $"\Test02.rtf"
-pRichEdit->SaveDoc(cv)
+pRichEdit->SaveDoc(cv, tomCreateAlways OR tomRTF)
 ```
 Saves the current document in text format:
 ```
