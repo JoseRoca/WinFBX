@@ -42,10 +42,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [HyphenateInfo](#hyphenateinfo) | Gets/sets information about hyphenation for a Microsoft Rich Edit control. |
 | [IMEModeBias](#imemodebias) | Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [IMEOptions](#imeoptions) | Gets/sets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system. |
-| [IsTextBold](#istextbold) | Checks if the selected text or the word under the cursor is bolded. |
-| [IsTextItalic](#istextitalic) | Checks if the selected text or word under the cursor is italicised. |
-| [IsTextStrikeOut](#istextstrikeout) | Checks if the selected text or word under the cursor is striked out. |
-| [IsTextInderline](#istextunderline) | Checks if the selected text or word under the cursor is underlined. |
 | [LangOptions](#langoptions) | Gets/sets a rich edit control's option settings for Input Method Editor (IME) and Asian language support. |
 | [LimitText](#limittext) | Gets/sets the current text limit for a rich edit control. |
 | [Margins](#margins) | Sets the width of the specified margin. |
@@ -117,6 +113,10 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [InsertImage](#insertimage) | Replaces the selection with a blob that displays an image. |
 | [InsertTable](#inserttable) | Inserts one or more identical table rows with empty cells. |
 | [IsIME](#isime) | Determines if current input locale is an East Asian locale. |
+| [IsTextBold](#istextbold) | Checks if the selected text or the word under the cursor is bolded. |
+| [IsTextItalic](#istextitalic) | Checks if the selected text or word under the cursor is italicised. |
+| [IsTextStrikeOut](#istextstrikeout) | Checks if the selected text or word under the cursor is striked out. |
+| [IsTextUnderline](#istextunderline) | Checks if the selected text or word under the cursor is underlined. |
 | [LineFromChar](#linefromchar) | Gets the index of the line that contains the specified character index in a multiline rich edit control. |
 | [LineIndex](#lineindex) | Gets the character index of the first character of a specified line in a multiline rich edit control. |
 | [LineLength](#linelength) | Retrieves the length, in characters, of a line in a rich edit control. |
@@ -3664,11 +3664,11 @@ Boolean true (-1) or false (0).
 
 ---
 
-# <a name="istextuderlined"></a>IsTextUnderlined
+# <a name="istextuderline"></a>IsTextUnderline
 
 Checks if the selected text or the word under the cursor is underlined.
 ```
-FUNCTION IsTextUnderlined () AS BOOLEAN
+FUNCTION IsTextUnderline () AS BOOLEAN
 ```
 #### Return value
 
