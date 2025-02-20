@@ -91,7 +91,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [FindWordBreak](#findwordbreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [FormatRange](#formatrange) | Formats a range of text in a rich edit control for a specific device. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
-| [GetHyphenateInfo](#gethyphenateinfo) | Gets information about hyphenation for a Microsoft Rich Edit control. |
 | [GetIMEColor](#getimecolor) | Retrieves the Input Method Editor (IME) composition color. |
 | [GetIMECompMode](#getimecompmode) | Gets the current IME mode for a rich edit control. |
 | [GetIMECompText](#getimecompText) | Gets the Input Method Editor (IME) composition text. |
@@ -151,7 +150,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [SetFontSize](#setfontsize) | Sets the font size for the selected text. |
-| [SetHyphenateInfo](#sethyphenateinfo) | Sets information about hyphenation for a Microsoft Rich Edit control. |
 | [SetIMEColor](#setimecolor) | Sets the Input Method Editor (IME) composition color. |
 | [SetIMEModeBias](#setimemodebias) | Sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control. |
 | [SetIMEOptions](#setimeoptions) | Sets the current Input Method Editor (IME) options. This message is available only in Asian-language support. |
@@ -923,10 +921,16 @@ For single-line rich edit controls, the return value is zero.
 # <a name="hyphenateinfo"></a>HyphenateInfo
 
 Gets/sets information about hyphenation for a Microsoft Rich Edit control.
+
 ```
 (GET) PROPERTY HyphenateInfo () AS .HYPHENATEINFO
 (SET) PROPERTY HyphenateInfo (BYREF hinfo AS .HYPHENATEINFO)
 ```
+```
+FUNCTION GetHyphenateInfo () AS .HYPHENATEINFO
+FUNCTION SetHyphenateInfo (BYREF info AS .HYPHENATEINFO) AS HRESULT
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *hinfo* | (SET) A [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure. |
@@ -934,31 +938,6 @@ Gets/sets information about hyphenation for a Microsoft Rich Edit control.
 #### Return value
 
 (GET) A [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure.
-
----
-
-# <a name="gethyphenateinfo"></a>GetHyphenateInfo
-
-Gets information about hyphenation for a Microsoft Rich Edit control.
-```
-FUNCTION GetHyphenateInfo () AS .HYPHENATEINFO
-```
-
-#### Return value
-
-A [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure.
-
----
-
-# <a name="sethyphenateinfo"></a>SetHyphenateInfo
-
-Sets information about hyphenation for a Microsoft Rich Edit control.
-```
-FUNCTION SetHyphenateInfo (BYREF info AS .HYPHENATEINFO) AS HRESULT
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *hinfo* | A [HYPHENATEINFO](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-hyphenateinfo) structure. |
 
 ---
 
