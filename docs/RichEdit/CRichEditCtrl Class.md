@@ -782,10 +782,16 @@ FUNCTION SetEditStyle (BYVAL fStyle AS LONG, BYVAL fMask AS LONG) AS HRESULT
 # <a name="editstyleex"></a>EditStyleEx
 
 Gets/sets the extended edit style flags.
+
 ```
 (GET) PROPERTY EditStyleEx () AS DWORD
 (SET) PROPERTY EditStyleEx (BYVAL fStyle AS LONG, BYVAL fMask AS LONG)
 ```
+```
+FUNCTION GetEditStyleEx () AS DWORD
+FUNCTION SetEditStyleEx (BYVAL fStyle AS LONG, BYVAL fMask AS LONG) AS HRESULT
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *fStyle* | Specifies one or more edit style flags. For a list of possible values, see table below. |
@@ -807,57 +813,6 @@ Gets/sets the extended edit style flags.
 (GET) Returns the state of the edit style flags.
 
 (SET) The return value is the state of the edit style flags after the rich edit control has attempted to implement your edit style changes. The edit style flags are a set of flags that indicate the current edit style. Call the (GET) **EditStyleEx** property to check if the value has changed.
-
----
-
-# <a name="geteditstyleex"></a>GetEditStyleEx
-
-Gets the extended edit style flags.
-```
-FUNCTION GetEditStyleEx () AS DWORD
-```
-| Edit style flag | Description |
-| --------------- | ----------- |
-| **SES_EX_HANDLEFRIENDLYURL** | Display friendly name links with the same text color and underlining as automatic links, provided that temporary formatting isn't used or uses text autocolor (default: 0). |
-| **SES_EX_MULTITOUCH** | Enable touch support in Rich Edit. This includes selection, caret placement, and context-menu invocation. When this flag is not set, touch is emulated by mouse commands, which do not take touch-mode specifics into account (default: 0). |
-| **SES_EX_NOACETATESELECTION** | Display selected text using classic Windows selection text and background colors instead of background acetate color (default: 0). |
-| **SES_EX_NOMATH** | Disable insertion of math zones (default: 1). To enable math editing and display, call the **EditStyleEx** property with *fStyle* set to 0, and *fMask* set to SES_EX_NOMATH. |
-| **SES_EX_NOTABLE** | Disable insertion of tables. The **InsertTable** method returns **E_FAIL** and RTF tables are skipped (default: 0). |
-| **SES_EX_USESINGLELINE** | Enable a multiline control to act like a single-line control with the ability to scroll vertically when the single-line height is greater than the window height (default: 0). |
-| **SES_HIDETEMPFORMAT** | Hide temporary formatting that is created when **Reset** method of the **ITextFont** is called with **tomApplyTmp**. For example, such formatting is used by spell checkers to display a squiggly underline under possibly misspelled words. |
-| **SES_EX_USEMOUSEWPARAM** | Use *wParam* when handling the **WM_MOUSEMOVE** message and do not call **GetAsyncKeyState**. |
-
-#### Return value
-
-Returns the state of the edit style flags.
-
----
-
-# <a name="seteditstyleex"></a>SetEditStyleEx
-
-Sets the extended edit style flags.
-```
-FUNCTION SetEditStyleEx (BYVAL fStyle AS LONG, BYVAL fMask AS LONG) AS HRESULT
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *fStyle* | Specifies one or more edit style flags. For a list of possible values, see table below. |
-| *fMask* | A mask consisting of one or more of the *fStyle* values. Only the values specified in this mask will be set or cleared. This allows a single flag to be set or cleared without reading the current flag states. |
-
-| Edit style flag | Description |
-| --------------- | ----------- |
-| **SES_EX_HANDLEFRIENDLYURL** | Display friendly name links with the same text color and underlining as automatic links, provided that temporary formatting isn't used or uses text autocolor (default: 0). |
-| **SES_EX_MULTITOUCH** | Enable touch support in Rich Edit. This includes selection, caret placement, and context-menu invocation. When this flag is not set, touch is emulated by mouse commands, which do not take touch-mode specifics into account (default: 0). |
-| **SES_EX_NOACETATESELECTION** | Display selected text using classic Windows selection text and background colors instead of background acetate color (default: 0). |
-| **SES_EX_NOMATH** | Disable insertion of math zones (default: 1). To enable math editing and display, call the **EditStyleEx** property with *fStyle* set to 0, and *fMask* set to SES_EX_NOMATH. |
-| **SES_EX_NOTABLE** | Disable insertion of tables. The **InsertTable** method returns **E_FAIL** and RTF tables are skipped (default: 0). |
-| **SES_EX_USESINGLELINE** | Enable a multiline control to act like a single-line control with the ability to scroll vertically when the single-line height is greater than the window height (default: 0). |
-| **SES_HIDETEMPFORMAT** | Hide temporary formatting that is created when **Reset** method of the **ITextFont** is called with **tomApplyTmp**. For example, such formatting is used by spell checkers to display a squiggly underline under possibly misspelled words. |
-| **SES_EX_USEMOUSEWPARAM** | Use *wParam* when handling the **WM_MOUSEMOVE** message and do not call **GetAsyncKeyState**. |
-
-#### Return value
-
-The return value is the state of the edit style flags after the rich edit control has attempted to implement your edit style changes. The edit style flags are a set of flags that indicate the current edit style. Call the **GetEditStyleEx** property to check if the value has changed.
 
 ---
 
