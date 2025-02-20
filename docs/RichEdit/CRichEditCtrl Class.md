@@ -99,7 +99,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetLineCount](#getlinecount) | Gets the number of lines in a multiline rich edit control. |
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [GetOptions](#getoptions) | Gets the options for a rich edit control. |
-| [GetPunctuation](#getpunctuation) | Gets the current punctuation characters for the rich edit control. |
 | [GetRect](#getrect) | Gets the formatting rectangle of a rich edit control. |
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
 | [GetSel](#getsel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
@@ -146,7 +145,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
 | [SetOptions](#setoptions) | Sets the options for a rich edit control. |
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
-| [SetPunctuation](#setpunctuation) | Sets the current punctuation characters for the rich edit control. |
 | [SetReadOnly](#setreadonly) | Sets or removes the read-only style (ES_READONLY) of a rich edit control. |
 | [SetRect](#setrect) | Sets the formatting rectangle of a rich edit control. |
 | [SetRectNP](#setrectNP) | Sets the formatting rectangle of a rich edit control. |
@@ -1244,10 +1242,16 @@ If an edit control is created with the **ES_PASSWORD** style, the default passwo
 # <a name="punctuation"></a>Punctuation
 
 Gets/sets the current punctuation characters for the rich edit control.
+
 ```
 (GET) PROPERTY Punctuation (BYVAL punctype AS DWORD) AS .PUNCTUATION
 (SET) PROPERTY Punctuation (BYVAL punctype AS LONG, BYREF punct AS .PUNCTUATION)
 ```
+FUNCTION GetPunctuation (BYVAL punctype AS DWORD) AS .PUNCTUATION
+FUNCTION SetPunctuation (BYVAL punctype AS LONG, BYREF punct AS .PUNCTUATION) AS BOOLEAN
+```
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *punctype* | Specifies the punctuation type, which can be one of the following values.<br>**PC_LEADING**. Leading punctuation characters.<br>**PC_FOLLOWING**. Following punctuation characters.<br>**PC_DELIMITER**. Delimiter.<br>**PC_OVERFLOW**. Not supported. |
@@ -1256,44 +1260,6 @@ Gets/sets the current punctuation characters for the rich edit control.
 #### Return value
 
 If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero.
-
-### Note
-
-This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions.
-
----
-
-# <a name="getpunctuation"></a>GetPunctuation
-
-Gets the current punctuation characters for the rich edit control.
-```
-FUNCTION GetPunctuation (BYVAL punctype AS DWORD) AS .PUNCTUATION
-```
-
-#### Return value
-
-If the operation succeeds, the return value is a true(-1). If the operation fails, the return value is false (0).
-
-### Note
-
-This message is supported only in Asian-language versions of Microsoft Rich Edit 1.0. It is not supported in any later versions.
-
----
-
-# <a name="setpunctuation"></a>SetPunctuation
-
-Sets the current punctuation characters for the rich edit control.
-```
-FUNCTION SetPunctuation (BYVAL punctype AS LONG, BYREF punct AS .PUNCTUATION) AS BOOLEAN
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *punctype* | Specifies the punctuation type, which can be one of the following values.<br>**PC_LEADING**. Leading punctuation characters.<br>**PC_FOLLOWING**. Following punctuation characters.<br>**PC_DELIMITER**. Delimiter.<br>**PC_OVERFLOW**. Not supported. |
-| *punct* | A [PUNCTUATION](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-punctuation) structure that contains the punctuation characters. |
-
-#### Return value
-
-If the operation succeeds, the return value is a true (-1). If the operation fails, the return value is false (0).
 
 ### Note
 
