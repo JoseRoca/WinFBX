@@ -269,6 +269,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | ---------- | ----------- |
 | [NewDoc](#newdoc) | Opens a new document. |
 | [OpenDoc](#opendoc) | Opens a new document. |
+| [SaveDoc](#davedoc) | Saves the document. |
 
 ---
 
@@ -5409,6 +5410,10 @@ FUNCTION OpenDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = 0, _
 | *Flags* | **tomRTF**: Open as RTF. **tomText**: Open as text ANSI or Unicode. |
 | *CodePage* | The code page to use for the file. Zero (the default value) means **CP_ACP** (ANSI code page) unless the file begins with a Unicode BOM &hfeff, in which case the file is considered to be Unicode. Note that code page 1200 is Unicode, **CP_UTF8** is UTF-8. |
 
+tomOpenExisting
+tomOpenAlways
+| *tomTruncateExisting* | Open an existing file, but truncate it to zero length. |
+
 #### Return value
 
 The return value can be an **HRESULT** value that corresponds to a system error or COM error code, including one of the following values.
@@ -5426,4 +5431,98 @@ The return value can be an **HRESULT** value that corresponds to a system error 
 DIM cv AS CVAR = AfxGetExePath & $"\Test.rtf"
 pRichEdit.OpenDoc(cv)
 ```
+# <a name="savedoc"></a>SaveDoc
+
+Saves the document.
+
+```
+FUNCTION SaveDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = tomRTF, _
+   BYVAL CodePage AS LONG = CP_ACP) AS HRESULT
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pVar* | The save target. This parameter is a **VARIANT**, which can be a file name, or **NULL**. See **Remarks**. |
+| *Flags* | File creation, share, and conversion flags. For a list of possible values, see the tables below. |
+| *CodePage* | The specified code page. Common values are **CP_ACP** (zero: system ANSI code page), 1200 (Unicode), and 1208 (UTF-8). |
+
+Any combination of these values may be used.
+
+| Flag | Description |
+| ---- | ----------- |
+| *tomReadOnly* | Read only. |
+| *tomShareDenyRead* | Other programs cannot read. |
+| *tomShareDenyWrite* | Other programs cannot write. |
+
+These values are mutually exclusive.
+
+| Flag | Description |
+| ---- | ----------- |
+| *tomCreateNew* | Create a new file. Fail if the file already exists. |
+| *tomCreateAlways* | Create a new file. Destroy the existing file if it exists. |
+| *tomRTF* | Save as RTF. |
+| *tomText* | Save as text. |
+
+#### Return value
+
+The return value can be an **HRESULT** value that corresponds to a system error or COM error code, including one of the following values.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **S_OK** | Method succeeds. |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **E_NOTIMPL** | Feature not implemented. |
+
+#### Remarks
+
+To use the parameters that were specified for opening the file, use zero values for the parameters.
+
+If *pVar* is null or missing, the file name given by this document's name is used. If both of these are missing or null, the method fails.
+
+If *pVar* specifies a file name, that name should replace the current **Name** property. Similarly, the *Flags* and *CodePage* arguments can overrule those supplied in the **OpenDoc** method and define the values to use for files created with the **NewDoc** method.
+
+Unicode plain-text files should be saved with the Unicode byte-order mark (&hFEFF) as the first character. This character should be removed when the file is read in; that is, it is only used for import/export to identify the plain text as Unicode and to identify the byte order of that text. Microsoft Notepad adopted this convention, which is now recommended by the Unicode standard.
+
+#### Usage examples
+
+Overwrites the current document in RTF format:
+```
+pRichEdit->SaveDoc(BYVAL NULL)
+-- or --
+pRichEdit->SaveDoc(BYVAL NULL, tomRTF)
+```
+Overwrites the current document in text format:
+```
+pRichEdit->SaveDoc(BYVAL NULL, tomText)
+```
+Overwrites the current document in utf-8 format:
+```
+pRichEdit->SaveDoc(BYVAL NULL, tomText, CP_UTF8)
+```
+Overwrites the current document in unicode format:
+```
+pRichEdit->SaveDoc(BYVAL NULL, tomText, 1200)
+```
+Saves the current document in RTF format:
+```
+DIM cv AS CVAR = AfxGetExePath & $"\Test02.rtf"
+pRichEdit->SaveDoc(cv)
+```
+Saves the current document in text format:
+```
+DIM cv AS CVAR = AfxGetExePath & $"\Test02.txt"
+pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText)
+```
+Saves the current document in utf-8 (with BOM):
+```
+DIM cv AS CVAR = AfxGetExePath & $"\Test02.txt"
+pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText, CP_UTF8)
+```
+Saves the current document in unicode:
+```
+DIM cv AS CVAR = AfxGetExePath & $"\Test02.txt"
+pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText, CP_UTF8)
+```
+
 ---
