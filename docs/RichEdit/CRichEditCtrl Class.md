@@ -31,9 +31,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [BidiOptions](#bidioptions) | Gets/sets the current state of the bidirectional options in the rich edit control. |
 | [CaretPos](#caretpos) | Gets/sets the caret position. |
 | [CharFormat](#charformat) | Gets/sets the current character formatting in a rich edit control. |
-| [DefaultCharFormat](#defaultcharformat) | Gets/sets the default character formatting in a rich edit control. |
-| [SelectionCharFormat](#selectioncharformat) | Gets/sets the character formatting attributes for the text in the current selection. |
-| [WordCharFormat](#wordcharformat) | Gets/sets the character formatting attributes for the currently selected word. |
 | [CTFModeBias](#ctfmodebias) | Gets/sets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [CTFOpenStatus](#ctfopenstatus) | Gets/sets if the Text Services Framework (TSF) keyboard is open or closed. |
 | [DisableWordWrap](#disablewordwrap) | Disables word wrap. |
@@ -92,11 +89,9 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [FindTextEx](#findtextex) | Finds text within a rich edit control. |
 | [FindWordBreak](#findwordbreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [FormatRange](#formatrange) | Formats a range of text in a rich edit control for a specific device. |
-| [GetCharFormat](#getcharformat) | Gets the current character formatting in a rich edit control. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
 | [GetCTFModeBias](#getctfmodebias) | Gets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [GetCTFOpenStatus](#getctfopenstatus) | Gets if the Text Services Framework (TSF) keyboard is open or closed. |
-| [GetDefaultCharFormat](#getdefaultcharformat) | Gets the default character formatting in a rich edit control. |
 | [GetEditStyle](#geteditstyle) | Gets the current edit style flags. |
 | [GetEditStyleEx](#geteditstyleex) | Gets the extended edit style flags. |
 | [GetEllipsisMode](#getellipsismode) | Gets the current ellipsis mode. |
@@ -125,7 +120,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
 | [GetRightMargin](#getrightmargin) | Gets the width of the right margin. |
 | [GetSel](#getsel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
-| [GetSelectionCharFormat](#getselectioncharformat) | Gets the selection character formatting in a rich edit control. |
 | [GetSelText](#getseltext) | Retrieves the currently selected text in a rich edit control. |
 | [GetStoryType](#getstorytype) | Gets the story type. |
 | [GetTableParams](#gettableparams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
@@ -145,7 +139,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetUndoName](#getundoname) | Retrieves the type of the next undo action, if any. |
 | [GetWordBreakProc](#getwordbreakproc) | Gets the address of the current Wordwrap function. |
 | [GetWordBreakProcEx](#getwordbreakprocex) | Retrieves the address of the currently registered extended word-break procedure. |
-| [GetWordCharFormat](#getwordcharformat) | Gets the word character formatting in a rich edit control. |
 | [GetWordWrapMode](#getwordwrapmode) | Gets the current word wrap and word-break options for the rich edit control. |
 | [GetZoom](#getzoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
 | [HideSelection](#hideselection) | Hides or shows the selection in a rich edit control. |
@@ -166,10 +159,8 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [ScrollCaret](#scrollcaret) | Scrolls the caret into view in a rich edit control. |
 | [SelectionType](#selectiontype) | Determines the selection type for a rich edit control. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
-| [SetCharFormat](#setcharformat) | Sets the current character formatting in a rich edit control. |
 | [SetCTFModeBias](#setctfmodebias) | Sets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [SetCTFOpenStatus](#setctfopenstatus) | Sets if the Text Services Framework (TSF) keyboard is open or closed. |
-| [SetDefaultCharFormat](#setdefaultcharformat) | Sets the default character formatting in a rich edit control. |
 | [SetEditStyle](#seteditstyle) | Sets the current edit style flags. |
 | [SetEditStyleEx](#seteditstyleex) | Sets the extended edit style flags. |
 | [SetEllipsisMode](#setellipsismode) | Sets the current ellipsis mode. |
@@ -196,7 +187,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetRectNP](#setrectNP) | Sets the formatting rectangle of a rich edit control. |
 | [SetRightMargin](#setrightmargin) | Sets the width of the right margin. |
 | [SetSel](#setsel) | Selects a range of characters in a rich edit control. |
-| [SetSelectionCharFormat](#setselectioncharformat) | Sets the selection character formatting in a rich edit control. |
 | [SetStoryType](#setstorytype) | Sets the story type. |
 | [SetTableParams](#settableparams) | Changes the parameters of rows in a table. |
 | [SetTabStops](#settabstops) | Sets the tab stops in a multiline rich edit control. |
@@ -219,7 +209,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetWordWrapMode](#setwordwrapmode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
 | [SetWordBreakProc](#setwordbreakproc) | Replaces a rich edit control's default Wordwrap function with an application-defined Wordwrap function. |
 | [SetWordBreakProcEx](#setwordbreakprocex) | Sets the extended word-break procedure. |
-| [SetWordCharFormat](#setwordcharformat) | Sets the word character formatting in a rich edit control. |
 | [SetZoom](#setzoom) | Sets the zoom ratio anywhere between 1/64 and 64. |
 | [ShowScrollBar](#showscrollbar) | Shows or hides one of the scroll bars in the Text Host window. |
 | [StopGroupTyping](#stopgrouptyping) | Stops the control from collecting additional typing actions into the current undo action. |
@@ -570,10 +559,48 @@ SUB SetCaretPos (BYVAL dwPos AS DWORD)
 # <a name="charformat"></a>CharFormat
 
 Gets/sets the current character formatting in a rich edit control.
+
 ```
 (GET) PROPERTY CharFormat (BYVAL fOption AS DWORD) AS CHARFORMATW
 (SET) PROPERTY CharFormat (BYVAL chfmt AS DWORD, BYREF cf AS CHARFORMATW)
 ```
+```
+FUNCTION GetCharFormat (BYVAL fOption AS DWORD) AS CHARFORMATW
+FUNCTION SetCharFormat (BYVAL chfmt AS DWORD, BYREF cf AS CHARFORMATW) AS BOOLEAN
+```
+
+Gets/sets the default character formatting in a rich edit control.
+
+```
+(GET) PROPERTY DefaultCharFormat () AS CHARFORMATW
+(SET) PROPERTY DefaultCharFormat (BYREF cf AS CHARFORMATW)
+```
+```
+FUNCTION GetDefaultCharFormat () AS CHARFORMATW
+FUNCTION SetDefaultCharFormat (BYREF cf AS CHARFORMATW) AS BOOLEAN
+```
+
+Gets/sets the character formatting attributes of the current selection.
+
+```
+(GET) PROPERTY SelectionCharFormat () AS CHARFORMATW
+(SET) PROPERTY SelectionCharFormat (BYREF cf AS CHARFORMATW)
+```
+```
+FUNCTION GetSelectionCharFormat () AS CHARFORMATW
+FUNCTION SetSelectionCharFormat (BYREF cf AS CHARFORMATW) AS BOOLEAN
+```
+
+Gets/sets the character formatting attributes for the currently selected word.
+```
+(GET) PROPERTY WordCharFormat () AS CHARFORMATW
+(SET) PROPERTY WordCharFormat (BYREF cf AS CHARFORMATW)
+```
+```
+FUNCTION GetWordCharFormat () AS CHARFORMATW
+FUNCTION SetWordCharFormat (BYREF cf AS CHARFORMATW) AS BOOLEAN
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *fOption* | (GET) Specifies the range of text from which to retrieve formatting. It can be one of the following values.<br>**SCF_DEFAULT** The default character formatting.<br>**SCF_SELECTION** The current selection's character formatting. |
@@ -604,252 +631,36 @@ Gets/sets the current character formatting in a rich edit control.
 
 (SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
 
----
-
-# <a name="getcharformat"></a>GetCharFormat
-
-Gets the current character formatting in a rich edit control.
-```
-GetCharFormat (BYVAL fOption AS DWORD) AS CHARFORMATW
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *fOption* | Specifies the range of text from which to retrieve formatting. It can be one of the following values.<br>**SCF_DEFAULT** The default character formatting.<br>**SCF_SELECTION** The current selection's character formatting. |
-
-#### Return Value
-
-Returns a [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
-
----
-
-# <a name="setcharformat"></a>SetCharFormat
-
-Sets the current character formatting in a rich edit control.
-```
-SetCharFormat (BYVAL chfmt AS DWORD, BYREF cf AS CHARFORMATW) AS BOOLEAN
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *chfmt* | Character formatting that applies to the control. If this parameter is zero, the default character format is set. Otherwise, it can be one of the following values (see Formatting values below). |
-| *cf* | A [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure specifying the character formatting to use. Only the formatting attributes specified by the **dwMask** member are changed. The **szFaceName** and **bCharSet** members may be overruled when invalid for characters, for example: Arial on kanji characters. |
-
-| Formatting value  | Meaning |
-| ----------------- | ------- |
-| **SCF_ALL** | Applies the formatting to all text in the control. Not valid with **SCF_SELECTION** or **SCF_WORD**. |
-| **SCF_ASSOCIATEFONT** | **RichEdit 4.1**: Associates a font to a given script, thus changing the default font for that script. To specify the font, use the following members of **CHARFORMAT2**: yHeight, bCharSet, bPitchAndFamily, szFaceName, and lcid. |
-| **SCF_ASSOCIATEFONT2** | **RichEdit 4.1**: Associates a surrogate (plane-2) font to a given script, thus changing the default font for that script. To specify the font, use the following members of **CHARFORMAT2**: yHeight, bCharSet, bPitchAndFamily, szFaceName, and lcid. |
-| **SCF_CHARREPFROMLCID** | Gets the character repertoire from the LCID. |
-| **SCF_DEFAULT** | **RichEdit 4.1**: Sets the default font for the control. |
-| **SPF_DONTSETDEFAULT** | Prevents setting the default paragraph format when the rich edit control is empty. |
-| **SCF_NOKBUPDATE** | **RichEdit 4.1**: Prevents keyboard switching to match the font. For example, if an Arabic font is set, normally the automatic keyboard feature for Bidi languages changes the keyboard to an Arabic keyboard. |
-| **SCF_SELECTION** | Applies the formatting to the current selection. If the selection is empty, the character formatting is applied to the insertion point, and the new character format is in effect only until the insertion point changes. |
-| **SPF_SETDEFAULT** | Sets the default paragraph formatting attributes. |
-| **SCF_SMARTFONT** | Apply the font only if it can handle script. |
-| **SCF_USEUIRULES** | **RichEdit 4.1**: Used with **SCF_SELECTION**. Indicates that format came from a toolbar or other UI tool, so UI formatting rules should be used instead of literal formatting. |
-| **SCF_WORD** | Applies the formatting to the selected word or words. If the selection is empty but the insertion point is inside a word, the formatting is applied to the word. The **SCF_WORD** value must be used in conjunction with the **SCF_SELECTION** value. |
-
-#### Return value
-
-If the operation succeeds, the return value is true (-1). If the operation fails, the return value is false (0).
-
----
-
-# <a name="defaultcharformat"></a>DefaultCharFormat
-
-Gets/sets the default character formatting in a rich edit control.
-```
-(GET) PROPERTY DefaultCharFormat () AS CHARFORMATW
-(SET) PROPERTY DefaultCharFormat (BYREF cf AS CHARFORMATW)
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *cf* | (SET) A [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure specifying the character formatting to use. Only the formatting attributes specified by the **dwMask** member are changed. The **szFaceName** and **bCharSet** members may be overruled when invalid for characters, for example: Arial on kanji characters. |
-
-#### Return value
-
-(GET) Returns the value of the **dwMask** member of the [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
-
-(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
-
----
-
-# <a name="getdefaultcharformat"></a>GetDefaultCharFormat
-
-Gets the default character formatting in a rich edit control.
-```
-FUNCTION GetDefaultCharFormat () AS CHARFORMATW
-```
-
-#### Return value
-
-Returns a [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
-
----
-
-# <a name="setdefaultcharformat"></a>SetDefaultCharFormat
-
-Sets the default character formatting in a rich edit control.
-```
-FUNCTION SetDefaultCharFormat (BYREF cf AS CHARFORMATW) AS BOOLEAN
-```
-
-#### Return value
-
-If the operation succeeds, the return value is true (-1). If the operation fails, the return value is false (0).
-
----
-
-# <a name="selectioncharformat"></a>SelectionCharFormat
-
-Gets/sets the character formatting attributes of the current selection.
-```
-(GET) PROPERTY SelectionCharFormat () AS CHARFORMATW
-(SET) PROPERTY SelectionCharFormat (BYREF cf AS CHARFORMATW)
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *cf* | (SET) A [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure specifying the character formatting to use. Only the formatting attributes specified by the **dwMask** member are changed. The **szFaceName** and **bCharSet** members may be overruled when invalid for characters, for example: Arial on kanji characters. |
-
-#### Return value
-
-(GET) Returns the value of the **dwMask** member of the [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
-
-(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
 
 #### Usage examples
 
 Select text and change color
 ```
-pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
+pRichEdit.ExSetSel(98, 113)          ' // Select word at position 98, 113
 DIM cf AS CHARFORMAT
-cf.dwMask = CFM_COLOR                 ' // Let's set the color
-cf.crTextColor = BGR(255, 0, 0)       ' // Red color
-pRichEdit->SelectionCharFormat = cf   ' // Set the color
-pRichEdit->HideSelection(TRUE)        ' // Hide selection
+cf.dwMask = CFM_COLOR                ' // Let's set the color
+cf.crTextColor = BGR(255, 0, 0)      ' // Red color
+pRichEdit.SelectionCharFormat = cf   ' // Set the color
+pRichEdit.HideSelection(TRUE)        ' // Hide selection
 ```
 Select text and make it bold
 ```
-pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
+pRichEdit.ExSetSel(98, 113)         ' // Select word at position 98, 113
 DIM cf AS CHARFORMAT
-cf.dwMask = CFM_BOLD                  ' // The CFE_BOLD value of the dwEffects member is valid.
-cf.dwEffects = CFE_BOLD               ' // Characters are bold
-pRichEdit->SelectionCharFormat = cf   ' // Set the format
-pRichEdit->HideSelection(TRUE)        ' // Hide selection
+cf.dwMask = CFM_BOLD                 ' // The CFE_BOLD value of the dwEffects member is valid.
+cf.dwEffects = CFE_BOLD              ' // Characters are bold
+pRichEdit.SelectionCharFormat = cf   ' // Set the format
+pRichEdit.HideSelection(TRUE)        ' // Hide selection
 ```
 Select text and change the font height
 ```
-pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
+pRichEdit.ExSetSel(98, 113)          ' // Select word at position 98, 113
 DIM cf AS CHARFORMAT
 cf.dwMask = CFM_SIZE                  ' // The yHeight member is valid.
 cf.yHeight = 12 * 20                  ' // Character height, in twips (1/1440 of an inch or 1/20 of a printer's point)
-pRichEdit->SelectionCharFormat = cf   ' // Set the format
-pRichEdit->HideSelection(TRUE)        ' // Hide selection
+pRichEdit.SelectionCharFormat = cf   ' // Set the format
+pRichEdit.HideSelection(TRUE)        ' // Hide selection
 ```
-
----
-
-# <a name="getselectioncharformat"></a>GetSelectionCharFormat
-
-Gets the selection character formatting in a rich edit control.
-```
-GetSelectionCharFormat () AS CHARFORMATW
-```
-
-#### Return value
-
-Returns a [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
-
----
-
-# <a name="setselectioncharformat"></a>SetSelectionCharFormat
-
-Sets the selection character formatting in a rich edit control.
-```
-FUNCTION SetSelectionCharFormat (BYREF cf AS CHARFORMATW) AS BOOLEAN
-```
-
-#### Return value
-
-If the operation succeeds, the return value is true (-1). If the operation fails, the return value is false (0).
-
-#### Usage examples
-
-Select text and change color
-```
-pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
-DIM cf AS CHARFORMAT
-cf.dwMask = CFM_COLOR                 ' // Let's set the color
-cf.crTextColor = BGR(255, 0, 0)       ' // Red color
-pRichEdit->SetSelectionCharFormat(cf) ' // Set the color
-pRichEdit->HideSelection(TRUE)        ' // Hide selection
-```
-Select text and make it bold
-```
-pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
-DIM cf AS CHARFORMAT
-cf.dwMask = CFM_BOLD                  ' // The CFE_BOLD value of the dwEffects member is valid.
-cf.dwEffects = CFE_BOLD               ' // Characters are bold
-pRichEdit->SetSelectionCharFormat(cf) ' // Set the format
-pRichEdit->HideSelection(TRUE)        ' // Hide selection
-```
-Select text and change the font height
-```
-pRichEdit->ExSetSel(98, 113)          ' // Select word at position 98, 113
-DIM cf AS CHARFORMAT
-cf.dwMask = CFM_SIZE                  ' // The yHeight member is valid.
-cf.yHeight = 12 * 20                  ' // Character height, in twips (1/1440 of an inch or 1/20 of a printer's point)
-pRichEdit->SetSelectionCharFormat(cf) ' // Set the format
-pRichEdit->HideSelection(TRUE)        ' // Hide selection
-```
----
-
-# <a name="wordcharformat"></a>WordCharFormat
-
-Gets/sets the character formatting attributes for the currently selected word.
-```
-(GET) PROPERTY WordCharFormat () AS CHARFORMATW
-(SET) PROPERTY WordCharFormat (BYREF cf AS CHARFORMATW)
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *cf* | (SET) A [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure specifying the character formatting to use. Only the formatting attributes specified by the **dwMask** member are changed. The **szFaceName** and **bCharSet** members may be overruled when invalid for characters, for example: Arial on kanji characters. |
-
-#### Return value
-
-(GET) Returns the value of the **dwMask** member of the [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
-
-(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
-
----
-
-# <a name="getwordcharformat"></a>GetWordCharFormat
-
-Gets the character formatting attributes for the currently selected word.
-```
-FUNCTION GetWordCharFormat () AS CHARFORMATW
-```
-
-#### Return value
-
-Returns a [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
-
----
-
-# <a name="setwordcharformat"></a>SetWordCharFormat
-
-Setss the character formatting attributes for the currently selected word.
-```
-FUNCTION SetWordCharFormat (BYREF cf AS CHARFORMATW) AS BOOLEAN
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *cf* | A [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure specifying the character formatting to use. Only the formatting attributes specified by the **dwMask** member are changed. The **szFaceName** and **bCharSet** members may be overruled when invalid for characters, for example: Arial on kanji characters. |
-
-#### Return value
-
-If the operation succeeds, the return value is true (-1). If the operation fails, the return value is false (0).
 
 ---
 
