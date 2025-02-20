@@ -99,7 +99,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetLineCount](#getlinecount) | Gets the number of lines in a multiline rich edit control. |
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [GetOptions](#getoptions) | Gets the options for a rich edit control. |
-| [GetParaFormat](#getparaformat) | Gets the paragraph formatting of the current selection in a rich edit control. |
 | [GetPunctuation](#getpunctuation) | Gets the current punctuation characters for the rich edit control. |
 | [GetRect](#getrect) | Gets the formatting rectangle of a rich edit control. |
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
@@ -147,7 +146,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetOleCallback](#setolecallback) | Gives a rich edit control an **IRichEditOleCallback** object that the control uses to get OLE-related resources and information from the client. |
 | [SetOptions](#setoptions) | Sets the options for a rich edit control. |
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
-| [SetParaFormat](#setparaformat) | Sets the paragraph formatting of the current selection in a rich edit control. |
 | [SetPunctuation](#setpunctuation) | Sets the current punctuation characters for the rich edit control. |
 | [SetReadOnly](#setreadonly) | Sets or removes the read-only style (ES_READONLY) of a rich edit control. |
 | [SetRect](#setrect) | Sets the formatting rectangle of a rich edit control. |
@@ -1188,10 +1186,16 @@ FUNCTION SetPageRotate (BYVAL txtlayout AS LONG) AS DWORD
 # <a name="paraformat"></a>ParaFormat
 
 Gets/sets the paragraph formatting of the current selection in a rich edit control.
+
 ```
 (GET) PROPERTY ParaFormat () AS .PARAFORMAT
 (SET) PROPERTY ParaFormat (BYREF pfmt AS .PARAFORMAT)
 ```
+```
+FUNCTION GetParaFormat () AS .PARAFORMAT
+FUNCTION SetParaFormat (BYREF pfmt AS .PARAFORMAT) AS BOOLEAN
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pfmt* | (SET) A [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure specifying the new paragraph formatting attributes. Only the attributes specified by the **dwMask** member are changed. |
@@ -1200,36 +1204,7 @@ Gets/sets the paragraph formatting of the current selection in a rich edit contr
 
 (GET) Returns a [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure.
 
-(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
-
----
-
-# <a name="getparaformat"></a>GetParaFormat
-
-Gets the paragraph formatting of the current selection in a rich edit control.
-```
-FUNCTION GetParaFormat () AS .PARAFORMAT
-```
-
-#### Return value
-
-Returns a [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure.
-
----
-
-# <a name="setparaformat"></a>SetParaFormat
-
-Sets the paragraph formatting of the current selection in a rich edit control.
-```
-FUNCTION SetParaFormat (BYREF pfmt AS .PARAFORMAT) AS BOOLEAN
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pfmt* | A [PARAFORMAT](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat) structure specifying the new paragraph formatting attributes. Only the attributes specified by the **dwMask** member are changed. |
-
-#### Return value
-
-A boolean true (-1) or false (0).
+(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero.
 
 ---
 
