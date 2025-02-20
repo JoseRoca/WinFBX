@@ -66,6 +66,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [TextOffset](#textoffset) | Gets/sets the text offset of the selected text or the word under the cursor. |
 | [TouchOptions](#touchoptions) | Gets/sets the touch options that are associated with a rich edit control. |
 | [TypographyOptions](#typographyoptions) | Gets/sets the current state of the typography options of a rich edit control. |
+| [UndoName](#undoname) | Retrieves the type of the next undo action, if any. |
 | [WordBreakProc](#wordbreakproc) | Gets/sets the address of the currently registered word-break procedure. |
 | [WordWrap](#wordwrap) | Enables/disables word wrap. |
 | [WordWrapMode](#wordwrapmode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
@@ -108,7 +109,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetTextHeight](#gettextheight) | Gets the text height of the selected text or the word under the cursor. |
 | [GetTextRange](#gettextrange) | Retrieves a specified range of characters from a rich edit control. |
 | [GetThumb](#getthumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
-| [GetUndoName](#getundoname) | Retrieves the type of the next undo action, if any. |
 | [GetZoom](#getzoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
 | [HideSelection](#hideselection) | Hides or shows the selection in a rich edit control. |
 | [InsertImage](#insertimage) | Replaces the selection with a blob that displays an image. |
@@ -2449,10 +2449,12 @@ FUNCTION GetThumb () AS LONG
 
 The return value is the position of the scroll box.
 
-# <a name="getundoname"></a>GetUndoName
+# <a name="undoname"></a>UndoName
 
 Retrieves the type of the next undo action, if any.
+
 ```
+FUNCTION UndoName () AS DWORD
 FUNCTION GetUndoName () AS DWORD
 ```
 
@@ -3700,7 +3702,7 @@ SUB Italic ()
 
 ---
 
-# <a name="strikeout"></a>StrikeOut
+# <a name="settextstrikeout"></a>SetTextStrikeOut
 
 Changes the selected text or word under the cursor to strike out. If it is already set, it removes it.
 ```
@@ -3709,7 +3711,7 @@ SUB StrikeOut ()
 
 ---
 
-# <a name="underline"></a>Underline
+# <a name="settextunderline"></a>SetTextUnderline
 
 Changes the selected text or word under the cursor to underline. If it is already set, it removes it.
 ```
