@@ -99,7 +99,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetLineCount](#getlinecount) | Gets the number of lines in a multiline rich edit control. |
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [GetOptions](#getoptions) | Gets the options for a rich edit control. |
-| [GetRect](#getrect) | Gets the formatting rectangle of a rich edit control. |
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
 | [GetSel](#getsel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
 | [GetSelText](#getseltext) | Retrieves the currently selected text in a rich edit control. |
@@ -146,7 +145,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetOptions](#setoptions) | Sets the options for a rich edit control. |
 | [SetPalette](#setpalette) | Changes the palette that a rich edit control uses for its display window. |
 | [SetReadOnly](#setreadonly) | Sets or removes the read-only style (ES_READONLY) of a rich edit control. |
-| [SetRect](#setrect) | Sets the formatting rectangle of a rich edit control. |
 | [SetRectNP](#setrectNP) | Sets the formatting rectangle of a rich edit control. |
 | [SetSel](#setsel) | Selects a range of characters in a rich edit control. |
 | [SetStoryType](#setstorytype) | Sets the story type. |
@@ -1270,10 +1268,16 @@ This message is supported only in Asian-language versions of Microsoft Rich Edit
 # <a name="rect"></a>Rect
 
 Gets/sets the formatting rectangle of a rich edit control.
+
 ```
 (GET) PROPERTY Rect () AS .RECT
 (SET) PROPERTY Rect (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
 ```
+FUNCTION GetRect () AS .RECT
+SUB SetRect (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
+```
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *fCoord* | (SET) **Rich Edit 2.0 and later**: Indicates whether *rc* specifies absolute or relative coordinates. A value of zero indicates absolute coordinates. A value of 1 indicates offsets relative to the current formatting rectangle. (The offsets can be positive or negative.)<br>**Edit controls and Rich Edit 1.0**: This parameter is not used and must be zero. |
@@ -1296,45 +1300,6 @@ When a rich edit control is first created, the formatting rectangle is set to a 
 If the rich edit control does not have a horizontal scroll bar, and the formatting rectangle is set to be larger than the rich edit control window, lines of text exceeding the width of the rich edit control window (but smaller than the width of the formatting rectangle) are clipped instead of wrapped.
 
 If the rich edit control contains a border, the formatting rectangle is reduced by the size of the border. If you are adjusting the rectangle returned by the (GET) **Rect** property, you must remove the size of the border before using the rectangle with the (SET) **Rect** property.
-
-The formatting rectangle does not include the selection bar, which is an unmarked area to the left of each paragraph. When the user clicks in the selection bar, the corresponding line is selected.
-
----
-
-# <a name="getrect"></a>GetRect
-
-Gets the formatting rectangle of a rich edit control.
-```
-FUNCTION GetRect () AS .RECT
-```
-
-#### Return value
-
-A **RECT** structure with the formatting rectangle.
-
----
-
-# <a name="setrect"></a>SetRect
-
-Sets the formatting rectangle of a rich edit control.
-```
-SUB SetRect (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *fCoord* | (SET) **Rich Edit 2.0 and later**: Indicates whether *rc* specifies absolute or relative coordinates. A value of zero indicates absolute coordinates. A value of 1 indicates offsets relative to the current formatting rectangle. (The offsets can be positive or negative.)<br>**Edit controls and Rich Edit 1.0**: This parameter is not used and must be zero. |
-| *rc* | (SET) A [RECT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect) structure that specifies the new dimensions of the rectangle. If this parameter is **NULL**, the formatting rectangle is set to its default values. |
-
-#### Remarks
-
-The **SetRect** method causes the text of the rich edit control to be redrawn. To change the size of the formatting rectangle without redrawing the text, use the **SetRectNP** method.
-
-When a rich edit control is first created, the formatting rectangle is set to a default size. You can use the **SetRect** method to make the formatting rectangle larger or smaller than the rich edit control window.
-
-If the rich edit control does not have a horizontal scroll bar, and the formatting rectangle is set to be larger than the rich edit control window, lines of text exceeding the width of the rich edit control window (but smaller than the width of the formatting rectangle) are clipped instead of wrapped.
-
-If the rich edit control contains a border, the formatting rectangle is reduced by the size of the border. If you are adjusting the rectangle returned by the **GetRect** method, you must remove the size of the border before using the rectangle with the **SetRect** property.
 
 The formatting rectangle does not include the selection bar, which is an unmarked area to the left of each paragraph. When the user clicks in the selection bar, the corresponding line is selected.
 
