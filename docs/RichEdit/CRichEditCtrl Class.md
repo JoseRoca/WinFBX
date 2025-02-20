@@ -68,6 +68,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [TextOffset](#textoffset) | Gets/sets the text offset of the selected text or the word under the cursor. |
 | [TouchOptions](#touchoptions) | Gets/sets the touch options that are associated with a rich edit control. |
 | [TypographyOptions](#typographyoptions) | Gets/sets the current state of the typography options of a rich edit control. |
+| [WordBreakProc](#worbreakproc) | Gets/sets the address of the currently registered word-break procedure. |
 | [WordWrap](#wordwrap) | Enables/disables word wrap. |
 | [WordWrapMode](#wordwrapmode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
 
@@ -135,8 +136,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetTouchOptions](#gettouchoptions) | Gets the touch options that are associated with a rich edit control. |
 | [GetTypographyOptions](#gettypographyoptions) | Gets the current state of the typography options of a rich edit control. |
 | [GetUndoName](#getundoname) | Retrieves the type of the next undo action, if any. |
-| [GetWordBreakProc](#getwordbreakproc) | Gets the address of the current Wordwrap function. |
-| [GetWordBreakProcEx](#getwordbreakprocex) | Retrieves the address of the currently registered extended word-break procedure. |
 | [GetZoom](#getzoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
 | [HideSelection](#hideselection) | Hides or shows the selection in a rich edit control. |
 | [InsertImage](#insertimage) | Replaces the selection with a blob that displays an image. |
@@ -201,8 +200,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetTypographyOptions](#settypographyoptions) | Sets the current state of the typography options of a rich edit control. |
 | [SetUIAName](#setuianame) | Sets the maximum number of actions that can stored in the undo queue. |
 | [SetUndoLimit](#setundolimit) | Sets the maximum number of actions that can stored in the undo queue. |
-| [SetWordBreakProc](#setwordbreakproc) | Replaces a rich edit control's default Wordwrap function with an application-defined Wordwrap function. |
-| [SetWordBreakProcEx](#setwordbreakprocex) | Sets the extended word-break procedure. |
 | [SetZoom](#setzoom) | Sets the zoom ratio anywhere between 1/64 and 64. |
 | [ShowScrollBar](#showscrollbar) | Shows or hides one of the scroll bars in the Text Host window. |
 | [StopGroupTyping](#stopgrouptyping) | Stops the control from collecting additional typing actions into the current undo action. |
@@ -2364,6 +2361,44 @@ You can turn on advanced line breaking by sending calling the **SetTypographyOPt
 
 ---
 
+# <a name="wordbreakproc"></a>WordBreakProc
+
+Gets/sets the address of the currently registered word-break procedure.
+
+```
+PROPERTY WordBreakProc () AS LONG_PTR
+PROPERTY WordBreakProc (BYVAL pfn AS LONG_PTR)
+```
+```
+FUNCTION GetWordBreakProc () AS LONG_PTR
+SUB SetWordBreakProc (BYVAL pfn AS LONG_PTR)
+```
+
+Gets/sets the address of the currently registered extended word-break procedure.
+
+```
+PROPERTY WordBreakProcEx () AS LONG_PTR
+PROPERTY WordBreakProcEx (BYVAL pfn AS LONG_PTR)
+```
+```
+FUNCTION GetWordBreakProcEx () AS LONG_PTR
+SUB SetWordBreakProcEx (BYVAL pfn AS LONG_PTR)
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pfn* | Pointer to an [EditWordBreakProcEx](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-editwordbreakprocex) function, or **NULL** to use the default procedure. |
+
+#### Return value
+
+The return value specifies the address of the application-defined word-break function. The return value is **NULL** if no word-break function exists.
+
+#### Remarks
+
+A Wordwrap function scans a text buffer that contains text to be sent to the display, looking for the first word that does not fit on the current display line. The wordwrap function places this word at the beginning of the next line on the display. A Wordwrap function defines the point at which the system should break a line of text for multiline edit controls, usually at a space character that separates two words.
+
+---
+
 # <a name="wordwrap"></a>WordWrap
 
 Enables/disables word wrap.
@@ -3305,34 +3340,6 @@ The types of actions that can be undone or redone include typing, delete, drag, 
 
 ---
 
-# <a name="getwordbreakproc"></a>GetWordBreakProc
-
-Gets the address of the current Wordwrap function.
-```
-FUNCTION GetWordBreakProc () AS LONG_PTR
-```
-#### Return value
-
-The return value specifies the address of the application-defined Wordwrap function. The return value is **NULL** if no Wordwrap function exists.
-
-#### Remarks
-
-A Wordwrap function scans a text buffer that contains text to be sent to the display, looking for the first word that does not fit on the current display line. The wordwrap function places this word at the beginning of the next line on the display. A Wordwrap function defines the point at which the system should break a line of text for multiline edit controls, usually at a space character that separates two words.
-
----
-
-# <a name="getwordbreakprocex"></a>GetWordBreakProcEx
-
-Retrieves the address of the currently registered extended word-break procedure.
-```
-FUNCTION GetWordBreakProcEx () AS LONG_PTR
-```
-#### Return value
-
-The message returns the address of the currently registered extended word-break procedure.
-
----
-
 # <a name="getzoom"></a>GetZoom
 
 Gets the current zoom ratio, which is always between 1/64 and 64.
@@ -4106,40 +4113,6 @@ The return value is the new maximum number of undo actions for the rich edit con
 By default, the maximum number of actions in the undo queue is 100. If you increase this number, there must be enough available memory to accommodate the new number. For better performance, set the limit to the smallest possible value.
 
 Setting the limit to zero disables the **Undo** feature.
-
----
-
-# <a name="setwordbreakproc"></a>SetWordBreakProc
-
-Replaces a rich edit control's default Wordwrap function with an application-defined Wordwrap function.
-```
-SUB SetWordBreakProc (BYVAL pfn AS LONG_PTR)
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pfn* | The address of the application-defined Wordwrap function. For more information about breaking lines, see the description of the [EditWordBreakProc](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nc-winuser-editwordbreakprocw) callback function. |
-
-#### Remarks
-
-A Wordwrap function scans a text buffer that contains text to be sent to the screen, looking for the first word that does not fit on the current screen line. The Wordwrap function places this word at the beginning of the next line on the screen.
-
-A Wordwrap function defines the point at which the system should break a line of text for multiline edit controls, usually at a space character that separates two words. Either a multiline or a single-line edit control might call this function when the user presses arrow keys in combination with the CTRL key to move the caret to the next word or previous word. The default Wordwrap function breaks a line of text at a space character. The application-defined function may define the Wordwrap to occur at a hyphen or a character other than the space character.
-
----
-
-# <a name="setwordbreakprocex"></a>SetWordBreakProcEx
-
-Sets the extended word-break procedure.
-```
-FUNCTION SetWordBreakProcEx (BYVAL pfn AS LONG_PTR) AS LONG_PTR
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pfn* | Pointer to an [EditWordBreakProcEx](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-editwordbreakprocex) function, or **NULL** to use the default procedure. |
-
-#### Return value
-
-This method returns the address of the previous extended word-break procedure.
 
 ---
 
