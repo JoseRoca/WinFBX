@@ -5,14 +5,14 @@ The `CMaskedEdit` class supports a masked edit control, which validates user inp
   
 ### Constructors
 
-|Name|Description|  
-|----------|-----------------|  
+| Name | Description |  
+| ---------- | ----------------- |  
 |[Constructors](#constructors)|Creates an instance of the class and the control. |  
   
 ### Public Methods  
   
-|Name|Description|  
-|----------|-----------------|  
+| Name | Description |  
+| ---------- | ----------------- |  
 |[Create](#create)|Creates an instance of the control|
 |[EnableMask](#enablemask)|Initializes the masked edit control.|
 |[GetText](#gettext)|Retrieves validated text from the masked edit control.|
