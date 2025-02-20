@@ -1251,7 +1251,6 @@ Gets/sets the current punctuation characters for the rich edit control.
 FUNCTION GetPunctuation (BYVAL punctype AS DWORD) AS .PUNCTUATION
 FUNCTION SetPunctuation (BYVAL punctype AS LONG, BYREF punct AS .PUNCTUATION) AS BOOLEAN
 ```
-```
 
 | Parameter  | Description |
 | ---------- | ----------- |
