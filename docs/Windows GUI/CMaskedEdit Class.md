@@ -7,7 +7,7 @@ The `CMaskedEdit` class supports a masked edit control, which validates user inp
 
 | Name | Description |  
 | ---------- | ----------------- |  
-|[Constructors](#constructors)|Creates an instance of the class and the control. |  
+|[Constructors](#constructors1)| Creates an instance of the class and the control. |  
   
 ### Public Methods  
   
@@ -22,7 +22,7 @@ The `CMaskedEdit` class supports a masked edit control, which validates user inp
 |[SetValidChars](#setvalidchars)|Specifies a string of valid characters that the user can enter.|
 |[SetText](#settext)|Displays a prompt in the masked edit control.|
 
-# <a name="constructors"></a>Constructors
+# <a name="constructors1"></a>Constructors
 
 ```
 CONSTRUCTOR CMaskedEdit
