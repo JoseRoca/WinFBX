@@ -92,7 +92,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [FindTextEx](#findtextex) | Finds text within a rich edit control. |
 | [FindWordBreak](#findwordbreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [FormatRange](#formatrange) | Formats a range of text in a rich edit control for a specific device. |
-| [GetCaretPos](#getcaretpos) | Gets the caret position |
 | [GetCharFormat](#getcharformat) | Gets the current character formatting in a rich edit control. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
 | [GetCTFModeBias](#getctfmodebias) | Gets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
@@ -167,7 +166,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [ScrollCaret](#scrollcaret) | Scrolls the caret into view in a rich edit control. |
 | [SelectionType](#selectiontype) | Determines the selection type for a rich edit control. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
-| [SetCaretPos](#setcaretpos) | Sets the caret position |
 | [SetCharFormat](#setcharformat) | Sets the current character formatting in a rich edit control. |
 | [SetCTFModeBias](#setctfmodebias) | Sets the Text Services Framework mode bias values for a Microsoft Rich Edit control. |
 | [SetCTFOpenStatus](#setctfopenstatus) | Sets if the Text Services Framework (TSF) keyboard is open or closed. |
@@ -466,7 +464,7 @@ FUNCTION EnableAutoUrlDetect (BYVAL fUrlDetect AS LONG) AS HRESULT
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *fUrlDetect* | Specify 0 to disable automatic link detection, or one of the following values to enable various kinds of detection. |
+| *fUrlDetect* | (SET) Specify 0 to disable automatic link detection, or one of the following values to enable various kinds of detection. |
 
 | fUrlDetect value  | Description |
 | --------------- | ----------- |
@@ -527,7 +525,7 @@ SUB SetBidiOptions (BYREF opt AS .BIDIOPTIONS)
 
 | Parameter  | Description |
 | ---------- | ----------- |
-| *opt* | A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure that indicates how to set the state of the bidirectional options in the rich edit control. |
+| *opt* |(SET) A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure that indicates how to set the state of the bidirectional options in the rich edit control. |
 
 #### Return value
 
@@ -552,6 +550,11 @@ Gets/sets the caret position.
 (GET) PROPERTY CaretPos () AS DWORD
 (SET) PROPERTY CaretPos (BYVAL dwPos AS DWORD)
 ```
+```
+FUNCTION GetCaretPos () AS DWORD
+SUB SetCaretPos (BYVAL dwPos AS DWORD)
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *dwPos* | (SET) The caret position. If you pass a value of -1, the caret will be positioned at the end of the document. |
@@ -560,34 +563,7 @@ Gets/sets the caret position.
 
 (GET) The caret position.
 
----
-
-# <a name="getcaretpos"></a>GetCaretPos
-
-Gets the caret position.
-```
-FUNCTION GetCaretPos () AS DWORD
-```
-
-#### Return value
-
-The caret position.
-
----
-
-# <a name="setcaretpos"></a>SetCaretPos
-
-Sets the caret position.
-```
-SUB SetCaretPos (BYVAL dwPos AS DWORD)
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *dwPos* | The caret position. If you pass a value of -1, the caret will be positioned at the end of the document. |
-
-#### Return value
-
-This method does not return a value.
+(SET) This property does not return a result.
 
 ---
 
