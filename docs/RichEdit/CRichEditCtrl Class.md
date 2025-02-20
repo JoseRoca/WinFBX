@@ -90,7 +90,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [FindWordBreak](#findwordbreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [FormatRange](#formatrange) | Formats a range of text in a rich edit control for a specific device. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
-| [GetCTFOpenStatus](#getctfopenstatus) | Gets if the Text Services Framework (TSF) keyboard is open or closed. |
 | [GetEditStyle](#geteditstyle) | Gets the current edit style flags. |
 | [GetEditStyleEx](#geteditstyleex) | Gets the extended edit style flags. |
 | [GetEllipsisMode](#getellipsismode) | Gets the current ellipsis mode. |
@@ -158,7 +157,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [ScrollCaret](#scrollcaret) | Scrolls the caret into view in a rich edit control. |
 | [SelectionType](#selectiontype) | Determines the selection type for a rich edit control. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
-| [SetCTFOpenStatus](#setctfopenstatus) | Sets if the Text Services Framework (TSF) keyboard is open or closed. |
 | [SetEditStyle](#seteditstyle) | Sets the current edit style flags. |
 | [SetEditStyleEx](#seteditstyleex) | Sets the extended edit style flags. |
 | [SetEllipsisMode](#setellipsismode) | Sets the current ellipsis mode. |
@@ -714,6 +712,11 @@ Gets/sets if the Text Services Framework (TSF) keyboard is open or closed.
 (GET) PROPERTY CTFOpenStatus () AS BOOLEAN
 (SET) PROPERTY CTFOpenStatus (BYVAL fTSFkbd AS LONG)
 ```
+```
+FUNCTION GetCTFOpenStatus () AS BOOLEAN
+FUNCTION SetCTFOpenStatus (BYVAL fTSFkbd AS LONG) AS BOOLEAN
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *fTSFkbd* | To turn on the TSF keyboard, use **TRUE**. To turn off the TSF keyboard, use **FALSE**. |
@@ -723,35 +726,6 @@ Gets/sets if the Text Services Framework (TSF) keyboard is open or closed.
 (GET) If the TSF keyboard is open, the return value is **TRUE**. Otherwise, it is **FALSE**.
 
 (SET) If successful, it returns **TRUE**. If unsuccessful, it returns **FALSE**. Call the (GET) **CTFOpenStatus** property to check if the value has changed.
-
----
-
-# <a name="getctfopenstatus"></a>GetCTFOpenStatus
-
-Gets if the Text Services Framework (TSF) keyboard is open or closed.
-```
-FUNCTION GetCTFOpenStatus () AS BOOLEAN
-```
-
-#### Return value
-
-If the TSF keyboard is open, the return value is **TRUE**. Otherwise, it is **FALSE**.
-
----
-
-# <a name="setctfopenstatus"></a>SetCTFOpenStatus
-
-Sets if the Text Services Framework (TSF) keyboard is open or closed.
-```
-FUNCTION SetCTFOpenStatus (BYVAL fTSFkbd AS LONG) AS BOOLEAN
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *fTSFkbd* | To turn on the TSF keyboard, use **TRUE**. To turn off the TSF keyboard, use **FALSE**. |
-
-#### Return value
-
-If successful, it returns true (-1). If unsuccessful, it returns false (0). Call the **GetCTFOpenStatus** function to check if the value has changed.
 
 ---
 
