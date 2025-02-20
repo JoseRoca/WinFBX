@@ -5397,7 +5397,7 @@ pRichEdit.NewDoc
 
 # <a name="opendoc"></a>OpenDoc
 
-Opens a new document. If another document is open, this method saves any current changes and closes the current document before opening a new one. There are parameters to specify access and sharing privileges, creation and conversion of the file, as well as the code page for the file.
+Opens a new document. If another document is open, this method saves any current changes and closes the current document before opening a new one.
 ```
 FUNCTION OpenDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = 0, _
    BYVAL CodePage AS LONG = CP_ACP) AS HRESULT
