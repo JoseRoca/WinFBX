@@ -636,28 +636,28 @@ FUNCTION SetWordCharFormat (BYREF cf AS CHARFORMATW) AS BOOLEAN
 
 Select text and change color
 ```
-pRichEdit.ExSetSel(98, 113)          ' // Select word at position 98, 113
+pRichEdit.ExSetSel(98, 113)         ' // Select word at position 98, 113
 DIM cf AS CHARFORMAT
-cf.dwMask = CFM_COLOR                ' // Let's set the color
-cf.crTextColor = BGR(255, 0, 0)      ' // Red color
-pRichEdit.SelectionCharFormat = cf   ' // Set the color
-pRichEdit.HideSelection(TRUE)        ' // Hide selection
+cf.dwMask = CFM_COLOR               ' // Let's set the color
+cf.crTextColor = BGR(255, 0, 0)     ' // Red color
+pRichEdit.SelectionCharFormat = cf  ' // Set the color
+pRichEdit.HideSelection(TRUE)       ' // Hide selection
 ```
 Select text and make it bold
 ```
 pRichEdit.ExSetSel(98, 113)         ' // Select word at position 98, 113
 DIM cf AS CHARFORMAT
-cf.dwMask = CFM_BOLD                 ' // The CFE_BOLD value of the dwEffects member is valid.
-cf.dwEffects = CFE_BOLD              ' // Characters are bold
-pRichEdit.SelectionCharFormat = cf   ' // Set the format
-pRichEdit.HideSelection(TRUE)        ' // Hide selection
+cf.dwMask = CFM_BOLD                ' // The CFE_BOLD value of the dwEffects member is valid.
+cf.dwEffects = CFE_BOLD             ' // Characters are bold
+pRichEdit.SelectionCharFormat = cf  ' // Set the format
+pRichEdit.HideSelection(TRUE)       ' // Hide selection
 ```
 Select text and change the font height
 ```
 pRichEdit.ExSetSel(98, 113)          ' // Select word at position 98, 113
 DIM cf AS CHARFORMAT
-cf.dwMask = CFM_SIZE                  ' // The yHeight member is valid.
-cf.yHeight = 12 * 20                  ' // Character height, in twips (1/1440 of an inch or 1/20 of a printer's point)
+cf.dwMask = CFM_SIZE                 ' // The yHeight member is valid.
+cf.yHeight = 12 * 20                 ' // Character height, in twips (1/1440 of an inch or 1/20 of a printer's point)
 pRichEdit.SelectionCharFormat = cf   ' // Set the format
 pRichEdit.HideSelection(TRUE)        ' // Hide selection
 ```
