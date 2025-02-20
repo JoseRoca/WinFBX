@@ -1211,10 +1211,16 @@ FUNCTION SetParaFormat (BYREF pfmt AS .PARAFORMAT) AS BOOLEAN
 # <a name="passwordchar"></a>PasswordChar
 
 Gets/sets the password character that a rich edit control displays when the user enters text.
+
 ```
 (GET) PROPERTY PasswordChar () AS LONG
 (SET) PROPERTY PasswordChar (BYVAL dwchar AS DWORD)
 ```
+```
+FUNCTION GetPasswordChar () AS LONG
+FUNCTION SetPasswordChar (BYVAL dwchar AS DWORD)
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *dwchar* | (SET) The character to be displayed in place of the characters typed by the user. If this parameter is zero, the control removes the current password character and displays the characters typed by the user. |
