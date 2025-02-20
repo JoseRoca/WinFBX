@@ -2,35 +2,35 @@
 
 | Name       | Description |
 | ---------- | ----------- |
-| [AfxAddIconToMenuItem](#AfxAddIconToMenuItem) | Converts an icon handle to a bitmap and adds it to the specified *hbmpItem* field of HMENU item. |
-| [AfxCheckMenuItem](#AfxCheckMenuItem) | Checks a menu item. |
-| [AfxDisableMenuItem](#AfxDisableMenuItem) | Disables the specified menu item. |
-| [AfxEnableMenuItem](#AfxEnableMenuItem) | Enables the specified menu item. |
-| [AfxGetMenuFont](#AfxGetMenuFont) | Retrieves information about the font used in menu bars. |
-| [AfxGetMenuFontPointSize](#AfxGetMenuFontPointSize) | Retrieves the point size of the font used in menu bars. |
-| [AfxGetMenuItemState](#AfxGetMenuItemState) | Retrieves the state of the specified menu item. |
-| [AfxGetMenuItemText](#AfxGetMenuItemText) | Retrieves the text of the specified menu item. |
-| [AfxGetMenuItemTextLen](#AfxGetMenuItemTextLen) | Retrieves length of the of the specified menu item. |
-| [AfxGetMenuRect](#AfxGetMenuRect) | Calculates the size of a menu bar or a drop-down menu. |
-| [AfxGrayMenuItem](#AfxGrayMenuItem) | Grays the specified menu item. |
-| [AfxHiliteMenuItem](#AfxHiliteMenuItem) | Highlights the specified menu item. |
-| [AfxIsMenuItemChecked](#AfxIsMenuItemChecked) | Returns TRUE if the specified menu item is checked; FALSE otherwise. |
-| [AfxIsMenuItemDisabled](#AfxIsMenuItemDisabled) | Returns TRUE if the specified menu item is disabled; FALSE otherwise. |
-| [AfxIsMenuItemEnabled](#AfxIsMenuItemEnabled) | Returns TRUE if the specified menu item is enabled; FALSE otherwise. |
-| [AfxIsMenuItemGrayed](#AfxIsMenuItemGrayed) | Returns TRUE if the specified menu item is grayed; FALSE otherwise. |
-| [AfxIsMenuItemHighlighted](#AfxIsMenuItemHighlighted) | Returns TRUE if the specified menu item is highlighted; FALSE otherwise. |
-| [AfxIsMenuItemOwnerDraw](#AfxIsMenuItemOwnerDraw) | Returns TRUE if the specified menu item is a ownerdraw; FALSE otherwise. |
-| [AfxIsMenuItemPopup](#AfxIsMenuItemPopup) | Returns TRUE if the specified menu item is a submenu; FALSE otherwise. |
-| [AfxIsMenuItemSeparator](#AfxIsMenuItemSeparator) | Returns TRUE if the specified menu item is a separator; FALSE otherwise. |
-| [AfxRemoveCloseMenu](#AfxRemoveCloseMenu) | Removes the system menu close option and disables the X button. |
-| [AfxRightJustifyMenuItem](#AfxRightJustifyMenuItem) | Right justifies a top level menu item. |
-| [AfxSetMenuItemBold](#AfxSetMenuItemBold) | Changes the text of a menu item to bold. |
-| [AfxSetMenuItemState](#AfxSetMenuItemState) | Sets the state of the specified menu item. |
-| [AfxSetMenuItemText](#AfxSetMenuItemText) | Sets the text of the specified menu item. |
-| [AfxToggleMenuItem](#AfxToggleMenuItem) | Toggles the checked state of a menu item. |
-| [AfxUnCheckMenuItem](#AfxUnCheckMenuItem) | Unchecks a menu item. |
+| [AfxAddIconToMenuItem](#afxaddicontomenuitem) | Converts an icon handle to a bitmap and adds it to the specified *hbmpItem* field of HMENU item. |
+| [AfxCheckMenuItem](#afxcheckmenuitem) | Checks a menu item. |
+| [AfxDisableMenuItem](#afxdisablemenuitem) | Disables the specified menu item. |
+| [AfxEnableMenuItem](#afxenablemenuitem) | Enables the specified menu item. |
+| [AfxGetMenuFont](#afxgetmenufont) | Retrieves information about the font used in menu bars. |
+| [AfxGetMenuFontPointSize](#afxgetmenufontpointsize) | Retrieves the point size of the font used in menu bars. |
+| [AfxGetMenuItemState](#afxgetmenuitemstate) | Retrieves the state of the specified menu item. |
+| [AfxGetMenuItemText](#afxgetmenuitemtext) | Retrieves the text of the specified menu item. |
+| [AfxGetMenuItemTextLen](#afxgetmenuitemtextlen) | Retrieves length of the of the specified menu item. |
+| [AfxGetMenuRect](#afxgetmenurect) | Calculates the size of a menu bar or a drop-down menu. |
+| [AfxGrayMenuItem](#afxgraymenuitem) | Grays the specified menu item. |
+| [AfxHiliteMenuItem](#afxhilitemenuitem) | Highlights the specified menu item. |
+| [AfxIsMenuItemChecked](#afxismenuitemchecked) | Returns TRUE if the specified menu item is checked; FALSE otherwise. |
+| [AfxIsMenuItemDisabled](#afxismenuitemdisabled) | Returns TRUE if the specified menu item is disabled; FALSE otherwise. |
+| [AfxIsMenuItemEnabled](#afxismenuitemenabled) | Returns TRUE if the specified menu item is enabled; FALSE otherwise. |
+| [AfxIsMenuItemGrayed](#afxismenuitemgrayed) | Returns TRUE if the specified menu item is grayed; FALSE otherwise. |
+| [AfxIsMenuItemHighlighted](#afxismenuitemhighlighted) | Returns TRUE if the specified menu item is highlighted; FALSE otherwise. |
+| [AfxIsMenuItemOwnerDraw](#afxismenuitemownerdraw) | Returns TRUE if the specified menu item is a ownerdraw; FALSE otherwise. |
+| [AfxIsMenuItemPopup](#afxismenuitempopup) | Returns TRUE if the specified menu item is a submenu; FALSE otherwise. |
+| [AfxIsMenuItemSeparator](#afxismenuitemseparator) | Returns TRUE if the specified menu item is a separator; FALSE otherwise. |
+| [AfxRemoveCloseMenu](#Afxremoveclosemenu) | Removes the system menu close option and disables the X button. |
+| [AfxRightJustifyMenuItem](#afxrightjustifymenuitem) | Right justifies a top level menu item. |
+| [AfxSetMenuItemBold](#afxsetmenuitembold) | Changes the text of a menu item to bold. |
+| [AfxSetMenuItemState](#afxsetmenuitemstate) | Sets the state of the specified menu item. |
+| [AfxSetMenuItemText](#afxsetmenuitemtext) | Sets the text of the specified menu item. |
+| [AfxToggleMenuItem](#afxtogglemenuitem) | Toggles the checked state of a menu item. |
+| [AfxUnCheckMenuItem](#afxuncheckmenuitem) | Unchecks a menu item. |
 
-# <a name="AfxAddIconToMenuItem"></a>AfxAddIconToMenuItem
+# <a name="afxaddicontomenuitem"></a>AfxAddIconToMenuItem
 
 Converts an icon handle to a bitmap and adds it to the specified *hbmpItem field* of **HMENU** item.
 
@@ -76,7 +76,7 @@ DIM hSubMenu AS HMENU = GetSubMenu(hMenu, 1)
 AfxAddIconToMenuItem(hSubMenu, 0, TRUE, AfxGdipIconFromRes(hInstance, "IDI_UNDO_32"))
 ```
 
-# <a name="AfxCheckMenuItem"></a>AfxCheckMenuItem
+# <a name="afxcheckmenuitem"></a>AfxCheckMenuItem
 
 Checks a menu item.
 
@@ -95,7 +95,7 @@ FUNCTION AfxCheckMenuItem (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, _
 
 The return value specifies the previous state of the menu item (either MF_CHECKED or MF_UNCHECKED). If the menu item does not exist, the return value is -1.
 
-# <a name="AfxDisableMenuItem"></a>AfxDisableMenuItem
+# <a name="afxdisablemenuitem"></a>AfxDisableMenuItem
 
 Disables the specified menu item.
 
@@ -118,7 +118,7 @@ TRUE or FALSE. To get extended error information, use the **GetLastError** funct
 
 The application must call the **DrawMenuBar** function whenever a menu changes, whether or not the menu is in a displayed window.
 
-# <a name="AfxEnableMenuItem"></a>AfxEnableMenuItem
+# <a name="afxenablemenuitem"></a>AfxEnableMenuItem
 
 Enables the specified menu item.
 
@@ -141,7 +141,7 @@ TRUE or FALSE. To get extended error information, use the **GetLastError** funct
 
 The application must call the **DrawMenuBar** function whenever a menu changes, whether or not the menu is in a displayed window.
 
-# <a name="AfxGetMenuFont"></a>AfxGetMenuFont
+# <a name="afxgetmenufont"></a>AfxGetMenuFont
 
 Retrieves information about the font used in menu bars.
 
@@ -157,7 +157,7 @@ FUNCTION AfxGetMenuFont (BYVAL plfw AS LOGFONTW PTR) AS BOOLEAN
 
 TRUE or FALSE. To get extended error information, use the **GetLastError** function.
 
-# <a name="AfxGetMenuFontPointSize"></a>AfxGetMenuFontPointSize
+# <a name="afxgetmenufonpointsize"></a>AfxGetMenuFontPointSize
 
 Retrieves the point size of the font used in menu bars.
 
@@ -169,7 +169,7 @@ FUNCTION AfxGetMenuFontPointSize () AS LONG
 
 The point size of the font. If the function fails, the return value is 0.
 
-# <a name="AfxGetMenuItemState"></a>AfxGetMenuItemState
+# <a name="afxgetmenuitemstate"></a>AfxGetMenuItemState
 
 Retrieves the state of the specified menu item.
 
@@ -198,7 +198,7 @@ MFS_UNCHECKED The item is unchecked.
 MFS_UNHILITE  The item is not highlighted.
 ```
 
-# <a name="AfxGetMenuItemText"></a>AfxGetMenuItemText
+# <a name="afxgetmenuitemtext"></a>AfxGetMenuItemText
 
 Retrieves the text of the specified menu item.
 
@@ -219,7 +219,7 @@ FUNCTION AfxGetMenuItemText (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, _
 DIM cwsText AS CWSTR = AfxGetMenuItemText(hMenu, 1, TRUE)
 ```
 
-# <a name="AfxGetMenuItemTextLen"></a>AfxGetMenuItemTextLen
+# <a name="afxgetmenuitemtextlen"></a>AfxGetMenuItemTextLen
 
 Returns the lengnth of the specified menu item.
 
@@ -234,7 +234,7 @@ FUNCTION AfxGetMenuItemTextLen (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, _
 | *uItem* | The identifier or position of the menu item to get information about. The meaning of this parameter depends on the value of *fByPosition*. |
 | *fByPosition* | The meaning of *uItem*. If this parameter is FALSE, *uItem* is a menu item identifier. Otherwise, it is a menu item position. |
 
-# <a name="AfxGetMenuRect"></a>AfxGetMenuRect
+# <a name="afxgetmenurect"></a>AfxGetMenuRect
 
 Returns the dimensions of a menu bar or a drop-down menu.
 
@@ -247,7 +247,7 @@ FUNCTION AfxGetMenuRect (BYVAL hwnd AS HWND, BYVAL hmenu AS HMENU) AS RECT
 | *hwnd* | Handle of the window that owns the menu. |
 | *hMenu* | Handle to the menu. |
 
-# <a name="AfxGrayMenuItem"></a>AfxGrayMenuItem
+# <a name="afxgraymenuitem"></a>AfxGrayMenuItem
 
 Grays the specified menu item.
 
@@ -270,7 +270,7 @@ TRUE or FALSE. To get extended error information, use the **GetLastError** funct
 
 The application must call the **DrawMenuBar** function whenever a menu changes, whether or not the menu is in a displayed window.
 
-# <a name="AfxHiliteMenuItem"></a>AfxHiliteMenuItem
+# <a name="afxhilitemenuitem"></a>AfxHiliteMenuItem
 
 Highlights the specified menu item.
 
@@ -293,7 +293,7 @@ TRUE or FALSE. To get extended error information, use the **GetLastError** funct
 
 The application must call the **DrawMenuBar** function whenever a menu changes, whether or not the menu is in a displayed window.
 
-# <a name="AfxIsMenuItemChecked"></a>AfxIsMenuItemChecked
+# <a name="afxismenuitemchecked"></a>AfxIsMenuItemChecked
 
 Returns TRUE if the specified menu item is checked; FALSE otherwise.
 
@@ -308,7 +308,7 @@ FUNCTION AfxIsMenuItemChecked (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, _
 | *uItem* | The identifier or position of the menu item to get information about. The meaning of this parameter depends on the value of *fByPosition*. |
 | *fByPosition* | The meaning of *uItem*. If this parameter is FALSE, *uItem* is a menu item identifier. Otherwise, it is a menu item position. |
 
-# <a name="AfxIsMenuItemDisabled"></a>AfxIsMenuItemDisabled
+# <a name="afxismenuitemdisabled"></a>AfxIsMenuItemDisabled
 
 Returns TRUE if the specified menu item is disabled; FALSE otherwise.
 
@@ -323,7 +323,7 @@ FUNCTION AfxIsMenuItemDisabled (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, _
 | *uItem* | The identifier or position of the menu item to get information about. The meaning of this parameter depends on the value of *fByPosition*. |
 | *fByPosition* | The meaning of *uItem*. If this parameter is FALSE, *uItem* is a menu item identifier. Otherwise, it is a menu item position. |
 
-# <a name="AfxIsMenuItemEnabled"></a>AfxIsMenuItemEnabled
+# <a name="afxismenuitemenabled"></a>AfxIsMenuItemEnabled
 
 Returns TRUE if the specified menu item is enabled; FALSE otherwise.
 
@@ -338,7 +338,7 @@ FUNCTION AfxIsMenuItemEnabled (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, _
 | *uItem* | The identifier or position of the menu item to get information about. The meaning of this parameter depends on the value of *fByPosition*. |
 | *fByPosition* | The meaning of *uItem*. If this parameter is FALSE, *uItem* is a menu item identifier. Otherwise, it is a menu item position. |
 
-# <a name="AfxIsMenuItemGrayed"></a>AfxIsMenuItemGrayed
+# <a name="afxismenuitemgrayed"></a>AfxIsMenuItemGrayed
 
 Returns TRUE if the specified menu item is grayed; FALSE otherwise.
 
@@ -353,7 +353,7 @@ FUNCTION AfxIsMenuItemGrayed (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, _
 | *uItem* | The identifier or position of the menu item to get information about. The meaning of this parameter depends on the value of *fByPosition*. |
 | *fByPosition* | The meaning of *uItem*. If this parameter is FALSE, *uItem* is a menu item identifier. Otherwise, it is a menu item position. |
 
-# <a name="AfxIsMenuItemHighlighted"></a>AfxIsMenuItemHighlighted
+# <a name="afxismenuitemhighlighted"></a>AfxIsMenuItemHighlighted
 
 Returns TRUE if the specified menu item is highlighted; FALSE otherwise.
 
@@ -368,7 +368,7 @@ FUNCTION AfxIsMenuItemHighlighted (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, _
 | *uItem* | The identifier or position of the menu item to get information about. The meaning of this parameter depends on the value of *fByPosition*. |
 | *fByPosition* | The meaning of *uItem*. If this parameter is FALSE, *uItem* is a menu item identifier. Otherwise, it is a menu item position. |
 
-# <a name="AfxIsMenuItemOwnerDraw"></a>AfxIsMenuItemOwnerDraw
+# <a name="afxismenuitemownerdraw"></a>AfxIsMenuItemOwnerDraw
 
 Returns TRUE if the specified menu item is a ownerdraw; FALSE otherwise.
 
@@ -383,7 +383,7 @@ FUNCTION AfxIsMenuItemOwnerDraw (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, _
 | *uItem* | The identifier or position of the menu item to get information about. The meaning of this parameter depends on the value of *fByPosition*. |
 | *fByPosition* | The meaning of *uItem*. If this parameter is FALSE, *uItem* is a menu item identifier. Otherwise, it is a menu item position. |
 
-# <a name="AfxIsMenuItemPopup"></a>AfxIsMenuItemPopup
+# <a name="afxismenuitempopup"></a>AfxIsMenuItemPopup
 
 Returns TRUE if the specified menu item is a submenu; FALSE otherwise.
 
@@ -398,7 +398,7 @@ FUNCTION AfxIsMenuItemPopup (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, _
 | *uItem* | The identifier or position of the menu item to get information about. The meaning of this parameter depends on the value of *fByPosition*. |
 | *fByPosition* | The meaning of *uItem*. If this parameter is FALSE, *uItem* is a menu item identifier. Otherwise, it is a menu item position. |
 
-# <a name="AfxIsMenuItemSeparator"></a>AfxIsMenuItemSeparator
+# <a name="afxismenuitemseparator"></a>AfxIsMenuItemSeparator
 
 Returns TRUE if the specified menu item is a separator; FALSE otherwise.
 
@@ -413,7 +413,7 @@ FUNCTION AfxIsMenuItemSeparator (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, _
 | *uItem* | The identifier or position of the menu item to get information about. The meaning of this parameter depends on the value of *fByPosition*. |
 | *fByPosition* | The meaning of *uItem*. If this parameter is FALSE, *uItem* is a menu item identifier. Otherwise, it is a menu item position. |
 
-# <a name="AfxRemoveCloseMenu"></a>AfxRemoveCloseMenu
+# <a name="afxremoveclosemenu"></a>AfxRemoveCloseMenu
 
 Removes the system menu close option and disables the X button.
 
@@ -429,7 +429,7 @@ SUB AfxRemoveCloseMenu (BYVAL hwnd AS HWND) AS BOOLEAN
 
 TRUE or FALSE.
 
-# <a name="AfxRightJustifyMenuItem"></a>AfxRightJustifyMenuItem
+# <a name="afxrightjustifymenuitem"></a>AfxRightJustifyMenuItem
 
 Right justifies a top level menu item.
 
@@ -450,7 +450,7 @@ If the function succeeds, the return value is TRUE. If the function fails, the r
 
 This is usually used to have the Help menu item right-justified on the menu bar.
 
-# <a name="AfxSetMenuItemBold"></a>AfxSetMenuItemBold
+# <a name="afxsetmenuitembold"></a>AfxSetMenuItemBold
 
 Changes the text of a menu item to bold.
 
@@ -467,7 +467,7 @@ FUNCTION AfxSetMenuItemBold (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD) AS BOOL
 
 If the function succeeds, the return value is TRUE. If the function fails, the return value is FALSE.
 
-# <a name="AfxSetMenuItemState"></a>AfxSetMenuItemState
+# <a name="afxsetmenuitemstate"></a>AfxSetMenuItemState
 
 Sets the state of the specified menu item.
 
@@ -491,7 +491,7 @@ TRUE or FALSE. To get extended error information, use the **GetLastError** funct
 
 The application must call the **DrawMenuBar** function whenever a menu changes, whether or not the menu is in a displayed window.
 
-# <a name="AfxSetMenuItemText"></a>AfxSetMenuItemText
+# <a name="afxsetmenuitemtext"></a>AfxSetMenuItemText
 
 Sets the text of the specified menu item.
 
@@ -515,7 +515,7 @@ TRUE or FALSE. To get extended error information, use the **GetLastError** funct
 
 The application must call the **DrawMenuBar** function whenever a menu changes, whether or not the menu is in a displayed window.
 
-# <a name="AfxToggleMenuItem"></a>AfxToggleMenuItem
+# <a name="afxtogglemenuitem"></a>AfxToggleMenuItem
 
 Toggles the checked state of a menu item.
 
@@ -534,7 +534,7 @@ FUNCTION AfxToggleMenuItem (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, _
 
 The return value specifies the previous state of the menu item (either MF_CHECKED or MF_UNCHECKED). If the menu item does not exist, the return value is -1.
 
-# <a name="AfxUnCheckMenuItem"></a>AfxUnCheckMenuItem
+# <a name="afxuncheckmenuitem"></a>AfxUnCheckMenuItem
 
 Unchecks a menu item.
 
