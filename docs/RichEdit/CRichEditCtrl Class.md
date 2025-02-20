@@ -1144,7 +1144,6 @@ Gets/sets the options for a rich edit control.
 FUNCTION GetOptions () AS DWORD
 FUNCTION SetOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG) AS DWORD
 ```
-```
 
 | Parameter  | Description |
 | ---------- | ----------- |
