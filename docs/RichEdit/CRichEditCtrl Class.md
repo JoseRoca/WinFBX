@@ -1410,7 +1410,7 @@ Gets/sets the text from a rich edit control.
 ```
 ```
 FUNCTION GetText () AS CWSTR
-SetText (BYREF wszText AS WSTRING) AS BOOLEAN
+FUNCTION SetText (BYREF wszText AS WSTRING) AS BOOLEAN
 ```
 
 | Parameter  | Description |
