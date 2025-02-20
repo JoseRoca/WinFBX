@@ -91,7 +91,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [FindWordBreak](#findwordbreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [FormatRange](#formatrange) | Formats a range of text in a rich edit control for a specific device. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
-| [GetEllipsisMode](#getellipsismode) | Gets the current ellipsis mode. |
 | [GetEllipsisState](#getellipsisstate) | Retrieves the current ellipsis state. |
 | [GetEventMask](#geteventmask) | Gets the event mask for a rich edit control. |
 | [GetFirstVisibleLine](#getfirstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
@@ -153,7 +152,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [ScrollCaret](#scrollcaret) | Scrolls the caret into view in a rich edit control. |
 | [SelectionType](#selectiontype) | Determines the selection type for a rich edit control. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
-| [SetEllipsisMode](#setellipsismode) | Sets the current ellipsis mode. |
 | [SetEventMask](#seteventmask) | Sets the event mask for a rich edit control. |
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [SetFontSize](#setfontsize) | Sets the font size for the selected text. |
@@ -819,49 +817,19 @@ FUNCTION SetEditStyleEx (BYVAL fStyle AS LONG, BYVAL fMask AS LONG) AS HRESULT
 # <a name="ellipsismode"></a>EllipsisMode
 
 Gets/sets the current ellipsis mode. When enabled, an ellipsis ( ) is displayed for text that doesn't fit in the display window. The ellipsis is only used when the control isn't active. When active, scroll bars are used to reveal text that doesn't fit into the display window.
+
 ```
 (GET) PROPERTY EllipsisMode () AS DWORD
 (SET) PROPERTY EllipsisMode (BYVAL fMode AS DWORD)
 ```
+```
+FUNCTION GetEllipsisMode () AS DWORD
+FUNCTION SetEllipsisMode (BYVAL fMode AS DWORD) AS BOOLEAN
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *fMode* | (SET) One of the values listed below. |
-
-| Value  | Meaning |
-| ------ | ----------- |
-| **ELLIPSIS_NONE** | No ellipsis is used. |
-| **ELLIPSIS_END** | Ellipsis at the end (forced break). |
-| **ELLIPSIS_WORD** | Ellipsis at the end (word break). |
-
-The bits for these values all fit in the **ELLIPSIS_MASK**.
-
----
-
-# <a name="getellipsismode"></a>GetEllipsisMode
-
-Gets the current ellipsis mode. When enabled, an ellipsis ( ) is displayed for text that doesn't fit in the display window. The ellipsis is only used when the control isn't active. When active, scroll bars are used to reveal text that doesn't fit into the display window.
-```
-FUNCTION GetEllipsisMode () AS DWORD
-```
-| Value  | Meaning |
-| ------ | ----------- |
-| **ELLIPSIS_NONE** | No ellipsis is used. |
-| **ELLIPSIS_END** | Ellipsis at the end (forced break). |
-| **ELLIPSIS_WORD** | Ellipsis at the end (word break). |
-
-The bits for these values all fit in the **ELLIPSIS_MASK**.
-
----
-
-# <a name="setellipsismode"></a>SetEllipsisMode
-
-Sets the current ellipsis mode. When enabled, an ellipsis ( ) is displayed for text that doesn't fit in the display window. The ellipsis is only used when the control isn't active. When active, scroll bars are used to reveal text that doesn't fit into the display window.
-```
-FUNCTION SetEllipsisMode (BYVAL fMode AS DWORD) AS BOOLEAN
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *fMode* | One of the values listed below. |
 
 | Value  | Meaning |
 | ------ | ----------- |
