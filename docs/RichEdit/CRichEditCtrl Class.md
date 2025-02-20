@@ -94,7 +94,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [FindTextEx](#findtextex) | Finds text within a rich edit control. |
 | [FindWordBreak](#findwordbreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [FormatRange](#formatrange) | Formats a range of text in a rich edit control for a specific device. |
-| [GetAutoCorrectProc](#getautocorrectproc) | Gets a pointer to the application-defined **AutoCorrectProc** callback function. |
 | [GetAutoUrlDetect](#getautourldetect) | Gets whether the auto URL detection is turned on in the rich edit control. |
 | [GetBidiOptions](#getbidioptions) | Gets the current state of the bidirectional options in the rich edit control. |
 | [GetCaretPos](#getcaretpos) | Gets the caret position |
@@ -171,7 +170,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Scroll](#scroll) | Scrolls the text vertically in a multiline rich edit control. |
 | [ScrollCaret](#scrollcaret) | Scrolls the caret into view in a rich edit control. |
 | [SelectionType](#selectiontype) | Determines the selection type for a rich edit control. |
-| [SetAutoCorrectProc](#setautocorrectproc) | Sets a pointer to the application-defined **AutoCorrectProc** callback function. |
 | [SetAutoUrlDetect](#setautourldetect) | Enables or disables automatic detection of URLs by a rich edit control. |
 | [SetBidiOptions](#setbidioptions) | Sets the current state of the bidirectional options in the rich edit control. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
@@ -452,34 +450,6 @@ FUNCTION SetAutoCorrectProc (BYVAL pfn AS LONG_PTR) AS HRESULT
 (GET) A pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
 
 (SET) If the operation succeeds, the return value is zero. If the operation fails, the return value is a nonzero value. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
-
----
-
-# <a name="getautocorrectproc"></a>GetAutoCorrectProc
-
-Gets a pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
-```
-FUNCTION GetAutoCorrectProc () AS LONG_PTR
-```
-#### Return value
-
-A pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
-
----
-
-# <a name="setautocorrectproc"></a>SetAutoCorrectProc
-
-Sets a pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
-```
-FUNCTION SetAutoCorrectProc (BYVAL pfn AS LONG_PTR) AS HRESULT
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pfn* | Pointer to the [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) application-defined callback function. |
-
-#### Return value
-
-If the operation succeeds, the return value is zero. If the operation fails, the return value is a nonzero value. Call **GetErrorInfo** to get information about the result.
 
 ---
 
