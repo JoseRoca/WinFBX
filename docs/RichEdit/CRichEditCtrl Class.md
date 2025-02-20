@@ -95,7 +95,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetIMECompMode](#getimecompmode) | Gets the current IME mode for a rich edit control. |
 | [GetIMECompText](#getimecompText) | Gets the Input Method Editor (IME) composition text. |
 | [GetIMEProperty](#getimeproperty) | Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale. |
-| [GetIMEOptions](#getimeoptions) | Gets the current Input Method Editor (IME) options. This message is available only in Asian-language support. |
 | [GetLangOptions](#getlangoptions) | Gets a rich edit control's option settings for Input Method Editor (IME) and Asian language support.
 | [GetLeftMargin](#getleftmargin) | Gets the width of the left margin. |
 | [GetLimitText](#getlimittext) | Gets the current text limit for a rich edit control. |
@@ -150,7 +149,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetFont](#setfont) | Sets the font used by a rich edit control. |
 | [SetFontSize](#setfontsize) | Sets the font size for the selected text. |
 | [SetIMEColor](#setimecolor) | Sets the Input Method Editor (IME) composition color. |
-| [SetIMEOptions](#setimeoptions) | Sets the current Input Method Editor (IME) options. This message is available only in Asian-language support. |
 | [SetLangOptions](#setlangoptions) | Sets options for Input Method Editor (IME) and Asian language support in a rich edit control.|
 | [SetLeftMargin](#setleftmargin) | Sets the width of the left margin. |
 | [SetLimitText](#setlimittext) | Sets the current text limit for a rich edit control. |
@@ -980,7 +978,7 @@ FUNCTION SetIMEModeBias (BYVAL nModeBias AS LONG) AS HRESULT
 
 #### Remarks
 
-(GET) To get the Text Services Framework mode bias, usethe **CTFModeBias** property.
+(GET) To get the Text Services Framework mode bias, use the **CTFModeBias** property.
 
 (SET) When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias. This message sets the criteria by which an alternative choice appears at the top of the list for selection.
 
@@ -991,10 +989,16 @@ The application should call the **IsIME** method before calling these properties
 # <a name="imeoptions"></a>IMEOptions
 
 Gets/sets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system.
+
 ```
 (GET) PROPERTY IMEOptions () AS DWORD
 (SET) PROPERTY IMEOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG)
 ```
+```
+FUNCTION GetIMEOptions () AS DWORD
+FUNCTION SetIMEOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG) AS HRESULT
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *fCoop* | (SET) Specifies one of the following values.<br>**ECOOP_SET**. Sets the options to those specified by *fOptions*.<br>**COOP_OR**. Combines the specified options with the current options.<br>**ECOOP_AND**. Retains only those current options that are also specified by *fOptions*.<br>**ECOOP_XOR**. Logically exclusive OR the current options with those specified by *fOptions*. |
@@ -1005,36 +1009,6 @@ Gets/sets the current Input Method Editor (IME) options. This message is availab
 (GET) Returns one or more of the IME option flag values described in the *fOptions* parameter of the SET property.
 
 (SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call the (GET) **ImeOptions** property to check if the value has changed.
-
----
-
-# <a name="getimeoptions"></a>GetIMEOptions
-
-Gets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system.
-```
-FUNCTION GetIMEOptions () AS DWORD
-```
-
-#### Return value
-
-Returns one or more of the IME option flag values described in the *fOptions* parameter of the SET property.
-
----
-
-# <a name="setimeoptions"></a>SetIMEOptions
-
-Sets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system.
-```
-FUNCTION SetIMEOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG) AS HRESULT
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *fCoop* | (SET) Specifies one of the following values.<br>**ECOOP_SET**. Sets the options to those specified by *fOptions*.<br>**COOP_OR**. Combines the specified options with the current options.<br>**ECOOP_AND**. Retains only those current options that are also specified by *fOptions*.<br>**ECOOP_XOR**. Logically exclusive OR the current options with those specified by *fOptions*. |
-| *fOptions* | (SET) Specifies one of more of the following values.<br>**IMF_CLOSESTATUSWINDOW**. Closes the IME status window when the control receives the input focus.<br>**IMF_FORCEACTIVE**. Activates the IME when the control receives the input focus.<br>**IMF_FORCEDISABLE**. Disables the IME when the control receives the input focus.<br>**IMF_FORCEENABLE**. Enables the IME when the control receives the input focus.<br>**IMF_FORCEINACTIVE**. Inactivates the IME when the control receives the input focus.<br>**IMF_FORCENONE**. Disables IME handling.<br>**IMF_FORCEREMEMBER**. Restores the previous IME status when the control receives the input focus.<br>**IMF_MULTIPLEEDIT**. Specifies that the composition string will not be canceled or determined by focus changes. This allows an application to have separate composition strings on each rich edit control.<br>**IMF_VERTICAL**. Note: used in Rich Edit 2.0 and later. |
-
-#### Return value
-
-If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call the **GetImeOptions** property to check if the value has changed.
 
 ---
 
