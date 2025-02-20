@@ -263,6 +263,12 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetResult](#setresult) | Sets the last result code. |
 | [GetErrorInfo](#geterrorinfo) | Returns a localized description of the last result code. |
 
+# ITextDocument2 Methods
+
+| Name       | Description |
+| ---------- | ----------- |
+| [NewDoc](#newdoc) | Opens a new document. |
+
 ---
 
 # <a name="afxcricheditctrlptr"></a>AfxCRichEditCtrlPtr
@@ -5372,3 +5378,14 @@ To select text programatically, use the **SetSel** method.
 
 ---
 
+# <a name="newdoc"></a>NewDoc
+
+Opens a new document.
+```
+FUNCTION NewDoc () AS HRESULT
+```
+#### Return value
+
+If this method succeeds, it returns **S_OK**.
+
+---
