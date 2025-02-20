@@ -103,7 +103,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetSel](#getsel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
 | [GetSelText](#getseltext) | Retrieves the currently selected text in a rich edit control. |
 | [GetTableParams](#gettableparams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
-| [GetText](#gettext) | Gets the text from a rich edit control. |
 | [GetTextColor](#gettextcolor) | Gets the text color of the selected text or the word under the cursor. |
 | [GetTextEx](#gettextex) | Gets all of the text from the rich edit control in any particular code base you want. |
 | [GetTextFontName](#gettextfontname) | Gets the font name of the selected text or the word under the cursor. |
@@ -149,7 +148,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetTableParams](#settableparams) | Changes the parameters of rows in a table. |
 | [SetTabStops](#settabstops) | Sets the tab stops in a multiline rich edit control. |
 | [SetTargetDevice](#settargetdevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
-| [SetText](#settext) | Sets the text of a rich edit control. |
 | [SetTextColor](#settextcolor) | Sets the text color of the selected text or the word under the cursor. |
 | [SetTextEx](#settextex) | Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text. |
 | [SetTextBold](#settextbold) | Sets the attribute of selected text or word to bold. |
@@ -1405,10 +1403,16 @@ FUNCTION SetStoryType (BYVAL Index AS LONG, BYVAL dwType AS DWORD) AS DWORD
 # <a name="text"></a>Text
 
 Gets/sets the text from a rich edit control.
+
 ```
 (GET) PROPERTY Text () AS CWSTR
 (SET) PROPERTY Text (BYREF wszText AS WSTRING)
 ```
+```
+FUNCTION GetText () AS CWSTR
+SetText (BYREF wszText AS WSTRING) AS BOOLEAN
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *wszText* | A **WSTRING** with the new text. |
@@ -1432,50 +1436,6 @@ DIM cws AS CWSTR = pRichEdit.Text
 ```
 DIM cws AS CWSTR = "New text"
 pRichEdit.Text = cws
-```
-
----
-
-# <a name="gettext"></a>GetText
-
-Gets the text from a rich edit control.
-```
-FUNCTION GetText () AS CWSTR
-```
-
-#### Return value
-
-The retrieved text.
-
-#### Remarks
-
-The Windows API function **GetWindowTextW** can also be used to retrieve the text of a rich edit control, but it cannot retrieve the text of a control in another application.
-
-#### Usage example (GET)
-```
-DIM cws AS CWSTR = pRichEdit.GetText
-```
-
----
-
-# <a name="settext"></a>SetText
-
-Sets the text of a rich edit control.
-```
-FUNCTION SetText (BYREF wszText AS WSTRING) AS BOOLEAN
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *wszText* | A **WSTRING** with the new text. |
-
-#### Return value
-
-A boolean true (-1) if the text is set, or false (0),otherwise.
-
-#### Usage example
-```
-DIM cws AS CWSTR = "New text"
-pRichEdit.SetText(cws)
 ```
 
 ---
