@@ -102,7 +102,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
 | [GetSel](#getsel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
 | [GetSelText](#getseltext) | Retrieves the currently selected text in a rich edit control. |
-| [GetStoryType](#getstorytype) | Gets the story type. |
 | [GetTableParams](#gettableparams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
 | [GetText](#gettext) | Gets the text from a rich edit control. |
 | [GetTextColor](#gettextcolor) | Gets the text color of the selected text or the word under the cursor. |
@@ -147,7 +146,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetReadOnly](#setreadonly) | Sets or removes the read-only style (ES_READONLY) of a rich edit control. |
 | [SetRectNP](#setrectNP) | Sets the formatting rectangle of a rich edit control. |
 | [SetSel](#setsel) | Selects a range of characters in a rich edit control. |
-| [SetStoryType](#setstorytype) | Sets the story type. |
 | [SetTableParams](#settableparams) | Changes the parameters of rows in a table. |
 | [SetTabStops](#settabstops) | Sets the tab stops in a multiline rich edit control. |
 | [SetTargetDevice](#settargetdevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
@@ -1363,10 +1361,16 @@ The values returned in the [POINT](https://learn.microsoft.com/en-us/windows/win
 # <a name="storytype"></a>StoryType
 
 Gets/sets the story type.
+
 ```
 PROPERTY StoryType (BYVAL Index AS DWORD) AS DWORD
 PROPERTY StoryType (BYVAL Index AS LONG, BYVAL dwType AS DWORD)
 ```
+```
+FUNCTION GetStoryType (BYVAL Index AS DWORD) AS DWORD
+FUNCTION SetStoryType (BYVAL Index AS LONG, BYVAL dwType AS DWORD) AS DWORD
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *Index* | (GET/SET) The story index. |
@@ -1395,71 +1399,6 @@ PROPERTY StoryType (BYVAL Index AS LONG, BYVAL dwType AS DWORD)
 (GET) Returns the story type, which can be a client-defined custom value, or one of the values listed in the table above.
 
 (SET) The story type that was set. Call the (GET) **StoryType** property to get the value.
-
----
-
-# <a name="getstorytype"></a>GetStoryType
-
-Gets the story type.
-```
-FUNCTION GetStoryType (BYVAL Index AS DWORD) AS DWORD
-```
-| Constant  | Value | Description |
-| --------- | ----- | ----------- |
-| **tomCommentsStory** | 4 | The story used for comments. |
-| **tomEndnotesStory** | 3 | The story used for endnotes. |
-| **tomEvenPagesFooterStory** | 8 | The story containing footers for even pages. |
-| **tomEvenPagesHeaderStory** | 6 | The story containing headers for even pages. |
-| **tomFindStory** | 128 | The story used for a Find dialog. |
-| **tomFirstPageFooterStory** | 11 | The story containing the footer for the first page. |
-| **tomFirstPageHeaderStory** | 10 | The story containing the header for the first page. |
-| **tomFootnotesStory** | 2 | The story used for footnotes. |
-| **tomMainTextStory** | 1 | The main story always exists for a rich edit control. |
-| **tomPrimaryFooterStory** | 9 | The story containing footers for odd pages. |
-| **tomPrimaryFooterStory** | 7 | The story containing headers for odd pages. |
-| **tomReplaceStory** | 129 | The story used for a Replace dialog. |
-| **tomScratchStory** | 127 | The scratch story. |
-| **tomTextFrameStory** | 5 | The story used for a text box. |
-| **tomUnknownStory** | 0 | No special type. |
-
-#### Return value
-
-Returns the story type, which can be a client-defined custom value, or one of the values listed in the table above.
-
----
-
-# <a name="setstorytype"></a>SetStoryType
-
-Sets the story type.
-```
-FUNCTION SetStoryType (BYVAL Index AS LONG, BYVAL dwType AS DWORD) AS DWORD
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *Index* | (GET/SET) The story index. |
-| *dwType* | (SET) The new story type. See the list below. |
-
-| Constant  | Value | Description |
-| --------- | ----- | ----------- |
-| **tomCommentsStory** | 4 | The story used for comments. |
-| **tomEndnotesStory** | 3 | The story used for endnotes. |
-| **tomEvenPagesFooterStory** | 8 | The story containing footers for even pages. |
-| **tomEvenPagesHeaderStory** | 6 | The story containing headers for even pages. |
-| **tomFindStory** | 128 | The story used for a Find dialog. |
-| **tomFirstPageFooterStory** | 11 | The story containing the footer for the first page. |
-| **tomFirstPageHeaderStory** | 10 | The story containing the header for the first page. |
-| **tomFootnotesStory** | 2 | The story used for footnotes. |
-| **tomMainTextStory** | 1 | The main story always exists for a rich edit control. |
-| **tomPrimaryFooterStory** | 9 | The story containing footers for odd pages. |
-| **tomPrimaryFooterStory** | 7 | The story containing headers for odd pages. |
-| **tomReplaceStory** | 129 | The story used for a Replace dialog. |
-| **tomScratchStory** | 127 | The scratch story. |
-| **tomTextFrameStory** | 5 | The story used for a text box. |
-| **tomUnknownStory** | 0 | No special type. |
-
-#### Return value
-
-The story type that was set.
 
 ---
 
