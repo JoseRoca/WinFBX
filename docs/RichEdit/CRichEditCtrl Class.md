@@ -91,7 +91,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [FindWordBreak](#findwordbreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [FormatRange](#formatrange) | Formats a range of text in a rich edit control for a specific device. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
-| [GetFirstVisibleLine](#getfirstvisibleline) | Gets the zero-based index of the uppermost visible line in a  rich edit control. |
 | [GetHyphenateInfo](#gethyphenateinfo) | Gets information about hyphenation for a Microsoft Rich Edit control. |
 | [GetIMEColor](#getimecolor) | Retrieves the Input Method Editor (IME) composition color. |
 | [GetIMECompMode](#getimecompmode) | Gets the current IME mode for a rich edit control. |
@@ -902,6 +901,22 @@ FUNCTION SetEventMask (BYVAL fMask AS DWORD) AS HRESULT
 #### Remarks
 
 The default event mask is **ENM_NONE** in which case no notifications are sent to the parent window.
+
+---
+
+# <a name="firstvisibleline"></a>FirstVisibleLine
+
+Gets the zero-based index of the uppermost visible line in a multiline rich edit control.
+
+```
+PROPERTY FirstVisibleLine () AS LONG
+FUNCTION GetFirstVisibleLine () AS LONG
+```
+#### Return value
+
+The return value is the zero-based index of the uppermost visible line in a multiline edit control.
+
+For single-line rich edit controls, the return value is zero.
 
 ---
 
@@ -2555,34 +2570,6 @@ The method returns a value based on the *fOperation* parameter.
 If *fOperation* is **WB_LEFT** and **WB_RIGHT**, the word-break procedure finds word breaks only after delimiters. This matches the functionality of an edit control. If *fOperation* is **WB_MOVEWORDLEFT** or **WB_MOVEWORDRIGHT**, the word-break procedure also compares character classes and word-break flags.
 
 For information about character classes and word-break flags, see [Word and Line Breaks](https://learn.microsoft.com/en-us/windows/win32/controls/use-word-and-line-break-information).
-
----
-
-# <a name="firstvisibleline"></a>FirstVisibleLine
-
-Gets the zero-based index of the uppermost visible line in a multiline rich edit control.
-```
-PROPERTY FirstVisibleLine () AS LONG
-```
-#### Return value
-
-The return value is the zero-based index of the uppermost visible line in a multiline edit control.
-
-For single-line rich edit controls, the return value is zero.
-
----
-
-# <a name="getfirstvisibleline"></a>GetFirstVisibleLine
-
-Gets the zero-based index of the uppermost visible line in a multiline rich edit control.
-```
-FUNCTION GetFirstVisibleLine () AS LONG
-```
-#### Return value
-
-The return value is the zero-based index of the uppermost visible line in a multiline edit control.
-
-For single-line rich edit controls, the return value is zero.
 
 ---
 
