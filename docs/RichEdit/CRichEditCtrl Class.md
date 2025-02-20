@@ -53,6 +53,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Punctuation](#punctuation) | Gets/sets the current punctuation characters for the rich edit control. |
 | [Rect](#rect) | Gets/sets the formatting rectangle of a rich edit control. |
 | [RectNP](#rectnp) | Sets the formatting rectangle of a multiline rich edit control. |
+| [RedoName](#redoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
 | [ScrollPos](#scrollpos) | Gets/sets the current scroll position of the edit control. |
 | [StoryType](#storytype) | Gets/sets the story type. |
 | [Text](#text) | Gets/sets the text from a rich edit control. |
@@ -1318,6 +1319,39 @@ This property does not return a value.
 
 ---
 
+# <a name="redoname"></a>RedoName
+
+Retrieves the type of the next action, if any, in the control's redo queue.
+
+```
+FUNCTION RedoName () AS LONG
+FUNCTION GetRedoName () AS LONG
+```
+
+#### Return value
+
+If the redo queue for the control is not empty, the value returned is an [UNDONAMEID](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-undonameid) enumeration value that indicates the type of the next action in the control's redo queue.
+
+If there are no redoable actions or the type of the next redoable action is unknown, the return value is zero.
+
+#### UNDONAMEID enumeration
+
+| Name              | Value | Description |
+| ----------------- | ----- | ----------- |
+| **UID_UNKNOWN**   |   0   | The type of undo action is unknown. |
+| **UID_TYPING**    |   1   | Typing operation. |
+| **UID_DELETE**    |   2   | Delete operation. |
+| **UID_DRAGDROP**  |   3   | Drag-and-drop operation. |
+| **UID_CUT**       |   4   | Cut operation. |
+| **UID_PASTE**     |   5   | Paste operation. |
+| **UID_AUTOTABLE** |   6   | Automatic table insertion; for example, typing +---+---+<Enter> to insert a table row. |
+
+#### Remarks
+
+The types of actions that can be undone or redone include typing, delete, drag-drop, cut, and paste operations. This information can be useful for applications that provide an extended user interface for undo and redo operations, such as a drop-down list box of redoable actions.
+
+---
+
 # <a name="scrollpos"></a>ScrollPos
 
 Gets/sets the current scroll position of the edit control.
@@ -2196,36 +2230,6 @@ FUNCTION GetOleInterface () AS IRichEditOle PTR
 #### Return value
 
 A pointer to the **IRichEditOle** interface. The control calls the **AddRef** method for the object before returning, so the calling application must call the **Release** method when it is done with the object. |
-
----
-
-# <a name="getredoname"></a>GetRedoName
-
-Retrieves the type of the next action, if any, in the control's redo queue.
-```
-FUNCTION GetRedoName () AS LONG
-```
-#### Return value
-
-If the redo queue for the control is not empty, the value returned is an [UNDONAMEID](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ne-richedit-undonameid) enumeration value that indicates the type of the next action in the control's redo queue.
-
-If there are no redoable actions or the type of the next redoable action is unknown, the return value is zero.
-
-#### UNDONAMEID enumeration
-
-| Name              | Value | Description |
-| ----------------- | ----- | ----------- |
-| **UID_UNKNOWN**   |   0   | The type of undo action is unknown. |
-| **UID_TYPING**    |   1   | Typing operation. |
-| **UID_DELETE**    |   2   | Delete operation. |
-| **UID_DRAGDROP**  |   3   | Drag-and-drop operation. |
-| **UID_CUT**       |   4   | Cut operation. |
-| **UID_PASTE**     |   5   | Paste operation. |
-| **UID_AUTOTABLE** |   6   | Automatic table insertion; for example, typing +---+---+<Enter> to insert a table row. |
-
-#### Remarks
-
-The types of actions that can be undone or redone include typing, delete, drag-drop, cut, and paste operations. This information can be useful for applications that provide an extended user interface for undo and redo operations, such as a drop-down list box of redoable actions.
 
 ---
 
