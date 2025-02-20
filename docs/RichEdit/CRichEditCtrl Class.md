@@ -75,10 +75,10 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 | Name       | Description |
 | ---------- | ----------- |
+| [CallAutocorrectProc](#callautocorrectproc) | Calls the autocorrect callback function that is stored by the (SET) **AutocorrectProc** property, provided that the text preceding the insertion point is a candidate for autocorrection. |
 | [CanPaste](#canpaste) | Determines whether a rich edit control can paste a specified clipboard format. |
 | [CanRedo](#canredo) | Determines whether there are any actions in the control redo queue. |
 | [CanUndo](#canundo) | Determines whether there are any actions in an edit control's undo queue. |
-| [CallAutocorrectProc](#callautocorrectproc) | Calls the autocorrect callback function that is stored by the (SET) **AutocorrectProc** property, provided that the text preceding the insertion point is a candidate for autocorrection. |
 | [DisplayBand](#displayband) | Displays a portion of the contents of a rich edit control, as previously formatted for a device using the EM_FORMATRANGE message. |
 | [EmptyUndoBuffer](#emptyundobuffer) | Resets the undo flag of a rich edit control. The undo flag is set whenever an operation within the rich edit control can be undone. |
 | [ExGetSel](#exgetsel) | Retrieves the starting and ending character positions of the selection in a rich edit control. |
