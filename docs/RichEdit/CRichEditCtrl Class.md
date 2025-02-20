@@ -82,10 +82,8 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [CanRedo](#canredo) | Determines whether there are any actions in the control redo queue. |
 | [CanUndo](#canundo) | Determines whether there are any actions in an edit control's undo queue. |
 | [CallAutocorrectProc](#callautocorrectproc) | Calls the autocorrect callback function that is stored by the (SET) **AutocorrectProc** property, provided that the text preceding the insertion point is a candidate for autocorrection. |
-| [DisableAutoUrlDetect](#disableautourldetect) | Disables automatic detection of URLs by a rich edit control. |
 | [DisplayBand](#displayband) | Displays a portion of the contents of a rich edit control, as previously formatted for a device using the EM_FORMATRANGE message. |
 | [EmptyUndoBuffer](#emptyundobuffer) | Resets the undo flag of a rich edit control. The undo flag is set whenever an operation within the rich edit control can be undone. |
-| [EnableAutoUrlDetect](#enableautourldetect) | Enables automatic detection of URLs by a rich edit control. |
 | [ExGetSel](#exgetsel) | Retrieves the starting and ending character positions of the selection in a rich edit control. |
 | [ExLimitText](#exlimittext) | Sets an upper limit to the amount of text the user can type or paste into a rich edit control. |
 | [ExLineFromChar](#exlinefromchar) | Determines which line contains the specified character in a rich edit control. |
@@ -94,7 +92,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [FindTextEx](#findtextex) | Finds text within a rich edit control. |
 | [FindWordBreak](#findwordbreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [FormatRange](#formatrange) | Formats a range of text in a rich edit control for a specific device. |
-| [GetAutoUrlDetect](#getautourldetect) | Gets whether the auto URL detection is turned on in the rich edit control. |
 | [GetBidiOptions](#getbidioptions) | Gets the current state of the bidirectional options in the rich edit control. |
 | [GetCaretPos](#getcaretpos) | Gets the caret position |
 | [GetCharFormat](#getcharformat) | Gets the current character formatting in a rich edit control. |
@@ -170,7 +167,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Scroll](#scroll) | Scrolls the text vertically in a multiline rich edit control. |
 | [ScrollCaret](#scrollcaret) | Scrolls the caret into view in a rich edit control. |
 | [SelectionType](#selectiontype) | Determines the selection type for a rich edit control. |
-| [SetAutoUrlDetect](#setautourldetect) | Enables or disables automatic detection of URLs by a rich edit control. |
 | [SetBidiOptions](#setbidioptions) | Sets the current state of the bidirectional options in the rich edit control. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
 | [SetCaretPos](#setcaretpos) | Sets the caret position |
@@ -449,17 +445,27 @@ FUNCTION SetAutoCorrectProc (BYVAL pfn AS LONG_PTR) AS HRESULT
 
 (GET) A pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
 
-(SET) If the operation succeeds, the return value is zero. If the operation fails, the return value is a nonzero value. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+(SET) If the operation succeeds, the return value is zero. If the operation fails, the return value is a nonzero value.
 
 ---
 
 # <a name="autourldetect"></a>AutoUrlDetect
 
 Gets/sets whether the auto URL detection is turned on in the rich edit control.
+
 ```
 (GET) PROPERTY AutoUrlDetect () AS BOOLEAN
 (SET) PROPERTY AutoUrlDetect (BYVAL fUrlDetect AS LONG)
 ```
+```
+FUNCTION GetAutoUrlDetect () AS BOOLEAN
+FUNCTION SetAutoUrlDetect (BYVAL fUrlDetect AS LONG) AS HRESULT
+```
+```
+FUNCTION DisableAutoUrlDetect () AS BOOLEAN
+FUNCTION EnableAutoUrlDetect (BYVAL fUrlDetect AS LONG) AS HRESULT
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *fUrlDetect* | Specify 0 to disable automatic link detection, or one of the following values to enable various kinds of detection. |
@@ -478,137 +484,7 @@ Gets/sets whether the auto URL detection is turned on in the rich edit control.
 
 (GET) If auto-URL detection is active, the return value is true (-1). If auto-URL detection is inactive, the return value is false (0).
 
-(SET) If the message succeeds, the return value is zero. If the message fails, the return value is a nonzero value. For example, the message might fail due to insufficient memory or an invalid detection option. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
-
-#### Remarks
-
-If automatic URL detection is enabled (that is, *fUrlDetect* includes **AURL_ENABLEURL**), the rich edit control scans any modified text to determine whether the text matches the format of a URL (or more generally in Windows 8 or later an IRI International Resource Identifier). The control detects URLs that begin with the following scheme names:
-
-- callto
-- file
-- ftp
-- gopher
-- http
-- https
-- mailto
-- news
-- notes
-- nntp
-- onenote
-- outlook
-- prospero
-- tel
-- telnet
-- wais
-- webcal
-
-When automatic link detection is enabled, the rich edit control removes the **CFE_LINK** effect from modified text that does not have a format recognized by the control. If your application uses the **CFE_LINK** effect to mark other types of text, do not enable automatic link detection. The rich edit control does not check whether a detected link exists; that responsibility belongs to the client.
-
-A rich edit control sends the [EN_LINK](https://learn.microsoft.com/en-us/windows/win32/controls/en-link) notification when it receives various messages while the mouse pointer is over text that has the **CFE_LINK** effect. 
-
----
-
-# <a name="getautourldetect"></a>GetAutoUrlDetect
-
-Gets whether the auto URL detection is turned on in the rich edit control.
-```
-FUNCTION GetAutoUrlDetect () AS BOOLEAN
-```
-
-#### Return value
-
-If auto-URL detection is active, the return value is true (-1). If auto-URL detection is inactive, the return value is false (0).
-
----
-
-# <a name="setautourldetect"></a>SetAutoUrlDetect
-
-Enables or disables automatic detection of URLs by a rich edit control.
-```
-FUNCTION SetAutoUrlDetect (BYVAL fUrlDetect AS LONG) AS HRESULT
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *fUrlDetect* | Specify 0 to disable automatic link detection, or one of the following values to enable various kinds of detection. |
-
-| fUrlDetect value  | Description |
-| --------------- | ----------- |
-| **AURL_DISABLEMIXEDLGC** | **Windows 8**: Disable recognition of domain names that contain labels with characters belonging to more than one of the following scripts: Latin, Greek, and Cyrillic. |
-| **AURL_ENABLEDRIVELETTERS** | **Windows 8**: Recognize file names that have a leading drive specification, such as c:\temp. |
-| **AURL_ENABLEEA** | This value is deprecated; use **AURL_ENABLEEAURLS** instead. |
-| **AURL_ENABLEEAURLS** | Recognize URLs that contain East Asian characters. |
-| **AURL_ENABLEEMAILADDR** | **Windows 8**: Recognize email addresses. |
-| **AURL_ENABLETELNO** | **Windows 8**: Recognize telephone numbers. |
-| **AURL_ENABLEUR** | **Windows 8**: Recognize URLs that include the path. |
-
-#### Return value
-
-If the message succeeds, the return value is zero. If the message fails, the return value is a nonzero value. For example, the message might fail due to insufficient memory or an invalid detection option. Call **GetErrorInfo** to get information about the result.
-
-#### Remarks
-
-If automatic URL detection is enabled (that is, *fUrlDetect* includes **AURL_ENABLEURL**), the rich edit control scans any modified text to determine whether the text matches the format of a URL (or more generally in Windows 8 or later an IRI International Resource Identifier). The control detects URLs that begin with the following scheme names:
-
-- callto
-- file
-- ftp
-- gopher
-- http
-- https
-- mailto
-- news
-- notes
-- nntp
-- onenote
-- outlook
-- prospero
-- tel
-- telnet
-- wais
-- webcal
-
-When automatic link detection is enabled, the rich edit control removes the **CFE_LINK** effect from modified text that does not have a format recognized by the control. If your application uses the **CFE_LINK** effect to mark other types of text, do not enable automatic link detection. The rich edit control does not check whether a detected link exists; that responsibility belongs to the client.
-
-A rich edit control sends the [EN_LINK](https://learn.microsoft.com/en-us/windows/win32/controls/en-link) notification when it receives various messages while the mouse pointer is over text that has the **CFE_LINK** effect. 
-
----
-
-# <a name="disableautourldetect"></a>DisableAutoUrlDetect
-
-Disables automatic detection of URLs by a rich edit control.
-```
-FUNCTION DisableAutoUrlDetect () AS BOOLEAN
-```
-#### Return value
-
-If the message succeeds, the return value is true (-1). If the message fails, the return value is false (0).
-
----
-
-# <a name="enableautourldetect"></a>EnableAutoUrlDetect
-
-Enables automatic detection of URLs by a rich edit control.
-```
-FUNCTION EnableAutoUrlDetect (BYVAL fUrlDetect AS LONG) AS HRESULT
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *fUrlDetect* | One of the following values to enable various kinds of detection. |
-
-| fUrlDetect value  | Description |
-| --------------- | ----------- |
-| **AURL_DISABLEMIXEDLGC** | **Windows 8**: Disable recognition of domain names that contain labels with characters belonging to more than one of the following scripts: Latin, Greek, and Cyrillic. |
-| **AURL_ENABLEDRIVELETTERS** | **Windows 8**: Recognize file names that have a leading drive specification, such as c:\temp. |
-| **AURL_ENABLEEA** | This value is deprecated; use **AURL_ENABLEEAURLS** instead. |
-| **AURL_ENABLEEAURLS** | Recognize URLs that contain East Asian characters. |
-| **AURL_ENABLEEMAILADDR** | **Windows 8**: Recognize email addresses. |
-| **AURL_ENABLETELNO** | **Windows 8**: Recognize telephone numbers. |
-| **AURL_ENABLEUR** | **Windows 8**: Recognize URLs that include the path. |
-
-#### Return value
-
-If the message succeeds, the return value is zero. If the message fails, the return value is a nonzero value. For example, the message might fail due to insufficient memory or an invalid detection option. Call **GetErrorInfo** to get information about the result.
+(SET) If the message succeeds, the return value is zero. If the message fails, the return value is a nonzero value. For example, the message might fail due to insufficient memory or an invalid detection option.
 
 #### Remarks
 
