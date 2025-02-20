@@ -104,8 +104,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetSelText](#getseltext) | Retrieves the currently selected text in a rich edit control. |
 | [GetTableParams](#gettableparams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
 | [GetTextEx](#gettextex) | Gets all of the text from the rich edit control in any particular code base you want. |
-| [GetTextFontName](#gettextfontname) | Gets the font name of the selected text or the word under the cursor. |
-| [GetTextHeight](#gettextheight) | Gets the text height of the selected text or the word under the cursor. |
 | [GetTextRange](#gettextrange) | Retrieves a specified range of characters from a rich edit control. |
 | [GetThumb](#getthumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
 | [GetZoom](#getzoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
@@ -146,8 +144,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetTargetDevice](#settargetdevice) | Sets the target device and line width used for WYSIWYG formatting in a rich edit control. |
 | [SetTextEx](#settextex) | Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text. |
 | [SetTextBold](#settextbold) | Sets the attribute of selected text or word to bold. |
-| [SetTextFontName](#settextfontname) | Sets the font name of the selected text or the word under the cursor. |
-| [SetTextHeight](#settextheight) | Sets the text height of the selected text or the word under the cursor. |
 | [SetTextItalic](#settextitalic) | Sets the attribute of selected text or word to italic. |
 | [SetTextStrikeOut](#settextstrikeout) | Sets the attribute of selected text or word to strike out. |
 | [SetTextUnderline](#settextunderline) | Sets the attribute of selected text or word to underline. |
@@ -3750,47 +3746,16 @@ To select text programatically, use the **SetSel** method.
 # <a name="textheight"></a>TextHeight
 
 Gets/sets the height of the selected text or the word under the cursor.
+
 ```
 (GET) PROPERTY TextHeight () AS LONG
 (SET) PROPERTY TextHeight (BYVAL ptSize AS LONG)
 ```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *ptSize* | The new text height in points. |
-
-#### Return value
-
-(GET) The height of the selected text or the word under the cursor if there is not selection.
-
-#### Remarks
-
-To select text programatically, use the **SetSel** method.
-
----
-
-# <a name="gettextheight"></a>GetTextHeight
-
-Gets the height of the selected text or the word under the cursor.
 ```
 FUNCTION GetTextHeight () AS LONG
-```
-
-#### Return value
-
-The height of the selected text or the word under the cursor if there is not selection.
-
-#### Remarks
-
-To select text programatically, use the **SetSel** method.
-
----
-
-# <a name="settextheight"></a>SetTextHeight
-
-Sets the height of the selected text or the word under the cursor.
-```
 FUNCTION SetTextHeight (BYVAL ptSize AS LONG) AS BOOLEAN
 ```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *ptSize* | The new text height in points. |
@@ -3836,52 +3801,19 @@ To select text programatically, use the **SetSel** method.
 
 ---
 
-# <a name="gettextoffset"></a>GetTextOffset
-
-Gets the offset of the selected text or the word under the cursor.
-```
-FUNCTION GetTextOffset () AS LONG
-```
-
-#### Return value
-
-The offset of the selected text or the word under the cursor if there is not selection.
-
-#### Remarks
-
-This method converts the pixels to twips internally.
-
-To select text programatically, use the **SetSel** method.
-
----
-
-# <a name="settextoffset"></a>SetTextOffset
-
-Sets the offset of the selected text or the word under the cursor.
-```
-FUNCTION SetTextOffset (BYVAL offset AS LONG) AS BOOLEAN
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *offset* | Character offset, in pixels, from the baseline. If the value of this member is positive, the character is a superscript; if it is negative, the character is a subscript. |
-
-#### Return value
-
-A boolean true (-1) or false (0).
-
-#### Remarks
-
-This method converts the pixels to twips internally.
-
-To select text programatically, use the **SetSel** method.
-
 # <a name="textfontname"></a>TextFontName
 
 Gets/sets the font face name of the selected text or the word under the cursor if there is not selection.
+
 ```
 (GET) PROPERTY TextFontName () AS CWSTR
 (SET) PROPERTY TextFontName (BYREF wszFaceName AS WSTRING)
 ```
+```
+FUNCTION GetTextFontName () AS CWSTR
+FUNCTION SetTextFontName (BYREF wszFaceName AS WSTRING) AS BOOLEAN
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *wszFaceName* | (SET) The new font face name, e.g. "Times New Roman". |
@@ -3891,43 +3823,6 @@ Gets/sets the font face name of the selected text or the word under the cursor i
 (GET) The font face name.
 
 (SET) A boolean true (-1) or false (0).
-
-#### Remarks
-
-To select text programatically, use the **SetSel** method.
-
----
-
-# <a name="gettextfontname"></a>GetTextFontName
-
-Gets the font face name of the selected text or the word under the cursor if there is not selection.
-```
-FUNCTION GetTextFontName () AS CWSTR
-```
-
-#### Return value
-
-The font face name.
-
-#### Remarks
-
-To select text programatically, use the **SetSel** method.
-
----
-
-# <a name="settextfontname"></a>SetTextFontName
-
-Sets the font face name of the selected text or the word under the cursor if there is not selection.
-```
-FUNCTION SetTextFontName (BYREF wszFaceName AS WSTRING) AS BOOLEAN
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *wszFaceName* | The new font face name, e.g. "Times New Roman". |
-
-#### Return value
-
-A boolean true (-1) or false (0).
 
 #### Remarks
 
