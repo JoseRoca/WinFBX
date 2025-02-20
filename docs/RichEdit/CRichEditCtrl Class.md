@@ -1316,6 +1316,10 @@ This message is processed only by multiline edit controls. You can send this mes
 ```
 (SET) PROPERTY RectNP (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
 ```
+```
+SUB SetRectNP (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *fCoord* | (SET) **Rich Edit 3.0 and later**: Indicates whether *prect* specifies absolute or relative coordinates. A value of zero indicates absolute coordinates. A value of 1 indicates offsets relative to the current formatting rectangle. (The offsets can be positive or negative.) |
@@ -1324,28 +1328,6 @@ This message is processed only by multiline edit controls. You can send this mes
 #### Return value
 
 This property does not return a value.
-
----
-
-# <a name="setrectnp"></a>SetRectNP
-
-Sets the formatting rectangle of a multiline rich edit control. It is identical to the **SetRect** method, except that **SetRectNP** does not redraw the edit control window.
-
-The formatting rectangle is the limiting rectangle into which the control draws the text. The limiting rectangle is independent of the size of the edit control window.
-
-This message is processed only by multiline edit controls. You can send this message to either an edit control or a rich edit control.
-
-```
-SUB SetRectNP (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *fCoord* | **Rich Edit 3.0 and later**: Indicates whether *prect* specifies absolute or relative coordinates. A value of zero indicates absolute coordinates. A value of 1 indicates offsets relative to the current formatting rectangle. (The offsets can be positive or negative.) |
-| *rc* | A [RECT](https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect) structure that specifies the new dimensions of the rectangle. If this parameter is **NULL**, the formatting rectangle is set to its default values. |
-
-#### Return value
-
-This method does not return a value.
 
 ---
 
