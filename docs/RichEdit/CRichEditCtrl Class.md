@@ -92,7 +92,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [FindTextEx](#findtextex) | Finds text within a rich edit control. |
 | [FindWordBreak](#findwordbreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [FormatRange](#formatrange) | Formats a range of text in a rich edit control for a specific device. |
-| [GetBidiOptions](#getbidioptions) | Gets the current state of the bidirectional options in the rich edit control. |
 | [GetCaretPos](#getcaretpos) | Gets the caret position |
 | [GetCharFormat](#getcharformat) | Gets the current character formatting in a rich edit control. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
@@ -167,7 +166,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Scroll](#scroll) | Scrolls the text vertically in a multiline rich edit control. |
 | [ScrollCaret](#scrollcaret) | Scrolls the caret into view in a rich edit control. |
 | [SelectionType](#selectiontype) | Determines the selection type for a rich edit control. |
-| [SetBidiOptions](#setbidioptions) | Sets the current state of the bidirectional options in the rich edit control. |
 | [SetBkgndColor](#setbkgndcolor) | Sets the background color for a rich edit control. |
 | [SetCaretPos](#setcaretpos) | Sets the caret position |
 | [SetCharFormat](#setcharformat) | Sets the current character formatting in a rich edit control. |
@@ -517,10 +515,16 @@ A rich edit control sends the [EN_LINK](https://learn.microsoft.com/en-us/window
 # <a name="bidioptions"></a>BidiOptions
 
 Gets/sets the current state of the bidirectional options in the rich edit control.
+
 ```
 (GET) PROPERTY BidiOptions () AS .BIDIOPTIONS
 (SET) PROPERTY BidiOptions (BYREF opt AS .BIDIOPTIONS)
 ```
+```
+FUNCTION GetBidiOptions () AS .BIDIOPTIONS
+SUB SetBidiOptions (BYREF opt AS .BIDIOPTIONS)
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *opt* | A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure that indicates how to set the state of the bidirectional options in the rich edit control. |
@@ -532,43 +536,6 @@ Gets/sets the current state of the bidirectional options in the rich edit contro
 (SET) This property does not return a result.
 
 #### Remarks (SET property)
-
-The rich edit control must be in plain text mode or **BidiOptions** will not do anything.
-
-In plain text controls, **BidiOptions** automatically determines the paragraph direction and/or alignment based on the context rules. These rules state that the direction and/or alignment is derived from the first strong character in the control. A strong character is one from which text direction can be determined (see Unicode Standard version 2.0). The paragraph direction and/or alignment is applied to the default format.
-
-**BidiOptions** only switches the default paragraph format to RTL (right to left) if it finds an RTL character.
-
----
-
-# <a name="getbidioptions"></a>GetBidiOptions
-
-Gets the current state of the bidirectional options in the rich edit control.
-```
-GetBidiOptions () AS .BIDIOPTIONS
-```
-
-#### Return value
-
-A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure with the current state of the bidirectional options in the rich edit control. The values of the **wMask** and **wEffects** contain the current state of the bidirectional options in the rich edit control.
-
----
-
-# <a name="setbidioptions"></a>SetBidiOptions
-
-Sets the current state of the bidirectional options in the rich edit control.
-```
-SUB SetBidiOptions (BYREF opt AS .BIDIOPTIONS)
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *opt* | A [BIDIOPTIONS](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-bidioptions) structure that indicates how to set the state of the bidirectional options in the rich edit control. |
-
-#### Return value
-
-This message does not return a result.
-
-#### Remarks
 
 The rich edit control must be in plain text mode or **BidiOptions** will not do anything.
 
