@@ -60,6 +60,8 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [TextColor](#textcolor) | Gets/sets the text color of the selected text or the word under the cursor. |
 | [TextFontName](#textfontname) | Gets/sets the font name of the selected text or the word under the cursor. |
 | [TextHeight](#textheight) | Gets/sets the text height of the selected text or the word under the cursor. |
+| [TextLength](#textlength) | Retrieves the length of all text in a rich edit control. |
+| [TextLengthEx](#textlengthex) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
 | [TextMode](#textmode) | Gets/sets the current text mode and undo level of a rich edit control. |
 | [TextOffset](#textoffset) | Gets/sets the text offset of the selected text or the word under the cursor. |
 | [TouchOptions](#touchoptions) | Gets/sets the touch options that are associated with a rich edit control. |
@@ -104,8 +106,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetTextEx](#gettextex) | Gets all of the text from the rich edit control in any particular code base you want. |
 | [GetTextFontName](#gettextfontname) | Gets the font name of the selected text or the word under the cursor. |
 | [GetTextHeight](#gettextheight) | Gets the text height of the selected text or the word under the cursor. |
-| [GetTextLength](#gettextlength) | Retrieves the length of all text in a rich edit control. |
-| [GetTextLengthEx](#gettextlengthex) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
 | [GetTextRange](#gettextrange) | Retrieves a specified range of characters from a rich edit control. |
 | [GetThumb](#getthumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
 | [GetUndoName](#getundoname) | Retrieves the type of the next undo action, if any. |
@@ -1463,6 +1463,77 @@ DIM cws AS CWSTR = "New text"
 pRichEdit.Text = cws
 ```
 
+# <a name="textlength"></a>TextLength
+
+Retrieves the length of all text in a rich edit control.
+
+```
+FUNCTION TextLength () AS LONG
+FUNCTION GetTextLength () AS LONG
+```
+
+#### Return value
+
+The return value is the length of the text in characters, not including the terminating null character.
+
+#### Remarks
+
+When the **GetTextLength** method is called, the **DefWindowProc** function returns the length, in characters, of the text. Under certain conditions, the **DefWindowProc** function returns a value that is larger than the actual length of the text. This occurs with certain mixtures of ANSI and Unicode, and is due to the system allowing for the possible existence of double-byte character set (DBCS) characters within the text. The return value, however, will always be at least as large as the actual length of the text; you can thus always use it to guide buffer allocation. This behavior can occur when an application uses both ANSI functions and common dialogs, which use Unicode.
+
+To retrieve the text, you can also use the **AfxGetWindowText** function, the **WM_GETTEXT** message, or the Windows API **GetWindowTextW** function.
+
+---
+
+# <a name="textlengthex"></a>TextLengthEx
+
+Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. Since this `CRichEditCtrl` class uses unicode, it is easier to use the simplified second overloaded function.
+
+```
+FUNCTION TextLengthEx (BYREF gtex AS .GETTEXTLENGTHEX) AS LONG
+FUNCTION TextLengthEx (BYVAL dwFlags AS DWORD = GTL_DEFAULT) AS LONG
+FUNCTION GetTextLengthEx OVERLOAD (BYREF gtex AS .GETTEXTLENGTHEX) AS LONG
+FUNCTION GetTextLengthEx OVERLOAD (BYVAL dwFlags AS DWORD = GTL_DEFAULT) AS LONG
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *gtex* | A [GETTEXTLENGTHEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextlengthex) structure that receives the text length information. |
+| *dwFlags* | Value specifying the method to be used in determining the text length. This member can be one or more of the following values (some values are mutually exclusive). |
+
+| Flag  | Meaning |
+| ----- | ------- |
+| **GTL_DEFAULT** | Returns the number of characters. This is the default. |
+| **GTL_USECRLF** | Computes the answer by using CR/LFs at the end of paragraphs. |
+| **GTL_PRECISE** | Computes a precise answer. This approach could necessitate a conversion and thereby take longer. This flag cannot be used with the **GTL_CLOSE** flag. **E_INVALIDARG** will be returned if both are used. |
+| **GTL_CLOSE** | Computes an approximate (close) answer. It is obtained quickly and can be used to set the buffer size. This flag cannot be used with the **GTL_PRECISE** flag. **E_INVALIDARG** will be returned if both are used. |
+| **GTL_NUMCHARS** | Returns the number of characters. This flag cannot be used with the **GTL_NUMBYTES** flag. **E_INVALIDARG** will be returned if both are used. |
+| **GTL_NUMBYTES** | Returns the number of bytes. This flag cannot be used with the **GTL_NUMCHARS** flag. **E_INVALIDARG** will be returned if both are used |
+
+#### Return value
+
+**First overloaded method**: The method returns the number of characters in the edit control, depending on the setting of the flags in the [GETTEXTLENGTHEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextlengthex) structure. If incompatible flags were set in the **flags** member, the message returns **E_INVALIDARG**.
+
+**Second overloaded method**: The method returns the number of characters in the edit control, depending on the setting of the flags in the *dwFlags* parameter. If incompatible flags were set in the **flags** member, the message returns **E_INVALIDARG**.
+
+#### Remarks
+
+This message is a fast and easy way to determine the number of characters in the Unicode version of the rich edit control. However, for a non-Unicode target code page you will potentially be converting to a combination of single-byte and double-byte characters.
+
+#### Usage examples
+```
+--- First overloaded method:
+DIM gtex AS GETTEXTLENGTHEX = TYPE<GETTEXTLENGTHEX>(GTL_NUMCHARS, 1200)
+DIM Result AS LONG = pRichEdit.GetTextLEngthEx(gtex)
+DIM cbLen AS LONG
+IF Result <> E_INVALIDARG THEN cbLen = Result
+```
+```
+--- Second overloaded method:
+DIM Result AS LONG = pRichEdit.GetTextLEngthEx                 ' // Uses the GTL_DEFAULT flag
+DIM Result AS LONG = pRichEdit.GetTextLEngthEx(GTL_NUMCHARS)   ' // Uses the GTL_NUMCHARS flag
+DIM cbLen AS LONG
+IF Result <> E_INVALIDARG THEN cbLen = Result
+```
 ---
 
 # <a name="textmode"></a>TextMode
@@ -2318,71 +2389,6 @@ The return value is the number of characters copied into the output buffer, not 
 If the size of the output buffer is less than the size of the text in the control, the edit control will copy text from its beginning and place it in the buffer until the buffer is full. A terminating null character will still be placed at the end of the buffer.
 
 ---
-
-# <a name="gettextlength"></a>GetTextLength
-
-Retrieves the length of all text in a rich edit control.
-```
-FUNCTION GetTextLength () AS LONG
-```
-#### Return value
-
-The return value is the length of the text in characters, not including the terminating null character.
-
-#### Remarks
-
-When the **GetTextLength** method is called, the **DefWindowProc** function returns the length, in characters, of the text. Under certain conditions, the **DefWindowProc** function returns a value that is larger than the actual length of the text. This occurs with certain mixtures of ANSI and Unicode, and is due to the system allowing for the possible existence of double-byte character set (DBCS) characters within the text. The return value, however, will always be at least as large as the actual length of the text; you can thus always use it to guide buffer allocation. This behavior can occur when an application uses both ANSI functions and common dialogs, which use Unicode.
-
-To retrieve the text, you can also use the **AfxGetWindowText** function, the **WM_GETTEXT** message, or the Windows API **GetWindowTextW** function.
-
----
-
-# <a name="gettextlengthex"></a>GetTextLengthEx
-
-Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. Since this `CRichEditCtrl` class uses unicode, it is easier to use the simplified second overloaded function.
-```
-FUNCTION GetTextLengthEx OVERLOAD (BYREF gtex AS .GETTEXTLENGTHEX) AS LONG
-FUNCTION GetTextLengthEx OVERLOAD (BYVAL dwFlags AS DWORD = GTL_DEFAULT) AS LONG
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *gtex* | A [GETTEXTLENGTHEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextlengthex) structure that receives the text length information. |
-| *dwFlags* | Value specifying the method to be used in determining the text length. This member can be one or more of the following values (some values are mutually exclusive). |
-
-| Flag  | Meaning |
-| ----- | ------- |
-| **GTL_DEFAULT** | Returns the number of characters. This is the default. |
-| **GTL_USECRLF** | Computes the answer by using CR/LFs at the end of paragraphs. |
-| **GTL_PRECISE** | Computes a precise answer. This approach could necessitate a conversion and thereby take longer. This flag cannot be used with the **GTL_CLOSE** flag. **E_INVALIDARG** will be returned if both are used. |
-| **GTL_CLOSE** | Computes an approximate (close) answer. It is obtained quickly and can be used to set the buffer size. This flag cannot be used with the **GTL_PRECISE** flag. **E_INVALIDARG** will be returned if both are used. |
-| **GTL_NUMCHARS** | Returns the number of characters. This flag cannot be used with the **GTL_NUMBYTES** flag. **E_INVALIDARG** will be returned if both are used. |
-| **GTL_NUMBYTES** | Returns the number of bytes. This flag cannot be used with the **GTL_NUMCHARS** flag. **E_INVALIDARG** will be returned if both are used |
-
-#### Return value
-
-**First overloaded method**: The method returns the number of characters in the edit control, depending on the setting of the flags in the [GETTEXTLENGTHEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-gettextlengthex) structure. If incompatible flags were set in the **flags** member, the message returns **E_INVALIDARG**.
-
-**Second overloaded method**: The method returns the number of characters in the edit control, depending on the setting of the flags in the *dwFlags* parameter. If incompatible flags were set in the **flags** member, the message returns **E_INVALIDARG**.
-
-#### Remarks
-
-This message is a fast and easy way to determine the number of characters in the Unicode version of the rich edit control. However, for a non-Unicode target code page you will potentially be converting to a combination of single-byte and double-byte characters.
-
-#### Usage examples
-```
---- First overloaded method:
-DIM gtex AS GETTEXTLENGTHEX = TYPE<GETTEXTLENGTHEX>(GTL_NUMCHARS, 1200)
-DIM Result AS LONG = pRichEdit.GetTextLEngthEx(gtex)
-DIM cbLen AS LONG
-IF Result <> E_INVALIDARG THEN cbLen = Result
-```
-```
---- Second overloaded method:
-DIM Result AS LONG = pRichEdit.GetTextLEngthEx                 ' // Uses the GTL_DEFAULT flag
-DIM Result AS LONG = pRichEdit.GetTextLEngthEx(GTL_NUMCHARS)   ' // Uses the GTL_NUMCHARS flag
-DIM cbLen AS LONG
-IF Result <> E_INVALIDARG THEN cbLen = Result
-```
 
 # <a name="gettextrange"></a>GetTextRange
 
