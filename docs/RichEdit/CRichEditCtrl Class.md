@@ -111,7 +111,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetTextLengthEx](#gettextlengthex) | Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. |
 | [GetTextRange](#gettextrange) | Retrieves a specified range of characters from a rich edit control. |
 | [GetThumb](#getthumb) | Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control. |
-| [GetTypographyOptions](#gettypographyoptions) | Gets the current state of the typography options of a rich edit control. |
 | [GetUndoName](#getundoname) | Retrieves the type of the next undo action, if any. |
 | [GetZoom](#getzoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
 | [HideSelection](#hideselection) | Hides or shows the selection in a rich edit control. |
@@ -153,7 +152,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetTextItalic](#settextitalic) | Sets the attribute of selected text or word to italic. |
 | [SetTextStrikeOut](#settextstrikeout) | Sets the attribute of selected text or word to strike out. |
 | [SetTextUnderline](#settextunderline) | Sets the attribute of selected text or word to underline. |
-| [SetTypographyOptions](#settypographyoptions) | Sets the current state of the typography options of a rich edit control. |
 | [SetUIAName](#setuianame) | Sets the maximum number of actions that can stored in the undo queue. |
 | [SetUndoLimit](#setundolimit) | Sets the maximum number of actions that can stored in the undo queue. |
 | [SetZoom](#setzoom) | Sets the zoom ratio anywhere between 1/64 and 64. |
@@ -1524,10 +1522,16 @@ Advanced line breaking is turned on automatically by the rich edit control when 
 # <a name="typographyoptions"></a>TypographyOptions
 
 Gets/sets the current state of the typography options of a rich edit control.
+
 ```
 (GET) PROPERTY TypographyOptions () AS DWORD
 (SET) PROPERTY TypographyOptions (BYVAL pto AS LONG, BYVAL fMask AS LONG)
 ```
+```
+FUNCTION GetTypographyOptions () AS DWORD
+FUNCTION SetTypographyOptions (BYVAL pto AS LONG, BYVAL fMask AS LONG) AS BOOLEAN
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pto* | Specifies one or both of the following values.<br>**TO_ADVANCEDTYPOGRAPHY**. Advanced line breaking and line formatting is turned on.<br>**TO_SIMPLELINEBREAK**. Faster line breaking for simple text (requires **TO_ADVANCEDTYPOGRAPHY**). |
@@ -1535,48 +1539,13 @@ Gets/sets the current state of the typography options of a rich edit control.
 
 #### Return value
 
-(GET Returns the current typography options.
+(GET) Returns the current typography options.
+
+(SET) A boolean true (-1) or false (0).
 
 #### Remarks
 
 You can turn on advanced line breaking by sending calling the (SET) **TypographyOPtions** property. Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
-
----
-
-# <a name="gettypographyoptions"></a>GetTypographyOptions
-
-Gets the current state of the typography options of a rich edit control.
-```
-FUNCTION GetTypographyOptions () AS DWORD
-```
-#### Return value
-
-Returns the current typography options.
-
-#### Remarks
-
-You can turn on advanced line breaking by sending calling the **SetTypographyOPtions** property. Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
-
----
-
-# <a name="settypographyoptions"></a>SetTypographyOptions
-
-Sets the current state of the typography options of a rich edit control.
-```
-FUNCTION SetTypographyOptions (BYVAL pto AS LONG, BYVAL fMask AS LONG) AS BOOLEAN
-```
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pto* | Specifies one or both of the following values.<br>**TO_ADVANCEDTYPOGRAPHY**. Advanced line breaking and line formatting is turned on.<br>**TO_SIMPLELINEBREAK**. Faster line breaking for simple text (requires **TO_ADVANCEDTYPOGRAPHY**). |
-| *fMask* | A mask consisting of one or more of the flags in *pto*. Only the flags that are set in this mask will be set or cleared. This allows a single flag to be set or cleared without reading the current flag states. |
-
-#### Return value
-
-A boollean true (-1) or false (0).
-
-#### Remarks
-
-You can turn on advanced line breaking by sending calling the **SetTypographyOPtions** property. Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
 
 ---
 
