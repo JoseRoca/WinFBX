@@ -99,7 +99,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetLine](#getline) | Copies a line of text from a rich edit control. |
 | [GetLineCount](#getlinecount) | Gets the number of lines in a multiline rich edit control. |
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
-| [GetOptions](#getoptions) | Gets the options for a rich edit control. |
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
 | [GetSel](#getsel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
 | [GetSelText](#getseltext) | Retrieves the currently selected text in a rich edit control. |
