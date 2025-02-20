@@ -561,7 +561,7 @@ END FUNCTION
 | Parameter | Description |
 | --------- | ----------- |
 | *pVar* | A **VARIANT** that specifies the name of the file to open. |
-| *Flags* | The file creation, open, share, and conversion flags. Default value is zero, which gives read/write access and read/write sharing, open always, and automatic recognition of the file format (unrecognized file formats are treated as text). Other values are defined in the following groups (see table below). |
+| *Flags* | **tomRTF**: Open as RTF. **tomText**: Open as text ANSI or Unicode. |
 | *CodePage* | The code page to use for the file. Zero (the default value) means **CP_ACP** (ANSI code page) unless the file begins with a Unicode BOM 0xfeff, in which case the file is considered to be Unicode. Note that code page 1200 is Unicode, **CP_UTF8** is UTF-8. |
 
 
