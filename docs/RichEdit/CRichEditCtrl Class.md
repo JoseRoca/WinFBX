@@ -1273,9 +1273,9 @@ Gets/sets the formatting rectangle of a rich edit control.
 (GET) PROPERTY Rect () AS .RECT
 (SET) PROPERTY Rect (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
 ```
+```
 FUNCTION GetRect () AS .RECT
 SUB SetRect (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
-```
 ```
 
 | Parameter  | Description |
