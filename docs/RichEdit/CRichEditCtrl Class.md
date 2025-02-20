@@ -75,6 +75,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 | Name       | Description |
 | ---------- | ----------- |
+| [AddLF/AddCR/AddCRLF](#addlfcr) | Inserts a line feed, a carriage return or a carriage return and line feed at the cursor position or at the end of the text. |
 | [CallAutocorrectProc](#callautocorrectproc) | Calls the autocorrect callback function that is stored by the (SET) **AutocorrectProc** property, provided that the text preceding the insertion point is a candidate for autocorrection. |
 | [CanPaste](#canpaste) | Determines whether a rich edit control can paste a specified clipboard format. |
 | [CanRedo](#canredo) | Determines whether there are any actions in the control redo queue. |
@@ -177,7 +178,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SaveSelRtf](#saveselrtf) | Saves selection of the rich edit control to a file in rtf format. |
 | [SaveText](#savetext) | Saves the contents of the rich edit control in text format. |
 | [SaveSelText](#saveseltext) | Saves selection of the rich edit control in text format. |
-| [AddLF/AddCR/AddCRLF](#addlfcr) | Inserts a line feed, a carriage return or a carriage return and line feed at the cursor position or at the end of the text. |
 
 # Methods inherited from CTextObjectBase
 
