@@ -5522,7 +5522,7 @@ pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText, CP_UTF8)
 Saves the current document in unicode:
 ```
 DIM cv AS CVAR = AfxGetExePath & $"\Test02.txt"
-pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText, CP_UTF8)
+pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText, 1200)
 ```
 
 ---
