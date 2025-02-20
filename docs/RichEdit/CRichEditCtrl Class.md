@@ -1140,6 +1140,7 @@ Gets/sets the options for a rich edit control.
 (GET) PROPERTY Options () AS DWORD
 (SET) PROPERTY Options (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG)
 ```
+```
 FUNCTION GetOptions () AS DWORD
 FUNCTION SetOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG) AS DWORD
 ```
