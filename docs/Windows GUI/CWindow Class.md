@@ -46,88 +46,88 @@ DIM pWindow AS CWindow = "MyClassName"
 
 | Topic      |
 | ---------- |
-| [Creating the main window](#Topic1) |
-| [Getting a pointer to the CWindow class](#Topic2) |
-| [Adding controls](#Topic3) |
-| [Popup windows](#Topic4) |
-| [Using PNG icons in toolbars](#Topic5) |
-| [Visual style menus](#Topic6) |
-| [Keyboard accelerators](#Topic7) |
-| [Scrollable windows](#Topic8) |
-| [TabPages](#Topic9) |
-| [Layout Manager](#Topic10) |
-| [MDI WIndows](#Topic11) |
+| [Creating the main window](#topic1) |
+| [Getting a pointer to the CWindow class](#topic2) |
+| [Adding controls](#topic3) |
+| [Popup windows](#topic4) |
+| [Using PNG icons in toolbars](#topic5) |
+| [Visual style menus](#topic6) |
+| [Keyboard accelerators](#topic7) |
+| [Scrollable windows](#topic8) |
+| [TabPages](#topic9) |
+| [Layout Manager](#topic10) |
+| [MDI WIndows](#topic11) |
 
 ### Methods and Properties
 
 | Name       | Description |
 | ---------- | ----------- |
-| [AccelHandle](#AccelHandle) | Gets/sets the accelerator table handle. |
-| [AddAccelerator](#AddAccelerator) | Adds an accelerator key to the table. |
-| [AddControl](#AddControl) | Adds a control to the window. |
-| [BigIcon](#BigIcon) | Associates a new large icon with the main window. |
-| [Brush](#Brush) | Gets/sets the background brush. |
-| [Center](#Center) | Centers a window on the screen or over another window. |
-| [ClassStyle](#ClassStyle) | Gets/sets the style of the class. |
-| [ClientHeight](#ClientHeight) | Returns the unscaled client height of the main window. |
-| [ClientWidth](#ClientWidth) | Returns the unscaled client width of the window. |
-| [ControlClientHeight](#ControlClientHeight) | Returns the unscaled client height of the specified window. |
-| [ControlClientWidth](#ControlClientWidth) | Returns the unscaled client width of the specified window. |
-| [ControlHandle](#ControlHandle) | Retrieves a handle to the child control specified by its identifier. |
-| [ControlHeight](#ControlHeight) | Returns the unscaled height of the specified window. |
-| [ControlWidth](#ControlWidth) | Returns the unscaled width of the specified window. |
-| [Create](#Create) | Creates a new window. |
-| [CreateAcceleratorTable](#CreateAcceleratorTable) | Creates the accelerator table. |
-| [CreateFont](#CreateFont) | Creates a DPI aware logical font. |
-| [CreateMDIWindow](#CreateMDIWindow) | Creates a new MDI window. |
-| [DefaultFontSize](#DefaultFontSize) | Gets/sets the point size of the default font. |
-| [DestroyAcceleratorTable](#DestroyAcceleratorTable) | Destroys the accelerator table. |
-| [DoEvents](#DoEvents) | Processes windows messages. |
-| [DPI](#DPI) | Gets/sets the DPI (dots per inch) to be used by the application. |
-| [Font](#Font) | Gets/sets the font used as default. |
-| [GetClientRect](#GetClientRect) | Retrieves the unscaled coordinates of the main window client area. |
-| [GetControlClientRect](#GetControlClientRect) | Retrieves the unscaled coordinates of a window's client area. |
-| [GetControlWindowRect](#GetControlWindowRect) | Retrieves the unscaled dimensions of the bounding rectangle of the specified window. |
-| [GetWindowRect](#GetWindowRect) | Retrieves the unscaled dimensions of the bounding rectangle of the main window. |
-| [GetWorkArea](#GetWorkArea) | Retrieves the unscaled size of the work area on the primary display monitor. |
-| [Height](#Height) | Returns the unscaled height of the main window. |
-| [hWindow](#hWindow) | Gets/sets the main window handle. |
-| [hwndClient](#hwndClient) | Gets the MDI client window handle. |
-| [InstanceHandle](#InstanceHandle) | Gets/sets the instance handle. |
-| [MDICLassName](#MDICLassName) | Sets the class name of the MDI frame window. |
-| [MoveWindow](#MoveWindow) | Changes the position and dimensions of the specified window. |
-| [Resize](#Resize) | Resizes the window sending a WM_SIZE message with the  SIZE_RESTORED value. |
-| [rxRatio](#rxRatio) | Returns the horizontal scaling ratio. |
-| [ryRatio](#ryRatio) | Returns the vertical scaling ratio. |
-| [ScaleX](#ScaleX) | Scales an horizontal coordinate according the DPI setting. |
-| [ScaleY](#ScaleY) | Scales a vertical coordinate according the DPI setting. |
-| [ScreenX](#ScreenX) | Returns the x-coordinate of the window relative to the screen. |
-| [ScreenY](#ScreenY) | Returns the y-coordinate of the window relative to the screen. |
-| [ScrollWindowPtr](#ScrollWindowPtr) | Gets/sets a pointer to the scroll window class. |
-| [SetClientSize](#SetClientSize) | Adjusts the bounding rectangle of the window based on the desired size of the client area. |
-| [SetFont](#SetFont) | Creates a DPI aware logical font and sets it as the default font. |
-| [SetWindowPos](#SetWindowPos) | Changes the size, position, and Z order of a child, pop-up, or top-level window. |
-| [SmallIcon](#SmallIcon) | Associates a new small icon with the main window. |
-| [UnScaleX](#UnScaleX) | Unscales an horizontal coordinate according the DPI setting. |
-| [UnScaleY](#UnScaleY) | Unscales a vertical coordinate according the DPI setting. |
-| [UserData](#UserData) | Gets/sets a value in the user data area of the window. |
-| [Width](#Width) | Returns the unscaled width of the main window. |
-| [WindowExStyle](#WindowExStyle) | Gets/sets the window extended styles. |
-| [WindowStyle](#WindowStyle) | Gets/sets the window styles. |
+| [AccelHandle](#accelhandle) | Gets/sets the accelerator table handle. |
+| [AddAccelerator](#addaccelerator) | Adds an accelerator key to the table. |
+| [AddControl](#addcontrol) | Adds a control to the window. |
+| [BigIcon](#bigicon) | Associates a new large icon with the main window. |
+| [Brush](#brush) | Gets/sets the background brush. |
+| [Center](#center) | Centers a window on the screen or over another window. |
+| [ClassStyle](#classstyle) | Gets/sets the style of the class. |
+| [ClientHeight](#clientheight) | Returns the unscaled client height of the main window. |
+| [ClientWidth](#clientwidth) | Returns the unscaled client width of the window. |
+| [ControlClientHeight](#controlclientheight) | Returns the unscaled client height of the specified window. |
+| [ControlClientWidth](#controlclientwidth) | Returns the unscaled client width of the specified window. |
+| [ControlHandle](#controlhandle) | Retrieves a handle to the child control specified by its identifier. |
+| [ControlHeight](#controlheight) | Returns the unscaled height of the specified window. |
+| [ControlWidth](#controlwidth) | Returns the unscaled width of the specified window. |
+| [Create](#create) | Creates a new window. |
+| [CreateAcceleratorTable](#createacceleratortable) | Creates the accelerator table. |
+| [CreateFont](#createfont) | Creates a DPI aware logical font. |
+| [CreateMDIWindow](#createmdiwindow) | Creates a new MDI window. |
+| [DefaultFontSize](#defaultfontsize) | Gets/sets the point size of the default font. |
+| [DestroyAcceleratorTable](#destroyacceleratortable) | Destroys the accelerator table. |
+| [DoEvents](#doevents) | Processes windows messages. |
+| [DPI](#dpi) | Gets/sets the DPI (dots per inch) to be used by the application. |
+| [Font](#font) | Gets/sets the font used as default. |
+| [GetClientRect](#getclientrect) | Retrieves the unscaled coordinates of the main window client area. |
+| [GetControlClientRect](#getcontrolclientrect) | Retrieves the unscaled coordinates of a window's client area. |
+| [GetControlWindowRect](#getcontrolwindowrect) | Retrieves the unscaled dimensions of the bounding rectangle of the specified window. |
+| [GetWindowRect](#getwindowrect) | Retrieves the unscaled dimensions of the bounding rectangle of the main window. |
+| [GetWorkArea](#getworkarea) | Retrieves the unscaled size of the work area on the primary display monitor. |
+| [Height](#height) | Returns the unscaled height of the main window. |
+| [hWindow](#hwindow) | Gets/sets the main window handle. |
+| [hwndClient](#hwndclient) | Gets the MDI client window handle. |
+| [InstanceHandle](#instancehandle) | Gets/sets the instance handle. |
+| [MDIClassName](#mdiclassname) | Sets the class name of the MDI frame window. |
+| [MoveWindow](#movewindow) | Changes the position and dimensions of the specified window. |
+| [Resize](#resize) | Resizes the window sending a WM_SIZE message with the  SIZE_RESTORED value. |
+| [rxRatio](#rxratio) | Returns the horizontal scaling ratio. |
+| [ryRatio](#ryratio) | Returns the vertical scaling ratio. |
+| [ScaleX](#scalex) | Scales an horizontal coordinate according the DPI setting. |
+| [ScaleY](#scaley) | Scales a vertical coordinate according the DPI setting. |
+| [ScreenX](#screenx) | Returns the x-coordinate of the window relative to the screen. |
+| [ScreenY](#screeny) | Returns the y-coordinate of the window relative to the screen. |
+| [ScrollWindowPtr](#scrollwindowptr) | Gets/sets a pointer to the scroll window class. |
+| [SetClientSize](#setclientsize) | Adjusts the bounding rectangle of the window based on the desired size of the client area. |
+| [SetFont](#setfont) | Creates a DPI aware logical font and sets it as the default font. |
+| [SetWindowPos](#setwindowpos) | Changes the size, position, and Z order of a child, pop-up, or top-level window. |
+| [SmallIcon](#smallicon) | Associates a new small icon with the main window. |
+| [UnScaleX](#unscalex) | Unscales an horizontal coordinate according the DPI setting. |
+| [UnScaleY](#unscaley) | Unscales a vertical coordinate according the DPI setting. |
+| [UserData](#userdata) | Gets/sets a value in the user data area of the window. |
+| [Width](#width) | Returns the unscaled width of the main window. |
+| [WindowExStyle](#windowexstyle) | Gets/sets the window extended styles. |
+| [WindowStyle](#windowstyle) | Gets/sets the window styles. |
 
 ### Procedures
 
 | Name       | Description |
 | ---------- | ----------- |
-| [AfxCWindowPtr](#AfxCWindowPtr) | Returns a pointer to the **CWindow** class given the handle of the main window or the CREATESTRUCT structure associated with it. |
-| [AfxCWindowOwnerPtr](#AfxCWindowOwnerPtr) | Returns a pointer to the **CWindow** class given the handle of the window created with it or the handle of any of it's children windows or controls. |
-| [AfxScrollWindowPtr](#AfxScrollWindowPtr) | Returns a pointer to the **CScrollWindow** class given the handle of the window attached to it. |
+| [AfxCWindowPtr](#afxcwindowptr) | Returns a pointer to the **CWindow** class given the handle of the main window or the CREATESTRUCT structure associated with it. |
+| [AfxCWindowOwnerPtr](#afxcwindowownerptr) | Returns a pointer to the **CWindow** class given the handle of the window created with it or the handle of any of it's children windows or controls. |
+| [AfxScrollWindowPtr](#afxscrollwindowptr) | Returns a pointer to the **CScrollWindow** class given the handle of the window attached to it. |
 
 ### Dialog
 
 | Name       | Description |
 | ---------- | ----------- |
-| [AfxInputBox](#AfxInputBox) | Input box dialog. |
+| [AfxInputBox](#afxinputbox) | Input box dialog. |
 
 # CLayout Class
 
@@ -156,8 +156,8 @@ DIM pLayout AS CLayout = pWindow.hWindow
 
 | Name       | Description |
 | ---------- | ----------- |
-| [AnchorControl](#AnchorControl) | Anchors a window or control to its parent window. |
-| [AdjustControls](#AdjustControls) | Adjusts the size and location of the child controls to the dimensions of its parent window. |
+| [AnchorControl](#anchorcontrol) | Anchors a window or control to its parent window. |
+| [AdjustControls](#adjustcontrols) | Adjusts the size and location of the child controls to the dimensions of its parent window. |
 
 # CTabPage Class
 
@@ -171,22 +171,22 @@ Creates a generic window used as a tab page of a tab control.
 
 | Name       | Description |
 | ---------- | ----------- |
-| [hTabPage](#hTabPage) | Returns the window handle of the tab page. |
-| [InsertPage](#InsertPage) | Adds a tab page and creates a generic window that will be associated with the page. |
+| [hTabPage](#htabpage) | Returns the window handle of the tab page. |
+| [InsertPage](#insertpage) | Adds a tab page and creates a generic window that will be associated with the page. |
 
 ### Procedures
 
 | Name       | Description |
 | ---------- | ----------- |
-| [AfxCTabPagePtr](#AfxCTabPagePtr) | Returns a pointer to the **CTabPage** class given the handle of the tab control to which the tab page is associated and the zero-based tab index. |
-| [AfxDestroyTabPage](#AfxDestroyTabPage) | Detroys a tab page. |
-| [AfxDestroyAllTabPages](#AfxDestroyAllTabPages) | Detroys all the tab pages. |
-| [AfxResizeTabPages](#AfxResizeTabPages) | Resizes all the tab pages associated with a tab control. |
-| [AfxScrollTabPagePtr](#AfxScrollTabPagePtr) | Returns a pointer to the CScrollWindow class given the handle of the tab control to which the tab page is associated and the zero-based tab index. |
+| [AfxCTabPagePtr](#afxctabpageptr) | Returns a pointer to the **CTabPage** class given the handle of the tab control to which the tab page is associated and the zero-based tab index. |
+| [AfxDestroyTabPage](#afxdestroytabpage) | Detroys a tab page. |
+| [AfxDestroyAllTabPages](#afxdestroyalltabpages) | Detroys all the tab pages. |
+| [AfxResizeTabPages](#afxresizetabpages) | Resizes all the tab pages associated with a tab control. |
+| [AfxScrollTabPagePtr](#afxscrolltabpageptr) | Returns a pointer to the CScrollWindow class given the handle of the tab control to which the tab page is associated and the zero-based tab index. |
 
 # Tutorial
 
-### <a name="Topic1"></a>Creating the main window
+### <a name="topic1"></a>Creating the main window
 
 To use **CWindow** you must first include "CWindow.inc" and allow all symbols of its namespace to be accessed adding **USING Afx**.
 
@@ -336,7 +336,7 @@ Each instance of the **CWindow** class has an user data area consisting in an ar
 
 These values are set and retrieved using the **UserData** property and an index from 0 to 99.
 
-### <a name="Topic2"></a>Getting a pointer to the CWindow class
+### <a name="topic2"></a>Getting a pointer to the CWindow class
 
 At any time, you can get a pointer to the **CWindow** class by using:
 
@@ -366,7 +366,7 @@ CASE WM_CREATE
    DIM pWindow AS CWindow PTR = AfxCWindowPtr(lParam)
 ```
 
-### <a name="Topic3"></a>Adding controls
+### <a name="topic3"></a>Adding controls
 
 To add controls to the window you can use the **AddControl** method. Alternatively, you can use the API function **CreateWindowEx**, but then you will have to do scaling by yourself.
 
@@ -501,7 +501,7 @@ Both of these methods are optional. Therefore, you can use your own way to subcl
 
 **Warning**: You cannot use the subclassing helper functions to subclass a window across threads.
 
-### <a name="Topic4"></a>Popup windows
+### <a name="topic4"></a>Popup windows
 
 To create a popup window you simply create a new instance of the **CWindow** class and, in the **Create** method, you make it child of the main window and use the WS_POPUPWINDOW style.
 
@@ -706,7 +706,7 @@ END FUNCTION
 ' ========================================================================================
 ```
 
-### <a name="Topic5"></a>Using PNG icons in toolbars
+### <a name="topic5"></a>Using PNG icons in toolbars
 
 **AfxGdiplus.inc** provides functions that allow to use alphablended PNG icons in toolbars.
 
@@ -961,7 +961,7 @@ END FUNCTION
 ' ========================================================================================
 ```
 
-### <a name="Topic6"></a>Visual style menus
+### <a name="topic6"></a>Visual style menus
 
 Windows Vista and posterior Windows versions provide menus that are part of the visual schema. These menus are rendered using visual styles, which can be added to existing applications. Adding code for new features to existing code must be done carefully to avoid breaking existing application behavior. Certain situations can cause visual styling to be disabled in an application. These situations include:
 
@@ -1143,7 +1143,7 @@ END FUNCTION
 ' ========================================================================================
 ```
 
-### <a name="Topic7"></a>Keyboard Accelerators
+### <a name="topic7"></a>Keyboard Accelerators
 
 Accelerators are closely related to menus — both provide the user with access to an application's command set. Typically, users rely on an application's menus to learn the command set and then switch over to using accelerators as they become more proficient with the application. Accelerators provide faster, more direct access to commands than menus do. At a minimum, an application should provide accelerators for the more commonly used commands. Although accelerators typically generate commands that exist as menu items, they can also generate commands that have no equivalent menu items. 
 
@@ -1297,7 +1297,7 @@ END FUNCTION
 ' ========================================================================================
 ```
 
-### <a name="Topic8"></a>Scrollable windows
+### <a name="topic8"></a>Scrollable windows
 
 **CWindow** windows can be made scrollable with the help of the **CScrollWindow** class.
 
@@ -1486,7 +1486,7 @@ ShowWindow pTabPage1->hTabPage, SW_SHOW
 SendMessageW hTab, TCM_SETCURFOCUS, 0, 0
 ```
 
-### <a name="Topic9"></a>Tab pages
+### <a name="topic9"></a>Tab pages
 
 The **CTabPage** class extends the **CWindow** class and allows to create generic windows used as a tab pages of a tab control.
 
@@ -1750,7 +1750,7 @@ END FUNCTION
 ' ====================================================================================
 ```
 
-### <a name="Topic10"></a>Layout manager
+### <a name="topic10"></a>Layout manager
 
 The **CLayout** class allows to anchor child windows to a parent window. When the parent window is resized, it manages the location and size of the anchored child windows according to the new dimensions of the parent.
 
@@ -1898,7 +1898,7 @@ END FUNCTION
 ' ========================================================================================
 ```
 
-### <a name="Topic11"></a>MDI windows
+### <a name="topic11"></a>MDI windows
 
 The multiple-document interface (MDI) is a specification that defines a user interface for applications that enable the user to work with more than one document at the same time.
 
@@ -2268,7 +2268,7 @@ END FUNCTION
 ' ========================================================================================
 ```
 
-# <a name="AccelHandle"></a>AccelHandle
+# <a name="accelhandle"></a>AccelHandle
 
 Gets/sets the accelerator table handle.
 
@@ -2296,7 +2296,7 @@ You can destroy the current accelerator table by setting the property with a nul
 DIM hAccel AS HACCEL = pWindow.AccelHandle
 
 
-# <a name="AddAccelerator"></a>AddAccelerator
+# <a name="addaccelerator"></a>AddAccelerator
 
 Adds an accelerator key to the table.
 
@@ -2325,7 +2325,7 @@ pWindow.AddAccelerator FVIRTKEY OR FCONTROL, "S", IDM_SAVE ' // Ctrl+S - Save
 pWindow.CreateAcceleratorTable
 ```
 
-# <a name="AddControl"></a>AddControl
+# <a name="addcontrol"></a>AddControl
 
 Adds a control to the window.
 
@@ -2506,7 +2506,7 @@ Two of the added benefits are that you can use the same subclass procedure for s
 **SetWindowSubclass** was made available for the first time in ComCtl32.dll version 6 and, therefore, can only be used with Windows XP or superior. ComCtl32.dll version 6 is Unicode only. The common controls supported by ComCtl32.dll version 6 should not be subclassed (or superclassed) with ANSI window procedures.
 
 
-# <a name="BigIcon"></a>BigIcon
+# <a name="bigicon"></a>BigIcon
 
 Associates a new large icon with the main window. The system displays the large icon in the ALT+TAB dialog box.
 
@@ -2524,7 +2524,7 @@ PROPERTY BigIcon (BYVAL hIcon AS HICON)
 pWindow.BigIcon = LoadImage(hInstance, MAKEINTRESOURCE(101), IMAGE_ICON, 48, 48, LR_SHARED)
 ```
 
-# <a name="SmallIcon"></a>SmallIcon
+# <a name="smallicon"></a>SmallIcon
 
 Associates a new small icon with the main window. The system displays the small icon in the in the window caption.
 
@@ -2542,7 +2542,7 @@ PROPERTY SmallIcon (BYVAL hIcon AS HICON)
 pWindow.SmallIcon = LoadImage(hInstance, MAKEINTRESOURCE(100), IMAGE_ICON, 32, 32, LR_SHARED)
 ```
 
-# <a name="Brush"></a>Brush
+# <a name="brush"></a>Brush
 
 Gets/sets the background brush.
 
@@ -2569,7 +2569,7 @@ pWindow.Brush = GetStockObject(WHITE_BRUSH)
 pWindow.Brush = CreateSolidBrush(BGR(0, 0, 255))
 ```
 
-# <a name="Center"></a>Center
+# <a name="center"></a>Center
 
 Centers a window on the screen or over another window. It also ensures that the placement is done within the work area.
 
@@ -2594,7 +2594,7 @@ pWindow.SetClientSize(500, 320)
 pWindow.Center
 ```
 
-# <a name="ClassStyle"></a>ClassStyle
+# <a name="classstyle"></a>ClassStyle
 
 Gets/sets the style of the class.
 
@@ -2632,7 +2632,7 @@ pWindow.Create(NULL, "CWindow test", @WndProc)
 pWindow.ClassStyle = CS_DBLCLKS
 ```
 
-# <a name="ClientHeight"></a>ClientHeight
+# <a name="clientheight"></a>ClientHeight
 
 Returns the unscaled client height of the main window.
 
@@ -2646,7 +2646,7 @@ PROPERTY ClientHeight () AS LONG
 DIM nHeight AS LONG = pWindow.ClientHeight
 ```
 
-# <a name="ClientWidth"></a>ClientWidth
+# <a name="clientwidth"></a>ClientWidth
 
 Returns the unscaled client width of the main window.
 
@@ -2660,7 +2660,7 @@ PROPERTY ClientWidth () AS LONG
 DIM nWidth AS LONG = pWindow.ClientWidth
 ```
 
-# <a name="ControlClientHeight"></a>ControlClientHeight
+# <a name="controlclientheight"></a>ControlClientHeight
 
 Returns the unscaled client height of the specified window or control.
 
@@ -2678,7 +2678,7 @@ PROPERTY ControlClientHeight (BYVAL hwnd AS HWND) AS LONG
 DIM nHeight AS LONG = pWindow.ControlClientHeight(hwnd)
 ```
 
-# <a name="ControlClientWidth"></a>ControlClientWidth
+# <a name="controlclientwidth"></a>ControlClientWidth
 
 Returns the unscaled client width of the specified window or control.
 
@@ -2696,7 +2696,7 @@ PROPERTY ControlClientWidth (BYVAL hwnd AS HWND) AS LONG
 DIM nHeight AS LONG = pWindow.ControlClientWidth(hwnd)
 ```
 
-# <a name="ControlHandle"></a>ControlHandle
+# <a name="controlhandle"></a>ControlHandle
 
 Retrieves a handle to the child control specified by its identifier.
 
@@ -2714,7 +2714,7 @@ FUNCTION ControlHandle (BYVAL cID AS LONG) AS HWND
 DIM hCtl AS HWND = pWindow.ControlHandle(cID)
 ```
 
-# <a name="ControlHeight"></a>ControlHeight
+# <a name="controlheight"></a>ControlHeight
 
 Returns the unscaled height of the specified window.
 
@@ -2732,7 +2732,7 @@ FUNCTION ControlHeight (BYVAL hwnd AS HWND) AS LONG
 DIM nHeight AS LONG = pWindow.ControlHeight(hwnd)
 ```
 
-# <a name="ControlWidth"></a>ControlWidth
+# <a name="controlwidth"></a>ControlWidth
 
 Returns the unscaled width of the specified window.
 
@@ -2750,7 +2750,7 @@ FUNCTION ControlWidth (BYVAL hwnd AS HWND) AS LONG
 DIM nWidth AS LONG = pWindow.ControlWidth(hwnd)
 ```
 
-# <a name="Create"></a>Create
+# <a name="create"></a>Create
 
 **Create** creates a new window. If you don't specify the window styles, it creates an overlaped window with the styles WS_OVERLAPPEDWINDOW OR WS_CLIPCHILDREN OR WS_CLIPSIBLINGS and the extended styles WS_EX_CONTROLPARENT OR WS_EX_WINDOWEDGE.
 
@@ -2873,7 +2873,7 @@ DIM hwndMain AS HWND = pWindow.Create(NULL, "CWindow Test", @WndProc, 0, 0, 525,
    WS_OVERLAPPEDWINDOW OR WS_CLIPCHILDREN OR WS_CLIPSIBLINGS, WS_EX_CONTROLPARENT OR WS_EX_WINDOWEDGE)
 ```
 
-# <a name="CreateAcceleratorTable"></a>CreateAcceleratorTable
+# <a name="createacceleratortable"></a>CreateAcceleratorTable
 
 Creates the accelerator table.
 
@@ -2896,7 +2896,7 @@ pWindow.AddAccelerator FVIRTKEY OR FCONTROL, "S", IDM_SAVE ' // Ctrl+S - Save
 DIM hAccel AS HACCEL = pWindow.CreateAcceleratorTable
 ```
 
-# <a name="CreateFont"></a>CreateFont
+# <a name="createfont"></a>CreateFont
 
 Creates a DPI aware logical font.
 
@@ -2929,7 +2929,7 @@ hFont = CWindow.CreateFont("Courier New", 10, FW_BOLD, , , , DEFAULT_CHARSET)
 hFont = CWindow.CreateFont("Marlett", 8, FW_NORMAL, , , , SYMBOL_CHARSET)
 ```
 
-# <a name="CreateMDIWindow"></a>CreateMDIWindow
+# <a name="createmdiwindow"></a>CreateMDIWindow
 
 Creates a new MDI window.
 
@@ -3031,7 +3031,7 @@ hwindowMenu = GetSubMenu(hMenu, 2)
 pWindow.CreateMDIWindow(101, 0, 0, 0, 0, 0, 0, hwindowMenu, @MDIWindowProc)
 ```
 
-# <a name="DefaultFontSize"></a>DefaultFontSize
+# <a name="defaultfontsize"></a>DefaultFontSize
 
 Gets/sets the point size of the default font.
 
@@ -3057,7 +3057,7 @@ DIM nSize AS LONG = pWindow.DefaultFontSize
 pWindow.DefaultFontSize = 12
 ```
 
-# <a name="DoEvents"></a>DoEvents
+# <a name="dowvents"></a>DoEvents
 
 Processes windows messages.
 
@@ -3099,7 +3099,7 @@ CASE WM_GETDLGCODE
 FUNCTION = pWindow.DoEvents(nCmdShow)
 ```
 
-# <a name="DPI"></a>DPI
+# <a name="dpi"></a>DPI
 
 Gets/sets the **DPI** (dots per inch) to be used by the application. The main window, controls and fonts will be scaled according this value. Don't change the DPI value once the main window has been created.
 
@@ -3145,7 +3145,7 @@ DIM dpi AS LONG = pWindow.DPI
 pWindow.DPI = 96
 ```
 
-# <a name="Font"></a>Font
+# <a name="font"></a>Font
 
 Gets/sets the font used as default.
 
@@ -3167,7 +3167,7 @@ DIM hFont AS HFONT = pWindow.Font
 pWindow.Font = hFont
 ```
 
-# <a name="GetClientRect"></a>GetClientRect
+# <a name="getclientrect"></a>GetClientRect
 
 Retrieves the unscaled coordinates of the main window client area. The client coordinates specify the upper-left and lower-right corners of the client area. Because client coordinates are relative to the upper-left corner of a window's client area, the coordinates of the upper-left corner are (0,0). 
 
@@ -3194,7 +3194,7 @@ pWindow.GetClientRect(@rc)
 DIM rc AS RECT = pWindow.GetClientRect
 ```
 
-# <a name="GetControlClientRect"></a>GetControlClientRect
+# <a name="getcontrolclientrect"></a>GetControlClientRect
 
 Retrieves the unscaled coordinates of a window's client area. The client coordinates specify the upper-left and lower-right corners of the client area. Because client coordinates are relative to the upper-left corner of a window's client area, the coordinates of the upper-left corner are (0,0). 
 
@@ -3224,7 +3224,7 @@ pWindow.GetControlClientRect(hCtl, @rc)
 DIM rc AS RECT = pWindow.GetControlClientRect(hCtl)
 ```
 
-# <a name="GetControlWindowRect"></a>GetControlWindowRect
+# <a name="getcontrolwindowrect"></a>GetControlWindowRect
 
 Retrieves the unscaled dimensions of the bounding rectangle of the specified window. The dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.
 
@@ -3254,7 +3254,7 @@ pWindow.GetControlWindowRect(hCtl, @rc)
 DIM rc AS RECT = pWindow.GetControlWindowRect(hCtl)
 ```
 
-# <a name="GetWindowRect"></a>GetWindowRect
+# <a name="getwindowrect"></a>GetWindowRect
 
 Retrieves the unscaled dimensions of the bounding rectangle of the main window. The dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.
 
@@ -3284,7 +3284,7 @@ pWindow.GetWindowRect(@rc)
 DIM rc AS RECT = pWindow.GetWindowRect
 ```
 
-# <a name="GetWorkArea"></a>GetWorkArea
+# <a name="getworkarea"></a>GetWorkArea
 
 Retrieves the unscaled size of the work area on the primary display monitor. The work area is the portion of the screen not obscured by the system taskbar or by application desktop toolbars.
 
@@ -3314,7 +3314,7 @@ pWindow.GetWorkArea(@rc)
 DIM rc AS RECT = pWindow.GetWorkArea
 ```
 
-# <a name="Height"></a>Height
+# <a name="height"></a>Height
 
 Returns the unscaled height of the main window.
 
@@ -3328,7 +3328,7 @@ PROPERTY Height () AS LONG
 DIM nHeight AS LONG = pWindow.Height
 ```
 
-# <a name="Width"></a>Width
+# <a name="width"></a>Width
 
 Returns the unscaled width of the main window.
 
@@ -3342,7 +3342,7 @@ PROPERTY Width () AS LONG
 DIM nWidth AS LONG = pWindow.Width
 ```
 
-# <a name="ScreenX"></a>ScreenX
+# <a name="screenx"></a>ScreenX
 
 Returns the unscaled x-coordinate of the window relative to the screen.
 
@@ -3356,7 +3356,7 @@ PROPERTY ScreenX () AS LONG
 DIM nLeft AS LONG = pWindow.ScreenX
 ```
 
-# <a name="ScreenY"></a>ScreenY
+# <a name="screeny"></a>ScreenY
 
 Returns the unscaled y-coordinate of the window relative to the screen.
 
@@ -3370,7 +3370,7 @@ PROPERTY ScreenY () AS LONG
 DIM nTop AS LONG = pWindow.ScreenY
 ```
 
-# <a name="hWindow"></a>hWindow
+# <a name="hwindow"></a>hWindow
 
 Gets/sets the main window handle.
 
@@ -3396,7 +3396,7 @@ DIM hwnd AS HWND = pWindow.hWindow
 pWindow.hWindow = hwnd
 ```
 
-# <a name="hwndClient"></a>hwndClient
+# <a name="hwndclient"></a>hwndClient
 
 Gets the MDI client window handle.
 
@@ -3410,7 +3410,7 @@ PROPERTY hwndClient () AS HWND
 DIM hwnd AS HWND = pWindow.hwndClient
 ```
 
-# <a name="InstanceHandle"></a>InstanceHandle
+# <a name="instancehandle"></a>InstanceHandle
 
 Gets/sets the instance handle.
 
@@ -3436,7 +3436,7 @@ DIM hInstance = pWindow.InstanceHandle
 pWindow.InstanceHandle = pInstance
 ```
 
-# <a name="MDICLassName"></a>MDICLassName
+# <a name="mdiclassname"></a>MDICLassName
 
 Sets the class name of the MDI frame window.
 
@@ -3454,7 +3454,7 @@ PROPERTY MDICLassName (BYREF wszMDIClassName AS WSTRING)
 pWindow.MDIClassName = "MyClassName"
 ```
 
-# <a name="MoveWindow"></a>MoveWindow
+# <a name="movewindow"></a>MoveWindow
 
 Changes the position and dimensions of the specified window. For a top-level window, the position and dimensions are relative to the upper-left corner of the screen. For a child window, they are relative to the upper-left corner of the parent window's client area. This method scales the window by multiplying the size and coordinates according the DPI setting; therefore, you must pass unscaled values to it.
 
@@ -3491,7 +3491,7 @@ pWindow.MoveWindow GetDlgItem(hwnd, IDCANCEL), pWindow.ClientWidth, _
    pWindow-ClientHeight, 75, 23, CTRUE
 ```
 
-# <a name="Resize"></a>Resize
+# <a name="resize"></a>Resize
 
 Resizes the window sending a WM_SIZE message with the  SIZE_RESTORED value.
 
@@ -3505,7 +3505,7 @@ SUB Resize
 pWindow.Resize
 ```
 
-# <a name="rxRatio"></a>rxRatio
+# <a name="rxratio"></a>rxRatio
 
 Returns the horizontal scaling ratio.
 
@@ -3519,7 +3519,7 @@ PROPERTY rxRatio () AS SINGLE
 DIM rx AS LONG = pWindow.rxRatio
 ```
 
-# <a name="ryRatio"></a>ryRatio
+# <a name="ryratio"></a>ryRatio
 
 Returns the vertical scaling ratio.
 
@@ -3533,7 +3533,7 @@ PROPERTY ryRatio () AS SINGLE
 DIM ry AS LONG = pWindow.ryRatio
 ```
 
-# <a name="ScaleX"></a>ScaleX
+# <a name="scalex"></a>ScaleX
 
 Scales an horizontal coordinate according the DPI setting.
 
@@ -3555,7 +3555,7 @@ DIM cx AS LONG = pWindow.ScaleX
 
 A SINGLE datatype is used instead of a long to avoid rounding errors in the calculation.
 
-# <a name="ScaleY"></a>ScaleY
+# <a name="scaley"></a>ScaleY
 
 Scales an vertical coordinate according the DPI setting.
 
@@ -3578,7 +3578,7 @@ DIM cy AS LONG = pWindow.ScaleY
 A SINGLE datatype is used instead of a long to avoid rounding errors in the calculation.
 
 
-# <a name="ScrollWindowPtr"></a>ScrollWindowPtr
+# <a name="scrollwindowptr"></a>ScrollWindowPtr
 
 Gets/sets a pointer to the scroll window class.
 
@@ -3600,7 +3600,7 @@ DIM pScrollWindow AS CScrollWindowPtr = pWindow.ScrollWondowPtr
 pWindow.ScrollWondowPtr = pScrollWindow
 ```
 
-# <a name="SetClientSize"></a>SetClientSize
+# <a name="setclientsize"></a>SetClientSize
 
 Adjusts the bounding rectangle of the window based on the desired size of the client area. The sizes are scaled according the DPI seeting.
 
@@ -3619,7 +3619,7 @@ SUB SetClientSize (BYVAL nWidth AS LONG, BYVAL nHeight AS LONG)
 pWindow.SetClientSize(400, 250)
 ```
 
-# <a name="SetFont"></a>SetFont
+# <a name="setfont"></a>SetFont
 
 Creates a DPI aware logical font and sets it as the default font.
 
@@ -3652,7 +3652,7 @@ pWindow.SetFont("Courier New", 10, FW_BOLD, , , , DEFAULT_CHARSET)
 pWindow.SetFont("Marlett", 8, FW_NORMAL, , , , SYMBOL_CHARSET)
 ```
 
-# <a name="SetWindowPos"></a>SetWindowPos
+# <a name="setwindowpos"></a>SetWindowPos
 
 Changes the size, position, and Z order of a child, pop-up, or top-level window. These windows are ordered according to their appearance on the screen. The topmost window receives the highest rank and is the first window in the Z order. The sizes and coordinates are scaled according the DPI setting.
 
@@ -3726,7 +3726,7 @@ SetWindowPos(hwnd, NULL, 0, 0, cx, cy, _
    SWP_NOZORDER OR SWP_NOMOVE OR SWP_NOACTIVATE)
 ```
 
-# <a name="UnScaleX"></a>UnScaleX
+# <a name="unscalex"></a>UnScaleX
 
 Unscales an horizontal coordinate according the DPI setting.
 
@@ -3746,7 +3746,7 @@ A SINGLE datatype is used instead of a long to avoid rounding errors in the calc
 
 DIM cx AS SINGLE = pWindow.UnScaleX(250)
 
-# <a name="UnScaleY"></a>UnScaleY
+# <a name="unscaley"></a>UnScaleY
 
 Unscales a vertical coordinate according the DPI setting.
 
@@ -3766,7 +3766,7 @@ A SINGLE datatype is used instead of a long to avoid rounding errors in the calc
 
 DIM cy AS SINGLE = pWindow.UnScaleY(250)
 
-# <a name="UserData"></a>UserData
+# <a name="userdata"></a>UserData
 
 Gets/sets a value in the user data area of the window.
 
@@ -3789,7 +3789,7 @@ pWindow.UserData(1) = value
 DIM value AS LONG_PTR = pWindow.UserData(1)
 ```
 
-# <a name="WindowExStyle"></a>WindowExStyle
+# <a name="windowexstyle"></a>WindowExStyle
 
 Gets/sets the window extended styles.
 
@@ -3815,7 +3815,7 @@ DIM dwExStyle AS ULONG_PTR = pWindow.WindowExStyle
 pWindow.WindowExStyle = WS_EX_CLIENTEDGE
 ```
 
-# <a name="WindowStyle"></a>WindowStyle
+# <a name="windowstyle"></a>WindowStyle
 
 Gets/sets the window styles.
 
@@ -3841,7 +3841,7 @@ DIM dwStyle AS ULONG_PTR = pWindow.WindowStyle
 pWindow.WindowStyle = WS_POPUPWINDOW OR WS_CAPTION   ' // Creates a popup window
 ```
 
-# <a name="AfxCWindowPtr"></a>AfxCWindowPtr
+# <a name="afxcwindowptr"></a>AfxCWindowPtr
 
 Returns a pointer to the **CWindow** class given the handle of the main window or the **CREATESTRUCT** structure associated with it. To retrieve it from the handle of any of its child windows or controls, use **AfxCWindowOwnerPtr**.
 
@@ -3870,7 +3870,7 @@ DIM pWindow AS CWindow PTR = AfxCWindowPtr(hwnd)
 DIM pWindow AS CWindow PTR = AfxCWindowPtr(lParam)
 ```
 
-# <a name="AfxCWindowOwnerPtr"></a>AfxCWindowOwnerPtr
+# <a name="afxcwindowownerptr"></a>AfxCWindowOwnerPtr
 
 Returns a pointer to the **CWindow** class given the handle of the window created with it or the handle of any of it's children windows or controls.
 
@@ -3892,7 +3892,7 @@ A pointer to the **CWindow** class or NULL.
 DIM pWindow AS CWindow PTR = AfxCWindowOwnerPtr(hwnd)
 ```
 
-# <a name="AfxScrollWindowPtr"></a>AfxScrollWindowPtr
+# <a name="afxscrollwindowptr"></a>AfxScrollWindowPtr
 
 Returns a pointer to the **CScrollWindow** class given the handle of the window attached to it.
 
@@ -3914,7 +3914,7 @@ A pointer to the **CScrollWindow** class or NULL.
 DIM pWindow AS CScrollWindow PTR = AfxScrollWindowPtr(hwnd)
 ```
 
-# <a name="AfxInputBox"></a>AfxInputBox
+# <a name="afxinputbox"></a>AfxInputBox
 
 Input box dialog.
 
@@ -3945,7 +3945,7 @@ The edited string.
 DIM cws AS CWSTR = AfxInputBox(hwnd, 0, 0, "InputBox test", "What's your name?", "My name is José")
 ```
 
-# <a name="AnchorControl"></a>AnchorControl
+# <a name="anchorcontrol"></a>AnchorControl
 
 Anchors a window or control to its parent window.
 
@@ -4006,7 +4006,7 @@ pChildLayout.AnchorControl(IDC_EDIT1, AFX_ANCHOR_WIDTH)
 ' etc.
 ```
 
-# <a name="AdjustControls"></a>AdjustControls
+# <a name="adjustcontrols"></a>AdjustControls
 
 Adjusts the size and location of the child controls to the dimensions of its parent window.
 
@@ -4019,7 +4019,7 @@ SUB AdjustControls
 See **Layout manager** in the Tutorial.
 
 
-# <a name="hTabPage"></a>hTabPage
+# <a name="htabpage"></a>hTabPage
 
 Returns the window handle of the tab page.
 
@@ -4033,7 +4033,7 @@ PROPERTY hTabPage () AS HWND
 DIM hTabPage AS HWND = pTabPage.hTabPage
 ```
 
-# <a name="InsertPage"></a>InsertPage
+# <a name="insertpage"></a>InsertPage
 
 Adds a tab page and creates a generic window that will be associated with the page.
 
@@ -4069,7 +4069,7 @@ pTabPage->AddControl("Edit", pTabPage->hTabPage, IDC_EDIT2, "", 165, 50, 186, 21
 pTabPage->AddControl("Button", pTabPage->hTabPage, IDC_BTNSUBMIT, "Submit", 340, 185, 76, 26, BS_DEFPUSHBUTTON)
 ```
 
-# <a name="AfxCTabPagePtr"></a>AfxCTabPagePtr
+# <a name="afxctabpageptr"></a>AfxCTabPagePtr
 
 Returns a pointer to the **CTabPage** class given the handle of the tab control to which the tab page is associated and the zero-based tab index.
 
@@ -4088,7 +4088,7 @@ FUNCTION AfxCTabPagePtr (BYVAL hTab AS HWND, BYVAL idx AS LONG = -1) AS CTabPage
 DIM pTabPage AS CTabPage PTR = AfxCTabPagePtr(hTab, 1)
 ```
 
-# <a name="AfxDestroyTabPage"></a>AfxDestroyTabPage
+# <a name="afxdestroytabpage"></a>AfxDestroyTabPage
 
 Detroys the specified tab page.
 
@@ -4111,7 +4111,7 @@ TRUE or FALSE.
 AfxDestroyTabPage(hTab, 1)
 ```
 
-# <a name="AfxDestroyAllTabPages"></a>AfxDestroyAllTabPages
+# <a name="afxdestroyalltabpages"></a>AfxDestroyAllTabPages
 
 Detroys all the tab pages.
 
@@ -4133,7 +4133,7 @@ TRUE or FALSE.
 AfxDestroyAllTabPages(hTab)
 ```
 
-# <a name="AfxResizeTabPages"></a>AfxResizeTabPages
+# <a name="afxresizetabpages"></a>AfxResizeTabPages
 
 Resizes all the tab pages associated with a tab control.
 
@@ -4155,7 +4155,7 @@ TRUE or FALSE.
 AfxResizeTabPages(hTab)
 ```
 
-# <a name="AfxScrollTabPagePtr"></a>AfxScrollTabPagePtr
+# <a name="afxscrolltabpageptr"></a>AfxScrollTabPagePtr
 
 Returns a pointer to the **CScrollWindow** class given the handle of the tab control to which the tab page is associated and the zero-based tab index.
 
