@@ -433,10 +433,16 @@ A boolean true (-1) or false (0).
 # <a name="autocorrectproc"></a>AutoCorrectProc
 
 Gets/sets a pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
+
 ```
 (GET) PROPERTY AutoCorrectProc () AS LONG_PTR
 (SET) PROPERTY AutoCorrectProc (BYVAL pfn AS LONG_PTR)
 ```
+```
+FUNCTION GetAutoCorrectProc () AS LONG_PTR
+FUNCTION SetAutoCorrectProc (BYVAL pfn AS LONG_PTR) AS HRESULT
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *pfn* | Pointer to the [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) application-defined callback function. |
