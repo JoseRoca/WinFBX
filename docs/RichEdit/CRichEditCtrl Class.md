@@ -164,7 +164,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [AppendRtfFile](#appendrtffile) | Appends the contents of the specified RTF file. |
 | [GetRtf](#getrtf) | Retrieves formatted text from a rich edit control. |
 | [InsertRtfFile](#insertrtffile) | Inserts the contents of the specified RTF file. |
-| [LoadRtfFromFile](#loadrtffromfile) | Loads a rich text file into a rich edit control. |
 | [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
 | [InsertObject](#insertobject) | Inserts an image or an Ole object in the rich edit control. |
 | [SaveRtf](#savertf) | Saves the contents of the rich edit control to a file in rtf format. |
@@ -3490,6 +3489,7 @@ Returns the retrieved text or a null string.
 # <a name="loadrtffromfile"></a>LoadRtfFromFile
 
 Loads the contents of a RTF file into a Rich Edit control.
+Deprecated and removed. Use **OpenDoc** instead.
 ```
 FUNCTION LoadRtfFromFile (BYREF wszFileName AS WSTRING) AS BOOLEAN
 ```
