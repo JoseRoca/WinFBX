@@ -164,10 +164,13 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Undo](#undo) | This message undoes the last edit control operation in the control's undo queue. |
 
 
-# CRichEdit Helper Methods and Properties
+# CRichEdit File Operations Methods
 
 | Name       | Description |
 | ---------- | ----------- |
+| [NewDoc](#newdoc) | Opens a new document. |
+| [OpenDoc](#opendoc) | Opens a new document. |
+| [SaveDoc](#savedoc) | Saves the document. |
 | [AppendRtfFile](#appendrtffile) | Appends the contents of the specified RTF file. |
 | [GetRtf](#getrtf) | Retrieves formatted text from a rich edit control. |
 | [InsertRtfFile](#insertrtffile) | Inserts the contents of the specified RTF file. |
@@ -182,9 +185,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 | Name       | Description |
 | ---------- | ----------- |
-| [NewDoc](#newdoc) | Opens a new document. |
-| [OpenDoc](#opendoc) | Opens a new document. |
-| [SaveDoc](#savedoc) | Saves the document. |
 
 ---
 
