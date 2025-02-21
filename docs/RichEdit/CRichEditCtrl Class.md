@@ -171,9 +171,9 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [NewDoc](#newdoc) | Opens a new document. |
 | [OpenDoc](#opendoc) | Opens a new document. |
 | [SaveDoc](#savedoc) | Saves the document. |
-| [AppendRtfFile](#appendrtffile) | Appends the contents of the specified RTF file. |
+| [AppendDocFile](#appenddocfile) | Appends the contents of the specified RTF file. |
 | [GetRtf](#getrtf) | Retrieves formatted text from a rich edit control. |
-| [InsertRtfFile](#insertrtffile) | Inserts the contents of the specified RTF file. |
+| [InsertdocFile](#insertdocfile) | Inserts the contents of the specified RTF file. |
 | [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
 | [SaveRtf](#savertf) | Saves the contents of the rich edit control to a file in rtf format. |
 | [SaveRtfNoObjs](#savertfnoobjs) | Saves the contents of the rich edit control to a file in rtf format with spaces in place of COM objects. |
@@ -3379,43 +3379,239 @@ PRIVATE FUNCTION GetErrorInfo (BYVAL nError AS LONG = -1) AS CWSTR
 
 ---
 
-# <a name="appendrtfFile"></a>AppendRtfFile
+# <a name="newdoc"></a>NewDoc
 
-Appends the contents of the specified RTF file.
+Opens a new document. If another document is open, this method saves any current changes and closes the current document before opening a new one.
 ```
-FUNCTION AppendRtfFile (BYREF wszFileName AS WSTRING) AS DWORD
+FUNCTION NewDoc () AS HRESULT
 ```
-| Parameter | Description |
-| --------- | ----------- |
-| *wszFileName* | Path and name of the RTF file to append. |
+#### Return value
+
+If this method succeeds, it returns **S_OK**.
 
 #### Usage example
-
 ```
-IM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.rtf"
-RichEdit->AppendRtfFile(wszFileName)
+pRichEdit.NewDoc
 ```
 
 ---
 
-# <a name="insertrtfFile"></a>InsertRtfFile
+# <a name="opendoc"></a>OpenDoc
 
-Inserts the contents of the specified RTF file at the specified location.
+Opens a new document. If another document is open, this method saves any current changes and closes the current document before opening a new one.
 ```
-FUNCTION InsertRtfFile (BYREF wszFileName AS WSTRING, BYVAL dwPos AS DWORD) AS DWORD
+FUNCTION OpenDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = 0, _
+   BYVAL CodePage AS LONG = CP_ACP) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pVar* | A VARIANT that specifies the name of the file to open. |
+| *Flags* | **tomRTF**: Open as RTF. **tomText**: Open as text ANSI or Unicode. |
+| *CodePage* | The code page to use for the file. Zero (the default value) means **CP_ACP** (ANSI code page) unless the file begins with a Unicode BOM &hfeff, in which case the file is considered to be Unicode. Note that code page 1200 is Unicode, **CP_UTF8** is UTF-8. |
+
+| Flag | Description |
+| ---- | ----------- |
+| *tomOpenExisting* | Open an existing file. Fail if the file does not exist. |
+| *tomOpenAlways* | Open an existing file. Create a new file if the file does not exist. |
+| *tomTruncateExisting* | Open an existing file, but truncate it to zero length. |
+
+#### Return value
+
+The return value can be an **HRESULT** value that corresponds to a system error or COM error code, including one of the following values.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **S_OK** | Method succeeds. |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **E_NOTIMPL** | Feature not implemented. |
+
+#### Usage example
+
+```
+DIM cv AS CVAR = AfxGetExePath & $"\Test.rtf"
+pRichEdit.OpenDoc(cv)
+```
+# <a name="savedoc"></a>SaveDoc
+
+Saves the document.
+
+```
+FUNCTION SaveDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = tomRTF, _
+   BYVAL CodePage AS LONG = CP_ACP) AS HRESULT
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *pVar* | The save target. This parameter is a **VARIANT**, which can be a file name, or **NULL**. See **Remarks**. |
+| *Flags* | File creation, share, and conversion flags. For a list of possible values, see the tables below. |
+| *CodePage* | The specified code page. Common values are **CP_ACP** (zero: system ANSI code page), 1200 (Unicode), and 1208 (UTF-8). |
+
+Any combination of these values may be used.
+
+| Flag | Description |
+| ---- | ----------- |
+| *tomReadOnly* | Read only. |
+| *tomShareDenyRead* | Other programs cannot read. |
+| *tomShareDenyWrite* | Other programs cannot write. |
+
+These values are mutually exclusive.
+
+| Flag | Description |
+| ---- | ----------- |
+| *tomCreateNew* | Create a new file. Fail if the file already exists. |
+| *tomCreateAlways* | Create a new file. Destroy the existing file if it exists. |
+| *tomRTF* | Save as RTF. |
+| *tomText* | Save as text. |
+
+#### Return value
+
+The return value can be an **HRESULT** value that corresponds to a system error or COM error code, including one of the following values.
+
+| Result code | Description |
+| ----------- | ----------- |
+| **S_OK** | Method succeeds. |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_OUTOFMEMORY** | Insufficient memory. |
+| **E_NOTIMPL** | Feature not implemented. |
+
+#### Remarks
+
+To use the parameters that were specified for opening the file, use zero values for the parameters.
+
+If *pVar* is null or missing, the file name given by this document's name is used. If both of these are missing or null, the method fails.
+
+If *pVar* specifies a file name, that name should replace the current **Name** property. Similarly, the *Flags* and *CodePage* arguments can overrule those supplied in the **OpenDoc** method and define the values to use for files created with the **NewDoc** method.
+
+Unicode plain-text files should be saved with the Unicode byte-order mark (&hFEFF) as the first character. This character should be removed when the file is read in; that is, it is only used for import/export to identify the plain text as Unicode and to identify the byte order of that text. Microsoft Notepad adopted this convention, which is now recommended by the Unicode standard.
+
+#### Usage examples
+
+Overwrites the current document in RTF format:
+```
+pRichEdit->SaveDoc(BYVAL NULL)
+-- or --
+pRichEdit->SaveDoc(BYVAL NULL, tomRTF)
+```
+Overwrites the current document in text format:
+```
+pRichEdit->SaveDoc(BYVAL NULL, tomText)
+```
+Overwrites the current document in utf-8 format:
+```
+pRichEdit->SaveDoc(BYVAL NULL, tomText, CP_UTF8)
+```
+Overwrites the current document in unicode format:
+```
+pRichEdit->SaveDoc(BYVAL NULL, tomText, 1200)
+```
+Saves the current document in RTF format:
+```
+DIM cv AS CVAR = AfxGetExePath & $"\Test02.rtf"
+pRichEdit->SaveDoc(cv, tomCreateAlways OR tomRTF)
+```
+Saves the current document in text format:
+```
+DIM cv AS CVAR = AfxGetExePath & $"\Test02.txt"
+pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText)
+```
+Saves the current document in utf-8 (with BOM):
+```
+DIM cv AS CVAR = AfxGetExePath & $"\Test02.txt"
+pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText, CP_UTF8)
+```
+Saves the current document in unicode:
+```
+DIM cv AS CVAR = AfxGetExePath & $"\Test02.txt"
+pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText, 1200)
+```
+
+---
+
+# <a name="appenddocfile"></a>AppendDocFile
+
+Appends the contents of the specified file. Besides .rtf files, this method also insert the content of ansi, unicode or utf8 files if you specify the appropriate code page.
+```
+FUNCTION AppendDocFile (BYREF wszFileName AS WSTRING, BYVAL CodePage AS DWORD = CP_ACP) AS DWORD
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *wszFileName* | Path and name of the RTF file to append. |
+| *CodePage* | The code page to use for the conversion. Besides the default (CP_ACP), you can use CP_ANSI (ansi), CP_UTF8 (utf8) or 1200 (unicode). |
+
+#### Usage example
+
+Append a RTF file.
+```
+IM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.rtf"
+RichEdit->AppendDocFile(wszFileName)
+```
+Append a file with ansi contents.
+```
+IM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.txt"
+RichEdit->AppendDocFile(wszFileName, 500, CP_ANSI)
+-- or --
+RichEdit->AppendDocFile(wszFileName, -1, CP_ANSI)
+```
+Append a file with utf8 contents.
+```
+IM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.txt"
+RichEdit->AppendDocFile(wszFileName, 500, CP_UTF8)
+-- or --
+RichEdit->AppendDocFile(wszFileName, -1, CP_UTF8)
+```
+Append a file with unicode contents.
+```
+IM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.txt"
+RichEdit->AppendDocFile(wszFileName, 500, 1200)
+-- or --
+RichEdit->AppendDocFile(wszFileName, -1, 1200)
+```
+
+---
+
+# <a name="insertdocfile"></a>InsertDocFile
+
+Inserts the contents of the specified file at the specified location. Besides .rtf files, this method also insert the content of ansi, unicode or utf8 files if you specify the appropriate code page.
+```
+FUNCTION InsertDocFile (BYREF wszFileName AS WSTRING, BYVAL dwPos AS DWORD, BYVAL CodePage AS DWORD = CP_ACP) AS DWORD
 ```
 | Parameter | Description |
 | --------- | ----------- |
 | *wszFileName* | Path and name of the RTF file to insert. |
 | *dwPos* | Location where to insert the RTF file. If dwPos = -1, the contents of the RTF file are inserted at the caret position. |
+| *CodePage* | The code page to use for the conversion. Besides the default (CP_ACP), you can use CP_ANSI (ansi), CP_UTF8 (utf8) or 1200 (unicode). |
 
 #### Usage examples
 
+Insert a RTF file.
 ```
 IM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.rtf"
-RichEdit->InsertRtfFile(wszFileName, 500)
+RichEdit->InsertDocFile(wszFileName, 500)
 -- or --
-RichEdit->InsertRtfFile(wszFileName, -1)
+RichEdit->InsertDocFile(wszFileName, -1)
+```
+Insert a file with ansi contents.
+```
+IM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.txt"
+RichEdit->InsertDocFile(wszFileName, 500, CP_ANSI)
+-- or --
+RichEdit->InsertDocFile(wszFileName, -1, CP_ANSI)
+```
+Insert a file with utf8 contents.
+```
+IM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.txt"
+RichEdit->InsertDocFile(wszFileName, 500, CP_UTF8)
+-- or --
+RichEdit->InsertDocFile(wszFileName, -1, CP_UTF8)
+```
+Insert a file with unicode contents.
+```
+IM wszFileName AS WSTRING * MAX_PATH = AfxGetExePath & $"\Test.txt"
+RichEdit->InsertDocFile(wszFileName, 500, 1200)
+-- or --
+RichEdit->InsertDocFile(wszFileName, -1, 1200)
 ```
 
 ---
@@ -3795,155 +3991,5 @@ FUNCTION SetTextOffset (BYVAL offset AS LONG) AS BOOLEAN
 This property converts the pixels to twips internally.
 
 To select text programatically, use the **SetSel** method.
-
----
-
-# <a name="newdoc"></a>NewDoc
-
-Opens a new document. If another document is open, this method saves any current changes and closes the current document before opening a new one.
-```
-FUNCTION NewDoc () AS HRESULT
-```
-#### Return value
-
-If this method succeeds, it returns **S_OK**.
-
-#### Usage example
-```
-pRichEdit.NewDoc
-```
-
----
-
-# <a name="opendoc"></a>OpenDoc
-
-Opens a new document. If another document is open, this method saves any current changes and closes the current document before opening a new one.
-```
-FUNCTION OpenDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = 0, _
-   BYVAL CodePage AS LONG = CP_ACP) AS HRESULT
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pVar* | A VARIANT that specifies the name of the file to open. |
-| *Flags* | **tomRTF**: Open as RTF. **tomText**: Open as text ANSI or Unicode. |
-| *CodePage* | The code page to use for the file. Zero (the default value) means **CP_ACP** (ANSI code page) unless the file begins with a Unicode BOM &hfeff, in which case the file is considered to be Unicode. Note that code page 1200 is Unicode, **CP_UTF8** is UTF-8. |
-
-| Flag | Description |
-| ---- | ----------- |
-| *tomOpenExisting* | Open an existing file. Fail if the file does not exist. |
-| *tomOpenAlways* | Open an existing file. Create a new file if the file does not exist. |
-| *tomTruncateExisting* | Open an existing file, but truncate it to zero length. |
-
-#### Return value
-
-The return value can be an **HRESULT** value that corresponds to a system error or COM error code, including one of the following values.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **S_OK** | Method succeeds. |
-| **E_INVALIDARG** | Invalid argument. |
-| **E_OUTOFMEMORY** | Insufficient memory. |
-| **E_NOTIMPL** | Feature not implemented. |
-
-#### Usage example
-
-```
-DIM cv AS CVAR = AfxGetExePath & $"\Test.rtf"
-pRichEdit.OpenDoc(cv)
-```
-# <a name="savedoc"></a>SaveDoc
-
-Saves the document.
-
-```
-FUNCTION SaveDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = tomRTF, _
-   BYVAL CodePage AS LONG = CP_ACP) AS HRESULT
-```
-
-| Parameter | Description |
-| --------- | ----------- |
-| *pVar* | The save target. This parameter is a **VARIANT**, which can be a file name, or **NULL**. See **Remarks**. |
-| *Flags* | File creation, share, and conversion flags. For a list of possible values, see the tables below. |
-| *CodePage* | The specified code page. Common values are **CP_ACP** (zero: system ANSI code page), 1200 (Unicode), and 1208 (UTF-8). |
-
-Any combination of these values may be used.
-
-| Flag | Description |
-| ---- | ----------- |
-| *tomReadOnly* | Read only. |
-| *tomShareDenyRead* | Other programs cannot read. |
-| *tomShareDenyWrite* | Other programs cannot write. |
-
-These values are mutually exclusive.
-
-| Flag | Description |
-| ---- | ----------- |
-| *tomCreateNew* | Create a new file. Fail if the file already exists. |
-| *tomCreateAlways* | Create a new file. Destroy the existing file if it exists. |
-| *tomRTF* | Save as RTF. |
-| *tomText* | Save as text. |
-
-#### Return value
-
-The return value can be an **HRESULT** value that corresponds to a system error or COM error code, including one of the following values.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **S_OK** | Method succeeds. |
-| **E_INVALIDARG** | Invalid argument. |
-| **E_OUTOFMEMORY** | Insufficient memory. |
-| **E_NOTIMPL** | Feature not implemented. |
-
-#### Remarks
-
-To use the parameters that were specified for opening the file, use zero values for the parameters.
-
-If *pVar* is null or missing, the file name given by this document's name is used. If both of these are missing or null, the method fails.
-
-If *pVar* specifies a file name, that name should replace the current **Name** property. Similarly, the *Flags* and *CodePage* arguments can overrule those supplied in the **OpenDoc** method and define the values to use for files created with the **NewDoc** method.
-
-Unicode plain-text files should be saved with the Unicode byte-order mark (&hFEFF) as the first character. This character should be removed when the file is read in; that is, it is only used for import/export to identify the plain text as Unicode and to identify the byte order of that text. Microsoft Notepad adopted this convention, which is now recommended by the Unicode standard.
-
-#### Usage examples
-
-Overwrites the current document in RTF format:
-```
-pRichEdit->SaveDoc(BYVAL NULL)
--- or --
-pRichEdit->SaveDoc(BYVAL NULL, tomRTF)
-```
-Overwrites the current document in text format:
-```
-pRichEdit->SaveDoc(BYVAL NULL, tomText)
-```
-Overwrites the current document in utf-8 format:
-```
-pRichEdit->SaveDoc(BYVAL NULL, tomText, CP_UTF8)
-```
-Overwrites the current document in unicode format:
-```
-pRichEdit->SaveDoc(BYVAL NULL, tomText, 1200)
-```
-Saves the current document in RTF format:
-```
-DIM cv AS CVAR = AfxGetExePath & $"\Test02.rtf"
-pRichEdit->SaveDoc(cv, tomCreateAlways OR tomRTF)
-```
-Saves the current document in text format:
-```
-DIM cv AS CVAR = AfxGetExePath & $"\Test02.txt"
-pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText)
-```
-Saves the current document in utf-8 (with BOM):
-```
-DIM cv AS CVAR = AfxGetExePath & $"\Test02.txt"
-pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText, CP_UTF8)
-```
-Saves the current document in unicode:
-```
-DIM cv AS CVAR = AfxGetExePath & $"\Test02.txt"
-pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText, 1200)
-```
 
 ---
