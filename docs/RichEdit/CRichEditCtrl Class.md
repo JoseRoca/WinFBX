@@ -109,6 +109,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetZoom](#getzoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
 | [HideSelection](#hideselection) | Hides or shows the selection in a rich edit control. |
 | [InsertImage](#insertimage) | Replaces the selection with a blob that displays an image. |
+| [InsertObject](#insertobject) | Inserts an image or an Ole object in the rich edit control. |
 | [InsertTable](#inserttable) | Inserts one or more identical table rows with empty cells. |
 | [IsIME](#isime) | Determines if current input locale is an East Asian locale. |
 | [IsTextBold](#istextbold) | Checks if the selected text or the word under the cursor is bolded. |
@@ -165,7 +166,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetRtf](#getrtf) | Retrieves formatted text from a rich edit control. |
 | [InsertRtfFile](#insertrtffile) | Inserts the contents of the specified RTF file. |
 | [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
-| [InsertObject](#insertobject) | Inserts an image or an Ole object in the rich edit control. |
 | [SaveRtf](#savertf) | Saves the contents of the rich edit control to a file in rtf format. |
 | [SaveRtfNoObjs](#savertfnoobjs) | Saves the contents of the rich edit control to a file in rtf format with spaces in place of COM objects. |
 | [SaveSelRtf](#saveselrtf) | Saves selection of the rich edit control to a file in rtf format. |
