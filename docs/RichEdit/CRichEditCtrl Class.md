@@ -14,6 +14,14 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetScalingRatio](#setscalingratio) | Sets the scaling ratio. |
 | [SetWysiwygPrint](#setwysiwygprint) | Sets the target printer device and line width used for "what you see is what you get" (WYSIWYG) formatting in a rich edit control. |
 
+# Methods inherited from CTextObjectBase
+
+| Name       | Description |
+| ---------- | ----------- |
+| [GetLastResult](#getlastresult) | Returns the last result code. |
+| [SetResult](#setresult) | Sets the last result code. |
+| [GetErrorInfo](#geterrorinfo) | Returns a localized description of the last result code. |
+
 #### Helper procedure
 
 | Name       | Description |
@@ -171,14 +179,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SaveSelRtf](#saveselrtf) | Saves selection of the rich edit control to a file in rtf format. |
 | [SaveText](#savetext) | Saves the contents of the rich edit control in text format. |
 | [SaveSelText](#saveseltext) | Saves selection of the rich edit control in text format. |
-
-# Methods inherited from CTextObjectBase
-
-| Name       | Description |
-| ---------- | ----------- |
-| [GetLastResult](#getlastresult) | Returns the last result code. |
-| [SetResult](#setresult) | Sets the last result code. |
-| [GetErrorInfo](#geterrorinfo) | Returns a localized description of the last result code. |
 
 # ITextDocument2 Methods
 
