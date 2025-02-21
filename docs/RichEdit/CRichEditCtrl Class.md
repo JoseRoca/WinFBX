@@ -171,15 +171,16 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [NewDoc](#newdoc) | Opens a new document. |
 | [OpenDoc](#opendoc) | Opens a new document. |
 | [SaveDoc](#savedoc) | Saves the document. |
+| [GetTextFromFile](#gettextfromfile) | Gets text from the specified file. |
 | [AppendDocFile](#appenddocfile) | Appends the contents of the specified RTF file. |
+| [InsertDocFile](#insertdocfile) | Inserts the contents of the specified RTF file. |
 | [GetRtf](#getrtf) | Retrieves formatted text from a rich edit control. |
-| [InsertdocFile](#insertdocfile) | Inserts the contents of the specified RTF file. |
-| [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
 | [SaveRtf](#savertf) | Saves the contents of the rich edit control to a file in rtf format. |
 | [SaveRtfNoObjs](#savertfnoobjs) | Saves the contents of the rich edit control to a file in rtf format with spaces in place of COM objects. |
 | [SaveSelRtf](#saveselrtf) | Saves selection of the rich edit control to a file in rtf format. |
 | [SaveText](#savetext) | Saves the contents of the rich edit control in text format. |
 | [SaveSelText](#saveseltext) | Saves selection of the rich edit control in text format. |
+| [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
 
 # ITextDocument2 Methods
 
@@ -3528,6 +3529,25 @@ pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText, 1200)
 ```
 
 ---
+
+# <a name="gettextfromfile"></a>GetTextFromFile
+
+Gets text from the specified file
+```
+FUNCTION GetTextFromFile (BYREF wszFileName AS WSTRING) AS STRING
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *wszFileName* | The path and name of the file to read. |
+
+#### Return value
+
+An string with the contents of the file or an empty string if the method fails. Possible errors are E_INVALIDARG (invalid argument) and ERROR_FILE_NOT_FOUND (if the file does not exist). Call the **GetErrorInfo** method to get error information.
+
+#### Remarks
+
+This method is used by the **AppendDocFile** and **InsertDocFile** methods.
 
 # <a name="appenddocfile"></a>AppendDocFile
 
