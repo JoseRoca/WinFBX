@@ -10,8 +10,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [DESTRUCTOR](#destructor) | Called automatically when a class variable goes out of scope or is destroyed. |
 | [hRichEdit](#hrichedit) | Returns the handle of the rich edit control. |
 | [ScalingRatio](#scalingratio) | Gets/sets the scaling ratio. |
-| [GetScalingRatio](#getscalingratio) | Gets the scaling ratio. |
-| [SetScalingRatio](#setscalingratio) | Sets the scaling ratio. |
 | [SetWysiwygPrint](#setwysiwygprint) | Sets the target printer device and line width used for "what you see is what you get" (WYSIWYG) formatting in a rich edit control. |
 
 # Methods inherited from CTextObjectBase
@@ -278,8 +276,12 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 Gets/sets the scaling ratio.
 
 ```
-PROPERTY ScalingRatio () AS SINGLE
-PROPERTY ScalingRatio (BYVAL Ratio AS SINGLE)
+(GET) PROPERTY ScalingRatio () AS SINGLE
+(SET) PROPERTY ScalingRatio (BYVAL Ratio AS SINGLE)
+```
+FUNCTION GetScalingRatio () AS SINGLE
+SUB SetScalingRatio (BYVAL ratio AS SINGLE)
+```
 ```
 #### Remarks
 
@@ -291,42 +293,8 @@ The scaling ratio is used by the **InsertImage** and **InsertObject** methods to
 DIM ratio AS LONG = pRichEdit.ScalingRatio
 pRichEdit.ScalingRatio = ratio
 ```
-
----
-
-# <a name="getscalingratio"></a>GetScalingRatio
-
-Gets the scaling ratio.
-
-```
-FUNCTION CRichEditCtrl.GetScalingRatio () AS SINGLE
-```
-#### Remarks
-
-The scaling ratio is used by the **InsertImage** and **InsertObject** methods to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
-
-#### Usage example
-
 ```
 DIM ratio AS LONG = pRichEdit.GetScalingRatio
-```
-
----
-
-# <a name="setscalingratio"></a>SetScalingRatio
-
-Sets the scaling ratio.
-
-```
-SUB CRichEditCtrl.SetScalingRatio (BYVAL ratio AS SINGLE)
-```
-#### Remarks
-
-The scaling ratio is used by the **InsertImage** and **InsertObject** methods to scale images according to the DPI settings of your computer. Its initial value is the scaling ratio used by its parent window, but you can change it with this property. Setting a value or 1 disables scaling.
-
-#### Usage example
-
-```
 pRichEdit.SetScalingRatio(ratio)
 ```
 
