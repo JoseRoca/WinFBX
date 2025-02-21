@@ -109,7 +109,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetZoom](#getzoom) | Gets the current zoom ratio, which is always between 1/64 and 64. |
 | [HideSelection](#hideselection) | Hides or shows the selection in a rich edit control. |
 | [InsertImage](#insertimage) | Replaces the selection with a blob that displays an image. |
-| [InsertObject](#insertobject) | Inserts an image or an Ole object in the rich edit control. |
+| [InsertObject](#insertobject) | Inserts an image or a Ole object in the rich edit control. |
 | [InsertTable](#inserttable) | Inserts one or more identical table rows with empty cells. |
 | [IsIME](#isime) | Determines if current input locale is an East Asian locale. |
 | [IsTextBold](#istextbold) | Checks if the selected text or the word under the cursor is bolded. |
@@ -2555,7 +2555,7 @@ Returns S_OK if successful, or one of the following error codes.
 
 # <a name="insertobject"></a>InsertObject
 
-Inserts an image or an Ole object in the rich edit control.
+Inserts an image or a Ole object in the rich edit control.
 See MSDN: https://learn.microsoft.com/en-us/windows/win32/controls/using-rich-edit-com
 Remarks: To insert images, use the **InsertImage** method, because the **InsertObject** method won't display the image, but an icon, when the image type is not a bitmap.
 ```
