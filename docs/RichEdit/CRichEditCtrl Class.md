@@ -186,6 +186,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 | Name       | Description |
 | ---------- | ----------- |
+| [GetDocInterface](#getdocinterface) | Retrieves a pointer to the ITextDocument2 interface. |
 
 ---
 
@@ -4016,3 +4017,26 @@ This property converts the pixels to twips internally.
 To select text programatically, use the **SetSel** method.
 
 ---
+
+# <a name="getdocinterface"></a>GetDocInterface
+
+Retrieves a pointer to the ITextDocument2 interface.
+
+```
+FUNCTION GetDocInterface () AS ITextDocument2 PTR
+```
+
+#### Return value
+
+A pointer to the **ITextDocument2** interface. When you have finished to use it, you must release it calling its **Release** method.
+
+#### Usage example
+
+```
+DIM pTextDoc AS ITExtDocument2 PTR
+pTextDoc = pRichEdit.GetDocInterface
+...
+...
+' // Release the pointer
+pTextDoc->lpvtbl->Release(pTextDoc)
+```
