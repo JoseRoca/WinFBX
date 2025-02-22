@@ -4020,7 +4020,7 @@ To select text programatically, use the **SetSel** method.
 
 # <a name="getdocinterface"></a>GetDocInterface
 
-Retrieves a pointer to the ITextDocument2 interface.
+Retrieves a pointer to the **ITextDocument2** interface.
 
 ```
 FUNCTION GetDocInterface () AS ITextDocument2 PTR
