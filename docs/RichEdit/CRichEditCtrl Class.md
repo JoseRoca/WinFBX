@@ -1057,6 +1057,9 @@ Gets/sets the state of a rich edit control's modification flag. The flag indicat
 FUNCTION GetModify () AS LONG
 SUB SetModify (BYVAL fModify AS LONG)
 ```
+```
+FUNCTION IsModified () AS BOOLEAN
+```
 
 | Parameter  | Description |
 | ---------- | ----------- |
