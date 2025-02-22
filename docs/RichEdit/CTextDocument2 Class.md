@@ -1794,7 +1794,7 @@ A pointer to the **ITextStory** interface of the active story.
 
 #### Result code
 
-If the method succeeds, **GetLAstREsult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetActiveStory"></a>SetActiveStory
 
