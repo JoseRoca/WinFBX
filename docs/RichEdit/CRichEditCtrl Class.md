@@ -186,7 +186,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetDocInterface](#getdocinterface) | Retrieves a pointer to the ITextDocument2 interface. |
+| [GetDocumentInterface](#getdocumentinterface) | Retrieves a pointer to the ITextDocument2 interface. |
 
 ---
 
@@ -4018,12 +4018,12 @@ To select text programatically, use the **SetSel** method.
 
 ---
 
-# <a name="getdocinterface"></a>GetDocInterface
+# <a name="getdocumentinterface"></a>GetDocumentInterface
 
 Retrieves a pointer to the **ITextDocument2** interface.
 
 ```
-FUNCTION GetDocInterface () AS ITextDocument2 PTR
+FUNCTION GetDocumentInterface () AS ITextDocument2 PTR
 ```
 
 #### Return value
@@ -4034,9 +4034,41 @@ A pointer to the **ITextDocument2** interface. When you have finished to use it,
 
 ```
 DIM pTextDoc AS ITExtDocument2 PTR
-pTextDoc = pRichEdit.GetDocInterface
+pTextDoc = pRichEdit.GetDocumentInterface
 ...
 ...
 ' // Release the pointer
-pTextDoc->lpvtbl->Release(pTextDoc)
+IUnknown_Release(pTextDoc)
 ```
+---
+
+# <a name="documentfont"></a>DocumentFont
+
+Gets/sets a pointer to the **ITextFont2** interface.
+
+```
+(GET) PROPERTY DocumentFont () AS ITextFont2 PTR
+(SET) PROPERTY DocumentFont (BYVAL pFont AS ITextFont2 PTR)
+```
+```
+FUNCTION GetDocumentFont () AS ITextFont2 PTR
+FUNCTION SetDocumentFont (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+```
+
+#### Return value
+
+A pointer to the **ITextFont2** interface. When you have finished to use it, you must release it calling its **Release** method.
+
+#### Usage example
+
+```
+DIM pTextFont AS ITExtFont2 PTR
+pTextFont = pRichEdit.DocumentFont
+--or--
+pTextFont = pRichEdit.GetDocumentFont
+...
+...
+' // Release the pointer
+IUnknown_Release(pTextFont)
+```
+---
