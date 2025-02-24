@@ -4336,7 +4336,7 @@ FUNCTION SetSaved (BYVAL value AS BOOLEAN) AS HRESULT
 
 #### Result code
 
-(SET) If the method succeeds, it returns **S_OK**. If the method fails, it returns **E_INVALIDARG** (invalid argument).
+(SET) If the method succeeds, it returns **S_OK**. If the method fails, it returns **E_INVALIDARG** (invalid argument). Call **GetErrorInfo** to get information about the result.
 
 ---
 
