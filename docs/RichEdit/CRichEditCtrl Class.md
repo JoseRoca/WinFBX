@@ -198,6 +198,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
+| [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
 | [Range2](#range2) | Retrieves a new text range for the active story of the document. |
 | [RangeFromPoint](#rangefrompoint) | Retrieves a range for the content at or nearest to the specified point on the screen. |
@@ -4482,5 +4483,22 @@ The number of stories in the document.
 #### Result code
 
 If the method succeeds, it returns **S_OK**. Call **GetErrorInfo** to get information about the result.
+
+---
+# <a name="getgenerator"></a>GetGenerator
+
+Gets the name of the Text Object Model (TOM) engine.
+
+```
+FUNCTION GetGenerator () AS CBSTR
+```
+
+#### Return value
+
+The name of the TOM engine.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 ---
