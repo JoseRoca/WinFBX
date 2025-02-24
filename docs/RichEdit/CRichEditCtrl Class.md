@@ -189,6 +189,8 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | Name       | Description |
 | ---------- | ----------- |
 | [DefaultTabStop](#defaulttabstop) | Gets/sets the default tab width. |
+| [Freeze](#freeze) | Increments the freeze count. |
+| [Unfreeze](#unfreeze) | Decrements the freeze count. |
 | [Saved](#saved) | Gets/sets the Saved property. |
 | [Selection](#selection) | Gets the active selection. |
 | [StoryCount](#storycount) | Gets the number of stories in the document. |
@@ -4116,6 +4118,53 @@ pTextFont = pRichEdit.GetDocumentFont
 ' // Release the pointer
 IUnknown_Release(pTextFont)
 ```
+---
+
+# <a name="freeze"></a>Freeze
+
+Increments the freeze count.
+
+```
+FUNCTION Freeze () AS LONG
+```
+
+#### Return value
+
+The updated freeze count.
+
+#### Result code
+
+If the **Freeze** count is nonzero, it returns **S_OK**. If the **Freeze** count is zero, it returns **FALSE**.
+
+#### Remarks
+
+If the freeze count is nonzero, screen updating is disabled. This allows a sequence of editing operations to be performed without the performance loss and flicker of screen updating. To decrement the freeze count, call the **Unfreeze** method.
+
+---
+
+
+# <a name="unfreeze"></a>Unfreeze
+
+Decrements the freeze count.
+
+```
+FUNCTION Unfreeze () AS LONG
+```
+
+#### Return value
+
+The updated freeze count.
+
+#### Result code
+
+If the freeze count is zero, the method returns **S_OK**. If the method fails, it returns **S_FALSE**, indicating that the freeze count is nonzero.
+
+#### Remarks
+
+If the freeze count goes to zero, screen updating is enabled. This method cannot decrement the count below zero, and no error occurs if it is executed with a zero freeze count.
+
+Note, if edit collection is active, screen updating is suppressed, even if the freeze count is zero.
+
 ---
 
 # <a name="getstoryranges"></a>GetStoryRanges
