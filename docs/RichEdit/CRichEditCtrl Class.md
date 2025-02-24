@@ -4222,18 +4222,18 @@ FUNCTION GetEastAsianFlags () AS LONG
 
 The East Asian flags. This parameter can be a combination of the following values.
 
-| Value  | Meaning |    |
-| ------ | -------- | -- |
-| **tomRE10Mode** | TOM version 1.0 emulation mode. | |
-| **tomUseAtFont** | Use @ fonts for CJK vertical text. | |
-| **tomTextFlowMask** | A mask for the following four text orientations: | |
+| Value  | Meaning |
+| ------ | ------- |
+| **tomRE10Mode** | TOM version 1.0 emulation mode. |
+| **tomUseAtFont** | Use @ fonts for CJK vertical text. |
+| **tomTextFlowMask** | A mask for the following four text orientations: |
 | | **tomTextFlowES** | Ordinary left-to-right horizontal text. |
-| | **tomTextFlowSW** | Ordinary East Asian vertical text. |
-| | **tomTextFlowWN** | An alternative orientation. |
-| | **tomTextFlowNE** | An alternative orientation. |
-| **tomUsePassword** | Use password control. | |
-| **tomNoIME** | Turn off IME operation (see ES_NOIME). ||
-| **tomSelfIME** | The rich edit host handles IME operation (see ES_SELFIME) . | |
+| | **tomTextFlowSW**<br> Ordinary East Asian vertical text. |
+| | **tomTextFlowWN**<br> An alternative orientation. |
+| | **tomTextFlowNE**<br> An alternative orientation. |
+| **tomUsePassword** | Use password control. |
+| **tomNoIME** | Turn off IME operation (see **ES_NOIME**). |
+| **tomSelfIME** | The rich edit host handles IME operation (see **ES_SELFIME**). |
 
 #### Result code
 
