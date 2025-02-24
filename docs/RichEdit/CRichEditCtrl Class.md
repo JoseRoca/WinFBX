@@ -188,6 +188,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 | Name       | Description |
 | ---------- | ----------- |
+| [AttachMsgFilter](#attachmsgfilter) | Attaches a new message filter to the edit instance. |
 | [BeginEditCollection](#begineditcollection) | Turns on edit collection (also called *undo grouping*). |
 | [EndEditCollection](#endeditcollection) | Turns off edit collection (also called *undo grouping*). |
 | [CaretType](#carettype) | Gets/sets the caret type. |
@@ -4078,6 +4079,27 @@ pTextDoc = pRichEdit.GetDocumentInterface
 ' // Release the pointer
 IUnknown_Release(pTextDoc)
 ```
+---
+
+# <a name="attachmsgfilter"></a>AttachMsgFilter
+
+Attaches a new message filter to the edit instance. All window messages that the edit instance receives are forwarded to the message filter.
+
+```
+FUNCTION AttachMsgFilter (BYVAL pFilter AS IUnknown PTR) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pFilter* | The message filter. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The message filter must be bound to the document before it can be used.
+
 ---
 
 # <a name="begineditcollection"></a>BeginEditCollection
