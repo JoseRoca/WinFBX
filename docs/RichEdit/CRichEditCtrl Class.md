@@ -192,6 +192,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [BeginEditCollection](#begineditcollection) | Turns on edit collection (also called *undo grouping*). |
 | [EndEditCollection](#endeditcollection) | Turns off edit collection (also called *undo grouping*). |
 | [CaretType](#carettype) | Gets/sets the caret type. |
+| [CheckTextLimit](#checktextlimit) | Checks whether the number of characters to be added would exceed the maximum text limit. |
 | [DefaultTabStop](#defaulttabstop) | Gets/sets the default tab width. |
 | [DocumentFont](#documentfont) | Gets/sets a font object that provides the default character format information for this instance of the Text Object Model (TOM) engine. |
 | [DocumentPara](#documentpara) | Gets/sets an object that provides the default paragraph format information for this instance of the Text Object Model (TOM) engine. |
@@ -4158,6 +4159,26 @@ FUNCTION SetCaretType (BYVAL Value AS LONG) AS HRESULT
 #### Result code
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.  Call **GetErrorInfo** to get information about the result.
+
+---
+# <a name="checktextlimit"></a>CheckTextLimit
+
+Checks whether the number of characters to be added would exceed the maximum text limit.
+
+```
+FUNCTION CheckTextLimit (BYVAL cch AS LONG) AS LONG
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cch* | The number of characters to be added. |
+
+#### Return value
+
+The number of characters that exceed the maximum text limit. This parameter is 0 if the number of characters does not exceed the limit.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 ---
 
