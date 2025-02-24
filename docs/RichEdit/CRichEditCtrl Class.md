@@ -198,6 +198,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
+| [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
 | [Range2](#range2) | Retrieves a new text range for the active story of the document. |
@@ -4516,6 +4517,29 @@ FUNCTION SetIMEInProgress (BYVAL Value AS LONG) AS HRESULT
 | Parameter  | Description |
 | ---------- | ----------- |
 | *Value* | Use **tomTrue** to turn on the IME in-progress flag, or **tomFalse** to turn it off. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+# <a name="notificationmode"></a>NotificationMode
+
+Gets/sets the notification mode.
+
+```
+(GET) PROPERTY NotificationMode () AS LONG
+(SET) PROPERTY NotificationMode (BYVAL Value AS LONG)
+```
+```
+FUNCTION GetNotificationMode () AS LONG
+FUNCTION SetNotificationMode (BYVAL Value AS LONG) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Value* | The notification mode. This parameter is set to **tomTrue** if notifications are active, or **tomFalse** if not. |
 
 #### Return value
 
