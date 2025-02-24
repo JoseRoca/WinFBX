@@ -97,6 +97,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [FindWordBreak](#findwordbreak) | Finds the next word break before or after the specified character position or retrieves information about the character at that position. |
 | [FormatRange](#formatrange) | Formats a range of text in a rich edit control for a specific device. |
 | [GetCharFromPos](#getcharfrompos) | Gets information about the character closest to a specified point in the client area of an edit control. |
+| [GetDocumentInterface](#getdocumentinterface) | Retrieves a pointer to the ITextDocument2 interface. |
 | [GetIMEColor](#getimecolor) | Retrieves the Input Method Editor (IME) composition color. |
 | [GetIMECompMode](#getimecompmode) | Gets the current IME mode for a rich edit control. |
 | [GetIMECompText](#getimecompText) | Gets the Input Method Editor (IME) composition text. |
@@ -187,11 +188,11 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetDocumentInterface](#getdocumentinterface) | Retrieves a pointer to the ITextDocument2 interface. |
-| [GetStoryRanges](#getstoryranges) | Gets the story collection object used to enumerate the stories in a document. |
-| [Saved](#saved) | Gets/sets the Saved property |
+| [DefaultTabStop](#defaulttabstop) | Gets/sets the default tab width. |
+| [Saved](#saved) | Gets/sets the Saved property. |
 | [Selection](#selection) | Gets the active selection. |
 | [StoryCount](#storycount) | Gets the number of stories in the document. |
+| [GetStoryRanges](#getstoryranges) | Gets the story collection object used to enumerate the stories in a document. |
 
 ---
 
@@ -4060,6 +4061,31 @@ pTextDoc = pRichEdit.GetDocumentInterface
 IUnknown_Release(pTextDoc)
 ```
 ---
+
+# <a name="defaulttabstop"></a>DefaultTabStop
+
+Gets/sets the default tab width. Default value is 36.0 points, that is, 0.5 inches.
+
+```
+(GET) PROPERTY DefaultTabStop () AS SINGLE
+(SET) DefaultTabStop (BYVAL Value AS SINGLE)
+```
+```
+FUNCTION GetDefaultTabStop () AS SINGLE
+FUNCTION SetDefaultTabStop (BYVAL Value AS SINGLE = 36.0) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Value* | New default tab setting, in floating-point points. Default value is 36.0 points, that is, 0.5 inches. |
+
+#### Result code
+
+If the method succeeds it returns **S_OK**. If the method fails, it returns **E_INVALIDARG** (invalid argument) or **E_OUTOFMEMORY** (insufficient memory.).
+
+#### Remarks
+
+The default tab width is used whenever no tab exists beyond the current display position. The default width is given in floating-point points.
 
 # <a name="documentfont"></a>DocumentFont
 
