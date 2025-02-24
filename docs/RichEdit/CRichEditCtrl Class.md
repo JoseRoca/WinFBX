@@ -200,6 +200,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
+| [GetWindow](#getwindow) | Gets the handle of the window that the Text Object Model (TOM) engine is using to display output. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
 | [Range2](#range2) | Retrieves a new text range for the active story of the document. |
 | [RangeFromPoint](#rangefrompoint) | Retrieves a range for the content at or nearest to the specified point on the screen. |
@@ -4542,6 +4543,24 @@ FUNCTION GetGenerator () AS CBSTR
 #### Return value
 
 The name of the TOM engine.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+# <a name="getwindow"></a>GetWindow
+
+Gets the handle of the window that the Text Object Model (TOM) engine is using to display output.
+
+```
+FUNCTION FUNCTION GetWindow () AS __int64
+```
+
+#### Return value
+
+The handle of the window that the TOM engine is using.
 
 #### Result code
 
