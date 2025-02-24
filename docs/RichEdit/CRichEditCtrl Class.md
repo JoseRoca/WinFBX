@@ -199,6 +199,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [EastAsianFlags](#eastasianflags) | Gets the East Asian flags. |
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
+| [GetCallManager](#getcallmanager) | Gets the call manager. |
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
@@ -4332,6 +4333,28 @@ If the freeze count is zero, the method returns **S_OK**. If the method fails, i
 If the freeze count goes to zero, screen updating is enabled. This method cannot decrement the count below zero, and no error occurs if it is executed with a zero freeze count.
 
 Note, if edit collection is active, screen updating is suppressed, even if the freeze count is zero.
+
+---
+
+# <a name="getcallnanager"></a>GetCallManager
+
+Gets the call manager.
+
+```
+FUNCTION GetCallManager () AS IUnknown PTR
+```
+
+#### Return value
+
+Gets the call manager.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The call manager object is opaque to the caller. The Text Object Model (TOM) engine uses the object to handle internal notifications for particular scenarios.
 
 ---
 
