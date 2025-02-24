@@ -188,6 +188,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | Name       | Description |
 | ---------- | ----------- |
 | [GetDocumentInterface](#getdocumentinterface) | Retrieves a pointer to the ITextDocument2 interface. |
+| [Selection](#selection) | Gets the active selection. |
 
 ---
 
@@ -538,7 +539,7 @@ FUNCTION SetWordCharFormat (BYREF cf AS CHARFORMATW) AS BOOLEAN
 
 (GET) Returns a [CHARFORMATW](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformatw) structure with the attributes of the first character. The **dwMask** member specifies which attributes are consistent throughout the entire selection. For example, if the entire selection is either in italics or not in italics, CFM_ITALIC is set; if the selection is partly in italics and partly not, CFM_ITALIC is not set.
 
-(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+(SET) If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetErrorInfo** to get information about the result.
 
 
 #### Usage examples
@@ -1413,7 +1414,7 @@ FUNCTION SetText (BYREF wszText AS WSTRING) AS BOOLEAN
 
 (GET) The retrieved text.
 
-(SET) The return value is **TRUE** if the text is set. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+(SET) The return value is **TRUE** if the text is set. Call **GetErrorInfo** to get information about the result.
 
 #### Remarks
 
@@ -2105,7 +2106,7 @@ END FUNCTION
 
 #### Return value
 
-If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetErrorInfo** to get information about the result.
 
 #### Note
 
@@ -2499,7 +2500,7 @@ BYVAL Ascent AS LONG = 0, BYVAL nType AS LONG = TA_BASELINE, BYREF wszAlternateT
 
 #### Return value
 
-Returns a boolean value: 0 for success and -1 for failure. To get extended error information call **GetLastResult** and/or **GetErrorInfo**, which can return **S_OK** if successful, or one of the following error codes.
+Returns a boolean value: 0 for success and -1 for failure. To get extended error information call **GetErrorInfo**, which can return **S_OK** if successful, or one of the following error codes.
 
 | Return code  | Description |
 | ------------ | ----------- |
@@ -2541,7 +2542,7 @@ FUNCTION InsertObject (BYREF wszFileName AS WSTRING) AS BOOLEAN
 
 #### Return value
 
-Returns a boolean true (-1) for success of false (0) for failure. To get extended information call the **GetLastResult** and/or the **GetErrorInfo** methods.
+Returns a boolean true (-1) for success of false (0) for failure. To get extended information call the  **GetErrorInfo** method.
 
 ---
 
@@ -2931,7 +2932,7 @@ END FUNCTION
 
 #### Return value
 
-If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetLastResult** and/or **GetErrorInfo** to get information about the result.
+If the operation succeeds, the return value is a nonzero value. If the operation fails, the return value is zero. Call **GetErrorInfo** to get information about the result.
 
 #### Note
 
@@ -3547,6 +3548,8 @@ The path and file name of the document.
 
 ---
 
+---
+
 # <a name="gettextfromfile"></a>GetTextFromFile
 
 Gets text from the specified file
@@ -4084,4 +4087,23 @@ pTextFont = pRichEdit.GetDocumentFont
 ' // Release the pointer
 IUnknown_Release(pTextFont)
 ```
+---
+
+# <a name="selection"></a>Selection
+
+Gets the active selection.
+
+```
+PRIVATE FUNCTION Selection () AS ITextSelection PTR
+PRIVATE FUNCTION GetSelection () AS ITextSelection PTR
+```
+
+#### Return value
+
+The active selection. It will be null if there is not active selection.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If there is not active selection, it returns **S_FALSE**. Call **GetErrorInfo** to get information about the result.
+
 ---
