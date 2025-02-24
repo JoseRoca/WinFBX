@@ -200,6 +200,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
 | [GetCallManager](#getcallmanager) | Gets the call manager. |
+| [GetClientRect](#getclientrect) || [GetClientRect](#getclientrect) | Gets the call manager. | |
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
@@ -4595,6 +4596,31 @@ The number of stories in the document.
 #### Result code
 
 If the method succeeds, it returns **S_OK**. Call **GetErrorInfo** to get information about the result.
+
+---
+
+# <a name="getclientrect"></a>GetClientRect
+
+Retrieves the client rectangle of the rich edit control.
+
+```
+FUNCTION GetClientRect (BYVAL nType AS LONG, BYREF Left AS LONG, BYREF Top AS LONG,_
+   BYREF Right AS LONG, BYREF Bottom AS LONG) AS HRESULT
+FUNCTION GetClientRect (BYVAL nType AS LONG) AS .RECT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nType* | The client rectangle retrieval options. It can be a combination of the following values:<br>**tomClientCoord**: Retrieve the rectangle in client coordinates. If this value isn't specified, the function retrieves screen coordinates.<br>**tomIncludeInset**:Add left and top insets to the left and top coordinates of the client rectangle, and subtract right and bottom insets from the right and bottom coordinates.<br>**tomTransform**: Use a world transform (XFORM) provided by the host application to transform the retrieved rectangle coordinates. |
+| *Left* | The x-coordinate of the upper-left corner of the rectangle. |
+| *Top* | The y-coordinate of the upper-left corner of the rectangle. |
+| *Right* | The x-coordinate of the lower-right corner of the rectangle. |
+| *Bottom* | The y-coordinate of the lower-right corner of the rectangle. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+The second overlapped structure returns a **RECT** structure.
 
 ---
 
