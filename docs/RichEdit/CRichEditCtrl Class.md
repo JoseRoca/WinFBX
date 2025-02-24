@@ -4227,7 +4227,7 @@ The East Asian flags. This parameter can be a combination of the following value
 | **tomRE10Mode** | TOM version 1.0 emulation mode. |
 | **tomUseAtFont** | Use @ fonts for CJK vertical text. |
 | **tomTextFlowMask** | A mask for the following four text orientations: |
-| | **tomTextFlowES** | Ordinary left-to-right horizontal text. |
+| | **tomTextFlowES**<br> Ordinary left-to-right horizontal text. |
 | | **tomTextFlowSW**<br> Ordinary East Asian vertical text. |
 | | **tomTextFlowWN**<br> An alternative orientation. |
 | | **tomTextFlowNE**<br> An alternative orientation. |
