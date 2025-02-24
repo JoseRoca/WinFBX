@@ -4128,6 +4128,8 @@ FUNCTION SetCaretType (BYVAL Value AS LONG) AS HRESULT
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.  Call **GetErrorInfo** to get information about the result.
 
+---
+
 # <a name="defaulttabstop"></a>DefaultTabStop
 
 Gets/sets the default tab width. Default value is 36.0 points, that is, 0.5 inches.
