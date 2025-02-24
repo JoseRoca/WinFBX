@@ -189,6 +189,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | ---------- | ----------- |
 | [GetDocumentInterface](#getdocumentinterface) | Retrieves a pointer to the ITextDocument2 interface. |
 | [Selection](#selection) | Gets the active selection. |
+| [StoryCount](#storycount) | Gets the number of stories in the document. |
 
 ---
 
@@ -4105,5 +4106,24 @@ The active selection. It will be null if there is not active selection.
 #### Result code
 
 If the method succeeds, it returns **S_OK**. If there is not active selection, it returns **S_FALSE**. Call **GetErrorInfo** to get information about the result.
+
+---
+
+# <a name="storycount"></a>StoryCount
+
+Gets the number of stories in the document.
+
+```
+DECLARE FUNCTION StoryCount () AS LONG
+DECLARE FUNCTION GetStoryCount () AS LONG
+```
+
+#### Return value
+
+The number of stories in the document.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. Call **GetErrorInfo** to get information about the result.
 
 ---
