@@ -202,9 +202,10 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetCallManager](#getcallmanager) | Gets the call manager. |
 | [GetClientRect](#getclientrect) | Retrieves the client rectangle of the rich edit control. |
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
-| [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
+| [GetEffectColor](#GetEffectColor) | Retrieves the color used for special text attributes. |
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
 | [GetWindow](#getwindow) | Gets the handle of the window that the Text Object Model (TOM) engine is using to display output. |
+| [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
 | [Range2](#range2) | Retrieves a new text range for the active story of the document. |
 | [RangeFromPoint](#rangefrompoint) | Retrieves a range for the content at or nearest to the specified point on the screen. |
@@ -4621,6 +4622,51 @@ FUNCTION GetClientRect (BYVAL nType AS LONG) AS .RECT
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 The second overlapped structure returns a **RECT** structure.
+
+---
+
+# <a name="geteffectcolor"></a>GetEffectColor
+
+Retrieves the color used for special text attributes.
+
+```
+FUNCTION GetEffectColor (BYVAL Index AS LONG) AS ULONG
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Index* | The index of the color to retrieve. It can be one of the following values: |
+
+| Index  | Meaning |
+| ------ | ------- |
+| 0 | Text color. |
+| 1 | RGB(0, 0, 0) |
+| 2 | RGB(0, 0, 255) |
+| 3 | RGB(0, 255, 255) |
+| 4 | RGB(0, 255, 0) |
+| 5 | RGB(255, 0, 255) |
+| 6 | RGB(255, 0, 0) |
+| 7 | RGB(255, 255, 0) |
+| 8 | RGB(255, 255, 255) |
+| 9 | RGB(0, 0, 128) |
+| 10 | RGB(0, 128, 128) |
+| 11 | RGB(0, 128, 0) |
+| 12 | RGB(128, 0, 128) |
+| 13 | RGB(128, 0, 0) |
+| 14 | RGB(128, 128, 0) |
+| 15 | RGB(128, 128, 128) |
+| 16 | RGB(192, 192, 192) |
+
+#### Return value
+
+The color that corresponds to the specified index.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The first 16 index values are for special underline colors. If an index between 1 and 16 hasn't been defined by a call to the **SetEffectColor** method, **GetEffectColor** returns the corresponding Microsoft Word default color.
 
 ---
 
