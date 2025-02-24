@@ -194,6 +194,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [DefaultTabStop](#defaulttabstop) | Gets/sets the default tab width. |
 | [DocumentFont](#documentfont) | Gets/sets a font object that provides the default character format information for this instance of the Text Object Model (TOM) engine. |
 | [DocumentPara](#documentpara) | Gets/sets an object that provides the default paragraph format information for this instance of the Text Object Model (TOM) engine. |
+| [EastAsianFlags](#eastasianflags) | Gets the East Asian flags. |
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
@@ -4205,6 +4206,38 @@ FUNCTION SetDocumentPara (BYVAL pTextPara AS ITextPara2 PTR) AS HRESULT
 #### Return value
 
 A pointer to the **ITextPara2** interface. When you have finished to use it, you must release it calling its **Release** method.
+
+---
+
+# <a name="eastasianflags"></a>EastAsianFlags
+
+Gets the East Asian flags.
+
+```
+FUNCTION EastAsianFlags () AS LONG
+FUNCTION GetEastAsianFlags () AS LONG
+```
+
+#### Return value
+
+The East Asian flags. This parameter can be a combination of the following values.
+
+| Value  | Meaaning |    |
+| ------ | -------- | -- |
+| **tomRE10Mode** | TOM version 1.0 emulation mode. | |
+| **tomUseAtFont** | Use @ fonts for CJK vertical text. | |
+| **tomTextFlowMask** | A mask for the following four text orientations: | |
+| | **tomTextFlowES** | Ordinary left-to-right horizontal text. |
+| | **tomTextFlowSW** | Ordinary East Asian vertical text. |
+| | **tomTextFlowSW** | An alternative orientation. |
+| | **tomTextFlowNE** | An alternative orientation. |
+| **tomUsePassword** | Use password control. | |
+| **tomNoIME** | Turn off IME operation (see ES_NOIME). ||
+| **tomSelfIME** | The rich edit host handles IME operation (see ES_SELFIME) . | |
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 ---
 
