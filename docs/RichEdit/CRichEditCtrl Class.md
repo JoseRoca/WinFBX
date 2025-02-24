@@ -4091,6 +4091,24 @@ IUnknown_Release(pTextFont)
 ```
 ---
 
+# <a name="getstoryranges"></a>GetStoryRanges
+
+Gets the story collection object used to enumerate the stories in a document.
+
+```
+FUNCTION GetStoryRanges () AS ITextStoryRanges PTR
+```
+
+#### Return value
+
+The **ITextStoryRanges** pointer. It can be null if there is only one story in this document.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns **E_NOTIMPL** (not implemented; only one story in this document).
+
+---
+
 # <a name="selection"></a>Selection
 
 Gets the active selection.
@@ -4109,22 +4127,6 @@ The active selection. It will be null if there is not active selection.
 If the method succeeds, it returns **S_OK**. If there is not active selection, it returns **S_FALSE**. Call **GetErrorInfo** to get information about the result.
 
 ---
-
-# <a name="getstoryranges"></a>GetStoryRanges
-
-Gets the story collection object used to enumerate the stories in a document.
-
-```
-FUNCTION GetStoryRanges () AS ITextStoryRanges PTR
-```
-
-#### Return value
-
-The **ITextStoryRanges** pointer. It can be null if there is only one story in this document.
-
-#### Result code
-
-If the method succeeds, it returns **S_OK**. If the method fails, it returns **E_NOTIMPL** (not implemented; only one story in this document).
 
 # <a name="storycount"></a>StoryCount
 
