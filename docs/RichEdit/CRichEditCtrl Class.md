@@ -188,6 +188,8 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 | Name       | Description |
 | ---------- | ----------- |
+| [BeginEditCollection](#begineditcollection) | Turns on edit collection (also called *undo grouping*). |
+| [EndEditCollection](#endeditcollection) | Turns off edit collection (also called *undo grouping*). |
 | [DefaultTabStop](#defaulttabstop) | Gets/sets the default tab width. |
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
@@ -4062,6 +4064,36 @@ pTextDoc = pRichEdit.GetDocumentInterface
 ' // Release the pointer
 IUnknown_Release(pTextDoc)
 ```
+---
+
+# <a name="begineditcollection"></a>BeginEditCollection
+
+Turns on edit collection (also called *undo grouping*).
+
+```
+FUNCTION BeginEditCollection () AS HRESULT
+```
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes: **S_FALSE** (undo is not enabled), **E_NOTIMPL** (this method is not implemented).
+
+---
+
+# <a name="endeditcollection"></a>EndEditCollection
+
+Turns off edit collection (also called *undo grouping*).
+
+```
+FUNCTION EndEditCollection () AS HRESULT
+```
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns **E_NOTIMPL** (this method is not implemented).
+
+#### Remarks
+
+The screen is unfrozen unless the freeze count is nonzero.
+
 ---
 
 # <a name="defaulttabstop"></a>DefaultTabStop
