@@ -171,9 +171,10 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [NewDoc](#newdoc) | Opens a new document. |
 | [OpenDoc](#opendoc) | Opens a new document. |
 | [SaveDoc](#savedoc) | Saves the document. |
-| [GetTextFromFile](#gettextfromfile) | Gets text from the specified file. |
+| [DocName](#docname) | Gets the file name of this document. |
 | [AppendDocFile](#appenddocfile) | Appends the contents of the specified RTF file. |
 | [InsertDocFile](#insertdocfile) | Inserts the contents of the specified RTF file. |
+| [GetTextFromFile](#gettextfromfile) | Gets text from the specified file. |
 | [GetRtf](#getrtf) | Retrieves formatted text from a rich edit control. |
 | [SaveRtf](#savertf) | Saves the contents of the rich edit control to a file in rtf format. |
 | [SaveRtfNoObjs](#savertfnoobjs) | Saves the contents of the rich edit control to a file in rtf format with spaces in place of COM objects. |
@@ -3531,6 +3532,18 @@ Saves the current document in unicode:
 DIM cv AS CVAR = AfxGetExePath & $"\Test02.txt"
 pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText, 1200)
 ```
+
+# <a name="docname"></a>DocName
+
+Gets the path and file name of the document.
+
+```
+PRIVATE FUNCTION DocName () AS CWSTR
+PRIVATE FUNCTION GetDocName () AS CWSTR
+```
+#### Return value
+
+The path and file name of the document.
 
 ---
 
