@@ -4135,6 +4135,8 @@ FUNCTION SetSaved (BYVAL value AS BOOLEAN) AS HRESULT
 
 (SET) If the method succeeds, it returns **S_OK**. If the method fails, it returns **E_INVALIDARG** (invalid argument).
 
+---
+
 # <a name="selection"></a>Selection
 
 Gets the active selection.
