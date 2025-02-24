@@ -4222,14 +4222,14 @@ FUNCTION GetEastAsianFlags () AS LONG
 
 The East Asian flags. This parameter can be a combination of the following values.
 
-| Value  | Meaaning |    |
+| Value  | Meaning |    |
 | ------ | -------- | -- |
 | **tomRE10Mode** | TOM version 1.0 emulation mode. | |
 | **tomUseAtFont** | Use @ fonts for CJK vertical text. | |
 | **tomTextFlowMask** | A mask for the following four text orientations: | |
 | | **tomTextFlowES** | Ordinary left-to-right horizontal text. |
 | | **tomTextFlowSW** | Ordinary East Asian vertical text. |
-| | **tomTextFlowSW** | An alternative orientation. |
+| | **tomTextFlowWN** | An alternative orientation. |
 | | **tomTextFlowNE** | An alternative orientation. |
 | **tomUsePassword** | Use password control. | |
 | **tomNoIME** | Turn off IME operation (see ES_NOIME). ||
