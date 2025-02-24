@@ -205,6 +205,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [RangeFromPoint2](#rangefrompoint2) | Retrieves the degenerate range at (or nearest to) a particular point on the screen. |
 | [Saved](#saved) | Gets/sets the Saved property. |
 | [Selection](#selection) | Gets the active selection. |
+| [SetIMEInProgress](#setimeinprogress) | Sets the state of the Input Method Editor (IME) in-progress flag. |
 | [StoryCount](#storycount) | Gets the number of stories in the document. |
 | [GetStoryRanges](#getstoryranges) | Gets the story collection object used to enumerate the stories in a document. |
 
@@ -4485,6 +4486,7 @@ The number of stories in the document.
 If the method succeeds, it returns **S_OK**. Call **GetErrorInfo** to get information about the result.
 
 ---
+
 # <a name="getgenerator"></a>GetGenerator
 
 Gets the name of the Text Object Model (TOM) engine.
@@ -4498,6 +4500,24 @@ FUNCTION GetGenerator () AS CBSTR
 The name of the TOM engine.
 
 #### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+# <a name="setimeinprogress"></a>SetIMEInProgress
+
+Sets the state of the Input Method Editor (IME) in-progress flag.
+
+```
+FUNCTION SetIMEInProgress (BYVAL Value AS LONG) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Value* | Use **tomTrue** to turn on the IME in-progress flag, or **tomFalse** to turn it off. |
+
+#### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
