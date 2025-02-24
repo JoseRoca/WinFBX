@@ -206,6 +206,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [RangeFromPoint2](#rangefrompoint2) | Retrieves the degenerate range at (or nearest to) a particular point on the screen. |
 | [Saved](#saved) | Gets/sets the Saved property. |
 | [Selection](#selection) | Gets the active selection. |
+| [Selection2](#selection2) | Gets the active selection. |
 | [SetIMEInProgress](#setimeinprogress) | Sets the state of the Input Method Editor (IME) in-progress flag. |
 | [StoryCount](#storycount) | Gets the number of stories in the document. |
 | [GetStoryRanges](#getstoryranges) | Gets the story collection object used to enumerate the stories in a document. |
@@ -591,7 +592,6 @@ cf.yHeight = 12 * 20                 ' // Character height, in twips (1/1440 of 
 pRichEdit.SelectionCharFormat = cf   ' // Set the format
 pRichEdit.HideSelection(TRUE)        ' // Hide selection
 ```
-
 ---
 
 # <a name="ctfmodebias"></a>CTFModeBias
@@ -4462,6 +4462,25 @@ PRIVATE FUNCTION GetSelection () AS ITextSelection PTR
 #### Return value
 
 The active selection. It will be null if there is not active selection.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If there is not active selection, it returns **S_FALSE**. Call **GetErrorInfo** to get information about the result.
+
+---
+
+# <a name="selection2"></a>Selection2
+
+Gets the active selection.
+
+```
+PRIVATE FUNCTION Selection2 () AS ITextSelection PTR
+PRIVATE FUNCTION GetSelection2 () AS ITextSelection PTR
+```
+
+#### Return value
+
+The active selection. It will be **NULL** if the rich edit control is not in-place active.
 
 #### Result code
 
