@@ -190,10 +190,11 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | ---------- | ----------- |
 | [BeginEditCollection](#begineditcollection) | Turns on edit collection (also called *undo grouping*). |
 | [EndEditCollection](#endeditcollection) | Turns off edit collection (also called *undo grouping*). |
-| [DefaultTabStop](#defaulttabstop) | Gets/sets the default tab width. |
 | [CaretType](#carettype) | Gets/sets the caret type. |
+| [DefaultTabStop](#defaulttabstop) | Gets/sets the default tab width. |
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
+| [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
 | [Range2](#range2) | Retrieves a new text range for the active story of the document. |
 | [RangeFromPoint](#rangefrompoint) | Retrieves a range for the content at or nearest to the specified point on the screen. |
@@ -4229,6 +4230,28 @@ If the freeze count is zero, the method returns **S_OK**. If the method fails, i
 If the freeze count goes to zero, screen updating is enabled. This method cannot decrement the count below zero, and no error occurs if it is executed with a zero freeze count.
 
 Note, if edit collection is active, screen updating is suppressed, even if the freeze count is zero.
+
+---
+
+# <a name="getdisplays"></a>GetDisplays
+
+Gets the displays collection for this Text Object Model (TOM) engine instance.
+
+```
+FUNCTION GetDisplays () AS ITextDisplays PTR
+```
+
+#### Return value
+
+A pointer to the displays collection.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The rich edit control doesn't implement this method.
 
 ---
 
