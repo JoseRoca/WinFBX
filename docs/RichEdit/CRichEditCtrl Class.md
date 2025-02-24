@@ -193,6 +193,8 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [DefaultTabStop](#defaulttabstop) | Gets/sets the default tab width. |
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
+| [Range](#Range) | Retrieves a text range object for a specified range of content in the active story of the document. |
+| [Range2](#Range2) | Retrieves a new text range for the active story of the document. |
 | [Saved](#saved) | Gets/sets the Saved property. |
 | [Selection](#selection) | Gets the active selection. |
 | [StoryCount](#storycount) | Gets the number of stories in the document. |
@@ -4174,7 +4176,6 @@ If the freeze count is nonzero, screen updating is disabled. This allows a seque
 
 ---
 
-
 # <a name="unfreeze"></a>Unfreeze
 
 Decrements the freeze count.
@@ -4196,6 +4197,52 @@ If the freeze count is zero, the method returns **S_OK**. If the method fails, i
 If the freeze count goes to zero, screen updating is enabled. This method cannot decrement the count below zero, and no error occurs if it is executed with a zero freeze count.
 
 Note, if edit collection is active, screen updating is suppressed, even if the freeze count is zero.
+
+---
+
+# <a name="range"></a>Range
+
+Retrieves a text range object for a specified range of content in the active story of the document.
+
+```
+FUNCTION Range (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cpActive* | The start position of new range. The default value is zero, which represents the start of the document. |
+| *cpAnchor* | The end position of new range. The default value is zero. |
+
+#### Return value
+
+A **ITextRange** pointer to the specified text range.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes: **E_INVALIDARG** (invalid argument), **E_OUTOFMEMORY** (insufficient memory). Call **GetErrorInfo** to get information about the result.
+
+---
+
+# <a name="range2"></a>Range2
+
+Retrieves a new text range for the active story of the document.
+
+```
+FUNCTION Range2 (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange2 PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cpActive* | The active end of the new text range. The default value is 0; that is, the beginning of the story. |
+| *cpAnchor* | The anchor end of the new text range. The default value is 0. |
+
+#### Return value
+
+A **ITextRange2** pointer to the specified text range.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.  Call **GetErrorInfo** to get information about the result.
 
 ---
 
