@@ -191,6 +191,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [BeginEditCollection](#begineditcollection) | Turns on edit collection (also called *undo grouping*). |
 | [EndEditCollection](#endeditcollection) | Turns off edit collection (also called *undo grouping*). |
 | [DefaultTabStop](#defaulttabstop) | Gets/sets the default tab width. |
+| [CaretType](#carettype) | Gets/sets the caret type. |
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
@@ -4100,13 +4101,40 @@ The screen is unfrozen unless the freeze count is nonzero.
 
 ---
 
+# <a name="carettype"></a>CaretType
+
+Gets/sets the caret type.
+
+```
+(GET) PROPERTY CaretType () AS LONG
+(SET) PROPERTY CaretType (BYVAL Value AS LONG) AS HRESULT
+```
+```
+FUNCTION GetCaretType () AS LONG
+FUNCTION SetCaretType (BYVAL Value AS LONG) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Value* | The caret type. It can be one of the following values: |
+
+| Value  | Description |
+| ------ | ----------- |
+| **tomKoreanBlockCaret** | The Korean block caret. |
+| **tomNormalCaret** | Normal caret. |
+| **tomNullCaret** | NULL caret (caret suppressed). |
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.  Call **GetErrorInfo** to get information about the result.
+
 # <a name="defaulttabstop"></a>DefaultTabStop
 
 Gets/sets the default tab width. Default value is 36.0 points, that is, 0.5 inches.
 
 ```
 (GET) PROPERTY DefaultTabStop () AS SINGLE
-(SET) DefaultTabStop (BYVAL Value AS SINGLE)
+(SET) PROPERTY DefaultTabStop (BYVAL Value AS SINGLE)
 ```
 ```
 FUNCTION GetDefaultTabStop () AS SINGLE
