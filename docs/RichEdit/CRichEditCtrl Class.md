@@ -189,6 +189,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | ---------- | ----------- |
 | [GetDocumentInterface](#getdocumentinterface) | Retrieves a pointer to the ITextDocument2 interface. |
 | [GetStoryRanges](#getstoryranges) | Gets the story collection object used to enumerate the stories in a document. |
+| [Saved](#saved) | Gets/sets the Saved property |
 | [Selection](#selection) | Gets the active selection. |
 | [StoryCount](#storycount) | Gets the number of stories in the document. |
 
@@ -4108,6 +4109,31 @@ The **ITextStoryRanges** pointer. It can be null if there is only one story in t
 If the method succeeds, it returns **S_OK**. If the method fails, it returns **E_NOTIMPL** (not implemented; only one story in this document).
 
 ---
+
+# <a name="saved"></a>Saved
+
+Gets/sets a value that indicates whether changes have been made since the file was last saved.
+
+```
+(GET) PROPERTY Saved () AS BOOLEAN
+(SET) PROPERTY Saved (BYVAL value AS BOOLEAN)
+```
+```
+FUNCTION GetSaved () AS BOOLEAN
+FUNCTION SetSaved (BYVAL value AS BOOLEAN) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *value* | The value **tomTrue** if no changes have been made since the file was last saved, or the value **tomFalse** if there are unsaved changes. |
+
+#### Return value
+
+(GET) The value **tomTrue** if no changes have been made since the file was last saved, or the value **tomFalse** if there are unsaved changes.
+
+#### Result code
+
+(SET) If the method succeeds, it returns **S_OK**. If the method fails, it returns **E_INVALIDARG** (invalid argument).
 
 # <a name="selection"></a>Selection
 
