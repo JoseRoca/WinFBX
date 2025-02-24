@@ -210,6 +210,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetIMEInProgress](#setimeinprogress) | Sets the state of the Input Method Editor (IME) in-progress flag. |
 | [StoryCount](#storycount) | Gets the number of stories in the document. |
 | [GetStoryRanges](#getstoryranges) | Gets the story collection object used to enumerate the stories in a document. |
+| [GetStoryRanges2](#getstoryranges2) | Gets an object for enumerating the stories in a document. |
 
 ---
 
@@ -4420,6 +4421,29 @@ The **ITextStoryRanges** pointer. It can be null if there is only one story in t
 #### Result code
 
 If the method succeeds, it returns **S_OK**. If the method fails, it returns **E_NOTIMPL** (not implemented; only one story in this document).
+
+---
+
+
+# <a name="getstoryranges2"></a>GetStoryRanges2
+
+Gets an object for enumerating the stories in a document.
+
+```
+FUNCTION GetStoryRanges2 () AS ITextStoryRanges2 PTR
+```
+
+#### Return value
+
+The object for enumerating stories.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns **E_NOTIMPL** (not implemented; only one story in this document).
+
+#### Remarks
+
+Call this method only if the **GetStoryCount** method returns a value that is greater than one.
 
 ---
 
