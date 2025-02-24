@@ -200,7 +200,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
 | [GetCallManager](#getcallmanager) | Gets the call manager. |
-| [GetClientRect](#getclientrect) || [GetClientRect](#getclientrect) | Gets the call manager. | |
+| [GetClientRect](#getclientrect) | Retrieves the client rectangle of the rich edit control. |
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
