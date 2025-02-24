@@ -192,9 +192,9 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [EndEditCollection](#endeditcollection) | Turns off edit collection (also called *undo grouping*). |
 | [CaretType](#carettype) | Gets/sets the caret type. |
 | [DefaultTabStop](#defaulttabstop) | Gets/sets the default tab width. |
+| [DocumentFont](#documentfont) | Gets/sets a font object that provides the default character format information for this instance of the Text Object Model (TOM) engine. |
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
-| [DocumentFont](#documentfont) | Gets/sets a font object that provides the default character format information for this instance of the Text Object Model (TOM) engine. |
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
 | [Range2](#range2) | Retrieves a new text range for the active story of the document. |
