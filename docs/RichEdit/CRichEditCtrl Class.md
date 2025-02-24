@@ -193,6 +193,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [CaretType](#carettype) | Gets/sets the caret type. |
 | [DefaultTabStop](#defaulttabstop) | Gets/sets the default tab width. |
 | [DocumentFont](#documentfont) | Gets/sets a font object that provides the default character format information for this instance of the Text Object Model (TOM) engine. |
+| [DocumentPara](#documentpara) | Gets/sets an object that provides the default paragraph format information for this instance of the Text Object Model (TOM) engine. |
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
@@ -4186,6 +4187,25 @@ pTextFont = pRichEdit.GetDocumentFont
 ' // Release the pointer
 IUnknown_Release(pTextFont)
 ```
+---
+
+# <a name="documentpara"></a>DocumentPara
+
+Gets/sets an object that provides the default paragraph format information for this instance of the Text Object Model (TOM) engine.
+
+```
+(GET) PROPERTY DocumentPara () AS ITextPara2 PTR
+(SET) PROPERTY DocumentPara (BYVAL pTextPara AS ITextPara2 PTR)
+```
+```
+FUNCTION GetDocumentPara () AS ITextPara2 PTR
+FUNCTION SetDocumentPara (BYVAL pTextPara AS ITextPara2 PTR) AS HRESULT
+```
+
+#### Return value
+
+A pointer to the **ITextPara2** interface. When you have finished to use it, you must release it calling its **Release** method.
+
 ---
 
 # <a name="freeze"></a>Freeze
