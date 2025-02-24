@@ -193,8 +193,10 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [DefaultTabStop](#defaulttabstop) | Gets/sets the default tab width. |
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
-| [Range](#Range) | Retrieves a text range object for a specified range of content in the active story of the document. |
-| [Range2](#Range2) | Retrieves a new text range for the active story of the document. |
+| [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
+| [Range2](#range2) | Retrieves a new text range for the active story of the document. |
+| [RangeFromPoint](#rangefrompoint) | Retrieves a range for the content at or nearest to the specified point on the screen. |
+| [RangeFromPoint2](#rangefrompoint2) | Retrieves the degenerate range at (or nearest to) a particular point on the screen. |
 | [Saved](#saved) | Gets/sets the Saved property. |
 | [Selection](#selection) | Gets the active selection. |
 | [StoryCount](#storycount) | Gets the number of stories in the document. |
@@ -4243,6 +4245,53 @@ A **ITextRange2** pointer to the specified text range.
 #### Result code
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.  Call **GetErrorInfo** to get information about the result.
+
+---
+
+# <a name="rangefrompoint"></a>RangeFromPoint
+
+Retrieves a range for the content at or nearest to the specified point on the screen.
+
+```
+FUNCTION RangeFromPoint (BYVAL x AS LONG, BYVAL y AS LONG) AS ITextRange PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x* | The horizontal coordinate of the specified point, in screen coordinates. |
+| *y* | The vertical coordinate of the specified point, in screen coordinates. |
+
+#### Return value
+
+The text range that corresponds to the specified point.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes: **E_INVALIDARG** (invalid argument), **E_OUTOFMEMORY** (insufficient memory). Call **GetErrorInfo** to get information about the result.
+
+---
+
+# <a name="rangefrompoint2"></a>RangeFromPoint2
+
+Retrieves the degenerate range at (or nearest to) a particular point on the screen.
+
+```
+FUNCTION RangeFromPoint2 (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG) AS ITextRange2 PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *x* | The horizontal coordinate of the specified point, in screen coordinates. |
+| *y* | The vertical coordinate of the specified point, in screen coordinates. |
+| *nType* | The alignment type of the specified point. For a list of valid values, see [ITextRange.GetPoint](https://learn.microsoft.com/en-us/windows/win32/api/tom/nf-tom-itextrange-getpoint). |
+
+#### Return value
+
+The text range that corresponds to the specified point.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 ---
 
