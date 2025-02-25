@@ -214,6 +214,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetStoryRanges2](#getstoryranges2) | Gets an object for enumerating the stories in a document. |
 | [GetStrings](#getstrings) | Gets a collection of rich-text strings. |
 | [GetWindow](#getwindow) | Gets the handle of the window that the Text Object Model (TOM) engine is using to display output. |
+| [MathProperties](#mathproperties) | Gets the math properties for the document. |
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
 | [Notify](#notify) | Notifies the Text Object Model (TOM) engine client of particular Input Method Editor (IME) events. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
@@ -4882,6 +4883,60 @@ FUNCTION SetIMEInProgress (BYVAL Value AS LONG) AS HRESULT
 | Parameter  | Description |
 | ---------- | ----------- |
 | *Value* | Use **tomTrue** to turn on the IME in-progress flag, or **tomFalse** to turn it off. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+# <a name="mathproperties"></a>MathProperties
+
+Gets/sets the math properties for the document.
+
+```
+PROPERTY MathProperties () AS LONG
+PROPERTY MathProperties (BYVAL nOptions AS LONG, BYVAL Mask AS LONG)
+```
+```
+FUNCTION GetMathProperties () AS LONG
+FUNCTION SetMathProperties (BYVAL Options AS LONG, BYVAL Mask AS LONG) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nOptions* | A combination of math properties. See table below. |
+| *Mask* | The math mask. See table below. |
+
+| Property  | Meaning |
+| --------- | ----------- |
+| **tomMathDispAlignMask** | Display-mode alignment mask. |
+| **tomMathDispAlignCenter** | Center (default) alignment. |
+| **tomMathDispAlignLeft** | Left alignment. |
+| **tomMathDispAlignRight** | Right alignment. |
+| **tomMathDispIntUnderOver** | Display-mode integral limits location. |
+| **tomMathDispFracTeX** | Display-mode nested fraction script size. |
+| **tomMathDispNaryGrow** | Math-paragraph n-ary grow. |
+| **tomMathDocEmptyArgMask** | Empty arguments display mask. |
+| **tomMathDocEmptyArgAuto** | Automatically use a dotted square to denote empty arguments, if necessary. |
+| **tomMathDocEmptyArgAlways** | Always use a dotted square to denote empty arguments. |
+| **tomMathDocEmptyArgNever** | Don't denote empty arguments. |
+| **tomMathDocSbSpOpUnchanged** | Display the underscore (_) and caret (^) as themselves. |
+| **tomMathDocDiffMask** | Style mask for the **tomMathDocDiffUpright**, **tomMathDocDiffItalic**, **tomMathDocDiffOpenItalic** options. |
+| **tomMathDocDiffItalic** | Use italic (default) for math differentials. |
+| **tomMathDocDiffUpright** | Use an upright font for math differentials. |
+| **tomMathDocDiffOpenItalic** | Use open italic (default) for math differentials. |
+| **tomMathDispNarySubSup** | Math-paragraph non-integral n-ary limits location. |
+| **tomMathDispDef** | Math-paragraph spacing defaults. |
+| **tomMathEnableRtl** | Enable right-to-left (RTL) math zones in RTL paragraphs. |
+| **tomMathBrkBinMask** | Equation line break mask. |
+| **tomMathBrkBinBefore** | Break before binary/relational operator. |
+| **tomMathBrkBinAfter** | Break after binary/relational operator. |
+| **tomMathBrkBinDup** | Duplicate binary/relational before/after. |
+| **tomMathBrkBinSubMask** | Duplicate mask for minus operator. |
+| **tomMathBrkBinSubMM** | - - (minus on both lines). |
+| **tomMathBrkBinSubPM** | + - |
+| **tomMathBrkBinSubMP** | - + |
 
 #### Return value
 
