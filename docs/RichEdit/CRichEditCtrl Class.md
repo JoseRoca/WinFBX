@@ -1665,7 +1665,7 @@ You can turn on advanced line breaking by sending calling the (SET) **Typography
 
 ---
 
-# <a name="typographyoptions"></a>TypographyOptions
+# <a name="enableadvancedtypography"></a>EnableAdvancedTypography
 
 Enables advanced typography.
 
