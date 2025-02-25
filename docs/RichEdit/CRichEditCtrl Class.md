@@ -72,6 +72,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [TextOffset](#textoffset) | Gets/sets the text offset of the selected text or the word under the cursor. |
 | [TouchOptions](#touchoptions) | Gets/sets the touch options that are associated with a rich edit control. |
 | [TypographyOptions](#typographyoptions) | Gets/sets the current state of the typography options of a rich edit control. |
+| [EnableAdvancedTypography](#enableadvancedtypography) | Enables advanced typography. |
 | [UndoName](#undoname) | Retrieves the type of the next undo action, if any. |
 | [WordBreakProc](#wordbreakproc) | Gets/sets the address of the currently registered word-break procedure. |
 | [WordWrap](#wordwrap) | Enables/disables word wrap. |
@@ -1660,7 +1661,25 @@ FUNCTION SetTypographyOptions (BYVAL pto AS LONG, BYVAL fMask AS LONG) AS BOOLEA
 
 #### Remarks
 
-You can turn on advanced line breaking by sending calling the (SET) **TypographyOPtions** property. Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It s also needed for justified paragraphs, hyphenation, and other typographic features.
+You can turn on advanced line breaking by sending calling the (SET) **TypographyOPtions** property. Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics. It is also needed for justified paragraphs, hyphenation, and other typographic features.
+
+---
+
+# <a name="typographyoptions"></a>TypographyOptions
+
+Enables advanced typography.
+
+```
+FUNCTION EnableAdvancedTypography () AS BOOLEAN
+```
+
+#### Return value
+
+A boolean true (-1) or false (0).
+
+#### Remarks
+
+Advanced typography is needed for justified paragraphs, hyphenation, and other typographic features. Advanced line breaking is turned on automatically by the rich edit control when needed, such as for handling complex scripts like Arabic and Hebrew, and for mathematics.
 
 ---
 
