@@ -119,6 +119,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [InsertImage](#insertimage) | Replaces the selection with a blob that displays an image. |
 | [InsertObject](#insertobject) | Inserts an image or a Ole object in the rich edit control. |
 | [InsertTable](#inserttable) | Inserts one or more identical table rows with empty cells. |
+| [InsertText](#settextex) | Inserts text at the specified location. |
 | [IsIME](#isime) | Determines if current input locale is an East Asian locale. |
 | [IsTextBold](#istextbold) | Checks if the selected text or the word under the cursor is bolded. |
 | [IsTextItalic](#istextitalic) | Checks if the selected text or word under the cursor is italicised. |
@@ -132,6 +133,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [PosFromChar](#posfromchar) | Retrieves the client area coordinates of a specified character in a rich edit control. |
 | [Redo](#redo) | Redoes the next action in the control's redo queue. |
 | [ReplaceSel](#replacesel) | Replaces the current selection in a rich edit control with the specified text. |
+| [ReplaceText](#settextex) | Replaces text from the starting to ending position with the specified text. |
 | [RequestResize](#requestresize) | Forces a rich edit control to send an **EN_REQUESTRESIZE** notification message to its parent window. |
 | [Reconversion](#reconversion) | Invokes the Input Method Editor (IME) reconversion dialog box. |
 | [Scroll](#scroll) | Scrolls the text vertically in a multiline rich edit control. |
@@ -3176,7 +3178,7 @@ If *lnwidth* is zero, no line breaks are created.
 
 ---
 
-# <a name="settextex"></a>SetTextEx
+# <a name="settextex"></a>SetTextEx / InsertText / ReplaceText
 
 Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text.
 ```
@@ -3187,6 +3189,10 @@ FUNCTION SetTextEx OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF str
 FUNCTION SetTextEx OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF wszText AS WSTRING) AS DWORD
 FUNCTION SetTextEx OVERLOAD (BYVAL nPos AS LONG, BYREF strText AS STRING) AS DWORD
 FUNCTION SetTextEx OVERLOAD (BYVAL nPos AS LONG, BYREF wszText AS WSTRING) AS DWORD
+FUNCTION InsertText OVERLOAD (BYVAL nPos AS LONG, BYREF strText AS STRING) AS DWORD
+FUNCTION InsertText OVERLOAD (BYVAL nPos AS LONG, BYREF wszText AS WSTRING) AS DWORD
+FUNCTION ReplaceText OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF strText AS STRING) AS DWORD
+FUNCTION ReplaceText OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF wszText AS WSTRING) AS DWORD
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
