@@ -3180,12 +3180,26 @@ If *lnwidth* is zero, no line breaks are created.
 
 Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text.
 ```
-FUNCTION SetTextExW (BYREF stex AS SETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
+FUNCTION SetTextEx OVERLOAD (BYREF stex AS SETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
+FUNCTION SetTextEx OVERLOAD (BYREF stex AS .SETTEXTEX, BYREF strText AS STRING) AS DWORD
+FUNCTION SetTextEx OVERLOAD (BYREF stex AS .SETTEXTEX, BYREF wszText AS WSTRING) AS DWORD
+FUNCTION SetTextEx OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF strText AS STRING) AS DWORD
+FUNCTION SetTextEx OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF wszText AS WSTRING) AS DWORD
+FUNCTION SetTextEx OVERLOAD (BYVAL nPos AS LONG, BYREF strText AS STRING) AS DWORD
+FUNCTION SetTextEx OVERLOAD (BYVAL nPos AS LONG, BYREF wszText AS WSTRING) AS DWORD
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
 | *stex* | A [SETTEXTEX](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-settextex) structure that specifies flags and an optional code page to use in translating to Unicode. |
 | *buffer* | Pointer to the null-terminated text to insert. This text is an ANSI string, unless the code page is 1200 (Unicode). If *pwszText* starts with a valid RTF ASCII sequence for example, "{\rtf" or "{urtf" the text is read in using the RTF reader. |
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nStart* | Start position. |
+| *nEnd* | End position. |
+| *nPos* | Position. |
+| *strText* | Ansi text. |
+| *wszText* | Unicode text. |
 
 **SETTEXTEX flags**
 
@@ -3213,6 +3227,79 @@ If the operation is setting the selection and succeeds, the return value is the 
 
 If the operation fails, the return value is zero.
 
+#### Usage examples
+
+Insrts ansi text at the caret position:
+```
+DIM stex AS .SETTEXTEX
+stex.flags = ST_SELECTION OR ST_KEEPUNDO
+stex.codepage = CP_ACP
+DIM st AS STRING = "New text"
+pRichEdit->SetTextEx(stex, st)
+```
+Inserts formatted rich text at the caret position:
+```
+DIM stex AS .SETTEXTEX
+stex.flags = ST_SELECTION OR ST_KEEPUNDO
+stex.codepage = CP_ACP
+DIM st AS STRING = $"{\rtf1\ansi New text}"
+pRichEdit->SetTextEx(stex, st)
+```
+Inserts unicode text at the caret position:
+```
+DIM stex AS .SETTEXTEX
+stex.flags = ST_SELECTION OR ST_KEEPUNDO
+stex.codepage = 1200
+DIM wsz AS WSTRING * 10 = "New text"
+pRichEdit->SetTextEx(stex, wsz)
+```
+```
+DIM stex AS .SETTEXTEX
+stex.flags = ST_SELECTION OR ST_KEEPUNDO
+stex.codepage = 1200
+DIM cws AS CWSTR = "New text"
+pRichEdit->SetTextEx(stex, cws)
+```
+Replaces text
+```
+pRichEdit->SetTextEx (10, 20, "New Text")
+```
+```
+DIM st AS STRING = "New text"
+pRichEdit->SetTextEx (10, 20, st)
+```
+```
+DIM st AS STRING = $"{\rtf1\ansi New text}"
+pRichEdit->SetTextEx (10, 20, st)
+```
+```
+DIM wsz AS WSTRING * 10 = "New text"
+pRichEdit->SetTextEx (10, 20, wsz)
+```
+```
+DIM cws AS CWSTR = "New text"
+pRichEdit->SetTextEx (10, 20, cws)
+```
+Inserts text at the specified position:
+```
+pRichEdit->SetTextEx (10, "New Text")
+```
+```
+DIM st AS STRING = "New text"
+pRichEdit->SetTextEx (10, st)
+```
+```
+DIM st AS STRING = $"{\rtf1\ansi New text}"
+pRichEdit->SetTextEx (10, st)
+```
+```
+DIM wsz AS WSTRING * 10 = "New text"
+pRichEdit->SetTextEx (10, wsz)
+```
+```
+DIM cws AS CWSTR = "New text"
+pRichEdit->SetTextEx (10, cws)
+```
 ---
 
 # <a name="setuianame"></a>SetUIAName
