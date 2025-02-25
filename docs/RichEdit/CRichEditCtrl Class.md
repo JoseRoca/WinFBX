@@ -201,6 +201,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
 | [GetCallManager](#getcallmanager) | Gets the call manager. |
+| [ReleaseCallManager](#releasecallmanager) | Releases the call manager. |
 | [GetClientRect](#getclientrect) | Retrieves the client rectangle of the rich edit control. |
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
@@ -4363,6 +4364,23 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 #### Remarks
 
 The call manager object is opaque to the caller. The Text Object Model (TOM) engine uses the object to handle internal notifications for particular scenarios.
+
+---
+
+# <a name="releasecallnanager"></a>ReleaseCallManager
+
+Releases the call manager.
+
+```
+FUNCTION ReleaseCallManager (BYVAL pVoid AS IUnknown PTR) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *pVoid* | The call manager object to release. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 ---
 
