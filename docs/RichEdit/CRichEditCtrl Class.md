@@ -3229,7 +3229,7 @@ If the operation fails, the return value is zero.
 
 #### Usage examples
 
-Insrts ansi text at the caret position:
+Inserts ansi text at the caret position:
 ```
 DIM stex AS .SETTEXTEX
 stex.flags = ST_SELECTION OR ST_KEEPUNDO
