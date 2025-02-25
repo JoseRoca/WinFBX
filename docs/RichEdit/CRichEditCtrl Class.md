@@ -226,6 +226,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SetIMEInProgress](#setimeinprogress) | Sets the state of the Input Method Editor (IME) in-progress flag. |
 | [StoryCount](#storycount) | Gets the number of stories in the document. |
 | [SysBeep](#sysbeep) | Generates a system beep. |
+| [Update](#update) | Updates the selection and caret. |
 
 ---
 
@@ -4935,6 +4936,24 @@ Generates a system beep.
 ```
 FUNCTION SysBeep () AS HRESULT
 ```
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+# <a name="update"></a>Update
+
+Updates the selection and caret.
+
+```
+FUNCTION Update (BYVAL Value AS LONG) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Value* | Scroll flag. Use **tomTrue** to scroll the caret into view. |
 
 #### Return value
 
