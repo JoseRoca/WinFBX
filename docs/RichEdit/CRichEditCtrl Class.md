@@ -204,6 +204,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetClientRect](#getclientrect) | Retrieves the client rectangle of the rich edit control. |
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
+| [GetPreferredFont](#getpreferredfont) | Retrieves the preferred font for a particular character repertoire and character position. |
 | [GetWindow](#getwindow) | Gets the handle of the window that the Text Object Model (TOM) engine is using to display output. |
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
@@ -4693,6 +4694,33 @@ FUNCTION GetGenerator () AS CBSTR
 The name of the TOM engine.
 
 #### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+# <a name="getpreferredfont"></a>GetPreferredFont
+
+Retrieves the preferred font for a particular character repertoire and character position.
+
+```
+PRIVATE FUNCTION CRichEditCtrl.GetPreferredFont (BYVAL cp AS LONG, BYVAL CharRep AS LONG, _
+   BYVAL nOptions AS LONG, BYVAL curCharRep AS LONG, BYVAL curFontSize AS LONG, _
+   BYVAL fontName AS AFX_BSTR PTR, BYREF PitchAndFamily AS LONG, BYREF NewFontSize AS LONG) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *cp* | The character position for the preferred font. |
+| *CharRep* | The character repertoire index for the preferred font. It can be one of the following values.<br>**tomAboriginal**, **tomAnsi**, **tomArabic**, **tomArmenian**, **tomBaltic**, **tomBengali**, **tomBIG5**, **tomBraille**, **tomCherokee**, **tomCyrillic**, **tomDefaultCharRep**, **tomDevanagari**, **tomEastEurope**, **tomEmoji**, **tomEthiopic**, **tomGB2312**, **tomGeorgian**, **tomGreek**, **tomGujarati**, **tomGurmukhi**, **tomHangul**, **tomHebrew**, **tomJamo**, **tomKannada**, **tomKayahli**, **tomKharoshthi**, **tomKhmer**, **tomLao**, **tomLimbu**, **tomMac**, **tomMalayalam**, **tomMongolian**, **tomMyanmar**, **tomNewTaiLu**, **tomOEM**, **tomOgham**, **tomOriya**, **tomPC437**, **tomRunic**, **tomShiftJIS**, **tomSinhala**, **tomSylotinagr**, **tomSymbol**, **tomSyriac**, **tomTaiLe**, **tomTamil**, **tomTelugu**, **tomThaana**, **tomThai**, **tomTibetan**, **tomTurkish**, **tomUsymbol**, **tomVietnamese**, **tomYi**. |
+| *nOptions* | The preferred font options. The low-order word can be a combination of the following values: **tomIgnoreCurrentFont**, **tomMatchCharRep**, **tomMatchFontSignature**, **tomMatchAscii**, **tomGetHeightOnly**, **tomMatchMathFont**. If the high-order word of Options is **tomUseTwips**, the font heights are given in twips. |
+| *curCharRep* | The index of the current character repertoire. |
+| *curFontSize* | The current font size. |
+| *fontName* | The name of the font. |
+| *PitchAndFamily* | The font pitch and family. |
+| *NewFontSize* | The new font size. |
+
+#### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
