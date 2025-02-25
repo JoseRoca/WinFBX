@@ -206,6 +206,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
 | [GetImmContext](#getimmcontext) | Gets the Input Method Manager (IMM) input context from the Text Object Model (TOM) host. |
 | [GetPreferredFont](#getpreferredfont) | Retrieves the preferred font for a particular character repertoire and character position. |
+| [GetProperty](#getproperty) | Gets/sets the value of a property. |
 | [GetWindow](#getwindow) | Gets the handle of the window that the Text Object Model (TOM) engine is using to display output. |
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
@@ -4742,6 +4743,44 @@ PRIVATE FUNCTION CRichEditCtrl.GetPreferredFont (BYVAL cp AS LONG, BYVAL CharRep
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+# <a name="getproperty"></a>GetProperty
+
+Retrieves the value of a property.
+```
+FUNCTION GetProperty (BYVAL nType AS LONG) AS LONG
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nType* | The identifier of the property to retrieve. It can be one of the following property IDs: **tomCanCopy**, **tomCanRedo**, **tomCanUndo**, **tomDocMathBuild**, **tomMathInterSpace**, **tomMathIntraSpace**, **tomMathLMargin**, **tomMathPostSpace**, **tomMathPreSpace**, **tomMathRMargin**, **tomMathWrapIndent**, **tomMathWrapRight**, **tomUndoLimit**, **tomEllipsisMode**, **tomEllipsisState**. |
+
+#### Return value
+
+The value of the property.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code. Call **GetErrorInfo** to get information about the result.
+
+---
+
+
+# <a name="setproperty"></a>SetProperty
+
+Specifies a new value for a property.
+```
+FUNCTION SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nType* | The identifier of the property. It can be one of the following property IDs: **tomCanCopy**, **tomCanRedo**, **tomCanUndo**, **tomDocMathBuild**, **tomMathInterSpace**, **tomMathIntraSpace**, **tomMathLMargin**, **tomMathPostSpace**, **tomMathPreSpace**, **tomMathRMargin**, **tomMathWrapIndent**, **tomMathWrapRight**, **tomUndoLimit**, **tomEllipsisMode**, **tomEllipsisState**. |
+| *Value* | The new property value. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code. Call **GetErrorInfo** to get information about the result.
 
 ---
 
