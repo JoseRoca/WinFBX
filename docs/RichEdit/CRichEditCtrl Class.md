@@ -225,6 +225,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Selection2](#selection2) | Gets the active selection. |
 | [SetIMEInProgress](#setimeinprogress) | Sets the state of the Input Method Editor (IME) in-progress flag. |
 | [StoryCount](#storycount) | Gets the number of stories in the document. |
+| [SysBeep](#sysbeep) | Generates a system beep. |
 
 ---
 
@@ -4926,3 +4927,18 @@ FUNCTION Notify (BYVAL nNotify AS LONG) AS HRESULT
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 ---
+
+# <a name="sysbeep"></a>SysBeep
+
+Generates a system beep.
+
+```
+FUNCTION SysBeep () AS HRESULT
+```
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
