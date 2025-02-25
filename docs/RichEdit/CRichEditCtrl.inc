@@ -145,6 +145,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE PROPERTY TouchOptions (BYVAL opt AS LONG, BYVAL fEnable AS LONG)
       DECLARE PROPERTY TypographyOptions () AS DWORD
       DECLARE PROPERTY TypographyOptions (BYVAL pto AS LONG, BYVAL fMask AS LONG)
+      DECLARE FUNCTION EnableAdvancedTypography () AS BOOLEAN
       DECLARE FUNCTION UndoName () AS DWORD
       DECLARE PROPERTY WordBreakProc () AS LONG_PTR
       DECLARE PROPERTY WordBreakProc (BYVAL pfn AS LONG_PTR)
@@ -200,6 +201,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION SetCTFModeBias (BYVAL nModeBias AS LONG) AS HRESULT
       DECLARE FUNCTION GetCTFOpenStatus () AS BOOLEAN
       DECLARE FUNCTION SetCTFOpenStatus (BYVAL fTSFkbd AS LONG) AS BOOLEAN
+      DECLARE FUNCTION GetDocumentInterface () AS ITextDocument2 PTR
       DECLARE FUNCTION GetEditStyle () AS DWORD
       DECLARE FUNCTION SetEditStyle (BYVAL fStyle AS LONG, BYVAL fMask AS LONG) AS HRESULT
       DECLARE FUNCTION GetEditStyleEx () AS DWORD
@@ -229,6 +231,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION GetLineCount () AS LONG
       DECLARE FUNCTION GetModify () AS LONG
       DECLARE SUB SetModify (BYVAL fModify AS LONG)
+      DECLARE FUNCTION IsModified () AS BOOLEAN
       DECLARE FUNCTION GetOleInterface () AS IRichEditOle PTR
       DECLARE FUNCTION GetOptions () AS DWORD
       DECLARE FUNCTION SetOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG) AS DWORD
@@ -308,7 +311,6 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE SUB PasteSpecial OVERLOAD (BYVAL clpfmt AS DWORD, BYVAL dwAspect AS DWORD, BYVAL hMF AS HMETAFILE)
       DECLARE FUNCTION PosFromChar (BYVAL index as DWORD) AS .POINTL
       DECLARE SUB Reconversion ()
-      DECLARE FUNCTION Redo () AS LONG
       DECLARE SUB ReplaceSel (BYVAL bCanBeUndone AS LONG = TRUE, BYREF wszText AS WSTRING)
       DECLARE SUB RequestResize ()
       DECLARE FUNCTION Scroll (BYVAL nAction AS LONG) AS LONG
@@ -337,13 +339,25 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION StopGroupTyping () AS DWORD
       DECLARE FUNCTION StreamIn (BYVAL psf AS LONG, BYREF edst AS EDITSTREAM) AS DWORD
       DECLARE FUNCTION StreamOut (BYVAL psf AS LONG, BYREF edst AS EDITSTREAM) AS DWORD
-      DECLARE FUNCTION Undo () AS LONG
+      DECLARE FUNCTION Redo OVERLOAD () AS LONG
+      DECLARE FUNCTION Redo OVERLOAD (BYVAL Count AS LONG) AS LONG
+      DECLARE FUNCTION Undo OVERLOAD () AS LONG
+      DECLARE FUNCTION Undo OVERLOAD (BYVAL Count AS LONG) AS LONG
+      DECLARE FUNCTION SuspendUndo () AS LONG
+      DECLARE FUNCTION ResumeUndo () AS LONG
 
       ' // Helper methods and properties
       DECLARE FUNCTION SetFont (BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS HRESULT
       DECLARE FUNCTION GetRtf (BYVAL dwOptionsAndFlags AS DWORD = SF_RTF) AS STRING
 
       ' // File operations methods
+      DECLARE FUNCTION NewDoc () AS HRESULT
+      DECLARE FUNCTION OpenDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = 0, BYVAL CodePage AS LONG = CP_ACP) AS HRESULT
+      DECLARE FUNCTION SaveDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = tomRTF, BYVAL CodePage AS LONG = CP_ACP) AS HRESULT
+      DECLARE FUNCTION AppendDocFile (BYREF wszFileName AS WSTRING, BYVAL CodePage AS DWORD = CP_ACP) AS DWORD
+      DECLARE FUNCTION InsertDocFile (BYREF wszFileName AS WSTRING, BYVAL nPos AS DWORD, BYVAL CodePage AS DWORD = CP_ACP) AS DWORD
+      DECLARE FUNCTION DocName () AS CWSTR
+      DECLARE FUNCTION GetDocName () AS CWSTR
       DECLARE FUNCTION GetTextFromFile (BYREF wszFileName AS WSTRING) AS STRING
       DECLARE FUNCTION LoadRtfFromResource (BYREF wszResourceName AS WSTRING) AS BOOLEAN
       DECLARE FUNCTION SaveRtf (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
@@ -370,28 +384,87 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
 '      DECLARE FUNCTION AppendTextFromFile (BYREF wszFileName AS WSTRING) AS BOOLEAN
 
       ' // Wrapper methods and properties for the ITextDocument2 interface
-      DECLARE FUNCTION GetDocInterface () AS ITextDocument2 PTR
-      DECLARE FUNCTION NewDoc () AS HRESULT
-      DECLARE FUNCTION OpenDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = 0, BYVAL CodePage AS LONG = CP_ACP) AS HRESULT
-      DECLARE FUNCTION SaveDoc (BYVAL pVar AS VARIANT PTR, BYVAL Flags AS LONG = tomRTF, BYVAL CodePage AS LONG = CP_ACP) AS HRESULT
-      DECLARE FUNCTION AppendDocFile (BYREF wszFileName AS WSTRING, BYVAL CodePage AS DWORD = CP_ACP) AS DWORD
-      DECLARE FUNCTION InsertDocFile (BYREF wszFileName AS WSTRING, BYVAL nPos AS DWORD, BYVAL CodePage AS DWORD = CP_ACP) AS DWORD
-      DECLARE FUNCTION DocName () AS CWSTR
-      DECLARE FUNCTION GetDocName () AS CWSTR
+      DECLARE PROPERTY ActiveStory () AS ITextStory PTR
+      DECLARE PROPERTY ActiveStory (BYVAL pStory AS ITextStory PTR)
+      DECLARE FUNCTION GetActiveStory () AS ITextStory PTR
+      DECLARE FUNCTION SetActiveStory (BYVAL pStory AS ITextStory PTR) AS HRESULT
+      DECLARE FUNCTION AttachMsgFilter (BYVAL pFilter AS IUnknown PTR) AS HRESULT
+      DECLARE FUNCTION BeginEditCollection () AS HRESULT
+      DECLARE FUNCTION EndEditCollection () AS HRESULT
+      DECLARE PROPERTY CaretType () AS LONG
+      DECLARE PROPERTY CaretType (BYVAL Value AS LONG) AS HRESULT
+      DECLARE FUNCTION GetCaretType () AS LONG
+      DECLARE FUNCTION SetCaretType (BYVAL Value AS LONG) AS HRESULT
+      DECLARE FUNCTION CheckTextLimit (BYVAL cch AS LONG) AS LONG
+      DECLARE PROPERTY DefaultTabStop () AS SINGLE
+      DECLARE PROPERTY DefaultTabStop (BYVAL Value AS SINGLE)
+      DECLARE FUNCTION GetDefaultTabStop () AS SINGLE
+      DECLARE FUNCTION SetDefaultTabStop (BYVAL Value AS SINGLE = 36.0) AS HRESULT
+      DECLARE PROPERTY DocumentFont () AS ITextFont2 PTR
+      DECLARE PROPERTY DocumentFont (BYVAL pFont AS ITextFont2 PTR)
+      DECLARE FUNCTION GetDocumentFont () AS ITextFont2 PTR
+      DECLARE FUNCTION SetDocumentFont (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+      DECLARE PROPERTY DocumentPara () AS ITextPara2 PTR
+      DECLARE PROPERTY DocumentPara (BYVAL pTextPara AS ITextPara2 PTR)
+      DECLARE FUNCTION GetDocumentPara () AS ITextPara2 PTR
+      DECLARE FUNCTION SetDocumentPara (BYVAL pTextPara AS ITextPara2 PTR) AS HRESULT
+      DECLARE FUNCTION EastAsianFlags () AS LONG
+      DECLARE FUNCTION GetEastAsianFlags () AS LONG
+      DECLARE PROPERTY EffectColor (BYVAL Index AS LONG) AS ULONG
+      DECLARE PROPERTY EffectColor (BYVAL Index AS LONG, BYVAL Value AS ULONG)
+      DECLARE FUNCTION GetEffectColor (BYVAL Index AS LONG) AS ULONG
+      DECLARE FUNCTION SetEffectColor (BYVAL Index AS LONG, BYVAL Value AS ULONG) AS HRESULT
+      DECLARE FUNCTION Freeze () AS LONG
+      DECLARE FUNCTION Unfreeze () AS LONG
+      DECLARE FUNCTION GetCallManager () AS IUnknown PTR
+      DECLARE FUNCTION ReleaseCallManager (BYVAL pVoid AS IUnknown PTR) AS HRESULT
+      DECLARE FUNCTION GetClientRect (BYVAL nType AS LONG, BYREF Left AS LONG, BYREF Top AS LONG, BYREF Right AS LONG, BYREF Bottom AS LONG) AS HRESULT
+      DECLARE FUNCTION GetClientRect (BYVAL nType AS LONG) AS .RECT
+      DECLARE FUNCTION GetDisplays () AS ITextDisplays PTR
+      DECLARE FUNCTION GetGenerator () AS CBSTR
+      DECLARE FUNCTION GetImmContext () AS __int64
+      DECLARE FUNCTION ReleaseImmContext (BYVAL Context AS __int64) AS HRESULT
+      DECLARE PROPERTY NotificationMode () AS LONG
+      DECLARE PROPERTY NotificationMode (BYVAL Value AS LONG)
+      DECLARE FUNCTION GetNotificationMode () AS LONG
+      DECLARE FUNCTION SetNotificationMode (BYVAL Value AS LONG) AS HRESULT
+      DECLARE FUNCTION GetPreferredFont (BYVAL cp AS LONG, BYVAL CharRep AS LONG, BYVAL nOptions AS LONG, _
+         BYVAL curCharRep AS LONG, BYVAL curFontSize AS LONG, BYVAL fontName AS AFX_BSTR PTR, _
+         BYREF PitchAndFamily AS LONG, BYREF NewFontSize AS LONG) AS HRESULT
+      DECLARE FUNCTION GetProperty (BYVAL nType AS LONG) AS LONG
+      DECLARE FUNCTION SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
+      DECLARE FUNCTION Selection () AS ITextSelection PTR
+      DECLARE FUNCTION GetSelection () AS ITextSelection PTR
+      DECLARE FUNCTION Selection2 () AS ITextSelection2 PTR
+      DECLARE FUNCTION GetSelection2 () AS ITextSelection2 PTR
+      DECLARE FUNCTION GetStory (BYVAL Index AS LONG) AS ITextStory PTR
+      DECLARE FUNCTION StoryCount () AS LONG
+      DECLARE FUNCTION GetStoryCount () AS LONG
+      DECLARE FUNCTION GetStoryRanges () AS ITextStoryRanges PTR
+      DECLARE FUNCTION GetStoryRanges2 () AS ITextStoryRanges2 PTR
+      DECLARE FUNCTION GetStrings () AS ITextStrings PTR
+      DECLARE FUNCTION GetWindow () AS __int64
+      DECLARE PROPERTY MathProperties () AS LONG
+      DECLARE PROPERTY MathProperties (BYVAL nOptions AS LONG, BYVAL Mask AS LONG)
+      DECLARE FUNCTION GetMathProperties () AS LONG
+      DECLARE FUNCTION SetMathProperties (BYVAL Options AS LONG, BYVAL Mask AS LONG) AS HRESULT
+      DECLARE FUNCTION MainStory () AS ITextStory PTR
+      DECLARE FUNCTION GetMainStory () AS ITextStory PTR
+      DECLARE FUNCTION NewStory () AS ITextStory PTR
+      DECLARE FUNCTION GetNewStory () AS ITextStory PTR
+      DECLARE FUNCTION Notify (BYVAL nNotify AS LONG) AS HRESULT
+      DECLARE FUNCTION Range (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange PTR
+      DECLARE FUNCTION RangeFromPoint (BYVAL x AS LONG, BYVAL y AS LONG) AS ITextRange PTR
+      DECLARE FUNCTION Range2 (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange2 PTR
+      DECLARE FUNCTION RangeFromPoint2 (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG) AS ITextRange2 PTR
       DECLARE PROPERTY Saved () AS BOOLEAN
       DECLARE PROPERTY Saved (BYVAL value AS BOOLEAN)
       DECLARE FUNCTION GetSaved () AS BOOLEAN
       DECLARE FUNCTION SetSaved (BYVAL value AS BOOLEAN) AS HRESULT
-      DECLARE FUNCTION Freeze () AS LONG
-      DECLARE FUNCTION Unfreeze () AS LONG
+      DECLARE FUNCTION SetIMEInProgress (BYVAL Value AS LONG) AS HRESULT
+      DECLARE FUNCTION SysBeep () AS HRESULT
       DECLARE FUNCTION Update (BYVAL Value AS LONG) AS HRESULT
-
-      DECLARE FUNCTION ChangeCase (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0, BYVAL nType AS LONG = tomLowerCase) AS HRESULT
-      DECLARE FUNCTION LowerCase (BYVAL nStart AS LONG, BYVAL nLen AS LONG) AS HRESULT
-      DECLARE FUNCTION UpperCase (BYVAL nStart AS LONG, BYVAL nLen AS LONG) AS HRESULT
-      DECLARE FUNCTION TitleCase (BYVAL nStart AS LONG, BYVAL nLen AS LONG) AS HRESULT
-      DECLARE FUNCTION SentenceCase (BYVAL nStart AS LONG, BYVAL nLen AS LONG) AS HRESULT
-      DECLARE FUNCTION ToggleCase (BYVAL nStart AS LONG, BYVAL nLen AS LONG) AS HRESULT
+      DECLARE FUNCTION UpdateWindow () AS HRESULT
    
 END TYPE
 ' ========================================================================================
@@ -487,7 +560,7 @@ PRIVATE CONSTRUCTOR CRichEditCtrl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LO
       DIM dwExStyle AS DWORD = SendMessageW(m_hRichEdit, ECM_FIRST + 11, 0, 0)
       SendMessageW(m_hRichEdit, ECM_FIRST + 10, dwExStyle, &H0010)
       ' // Get a pointer to the ITextDocument2 interface
-      m_pTextDocument2 = this.GetDocInterface
+      m_pTextDocument2 = this.GetDocumentInterface
       IF m_pTextDocument2 = NULL THEN EXIT CONSTRUCTOR
    ELSE
       EXIT CONSTRUCTOR
@@ -502,10 +575,8 @@ END CONSTRUCTOR
 PRIVATE DESTRUCTOR CRichEditCtrl
    CREC_DP("CRichEditCtrl DESTRUCTOR")
    ' // Release the ITextDocument2 interface
-   IF m_pTextDocument2 THEN
-      DIM dwRefCount AS DWORD = m_pTextDocument2->lpvtbl->Release(m_pTextDocument2)
-      CREC_DP("CRichEditCtrl DESTRUCTOR - ITextDOcument2 ref count = " & WSTR(dwRefCount))
-   END IF
+   DIM dwRefCount AS DWORD = AfxSafeRelease(m_pTextDocument2)
+   CREC_DP("CRichEditCtrl DESTRUCTOR - ITextDOcument2 ref count = " & WSTR(dwRefCount))
    ' // Destroy the Rich Edit control
    DestroyWindow m_hRichEdit
    m_hRichEdit = NULL
@@ -1268,6 +1339,14 @@ PRIVATE SUB CRichEditCtrl.SetModify (BYVAL fModify AS LONG)
    SendMessageW(m_hRichEdit, EM_SETMODIFY, fModify, 0)
 END SUB
 ' ========================================================================================
+' ========================================================================================
+' Returns true (-1) if the document has been modified; false (0) otherwise.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.IsModified () AS BOOLEAN
+   m_Result = 0
+   RETURN SendMessageW(m_hRichEdit, EM_GETMODIFY, 0, 0)
+END FUNCTION
+' ========================================================================================
 
 ' ========================================================================================
 ' Retrieves the options for a rich edit control.
@@ -1733,6 +1812,14 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl.SetTypographyOptions (BYVAL pto AS LONG, BYVAL fMask AS LONG) AS BOOLEAN
    m_Result = SendMessageW(m_hRichEdit, EM_SETTYPOGRAPHYOPTIONS, pto, fMask)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Enable advanced typography
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.EnableAdvancedTypography () AS BOOLEAN
+   m_Result = SendMessageW(m_hRichEdit, EM_SETTYPOGRAPHYOPTIONS, TO_ADVANCEDTYPOGRAPHY OR TO_SIMPLELINEBREAK, TO_ADVANCEDTYPOGRAPHY OR TO_SIMPLELINEBREAK)
    RETURN m_Result
 END FUNCTION
 ' ========================================================================================
@@ -2360,7 +2447,7 @@ BYVAL Ascent AS LONG = 0, BYVAL nType AS LONG = TA_BASELINE, BYREF wszAlternateT
    ' // Insert the image
    m_Result = SendMessageW(m_hRichEdit, EM_INSERTIMAGE, 0, cast(LPARAM, @ip))
    ' // Release the stream
-   IF pStream THEN pStream->lpvtbl->Release(pStream)
+   AfxSafeRelease(pStream)
    ' // Return TRUE for success or FALSE for failure
    IF m_Result <> S_OK THEN RETURN FALSE
    RETURN TRUE
@@ -2466,15 +2553,6 @@ END FUNCTION
 PRIVATE SUB CRichEditCtrl.Reconversion
    m_Result = SendMessageW(m_hRichEdit, EM_RECONVERSION, 0, 0)
 END SUB
-' ========================================================================================
-
-' ========================================================================================
-' Redoes the next action in the control's redo queue.
-' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.Redo () AS LONG
-   m_Result = 0
-   RETURN SendMessageW(m_hRichEdit, EM_REDO, 0, 0)
-END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
@@ -2770,11 +2848,58 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Redoes the next action in the control's redo queue.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.Redo () AS LONG
+   m_Result = 0
+   RETURN SendMessageW(m_hRichEdit, EM_REDO, 0, 0)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Performs a specified number of redo operations.
+' Returns the actual count of redo operations performed.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.Redo (BYVAL Count AS LONG) AS LONG
+   DIM nCount AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->Redo(m_pTextDocument2, Count, @nCount)
+   RETURN nCount
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' This message undoes the last edit control operation in the control's undo queue.
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl.Undo () AS LONG
    m_Result = 0
    RETURN SendMessageW(m_hRichEdit, EM_UNDO, 0, 0)
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Performs a specified number of undo operations.
+' Returns the actual count of undo operations performed.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.Undo (BYVAL Count AS LONG) AS LONG
+   DIM nCount AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->Undo(m_pTextDocument2, Count, @nCount)
+   RETURN nCount
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Suspends undo processing
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SuspendUndo () AS LONG
+   DIM nCount AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->Undo(m_pTextDocument2, tomFalse, @nCount)
+   RETURN nCount
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Resumes undo processing
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.ResumeUndo () AS LONG
+   DIM nCount AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->Undo(m_pTextDocument2, tomTrue, @nCount)
+   RETURN nCount
 END FUNCTION
 ' ========================================================================================
 
@@ -3224,14 +3349,13 @@ PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    DIM pUnk AS IUnknown PTR
    m_Result = OleCreateFromFile(@CLSID_NULL, @wszFileName, @IID_IUnknown, OLERENDER_DRAW, _
            @formatEtc, pClientSite, pStorage, @pUnk)
-   pClientSite->lpvtbl->Release(pClientSite)
    IF FAILED(m_Result) THEN RETURN FALSE
 
    ' // Get the IOleObject interface to the object
    CREC_DP("#### CRichEditCtrl.InsertObject - IOleObject")
    DIM pObject AS IOleObject PTR
    m_Result = pUnk->lpvtbl->QueryInterface(pUnk, @IID_IOleObject, @pObject)
-   pUnk->lpvtbl->Release(pUnk)
+   AfxSafeRelease(pUnk)
    IF FAILED(m_Result) THEN RETURN FALSE
 
    ' // To ensure that references are counted correctly, notify the object that it is contained
@@ -3241,7 +3365,7 @@ PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    ' // Get the object class identifier
    m_Result = pObject->lpvtbl->GetUserClassID(pObject, @clsid)
    IF FAILED(m_Result) THEN
-      pObject->lpvtbl->Release(pObject)
+      AfxSafeRelease(pObject)
       RETURN FALSE
    END IF
 
@@ -3268,8 +3392,9 @@ PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    ' // Insert the object
    CREC_DP("#### CRichEditCtrl.InsertObject - InsertObject")
    m_Result = pRichEditOle->lpvtbl->InsertObject(pRichEditOle, @reobject)
-   pObject->lpvtbl->Release(pObject)
-   pRichEditOle->lpvtbl->Release(pRichEditOle)
+   AfxSafeRelease(pClientSite)
+   AfxSafeRelease(pObject)
+   AfxSafeRelease(pRichEditOle)
    IF FAILED(m_Result) THEN RETURN FALSE
    
    CREC_DP("#### END - CRichEditCtrl.InsertObject hr = " & WSTR(m_Result))
@@ -3740,13 +3865,13 @@ END FUNCTION
 ' ========================================================================================
 
 ' ########################################################################################
-' Wrapper methods and propesties for the ITexDocument2 interface
+' Wrapper methods and properties for the ITexDocument2 interface
 ' ########################################################################################
 
 ' ========================================================================================
 ' Retrieves a pointer to the ITextDocument2 interface
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.GetDocInterface () AS ITextDocument2 PTR
+PRIVATE FUNCTION CRichEditCtrl.GetDocumentInterface () AS ITextDocument2 PTR
    ' // Retrieve a pointer to the IRichEditOle interface of the rich edit control
    DIM pUnk AS IUnknown PTR, pTextDocument2 AS ITextDocument2 PTR
    m_Result = SendMessageW(hRichEdit, EM_GETOLEINTERFACE, 0, cast(LPARAM, @pUnk))
@@ -3754,7 +3879,7 @@ PRIVATE FUNCTION CRichEditCtrl.GetDocInterface () AS ITextDocument2 PTR
    IF pUnk THEN
       DIM IID_ITextDocument2_ AS IID = AfxGuid(AFX_IID_ITextDocument2)
       m_Result = IUnknown_QueryInterface(pUnk, @IID_ITextDocument2_, @pTextDocument2)
-      IUnknown_Release(pUnk)
+      AfxSafeRelease(pUnk)
    END IF
    RETURN pTextDocument2
 END FUNCTION
@@ -3822,6 +3947,81 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Gets the active selection.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.Selection () AS ITextSelection PTR
+   DIM pSelection AS ITextSelection PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetSelection(m_pTextDocument2, @pSelection)
+   RETURN pSelection
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Gets the active selection.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetSelection () AS ITextSelection PTR
+   DIM pSelection AS ITextSelection PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetSelection(m_pTextDocument2, @pSelection)
+   RETURN pSelection
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the active selection.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.Selection2 () AS ITextSelection2 PTR
+   DIM pSelection2 AS ITextSelection2 PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetSelection2(m_pTextDocument2, @pSelection2)
+   RETURN pSelection2
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Gets the active selection.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetSelection2 () AS ITextSelection2 PTR
+   DIM pSelection2 AS ITextSelection2 PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetSelection2(m_pTextDocument2, @pSelection2)
+   RETURN pSelection2
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the count of stories in this document.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.StoryCount () AS LONG
+   DIM nCount AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->GetStoryCount(m_pTextDocument2, @nCount)
+   RETURN nCount
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetStoryCount () AS LONG
+   DIM nCount AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->GetStoryCount(m_pTextDocument2, @nCount)
+   RETURN nCount
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the story collection object used to enumerate the stories in a document.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetStoryRanges () AS ITextStoryRanges PTR
+   DIM pStoryRanges AS ITextStoryRanges PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetStoryRanges(m_pTextDocument2, @pStoryRanges)
+   RETURN pStoryRanges
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets an object for enumerating the stories in a document.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetStoryRanges2 () AS ITextStoryRanges2 PTR
+   DIM pStories AS ITextStoryRanges2 PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetStoryRanges2(m_pTextDocument2, @pStories)
+   RETURN pStories
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Gets/sets the Saved property
 ' ========================================================================================
 PRIVATE PROPERTY CRichEditCtrl.Saved () AS BOOLEAN
@@ -3855,6 +4055,40 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Gets the default tab width.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.DefaultTabStop () AS SINGLE
+   DIM Value AS SINGLE
+   m_Result = m_pTextDocument2->lpvtbl->GetDefaultTabStop(m_pTextDocument2, @Value)
+   RETURN Value
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Gets the default tab width.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetDefaultTabStop () AS SINGLE
+   DIM Value AS SINGLE
+   m_Result = m_pTextDocument2->lpvtbl->GetDefaultTabStop(m_pTextDocument2, @Value)
+   RETURN Value
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the default tab stop, which is used when no tab exists beyond the current display position.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.DefaultTabStop (BYVAL Value AS SINGLE)
+   m_Result = m_pTextDocument2->lpvtbl->SetDefaultTabStop(m_pTextDocument2, Value)
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Sets the default tab stop, which is used when no tab exists beyond the current display position.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetDefaultTabStop (BYVAL Value AS SINGLE = 36.0) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->SetDefaultTabStop(m_pTextDocument2, Value)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Increments the freeze count.
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl.Freeze () AS LONG
@@ -3874,64 +4108,534 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Turns on edit collection (also called undo grouping).
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.BeginEditCollection () AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->BeginEditCollection(m_pTextDocument2)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Turns off edit collection (also called undo grouping).
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.EndEditCollection () AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->EndEditCollection(m_pTextDocument2)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets a text range object for a specified range of content in the active story of the document.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.Range (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange PTR
+   DIM pTextRange AS ITextRange PTR
+   m_Result = m_pTextDocument2->lpvtbl->Range(m_pTextDocument2, cpActive, cpAnchor, @pTextRange)
+   RETURN pTextRange
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Gets a new text range for the active story of the document.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.Range2 (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange2 PTR
+   DIM pRange2 AS ITextRange2 PTR
+   m_Result = m_pTextDocument2->lpvtbl->Range2(m_pTextDocument2, cpActive, cpAnchor, @pRange2)
+   RETURN pRange2
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves a text range object for a specified range of content in the active story of the document.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.RangeFromPoint (BYVAL x AS LONG, BYVAL y AS LONG) AS ITextRange PTR
+   DIM pTextRange AS ITextRange PTR
+   m_Result = m_pTextDocument2->lpvtbl->RangeFromPoint(m_pTextDocument2, x, y, @pTextRange)
+   RETURN pTextRange
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Retrieves the degenerate range at (or nearest to) a particular point on the screen.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.RangeFromPoint2 (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG) AS ITextRange2 PTR
+   DIM pRange2 AS ITextRange2 PTR
+   IF m_pTextDocument2 = NULL THEN m_Result = E_POINTER: RETURN pRange2
+   this.SetResult(m_pTextDocument2->lpvtbl->RangeFromPoint2(m_pTextDocument2, x, y, nType, @pRange2))
+   RETURN pRange2
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the caret type.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.CaretType () AS LONG
+   DIM Value AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->GetCaretType(m_pTextDocument2, @Value)
+   RETURN Value
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetCaretType () AS LONG
+   DIM Value AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->GetCaretType(m_pTextDocument2, @Value)
+   RETURN Value
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the caret type.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.CaretType (BYVAL Value AS LONG) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->SetCaretType(m_pTextDocument2, Value)
+   RETURN m_Result
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetCaretType (BYVAL Value AS LONG) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->SetCaretType(m_pTextDocument2, Value)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the displays collection for this Text Object Model (TOM) engine instance.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetDisplays () AS ITextDisplays PTR
+   DIM pTextDisplays AS ITextDisplays PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetDisplays(m_pTextDocument2, @pTextDisplays)
+   RETURN pTextDisplays
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets an object that provides the default character format information for this instance
+' of the Text Object Model (TOM) engine.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.DocumentFont () AS ITextFont2 PTR
+   DIM pITextFont2 AS ITextFont2 PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetDocumentFont(m_pTextDocument2, @pITextFont2)
+   RETURN pITextFont2
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Sets the default character formatting for this instance of the Text Object Model (TOM) engine.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.DocumentFont (BYVAL pTextFont AS ITextFont2 PTR)
+   m_Result = m_pTextDocument2->lpvtbl->SetDocumentFont(m_pTextDocument2, pTextFont)
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Gets an object that provides the default character format information for this instance
+' of the Text Object Model (TOM) engine.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetDocumentFont () AS ITextFont2 PTR
+   DIM pITextFont2 AS ITextFont2 PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetDocumentFont(m_pTextDocument2, @pITextFont2)
+   RETURN pITextFont2
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the default character formatting for this instance of the Text Object Model (TOM) engine.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetDocumentFont (BYVAL pTextFont AS ITextFont2 PTR) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->SetDocumentFont(m_pTextDocument2, pTextFont)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets an object that provides the default paragraph format information for this instance
+' of the Text Object Model (TOM) engine.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.DocumentPara () AS ITextPara2 PTR
+   DIM pITextPara2 AS ITextPara2 PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetDocumentPara(m_pTextDocument2, @pITextPara2)
+   RETURN pITextPara2
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Sets the default paragraph formatting for this instance of the Text Object Model (TOM) engine.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.DocumentPara (BYVAL pTextPara AS ITextPara2 PTR)
+   m_Result = m_pTextDocument2->lpvtbl->SetDocumentPara(m_pTextDocument2, pTextPara)
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Gets an object that provides the default paragraph format information for this instance
+' of the Text Object Model (TOM) engine.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetDocumentPara () AS ITextPara2 PTR
+   DIM pITextPara2 AS ITextPara2 PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetDocumentPara(m_pTextDocument2, @pITextPara2)
+   RETURN pITextPara2
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the default paragraph formatting for this instance of the Text Object Model (TOM) engine.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetDocumentPara (BYVAL pTextPara AS ITextPara2 PTR) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->SetDocumentPara(m_pTextDocument2, pTextPara)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the East Asian flags.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.EastAsianFlags () AS LONG
+   DIM Flags AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->GetEastAsianFlags(m_pTextDocument2, @Flags)
+   RETURN Flags
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetEastAsianFlags () AS LONG
+   DIM Flags AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->GetEastAsianFlags(m_pTextDocument2, @Flags)
+   RETURN Flags
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the name of the Text Object Model (TOM) engine.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetGenerator () AS CBSTR
+   DIM bstr AS AFX_BSTR
+   m_Result = m_pTextDocument2->lpvtbl->GetGenerator(m_pTextDocument2, @bstr)
+   RETURN bstr
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the state of the Input Method Editor (IME) in-progress flag.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetIMEInProgress (BYVAL Value AS LONG) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->SetIMEInProgress(m_pTextDocument2, Value)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the notification mode.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.NotificationMode () AS LONG
+   DIM Value AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->GetNotificationMode(m_pTextDocument2, @Value)
+   RETURN Value
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetNotificationMode () AS LONG
+   DIM Value AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->GetNotificationMode(m_pTextDocument2, @Value)
+   RETURN Value
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the notification mode.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.NotificationMode (BYVAL Value AS LONG)
+   m_Result = m_pTextDocument2->lpvtbl->SetNotificationMode(m_pTextDocument2, Value)
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+' Sets the notification mode.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetNotificationMode (BYVAL Value AS LONG) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->SetNotificationMode(m_pTextDocument2, Value)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the handle of the window that the Text Object Model (TOM) engine is using to display output.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetWindow () AS __int64
+   DIM pHwnd AS __int64
+   m_Result = m_pTextDocument2->lpvtbl->GetWindow(m_pTextDocument2, @pHwnd)
+   RETURN pHwnd
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Attaches a new message filter to the edit instance. All window messages that the edit
+' instance receives are forwarded to the message filter.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.AttachMsgFilter (BYVAL pFilter AS IUnknown PTR) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->AttachMsgFilter(m_pTextDocument2, pFilter)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Checks whether the number of characters to be added would exceed the maximum text limit.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.CheckTextLimit (BYVAL cch AS LONG) AS LONG
+   DIM pcch AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->CheckTextLimit(m_pTextDocument2, cch, @pcch)
+   RETURN pcch
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the call manager.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetCallManager () AS IUnknown PTR
+   DIM pVoid AS IUnknown PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetCallManager(m_pTextDocument2, @pVoid)
+   RETURN pVoid
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the client rectangle of the rich edit control.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetClientRect (BYVAL nType AS LONG, BYREF Left AS LONG, _
+BYREF Top AS LONG, BYREF Right AS LONG, BYREF Bottom AS LONG) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->GetClientRect(m_pTextDocument2, nType, @Left, @Top, @Right, @Bottom)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetClientRect (BYVAL nType AS LONG) AS .RECT
+   DIM AS LONG Left, Top, Right, Bottom
+   m_Result = m_pTextDocument2->lpvtbl->GetClientRect(m_pTextDocument2, nType, @Left, @Top, @Right, @Bottom)
+   DIM rc AS .RECT = TYPE<.RECT>(Left, Top, Right, Bottom)
+   RETURN rc
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the color used for special text attributes.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.EffectColor (BYVAL Index AS LONG) AS ULONG
+   DIM pcr AS ULONG
+   m_Result = m_pTextDocument2->lpvtbl->GetEffectColor(m_pTextDocument2, Index, @pcr)
+   RETURN pcr
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetEffectColor (BYVAL Index AS LONG) AS ULONG
+   DIM pcr AS ULONG
+   m_Result = m_pTextDocument2->lpvtbl->GetEffectColor(m_pTextDocument2, Index, @pcr)
+   RETURN pcr
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Specifies the color to use for special text attributes.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.EffectColor (BYVAL Index AS LONG, BYVAL Value AS ULONG)
+   m_Result = m_pTextDocument2->lpvtbl->SetEffectColor(m_pTextDocument2, Index, Value)
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetEffectColor (BYVAL Index AS LONG, BYVAL Value AS ULONG) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->SetEffectColor(m_pTextDocument2, Index, Value)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the preferred font for a particular character repertoire and character position.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetPreferredFont (BYVAL cp AS LONG, BYVAL CharRep AS LONG, BYVAL nOptions AS LONG, _
+BYVAL curCharRep AS LONG, BYVAL curFontSize AS LONG, BYVAL fontName AS AFX_BSTR PTR, _
+BYREF PitchAndFamily AS LONG, BYREF NewFontSize AS LONG) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->GetPreferredFont(m_pTextDocument2, cp, CharRep, _
+   nOptions, curCharRep, curFontSize, fontName, @PitchAndFamily, @NewFontSize)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the Input Method Manager (IMM) input context from the Text Object Model (TOM) host.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetImmContext () AS __int64
+   DIM Context AS __int64
+   m_Result = m_pTextDocument2->lpvtbl->GetImmContext(m_pTextDocument2, @Context)
+   RETURN Context
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the value of a property.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetProperty (BYVAL nType AS LONG) AS LONG
+   DIM Value AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->GetProperty(m_pTextDocument2, nType, @Value)
+   RETURN Value
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->SetProperty(m_pTextDocument2, nType, Value)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets a collection of rich-text strings.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetStrings () AS ITextStrings PTR
+   DIM pStrs AS ITextStrings PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetStrings(m_pTextDocument2, @pStrs)
+   RETURN pStrs
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Notifies the Text Object Model (TOM) engine client of particular Input Method Editor (IME) events.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.Notify (BYVAL nNotify AS LONG) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->Notify(m_pTextDocument2, nNotify)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Releases the call manager.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.ReleaseCallManager (BYVAL pVoid AS IUnknown PTR) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->ReleaseCallManager(m_pTextDocument2, pVoid)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Releases an Input Method Manager (IMM) input context.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.ReleaseImmContext (BYVAL Context AS __int64) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->ReleaseImmContext(m_pTextDocument2, Context)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Generates a system beep.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SysBeep () AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->SysBeep(m_pTextDocument2)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Updates the selection and caret.
 ' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl.Update (BYVAL Value AS LONG) AS HRESULT
-   Return m_pTextDocument2->lpvtbl->Update(m_pTextDocument2, Value)
+   RETURN m_pTextDocument2->lpvtbl->Update(m_pTextDocument2, Value)
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Changes the case of letters in a range according to the nType parameter.
+' Notifies the client that the view has changed and the client should update the view if
+' the Text Object Model (TOM) engine is in-place active.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.ChangeCase (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0, BYVAL nType AS LONG = tomLowerCase) AS HRESULT
-   DIM pRange2 AS ITextRange2 PTR
-   m_Result = m_pTextDocument2->lpvtbl->Range2(m_pTextDocument2, cpActive, cpAnchor, @pRange2)
-   IF pRange2 = NULL THEN RETURN m_Result
-   m_Result = pRange2->lpvtbl->ChangeCase(pRange2, nType)
-   IUnknown_Release(pRange2)
+PRIVATE FUNCTION CRichEditCtrl.UpdateWindow () AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->UpdateWindow(m_pTextDocument2)
    RETURN m_Result
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Changes the case letters in a range to lower case
+' Gets the math properties for the document.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.LowerCase (BYVAL nStart AS LONG, BYVAL nLen AS LONG) AS HRESULT
-   m_Result = this.ChangeCase(nStart, nStart + nLen, tomLowerCase)
-   RETURN m_Result
+PRIVATE PROPERTY CRichEditCtrl.MathProperties () AS LONG
+   DIM nOptions AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->GetMathProperties(m_pTextDocument2, @nOptions)
+   RETURN nOptions
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetMathProperties () AS LONG
+   DIM nOptions AS LONG
+   m_Result = m_pTextDocument2->lpvtbl->GetMathProperties(m_pTextDocument2, @nOptions)
+   RETURN nOptions
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' Changes the case letters in a range to upper case
+' Specifies the math properties to use for the document.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.UpperCase (BYVAL nStart AS LONG, BYVAL nLen AS LONG) AS HRESULT
-   m_Result = this.ChangeCase(nStart, nStart + nLen, tomUpperCase)
+PRIVATE PROPERTY CRichEditCtrl.MathProperties (BYVAL nOptions AS LONG, BYVAL Mask AS LONG)
+   m_Result = m_pTextDocument2->lpvtbl->SetMathProperties(m_pTextDocument2, nOptions, Mask)
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetMathProperties (BYVAL nOptions AS LONG, BYVAL Mask AS LONG) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->SetMathProperties(m_pTextDocument2, nOptions, Mask)
    RETURN m_Result
 END FUNCTION
 ' ========================================================================================
+
 ' ========================================================================================
-' Changes the case letters in a range to title case
+' Retrieves the story that corresponds to a particular index.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.TitleCase (BYVAL nStart AS LONG, BYVAL nLen AS LONG) AS HRESULT
-   m_Result = this.ChangeCase(nStart, nStart + nLen, tomTitleCase)
-   RETURN m_Result
+PRIVATE FUNCTION CRichEditCtrl.GetStory (BYVAl Index AS LONG) AS ITextStory PTR
+   DIM pStory AS ITextStory PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetStory(m_pTextDocument2, Index, @pStory)
+   RETURN pStory
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the active story; that is, the story that receives keyboard and mouse input.
+' ========================================================================================
+PRIVATE PROPERTY CRichEditCtrl.ActiveStory () AS ITextStory PTR
+   DIM pStory AS ITextStory PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetActiveStory(m_pTextDocument2, @pStory)
+   RETURN pStory
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetActiveStory () AS ITextStory PTR
+   DIM pStory AS ITextStory PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetActiveStory(m_pTextDocument2, @pStory)
+   RETURN pStory
 END FUNCTION
 ' ========================================================================================
 ' ========================================================================================
-' Changes the case letters in a range to sentence case
+' Sets the active story; that is, the story that receives keyboard and mouse input.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.SentenceCase (BYVAL nStart AS LONG, BYVAL nLen AS LONG) AS HRESULT
-   m_Result = this.ChangeCase(nStart, nStart + nLen, tomSentenceCase)
+PRIVATE PROPERTY CRichEditCtrl.ActiveStory (BYVAL pStory AS ITextStory PTR)
+   m_Result = m_pTextDocument2->lpvtbl->SetActiveStory(m_pTextDocument2, pStory)
+END PROPERTY
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetActiveStory (BYVAL pStory AS ITextStory PTR) AS HRESULT
+   m_Result = m_pTextDocument2->lpvtbl->SetActiveStory(m_pTextDocument2, pStory)
    RETURN m_Result
 END FUNCTION
 ' ========================================================================================
+
 ' ========================================================================================
-' Changes the case letters in a range to sentence case
+' Gets the main story.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.ToggleCase (BYVAL nStart AS LONG, BYVAL nLen AS LONG) AS HRESULT
-   m_Result = this.ChangeCase(nStart, nStart + nLen, tomToggleCase)
-   RETURN m_Result
+PRIVATE FUNCTION CRichEditCtrl.MainStory () AS ITextStory PTR
+   DIM pStory AS ITextStory PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetMainStory(m_pTextDocument2, @pStory)
+   RETURN pStory
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetMainStory () AS ITextStory PTR
+   DIM pStory AS ITextStory PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetMainStory(m_pTextDocument2, @pStory)
+   RETURN pStory
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets a new story.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.NewStory () AS ITextStory PTR
+   DIM pStory AS ITextStory PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetNewStory(m_pTextDocument2, @pStory)
+   RETURN pStory
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetNewStory () AS ITextStory PTR
+   DIM pStory AS ITextStory PTR
+   m_Result = m_pTextDocument2->lpvtbl->GetNewStory(m_pTextDocument2, @pStory)
+   RETURN pStory
 END FUNCTION
 ' ========================================================================================
 
