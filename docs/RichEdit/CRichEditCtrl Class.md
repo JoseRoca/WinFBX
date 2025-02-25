@@ -3300,6 +3300,10 @@ pRichEdit->SetTextEx (10, wsz)
 DIM cws AS CWSTR = "New text"
 pRichEdit->SetTextEx (10, cws)
 ```
+Delete text:
+```
+pRichEdit->SetTextEx (10, 20, "")
+```
 ---
 
 # <a name="setuianame"></a>SetUIAName
