@@ -206,7 +206,8 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
 | [GetImmContext](#getimmcontext) | Gets the Input Method Manager (IMM) input context from the Text Object Model (TOM) host. |
 | [GetPreferredFont](#getpreferredfont) | Retrieves the preferred font for a particular character repertoire and character position. |
-| [GetProperty](#getproperty) | Gets/sets the value of a property. |
+| [GetProperty](#getproperty) | Gets the value of a property. |
+| [SetProperty](#setproperty) | Sets the value of a property. |
 | [GetWindow](#getwindow) | Gets the handle of the window that the Text Object Model (TOM) engine is using to display output. |
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
