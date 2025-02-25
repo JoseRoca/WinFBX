@@ -204,6 +204,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetClientRect](#getclientrect) | Retrieves the client rectangle of the rich edit control. |
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
+| [GetImmContext](#getimmcontext) | Gets the Input Method Manager (IMM) input context from the Text Object Model (TOM) host. |
 | [GetPreferredFont](#getpreferredfont) | Retrieves the preferred font for a particular character repertoire and character position. |
 | [GetWindow](#getwindow) | Gets the handle of the window that the Text Object Model (TOM) engine is using to display output. |
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
@@ -4692,6 +4693,24 @@ FUNCTION GetGenerator () AS CBSTR
 #### Return value
 
 The name of the TOM engine.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+# <a name="getimmcontext"></a>GetImmContext
+
+Gets the Input Method Manager (IMM) input context from the Text Object Model (TOM) host.
+
+```
+FUNCTION GetImmContext () AS __int64
+```
+
+#### Return value
+
+The IMM input context.
 
 #### Result code
 
