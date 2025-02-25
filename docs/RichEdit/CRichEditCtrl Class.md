@@ -210,6 +210,8 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetPreferredFont](#getpreferredfont) | Retrieves the preferred font for a particular character repertoire and character position. |
 | [GetProperty](#getproperty) | Gets the value of a property. |
 | [SetProperty](#setproperty) | Sets the value of a property. |
+| [GetStoryRanges](#getstoryranges) | Gets the story collection object used to enumerate the stories in a document. |
+| [GetStoryRanges2](#getstoryranges2) | Gets an object for enumerating the stories in a document. |
 | [GetStrings](#getstrings) | Gets a collection of rich-text strings. |
 | [GetWindow](#getwindow) | Gets the handle of the window that the Text Object Model (TOM) engine is using to display output. |
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
@@ -223,8 +225,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Selection2](#selection2) | Gets the active selection. |
 | [SetIMEInProgress](#setimeinprogress) | Sets the state of the Input Method Editor (IME) in-progress flag. |
 | [StoryCount](#storycount) | Gets the number of stories in the document. |
-| [GetStoryRanges](#getstoryranges) | Gets the story collection object used to enumerate the stories in a document. |
-| [GetStoryRanges2](#getstoryranges2) | Gets an object for enumerating the stories in a document. |
 
 ---
 
