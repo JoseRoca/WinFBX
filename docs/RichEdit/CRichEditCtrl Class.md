@@ -188,6 +188,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 | Name       | Description |
 | ---------- | ----------- |
+| [ActiveStory](#activestory) | Gets the active story. |
 | [AttachMsgFilter](#attachmsgfilter) | Attaches a new message filter to the edit instance. |
 | [BeginEditCollection](#begineditcollection) | Turns on edit collection (also called *undo grouping*). |
 | [EndEditCollection](#endeditcollection) | Turns off edit collection (also called *undo grouping*). |
@@ -206,10 +207,13 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
 | [GetImmContext](#getimmcontext) | Gets the Input Method Manager (IMM) input context from the Text Object Model (TOM) host. |
+| [MainStory](#mainstory) | Gets the main story. |
+| [NewStory](#newstory) | Not implemented. Gets a new story. |
 | [ReleaseImmContext](#releaseimmcontext) | Releases an Input Method Manager (IMM) input context. |
 | [GetPreferredFont](#getpreferredfont) | Retrieves the preferred font for a particular character repertoire and character position. |
 | [GetProperty](#getproperty) | Gets the value of a property. |
 | [SetProperty](#setproperty) | Sets the value of a property. |
+| [GetStory](#getstory) | Retrieves the story that corresponds to a particular index. |
 | [GetStoryRanges](#getstoryranges) | Gets the story collection object used to enumerate the stories in a document. |
 | [GetStoryRanges2](#getstoryranges2) | Gets an object for enumerating the stories in a document. |
 | [GetStrings](#getstrings) | Gets a collection of rich-text strings. |
@@ -4832,6 +4836,89 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
+# <a name="getstory"></a>GetStory
+
+Retrieves the story that corresponds to a particular index.
+
+```
+FUNCTION GetStory (BYVAl Index AS LONG) AS ITextStory PTR
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Index* | The index of the story to retrieve. |
+
+#### Return value
+
+A pointer to the **ITextStory** interface.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+# <a name="activestory"></a>ActiveStory
+
+Gets the active story; that is, the story that receives keyboard and mouse input.
+
+```
+(GET) PROPERTY ActiveStory () AS ITextStory PTR
+(SET) PROPERTY ActiveStory (BYVAL pStory AS ITextStory PTR)
+```
+```
+FUNCTION GetActiveStory () AS ITextStory PTR
+FUNCTION SetActiveStory (BYVAL pStory AS ITextStory PTR) AS HRESULT
+```
+
+#### Return value
+
+A pointer to the **ITextStory** interface of the active story.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+# <a name="mainstory"></a>MainStory
+
+Gets the main story.
+
+```
+FUNCTION MainStory () AS ITextStory PTR
+FUNCTION GetMainStory (BYVAL pStory AS ITextStory PTR) AS HRESULT
+```
+
+#### Return value
+
+A pointer to the **ITextStory** interface of the main story.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+# <a name="newstory"></a>NewStory
+
+Not implemented. Gets a new story.
+
+```
+FUNCTION NewStory () AS ITextStory PTR
+FUNCTION GetNewStory (BYVAL pStory AS ITextStory PTR) AS HRESULT
+```
+
+#### Return value
+
+A pointer to the **ITextStory** interface of the new story.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
 # <a name="getstrings"></a>GetStrings
 
 Gets a collection of rich-text strings.
@@ -4842,7 +4929,7 @@ FUNCTION GetStrings () AS ITextStrings PTR
 
 #### Return value
 
-A pointer to tyhe collection of rich-text strings.
+A pointer to the collection of rich-text strings.
 
 #### Result code
 
