@@ -1867,7 +1867,7 @@ FUNCTION ExGetSel OVERLOAD (BYREF cpMin AS LONG, BYVAL cpMax AS LONG)
 
 The first overloaded method returns a [CHARRANGE](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charrange) structure with the selection range.
 
-The second overloades method does not return a value. The values are filled in the passed parameters.
+The second overloaded method does not return a value. The values are filled in the passed parameters.
 
 #### CHARRANGE structure
 ```
@@ -3378,13 +3378,21 @@ When you call the **StreamOut** method, the rich edit control makes repeated cal
 
 # <a name="undo"></a>Undo
 
-First overloades function: Undoes the last edit control operation in the control's undo queue.
+**First overloaded function**: Undoes the last edit control operation in the control's undo queue.
 
-Second overloades function: Performs a specified number of undo operations.
+**Second overloaded function**: Performs a specified number of undo operations.
+
+**SuspendUndo**: Suspends undo processing.
+
+**ResumeUndo**: Resumes undo processing.
 
 ```
 FUNCTION Undo () AS LONG
 FUNCTION Undo (BYVAL Count AS LONG) AS LONG
+```
+```
+DECLARE FUNCTION SuspendUndo () AS LONG
+DECLARE FUNCTION ResumeUndo () AS LONG
 ```
 
 | Parameter | Description |
