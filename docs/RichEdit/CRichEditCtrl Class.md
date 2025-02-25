@@ -3378,15 +3378,24 @@ When you call the **StreamOut** method, the rich edit control makes repeated cal
 
 # <a name="undo"></a>Undo
 
-This message undoes the last edit control operation in the control's undo queue.
+First overloades function: Undoes the last edit control operation in the control's undo queue.
+
+Second overloades function: Performs a specified number of undo operations.
+
 ```
 FUNCTION Undo () AS LONG
+FUNCTION Undo (BYVAL Count AS LONG) AS LONG
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Count* | The specified number of undo operations. If the value of this parameter is **tomFalse**, undo processing is suspended. If this parameter is **tomTrue**, undo processing is restored. |
+
 #### Return value
 
-For a single-line edit control, the return value is always **TRUE**.
+First overloaded function: For a single-line edit control, the return value is always **TRUE**. For a multiline edit control, the return value is **TRUE** if the undo operation is successful, or **FALSE** if the undo operation fails.
 
-For a multiline edit control, the return value is **TRUE** if the undo operation is successful, or **FALSE** if the undo operation fails.
+Second overloaded function: The actual count of undo operations performed. If all of the *Count* undo operations were performed, it returns **S_OK**. If the method fails, it returns **S_FALSE**, indicating that less than *Count* undo operations were performed.
 
 #### Remarks
 
