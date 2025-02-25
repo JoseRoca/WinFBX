@@ -208,6 +208,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetPreferredFont](#getpreferredfont) | Retrieves the preferred font for a particular character repertoire and character position. |
 | [GetProperty](#getproperty) | Gets the value of a property. |
 | [SetProperty](#setproperty) | Sets the value of a property. |
+| [GetStrings](#getstrings) | Gets a collection of rich-text strings. |
 | [GetWindow](#getwindow) | Gets the handle of the window that the Text Object Model (TOM) engine is using to display output. |
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
@@ -4782,6 +4783,28 @@ FUNCTION SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code. Call **GetErrorInfo** to get information about the result.
+
+---
+
+# <a name="getstrings"></a>GetStrings
+
+Gets a collection of rich-text strings.
+
+```
+FUNCTION GetStrings () AS ITextStrings PTR
+```
+
+#### Return value
+
+A pointer to tyhe collection of rich-text strings.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The collection is useful for manipulating rich text, particularly for transforming mathematical text from linear to built-up form, or vice versa.
 
 ---
 
