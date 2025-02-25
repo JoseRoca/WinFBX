@@ -211,6 +211,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetStrings](#getstrings) | Gets a collection of rich-text strings. |
 | [GetWindow](#getwindow) | Gets the handle of the window that the Text Object Model (TOM) engine is using to display output. |
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
+| [Notify](#notify) | Notifies the Text Object Model (TOM) engine client of particular Input Method Editor (IME) events. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
 | [Range2](#range2) | Retrieves a new text range for the active story of the document. |
 | [RangeFromPoint](#rangefrompoint) | Retrieves a range for the content at or nearest to the specified point on the screen. |
@@ -4860,6 +4861,24 @@ FUNCTION SetNotificationMode (BYVAL Value AS LONG) AS HRESULT
 | Parameter  | Description |
 | ---------- | ----------- |
 | *Value* | The notification mode. This parameter is set to **tomTrue** if notifications are active, or **tomFalse** if not. |
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+# <a name="notify"></a>Notify
+
+Notifies the Text Object Model (TOM) engine client of particular Input Method Editor (IME) events.
+
+```
+FUNCTION Notify (BYVAL nNotify AS LONG) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *nNotify* | An IME notification code. |
 
 #### Return value
 
