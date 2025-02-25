@@ -197,12 +197,12 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [DocumentFont](#documentfont) | Gets/sets a font object that provides the default character format information for this instance of the Text Object Model (TOM) engine. |
 | [DocumentPara](#documentpara) | Gets/sets an object that provides the default paragraph format information for this instance of the Text Object Model (TOM) engine. |
 | [EastAsianFlags](#eastasianflags) | Gets the East Asian flags. |
+| [EffectColor](#effectcolor) | Gets/sets the color used for special text attributes. |
 | [Freeze](#freeze) | Increments the freeze count. |
 | [Unfreeze](#unfreeze) | Decrements the freeze count. |
 | [GetCallManager](#getcallmanager) | Gets the call manager. |
 | [GetClientRect](#getclientrect) | Retrieves the client rectangle of the rich edit control. |
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
-| [GetEffectColor](#GetEffectColor) | Retrieves the color used for special text attributes. |
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
 | [GetWindow](#getwindow) | Gets the handle of the window that the Text Object Model (TOM) engine is using to display output. |
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
@@ -4625,13 +4625,19 @@ The second overlapped structure returns a **RECT** structure.
 
 ---
 
-# <a name="geteffectcolor"></a>GetEffectColor
+# <a name="effectcolor"></a>EffectColor
 
 Retrieves the color used for special text attributes.
 
 ```
-FUNCTION GetEffectColor (BYVAL Index AS LONG) AS ULONG
+(GET) PROPERTY EffectColor (BYVAL Index AS LONG) AS ULONG
+(SET) PROPERTY EffectColor (BYVAL Index AS LONG, BYVAL Value AS ULONG)
 ```
+```
+FUNCTION GetEffectColor (BYVAL Index AS LONG) AS ULONG
+FUNCTION SetEffectColor (BYVAL Index AS LONG, BYVAL Value AS ULONG) AS HRESULT
+```
+
 | Parameter  | Description |
 | ---------- | ----------- |
 | *Index* | The index of the color to retrieve. It can be one of the following values: |
@@ -4656,9 +4662,13 @@ FUNCTION GetEffectColor (BYVAL Index AS LONG) AS ULONG
 | 15 | RGB(128, 128, 128) |
 | 16 | RGB(192, 192, 192) |
 
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Value* | The new color for the specified index. |
+
 #### Return value
 
-The color that corresponds to the specified index.
+(GET) The color that corresponds to the specified index.
 
 #### Result code
 
