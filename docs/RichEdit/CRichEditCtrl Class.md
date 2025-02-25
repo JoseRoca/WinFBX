@@ -227,6 +227,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [StoryCount](#storycount) | Gets the number of stories in the document. |
 | [SysBeep](#sysbeep) | Generates a system beep. |
 | [Update](#update) | Updates the selection and caret. |
+| [UpdateWindow](#updatewindow) | Notifies the client that the view has changed and the client should update the view if the Text Object Model (TOM) engine is in-place active. |
 
 ---
 
@@ -4961,3 +4962,16 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
+# <a name="updatewindow"></a>UpdateWindow
+
+Notifies the client that the view has changed and the client should update the view if the Text Object Model (TOM) engine is in-place active.
+
+```
+FUNCTION UpdateWindow () AS HRESULT
+```
+
+#### Return value
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
