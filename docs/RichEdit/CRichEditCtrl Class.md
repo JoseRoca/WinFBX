@@ -206,6 +206,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetDisplays](#getdisplays) | Gets the displays collection for this Text Object Model (TOM) engine instance. |
 | [GetGenerator](#getgenerator) | Gets the name of the Text Object Model (TOM) engine. |
 | [GetImmContext](#getimmcontext) | Gets the Input Method Manager (IMM) input context from the Text Object Model (TOM) host. |
+| [ReleaseImmContext](#releaseimmcontext) | Releases an Input Method Manager (IMM) input context. |
 | [GetPreferredFont](#getpreferredfont) | Retrieves the preferred font for a particular character repertoire and character position. |
 | [GetProperty](#getproperty) | Gets the value of a property. |
 | [SetProperty](#setproperty) | Sets the value of a property. |
@@ -4729,6 +4730,28 @@ Gets the Input Method Manager (IMM) input context from the Text Object Model (TO
 ```
 FUNCTION GetImmContext () AS __int64
 ```
+
+#### Return value
+
+The IMM input context.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+# <a name="releaseimmcontext"></a>ReleaseImmContext
+
+Releases an Input Method Manager (IMM) input context.
+
+```
+FUNCTION ReleaseImmContext (BYVAL Context AS __int64) AS HRESULT
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *Context* | The IMM input context to release. |
 
 #### Return value
 
