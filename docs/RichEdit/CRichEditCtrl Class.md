@@ -2412,6 +2412,53 @@ The character position specified by the **cpStartRow** member of the **TABLEROWP
 
 ---
 
+# <a name="getrawtext"></a>GetRawText
+
+Gets the raw text exactly as it appears in memory.
+```
+FUNCTION GetRawText () AS STRING
+```
+#### Return value
+
+The retrieved text.
+
+#### Remarks
+
+Text is retrieved exactly as it appears in memory. This includes special structure characters for table row and cell delimiters as well as math object delimiters (start delimiter U+FDD0, argument delimiter U+FDEE, and end delimiter U+FDDF) and object markers (U+FFFC). This maintains character-position alignment between the retrieved text and the text in memory.
+
+---
+
+# <a name="getrawtextlenght"></a>GetRawTextLength
+
+Gets the length of the raw text.
+```
+FUNCTION GetRawTextLength () AS LONG
+```
+#### Return value
+
+The retrieved length.
+
+---
+
+# <a name="saverawtext"></a>SaveRawText
+
+Saves the raw contents of the rich edit control to a file.
+```
+FUNCTION SaveRawText (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+   BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+```
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszFilename* | Path and file name of the file where the RTF content will be saved. |
+| *Overwrite* | If true, the file will be overwritten if it already exists and the function will return true; if false, the file will not be overwritten, the function will return false and **GetLastResult" will return the **ERROR_ALREADY_EXISTS** error. |
+| *dwFlagsAndAttributes* | The file or device attributes and flags. Default is **FILE_ATTRIBUTE_NORMAL**, which is the most common default value for files. To see more options see [CreateFileW](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew) |
+
+#### Return value
+
+A bollean true (-1) of false (0).
+
+---
+
 # <a name="gettextex"></a>GetTextEx
 
 Gets all of the text from the rich edit control in any particular code base you want.
