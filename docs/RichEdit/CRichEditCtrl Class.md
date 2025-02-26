@@ -183,7 +183,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SaveSelText](#saveseltext) | Saves selection of the rich edit control in text format. |
 | [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
 
-# ITextDocument2 Methods
+# ITextDocument2 Methods and Properties
 
 | Name       | Description |
 | ---------- | ----------- |
