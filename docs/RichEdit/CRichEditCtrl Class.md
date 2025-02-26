@@ -326,9 +326,9 @@ Gets/sets the scaling ratio.
 (GET) PROPERTY ScalingRatio () AS SINGLE
 (SET) PROPERTY ScalingRatio (BYVAL Ratio AS SINGLE)
 ```
+```
 FUNCTION GetScalingRatio () AS SINGLE
 SUB SetScalingRatio (BYVAL ratio AS SINGLE)
-```
 ```
 #### Remarks
 
