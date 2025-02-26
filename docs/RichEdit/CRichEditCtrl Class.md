@@ -2457,6 +2457,12 @@ FUNCTION SaveRawText (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN =
 
 A bollean true (-1) of false (0).
 
+#### Usage example
+
+```
+RichEdit->SaveRawText(AfxGetExePath & "\test.txt", TRUE)
+```
+
 ---
 
 # <a name="gettextex"></a>GetTextEx
