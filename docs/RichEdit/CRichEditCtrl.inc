@@ -262,7 +262,22 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION GetTextColor () AS COLORREF
       DECLARE FUNCTION SetTextColor (BYVAL crTxtColor AS COLORREF) AS BOOLEAN
       DECLARE FUNCTION GetTextEx (BYREF gtex AS GETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
-      DECLARE FUNCTION SetTextEx (BYREF stex AS .SETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
+      DECLARE FUNCTION SetTextEx OVERLOAD (BYREF strText AS STRING) AS DWORD
+      DECLARE FUNCTION SetTextEx OVERLOAD (BYREF wszText AS WSTRING) AS DWORD
+
+      DECLARE FUNCTION SetTextEx OVERLOAD (BYREF stex AS .SETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
+      DECLARE FUNCTION SetTextEx OVERLOAD (BYREF stex AS .SETTEXTEX, BYREF strText AS STRING) AS DWORD
+      DECLARE FUNCTION SetTextEx OVERLOAD (BYREF stex AS .SETTEXTEX, BYREF wszText AS WSTRING) AS DWORD
+      DECLARE FUNCTION SetTextEx OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF strText AS STRING) AS DWORD
+      DECLARE FUNCTION SetTextEx OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF wszText AS WSTRING) AS DWORD
+      DECLARE FUNCTION SetTextEx OVERLOAD (BYVAL nPos AS LONG, BYREF strText AS STRING) AS DWORD
+      DECLARE FUNCTION SetTextEx OVERLOAD (BYVAL nPos AS LONG, BYREF wszText AS WSTRING) AS DWORD
+      DECLARE FUNCTION InsertText OVERLOAD (BYREF strText AS STRING) AS DWORD
+      DECLARE FUNCTION InsertText OVERLOAD (BYREF wszText AS WSTRING) AS DWORD
+      DECLARE FUNCTION InsertText OVERLOAD (BYVAL nPos AS LONG, BYREF strText AS STRING) AS DWORD
+      DECLARE FUNCTION InsertText OVERLOAD (BYVAL nPos AS LONG, BYREF wszText AS WSTRING) AS DWORD
+      DECLARE FUNCTION ReplaceText OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF strText AS STRING) AS DWORD
+      DECLARE FUNCTION ReplaceText OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF wszText AS WSTRING) AS DWORD
       DECLARE FUNCTION GetTextFontName () AS CWSTR
       DECLARE FUNCTION SetTextFontName (BYREF wszFaceName AS WSTRING) AS BOOLEAN
       DECLARE FUNCTION GetTextHeight () AS LONG
@@ -576,7 +591,7 @@ PRIVATE DESTRUCTOR CRichEditCtrl
    CREC_DP("CRichEditCtrl DESTRUCTOR")
    ' // Release the ITextDocument2 interface
    DIM dwRefCount AS DWORD = AfxSafeRelease(m_pTextDocument2)
-   CREC_DP("CRichEditCtrl DESTRUCTOR - ITextDOcument2 ref count = " & WSTR(dwRefCount))
+   CREC_DP("CRichEditCtrl DESTRUCTOR - ITextDocument2 ref count = " & WSTR(dwRefCount))
    ' // Destroy the Rich Edit control
    DestroyWindow m_hRichEdit
    m_hRichEdit = NULL
@@ -2302,6 +2317,183 @@ PRIVATE FUNCTION CRichEditCtrl.SetTextEx (BYREF stex AS .SETTEXTEX, BYVAL buffer
    RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, buffer))
 END FUNCTION
 ' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetTextEx (BYREF stex AS .SETTEXTEX, BYREF strText AS STRING) AS DWORD
+   CREC_DP("CRichEditCtrl.SetTextEx - SETTEXTEX STRING")
+   m_Result = 0
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(strText)))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetTextEx (BYREF stex AS .SETTEXTEX, BYREF wszText AS WSTRING) AS DWORD
+   CREC_DP("CRichEditCtrl.SetTextEx - SETTEXTEX WSTRING")
+   m_Result = 0
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(wszText)))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Inserts text at the caret position with the passed ansi string.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetTextEx (BYREF strText AS STRING) AS DWORD
+   CREC_DP("CRichEditCtrl.SetTextEx - INSERT STRING")
+   m_Result = 0
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = CP_ACP
+   DIM nPos As LONG = this.GetCaretPos
+   this.SetSel(nPos, nPos)
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(strText)))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Inserts text at the specified position with the passed unicode string.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetTextEx (BYREF wszText AS WSTRING) AS DWORD
+   CREC_DP("CRichEditCtrl.SetTextEx - INSERT WSTRING")
+   m_Result = 0
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = 1200 ' Unicode page
+   DIM nPos As LONG = this.GetCaretPos
+   this.SetSel(nPos, nPos)
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(wszText)))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Inserts text at the caret position with the passed ansi string.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.InsertText (BYREF strText AS STRING) AS DWORD
+   CREC_DP("CRichEditCtrl.InsertText - STRING")
+   m_Result = 0
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = CP_ACP
+   DIM nPos As LONG = this.GetCaretPos
+   this.SetSel(nPos, nPos)
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(strText)))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Inserts text at the specified position with the passed unicode string.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.InsertText (BYREF wszText AS WSTRING) AS DWORD
+   CREC_DP("CRichEditCtrl.SetTextEx - WSTRING")
+   m_Result = 0
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = 1200 ' Unicode page
+   DIM nPos As LONG = this.GetCaretPos
+   this.SetSel(nPos, nPos)
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(wszText)))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Inserts text at the specified position with the passed ansi string.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetTextEx (BYVAL nPos AS LONG, BYREF strText AS STRING) AS DWORD
+   CREC_DP("CRichEditCtrl.SetTextEx - INSERT STRING - nPos")
+   m_Result = 0
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = CP_ACP
+   this.SetSel(nPos, nPos)
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(strText)))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Inserts text at the specified position with the passed unicode string.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetTextEx (BYVAL nPos AS LONG, BYREF wszText AS WSTRING) AS DWORD
+   CREC_DP("CRichEditCtrl.SetTextEx - INSERT WSTRING - nPos")
+   m_Result = 0
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = 1200 ' Unicode page
+   this.SetSel(nPos, nPos)
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(wszText)))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Inserts text at the specified position with the passed ansi string.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.InsertText (BYVAL nPos AS LONG, BYREF strText AS STRING) AS DWORD
+   CREC_DP("CRichEditCtrl.InsertText - STRING - nPos")
+   m_Result = 0
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = CP_ACP
+   this.SetSel(nPos, nPos)
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(strText)))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Inserts text at the specified position with the passed unicode string.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.InsertText (BYVAL nPos AS LONG, BYREF wszText AS WSTRING) AS DWORD
+   CREC_DP("CRichEditCtrl.InsertText - WSTRING - nPos")
+   m_Result = 0
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = 1200 ' Unicode page
+   this.SetSel(nPos, nPos)
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(wszText)))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Replaces text from start to end with the passed ansi string.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetTextEx (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF strText AS STRING) AS DWORD
+   CREC_DP("CRichEditCtrl.SetTextEx - REPLACE STRING - nStart-nEnd")
+   m_Result = 0
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = CP_ACP
+   this.SetSel(nStart, nEnd)
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(strText)))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Replaces text from start to end with the passed unicode string.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SetTextEx (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF wszText AS WSTRING) AS DWORD
+   CREC_DP("CRichEditCtrl.SetTextEx - REPLACE WSTRING - nStart-nEnd")
+   m_Result = 0
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = 1200 ' Unicode page
+   this.SetSel(nStart, nEnd)
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(wszText)))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Replaces text from nStart to nEnd with the passed ansi string.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.ReplaceText (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF strText AS STRING) AS DWORD
+   CREC_DP("CRichEditCtrl.ReplaceText - STRING - nStart-nEnd")
+   m_Result = 0
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = CP_ACP
+   this.SetSel(nStart, nEnd)
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(strText)))
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Replaces text from nStart to nEnd with the passed unicode string.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.ReplaceText (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF wszText AS WSTRING) AS DWORD
+   CREC_DP("CRichEditCtrl.ReplaceText - WSTRING - nStart-nEnd")
+   m_Result = 0
+   DIM stex AS .SETTEXTEX
+   stex.flags = ST_SELECTION OR ST_KEEPUNDO
+   stex.codepage = 1200 ' Unicode page
+   this.SetSel(nStart, nEnd)
+   RETURN SendMessageW(m_hRichEdit, EM_SETTEXTEX, cast(WPARAM, @stex), cast(LPARAM, STRPTR(wszText)))
+END FUNCTION
+' ========================================================================================
 
 ' ========================================================================================
 ' Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline
@@ -3328,6 +3520,7 @@ PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    DIM pStorage AS IStorage PTR
    m_Result = StgCreateDocfileOnILockBytes(pLockBytes, _
       STGM_SHARE_EXCLUSIVE OR STGM_CREATE OR STGM_READWRITE, 0, @pStorage)
+   AfxSafeRelease(pLockBytes)
    IF FAILED(m_Result) THEN RETURN FALSE
 
    ' // Set up the data format
@@ -3366,6 +3559,7 @@ PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    m_Result = pObject->lpvtbl->GetUserClassID(pObject, @clsid)
    IF FAILED(m_Result) THEN
       AfxSafeRelease(pObject)
+      AfxSafeRelease(pStorage)
       RETURN FALSE
    END IF
 
@@ -3394,6 +3588,7 @@ PRIVATE FUNCTION CRichEditCtrl.InsertObject ( _
    m_Result = pRichEditOle->lpvtbl->InsertObject(pRichEditOle, @reobject)
    AfxSafeRelease(pClientSite)
    AfxSafeRelease(pObject)
+   AfxSafeRelease(pStorage)
    AfxSafeRelease(pRichEditOle)
    IF FAILED(m_Result) THEN RETURN FALSE
    
