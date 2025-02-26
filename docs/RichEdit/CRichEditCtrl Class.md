@@ -11,6 +11,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [hRichEdit](#hrichedit) | Returns the handle of the rich edit control. |
 | [ScalingRatio](#scalingratio) | Gets/sets the scaling ratio. |
 | [SetWysiwygPrint](#setwysiwygprint) | Sets the target printer device and line width used for "what you see is what you get" (WYSIWYG) formatting in a rich edit control. |
+| [RestoreTargetDevice](#restoretargetdevice) | Sets the target device to the device context of the rich edit control. |
 
 # Methods inherited from CTextObjectBase
 
@@ -361,6 +362,18 @@ FUNCTION SetWysiwygPrint (BYREF wszPrinterName AS WSTRING = "") AS BOOLEAN
 | Parameter  | Description |
 | ---------- | ----------- |
 | *wszPrinterName* | The printer name, e.g. "OKI B410d" or the "Microsoft Print to PDF" virtual printer. If wszPrinterName is empty, the control will use the default printer. |
+
+#### Return value
+
+A boolean true (-1) or false (0).
+
+# <a name="restoretargetdevice"></a>RestoreTargetDevice
+
+Sets the target device to the device context of the rich edit control.
+
+```
+FUNCTION RestoreTargetDevice () AS BOOLEAN
+```
 
 #### Return value
 
