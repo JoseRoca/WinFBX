@@ -356,7 +356,7 @@ FUNCTION SetWysiwygPrint (BYREF wszPrinterName AS WSTRING = "") AS BOOLEAN
 ```
 | Parameter  | Description |
 | ---------- | ----------- |
-| *wszPrinterName* | The printer name, e.g. "OKI B410d" or the "Microsoft Print to PDF" virtual printer. If wszPrinterName is empty, the control will use the default printer. |
+| *wszPrinterName* | The printer name, e.g. "OKI B410d" or the "Microsoft Print to PDF" virtual printer. If *wszPrinterName* is empty, the control will use the default printer. |
 
 #### Return value
 
