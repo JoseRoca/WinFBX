@@ -2324,6 +2324,8 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Gets the length of the raw text
+' ========================================================================================
 PRIVATE FUNCTION CRichEditCtrl.GetRawTextLength () AS LONG
    m_Result = 0
    DIM gtlex AS .GETTEXTLENGTHEX = TYPE<.GETTEXTLENGTHEX>(GT_RAWTEXT, CP_ACP)
