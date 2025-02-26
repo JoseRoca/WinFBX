@@ -3191,6 +3191,8 @@ FUNCTION SetTextEx OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF str
 FUNCTION SetTextEx OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF wszText AS WSTRING) AS DWORD
 FUNCTION SetTextEx OVERLOAD (BYVAL nPos AS LONG, BYREF strText AS STRING) AS DWORD
 FUNCTION SetTextEx OVERLOAD (BYVAL nPos AS LONG, BYREF wszText AS WSTRING) AS DWORD
+FUNCTION InsertText OVERLOAD (BYREF strText AS STRING) AS DWORD
+FUNCTION InsertText OVERLOAD (BYREF wszText AS WSTRING) AS DWORD
 FUNCTION InsertText OVERLOAD (BYVAL nPos AS LONG, BYREF strText AS STRING) AS DWORD
 FUNCTION InsertText OVERLOAD (BYVAL nPos AS LONG, BYREF wszText AS WSTRING) AS DWORD
 FUNCTION ReplaceText OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF strText AS STRING) AS DWORD
@@ -3246,6 +3248,8 @@ DIM st AS STRING = "New text"
 pRichEdit->SetTextEx(stex, st)
 --or--
 pRichEdit->SetTextEx(st)
+--or--
+pRichEdit->InsertTextEx(st)
 ```
 Inserts formatted rich text at the caret position:
 ```
@@ -3256,6 +3260,8 @@ DIM st AS STRING = $"{\rtf1\ansi New text}"
 pRichEdit->SetTextEx(stex, st)
 --or--
 pRichEdit->SetTextEx(st)
+--or--
+pRichEdit->InsertTextEx(st)
 ```
 Inserts unicode text at the caret position:
 ```
@@ -3266,6 +3272,8 @@ DIM wsz AS WSTRING * 10 = "New text"
 pRichEdit->SetTextEx(stex, wsz)
 --or--
 pRichEdit->SetTextEx(wsz)
+--or--
+pRichEdit->InsertTextEx(wsz)
 ```
 ```
 DIM stex AS .SETTEXTEX
@@ -3275,6 +3283,8 @@ DIM cws AS CWSTR = "New text"
 pRichEdit->SetTextEx(stex, cws)
 --or--
 pRichEdit->SetTextEx(cws)
+--or--
+pRichEdit->InsertTextEx(cws)
 ```
 Replaces text
 ```
