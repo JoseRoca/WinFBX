@@ -12,6 +12,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [ScalingRatio](#scalingratio) | Gets/sets the scaling ratio. |
 | [SetWysiwygPrint](#setwysiwygprint) | Sets the target printer device and line width used for "what you see is what you get" (WYSIWYG) formatting in a rich edit control. |
 | [RestoreTargetDevice](#restoretargetdevice) | Sets the target device to the device context of the rich edit control. |
+| [AfxCRichEditCtrlPtr](#afxcricheditctrlptr) | Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or from the handle of its parent window and the control's identifier. |
 
 # Methods inherited from CTextObjectBase
 
@@ -20,12 +21,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetLastResult](#getlastresult) | Returns the last result code. |
 | [SetResult](#setresult) | Sets the last result code. |
 | [GetErrorInfo](#geterrorinfo) | Returns a localized description of the last result code. |
-
-#### Helper procedure
-
-| Name       | Description |
-| ---------- | ----------- |
-| [AfxCRichEditCtrlPtr](#afxcricheditctrlptr) | Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or from the handle of its parent window and the control's identifier. |
 
 ---
 
