@@ -32,9 +32,11 @@ Public:
 Public:
    DECLARE CONSTRUCTOR
    DECLARE DESTRUCTOR
+   DECLARE FUNCTION SetDefaultPrinter (BYREF wszPrinterName AS WSTRING) AS BOOLEAN
    DECLARE FUNCTION GetDefaultPrinter () AS CWSTR
    DECLARE FUNCTION GetDefaultPrinterDriver () AS CWSTR
    DECLARE FUNCTION GetDefaultPrinterPort () AS CWSTR
+   DECLARE FUNCTION SetDefaultPrinterPort () AS CWSTR
    DECLARE FUNCTION ChoosePrinter (BYVAL hwndOwner AS HWND = NULL) AS BOOLEAN
    DECLARE FUNCTION EnumPrinterNames () AS CWSTR
    DECLARE FUNCTION AttachPrinter (BYREF wszPrinterName AS WSTRING = "") AS BOOLEAN
@@ -85,12 +87,15 @@ Public:
    DECLARE PROPERTY Scale (BYVAL nScale AS LONG)
    DECLARE PROPERTY Tray () AS LONG
    DECLARE PROPERTY Tray (BYVAL nTray AS LONG)
-   DECLARE SUB GetMarginPixels (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
-   DECLARE SUB GetMarginUnits (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
+   DECLARE SUB GetMarginsPixels OVERLOAD (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
+   DECLARE FUNCTION GetMarginsPixels OVERLOAD () AS RECT
+   DECLARE SUB GetMarginsUnits OVERLOAD (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
+   DECLARE FUNCTION GetMarginsUnits OVERLOAD () AS RECT
    DECLARE FUNCTION PrintBitmap (BYREF wszDocName AS WSTRING, BYVAL hbmp AS HBITMAP, BYVAL bStretch AS BOOLEAN = FALSE, _
                     BYVAL nStretchMode AS LONG = InterpolationModeHighQualityBicubic) AS BOOLEAN
    DECLARE FUNCTION PrintBitmapToFile (BYREF wszDocName AS WSTRING, BYREF wszOutputFileName AS WSTRING, BYVAL hbmp AS HBITMAP, BYVAL bStretch AS BOOLEAN = FALSE, _
                     BYVAL nStretchMode AS LONG = InterpolationModeHighQualityBicubic) AS BOOLEAN
+   DECLARE FUNCTION PrintRtf (BYVAL hRichEdit AS HWND, BYREF wszDocName AS WSTRING) AS BOOLEAN
 
 END TYPE
 ' ========================================================================================
@@ -108,6 +113,14 @@ END CONSTRUCTOR
 PRIVATE DESTRUCTOR CPrint
    IF m_hDC then DeleteDC m_hDC
 END DESTRUCTOR
+' ========================================================================================
+
+' ========================================================================================
+' Sets the default printer.
+' ========================================================================================
+PRIVATE FUNCTION CPrint.SetDefaultPrinter (BYREF wszPrinterName AS WSTRING) AS BOOLEAN
+   RETURN SetDefaultPrinterW(wszPrinterName)
+END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
@@ -276,9 +289,9 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CPrint.GetVerticalUnits () AS LONG
    IF m_hDC = NULL THEN RETURN 0
-   ' // Get the horizontal PPI of the printer
+   ' // Get the vertical PPI of the printer
    DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
-   ' // Calculate the width according to the PPI of the printer
+   ' // Calculate the height according to the PPI of the printer
    RETURN GetDeviceCaps(m_hDC, VERTRES) / (ppiy / 100)
 END FUNCTION
 ' ========================================================================================
@@ -804,7 +817,7 @@ END PROPERTY
 ' ========================================================================================
 ' Retrieves the margins (the non-printable area) of the printer page, in pixels.
 ' ========================================================================================
-PRIVATE SUB CPrint.GetMarginPixels (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
+PRIVATE SUB CPrint.GetMarginsPixels (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
    IF m_hDC = NULL THEN RETURN
    DIM totalWidth AS LONG = GetDeviceCaps(m_hdc, PHYSICALWIDTH)
    DIM printWidth AS LONG = GetDeviceCaps(m_hdc, HORZRES)
@@ -821,9 +834,29 @@ PRIVATE SUB CPrint.GetMarginPixels (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYR
 END SUB
 ' ========================================================================================
 ' ========================================================================================
+PRIVATE FUNCTION CPrint.GetMarginsPixels () AS RECT
+   DIM rc AS RECT
+   IF m_hDC = NULL THEN RETURN rc
+   DIM totalWidth AS LONG = GetDeviceCaps(m_hdc, PHYSICALWIDTH)
+   DIM printWidth AS LONG = GetDeviceCaps(m_hdc, HORZRES)
+   DIM leftMargin AS LONG = GetDeviceCaps(m_hdc, PHYSICALOFFSETX)
+   DIM rightMargin AS LONG = totalWidth - printWidth - leftMargin
+   DIM totalHeight AS LONG = GetDeviceCaps(m_hdc, PHYSICALHEIGHT)
+   DIM printHeight AS LONG = GetDeviceCaps(m_hdc, VERTRES)
+   DIM topMargin AS LONG = GetDeviceCaps(m_hdc, PHYSICALOFFSETY)
+   DIM bottomMargin AS LONG = totalHeight - printHeight - topMargin
+   rc.Left = leftMargin
+   rc.Top = topMargin
+   rc.right = rightMargin
+   rc.bottom = bottomMargin
+   RETURN rc
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' Retrieves the margins (the non-printable area) of the printer page, in world units.
 ' ========================================================================================
-PRIVATE SUB CPrint.GetMarginUnits (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
+PRIVATE SUB CPrint.GetMarginsUnits (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYREF nRight AS LONG, BYREF nBottom AS LONG)
    IF m_hDC = NULL THEN RETURN
    ' // Get the horizontal PPI of the printer
    DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
@@ -843,6 +876,30 @@ PRIVATE SUB CPrint.GetMarginUnits (BYREF nLeft AS LONG, BYREF nTop AS LONG, BYRE
    IF VARPTR(nRight) THEN nRight = rightMargin
    IF VARPTR(nBottom) THEN nBottom = bottomMargin
 END SUB
+' ========================================================================================
+' ========================================================================================
+PRIVATE FUNCTION CPrint.GetMarginsUnits () AS RECT
+   DIM rc AS RECT
+   IF m_hDC = NULL THEN RETURN rc
+   ' // Get the horizontal PPI of the printer
+   DIM ppix AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSX)
+   ' // Get the vertical PPI of the printer
+   DIM ppiy AS LONG = GetDeviceCaps(m_hDC, LOGPIXELSY)
+   ' // Calculate the margins according to the PPI of the printer
+   DIM totalWidth AS LONG = GetDeviceCaps(m_hdc, PHYSICALWIDTH) / (ppix / 100)
+   DIM printWidth AS LONG = GetDeviceCaps(m_hdc, HORZRES) / (ppix / 100)
+   DIM leftMargin AS LONG = GetDeviceCaps(m_hdc, PHYSICALOFFSETX) / (ppix / 100)
+   DIM rightMargin AS LONG = totalWidth - printWidth - leftMargin
+   DIM totalHeight AS LONG = GetDeviceCaps(m_hdc, PHYSICALHEIGHT) / (ppiy / 100)
+   DIM printHeight AS LONG = GetDeviceCaps(m_hdc, VERTRES) / (ppiy / 100)
+   DIM topMargin AS LONG = GetDeviceCaps(m_hdc, PHYSICALOFFSETY) / (ppiy / 100)
+   DIM bottomMargin AS LONG = totalHeight - printHeight - topMargin
+   rc.left = leftMargin
+   rc.top = topMargin
+   rc.right = rightMargin
+   rc.bottom = bottomMargin
+   RETURN rc
+END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
@@ -1009,6 +1066,98 @@ PRIVATE FUNCTION CPrint.PrintBitmapToFile ( _
    IF pGraphics THEN GdipDeleteGraphics(pGraphics)
    ' // Shutdown Gdiplus
    GdiplusShutdown token
+
+END FUNCTION
+' ========================================================================================
+
+
+' ========================================================================================
+' Prints RTF to the selected printer.
+' Parameters:
+' - hRichEdit = Handle of the rich edit control.
+' - wszDocName = Document name
+' Return value: Returns TRUE if the bitmap has been printed successfully, or FALSE otherwise.
+' ========================================================================================
+PRIVATE FUNCTION CPrint.PrintRtf (BYVAL hRichEdit AS HWND, BYREF wszDocName AS WSTRING) AS BOOLEAN
+
+   ' // Invoke the print dialog
+   IF this.ChoosePrinter = FALSE THEN EXIT FUNCTION
+   ' // If you prefer to attach the printer without invoking the print dialog, you can use
+   ' pPrint.AttachPrinter(name of the printer, e.g. "Microsoft Print to PDF")
+   IF m_hDC = NULL THEN RETURN FALSE
+
+   ' // Get the physical offsets of the printing device
+   DIM cxPhysOffset AS LONG = GetDeviceCaps(m_hDC, PHYSICALOFFSETX)
+   DIM cyPhysOffset AS LONG = GetDeviceCaps(m_hDC, PHYSICALOFFSETY)
+
+   ' // Calculate the width and height in twips
+   DIM cx AS LONG, cy AS LONG
+   cx = (this.GetHorizontalResolution * 1440) \ this.GetPPIX
+   cy = (this.GetVerticalResolution * 1440) \ this.GetPPIY
+
+   ' // Set the target device and line width
+   SendMessageW(hRichEdit, EM_SETTARGETDEVICE, cast(WPARAM, m_hDC), cx)
+
+   ' // Fill a FORMATRANGE structure
+   DIM fr AS FORMATRANGE
+   fr.hdc = m_hDC
+   fr.hdcTarget = m_hDC
+   DIM rcPage AS RECT
+   DIM rc AS RECT
+
+   rcPage.left = cxPhysOffset
+   rcPage.top = cyPhysOffset
+   rcPage.right = cxPhysOffset + cx
+   rcPage.bottom = cyPhysOffset + cy
+
+   rc = rcPage
+   fr.rc = rc
+   fr.rcPage = rcPage
+   fr.chrg.cpMin = 0
+   fr.chrg.cpMax = -1
+
+   ' // Select the entire contents
+   SendMessageW(hRichEdit, EM_SETSEL, 0, cast(LPARAM, -1))
+   ' // Get the selection into a CHARRANGE
+   SendMessageW(hRichEdit, EM_EXGETSEL, 0, cast(LPARAM, @fr.chrg))   
+
+   ' // Print the RTF
+   ' // Use GDI to print successive pages
+   DIM di AS DOCINFOW
+   di.cbSize = SIZEOF(DOCINFOW)
+   di.lpszDocName = @wszDocName
+   DIM hr AS LONG = StartDocW(m_hDC, @di)
+   IF hr <= 0 THEN RETURN FALSE
+   DIM nCopies AS LONG = this.Copies
+   IF nCopies < 1 THEN nCopies = 1
+   DIM fSuccess AS BOOLEAN = TRUE
+   FOR i AS LONG = 1 TO nCopies
+      WHILE (fr.chrg.cpMin < fr.chrg.cpMax) ANDALSO (fSuccess = TRUE)
+         fSuccess = StartPage(m_hDC) > 0
+         IF fSuccess = FALSE THEN EXIT WHILE
+         DIM cpMin AS LONG = SendMessageW(hRichEdit, EM_FORMATRANGE, TRUE, cast(LPARAM, @fr))
+         IF cpMin <= fr.chrg.cpMin THEN
+            fSuccess = FALSE
+            EXIT WHILE
+         END IF
+         fr.chrg.cpMin = cpMin
+         fSuccess = EndPage(m_hDC) > 0
+      WEND
+   NEXT
+
+   ' // Free cached information
+   SendMessageW(hRichEdit, EM_FORMATRANGE, FALSE, NULL)
+
+   ' // If printing has been successful, end the print job
+   IF fSuccess THEN
+      EndDoc(m_hDC)
+   ELSE
+      ' // otherwise, abort it
+      AbortDoc(m_hDC)
+   END IF
+
+   ' // Return success or failure
+   RETURN fSuccess
 
 END FUNCTION
 ' ========================================================================================
