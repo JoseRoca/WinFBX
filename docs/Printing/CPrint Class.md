@@ -12,6 +12,7 @@ Allows to attach/choose a printer and get/set its setting values.
 | [ChoosePrinter](#chooseprinter) | Displays the printer dialog to select a printer. |
 | [PageSetup](#pagesetup) | Displays a Page Setup dialog box that enables the user to specify the attributes of a printed page. |
 | [GetPrinterName](#getprintername) | Returns the name of the attached printer. |
+| [SetDefaultPrinter](#setdefaultprinter) | Sets the default printer. |
 | [GetDefaultPrinter](#getdefaultprinter) | Returns the name of the default printer. |
 | [GetDefaultPrinterDriver](#getdefaultprinterdriver) | Returns the name of the default printer driver. |
 | [GetDefaultPrinterPort](#getdefaultprinterport) | Returns the name of the default printer port. |
@@ -174,6 +175,30 @@ FUNCTION GetPrinterName () AS CWSTR
 CWSTR. The name of the attached printer. If there is not a printer attached, it returns an empty string.
 
 ---
+
+# <a name="setdefaultprinter"></a>SetDefaultPrinter
+
+Sets the printer name of the default printer for the current user on the local computer.
+
+```
+FUNCTION SetDefaultPrinter (BYREF wszPrinterName AS WSTRING) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *wszPrinterName* | A pointer to a null-terminated string containing the default printer name. For a remote printer connection, the name format is \**\\server\\**printername. For a local printer, the name format is printername. If this parameter is **NULL** or an empty string, that is, "", **SetDefaultPrinter** will select a default printer from one of the installed printers. If a default printer already exists, calling **SetDefaultPrinter** with a **NULL** or an empty string in this parameter might change the default printer. |
+
+#### Return value
+
+BOOLEAN. True or false.
+
+#### Remarks
+
+When using this method, you must specify a valid printer, driver, and port. If they are invalid, the APIs do not fail but the result is not defined. This could cause other programs to set the printer back to the previous valid printer. You can use **EnumPrinters** to retrieve the printer name, driver name, and port name of all available printers.
+
+ #### Note
+
+This is a blocking or synchronous function and might not return immediately. How quickly this function returns depends on run-time factors such as network status, print server configuration, and printer driver implementation factors that are difficult to predict when writing an application. Calling this function from a thread that manages interaction with the user interface could make the application appear to be unresponsive.
 
 # <a name="getdefaultprinter"></a>GetDefaultPrinter
 
