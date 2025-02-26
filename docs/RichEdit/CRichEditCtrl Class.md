@@ -187,7 +187,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 | Name       | Description |
 | ---------- | ----------- |
-| [ActiveStory](#activestory) | Gets the active story. |
+| [ActiveStory](#activestory) | Gets/sets the active story. |
 | [AttachMsgFilter](#attachmsgfilter) | Attaches a new message filter to the edit instance. |
 | [BeginEditCollection](#begineditcollection) | Turns on edit collection (also called *undo grouping*). |
 | [EndEditCollection](#endeditcollection) | Turns off edit collection (also called *undo grouping*). |
@@ -5021,7 +5021,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 # <a name="activestory"></a>ActiveStory
 
-Gets the active story; that is, the story that receives keyboard and mouse input.
+Gets/sets the active story; that is, the story that receives keyboard and mouse input.
 
 ```
 (GET) PROPERTY ActiveStory () AS ITextStory PTR
