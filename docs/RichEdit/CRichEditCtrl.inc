@@ -45,6 +45,8 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION hRichEdit () AS HWND
       DECLARE PROPERTY ScalingRatio (BYVAL ratio AS SINGLE)
       DECLARE PROPERTY ScalingRatio () AS SINGLE
+      DECLARE FUNCTION GetScalingRatio () AS SINGLE
+      DECLARE SUB SetScalingRatio (BYVAL ratio AS SINGLE)
       DECLARE FUNCTION SetWysiwygPrint (BYREF wszPrinterName AS WSTRING = "") AS BOOLEAN
       DECLARE FUNCTION RestoreTargetDevice () AS BOOLEAN
       DECLARE PROPERTY AcceptTab () AS BOOLEAN
@@ -250,8 +252,6 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE SUB SetRectNP (BYVAL fCoord AS LONG, BYREF rc AS .RECT)
       DECLARE FUNCTION GetScrollPos () AS .POINT
       DECLARE FUNCTION SetScrollPos (BYREF pt AS .POINT) AS HRESULT
-      DECLARE FUNCTION GetScalingRatio () AS SINGLE
-      DECLARE SUB SetScalingRatio (BYVAL ratio AS SINGLE)
       DECLARE FUNCTION GetSel OVERLOAD (BYREF dwStartPos AS DWORD, BYREF dwEndPos AS DWORD) AS LONG
       DECLARE FUNCTION GetSel OVERLOAD () AS .POINTL
       DECLARE FUNCTION GetSelText () AS CWSTR
@@ -260,12 +260,11 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION GetTableParams (BYREF tp AS TABLEROWPARMS, BYREF tcp AS TABLECELLPARMS) AS DWORD
       DECLARE FUNCTION GetText () AS CWSTR
       DECLARE FUNCTION SetText (BYREF wszText AS WSTRING) AS BOOLEAN
+      DECLARE FUNCTION GetTextEx (BYREF gtex AS .GETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
       DECLARE FUNCTION GetTextColor () AS COLORREF
       DECLARE FUNCTION SetTextColor (BYVAL crTxtColor AS COLORREF) AS BOOLEAN
-      DECLARE FUNCTION GetTextEx (BYREF gtex AS GETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
       DECLARE FUNCTION SetTextEx OVERLOAD (BYREF strText AS STRING) AS DWORD
       DECLARE FUNCTION SetTextEx OVERLOAD (BYREF wszText AS WSTRING) AS DWORD
-
       DECLARE FUNCTION SetTextEx OVERLOAD (BYREF stex AS .SETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
       DECLARE FUNCTION SetTextEx OVERLOAD (BYREF stex AS .SETTEXTEX, BYREF strText AS STRING) AS DWORD
       DECLARE FUNCTION SetTextEx OVERLOAD (BYREF stex AS .SETTEXTEX, BYREF wszText AS WSTRING) AS DWORD
@@ -365,6 +364,10 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       ' // Helper methods and properties
       DECLARE FUNCTION SetFont (BYREF wszFaceName AS WSTRING, BYVAL ptsize AS LONG) AS HRESULT
       DECLARE FUNCTION GetRtf (BYVAL dwOptionsAndFlags AS DWORD = SF_RTF) AS STRING
+      DECLARE FUNCTION GetRawTextLength () AS LONG
+      DECLARE FUNCTION GetRawText () AS STRING
+      DECLARE FUNCTION SaveRawText (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+         BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
 
       ' // File operations methods
       DECLARE FUNCTION NewDoc () AS HRESULT
@@ -2319,6 +2322,54 @@ PRIVATE FUNCTION CRichEditCtrl.GetTextEx (BYREF gtex AS .GETTEXTEX, BYVAL buffer
    RETURN SendMessageW(m_hRichEdit, EM_GETTEXTEX, cast(WPARAM, @gtex), cast(LPARAM, buffer))
 END FUNCTION
 ' ========================================================================================
+
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetRawTextLength () AS LONG
+   m_Result = 0
+   DIM gtlex AS .GETTEXTLENGTHEX = TYPE<.GETTEXTLENGTHEX>(GT_RAWTEXT, CP_ACP)
+   RETURN SendMessageW(m_hRichEdit, EM_GETTEXTLENGTHEX, cast(WPARAM, @gtlex), 0)
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the raw text exactly as it appears in memory.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.GetRawText () AS STRING
+   m_Result = 0
+   DIM gtlex AS .GETTEXTLENGTHEX = TYPE<.GETTEXTLENGTHEX>(GT_RAWTEXT, CP_ACP)
+   DIM cb AS LONG = SendMessageW(m_hRichEdit, EM_GETTEXTLENGTHEX, cast(WPARAM, @gtlex), 0)
+   DIM gtex AS .GETTEXTEX
+   gtex.cb = cb
+   gtex.flags = GT_RAWTEXT
+   gtex.codepage = CP_ACP
+   DIM buffer AS STRING = SPACE(cb)
+   m_Result = SendMessageW(m_hRichEdit, EM_GETTEXTEX, cast(WPARAM, @gtex), cast(LPARAM, STRPTR(buffer)))
+   RETURN buffer
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Saves the raw contents of the rich edit control to a file.
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.SaveRawText (BYREF wszFilename AS WSTRING, BYVAL Overwrite AS BOOLEAN = FALSE, _
+BYVAL dwFlagsAndAttributes AS DWORD = FILE_ATTRIBUTE_NORMAL) AS BOOLEAN
+   ' // Get the Rtf text
+   DIM strRawText AS STRING = this.GetRawText
+   ' // Create the file
+   m_Result = 0
+   DIM dwCreationFlag AS DWORD
+   IF Overwrite THEN dwCreationFlag = CREATE_ALWAYS ELSE dwCreationFlag = CREATE_NEW
+   DIM hFile AS HANDLE = CreateFileW(wszFileName, GENERIC_WRITE, 0, NULL, dwCreationFlag, dwFlagsAndAttributes, NULL)
+   IF hFile = INVALID_HANDLE_VALUE THEN m_Result = GetLastError : RETURN FALSE
+   ' // Save the rtf text
+   DIM dwBytesWritten AS DWORD
+   DIM bSuccess AS BOOLEAN = WriteFile(hFile, STRPTR(strRawText), LEN(strRawText), @dwBytesWritten, NULL)
+   IF bSuccess = FALSE THEN m_Result = GetLastError
+   CloseHandle(hFile)
+   RETURN bSuccess
+END FUNCTION
+' ========================================================================================
+
 
 ' ========================================================================================
 ' Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set
