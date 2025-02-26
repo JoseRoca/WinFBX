@@ -3185,6 +3185,8 @@ Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability 
 FUNCTION SetTextEx OVERLOAD (BYREF stex AS SETTEXTEX, BYVAL buffer AS ANY PTR) AS DWORD
 FUNCTION SetTextEx OVERLOAD (BYREF stex AS .SETTEXTEX, BYREF strText AS STRING) AS DWORD
 FUNCTION SetTextEx OVERLOAD (BYREF stex AS .SETTEXTEX, BYREF wszText AS WSTRING) AS DWORD
+FUNCTION SetTextEx OVERLOAD (BYREF strText AS STRING) AS DWORD
+FUNCTION SetTextEx OVERLOAD (BYREF wszText AS WSTRING) AS DWORD
 FUNCTION SetTextEx OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF strText AS STRING) AS DWORD
 FUNCTION SetTextEx OVERLOAD (BYVAL nStart AS LONG, BYVAL nEnd AS LONG, BYREF wszText AS WSTRING) AS DWORD
 FUNCTION SetTextEx OVERLOAD (BYVAL nPos AS LONG, BYREF strText AS STRING) AS DWORD
@@ -3242,6 +3244,8 @@ stex.flags = ST_SELECTION OR ST_KEEPUNDO
 stex.codepage = CP_ACP
 DIM st AS STRING = "New text"
 pRichEdit->SetTextEx(stex, st)
+--or--
+pRichEdit->SetTextEx(st)
 ```
 Inserts formatted rich text at the caret position:
 ```
@@ -3250,6 +3254,8 @@ stex.flags = ST_SELECTION OR ST_KEEPUNDO
 stex.codepage = CP_ACP
 DIM st AS STRING = $"{\rtf1\ansi New text}"
 pRichEdit->SetTextEx(stex, st)
+--or--
+pRichEdit->SetTextEx(st)
 ```
 Inserts unicode text at the caret position:
 ```
@@ -3258,6 +3264,8 @@ stex.flags = ST_SELECTION OR ST_KEEPUNDO
 stex.codepage = 1200
 DIM wsz AS WSTRING * 10 = "New text"
 pRichEdit->SetTextEx(stex, wsz)
+--or--
+pRichEdit->SetTextEx(wsz)
 ```
 ```
 DIM stex AS .SETTEXTEX
@@ -3265,6 +3273,8 @@ stex.flags = ST_SELECTION OR ST_KEEPUNDO
 stex.codepage = 1200
 DIM cws AS CWSTR = "New text"
 pRichEdit->SetTextEx(stex, cws)
+--or--
+pRichEdit->SetTextEx(cws)
 ```
 Replaces text
 ```
