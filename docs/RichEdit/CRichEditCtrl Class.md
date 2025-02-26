@@ -104,6 +104,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [GetLineCount](#getlinecount) | Gets the number of lines in a multiline rich edit control. |
 | [GetOleInterface](#getoleinterface) | Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality. |
 | [GetRedoName](#getredoname) | Retrieves the type of the next action, if any, in the control's redo queue. |
+| [GetRtf](#getrtf) | Retrieves formatted text from a rich edit control. |
 | [GetSel](#getsel) | Gets the starting and ending character positions of the current selection in a rich edit control. |
 | [GetSelText](#getseltext) | Retrieves the currently selected text in a rich edit control. |
 | [GetTableParams](#gettableparams) | Retrieves the table parameters for a table row and the cell parameters for the specified number of cells. |
@@ -175,7 +176,6 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [AppendDocFile](#appenddocfile) | Appends the contents of the specified RTF file. |
 | [InsertDocFile](#insertdocfile) | Inserts the contents of the specified RTF file. |
 | [GetTextFromFile](#gettextfromfile) | Gets text from the specified file. |
-| [GetRtf](#getrtf) | Retrieves formatted text from a rich edit control. |
 | [SaveRtf](#savertf) | Saves the contents of the rich edit control to a file in rtf format. |
 | [SaveRtfNoObjs](#savertfnoobjs) | Saves the contents of the rich edit control to a file in rtf format with spaces in place of COM objects. |
 | [SaveSelRtf](#saveselrtf) | Saves selection of the rich edit control to a file in rtf format. |
