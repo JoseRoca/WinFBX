@@ -46,6 +46,7 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE PROPERTY ScalingRatio (BYVAL ratio AS SINGLE)
       DECLARE PROPERTY ScalingRatio () AS SINGLE
       DECLARE FUNCTION SetWysiwygPrint (BYREF wszPrinterName AS WSTRING = "") AS BOOLEAN
+      DECLARE FUNCTION RestoreTargetDevice () AS BOOLEAN
       DECLARE PROPERTY AcceptTab () AS BOOLEAN
       DECLARE PROPERTY AcceptTab (BYVAL bAccept AS BOOLEAN)
 
@@ -666,6 +667,17 @@ PRIVATE FUNCTION CRichEditCtrl.SetWysiwygPrint (BYREF wszPrinterName AS WSTRING 
    m_Result = SendMessageW(m_hRichEdit, EM_SETTARGETDEVICE, cast(WPARAM, hDCPrinter), cx)
    IF m_Result THEN m_Result = 0 : RETURN TRUE
    IF m_Result = 0 THEN m_Result = E_FAIL: RETURN FALSE
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Restores the target device to the device context of the control
+' ========================================================================================
+PRIVATE FUNCTION CRichEditCtrl.RestoreTargetDevice () AS BOOLEAN
+   m_Result = 0
+   DIM hDC AS HDC = GetDC(m_hRichEdit)
+   m_Result = SendMessageW(m_hRichEdit, EM_SETTARGETDEVICE, cast(WPARAM, hDC), 0)
+   RETURN CBOOL(m_Result)
 END FUNCTION
 ' ========================================================================================
 
