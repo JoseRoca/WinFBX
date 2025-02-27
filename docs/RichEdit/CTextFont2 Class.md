@@ -13,10 +13,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | ---------- | ----------- |
 | [Duplicate](#duplicate) | Gets/sets a duplicate of this text font object. |
 | [CanChange](#canchange) | Determines whether the font can be changed. |
+| [IsEqual](#isequal) | Determines whether this text font object has the same properties as the specified text font object. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [IsEqual](#isequal) | Determines whether this text font object has the same properties as the specified text font object. |
 | [Reset](#reset) | Resets the character formatting to the specified values. |
 | [GetStyle](#getstyle) | Gets the character style handle of the characters in a range. |
 | [SetStyle](#setstyle) | Sets the character style handle of the characters in a range. |
@@ -117,7 +117,6 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [GetEffects2](#GetEffects2) | Gets the additional character format effects. |
 | [GetProperty](#GetProperty) | Gets the value of the specified property. |
 | [GetPropertyInfo](#GetPropertyInfo) | Gets the property type and value of the specified extra property. |
-| [IsEqual2](#IsEqual2) | The text font object to compare against. |
 | [SetEffects](#SetEffects) | Sets the character format effects. |
 | [SetEffects2](#SetEffects2) | Sets the additional character format effects. |
 | [SetProperty](#SetProperty) | Sets the value of the specified property. |
@@ -251,10 +250,7 @@ Determines whether this text font object has the same properties as the specifie
 
 ```
 FUNCTION CTextFont2.IsEqual (BYVAL pFont AS ITextFont2 PTR) AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->IsEqual(m_pTextFont2, pFont, @Value))
-   RETURN Value
-END FUNCTION
+FUNCTION CTextFont2.IsEqual2 (BYVAL pFont AS ITextFont2 PTR) AS LONG
 ```
 
 | Parameter | Description |
@@ -263,11 +259,7 @@ END FUNCTION
 
 #### Return value
 
-A variable that is **tomTrue** if the font objects have the same properties or **tomFalse** if they do not.
-
-#### Result code
-
-If the text font objects have the same properties, the method succeeds and returns **S_OK**. If the text font objects do not have the same properties, the method fails and returns **S_FALSE**.
+It returnss **tomTrue** if the font objects have the same properties or **tomFalse** if they do not.
 
 #### Remarks
 
@@ -2976,30 +2968,6 @@ END FUNCTION
 | *pType* | The property value. |
 
 #### Return value
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="IsEqual2"></a>IsEqual2
-
-Determines whether this text font object has the same properties as the specified text font object.
-
-```
-FUNCTION CTextFont2.IsEqual2 (BYVAL pFont AS ITextFont2 PTR) AS LONG
-   DIM B AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->IsEqual2(m_pTextFont2, pFont, @B))
-   RETURN B
-END FUNCTION
-```
-
-| Parameter | Description |
-| --------- | ----------- |
-| *pFont* | The text font object to compare against. |
-
-#### Return value
-
-A variable that is **tomTrue** if the font objects have the same properties or **tomFalse** if they do not.
-
-#### Result code
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
