@@ -17,11 +17,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Reset](#reset) | Resets the character formatting to the specified values. |
 | [Style](#style) | Gets/sets the character style handle of the characters in a range. |
 | [AllCaps](#allcaps) | Gets/sets whether the characters are all uppercase. |
+| [Animation](#animation) | Gets/sets the animation type. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetAnimation](#getanimation) | Gets the animation type. |
-| [SetAnimation](#setanimation) | Sets the animation type. |
 | [GetBackColor](#getbackColor) | Gets the text background (highlight) color. |
 | [SetBackColor](#setbackColor) | Sets the background color. |
 | [GetBold](#getbold) | Gets whether the characters are bold. |
@@ -403,51 +402,17 @@ This property corresponds to the **CFE_ALLCAPS** effect described in the [CHARFO
 
 ---
 
-## <a name="GetAnimation"></a>GetAnimation
+## <a name="animation"></a>Animation
 
-Gets the animation type.
+Gets/sets the animation type.
 
+```
+(GET) PROPERTY Animation () AS LONG
+(SET) PROPERTY Animation (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetAnimation () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetAnimation(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-
-#### Return value
-
-One of the following animation types.
-
-| Constant | Value | Meaning |
-| -------- | ----- | ------- |
-| **tomNoAnimation** | 0 | Do not apply text animation. |
-| **tomLasVegasLights** | 1 | Text is bordered by marquee lights that blink between the colors red, yellow, green, and blue. |
-| **tomBlinkingBackground** | 2 | Text has a black background that blinks on and off. |
-| **tomSparkleText** | 3 | Text is overlaid with multicolored stars that blink on and off at regular intervals. |
-| **tomMarchingBlackAnts** | 4 | Text is surrounded by a black dashed-line border. The border is animated so that the individual dashes appear to move clockwise around the text. |
-| **tomMarchingRedAnts** | 5 | Text is surrounded by a red dashed-line border that is animated to appear to move clockwise around the text. |
-| **tomShimmer** | 6 | Text is alternately blurred and unblurred at regular intervals, to give the appearance of shimmering. |
-| **tomWipeDown** | 7 | Text appears gradually from the top down. |
-| **tomWipeRight** | 8 | Text appears gradually from the bottom up. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error codes.
-
-| Return code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-# <a name="SetAnimation"></a>SetAnimation
-
-Sets the animation type.
-
-```
 FUNCTION SetAnimation (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetAnimation(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -470,9 +435,18 @@ The animation type. It can be one of the following values.
 
 #### Return value
 
-If the method succeeds, it returns **S_OK**. If the method fails, it returns an **HRESULT** COM error code.
+One of the animation types listed above.
 
-# <a name="GetBackColor"></a>GetBackColor
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error codes.
+
+| Return code | Description |
+| ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
+
+## <a name="GetBackColor"></a>GetBackColor
 
 Gets the text background (highlight) color.
 
