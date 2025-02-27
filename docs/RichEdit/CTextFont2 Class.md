@@ -16,11 +16,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [IsEqual](#isequal) | Determines whether this text font object has the same properties as the specified text font object. |
 | [Reset](#reset) | Resets the character formatting to the specified values. |
 | [Style](#style) | Gets/sets the character style handle of the characters in a range. |
+| [AllCaps](#allcaps) | Gets/sets whether the characters are all uppercase. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetAllCaps](#getallCaps) | Gets whether the characters are all uppercase. |
-| [SetAllCaps](#setallCaps) | Sets whether the characters are all uppercase. |
 | [GetAnimation](#getanimation) | Gets the animation type. |
 | [SetAnimation](#setanimation) | Sets the animation type. |
 | [GetBackColor](#getbackColor) | Gets the text background (highlight) color. |
@@ -358,49 +357,19 @@ The Text Object Model (TOM) version 1.0 does not specify the meanings of the sty
 
 If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
-## <a name="GetAllCaps"></a>GetAllCaps
+---
 
-Gets whether the characters are all uppercase.
+## <a name="allcaps"></a>AllCaps
 
+Gets/sets whether the characters are all uppercase.
+
+```
+(GET) FUNCTION GetAllCaps () AS LONG
+(SET) FUNCTION SetAllCaps (BYVAL Value AS LONG) AS HRESULT
+```
 ```
 FUNCTION GetAllCaps () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetAllCaps(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are all uppercase. |
-| **tomFalse** | Characters are not all uppercase. |
-| **tomUndefined** | The AllCaps property is undefined. |
-	
-#### Return code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error code.
-
-| Return code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-#### Remarks
-
-This property corresponds to the **CFE_ALLCAPS** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
-
-# <a name="SetAllCaps"></a>SetAllCaps
-
-Sets whether the characters are all uppercase.
-
-```
 FUNCTION SetAllCaps (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetAllCaps(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -411,12 +380,15 @@ END FUNCTION
 | ----- | ------- |
 | **tomTrue** | Characters are all uppercase. |
 | **tomFalse** | Characters are not all uppercase. |
-| **tomToggle** | Toggle the state of the AllCaps property. |
 | **tomUndefined** | The AllCaps property is undefined. |
 
 #### Return value
 
-If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+A **tomBool** value that can be one of the above.
+	
+#### Return code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error code.
 
 | Return code | Description |
 | ----------- | ----------- |
@@ -425,7 +397,13 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-# <a name="GetAnimation"></a>GetAnimation
+#### Remarks
+
+This property corresponds to the **CFE_ALLCAPS** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
+
+---
+
+## <a name="GetAnimation"></a>GetAnimation
 
 Gets the animation type.
 
