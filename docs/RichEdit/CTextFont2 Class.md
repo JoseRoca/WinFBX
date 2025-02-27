@@ -145,6 +145,8 @@ CONSTRUCTOR (BYVAL pTextFont2 AS ITextFont2 PTR, BYVAL fAddRef AS BOOLEAN = FALS
 
 A pointer to the new instance of the class.
 
+---
+
 # <a name="destructor"></a>DESTRUCTOR
 
 Called automatically when a class variable goes out of scope or is destroyed.
@@ -152,6 +154,7 @@ Called automatically when a class variable goes out of scope or is destroyed.
 ```
 DESTRUCTOR CTextFont2
 ```
+---
 
 # <a name="getlastresult"></a>GetLastResult
 
@@ -160,6 +163,7 @@ Returns the last result code
 ```
 FUNCTION GetLastResult () AS HRESULT
 ```
+---
 
 # <a name="setresult"></a>SetResult
 
@@ -173,6 +177,8 @@ FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
 | --------- | ----------- |
 | *Result* | The **HRESULT** error code returned by the methods. |
 
+---
+
 # <a name="geterrorinfo"></a>GetErrorInfo
 
 Returns a description of the last result code.
@@ -180,6 +186,7 @@ Returns a description of the last result code.
 ```
 FUNCTION GetErrorInfo () AS CWSTR
 ```
+---
 
 # <a name="duplicate"></a>Duplicate
 
@@ -196,6 +203,7 @@ Gets/sets a duplicate of this range object. In this implementation of the class,
 ```
 FUNCTION GetDuplicate () AS ITextFont2 PTR
 FUNCTION SetDuplicate (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
+```
 ```
 FUNCTION GetDuplicate2 () AS ITextFont2 PTR
 FUNCTION SetDuplicate2 (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
@@ -224,6 +232,8 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 Values with the **tomUndefined** attribute have no effect.
 
+---
+
 # <a name="canchange"></a>CanChange
 
 Determines whether the font can be changed.
@@ -244,13 +254,15 @@ If the font can change, the method returns **S_OK**. If the method fails, it ret
 
 This method returns **tomTrue** only if the font can be changed. That is, no part of an associated range is protected and an associated document is not read-only. If this **ITextFont** object is a duplicate, no protection rules apply.
 
+---
+
 # <a name="isequal"></a>IsEqual
 
 Determines whether this text font object has the same properties as the specified text font object.
 
 ```
-FUNCTION CTextFont2.IsEqual (BYVAL pFont AS ITextFont2 PTR) AS LONG
-FUNCTION CTextFont2.IsEqual2 (BYVAL pFont AS ITextFont2 PTR) AS LONG
+FUNCTION IsEqual (BYVAL pFont AS ITextFont2 PTR) AS LONG
+FUNCTION IsEqual2 (BYVAL pFont AS ITextFont2 PTR) AS LONG
 ```
 
 | Parameter | Description |
@@ -264,6 +276,8 @@ It returnss **tomTrue** if the font objects have the same properties or **tomFal
 #### Remarks
 
 The text font objects are equal only if *pFont* belongs to the same Text Object Model (TOM) object as the current font object. The **IsEqual** method ignores entries for which either font object has an **tomUndefined**.
+
+---
 
 # <a name="Reset"></a>Reset
 
