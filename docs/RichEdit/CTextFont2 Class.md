@@ -25,11 +25,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Hidden](#hidden) | Gets/sets whether characters are hidden. |
 | [Engrave](#engrave) | Gets/sets whether characters are displayed as imprinted characters. |
 | [Italic](#italic) | Gets/sets whether characters are in italics. |
+| [Kerning](#kerning) | Gets/sets the minimum font size at which kerning occurs. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetKerning](#GetKerning) | Gets the minimum font size at which kerning occurs. |
-| [SetKerning](#SetKerning) | Sets the minimum font size at which kerning occurs. |
 | [GetLanguageID](#GetLanguageID) | Gets the language ID or language code identifier (LCID). |
 | [SetLanguageID](#SetLanguageID) | Sets the language ID or language code identifier (LCID). |
 | [GetName](#GetName) | Gets the font name. |
@@ -741,45 +740,31 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 ---
 
-# <a name="GetKerning"></a>GetKerning
+# <a name="kerning"></a>Kerning
 
-Gets the minimum font size at which kerning occurs.
+Gets/sets the minimum font size at which kerning occurs.
 
+```
+(GET) PROPERTY Kerning () AS SINGLE
+(SET) PROPERTY Kerning (BYVAL Value AS SINGLE)
+```
 ```
 FUNCTION GetKerning () AS SINGLE
-   DIM Value AS SINGLE
-   this.SetResult(m_pTextFont2->lpvtbl->GetKerning(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
+SetKerning (BYVAL Value AS SINGLE) As HRESULT
 ```
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new value of the minimum kerning size, in floating-point points. |
+
+If the value is zero, kerning is turned off. Positive values turn on pair kerning for font sizes greater than this kerning value. For example, the value 1 turns on kerning for all legible sizes, whereas 16 turns on kerning only for font sizes of 16 points and larger.
+
 #### Return value
 
 The minimum font size at which kerning occurs, in floating-point points.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-# <a name="SetKerning"></a>SetKerning
-
-Sets the minimum font size at which kerning occurs.
-
-```
-FUNCTION SetKerning (BYVAL Value AS SINGLE) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetKerning(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
-```
-
-| Parameter | Description |
-| --------- | ----------- |
-| *Value* | The new value of the minimum kerning size, in floating-point points. |
-
-If the value is zero, kerning is turned off. Positive values turn on pair kerning for font sizes greater than this kerning value. For example, the value 1 turns on kerning for all legible sizes, whereas 16 turns on kerning only for font sizes of 16 points and larger.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
@@ -787,6 +772,8 @@ If the value is zero, kerning is turned off. Positive values turn on pair kernin
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+---
 
 # <a name="GetLanguageID"></a>GetLanguageID
 
