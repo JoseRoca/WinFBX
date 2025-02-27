@@ -285,9 +285,6 @@ Resets the character formatting to the specified values.
 
 ```
 FUNCTION CTextFont2.Reset (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->Reset(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -322,7 +319,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 Calling **Reset** with **tomUndefined** sets all properties to undefined values. Thus, applying the font object to a range changes nothing. This applies to a font object that is obtained by the **GetDuplicate** method.
 
-# <a name="GetStyle"></a>GetStyle
+## <a name="GetStyle"></a>GetStyle
 
 Gets the character style handle of the characters in a range.
 
