@@ -19,11 +19,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [AllCaps](#allcaps) | Gets/sets whether the characters are all uppercase. |
 | [Animation](#animation) | Gets/sets the animation type. |
 | [BackColor](#backColor) | Gets/sets the text background (highlight) color. |
+| [Bold](#bold) | Gets/sets whether the characters are bold. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetBold](#getbold) | Gets whether the characters are bold. |
-| [SetBold](#setbold) | Sets whether characters are bold. |
 | [GetEmboss](#GetEmboss) | Gets whether characters are embossed. |
 | [SetEmboss](#SetEmboss) | Sets whether characters are embossed. |
 | [GetForeColor](#GetForeColor) | Gets the foreground, or text, color. |
@@ -490,46 +489,18 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 ---
 
-## <a name="GetBold"></a>GetBold
+## <a name="bold"></a>Bold
 
-Gets whether the characters are bold.
+Gets/sets whether the characters are bold.
 
+```
+(GET) Bold () AS LONG
+(SET) Bold (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetBold () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetBold(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are bold. |
-| **tomFalse** | Characters are not bold. |
-| **tomUndefined** | The Bold property is undefined. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-# <a name="SetBold"></a>SetBold
-
-Sets whether characters are bold.
-
-```
 FUNCTION SetBold (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetBold(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
-
 | Parameter | Description |
 | --------- | ----------- |
 | *Value* | A **tomBool** value that can be one of the following. |
@@ -541,12 +512,35 @@ END FUNCTION
 | **tomToggle** | Toggle the state of the Bold property. |
 | **tomUndefined** | The Bold property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
+
 | Result code | Description |
 | ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+---
+
+## <a name="SetBold"></a>SetBold
+
+Sets whether characters are bold.
+
+```
+
+   this.SetResult(m_pTextFont2->lpvtbl->SetBold(m_pTextFont2, Value))
+   RETURN m_Result
+END FUNCTION
+```
+
+
 
 # <a name="GetEmboss"></a>GetEmboss
 
