@@ -26,11 +26,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Engrave](#engrave) | Gets/sets whether characters are displayed as imprinted characters. |
 | [Italic](#italic) | Gets/sets whether characters are in italics. |
 | [Kerning](#kerning) | Gets/sets the minimum font size at which kerning occurs. |
+| [LanguageID](#languageid) | Gets/sets the language ID or language code identifier (LCID). |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetLanguageID](#GetLanguageID) | Gets the language ID or language code identifier (LCID). |
-| [SetLanguageID](#SetLanguageID) | Sets the language ID or language code identifier (LCID). |
 | [GetName](#GetName) | Gets the font name. |
 | [SetName](#SetName) | Sets the font name. |
 | [GetOutline](#GetOutline) | Gets whether characters are displayed as outlined characters. |
@@ -775,45 +774,31 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 ---
 
-# <a name="GetLanguageID"></a>GetLanguageID
+# <a name="languageid"></a>LanguageID
 
-Gets the language ID or language code identifier (LCID).
+Gets/sets the language ID or language code identifier (LCID).
 
+```
+(GET) PROPERTY LanguageID () AS LONG
+(SET) PROPERTY LanguageID (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetLanguageID () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetLanguageID(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
+SetLanguageID (BYVAL Value AS LONG) AS HRESULT
 ```
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new value of the minimum kerning size, in floating-point points. |
+
+The new language identifier. The low word contains the language identifier. The high word is either zero or it contains the high word of the locale identifier LCID. For more information, see [Locale Identifiers](https://learn.microsoft.com/en-us/windows/win32/intl/locale-identifiers).
+
 #### Return value
 
 The language ID or LCID. The low word contains the language identifier. The high word is either zero or it contains the high word of the LCID. To retrieve the language identifier, mask out the high word. For more information, see [Locale Identifiers](https://learn.microsoft.com/en-us/windows/win32/intl/locale-identifiers).
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-# <a name="SetLanguageID"></a>SetLanguageID
-
-Sets the language ID or language code identifier (LCID).
-
-```
-FUNCTION SetLanguageID (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetLanguageID(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
-```
-
-| Parameter | Description |
-| --------- | ----------- |
-| *Value* | The new value of the minimum kerning size, in floating-point points. |
-
-The new language identifier. The low word contains the language identifier. The high word is either zero or it contains the high word of the locale identifier LCID. For more information, see [Locale Identifiers](https://learn.microsoft.com/en-us/windows/win32/intl/locale-identifiers).
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
