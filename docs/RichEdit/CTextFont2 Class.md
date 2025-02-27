@@ -18,11 +18,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Style](#style) | Gets/sets the character style handle of the characters in a range. |
 | [AllCaps](#allcaps) | Gets/sets whether the characters are all uppercase. |
 | [Animation](#animation) | Gets/sets the animation type. |
+| [BackColor](#backColor) | Gets/sets the text background (highlight) color. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetBackColor](#getbackColor) | Gets the text background (highlight) color. |
-| [SetBackColor](#setbackColor) | Sets the background color. |
 | [GetBold](#getbold) | Gets whether the characters are bold. |
 | [SetBold](#setbold) | Sets whether characters are bold. |
 | [GetEmboss](#GetEmboss) | Gets whether characters are embossed. |
@@ -446,44 +445,19 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 | **E_INVALIDARG** | Invalid argument. |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 
-## <a name="GetBackColor"></a>GetBackColor
+---
 
-Gets the text background (highlight) color.
+## <a name="backcolor"></a>BackColor
 
+Gets/sets the text background (highlight) color.
+
+```
+PROPERTY BackColor () AS LONG
+PROPERTY BackColor (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetBackColor () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetBackColor(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-The text background color. It can be one of the following values.
-
-| Value | Meaning |
-| ----- | ------- |
-| A **COLORREF** value | The high-order byte is zero, and the three low-order bytes specify an RGB color. |
-| A value returned by **PALETTEINDEX** | The high-order byte is 1, and the **LOWORD** specifies the index of a logical-color palette entry. |
-| **tomAutocolor** (-9999997) | Indicates the range uses the default system background color. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-# <a name="SetBackColor"></a>SetBackColor
-
-Sets the background color.
-
-```
 FUNCTION SetBackColor (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetBackColor(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -499,6 +473,14 @@ END FUNCTION
 
 If **Value** contains an RGB color, generate the **COLORREF** by using the [RGB](https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-rgb) macro (BGR function in FreeBasic).
 
+#### Return value
+
+The text background color. It can be one of the values listed above.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
+
 | Result code | Description |
 | ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
@@ -506,7 +488,9 @@ If **Value** contains an RGB color, generate the **COLORREF** by using the [RGB]
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-# <a name="GetBold"></a>GetBold
+---
+
+## <a name="GetBold"></a>GetBold
 
 Gets whether the characters are bold.
 
