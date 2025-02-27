@@ -614,7 +614,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 ---
 
-## <a name="GetHidden"></a>GetHidden
+## <a name="hidden"></a>Hidden
 
 Gets/sets whether characters are hidden.
 
