@@ -181,7 +181,7 @@ Returns a description of the last result code.
 FUNCTION GetErrorInfo () AS CWSTR
 ```
 
-# <a name="Duplicate"></a>Duplicate
+# <a name="duplicate"></a>Duplicate
 
 Gets/sets a duplicate of this range object. In this implementation of the class, **Duplicate** and **Duplicate2** are the same method.
 
