@@ -23,11 +23,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Emboss](#emboss) | Gets/sets whether characters are embossed. |
 | [ForeColor](#forecolor) | Gets/sts the foreground, or text, color. |
 | [Hidden](#hidden) | Gets/sets whether characters are hidden. |
+| [Engrave](#engrave) | Gets/sets whether characters are displayed as imprinted characters. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetEngrave](#GetEngrave) | Gets whether characters are displayed as imprinted characters. |
-| [SetEngrave](#SetEngrave) | Sets whether characters are displayed as imprinted characters. |
 | [GetItalic](#GetItalic) | Gets whether characters are in italics. |
 | [SetItalic](#SetItalic) | Sets whether characters are in italics. |
 | [GetKerning](#GetKerning) | Gets the minimum font size at which kerning occurs. |
@@ -657,48 +656,17 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 This property corresponds to the **CFE_HIDDEN** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
 
-## <a name="GetEngrave"></a>GetEngrave
+## <a name="engrave"></a>Engrave
 
-Gets whether characters are displayed as imprinted characters.
+Gets/sets whether characters are displayed as imprinted characters.
 
+```
+(GET) PROPERTY Engrave () AS LONG
+(SET) PROPERTY Engrave (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetEngrave () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetEngrave(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are displayed as imprinted characters. |
-| **tomFalse** | Characters are not displayed as imprinted characters. |
-| **tomUndefined** | The Engrave property is undefined. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-#### Remarks
-
-This property corresponds to the **CFE_IMPRINT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
-
-# <a name="SetEngrave"></a>SetEngrave
-
-Sets whether characters are displayed as imprinted characters.
-
-```
 FUNCTION SetEngrave (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetEngrave(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -712,12 +680,26 @@ END FUNCTION
 | **tomToggle** | Toggle the state of the Engrave property. |
 | **tomUndefined** | The Engrave property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
+
 | Result code | Description |
 | ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+#### Remarks
+
+This property corresponds to the **CFE_IMPRINT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
+
+---
 
 # <a name="GetItalic"></a>GetItalic
 
