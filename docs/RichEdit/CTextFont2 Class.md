@@ -21,11 +21,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [BackColor](#backColor) | Gets/sets the text background (highlight) color. |
 | [Bold](#bold) | Gets/sets whether the characters are bold. |
 | [Emboss](#emboss) | Gets/sets whether characters are embossed. |
+| [ForeColor](#forecolor) | Gets/sts the foreground, or text, color. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetForeColor](#GetForeColor) | Gets the foreground, or text, color. |
-| [SetForeColor](#SetForeColor) | Sets the foreground (text) color. |
 | [GetHidden](#GetHidden) | Gets whether characters are hidden. |
 | [SetHidden](#SetHidden) | Sets whether characters are hidden. |
 | [GetEngrave](#GetEngrave) | Gets whether characters are displayed as imprinted characters. |
@@ -573,44 +572,17 @@ This property corresponds to the **CFE_EMBOSS** effect described in the [CHARFOR
 
 ---
 
-## <a name="GetForeColor"></a>GetForeColor
+## <a name="forecolor"></a>ForeColor
 
-Gets the foreground, or text, color.
+Gets/sets the foreground, or text, color.
 
+```
+(GET) PROPERTY ForeColor () AS LONG
+(SET) PROPERTY ForeColor (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetForeColor () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetForeColor(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-The foreground color. It can be one of the following values.
-
-| Value | Meaning |
-| ----- | ------- |
-| A **COLORREF** value | The high-order byte is zero, and the three low-order bytes specify an RGB color. |
-| A value returned by **PALETTEINDEX** | The high-order byte is 1, and the **LOWORD** specifies the index of a logical-color palette entry. |
-| **tomAutocolor** (-9999997) | Indicates the range uses the default system foreground color. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-# <a name="SetForeColor"></a>SetForeColor
-
-Sets the foreground (text) color.
-
-```
 FUNCTION SetForeColor (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetForeColor(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -626,6 +598,14 @@ END FUNCTION
 
 If **Value** contains an RGB color, generate the **COLORREF** by using the [RGB](https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-rgb) macro (BGR function in FreeBasic).
 
+#### Return value
+
+The foreground color. It can be one of the ones listed above.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
+
 | Result code | Description |
 | ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
@@ -633,7 +613,7 @@ If **Value** contains an RGB color, generate the **COLORREF** by using the [RGB]
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-# <a name="GetHidden"></a>GetHidden
+## <a name="GetHidden"></a>GetHidden
 
 Gets whether characters are hidden.
 
