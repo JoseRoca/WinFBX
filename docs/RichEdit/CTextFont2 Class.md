@@ -20,11 +20,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Animation](#animation) | Gets/sets the animation type. |
 | [BackColor](#backColor) | Gets/sets the text background (highlight) color. |
 | [Bold](#bold) | Gets/sets whether the characters are bold. |
+| [Emboss](#emboss) | Gets/sets whether characters are embossed. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetEmboss](#GetEmboss) | Gets whether characters are embossed. |
-| [SetEmboss](#SetEmboss) | Sets whether characters are embossed. |
 | [GetForeColor](#GetForeColor) | Gets the foreground, or text, color. |
 | [SetForeColor](#SetForeColor) | Sets the foreground (text) color. |
 | [GetHidden](#GetHidden) | Gets whether characters are hidden. |
@@ -529,62 +528,17 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 ---
 
-## <a name="SetBold"></a>SetBold
+# <a name="emboss"></a>Emboss
 
-Sets whether characters are bold.
+Gets/sets whether the characters are embossed.
 
 ```
-
-   this.SetResult(m_pTextFont2->lpvtbl->SetBold(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
+(GET) Bold () AS LONG
+(SET) Bold (BYVAL Value AS LONG)
 ```
-
-
-
-# <a name="GetEmboss"></a>GetEmboss
-
-Gets whether the characters are embossed.
-
 ```
 FUNCTION GetEmboss () AS LONG
-   DIM Value AS LONG
-   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
-   this.SetResult(m_pTextFont2->lpvtbl->GetEmboss(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are embossed. |
-| **tomFalse** | Characters are not embossed. |
-| **tomUndefined** | The Emboss property is undefined. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-#### Remarks
-
-This property corresponds to the **CFE_EMBOSS** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
-
-# <a name="SetEmboss"></a>SetEmboss
-
-Sets whether characters are embossed.
-
-```
 FUNCTION SetEmboss (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetEmboss(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -598,6 +552,14 @@ END FUNCTION
 | **tomToggle** | Toggle the state of the Emboss property. |
 | **tomUndefined** | The Emboss property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
+
 | Result code | Description |
 | ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
@@ -605,7 +567,13 @@ END FUNCTION
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-# <a name="GetForeColor"></a>GetForeColor
+#### Remarks
+
+This property corresponds to the **CFE_EMBOSS** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
+
+---
+
+## <a name="GetForeColor"></a>GetForeColor
 
 Gets the foreground, or text, color.
 
