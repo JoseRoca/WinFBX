@@ -14,10 +14,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Duplicate](#duplicate) | Gets/sets a duplicate of this text font object. |
 | [CanChange](#canchange) | Determines whether the font can be changed. |
 | [IsEqual](#isequal) | Determines whether this text font object has the same properties as the specified text font object. |
+| [Reset](#reset) | Resets the character formatting to the specified values. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Reset](#reset) | Resets the character formatting to the specified values. |
 | [GetStyle](#getstyle) | Gets the character style handle of the characters in a range. |
 | [SetStyle](#setstyle) | Sets the character style handle of the characters in a range. |
 | [GetAllCaps](#getallCaps) | Gets whether the characters are all uppercase. |
