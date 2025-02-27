@@ -284,7 +284,7 @@ The text font objects are equal only if *pFont* belongs to the same Text Object 
 Resets the character formatting to the specified values.
 
 ```
-FUNCTION CTextFont2.Reset (BYVAL Value AS LONG) AS HRESULT
+FUNCTION Reset (BYVAL Value AS LONG) AS HRESULT
 ```
 
 | Parameter | Description |
@@ -319,12 +319,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 Calling **Reset** with **tomUndefined** sets all properties to undefined values. Thus, applying the font object to a range changes nothing. This applies to a font object that is obtained by the **GetDuplicate** method.
 
+---
+
 ## <a name="GetStyle"></a>GetStyle
 
 Gets the character style handle of the characters in a range.
 
 ```
-FUNCTION CTextFont2.GetStyle () AS LONG
+FUNCTION GetStyle () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetStyle(m_pTextFont2, @Value))
    RETURN Value
@@ -352,7 +354,7 @@ The Text Object Model (TOM) version 1.0 does not specify the meanings of the sty
 Sets the character style handle of the characters in a range.
 
 ```
-FUNCTION CTextFont2.SetStyle (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetStyle (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetStyle(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -382,7 +384,7 @@ The Text Object Model (TOM) version 1.0 does not specify the meanings of the sty
 Gets whether the characters are all uppercase.
 
 ```
-FUNCTION CTextFont2.GetAllCaps () AS LONG
+FUNCTION GetAllCaps () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetAllCaps(m_pTextFont2, @Value))
    RETURN Value
@@ -416,7 +418,7 @@ This property corresponds to the **CFE_ALLCAPS** effect described in the [CHARFO
 Sets whether the characters are all uppercase.
 
 ```
-FUNCTION CTextFont2.SetAllCaps (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetAllCaps (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetAllCaps(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -449,7 +451,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 Gets the animation type.
 
 ```
-FUNCTION CTextFont2.GetAnimation () AS LONG
+FUNCTION GetAnimation () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetAnimation(m_pTextFont2, @Value))
    RETURN Value
@@ -485,7 +487,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets the animation type.
 
 ```
-FUNCTION CTextFont2.SetAnimation (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetAnimation (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetAnimation(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -518,7 +520,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns an 
 Gets the text background (highlight) color.
 
 ```
-FUNCTION CTextFont2.GetBackColor () AS LONG
+FUNCTION GetBackColor () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetBackColor(m_pTextFont2, @Value))
    RETURN Value
@@ -547,7 +549,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets the background color.
 
 ```
-FUNCTION CTextFont2.SetBackColor (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetBackColor (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetBackColor(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -578,7 +580,7 @@ If **Value** contains an RGB color, generate the **COLORREF** by using the [RGB]
 Gets whether the characters are bold.
 
 ```
-FUNCTION CTextFont2.GetBold () AS LONG
+FUNCTION GetBold () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetBold(m_pTextFont2, @Value))
    RETURN Value
@@ -607,7 +609,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets whether characters are bold.
 
 ```
-FUNCTION CTextFont2.SetBold (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetBold (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetBold(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -636,7 +638,7 @@ END FUNCTION
 Gets whether the characters are embossed.
 
 ```
-FUNCTION CTextFont2.GetEmboss () AS LONG
+FUNCTION GetEmboss () AS LONG
    DIM Value AS LONG
    IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetEmboss(m_pTextFont2, @Value))
@@ -670,7 +672,7 @@ This property corresponds to the **CFE_EMBOSS** effect described in the [CHARFOR
 Sets whether characters are embossed.
 
 ```
-FUNCTION CTextFont2.SetEmboss (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetEmboss (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetEmboss(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -699,7 +701,7 @@ END FUNCTION
 Gets the foreground, or text, color.
 
 ```
-FUNCTION CTextFont2.GetForeColor () AS LONG
+FUNCTION GetForeColor () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetForeColor(m_pTextFont2, @Value))
    RETURN Value
@@ -728,7 +730,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets the foreground (text) color.
 
 ```
-FUNCTION CTextFont2.SetForeColor (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetForeColor (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetForeColor(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -759,7 +761,7 @@ If **Value** contains an RGB color, generate the **COLORREF** by using the [RGB]
 Gets whether characters are hidden.
 
 ```
-FUNCTION CTextFont2.GetHidden () AS LONG
+FUNCTION GetHidden () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetHidden(m_pTextFont2, @Value))
    RETURN Value
@@ -792,7 +794,7 @@ This property corresponds to the **CFE_HIDDEN** effect described in the [CHARFOR
 Sets whether characters are hidden.
 
 ```
-FUNCTION CTextFont2.SetHidden (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetHidden (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetHidden(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -821,7 +823,7 @@ END FUNCTION
 Gets whether characters are displayed as imprinted characters.
 
 ```
-FUNCTION CTextFont2.GetEngrave () AS LONG
+FUNCTION GetEngrave () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetEngrave(m_pTextFont2, @Value))
    RETURN Value
@@ -854,7 +856,7 @@ This property corresponds to the **CFE_IMPRINT** effect described in the [CHARFO
 Sets whether characters are displayed as imprinted characters.
 
 ```
-FUNCTION CTextFont2.SetEngrave (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetEngrave (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetEngrave(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -883,7 +885,7 @@ END FUNCTION
 Gets whether characters are in italics.
 
 ```
-FUNCTION CTextFont2.GetItalic () AS LONG
+FUNCTION GetItalic () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetItalic(m_pTextFont2, @Value))
    RETURN Value
@@ -912,7 +914,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets whether characters are in italics.
 
 ```
-FUNCTION CTextFont2.SetItalic (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetItalic (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetItalic(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -941,7 +943,7 @@ END FUNCTION
 Gets the minimum font size at which kerning occurs.
 
 ```
-FUNCTION CTextFont2.GetKerning () AS SINGLE
+FUNCTION GetKerning () AS SINGLE
    DIM Value AS SINGLE
    this.SetResult(m_pTextFont2->lpvtbl->GetKerning(m_pTextFont2, @Value))
    RETURN Value
@@ -964,7 +966,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets the minimum font size at which kerning occurs.
 
 ```
-FUNCTION CTextFont2.SetKerning (BYVAL Value AS SINGLE) AS HRESULT
+FUNCTION SetKerning (BYVAL Value AS SINGLE) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetKerning(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -988,7 +990,7 @@ If the value is zero, kerning is turned off. Positive values turn on pair kernin
 Gets the language ID or language code identifier (LCID).
 
 ```
-FUNCTION CTextFont2.GetLanguageID () AS LONG
+FUNCTION GetLanguageID () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetLanguageID(m_pTextFont2, @Value))
    RETURN Value
@@ -1011,7 +1013,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets the language ID or language code identifier (LCID).
 
 ```
-FUNCTION CTextFont2.SetLanguageID (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetLanguageID (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetLanguageID(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -1043,7 +1045,7 @@ To set the BCP-47 language tag, such as "en-US", call **SetText2** and set the *
 Gets the font name.
 
 ```
-FUNCTION CTextFont2.GetName () AS CBSTR
+FUNCTION GetName () AS CBSTR
    DIM pName AS AFX_BSTR
    this.SetResult(m_pTextFont2->lpvtbl->GetName(m_pTextFont2, @pName))
    RETURN pName
@@ -1067,7 +1069,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets the new font name.
 
 ```
-FUNCTION CTextFont2.SetName (BYVAL bstr AS BSTR) AS HRESULT
+FUNCTION SetName (BYVAL bstr AS BSTR) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetName(m_pTextFont2, bstr))
    RETURN m_Result
 END FUNCTION
@@ -1093,7 +1095,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets whether characters are displayed as outlined characters.
 
 ```
-FUNCTION CTextFont2.GetOutline () AS LONG
+FUNCTION GetOutline () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetOutline(m_pTextFont2, @Value))
    RETURN Value
@@ -1122,7 +1124,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets whether characters are displayed as outlined characters.
 
 ```
-FUNCTION CTextFont2.SetOutline (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetOutline (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetOutline(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -1155,7 +1157,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets the amount that characters are offset vertically relative to the baseline.
 
 ```
-FUNCTION CTextFont2.GetPosition () AS SINGLE
+FUNCTION GetPosition () AS SINGLE
    DIM Value AS SINGLE
    this.SetResult(m_pTextFont2->lpvtbl->GetPosition(m_pTextFont2, @Value))
    RETURN Value
@@ -1182,7 +1184,7 @@ Displayed text typically has a zero value for this property. Positive values rai
 Sets the amount that characters are offset vertically relative to the baseline.
 
 ```
-FUNCTION CTextFont2.SetPosition (BYVAL Value AS SINGLE) AS HRESULT
+FUNCTION SetPosition (BYVAL Value AS SINGLE) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetPosition(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -1212,7 +1214,7 @@ Displayed text typically has a zero value for this property. Positive values rai
 Gets whether characters are protected against attempts to modify them.
 
 ```
-FUNCTION CTextFont2.GetProtected () AS LONG
+FUNCTION GetProtected () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetProtected(m_pTextFont2, @Value))
    RETURN Value
@@ -1245,7 +1247,7 @@ In general, Text Object Model (TOM) methods that attempt to change the formattin
 Sets whether characters are protected against attempts to modify them.
 
 ```
-FUNCTION CTextFont2.SetProtected (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetProtected (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetProtected(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -1278,7 +1280,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets whether characters are displayed as shadowed characters.
 
 ```
-FUNCTION CTextFont2.GetShadow () AS LONG
+FUNCTION GetShadow () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetShadow(m_pTextFont2, @Value))
    RETURN Value
@@ -1311,7 +1313,7 @@ This property corresponds to the **CFE_SHADOW** effect described in the [CHARFOR
 Sets whether characters are displayed as shadowed characters.
 
 ```
-FUNCTION CTextFont2.SetShadow (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetShadow (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetShadow(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -1344,7 +1346,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets the font size.
 
 ```
-FUNCTION CTextFont2.GetSize () AS SINGLE
+FUNCTION GetSize () AS SINGLE
    DIM Value AS SINGLE
    this.SetResult(m_pTextFont2->lpvtbl->GetSize(m_pTextFont2, @Value))
    RETURN Value
@@ -1367,7 +1369,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets the font size.
 
 ```
-FUNCTION CTextFont2.SetSize (BYVAL Value AS SINGLE) AS HRESULT
+FUNCTION SetSize (BYVAL Value AS SINGLE) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetSize(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -1393,7 +1395,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets whether characters are in small capital letters.
 
 ```
-FUNCTION CTextFont2.GetSmallCaps () AS LONG
+FUNCTION GetSmallCaps () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetSmallCaps(m_pTextFont2, @Value))
    RETURN Value
@@ -1422,7 +1424,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets whether characters are in small capital letters.
 
 ```
-FUNCTION CTextFont2.SetSmallCaps (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetSmallCaps (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetSmallCaps(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -1455,7 +1457,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets the amount of horizontal spacing between characters.
 
 ```
-FUNCTION CTextFont2.GetSpacing () AS SINGLE
+FUNCTION GetSpacing () AS SINGLE
    DIM Value AS SINGLE
    this.SetResult(m_pTextFont2->lpvtbl->GetSpacing(m_pTextFont2, @Value))
    RETURN Value
@@ -1478,7 +1480,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets the amount of horizontal spacing between characters.
 
 ```
-FUNCTION CTextFont2.SetSpacing (BYVAL Value AS SINGLE) AS HRESULT
+FUNCTION SetSpacing (BYVAL Value AS SINGLE) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetSpacing(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -1508,7 +1510,7 @@ Displayed text typically has an intercharacter spacing value of zero. Positive v
 Gets whether characters are displayed with a horizontal line through the center.
 
 ```
-FUNCTION CTextFont2.GetStrikeThrough () AS LONG
+FUNCTION GetStrikeThrough () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetStrikeThrough(m_pTextFont2, @Value))
    RETURN Value
@@ -1541,7 +1543,7 @@ This property corresponds to the **CFE_STRIKEOUT** effect described in the [CHAR
 Sets whether characters are displayed with a horizontal line through the center.
 
 ```
-FUNCTION CTextFont2.SetStrikeThrough (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetStrikeThrough (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetStrikeThrough(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -1574,7 +1576,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets whether characters are displayed as subscript.
 
 ```
-FUNCTION CTextFont2.GetSubscript () AS LONG
+FUNCTION GetSubscript () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetSubscript(m_pTextFont2, @Value))
    RETURN Value
@@ -1607,7 +1609,7 @@ This property corresponds to the **CFE_SUBSCRIPT** effect described in the [CHAR
 Sets whether characters are displayed as subscript.
 
 ```
-FUNCTION CTextFont2.SetSubscript (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetSubscript (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetSubscript(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -1640,7 +1642,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets whether characters are displayed as superscript.
 
 ```
-FUNCTION CTextFont2.GetSuperscript () AS LONG
+FUNCTION GetSuperscript () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetSuperscript(m_pTextFont2, @Value))
    RETURN Value
@@ -1673,7 +1675,7 @@ This property corresponds to the **CFE_SUPERSCRIPT** effect described in the [CH
 Sets whether characters are displayed as superscript.
 
 ```
-FUNCTION CTextFont2.SetSuperscript (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetSuperscript (BYVAL Value AS LONG) AS HRESULT
    IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetSuperscript(m_pTextFont2, Value))
    RETURN m_Result
@@ -1707,7 +1709,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets the type of underlining for the characters in a range.
 
 ```
-FUNCTION CTextFont2.GetUnderline () AS LONG
+FUNCTION GetUnderline () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetUnderline(m_pTextFont2, @Value))
    RETURN Value
@@ -1751,7 +1753,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets thevtype of underlining for the characters in a range.
 
 ```
-FUNCTION CTextFont2.SetUnderline (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetUnderline (BYVAL Value AS LONG) AS HRESULT
    IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetUnderline(m_pTextFont2, Value))
    RETURN m_Result
@@ -1799,7 +1801,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets the font weight for the characters in a range.
 
 ```
-FUNCTION CTextFont2.GetWeight () AS LONG
+FUNCTION GetWeight () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetWeight(m_pTextFont2, @Value))
    RETURN Value
@@ -1835,7 +1837,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Sets the font weight for the characters in a range.
 
 ```
-FUNCTION CTextFont2.SetWeight (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetWeight (BYVAL Value AS LONG) AS HRESULT
    IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetWeight(m_pTextFont2, Value))
    RETURN m_Result
@@ -1875,7 +1877,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets the count of extra properties in this character formatting collection.
 
 ```
-FUNCTION CTextFont2.GetCount () AS LONG
+FUNCTION GetCount () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetCount(m_pTextFont2, @Value))
    RETURN Value
@@ -1894,7 +1896,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Gets whether support for automatic ligatures is active.
 
 ```
-FUNCTION CTextFont2.GetAutoLigatures () AS LONG
+FUNCTION GetAutoLigatures () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetAutoLigatures(m_pTextFont2, @Value))
    RETURN Value
@@ -1919,7 +1921,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets whether support for automatic ligatures is active.
 
 ```
-FUNCTION CTextFont2.SetAutoLigatures (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetAutoLigatures (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetAutoLigatures(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -1945,7 +1947,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESU
 Gets the East Asian "autospace alphabetics" state.
 
 ```
-FUNCTION CTextFont2.GetAutospaceAlpha () AS LONG
+FUNCTION GetAutospaceAlpha () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetAutospaceAlpha(m_pTextFont2, @Value))
    RETURN Value
@@ -1970,7 +1972,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets the East Asian "autospace alpha" state.
 
 ```
-FUNCTION CTextFont2.SetAutospaceAlpha (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetAutospaceAlpha (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetAutospaceAlpha(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -1996,7 +1998,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESU
 Gets the East Asian "autospace numeric" state.
 
 ```
-FUNCTION CTextFont2.GetAutospaceNumeric () AS LONG
+FUNCTION GetAutospaceNumeric () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetAutospaceNumeric(m_pTextFont2, @Value))
    RETURN Value
@@ -2021,7 +2023,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets the East Asian "autospace numeric" state.
 
 ```
-FUNCTION CTextFont2.SetAutospaceNumeric (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetAutospaceNumeric (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetAutospaceNumeric(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2047,7 +2049,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESU
 Gets the East Asian "autospace parentheses" state.
 
 ```
-FUNCTION CTextFont2.GetAutospaceParens () AS LONG
+FUNCTION GetAutospaceParens () AS LONG
    DIM Value AS LONG
    IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
    this.SetResult(m_pTextFont2->lpvtbl->GetAutospaceParens(m_pTextFont2, @Value))
@@ -2073,7 +2075,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets the East Asian "autospace numeric" state.
 
 ```
-FUNCTION CTextFont2.SetAutospaceParens (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetAutospaceParens (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetAutospaceParens(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2099,7 +2101,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESU
 Gets the character repertoire (writing system).
 
 ```
-FUNCTION CTextFont2.GetCharRep () AS LONG
+FUNCTION GetCharRep () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetCharRep(m_pTextFont2, @Value))
    RETURN Value
@@ -2174,7 +2176,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets the character repertoire (writing system).
 
 ```
-FUNCTION CTextFont2.SetCharRep (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetCharRep (BYVAL Value AS LONG) AS HRESULT
    IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetCharRep(m_pTextFont2, Value))
    RETURN m_Result
@@ -2250,7 +2252,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESU
 Gets the East Asian compression mode.
 
 ```
-FUNCTION CTextFont2.GetCompressionMode () AS LONG
+FUNCTION GetCompressionMode () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetCompressionMode(m_pTextFont2, @Value))
    RETURN Value
@@ -2275,7 +2277,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets the East Asian compression mode.
 
 ```
-FUNCTION CTextFont2.SetCompressionMode (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetCompressionMode (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetCompressionMode(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2300,7 +2302,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESU
 Gets the client cookie.
 
 ```
-FUNCTION CTextFont2.GetCookie () AS LONG
+FUNCTION GetCookie () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetCookie(m_pTextFont2, @Value))
    RETURN Value
@@ -2323,7 +2325,7 @@ This value is purely for the use of the client and has no meaning to the Text Ob
 Sets the client cookie.
 
 ```
-FUNCTION CTextFont2.SetCookie (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetCookie (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetCookie(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2346,7 +2348,7 @@ This value is purely for the use of the client. It has no meaning to the Text Ob
 Gets whether characters are displayed with double horizontal lines through the center.
 
 ```
-FUNCTION CTextFont2.GetDoubleStrike () AS LONG
+FUNCTION GetDoubleStrike () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetDoubleStrike(m_pTextFont2, @Value))
    RETURN Value
@@ -2371,7 +2373,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets whether characters are displayed with double horizontal lines through the center.
 
 ```
-FUNCTION CTextFont2.SetDoubleStrike (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetDoubleStrike (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetDoubleStrike(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2397,7 +2399,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Gets the link type.
 
 ```
-FUNCTION CTextFont2.GetLinkType () AS LONG
+FUNCTION GetLinkType () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetLinkType(m_pTextFont2, @Value))
    RETURN Value
@@ -2427,7 +2429,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Gets whether a math zone is active.
 
 ```
-FUNCTION CTextFont2.GetMathZone () AS LONG
+FUNCTION GetMathZone () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetMathZone(m_pTextFont2, @Value))
    RETURN Value
@@ -2452,7 +2454,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets whether a math zone is active.
 
 ```
-FUNCTION CTextFont2.SetMathZone (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetMathZone (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetMathZone(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2478,7 +2480,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Gets whether "decrease widths on pairs" is active.
 
 ```
-FUNCTION CTextFont2.GetModWidthPairs () AS LONG
+FUNCTION GetModWidthPairs () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetModWidthPairs(m_pTextFont2, @Value))
    RETURN Value
@@ -2503,7 +2505,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets whether "decrease widths on pairs" is active.
 
 ```
-FUNCTION CTextFont2.SetModWidthPairs (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetModWidthPairs (BYVAL Value AS LONG) AS HRESULT
    IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
    this.SetResult(m_pTextFont2->lpvtbl->SetModWidthPairs(m_pTextFont2, Value))
    RETURN m_Result
@@ -2530,7 +2532,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Gets whether "increase width of whitespace" is active.
 
 ```
-FUNCTION CTextFont2.GetModWidthSpace () AS LONG
+FUNCTION GetModWidthSpace () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetModWidthSpace(m_pTextFont2, @Value))
    RETURN Value
@@ -2555,7 +2557,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets whether "increase width of whitespace" is active.
 
 ```
-FUNCTION CTextFont2.SetModWidthSpace (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetModWidthSpace (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetModWidthSpace(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2581,7 +2583,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Gets whether old-style numbers are active.
 
 ```
-FUNCTION CTextFont2.GetOldNumbers () AS LONG
+FUNCTION GetOldNumbers () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetOldNumbers(m_pTextFont2, @Value))
    RETURN Value
@@ -2606,7 +2608,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets whether old-style numbers are active.
 
 ```
-FUNCTION CTextFont2.SetOldNumbers (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetOldNumbers (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetOldNumbers(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2632,7 +2634,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Gets whether overlapping text is active.
 
 ```
-FUNCTION CTextFont2.GetOverlapping () AS LONG
+FUNCTION GetOverlapping () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetOverlapping(m_pTextFont2, @Value))
    RETURN Value
@@ -2657,7 +2659,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets whether overlapping text is active.
 
 ```
-FUNCTION CTextFont2.SetOverlapping (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetOverlapping (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetOverlapping(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2683,7 +2685,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Gets the subscript or superscript position relative to the baseline.
 
 ```
-FUNCTION CTextFont2.GetPositionSubSuper () AS LONG
+FUNCTION GetPositionSubSuper () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetPositionSubSuper(m_pTextFont2, @Value))
    RETURN Value
@@ -2702,7 +2704,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets the position of a subscript or superscript relative to the baseline, as a percentage of the font height.
 
 ```
-FUNCTION CTextFont2.SetPositionSubSuper (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetPositionSubSuper (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetPositionSubSuper(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2721,7 +2723,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Gets the font horizontal scaling percentage.
 
 ```
-FUNCTION CTextFont2.GetScaling () AS LONG
+FUNCTION GetScaling () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetScaling(m_pTextFont2, @Value))
    RETURN Value
@@ -2744,7 +2746,7 @@ The font horizontal scaling percentage can range from 200, which doubles the wid
 Sets the font horizontal scaling percentage.
 
 ```
-FUNCTION CTextFont2.SetScaling (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetScaling (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetScaling(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2763,7 +2765,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Gets the East Asian space extension value.
 
 ```
-FUNCTION CTextFont2.GetSpaceExtension () AS LONG
+FUNCTION GetSpaceExtension () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetSpaceExtension(m_pTextFont2, @Value))
    RETURN Value
@@ -2782,7 +2784,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets the East Asian space extension value.
 
 ```
-FUNCTION CTextFont2.SetSpaceExtension (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetSpaceExtension (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetSpaceExtension(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2801,7 +2803,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Gets the underline position mode.
 
 ```
-FUNCTION CTextFont2.GetUnderlinePositionMode () AS LONG
+FUNCTION GetUnderlinePositionMode () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetUnderlinePositionMode(m_pTextFont2, @Value))
    RETURN Value
@@ -2826,7 +2828,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets the underline position mode.
 
 ```
-FUNCTION CTextFont2.SetUnderlinePositionMode (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetUnderlinePositionMode (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetUnderlinePositionMode(m_pTextFont2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2851,7 +2853,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Gets the character format effects.
 
 ```
-FUNCTION CTextFont2.GetEffects (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
+FUNCTION GetEffects (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->GetEffects(m_pTextFont2, pValue, pMask))
    RETURN m_Result
 END FUNCTION
@@ -2902,7 +2904,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Gets the additional character format effects.
 
 ```
-FUNCTION CTextFont2.GetEffects2 (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
+FUNCTION GetEffects2 (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->GetEffects2(m_pTextFont2, pValue, pMask))
    RETURN m_Result
 END FUNCTION
@@ -2938,7 +2940,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Gets the value of the specified property.
 
 ```
-FUNCTION CTextFont2.GetProperty (BYVAL nType AS LONG) AS LONG
+FUNCTION GetProperty (BYVAL nType AS LONG) AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextFont2->lpvtbl->GetProperty(m_pTextFont2, nType, @Value))
    RETURN Value
@@ -2964,7 +2966,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Gets the property type and value of the specified extra property.
 
 ```
-FUNCTION CTextFont2.GetPropertyInfo (BYVAL Index AS LONG, BYVAL pType AS LONG PTR, BYVAL pValue AS LONG PTR) AS HRESULT
+FUNCTION GetPropertyInfo (BYVAL Index AS LONG, BYVAL pType AS LONG PTR, BYVAL pValue AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->GetPropertyInfo(m_pTextFont2, Index, pType, pValue))
    RETURN m_Result
 END FUNCTION
@@ -2987,7 +2989,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Sets the character format effects.
 
 ```
-FUNCTION CTextFont2.SetEffects (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
+FUNCTION SetEffects (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetEffects(m_pTextFont2, Value, Mask))
    RETURN m_Result
 END FUNCTION
@@ -3040,7 +3042,7 @@ Only effects with the corresponding mask flag set are modified.
 Sets the additional character format effects.
 
 ```
-FUNCTION CTextFont2.SetEffects2 (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
+FUNCTION SetEffects2 (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetEffects2(m_pTextFont2, Value, Mask))
    RETURN m_Result
 END FUNCTION
@@ -3080,7 +3082,7 @@ Only effects with the corresponding mask flag set are modified.
 Sets the value of the specified property.
 
 ```
-FUNCTION CTextFont2.SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextFont2->lpvtbl->SetProperty(m_pTextFont2, nType, Value))
    RETURN m_Result
 END FUNCTION
