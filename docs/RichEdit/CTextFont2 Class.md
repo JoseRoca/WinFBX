@@ -129,7 +129,7 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SetResult](#setresult) | Sets the last result code. |
 | [GetErrorInfo](#geterrorinfo) | Returns a description of the last result code. |
 
-# <a name="constructor"></a>CONSTRUCTOR
+## <a name="constructor"></a>CONSTRUCTOR
 
 Called when a **CTextFont2** class variable is created.
 
@@ -147,7 +147,7 @@ A pointer to the new instance of the class.
 
 ---
 
-# <a name="destructor"></a>DESTRUCTOR
+## <a name="destructor"></a>DESTRUCTOR
 
 Called automatically when a class variable goes out of scope or is destroyed.
 
@@ -156,7 +156,7 @@ DESTRUCTOR CTextFont2
 ```
 ---
 
-# <a name="getlastresult"></a>GetLastResult
+## <a name="getlastresult"></a>GetLastResult
 
 Returns the last result code
 
@@ -165,7 +165,7 @@ FUNCTION GetLastResult () AS HRESULT
 ```
 ---
 
-# <a name="setresult"></a>SetResult
+## <a name="setresult"></a>SetResult
 
 Sets the last result code.
 
@@ -179,7 +179,7 @@ FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
 
 ---
 
-# <a name="geterrorinfo"></a>GetErrorInfo
+## <a name="geterrorinfo"></a>GetErrorInfo
 
 Returns a description of the last result code.
 
@@ -188,7 +188,7 @@ FUNCTION GetErrorInfo () AS CWSTR
 ```
 ---
 
-# <a name="duplicate"></a>Duplicate
+## <a name="duplicate"></a>Duplicate
 
 Gets/sets a duplicate of this range object. In this implementation of the class, **Duplicate** and **Duplicate2** are the same method.
 
@@ -234,7 +234,7 @@ Values with the **tomUndefined** attribute have no effect.
 
 ---
 
-# <a name="canchange"></a>CanChange
+## <a name="canchange"></a>CanChange
 
 Determines whether the font can be changed.
 
@@ -256,7 +256,7 @@ This method returns **tomTrue** only if the font can be changed. That is, no par
 
 ---
 
-# <a name="isequal"></a>IsEqual
+## <a name="isequal"></a>IsEqual
 
 Determines whether this text font object has the same properties as the specified text font object.
 
@@ -279,7 +279,7 @@ The text font objects are equal only if *pFont* belongs to the same Text Object 
 
 ---
 
-# <a name="Reset"></a>Reset
+## <a name="Reset"></a>Reset
 
 Resets the character formatting to the specified values.
 
