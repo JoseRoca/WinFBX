@@ -14,7 +14,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [RestoreTargetDevice](#restoretargetdevice) | Sets the target device to the device context of the rich edit control. |
 | [AfxCRichEditCtrlPtr](#afxcricheditctrlptr) | Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or from the handle of its parent window and the control's identifier. |
 
-# Methods inherited from CTextObjectBase
+## Methods inherited from CTextObjectBase
 
 | Name       | Description |
 | ---------- | ----------- |
