@@ -15,11 +15,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [CanChange](#canchange) | Determines whether the font can be changed. |
 | [IsEqual](#isequal) | Determines whether this text font object has the same properties as the specified text font object. |
 | [Reset](#reset) | Resets the character formatting to the specified values. |
+| [Style](#style) | Gets/sets the character style handle of the characters in a range. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetStyle](#getstyle) | Gets the character style handle of the characters in a range. |
-| [SetStyle](#setstyle) | Sets the character style handle of the characters in a range. |
 | [GetAllCaps](#getallCaps) | Gets whether the characters are all uppercase. |
 | [SetAllCaps](#setallCaps) | Sets whether the characters are all uppercase. |
 | [GetAnimation](#getanimation) | Gets the animation type. |
@@ -321,43 +320,17 @@ Calling **Reset** with **tomUndefined** sets all properties to undefined values.
 
 ---
 
-## <a name="GetStyle"></a>GetStyle
+## <a name="style"></a>Style
 
-Gets the character style handle of the characters in a range.
+Gets/sets the character style handle of the characters in a range.
 
+```
+(GET) PROPERTY Style () AS LONG
+(SET) PROPERTY Style (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetStyle () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetStyle(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-
-#### Return value
-
-The character style handle.
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns one of the following COM error code.
-
-| Return code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-#### Remarks
-
-The Text Object Model (TOM) version 1.0 does not specify the meanings of the style handles. The meanings depend on other facilities of the text system that implements TOM.
-
-# <a name="SetStyle"></a>SetStyle
-
-Sets the character style handle of the characters in a range.
-
-```
 FUNCTION SetStyle (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetStyle(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -366,7 +339,9 @@ END FUNCTION
 
 #### Return value
 
-If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+(GET) The character style handle.
+
+(SET) If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error code.
 
 | Return code | Description |
 | ----------- | ----------- |
@@ -379,7 +354,11 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 The Text Object Model (TOM) version 1.0 does not specify the meanings of the style handles. The meanings depend on other facilities of the text system that implements TOM.
 
-# <a name="GetAllCaps"></a>GetAllCaps
+#### Return value
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
+
+## <a name="GetAllCaps"></a>GetAllCaps
 
 Gets whether the characters are all uppercase.
 
