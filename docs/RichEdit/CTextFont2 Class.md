@@ -27,11 +27,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Italic](#italic) | Gets/sets whether characters are in italics. |
 | [Kerning](#kerning) | Gets/sets the minimum font size at which kerning occurs. |
 | [LanguageID](#languageid) | Gets/sets the language ID or language code identifier (LCID). |
+| [Name](#name) | Gets/sets the font name. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetName](#GetName) | Gets the font name. |
-| [SetName](#SetName) | Sets the font name. |
 | [GetOutline](#GetOutline) | Gets whether characters are displayed as outlined characters. |
 | [SetOutline](#SetOutline) | Sets whether characters are displayed as outlined characters. |
 | [GetPosition](#GetPosition) | Gets the amount that characters are offset vertically relative to the baseline. |
@@ -815,48 +814,30 @@ If the high nibble of *Value* is **tomCharRepFromLcid**, set the *charrep* from 
 
 To set the BCP-47 language tag, such as "en-US", call **SetText2** and set the **tomLanguageTag** and *bstr* with the language tag.
 
-# <a name="GetName"></a>GetName
+# <a name="name"></a>Name
 
-Gets the font name.
+Gets/sets the font name.
 
+```
+(GET) PROPERTY Name () AS CBSTR
+(SET) PROPERTY Name (BYVAL fontName AS AFX_BSTR)
+```
 ```
 FUNCTION GetName () AS CBSTR
-   DIM pName AS AFX_BSTR
-   this.SetResult(m_pTextFont2->lpvtbl->GetName(m_pTextFont2, @pName))
-   RETURN pName
-END FUNCTION
+FUNCTION SetName (BYVAL fontName AS BSTR) AS HRESULT
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *fontName* | The new font name. |
+
 #### Return value
 
 The font name.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **E_OUTOFMEMORY** | Could not allocate memory for string. |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-# <a name="SetName"></a>SetName
-
-Sets the new font name.
-
-```
-FUNCTION SetName (BYVAL bstr AS BSTR) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetName(m_pTextFont2, bstr))
-   RETURN m_Result
-END FUNCTION
-```
-
-| Parameter | Description |
-| --------- | ----------- |
-| *bstr* | The new font name. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
@@ -864,6 +845,8 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+---
 
 # <a name="GetOutline"></a>GetOutline
 
