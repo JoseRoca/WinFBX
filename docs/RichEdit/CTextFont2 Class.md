@@ -244,7 +244,7 @@ If the font can change, the method returns **S_OK**. If the method fails, it ret
 
 This method returns **tomTrue** only if the font can be changed. That is, no part of an associated range is protected and an associated document is not read-only. If this **ITextFont** object is a duplicate, no protection rules apply.
 
-# <a name="IsEqual"></a>IsEqual
+# <a name="isequal"></a>IsEqual
 
 Determines whether this text font object has the same properties as the specified text font object.
 
