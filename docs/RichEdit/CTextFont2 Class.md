@@ -22,11 +22,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Bold](#bold) | Gets/sets whether the characters are bold. |
 | [Emboss](#emboss) | Gets/sets whether characters are embossed. |
 | [ForeColor](#forecolor) | Gets/sts the foreground, or text, color. |
+| [Hidden](#hidden) | Gets/sets whether characters are hidden. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetHidden](#GetHidden) | Gets whether characters are hidden. |
-| [SetHidden](#SetHidden) | Sets whether characters are hidden. |
 | [GetEngrave](#GetEngrave) | Gets whether characters are displayed as imprinted characters. |
 | [SetEngrave](#SetEngrave) | Sets whether characters are displayed as imprinted characters. |
 | [GetItalic](#GetItalic) | Gets whether characters are in italics. |
@@ -613,48 +612,19 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
+---
+
 ## <a name="GetHidden"></a>GetHidden
 
-Gets whether characters are hidden.
+Gets/sets whether characters are hidden.
 
+```
+(GET) Hidden () AS LONG
+(SET) Hidden (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetHidden () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetHidden(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are hidden. |
-| **tomFalse** | Characters are not hidden. |
-| **tomToggle** | Toggle the state of the Hidden property. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-#### Remarks
-
-This property corresponds to the **CFE_HIDDEN** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
-
-# <a name="SetHidden"></a>SetHidden
-
-Sets whether characters are hidden.
-
-```
 FUNCTION SetHidden (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetHidden(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -668,6 +638,14 @@ END FUNCTION
 | **tomToggle** | Toggle the state of the Hidden property. |
 | **tomUndefined** | The Hidden property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
+
 | Result code | Description |
 | ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
@@ -675,7 +653,11 @@ END FUNCTION
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-# <a name="GetEngrave"></a>GetEngrave
+#### Remarks
+
+This property corresponds to the **CFE_HIDDEN** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
+
+## <a name="GetEngrave"></a>GetEngrave
 
 Gets whether characters are displayed as imprinted characters.
 
