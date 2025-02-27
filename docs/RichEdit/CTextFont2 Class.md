@@ -24,11 +24,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [ForeColor](#forecolor) | Gets/sts the foreground, or text, color. |
 | [Hidden](#hidden) | Gets/sets whether characters are hidden. |
 | [Engrave](#engrave) | Gets/sets whether characters are displayed as imprinted characters. |
+| [Italic](#italic) | Gets/sets whether characters are in italics. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetItalic](#GetItalic) | Gets whether characters are in italics. |
-| [SetItalic](#SetItalic) | Sets whether characters are in italics. |
 | [GetKerning](#GetKerning) | Gets the minimum font size at which kerning occurs. |
 | [SetKerning](#SetKerning) | Sets the minimum font size at which kerning occurs. |
 | [GetLanguageID](#GetLanguageID) | Gets the language ID or language code identifier (LCID). |
@@ -701,44 +700,17 @@ This property corresponds to the **CFE_IMPRINT** effect described in the [CHARFO
 
 ---
 
-# <a name="GetItalic"></a>GetItalic
+## <a name="italic"></a>Italic
 
-Gets whether characters are in italics.
+Gets/sets whether characters are in italics.
 
+```
+(GET) PROPERTY Italic () AS LONG
+(SET) PROPERTY Italic (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetItalic () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetItalic(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are in italics. |
-| **tomFalse** | Characters are not in italics. |
-| **tomUndefined** | The Italic property is undefined. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-# <a name="SetItalic"></a>SetItalic
-
-Sets whether characters are in italics.
-
-```
 FUNCTION SetItalic (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetItalic(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -752,12 +724,22 @@ END FUNCTION
 | **tomToggle** | Toggle the state of the Italic property. |
 | **tomUndefined** | The Italic property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
+
 | Result code | Description |
 | ----------- | ----------- |
 | **E_INVALIDARG** | Invalid argument. |
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+---
 
 # <a name="GetKerning"></a>GetKerning
 
