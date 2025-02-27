@@ -24,7 +24,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 ---
 
-# CRichEditCtrl Properties
+## CRichEditCtrl Properties
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -74,7 +74,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [WordWrap](#wordwrap) | Enables/disables word wrap. |
 | [WordWrapMode](#wordwrapmode) | Sets the word-wrapping and word-breaking options for the rich edit control. |
 
-# CRichEditCtrl Methods
+## CRichEditCtrl Methods
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -167,7 +167,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [Undo](#undo) | This message undoes the last edit control operation in the control's undo queue. |
 
 
-# CRichEdit File Operations Methods
+## CRichEdit File Operations Methods
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -186,7 +186,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [SaveSelText](#saveseltext) | Saves selection of the rich edit control in text format. |
 | [LoadRtfFromResource](#loadrtffromresource) | Loads a rich text resource file into a rich edit control. |
 
-# ITextDocument2 Methods and Properties
+## ITextDocument2 Methods and Properties
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -238,7 +238,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 
 ---
 
-# <a name="afxcricheditctrlptr"></a>AfxCRichEditCtrlPtr
+## <a name="afxcricheditctrlptr"></a>AfxCRichEditCtrlPtr
 
 Overloaded function that retrieves a pointer to the `CRichEditCtrl`class from the handle of the rich edit control or from the handle of its parent window and the control's identifier.
 ```
@@ -260,7 +260,7 @@ A pointer to the `CRichEditCtrl` class.
 
 ---
 
-# <a name="constructor"></a>CONSTRUCTOR
+## <a name="constructor"></a>CONSTRUCTOR
 
 Creates an instance of the rich edit control.
 
@@ -296,7 +296,7 @@ DIM pRichEdit AS CRichEditCtrl PTR = NEW CRichEditCtrl(@pWindow, IDC_RICHEDIT, _
 
 ---
 
-# <a name="destructor"></a>DESTRUCTOR
+## <a name="destructor"></a>DESTRUCTOR
 
 Called automatically when a class variable goes out of scope or is destroyed.
 ```
@@ -305,7 +305,7 @@ DESTRUCTOR CRichEditCtrl
 
 ---
 
-# <a name="hrichedit"></a>hRichEdit
+## <a name="hrichedit"></a>hRichEdit
 
 Returns the handle of the rich edit control.
 
@@ -321,7 +321,7 @@ DIM hRichEdit AS HWND = pRichEdit.hRichEdit
 ```
 ---
 
-# <a name="scalingratio"></a>ScalingRatio
+## <a name="scalingratio"></a>ScalingRatio
 
 Gets/sets the scaling ratio.
 
@@ -350,7 +350,7 @@ pRichEdit.SetScalingRatio(ratio)
 
 ---
 
-# <a name="setwysiwygprint"></a>SetWysiwygPrint
+## <a name="setwysiwygprint"></a>SetWysiwygPrint
 
 Sets the target printer device and line width used for "what you see is what you get" (WYSIWYG) formatting in a rich edit control.
 
@@ -365,7 +365,7 @@ FUNCTION SetWysiwygPrint (BYREF wszPrinterName AS WSTRING = "") AS BOOLEAN
 
 A boolean true (-1) or false (0).
 
-# <a name="restoretargetdevice"></a>RestoreTargetDevice
+## <a name="restoretargetdevice"></a>RestoreTargetDevice
 
 Sets the target device to the device context of the rich edit control.
 
@@ -377,7 +377,7 @@ FUNCTION RestoreTargetDevice () AS BOOLEAN
 
 A boolean true (-1) or false (0).
 
-# <a name="autocorrectproc"></a>AutoCorrectProc
+## <a name="autocorrectproc"></a>AutoCorrectProc
 
 Gets/sets a pointer to the application-defined [AutoCorrectProc](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-autocorrectproc) callback function.
 
@@ -402,7 +402,7 @@ FUNCTION SetAutoCorrectProc (BYVAL pfn AS LONG_PTR) AS HRESULT
 
 ---
 
-# <a name="autourldetect"></a>AutoUrlDetect
+## <a name="autourldetect"></a>AutoUrlDetect
 
 Gets/sets whether the auto URL detection is turned on in the rich edit control.
 
@@ -467,7 +467,7 @@ A rich edit control sends the [EN_LINK](https://learn.microsoft.com/en-us/window
 
 ---
 
-# <a name="bidioptions"></a>BidiOptions
+## <a name="bidioptions"></a>BidiOptions
 
 Gets/sets the current state of the bidirectional options in the rich edit control.
 
@@ -500,7 +500,7 @@ In plain text controls, **BidiOptions** automatically determines the paragraph d
 
 ---
 
-# <a name="caretpos"></a>CaretPos
+## <a name="caretpos"></a>CaretPos
 
 Gets/sets the caret position.
 ```
@@ -524,7 +524,7 @@ SUB SetCaretPos (BYVAL dwPos AS DWORD)
 
 ---
 
-# <a name="charformat"></a>CharFormat
+## <a name="charformat"></a>CharFormat
 
 Gets/sets the current character formatting in a rich edit control.
 
@@ -631,7 +631,7 @@ pRichEdit.HideSelection(TRUE)        ' // Hide selection
 ```
 ---
 
-# <a name="ctfmodebias"></a>CTFModeBias
+## <a name="ctfmodebias"></a>CTFModeBias
 
 Gets/sets the Text Services Framework mode bias values for a Microsoft Rich Edit control.
 
@@ -676,7 +676,7 @@ When a Microsoft Rich Edit application uses TSF, it can select the TSF mode bias
 
 ---
 
-# <a name="ctfopenstatus"></a>CTFOpenStatus
+## <a name="ctfopenstatus"></a>CTFOpenStatus
 
 Gets/sets if the Text Services Framework (TSF) keyboard is open or closed.
 ```
@@ -700,7 +700,7 @@ FUNCTION SetCTFOpenStatus (BYVAL fTSFkbd AS LONG) AS BOOLEAN
 
 ---
 
-# <a name="editstyle"></a>EditStyle
+## <a name="editstyle"></a>EditStyle
 
 Gets/sets the current edit style flags.
 
@@ -759,7 +759,7 @@ FUNCTION SetEditStyle (BYVAL fStyle AS LONG, BYVAL fMask AS LONG) AS HRESULT
 
 ---
 
-# <a name="editstyleex"></a>EditStyleEx
+## <a name="editstyleex"></a>EditStyleEx
 
 Gets/sets the extended edit style flags.
 
@@ -796,7 +796,7 @@ FUNCTION SetEditStyleEx (BYVAL fStyle AS LONG, BYVAL fMask AS LONG) AS HRESULT
 
 ---
 
-# <a name="ellipsismode"></a>EllipsisMode
+## <a name="ellipsismode"></a>EllipsisMode
 
 Gets/sets the current ellipsis mode. When enabled, an ellipsis ( ) is displayed for text that doesn't fit in the display window. The ellipsis is only used when the control isn't active. When active, scroll bars are used to reveal text that doesn't fit into the display window.
 
@@ -827,7 +827,7 @@ A boolean true(-1) or false (0).
 
 ---
 
-# <a name="ellipsisstate"></a>EllipsisState
+## <a name="ellipsisstate"></a>EllipsisState
 
 Gets the current ellipsis state.
 ```
@@ -840,7 +840,7 @@ Returns a boolean true (-1) if an ellipsis is being displayed of false (0) other
 
 ---
 
-# <a name="eventmask"></a>EventMask
+## <a name="eventmask"></a>EventMask
 
 Gets/sets the event mask for a rich edit control. The event mask specifies which notification messages the control sends to its parent window.
 
@@ -890,7 +890,7 @@ The default event mask is **ENM_NONE** in which case no notifications are sent t
 
 ---
 
-# <a name="firstvisibleline"></a>FirstVisibleLine
+## <a name="firstvisibleline"></a>FirstVisibleLine
 
 Gets the zero-based index of the uppermost visible line in a multiline rich edit control.
 
@@ -906,7 +906,7 @@ For single-line rich edit controls, the return value is zero.
 
 ---
 
-# <a name="hyphenateinfo"></a>HyphenateInfo
+## <a name="hyphenateinfo"></a>HyphenateInfo
 
 Gets/sets information about hyphenation for a Microsoft Rich Edit control.
 
@@ -929,7 +929,7 @@ FUNCTION SetHyphenateInfo (BYREF info AS .HYPHENATEINFO) AS HRESULT
 
 ---
 
-# <a name="imemodebias"></a>IMEModeBias
+## <a name="imemodebias"></a>IMEModeBias
 
 Gets/sets the Input Method Editor (IME) mode bias for a Microsoft Rich Edit control.
 
@@ -978,7 +978,7 @@ The application should call the **IsIME** method before calling these properties
 
 ---
 
-# <a name="imeoptions"></a>IMEOptions
+## <a name="imeoptions"></a>IMEOptions
 
 Gets/sets the current Input Method Editor (IME) options. This message is available only in Asian-language versions of the operating system.
 
@@ -1004,7 +1004,7 @@ FUNCTION SetIMEOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG) AS HRESULT
 
 ---
 
-# <a name="langoptions"></a>LangOptions
+## <a name="langoptions"></a>LangOptions
 
 Gets/sets a rich edit control's option settings for Input Method Editor (IME) and Asian language support.
 
@@ -1049,7 +1049,7 @@ The **IMF_AUTOFONT** flag is set by default. The **IMF_AUTOKEYBOARD** and **IMF_
 
 ---
 
-# <a name="limittext"></a>LimitText
+## <a name="limittext"></a>LimitText
 
 Gets/sets the current text limit for a rich edit control. The text limit is the maximum amount of text that the user can type into the edit control.
 ```
@@ -1072,7 +1072,7 @@ Gets/sets the current text limit for a rich edit control. The text limit is the 
 
 ---
 
-# <a name="getlimittext"></a>GetLimitText
+## <a name="getlimittext"></a>GetLimitText
 
 Gets the current text limit for a rich edit control. The text limit is the maximum amount of text that the user can type into the edit control.
 ```
@@ -1085,7 +1085,7 @@ The return value is the text limit.
 
 ---
 
-# <a name="setlimittext"></a>SetLimitText
+## <a name="setlimittext"></a>SetLimitText
 
 Sets the current text limit for a rich edit control. The text limit is the maximum amount of text that the user can type into the edit control.
 ```
@@ -1105,7 +1105,7 @@ The set property does not return a value.
 
 ---
 
-# <a name="modify"></a>Modify
+## <a name="modify"></a>Modify
 
 Gets/sets the state of a rich edit control's modification flag. The flag indicates whether the contents of the rich edit control have been modified.
 
@@ -1137,7 +1137,7 @@ The system automatically clears the modification flag to zero when the control i
 
 ---
 
-# <a name="options"></a>Options
+## <a name="options"></a>Options
 
 Gets/sets the options for a rich edit control.
 
@@ -1163,7 +1163,7 @@ FUNCTION SetOptions (BYVAL fCoop AS LONG, BYVAL fOptions AS LONG) AS DWORD
 
 ---
 
-# <a name="pagerotate"></a>PageRotate
+## <a name="pagerotate"></a>PageRotate
 
 Deprecated. Gets/sets the text layout for a Microsoft Rich Edit control.
 
@@ -1192,7 +1192,7 @@ FUNCTION SetPageRotate (BYVAL txtlayout AS LONG) AS DWORD
 
 ---
 
-# <a name="paraformat"></a>ParaFormat
+## <a name="paraformat"></a>ParaFormat
 
 Gets/sets the paragraph formatting of the current selection in a rich edit control.
 
@@ -1217,7 +1217,7 @@ FUNCTION SetParaFormat (BYREF pfmt AS .PARAFORMAT) AS BOOLEAN
 
 ---
 
-# <a name="passwordchar"></a>PasswordChar
+## <a name="passwordchar"></a>PasswordChar
 
 Gets/sets the password character that a rich edit control displays when the user enters text.
 
@@ -1250,7 +1250,7 @@ If an edit control is created with the **ES_PASSWORD** style, the default passwo
 
 ---
 
-# <a name="punctuation"></a>Punctuation
+## <a name="punctuation"></a>Punctuation
 
 Gets/sets the current punctuation characters for the rich edit control.
 
@@ -1278,7 +1278,7 @@ This message is supported only in Asian-language versions of Microsoft Rich Edit
 
 ---
 
-# <a name="rect"></a>Rect
+## <a name="rect"></a>Rect
 
 Gets/sets the formatting rectangle of a rich edit control.
 
@@ -1318,7 +1318,7 @@ The formatting rectangle does not include the selection bar, which is an unmarke
 
 ---
 
-# <a name="rectnp"></a>RectNP
+## <a name="rectnp"></a>RectNP
 
 Sets the formatting rectangle of a multiline rich edit control. It is identical to the **Rect** property, except that **RectNP** does not redraw the edit control window.
 
@@ -1344,7 +1344,7 @@ This property does not return a value.
 
 ---
 
-# <a name="redoname"></a>RedoName
+## <a name="redoname"></a>RedoName
 
 Retrieves the type of the next action, if any, in the control's redo queue.
 
@@ -1377,7 +1377,7 @@ The types of actions that can be undone or redone include typing, delete, drag-d
 
 ---
 
-# <a name="scrollpos"></a>ScrollPos
+## <a name="scrollpos"></a>ScrollPos
 
 Gets/sets the current scroll position of the edit control.
 
@@ -1406,7 +1406,7 @@ The values returned in the [POINT](https://learn.microsoft.com/en-us/windows/win
 
 ---
 
-# <a name="storytype"></a>StoryType
+## <a name="storytype"></a>StoryType
 
 Gets/sets the story type.
 
@@ -1450,7 +1450,7 @@ FUNCTION SetStoryType (BYVAL Index AS LONG, BYVAL dwType AS DWORD) AS DWORD
 
 ---
 
-# <a name="text"></a>Text
+## <a name="text"></a>Text
 
 Gets/sets the text from a rich edit control.
 
@@ -1488,7 +1488,7 @@ DIM cws AS CWSTR = "New text"
 pRichEdit.Text = cws
 ```
 
-# <a name="textlength"></a>TextLength
+## <a name="textlength"></a>TextLength
 
 Retrieves the length of all text in a rich edit control.
 
@@ -1509,7 +1509,7 @@ To retrieve the text, you can also use the **AfxGetWindowText** function, the **
 
 ---
 
-# <a name="textlengthex"></a>TextLengthEx
+## <a name="textlengthex"></a>TextLengthEx
 
 Calculates text length in various ways. It is usually called before creating a buffer to receive the text from the control. Since this `CRichEditCtrl` class uses unicode, it is easier to use the simplified second overloaded function.
 
@@ -1561,7 +1561,7 @@ IF Result <> E_INVALIDARG THEN cbLen = Result
 ```
 ---
 
-# <a name="textmode"></a>TextMode
+## <a name="textmode"></a>TextMode
 
 Gets/sets the current text mode and undo level of a rich edit control.
 
@@ -1618,7 +1618,7 @@ In rich text mode, a rich edit control has standard rich edit functionality. How
 
 ---
 
-# <a name="touchoptions"></a>TouchOptions
+## <a name="touchoptions"></a>TouchOptions
 
 Gets/sets the touch options that are associated with a rich edit control.
 
@@ -1648,7 +1648,7 @@ Advanced line breaking is turned on automatically by the rich edit control when 
 
 ---
 
-# <a name="typographyoptions"></a>TypographyOptions
+## <a name="typographyoptions"></a>TypographyOptions
 
 Gets/sets the current state of the typography options of a rich edit control.
 
@@ -1678,7 +1678,7 @@ You can turn on advanced line breaking by sending calling the (SET) **Typography
 
 ---
 
-# <a name="enableadvancedtypography"></a>EnableAdvancedTypography
+## <a name="enableadvancedtypography"></a>EnableAdvancedTypography
 
 Enables advanced typography.
 
@@ -1696,7 +1696,7 @@ Advanced typography is needed for justified paragraphs, hyphenation, and other t
 
 ---
 
-# <a name="wordbreakproc"></a>WordBreakProc
+## <a name="wordbreakproc"></a>WordBreakProc
 
 Gets/sets the address of the currently registered word-break procedure.
 
@@ -1734,7 +1734,7 @@ A Wordwrap function scans a text buffer that contains text to be sent to the dis
 
 ---
 
-# <a name="wordwrap"></a>WordWrap
+## <a name="wordwrap"></a>WordWrap
 
 Enables/disables word wrap.
 
@@ -1753,7 +1753,7 @@ If the method succeeds it returns the boolean value true (-1); if it fails, it r
 
 ---
 
-# <a name="wordwrapmode"></a>WordWrapMode
+## <a name="wordwrapmode"></a>WordWrapMode
 
 Gets/sets the current word wrap and word-break options for the rich edit control.
 
@@ -1791,7 +1791,7 @@ This property is supported only in Asian-language versions of Microsoft Rich Edi
 
 ---
 
-# <a name="callautocorrectproc"></a>CallAutocorrectProc
+## <a name="callautocorrectproc"></a>CallAutocorrectProc
 
 Calls the autocorrect callback function that is stored by the (SET) **AutocorrectProc** property, provided that the text preceding the insertion point is a candidate for autocorrection.
 ```
@@ -1807,7 +1807,7 @@ The return value is zero if the message succeeds, or nonzero if an error occurs.
 
 ---
 
-# <a name="canpaste"></a>CanPaste
+## <a name="canpaste"></a>CanPaste
 
 Determines whether a rich edit control can paste a specified clipboard format.
 ```
@@ -1823,7 +1823,7 @@ If the clipboard format can be pasted, the return value is a nonzero value. If t
 
 ---
 
-# <a name="canredo"></a>CanRedo
+## <a name="canredo"></a>CanRedo
 
 Determines whether there are any actions in the control redo queue.
 ```
@@ -1833,7 +1833,7 @@ FUNCTION CanRedo () AS BOOLEAN
 
 If there are actions in the control redo queue, the return value is a nonzero value. If the redo queue is empty, the return value is zero.
 
-# <a name="canundo"></a>CanUndo
+## <a name="canundo"></a>CanUndo
 
 Determines whether there are any actions in an edit control's undo queue.
 ```
@@ -1845,7 +1845,7 @@ If there are actions in the control's undo queue, the return value is nonzero. I
 
 ---
 
-# <a name="displayband"></a>DisplayBand
+## <a name="displayband"></a>DisplayBand
 
 Displays a portion of the contents of a rich edit control, as previously formatted for a device using the **FormatRange** method.
 ```
@@ -1867,7 +1867,7 @@ Banding is the process by which a single page of output is generated using one o
 
 ---
 
-# <a name="emptyundobuffer"></a>EmptyUndoBuffer
+## <a name="emptyundobuffer"></a>EmptyUndoBuffer
 
 Resets the undo flag of a rich edit control. The undo flag is set whenever an operation within the rich edit control can be undone.
 ```
@@ -1883,7 +1883,7 @@ The undo flag is automatically reset whenever the edit control receives a **WM_S
 
 ---
 
-# <a name="exgetsel"></a>ExGetSel
+## <a name="exgetsel"></a>ExGetSel
 
 Oveloaded method to retrieve the starting and ending character positions of the selection in a rich edit control.
 ```
@@ -1917,7 +1917,7 @@ type CHARRANGE as _charrange
 
 ---
 
-# <a name="exlimittext"></a>ExLimitText
+## <a name="exlimittext"></a>ExLimitText
 
 Sets an upper limit to the amount of text the user can type or paste into a rich edit control.
 ```
@@ -1939,7 +1939,7 @@ This method does not return a value.
 
 ---
 
-# <a name="exlinefromchar"></a>ExLineFromChar
+## <a name="exlinefromchar"></a>ExLineFromChar
 
 Determines which line contains the specified character in a rich edit control.
 ```
@@ -1955,7 +1955,7 @@ Returns the zero-based index of the line.
 
 ---
 
-# <a name="exsetsel"></a>ExSetSel
+## <a name="exsetsel"></a>ExSetSel
 
 Overloaded method that selects a range of characters and/or Component Object Model (COM) objects in a Microsoft Rich Edit control.
 ```
@@ -1997,7 +1997,7 @@ pRichEditCtro.ExSetSel(@chrRange)
 
 ---
 
-# <a name="findtext"></a>FindText
+## <a name="findtext"></a>FindText
 
 Overloaded method to find text within a rich edit control.
 ```
@@ -2046,7 +2046,7 @@ pRichEdit.ExSetSel(cbStart, cbStart + LEN(cws))
 
 ---
 
-# <a name="findtextex"></a>FindTextEx
+## <a name="findtextex"></a>FindTextEx
 
 Overloaded method to find text within a rich edit control.
 ```
@@ -2097,7 +2097,7 @@ pRichEdit.ExSetSel(chrg.cpMin, chrg.cpMax)
 
 ---
 
-# <a name="findwordbreak"></a>FindWordBreak
+## <a name="findwordbreak"></a>FindWordBreak
 
 Finds the next word break before or after the specified character position or retrieves information about the character at that position.
 ```
@@ -2126,7 +2126,7 @@ For information about character classes and word-break flags, see [Word and Line
 
 ---
 
-# <a name="formatrange"></a>FormatRange
+## <a name="formatrange"></a>FormatRange
 
 Formats a range of text in a rich edit control for a specific device.
 ```
@@ -2149,7 +2149,7 @@ After using this method to format a range of text, it is important that you free
 
 ---
 
-# <a name="getcharfrompos"></a>GetCharFromPos
+## <a name="getcharfrompos"></a>GetCharFromPos
 
 Gets information about the character closest to a specified point in the client area of an edit control.
 ```
@@ -2165,7 +2165,7 @@ The return value specifies the zero-based character index of the character neare
 
 ---
 
-# <a name="getimecolor"></a>GetIMEColor
+## <a name="getimecolor"></a>GetIMEColor
 
 Gets the Input Method Editor (IME) composition color. This message is available only in Asian-language versions of the operating system.
 
@@ -2189,7 +2189,7 @@ This message is supported only in Asian-language versions of Microsoft Rich Edit
 
 ---
 
-# <a name="getimecompMode"></a>GetIMECompMode
+## <a name="getimecompMode"></a>GetIMECompMode
 
 Gets the current IME mode for a rich edit control.
 ```
@@ -2207,7 +2207,7 @@ The return value is one of the following values.
 | **ICM_LEVEL2_5** | Level 2.5. |
 | **ICM_LEVEL2_SUI** | Special UI. |
 
-# <a name="getimecompText"></a>GetIMECompText
+## <a name="getimecompText"></a>GetIMECompText
 
 Gets the Input Method Editor (IME) composition text.
 ```
@@ -2230,7 +2230,7 @@ This message only takes Unicode strings.
 
 ---
 
-# <a name="getimeproperty"></a>GetIMEProperty
+## <a name="getimeproperty"></a>GetIMEProperty
 
 Gets the property and capabilities of the Input Method Editor (IME) associated with the current input locale.
 ```
@@ -2301,7 +2301,7 @@ This message is similar to **ImmGetProperty**, except that it uses the current i
 
 ---
 
-# <a name="getline"></a>GetLine
+## <a name="getline"></a>GetLine
 
 Copies a line of text from a rich edit control.
 ```
@@ -2317,7 +2317,7 @@ A copy of the line.
 
 ---
 
-# <a name="getlinecount"></a>GetLineCount
+## <a name="getlinecount"></a>GetLineCount
 
 Gets the number of lines in a multiline rich edit control.
 ```
@@ -2335,7 +2335,7 @@ If the Wordwrap feature is enabled, the number of lines can change when the dime
 
 ---
 
-# <a name="getoleinterface"></a>GetOleInterface
+## <a name="getoleinterface"></a>GetOleInterface
 
 Retrieves an IRichEditOle object that a client can use to access a rich edit control's Component Object Model (COM) functionality.
 ```
@@ -2347,7 +2347,7 @@ A pointer to the **IRichEditOle** interface. The control calls the **AddRef** me
 
 ---
 
-# <a name="getsel"></a>GetSel
+## <a name="getsel"></a>GetSel
 
 Gets the starting and ending character positions of the current selection in a rich edit control.
 ```
@@ -2373,7 +2373,7 @@ You can also use the **ExtGetSel** method to retrieve the same information. **Ex
 
 ---
 
-# <a name="getseltext"></a>GetSelText
+## <a name="getseltext"></a>GetSelText
 
 Retrieves the currently selected text in a rich edit control.
 ```
@@ -2383,7 +2383,7 @@ FUNCTION GetSelText () AS CWSTR
 
 The selected text as a **CWSTR** (dynamic unicode string).
 
-# <a name="gettableparams"></a>GetTableParams
+## <a name="gettableparams"></a>GetTableParams
 
 Retrieves the table parameters for a table row and the cell parameters for the specified number of cells.
 ```
@@ -2412,7 +2412,7 @@ The character position specified by the **cpStartRow** member of the **TABLEROWP
 
 ---
 
-# <a name="getrawtext"></a>GetRawText
+## <a name="getrawtext"></a>GetRawText
 
 Gets the raw text exactly as it appears in memory.
 ```
@@ -2428,7 +2428,7 @@ Text is retrieved exactly as it appears in memory. This includes special structu
 
 ---
 
-# <a name="getrawtextlenght"></a>GetRawTextLength
+## <a name="getrawtextlenght"></a>GetRawTextLength
 
 Gets the length of the raw text.
 ```
@@ -2440,7 +2440,7 @@ The retrieved length.
 
 ---
 
-# <a name="saverawtext"></a>SaveRawText
+## <a name="saverawtext"></a>SaveRawText
 
 Saves the raw contents of the rich edit control to a file.
 ```
@@ -2465,7 +2465,7 @@ RichEdit->SaveRawText(AfxGetExePath & "\test.txt", TRUE)
 
 ---
 
-# <a name="gettextex"></a>GetTextEx
+## <a name="gettextex"></a>GetTextEx
 
 Gets all of the text from the rich edit control in any particular code base you want.
 ```
@@ -2486,7 +2486,7 @@ If the size of the output buffer is less than the size of the text in the contro
 
 ---
 
-# <a name="gettextrange"></a>GetTextRange
+## <a name="gettextrange"></a>GetTextRange
 
 Overloaded method that retrieves a specified range of characters from a rich edit control.
 ```
@@ -2535,7 +2535,7 @@ AfxMsg cws
 
 ---
 
-# <a name="getthumb"></a>GetThumb
+## <a name="getthumb"></a>GetThumb
 
 Gets the position of the scroll box (thumb) in the vertical scroll bar of a multiline rich edit control.
 ```
@@ -2545,7 +2545,7 @@ FUNCTION GetThumb () AS LONG
 
 The return value is the position of the scroll box.
 
-# <a name="undoname"></a>UndoName
+## <a name="undoname"></a>UndoName
 
 Retrieves the type of the next undo action, if any.
 
@@ -2578,7 +2578,7 @@ The types of actions that can be undone or redone include typing, delete, drag, 
 
 ---
 
-# <a name="getzoom"></a>GetZoom
+## <a name="getzoom"></a>GetZoom
 
 Gets the current zoom ratio, which is always between 1/64 and 64.
 ```
@@ -2594,7 +2594,7 @@ The message returns **TRUE** if message is processed, which it will be if both *
 
 ---
 
-# <a name="hideselection"></a>HideSelection
+## <a name="hideselection"></a>HideSelection
 
 Hides or shows the selection in a rich edit control.
 ```
@@ -2610,7 +2610,7 @@ This message does not return a value.
 
 ---
 
-# <a name="insertimage"></a>InsertImage
+## <a name="insertimage"></a>InsertImage
 
 Overloaded method that replaces the selection with a blob that displays an image. It uses pixels instead of HIMETRIC units and it is DPI aware. Can insert and display .bmp, .jpg, .png and .gif files.
 ```
@@ -2656,7 +2656,7 @@ Returns S_OK if successful, or one of the following error codes.
 | **E_INVALIDARG** | The *ip* parameter is NULL or points to an invalid image. |
 | **E_OUTOFMEMORY** | Insufficient memory is available. |
 
-# <a name="insertobject"></a>InsertObject
+## <a name="insertobject"></a>InsertObject
 
 Inserts an image or a Ole object in the rich edit control.
 See MSDN: https://learn.microsoft.com/en-us/windows/win32/controls/using-rich-edit-com
@@ -2674,7 +2674,7 @@ Returns a boolean true (-1) for success of false (0) for failure. To get extende
 
 ---
 
-# <a name="inserttable"></a>InsertTable
+## <a name="inserttable"></a>InsertTable
 
 Inserts one or more identical table rows with empty cells.
 ```
@@ -2697,7 +2697,7 @@ A Microsoft Rich Edit table consists of a sequence of table rows which, in turn,
 
 ---
 
-# <a name="isime"></a>IsIME
+## <a name="isime"></a>IsIME
 
 Determines if current input locale is an East Asian locale.
 ```
@@ -2709,7 +2709,7 @@ Returns **TRUE** if it is an East Asian locale. Otherwise, it returns **FALSE**.
 
 ---
 
-# <a name="linefromchar"></a>LineFromChar
+## <a name="linefromchar"></a>LineFromChar
 
 Gets the index of the line that contains the specified character index in a multiline rich edit control.
 ```
@@ -2725,7 +2725,7 @@ The return value is the zero-based line number of the line containing the charac
 
 ---
 
-# <a name="lineindex"></a>LineIndex
+## <a name="lineindex"></a>LineIndex
 
 Gets the character index of the first character of a specified line in a multiline rich edit control.
 ```
@@ -2741,7 +2741,7 @@ The return value is the character index of the line specified in the *nLine* par
 
 ---
 
-# <a name="linelength"></a>LineLength
+## <a name="linelength"></a>LineLength
 
 Retrieves the length, in characters, of a line in a rich edit control.
 ```
@@ -2757,7 +2757,7 @@ If *index* is greater than the number of characters in the control, the return v
 
 ---
 
-# <a name="linescroll"></a>LineScroll
+## <a name="linescroll"></a>LineScroll
 
 Scrolls the text in a multiline rich edit control.
 ```
@@ -2777,7 +2777,7 @@ The control does not scroll vertically past the last line of text in the edit co
 
 ---
 
-# <a name="margins"></a>Margins
+## <a name="margins"></a>Margins
 
 Sets the widths of the left and right margins for a rich edit control. The message redraws the control to reflect the new margins.
 
@@ -2824,7 +2824,7 @@ pRichEdit.Margins(EC_LEFTMARGIN OR EC_RIGHTMARGIN) = MAKELONG(50, 50)
 
 ---
 
-# <a name="pastespecial"></a>PasteSpecial
+## <a name="pastespecial"></a>PasteSpecial
 
 Pastes a specific clipboard format in a rich edit control.
 ```
@@ -2840,7 +2840,7 @@ SUB PasteSpecial OVERLOAD (BYVAL clpfmt AS DWORD, BYVAL dwAspect AS DWORD, BYVAL
 
 ---
 
-# <a name="posfromchar"></a>PosFromChar
+## <a name="posfromchar"></a>PosFromChar
 
 Retrieves the client area coordinates of a specified character in a rich edit control.
 ```
@@ -2862,7 +2862,7 @@ If the character is a line delimiter, the returned coordinates indicate a point 
 
 ---
 
-# <a name="reconversion"></a>Reconversion
+## <a name="reconversion"></a>Reconversion
 
 Invokes the Input Method Editor (IME) reconversion dialog box.
 ```
@@ -2874,7 +2874,7 @@ Thismethod does not return a value.
 
 ---
 
-# <a name="redo"></a>Redo
+## <a name="redo"></a>Redo
 
 Redoes the next action in the control's redo queue.
 ```
@@ -2890,7 +2890,7 @@ To determine whether there are any actions in the control's redo queue, call the
 
 ---
 
-# <a name="replacesel"></a>ReplaceSel
+## <a name="replacesel"></a>ReplaceSel
 
 Replaces the current selection in a rich edit control with the specified text.
 ```
@@ -2911,7 +2911,7 @@ In a rich edit control, the replacement text takes the formatting of the charact
 
 ---
 
-# <a name="requestresize"></a>RequestResize
+## <a name="requestresize"></a>RequestResize
 
 Forces a rich edit control to send an **EN_REQUESTRESIZE** notification message to its parent window.
 ```
@@ -2923,7 +2923,7 @@ This message is useful during **WM_SIZE** processing for the parent of a bottoml
 
 ---
 
-# <a name="scroll"></a>Scroll
+## <a name="scroll"></a>Scroll
 
 Scrolls the text vertically in a multiline rich edit control.
 ```
@@ -2943,7 +2943,7 @@ To scroll to a specific line or character position, use the **LineScroll** metho
 
 ---
 
-# <a name="scrollcaret"></a>ScrollCaret
+## <a name="scrollcaret"></a>ScrollCaret
 
 Scrolls the caret into view in a rich edit control.
 ```
@@ -2956,7 +2956,7 @@ The return value is not meaningful.
 
 ---
 
-# <a name="selectiontype"></a>SelectionType
+## <a name="selectiontype"></a>SelectionType
 
 Determines the selection type for a rich edit control.
 ```
@@ -2979,7 +2979,7 @@ This message is useful during **WM_SIZE** processing for the parent of a bottoml
 
 ---
 
-# <a name="setbkgndcolor"></a>SetBkgndColor
+## <a name="setbkgndcolor"></a>SetBkgndColor
 
 Sets the background color for a rich edit control.
 ```
@@ -2996,7 +2996,7 @@ This message returns the original background color.
 
 ---
 
-# <a name="setfontsize"></a>SetFontSize
+## <a name="setfontsize"></a>SetFontSize
 
 Sets the font size for the selected text.
 ```
@@ -3045,7 +3045,7 @@ Additional examples are shown in the following table.
 | 80 | 1 | 90 |
 | 80 | -1 | 72 |
 
-# <a name="setimecolor"></a>SetIMEColor
+## <a name="setimecolor"></a>SetIMEColor
 
 Sets the Input Method Editor (IME) composition color. This message is available only in Asian-language versions of the operating system.
 ```
@@ -3068,7 +3068,7 @@ This message is supported only in Asian-language versions of Microsoft Rich Edit
 
 ---
 
-# <a name="setolecallback"></a>SetOleCallback
+## <a name="setolecallback"></a>SetOleCallback
 
 Gives a rich edit control an IRichEditOleCallback object that the control uses to get OLE-related resources and information from the client.
 ```
@@ -3084,7 +3084,7 @@ If the operation succeeds, the return value is a nonzero value. If the operation
 
 ---
 
-# <a name="setpalette"></a>SetPalette
+## <a name="setpalette"></a>SetPalette
 
 Changes the palette that a rich edit control uses for its display window.
 ```
@@ -3104,7 +3104,7 @@ The rich edit control does not check whether the new palette is valid.
 
 ---
 
-# <a name="setreadonly"></a>SetReadOnly
+## <a name="setreadonly"></a>SetReadOnly
 
 Sets or removes the read-only style (ES_READONLY) of a rich edit control.
 ```
@@ -3126,7 +3126,7 @@ To determine whether an edit control has the **ES_READONLY** style, use the Wind
 
 ---
 
-# <a name="setsel"></a>SetSel
+## <a name="setsel"></a>SetSel
 
 Selects a range of characters in a rich edit control.
 ```
@@ -3154,7 +3154,7 @@ If the edit control has the **ES_NOHIDESEL** style, the selected text is highlig
 
 ---
 
-# <a name="settableparams"></a>SetTableParams
+## <a name="settableparams"></a>SetTableParams
 
 Changes the parameters of rows in a table.
 ```
@@ -3182,7 +3182,7 @@ This message changes the parameters of the number of rows specified by the **cRo
 
 ---
 
-# <a name="settabstops"></a>SetTabStops
+## <a name="settabstops"></a>SetTabStops
 
 Sets the tab stops in a multiline rich edit control.
 ```
@@ -3209,7 +3209,7 @@ The values specified in the array are in dialog template units, which are the de
 
 ---
 
-# <a name="settargetdevice"></a>SetTargetDevice
+## <a name="settargetdevice"></a>SetTargetDevice
 
 Sets the target device and line width used for WYSIWYG formatting in a rich edit control.
 ```
@@ -3242,7 +3242,7 @@ If *lnwidth* is zero, no line breaks are created.
 
 ---
 
-# <a name="settextex"></a>SetTextEx / InsertText / ReplaceText
+## <a name="settextex"></a>SetTextEx / InsertText / ReplaceText
 
 Combines the functionality of WM_SETTEXT and EM_REPLACESEL and adds the ability to set text using a code page and to use either Rich Text Format (RTF) rich text or plain text.
 ```
@@ -3396,7 +3396,7 @@ pRichEdit->SetTextEx (10, 20, "")
 ```
 ---
 
-# <a name="setuianame"></a>SetUIAName
+## <a name="setuianame"></a>SetUIAName
 
 Sets the name of a rich edit control for UI Automation (UIA).
 ```
@@ -3412,7 +3412,7 @@ FUNCTION SetUIAName (BYREF wszName AS WSTRING) AS DWORD
 
 ---
 
-# <a name="setundolimit"></a>SetUndoLimit
+## <a name="setundolimit"></a>SetUndoLimit
 
 Sets the maximum number of actions that can stored in the undo queue.
 ```
@@ -3434,7 +3434,7 @@ Setting the limit to zero disables the **Undo** feature.
 
 ---
 
-# <a name="setzoom"></a>SetZoom
+## <a name="setzoom"></a>SetZoom
 
 Sets the zoom ratio for a multiline edit control or a rich edit control. The ratio must be a value between 1/64 and 64. The edit control needs to have the **ES_EX_ZOOMABLE** extended style set, for this message to have an effect, see [Edit Control Extended Styles](https://learn.microsoft.com/en-us/windows/win32/controls/edit-control-window-extended-styles).
 
@@ -3457,7 +3457,7 @@ If the new zoom setting is accepted, the return value is **TRUE**. If the new zo
 
 ---
 
-# <a name="showscrollbar"></a>ShowScrollBar
+## <a name="showscrollbar"></a>ShowScrollBar
 
 Shows or hides one of the scroll bars in the Text Host window.
 ```
@@ -3474,7 +3474,7 @@ This method is only valid when the control is in-place active. Calls made while 
 
 ---
 
-# <a name="stopgrouptyping"></a>StopGroupTyping
+## <a name="stopgrouptyping"></a>StopGroupTyping
 
 Stops the control from collecting additional typing actions into the current undo action.
 ```
@@ -3497,7 +3497,7 @@ You can send the **RichEdit_StopGroupTyping** message to break consecutive typin
 
 ---
 
-# <a name="streamin"></a>StreamIn
+## <a name="streamin"></a>StreamIn
 
 Replaces the contents of a rich edit control with a stream of data provided by an application defined [EditStreamCallback](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-editstreamcallback) callback function.
 ```
@@ -3534,7 +3534,7 @@ When you call the **StreamIn** methos, the rich edit control makes repeated call
 
 ---
 
-# <a name="streamout"></a>StreamOut
+## <a name="streamout"></a>StreamOut
 
 Causes a rich edit control to pass its contents to an application defined [EditStreamCallback](https://learn.microsoft.com/en-us/windows/win32/api/richedit/nc-richedit-editstreamcallback) callback function. The callback function can then write the stream of data to a file or any other location that it chooses.
 
@@ -3576,7 +3576,7 @@ When you call the **StreamOut** method, the rich edit control makes repeated cal
 
 ---
 
-# <a name="undo"></a>Undo
+## <a name="undo"></a>Undo
 
 **First overloaded function**: Undoes the last edit control operation in the control's undo queue.
 
@@ -3613,7 +3613,7 @@ Second overloaded function: The actual count of undo operations performed. If al
 
 ---
 
-# <a name="getlastresult"></a>GetLastResult
+## <a name="getlastresult"></a>GetLastResult
 
 Returns the last result code
 ```
@@ -3622,7 +3622,7 @@ FUNCTION GetLastResult () AS HRESULT
 END FUNCTION
 ```
 
-# <a name="setresult"></a>SetResult
+## <a name="setresult"></a>SetResult
 
 Sets the last result code.
 ```
@@ -3637,7 +3637,7 @@ END FUNCTION
 
 ---
 
-# <a name="geterrorinfo"></a>GetErrorInfo
+## <a name="geterrorinfo"></a>GetErrorInfo
 
 Returns a description of the last result code.
 ```
@@ -3646,7 +3646,7 @@ PRIVATE FUNCTION GetErrorInfo (BYVAL nError AS LONG = -1) AS CWSTR
 
 ---
 
-# <a name="newdoc"></a>NewDoc
+## <a name="newdoc"></a>NewDoc
 
 Opens a new document. If another document is open, this method saves any current changes and closes the current document before opening a new one.
 ```
@@ -3663,7 +3663,7 @@ pRichEdit.NewDoc
 
 ---
 
-# <a name="opendoc"></a>OpenDoc
+## <a name="opendoc"></a>OpenDoc
 
 Opens a new document. If another document is open, this method saves any current changes and closes the current document before opening a new one.
 ```
@@ -3700,7 +3700,7 @@ The return value can be an **HRESULT** value that corresponds to a system error 
 DIM cv AS CVAR = AfxGetExePath & $"\Test.rtf"
 pRichEdit.OpenDoc(cv)
 ```
-# <a name="savedoc"></a>SaveDoc
+## <a name="savedoc"></a>SaveDoc
 
 Saves the document.
 
@@ -3794,7 +3794,7 @@ DIM cv AS CVAR = AfxGetExePath & $"\Test02.txt"
 pRichEdit->SaveDoc(cv, tomCreateAlways OR tomText, 1200)
 ```
 
-# <a name="docname"></a>DocName
+## <a name="docname"></a>DocName
 
 Gets the path and file name of the document.
 
@@ -3810,7 +3810,7 @@ The path and file name of the document.
 
 ---
 
-# <a name="gettextfromfile"></a>GetTextFromFile
+## <a name="gettextfromfile"></a>GetTextFromFile
 
 Gets text from the specified file
 ```
@@ -3829,7 +3829,7 @@ An string with the contents of the file or an empty string if the method fails. 
 
 This method is used by the **AppendDocFile** and **InsertDocFile** methods.
 
-# <a name="appenddocfile"></a>AppendDocFile
+## <a name="appenddocfile"></a>AppendDocFile
 
 Appends the contents of the specified file. Besides .rtf files, this method also insert the content of ansi, unicode or utf8 files if you specify the appropriate code page.
 ```
@@ -3871,7 +3871,7 @@ RichEdit->AppendDocFile(wszFileName, -1, 1200)
 
 ---
 
-# <a name="insertdocfile"></a>InsertDocFile
+## <a name="insertdocfile"></a>InsertDocFile
 
 Inserts the contents of the specified file at the specified location. Besides .rtf files, this method also insert the content of ansi, unicode or utf8 files if you specify the appropriate code page.
 ```
@@ -3916,7 +3916,7 @@ RichEdit->InsertDocFile(wszFileName, -1, 1200)
 
 ---
 
-# <a name="getrtf"></a>GetRtf
+## <a name="getrtf"></a>GetRtf
 
 Retrieves RTF formatted text from a Rich Edit control.
 ```
@@ -3950,7 +3950,7 @@ Returns the retrieved text or a null string.
 
 ---
 
-# <a name="loadrtffromfile"></a>LoadRtfFromFile
+## <a name="loadrtffromfile"></a>LoadRtfFromFile
 
 Loads the contents of a RTF file into a Rich Edit control.
 Deprecated and removed. Use **OpenDoc** instead.
@@ -3980,7 +3980,7 @@ e.g. pRichEdit->LoadRtfFromFile(AfxGetExePath & "\Test.rtf")
 
 ---
 
-# <a name="loadrtffromresource"></a>LoadRtfFromResource
+## <a name="loadrtffromresource"></a>LoadRtfFromResource
 
 Loads a RTF resource file into a Rich Edit control.
 ```
@@ -4011,7 +4011,7 @@ RTFFILE       RCDATA ".\Resources\<title of the rtf file>.rtf"
 
 ---
 
-# <a name="setfont"></a>SetFont
+## <a name="setfont"></a>SetFont
 
 Sets the font used by a rich edit control.
 ```
@@ -4028,7 +4028,7 @@ If the operation succeeds, the return value is a nonzero value. If the operation
 
 ---
 
-# <a name="addlfcr"></a>AddLF/AddCR/AddCRLF
+## <a name="addlfcr"></a>AddLF/AddCR/AddCRLF
 
 Inserts a line feed, a carriage return or a carriage return and line feed at the cursor position or at the end of the text.
 ```
@@ -4042,7 +4042,7 @@ SUB AddCRLF (BYVAL atEnd AS BOOLEAN = FALSE)
 
 ---
 
-# <a name="savertf"></a>SaveRtf
+## <a name="savertf"></a>SaveRtf
 
 Saves the contents of the rich edit control to a file in rtf format.
 ```
@@ -4062,7 +4062,7 @@ Boolean true on success or false on failure.
 
 ---
 
-# <a name="savertfnoobjs"></a>SaveRtfNoObjs
+## <a name="savertfnoobjs"></a>SaveRtfNoObjs
 
 Saves the contents of the rich edit control to a file in rtf format with spaces in place of COM objects.
 
@@ -4070,7 +4070,7 @@ For parameters and return values see the **SaveRtf** method.
 
 ---
 
-# <a name="saveselrtf"></a>SaveSelRtf
+## <a name="saveselrtf"></a>SaveSelRtf
 
 Saves selection of the rich edit control to a file in rtf format.
 
@@ -4078,7 +4078,7 @@ For parameters and return values see the **SaveRtf** method.
 
 ---
 
-# <a name="savetext"></a>SaveText
+## <a name="savetext"></a>SaveText
 
 Saves the contents of the rich edit control in text format.
 
@@ -4086,7 +4086,7 @@ For parameters and return values see the **SaveRtf** method.
 
 ---
 
-# <a name="saveseltext"></a>SaveSelText
+## <a name="saveseltext"></a>SaveSelText
 
 Saves selection of the rich edit control in text format.
 
@@ -4094,7 +4094,7 @@ For parameters and return values see the **SaveRtf** method.
 
 ---
 
-# <a name="istextbold"></a>IsTextBold
+## <a name="istextbold"></a>IsTextBold
 
 Checks if the selected text or the word under the cursor is bolded.
 ```
@@ -4106,7 +4106,7 @@ Boolean true (-1) or false (0).
 
 ---
 
-# <a name="istextitalic"></a>IsTextItalic
+## <a name="istextitalic"></a>IsTextItalic
 
 Checks if the selected text or the word under the cursor is italicised.
 ```
@@ -4118,7 +4118,7 @@ Boolean true (-1) or false (0).
 
 ---
 
-# <a name="istextstrikeout"></a>IsTextStrikeOut
+## <a name="istextstrikeout"></a>IsTextStrikeOut
 
 Checks if the selected text or the word under the cursor is striked out.
 ```
@@ -4130,7 +4130,7 @@ Boolean true (-1) or false (0).
 
 ---
 
-# <a name="istextuderline"></a>IsTextUnderline
+## <a name="istextuderline"></a>IsTextUnderline
 
 Checks if the selected text or the word under the cursor is underlined.
 ```
@@ -4142,7 +4142,7 @@ Boolean true (-1) or false (0).
 
 ---
 
-# <a name="settextbold"></a>SetTextBold
+## <a name="settextbold"></a>SetTextBold
 
 Changes the selected text or word under the cursor to bold. If it is already set, it removes it.
 ```
@@ -4151,7 +4151,7 @@ SUB SetTextBold ()
 
 ---
 
-# <a name="settextitalic"></a>SetTextItalic
+## <a name="settextitalic"></a>SetTextItalic
 
 Changes the selected text or word under the cursor to italic. If it is already set, it removes it.
 ```
@@ -4160,7 +4160,7 @@ SUB SetTextItalic ()
 
 ---
 
-# <a name="settextstrikeout"></a>SetTextStrikeOut
+## <a name="settextstrikeout"></a>SetTextStrikeOut
 
 Changes the selected text or word under the cursor to strike out. If it is already set, it removes it.
 ```
@@ -4169,7 +4169,7 @@ SUB SetTextStrikeOut ()
 
 ---
 
-# <a name="settextunderline"></a>SetTextUnderline
+## <a name="settextunderline"></a>SetTextUnderline
 
 Changes the selected text or word under the cursor to underline. If it is already set, it removes it.
 ```
@@ -4178,7 +4178,7 @@ SUB SetTextUderline ()
 
 ---
 
-# <a name="textcolor"></a>TextColor
+## <a name="textcolor"></a>TextColor
 
 Gets/sets the color of the selected text or the word under the cursor.
 
@@ -4207,7 +4207,7 @@ To select text programatically, use the **SetSel** method.
 
 ---
 
-# <a name="textfontname"></a>TextFontName
+## <a name="textfontname"></a>TextFontName
 
 Gets/sets the font face name of the selected text or the word under the cursor if there is not selection.
 
@@ -4236,7 +4236,7 @@ To select text programatically, use the **SetSel** method.
 
 ---
 
-# <a name="textheight"></a>TextHeight
+## <a name="textheight"></a>TextHeight
 
 Gets/sets the height of the selected text or the word under the cursor.
 
@@ -4263,7 +4263,7 @@ To select text programatically, use the **SetSel** method.
 
 ---
 
-# <a name="textoffset"></a>TextOffset
+## <a name="textoffset"></a>TextOffset
 
 Gets/sets the offset of the selected text or the word under the cursor.
 
@@ -4294,7 +4294,7 @@ To select text programatically, use the **SetSel** method.
 
 ---
 
-# <a name="getdocumentinterface"></a>GetDocumentInterface
+## <a name="getdocumentinterface"></a>GetDocumentInterface
 
 Retrieves a pointer to the **ITextDocument2** interface.
 
@@ -4318,7 +4318,7 @@ IUnknown_Release(pTextDoc)
 ```
 ---
 
-# <a name="attachmsgfilter"></a>AttachMsgFilter
+## <a name="attachmsgfilter"></a>AttachMsgFilter
 
 Attaches a new message filter to the edit instance. All window messages that the edit instance receives are forwarded to the message filter.
 
@@ -4339,7 +4339,7 @@ The message filter must be bound to the document before it can be used.
 
 ---
 
-# <a name="begineditcollection"></a>BeginEditCollection
+## <a name="begineditcollection"></a>BeginEditCollection
 
 Turns on edit collection (also called *undo grouping*).
 
@@ -4352,7 +4352,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="endeditcollection"></a>EndEditCollection
+## <a name="endeditcollection"></a>EndEditCollection
 
 Turns off edit collection (also called *undo grouping*).
 
@@ -4369,7 +4369,7 @@ The screen is unfrozen unless the freeze count is nonzero.
 
 ---
 
-# <a name="carettype"></a>CaretType
+## <a name="carettype"></a>CaretType
 
 Gets/sets the caret type.
 
@@ -4397,7 +4397,7 @@ FUNCTION SetCaretType (BYVAL Value AS LONG) AS HRESULT
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.  Call **GetErrorInfo** to get information about the result.
 
 ---
-# <a name="checktextlimit"></a>CheckTextLimit
+## <a name="checktextlimit"></a>CheckTextLimit
 
 Checks whether the number of characters to be added would exceed the maximum text limit.
 
@@ -4418,7 +4418,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="defaulttabstop"></a>DefaultTabStop
+## <a name="defaulttabstop"></a>DefaultTabStop
 
 Gets/sets the default tab width. Default value is 36.0 points, that is, 0.5 inches.
 
@@ -4443,7 +4443,7 @@ If the method succeeds it returns **S_OK**. If the method fails, it returns **E_
 
 The default tab width is used whenever no tab exists beyond the current display position. The default width is given in floating-point points.
 
-# <a name="documentfont"></a>DocumentFont
+## <a name="documentfont"></a>DocumentFont
 
 Gets/sets a pointer to the **ITextFont2** interface.
 
@@ -4474,7 +4474,7 @@ IUnknown_Release(pTextFont)
 ```
 ---
 
-# <a name="documentpara"></a>DocumentPara
+## <a name="documentpara"></a>DocumentPara
 
 Gets/sets an object that provides the default paragraph format information for this instance of the Text Object Model (TOM) engine.
 
@@ -4493,7 +4493,7 @@ A pointer to the **ITextPara2** interface. When you have finished to use it, you
 
 ---
 
-# <a name="eastasianflags"></a>EastAsianFlags
+## <a name="eastasianflags"></a>EastAsianFlags
 
 Gets the East Asian flags.
 
@@ -4525,7 +4525,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="freeze"></a>Freeze
+## <a name="freeze"></a>Freeze
 
 Increments the freeze count.
 
@@ -4547,7 +4547,7 @@ If the freeze count is nonzero, screen updating is disabled. This allows a seque
 
 ---
 
-# <a name="unfreeze"></a>Unfreeze
+## <a name="unfreeze"></a>Unfreeze
 
 Decrements the freeze count.
 
@@ -4571,7 +4571,7 @@ Note, if edit collection is active, screen updating is suppressed, even if the f
 
 ---
 
-# <a name="getcallnanager"></a>GetCallManager
+## <a name="getcallnanager"></a>GetCallManager
 
 Gets the call manager.
 
@@ -4593,7 +4593,7 @@ The call manager object is opaque to the caller. The Text Object Model (TOM) eng
 
 ---
 
-# <a name="releasecallnanager"></a>ReleaseCallManager
+## <a name="releasecallnanager"></a>ReleaseCallManager
 
 Releases the call manager.
 
@@ -4610,7 +4610,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="getdisplays"></a>GetDisplays
+## <a name="getdisplays"></a>GetDisplays
 
 Gets the displays collection for this Text Object Model (TOM) engine instance.
 
@@ -4632,7 +4632,7 @@ The rich edit control doesn't implement this method.
 
 ---
 
-# <a name="range"></a>Range
+## <a name="range"></a>Range
 
 Retrieves a text range object for a specified range of content in the active story of the document.
 
@@ -4655,7 +4655,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="range2"></a>Range2
+## <a name="range2"></a>Range2
 
 Retrieves a new text range for the active story of the document.
 
@@ -4678,7 +4678,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="rangefrompoint"></a>RangeFromPoint
+## <a name="rangefrompoint"></a>RangeFromPoint
 
 Retrieves a range for the content at or nearest to the specified point on the screen.
 
@@ -4701,7 +4701,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="rangefrompoint2"></a>RangeFromPoint2
+## <a name="rangefrompoint2"></a>RangeFromPoint2
 
 Retrieves the degenerate range at (or nearest to) a particular point on the screen.
 
@@ -4725,7 +4725,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="getstoryranges"></a>GetStoryRanges
+## <a name="getstoryranges"></a>GetStoryRanges
 
 Gets the story collection object used to enumerate the stories in a document.
 
@@ -4744,7 +4744,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns **E
 ---
 
 
-# <a name="getstoryranges2"></a>GetStoryRanges2
+## <a name="getstoryranges2"></a>GetStoryRanges2
 
 Gets an object for enumerating the stories in a document.
 
@@ -4766,7 +4766,7 @@ Call this method only if the **GetStoryCount** method returns a value that is gr
 
 ---
 
-# <a name="saved"></a>Saved
+## <a name="saved"></a>Saved
 
 Gets/sets a value that indicates whether changes have been made since the file was last saved.
 
@@ -4793,7 +4793,7 @@ FUNCTION SetSaved (BYVAL value AS BOOLEAN) AS HRESULT
 
 ---
 
-# <a name="selection"></a>Selection
+## <a name="selection"></a>Selection
 
 Gets the active selection.
 
@@ -4812,7 +4812,7 @@ If the method succeeds, it returns **S_OK**. If there is not active selection, i
 
 ---
 
-# <a name="selection2"></a>Selection2
+## <a name="selection2"></a>Selection2
 
 Gets the active selection.
 
@@ -4831,7 +4831,7 @@ If the method succeeds, it returns **S_OK**. If there is not active selection, i
 
 ---
 
-# <a name="storycount"></a>StoryCount
+## <a name="storycount"></a>StoryCount
 
 Gets the number of stories in the document.
 
@@ -4850,7 +4850,7 @@ If the method succeeds, it returns **S_OK**. Call **GetErrorInfo** to get inform
 
 ---
 
-# <a name="getclientrect"></a>GetClientRect
+## <a name="getclientrect"></a>GetClientRect
 
 Retrieves the client rectangle of the rich edit control.
 
@@ -4875,7 +4875,7 @@ The second overlapped structure returns a **RECT** structure.
 
 ---
 
-# <a name="effectcolor"></a>EffectColor
+## <a name="effectcolor"></a>EffectColor
 
 Retrieves the color used for special text attributes.
 
@@ -4930,7 +4930,7 @@ The first 16 index values are for special underline colors. If an index between 
 
 ---
 
-# <a name="getgenerator"></a>GetGenerator
+## <a name="getgenerator"></a>GetGenerator
 
 Gets the name of the Text Object Model (TOM) engine.
 
@@ -4948,7 +4948,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="getimmcontext"></a>GetImmContext
+## <a name="getimmcontext"></a>GetImmContext
 
 Gets the Input Method Manager (IMM) input context from the Text Object Model (TOM) host.
 
@@ -4966,7 +4966,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="releaseimmcontext"></a>ReleaseImmContext
+## <a name="releaseimmcontext"></a>ReleaseImmContext
 
 Releases an Input Method Manager (IMM) input context.
 
@@ -4988,7 +4988,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="getpreferredfont"></a>GetPreferredFont
+## <a name="getpreferredfont"></a>GetPreferredFont
 
 Retrieves the preferred font for a particular character repertoire and character position.
 
@@ -5015,7 +5015,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="getproperty"></a>GetProperty
+## <a name="getproperty"></a>GetProperty
 
 Retrieves the value of a property.
 ```
@@ -5036,7 +5036,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 ---
 
 
-# <a name="setproperty"></a>SetProperty
+## <a name="setproperty"></a>SetProperty
 
 Specifies a new value for a property.
 ```
@@ -5053,7 +5053,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="getstory"></a>GetStory
+## <a name="getstory"></a>GetStory
 
 Retrieves the story that corresponds to a particular index.
 
@@ -5075,7 +5075,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="activestory"></a>ActiveStory
+## <a name="activestory"></a>ActiveStory
 
 Gets/sets the active story; that is, the story that receives keyboard and mouse input.
 
@@ -5098,7 +5098,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="mainstory"></a>MainStory
+## <a name="mainstory"></a>MainStory
 
 Gets the main story.
 
@@ -5117,7 +5117,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="newstory"></a>NewStory
+## <a name="newstory"></a>NewStory
 
 Not implemented. Gets a new story.
 
@@ -5136,7 +5136,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="getstrings"></a>GetStrings
+## <a name="getstrings"></a>GetStrings
 
 Gets a collection of rich-text strings.
 
@@ -5158,7 +5158,7 @@ The collection is useful for manipulating rich text, particularly for transformi
 
 ---
 
-# <a name="getwindow"></a>GetWindow
+## <a name="getwindow"></a>GetWindow
 
 Gets the handle of the window that the Text Object Model (TOM) engine is using to display output.
 
@@ -5176,7 +5176,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="setimeinprogress"></a>SetIMEInProgress
+## <a name="setimeinprogress"></a>SetIMEInProgress
 
 Sets the state of the Input Method Editor (IME) in-progress flag.
 
@@ -5194,7 +5194,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="mathproperties"></a>MathProperties
+## <a name="mathproperties"></a>MathProperties
 
 Gets/sets the math properties for the document.
 
@@ -5248,7 +5248,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="notificationmode"></a>NotificationMode
+## <a name="notificationmode"></a>NotificationMode
 
 Gets/sets the notification mode.
 
@@ -5271,7 +5271,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="notify"></a>Notify
+## <a name="notify"></a>Notify
 
 Notifies the Text Object Model (TOM) engine client of particular Input Method Editor (IME) events.
 
@@ -5289,7 +5289,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="sysbeep"></a>SysBeep
+## <a name="sysbeep"></a>SysBeep
 
 Generates a system beep.
 
@@ -5303,7 +5303,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="update"></a>Update
+## <a name="update"></a>Update
 
 Updates the selection and caret.
 
@@ -5321,7 +5321,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="updatewindow"></a>UpdateWindow
+## <a name="updatewindow"></a>UpdateWindow
 
 Notifies the client that the view has changed and the client should update the view if the Text Object Model (TOM) engine is in-place active.
 
