@@ -15,7 +15,7 @@ The **ITextRange** interface inherits from the **IDispatch** interface. **ITextR
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetText](#GetText) | Gets the plain text in this range. |
+| [GetText](#GetText) | Gets the text in this range according to the specified conversion flags. |
 | [SetText](#SetText) | Sets the plain text in this range. |
 | [GetChar](#GetChar) | Gets the character at the start position of the range. |
 | [SetChar](#SetChar) | Sets the character at the starting position of the range. |
@@ -122,7 +122,6 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [GetProperty](#GetProperty) | Gets the value of a property. |
 | [GetRect](#GetRect) | Retrieves a rectangle of the specified type for the current range. |
 | [GetSubrange](#GetSubrange) | Retrieves a subrange in a range. |
-| [GetText2](#GetText2) | Gets the text in this range according to the specified conversion flags. |
 | [HexToUnicode](#HexToUnicode) | Converts and replaces the hexadecimal number at the end of this range to a Unicode character. |
 | [InsertTable](#InsertTable) | Inserts a table in a range. |
 | [Linearize](#Linearize) | Translates the built-up math, ruby, and other inline objects in this range to linearized form. |
@@ -143,7 +142,7 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [SetResult](#SetResult) | Sets the last result code. |
 | [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
 
-# <a name="constructor"></a>CONSTRUCTOR
+## <a name="constructor"></a>CONSTRUCTOR
 
 Called when a **CTextRange2** class variable is created.
 
@@ -166,57 +165,27 @@ A pointer to the new instance of the class.
 
 ```
 SCOPE
-   ' // Create a new instance of the CTextDocument2 class
-   DIM pCTextDocument2 AS CTextDocument2 = hRichEdit
    ' // Get the number of characters of the text in the Rich Edit control
-   DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
+   DIM numChars AS LONG = pRichEdit->TextLength
    ' // Get the 0-based range of all the text
-   DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(0, numChars)
+   DIM pRange2 AS CTextRange2 = pRichEdit->Range2(0, numChars)
    ' // Get the text
-   DIM cbsText AS CBSTR = pCRange2.GetText2(0)
-   ' // The CTextDocument2 class and the CTextRange2 class will be destroyed when the scope ends
+   DIM cbsText AS CBSTR = pRange2.GetText2(tomUseCRLF)
+   ' // The CTextRange2 class will be destroyed when the scope ends
 END SCOPE
 ```
-
-**Note**: The following lines of code:
-```
-DIM pCTextDocument2 AS CTextDocument2 = hRichEdit
-DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(0, numChars)
-DIM cbsText AS CBSTR = pCRange2.GetText2(0)
-```
-can be replaced with a compound syntax:
-```
-DIM cbsText AS CBSTR = CTextRange2(CTextDocument2(hRichEdit).Range2(0, numChars)).GetText2(0)
-```
 <ins>To use with the pointer syntax.</ins>
-
 ```
-' // Create a new instance of the CTextDocument2 class
-DIM pCTextDocument2 AS CTextDocument2 PTR = NEW CTextDocument2(hRichEdit)
 ' // Get the number of characters of the text in the Rich Edit control
-DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
+DIM numChars AS LONG = pRichEdit->TextLength
 ' // Get the 0-based range of all the text
-DIM pCRange2 AS CTextRange2 PTR = NEW CTextRange2(pCTextDocument2->Range2(0, numChars))
+DIM pRange2 AS CTextRange2 PTR = NEW CTextRange2(pRichEdit->Range2(0, numChars))
 ' // Get the text
-DIM cbsText AS CBSTR = pCRange2->GetText2(0)
+DIM cbsText AS CBSTR = pRange2->GetText2(tomUseCRLF)
 ' // Delete the range
-Delete pCRange2
-' // Delete the class
-Delete pCTextDocument2
+Delete pRange2
 ```
-
-**Note**: Although the following lines of code:
-```
-DIM pCRange2 AS CTextRange2 PTR = NEW CTextRange2(pCTextDocument2->Range2(0, numChars))
-DIM cbsText AS CBSTR = pCRange2->GetText2(0)
-```
-could be replaced with a compound syntax:
-```
-DIM cbsText AS CBSTR = NEW CTextRange2(pCTextDocument2->Range2(0, numChars))->GetText2(0)
-```
-it would create memory leaks because the instance of the **CTextRange2** class is not automatically deleted and we can't destroy it with **Delete** because we don't have a pointer to it.
-
-# <a name="destructor"></a>DESTRUCTOR
+## <a name="destructor"></a>DESTRUCTOR
 
 Called automatically when a class variable goes out of scope or is destroyed.
 
@@ -224,7 +193,7 @@ Called automatically when a class variable goes out of scope or is destroyed.
 DESTRUCTOR CTextRange2
 ```
 
-# <a name="getlastresult"></a>GetLastResult
+## <a name="getlastresult"></a>GetLastResult
 
 Returns the last result code
 
@@ -232,7 +201,7 @@ Returns the last result code
 FUNCTION GetLastResult () AS HRESULT
 ```
 
-# <a name="setresult"></a>SetResult
+## <a name="setresult"></a>SetResult
 
 Sets the last result code.
 
@@ -244,59 +213,81 @@ FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
 | --------- | ----------- |
 | *Result* | The **HRESULT** error code returned by the methods. |
 
-# <a name="GetErrorInfo"></a>GetErrorInfo
+## <a name="GetErrorInfo"></a>GetErrorInfo
 
 Returns a description of the last result code.
 
 ```
-FUNCTION CTOMBase.GetErrorInfo () AS CWSTR
+FUNCTION GetErrorInfo () AS CWSTR
 ```
 
-# <a name="GetText"></a>GetText
+# <a name="gettext"></a>GetText
 
-Gets the plain text in this range.
+Gets the text in this range according to the specified conversion flags.
 
 ```
-FUNCTION CTextRange2.GetText () AS CBSTR
-   DIM pText AS AFX_BSTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetText(m_pTextRange2, @pText))
-   RETURN pText
-END FUNCTION
+FUNCTION GetText (BYVAL Flags AS LONG = tomUseCRLF) AS CBSTR
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Flags* | The flags controlling how the text is retrieved. The flags can include a combination of the values in the table below. |
+
+| Flag | Description |
+| ---- | ----------- |
+| **tomAdjustCRLF** | Adjust CR/LFs at the start. |
+| **tomUseCRLF** | Use CR/LF in place of a carriage return or a line feed. |
+| **tomIncludeNumbering** | Include list numbers. |
+| **tomNoHidden** | Don't include hidden text. |
+| **tomNoMathZoneBrackets** | Don't include math zone brackets. |
+| **tomTextize** | Copy up to &hFFFC (OLE object). |
+| **tomAllowFinalEOP** | Allow a final end-of-paragraph (EOP) marker. |
+| **tomTranslateTableCell** | Replace table row delimiter characters with spaces. |
+| **tomFoldMathAlpha** | Replace table row delimiter characters with spaces. |
+| **tomLanguageTag** | Fold math alphanumerics to ASCII/Greek. |
 
 #### Return value
 
-The retrieved text.
+CBSTR. The text in the range in unicode.
 
 #### Result code
 
-If the method succeeds, it returns **S_OK**. If the method fails, it returns the following error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
 
 | Result code | Description |
 | ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
+| **E_ACCESSDENIED** | Write access is denied.. |
 | **E_OUTOFMEMORY** | Insufficient memory to hold the text. |
 
-#### Usage example
+#### Remarks
 
+This method uses the **GetText2** method of the **ITextRange2** interface to retrieve the text because it allows to use the conversion flags. Passing 0 in the *Flags* parameter is the same that using the **GetText** method of the **ITextRange** interface, which does not return correct results when dealing with files that use CR (MacIntosh) or LF (Linux), instead of CRLF (Windows).
+
+This method includes the special flag **tomLanguageTag** to get the BCP-47 language tag for the range. This is an industry standard language tag which may be preferable to the language code identifier (LCID) obtained by calling the **GetLanguageID** method of the **ITextFont** interface.
+
+<ins>To use with the dotted syntax.</ins>
 ```
-' // Create a new instance of the CTextDocument2 class
-DIM pCTextDocument2 AS CTextDocument2 = hRichEdit
+SCOPE
+   ' // Get the number of characters of the text in the Rich Edit control
+   DIM numChars AS LONG = pRichEdit->TextLength
+   ' // Get the 0-based range of all the text
+   DIM pRange2 AS CTextRange2 = pRichEdit->Range2(0, numChars)
+   ' // Get the text
+   DIM cbsText AS CBSTR = pRange2.GetText2(tomUseCRLF)
+   ' // The CTextRange2 class will be destroyed when the scope ends
+END SCOPE
+```
+<ins>To use with the pointer syntax.</ins>
+```
 ' // Get the number of characters of the text in the Rich Edit control
-DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
+DIM numChars AS LONG = pRichEdit->TextLength
 ' // Get the 0-based range of all the text
-DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(0, numChars)
+DIM pRange2 AS CTextRange2 PTR = NEW CTextRange2(pRichEdit->Range2(0, numChars))
 ' // Get the text
-DIM cbsText AS CBSTR = pCRange2.GetText
-```
-
-**Note**: The following lines of code:
-```
-DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(0, numChars)
-DIM cbsText AS CBSTR = pCRange2.GetText2(0)
-```
-can be replaced with a compound syntax:
-```
-DIM cbsText AS CBSTR = CTextRange2(pCTextDocument2.Range2(0, numChars)).GetText2(0)
+DIM cbsText AS CBSTR = pRange2->GetText2(tomUseCRLF)
+' // Delete the range
+Delete pRange2
 ```
 
 # <a name="SetText"></a>SetText
@@ -3135,66 +3126,6 @@ Subranges are selected as follows.
 | Less than zero | Gets the subrange at the index specified by *iSubrange*, in increasing character position order. |
  
 See **GetCount** for the count of subranges not including the active subrange.
-
-# <a name="GetText2"></a>GetText2
-
-Gets the text in this range according to the specified conversion flags.
-
-```
-FUNCTION CTextRange2.GetText2 (BYVAL Flags AS LONG) AS CBSTR
-   DIM pText2 AS AFX_BSTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetText2(m_pTextRange2, Flags, @pText2))
-   RETURN pText2
-END FUNCTION
-```
-
-| Parameter | Description |
-| --------- | ----------- |
-| *Flags* | The flags controlling how the text is retrieved. The flags can include a combination of the values in the table below. Specifying a *Flags* value of 0 is the same as calling the **GetText** method. |
-
-| Flag | Value | Description |
-| ---- | ----- | ----------- |
-| **tomAdjustCRLF** | 1 | Adjust CR/LFs at the start. |
-| **tomUseCRLF** | 2 | Use CR/LF in place of a carriage return or a line feed. |
-| **tomIncludeNumbering** | 64 | Include list numbers. |
-| **tomNoHidden** | 32 | Don't include hidden text. |
-| **tomNoMathZoneBrackets** | &h100 | Don't include math zone brackets. |
-| **tomTextize** | 4 | Copy up to &hFFFC (OLE object). |
-| **tomAllowFinalEOP** | 8 | Allow a final end-of-paragraph (EOP) marker. |
-| **tomTranslateTableCell** | 128 | Replace table row delimiter characters with spaces. |
-| **tomFoldMathAlpha** | 128 | Replace table row delimiter characters with spaces. |
-| **tomLanguageTag** | 16 | Fold math alphanumerics to ASCII/Greek. |
-
-#### Return value
-
-The text in the range
-
-#### Result code
-
-If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **E_INVALIDARG** | Invalid argument. |
-| **E_ACCESSDENIED** | Write access is denied.. |
-| **E_OUTOFMEMORY** | Insufficient memory to hold the text. |
-
-#### Remarks
-
-This method includes the special flag **tomLanguageTag** to get the BCP-47 language tag for the range. This is an industry standard language tag which may be preferable to the language code identifier (LCID) obtained by calling the **GetLanguageID** method of the **ITextFont** interface.
-
-#### Usage example
-
-```
-' // Create a new instance of the CTextDocument2 class
-DIM pTextDocument2 AS CTextDocument2 = hRichEdit
-' // Get the number of characters of the text in the Rich Edit control
-DIM numChars AS LONG = RichEdit_GetTextLength(hRichEdit)
-' // Get the 0-based range of all the text
-DIM pCRange2 AS CTextRange2 = pCTextDoc.Range2(0, numChars)
-' // Get the text
-DIM cbsText AS CBSTR = pCRange2.GetText2(0)
-```
 
 # <a name="HexToUnicode"></a>HexToUnicode
 
