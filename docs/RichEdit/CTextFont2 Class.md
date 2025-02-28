@@ -59,11 +59,10 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [Count](#count) | Gets the count of extra properties in this character formatting collection. |
 | [DoubleStrike](#doublestrike) | Gets/sets whether characters are displayed with double horizontal lines through the center. |
 | [LinkType](#linktype) | Gets the link type. |
+| [MathZone](#mathzone) | Gets/sets whether a math zone is active. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetMathZone](#GetMathZone) | Gets whether a math zone is active. |
-| [SetMathZone](#SetMathZone) | Sets whether a math zone is active. |
 | [GetModWidthPairs](#GetModWidthPairs) | Gets whether "decrease widths on pairs" is active. |
 | [SetModWidthPairs](#SetModWidthPairs) | Sets whether "decrease widths on pairs" is active. |
 | [GetModWidthSpace](#GetModWidthSpace) | Gets whether "increase width of whitespace" is active. |
@@ -1702,40 +1701,17 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-## <a name="GetMathZone"></a>GetMathZone
+## <a name="mathzone"></a>MathZone
 
-Gets whether a math zone is active.
+Gets/sets whether a math zone is active.
 
+```
+(GET) PROPERTY MathZone () AS LONG
+(SET) PROPERTY MathZone (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetMathZone () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetMathZone(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | A math zone is active. |
-| **tomFalse** | A math zone is not active. |
-| **tomUndefined** | The MathZone property is undefined. |
-	
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetMathZone"></a>SetMathZone
-
-Sets whether a math zone is active.
-
-```
 FUNCTION SetMathZone (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetMathZone(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1751,9 +1727,15 @@ END FUNCTION
 
 #### Return value
 
+A **tomBool** value that can be one of the ones listed above.
+
+#### Result code
+
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetModWidthPairs"></a>GetModWidthPairs
+---
+
+## <a name="GetModWidthPairs"></a>GetModWidthPairs
 
 Gets whether "decrease widths on pairs" is active.
 
