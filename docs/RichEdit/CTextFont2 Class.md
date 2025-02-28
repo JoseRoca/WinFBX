@@ -38,11 +38,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [StrikeThrough](#strikethrough) | Gets whether characters are displayed with a horizontal line through the center. |
 | [Subscript](#subscript) | Gets/sets whether characters are displayed as subscript. |
 | [Superscript](#superscript) | Gets/sets whether characters are displayed as superscript. |
+| [Underline](#underline) | Gets/sets the type of underlining for the characters in a range. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetUnderline](#GetUnderline) | Gets the type of underlining for the characters in a range. |
-| [SetUnderline](#SetUnderline) | Sets the type of underlining for the characters in a range. |
 | [GetWeight](#GetWeight) | Gets the font weight for the characters in a range. |
 | [SetWeight](#SetWeight) | Sets the font weight for the characters in a range. |
 
@@ -1069,7 +1068,7 @@ A **tomBool** value that can be one of the ones listed above.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
@@ -1102,7 +1101,7 @@ The amount of horizontal spacing between characters, in floating-point points.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
@@ -1238,7 +1237,7 @@ A **tomBool** value that can be one of the ones listed above.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
@@ -1253,62 +1252,18 @@ This property corresponds to the **CFE_SUPERSCRIPT** effect described in the [CH
 
 ---
 
-## <a name="GetUnderline"></a>GetUnderline
+## <a name="underline"></a>Underline
 
-Gets the type of underlining for the characters in a range.
+Gets/sets the type of underlining for the characters in a range.
 
+```
+(GET) PROPERTY Underline () AS LONG
+(SET) PROPERTY Underline (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetUnderline () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetUnderline(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-The type of underlining. It can be one of the following values.
-
-| Constant | Value | Meaning |
-| -------- | ----- | ------- |
-| **tomNone** | 0 | No underlining. |
-| **tomSingle** | 1 | Single underline. |
-| **tomWords** | 2 | Underline words only. |
-| **tomDouble** | 3 | Double underline. |
-| **tomDash** | 5 | Dash underline. |
-| **tomDashDot** | 6 | Dash dot underline. |
-| **tomDashDotDot** | 7 | Dash dot dot underline. |
-| **tomWave** | 8 | Wave underline. |
-| **tomThick** | 9 | Thick underline. |
-| **tomHair** | 10 | Hair underline. |
-| **tomDoubleWave** | 11 | Double wave underline. |
-| **tomHeavyWave** | 12 | Heavy wave underline. |
-| **tomLongDash** | 13 | Long dash underline. |
-| **tomThickDash** | 14 | Thick dash underline. |
-| **tomThickDashDot** | 15 | Thick dash dot underline. |
-| **tomThickDashDotDot** | 16 | Thick dash dot dot underline. |
-| **tomThickDotted** | 17 | Thick dotted underline. |
-| **tomThickLongDash** | 18 | Thick long dash underline. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-# <a name="SetUnderline"></a>SetUnderline
-
-Sets thevtype of underlining for the characters in a range.
-
-```
 FUNCTION SetUnderline (BYVAL Value AS LONG) AS HRESULT
-   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
-   this.SetResult(m_pTextFont2->lpvtbl->SetUnderline(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
-
 | Parameter | Description |
 | --------- | ----------- |
 | *Value* | The type of underlining. It can be one of the following values. |
@@ -1334,9 +1289,13 @@ END FUNCTION
 | **tomThickDotted** | 17 | Thick dotted underline. |
 | **tomThickLongDash** | 18 | Thick long dash underline. |
 
+#### Return value
+
+The type of underlining. It can be one of the ones listed above.
+
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
@@ -1344,6 +1303,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+# <a name="SetUnderline"></a>SetUnderline
+
+
+#### Result code
+
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
+
 
 # <a name="GetWeight"></a>GetWeight
 
@@ -1375,7 +1342,7 @@ The font weight. The Bold property is a binary version of the Weight property th
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
@@ -1412,7 +1379,7 @@ END FUNCTION
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
@@ -1438,7 +1405,7 @@ The count of extra properties in this collection.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetAutoLigatures"></a>GetAutoLigatures
 
@@ -1463,7 +1430,7 @@ A **tomBool** value that can be one of the following.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetAutoLigatures"></a>SetAutoLigatures
 
@@ -1514,7 +1481,7 @@ A **tomBool** value that can be one of the following.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetAutospaceAlpha"></a>SetAutospaceAlpha
 
@@ -1565,7 +1532,7 @@ A **tomBool** value that can be one of the following.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetAutospaceNumeric"></a>SetAutospaceNumeric
 
@@ -1617,7 +1584,7 @@ A **tomBool** value that can be one of the following.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetAutospaceParens"></a>SetAutospaceParens
 
@@ -1718,7 +1685,7 @@ The character repertoire. It can be one of the following values.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetCharRep"></a>SetCharRep
 
@@ -1819,7 +1786,7 @@ The compression mode, which can be one of these values:
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetCompressionMode"></a>SetCompressionMode
 
@@ -1863,7 +1830,7 @@ The client cookie.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 #### Remarks
 
@@ -1915,7 +1882,7 @@ A **tomBool** value that can be one of the following.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetDoubleStrike"></a>SetDoubleStrike
 
@@ -1971,7 +1938,7 @@ The link type. It can be one of the following values.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetMathZone"></a>GetMathZone
 
@@ -1996,7 +1963,7 @@ A **tomBool** value that can be one of the following.
 	
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetMathZone"></a>SetMathZone
 
@@ -2047,7 +2014,7 @@ A **tomBool** value that can be one of the following.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetModWidthPairs"></a>SetModWidthPairs
 
@@ -2099,7 +2066,7 @@ A **tomBool** value that can be one of the following.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetModWidthSpace"></a>SetModWidthSpace
 
@@ -2150,7 +2117,7 @@ A **tomBool** value that can be one of the following.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetOldNumbers"></a>SetOldNumbers
 
@@ -2201,7 +2168,7 @@ A **tomBool** value that can be one of the following.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetOverlapping"></a>SetOverlapping
 
@@ -2246,7 +2213,7 @@ The subscript or superscript position relative to the baseline.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetPositionSubSuper"></a>SetPositionSubSuper
 
@@ -2284,7 +2251,7 @@ The scaling percentage.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 #### Remarks
 
@@ -2326,7 +2293,7 @@ The space extension, in floating-point points.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetSpaceExtension"></a>SetSpaceExtension
 
@@ -2370,7 +2337,7 @@ The underline position mode. It can be one of the following values.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="SetUnderlinePositionMode"></a>SetUnderlinePositionMode
 
@@ -2446,7 +2413,7 @@ If the **tomInlineObjectStart** flag is set, you might want to call **GetInlineO
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetEffects2"></a>GetEffects2
 
@@ -2482,7 +2449,7 @@ END FUNCTION
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetProperty"></a>GetProperty
 
@@ -2508,7 +2475,7 @@ The property value.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetPropertyInfo"></a>GetPropertyInfo
 
@@ -2580,7 +2547,7 @@ END FUNCTION
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 #### Remarks
 
@@ -2620,7 +2587,7 @@ END FUNCTION
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 #### Remarks
 
@@ -2646,4 +2613,4 @@ END FUNCTION
 
 #### Return value
 
-If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
