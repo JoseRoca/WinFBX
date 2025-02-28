@@ -173,7 +173,7 @@ SCOPE
    ' // Get the 0-based range of all the text
    DIM pRange2 AS CTextRange2 = pRichEdit->Range2(0, numChars)
    ' // Get the text
-   DIM cbsText AS CBSTR = pRange2.GetText2(tomUseCRLF)
+   DIM cbsText AS CBSTR = pRange2.GetText(tomUseCRLF)
    ' // The CTextRange2 class will be destroyed when the scope ends
 END SCOPE
 ```
@@ -184,7 +184,7 @@ DIM numChars AS LONG = pRichEdit->TextLength
 ' // Get the 0-based range of all the text
 DIM pRange2 AS CTextRange2 PTR = NEW CTextRange2(pRichEdit->Range2(0, numChars))
 ' // Get the text
-DIM cbsText AS CBSTR = pRange2->GetText2(tomUseCRLF)
+DIM cbsText AS CBSTR = pRange2->GetText(tomUseCRLF)
 ' // Delete the range
 Delete pRange2
 ```
@@ -277,7 +277,7 @@ SCOPE
    ' // Get the 0-based range of all the text
    DIM pRange2 AS CTextRange2 = pRichEdit->Range2(0, numChars)
    ' // Get the text
-   DIM cbsText AS CBSTR = pRange2.GetText2(tomUseCRLF)
+   DIM cbsText AS CBSTR = pRange2.GetText(tomUseCRLF)
    ' // The CTextRange2 class will be destroyed when the scope ends
 END SCOPE
 ```
@@ -288,7 +288,7 @@ DIM numChars AS LONG = pRichEdit->TextLength
 ' // Get the 0-based range of all the text
 DIM pRange2 AS CTextRange2 PTR = NEW CTextRange2(pRichEdit->Range2(0, numChars))
 ' // Get the text
-DIM cbsText AS CBSTR = pRange2->GetText2(tomUseCRLF)
+DIM cbsText AS CBSTR = pRange2->GetText(tomUseCRLF)
 ' // Delete the range
 Delete pRange2
 ```
