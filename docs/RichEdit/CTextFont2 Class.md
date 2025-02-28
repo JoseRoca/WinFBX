@@ -67,12 +67,11 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [PositionSubSuper](#positionsubsuper) | Gets/sets the subscript or superscript position relative to the baseline. |
 | [Scaling](#scaling) | Gets/sets the font horizontal scaling percentage. |
 | [SpaceExtension](#spaceextension) | Gets/sets the East Asian space extension value. |
+| [UnderlinePositionMode](#underlinepositionmode) | Gets/sets the underline position mode. |
 
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetUnderlinePositionMode](#GetUnderlinePositionMode) | Gets the underline position mode. |
-| [SetUnderlinePositionMode](#SetUnderlinePositionMode) | Sets the underline position mode. |
 | [GetEffects](#GetEffects) | Gets the character format effects. |
 | [GetEffects2](#GetEffects2) | Gets the additional character format effects. |
 | [GetProperty](#GetProperty) | Gets the value of the specified property. |
@@ -1950,40 +1949,17 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-## <a name="GetUnderlinePositionMode"></a>GetUnderlinePositionMode
+## <a name="underlinepositionmode"></a>UnderlinePositionMode
 
-Gets the underline position mode.
+Gets/sets the underline position mode.
 
+```
+(GET) PROPERTY UnderlinePositionMode () AS LONG
+(SET) PROPERTY UnderlinePositionMode (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetUnderlinePositionMode () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetUnderlinePositionMode(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-The underline position mode. It can be one of the following values.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomUnderlinePositionAuto** | Automatically set the underline position. |
-| **tomUnderlinePositionBelow** | Render underline below text. |
-| **tomUnderlinePositionAbove** | Render underline above text. |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetUnderlinePositionMode"></a>SetUnderlinePositionMode
-
-Sets the underline position mode.
-
-```
 FUNCTION SetUnderlinePositionMode (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetUnderlinePositionMode(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1998,9 +1974,15 @@ END FUNCTION
 
 #### Return value
 
+The underline position mode. It can be one of the ones listed above.
+
+#### Result code
+
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetEffects"></a>GetEffects
+---
+
+## <a name="GetEffects"></a>GetEffects
 
 Gets the character format effects.
 
