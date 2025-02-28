@@ -7,21 +7,20 @@ Class that wraps all the methods of the **ITextRange**, **ITextSelection** and *
 | [CONSTRUCTOR](#constructor) | Called when a class variable is created. |
 | [DESTRUCTOR](#destructor) | Called automatically when a class variable goes out of scope or is destroyed. |
 
-### ITextRange Interface
+### ITextRange2 Interface
 
-The **ITextRange** objects are powerful editing and data-binding tools that allow a program to select text in a story and then examine or change that text.
-
-The **ITextRange** interface inherits from the **IDispatch** interface. **ITextRange** also has these types of members:
+The **ITextRange2** interface is derived from **ITextRange**, and its objects are powerful editing and data-binding tools that enable a program to select text in a story and then examine or change that text.
 
 | Name       | Description |
 | ---------- | ----------- |
 | [GetText](#gettext) | Gets the text in this range according to the specified conversion flags. |
 | [SetText](#settext) | Sets the plain text in this range. |
+| [GetChar](#getchar) | Gets the character at the start position of the range. |
+| [SetChar](#setchar) | Sets the character at the starting position of the range. |
+| [GetChar2](#getchar2) | Gets the character at the specified offset from the end of this range. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetChar](#GetChar) | Gets the character at the start position of the range. |
-| [SetChar](#SetChar) | Sets the character at the starting position of the range. |
 | [GetDuplicate](#GetDuplicate) | Gets a duplicate of this range object. |
 | [GetFormattedText](#GetFormattedText) | Gets an **ITextRange** object with the specified range's formatted text. |
 | [SetFormattedText](#SetFormattedText) | Sets the formatted text of this range text to the formatted text of the specified range. |
@@ -119,7 +118,6 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [BuildUpMath](#BuildUpMath) | Converts the linear-format math in a range to a built-up form, or modifies the current built-up form. |
 | [DeleteSubrange](#DeleteSubrange) | Deletes a subrange from a range. |
 | [Find](#Find) | Searches for math inline functions in text as specified by a source range. |
-| [GetChar2](#GetChar2) | Gets the character at the specified offset from the end of this range. |
 | [GetDropCap](#GetDropCap) | Not implemented. Gets the drop-cap parameters of the paragraph that contains this range. |
 | [GetInlineObject](#GetInlineObject) | Gets the properties of the inline object at the range active end. |
 | [GetProperty](#GetProperty) | Gets the value of a property. |
@@ -324,36 +322,27 @@ pRange2.SetText("new text")
 pRange2.SetText("")
 ```
 
-# <a name="GetChar"></a>GetChar
+# <a name="getchar"></a>GetChar
 
 Gets the character at the start position of the range.
 
 ```
-FUNCTION CTextRange2.GetChar () AS LONG
-   DIM Char AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetChar(m_pTextRange2, @Char))
-   RETURN Char
-END FUNCTION
+FUNCTION GetChar () AS LONG
 ```
 #### Return value
 
 The character at the start position of the range.
 
-#### Usage example
-
-```
-DIM pCTextDocument AS CTextDocument2 = hRichEdit
-IF pCTextDocument THEN
-   DIM pCRange2 AS CTextRange2 = pCTextDocument.Range2(3, 8)
-   IF pCRange2 THEN
-      DIM char AS LONG = pcRange2.GetChar
-      AfxMsg WCHR(char)
-   END IF
-END IF
-```
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **S_OK**; if it fails, it returns **S_FALSE**.
+
+#### Usage example
+
+```
+DIM pRange2 AS CTextRange2 = pRichEdit.Range2(3, 8)
+DIM char AS LONG = pcRange2.GetChar
+```
 
 #### Remarks
 
@@ -366,17 +355,15 @@ The **Char** property, which can do most things that a characters collection can
 
 Accordingly, the Text Object Model (TOM) does not support a characters collection.
 
-# <a name="GetChar2"></a>GetChar2
+# <a name="getchar2"></a>GetChar2
 
 Gets the character at the specified offset from the end of this range.
 
 ```
-FUNCTION CTextRange2.GetChar2 (BYVAL Offset AS LONG) AS LONG
-   DIM Char AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetChar2(m_pTextRange2, @Char, Offset))
-   RETURN Char
+FUNCTION GetChar2 (BYVAL Offset AS LONG) AS LONG
 END FUNCTION
 ```
+
 | Parameter | Description |
 | --------- | ----------- |
 | *Offset* | The offset from the end of the range. An offset of 0 gets the character at the end of the range. |
@@ -406,16 +393,14 @@ If *Offset* specifies a character before the start of the story or at the end of
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="SetChar"></a>SetChar
+# <a name="setchar"></a>SetChar
 
 Sets the character at the starting position of the range.
 
 ```
-FUNCTION CTextRange2.SetChar (BYVAL char AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetChar(m_pTextRange2, char))
-   RETURN m_Result
-END FUNCTION
+FUNCTION SetChar (BYVAL char AS LONG) AS HRESULT
 ```
+
 | Parameter | Description |
 | --------- | ----------- |
 | *char* | New value for character at the starting position. |
@@ -432,11 +417,8 @@ The method returns an **HRESULT** value. If the method succeeds, it returns **S_
 #### Usage example
 
 ```
-DIM pCTextDocument2 AS CTextDocument2 = hRichEdit
-IF pCTextDocument2 THEN
-   DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(3, 8)
-   IF pCRange2 THEN pcRange2.SetChar(ASC("X"))
-END IF
+DIM pRange2 AS CTextRange2 = pRichEdit.Range2(3, 8)
+pRange2.SetChar(ASC("X"))
 ```
 
 # <a name="GetDuplicate"></a>GetDuplicate
