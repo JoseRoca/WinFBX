@@ -16,10 +16,10 @@ The **ITextRange** interface inherits from the **IDispatch** interface. **ITextR
 | Name       | Description |
 | ---------- | ----------- |
 | [GetText](#gettext) | Gets the text in this range according to the specified conversion flags. |
+| [SetText](#settext) | Sets the plain text in this range. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [SetText](#SetText) | Sets the plain text in this range. |
 | [GetChar](#GetChar) | Gets the character at the start position of the range. |
 | [SetChar](#SetChar) | Sets the character at the starting position of the range. |
 | [GetDuplicate](#GetDuplicate) | Gets a duplicate of this range object. |
@@ -273,9 +273,9 @@ This method includes the special flag **tomLanguageTag** to get the BCP-47 langu
 ```
 SCOPE
    ' // Get the number of characters of the text in the Rich Edit control
-   DIM numChars AS LONG = pRichEdit->TextLength
+   DIM numChars AS LONG = pRichEdit.TextLength
    ' // Get the 0-based range of all the text
-   DIM pRange2 AS CTextRange2 = pRichEdit->Range2(0, numChars)
+   DIM pRange2 AS CTextRange2 = pRichEdit.Range2(0, numChars)
    ' // Get the text
    DIM cbsText AS CBSTR = pRange2.GetText(tomUseCRLF)
    ' // The CTextRange2 class will be destroyed when the scope ends
@@ -294,15 +294,12 @@ Delete pRange2
 ```
 ---
 
-# <a name="SetText"></a>SetText
+## <a name="settext"></a>SetText
 
 Sets the text in this range.
 
 ```
-FUNCTION CTextRange2.SetText (BYREF cbs AS CBSTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetText(m_pTextRange2, cbs))
-   RETURN m_Result
-END FUNCTION
+FUNCTION SetText (BYREF cbs AS CBSTR) AS HRESULT
 ```
 
 | Parameter | Description |
@@ -318,14 +315,13 @@ The method returns an **HRESULT** value. If the method succeeds, it returns S_OK
 
 #### Usage example
 ```
-DIM pCTextDocument AS CTextDocument2 = hRichEdit
-DIM pCRange2 AS CTextRange2 = pCTextDocument.Range2(3, 8)
+DIM pRange2 AS CTextRange2 = pRichEdit.Range2(3, 8)
 DIM cbsText AS CBSTR = "new text"
-pCRange2.SetText(cbsText)
+pRange2.SetText(cbsText)
 ' You can also use a string literal
-pCRange2.SetText("new text")
+pRange2.SetText("new text")
 ' or pass an empty string to delete the range
-pCRange2.SetText("")
+pRange2.SetText("")
 ```
 
 # <a name="GetChar"></a>GetChar
