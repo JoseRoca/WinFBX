@@ -61,11 +61,10 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [LinkType](#linktype) | Gets the link type. |
 | [MathZone](#mathzone) | Gets/sets whether a math zone is active. |
 | [ModWidthPairs](#modwidthpairs) | Gets/sets whether "decrease widths on pairs" is active. |
+| [ModWidthSpace](#modwidthspace) | Gets/sets whether "increase width of whitespace" is active. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetModWidthSpace](#GetModWidthSpace) | Gets whether "increase width of whitespace" is active. |
-| [SetModWidthSpace](#SetModWidthSpace) | Sets whether "increase width of whitespace" is active. |
 | [GetOldNumbers](#GetOldNumbers) | Gets whether old-style numbers are active. |
 | [SetOldNumbers](#SetOldNumbers) | Sets whether old-style numbers are active. |
 | [GetOverlapping](#GetOverlapping) | Gets whether overlapping text is active. |
@@ -1739,8 +1738,8 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Gets/sets whether "decrease widths on pairs" is active.
 
 ```
-(GET) PROPERTY 
-(SET) PROPERTY 
+(GET) PROPERTY ModWidthPairs () AS LONG
+(SET) PROPERTY ModWidthPairs (BYVAL Value AS LONG)
 ```
 ```
 FUNCTION GetModWidthPairs () AS LONG
@@ -1768,40 +1767,17 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="GetModWidthSpace"></a>GetModWidthSpace
+## <a name="modwidthspace"></a>ModWidthSpace
 
-Gets whether "increase width of whitespace" is active.
+Gets/sets whether "increase width of whitespace" is active.
 
+```
+(GET) PROPERTY ModWidthSpace () AS LONG
+(SET) PROPERTY ModWidthSpace (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetModWidthSpace () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetModWidthSpace(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Increase width of whitespace is active. |
-| **tomFalse** | Increase width of whitespace is not active. |
-| **tomUndefined** | The ModWidthSpace property is undefined. |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetModWidthSpace"></a>SetModWidthSpace
-
-Sets whether "increase width of whitespace" is active.
-
-```
 FUNCTION SetModWidthSpace (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetModWidthSpace(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1814,6 +1790,19 @@ END FUNCTION
 | **tomFalse** | Increase width of whitespace is not active. |
 | **tomToggle** | Toggle the ModWidthSpace property. |
 | **tomUndefined** | The ModWidthSpace property is undefined. |
+
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
+
+## <a name="SetModWidthSpace"></a>SetModWidthSpace
+
 
 #### Return value
 
