@@ -66,12 +66,11 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [Overlapping](#overlapping) | Gets/sets whether overlapping text is active. |
 | [PositionSubSuper](#positionsubsuper) | Gets/sets the subscript or superscript position relative to the baseline. |
 | [Scaling](#scaling) | Gets/sets the font horizontal scaling percentage. |
+| [SpaceExtension](#spaceextension) | Gets/sets the East Asian space extension value. |
 
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetSpaceExtension](#GetSpaceExtension) | Gets the East Asian space extension value. |
-| [SetSpaceExtension](#SetSpaceExtension) | Sets the East Asian space extension value. |
 | [GetUnderlinePositionMode](#GetUnderlinePositionMode) | Gets the underline position mode. |
 | [SetUnderlinePositionMode](#SetUnderlinePositionMode) | Sets the underline position mode. |
 | [GetEffects](#GetEffects) | Gets the character format effects. |
@@ -1924,34 +1923,17 @@ The font horizontal scaling percentage can range from 200, which doubles the wid
 
 ---
 
-## <a name="GetSpaceExtension"></a>GetSpaceExtension
+## <a name="spaceextension"></a>SpaceExtension
 
-Gets the East Asian space extension value.
+Gets/sets the East Asian space extension value.
 
+```
+(GET) PROPERTY SpaceExtension () AS LONG
+(SET) PROPERTY SpaceExtension (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetSpaceExtension () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetSpaceExtension(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-The space extension, in floating-point points.
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetSpaceExtension"></a>SetSpaceExtension
-
-Sets the East Asian space extension value.
-
-```
 FUNCTION SetSpaceExtension (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetSpaceExtension(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1960,9 +1942,15 @@ END FUNCTION
 
 #### Return value
 
+The space extension, in floating-point points.
+
+#### Result code
+
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetUnderlinePositionMode"></a>GetUnderlinePositionMode
+---
+
+## <a name="GetUnderlinePositionMode"></a>GetUnderlinePositionMode
 
 Gets the underline position mode.
 
