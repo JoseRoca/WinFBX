@@ -28,11 +28,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Kerning](#kerning) | Gets/sets the minimum font size at which kerning occurs. |
 | [LanguageID](#languageid) | Gets/sets the language ID or language code identifier (LCID). |
 | [Name](#name) | Gets/sets the font name. |
+| [Outline](#outline) | Gets/sets whether characters are displayed as outlined characters. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetOutline](#GetOutline) | Gets whether characters are displayed as outlined characters. |
-| [SetOutline](#SetOutline) | Sets whether characters are displayed as outlined characters. |
 | [GetPosition](#GetPosition) | Gets the amount that characters are offset vertically relative to the baseline. |
 | [SetPosition](#SetPosition) | Sets the amount that characters are offset vertically relative to the baseline. |
 | [GetProtected](#GetProtected) | Gets whether characters are protected against attempts to modify them. |
@@ -738,7 +737,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 ---
 
-# <a name="kerning"></a>Kerning
+## <a name="kerning"></a>Kerning
 
 Gets/sets the minimum font size at which kerning occurs.
 
@@ -773,7 +772,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 ---
 
-# <a name="languageid"></a>LanguageID
+## <a name="languageid"></a>LanguageID
 
 Gets/sets the language ID or language code identifier (LCID).
 
@@ -814,7 +813,7 @@ If the high nibble of *Value* is **tomCharRepFromLcid**, set the *charrep* from 
 
 To set the BCP-47 language tag, such as "en-US", call **SetText2** and set the **tomLanguageTag** and *bstr* with the language tag.
 
-# <a name="name"></a>Name
+## <a name="name"></a>Name
 
 Gets/sets the font name.
 
@@ -848,44 +847,17 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 ---
 
-# <a name="GetOutline"></a>GetOutline
+## <a name="outline"></a>Outline
 
-Gets whether characters are displayed as outlined characters.
+Gets/sets whether characters are displayed as outlined characters.
 
+```
+(GET) PROPERTY Outline () AS LONG
+(SET) PROPERTY Outline (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetOutline () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetOutline(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are displayed as outlined characters. |
-| **tomFalse** | Characters are not displayed as outlined characters. |
-| **tomUndefined** | The Outline property is undefined. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-# <a name="SetOutline"></a>SetOutline
-
-Sets whether characters are displayed as outlined characters.
-
-```
 FUNCTION SetOutline (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetOutline(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -899,9 +871,13 @@ END FUNCTION
 | **tomToggle** | Toggle the state of the Outline property. |
 | **tomUndefined** | The Outline property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
+
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
