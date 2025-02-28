@@ -29,11 +29,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [LanguageID](#languageid) | Gets/sets the language ID or language code identifier (LCID). |
 | [Name](#name) | Gets/sets the font name. |
 | [Outline](#outline) | Gets/sets whether characters are displayed as outlined characters. |
+| [Position](#position) | Gets/sets the amount that characters are offset vertically relative to the baseline. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetPosition](#GetPosition) | Gets the amount that characters are offset vertically relative to the baseline. |
-| [SetPosition](#SetPosition) | Sets the amount that characters are offset vertically relative to the baseline. |
 | [GetProtected](#GetProtected) | Gets whether characters are protected against attempts to modify them. |
 | [SetProtected](#SetProtected) | Sets whether characters are protected against attempts to modify them. |
 | [GetShadow](#GetShadow) | Gets whether characters are displayed as shadowed characters. |
@@ -886,51 +885,32 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-# <a name="GetPosition"></a>GetPosition
+---
 
-Gets the amount that characters are offset vertically relative to the baseline.
+# <a name="position"></a>Position
 
+Gets/sets the amount that characters are offset vertically relative to the baseline.
+
+```
+(GET) PROPERTY Position () AS SINGLE
+(SET) PROPERTY Position (BYVAL Value AS SINGLE)
+```
 ```
 FUNCTION GetPosition () AS SINGLE
-   DIM Value AS SINGLE
-   this.SetResult(m_pTextFont2->lpvtbl->GetPosition(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-The amount of vertical offset, in floating-point points.
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-#### Remarks
-
-Displayed text typically has a zero value for this property. Positive values raise the text, and negative values lower it.
-
-# <a name="SetPosition"></a>SetPosition
-
-Sets the amount that characters are offset vertically relative to the baseline.
-
-```
 FUNCTION SetPosition (BYVAL Value AS SINGLE) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetPosition(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
 | --------- | ----------- |
 | *Value* | The new amount of vertical offset, in floating-point points. |
 
+#### Return value
+
+The amount of vertical offset, in floating-point points.
+
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
