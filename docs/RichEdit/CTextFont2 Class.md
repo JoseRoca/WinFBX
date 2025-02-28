@@ -11,19 +11,17 @@ Class that wraps all the methods of the **ITextFont2** interface.
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Duplicate](#duplicate) | Gets/sets a duplicate of this text font object. |
-| [CanChange](#canchange) | Determines whether the font can be changed. |
-| [IsEqual](#isequal) | Determines whether this text font object has the same properties as the specified text font object. |
-| [Reset](#reset) | Resets the character formatting to the specified values. |
-| [Style](#style) | Gets/sets the character style handle of the characters in a range. |
 | [AllCaps](#allcaps) | Gets/sets whether the characters are all uppercase. |
 | [Animation](#animation) | Gets/sets the animation type. |
 | [BackColor](#backColor) | Gets/sets the text background (highlight) color. |
 | [Bold](#bold) | Gets/sets whether the characters are bold. |
+| [CanChange](#canchange) | Determines whether the font can be changed. |
+| [Duplicate](#duplicate) | Gets/sets a duplicate of this text font object. |
 | [Emboss](#emboss) | Gets/sets whether characters are embossed. |
+| [Engrave](#engrave) | Gets/sets whether characters are displayed as imprinted characters. |
 | [ForeColor](#forecolor) | Gets/sts the foreground, or text, color. |
 | [Hidden](#hidden) | Gets/sets whether characters are hidden. |
-| [Engrave](#engrave) | Gets/sets whether characters are displayed as imprinted characters. |
+| [IsEqual](#isequal) | Determines whether this text font object has the same properties as the specified text font object. |
 | [Italic](#italic) | Gets/sets whether characters are in italics. |
 | [Kerning](#kerning) | Gets/sets the minimum font size at which kerning occurs. |
 | [LanguageID](#languageid) | Gets/sets the language ID or language code identifier (LCID). |
@@ -31,11 +29,13 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Outline](#outline) | Gets/sets whether characters are displayed as outlined characters. |
 | [Position](#position) | Gets/sets the amount that characters are offset vertically relative to the baseline. |
 | [Protected](#protected) | Gets/sets whether characters are protected against attempts to modify them. |
+| [Reset](#reset) | Resets the character formatting to the specified values. |
 | [Shadow](#shadow) | Gets/sets whether characters are displayed as shadowed characters. |
 | [Size](#size) | Gets/sets the font size. |
 | [SmallCaps](#smallcaps) | Gets/sets whether characters are in small capital letters. |
 | [Spacing](#spacing) | Gets/sets the amount of horizontal spacing between characters. |
 | [StrikeThrough](#strikethrough) | Gets whether characters are displayed with a horizontal line through the center. |
+| [Style](#style) | Gets/sets the character style handle of the characters in a range. |
 | [Subscript](#subscript) | Gets/sets whether characters are displayed as subscript. |
 | [Superscript](#superscript) | Gets/sets whether characters are displayed as superscript. |
 | [Underline](#underline) | Gets/sets the type of underlining for the characters in a range. |
