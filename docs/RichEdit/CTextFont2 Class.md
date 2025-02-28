@@ -49,11 +49,12 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 
 | Name       | Description |
 | ---------- | ----------- |
-| [AutoLigatures](#autoligatures) | Gets whether support for automatic ligatures is active. |
+| [AutoLigatures](#autoligatures) | Gets/sets whether support for automatic ligatures is active. |
+| [AutospaceAlpha](#autospacealpha) | Gets/sets the East Asian "autospace alphabetics" state. |
 | [Count](#count) | Gets the count of extra properties in this character formatting collection. |
 
-| [GetAutospaceAlpha](#GetAutospaceAlpha) | Gets the East Asian "autospace alphabetics" state. |
-| [SetAutospaceAlpha](#SetAutospaceAlpha) | Sets the East Asian "autospace alphabetics" state. |
+| Name       | Description |
+| ---------- | ----------- |
 | [GetAutospaceNumeric](#GetAutospaceNumeric) | Gets the East Asian "autospace numeric" state. |
 | [SetAutospaceNumeric](#SetAutospaceNumeric) | Sets the East Asian "autospace numeric" state. |
 | [GetAutospaceParens](#GetAutospaceParens) | Gets the East Asian "autospace parentheses" state. |
@@ -1395,40 +1396,17 @@ A **tomBool** value that can be one of the ones listed above.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetAutospaceAlpha"></a>GetAutospaceAlpha
+# <a name="autospacealpha"></a>AutospaceAlpha
 
-Gets the East Asian "autospace alphabetics" state.
+Gets/sets the East Asian "autospace alphabetics" state.
 
+```
+(GET) PROPERTY AutospaceAlpha () AS LONG
+(SET) PROPERTY AutospaceAlpha (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetAutospaceAlpha () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetAutospaceAlpha(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | East Asian autospace alphabetics. |
-| **tomFalse** | Do not use East Asian autospace alphabetics. |
-| **tomUndefined** | The AutospaceAlpha property is undefined |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetAutospaceAlpha"></a>SetAutospaceAlpha
-
-Sets the East Asian "autospace alpha" state.
-
-```
 FUNCTION SetAutospaceAlpha (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetAutospaceAlpha(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1442,9 +1420,13 @@ END FUNCTION
 | **tomToggle** | Toggle the AutospaceAlpha property. |
 | **tomUndefined** | The AutospaceAlpha property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
+
 #### Result code
 
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetAutospaceNumeric"></a>GetAutospaceNumeric
 
