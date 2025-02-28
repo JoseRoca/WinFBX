@@ -33,11 +33,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Protected](#protected) | Gets/sets whether characters are protected against attempts to modify them. |
 | [Shadow](#shadow) | Gets/sets whether characters are displayed as shadowed characters. |
 | [Size](#size) | Gets/sets the font size. |
+| [SmallCaps](#smallcaps) | Gets/sets whether characters are in small capital letters. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetSmallCaps](#GetSmallCaps) | Gets whether characters are in small capital letters. |
-| [SetSmallCaps](#SetSmallCaps) | Sets whether characters are in small capital letters. |
 | [GetSpacing](#GetSpacing) | Gets the amount of horizontal spacing between characters. |
 | [SetSpacing](#SetSpacing) | Sets the amount of horizontal spacing between characters. |
 | [GetStrikeThrough](#GetStrikeThrough) | Gets whether characters are displayed with a horizontal line through the center. |
@@ -1042,44 +1041,17 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-# <a name="GetSmallCaps"></a>GetSmallCaps
+# <a name="smallcaps"></a>SmallCaps
 
-Gets whether characters are in small capital letters.
+Gets/sets whether characters are in small capital letters.
 
+```
+(GET) PROPERTY SmallCaps () AS LONG
+(SET) PROPERTY SmallCaps (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetSmallCaps () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetSmallCaps(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are in small capital letters. |
-| **tomFalse** | Characters are not in small capital letters. |
-| **tomUndefined** | The SmallCaps property is undefined. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-# <a name="SetSmallCaps"></a>SetSmallCaps
-
-Sets whether characters are in small capital letters.
-
-```
 FUNCTION SetSmallCaps (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetSmallCaps(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1092,6 +1064,10 @@ END FUNCTION
 | **tomFalse** | Characters are not in small capital letters. |
 | **tomToggle** | Toggle the state of the SmallCaps property. |
 | **tomUndefined** | The SmallCaps property is undefined. |
+
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
 
 #### Result code
 
