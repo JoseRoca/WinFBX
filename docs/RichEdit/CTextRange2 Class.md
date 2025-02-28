@@ -4,13 +4,8 @@ Class that wraps all the methods of the **ITextRange**, **ITextSelection** and *
 
 | Name       | Description |
 | ---------- | ----------- |
-| [CONSTRUCTORS](#CONSTRUCTORS) | Called when a class variable is created. |
-| [DESTRUCTOR](#DESTRUCTOR) | Called automatically when a class variable goes out of scope or is destroyed. |
-| [LET](#LET) | Assignment operator. |
-| [CAST](#CAST) | Cast operator. |
-| [TextRangePtr](#TextRangePtr) | Returns a pointer to the underlying **ITextRange2** interface. |
-| [Attach](#Attach) | Attaches an **ITextRange2** interface pointer to the class. |
-| [Detach](#Detach) | Detaches the underlying **ITextRange2** interface pointer from the class. |
+| [CONSTRUCTOR](#constructor) | Called when a class variable is created. |
+| [DESTRUCTOR](#destructor) | Called automatically when a class variable goes out of scope or is destroyed. |
 
 ### ITextRange Interface
 
@@ -148,32 +143,12 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [SetResult](#SetResult) | Sets the last result code. |
 | [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
 
-# <a name="CONSTRUCTORS"></a>CONSTRUCTORS
+# <a name="constructor"></a>CONSTRUCTOR
 
 Called when a **CTextRange2** class variable is created.
 
 ```
-DECLARE CONSTRUCTOR
 DECLARE CONSTRUCTOR (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
-```
-
-## CONSTRUCTOR (Empty)
-
-Can be used, for example, when we have an **ITextRange2** interface pointer returned by a function and we want to attach it to a new instance of the **CTextRange2** class.
-
-```
-DIM pCTextRange2 AS CTextRange2
-pCTextRange2.Attach(pTextRange2)
-```
-## CONSTRUCTOR (ITextRange2 PTR)
-
-```
-CONSTRUCTOR CTextRange2 (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE)
-   IF pTextRange2 THEN
-      IF fAddRef THEN pTextRange2->lpvtbl->AddRef(pTextRange2)
-   END IF
-   m_pTextRange2 = pTextRange2
-END CONSTRUCTOR
 ```
 
 | Parameter | Description |
@@ -241,108 +216,28 @@ DIM cbsText AS CBSTR = NEW CTextRange2(pCTextDocument2->Range2(0, numChars))->Ge
 ```
 it would create memory leaks because the instance of the **CTextRange2** class is not automatically deleted and we can't destroy it with **Delete** because we don't have a pointer to it.
 
-# <a name="DESTRUCTOR"></a>DESTRUCTOR
+# <a name="destructor"></a>DESTRUCTOR
 
 Called automatically when a class variable goes out of scope or is destroyed.
 
 ```
 DESTRUCTOR CTextRange2
-   ' // Release the ITextRange2 interface
-   IF m_pTextRange2 THEN m_pTextRange2->lpvtbl->Release(m_pTextRange2)
-END DESTRUCTOR
 ```
 
-# <a name="LET"></a>LET
-
-Assignment operator. The assigned pointer must be an "addrefed" one.
-
-```
-OPERATOR CTextRange2.LET (BYVAL pTextRange2 AS ITextRange2 PTR)
-   m_Result = 0
-   IF pTextRange2 = NULL THEN m_Result = E_INVALIDARG : EXIT OPERATOR
-   ' // Release the interface
-   IF m_pTextRange2 THEN m_pTextRange2->lpvtbl->Release(m_pTextRange2)
-   ' // Attach the passed interface pointer to the class
-   m_pTextRange2 = pTextRange2
-END OPERATOR
-```
-
-# <a name="CAST"></a>CAST
-
-Cast operator.
-
-```
-OPERATOR CTextRange2.CAST () AS ITextRange2 PTR
-   m_Result = 0
-   OPERATOR = m_pTextRange2
-END OPERATOR
-```
-
-# <a name="TextRangePtr"></a>TextRangePtr
-
-Returns a pointer to the underlying **ITextRange2** interface
-
-```
-FUNCTION CTextRange2.TextRangePtr () AS ITextRange2 PTR
-   m_Result = 0
-   RETURN m_pTextRange2
-END FUNCTION
-```
-
-# <a name="Attach"></a>Attach
-
-Attaches an **ITextRange2** interface pointer to the class.
-
-```
-FUNCTION CTextRange2.Attach (BYVAL pTextRange2 AS ITextRange2 PTR, BYVAL fAddRef AS BOOLEAN = FALSE) AS HRESULT
-   m_Result = 0
-   IF pTextRange2 = NULL THEN m_Result = E_INVALIDARG : RETURN m_Result
-   ' // Release the interface
-   IF m_pTextRange2 THEN m_Result = m_pTextRange2->lpvtbl->Release(m_pTextRange2)
-   ' // Attach the passed interface pointer to the class
-   IF fAddRef THEN pTextRange2->lpvtbl->AddRef(pTextRange2)
-   m_pTextRange2 = pTextRange2
-   RETURN m_Result
-END FUNCTION
-```
-
-| Parameter | Description |
-| --------- | ----------- |
-| *pTextRange2* | The **ITextRange2** interface pointer to attach. |
-| *fAddRef* | **TRUE** to increment the reference count of the object; otherwise, **FALSE**. Default is **FALSE**. |
-
-# <a name="Detach"></a>Detach
-
-Detaches the interface pointer from the class
-
-```
-FUNCTION CTextRange2.Detach () AS ITextRange2 PTR
-   m_Result = 0
-   DIM pTextRange2 AS ITextRange2 PTR = m_pTextRange2
-   m_pTextRange2 = NULL
-   RETURN pTextRange2
-END FUNCTION
-```
-
-# <a name="GetLastResult"></a>GetLastResult
+# <a name="getlastresult"></a>GetLastResult
 
 Returns the last result code
 
 ```
-FUNCTION CTOMBase.GetLastResult () AS HRESULT
-   RETURN m_Result
-END FUNCTION
+FUNCTION GetLastResult () AS HRESULT
 ```
 
-# <a name="SetResult"></a>SetResult
+# <a name="setresult"></a>SetResult
 
 Sets the last result code.
 
 ```
-FUNCTION CTOMBase.SetResult (BYVAL Result AS HRESULT) AS HRESULT
-   m_Result = Result
-   RETURN m_Result
-END FUNCTION
+FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
 ```
 
 | Parameter | Description |
@@ -355,26 +250,6 @@ Returns a description of the last result code.
 
 ```
 FUNCTION CTOMBase.GetErrorInfo () AS CWSTR
-   IF SUCCEEDED(m_Result) THEN RETURN "Success"
-   DIM s AS CWSTR = "Error &h" & HEX(m_Result, 8)
-   SELECT CASE m_Result
-      CASE E_POINTER : s += ": E_POINTER - Null pointer"
-      CASE S_OK : s += ": S_OK - Success"
-      CASE S_FALSE : s += ": S_FALSE - Failure"
-      CASE E_NOTIMPL : s += ": E_NOTIMPL - Not implemented."
-      CASE E_INVALIDARG : s += ": E_INVALIDARG - Invalid argument"
-      CASE E_OUTOFMEMORY : s += ": E_OUTOFMEMORY - Insufficient memory"
-'      CASE E_FILENOTFOUND : s += "E_FILENOTFOUND - File not found"
-      CASE &h80070002 : s += "E_FILENOTFOUND - File not found"
-      CASE E_ACCESSDENIED : s += "E_ACCESSDENIED - Access denied"
-      CASE E_FAIL : s += ": E_FAIL - Access denied"
-      CASE NOERROR : s += ": NOERROR - Success" '' (same as S_OK)
-      CASE CO_E_RELEASED:  : s += ": CO_E_RELEASED: - The object has been released"
-      CASE ELSE
-         s += "Unknown error"
-   END SELECT
-   RETURN s
-END FUNCTION
 ```
 
 # <a name="GetText"></a>GetText
