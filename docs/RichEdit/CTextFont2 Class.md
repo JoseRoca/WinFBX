@@ -1396,7 +1396,7 @@ A **tomBool** value that can be one of the ones listed above.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="autospacealpha"></a>AutospaceAlpha
+## <a name="autospacealpha"></a>AutospaceAlpha
 
 Gets/sets the East Asian "autospace alphabetics" state.
 
@@ -1428,7 +1428,7 @@ A **tomBool** value that can be one of the ones listed above.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetAutospaceNumeric"></a>GetAutospaceNumeric
+## <a name="GetAutospaceNumeric"></a>GetAutospaceNumeric
 
 Gets the East Asian "autospace numeric" state.
 
