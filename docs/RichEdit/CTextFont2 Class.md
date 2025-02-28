@@ -62,11 +62,11 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [MathZone](#mathzone) | Gets/sets whether a math zone is active. |
 | [ModWidthPairs](#modwidthpairs) | Gets/sets whether "decrease widths on pairs" is active. |
 | [ModWidthSpace](#modwidthspace) | Gets/sets whether "increase width of whitespace" is active. |
+| [OldNumbers](#oldnumbers) | Gets/sets whether old-style numbers are active. |
+
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetOldNumbers](#GetOldNumbers) | Gets whether old-style numbers are active. |
-| [SetOldNumbers](#SetOldNumbers) | Sets whether old-style numbers are active. |
 | [GetOverlapping](#GetOverlapping) | Gets whether overlapping text is active. |
 | [SetOverlapping](#SetOverlapping) | Sets whether overlapping text is active. |
 | [GetPositionSubSuper](#GetPositionSubSuper) | Gets the subscript or superscript position relative to the baseline. |
@@ -1801,47 +1801,17 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-## <a name="SetModWidthSpace"></a>SetModWidthSpace
+## <a name="oldnumbers"></a>OldNumbers
 
+Gets/sets whether old-style numbers are active.
 
-#### Return value
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="GetOldNumbers"></a>GetOldNumbers
-
-Gets whether old-style numbers are active.
-
+```
+(GET) PROPERTY OldNumbers () AS LONG
+(SET) PROPERTY OldNumbers (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetOldNumbers () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetOldNumbers(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTIONN
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Old-style numbers are active. |
-| **tomFalse** | Old-style numbers are not active. |
-| **tomUndefined** | The OldNumbers property is undefined. |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetOldNumbers"></a>SetOldNumbers
-
-Sets whether old-style numbers are active.
-
-```
 FUNCTION SetOldNumbers (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetOldNumbers(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1857,7 +1827,13 @@ END FUNCTION
 
 #### Return value
 
+A **tomBool** value that can be one of the ones listed above.
+
+#### Result code
+
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
 
 # <a name="GetOverlapping"></a>GetOverlapping
 
