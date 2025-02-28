@@ -63,12 +63,11 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [ModWidthPairs](#modwidthpairs) | Gets/sets whether "decrease widths on pairs" is active. |
 | [ModWidthSpace](#modwidthspace) | Gets/sets whether "increase width of whitespace" is active. |
 | [OldNumbers](#oldnumbers) | Gets/sets whether old-style numbers are active. |
+| [Overlapping](#overlapping) | Gets/sets whether overlapping text is active. |
 
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetOverlapping](#GetOverlapping) | Gets whether overlapping text is active. |
-| [SetOverlapping](#SetOverlapping) | Sets whether overlapping text is active. |
 | [GetPositionSubSuper](#GetPositionSubSuper) | Gets the subscript or superscript position relative to the baseline. |
 | [SetPositionSubSuper](#SetPositionSubSuper) | Sets the position of a subscript or superscript relative to the baseline, as a percentage of the font height. |
 | [GetScaling](#GetScaling) | Gets the font horizontal scaling percentage. |
@@ -1835,40 +1834,17 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="GetOverlapping"></a>GetOverlapping
+## <a name="overlapping"></a>Overlapping
 
-Gets whether overlapping text is active.
+Gets/sets whether overlapping text is active.
 
+```
+(GET) PROPERTY Overlapping () AS LONG
+(SET) PROPERTY Overlapping (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetOverlapping () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetOverlapping(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Overlapping text is active. |
-| **tomFalse** | Overlapping text is not active. |
-| **tomUndefined** | The Overlapping property is undefined. |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetOverlapping"></a>SetOverlapping
-
-Sets whether overlapping text is active.
-
-```
 FUNCTION SetOverlapping (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetOverlapping(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1884,9 +1860,15 @@ END FUNCTION
 
 #### Return value
 
+A **tomBool** value that can be one of the ones listed above.
+
+#### Result code
+
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetPositionSubSuper"></a>GetPositionSubSuper
+---
+
+## <a name="GetPositionSubSuper"></a>GetPositionSubSuper
 
 Gets the subscript or superscript position relative to the baseline.
 
