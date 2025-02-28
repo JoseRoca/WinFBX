@@ -15,7 +15,10 @@ The **ITextRange** interface inherits from the **IDispatch** interface. **ITextR
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetText](#GetText) | Gets the text in this range according to the specified conversion flags. |
+| [GetText](#gettext) | Gets the text in this range according to the specified conversion flags. |
+
+| Name       | Description |
+| ---------- | ----------- |
 | [SetText](#SetText) | Sets the plain text in this range. |
 | [GetChar](#GetChar) | Gets the character at the start position of the range. |
 | [SetChar](#SetChar) | Sets the character at the starting position of the range. |
@@ -221,7 +224,7 @@ Returns a description of the last result code.
 FUNCTION GetErrorInfo () AS CWSTR
 ```
 
-# <a name="gettext"></a>GetText
+## <a name="gettext"></a>GetText
 
 Gets the text in this range according to the specified conversion flags.
 
@@ -289,6 +292,7 @@ DIM cbsText AS CBSTR = pRange2->GetText2(tomUseCRLF)
 ' // Delete the range
 Delete pRange2
 ```
+---
 
 # <a name="SetText"></a>SetText
 
