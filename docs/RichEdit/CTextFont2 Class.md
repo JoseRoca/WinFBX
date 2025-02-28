@@ -57,11 +57,10 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [CompressionMode](#compressionmode) | Gets/sets the East Asian compression mode. |
 | [Cookie](#cookie) | Gets/sets the client cookie. |
 | [Count](#count) | Gets the count of extra properties in this character formatting collection. |
+| [DoubleStrike](#doublestrike) | Gets/sets whether characters are displayed with double horizontal lines through the center. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetDoubleStrike](#GetDoubleStrike) | Gets whether characters are displayed with double horizontal lines through the center. |
-| [SetDoubleStrike](#SetDoubleStrike) | Sets whether characters are displayed with double horizontal lines through the center. |
 | [GetLinkType](#GetLinkType) | Gets the link type. |
 | [GetMathZone](#GetMathZone) | Gets whether a math zone is active. |
 | [SetMathZone](#SetMathZone) | Sets whether a math zone is active. |
@@ -1640,51 +1639,17 @@ This value is purely for the use of the client and has no meaning to the Text Ob
 
 ---
 
-## <a name="SetCookie"></a>SetCookie
+## <a name="doublestrike"></a>DoubleStrike
 
+Gets/sets whether characters are displayed with double horizontal lines through the center.
 
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-#### Remarks
-
-This value is purely for the use of the client. It has no meaning to the Text Object Model (TOM) engine except that different values correspond to different character format runs.
-
-# <a name="GetDoubleStrike"></a>GetDoubleStrike
-
-Gets whether characters are displayed with double horizontal lines through the center.
-
+```
+(GET) PROPERTY DoubleStrike () AS LONG
+(SET) PROPERTY DoubleStrike (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetDoubleStrike () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetDoubleStrike(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are displayed with double horizontal lines. |
-| **tomFalse** | Characters are not displayed with double horizontal lines. |
-| **tomUndefined** | The DoubleStrike property is undefined. |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetDoubleStrike"></a>SetDoubleStrike
-
-Sets whether characters are displayed with double horizontal lines through the center.
-
-```
 FUNCTION SetDoubleStrike (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetDoubleStrike(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1700,7 +1665,13 @@ END FUNCTION
 
 #### Return value
 
+A **tomBool** value that can be one of the ones listed above.
+
+#### Result code
+
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
 
 # <a name="GetLinkType"></a>GetLinkType
 
