@@ -36,11 +36,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [SmallCaps](#smallcaps) | Gets/sets whether characters are in small capital letters. |
 | [Spacing](#spacing) | Gets/sets the amount of horizontal spacing between characters. |
 | [StrikeThrough](#strikethrough) | Gets whether characters are displayed with a horizontal line through the center. |
+| [Subscript](#subscript) | Gets/sets whether characters are displayed as subscript. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetSubscript](#GetSubscript) | Gets whether characters are displayed as subscript. |
-| [SetSubscript](#SetSubscript) | Sets whether characters are displayed as subscript. |
 | [GetSuperscript](#GetSuperscript) | Gets whether characters are displayed as superscript. |
 | [SetSuperscript](#SetSuperscript) | Sets whether characters are displayed as superscript. |
 | [GetUnderline](#GetUnderline) | Gets the type of underlining for the characters in a range. |
@@ -1161,48 +1160,17 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 This property corresponds to the **CFE_STRIKEOUT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
 
-# <a name="GetSubscript"></a>GetSubscript
+# <a name="subscript"></a>Subscript
 
-Gets whether characters are displayed as subscript.
+Gets/sets whether characters are displayed as subscript.
 
+```
+(GET) PROPERTY Subscript () AS LONG
+(SET) PROPERTY Subscript (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetSubscript () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetSubscript(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are displayed as subscript. |
-| **tomFalse** | Characters are not displayed as subscript. |
-| **tomUndefined** | The Subscript property is undefined. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-#### Remarks
-
-This property corresponds to the **CFE_SUBSCRIPT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
-
-# <a name="SetSubscript"></a>SetSubscript
-
-Sets whether characters are displayed as subscript.
-
-```
-FUNCTION SetSubscript (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetSubscript(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
+SetSubscript (BYVAL Value AS LONG) AS HRESULT
 ```
 
 | Parameter | Description |
@@ -1216,9 +1184,13 @@ END FUNCTION
 | **tomToggle** | Toggle the state of the Subscript property. |
 | **tomUndefined** | The Subscript property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
+
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
@@ -1226,6 +1198,10 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+#### Remarks
+
+This property corresponds to the **CFE_SUBSCRIPT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
 
 # <a name="GetSuperscript"></a>GetSuperscript
 
