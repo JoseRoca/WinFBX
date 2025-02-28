@@ -7,7 +7,7 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [CONSTRUCTOR](#constructor) | Called when a class variable is created. |
 | [DESTRUCTOR](#destructor) | Called automatically when a class variable goes out of scope or is destroyed. |
 
-### CTextFont2 Class Methods and Properties
+### CTextFont2 Class Properties
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -35,11 +35,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Size](#size) | Gets/sets the font size. |
 | [SmallCaps](#smallcaps) | Gets/sets whether characters are in small capital letters. |
 | [Spacing](#spacing) | Gets/sets the amount of horizontal spacing between characters. |
+| [StrikeThrough](#strikethrough) | Gets whether characters are displayed with a horizontal line through the center. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetStrikeThrough](#GetStrikeThrough) | Gets whether characters are displayed with a horizontal line through the center. |
-| [SetStrikeThrough](#SetStrikeThrough) | Sets whether characters are displayed with a horizontal line through the center. |
 | [GetSubscript](#GetSubscript) | Gets whether characters are displayed as subscript. |
 | [SetSubscript](#SetSubscript) | Sets whether characters are displayed as subscript. |
 | [GetSuperscript](#GetSuperscript) | Gets whether characters are displayed as superscript. |
@@ -1120,50 +1119,18 @@ Displayed text typically has an intercharacter spacing value of zero. Positive v
 
 ---
 
-## <a name="GetStrikeThrough"></a>GetStrikeThrough
+## <a name="strikethrough"></a>StrikeThrough
 
-Gets whether characters are displayed with a horizontal line through the center.
+Gets/sets whether characters are displayed with a horizontal line through the center.
 
+```
+(GET) PROPERTY StrikeThrough () AS LONG
+(SET) PROPERTY StrikeThrough (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetStrikeThrough () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetStrikeThrough(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are displayed with a horizontal line through the center. |
-| **tomFalse** | Characters are not displayed with a horizontal line through the center. |
-| **tomUndefined** | The StrikeThrough property is undefined. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-#### Remarks
-
-This property corresponds to the **CFE_STRIKEOUT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
-
-# <a name="SetStrikeThrough"></a>SetStrikeThrough
-
-Sets whether characters are displayed with a horizontal line through the center.
-
-```
 FUNCTION SetStrikeThrough (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetStrikeThrough(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
-
 | Parameter | Description |
 | --------- | ----------- |
 | *Value* | A **tomBool** value that can be one of the following. |
@@ -1175,9 +1142,13 @@ END FUNCTION
 | **tomToggle** | Toggle the state of the StrikeThrough property. |
 | **tomUndefined** | The StrikeThrough property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the following.
+
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
@@ -1185,6 +1156,10 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+#### Remarks
+
+This property corresponds to the **CFE_STRIKEOUT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
 
 # <a name="GetSubscript"></a>GetSubscript
 
