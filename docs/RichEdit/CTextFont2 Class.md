@@ -68,14 +68,10 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [Overlapping](#overlapping) | Gets/sets whether overlapping text is active. |
 | [PositionSubSuper](#positionsubsuper) | Gets/sets the subscript or superscript position relative to the baseline. |
 | [Property](#Property) | Gets/sets the value of the specified property. |
+| [PropertyInfo](#propertyinfo) | Gets the property type and value of the specified extra property. |
 | [Scaling](#scaling) | Gets/sets the font horizontal scaling percentage. |
 | [SpaceExtension](#spaceextension) | Gets/sets the East Asian space extension value. |
 | [UnderlinePositionMode](#underlinepositionmode) | Gets/sets the underline position mode. |
-
-
-| Name       | Description |
-| ---------- | ----------- |
-| [GetPropertyInfo](#GetPropertyInfo) | Gets the property type and value of the specified extra property. |
 
 ### Methods inherited from CTOMBase Class
 
@@ -2102,11 +2098,12 @@ The property value.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="GetPropertyInfo"></a>GetPropertyInfo
+## <a name="propertyinfo"></a>PropertyInfo
 
 Gets the property type and value of the specified extra property.
 
 ```
+FUNCTION PropertyInfo (BYVAL Index AS LONG, BYVAL pType AS LONG PTR, BYVAL pValue AS LONG PTR) AS HRESULT
 FUNCTION GetPropertyInfo (BYVAL Index AS LONG, BYVAL pType AS LONG PTR, BYVAL pValue AS LONG PTR) AS HRESULT
 ```
 
@@ -2121,3 +2118,5 @@ FUNCTION GetPropertyInfo (BYVAL Index AS LONG, BYVAL pType AS LONG PTR, BYVAL pV
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
