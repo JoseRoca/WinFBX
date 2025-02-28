@@ -32,11 +32,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Position](#position) | Gets/sets the amount that characters are offset vertically relative to the baseline. |
 | [Protected](#protected) | Gets/sets whether characters are protected against attempts to modify them. |
 | [Shadow](#shadow) | Gets/sets whether characters are displayed as shadowed characters. |
+| [Size](#size) | Gets/sets the font size. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetSize](#GetSize) | Gets the font size. |
-| [SetSize](#SetSize) | Sets the font size. |
 | [GetSmallCaps](#GetSmallCaps) | Gets whether characters are in small capital letters. |
 | [SetSmallCaps](#SetSmallCaps) | Sets whether characters are in small capital letters. |
 | [GetSpacing](#GetSpacing) | Gets the amount of horizontal spacing between characters. |
@@ -1011,47 +1010,30 @@ This property corresponds to the **CFE_SHADOW** effect described in the [CHARFOR
 
 ---
 
-# <a name="GetSize"></a>GetSize
+## <a name="size"></a>Size
 
-Gets the font size.
+Gets/sets the font size.
 
+```
+(GET) PROPERTY Size () AS SINGLE
+(SET) PROPERTY Size (BYVAL Value AS SINGLE)
+```
 ```
 FUNCTION GetSize () AS SINGLE
-   DIM Value AS SINGLE
-   this.SetResult(m_pTextFont2->lpvtbl->GetSize(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-The font size, in floating-point points.
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-# <a name="SetSize"></a>SetSize
-
-Sets the font size.
-
-```
 FUNCTION SetSize (BYVAL Value AS SINGLE) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetSize(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
 | --------- | ----------- |
 | *Value* | The new font size, in floating-point points. |
 
+#### Return value
+
+The font size, in floating-point points.
+
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
