@@ -73,7 +73,7 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [SpaceExtension](#spaceextension) | Gets/sets the East Asian space extension value. |
 | [UnderlinePositionMode](#underlinepositionmode) | Gets/sets the underline position mode. |
 
-### Methods inherited from CTOMBase Class
+### Methods inherited from CTextObjectBase Class
 
 | Name       | Description |
 | ---------- | ----------- |
