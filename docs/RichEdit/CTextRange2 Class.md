@@ -100,8 +100,6 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [GetCells](#GetCells) | Not implemented. Gets a cells object with the parameters of cells in the currently selected table row or column. |
 | [GetColumn](#GetColumn) | Not implemented. Gets the column properties for the currently selected column. |
 | [GetCount](#GetCount) | Gets the count of subranges, including the active subrange in the current range. |
-| [GetFont2](#GetFont) | Gets an **ITextFont2** object with the character attributes of the current range. |
-| [SetFont2](#SetFont) | Sets the character formatting attributes of the range. |
 | [GetGravity](#GetGravity) | Gets the gravity of this range. |
 | [SetGravity](#SetGravity) | Sets the gravity of this range. |
 | [GetPara2](#GetPara) | Gets an **ITextPara2** object with the paragraph attributes of a range. |
@@ -574,23 +572,12 @@ If this range is actually the selection, the end position becomes the active end
 
 ---
 
-# <a name="GetFont"></a>GetFont
+## <a name="getfont"></a>GetFont
 
 Gets an **ITextFont2** object with the character attributes of the current range. In this implementation of the class, **GetFont** and **GetFont2** are the same method.
 
 ```
-FUNCTION CTextRange2.GetFont () AS ITextFont PTR
-   DIM pFont AS ITextFont PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetFont(m_pTextRange2, @pFont))
-   RETURN pFont
-END FUNCTION
-```
-```
-FUNCTION CTextRange2.GetFont2 () AS ITextFont2 PTR
-   DIM pFont AS ITextFont2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetFont2(m_pTextRange2, @pFont))
-   RETURN pFont
-END FUNCTION
+FUNCTION GetFont () AS ITextFont PTR
 ```
 #### Return value
 
@@ -600,21 +587,14 @@ The **ITextFont2** object.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an HRESULT error code.
 
-# <a name="SetFont"></a>SetFont
+---
 
-Sets the character formatting attributes of the range. In this implementation of the class, **SetFont** and **SetFont2** are the same method.
+## <a name="setfont"></a>SetFont
+
+Sets the character formatting attributes of the range.
 
 ```
-FUNCTION CTextRange2.SetFont (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetFont2(m_pTextRange2, pFont))
-   RETURN m_Result
-END FUNCTION
-```
-```
-FUNCTION CTextRange2.SetFont2 (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetFont2(m_pTextRange2, pFont))
-   RETURN m_Result
-END FUNCTION
+FUNCTION SetFont (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
 ```
 | Parameter | Description |
 | --------- | ----------- |
@@ -629,6 +609,8 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_INVALIDARG** | Invalid argument. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+---
 
 # <a name="GetPara"></a>GetPara
 
