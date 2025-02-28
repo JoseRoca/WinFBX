@@ -37,11 +37,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Spacing](#spacing) | Gets/sets the amount of horizontal spacing between characters. |
 | [StrikeThrough](#strikethrough) | Gets whether characters are displayed with a horizontal line through the center. |
 | [Subscript](#subscript) | Gets/sets whether characters are displayed as subscript. |
+| [Superscript](#superscript) | Gets/sets whether characters are displayed as superscript. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetSuperscript](#GetSuperscript) | Gets whether characters are displayed as superscript. |
-| [SetSuperscript](#SetSuperscript) | Sets whether characters are displayed as superscript. |
 | [GetUnderline](#GetUnderline) | Gets the type of underlining for the characters in a range. |
 | [SetUnderline](#SetUnderline) | Sets the type of underlining for the characters in a range. |
 | [GetWeight](#GetWeight) | Gets the font weight for the characters in a range. |
@@ -1160,7 +1159,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 This property corresponds to the **CFE_STRIKEOUT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
 
-# <a name="subscript"></a>Subscript
+## <a name="subscript"></a>Subscript
 
 Gets/sets whether characters are displayed as subscript.
 
@@ -1203,49 +1202,17 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 This property corresponds to the **CFE_SUBSCRIPT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
 
-# <a name="GetSuperscript"></a>GetSuperscript
+## <a name="superscript"></a>Superscript
 
-Gets whether characters are displayed as superscript.
+Gets/sets whether characters are displayed as superscript.
 
+```
+(GET) PROPERTY Superscript () AS LONG
+(SET) PROPERTY Superscript (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetSuperscript () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetSuperscript(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are displayed as superscript. |
-| **tomFalse** | Characters are not displayed as superscript. |
-| **tomUndefined** | The Superscript property is undefined. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-#### Remarks
-
-This property corresponds to the **CFE_SUPERSCRIPT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
-
-# <a name="SetSuperscript"></a>SetSuperscript
-
-Sets whether characters are displayed as superscript.
-
-```
 FUNCTION SetSuperscript (BYVAL Value AS LONG) AS HRESULT
-   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
-   this.SetResult(m_pTextFont2->lpvtbl->SetSuperscript(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1259,6 +1226,16 @@ END FUNCTION
 | **tomToggle** | Toggle the state of the Superscript property. |
 | **tomUndefined** | The Superscript property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomTrue** | Characters are displayed as superscript. |
+| **tomFalse** | Characters are not displayed as superscript. |
+| **tomUndefined** | The Superscript property is undefined. |
+
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
@@ -1270,7 +1247,13 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-# <a name="GetUnderline"></a>GetUnderline
+#### Remarks
+
+This property corresponds to the **CFE_SUPERSCRIPT** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
+
+---
+
+## <a name="GetUnderline"></a>GetUnderline
 
 Gets the type of underlining for the characters in a range.
 
