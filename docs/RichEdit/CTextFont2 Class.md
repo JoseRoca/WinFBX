@@ -7,7 +7,7 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [CONSTRUCTOR](#constructor) | Called when a class variable is created. |
 | [DESTRUCTOR](#destructor) | Called automatically when a class variable goes out of scope or is destroyed. |
 
-### CTextFont2 Class Properties
+### Inherited ITextFont Properties
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -39,7 +39,7 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Subscript](#subscript) | Gets/sets whether characters are displayed as subscript. |
 | [Superscript](#superscript) | Gets/sets whether characters are displayed as superscript. |
 | [Underline](#underline) | Gets/sets the type of underlining for the characters in a range. |
-| [Weight](#wWeight) | Gets/sets the font weight for the characters in a range. |
+| [Weight](#weight) | Gets/sets the font weight for the characters in a range. |
 
 ### ITextFont2 Interface
 
