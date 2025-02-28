@@ -1041,7 +1041,9 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-# <a name="smallcaps"></a>SmallCaps
+---
+
+## <a name="smallcaps"></a>SmallCaps
 
 Gets/sets whether characters are in small capital letters.
 
@@ -1079,6 +1081,8 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+---
 
 # <a name="GetSpacing"></a>GetSpacing
 
