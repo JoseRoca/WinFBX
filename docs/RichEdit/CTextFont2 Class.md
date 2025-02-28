@@ -49,9 +49,9 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetCount](#GetCount) | Gets the count of extra properties in this character formatting collection. |
-| [GetAutoLigatures](#GetAutoLigatures) | Gets whether support for automatic ligatures is active. |
-| [SetAutoLigatures](#SetAutoLigatures) | Sets whether support for automatic ligatures is active. |
+| [AutoLigatures](#autoligatures) | Gets whether support for automatic ligatures is active. |
+| [Count](#count) | Gets the count of extra properties in this character formatting collection. |
+
 | [GetAutospaceAlpha](#GetAutospaceAlpha) | Gets the East Asian "autospace alphabetics" state. |
 | [SetAutospaceAlpha](#SetAutospaceAlpha) | Sets the East Asian "autospace alphabetics" state. |
 | [GetAutospaceNumeric](#GetAutospaceNumeric) | Gets the East Asian "autospace numeric" state. |
@@ -1347,16 +1347,13 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-# <a name="GetCount"></a>GetCount
+## <a name="Count"></a>Count
 
 Gets the count of extra properties in this character formatting collection.
 
 ```
+FUNCTION Count () AS LONG
 FUNCTION GetCount () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetCount(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -1366,40 +1363,17 @@ The count of extra properties in this collection.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetAutoLigatures"></a>GetAutoLigatures
+## <a name="autoligatures"></a>AutoLigatures
 
-Gets whether support for automatic ligatures is active.
+Gets/sets whether support for automatic ligatures is active.
 
+```
+(GET) PROPERTY AutoLigatures () AS LONG
+(SET) PROPERTY AutoLigatures (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetAutoLigatures () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetAutoLigatures(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Automatic ligature support is active. |
-| **tomFalse** | Automatic ligature support is not active. |
-| **tomUndefined** | The AutoLigatures property is undefined. |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetAutoLigatures"></a>SetAutoLigatures
-
-Sets whether support for automatic ligatures is active.
-
-```
 FUNCTION SetAutoLigatures (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetAutoLigatures(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1413,9 +1387,13 @@ END FUNCTION
 | **tomToggle** | Toggle the AutoLigatures property. |
 | **tomUndefined** | The AutoLigatures property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
+
 #### Result code
 
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetAutospaceAlpha"></a>GetAutospaceAlpha
 
