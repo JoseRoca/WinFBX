@@ -52,12 +52,11 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [AutoLigatures](#autoligatures) | Gets/sets whether support for automatic ligatures is active. |
 | [AutospaceAlpha](#autospacealpha) | Gets/sets the East Asian "autospace alphabetics" state. |
 | [AutospaceNumeric](#autospacenumeric) | Gets/sets the East Asian "autospace numeric" state. |
+| [AutospaceParens](#autospaceparens) | Gets/sets the East Asian "autospace parentheses" state. |
 | [Count](#count) | Gets the count of extra properties in this character formatting collection. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetAutospaceParens](#GetAutospaceParens) | Gets the East Asian "autospace parentheses" state. |
-| [SetAutospaceParens](#SetAutospaceParens) | Sets the East Asian "autospace parentheses" state. |
 | [GetCharRep](#GetCharRep) | Gets the character repertoire (writing system). |
 | [SetCharRep](#SetCharRep) | Sets the character repertoire (writing system). |
 | [GetCompressionMode](#GetCompressionMode) | Gets the East Asian compression mode. |
@@ -1427,6 +1426,8 @@ A **tomBool** value that can be one of the ones listed above.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+---
+
 ## <a name="autospacenumeric"></a>AutospaceNumeric
 
 Gets/sets the East Asian "autospace numeric" state.
@@ -1459,41 +1460,19 @@ A **tomBool** value that can be one of the ones listed above.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetAutospaceParens"></a>GetAutospaceParens
+---
 
-Gets the East Asian "autospace parentheses" state.
+# <a name="autospaceparens"></a>AutospaceParens
 
+Gets/sets the East Asian "autospace parentheses" state.
+
+```
+(GET) PROPERTY AutospaceParens () AS LONG
+(SET) PROPERTY AutospaceParens (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetAutospaceParens () AS LONG
-   DIM Value AS LONG
-   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN Value
-   this.SetResult(m_pTextFont2->lpvtbl->GetAutospaceParens(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Use East Asian autospace parentheses. |
-| **tomFalse** | Do not use East Asian autospace parentheses. |
-| **tomUndefined** | The AutospaceParens property is undefined |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetAutospaceParens"></a>SetAutospaceParens
-
-Sets the East Asian "autospace numeric" state.
-
-```
 FUNCTION SetAutospaceParens (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetAutospaceParens(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1507,9 +1486,13 @@ END FUNCTION
 | **tomToggle** | Toggle the AutospaceParens property. |
 | **tomUndefined** | The AutospaceParens property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
+
 #### Result code
 
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetCharRep"></a>GetCharRep
 
