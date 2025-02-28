@@ -65,12 +65,11 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [OldNumbers](#oldnumbers) | Gets/sets whether old-style numbers are active. |
 | [Overlapping](#overlapping) | Gets/sets whether overlapping text is active. |
 | [PositionSubSuper](#positionsubsuper) | Gets/sets the subscript or superscript position relative to the baseline. |
+| [Scaling](#scaling) | Gets/sets the font horizontal scaling percentage. |
 
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetScaling](#GetScaling) | Gets the font horizontal scaling percentage. |
-| [SetScaling](#SetScaling) | Sets the font horizontal scaling percentage. |
 | [GetSpaceExtension](#GetSpaceExtension) | Gets the East Asian space extension value. |
 | [SetSpaceExtension](#SetSpaceExtension) | Sets the East Asian space extension value. |
 | [GetUnderlinePositionMode](#GetUnderlinePositionMode) | Gets the underline position mode. |
@@ -1894,17 +1893,23 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-## <a name="GetScaling"></a>GetScaling
+## <a name="scaling"></a>Scaling
 
-Gets the font horizontal scaling percentage.
+Gets/sets the font horizontal scaling percentage.
 
+```
+(GET) PROPERTY Scaling () AS LONG
+(SET) PROPERTY Scaling (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetScaling () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetScaling(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
+FUNCTION SetScaling (BYVAL Value AS LONG) AS HRESULT
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The scaling percentage. Values from 0 through 255 are valid. For example, a value of 200 doubles the widths of characters while retaining the same height. A value of 0 has the same effect as a value of 100; that is, it turns scaling off. |
+
 #### Return value
 
 The scaling percentage.
@@ -1917,26 +1922,9 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 The font horizontal scaling percentage can range from 200, which doubles the widths of characters, to 0, where no scaling is performed. When the percentage is increased the height does not change.
 
-# <a name="SetScaling"></a>SetScaling
+---
 
-Sets the font horizontal scaling percentage.
-
-```
-FUNCTION SetScaling (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetScaling(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
-```
-
-| Parameter | Description |
-| --------- | ----------- |
-| *Value* | The scaling percentage. Values from 0 through 255 are valid. For example, a value of 200 doubles the widths of characters while retaining the same height. A value of 0 has the same effect as a value of 100; that is, it turns scaling off. |
-
-#### Return value
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="GetSpaceExtension"></a>GetSpaceExtension
+## <a name="GetSpaceExtension"></a>GetSpaceExtension
 
 Gets the East Asian space extension value.
 
