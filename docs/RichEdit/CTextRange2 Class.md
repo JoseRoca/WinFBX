@@ -492,16 +492,12 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="GetStart"></a>GetStart
+## <a name="getstart"></a>GetStart
 
 Gets the start character position of the range.
 
 ```
-FUNCTION CTextRange2.GetStart () AS LONG
-   DIM cpFirst AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetStart(m_pTextRange2, @cpFirst))
-   RETURN cpFirst
-END FUNCTION
+FUNCTION GetStart () AS LONG
 ```
 #### Return value
 
@@ -511,15 +507,14 @@ The start character position.
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
-# <a name="SetStart"></a>SetStart
+---
+
+## <a name="setstart"></a>SetStart
 
 Sets the character position for the start of this range.
 
 ```
-FUNCTION CTextRange2.SetStart (BYVAL cpFirst AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetStart(m_pTextRange2, cpFirst))
-   RETURN m_Result
-END FUNCTION
+FUNCTION SetStart (BYVAL cpFirst AS LONG) AS HRESULT
 ```
 | Parameter | Description |
 | --------- | ----------- |
@@ -529,16 +524,14 @@ END FUNCTION
 
 The method returns an HRESULT value. If the method succeeds, it returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
-# <a name="GetEnd"></a>GetEnd
+---
+
+## <a name="getend"></a>GetEnd
 
 Gets the end character position of the range.
 
 ```
-FUNCTION CTextRange2.GetEnd () AS LONG
-   DIM cpLim AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetEnd(m_pTextRange2, @cpLim))
-   RETURN cpLim
-END FUNCTION
+FUNCTION GetEnd () AS LONG
 ```
 #### Return value
 
@@ -554,15 +547,14 @@ Although a pointer to a range remains valid when the text is edited, this is not
 
 This method is similar to the **GetStart** method which gets the start character position of the range.
 
-# <a name="SetEnd"></a>SetEnd
+---
+
+## <a name="setend"></a>SetEnd
 
 Sets the end position of the range.
 
 ```
-FUNCTION CTextRange2.SetEnd (BYVAL cpLim AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetEnd(m_pTextRange2, cpLim))
-   RETURN m_Result
-END FUNCTION
+FUNCTION SetEnd (BYVAL cpLim AS LONG) AS HRESULT
 ```
 | Parameter | Description |
 | --------- | ----------- |
@@ -579,6 +571,8 @@ If the new end position is less than the start position, this method also sets t
 If this range is actually the selection, the end position becomes the active end and, if the display is not frozen, it is scrolled into view.
 
 **SetStart** sets the range's start position and **SetRange** sets both range ends simultaneously.
+
+---
 
 # <a name="GetFont"></a>GetFont
 
