@@ -30,11 +30,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Name](#name) | Gets/sets the font name. |
 | [Outline](#outline) | Gets/sets whether characters are displayed as outlined characters. |
 | [Position](#position) | Gets/sets the amount that characters are offset vertically relative to the baseline. |
+| [Protected](#protected) | Gets/sets whether characters are protected against attempts to modify them. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetProtected](#GetProtected) | Gets whether characters are protected against attempts to modify them. |
-| [SetProtected](#SetProtected) | Sets whether characters are protected against attempts to modify them. |
 | [GetShadow](#GetShadow) | Gets whether characters are displayed as shadowed characters. |
 | [SetShadow](#SetShadow) | Sets whether characters are displayed as shadowed characters. |
 | [GetSize](#GetSize) | Gets the font size. |
@@ -923,16 +922,19 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 Displayed text typically has a zero value for this property. Positive values raise the text, and negative values lower it.
 
-# <a name="GetProtected"></a>GetProtected
+---
 
-Gets whether characters are protected against attempts to modify them.
+# <a name="protected"></a>Protected
+
+Gets/sets whether characters are protected against attempts to modify them.
 
 ```
+(GET) PROPERTY Protected_ () AS LONG
+(SET) PROPERTY Protected_ (BYVAL Value AS LONG) AS HRESULT
+```
+```
 FUNCTION GetProtected () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetProtected(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
+FUNCTION SetProtected (BYVAL Value AS LONG) AS HRESULT
 ```
 #### Return value
 
@@ -946,26 +948,7 @@ A **tomBool** value that can be one of the following.
 
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-#### Remarks
-
-In general, Text Object Model (TOM) methods that attempt to change the formatting or content of a range fail with **E_ACCESSDENIED** if any part of that range is protected, or if the document is read only. To make a change in protected text, the TOM client should attempt to turn off the protection of the text to be modified. The owner of the document may permit this to happen. For example in rich edit controls, attempts to change protected text result in an **EN_PROTECTED** notification code to the creator of the document, who then can refuse or grant permission for the change. The creator is the client that created a windowed rich edit control through the **CreateWindowEx** function or the **ITextHost** object that called the **CreateTextServices** function to create a windowless rich edit control.
-
-# <a name="SetProtected"></a>SetProtected
-
-Sets whether characters are protected against attempts to modify them.
-
-```
-FUNCTION SetProtected (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetProtected(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
-```
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Parameter | Description |
 | --------- | ----------- |
@@ -978,16 +961,11 @@ END FUNCTION
 | **tomToggle** | Toggle the state of the Protected property. |
 | **tomUndefined** | The Protected property is undefined. |
 
-#### Result code
+#### Remarks
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+In general, Text Object Model (TOM) methods that attempt to change the formatting or content of a range fail with **E_ACCESSDENIED** if any part of that range is protected, or if the document is read only. To make a change in protected text, the TOM client should attempt to turn off the protection of the text to be modified. The owner of the document may permit this to happen. For example in rich edit controls, attempts to change protected text result in an **EN_PROTECTED** notification code to the creator of the document, who then can refuse or grant permission for the change. The creator is the client that created a windowed rich edit control through the **CreateWindowEx** function or the **ITextHost** object that called the **CreateTextServices** function to create a windowless rich edit control.
 
-| Result code | Description |
-| ----------- | ----------- |
-| **E_INVALIDARG** | Invalid argument. |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-| **E_ACCESSDENIED** | Write access is denied. |
-| **E_OUTOFMEMORY** | Insufficient memory. |
+---
 
 # <a name="GetShadow"></a>GetShadow
 
