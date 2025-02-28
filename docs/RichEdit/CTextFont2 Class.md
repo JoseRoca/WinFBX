@@ -53,12 +53,11 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [AutospaceAlpha](#autospacealpha) | Gets/sets the East Asian "autospace alphabetics" state. |
 | [AutospaceNumeric](#autospacenumeric) | Gets/sets the East Asian "autospace numeric" state. |
 | [AutospaceParens](#autospaceparens) | Gets/sets the East Asian "autospace parentheses" state. |
+| [CharRep](#charrep) | Gets/sets the character repertoire (writing system). |
 | [Count](#count) | Gets the count of extra properties in this character formatting collection. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetCharRep](#GetCharRep) | Gets the character repertoire (writing system). |
-| [SetCharRep](#SetCharRep) | Sets the character repertoire (writing system). |
 | [GetCompressionMode](#GetCompressionMode) | Gets the East Asian compression mode. |
 | [SetCompressionMode](#SetCompressionMode) | Sets the East Asian compression mode. |
 | [GetCookie](#GetCookie) | Gets the client cookie. |
@@ -1462,7 +1461,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="autospaceparens"></a>AutospaceParens
+## <a name="autospaceparens"></a>AutospaceParens
 
 Gets/sets the East Asian "autospace parentheses" state.
 
@@ -1494,91 +1493,19 @@ A **tomBool** value that can be one of the ones listed above.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetCharRep"></a>GetCharRep
+---
 
-Gets the character repertoire (writing system).
+## <a name="charrep"></a>CharRep
 
+Gets/sets the character repertoire (writing system).
+
+```
+(GET) PROPERTY CharRep () AS LONG
+(SET) PROPERTY CharRep (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetCharRep () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetCharRep(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-The character repertoire. It can be one of the following values.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomAboriginal** | Aboriginal |
-| **tomAnsi** | Latin 1 |
-| **tomArabic** | Arabic |
-| **tomArmenian** | Armenian |
-| **tomBaltic** | From Latin 1 and 2 |
-| **tomBengali** | Bangla (formerly Bengali) |
-| **tomBIG5** | Traditional Chinese |
-| **tomBraille** | Braille |
-| **tomCherokee** | Cherokee |
-| **tomCyrillic** | Cyrillic |
-| **tomDefaultCharRep** | Default character repertoire |
-| **tomDevanagari** | Devanagari |
-| **tomEastEurope** | From Latin 1 and 2 |
-| **tomEmoji** | Emoji |
-| **tomEthiopic** | Ethiopic |
-| **tomGB2312** | Simplified Chinese |
-| **tomGeorgian** | Georgian |
-| **tomGreek** | Greek |
-| **tomGujarati** | Gujarati |
-| **tomGurmukhi** | Gurmukhi |
-| **tomHangul** | Hangul |
-| **tomHebrew** | Hebrew |
-| **tomJamo** | Jamo |
-| **tomKannada** | Kannada |
-| **tomKayahli** | Kayah Li |
-| **tomKharoshthi** | Kharoshthi |
-| **tomKhmer** | Khmer |
-| **tomLao** | Lao |
-| **tomLimbu** | Limbu |
-| **tomMac** | Main Macintosh character repertoire |
-| **tomMalayalam** | Malayalam |
-| **tomMongolian** | Mongolian |
-| **tomMyanmar** | Myanmar |
-| **tomNewTaiLu** | TaiLue |
-| **tomOEM** | OEM character set (original PC) |
-| **tomOriya** | Odia (formerly Oriya) |
-| **tomPC437** | PC437 character set (DOS) |
-| **tomRunic** | Runic |
-| **tomShiftJIS** | Japanese |
-| **tomSinhala** | Sinhala |
-| **tomSylotinagr** | Syloti Nagri |
-| **tomSymbol** | Symbol character set (not Unicode) |
-| **tomSyriac** | Syriac |
-| **tomTaiLe** | TaiLe |
-| **tomTamil** | Tamil |
-| **tomTelugu** | Telugu |
-| **tomThaana** | Thaana |
-| **tomThai** | Thai |
-| **tomTibetan** | Tibetan |
-| **tomTurkish** | Turkish (Latin 1 + dotless i, ...) |
-| **tomVietnamese** | Latin 1 with some combining marks |
-| **tomUsymbol** | Unicode symbol |
-| **tomYi** | Yi |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetCharRep"></a>SetCharRep
-
-Sets the character repertoire (writing system).
-
-```
 FUNCTION SetCharRep (BYVAL Value AS LONG) AS HRESULT
-   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
-   this.SetResult(m_pTextFont2->lpvtbl->SetCharRep(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1641,9 +1568,15 @@ END FUNCTION
 | **tomUsymbol** | Unicode symbol |
 | **tomYi** | Yi |
 
+#### Return value
+
+The character repertoire. It can be one of the ones listed above.
+
 #### Result code
 
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
 
 # <a name="GetCompressionMode"></a>GetCompressionMode
 
