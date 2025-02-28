@@ -60,11 +60,10 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [DoubleStrike](#doublestrike) | Gets/sets whether characters are displayed with double horizontal lines through the center. |
 | [LinkType](#linktype) | Gets the link type. |
 | [MathZone](#mathzone) | Gets/sets whether a math zone is active. |
+| [ModWidthPairs](#modwidthpairs) | Gets/sets whether "decrease widths on pairs" is active. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetModWidthPairs](#GetModWidthPairs) | Gets whether "decrease widths on pairs" is active. |
-| [SetModWidthPairs](#SetModWidthPairs) | Sets whether "decrease widths on pairs" is active. |
 | [GetModWidthSpace](#GetModWidthSpace) | Gets whether "increase width of whitespace" is active. |
 | [SetModWidthSpace](#SetModWidthSpace) | Sets whether "increase width of whitespace" is active. |
 | [GetOldNumbers](#GetOldNumbers) | Gets whether old-style numbers are active. |
@@ -1735,41 +1734,17 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-## <a name="GetModWidthPairs"></a>GetModWidthPairs
+## <a name="modwidthpairs"></a>ModWidthPairs
 
-Gets whether "decrease widths on pairs" is active.
+Gets/sets whether "decrease widths on pairs" is active.
 
+```
+(GET) PROPERTY 
+(SET) PROPERTY 
+```
 ```
 FUNCTION GetModWidthPairs () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetModWidthPairs(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Decrease widths on pairs is active. |
-| **tomFalse** | Decrease widths on pairs is not active. |
-| **tomUndefined** | The ModWidthPairs property is undefined. |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetModWidthPairs"></a>SetModWidthPairs
-
-Sets whether "decrease widths on pairs" is active.
-
-```
 FUNCTION SetModWidthPairs (BYVAL Value AS LONG) AS HRESULT
-   IF m_pTextFont2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
-   this.SetResult(m_pTextFont2->lpvtbl->SetModWidthPairs(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1785,7 +1760,13 @@ END FUNCTION
 
 #### Return value
 
+A **tomBool** value that can be one of the ones listed above.
+
+#### Result code
+
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
 
 # <a name="GetModWidthSpace"></a>GetModWidthSpace
 
