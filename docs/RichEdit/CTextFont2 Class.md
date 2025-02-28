@@ -54,12 +54,11 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [AutospaceNumeric](#autospacenumeric) | Gets/sets the East Asian "autospace numeric" state. |
 | [AutospaceParens](#autospaceparens) | Gets/sets the East Asian "autospace parentheses" state. |
 | [CharRep](#charrep) | Gets/sets the character repertoire (writing system). |
+| [CompressionMode](#compressionmode) | Gets/sets the East Asian compression mode. |
 | [Count](#count) | Gets the count of extra properties in this character formatting collection. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetCompressionMode](#GetCompressionMode) | Gets the East Asian compression mode. |
-| [SetCompressionMode](#SetCompressionMode) | Sets the East Asian compression mode. |
 | [GetCookie](#GetCookie) | Gets the client cookie. |
 | [SetCookie](#SetCookie) | Sets the client cookie. |
 | [GetDoubleStrike](#GetDoubleStrike) | Gets whether characters are displayed with double horizontal lines through the center. |
@@ -1578,40 +1577,17 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="GetCompressionMode"></a>GetCompressionMode
+## <a name="compressionmode"></a>CompressionMode
 
-Gets the East Asian compression mode.
+Gets/sets the East Asian compression mode.
 
+```
+(GET) PROPERTY CompressionMode () AS LONG
+(SET) PROPERTY CompressionMode (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetCompressionMode () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetCompressionMode(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-The compression mode, which can be one of these values:
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomCompressNone** (default) | No compression. |
-| **tomCompressPunctuation** | Compress punctuation. |
-| **tomCompressPunctuationAndKana** | Compress punctuation and kana. |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetCompressionMode"></a>SetCompressionMode
-
-Sets the East Asian compression mode.
-
-```
 FUNCTION SetCompressionMode (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetCompressionMode(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1624,9 +1600,15 @@ END FUNCTION
 | **tomCompressPunctuation** | Compress punctuation. |
 | **tomCompressPunctuationAndKana** | Compress punctuation and kana. |
 
+#### Return value
+
+The compression mode, which can be one of the ones listed above:
+
 #### Result code
 
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+---
 
 # <a name="GetCookie"></a>GetCookie
 
