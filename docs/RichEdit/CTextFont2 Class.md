@@ -31,11 +31,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Outline](#outline) | Gets/sets whether characters are displayed as outlined characters. |
 | [Position](#position) | Gets/sets the amount that characters are offset vertically relative to the baseline. |
 | [Protected](#protected) | Gets/sets whether characters are protected against attempts to modify them. |
+| [Shadow](#shadow) | Gets/sets whether characters are displayed as shadowed characters. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetShadow](#GetShadow) | Gets whether characters are displayed as shadowed characters. |
-| [SetShadow](#SetShadow) | Sets whether characters are displayed as shadowed characters. |
 | [GetSize](#GetSize) | Gets the font size. |
 | [SetSize](#SetSize) | Sets the font size. |
 | [GetSmallCaps](#GetSmallCaps) | Gets whether characters are in small capital letters. |
@@ -886,7 +885,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 
 ---
 
-# <a name="position"></a>Position
+## <a name="position"></a>Position
 
 Gets/sets the amount that characters are offset vertically relative to the baseline.
 
@@ -924,7 +923,7 @@ Displayed text typically has a zero value for this property. Positive values rai
 
 ---
 
-# <a name="protected"></a>Protected
+## <a name="protected"></a>Protected
 
 Gets/sets whether characters are protected against attempts to modify them.
 
@@ -967,48 +966,17 @@ In general, Text Object Model (TOM) methods that attempt to change the formattin
 
 ---
 
-# <a name="GetShadow"></a>GetShadow
+## <a name="shadow"></a>Shadow
 
-Gets whether characters are displayed as shadowed characters.
+Gets/sets whether characters are displayed as shadowed characters.
 
+```
+(GET) PROPERTY Shadow () AS LONG
+(SET) PROPERTY Shadow (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetShadow () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetShadow(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Characters are displayed as shadowed characters. |
-| **tomFalse** | Characters are not displayed as shadowed characters. |
-| **tomUndefined** | The Shadow property is undefined. |
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-#### Remarks
-
-This property corresponds to the **CFE_SHADOW** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
-
-# <a name="SetShadow"></a>SetShadow
-
-Sets whether characters are displayed as shadowed characters.
-
-```
 FUNCTION SetShadow (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetShadow(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1022,9 +990,13 @@ END FUNCTION
 | **tomToggle** | Toggle the state of the Shadow property. |
 | **tomUndefined** | The Shadow property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the ones listed below.
+
 #### Result code
 
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
+If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
 
 | Result code | Description |
 | ----------- | ----------- |
@@ -1032,6 +1004,12 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+#### Remarks
+
+This property corresponds to the **CFE_SHADOW** effect described in the [CHARFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-charformat2w_1) structure.
+
+---
 
 # <a name="GetSize"></a>GetSize
 
