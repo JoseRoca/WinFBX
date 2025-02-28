@@ -19,11 +19,11 @@ The **ITextRange2** interface is derived from **ITextRange**, and its objects ar
 | [SetChar](#setchar) | Sets the character at the starting position of the range. |
 | [GetChar2](#getchar2) | Gets the character at the specified offset from the end of this range. |
 | [GetDuplicate](#getduplicate) | Gets a duplicate of this range object. |
+| [GetFormattedText](#getformattedtext) | Gets an **ITextRange** object with the specified range's formatted text. |
+| [SetFormattedText](#setformattedtext) | Sets the formatted text of this range text to the formatted text of the specified range. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetFormattedText](#GetFormattedText) | Gets an **ITextRange** object with the specified range's formatted text. |
-| [SetFormattedText](#SetFormattedText) | Sets the formatted text of this range text to the formatted text of the specified range. |
 | [GetStart](#GetStart) | Gets the start character position of the range. |
 | [SetStart](#SetStart) | Sets the character position for the start of this range. |
 | [GetEnd](#GetEnd) | Gets the end character position of the range. |
@@ -102,8 +102,6 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [GetCount](#GetCount) | Gets the count of subranges, including the active subrange in the current range. |
 | [GetFont2](#GetFont) | Gets an **ITextFont2** object with the character attributes of the current range. |
 | [SetFont2](#SetFont) | Sets the character formatting attributes of the range. |
-| [GetFormattedText2](#GetFormattedText) | Gets an **ITextRange2** object with the current range's formatted text. |
-| [SetFormattedText2](#SetFormattedText) | Sets the text of this range to the formatted text of the specified range. |
 | [GetGravity](#GetGravity) | Gets the gravity of this range. |
 | [SetGravity](#SetGravity) | Sets the gravity of this range. |
 | [GetPara2](#GetPara) | Gets an **ITextPara2** object with the paragraph attributes of a range. |
@@ -185,6 +183,7 @@ DIM cbsText AS CBSTR = pRange2->GetText(tomUseCRLF)
 ' // Delete the range
 Delete pRange2
 ```
+---
 ## <a name="destructor"></a>DESTRUCTOR
 
 Called automatically when a class variable goes out of scope or is destroyed.
@@ -192,6 +191,7 @@ Called automatically when a class variable goes out of scope or is destroyed.
 ```
 DESTRUCTOR CTextRange2
 ```
+---
 
 ## <a name="getlastresult"></a>GetLastResult
 
@@ -200,6 +200,7 @@ Returns the last result code
 ```
 FUNCTION GetLastResult () AS HRESULT
 ```
+---
 
 ## <a name="setresult"></a>SetResult
 
@@ -213,6 +214,8 @@ FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
 | --------- | ----------- |
 | *Result* | The **HRESULT** error code returned by the methods. |
 
+---
+
 ## <a name="GetErrorInfo"></a>GetErrorInfo
 
 Returns a description of the last result code.
@@ -220,6 +223,7 @@ Returns a description of the last result code.
 ```
 FUNCTION GetErrorInfo () AS CWSTR
 ```
+---
 
 ## <a name="gettext"></a>GetText
 
@@ -320,6 +324,7 @@ pRange2.SetText("new text")
 ' or pass an empty string to delete the range
 pRange2.SetText("")
 ```
+---
 
 ## <a name="getchar"></a>GetChar
 
@@ -353,6 +358,8 @@ The **Char** property, which can do most things that a characters collection can
 - It is significantly faster, since **LONG**s are involved instead of range objects.
 
 Accordingly, the Text Object Model (TOM) does not support a characters collection.
+
+---
 
 ## <a name="getchar2"></a>GetChar2
 
@@ -392,6 +399,8 @@ If *Offset* specifies a character before the start of the story or at the end of
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+---
+
 ## <a name="setchar"></a>SetChar
 
 Sets the character at the starting position of the range.
@@ -419,6 +428,7 @@ The method returns an **HRESULT** value. If the method succeeds, it returns **S_
 DIM pRange2 AS CTextRange2 = pRichEdit.Range2(3, 8)
 pRange2.SetChar(ASC("X"))
 ```
+---
 
 ## <a name="getduplicate"></a>GetDuplicate
 
@@ -443,49 +453,30 @@ DIM pRange2 AS CTextRange2 = pRichEdit.Range2(3, 8)
 DIM pRangeDup AS CTextRange2 = pRange2.GetDuplicate
 DIM cbsText AS CBSTR = pRangeDup.GetText
 ```
+---
 
-# <a name="GetFormattedText"></a>GetFormattedText
+## <a name="getformattedtext"></a>GetFormattedText
 
 Gets an **ITextRange2** object with the specified range's formatted text.
-In this implementation of the class, **GetFormattedText** and **GetFormattedText2** are the same method.
 
 ```
-FUNCTION CTextRange2.GetFormattedText () AS ITextRange2 PTR
-   DIM pRange AS ITextRange2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetFormattedText(m_pTextRange2, @pRange))
-   RETURN pRange
-END FUNCTION
-```
-```
-FUNCTION CTextRange2.GetFormattedText2 () AS ITextRange2 PTR
-   DIM pRange AS ITextRange2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetFormattedText2(m_pTextRange2, @pRange))
-   RETURN pRange
-END FUNCTION
+FUNCTION GetFormattedText () AS ITextRange2 PTR
 ```
 
 #### Result code
 
-If the method succeeds, it returns **S_OK**. If the method fails, it returns **E_OUTOFMEMORY**. 
+If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **E_OUTOFMEMORY**. 
+
+---
 
 # <a name="SetFormattedText"></a>SetFormattedText
 
 Sets the formatted text of this range text to the formatted text of the specified range.
-In this implementation of the class, **SetFormattedText** and **SetFormattedText2** are the same method.
 
 ```
-FUNCTION CTextRange2.SetFormattedText (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetFormattedText(m_pTextRange2, pRange))
-   RETURN m_Result
-END FUNCTION
+FUNCTION SetFormattedText (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
 ```
 
-```
-FUNCTION CTextRange2.SetFormattedText2 (BYVAL pRange AS ITextRange2 PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetFormattedText2(m_pTextRange2, pRange))
-   RETURN m_Result
-END FUNCTION
-```
 | Parameter | Description |
 | --------- | ----------- |
 | *pRange* | The formatted text to replace this range's text. |
@@ -498,6 +489,8 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | ----------- | ----------- |
 | **E_ACCESSDENIED** | Text is write-protected. |
 | **E_OUTOFMEMORY** | Out of memory. |
+
+---
 
 # <a name="GetStart"></a>GetStart
 
