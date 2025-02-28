@@ -469,7 +469,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="SetFormattedText"></a>SetFormattedText
+## <a name="setformattedtext"></a>SetFormattedText
 
 Sets the formatted text of this range text to the formatted text of the specified range.
 
