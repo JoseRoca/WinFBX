@@ -67,6 +67,7 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [OldNumbers](#oldnumbers) | Gets/sets whether old-style numbers are active. |
 | [Overlapping](#overlapping) | Gets/sets whether overlapping text is active. |
 | [PositionSubSuper](#positionsubsuper) | Gets/sets the subscript or superscript position relative to the baseline. |
+| [Property](#Property) | Gets/sets the value of the specified property. |
 | [Scaling](#scaling) | Gets/sets the font horizontal scaling percentage. |
 | [SpaceExtension](#spaceextension) | Gets/sets the East Asian space extension value. |
 | [UnderlinePositionMode](#underlinepositionmode) | Gets/sets the underline position mode. |
@@ -74,8 +75,6 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetProperty](#GetProperty) | Gets the value of the specified property. |
-| [SetProperty](#SetProperty) | Sets the value of the specified property. |
 | [GetPropertyInfo](#GetPropertyInfo) | Gets the property type and value of the specified extra property. |
 
 ### Methods inherited from CTOMBase Class
@@ -2075,23 +2074,25 @@ Only effects with the corresponding mask flag set are modified.
 
 ---
 
-## <a name="GetProperty"></a>GetProperty
+## <a name="property"></a>Property
 
-Gets the value of the specified property.
+Gets/sets the value of the specified property.
 
 ```
+(GET) PROPERTY Property_ (BYVAL nType AS LONG) AS LONG
+(SET) PROPERTY Property_ (BYVAL nType AS LONG, BYVAL Value AS LONG)
+```
+```
 FUNCTION GetProperty (BYVAL nType AS LONG) AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetProperty(m_pTextFont2, nType, @Value))
-   RETURN Value
-END FUNCTION
+FUNCTION SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
 ```
 
 #### Parameters
 
 | Parameter | Description |
 | --------- | ----------- |
-| *nType* | The property ID of the value to return. |
+| *nType* | The ID of the property value to set. |
+| *Value* | The new property value. |
 
 #### Return value
 
@@ -2101,15 +2102,12 @@ The property value.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetPropertyInfo"></a>GetPropertyInfo
+## <a name="GetPropertyInfo"></a>GetPropertyInfo
 
 Gets the property type and value of the specified extra property.
 
 ```
 FUNCTION GetPropertyInfo (BYVAL Index AS LONG, BYVAL pType AS LONG PTR, BYVAL pValue AS LONG PTR) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->GetPropertyInfo(m_pTextFont2, Index, pType, pValue))
-   RETURN m_Result
-END FUNCTION
 ```
 
 #### Parameters
@@ -2119,28 +2117,6 @@ END FUNCTION
 | *Index* | The collection index of the extra property. |
 | *pType* | The property ID. |
 | *pType* | The property value. |
-
-#### Return value
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetProperty"></a>SetProperty
-
-Sets the value of the specified property.
-
-```
-FUNCTION SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetProperty(m_pTextFont2, nType, Value))
-   RETURN m_Result
-END FUNCTION
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --------- | ----------- |
-| *nType* | The ID of the property value to set. |
-| *Value* | The new property value. |
 
 #### Return value
 
