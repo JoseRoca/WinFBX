@@ -58,6 +58,8 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [Cookie](#cookie) | Gets/sets the client cookie. |
 | [Count](#count) | Gets the count of extra properties in this character formatting collection. |
 | [DoubleStrike](#doublestrike) | Gets/sets whether characters are displayed with double horizontal lines through the center. |
+| [Effects](#effects) | Gets/sets the character format effects. |
+| [Effects2](#efects2) | Gets/sets the additional character format effects. |
 | [LinkType](#linktype) | Gets the link type. |
 | [MathZone](#mathzone) | Gets/sets whether a math zone is active. |
 | [ModWidthPairs](#modwidthpairs) | Gets/sets whether "decrease widths on pairs" is active. |
@@ -72,13 +74,9 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetEffects](#GetEffects) | Gets the character format effects. |
-| [GetEffects2](#GetEffects2) | Gets the additional character format effects. |
 | [GetProperty](#GetProperty) | Gets the value of the specified property. |
-| [GetPropertyInfo](#GetPropertyInfo) | Gets the property type and value of the specified extra property. |
-| [SetEffects](#SetEffects) | Sets the character format effects. |
-| [SetEffects2](#SetEffects2) | Sets the additional character format effects. |
 | [SetProperty](#SetProperty) | Sets the value of the specified property. |
+| [GetPropertyInfo](#GetPropertyInfo) | Gets the property type and value of the specified extra property. |
 
 ### Methods inherited from CTOMBase Class
 
@@ -1982,15 +1980,13 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-## <a name="GetEffects"></a>GetEffects
+## <a name="effects"></a>Effects
 
-Gets the character format effects.
+Gets/sets the character format effects.
 
 ```
 FUNCTION GetEffects (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->GetEffects(m_pTextFont2, pValue, pMask))
-   RETURN m_Result
-END FUNCTION
+FUNCTION SetEffects (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
 ```
 
 #### Parameters
@@ -2033,15 +2029,19 @@ If the **tomInlineObjectStart** flag is set, you might want to call **GetInlineO
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetEffects2"></a>GetEffects2
+#### Remarks
 
-Gets the additional character format effects.
+Only effects with the corresponding mask flag set are modified.
+
+---
+
+## <a name="effects2"></a>Effects2
+
+Gets/sets the additional character format effects.
 
 ```
 FUNCTION GetEffects2 (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->GetEffects2(m_pTextFont2, pValue, pMask))
-   RETURN m_Result
-END FUNCTION
+FUNCTION SetEffects2 (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
 ```
 
 #### Parameters
@@ -2069,7 +2069,13 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetProperty"></a>GetProperty
+#### Remarks
+
+Only effects with the corresponding mask flag set are modified.
+
+---
+
+## <a name="GetProperty"></a>GetProperty
 
 Gets the value of the specified property.
 
@@ -2117,99 +2123,6 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetEffects"></a>SetEffects
-
-Sets the character format effects.
-
-```
-FUNCTION SetEffects (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetEffects(m_pTextFont2, Value, Mask))
-   RETURN m_Result
-END FUNCTION
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --------- | ----------- |
-| *Value* | A combination of the following character format values. |
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomAllCaps** | All caps |
-| **tomBold** | Boldface |
-| **tomDisabled** | Disabled |
-| **tomEmboss** | Emboss |
-| **tomHidden** | Hidden |
-| **tomImprint** | Imprint |
-| **tomInlineObjectStart** | The start delimiter of an inline object |
-| **tomItalic** | Italic |
-| **tomLink** | Hyperlink |
-| **tomLinkProtected** | The link is protected (friendly name link). |
-| **tomMathZone** | Math zone |
-| **tomMathZoneDisplay** | Display math zone |
-| **tomMathZoneNoBuildUp** | Don't build up operator |
-| **tomMathZoneOrdinary** | Math zone ordinary text. |
-| **tomOutline** | Outline |
-| **tomProtected** | Protected |
-| **tomRevised** | Revised |
-| **tomShadow** | Shadow |
-| **tomSmallCaps** | Small caps |
-| **tomStrikeout** | Strikeout |
-| **tomUnderline** | Underline |
-
-| Parameter | Description |
-| --------- | ----------- |
-| *pMask* | The desired mask, which can be a combination of the Value flags. Only effects with the corresponding mask flag set are modified. |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-#### Remarks
-
-Only effects with the corresponding mask flag set are modified.
-
-# <a name="SetEffects2"></a>SetEffects2
-
-Sets the additional character format effects.
-
-```
-FUNCTION SetEffects2 (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetEffects2(m_pTextFont2, Value, Mask))
-   RETURN m_Result
-END FUNCTION
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --------- | ----------- |
-| *Value* | A combination of the following character format values. |
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomAutoSpaceAlpha** | Use East Asian auto spacing between alphabetics. |
-| **tomAutoSpaceNumeric** | Use East Asian auto spacing for digits. |
-| **tomAutoSpaceParens** | Use East Asian automatic spacing for parentheses or brackets. |
-| **tomDoublestrike** | Double strikeout. |
-| **tomEmbeddedFont** | Embedded font (CLIP_EMBEDDED). |
-| **tomModWidthPairs** | Use East Asian character-pair-width modification. |
-| **tomModWidthSpace** | Use East Asian space-width modification. |
-| **tomOverlapping** | Run has overlapping text. |
-
-| Parameter | Description |
-| --------- | ----------- |
-| *pMask* | The desired mask, which can be a combination of the Value flags. Only effects with the corresponding mask flag set are modified. |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-#### Remarks
-
-Only effects with the corresponding mask flag set are modified.
 
 # <a name="SetProperty"></a>SetProperty
 
