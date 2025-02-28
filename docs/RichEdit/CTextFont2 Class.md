@@ -58,10 +58,10 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [Cookie](#cookie) | Gets/sets the client cookie. |
 | [Count](#count) | Gets the count of extra properties in this character formatting collection. |
 | [DoubleStrike](#doublestrike) | Gets/sets whether characters are displayed with double horizontal lines through the center. |
+| [LinkType](#linktype) | Gets the link type. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetLinkType](#GetLinkType) | Gets the link type. |
 | [GetMathZone](#GetMathZone) | Gets whether a math zone is active. |
 | [SetMathZone](#SetMathZone) | Sets whether a math zone is active. |
 | [GetModWidthPairs](#GetModWidthPairs) | Gets whether "decrease widths on pairs" is active. |
@@ -1673,16 +1673,13 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="GetLinkType"></a>GetLinkType
+## <a name="linktype"></a>LinkType
 
 Gets the link type.
 
 ```
+FUNCTION LinkType () AS LONG
 FUNCTION GetLinkType () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetLinkType(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -1703,7 +1700,9 @@ The link type. It can be one of the following values.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetMathZone"></a>GetMathZone
+---
+
+## <a name="GetMathZone"></a>GetMathZone
 
 Gets whether a math zone is active.
 
