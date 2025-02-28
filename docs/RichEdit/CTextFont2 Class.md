@@ -64,12 +64,11 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [ModWidthSpace](#modwidthspace) | Gets/sets whether "increase width of whitespace" is active. |
 | [OldNumbers](#oldnumbers) | Gets/sets whether old-style numbers are active. |
 | [Overlapping](#overlapping) | Gets/sets whether overlapping text is active. |
+| [PositionSubSuper](#positionsubsuper) | Gets/sets the subscript or superscript position relative to the baseline. |
 
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetPositionSubSuper](#GetPositionSubSuper) | Gets the subscript or superscript position relative to the baseline. |
-| [SetPositionSubSuper](#SetPositionSubSuper) | Sets the position of a subscript or superscript relative to the baseline, as a percentage of the font height. |
 | [GetScaling](#GetScaling) | Gets the font horizontal scaling percentage. |
 | [SetScaling](#SetScaling) | Sets the font horizontal scaling percentage. |
 | [GetSpaceExtension](#GetSpaceExtension) | Gets the East Asian space extension value. |
@@ -1868,34 +1867,17 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-## <a name="GetPositionSubSuper"></a>GetPositionSubSuper
+## <a name="positionsubsuper"></a>PositionSubSuper
 
-Gets the subscript or superscript position relative to the baseline.
+Gets/sets the subscript or superscript position relative to the baseline.
 
+```
+(GET) PROPERTY PositionSubSuper () AS LONG
+(SET) PROPERTY PositionSubSuper (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetPositionSubSuper () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetPositionSubSuper(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-The subscript or superscript position relative to the baseline.
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetPositionSubSuper"></a>SetPositionSubSuper
-
-Sets the position of a subscript or superscript relative to the baseline, as a percentage of the font height.
-
-```
 FUNCTION SetPositionSubSuper (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetPositionSubSuper(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1904,9 +1886,15 @@ END FUNCTION
 
 #### Return value
 
+The subscript or superscript position relative to the baseline.
+
+#### Result code
+
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetScaling"></a>GetScaling
+---
+
+## <a name="GetScaling"></a>GetScaling
 
 Gets the font horizontal scaling percentage.
 
