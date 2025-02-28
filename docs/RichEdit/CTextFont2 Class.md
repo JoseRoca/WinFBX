@@ -55,12 +55,11 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | [AutospaceParens](#autospaceparens) | Gets/sets the East Asian "autospace parentheses" state. |
 | [CharRep](#charrep) | Gets/sets the character repertoire (writing system). |
 | [CompressionMode](#compressionmode) | Gets/sets the East Asian compression mode. |
+| [Cookie](#cookie) | Gets/sets the client cookie. |
 | [Count](#count) | Gets the count of extra properties in this character formatting collection. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetCookie](#GetCookie) | Gets the client cookie. |
-| [SetCookie](#SetCookie) | Sets the client cookie. |
 | [GetDoubleStrike](#GetDoubleStrike) | Gets whether characters are displayed with double horizontal lines through the center. |
 | [SetDoubleStrike](#SetDoubleStrike) | Sets whether characters are displayed with double horizontal lines through the center. |
 | [GetLinkType](#GetLinkType) | Gets the link type. |
@@ -1610,17 +1609,23 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="GetCookie"></a>GetCookie
+## <a name="Cookie"></a>Cookie
 
-Gets the client cookie.
+Gets/sets the client cookie.
 
+```
+(GET) PROPERTY Cookie () AS LONG
+(SET) PROPERTY Cookie (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetCookie () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetCookie(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
+FUNCTION SetCookie (BYVAL Value AS LONG) AS HRESULT
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The client cookie. |
+
 #### Return value
 
 The client cookie.
@@ -1633,20 +1638,10 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 This value is purely for the use of the client and has no meaning to the Text Object Model (TOM) engine. There are exceptions where different values correspond to different character format runs.
 
-# <a name="SetCookie"></a>SetCookie
+---
 
-Sets the client cookie.
+## <a name="SetCookie"></a>SetCookie
 
-```
-FUNCTION SetCookie (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetCookie(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
-```
-
-| Parameter | Description |
-| --------- | ----------- |
-| *Value* | The client cookie. |
 
 #### Result code
 
