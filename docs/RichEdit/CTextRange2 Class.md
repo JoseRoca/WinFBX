@@ -19,7 +19,6 @@ The **ITextRange2** interface is derived from **ITextRange**, and its objects ar
 | [SetChar](#setchar) | Sets the character at the starting position of the range. |
 | [GetChar2](#getchar2) | Gets the character at the specified offset from the end of this range. |
 | [GetDuplicate](#getduplicate) | Gets a duplicate of this range object. |
-| [GetDuplicate2](#getduplicate) | Gets a duplicate of a range object. |
 
 | Name       | Description |
 | ---------- | ----------- |
