@@ -303,8 +303,10 @@ PRIVATE FUNCTION CGraphCtx.CGraphCtxProc (BYVAL hwnd AS HWND, BYVAL uMsg AS UINT
          SELECT CASE LOWORD(wParam)
             CASE VK_TAB
                IF HIWORD(.GetKeyState(VK_SHIFT)) = 0 THEN
+                  '// Set the focus in the previous control that has the WS_TABSTOP style
                   .SetFocus .GetNextDlgTabItem(GetParent(hwnd), hwnd, 0)
                ELSE
+                  '// Set the focus in the next control that has the WS_TABSTOP style
                   .SetFocus .GetNextDlgTabItem(GetParent(hwnd), hwnd, -1)
                END IF
             CASE VK_RETURN
