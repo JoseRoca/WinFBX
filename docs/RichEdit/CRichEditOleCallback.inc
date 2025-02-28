@@ -127,6 +127,7 @@ FUNCTION CRichEditOleCallback.GetNewStorage (BYVAL lplpstg AS LPSTORAGE PTR) AS 
    IF FAILED(hr) THEN RETURN hr
    hr = StgCreateDocfileOnILockBytes(pILockBytes, _
         STGM_SHARE_EXCLUSIVE OR STGM_READWRITE OR STGM_CREATE, 0, lplpstg)
+   AfxSafeRelease(pILockBytes)
    RETURN hr
 END FUNCTION
 ' ========================================================================================
