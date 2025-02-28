@@ -1304,13 +1304,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-# <a name="SetUnderline"></a>SetUnderline
-
-
-#### Result code
-
-If the method succeeds, it returns **S_OK**. If the method fails, it returns the following COM error code.
-
+---
 
 # <a name="GetWeight"></a>GetWeight
 
