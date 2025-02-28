@@ -51,12 +51,11 @@ The **ITextFont2** interface extends **ITextFont**, providing the programming eq
 | ---------- | ----------- |
 | [AutoLigatures](#autoligatures) | Gets/sets whether support for automatic ligatures is active. |
 | [AutospaceAlpha](#autospacealpha) | Gets/sets the East Asian "autospace alphabetics" state. |
+| [AutospaceNumeric](#autospacenumeric) | Gets/sets the East Asian "autospace numeric" state. |
 | [Count](#count) | Gets the count of extra properties in this character formatting collection. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetAutospaceNumeric](#GetAutospaceNumeric) | Gets the East Asian "autospace numeric" state. |
-| [SetAutospaceNumeric](#SetAutospaceNumeric) | Sets the East Asian "autospace numeric" state. |
 | [GetAutospaceParens](#GetAutospaceParens) | Gets the East Asian "autospace parentheses" state. |
 | [SetAutospaceParens](#SetAutospaceParens) | Sets the East Asian "autospace parentheses" state. |
 | [GetCharRep](#GetCharRep) | Gets the character repertoire (writing system). |
@@ -1428,40 +1427,17 @@ A **tomBool** value that can be one of the ones listed above.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="GetAutospaceNumeric"></a>GetAutospaceNumeric
+## <a name="autospacenumeric"></a>AutospaceNumeric
 
-Gets the East Asian "autospace numeric" state.
+Gets/sets the East Asian "autospace numeric" state.
 
+```
+(GET) PROPERTY AutospaceNumeric () AS LONG
+(SET) PROPERTY AutospaceNumeric (BYVAL Value AS LONG)
+```
 ```
 FUNCTION GetAutospaceNumeric () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextFont2->lpvtbl->GetAutospaceNumeric(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-A **tomBool** value that can be one of the following.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomTrue** | Use East Asian autospace numerics. |
-| **tomFalse** | Do not use East Asian autospace numerics. |
-| **tomUndefined** | The AutospaceNumeric property is undefined |
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-# <a name="SetAutospaceNumeric"></a>SetAutospaceNumeric
-
-Sets the East Asian "autospace numeric" state.
-
-```
 FUNCTION SetAutospaceNumeric (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetAutospaceNumeric(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1475,9 +1451,13 @@ END FUNCTION
 | **tomToggle** | Toggle the AutospaceNumeric property. |
 | **tomUndefined** | The AutospaceNumeric property is undefined. |
 
+#### Return value
+
+A **tomBool** value that can be one of the ones listed above.
+
 #### Result code
 
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an ^^HRESULT** error code.
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 # <a name="GetAutospaceParens"></a>GetAutospaceParens
 
