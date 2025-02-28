@@ -34,11 +34,10 @@ Class that wraps all the methods of the **ITextFont2** interface.
 | [Shadow](#shadow) | Gets/sets whether characters are displayed as shadowed characters. |
 | [Size](#size) | Gets/sets the font size. |
 | [SmallCaps](#smallcaps) | Gets/sets whether characters are in small capital letters. |
+| [Spacing](#spacing) | Gets/sets the amount of horizontal spacing between characters. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetSpacing](#GetSpacing) | Gets the amount of horizontal spacing between characters. |
-| [SetSpacing](#SetSpacing) | Sets the amount of horizontal spacing between characters. |
 | [GetStrikeThrough](#GetStrikeThrough) | Gets whether characters are displayed with a horizontal line through the center. |
 | [SetStrikeThrough](#SetStrikeThrough) | Sets whether characters are displayed with a horizontal line through the center. |
 | [GetSubscript](#GetSubscript) | Gets whether characters are displayed as subscript. |
@@ -1084,43 +1083,25 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="GetSpacing"></a>GetSpacing
+## <a name="spacing"></a>Spacing
 
-Gets the amount of horizontal spacing between characters.
+Gets/sets the amount of horizontal spacing between characters.
 
+```
+(GET) PROPERTY Spacing () AS SINGLE
+(SET) PROPERTY Spacing (BYVAL Value AS SINGLE)
+```
 ```
 FUNCTION GetSpacing () AS SINGLE
-   DIM Value AS SINGLE
-   this.SetResult(m_pTextFont2->lpvtbl->GetSpacing(m_pTextFont2, @Value))
-   RETURN Value
-END FUNCTION
-```
-#### Return value
-
-The amount of horizontal spacing between characters, in floating-point points.
-
-#### Result code
-
-If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns the following COM error code.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **CO_E_RELEASED** | The font object is attached to a range that has been deleted. |
-
-# <a name="SetSpacing"></a>SetSpacing
-
-Sets the amount of horizontal spacing between characters.
-
-```
 FUNCTION SetSpacing (BYVAL Value AS SINGLE) AS HRESULT
-   this.SetResult(m_pTextFont2->lpvtbl->SetSpacing(m_pTextFont2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
-
 | Parameter | Description |
 | --------- | ----------- |
 | *Value* | The new amount of horizontal spacing between characters, in floating-point points. |
+
+#### Return value
+
+The amount of horizontal spacing between characters, in floating-point points.
 
 #### Result code
 
@@ -1137,7 +1118,9 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 Displayed text typically has an intercharacter spacing value of zero. Positive values expand the spacing, and negative values compress it.
 
-# <a name="GetStrikeThrough"></a>GetStrikeThrough
+---
+
+## <a name="GetStrikeThrough"></a>GetStrikeThrough
 
 Gets whether characters are displayed with a horizontal line through the center.
 
