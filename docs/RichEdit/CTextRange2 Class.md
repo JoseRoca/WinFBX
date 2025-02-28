@@ -18,10 +18,11 @@ The **ITextRange2** interface is derived from **ITextRange**, and its objects ar
 | [GetChar](#getchar) | Gets the character at the start position of the range. |
 | [SetChar](#setchar) | Sets the character at the starting position of the range. |
 | [GetChar2](#getchar2) | Gets the character at the specified offset from the end of this range. |
+| [GetDuplicate](#getduplicate) | Gets a duplicate of this range object. |
+| [GetDuplicate2](#getduplicate) | Gets a duplicate of a range object. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetDuplicate](#GetDuplicate) | Gets a duplicate of this range object. |
 | [GetFormattedText](#GetFormattedText) | Gets an **ITextRange** object with the specified range's formatted text. |
 | [SetFormattedText](#SetFormattedText) | Sets the formatted text of this range text to the formatted text of the specified range. |
 | [GetStart](#GetStart) | Gets the start character position of the range. |
@@ -100,7 +101,6 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [GetCells](#GetCells) | Not implemented. Gets a cells object with the parameters of cells in the currently selected table row or column. |
 | [GetColumn](#GetColumn) | Not implemented. Gets the column properties for the currently selected column. |
 | [GetCount](#GetCount) | Gets the count of subranges, including the active subrange in the current range. |
-| [GetDuplicate2](#GetDuplicate) | Gets a duplicate of a range object. |
 | [GetFont2](#GetFont) | Gets an **ITextFont2** object with the character attributes of the current range. |
 | [SetFont2](#SetFont) | Sets the character formatting attributes of the range. |
 | [GetFormattedText2](#GetFormattedText) | Gets an **ITextRange2** object with the current range's formatted text. |
@@ -322,7 +322,7 @@ pRange2.SetText("new text")
 pRange2.SetText("")
 ```
 
-# <a name="getchar"></a>GetChar
+## <a name="getchar"></a>GetChar
 
 Gets the character at the start position of the range.
 
@@ -355,7 +355,7 @@ The **Char** property, which can do most things that a characters collection can
 
 Accordingly, the Text Object Model (TOM) does not support a characters collection.
 
-# <a name="getchar2"></a>GetChar2
+## <a name="getchar2"></a>GetChar2
 
 Gets the character at the specified offset from the end of this range.
 
@@ -393,7 +393,7 @@ If *Offset* specifies a character before the start of the story or at the end of
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="setchar"></a>SetChar
+## <a name="setchar"></a>SetChar
 
 Sets the character at the starting position of the range.
 
@@ -421,23 +421,12 @@ DIM pRange2 AS CTextRange2 = pRichEdit.Range2(3, 8)
 pRange2.SetChar(ASC("X"))
 ```
 
-# <a name="GetDuplicate"></a>GetDuplicate
+## <a name="getduplicate"></a>GetDuplicate
 
-Gets a duplicate of this range object. In this implementation of the class, **GetDuplicate** and **GetDuplicate2** are the same method.
+Gets a duplicate of this range object.
 
 ```
-FUNCTION CTextRange2.GetDuplicate () AS ITextRange2 PTR
-   DIM pRange AS ITextRange2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetDuplicate2(m_pTextRange2, @pRange))
-   RETURN pRange
-END FUNCTION
-```
-```
-FUNCTION CTextRange2.GetDuplicate2 () AS ITextRange2 PTR
-   DIM pRange AS ITextRange2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetDuplicate2(m_pTextRange2, @pRange))
-   RETURN pRange
-END FUNCTION
+FUNCTION GetDuplicate () AS ITextRange2 PTR
 ```
 
 #### Return value
@@ -451,15 +440,9 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Usage example
 
 ```
-DIM pCTextDocument2 AS CTextDocument2 = hRichEdit
-IF pCTextDocument2 THEN
-   DIM pCRange2 AS CTextRange2 = pCTextDocument2.Range2(3, 8)
-   IF pCRange2 THEN
-      DIM pCRangeDup AS CTextRange2 = pCRange2.GetDuplicate
-      DIM cbsText AS CBSTR = pCRangeDup.GetText
-      AfxMsg cbsText
-   END IF
-END IF
+DIM pRange2 AS CTextRange2 = pRichEdit.Range2(3, 8)
+DIM pRangeDup AS CTextRange2 = pRange2.GetDuplicate
+DIM cbsText AS CBSTR = pRangeDup.GetText
 ```
 
 # <a name="GetFormattedText"></a>GetFormattedText
