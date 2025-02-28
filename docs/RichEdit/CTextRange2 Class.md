@@ -23,11 +23,11 @@ The **ITextRange2** interface is derived from **ITextRange**, and its objects ar
 | [SetFormattedText](#setformattedtext) | Sets the formatted text of this range text to the formatted text of the specified range. |
 | [GetStart](#getstart) | Gets the start character position of the range. |
 | [SetStart](#setstart) | Sets the character position for the start of this range. |
+| [GetEnd](#getend) | Gets the end character position of the range. |
+| [SetEnd](#setend) | Sets the end position of the range. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetEnd](#GetEnd) | Gets the end character position of the range. |
-| [SetEnd](#SetEnd) | Sets the end position of the range. |
 | [GetFont](#GetFont) | Gets an **ITextFont** object with the character attributes of the specified range. |
 | [SetFont](#SetFont) | Sets this range's character attributes to those of the specified **ITextFont** object. |
 | [GetPara](#GetPara) | Gets an **ITextPara** object with the paragraph attributes of the specified range. |
