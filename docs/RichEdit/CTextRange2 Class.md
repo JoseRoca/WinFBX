@@ -89,12 +89,13 @@ The **ITextSelection** interface inherits from **ITextRange**. **ITextSelection*
 
 The **ITextRange2** objects are powerful editing and data-binding tools that enable a program to select text in a story and then examine or change that text.
 
-The **ITextRange2** interface inherits from **ITextSelection**, that in turn inherits from **ITextRange**. **ITextRange2** also has these types of members:
+| Name       | Description |
+| ---------- | ----------- |
+| [GetCch](#getcch) | Gets the count of characters in a range. |
+| [Getcells](#getcells) | Not implemented. Gets a cells object with the parameters of cells in the currently selected table row or column. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetCch](#GetCch) | Gets the count of characters in a range. |
-| [GetCells](#GetCells) | Not implemented. Gets a cells object with the parameters of cells in the currently selected table row or column. |
 | [GetColumn](#GetColumn) | Not implemented. Gets the column properties for the currently selected column. |
 | [GetCount](#GetCount) | Gets the count of subranges, including the active subrange in the current range. |
 | [GetGravity](#GetGravity) | Gets the gravity of this range. |
@@ -2395,16 +2396,12 @@ This method types the string given by *cbs* at this selection as if someone type
 
 ---
 
-## <a name="GetCch"></a>GetCch
+## <a name="getCch"></a>GetCch
 
 Gets the count of characters in a range.
 
 ```
 FUNCTION GetCch () AS LONG
-   DIM cch AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetCch(m_pTextRange2, @cch))
-   RETURN cch
-END FUNCTION
 ```
 
 #### Return value
@@ -2419,7 +2416,9 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 The count of characters is the difference between the character position of the active end of the range, and the character position of the anchor end. Some Text Object Model (TOM) implementations might include active ends only for a selection (represented by the **ITextSelection** interface). The rich edit control's TOM implementation of a text range (represented by the **ITextRange** interface) also has active ends.
 
-## <a name="GetCells"></a>GetCells
+---
+
+## <a name="getcells"></a>GetCells
 
 Not implemented.
 
@@ -2427,10 +2426,6 @@ Gets a cells object with the parameters of cells in the currently selected table
 
 ```
 FUNCTION GetCells () AS IUnknown PTR
-   DIM pCells AS IUnknown PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetCells(m_pTextRange2, @pCells))
-   RETURN pCells
-END FUNCTION
 ```
 
 #### Return value
@@ -2441,7 +2436,9 @@ The cells object.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="GetColumn"></a>GetColumn
+---
+
+## <a name="getcolumn"></a>GetColumn
 
 Not implemented.
 
@@ -2449,10 +2446,6 @@ Gets the column properties for the currently selected column.
 
 ```
 FUNCTION GetColumn () AS IUnknown PTR
-   DIM pColumn AS IUnknown PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetColumn(m_pTextRange2, @pColumn))
-   RETURN pColumn
-END FUNCTION
 ```
 
 #### Return value
@@ -2463,16 +2456,14 @@ The column properties for the currently selected column.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="GetCount"></a>GetCount
+---
+
+## <a name="getcount"></a>GetCount
 
 Gets the count of subranges, including the active subrange in the current range.
 
 ```
 FUNCTION GetCount () AS LONG
-   DIM Count AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetCount(m_pTextRange2, @Count))
-   RETURN Count
-END FUNCTION
 ```
 
 #### Return value
@@ -2489,16 +2480,14 @@ If you select a range with no or one character, the count will be 1. But if you 
 
 See **AddSubrange** to add subranges programmatically.
 
-## <a name="GetGravity"></a>GetGravity
+---
+
+## <a name="getgravity"></a>GetGravity
 
 Gets the gravity of this range.
 
 ```
 FUNCTION GetGravity () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetGravity(m_pTextRange2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -2516,15 +2505,14 @@ The gravity value, which can be one of the following:
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="SetGravity"></a>SetGravity
+---
+
+## <a name="setgravity"></a>SetGravity
 
 Sets the gravity of this range.
 
 ```
 FUNCTION SetGravity (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetGravity(m_pTextRange2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2543,16 +2531,14 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="GetRow"></a>GetRow
+---
+
+## <a name="getrow"></a>GetRow
 
 Gets the row properties in the currently selected row.
 
 ```
 FUNCTION GetRow () AS ITextRow PTR
-   DIM pRow AS ITextRow PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetRow(m_pTextRange2, @pRow))
-   RETURN pRow
-END FUNCTION
 ```
 
 #### Return value
@@ -2563,16 +2549,14 @@ The row properties.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="GetStartPara"></a>GetStartPara
+---
+
+## <a name="getstartpara"></a>GetStartPara
 
 Gets the character position of the start of the paragraph that contains the range's start character position.
 
 ```
 FUNCTION GetStartPara () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetStartPara(m_pTextRange2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 
 #### Return value
@@ -2583,16 +2567,14 @@ The start of the paragraph that contains the range's start character position.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="GetTable"></a>GetTable
+---
+
+## <a name="gettable"></a>GetTable
 
 Gets the table properties in the currently selected table.
 
 ```
 FUNCTION GetTable () AS IUnknown PTR
-   DIM pTable AS IUnknown PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetTable(m_pTextRange2, @pTable))
-   RETURN pTable
-END FUNCTION
 ```
 
 #### Return value
@@ -2603,16 +2585,14 @@ The table properties.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="GetURL"></a>GetURL
+---
+
+## <a name="geturl"></a>GetURL
 
 Returns the URL text associated with a range.
 
 ```
 FUNCTION GetURL () AS CBSTR
-   DIM pbstr AS AFX_BSTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetURL(m_pTextRange2, @pbstr))
-   RETURN pbstr
-END FUNCTION
 ```
 
 #### Return value
@@ -2623,15 +2603,14 @@ The URL text associated with the range.
 
 If the method succeeds, **GetLastResult** returns **S_OK**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="SetURL"></a>SetURL
+---
+
+## <a name="seturl"></a>SetURL
 
 Sets the text in this range to that of the specified URL.
 
 ```
 FUNCTION SetURL (BYREF cbs AS CBSTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetURL(m_pTextRange2, cbs))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2662,15 +2641,14 @@ The following actions are possible:
 
 The text range be adjusted to different character positions after calling SetURL.
 
-## <a name="AddSubrange"></a>AddSubrange
+---
+
+## <a name="addsubrange"></a>AddSubrange
 
 Adds a subrange to this range.
 
 ```
 FUNCTION AddSubrange (BYVAL cp1 AS LONG, BYVAL cp2 AS LONG, BYVAL Activate AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->AddSubrange(m_pTextRange2, cp1, cp2, Activate))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2681,15 +2659,14 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="BuildUpMath"></a>BuildUpMath
+---
+
+## <a name="buildupmath"></a>BuildUpMath
 
 Converts the linear-format math in a range to a built-up form, or modifies the current built-up form.
 
 ```
 FUNCTION BuildUpMath (BYVAL Flags AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->BuildUpMath(m_pTextRange2, Flags))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2760,15 +2737,14 @@ If full and partial build-up attempts fail, the function returns as described pr
 
 You should set the **tomNeedTermOp** flag should for formula autobuildup unless autocorrection has occurred that deletes the terminating blank. Autocorrection can occur when correcting text like \alpha when the user types a blank to force autocorrection.
 
-## <a name="DeleteSubrange"></a>DeleteSubrange
+---
+
+## <a name="deletesubrange"></a>DeleteSubrange
 
 Deletes a subrange from a range.
 
 ```
 FUNCTION DeleteSubrange (BYVAL cpFirst AS LONG, BYVAL cpLim AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->DeleteSubrange(m_pTextRange2, cpFirst, cpLim))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2780,16 +2756,12 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="Find"></a>Find
+## <a name="find"></a>Find
 
 Searches for math inline functions in text as specified by a source range.
 
 ```
 FUNCTION Find (BYVAL pRange AS ITextRange2 PTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->Find(m_pTextRange2, pRange, Count, Flags, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2806,7 +2778,9 @@ A count of the number of characters bypassed.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="GetDropCap"></a>GetDropCap
+---
+
+## <a name="getdropcap"></a>GetDropCap
 
 Not implemented.
 
@@ -2814,9 +2788,6 @@ Gets the drop-cap parameters of the paragraph that contains this range.
 
 ```
 FUNCTION GetDropCap (BYVAL pcLine AS LONG PTR, BYVAL pPosition AS LONG PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->GetDropCap(m_pTextRange2, pcLine, pPosition))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2828,18 +2799,19 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="GetInlineObject"></a>GetInlineObject
+---
+
+## <a name="getinlineobject"></a>GetInlineObject
 
 Gets the properties of the inline object at the range active end.
 
 See full MSDN documentation: [ITextRange2::GetInlineObject method](https://learn.microsoft.com/en-us/windows/win32/api/tom/nf-tom-itextrange2-getinlineobject)
 
 ```
-FUNCTION GetInlineObject (BYVAL pType AS LONG PTR, BYVAL pAlign AS LONG PTR, BYVAL pChar AS LONG PTR, BYVAL pChar1 AS LONG PTR, _
-BYVAL pChar2 AS LONG PTR, BYVAL pCount AS LONG PTR,  BYVAL pTeXStyle AS LONG PTR, BYVAL pcCol AS LONG PTR, BYVAL pLevel AS LONG PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->GetInlineObject(m_pTextRange2, pType, pAlign, pChar, pChar1, pChar2, pCount, pTeXStyle, pcCol))
-   RETURN m_Result
-END FUNCTION
+FUNCTION GetInlineObject (BYVAL pType AS LONG PTR, BYVAL pAlign AS LONG PTR, _
+   BYVAL pChar AS LONG PTR, BYVAL pChar1 AS LONG PTR, BYVAL pChar2 AS LONG PTR, _
+   BYVAL pCount AS LONG PTR,  BYVAL pTeXStyle AS LONG PTR, BYVAL pcCol AS LONG PTR, _
+   BYVAL pLevel AS LONG PTR) AS HRESULT
 ```
 
 | Parameter | Description |
@@ -2864,16 +2836,12 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 When that character is not a start delimiter, the character and column parameters are set to 0, the count is set to the 0-based argument index, and the other parameters are set according to the active-end character properties of the innermost inline object argument.
 
-## <a name="GetProperty"></a>GetProperty
+## <a name="getproperty"></a>GetProperty
 
 Gets the value of a property.
 
 ```
 FUNCTION GetProperty (BYVAL nType AS LONG) AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetProperty(m_pTextRange2, nType, @Value))
-   RETURN Value
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2888,16 +2856,15 @@ The property value.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="GetRect"></a>GetRect
+---
+
+## <a name="getrect"></a>GetRect
 
 Retrieves a rectangle of the specified type for the current range.
 
 ```
 FUNCTION GetRect (BYVAL nType AS LONG, BYVAL pLeft AS LONG PTR, BYVAL pTop AS LONG PTR, _
-BYVAL pRight AS LONG PTR, BYVAL pBottom AS LONG PTR, BYVAL pHit AS LONG PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->GetRect(m_pTextRange2, nType, pLeft, pTop, pRight, pBottom, pHit))
-   RETURN m_Result
-END FUNCTION
+   BYVAL pRight AS LONG PTR, BYVAL pBottom AS LONG PTR, BYVAL pHit AS LONG PTR) AS HRESULT
 ```
 
 | Parameter | Description |
@@ -2936,15 +2903,15 @@ Use one of the following values to indicate the horizontal position.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="GetSubrange"></a>GetSubrange
+---
+
+## <a name="getsubrange"></a>GetSubrange
 
 Retrieves a subrange in a range.
 
 ```
-FUNCTION GetSubrange (BYVAL iSubrange AS LONG, BYVAL pcpFirst AS LONG PTR, BYVAL pcpLim AS LONG PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->GetSubrange(m_pTextRange2, iSubrange, pcpFirst, pcpLim))
-   RETURN m_Result
-END FUNCTION
+FUNCTION GetSubrange (BYVAL iSubrange AS LONG, BYVAL pcpFirst AS LONG PTR, _
+   BYVAL pcpLim AS LONG PTR) AS HRESULT
 ```
 
 | Parameter | Description |
@@ -2969,15 +2936,14 @@ Subranges are selected as follows.
  
 See **GetCount** for the count of subranges not including the active subrange.
 
-## <a name="HexToUnicode"></a>HexToUnicode
+---
+
+## <a name="hextounicode"></a>HexToUnicode
 
 Converts and replaces the hexadecimal number at the end of this range to a Unicode character.
 
 ```
 FUNCTION HexToUnicode () AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->HexToUnicode(m_pTextRange2))
-   RETURN m_Result
-END FUNCTION
 ```
 
 #### Return value
@@ -2994,15 +2960,14 @@ Some Unicode surrogates for hex values from &h10000 up to &h10FFFF are for inter
 | &hA — &hD in the C0 range (0-&h1F) | Available for use |
 | C1 range (&h80 — &h9F) | Internal use only |
 
-## <a name="InsertTable"></a>InsertTable
+---
+
+## <a name="inserttable"></a>InsertTable
 
 Inserts a table in a range.
 
 ```
 FUNCTION InsertTable (BYVAL cCol AS LONG, BYVAL cRow AS LONG, BYVAL AutoFit AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->InsertTable(m_pTextRange2, cCol, cRow, AutoFit))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -3015,15 +2980,14 @@ END FUNCTION
 
 If the method succeeds, it returns **S_OK**. If the method fails, it returns an **HRESULT** error code.
 
-## <a name="Linearize"></a>Linearize
+---
+
+## <a name="linearize"></a>Linearize
 
 Translates the built-up math, ruby, and other inline objects in this range to linearized form.
 
 ```
 FUNCTION Linearize (BYVAL Flags AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->Linearize(m_pTextRange2, Flags))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -3036,15 +3000,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 | ----------- | ----------- |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-## <a name="SetActiveSubrange"></a>SetActiveSubrange
+---
+
+## <a name="setactivesubrange"></a>SetActiveSubrange
 
 Makes the specified subrange the active subrange of this range.
 
 ```
 FUNCTION SetActiveSubrange (BYVAL cpAnchor AS LONG, BYVAL cpActive AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetActiveSubrange(m_pTextRange2, cpAnchor, cpActive))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -3060,7 +3023,9 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 The active subrange is the one affected by operations such as Shift+Arrow keys if this range is the selection.
 
-## <a name="SetDropCap"></a>SetDropCap
+---
+
+## <a name="setdropcap"></a>SetDropCap
 
 Not implemented.
 
@@ -3068,9 +3033,6 @@ Sets the drop-cap parameters for the paragraph that contains the current range.
 
 ```
 FUNCTION SetDropCap (BYVAL cLine AS LONG, BYVAL Position AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetDropCap(m_pTextRange2, cLine, Position))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -3085,15 +3047,14 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 #### Remarks
 The current range can be degenerate, or you can select up to the complete drop-cap paragraph. If the range contains more than one paragraph, this method returns **E_FAIL**.
 
-## <a name="SetProperty"></a>SetProperty
+---
+
+## <a name="setproperty"></a>SetProperty
 
 Sets the value of the specified property.
 
 ```
 FUNCTION SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetProperty(m_pTextRange2, nType, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -3105,15 +3066,14 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="UnicodeToHex"></a>UnicodeToHex
+---
+
+## <a name="unicodetohex"></a>UnicodeToHex
 
 Converts the Unicode character(s) preceding the start position of this text range to a hexadecimal number, and selects it.
 
 ```
 FUNCTION UnicodeToHex () AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->UnicodeToHex(m_pTextRange2))
-   RETURN m_Result
-END FUNCTION
 ```
 
 #### Return value
@@ -3130,16 +3090,16 @@ Some Unicode surrogates for hex values from &h10000 up to &h10FFFF are for inter
 | &hA — &hD in the C0 range (0-&h1F) | Available for use |
 | C1 range (&h80 — &h9F) | Internal use only |
 
-## <a name="SetInlineObject"></a>SetInlineObject
+---
+
+## <a name="setinlineobject"></a>SetInlineObject
 
 Sets or inserts the properties of an inline object for a degenerate range.
 
 ```
 FUNCTION SetInlineObject (BYVAL nType AS Long, BYVAL Align AS LONG, BYVAL Char AS LONG, _
-BYVAL Char1 AS LONG, BYVAL Char2 AS LONG, BYVAL Count AS LONG, BYVAL TeXStyle AS LONG, BYVAL cCol AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetInlineObject(m_pTextRange2, nType, Align, Char, Char1, Char2, Count, TeXStyle, cCol))
-   RETURN m_Result
-END FUNCTION
+   BYVAL Char1 AS LONG, BYVAL Char2 AS LONG, BYVAL Count AS LONG, BYVAL TeXStyle AS LONG, _
+   BYVAL cCol AS LONG) AS HRESULT
 ```
 
 | Parameter | Description |
@@ -3157,16 +3117,14 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-## <a name="GetMathFunctionType"></a>GetMathFunctionType
+---
+
+## <a name="getmathfunctiontype"></a>GetMathFunctionType
 
 Retrieves the math function type associated with the specified math function name.
 
 ```
 FUNCTION GetMathFunctionType (BYREF cbs AS CBSTR) AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetMathFunctionType(m_pTextRange2, cbs, @Value))
-   RETURN Value
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -3189,17 +3147,15 @@ The math function type of the function name specified by bstr. It can be one of 
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
+---
 
-## <a name="InsertImage"></a>InsertImage
+## <a name="insertimage"></a>InsertImage
 
 Inserts an image into this range.
 
 ```
 FUNCTION InsertImage (BYVAL width_ AS LONG, BYVAL height AS LONG, BYVAL ascent AS LONG, _
-BYVAL nType AS LONG, BYREF cbsAltText AS CBSTR, BYVAL pStream AS IStream PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->InsertImage(m_pTextRange2, width_, height, ascent, nType, cbsAltText, pStream))
-   RETURN m_Result
-END FUNCTION
+   BYVAL nType AS LONG, BYREF cbsAltText AS CBSTR, BYVAL pStream AS IStream PTR) AS HRESULT
 ```
 | Parameter | Description |
 | --------- | ----------- |
@@ -3217,3 +3173,5 @@ If this method succeeds, it returns **S_OK**. Otherwise, it returns an **HRESULT
 #### Remarks
 
 If the range is nondegenerate, the image replaces the text in the range.
+
+---
