@@ -43,17 +43,17 @@ The **ITextRange** objects are powerful editing and data-binding tools that allo
 | [StartOf](#startof) | Moves the range ends to the start of the first overlapping *Unit* in the range. |
 | [EndOf](#endof) | Moves this range's ends to the end of the last overlapping *Unit* in the range. |
 | [Move](#move) | Moves the insertion point forward or backward a specified number of units. |
+| [Movestart](#movestart) | Moves the start position of the range the specified number of units in the specified direction. |
+| [MoveEnd](#moveend) | Moves the end position of the range. |
+| [MoveWhile](#movewhile) | Starts at a specified end of a range and searches while the characters belong to the set specified by *Cset* and while the number of characters is less than or equal to *Coun*t. |
+| [MoveStartWhile](#movestartwhile) | Moves the start position of the range either *Count* characters, or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less. |
+| [MoveEndWhile](#moveendwhile) | Moves the end of the range either *Count* characters or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less. |
+| [MoveUntil](#moveuntil) | Searches up to *Count* characters for the first character in the set of characters specified by *Cset*. |
+| [MoveStartUntil](#movestartuntil) | Moves the start position of the range either *Count* characters, or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less. |
+| [MoveEndUntil](#moveenduntil) | Moves the end of the range either *Count* characters or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [MoveStart](#MoveStart) | Moves the start position of the range the specified number of units in the specified direction. |
-| [MoveEnd](#MoveEnd) | Moves the end position of the range. |
-| [MoveWhile](#MoveWhile) | Starts at a specified end of a range and searches while the characters belong to the set specified by *Cset* and while the number of characters is less than or equal to *Coun*t. |
-| [MoveStartWhile](#MoveStartWhile) | Moves the start position of the range either *Count* characters, or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less. |
-| [MoveEndWhile](#MoveEndWhile) | Moves the end of the range either *Count* characters or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less. |
-| [MoveUntil](#MoveUntil) | Searches up to *Count* characters for the first character in the set of characters specified by *Cset*. |
-| [MoveStartUntil](#MoveStartUntil) | Moves the start position of the range either *Count* characters, or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less. |
-| [MoveEndUntil](#MoveEndUntil) | Moves the end of the range either *Count* characters or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less. |
 | [FindText](#FindText) | Searches up to *Count* characters for the text given by *bstr*. The starting position and direction are also specified by *Count*, and the matching criteria are given by *Flags*. |
 | [FindTextStart](#FindTextStart) | Searches up to *Count* characters for the string, *bstr*, starting at the range's Start *cp (cpFirst)*. The search is subject to the comparison parameter, *Flags*. |
 | [FindTextEnd](#FindTextEnd) | Searches up to *Count* characters for the string, *bstr*, starting from the range's End *cp*. The search is subject to the comparison parameter, *Flags*. |
@@ -1186,16 +1186,12 @@ If *Unit* specifies characters (**tomCharacter**), the Text Object Model (TOM) u
 
 See also the **MoveStart** and **MoveEnd** methods, which move the range Start or End position *Count  Units*, respectively.
 
-## <a name="MoveStart"></a>MoveStart
+## <a name="movestart"></a>MoveStart
 
 Moves the start position of the range the specified number of units in the specified direction.
 
 ```
 FUNCTION MoveStart (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->MoveStart(m_pTextRange2, Unit, Count, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1235,16 +1231,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_NOTIMPL** | Unit is not supported. |
 | **S_FALSE** | Failure for some other reason. |
 
-## <a name="MoveEnd"></a>MoveEnd
+---
+
+## <a name="moveend"></a>MoveEnd
 
 Moves the end position of the range.
 
 ```
 FUNCTION MoveEnd (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->MoveEnd(m_pTextRange2, Unit, Count, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1265,16 +1259,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_NOTIMPL** | Unit is not supported. |
 | **S_FALSE** | Failure for some other reason. |
 
-## <a name="MoveWhile"></a>MoveWhile
+---
+
+## <a name="movewhile"></a>MoveWhile
 
 Starts at a specified end of a range and searches while the characters belong to the set specified by *Cset* and while the number of characters is less than or equal to *Count*. The range is collapsed to an insertion point when a non-matching character is found.
 
 ```
 FUNCTION MoveWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->MoveWhile(m_pTextRange2, Cset, Count, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 Starts at a specified end of a range and searches while the characters belong to the set specified by *Cset* and while the number of characters is less than or equal to *Count*. The range is collapsed to an insertion point when a non-matching character is found.
@@ -1325,16 +1317,12 @@ varg.bstr = SysAllocString("0123456789")
 DIM Delta AS LONG = pRange.MoveWhile(@varg, tomForward)   ' // Move IP past span of digits
 ```
 
-# <a name="MoveStartWhile"></a>MoveStartWhile
+## <a name="movestartwhile"></a>MoveStartWhile
 
 Moves the start position of the range either *Count* characters, or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less.
 
 ```
 FUNCTION MoveStartWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->MoveStartWhile(m_pTextRange2, Cset, Count, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1363,16 +1351,14 @@ The motion described by **MoveStartWhile** is logical rather than geometric. Tha
 
 For more information, see **Move**.
 
-## <a name="MoveEndWhile"></a>MoveEndWhile
+---
+
+## <a name="moveendwhile"></a>MoveEndWhile
 
 Moves the end of the range either *Count* characters or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less.
 
 ```
 FUNCTION MoveEndWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->MoveEndWhile(m_pTextRange2, Cset, Count, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1401,16 +1387,14 @@ The motion described by **MoveEndWhile** is logical rather than geometric. That 
 
 For more information, see **Move**.
 
-## <a name="MoveUntil"></a>MoveUntil
+---
+
+## <a name="moveuntil"></a>MoveUntil
 
 Searches up to *Count* characters for the first character in the set of characters specified by *Cset*. If a character is found, the range is collapsed to that point. The start of the search and the direction are also specified by *Count*.
 
 ```
 FUNCTION MoveUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->MoveUntil(m_pTextRange2, Cset, Count, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1468,16 +1452,12 @@ SUB PrintNumbers (BYVAL pRange AS ITextRange2 PTR)
 END SUB
 ```
 
-## <a name="MoveStartUntil"></a>MoveStartUntil
+## <a name="movestartuntil"></a>MoveStartUntil
 
 Moves the start position of the range the position of the first character found that is in the set of characters specified by *Cset*, provided that the character is found within *Count* characters of the start position.
 
 ```
 FUNCTION MoveStartUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->MoveStartUntil(m_pTextRange2, Cset, Count, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1508,16 +1488,14 @@ The motion described by **MoveStartUntil** is logical rather than geometric. Tha
 
 For more information, see **Move**.
 
-## <a name="MoveEndUntil"></a>MoveEndUntil
+---
+
+## <a name="moveenduntil"></a>MoveEndUntil
 
 Moves the range's end to the character position of the first character found that is in the set of characters specified by *Cset*, provided that the character is found within *Count* characters of the range's end.
 
 ```
 FUNCTION MoveEndUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->MoveEndUntil(m_pTextRange2, Cset, Count, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1545,6 +1523,8 @@ If no character from the set specified by *Cset* is found within *Count* positio
 The motion described by **MoveEndUntil** is logical rather than geometric. That is, motion is toward the end or toward the start of a story. Depending on the language, moving to the end of the story could be moving left or moving right.
 
 For more information, see **Move**.
+
+---
 
 ## <a name="FindText"></a>FindText
 
