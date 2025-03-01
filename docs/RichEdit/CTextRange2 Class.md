@@ -55,14 +55,14 @@ The **ITextRange** objects are powerful editing and data-binding tools that allo
 | [FindTextStart](#findtextstart) | Searches up to *Count* characters for the string, *bstr*, starting at the range's Start *cp (cpFirst)*. The search is subject to the comparison parameter, *Flags*. |
 | [FindTextEnd](#findtextend) | Searches up to *Count* characters for the string, *bstr*, starting from the range's End *cp*. The search is subject to the comparison parameter, *Flags*. |
 | [Delete_](#delete_) | Mimics the DELETE and BACKSPACE keys, with and without the CTRL key depressed. |
+| [Cut](#cut) | Cuts the plain or rich text to a data object or to the Clipboard, depending on the *pVar* parameter. |
+| [Copy](#copy) | Copies the text to a data object. |
+| [Paste](#paste) | Pastes text from a specified data object. |
+| [CanPaste](#canpaste) | Determines if a data object can be pasted, using a specified format, into the current range. |
+| [CanEdit](#canedit) | Determines whether the specified range can be edited. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Cut](#Cut) | Cuts the plain or rich text to a data object or to the Clipboard, depending on the *pVar* parameter. |
-| [Copy](#Copy) | Copies the text to a data object. |
-| [Paste](#Paste) | Pastes text from a specified data object. |
-| [CanPaste](#CanPaste) | Determines if a data object can be pasted, using a specified format, into the current range. |
-| [CanEdit](#CanEdit) | Determines whether the specified range can be edited. |
 | [ChangeCase](#ChangeCase) | Changes the case of letters in this range according to the *nType* parameter. |
 | [GetPoint](#GetPoint) | Retrieves screen coordinates for the start or end character position in the text range, along with the intra-line position. |
 | [SetPoint](#SetPoint) | Changes the range based on a specified point at or up through (depending on *Extend*) the point (x, y) aligned according to *nType*. |
@@ -1733,30 +1733,26 @@ Deleting the end-of-paragraph mark (CR) results in the special behavior of the M
 
 ---
 
-## <a name="Cut"></a>Cut
+## <a name="cut"></a>Cut
 
 Cuts the plain or rich text to a data object or to the Clipboard, depending on the *pVar* parameter.
 
 ```
 FUNCTION Cut (BYVAL pVar AS VARIANT PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->Cut(m_pTextRange2, pVar))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
 | --------- | ----------- |
 | *pVar* | The cut text. pVar->ppunkVal is the out parameter for an **IDataObject** object, provided that the following conditions exist:<br>- pVar->vt = (VT_UNKNOWN OR VT_BYREF)<br>- pVar is not null<br>- pVar->ppunkVal is not null<br>Otherwise, the clipboard is used. |
 
-## <a name="Copy"></a>Copy
+---
+
+## <a name="copy"></a>Copy
 
 Copies the text to a data object.
 
 ```
 FUNCTION Copy (BYVAL pVar AS VARIANT PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->Copy(m_pTextRange2, pVar))
-   RETURN m_Result
-END FUNCTION
 ```
 
 #### Return value
@@ -1769,15 +1765,14 @@ The **Cut**, **Copy**, and **Paste** methods let you perform the usual **Cut**, 
 
 To copy and replace plain text, you can use the **GetText**  and **SetText**  methods. To copy formatted text from range r1 to range r2 without using the clipboard, you can use **Copy** and **Paste** and also the **GetFormattedText** and **SetFormattedText** methods.
 
-## <a name="Paste"></a>Paste
+---
+
+## <a name="paste"></a>Paste
 
 Pastes text from a specified data object.
 
 ```
 FUNCTION Paste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG = 0) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->Paste(m_pTextRange2, pVar, Format))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1797,16 +1792,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 For more information, see **Copy**.
 
-## <a name="CanPaste"></a>CanPaste
+---
+
+## <a name="canpaste"></a>CanPaste
 
 Determines if a data object can be pasted, using a specified format, into the current range.
 
 ```
 FUNCTION CanPaste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG = 0) AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->CanPaste(m_pTextRange2, pVar, Format, @Value))
-   RETURN Value
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1827,16 +1820,14 @@ The method returns one of the following COM error codes.
 | **S_OK** | The clipboard contents or IDataObject can be pasted. |
 | **S_FALSE** | The clipboard contents or **IDataObject** cannot be pasted. |
 
-## <a name="CanEdit"></a>CanEdit
+---
+
+## <a name="canedit"></a>CanEdit
 
 Determines whether the specified range can be edited.
 
 ```
 FUNCTION CanEdit () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->CanEdit(m_pTextRange2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 
 #### Return value
@@ -1850,6 +1841,8 @@ If the range can be edited, the method succeeds and **GetLastREsult** returns S_
 #### Remarks
 
 The range cannot be edited if any part of it is protected or if the document is read-only.
+
+---
 
 ## <a name="ChangeCase"></a>ChangeCase
 
