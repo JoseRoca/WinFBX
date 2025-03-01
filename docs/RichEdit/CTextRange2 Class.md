@@ -3190,3 +3190,5 @@ FUNCTION CTextRange2.GetRtf () AS STRING
 #### Return value
 
 If the method succeeds, it returns the content of the range as a Rich Text Format (RTF) string. If the method fails, it returns an empty string. Call **GetErrorInfo** to get information about the error.
+
+---
