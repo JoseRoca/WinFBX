@@ -96,42 +96,42 @@ The **ITextRange2** objects are powerful editing and data-binding tools that ena
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetColumn](#GetColumn) | Not implemented. Gets the column properties for the currently selected column. |
-| [GetCount](#GetCount) | Gets the count of subranges, including the active subrange in the current range. |
-| [GetGravity](#GetGravity) | Gets the gravity of this range. |
-| [SetGravity](#SetGravity) | Sets the gravity of this range. |
-| [GetRow](#GetRow) | Gets the row properties in the currently selected row. |
-| [GetStartPara](#GetStartPara) | Gets the character position of the start of the paragraph that contains the range's start character position. |
-| [GetTable](#GetTable) |  Not implemented. Gets the table properties in the currently selected table. |
-| [GetURL](#GetURL) | Returns the URL text associated with a range. |
-| [SetURL](#SetURL) | Sets the text in this range to that of the specified URL. |
-| [AddSubrange](#AddSubrange) | Adds a subrange to this range. |
-| [BuildUpMath](#BuildUpMath) | Converts the linear-format math in a range to a built-up form, or modifies the current built-up form. |
-| [DeleteSubrange](#DeleteSubrange) | Deletes a subrange from a range. |
-| [Find](#Find) | Searches for math inline functions in text as specified by a source range. |
-| [GetDropCap](#GetDropCap) | Not implemented. Gets the drop-cap parameters of the paragraph that contains this range. |
-| [GetInlineObject](#GetInlineObject) | Gets the properties of the inline object at the range active end. |
-| [GetProperty](#GetProperty) | Gets the value of a property. |
-| [GetRect](#GetRect) | Retrieves a rectangle of the specified type for the current range. |
-| [GetSubrange](#GetSubrange) | Retrieves a subrange in a range. |
-| [HexToUnicode](#HexToUnicode) | Converts and replaces the hexadecimal number at the end of this range to a Unicode character. |
-| [InsertTable](#InsertTable) | Inserts a table in a range. |
-| [Linearize](#Linearize) | Translates the built-up math, ruby, and other inline objects in this range to linearized form. |
-| [SetActiveSubrange](#SetActiveSubrange) | Makes the specified subrange the active subrange of this range. |
-| [SetDropCap](#SetDropCap) | Not implemented. Sets the drop-cap parameters for the paragraph that contains the current range. |
+| [GetColumn](#getcolumn) | Not implemented. Gets the column properties for the currently selected column. |
+| [GetCount](#getcount) | Gets the count of subranges, including the active subrange in the current range. |
+| [GetGravity](#getgravity) | Gets the gravity of this range. |
+| [SetGravity](#setgravity) | Sets the gravity of this range. |
+| [GetRow](#getrow) | Gets the row properties in the currently selected row. |
+| [GetStartPara](#getstartpara) | Gets the character position of the start of the paragraph that contains the range's start character position. |
+| [GetTable](#gettable) |  Not implemented. Gets the table properties in the currently selected table. |
+| [GetURL](#geturl) | Returns the URL text associated with a range. |
+| [SetURL](#seturl) | Sets the text in this range to that of the specified URL. |
+| [AddSubrange](#addsubrange) | Adds a subrange to this range. |
+| [BuildUpMath](#buildupmath) | Converts the linear-format math in a range to a built-up form, or modifies the current built-up form. |
+| [DeleteSubrange](#deletesubrange) | Deletes a subrange from a range. |
+| [Find](#find) | Searches for math inline functions in text as specified by a source range. |
+| [GetDropCap](#getdropcap) | Not implemented. Gets the drop-cap parameters of the paragraph that contains this range. |
+| [GetInlineObject](#getinlineobject) | Gets the properties of the inline object at the range active end. |
+| [GetProperty](#getproperty) | Gets the value of a property. |
+| [GetRect](#getrect) | Retrieves a rectangle of the specified type for the current range. |
+| [GetSubrange](#getsubrange) | Retrieves a subrange in a range. |
+| [HexToUnicode](#hextounicode) | Converts and replaces the hexadecimal number at the end of this range to a Unicode character. |
+| [InsertTable](#inserttable) | Inserts a table in a range. |
+| [Linearize](#linearize) | Translates the built-up math, ruby, and other inline objects in this range to linearized form. |
+| [SetActiveSubrange](#setactivesubrange) | Makes the specified subrange the active subrange of this range. |
+| [SetDropCap](#setdropcap) | Not implemented. Sets the drop-cap parameters for the paragraph that contains the current range. |
 | [SetProperty](#SetProperty) | Sets the value of the specified property. |
-| [UnicodeToHex](#UnicodeToHex) | Converts the Unicode character(s) preceding the start position of this text range to a hexadecimal number, and selects it. |
-| [SetInlineObject](#SetInlineObject) | Sets the text of this range. |
-| [GetMathFunctionType](#GetMathFunctionType) | Retrieves the math function type associated with the specified math function name. |
-| [InsertImage](#InsertImage) | Inserts an image into this range. |
+| [UnicodeToHex](#unicodetohex) | Converts the Unicode character(s) preceding the start position of this text range to a hexadecimal number, and selects it. |
+| [SetInlineObject](#setinlineobject) | Sets the text of this range. |
+| [GetMathFunctionType](#getmathfunctiontype) | Retrieves the math function type associated with the specified math function name. |
+| [InsertImage](#insertimage) | Inserts an image into this range. |
 
-### Methods inherited from CTOMBase Class
+### Methods inherited from CTextObjectBase Class
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetLastResult](#GetLastResult) | Returns the last result code |
-| [SetResult](#SetResult) | Sets the last result code. |
-| [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
+| [GetLastResult](#getlastresult) | Returns the last result code |
+| [SetResult](#setresult) | Sets the last result code. |
+| [GetErrorInfo](#geterrorinfo) | Returns a description of the last result code. |
 
 ## <a name="constructor"></a>CONSTRUCTOR
 
