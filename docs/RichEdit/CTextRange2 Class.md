@@ -51,13 +51,13 @@ The **ITextRange** objects are powerful editing and data-binding tools that allo
 | [MoveUntil](#moveuntil) | Searches up to *Count* characters for the first character in the set of characters specified by *Cset*. |
 | [MoveStartUntil](#movestartuntil) | Moves the start position of the range either *Count* characters, or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less. |
 | [MoveEndUntil](#moveenduntil) | Moves the end of the range either *Count* characters or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less. |
+| [FindText](#findtext) | Searches up to *Count* characters for the text given by *bstr*. The starting position and direction are also specified by *Count*, and the matching criteria are given by *Flags*. |
+| [FindTextStart](#findtextstart) | Searches up to *Count* characters for the string, *bstr*, starting at the range's Start *cp (cpFirst)*. The search is subject to the comparison parameter, *Flags*. |
+| [FindTextEnd](#findtextend) | Searches up to *Count* characters for the string, *bstr*, starting from the range's End *cp*. The search is subject to the comparison parameter, *Flags*. |
+| [Delete_](dDelete_) | Mimics the DELETE and BACKSPACE keys, with and without the CTRL key depressed. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [FindText](#FindText) | Searches up to *Count* characters for the text given by *bstr*. The starting position and direction are also specified by *Count*, and the matching criteria are given by *Flags*. |
-| [FindTextStart](#FindTextStart) | Searches up to *Count* characters for the string, *bstr*, starting at the range's Start *cp (cpFirst)*. The search is subject to the comparison parameter, *Flags*. |
-| [FindTextEnd](#FindTextEnd) | Searches up to *Count* characters for the string, *bstr*, starting from the range's End *cp*. The search is subject to the comparison parameter, *Flags*. |
-| [Delete_](#Delete_) | Mimics the DELETE and BACKSPACE keys, with and without the CTRL key depressed. |
 | [Cut](#Cut) | Cuts the plain or rich text to a data object or to the Clipboard, depending on the *pVar* parameter. |
 | [Copy](#Copy) | Copies the text to a data object. |
 | [Paste](#Paste) | Pastes text from a specified data object. |
@@ -1526,16 +1526,12 @@ For more information, see **Move**.
 
 ---
 
-## <a name="FindText"></a>FindText
+## <a name="findtext"></a>FindText
 
 Searches up to *Count* characters for the text given by *cbs*. The starting position and direction are also specified by *Count*, and the matching criteria are given by *Flags*.
 
 ```
 FUNCTION FindText (BYREF cbs AS CBSTR, BYVAL Count AS LONG = tomForward, BYVAL Flags AS LONG = 0) AS LONG
-   DIM Length AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->FindText(m_pTextRange2, cbs, Count, Flags, @Length))
-   RETURN Length
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1582,7 +1578,7 @@ To print all lines containing one or more occurrences of the word "laser", repla
 
 ```
 WHILE pRange.FindText("laser")   // Select next occurrence of "laser"
-   pRange.Expand(**tomLine)    ' // Select enclosing line
+   pRange.Expand(tomLine)    ' // Select enclosing line
    ' PRINT ---   ' // Print the line
 WEND
 ```
@@ -1632,16 +1628,14 @@ END SUB
 ```
 To do this for all such occurrences, change the IF into a WHILE/WEND loop in the above line of code.
 
-# <a name="FindTextStart"></a>FindTextStart
+---
+
+# <a name="findtextstart"></a>FindTextStart
 
 Searches up to *Count* characters for the string, *cbs*, starting at the range's Start *cp (cpFirst)*. The search is subject to the comparison parameter, *Flags*. If the string is found, the Start *cp* is changed to the matched string, and the method returns the length of the string. If the string is not found, the range is unchanged, and the method returns zero.
 
 ```
 FUNCTION FindTextStart (BYREF cbs AS CBSTR, BYVAL Count AS LONG = tomForward, BYVAL Flags AS LONG = 0) AS LONG
-   DIM Length AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->FindTextStart(m_pTextRange2, cbs, Count, Flags, @Length))
-   RETURN Length
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1664,16 +1658,12 @@ The length of the matched string.
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
-## <a name="FindTextEnd"></a>FindTextEnd
+## <a name="findtextend"></a>FindTextEnd
 
 Searches up to *Count* characters for the string, *cbs*, starting from the range's End *cp*. The search is subject to the comparison parameter, *Flags*. If the string is found, the End *cp* is changed to be the end of the matched string, and the method returns the length of the string. If the string is not found, the range is unchanged and the method returns zero.
 
 ```
 FUNCTION FindTextEnd (BYREF cbs AS CBSTR, BYVAL Count AS LONG = tomForward, BYVAL Flags AS LONG = 0) AS LONG
-   DIM Length AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->FindTextEnd(m_pTextRange2, cbs, Count, Flags, @Length))
-   RETURN Length
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1695,6 +1685,8 @@ The length of the matched string.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
+
+---
 
 ## <a name="Delete_"></a>Delete_
 
@@ -1702,10 +1694,6 @@ Mimics the DELETE and BACKSPACE keys, with and without the CTRL key depressed.
 
 ```
 FUNCTION Delete_ (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->Delete_(m_pTextRange2, Unit, Count, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1742,6 +1730,8 @@ Deleting the end-of-paragraph mark (CR) results in the special behavior of the M
 - If you delete the CR as well as some, but not all, of the characters in the following paragraph, the characters left over from the current paragraph get the paragraph formatting of the following paragraph.
 - If you select to the end of a paragraph, but not the whole paragraph, the CR is not deleted.
 - If you delete the whole paragraph (from the beginning through the CR), you delete the CR as well (unless it is the final CR in the file).
+
+---
 
 ## <a name="Cut"></a>Cut
 
