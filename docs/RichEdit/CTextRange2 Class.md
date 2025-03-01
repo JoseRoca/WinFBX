@@ -610,25 +610,13 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="GetPara"></a>GetPara
+## <a name="getpara"></a>GetPara
 
 Gets an **ITextPara2** object with the paragraph attributes of a range.
 
 ```
-FUNCTION CTextRange2.GetPara () AS ITextPara2 PTR
-   DIM pPara AS ITextPara2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetPara2(m_pTextRange2, @pPara))
-   RETURN pPara
-END FUNCTION
+FUNCTION GetPara () AS ITextPara2 PTR
 ```
-```
-FUNCTION CTextRange2.GetPara2 () AS ITextPara2 PTR
-   DIM pPara AS ITextPara2 PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetPara2(m_pTextRange2, @pPara))
-   RETURN pPara
-END FUNCTION
-```
-
 #### Return value
 
 The **ITextPara2** object.
@@ -637,21 +625,14 @@ The **ITextPara2** object.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="SetPara"></a>SetPara
+---
 
-Sets the paragraph format attributes of a range. In this implementation of the class, **SetPara** and **SetPara2** are the same method.
+## <a name="setpara"></a>SetPara
+
+Sets the paragraph format attributes of a range.
 
 ```
-FUNCTION CTextRange2.SetPara (BYVAL pPara AS ITextPara PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetPara(m_pTextRange2, pPara))
-   RETURN m_Result
-END FUNCTION
-```
-```
-FUNCTION CTextRange2.SetPara2 (BYVAL pPara AS ITextPara2 PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetPara2(m_pTextRange2, pPara))
-   RETURN m_Result
-END FUNCTION
+FUNCTION SetPara (BYVAL pPara AS ITextPara PTR) AS HRESULT
 ```
 | Parameter | Description |
 | --------- | ----------- |
@@ -666,6 +647,8 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_INVALIDARG** | Invalid argument. |
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
+
+---
 
 # <a name="GetStoryLength"></a>GetStoryLength
 
