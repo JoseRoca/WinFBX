@@ -60,14 +60,11 @@ The **ITextRange** objects are powerful editing and data-binding tools that allo
 | [Paste](#paste) | Pastes text from a specified data object. |
 | [CanPaste](#canpaste) | Determines if a data object can be pasted, using a specified format, into the current range. |
 | [CanEdit](#canedit) | Determines whether the specified range can be edited. |
-
-| Name       | Description |
-| ---------- | ----------- |
-| [ChangeCase](#ChangeCase) | Changes the case of letters in this range according to the *nType* parameter. |
-| [GetPoint](#GetPoint) | Retrieves screen coordinates for the start or end character position in the text range, along with the intra-line position. |
-| [SetPoint](#SetPoint) | Changes the range based on a specified point at or up through (depending on *Extend*) the point (x, y) aligned according to *nType*. |
-| [ScrollIntoView](#ScrollIntoView) | Scrolls the specified range into view. |
-| [GetEmbeddedObject](#GetEmbeddedObject) | Retrieves a pointer to the embedded object at the start of the specified range, that is, at *cpFirst*. |
+| [ChangeCase](#changecase) | Changes the case of letters in this range according to the *nType* parameter. |
+| [GetPoint](#getpoint) | Retrieves screen coordinates for the start or end character position in the text range, along with the intra-line position. |
+| [SetPoint](#setpoint) | Changes the range based on a specified point at or up through (depending on *Extend*) the point (x, y) aligned according to *nType*. |
+| [ScrollIntoView](#scrollintoview) | Scrolls the specified range into view. |
+| [GetEmbeddedObject](#getembeddedobject) | Retrieves a pointer to the embedded object at the start of the specified range, that is, at *cpFirst*. |
 
 ### ITextSelection Interface
 
@@ -1844,15 +1841,12 @@ The range cannot be edited if any part of it is protected or if the document is 
 
 ---
 
-## <a name="ChangeCase"></a>ChangeCase
+## <a name="changecase"></a>ChangeCase
 
 Changes the case of letters in this range according to the *nType* parameter.
 
 ```
 FUNCTION ChangeCase (BYVAL nType AS LONG  = tomLowerCase) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->ChangeCase(m_pTextRange2, nType))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1870,15 +1864,15 @@ END FUNCTION
 #### Return value
 This method returns an **HRESULT** value. If successful, it returns **S_OK**. Otherwise, it returns **S_FALSE**.
 
-## <a name="GetPoint"></a>GetPoint
+---
+
+## <a name="getpoint"></a>GetPoint
 
 Retrieves screen coordinates for the start or end character position in the text range, along with the intra-line position.
 
 ```
-FUNCTION GetPoint (BYVAL nType AS LONG = tomStart + TA_BASELINE + TA_LEFT, BYVAL px AS LONG PTR, BYVAL py AS LONG PTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->GetPoint(m_pTextRange2, nType, px, py))
-   RETURN m_Result
-END FUNCTION
+FUNCTION GetPoint (BYVAL nType AS LONG = tomStart + TA_BASELINE + TA_LEFT, _
+   BYVAL px AS LONG PTR, BYVAL py AS LONG PTR) AS HRESULT
 ```
 
 | Parameter | Description |
@@ -1928,15 +1922,14 @@ The method returns an **HRESULT** value. If the method succeeds, it returns **S_
 
 The **GetPoint** method gives **ITextRange** the ability to emulate UI-pointer commands; it is also handy for accessibility purposes.
 
-## <a name="SetPoint"></a>SetPoint
+---
+
+## <a name="setpoint"></a>SetPoint
 
 Changes the range based on a specified point at or up through (depending on Extend) the point (x, y) aligned according to *nType*.
 
 ```
 FUNCTION SetPoint (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG, BYVAL Extend AS LONG = 0) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetPoint(m_pTextRange2, x, y, nType, Extend))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1953,15 +1946,14 @@ The method returns an **HRESULT** value. If the method succeeds, it returns **S_
 #### Remarks
 An application can use the specified point in the **WindowFromPoint** function to get the handle of the window, which usually can be used to find the client-rectangle coordinates (although a notable exception is with [Windowless Controls](https://learn.microsoft.com/en-us/windows/win32/controls/windowless-rich-edit-controls)).
 
-## <a name="ScrollIntoView"></a>ScrollIntoView
+---
+
+## <a name="scrollintoview"></a>ScrollIntoView
 
 Scrolls the specified range into view.
 
 ```
 FUNCTION ScrollIntoView (BYVAL Value AS LONG = tomStart) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->ScrollIntoView(m_pTextRange2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1980,16 +1972,14 @@ END FUNCTION
 
 The method returns an **HRESULT** value. If the method succeeds, it returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
-## <a name="GetEmbeddedObject"></a>GetEmbeddedObject
+---
+
+## <a name="getembeddedobject"></a>GetEmbeddedObject
 
 Retrieves a pointer to the embedded object at the start of the specified range, that is, at *cpFirst*. The range must either be an insertion point or it must select only the embedded object.
 
 ```
 FUNCTION GetEmbeddedObject () AS IUnknown PTR
-   DIM pObject AS IUnknown PTR
-   this.SetResult(m_pTextRange2->lpvtbl->GetEmbeddedObject(m_pTextRange2, @pObject))
-   RETURN pObject
-END FUNCTION
 ```
 
 #### Return value
@@ -1999,6 +1989,8 @@ The pointer to the object.
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
+
+---
 
 ## <a name="GetFlags"></a>GetFlags
 
