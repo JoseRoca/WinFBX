@@ -224,9 +224,7 @@ A "rich edit control" is a window in which the user can enter and edit text. The
 | [NotificationMode](#notificationmode) | Gets/sets the notification mode. |
 | [Notify](#notify) | Notifies the Text Object Model (TOM) engine client of particular Input Method Editor (IME) events. |
 | [Range](#range) | Retrieves a text range object for a specified range of content in the active story of the document. |
-| [Range2](#range2) | Retrieves a new text range for the active story of the document. |
 | [RangeFromPoint](#rangefrompoint) | Retrieves a range for the content at or nearest to the specified point on the screen. |
-| [RangeFromPoint2](#rangefrompoint2) | Retrieves the degenerate range at (or nearest to) a particular point on the screen. |
 | [Saved](#saved) | Gets/sets the Saved property. |
 | [Selection](#selection) | Gets the active selection. |
 | [Selection2](#selection2) | Gets the active selection. |
@@ -4634,33 +4632,10 @@ The rich edit control doesn't implement this method.
 
 ## <a name="range"></a>Range
 
-Retrieves a text range object for a specified range of content in the active story of the document.
-
-```
-FUNCTION Range (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange PTR
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *cpActive* | The start position of new range. The default value is zero, which represents the start of the document. |
-| *cpAnchor* | The end position of new range. The default value is zero. |
-
-#### Return value
-
-A **ITextRange** pointer to the specified text range.
-
-#### Result code
-
-If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes: **E_INVALIDARG** (invalid argument), **E_OUTOFMEMORY** (insufficient memory). Call **GetErrorInfo** to get information about the result.
-
----
-
-## <a name="range2"></a>Range2
-
 Retrieves a new text range for the active story of the document.
 
 ```
-FUNCTION Range2 (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange2 PTR
+FUNCTION Range (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange2 PTR
 ```
 
 | Parameter  | Description |
@@ -4680,33 +4655,10 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ## <a name="rangefrompoint"></a>RangeFromPoint
 
-Retrieves a range for the content at or nearest to the specified point on the screen.
-
-```
-FUNCTION RangeFromPoint (BYVAL x AS LONG, BYVAL y AS LONG) AS ITextRange PTR
-```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *x* | The horizontal coordinate of the specified point, in screen coordinates. |
-| *y* | The vertical coordinate of the specified point, in screen coordinates. |
-
-#### Return value
-
-The text range that corresponds to the specified point.
-
-#### Result code
-
-If the method succeeds, it returns **S_OK**. If the method fails, it returns one of the following COM error codes: **E_INVALIDARG** (invalid argument), **E_OUTOFMEMORY** (insufficient memory). Call **GetErrorInfo** to get information about the result.
-
----
-
-## <a name="rangefrompoint2"></a>RangeFromPoint2
-
 Retrieves the degenerate range at (or nearest to) a particular point on the screen.
 
 ```
-FUNCTION RangeFromPoint2 (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG) AS ITextRange2 PTR
+FUNCTION RangeFromPoint (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG) AS ITextRange2 PTR
 ```
 
 | Parameter  | Description |
