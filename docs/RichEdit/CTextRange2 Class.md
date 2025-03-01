@@ -31,11 +31,11 @@ The **ITextRange2** interface is derived from **ITextRange**, and its objects ar
 | [SetPara](#setpara) | Sets the paragraph attributes of this range to those of the specified **ITextPara** object. |
 | [GetStoryLength](#getstorylength) | Gets the count of characters in the range's story. |
 | [GetStoryType](#getstorytype) | Get the type of the range's story. |
+| [Collapse](#collapse) | Collapses the specified text range into a degenerate point at either the beginning or end of the range. |
+| [Expand](#expand) | Expands this range so that any partial units it contains are completely contained. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Collapse](#Collapse) | Collapses the specified text range into a degenerate point at either the beginning or end of the range. |
-| [Expand](#Expand) | Expands this range so that any partial units it contains are completely contained. |
 | [GetIndex](#GetIndex) | Retrieves the story index of the *Unit* parameter at the specified range Start character position. |
 | [SetIndex](#SetIndex) | Changes this range to the specified unit of the story. |
 | [SetRange](#SetRange) | Adjusts the range endpoints to the specified values. |
@@ -699,15 +699,12 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="Collapse"></a>Collapse
+## <a name="collapse"></a>Collapse
 
 Collapses the specified text range into a degenerate point at either the beginning or end of the range.
 
 ```
-FUNCTION CTextRange2.Collapse (BYVAL bStart AS LONG = tomStart) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->Collapse(m_pTextRange2, bStart))
-   RETURN m_Result
-END FUNCTION
+FUNCTION Collapse (BYVAL bStart AS LONG = tomStart) AS HRESULT
 ```
 | Parameter | Description |
 | --------- | ----------- |
@@ -722,16 +719,14 @@ END FUNCTION
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
-# <a name="Expand"></a>Expand
+---
+
+## <a name="expand"></a>Expand
 
 Expands this range so that any partial units it contains are completely contained.
 
 ```
 FUNCTION CTextRange2.Expand (BYVAL Unit AS LONG = tomWord) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->Expand(m_pTextRange2, Unit, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 | Parameter | Description |
 | --------- | ----------- |
@@ -772,6 +767,8 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 For example, if an insertion point is at the beginning, the end, or within a word, **Expand** expands the range to include that word. If the range already includes one word and part of another, **Expand** expands the range to include both words. **Expand** expands the range to include the visible portion of the range's story.
+
+---
 
 # <a name="GetIndex"></a>GetIndex
 
