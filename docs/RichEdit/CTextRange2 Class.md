@@ -35,14 +35,14 @@ The **ITextRange** objects are powerful editing and data-binding tools that allo
 | [Expand](#expand) | Expands this range so that any partial units it contains are completely contained. |
 | [GetIndex](#getIndex) | Retrieves the story index of the *Unit* parameter at the specified range Start character position. |
 | [SetIndex](#setIndex) | Changes this range to the specified unit of the story. |
+| [SetRange](#setrange) | Adjusts the range endpoints to the specified values. |
+| [InRange](#inrange) | Determines whether this range is within or at the same text as a specified range. |
+| [InStory](#instory) | Determines whether this range's story is the same as a specified range's story. |
+| [IsEqual](#isequal) | Determines whether this range has the same character positions and story as those of a specified range. |
+| [Select_](#select_) | Sets the start and end positions, and story values of the active selection, to those of this range. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [SetRange](#SetRange) | Adjusts the range endpoints to the specified values. |
-| [InRange](#InRange) | Determines whether this range is within or at the same text as a specified range. |
-| [InStory](#InStory) | Determines whether this range's story is the same as a specified range's story. |
-| [IsEqual](#IsEqual) | Determines whether this range has the same character positions and story as those of a specified range. |
-| [Select](#Select) | Sets the start and end positions, and story values of the active selection, to those of this range. |
 | [StartOf](#StartOf) | Moves the range ends to the start of the first overlapping *Unit* in the range. |
 | [EndOf](#EndOf) | Moves this range's ends to the end of the last overlapping *Unit* in the range. |
 | [Move](#Move) | Moves the insertion point forward or backward a specified number of units. |
@@ -858,15 +858,12 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-## <a name="SetRange"></a>SetRange
+## <a name="setrange"></a>SetRange
 
 Adjusts the range endpoints to the specified values.
 
 ```
 FUNCTION SetRange (BYVAL cpAnchor AS LONG, BYVAL cpActive AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetRange(m_pTextRange2, cpAnchor, cpActive))
-   RETURN m_Result
-END FUNCTION
 ```
 | Parameter | Description |
 | --------- | ----------- |
@@ -885,16 +882,14 @@ This method removes any other subranges this range may have. To preserve the cur
 
 If the text range is a selection, you can set the attributes of the selection by using the **SetFlags** method.
 
-# <a name="InRange"></a>InRange
+---
+
+## <a name="inrange"></a>InRange
 
 Determines whether this range is within or at the same text as a specified range.
 
 ```
 FUNCTION InRange (BYVAL pRange AS ITextRange2 PTR) AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->InRange(m_pTextRange2, pRange, @Value))
-   RETURN Value
-END FUNCTION
 ```
 | Parameter | Description |
 | --------- | ----------- |
@@ -927,18 +922,15 @@ When the **FindText**, **MoveWhile**, and **MoveUntil** method families are used
 
 **IsEqual** is a special case of **InRange** that returns **tomTrue** if the *pRange* has the same start and end character positions and belongs to the same story.
 
-# <a name="InStory"></a>InStory
+---
+
+## <a name="instory"></a>InStory
 
 Determines whether this range's story is the same as a specified range's story.
 
 ```
 FUNCTION InStory (BYVAL pRange AS ITextRange2 PTR) AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->InStory(m_pTextRange2, pRange, @Value))
-   RETURN Value
-END FUNCTION
 ```
-
 | Parameter | Description |
 | --------- | ----------- |
 | *pRange* | The **ITextRange2** object whose story is compared to this range's story. |
@@ -951,18 +943,15 @@ The comparison result. Returns **tomTrue** if this range's story is the same as 
 
 If the two stories are the same, **GetLastResult** returns **S_OK**. Otherwise, it returns **S_FALSE**.
 
-# <a name="IsEqual"></a>IsEqual
+---
+
+# <a name="isequal"></a>IsEqual
 
 Determines whether this range has the same character positions and story as those of a specified range.
 
 ```
 FUNCTION IsEqual (BYVAL pRange AS ITextRange2 PTR) AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->IsEqual(m_pTextRange2, pRange, @Value))
-   RETURN Value
-END FUNCTION
 ```
-
 | Parameter | Description |
 | --------- | ----------- |
 | *pRange* | The **ITextRange2** object that is compared to this range. |
@@ -977,15 +966,14 @@ If the ranges have the same character positions and story, **GetLastResult** ret
 
 The **IsEqual** method returns **tomTrue** only if the range points at the same text as *pRange*.
 
-# <a name="Select_"></a>Select_
+---
+
+## <a name="Select_"></a>Select_
 
 Sets the start and end positions, and story values of the active selection, to those of this range.
 
 ```
 FUNCTION Select_ () AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->Select(m_pTextRange2))
-   RETURN m_Result
-END FUNCTION
 ```
 
 #### Return value
@@ -998,18 +986,15 @@ The active end of the new selection is at the end position.
 
 The caret for an ambiguous character position is displayed at the beginning of the line.
 
-# <a name="StartOf"></a>StartOf
+---
+
+# <a name="startof"></a>StartOf
 
 Moves the range ends to the start of the first overlapping *Unit* in the range.
 
 ```
 FUNCTION StartOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG = 0) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->StartOf(m_pTextRange2, Unit, Extend, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
-
 | Parameter | Description |
 | --------- | ----------- |
 | *Unit* | *Unit* to use in the move operation. For a list of *Unit* values, see the table below. |
@@ -1058,16 +1043,14 @@ If the range is an insertion point on a boundary between Units, **StartOf** does
 
 The **StartOf** and **EndOf** methods differ from the **HomeKey** and **EndKey** methods in that the latter extend from the active end, whereas **StartOf** extends from the start position and **EndOf** extends from the end position.
 
-# <a name="EndOf"></a>EndOf
+---
+
+# <a name="endof"></a>EndOf
 
 Moves this range's ends to the end of the last overlapping Unit in the range.
 
 ```
 FUNCTION EndOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG = 0) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->EndOf(m_pTextRange2, Unit, Extend, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1117,6 +1100,8 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 
 For comparison, the **StartOf** method moves the range ends to the beginning of the first overlapping *Unit* in the range. Note, the **StartOf** and **EndOf** methods differ from the **HomeKey** and **EndKey** methods in that the latter extend from the active end, whereas **StartOf** extends from Start and **EndOf** extends from End. If the range is an insertion point on a boundary between *Units*, **EndOf** does not change End. In particular, calling *EndOf (tomCharacter, 0)* does not change End except for an insertion point at the beginning of a story.
+
+---
 
 # <a name="Move"></a>Move
 
