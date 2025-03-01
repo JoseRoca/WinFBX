@@ -27,11 +27,11 @@ The **ITextRange2** interface is derived from **ITextRange**, and its objects ar
 | [SetEnd](#setend) | Sets the end position of the range. |
 | [GetFont](#getfont) | Gets an **ITextFont** object with the character attributes of the specified range. |
 | [SetFont](#setfont) | Sets this range's character attributes to those of the specified **ITextFont** object. |
+| [GetPara](#getpara) | Gets an **ITextPara** object with the paragraph attributes of the specified range. |
+| [SetPara](#setpara) | Sets the paragraph attributes of this range to those of the specified **ITextPara** object. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetPara](#GetPara) | Gets an **ITextPara** object with the paragraph attributes of the specified range. |
-| [SetPara](#SetPara) | Sets the paragraph attributes of this range to those of the specified **ITextPara** object. |
 | [GetStoryLength](#GetStoryLength) | Gets the count of characters in the range's story. |
 | [GetStoryType](#GetStoryType) | Get the type of the range's story. |
 | [Collapse](#Collapse) | Collapses the specified text range into a degenerate point at either the beginning or end of the range. |
