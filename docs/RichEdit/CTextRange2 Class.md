@@ -40,12 +40,12 @@ The **ITextRange** objects are powerful editing and data-binding tools that allo
 | [InStory](#instory) | Determines whether this range's story is the same as a specified range's story. |
 | [IsEqual](#isequal) | Determines whether this range has the same character positions and story as those of a specified range. |
 | [Select_](#select_) | Sets the start and end positions, and story values of the active selection, to those of this range. |
+| [StartOf](#startof) | Moves the range ends to the start of the first overlapping *Unit* in the range. |
+| [EndOf](#endof) | Moves this range's ends to the end of the last overlapping *Unit* in the range. |
+| [Move](#move) | Moves the insertion point forward or backward a specified number of units. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [StartOf](#StartOf) | Moves the range ends to the start of the first overlapping *Unit* in the range. |
-| [EndOf](#EndOf) | Moves this range's ends to the end of the last overlapping *Unit* in the range. |
-| [Move](#Move) | Moves the insertion point forward or backward a specified number of units. |
 | [MoveStart](#MoveStart) | Moves the start position of the range the specified number of units in the specified direction. |
 | [MoveEnd](#MoveEnd) | Moves the end position of the range. |
 | [MoveWhile](#MoveWhile) | Starts at a specified end of a range and searches while the characters belong to the set specified by *Cset* and while the number of characters is less than or equal to *Coun*t. |
@@ -945,7 +945,7 @@ If the two stories are the same, **GetLastResult** returns **S_OK**. Otherwise, 
 
 ---
 
-# <a name="isequal"></a>IsEqual
+## <a name="isequal"></a>IsEqual
 
 Determines whether this range has the same character positions and story as those of a specified range.
 
@@ -988,7 +988,7 @@ The caret for an ambiguous character position is displayed at the beginning of t
 
 ---
 
-# <a name="startof"></a>StartOf
+## <a name="startof"></a>StartOf
 
 Moves the range ends to the start of the first overlapping *Unit* in the range.
 
@@ -1045,7 +1045,7 @@ The **StartOf** and **EndOf** methods differ from the **HomeKey** and **EndKey**
 
 ---
 
-# <a name="endof"></a>EndOf
+## <a name="endof"></a>EndOf
 
 Moves this range's ends to the end of the last overlapping Unit in the range.
 
@@ -1103,7 +1103,7 @@ For comparison, the **StartOf** method moves the range ends to the beginning of 
 
 ---
 
-# <a name="Move"></a>Move
+## <a name="Move"></a>Move
 
 Moves the insertion point forward or backward a specified number of units. If the range is nondegenerate, the range is collapsed to an insertion point at either end, depending on *Count*, and then is moved.
 ```
@@ -1170,7 +1170,7 @@ If *Unit* specifies characters (**tomCharacter**), the Text Object Model (TOM) u
 
 See also the **MoveStart** and **MoveEnd** methods, which move the range Start or End position *Count  Units*, respectively.
 
-# <a name="MoveStart"></a>MoveStart
+## <a name="MoveStart"></a>MoveStart
 
 Moves the start position of the range the specified number of units in the specified direction.
 
@@ -1219,7 +1219,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_NOTIMPL** | Unit is not supported. |
 | **S_FALSE** | Failure for some other reason. |
 
-# <a name="MoveEnd"></a>MoveEnd
+## <a name="MoveEnd"></a>MoveEnd
 
 Moves the end position of the range.
 
@@ -1249,7 +1249,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_NOTIMPL** | Unit is not supported. |
 | **S_FALSE** | Failure for some other reason. |
 
-# <a name="MoveWhile"></a>MoveWhile
+## <a name="MoveWhile"></a>MoveWhile
 
 Starts at a specified end of a range and searches while the characters belong to the set specified by *Cset* and while the number of characters is less than or equal to *Count*. The range is collapsed to an insertion point when a non-matching character is found.
 
@@ -1347,7 +1347,7 @@ The motion described by **MoveStartWhile** is logical rather than geometric. Tha
 
 For more information, see **Move**.
 
-# <a name="MoveEndWhile"></a>MoveEndWhile
+## <a name="MoveEndWhile"></a>MoveEndWhile
 
 Moves the end of the range either *Count* characters or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less.
 
@@ -1385,7 +1385,7 @@ The motion described by **MoveEndWhile** is logical rather than geometric. That 
 
 For more information, see **Move**.
 
-# <a name="MoveUntil"></a>MoveUntil
+## <a name="MoveUntil"></a>MoveUntil
 
 Searches up to *Count* characters for the first character in the set of characters specified by *Cset*. If a character is found, the range is collapsed to that point. The start of the search and the direction are also specified by *Count*.
 
@@ -1452,7 +1452,7 @@ SUB PrintNumbers (BYVAL pRange AS ITextRange2 PTR)
 END SUB
 ```
 
-# <a name="MoveStartUntil"></a>MoveStartUntil
+## <a name="MoveStartUntil"></a>MoveStartUntil
 
 Moves the start position of the range the position of the first character found that is in the set of characters specified by *Cset*, provided that the character is found within *Count* characters of the start position.
 
@@ -1492,7 +1492,7 @@ The motion described by **MoveStartUntil** is logical rather than geometric. Tha
 
 For more information, see **Move**.
 
-# <a name="MoveEndUntil"></a>MoveEndUntil
+## <a name="MoveEndUntil"></a>MoveEndUntil
 
 Moves the range's end to the character position of the first character found that is in the set of characters specified by *Cset*, provided that the character is found within *Count* characters of the range's end.
 
@@ -1530,7 +1530,7 @@ The motion described by **MoveEndUntil** is logical rather than geometric. That 
 
 For more information, see **Move**.
 
-# <a name="FindText"></a>FindText
+## <a name="FindText"></a>FindText
 
 Searches up to *Count* characters for the text given by *cbs*. The starting position and direction are also specified by *Count*, and the matching criteria are given by *Flags*.
 
@@ -1668,7 +1668,7 @@ The length of the matched string.
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
-# <a name="FindTextEnd"></a>FindTextEnd
+## <a name="FindTextEnd"></a>FindTextEnd
 
 Searches up to *Count* characters for the string, *cbs*, starting from the range's End *cp*. The search is subject to the comparison parameter, *Flags*. If the string is found, the End *cp* is changed to be the end of the matched string, and the method returns the length of the string. If the string is not found, the range is unchanged and the method returns zero.
 
@@ -1700,7 +1700,7 @@ The length of the matched string.
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
-# <a name="Delete_"></a>Delete_
+## <a name="Delete_"></a>Delete_
 
 Mimics the DELETE and BACKSPACE keys, with and without the CTRL key depressed.
 
@@ -1747,7 +1747,7 @@ Deleting the end-of-paragraph mark (CR) results in the special behavior of the M
 - If you select to the end of a paragraph, but not the whole paragraph, the CR is not deleted.
 - If you delete the whole paragraph (from the beginning through the CR), you delete the CR as well (unless it is the final CR in the file).
 
-# <a name="Cut"></a>Cut
+## <a name="Cut"></a>Cut
 
 Cuts the plain or rich text to a data object or to the Clipboard, depending on the *pVar* parameter.
 
@@ -1762,7 +1762,7 @@ END FUNCTION
 | --------- | ----------- |
 | *pVar* | The cut text. pVar->ppunkVal is the out parameter for an **IDataObject** object, provided that the following conditions exist:<br>- pVar->vt = (VT_UNKNOWN OR VT_BYREF)<br>- pVar is not null<br>- pVar->ppunkVal is not null<br>Otherwise, the clipboard is used. |
 
-# <a name="Copy"></a>Copy
+## <a name="Copy"></a>Copy
 
 Copies the text to a data object.
 
@@ -1783,7 +1783,7 @@ The **Cut**, **Copy**, and **Paste** methods let you perform the usual **Cut**, 
 
 To copy and replace plain text, you can use the **GetText**  and **SetText**  methods. To copy formatted text from range r1 to range r2 without using the clipboard, you can use **Copy** and **Paste** and also the **GetFormattedText** and **SetFormattedText** methods.
 
-# <a name="Paste"></a>Paste
+## <a name="Paste"></a>Paste
 
 Pastes text from a specified data object.
 
@@ -1811,7 +1811,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 #### Remarks
 For more information, see **Copy**.
 
-# <a name="CanPaste"></a>CanPaste
+## <a name="CanPaste"></a>CanPaste
 
 Determines if a data object can be pasted, using a specified format, into the current range.
 
@@ -1841,7 +1841,7 @@ The method returns one of the following COM error codes.
 | **S_OK** | The clipboard contents or IDataObject can be pasted. |
 | **S_FALSE** | The clipboard contents or **IDataObject** cannot be pasted. |
 
-# <a name="CanEdit"></a>CanEdit
+## <a name="CanEdit"></a>CanEdit
 
 Determines whether the specified range can be edited.
 
@@ -1865,7 +1865,7 @@ If the range can be edited, the method succeeds and **GetLastREsult** returns S_
 
 The range cannot be edited if any part of it is protected or if the document is read-only.
 
-# <a name="ChangeCase"></a>ChangeCase
+## <a name="ChangeCase"></a>ChangeCase
 
 Changes the case of letters in this range according to the *nType* parameter.
 
@@ -1891,7 +1891,7 @@ END FUNCTION
 #### Return value
 This method returns an **HRESULT** value. If successful, it returns **S_OK**. Otherwise, it returns **S_FALSE**.
 
-# <a name="GetPoint"></a>GetPoint
+## <a name="GetPoint"></a>GetPoint
 
 Retrieves screen coordinates for the start or end character position in the text range, along with the intra-line position.
 
@@ -1949,7 +1949,7 @@ The method returns an **HRESULT** value. If the method succeeds, it returns **S_
 
 The **GetPoint** method gives **ITextRange** the ability to emulate UI-pointer commands; it is also handy for accessibility purposes.
 
-# <a name="SetPoint"></a>SetPoint
+## <a name="SetPoint"></a>SetPoint
 
 Changes the range based on a specified point at or up through (depending on Extend) the point (x, y) aligned according to *nType*.
 
@@ -1974,7 +1974,7 @@ The method returns an **HRESULT** value. If the method succeeds, it returns **S_
 #### Remarks
 An application can use the specified point in the **WindowFromPoint** function to get the handle of the window, which usually can be used to find the client-rectangle coordinates (although a notable exception is with [Windowless Controls](https://learn.microsoft.com/en-us/windows/win32/controls/windowless-rich-edit-controls)).
 
-# <a name="ScrollIntoView"></a>ScrollIntoView
+## <a name="ScrollIntoView"></a>ScrollIntoView
 
 Scrolls the specified range into view.
 
@@ -2001,7 +2001,7 @@ END FUNCTION
 
 The method returns an **HRESULT** value. If the method succeeds, it returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
-# <a name="GetEmbeddedObject"></a>GetEmbeddedObject
+## <a name="GetEmbeddedObject"></a>GetEmbeddedObject
 
 Retrieves a pointer to the embedded object at the start of the specified range, that is, at *cpFirst*. The range must either be an insertion point or it must select only the embedded object.
 
@@ -2021,7 +2021,7 @@ The pointer to the object.
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
-# <a name="GetFlags"></a>GetFlags
+## <a name="GetFlags"></a>GetFlags
 
 Gets the text selection flags.
 
@@ -2051,7 +2051,7 @@ Each of the table values is binary. Thus, if any value is not set, the text sele
 
 If the method succeeds, **GetLastResult** returns **S_OK**.
 
-# <a name="SetFlags"></a>SetFlags
+## <a name="SetFlags"></a>SetFlags
 
 Sets the text selection flags.
 
@@ -2088,7 +2088,7 @@ selection.Flags = tomSelStartActive + tomSelAtEOL
 
 The *Flags* property is useful because an **ITextRange** object can select itself. With **SetFlags**, you can change the active end from the default value of End, select the caret position for an ambiguous character position, or change the Insert/Overtype mode.
 
-# <a name="GetType"></a>GetType
+## <a name="GetType"></a>GetType
 
 Gets the type of text selection.
 
@@ -2120,7 +2120,7 @@ The selection type. Can be one of the values in the following table.
 
 If the method succeeds, **GetLastResult** returns **S_OK**.
 
-# <a name="MoveLeft"></a>MoveLeft
+## <a name="MoveLeft"></a>MoveLeft
 
 Generalizes the functionality of the Left Arrow key.
 
@@ -2180,7 +2180,7 @@ Similar to WordBasic and the Left Arrow key UI behavior, calling MoveLeft(Unit, 
 
 When *Extend* is **tomExtend** (or is nonzero), **MoveLeft** moves only the active end of the selection, leaving the other end where it is. However, if **Extend** equals zero and the selection starts as a nondegenerate range, MoveLeft(Unit, Count) where *Count* is greater than zero moves the active end Count - 1 units left, and then moves the other end to the active end. In other words, it makes an insertion point at the active end. Collapsing the range counts as one unit. Thus, MoveLeft(tomCharacter) converts a nondegenerate selection into a degenerate one at the selection's left end. Here, *Count* has the default value of 1 and *Extend* has the default value of zero. This example corresponds to pressing the Left Arrow key. **MoveLeft** and **MoveRight** are related to the **ITextRange** move methods, but differ in that they explicitly use the active end (the end moved by pressing the Shift key).
 
-# <a name="MoveRight"></a>MoveRight
+## <a name="MoveRight"></a>MoveRight
 
 Generalizes the functionality of the Right Arrow key.
 
@@ -2241,7 +2241,7 @@ When *Extend* is **tomExtend** (or is nonzero), **MoveRight** moves only the act
 
 The actual count of units the insertion point or active end is moved left. Collapsing the selection, when *Extend* is 0, counts as one unit.
 
-# <a name="MoveUp"></a>MoveUp
+## <a name="MoveUp"></a>MoveUp
 
 Mimics the functionality of the Up Arrow and Page Up keys.
 
@@ -2281,7 +2281,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_INVALIDARG** | Unit is not valid. |
 | **S_FALSE** | Failure for some other reason. |
 
-# <a name="MoveDown"></a>MoveDown
+## <a name="MoveDown"></a>MoveDown
 
 Mimics the functionality of the Down Arrow and Page Down keys.
 
@@ -2319,7 +2319,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_INVALIDARG** | Unit is not valid. |
 | **S_FALSE** | Failure for some other reason. |
 
-# <a name="HomeKey"></a>HomeKey
+## <a name="HomeKey"></a>HomeKey
 
 Generalizes the functionality of the Home key.
 
@@ -2364,7 +2364,7 @@ The **HomeKey** and **EndKey** methods are used to mimic the standard Home/End k
 
 The **HomeKey** and **EndKey** methods are logical methods like the **Move** methods, rather than directional methods. Thus, they depend on the language that is involved. For example, in Arabic text, HomeKey moves to the right end of a line, whereas in English text, it moves to the left. Thus, **HomeKey** and **EndKey** methods are different than the **MoveLeft** and **MoveRight** methods. Also, note that the **HomeKey** method is quite different from the **Start** property, which is the cp at the beginning of the selection. **HomeKey** and **EndKey** also differ from the **StartOf** and **EndOf** methods in that they extend from the active end, whereas **StartOf** extends from Start and **EndOf** extends from End.
 
-# <a name="EndKey"></a>EndKey
+## <a name="EndKey"></a>EndKey
 
 Mimics the functionality of the End key.
 
@@ -2411,7 +2411,7 @@ The **tomLine** value mimics the Home or End key behavior without the Ctrl key p
 
 The **HomeKey** and **EndKey** methods are logical methods like the **Move** methods, rather than directional methods. Thus, they depend on the language that is involved. For example, in Arabic text, **HomeKey** moves to the right end of a line, whereas in English text, it moves to the left. Thus, **HomeKey** and **EndKey** are different than the **MoveLeft** and **MoveRight** methods. Also, note that the **EndKey** method is quite different from the **End** property, which is the cp at the end of the selection. **HomeKey** and **EndKey** also differ from the **StartOf** and **EndOf** methods in that they extend from the active end, whereas **StartOf** extends from Start and **EndOf** extends from End.
 
-# <a name="TypeText"></a>TypeText
+## <a name="TypeText"></a>TypeText
 
 Types the string given by *cbs* at this selection as if someone typed it. This is similar to the underlying **SetText** method, but is sensitive to the Insert/Overtype key state and UI settings like AutoCorrect and smart quotes.
 
@@ -2441,7 +2441,7 @@ This method types the string given by *cbs* at this selection as if someone type
 
 **TypeText** is similar to the underlying **SetText** method, however, it is sensitive to the Insert/Overtype key state and UI settings like AutoCorrect and smart quotes. For example, it deletes any nondegenerate selection and then inserts or overtypes (depending on the Insert/Overtype key state—see the **SetFlags** method) the string *cbs* at the insertion point, leaving this selection as an insertion point following the inserted text.
 
-# <a name="GetCch"></a>GetCch
+## <a name="GetCch"></a>GetCch
 
 Gets the count of characters in a range.
 
@@ -2465,7 +2465,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 The count of characters is the difference between the character position of the active end of the range, and the character position of the anchor end. Some Text Object Model (TOM) implementations might include active ends only for a selection (represented by the **ITextSelection** interface). The rich edit control's TOM implementation of a text range (represented by the **ITextRange** interface) also has active ends.
 
-# <a name="GetCells"></a>GetCells
+## <a name="GetCells"></a>GetCells
 
 Not implemented.
 
@@ -2487,7 +2487,7 @@ The cells object.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetColumn"></a>GetColumn
+## <a name="GetColumn"></a>GetColumn
 
 Not implemented.
 
@@ -2509,7 +2509,7 @@ The column properties for the currently selected column.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetCount"></a>GetCount
+## <a name="GetCount"></a>GetCount
 
 Gets the count of subranges, including the active subrange in the current range.
 
@@ -2535,8 +2535,7 @@ If you select a range with no or one character, the count will be 1. But if you 
 
 See **AddSubrange** to add subranges programmatically.
 
-
-# <a name="GetGravity"></a>GetGravity
+## <a name="GetGravity"></a>GetGravity
 
 Gets the gravity of this range.
 
@@ -2563,7 +2562,7 @@ The gravity value, which can be one of the following:
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="SetGravity"></a>SetGravity
+## <a name="SetGravity"></a>SetGravity
 
 Sets the gravity of this range.
 
@@ -2590,7 +2589,7 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetRow"></a>GetRow
+## <a name="GetRow"></a>GetRow
 
 Gets the row properties in the currently selected row.
 
@@ -2610,7 +2609,7 @@ The row properties.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetStartPara"></a>GetStartPara
+## <a name="GetStartPara"></a>GetStartPara
 
 Gets the character position of the start of the paragraph that contains the range's start character position.
 
@@ -2630,7 +2629,7 @@ The start of the paragraph that contains the range's start character position.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetTable"></a>GetTable
+## <a name="GetTable"></a>GetTable
 
 Gets the table properties in the currently selected table.
 
@@ -2650,7 +2649,7 @@ The table properties.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetURL"></a>GetURL
+## <a name="GetURL"></a>GetURL
 
 Returns the URL text associated with a range.
 
@@ -2670,7 +2669,7 @@ The URL text associated with the range.
 
 If the method succeeds, **GetLastResult** returns **S_OK**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="SetURL"></a>SetURL
+## <a name="SetURL"></a>SetURL
 
 Sets the text in this range to that of the specified URL.
 
@@ -2709,7 +2708,7 @@ The following actions are possible:
 
 The text range be adjusted to different character positions after calling SetURL.
 
-# <a name="AddSubrange"></a>AddSubrange
+## <a name="AddSubrange"></a>AddSubrange
 
 Adds a subrange to this range.
 
@@ -2728,7 +2727,7 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="BuildUpMath"></a>BuildUpMath
+## <a name="BuildUpMath"></a>BuildUpMath
 
 Converts the linear-format math in a range to a built-up form, or modifies the current built-up form.
 
@@ -2807,7 +2806,7 @@ If full and partial build-up attempts fail, the function returns as described pr
 
 You should set the **tomNeedTermOp** flag should for formula autobuildup unless autocorrection has occurred that deletes the terminating blank. Autocorrection can occur when correcting text like \alpha when the user types a blank to force autocorrection.
 
-# <a name="DeleteSubrange"></a>DeleteSubrange
+## <a name="DeleteSubrange"></a>DeleteSubrange
 
 Deletes a subrange from a range.
 
@@ -2827,7 +2826,7 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="Find"></a>Find
+## <a name="Find"></a>Find
 
 Searches for math inline functions in text as specified by a source range.
 
@@ -2853,7 +2852,7 @@ A count of the number of characters bypassed.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetDropCap"></a>GetDropCap
+## <a name="GetDropCap"></a>GetDropCap
 
 Not implemented.
 
@@ -2875,7 +2874,7 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetInlineObject"></a>GetInlineObject
+## <a name="GetInlineObject"></a>GetInlineObject
 
 Gets the properties of the inline object at the range active end.
 
@@ -2911,7 +2910,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 When that character is not a start delimiter, the character and column parameters are set to 0, the count is set to the 0-based argument index, and the other parameters are set according to the active-end character properties of the innermost inline object argument.
 
-# <a name="GetProperty"></a>GetProperty
+## <a name="GetProperty"></a>GetProperty
 
 Gets the value of a property.
 
@@ -2935,7 +2934,7 @@ The property value.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetRect"></a>GetRect
+## <a name="GetRect"></a>GetRect
 
 Retrieves a rectangle of the specified type for the current range.
 
@@ -2983,7 +2982,7 @@ Use one of the following values to indicate the horizontal position.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetSubrange"></a>GetSubrange
+## <a name="GetSubrange"></a>GetSubrange
 
 Retrieves a subrange in a range.
 
@@ -3016,7 +3015,7 @@ Subranges are selected as follows.
  
 See **GetCount** for the count of subranges not including the active subrange.
 
-# <a name="HexToUnicode"></a>HexToUnicode
+## <a name="HexToUnicode"></a>HexToUnicode
 
 Converts and replaces the hexadecimal number at the end of this range to a Unicode character.
 
@@ -3041,7 +3040,7 @@ Some Unicode surrogates for hex values from &h10000 up to &h10FFFF are for inter
 | &hA — &hD in the C0 range (0-&h1F) | Available for use |
 | C1 range (&h80 — &h9F) | Internal use only |
 
-# <a name="InsertTable"></a>InsertTable
+## <a name="InsertTable"></a>InsertTable
 
 Inserts a table in a range.
 
@@ -3062,7 +3061,7 @@ END FUNCTION
 
 If the method succeeds, it returns **S_OK**. If the method fails, it returns an **HRESULT** error code.
 
-# <a name="Linearize"></a>Linearize
+## <a name="Linearize"></a>Linearize
 
 Translates the built-up math, ruby, and other inline objects in this range to linearized form.
 
@@ -3083,7 +3082,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 | ----------- | ----------- |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
-# <a name="SetActiveSubrange"></a>SetActiveSubrange
+## <a name="SetActiveSubrange"></a>SetActiveSubrange
 
 Makes the specified subrange the active subrange of this range.
 
@@ -3107,8 +3106,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 The active subrange is the one affected by operations such as Shift+Arrow keys if this range is the selection.
 
-
-# <a name="SetDropCap"></a>SetDropCap
+## <a name="SetDropCap"></a>SetDropCap
 
 Not implemented.
 
@@ -3133,7 +3131,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 #### Remarks
 The current range can be degenerate, or you can select up to the complete drop-cap paragraph. If the range contains more than one paragraph, this method returns **E_FAIL**.
 
-# <a name="SetProperty"></a>SetProperty
+## <a name="SetProperty"></a>SetProperty
 
 Sets the value of the specified property.
 
@@ -3153,7 +3151,7 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="SetText2"></a>SetText2
+## <a name="SetText2"></a>SetText2
 
 Sets the text of this range.
 
@@ -3204,7 +3202,7 @@ pCRange2.SetText2(0, "new text")
 pCRange2.SetText2(0, "")
 ```
 
-# <a name="UnicodeToHex"></a>UnicodeToHex
+## <a name="UnicodeToHex"></a>UnicodeToHex
 
 Converts the Unicode character(s) preceding the start position of this text range to a hexadecimal number, and selects it.
 
@@ -3229,7 +3227,7 @@ Some Unicode surrogates for hex values from &h10000 up to &h10FFFF are for inter
 | &hA — &hD in the C0 range (0-&h1F) | Available for use |
 | C1 range (&h80 — &h9F) | Internal use only |
 
-# <a name="SetInlineObject"></a>SetInlineObject
+## <a name="SetInlineObject"></a>SetInlineObject
 
 Sets or inserts the properties of an inline object for a degenerate range.
 
@@ -3256,7 +3254,7 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetMathFunctionType"></a>GetMathFunctionType
+## <a name="GetMathFunctionType"></a>GetMathFunctionType
 
 Retrieves the math function type associated with the specified math function name.
 
@@ -3289,7 +3287,7 @@ The math function type of the function name specified by bstr. It can be one of 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
 
-# <a name="InsertImage"></a>InsertImage
+## <a name="InsertImage"></a>InsertImage
 
 Inserts an image into this range.
 
