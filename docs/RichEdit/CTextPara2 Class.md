@@ -4,13 +4,8 @@ Class that wraps all the methods of the **ITextPara** and **ITextPara2** interfa
 
 | Name       | Description |
 | ---------- | ----------- |
-| [CONSTRUCTORS](#CONSTRUCTORS) | Called when a class variable is created. |
-| [DESTRUCTOR](#DESTRUCTOR) | Called automatically when a class variable goes out of scope or is destroyed. |
-| [LET](#LET) | Assignment operator. |
-| [CAST](#CAST) | Cast operator. |
-| [TextDocumentPtr](#TextDocumentPtr) | Returns a pointer to the underlying **ITextPara2** interface. |
-| [Attach](#Attach) | Attaches an **ITextPara2** interface pointer to the class. |
-| [Detach](#Detach) | Detaches the underlying **ITextPara2** interface pointer from the class. |
+| [CONSTRUCTOR](#constructor) | Called when a class variable is created. |
+| [DESTRUCTOR](#destructor) | Called automatically when a class variable goes out of scope or is destroyed. |
 
 ### ITextPara Interface
 
@@ -20,54 +15,54 @@ The **ITextPara** interface inherits from the **IDispatch** interface. **ITextPa
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetDuplicate](#GetDuplicate) | Gets a duplicate of this text paragraph format object. |
-| [SetDuplicate](#SetDuplicate) | Sets the formatting for an existing paragraph by copying a given format. |
-| [CanChange](#CanChange) | Determines whether the paragraph formatting can be changed. |
-| [IsEqual](#IsEqual) | Determines if the current range has the same properties as a specified range. |
-| [Reset](#Reset) | Resets the paragraph formatting to a choice of default values. |
-| [GetStyle](#GetStyle) | Retrieves the style handle to the paragraphs in the specified range. |
-| [SetStyle](#SetStyle) | Sets the paragraph style for the paragraphs in a range. |
-| [GetAlignment](#GetAlignment) | Retrieves the current paragraph alignment value. |
-| [SetAlignment](#SetAlignment) | Sets the paragraph alignment. |
-| [GetHyphenation](#GetHyphenation) | Determines whether automatic hyphenation is enabled for the range. |
-| [SetHyphenation](#SetHyphenation) | Controls hyphenation for the paragraphs in the range. |
-| [GetFirstLineIndent](#GetFirstLineIndent) | Retrieves the amount used to indent the first line of a paragraph relative to the left indent. The left indent is the indent for all lines of the paragraph except the first line. |
-| [GetKeepTogether](#GetKeepTogether) | Determines whether page breaks are allowed within paragraphs. |
-| [SetKeepTogether](#SetKeepTogether) | Controls whether page breaks are allowed within a paragraph in a range. |
-| [GetKeepWithNext](#GetKeepWithNext) | Determines whether page breaks are allowed between paragraphs in the range. |
-| [SetKeepWithNext](#SetKeepWithNext) | Controls whether page breaks are allowed between the paragraphs in a range. |
-| [GetLeftIndent](#GetLeftIndent) | Retrieves the distance used to indent all lines except the first line of a paragraph. The distance is relative to the left margin. |
-| [GetLineSpacing](#GetLineSpacing) | Retrieves the line-spacing value for the text range. |
-| [GetLineSpacingRule](#GetLineSpacingRule) | Retrieves the line-spacing rule for the text range. |
-| [GetListAlignment](#GetListAlignment) | Retrieves the kind of alignment to use for bulleted and numbered lists. |
-| [SetListAlignment](#SetListAlignment) | Sets the alignment of bulleted or numbered text used for paragraphs. |
-| [GetListLevelIndex](#GetListLevelIndex) | Retrieves the list level index used with paragraphs. |
-| [SetListLevelIndex](#SetListLevelIndex) | Sets the list level index used for paragraphs. |
-| [GetListStart](#GetListStart) | Retrieves the starting value or code of a list numbering sequence. |
-| [SetListStart](#SetListStart) | Sets the starting number or Unicode value for a numbered list. |
-| [GetListTab](#GetListTab) | Retrieves the list tab setting, which is the distance between the first-line indent and the text on the first line. The numbered or bulleted text is left-justified, centered, or right-justified at the first-line indent value. |
-| [SetListTab](#SetListTab) | Sets the list tab setting, which is the distance between the first indent and the start of the text on the first line. |
-| [GetListType](#GetListType) | Retrieves the kind of numbering to use with paragraphs. |
-| [SetListType](#SetListType) | Sets the type of list to be used for paragraphs. |
-| [GetNoLineNumber](#GetNoLineNumber) | Determines whether paragraph numbering is enabled. |
-| [SetNoLineNumber](#SetNoLineNumber) | Determines whether to suppress line numbering of paragraphs in a range. |
-| [GetPageBreakBefore](#GetPageBreakBefore) | Determines whether each paragraph in the range must begin on a new page. |
-| [SetPageBreakBefore](#SetPageBreakBefore) | Controls whether there is a page break before each paragraph in a range. |
-| [GetRightIndent](#GetRightIndent) | Retrieves the size of the right margin indent of a paragraph. |
-| [SetRightIndent](#SetRightIndent) | Sets the right margin of paragraph. |
-| [SetIndents](#SetIndents) | Sets the first-line indent, the left indent, and the right indent for a paragraph. |
-| [SetLineSpacing](#SetLineSpacing) | Sets the paragraph line-spacing rule and the line spacing for a paragraph. |
-| [GetSpaceAfter](#GetSpaceAfter) | The space-after value, in floating-point points. |
-| [SetSpaceAfter](#SetSpaceAfter) | Sets the amount of space that follows a paragraph. |
-| [GetSpaceBefore](#GetSpaceBefore) | Retrieves the amount of vertical space above a paragraph. |
-| [SetSpaceBefore](#SetSpaceBefore) | Sets the amount of space preceding a paragraph. |
-| [GetWidowControl](#GetWidowControl) | Retrieves the widow and orphan control state for the paragraphs in a range. |
-| [SetWidowControl](#SetWidowControl) | Controls the suppression of widows and orphans. |
-| [GetTabCount](#GetTabCount) | Retrieves the tab count. |
-| [AddTab](#AddTab) | Adds a tab at the displacement *tbPos*, with type *tbAlign*, and leader style, *tbLeader*. |
-| [ClearAllTabs](#ClearAllTabs) | Clears all tabs, reverting to equally spaced tabs with the default tab spacing. |
-| [DeleteTab](#DeleteTab) | Deletes a tab at a specified displacement. |
-| [GetTab](#GetTab) | Retrieves tab parameters (displacement, alignment, and leader style) for a specified tab. |
+| [GetDuplicate](#getduplicate) | Gets a duplicate of this text paragraph format object. |
+| [SetDuplicate](#setduplicate) | Sets the formatting for an existing paragraph by copying a given format. |
+| [CanChange](#canchange) | Determines whether the paragraph formatting can be changed. |
+| [IsEqual](#isequal) | Determines if the current range has the same properties as a specified range. |
+| [Reset](#reset) | Resets the paragraph formatting to a choice of default values. |
+| [GetStyle](#getstyle) | Retrieves the style handle to the paragraphs in the specified range. |
+| [SetStyle](#setstyle) | Sets the paragraph style for the paragraphs in a range. |
+| [GetAlignment](#getalignment) | Retrieves the current paragraph alignment value. |
+| [SetAlignment](#setalignment) | Sets the paragraph alignment. |
+| [GetHyphenation](#gethyphenation) | Determines whether automatic hyphenation is enabled for the range. |
+| [SetHyphenation](#sethyphenation) | Controls hyphenation for the paragraphs in the range. |
+| [GetFirstLineIndent](#getfirstlineindent) | Retrieves the amount used to indent the first line of a paragraph relative to the left indent. The left indent is the indent for all lines of the paragraph except the first line. |
+| [GetKeepTogether](#getkeeptogether) | Determines whether page breaks are allowed within paragraphs. |
+| [SetKeepTogether](#setkeeptogether) | Controls whether page breaks are allowed within a paragraph in a range. |
+| [GetKeepWithNext](#getkeepwithnext) | Determines whether page breaks are allowed between paragraphs in the range. |
+| [SetKeepWithNext](#setkeepwithnext) | Controls whether page breaks are allowed between the paragraphs in a range. |
+| [GetLeftIndent](#getleftindent) | Retrieves the distance used to indent all lines except the first line of a paragraph. The distance is relative to the left margin. |
+| [GetLineSpacing](#getlinespacing) | Retrieves the line-spacing value for the text range. |
+| [GetLineSpacingRule](#getlinespacingrule) | Retrieves the line-spacing rule for the text range. |
+| [GetListAlignment](#getlistalignment) | Retrieves the kind of alignment to use for bulleted and numbered lists. |
+| [SetListAlignment](#setlistalignment) | Sets the alignment of bulleted or numbered text used for paragraphs. |
+| [GetListLevelIndex](#getlistlevelindex) | Retrieves the list level index used with paragraphs. |
+| [SetListLevelIndex](#setlistlevelindex) | Sets the list level index used for paragraphs. |
+| [GetListStart](#getliststart) | Retrieves the starting value or code of a list numbering sequence. |
+| [SetListStart](#setliststart) | Sets the starting number or Unicode value for a numbered list. |
+| [GetListTab](#getlisttab) | Retrieves the list tab setting, which is the distance between the first-line indent and the text on the first line. The numbered or bulleted text is left-justified, centered, or right-justified at the first-line indent value. |
+| [SetListTab](#setlisttab) | Sets the list tab setting, which is the distance between the first indent and the start of the text on the first line. |
+| [GetListType](#getlisttype) | Retrieves the kind of numbering to use with paragraphs. |
+| [SetListType](#setlisttype) | Sets the type of list to be used for paragraphs. |
+| [GetNoLineNumber](#getnolinenumber) | Determines whether paragraph numbering is enabled. |
+| [SetNoLineNumber](#setnolinenumber) | Determines whether to suppress line numbering of paragraphs in a range. |
+| [GetPageBreakBefore](#getpagebreakbefore) | Determines whether each paragraph in the range must begin on a new page. |
+| [SetPageBreakBefore](#setpagebreakbefore) | Controls whether there is a page break before each paragraph in a range. |
+| [GetRightIndent](#getrightindent) | Retrieves the size of the right margin indent of a paragraph. |
+| [SetRightIndent](#setrightindent) | Sets the right margin of paragraph. |
+| [SetIndents](#setindents) | Sets the first-line indent, the left indent, and the right indent for a paragraph. |
+| [SetLineSpacing](#setlinespacing) | Sets the paragraph line-spacing rule and the line spacing for a paragraph. |
+| [GetSpaceAfter](#getspaceafter) | The space-after value, in floating-point points. |
+| [SetSpaceAfter](#setspaceafter) | Sets the amount of space that follows a paragraph. |
+| [GetSpaceBefore](#getspacebefore) | Retrieves the amount of vertical space above a paragraph. |
+| [SetSpaceBefore](#setspacebefore) | Sets the amount of space preceding a paragraph. |
+| [GetWidowControl](#getwidowcontrol) | Retrieves the widow and orphan control state for the paragraphs in a range. |
+| [SetWidowControl](#setwidowcontrol) | Controls the suppression of widows and orphans. |
+| [GetTabCount](#gettabcount) | Retrieves the tab count. |
+| [AddTab](#addtab) | Adds a tab at the displacement *tbPos*, with type *tbAlign*, and leader style, *tbLeader*. |
+| [ClearAllTabs](#clearalltabs) | Clears all tabs, reverting to equally spaced tabs with the default tab spacing. |
+| [DeleteTab](#deletetab) | Deletes a tab at a specified displacement. |
+| [GetTab](#gettab) | Retrieves tab parameters (displacement, alignment, and leader style) for a specified tab. |
 
 ### ITextPara2 Interface
 
@@ -77,22 +72,22 @@ The **ITextPara2** interface has these methods.
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetBorders](#GetBorders) | Not implemented. Gets the borders collection. |
-| [GetDuplicate2](#GetDuplicate) | Gets a duplicate of this text paragraph format object. |
-| [SetDuplicate2](#SetDuplicate) | Sets the formatting for an existing paragraph by copying a given format. |
-| [GetFontAlignment](#GetFontAlignment) | Gets the paragraph font alignment state. |
-| [SetFontAlignment](#SetFontAlignment) | Sets the paragraph font alignment for Chinese, Japanese, Korean text. |
-| [GetHangingPunctuation](#GetHangingPunctuation) | Gets whether to hang punctuation symbols on the right margin when the paragraph is justified. |
-| [SetHangingPunctuation](#SetHangingPunctuation) | Sets whether to hang punctuation symbols on the right margin when the paragraph is justified. |
-| [GetSnapToGrid](#GetSnapToGrid) | Gets whether paragraph lines snap to a vertical grid that could be defined for the whole document. |
-| [SetSnapToGrid](#SetSnapToGrid) | Sets whether paragraph lines snap to a vertical grid that could be defined for the whole document. |
-| [GetTrimPunctuationAtStart](#GetTrimPunctuationAtStart) | Gets whether to trim the leading space of a punctuation symbol at the start of a line. |
-| [SetTrimPunctuationAtStart](#SetTrimPunctuationAtStart) | Sets whether to trim the leading space of a punctuation symbol at the start of a line. |
-| [GetEffects](#GetEffects) | Gets the paragraph format effects. |
-| [GetProperty](#GetProperty) | Gets the value of the specified property. |
-| [IsEqual2](#IsEqual) | Determines if the current range has the same properties as a specified range. |
-| [SetEffects](#SetEffects) | Sets the paragraph format effects. |
-| [SetProperty](#SetProperty) | Sets the property value. |
+| [GetBorders](#getborders) | Not implemented. Gets the borders collection. |
+| [GetDuplicate2](#getduplicate) | Gets a duplicate of this text paragraph format object. |
+| [SetDuplicate2](#setduplicate) | Sets the formatting for an existing paragraph by copying a given format. |
+| [GetFontAlignment](#getfontalignment) | Gets the paragraph font alignment state. |
+| [SetFontAlignment](#setfontalignment) | Sets the paragraph font alignment for Chinese, Japanese, Korean text. |
+| [GetHangingPunctuation](#gethangingpunctuation) | Gets whether to hang punctuation symbols on the right margin when the paragraph is justified. |
+| [SetHangingPunctuation](#sethangingpunctuation) | Sets whether to hang punctuation symbols on the right margin when the paragraph is justified. |
+| [GetSnapToGrid](#getsnaptogrid) | Gets whether paragraph lines snap to a vertical grid that could be defined for the whole document. |
+| [SetSnapToGrid](#setsnaptogrid) | Sets whether paragraph lines snap to a vertical grid that could be defined for the whole document. |
+| [GetTrimPunctuationAtStart](#gettrimpunctuationatstart) | Gets whether to trim the leading space of a punctuation symbol at the start of a line. |
+| [SetTrimPunctuationAtStart](#settrimpunctuationatstart) | Sets whether to trim the leading space of a punctuation symbol at the start of a line. |
+| [GetEffects](#geteffects) | Gets the paragraph format effects. |
+| [GetProperty](#getproperty) | Gets the value of the specified property. |
+| [IsEqual2](#isequal) | Determines if the current range has the same properties as a specified range. |
+| [SetEffects](#seteffects) | Sets the paragraph format effects. |
+| [SetProperty](#setproperty) | Sets the property value. |
 
 ### Methods inherited from CTOMBase Class
 
