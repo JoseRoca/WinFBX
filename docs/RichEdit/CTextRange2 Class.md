@@ -7,9 +7,9 @@ Class that wraps all the methods of the **ITextRange**, **ITextSelection** and *
 | [CONSTRUCTOR](#constructor) | Called when a class variable is created. |
 | [DESTRUCTOR](#destructor) | Called automatically when a class variable goes out of scope or is destroyed. |
 
-### ITextRange2 Interface
+### ITextRange Interface
 
-The **ITextRange2** interface is derived from **ITextRange**, and its objects are powerful editing and data-binding tools that enable a program to select text in a story and then examine or change that text.
+The **ITextRange** objects are powerful editing and data-binding tools that allow a program to select text in a story and then examine or change that text.
 
 | Name       | Description |
 | ---------- | ----------- |
@@ -33,11 +33,11 @@ The **ITextRange2** interface is derived from **ITextRange**, and its objects ar
 | [GetStoryType](#getstorytype) | Get the type of the range's story. |
 | [Collapse](#collapse) | Collapses the specified text range into a degenerate point at either the beginning or end of the range. |
 | [Expand](#expand) | Expands this range so that any partial units it contains are completely contained. |
+| [GetIndex](#getIndex) | Retrieves the story index of the *Unit* parameter at the specified range Start character position. |
+| [SetIndex](#setIndex) | Changes this range to the specified unit of the story. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetIndex](#GetIndex) | Retrieves the story index of the *Unit* parameter at the specified range Start character position. |
-| [SetIndex](#SetIndex) | Changes this range to the specified unit of the story. |
 | [SetRange](#SetRange) | Adjusts the range endpoints to the specified values. |
 | [InRange](#InRange) | Determines whether this range is within or at the same text as a specified range. |
 | [InStory](#InStory) | Determines whether this range's story is the same as a specified range's story. |
@@ -726,7 +726,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Expands this range so that any partial units it contains are completely contained.
 
 ```
-FUNCTION CTextRange2.Expand (BYVAL Unit AS LONG = tomWord) AS LONG
+FUNCTION Expand (BYVAL Unit AS LONG = tomWord) AS LONG
 ```
 | Parameter | Description |
 | --------- | ----------- |
@@ -770,16 +770,12 @@ For example, if an insertion point is at the beginning, the end, or within a wor
 
 ---
 
-# <a name="GetIndex"></a>GetIndex
+## <a name="getindex"></a>GetIndex
 
 Retrieves the story index of the *Unit* parameter at the specified range Start character position. The first *Unit* in a story has an index value of 1. The index of a *Unit* is the same for all character positions from that immediately preceding the *Unit* up to the last character in the *Unit*.
 
 ```
-FUNCTION CTextRange2.GetIndex (BYVAL Unit AS LONG = tomWord) AS LONG
-   DIM Index AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetIndex(m_pTextRange2, Unit, @Index))
-   RETURN Index
-END FUNCTION
+FUNCTION GetIndex (BYVAL Unit AS LONG = tomWord) AS LONG
 ```
 | Parameter | Description |
 | --------- | ----------- |
@@ -816,15 +812,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **E_NOTIMPL** | Unit is not supported. |
 
-# <a name="SetIndex"></a>SetIndex
+---
+
+## <a name="setindex"></a>SetIndex
 
 Changes this range to the specified unit of the story.
 
 ```
-FUNCTION CTextRange2.SetIndex (BYVAL Unit AS LONG, BYVAL Index AS LONG, BYVAl Extend AS LONG = 0) AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->SetIndex(m_pTextRange2, Unit, Index, Extend))
-   RETURN m_Result
-END FUNCTION
+FUNCTION SetIndex (BYVAL Unit AS LONG, BYVAL Index AS LONG, BYVAl Extend AS LONG = 0) AS LONG
 ```
 | Parameter | Description |
 | --------- | ----------- |
@@ -861,12 +856,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_NOTIMPL** | Unit is not supported. |
 | **S_FALSE** | Failure for some other reason. |
 
-# <a name="SetRange"></a>SetRange
+---
+
+## <a name="SetRange"></a>SetRange
 
 Adjusts the range endpoints to the specified values.
 
 ```
-FUNCTION CTextRange2.SetRange (BYVAL cpAnchor AS LONG, BYVAL cpActive AS LONG) AS HRESULT
+FUNCTION SetRange (BYVAL cpAnchor AS LONG, BYVAL cpActive AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetRange(m_pTextRange2, cpAnchor, cpActive))
    RETURN m_Result
 END FUNCTION
@@ -893,7 +890,7 @@ If the text range is a selection, you can set the attributes of the selection by
 Determines whether this range is within or at the same text as a specified range.
 
 ```
-FUNCTION CTextRange2.InRange (BYVAL pRange AS ITextRange2 PTR) AS LONG
+FUNCTION InRange (BYVAL pRange AS ITextRange2 PTR) AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->InRange(m_pTextRange2, pRange, @Value))
    RETURN Value
@@ -935,7 +932,7 @@ When the **FindText**, **MoveWhile**, and **MoveUntil** method families are used
 Determines whether this range's story is the same as a specified range's story.
 
 ```
-FUNCTION CTextRange2.InStory (BYVAL pRange AS ITextRange2 PTR) AS LONG
+FUNCTION InStory (BYVAL pRange AS ITextRange2 PTR) AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->InStory(m_pTextRange2, pRange, @Value))
    RETURN Value
@@ -959,7 +956,7 @@ If the two stories are the same, **GetLastResult** returns **S_OK**. Otherwise, 
 Determines whether this range has the same character positions and story as those of a specified range.
 
 ```
-FUNCTION CTextRange2.IsEqual (BYVAL pRange AS ITextRange2 PTR) AS LONG
+FUNCTION IsEqual (BYVAL pRange AS ITextRange2 PTR) AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->IsEqual(m_pTextRange2, pRange, @Value))
    RETURN Value
@@ -985,7 +982,7 @@ The **IsEqual** method returns **tomTrue** only if the range points at the same 
 Sets the start and end positions, and story values of the active selection, to those of this range.
 
 ```
-FUNCTION CTextRange2.Select_ () AS HRESULT
+FUNCTION Select_ () AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->Select(m_pTextRange2))
    RETURN m_Result
 END FUNCTION
@@ -1006,7 +1003,7 @@ The caret for an ambiguous character position is displayed at the beginning of t
 Moves the range ends to the start of the first overlapping *Unit* in the range.
 
 ```
-FUNCTION CTextRange2.StartOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG = 0) AS LONG
+FUNCTION StartOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->StartOf(m_pTextRange2, Unit, Extend, @Delta))
    RETURN Delta
@@ -1066,7 +1063,7 @@ The **StartOf** and **EndOf** methods differ from the **HomeKey** and **EndKey**
 Moves this range's ends to the end of the last overlapping Unit in the range.
 
 ```
-FUNCTION CTextRange2.EndOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG = 0) AS LONG
+FUNCTION EndOf (BYVAL Unit AS LONG, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->EndOf(m_pTextRange2, Unit, Extend, @Delta))
    RETURN Delta
@@ -1125,7 +1122,7 @@ For comparison, the **StartOf** method moves the range ends to the beginning of 
 
 Moves the insertion point forward or backward a specified number of units. If the range is nondegenerate, the range is collapsed to an insertion point at either end, depending on *Count*, and then is moved.
 ```
-FUNCTION CTextRange2.Move (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
+FUNCTION Move (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->Move(m_pTextRange2, Unit, Count, @Delta))
    RETURN Delta
@@ -1193,7 +1190,7 @@ See also the **MoveStart** and **MoveEnd** methods, which move the range Start o
 Moves the start position of the range the specified number of units in the specified direction.
 
 ```
-FUNCTION CTextRange2.MoveStart (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
+FUNCTION MoveStart (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveStart(m_pTextRange2, Unit, Count, @Delta))
    RETURN Delta
@@ -1242,7 +1239,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Moves the end position of the range.
 
 ```
-FUNCTION CTextRange2.MoveEnd (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
+FUNCTION MoveEnd (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveEnd(m_pTextRange2, Unit, Count, @Delta))
    RETURN Delta
@@ -1272,7 +1269,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Starts at a specified end of a range and searches while the characters belong to the set specified by *Cset* and while the number of characters is less than or equal to *Count*. The range is collapsed to an insertion point when a non-matching character is found.
 
 ```
-FUNCTION CTextRange2.MoveWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
+FUNCTION MoveWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveWhile(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
@@ -1332,7 +1329,7 @@ DIM Delta AS LONG = pRange.MoveWhile(@varg, tomForward)   ' // Move IP past span
 Moves the start position of the range either *Count* characters, or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less.
 
 ```
-FUNCTION CTextRange2.MoveStartWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
+FUNCTION MoveStartWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveStartWhile(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
@@ -1370,7 +1367,7 @@ For more information, see **Move**.
 Moves the end of the range either *Count* characters or just past all contiguous characters that are found in the set of characters specified by *Cset*, whichever is less.
 
 ```
-FUNCTION CTextRange2.MoveEndWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
+FUNCTION MoveEndWhile (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveEndWhile(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
@@ -1408,7 +1405,7 @@ For more information, see **Move**.
 Searches up to *Count* characters for the first character in the set of characters specified by *Cset*. If a character is found, the range is collapsed to that point. The start of the search and the direction are also specified by *Count*.
 
 ```
-FUNCTION CTextRange2.MoveUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
+FUNCTION MoveUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveUntil(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
@@ -1475,7 +1472,7 @@ END SUB
 Moves the start position of the range the position of the first character found that is in the set of characters specified by *Cset*, provided that the character is found within *Count* characters of the start position.
 
 ```
-FUNCTION CTextRange2.MoveStartUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
+FUNCTION MoveStartUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveStartUntil(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
@@ -1515,7 +1512,7 @@ For more information, see **Move**.
 Moves the range's end to the character position of the first character found that is in the set of characters specified by *Cset*, provided that the character is found within *Count* characters of the range's end.
 
 ```
-FUNCTION CTextRange2.MoveEndUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
+FUNCTION MoveEndUntil (BYVAL Cset AS VARIANT PTR, BYVAL Count AS LONG = tomForward) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveEndUntil(m_pTextRange2, Cset, Count, @Delta))
    RETURN Delta
@@ -1553,7 +1550,7 @@ For more information, see **Move**.
 Searches up to *Count* characters for the text given by *cbs*. The starting position and direction are also specified by *Count*, and the matching criteria are given by *Flags*.
 
 ```
-FUNCTION CTextRange2.FindText (BYREF cbs AS CBSTR, BYVAL Count AS LONG = tomForward, BYVAL Flags AS LONG = 0) AS LONG
+FUNCTION FindText (BYREF cbs AS CBSTR, BYVAL Count AS LONG = tomForward, BYVAL Flags AS LONG = 0) AS LONG
    DIM Length AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->FindText(m_pTextRange2, cbs, Count, Flags, @Length))
    RETURN Length
@@ -1659,7 +1656,7 @@ To do this for all such occurrences, change the IF into a WHILE/WEND loop in the
 Searches up to *Count* characters for the string, *cbs*, starting at the range's Start *cp (cpFirst)*. The search is subject to the comparison parameter, *Flags*. If the string is found, the Start *cp* is changed to the matched string, and the method returns the length of the string. If the string is not found, the range is unchanged, and the method returns zero.
 
 ```
-FUNCTION CTextRange2.FindTextStart (BYREF cbs AS CBSTR, BYVAL Count AS LONG = tomForward, BYVAL Flags AS LONG = 0) AS LONG
+FUNCTION FindTextStart (BYREF cbs AS CBSTR, BYVAL Count AS LONG = tomForward, BYVAL Flags AS LONG = 0) AS LONG
    DIM Length AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->FindTextStart(m_pTextRange2, cbs, Count, Flags, @Length))
    RETURN Length
@@ -1691,7 +1688,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Searches up to *Count* characters for the string, *cbs*, starting from the range's End *cp*. The search is subject to the comparison parameter, *Flags*. If the string is found, the End *cp* is changed to be the end of the matched string, and the method returns the length of the string. If the string is not found, the range is unchanged and the method returns zero.
 
 ```
-FUNCTION CTextRange2.FindTextEnd (BYREF cbs AS CBSTR, BYVAL Count AS LONG = tomForward, BYVAL Flags AS LONG = 0) AS LONG
+FUNCTION FindTextEnd (BYREF cbs AS CBSTR, BYVAL Count AS LONG = tomForward, BYVAL Flags AS LONG = 0) AS LONG
    DIM Length AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->FindTextEnd(m_pTextRange2, cbs, Count, Flags, @Length))
    RETURN Length
@@ -1723,7 +1720,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Mimics the DELETE and BACKSPACE keys, with and without the CTRL key depressed.
 
 ```
-FUNCTION CTextRange2.Delete_ (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
+FUNCTION Delete_ (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->Delete_(m_pTextRange2, Unit, Count, @Delta))
    RETURN Delta
@@ -1770,7 +1767,7 @@ Deleting the end-of-paragraph mark (CR) results in the special behavior of the M
 Cuts the plain or rich text to a data object or to the Clipboard, depending on the *pVar* parameter.
 
 ```
-FUNCTION CTextRange2.Cut (BYVAL pVar AS VARIANT PTR) AS HRESULT
+FUNCTION Cut (BYVAL pVar AS VARIANT PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->Cut(m_pTextRange2, pVar))
    RETURN m_Result
 END FUNCTION
@@ -1785,7 +1782,7 @@ END FUNCTION
 Copies the text to a data object.
 
 ```
-FUNCTION CTextRange2.Copy (BYVAL pVar AS VARIANT PTR) AS HRESULT
+FUNCTION Copy (BYVAL pVar AS VARIANT PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->Copy(m_pTextRange2, pVar))
    RETURN m_Result
 END FUNCTION
@@ -1806,7 +1803,7 @@ To copy and replace plain text, you can use the **GetText**  and **SetText**  me
 Pastes text from a specified data object.
 
 ```
-FUNCTION CTextRange2.Paste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG = 0) AS HRESULT
+FUNCTION Paste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG = 0) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->Paste(m_pTextRange2, pVar, Format))
    RETURN m_Result
 END FUNCTION
@@ -1834,7 +1831,7 @@ For more information, see **Copy**.
 Determines if a data object can be pasted, using a specified format, into the current range.
 
 ```
-FUNCTION CTextRange2.CanPaste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG = 0) AS LONG
+FUNCTION CanPaste (BYVAL pVar AS VARIANT PTR, BYVAL Format AS LONG = 0) AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->CanPaste(m_pTextRange2, pVar, Format, @Value))
    RETURN Value
@@ -1864,7 +1861,7 @@ The method returns one of the following COM error codes.
 Determines whether the specified range can be edited.
 
 ```
-FUNCTION CTextRange2.CanEdit () AS LONG
+FUNCTION CanEdit () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->CanEdit(m_pTextRange2, @Value))
    RETURN Value
@@ -1888,7 +1885,7 @@ The range cannot be edited if any part of it is protected or if the document is 
 Changes the case of letters in this range according to the *nType* parameter.
 
 ```
-FUNCTION CTextRange2.ChangeCase (BYVAL nType AS LONG  = tomLowerCase) AS HRESULT
+FUNCTION ChangeCase (BYVAL nType AS LONG  = tomLowerCase) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->ChangeCase(m_pTextRange2, nType))
    RETURN m_Result
 END FUNCTION
@@ -1914,7 +1911,7 @@ This method returns an **HRESULT** value. If successful, it returns **S_OK**. Ot
 Retrieves screen coordinates for the start or end character position in the text range, along with the intra-line position.
 
 ```
-FUNCTION CTextRange2.GetPoint (BYVAL nType AS LONG = tomStart + TA_BASELINE + TA_LEFT, BYVAL px AS LONG PTR, BYVAL py AS LONG PTR) AS HRESULT
+FUNCTION GetPoint (BYVAL nType AS LONG = tomStart + TA_BASELINE + TA_LEFT, BYVAL px AS LONG PTR, BYVAL py AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->GetPoint(m_pTextRange2, nType, px, py))
    RETURN m_Result
 END FUNCTION
@@ -1972,7 +1969,7 @@ The **GetPoint** method gives **ITextRange** the ability to emulate UI-pointer c
 Changes the range based on a specified point at or up through (depending on Extend) the point (x, y) aligned according to *nType*.
 
 ```
-FUNCTION CTextRange2.SetPoint (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG, BYVAL Extend AS LONG = 0) AS HRESULT
+FUNCTION SetPoint (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG, BYVAL Extend AS LONG = 0) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetPoint(m_pTextRange2, x, y, nType, Extend))
    RETURN m_Result
 END FUNCTION
@@ -1997,7 +1994,7 @@ An application can use the specified point in the **WindowFromPoint** function t
 Scrolls the specified range into view.
 
 ```
-FUNCTION CTextRange2.ScrollIntoView (BYVAL Value AS LONG = tomStart) AS HRESULT
+FUNCTION ScrollIntoView (BYVAL Value AS LONG = tomStart) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->ScrollIntoView(m_pTextRange2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2024,7 +2021,7 @@ The method returns an **HRESULT** value. If the method succeeds, it returns **S_
 Retrieves a pointer to the embedded object at the start of the specified range, that is, at *cpFirst*. The range must either be an insertion point or it must select only the embedded object.
 
 ```
-FUNCTION CTextRange2.GetEmbeddedObject () AS IUnknown PTR
+FUNCTION GetEmbeddedObject () AS IUnknown PTR
    DIM pObject AS IUnknown PTR
    this.SetResult(m_pTextRange2->lpvtbl->GetEmbeddedObject(m_pTextRange2, @pObject))
    RETURN pObject
@@ -2044,7 +2041,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Gets the text selection flags.
 
 ```
-FUNCTION CTextRange2.GetFlags () AS LONG
+FUNCTION GetFlags () AS LONG
    DIM Flags AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->GetFlags(m_pTextRange2, @Flags))
    RETURN Flags
@@ -2074,7 +2071,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**.
 Sets the text selection flags.
 
 ```
-FUNCTION CTextRange2.SetFlags (BYVAL Flags AS LONG) AS HRESULT
+FUNCTION SetFlags (BYVAL Flags AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetFlags(m_pTextRange2, Flags))
    RETURN m_Result
 END FUNCTION
@@ -2111,7 +2108,7 @@ The *Flags* property is useful because an **ITextRange** object can select itsel
 Gets the type of text selection.
 
 ```
-FUNCTION CTextRange2.GetType () AS LONG
+FUNCTION GetType () AS LONG
    DIM nType AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->GetType(m_pTextRange2, @nType))
    RETURN nType
@@ -2143,7 +2140,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**.
 Generalizes the functionality of the Left Arrow key.
 
 ```
-FUNCTION CTextRange2.MoveLeft (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
+FUNCTION MoveLeft (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveLeft(m_pTextRange2, Unit, Count, Extend, @Delta))
    RETURN Delta
@@ -2203,7 +2200,7 @@ When *Extend* is **tomExtend** (or is nonzero), **MoveLeft** moves only the acti
 Generalizes the functionality of the Right Arrow key.
 
 ```
-FUNCTION CTextRange2.MoveRight (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
+FUNCTION MoveRight (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveRight(m_pTextRange2, Unit, Count, Extend, @Delta))
    RETURN Delta
@@ -2264,7 +2261,7 @@ The actual count of units the insertion point or active end is moved left. Colla
 Mimics the functionality of the Up Arrow and Page Up keys.
 
 ```
-FUNCTION CTextRange2.MoveUp (BYVAL Unit AS LONG = tomLine, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
+FUNCTION MoveUp (BYVAL Unit AS LONG = tomLine, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveUp(m_pTextRange2, Unit, Count, Extend, @Delta))
    RETURN Delta
@@ -2304,7 +2301,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Mimics the functionality of the Down Arrow and Page Down keys.
 
 ```
-FUNCTION CTextRange2.MoveDown (BYVAL Unit AS LONG = tomLine, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
+FUNCTION MoveDown (BYVAL Unit AS LONG = tomLine, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->MoveDown(m_pTextRange2, Unit, Count, Extend, @Delta))
    RETURN Delta
@@ -2342,7 +2339,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 Generalizes the functionality of the Home key.
 
 ```
-FUNCTION CTextRange2.HomeKey (BYVAL Unit AS LONG = tomLine, BYVAL Extend AS LONG = 0) AS LONG
+FUNCTION HomeKey (BYVAL Unit AS LONG = tomLine, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->HomeKey(m_pTextRange2, Unit, Extend, @Delta))
    RETURN Delta
@@ -2387,7 +2384,7 @@ The **HomeKey** and **EndKey** methods are logical methods like the **Move** met
 Mimics the functionality of the End key.
 
 ```
-FUNCTION CTextRange2.EndKey (BYVAL Unit AS LONG = tomLine, BYVAL Extend AS LONG = 0) AS LONG
+FUNCTION EndKey (BYVAL Unit AS LONG = tomLine, BYVAL Extend AS LONG = 0) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->EndKey(m_pTextRange2, Unit, Extend, @Delta))
    RETURN Delta
@@ -2434,7 +2431,7 @@ The **HomeKey** and **EndKey** methods are logical methods like the **Move** met
 Types the string given by *cbs* at this selection as if someone typed it. This is similar to the underlying **SetText** method, but is sensitive to the Insert/Overtype key state and UI settings like AutoCorrect and smart quotes.
 
 ```
-FUNCTION CTextRange2.TypeText (BYREF cbs AS CBSTR) AS HRESULT
+FUNCTION TypeText (BYREF cbs AS CBSTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->TypeText(m_pTextRange2, cbs))
    RETURN m_Result
 END FUNCTION
@@ -2464,7 +2461,7 @@ This method types the string given by *cbs* at this selection as if someone type
 Gets the count of characters in a range.
 
 ```
-FUNCTION CTextRange2.GetCch () AS LONG
+FUNCTION GetCch () AS LONG
    DIM cch AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->GetCch(m_pTextRange2, @cch))
    RETURN cch
@@ -2490,7 +2487,7 @@ Not implemented.
 Gets a cells object with the parameters of cells in the currently selected table row or column.
 
 ```
-FUNCTION CTextRange2.GetCells () AS IUnknown PTR
+FUNCTION GetCells () AS IUnknown PTR
    DIM pCells AS IUnknown PTR
    this.SetResult(m_pTextRange2->lpvtbl->GetCells(m_pTextRange2, @pCells))
    RETURN pCells
@@ -2512,7 +2509,7 @@ Not implemented.
 Gets the column properties for the currently selected column.
 
 ```
-FUNCTION CTextRange2.GetColumn () AS IUnknown PTR
+FUNCTION GetColumn () AS IUnknown PTR
    DIM pColumn AS IUnknown PTR
    this.SetResult(m_pTextRange2->lpvtbl->GetColumn(m_pTextRange2, @pColumn))
    RETURN pColumn
@@ -2532,7 +2529,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Gets the count of subranges, including the active subrange in the current range.
 
 ```
-FUNCTION CTextRange2.GetCount () AS LONG
+FUNCTION GetCount () AS LONG
    DIM Count AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->GetCount(m_pTextRange2, @Count))
    RETURN Count
@@ -2559,7 +2556,7 @@ See **AddSubrange** to add subranges programmatically.
 Gets the gravity of this range.
 
 ```
-FUNCTION CTextRange2.GetGravity () AS LONG
+FUNCTION GetGravity () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->GetGravity(m_pTextRange2, @Value))
    RETURN Value
@@ -2586,7 +2583,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Sets the gravity of this range.
 
 ```
-FUNCTION CTextRange2.SetGravity (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetGravity (BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetGravity(m_pTextRange2, Value))
    RETURN m_Result
 END FUNCTION
@@ -2613,7 +2610,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Gets the row properties in the currently selected row.
 
 ```
-FUNCTION CTextRange2.GetRow () AS ITextRow PTR
+FUNCTION GetRow () AS ITextRow PTR
    DIM pRow AS ITextRow PTR
    this.SetResult(m_pTextRange2->lpvtbl->GetRow(m_pTextRange2, @pRow))
    RETURN pRow
@@ -2633,7 +2630,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Gets the character position of the start of the paragraph that contains the range's start character position.
 
 ```
-FUNCTION CTextRange2.GetStartPara () AS LONG
+FUNCTION GetStartPara () AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->GetStartPara(m_pTextRange2, @Value))
    RETURN Value
@@ -2653,7 +2650,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Gets the table properties in the currently selected table.
 
 ```
-FUNCTION CTextRange2.GetTable () AS IUnknown PTR
+FUNCTION GetTable () AS IUnknown PTR
    DIM pTable AS IUnknown PTR
    this.SetResult(m_pTextRange2->lpvtbl->GetTable(m_pTextRange2, @pTable))
    RETURN pTable
@@ -2673,7 +2670,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Returns the URL text associated with a range.
 
 ```
-FUNCTION CTextRange2.GetURL () AS CBSTR
+FUNCTION GetURL () AS CBSTR
    DIM pbstr AS AFX_BSTR
    this.SetResult(m_pTextRange2->lpvtbl->GetURL(m_pTextRange2, @pbstr))
    RETURN pbstr
@@ -2693,7 +2690,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. Otherwise, it return
 Sets the text in this range to that of the specified URL.
 
 ```
-FUNCTION CTextRange2.SetURL (BYREF cbs AS CBSTR) AS HRESULT
+FUNCTION SetURL (BYREF cbs AS CBSTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetURL(m_pTextRange2, cbs))
    RETURN m_Result
 END FUNCTION
@@ -2732,7 +2729,7 @@ The text range be adjusted to different character positions after calling SetURL
 Adds a subrange to this range.
 
 ```
-FUNCTION CTextRange2.AddSubrange (BYVAL cp1 AS LONG, BYVAL cp2 AS LONG, BYVAL Activate AS LONG) AS HRESULT
+FUNCTION AddSubrange (BYVAL cp1 AS LONG, BYVAL cp2 AS LONG, BYVAL Activate AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->AddSubrange(m_pTextRange2, cp1, cp2, Activate))
    RETURN m_Result
 END FUNCTION
@@ -2751,7 +2748,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Converts the linear-format math in a range to a built-up form, or modifies the current built-up form.
 
 ```
-FUNCTION CTextRange2.BuildUpMath (BYVAL Flags AS LONG) AS HRESULT
+FUNCTION BuildUpMath (BYVAL Flags AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->BuildUpMath(m_pTextRange2, Flags))
    RETURN m_Result
 END FUNCTION
@@ -2830,7 +2827,7 @@ You should set the **tomNeedTermOp** flag should for formula autobuildup unless 
 Deletes a subrange from a range.
 
 ```
-FUNCTION CTextRange2.DeleteSubrange (BYVAL cpFirst AS LONG, BYVAL cpLim AS LONG) AS HRESULT
+FUNCTION DeleteSubrange (BYVAL cpFirst AS LONG, BYVAL cpLim AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->DeleteSubrange(m_pTextRange2, cpFirst, cpLim))
    RETURN m_Result
 END FUNCTION
@@ -2850,7 +2847,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Searches for math inline functions in text as specified by a source range.
 
 ```
-FUNCTION CTextRange2.Find (BYVAL pRange AS ITextRange2 PTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
+FUNCTION Find (BYVAL pRange AS ITextRange2 PTR, BYVAL Count AS LONG, BYVAL Flags AS LONG) AS LONG
    DIM Delta AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->Find(m_pTextRange2, pRange, Count, Flags, @Delta))
    RETURN Delta
@@ -2878,7 +2875,7 @@ Not implemented.
 Gets the drop-cap parameters of the paragraph that contains this range.
 
 ```
-FUNCTION CTextRange2.GetDropCap (BYVAL pcLine AS LONG PTR, BYVAL pPosition AS LONG PTR) AS HRESULT
+FUNCTION GetDropCap (BYVAL pcLine AS LONG PTR, BYVAL pPosition AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->GetDropCap(m_pTextRange2, pcLine, pPosition))
    RETURN m_Result
 END FUNCTION
@@ -2900,7 +2897,7 @@ Gets the properties of the inline object at the range active end.
 See full MSDN documentation: [ITextRange2::GetInlineObject method](https://learn.microsoft.com/en-us/windows/win32/api/tom/nf-tom-itextrange2-getinlineobject)
 
 ```
-FUNCTION CTextRange2.GetInlineObject (BYVAL pType AS LONG PTR, BYVAL pAlign AS LONG PTR, BYVAL pChar AS LONG PTR, BYVAL pChar1 AS LONG PTR, _
+FUNCTION GetInlineObject (BYVAL pType AS LONG PTR, BYVAL pAlign AS LONG PTR, BYVAL pChar AS LONG PTR, BYVAL pChar1 AS LONG PTR, _
 BYVAL pChar2 AS LONG PTR, BYVAL pCount AS LONG PTR,  BYVAL pTeXStyle AS LONG PTR, BYVAL pcCol AS LONG PTR, BYVAL pLevel AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->GetInlineObject(m_pTextRange2, pType, pAlign, pChar, pChar1, pChar2, pCount, pTeXStyle, pcCol))
    RETURN m_Result
@@ -2934,7 +2931,7 @@ When that character is not a start delimiter, the character and column parameter
 Gets the value of a property.
 
 ```
-FUNCTION CTextRange2.GetProperty (BYVAL nType AS LONG) AS LONG
+FUNCTION GetProperty (BYVAL nType AS LONG) AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->GetProperty(m_pTextRange2, nType, @Value))
    RETURN Value
@@ -2958,7 +2955,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Retrieves a rectangle of the specified type for the current range.
 
 ```
-FUNCTION CTextRange2.GetRect (BYVAL nType AS LONG, BYVAL pLeft AS LONG PTR, BYVAL pTop AS LONG PTR, _
+FUNCTION GetRect (BYVAL nType AS LONG, BYVAL pLeft AS LONG PTR, BYVAL pTop AS LONG PTR, _
 BYVAL pRight AS LONG PTR, BYVAL pBottom AS LONG PTR, BYVAL pHit AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->GetRect(m_pTextRange2, nType, pLeft, pTop, pRight, pBottom, pHit))
    RETURN m_Result
@@ -3006,7 +3003,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Retrieves a subrange in a range.
 
 ```
-FUNCTION CTextRange2.GetSubrange (BYVAL iSubrange AS LONG, BYVAL pcpFirst AS LONG PTR, BYVAL pcpLim AS LONG PTR) AS HRESULT
+FUNCTION GetSubrange (BYVAL iSubrange AS LONG, BYVAL pcpFirst AS LONG PTR, BYVAL pcpLim AS LONG PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->GetSubrange(m_pTextRange2, iSubrange, pcpFirst, pcpLim))
    RETURN m_Result
 END FUNCTION
@@ -3039,7 +3036,7 @@ See **GetCount** for the count of subranges not including the active subrange.
 Converts and replaces the hexadecimal number at the end of this range to a Unicode character.
 
 ```
-FUNCTION CTextRange2.HexToUnicode () AS HRESULT
+FUNCTION HexToUnicode () AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->HexToUnicode(m_pTextRange2))
    RETURN m_Result
 END FUNCTION
@@ -3064,7 +3061,7 @@ Some Unicode surrogates for hex values from &h10000 up to &h10FFFF are for inter
 Inserts a table in a range.
 
 ```
-FUNCTION CTextRange2.InsertTable (BYVAL cCol AS LONG, BYVAL cRow AS LONG, BYVAL AutoFit AS LONG) AS HRESULT
+FUNCTION InsertTable (BYVAL cCol AS LONG, BYVAL cRow AS LONG, BYVAL AutoFit AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->InsertTable(m_pTextRange2, cCol, cRow, AutoFit))
    RETURN m_Result
 END FUNCTION
@@ -3085,7 +3082,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns an 
 Translates the built-up math, ruby, and other inline objects in this range to linearized form.
 
 ```
-FUNCTION CTextRange2.Linearize (BYVAL Flags AS LONG) AS HRESULT
+FUNCTION Linearize (BYVAL Flags AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->Linearize(m_pTextRange2, Flags))
    RETURN m_Result
 END FUNCTION
@@ -3106,7 +3103,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns the
 Makes the specified subrange the active subrange of this range.
 
 ```
-FUNCTION CTextRange2.SetActiveSubrange (BYVAL cpAnchor AS LONG, BYVAL cpActive AS LONG) AS HRESULT
+FUNCTION SetActiveSubrange (BYVAL cpAnchor AS LONG, BYVAL cpActive AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetActiveSubrange(m_pTextRange2, cpAnchor, cpActive))
    RETURN m_Result
 END FUNCTION
@@ -3133,7 +3130,7 @@ Not implemented.
 Sets the drop-cap parameters for the paragraph that contains the current range.
 
 ```
-FUNCTION CTextRange2.SetDropCap (BYVAL cLine AS LONG, BYVAL Position AS LONG) AS HRESULT
+FUNCTION SetDropCap (BYVAL cLine AS LONG, BYVAL Position AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetDropCap(m_pTextRange2, cLine, Position))
    RETURN m_Result
 END FUNCTION
@@ -3156,7 +3153,7 @@ The current range can be degenerate, or you can select up to the complete drop-c
 Sets the value of the specified property.
 
 ```
-FUNCTION CTextRange2.SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetProperty(m_pTextRange2, nType, Value))
    RETURN m_Result
 END FUNCTION
@@ -3176,7 +3173,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Sets the text of this range.
 
 ```
-FUNCTION CTextRange2.SetText2 (BYVAL Flags AS LONG, BYREF cbs AS CBSTR) AS HRESULT
+FUNCTION SetText2 (BYVAL Flags AS LONG, BYREF cbs AS CBSTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetText2(m_pTextRange2, Flags, cbs))
    RETURN m_Result
 END FUNCTION
@@ -3227,7 +3224,7 @@ pCRange2.SetText2(0, "")
 Converts the Unicode character(s) preceding the start position of this text range to a hexadecimal number, and selects it.
 
 ```
-FUNCTION CTextRange2.UnicodeToHex () AS HRESULT
+FUNCTION UnicodeToHex () AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->UnicodeToHex(m_pTextRange2))
    RETURN m_Result
 END FUNCTION
@@ -3252,7 +3249,7 @@ Some Unicode surrogates for hex values from &h10000 up to &h10FFFF are for inter
 Sets or inserts the properties of an inline object for a degenerate range.
 
 ```
-FUNCTION CTextRange2.SetInlineObject (BYVAL nType AS Long, BYVAL Align AS LONG, BYVAL Char AS LONG, _
+FUNCTION SetInlineObject (BYVAL nType AS Long, BYVAL Align AS LONG, BYVAL Char AS LONG, _
 BYVAL Char1 AS LONG, BYVAL Char2 AS LONG, BYVAL Count AS LONG, BYVAL TeXStyle AS LONG, BYVAL cCol AS LONG) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->SetInlineObject(m_pTextRange2, nType, Align, Char, Char1, Char2, Count, TeXStyle, cCol))
    RETURN m_Result
@@ -3279,7 +3276,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 Retrieves the math function type associated with the specified math function name.
 
 ```
-FUNCTION CTextRange2.GetMathFunctionType (BYREF cbs AS CBSTR) AS LONG
+FUNCTION GetMathFunctionType (BYREF cbs AS CBSTR) AS LONG
    DIM Value AS LONG
    this.SetResult(m_pTextRange2->lpvtbl->GetMathFunctionType(m_pTextRange2, cbs, @Value))
    RETURN Value
@@ -3312,7 +3309,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 Inserts an image into this range.
 
 ```
-FUNCTION CTextRange2.InsertImage (BYVAL width_ AS LONG, BYVAL height AS LONG, BYVAL ascent AS LONG, _
+FUNCTION InsertImage (BYVAL width_ AS LONG, BYVAL height AS LONG, BYVAL ascent AS LONG, _
 BYVAL nType AS LONG, BYREF cbsAltText AS CBSTR, BYVAL pStream AS IStream PTR) AS HRESULT
    this.SetResult(m_pTextRange2->lpvtbl->InsertImage(m_pTextRange2, width_, height, ascent, nType, cbsAltText, pStream))
    RETURN m_Result
