@@ -25,6 +25,8 @@ The **ITextRange** objects are powerful editing and data-binding tools that allo
 | [SetStart](#setstart) | Sets the character position for the start of this range. |
 | [GetEnd](#getend) | Gets the end character position of the range. |
 | [SetEnd](#setend) | Sets the end position of the range. |
+| [GetLenght](#getlength) | Gets the length of the range. |
+| [SetLenght](#setlength) | Sets the length of the range. |
 | [GetFont](#getfont) | Gets an **ITextFont** object with the character attributes of the specified range. |
 | [SetFont](#setfont) | Sets this range's character attributes to those of the specified **ITextFont** object. |
 | [GetPara](#getpara) | Gets an **ITextPara** object with the paragraph attributes of the specified range. |
@@ -584,6 +586,41 @@ If the new end position is less than the start position, this method also sets t
 If this range is actually the selection, the end position becomes the active end and, if the display is not frozen, it is scrolled into view.
 
 **SetStart** sets the range's start position and **SetRange** sets both range ends simultaneously.
+
+---
+
+## <a name="getlength"></a>GetLength
+
+Gets the length of the range.
+
+```
+FUNCTION GetLength () AS LONG
+```
+#### Return value
+
+The lenght of the range
+
+#### Result code
+
+If the method succeeds, **GetLastResult** returns **S_OK**. If method fails, it returns **S_FALSE**.
+
+---
+
+
+## <a name="setlength"></a>SetLength
+
+Sets the length of the range.
+
+```
+FUNCTION SetLEngth (BYVAL Value AS LONG) AS HRESULT
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *Value* | The new length. |
+
+#### Return value
+
+The method returns an **HRESULT** value. If the method succeeds, it returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
 ---
 
