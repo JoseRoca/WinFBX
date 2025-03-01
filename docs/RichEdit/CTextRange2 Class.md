@@ -612,7 +612,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If method fails, it 
 Sets the length of the range.
 
 ```
-FUNCTION SetLEngth (BYVAL Value AS LONG) AS HRESULT
+FUNCTION SetLength (BYVAL Value AS LONG) AS HRESULT
 ```
 | Parameter | Description |
 | --------- | ----------- |
