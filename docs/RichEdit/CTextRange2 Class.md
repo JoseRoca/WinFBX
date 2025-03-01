@@ -66,6 +66,12 @@ The **ITextRange** objects are powerful editing and data-binding tools that allo
 | [ScrollIntoView](#scrollintoview) | Scrolls the specified range into view. |
 | [GetEmbeddedObject](#getembeddedobject) | Retrieves a pointer to the embedded object at the start of the specified range, that is, at *cpFirst*. |
 
+## Helper Method
+
+| Name       | Description |
+| ---------- | ----------- |
+| [GetRtf](#getrtf) | Gets the content of the range as a Rich Text Format (RTF) string. |
+
 ### ITextSelection Interface
 
 A text selection is a text range with selection highlighting.
@@ -3172,3 +3178,15 @@ If this method succeeds, it returns **S_OK**. Otherwise, it returns an **HRESULT
 If the range is nondegenerate, the image replaces the text in the range.
 
 ---
+
+## <a name="getrtf"></a>GetRtf
+
+Gets the content of the range as a Rich Text Format (RTF) string.
+
+```
+FUNCTION CTextRange2.GetRtf () AS STRING
+```
+
+#### Return value
+
+If the method succeeds, it returns the content of the range as a Rich Text Format (RTF) string. If the method fails, it returns an empty string. Call **GetErrorInfo** to get information about the error.
