@@ -93,9 +93,6 @@ The **ITextRange2** objects are powerful editing and data-binding tools that ena
 | ---------- | ----------- |
 | [GetCch](#getcch) | Gets the count of characters in a range. |
 | [Getcells](#getcells) | Not implemented. Gets a cells object with the parameters of cells in the currently selected table row or column. |
-
-| Name       | Description |
-| ---------- | ----------- |
 | [GetColumn](#getcolumn) | Not implemented. Gets the column properties for the currently selected column. |
 | [GetCount](#getcount) | Gets the count of subranges, including the active subrange in the current range. |
 | [GetGravity](#getgravity) | Gets the gravity of this range. |
