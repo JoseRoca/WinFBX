@@ -122,7 +122,6 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [SetActiveSubrange](#SetActiveSubrange) | Makes the specified subrange the active subrange of this range. |
 | [SetDropCap](#SetDropCap) | Not implemented. Sets the drop-cap parameters for the paragraph that contains the current range. |
 | [SetProperty](#SetProperty) | Sets the value of the specified property. |
-| [SetText2](#SetText2) | Sets the text of this range. |
 | [UnicodeToHex](#UnicodeToHex) | Converts the Unicode character(s) preceding the start position of this text range to a hexadecimal number, and selects it. |
 | [SetInlineObject](#SetInlineObject) | Sets the text of this range. |
 | [GetMathFunctionType](#GetMathFunctionType) | Retrieves the math function type associated with the specified math function name. |
@@ -293,22 +292,39 @@ Delete pRange2
 
 ## <a name="settext"></a>SetText
 
-Sets the text in this range.
+Sets the text of this range.
 
 ```
-FUNCTION SetText (BYREF cbs AS CBSTR) AS HRESULT
+FUNCTION SetText (BYREF cbs AS CBSTR, BYVAL Flags AS LONG = 0) AS HRESULT
 ```
 
 | Parameter | Description |
 | --------- | ----------- |
+| *Flags* | Flags controlling how the text is inserted in the range. The flag can be one of the following values (see table below) |
 | *cbs* | Text that replaces the current text in this range. If "", the current text is deleted. |
+
+| Flag | Value | Description |
+| ---- | ----- | ----------- |
+| **tomUnicodeBiDi** | 1 | Use the Unicode bidirectional (bidi) algorithm. |
+| **tomMathCFCheck** | 4 | Check math-zone character formatting. |
+| **tomUnlink** | 8 | Don't include text as part of a hyperlink. |
+| **tomUnhide** | &h10 | Don't insert as hidden text. |
+| **tomCheckTextLimit** | &h20 | Obey the current text limit instead of increasing the text to fit. |
+| **tomLanguageTag** | &h1000 | Get the BCP-47 language tag for this range. |
+
+#### Return value
 
 The method returns an **HRESULT** value. If the method succeeds, it returns S_OK. If the method fails, it returns one of the following COM error codes.
 
 | Result code | Description |
 | ----------- | ----------- |
+| **E_INVALIDARG** | Invalid argument. |
 | **E_ACCESSDENIED** | Text is write-protected. |
 | **E_OUTOFMEMORY** | Insufficient memory to hold the text. |
+
+#### Remarks
+
+This method is similar to **SetText**, but lets the client specify flags that control various insertion options, including the special flag **tomLanguageTag** to get the BCP-47 language tag for the range. This is an industry standard language tag that may be preferable **SetLanguageID**, which uses a language code identifier (LCID).
 
 #### Usage example
 ```
@@ -3150,57 +3166,6 @@ END FUNCTION
 #### Return value
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-## <a name="SetText2"></a>SetText2
-
-Sets the text of this range.
-
-```
-FUNCTION SetText2 (BYVAL Flags AS LONG, BYREF cbs AS CBSTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetText2(m_pTextRange2, Flags, cbs))
-   RETURN m_Result
-END FUNCTION
-```
-
-| Parameter | Description |
-| --------- | ----------- |
-| *Flags* | Flags controlling how the text is inserted in the range. The flag can be one of the following values (see table below) |
-| *cbs* | Text that replaces the current text in this range. If "", the current text is deleted. |
-
-| Flag | Value | Description |
-| ---- | ----- | ----------- |
-| **tomUnicodeBiDi** | 1 | Use the Unicode bidirectional (bidi) algorithm. |
-| **tomMathCFCheck** | 4 | Check math-zone character formatting. |
-| **tomUnlink** | 8 | Don't include text as part of a hyperlink. |
-| **tomUnhide** | &h10 | Don't insert as hidden text. |
-| **tomCheckTextLimit** | &h20 | Obey the current text limit instead of increasing the text to fit. |
-| **tomLanguageTag** | &h1000 | Get the BCP-47 language tag for this range. |
-
-#### Return value
-
-The method returns an **HRESULT** value. If the method succeeds, it returns S_OK. If the method fails, it returns one of the following COM error codes.
-
-| Result code | Description |
-| ----------- | ----------- |
-| **E_INVALIDARG** | Invalid argument. |
-| **E_ACCESSDENIED** | Text is write-protected. |
-| **E_OUTOFMEMORY** | Insufficient memory to hold the text. |
-
-#### Remarks
-
-This method is similar to **SetText**, but lets the client specify flags that control various insertion options, including the special flag **tomLanguageTag** to get the BCP-47 language tag for the range. This is an industry standard language tag that may be preferable **SetLanguageID**, which uses a language code identifier (LCID).
-
-#### Usage example
-```
-DIM pCTextDocument AS CTextDocument2 = hRichEdit
-DIM pCRange2 AS CTextRange2 = pCTextDoc.Range2(3, 8)
-DIM cbsText AS CBSTR = "new text"
-pCRange2.SetText2(0, cbsText)
-' You can also use a string literal
-pCRange2.SetText2(0, "new text")
-' or pass an empty string to delete the range
-pCRange2.SetText2(0, "")
-```
 
 ## <a name="UnicodeToHex"></a>UnicodeToHex
 
