@@ -29,11 +29,11 @@ The **ITextRange2** interface is derived from **ITextRange**, and its objects ar
 | [SetFont](#setfont) | Sets this range's character attributes to those of the specified **ITextFont** object. |
 | [GetPara](#getpara) | Gets an **ITextPara** object with the paragraph attributes of the specified range. |
 | [SetPara](#setpara) | Sets the paragraph attributes of this range to those of the specified **ITextPara** object. |
+| [GetStoryLength](#getstorylength) | Gets the count of characters in the range's story. |
+| [GetStoryType](#getstorytype) | Get the type of the range's story. |
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetStoryLength](#GetStoryLength) | Gets the count of characters in the range's story. |
-| [GetStoryType](#GetStoryType) | Get the type of the range's story. |
 | [Collapse](#Collapse) | Collapses the specified text range into a degenerate point at either the beginning or end of the range. |
 | [Expand](#Expand) | Expands this range so that any partial units it contains are completely contained. |
 | [GetIndex](#GetIndex) | Retrieves the story index of the *Unit* parameter at the specified range Start character position. |
@@ -650,16 +650,12 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="GetStoryLength"></a>GetStoryLength
+## <a name="getstorylength"></a>GetStoryLength
 
 Gets the count of characters in the range's story.
 
 ```
-FUNCTION CTextRange2.GetStoryLength () AS LONG
-   DIM Count AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetStoryLength(m_pTextRange2, @Count))
-   RETURN Count
-END FUNCTION
+FUNCTION GetStoryLength () AS LONG
 ```
 #### Return value
 
@@ -669,16 +665,14 @@ The count of characters in the range's story.
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
 
-# <a name="GetStoryType"></a>GetStoryType
+---
+
+## <a name="getstorytype"></a>GetStoryType
 
 Get the type of the range's story.
 
 ```
-FUNCTION CTextRange2.GetStoryType () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetStoryType(m_pTextRange2, @Value))
-   RETURN Value
-END FUNCTION
+FUNCTION GetStoryType () AS LONG
 ```
 #### Return value
 
@@ -702,6 +696,8 @@ The type of the range's story. It can be one of the following values:
 #### Result code
 
 If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails, it returns **S_FALSE**.
+
+---
 
 # <a name="Collapse"></a>Collapse
 
