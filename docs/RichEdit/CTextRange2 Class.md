@@ -74,16 +74,16 @@ The **ITextSelection** interface inherits from **ITextRange**. **ITextSelection*
 
 | Name       | Description |
 | ---------- | ----------- |
-| [GetFlags](#GetFlags) | Gets the text selection flags. |
-| [SetFlags](#SetFlags) | Sets the text selection flags. |
-| [GetType](#GetType) | Gets the type of text selection. |
-| [MoveLeft](#MoveLeft) | Generalizes the functionality of the Left Arrow key. |
-| [MoveRight](#MoveRight) | Generalizes the functionality of the Right Arrow key. |
-| [MoveUp](#MoveUp) | Mimics the functionality of the Up Arrow and Page Up keys. |
-| [MoveDown](#MoveDown) | Mimics the functionality of the Down Arrow and Page Down keys. |
-| [HomeKey](#HomeKey) | Generalizes the functionality of the Home key. |
-| [EndKey](#EndKey) | Mimics the functionality of the End key. |
-| [TypeText](#TypeText) | Types the string given by *cbs* at this selection as if someone typed it.  |
+| [GetFlags](#getflags) | Gets the text selection flags. |
+| [SetFlags](#setflags) | Sets the text selection flags. |
+| [GetType](#gettype) | Gets the type of text selection. |
+| [MoveLeft](#moveleft) | Generalizes the functionality of the Left Arrow key. |
+| [MoveRight](#moveright) | Generalizes the functionality of the Right Arrow key. |
+| [MoveUp](#moveup) | Mimics the functionality of the Up Arrow and Page Up keys. |
+| [MoveDown](#movedown) | Mimics the functionality of the Down Arrow and Page Down keys. |
+| [HomeKey](#homekey) | Generalizes the functionality of the Home key. |
+| [EndKey](#endkey) | Mimics the functionality of the End key. |
+| [TypeText](#typetext) | Types the string given by *cbs* at this selection as if someone typed it.  |
 
 ### ITextRange2 Interface
 
@@ -1992,16 +1992,12 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-## <a name="GetFlags"></a>GetFlags
+## <a name="getflags"></a>GetFlags
 
 Gets the text selection flags.
 
 ```
 FUNCTION GetFlags () AS LONG
-   DIM Flags AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetFlags(m_pTextRange2, @Flags))
-   RETURN Flags
-END FUNCTION
 ```
 
 #### Return value
@@ -2022,15 +2018,14 @@ Each of the table values is binary. Thus, if any value is not set, the text sele
 
 If the method succeeds, **GetLastResult** returns **S_OK**.
 
-## <a name="SetFlags"></a>SetFlags
+---
+
+## <a name="setflags"></a>SetFlags
 
 Sets the text selection flags.
 
 ```
 FUNCTION SetFlags (BYVAL Flags AS LONG) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->SetFlags(m_pTextRange2, Flags))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2059,16 +2054,14 @@ selection.Flags = tomSelStartActive + tomSelAtEOL
 
 The *Flags* property is useful because an **ITextRange** object can select itself. With **SetFlags**, you can change the active end from the default value of End, select the caret position for an ambiguous character position, or change the Insert/Overtype mode.
 
-## <a name="GetType"></a>GetType
+---
+
+## <a name="gettype"></a>GetType
 
 Gets the type of text selection.
 
 ```
 FUNCTION GetType () AS LONG
-   DIM nType AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->GetType(m_pTextRange2, @nType))
-   RETURN nType
-END FUNCTION
 ```
 
 #### Return value
@@ -2091,16 +2084,15 @@ The selection type. Can be one of the values in the following table.
 
 If the method succeeds, **GetLastResult** returns **S_OK**.
 
-## <a name="MoveLeft"></a>MoveLeft
+---
+
+## <a name="moveleft"></a>MoveLeft
 
 Generalizes the functionality of the Left Arrow key.
 
 ```
-FUNCTION MoveLeft (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->MoveLeft(m_pTextRange2, Unit, Count, Extend, @Delta))
-   RETURN Delta
-END FUNCTION
+FUNCTION MoveLeft (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1, _
+   BYVAL Extend AS LONG = 0) AS LONG
 ```
 
 | Parameter | Description |
@@ -2151,16 +2143,15 @@ Similar to WordBasic and the Left Arrow key UI behavior, calling MoveLeft(Unit, 
 
 When *Extend* is **tomExtend** (or is nonzero), **MoveLeft** moves only the active end of the selection, leaving the other end where it is. However, if **Extend** equals zero and the selection starts as a nondegenerate range, MoveLeft(Unit, Count) where *Count* is greater than zero moves the active end Count - 1 units left, and then moves the other end to the active end. In other words, it makes an insertion point at the active end. Collapsing the range counts as one unit. Thus, MoveLeft(tomCharacter) converts a nondegenerate selection into a degenerate one at the selection's left end. Here, *Count* has the default value of 1 and *Extend* has the default value of zero. This example corresponds to pressing the Left Arrow key. **MoveLeft** and **MoveRight** are related to the **ITextRange** move methods, but differ in that they explicitly use the active end (the end moved by pressing the Shift key).
 
-## <a name="MoveRight"></a>MoveRight
+---
+
+## <a name="moveright"></a>MoveRight
 
 Generalizes the functionality of the Right Arrow key.
 
 ```
-FUNCTION MoveRight (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->MoveRight(m_pTextRange2, Unit, Count, Extend, @Delta))
-   RETURN Delta
-END FUNCTION
+FUNCTION MoveRight (BYVAL Unit AS LONG = tomCharacter, BYVAL Count AS LONG = 1, _
+   BYVAL Extend AS LONG = 0) AS LONG
 ```
 
 | Parameter | Description |
@@ -2196,7 +2187,6 @@ Microsoft WordBasic move methods like **CharRigh**t, **CharLeft**, **WordRight**
 
 The *Extend* argument of **MoveLeft** and **MoveRight** enables you to be consistent with the three items above. For example, given a selection, s, consisting of a single range, you have the following correspondences (for left-to-right characters).
 
-
 | ITextSelection | WordBasic | Function |
 | -------------- | --------- | -------- |
 | s.MoveRight tomWord, 1, 1 | WordRight 1,1 | Moves active end one word right. |
@@ -2212,16 +2202,14 @@ When *Extend* is **tomExtend** (or is nonzero), **MoveRight** moves only the act
 
 The actual count of units the insertion point or active end is moved left. Collapsing the selection, when *Extend* is 0, counts as one unit.
 
-## <a name="MoveUp"></a>MoveUp
+---
+
+## <a name="moveup"></a>MoveUp
 
 Mimics the functionality of the Up Arrow and Page Up keys.
 
 ```
 FUNCTION MoveUp (BYVAL Unit AS LONG = tomLine, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->MoveUp(m_pTextRange2, Unit, Count, Extend, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2252,16 +2240,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_INVALIDARG** | Unit is not valid. |
 | **S_FALSE** | Failure for some other reason. |
 
-## <a name="MoveDown"></a>MoveDown
+---
+
+## <a name="movedown"></a>MoveDown
 
 Mimics the functionality of the Down Arrow and Page Down keys.
 
 ```
 FUNCTION MoveDown (BYVAL Unit AS LONG = tomLine, BYVAL Count AS LONG = 1, BYVAL Extend AS LONG = 0) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->MoveDown(m_pTextRange2, Unit, Count, Extend, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2290,16 +2276,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_INVALIDARG** | Unit is not valid. |
 | **S_FALSE** | Failure for some other reason. |
 
-## <a name="HomeKey"></a>HomeKey
+---
+
+## <a name="homekey"></a>HomeKey
 
 Generalizes the functionality of the Home key.
 
 ```
 FUNCTION HomeKey (BYVAL Unit AS LONG = tomLine, BYVAL Extend AS LONG = 0) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->HomeKey(m_pTextRange2, Unit, Extend, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2335,16 +2319,14 @@ The **HomeKey** and **EndKey** methods are used to mimic the standard Home/End k
 
 The **HomeKey** and **EndKey** methods are logical methods like the **Move** methods, rather than directional methods. Thus, they depend on the language that is involved. For example, in Arabic text, HomeKey moves to the right end of a line, whereas in English text, it moves to the left. Thus, **HomeKey** and **EndKey** methods are different than the **MoveLeft** and **MoveRight** methods. Also, note that the **HomeKey** method is quite different from the **Start** property, which is the cp at the beginning of the selection. **HomeKey** and **EndKey** also differ from the **StartOf** and **EndOf** methods in that they extend from the active end, whereas **StartOf** extends from Start and **EndOf** extends from End.
 
-## <a name="EndKey"></a>EndKey
+---
+
+## <a name="endkey"></a>EndKey
 
 Mimics the functionality of the End key.
 
 ```
 FUNCTION EndKey (BYVAL Unit AS LONG = tomLine, BYVAL Extend AS LONG = 0) AS LONG
-   DIM Delta AS LONG
-   this.SetResult(m_pTextRange2->lpvtbl->EndKey(m_pTextRange2, Unit, Extend, @Delta))
-   RETURN Delta
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2382,15 +2364,14 @@ The **tomLine** value mimics the Home or End key behavior without the Ctrl key p
 
 The **HomeKey** and **EndKey** methods are logical methods like the **Move** methods, rather than directional methods. Thus, they depend on the language that is involved. For example, in Arabic text, **HomeKey** moves to the right end of a line, whereas in English text, it moves to the left. Thus, **HomeKey** and **EndKey** are different than the **MoveLeft** and **MoveRight** methods. Also, note that the **EndKey** method is quite different from the **End** property, which is the cp at the end of the selection. **HomeKey** and **EndKey** also differ from the **StartOf** and **EndOf** methods in that they extend from the active end, whereas **StartOf** extends from Start and **EndOf** extends from End.
 
-## <a name="TypeText"></a>TypeText
+---
+
+## <a name="typetext"></a>TypeText
 
 Types the string given by *cbs* at this selection as if someone typed it. This is similar to the underlying **SetText** method, but is sensitive to the Insert/Overtype key state and UI settings like AutoCorrect and smart quotes.
 
 ```
 FUNCTION TypeText (BYREF cbs AS CBSTR) AS HRESULT
-   this.SetResult(m_pTextRange2->lpvtbl->TypeText(m_pTextRange2, cbs))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2411,6 +2392,8 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 This method types the string given by *cbs* at this selection as if someone typed it. Using **TypeText** is faster than sending characters through the **SendMessage** function, but it is slower than using **SetText**.
 
 **TypeText** is similar to the underlying **SetText** method, however, it is sensitive to the Insert/Overtype key state and UI settings like AutoCorrect and smart quotes. For example, it deletes any nondegenerate selection and then inserts or overtypes (depending on the Insert/Overtype key state—see the **SetFlags** method) the string *cbs* at the insertion point, leaving this selection as an insertion point following the inserted text.
+
+---
 
 ## <a name="GetCch"></a>GetCch
 
