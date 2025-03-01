@@ -1688,7 +1688,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-## <a name="Delete_"></a>Delete_
+## <a name="delete_"></a>Delete_
 
 Mimics the DELETE and BACKSPACE keys, with and without the CTRL key depressed.
 
