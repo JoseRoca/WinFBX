@@ -97,7 +97,7 @@ The **ITextPara2** interface has these methods.
 | [SetResult](#SetResult) | Sets the last result code. |
 | [GetErrorInfo](#GetErrorInfo) | Returns a description of the last result code. |
 
-# <a name="constructor"></a>CONSTRUCTOR
+## <a name="constructor"></a>CONSTRUCTOR
 
 Called when a **CTextPara2** class variable is created.
 
@@ -116,7 +116,7 @@ A pointer to the new instance of the class.
 
 ---
 
-# <a name="destructor"></a>DESTRUCTOR
+## <a name="destructor"></a>DESTRUCTOR
 
 Called automatically when a class variable goes out of scope or is destroyed.
 
@@ -126,7 +126,7 @@ DESTRUCTOR
 
 ---
 
-# <a name="getlastresult"></a>GetLastResult
+## <a name="getlastresult"></a>GetLastResult
 
 Returns the last result code
 
@@ -137,7 +137,7 @@ END FUNCTION
 ```
 ---
 
-# <a name="setresult"></a>SetResult
+## <a name="setresult"></a>SetResult
 
 Sets the last result code.
 
@@ -151,7 +151,7 @@ FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
 
 ---
 
-# <a name="geterrorinfo"></a>GetErrorInfo
+## <a name="geterrorinfo"></a>GetErrorInfo
 
 Returns a description of the last result code.
 
@@ -160,7 +160,7 @@ FUNCTION GetErrorInfo () AS CWSTR
 ```
 ---
 
-# <a name="getduplicate"></a>GetDuplicate
+## <a name="getduplicate"></a>GetDuplicate
 
 Gets a duplicate of this range object. In this implementation of the class, **GetDuplicate** and **GetDuplicate2** are the same method.
 
@@ -183,7 +183,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="setduplicate"></a>SetDuplicate
+## <a name="setduplicate"></a>SetDuplicate
 
 Sets the properties of this object by copying the properties of another text paragraph object. In this implementation of the class, **SetDuplicate** and **SetDuplicate2** are the same method.
 
@@ -207,7 +207,7 @@ If **SetDuplicate2** succeeds, it returns **S_OK**. If the method fails, it retu
 
 ---
 
-# <a name="canchange"></a>CanChange
+## <a name="canchange"></a>CanChange
 
 Determines whether the paragraph formatting can be changed.
 
@@ -225,7 +225,7 @@ If paragraph formatting can change, **CanChange** succeeds and **GetLastResult**
 
 ---
 
-# <a name="isequal"></a>IsEqual
+## <a name="isequal"></a>IsEqual
 
 Determines if the current range has the same properties as a specified range.  In this implementation of the class, **IsEqual** and **IsEqual2** are the same method.
 
@@ -247,7 +247,7 @@ If paragraph formatting can change, **IsEqual** succeeds and **GetLastResult** r
 
 ---
 
-# <a name="reset"></a>Reset
+## <a name="reset"></a>Reset
 
 Determines whether the paragraph formatting can be changed.
 
@@ -276,7 +276,7 @@ If **Reset** succeeds, it returns **S_OK**. If the method fails, it returns one 
 
 ---
 
-# <a name="getstyle"></a>GetStyle
+## <a name="getstyle"></a>GetStyle
 
 Retrieves the style handle to the paragraphs in the specified range.
 
@@ -348,7 +348,7 @@ The Text Object Model (TOM) version 1.0 has no way to specify the meanings of us
 
 ---
 
-# <a name="setstyle"></a>SetStyle
+## <a name="setstyle"></a>SetStyle
 
 Sets the paragraph style for the paragraphs in a range.
 
@@ -420,7 +420,7 @@ If **SetStyle** succeeds, it returns **S_OK**. If the method fails, it returns o
 
 ---
 
-# <a name="getalignment"></a>GetAlignment
+## <a name="getalignment"></a>GetAlignment
 
 Retrieves the current paragraph alignment value.
 
@@ -453,7 +453,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="setalignment"></a>SetAlignment
+## <a name="setalignment"></a>SetAlignment
 
 Sets the paragraph alignment.
 
@@ -489,7 +489,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="gethyphenation"></a>GetHyphenation
+## <a name="gethyphenation"></a>GetHyphenation
 
 Determines whether automatic hyphenation is enabled for the range.
 
@@ -520,7 +520,7 @@ This property corresponds to the **PFE_DONOTHYPHEN** effect described in the [PA
 
 ---
 
-# <a name="sethyphenation"></a>SetHyphenation
+## <a name="sethyphenation"></a>SetHyphenation
 
 Controls hyphenation for the paragraphs in the range.
 
@@ -550,7 +550,7 @@ If **SetHyphenation** succeeds, it returns **S_OK**. If the method fails, it ret
 
 ---
 
-# <a name="getfirstlineindent"></a>GetFirstLineIndent
+## <a name="getfirstlineindent"></a>GetFirstLineIndent
 
 Retrieves the amount used to indent the first line of a paragraph relative to the left indent. The left indent is the indent for all lines of the paragraph except the first line.
 
@@ -577,7 +577,7 @@ To get and set the indent for all other lines of the paragraph (that is, the lef
 
 ---
 
-# <a name="getkeeptogether"></a>GetKeepTogether
+## <a name="getkeeptogether"></a>GetKeepTogether
 
 Determines whether page breaks are allowed within paragraphs.
 
@@ -608,7 +608,7 @@ This property corresponds to the **PFE_KEEP** effect described in the [PARAFORMA
 
 ---
 
-# <a name="setkeeptogether"></a>SetKeepTogether
+## <a name="setkeeptogether"></a>SetKeepTogether
 
 Controls whether page breaks are allowed within a paragraph in a range.
 
@@ -638,7 +638,7 @@ If **SetKeepTogether** succeeds, it returns S_OK. If the method fails, it return
 
 ---
 
-# <a name="getkeepwithnext"></a>GetKeepWithNext
+## <a name="getkeepwithnext"></a>GetKeepWithNext
 
 Determines whether page breaks are allowed between paragraphs in the range.
 
@@ -669,7 +669,7 @@ This property corresponds to the PFE_KEEPNEXT effect described in the [PARAFORMA
 
 ---
 
-# <a name="setkeepwithnext"></a>SetKeepWithNext
+## <a name="setkeepwithnext"></a>SetKeepWithNext
 
 Controls whether page breaks are allowed between the paragraphs in a range.
 
@@ -703,7 +703,7 @@ This property corresponds to the PFE_KEEPNEXT effect described in the [PARAFORMA
 
 ---
 
-# <a name="getleftindent"></a>GetLeftIndent
+## <a name="getleftindent"></a>GetLeftIndent
 
 Retrieves the distance used to indent all lines except the first line of a paragraph. The distance is relative to the left margin.
 
@@ -724,7 +724,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="getlinespacing"></a>GetLineSpacing
+## <a name="getlinespacing"></a>GetLineSpacing
 
 Retrieves the line-spacing value for the text range.
 
@@ -754,7 +754,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="getlinespacingrule"></a>GetLineSpacingRule
+## <a name="getlinespacingrule"></a>GetLineSpacingRule
 
 Retrieves the line-spacing rule for the text range.
 
@@ -785,7 +785,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="getlistalignment"></a>GetListAlignment
+## <a name="getlistalignment"></a>GetListAlignment
 
 Retrieves the kind of alignment to use for bulleted and numbered lists.
 
@@ -812,7 +812,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="setlistalignment"></a>SetListAlignment
+## <a name="setlistalignment"></a>SetListAlignment
 
 Sets the alignment of bulleted or numbered text used for paragraphs.
 
@@ -842,7 +842,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="getlistlevelindex"></a>GetListLevelIndex
+## <a name="getlistlevelindex"></a>GetListLevelIndex
 
 Retrieves the list level index used with paragraphs.
 
@@ -873,7 +873,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="setlistlevelindex"></a>SetListLevelIndex
+## <a name="setlistlevelindex"></a>SetListLevelIndex
 
 Sets the list level index used for paragraphs.
 
@@ -905,7 +905,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="getliststart"></a>GetListStart
+## <a name="getliststart"></a>GetListStart
 
 Retrieves the starting value or code of a list numbering sequence.
 
@@ -965,7 +965,7 @@ For a discussion on which sequence to use, see the **GetListType** method.
 
 ---
 
-# <a name="setliststart"></a>SetListStart
+## <a name="setliststart"></a>SetListStart
 
 Sets the starting number or Unicode value for a numbered list.
 
@@ -994,7 +994,7 @@ Other characteristics of a list are specified by **SetListType**.
 
 ---
 
-# <a name="getlisttab"></a>GetListTab
+## <a name="getlisttab"></a>GetListTab
 
 Retrieves the list tab setting, which is the distance between the first-line indent and the text on the first line. The numbered or bulleted text is left-justified, centered, or right-justified at the first-line indent value.
 
@@ -1015,7 +1015,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="setlisttab"></a>SetListTab
+## <a name="setlisttab"></a>SetListTab
 
 Sets the list tab setting, which is the distance between the first indent and the start of the text on the first line.
 
@@ -1040,7 +1040,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="getlisttype"></a>GetListType
+## <a name="getlisttype"></a>GetListType
 
 Retrieves the kind of numbering to use with paragraphs.
 
@@ -1100,7 +1100,7 @@ Values above 32 correspond to Unicode values for bullets.
 
 ---
 
-# <a name="setlisttype"></a>SetListType
+## <a name="setlisttype"></a>SetListType
 
 Sets the type of list to be used for paragraphs.
 
@@ -1160,7 +1160,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="getnolinenumber"></a>GetNoLineNumber
+## <a name="getnolinenumber"></a>GetNoLineNumber
 
 Determines whether paragraph numbering is enabled.
 
@@ -1191,7 +1191,7 @@ Paragraph numbering is when the paragraphs of a range are numbered. The number a
 
 ---
 
-# <a name="setnolinenumber"></a>SetNoLineNumber
+## <a name="setnolinenumber"></a>SetNoLineNumber
 
 Determines whether to suppress line numbering of paragraphs in a range.
 
@@ -1222,7 +1222,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="getpagebreakbefore"></a>GetPageBreakBefore
+## <a name="getpagebreakbefore"></a>GetPageBreakBefore
 
 Determines whether each paragraph in the range must begin on a new page.
 
@@ -1249,7 +1249,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="setpagebbreakbefore"></a>SetPageBreakBefore
+## <a name="setpagebbreakbefore"></a>SetPageBreakBefore
 
 Controls whether there is a page break before each paragraph in a range.
 
@@ -1285,7 +1285,7 @@ This method is included for compatibility with Microsoft Word; it does not affec
 
 ---
 
-# <a name="getrightindent"></a>GetRightIndent
+## <a name="getrightindent"></a>GetRightIndent
 
 Retrieves the size of the right margin indent of a paragraph.
 
@@ -1306,7 +1306,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="setrightindent"></a>SetRightIndent
+## <a name="setrightindent"></a>SetRightIndent
 
 Sets the right margin of paragraph.
 
@@ -1331,7 +1331,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="setindents"></a>SetIndents
+## <a name="setindents"></a>SetIndents
 
 Sets the first-line indent, the left indent, and the right indent for a paragraph.
 
@@ -1362,7 +1362,7 @@ Line indents are not allowed to position text in the margins. If the first-line 
 
 ---
 
-# <a name="setlinespacing"></a>SetLineSpacing
+## <a name="setlinespacing"></a>SetLineSpacing
 
 Sets the paragraph line-spacing rule and the line spacing for a paragraph.
 
@@ -1402,7 +1402,7 @@ The line-spacing rule and line spacing work together, and as a result, they must
 
 ---
 
-# <a name="getspaceafter"></a>GetSpaceAfter
+## <a name="getspaceafter"></a>GetSpaceAfter
 
 Retrieves the amount of vertical space below a paragraph.
 
@@ -1423,7 +1423,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="setspaceafter"></a>SetSpaceAfter
+## <a name="setspaceafter"></a>SetSpaceAfter
 
 Sets the amount of space that follows a paragraph.
 
@@ -1448,7 +1448,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="getspacebefore"></a>GetSpaceBefore
+## <a name="getspacebefore"></a>GetSpaceBefore
 
 Retrieves the amount of vertical space above a paragraph.
 
@@ -1469,7 +1469,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="setspacebefore"></a>SetSpaceBefore
+## <a name="setspacebefore"></a>SetSpaceBefore
 
 Sets the amount of space preceding a paragraph.
 
@@ -1494,7 +1494,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="getwidowcontrol"></a>GetWidowControl
+## <a name="getwidowcontrol"></a>GetWidowControl
 
 Retrieves the widow and orphan control state for the paragraphs in a range.
 
@@ -1521,7 +1521,7 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 ---
 
-# <a name="setwidowcontrol"></a>SetWidowControl
+## <a name="setwidowcontrol"></a>SetWidowControl
 
 Controls the suppression of widows and orphans.
 
@@ -1553,7 +1553,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="gettabcount"></a>GetTabCount
+## <a name="gettabcount"></a>GetTabCount
 
 Retrieves the tab count.
 
@@ -1584,7 +1584,7 @@ The tab count of a new instance can be nonzero, depending on the underlying text
 
 ---
 
-# <a name="addtab"></a>AddTab
+## <a name="addtab"></a>AddTab
 
 Adds a tab at the displacement *tbPos*, with type *tbAlign*, and leader style, *tbLeader*.
 
@@ -1629,7 +1629,7 @@ It is assumed that there is never a tab at position zero. If multiple paragraphs
 
 ---
 
-# <a name="clearalltabs"></a>ClearAllTabs
+## <a name="clearalltabs"></a>ClearAllTabs
 
 Clears all tabs, reverting to equally spaced tabs with the default tab spacing.
 
@@ -1649,7 +1649,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="deletetab"></a>DeleteTab
+## <a name="deletetab"></a>DeleteTab
 
 Deletes a tab at a specified displacement.
 
@@ -1674,7 +1674,7 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="gettab"></a>GetTab
+## <a name="gettab"></a>GetTab
 
 Retrieves tab parameters (displacement, alignment, and leader style) for a specified tab.
 
@@ -1729,7 +1729,7 @@ If **GetTab** succeeds, it returns **S_OK**. If the method fails, it returns one
 
 ---
 
-# <a name="getborders"></a>GetBorders
+## <a name="getborders"></a>GetBorders
 
 Not implemented. Gets the borders collection.
 
@@ -1747,7 +1747,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 ---
 
-# <a name="getfontalignment"></a>GetFontAlignment
+## <a name="getfontalignment"></a>GetFontAlignment
 
 Gets the paragraph font alignment state.
 
@@ -1773,7 +1773,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 ---
 
-# <a name="setfontalignment"></a>SetFontAlignment
+## <a name="setfontalignment"></a>SetFontAlignment
 
 Sets the paragraph font alignment for Chinese, Japanese, Korean text.
 
@@ -1803,7 +1803,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="gethangingpunctuation"></a>GetHangingPunctuation
+## <a name="gethangingpunctuation"></a>GetHangingPunctuation
 
 Gets whether to hang punctuation symbols on the right margin when the paragraph is justified.
 
@@ -1827,7 +1827,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 ---
 
-# <a name="sethangingpunctuation"></a>SetHangingPunctuation
+## <a name="sethangingpunctuation"></a>SetHangingPunctuation
 
 Sets whether to hang punctuation symbols on the right margin when the paragraph is justified.
 
@@ -1852,7 +1852,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="getsnapogrid"></a>GetSnapToGrid
+## <a name="getsnapogrid"></a>GetSnapToGrid
 
 Gets whether paragraph lines snap to a vertical grid that could be defined for the whole document.
 
@@ -1876,7 +1876,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 ---
 
-# <a name="setsnaptogrid"></a>SetSnapToGrid
+## <a name="setsnaptogrid"></a>SetSnapToGrid
 
 Sets whether paragraph lines snap to a vertical grid that could be defined for the whole document.
 
@@ -1901,7 +1901,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="gettrimpunctuationatstart"></a>GetTrimPunctuationAtStart
+## <a name="gettrimpunctuationatstart"></a>GetTrimPunctuationAtStart
 
 Gets whether to trim the leading space of a punctuation symbol at the start of a line.
 
@@ -1925,7 +1925,7 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 ---
 
-# <a name="settrimpunctuationatstart"></a>SetTrimPunctuationAtStart
+## <a name="settrimpunctuationatstart"></a>SetTrimPunctuationAtStart
 
 Sets whether to trim the leading space of a punctuation symbol at the start of a line.
 
@@ -1950,7 +1950,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="geteffects"></a>GetEffects
+## <a name="geteffects"></a>GetEffects
 
 Gets the paragraph format effects.
 
@@ -1991,7 +1991,7 @@ If the **tomTable** flag is set, you can use the **GetTable** method to get more
 
 ---
 
-# <a name="seteffects"></a>SetEffects
+## <a name="seteffects"></a>SetEffects
 
 Sets the paragraph format effects.
 
@@ -2025,7 +2025,7 @@ If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESU
 
 ---
 
-# <a name="getproperty"></a>GetProperty
+## <a name="getproperty"></a>GetProperty
 
 Gets the value of the specified property.
 
@@ -2059,7 +2059,7 @@ The **tomParaPropMathAlign** property sets the math alignment for math paragraph
 
 ---
 
-# <a name="setproperty"></a>SetProperty
+## <a name="setproperty"></a>SetProperty
 
 Sets the value of the specified property.
 
