@@ -54,7 +54,7 @@ The **ITextRange** objects are powerful editing and data-binding tools that allo
 | [FindText](#findtext) | Searches up to *Count* characters for the text given by *bstr*. The starting position and direction are also specified by *Count*, and the matching criteria are given by *Flags*. |
 | [FindTextStart](#findtextstart) | Searches up to *Count* characters for the string, *bstr*, starting at the range's Start *cp (cpFirst)*. The search is subject to the comparison parameter, *Flags*. |
 | [FindTextEnd](#findtextend) | Searches up to *Count* characters for the string, *bstr*, starting from the range's End *cp*. The search is subject to the comparison parameter, *Flags*. |
-| [Delete_](dDelete_) | Mimics the DELETE and BACKSPACE keys, with and without the CTRL key depressed. |
+| [Delete_](delete_) | Mimics the DELETE and BACKSPACE keys, with and without the CTRL key depressed. |
 
 | Name       | Description |
 | ---------- | ----------- |
