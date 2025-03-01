@@ -37,6 +37,8 @@ Public:
    DECLARE FUNCTION SetStart (BYVAL cpFirst AS LONG) AS HRESULT
    DECLARE FUNCTION GetEnd () AS LONG
    DECLARE FUNCTION SetEnd (BYVAL cpLim AS LONG) AS HRESULT
+   DECLARE FUNCTION GetLength () AS LONG
+   DECLARE FUNCTION SetLength (BYVAL Value AS LONG) AS HRESULT
    DECLARE FUNCTION GetFont () AS ITextFont2 PTR
    DECLARE FUNCTION SetFont (BYVAL pFont AS ITextFont2 PTR) AS HRESULT
    DECLARE FUNCTION GetPara () AS ITextPara2 PTR
@@ -276,6 +278,30 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CTextRange2.SetEnd (BYVAL cpLim AS LONG) AS HRESULT
    m_Result = m_pTextRange2->lpvtbl->SetEnd(m_pTextRange2, cpLim)
+   RETURN m_Result
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Gets the length of the range
+' ========================================================================================
+PRIVATE FUNCTION CTextRange2.GetLength () AS LONG
+   DIM nStart AS LONG, nEnd AS LONG
+   m_Result = m_pTextRange2->lpvtbl->GetStart(m_pTextRange2, @nStart)
+   IF m_Result <> S_OK THEN RETURN 0
+   m_Result = m_pTextRange2->lpvtbl->GetEnd(m_pTextRange2, @nEnd)
+   IF m_Result <> S_OK THEN RETURN 0
+   RETURN nEnd - nStart
+END FUNCTION
+' ========================================================================================
+' ========================================================================================
+' Sets the length of the range
+' ========================================================================================
+PRIVATE FUNCTION CTextRange2.SetLength (BYVAL Value AS LONG) AS HRESULT
+   DIM nStart AS LONG
+   m_Result = m_pTextRange2->lpvtbl->GetStart(m_pTextRange2, @nStart)
+   IF m_Result <> S_OK THEN RETURN m_Result
+   m_Result = m_pTextRange2->lpvtbl->SetEnd(m_pTextRange2, nStart + VAlue)
    RETURN m_Result
 END FUNCTION
 ' ========================================================================================
@@ -1109,7 +1135,7 @@ PRIVATE FUNCTION CTextRange2.GetRtf () AS STRING
    fe.tymed = TYMED_HGLOBAL
    m_Result = pData->lpvtbl->QueryGetData(pData, @fe)
    DIM stm AS STGMEDIUM
-   ' // Get data. Be sure to check the return value.
+   ' // Get the data
    m_Result = pData->lpvtbl->GetData(pData, @fe, @stm)
    IF m_Result = S_OK THEN
       ' // Lock the memory location of the string and get a pointer to it
