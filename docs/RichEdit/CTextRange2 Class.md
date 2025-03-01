@@ -102,8 +102,6 @@ The **ITextRange2** interface inherits from **ITextSelection**, that in turn inh
 | [GetCount](#GetCount) | Gets the count of subranges, including the active subrange in the current range. |
 | [GetGravity](#GetGravity) | Gets the gravity of this range. |
 | [SetGravity](#SetGravity) | Sets the gravity of this range. |
-| [GetPara2](#GetPara) | Gets an **ITextPara2** object with the paragraph attributes of a range. |
-| [SetPara2](#SetPara) | Sets the paragraph format attributes of a range. |
 | [GetRow](#GetRow) | Gets the row properties in the currently selected row. |
 | [GetStartPara](#GetStartPara) | Gets the character position of the start of the paragraph that contains the range's start character position. |
 | [GetTable](#GetTable) |  Not implemented. Gets the table properties in the currently selected table. |
