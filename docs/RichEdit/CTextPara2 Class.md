@@ -114,6 +114,8 @@ CONSTRUCTOR (BYVAL pTextPara2 AS ITextPara2 PTR, BYVAL fAddRef AS BOOLEAN = FALS
 
 A pointer to the new instance of the class.
 
+---
+
 # <a name="destructor"></a>DESTRUCTOR
 
 Called automatically when a class variable goes out of scope or is destroyed.
@@ -121,6 +123,8 @@ Called automatically when a class variable goes out of scope or is destroyed.
 ```
 DESTRUCTOR
 ```
+
+---
 
 # <a name="getlastresult"></a>GetLastResult
 
@@ -131,6 +135,7 @@ FUNCTION GetLastResult () AS HRESULT
    RETURN m_Result
 END FUNCTION
 ```
+---
 
 # <a name="setresult"></a>SetResult
 
@@ -144,6 +149,8 @@ FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
 | --------- | ----------- |
 | *Result* | The **HRESULT** error code returned by the methods. |
 
+---
+
 # <a name="geterrorinfo"></a>GetErrorInfo
 
 Returns a description of the last result code.
@@ -151,6 +158,7 @@ Returns a description of the last result code.
 ```
 FUNCTION GetErrorInfo () AS CWSTR
 ```
+---
 
 # <a name="getduplicate"></a>GetDuplicate
 
@@ -172,6 +180,8 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **E_OUTOFMEMORY** | Memory could not be allocated for the new object. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+---
 
 # <a name="setduplicate"></a>SetDuplicate
 
@@ -195,6 +205,8 @@ If **SetDuplicate2** succeeds, it returns **S_OK**. If the method fails, it retu
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 
+---
+
 # <a name="canchange"></a>CanChange
 
 Determines whether the paragraph formatting can be changed.
@@ -210,6 +222,8 @@ FUNCTION CanChange (BYVAL pPara AS ITextPara2 PTR) AS LONG
 #### Result code
 
 If paragraph formatting can change, **CanChange** succeeds and **GetLastResult** returns **S_OK**. If paragraph formatting cannot change, the method fails and returns **S_FALSE**.
+
+---
 
 # <a name="isequal"></a>IsEqual
 
@@ -230,6 +244,8 @@ A **tomBool** value that is **tomTrue** if the text paragraph objects have the s
 #### Result code
 
 If paragraph formatting can change, **IsEqual** succeeds and **GetLastResult** returns **S_OK**. If paragraph formatting cannot change, the method fails and returns **S_FALSE**.
+
+---
 
 # <a name="reset"></a>Reset
 
@@ -257,6 +273,8 @@ If **Reset** succeeds, it returns **S_OK**. If the method fails, it returns one 
 | E_ACCESSDENIED | Write access is denied. |
 | E_OUTOFMEMORY | Insufficient memory. |
 | CO_E_RELEASED | The paragraph formatting object is attached to a range that has been deleted. |
+
+---
 
 # <a name="getstyle"></a>GetStyle
 
@@ -328,6 +346,8 @@ The Text Object Model (TOM) version 1.0 has no way to specify the meanings of us
 | StyleEndnoteReference | -43 | StyleHyperlinkFollowed | -87 |
 | StyleEndnoteText | -44 |  |  |
 
+---
+
 # <a name="setstyle"></a>SetStyle
 
 Sets the paragraph style for the paragraphs in a range.
@@ -398,6 +418,8 @@ If **SetStyle** succeeds, it returns **S_OK**. If the method fails, it returns o
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
+---
+
 # <a name="getalignment"></a>GetAlignment
 
 Retrieves the current paragraph alignment value.
@@ -428,6 +450,8 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | Result code | Description |
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+---
 
 # <a name="setalignment"></a>SetAlignment
 
@@ -463,6 +487,8 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
+---
+
 # <a name="gethyphenation"></a>GetHyphenation
 
 Determines whether automatic hyphenation is enabled for the range.
@@ -492,6 +518,8 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 This property corresponds to the **PFE_DONOTHYPHEN** effect described in the [PARAFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat2) structure.
 
+---
+
 # <a name="sethyphenation"></a>SetHyphenation
 
 Controls hyphenation for the paragraphs in the range.
@@ -520,6 +548,8 @@ If **SetHyphenation** succeeds, it returns **S_OK**. If the method fails, it ret
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
+---
+
 # <a name="getfirstlineindent"></a>GetFirstLineIndent
 
 Retrieves the amount used to indent the first line of a paragraph relative to the left indent. The left indent is the indent for all lines of the paragraph except the first line.
@@ -544,6 +574,8 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 To set the first line indentation amount, call the **SetIndents** method.
 
 To get and set the indent for all other lines of the paragraph (that is, the left indent), use **GetLeftIndent** and **SetIndents**.
+
+---
 
 # <a name="getkeeptogether"></a>GetKeepTogether
 
@@ -574,6 +606,8 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 This property corresponds to the **PFE_KEEP** effect described in the [PARAFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat2) structure.
 
+---
+
 # <a name="setkeeptogether"></a>SetKeepTogether
 
 Controls whether page breaks are allowed within a paragraph in a range.
@@ -601,6 +635,8 @@ If **SetKeepTogether** succeeds, it returns S_OK. If the method fails, it return
 | **E_ACCESSDENIED** | Write access is denied. |
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
+
+---
 
 # <a name="getkeepwithnext"></a>GetKeepWithNext
 
@@ -631,7 +667,9 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 This property corresponds to the PFE_KEEPNEXT effect described in the [PARAFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat2) structure.
 
-# <a name="SetKeepWithNext"></a>SetKeepWithNext
+---
+
+# <a name="setkeepwithnext"></a>SetKeepWithNext
 
 Controls whether page breaks are allowed between the paragraphs in a range.
 
@@ -663,16 +701,14 @@ If **SetKeepWithNext** succeeds, it returns S_OK. If the method fails, it return
 #### Remarks
 This property corresponds to the PFE_KEEPNEXT effect described in the [PARAFORMAT2](https://learn.microsoft.com/en-us/windows/win32/api/richedit/ns-richedit-paraformat2) structure.
 
-# <a name="GetLeftIndent"></a>GetLeftIndent
+---
+
+# <a name="getleftindent"></a>GetLeftIndent
 
 Retrieves the distance used to indent all lines except the first line of a paragraph. The distance is relative to the left margin.
 
 ```
 FUNCTION GetLeftIndent () AS SINGLE
-   DIM Value AS SINGLE
-   this.SetResult(m_pTextPara2->lpvtbl->GetLeftIndent(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -686,16 +722,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetLineSpacing"></a>GetLineSpacing
+---
+
+# <a name="getlinespacing"></a>GetLineSpacing
 
 Retrieves the line-spacing value for the text range.
 
 ```
 FUNCTION GetLineSpacing () AS SINGLE
-   DIM Value AS SINGLE
-   this.SetResult(m_pTextPara2->lpvtbl->GetLineSpacing(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -718,16 +752,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetLineSpacingRule"></a>GetLineSpacingRule
+---
+
+# <a name="getlinespacingrule"></a>GetLineSpacingRule
 
 Retrieves the line-spacing rule for the text range.
 
 ```
 FUNCTION GetLineSpacingRule () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetLineSpacingRule(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -751,16 +783,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetListAlignment"></a>GetListAlignment
+---
+
+# <a name="getlistalignment"></a>GetListAlignment
 
 Retrieves the kind of alignment to use for bulleted and numbered lists.
 
 ```
 FUNCTION GetListAlignment () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetListAlignment(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -780,15 +810,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="SetListAlignment"></a>SetListAlignment
+---
+
+# <a name="setlistalignment"></a>SetListAlignment
 
 Sets the alignment of bulleted or numbered text used for paragraphs.
 
 ```
 FUNCTION SetListAlignment (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetListAlignment(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 | Parameter | Description |
 | ----------------- | ------- |
@@ -811,16 +840,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetListLevelIndex"></a>GetListLevelIndex
+---
+
+# <a name="getlistlevelindex"></a>GetListLevelIndex
 
 Retrieves the list level index used with paragraphs.
 
 ```
 FUNCTION GetListLevelIndex () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetListLevelIndex(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -844,15 +871,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="SetListLevelIndex"></a>SetListLevelIndex
+---
+
+# <a name="setlistlevelindex"></a>SetListLevelIndex
 
 Sets the list level index used for paragraphs.
 
 ```
 FUNCTION SetListLevelIndex (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetListLevelIndex(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 | Parameter | Description |
 | --------- | ----------- |
@@ -877,16 +903,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetListStart"></a>GetListStart
+---
+
+# <a name="getliststart"></a>GetListStart
 
 Retrieves the starting value or code of a list numbering sequence.
 
 ```
 FUNCTION GetListStart () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetListStart(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -939,15 +963,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 For a discussion on which sequence to use, see the **GetListType** method.
 
-# <a name="SetListStart"></a>SetListStart
+---
+
+# <a name="setliststart"></a>SetListStart
 
 Sets the starting number or Unicode value for a numbered list.
 
 ```
 FUNCTION SetListStart (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetListStart(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -969,16 +992,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 Other characteristics of a list are specified by **SetListType**.
 
-# <a name="GetListTab"></a>GetListTab
+---
+
+# <a name="getlisttab"></a>GetListTab
 
 Retrieves the list tab setting, which is the distance between the first-line indent and the text on the first line. The numbered or bulleted text is left-justified, centered, or right-justified at the first-line indent value.
 
 ```
 FUNCTION GetListTab () AS SINGLE
-   DIM Value AS SINGLE
-   this.SetResult(m_pTextPara2->lpvtbl->GetListTab(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -992,15 +1013,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="SetListTab"></a>SetListTab
+---
+
+# <a name="setlisttab"></a>SetListTab
 
 Sets the list tab setting, which is the distance between the first indent and the start of the text on the first line.
 
 ```
 FUNCTION SetListTab (BYVAL Value AS SINGLE) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetListTab(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1018,16 +1038,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetListType"></a>GetListType
+---
+
+# <a name="getlisttype"></a>GetListType
 
 Retrieves the kind of numbering to use with paragraphs.
 
 ```
 FUNCTION GetListType () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetListType(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -1080,15 +1098,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 Values above 32 correspond to Unicode values for bullets.
 
-# <a name="SetListType"></a>SetListType
+---
+
+# <a name="setlisttype"></a>SetListType
 
 Sets the type of list to be used for paragraphs.
 
 ```
 FUNCTION SetListType (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetListTab(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1141,16 +1158,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetNoLineNumber"></a>GetNoLineNumber
+---
+
+# <a name="getnolinenumber"></a>GetNoLineNumber
 
 Determines whether paragraph numbering is enabled.
 
 ```
 FUNCTION GetNoLineNumber () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetNoLineNumber(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -1174,15 +1189,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 Paragraph numbering is when the paragraphs of a range are numbered. The number appears on the first line of a paragraph.
 
-# <a name="SetNoLineNumber"></a>SetNoLineNumber
+---
+
+# <a name="setnolinenumber"></a>SetNoLineNumber
 
 Determines whether to suppress line numbering of paragraphs in a range.
 
 ```
 FUNCTION SetNoLineNumber (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetNoLineNumber(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1206,16 +1220,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetPageBreakBefore"></a>GetPageBreakBefore
+---
+
+# <a name="getpagebreakbefore"></a>GetPageBreakBefore
 
 Determines whether each paragraph in the range must begin on a new page.
 
 ```
 FUNCTION GetPageBreakBefore () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetPageBreakBefore(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -1235,15 +1247,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="SetPageBreakBefore"></a>SetPageBreakBefore
+---
+
+# <a name="setpagebbreakbefore"></a>SetPageBreakBefore
 
 Controls whether there is a page break before each paragraph in a range.
 
 ```
 FUNCTION SetPageBreakBefore (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetPageBreakBefore(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1272,16 +1283,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 This method is included for compatibility with Microsoft Word; it does not affect how the rich edit control displays text.
 
-# <a name="GetRightIndent"></a>GetRightIndent
+---
+
+# <a name="getrightindent"></a>GetRightIndent
 
 Retrieves the size of the right margin indent of a paragraph.
 
 ```
 FUNCTION GetRightIndent () AS SINGLE
-   DIM Value AS SINGLE
-   this.SetResult(m_pTextPara2->lpvtbl->GetRightIndent(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -1295,15 +1304,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="SetRightIndent"></a>SetRightIndent
+---
+
+# <a name="setrightindent"></a>SetRightIndent
 
 Sets the right margin of paragraph.
 
 ```
 FUNCTION SetRightIndent (BYVAL Value AS SINGLE) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetRightIndent(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1321,15 +1329,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="SetIndents"></a>SetIndents
+---
+
+# <a name="setindents"></a>SetIndents
 
 Sets the first-line indent, the left indent, and the right indent for a paragraph.
 
 ```
 FUNCTION SetIndents (BYVAL First AS SINGLE, BYVAL Left AS SINGLE, BYVAL Right AS SINGLE) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetIndents(m_pTextPara2, First, Left, Right))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1353,15 +1360,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 Line indents are not allowed to position text in the margins. If the first-line indent is set to a negative value (for an outdented paragraph) while the left indent is zero, the first-line indent is reset to zero. To avoid this problem while retaining property sets, set the first-line indent value equal to zero either explicitly or by calling the **Reset** method. Then, call **SetIndents** to set a nonnegative, left-indent value and set the desired first-line indent.
 
-# <a name="SetLineSpacing"></a>SetLineSpacing
+---
+
+# <a name="setlinespacing"></a>SetLineSpacing
 
 Sets the paragraph line-spacing rule and the line spacing for a paragraph.
 
 ```
 FUNCTION SetLineSpacing (BYVAL Rule AS LONG, BYVAL Spacing AS SINGLE) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetLineSpacing(m_pTextPara2, Rule, Spacing))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1394,16 +1400,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 
 The line-spacing rule and line spacing work together, and as a result, they must be set together, much as the first and left indents need to be set together.
 
-# <a name="GetSpaceAfter"></a>GetSpaceAfter
+---
+
+# <a name="getspaceafter"></a>GetSpaceAfter
 
 Retrieves the amount of vertical space below a paragraph.
 
 ```
 FUNCTION GetSpaceAfter () AS SINGLE
-   DIM Value AS SINGLE
-   this.SetResult(m_pTextPara2->lpvtbl->GetSpaceAfter(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -1417,15 +1421,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="SetSpaceAfter"></a>SetSpaceAfter
+---
+
+# <a name="setspaceafter"></a>SetSpaceAfter
 
 Sets the amount of space that follows a paragraph.
 
 ```
 FUNCTION SetSpaceAfter (BYVAL Value AS SINGLE) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetSpaceAfter(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1443,16 +1446,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetSpaceBefore"></a>GetSpaceBefore
+---
+
+# <a name="getspacebefore"></a>GetSpaceBefore
 
 Retrieves the amount of vertical space above a paragraph.
 
 ```
 FUNCTION GetSpaceBefore () AS SINGLE
-   DIM Value AS SINGLE
-   this.SetResult(m_pTextPara2->lpvtbl->GetSpaceBefore(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -1466,15 +1467,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="SetSpaceBefore"></a>SetSpaceBefore
+---
+
+# <a name="setspacebefore"></a>SetSpaceBefore
 
 Sets the amount of space preceding a paragraph.
 
 ```
 FUNCTION SetSpaceBefore (BYVAL Value AS SINGLE) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetSpaceBefore(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1492,16 +1492,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetWidowControl"></a>GetWidowControl
+---
+
+# <a name="getwidowcontrol"></a>GetWidowControl
 
 Retrieves the widow and orphan control state for the paragraphs in a range.
 
 ```
 FUNCTION GetWidowControl () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetWidowControl(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -1521,15 +1519,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 | ----------- | ----------- |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="SetWidowControl"></a>SetWidowControl
+---
+
+# <a name="setwidowcontrol"></a>SetWidowControl
 
 Controls the suppression of widows and orphans.
 
 ```
 FUNCTION SetWidowControl (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetWidowControl(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1554,16 +1551,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetTabCount"></a>GetTabCount
+---
+
+# <a name="gettabcount"></a>GetTabCount
 
 Retrieves the tab count.
 
 ```
 FUNCTION GetTabCount () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetTabCount(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 #### Return value
 
@@ -1587,15 +1582,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 The tab count of a new instance can be nonzero, depending on the underlying text engine. For example, Microsoft Word stories begin with no explicit tabs defined, while rich edit instances start with a single explicit tab. To be sure there are no explicit tabs (that is, to set the tab count to zero), call **ClearAllTabs**.
 
-# <a name="AddTab"></a>AddTab
+---
+
+# <a name="addtab"></a>AddTab
 
 Adds a tab at the displacement *tbPos*, with type *tbAlign*, and leader style, *tbLeader*.
 
 ```
 FUNCTION AddTab (BYVAL tbPos AS SINGLE, BYVAL tbAlign AS LONG, BYVAL tbLeader AS LONG) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->AddTab(m_pTextPara2, tbPos, tbAlign, tbLeader))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1633,15 +1627,14 @@ If the method succeeds, **GetLastResult** returns **S_OK**. If the method fails,
 
 It is assumed that there is never a tab at position zero. If multiple paragraphs are described, the common subset of tabs will be returned with &h8000 in the upper word of the tab type.
 
-# <a name="ClearAllTabs"></a>ClearAllTabs
+---
+
+# <a name="clearalltabs"></a>ClearAllTabs
 
 Clears all tabs, reverting to equally spaced tabs with the default tab spacing.
 
 ```
 FUNCTION ClearAllTabs () AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->ClearAllTabs(m_pTextPara2))
-   RETURN m_Result
-END FUNCTION
 ```
 #### Return value
 
@@ -1654,15 +1647,14 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="DeleteTab"></a>DeleteTab
+---
+
+# <a name="deletetab"></a>DeleteTab
 
 Deletes a tab at a specified displacement.
 
 ```
 FUNCTION DeleteTab (BYVAL tbPos AS SINGLE) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->DeleteTab(m_pTextPara2, tbPos))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1680,15 +1672,15 @@ If the method succeeds, it returns **S_OK**. If the method fails, it returns one
 | **E_OUTOFMEMORY** | Insufficient memory. |
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 
-# <a name="GetTab"></a>GetTab
+---
+
+# <a name="gettab"></a>GetTab
 
 Retrieves tab parameters (displacement, alignment, and leader style) for a specified tab.
 
 ```
-FUNCTION GetTab (BYVAL iTab AS LONG, BYVAL ptbPos AS SINGLE PTR, BYVAL ptbAlign AS LONG PTR, BYVAL ptbLeader AS LONG PTR) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->GetTab(m_pTextPara2, iTab, ptbPos, ptbAlign, ptbLeader))
-   RETURN m_Result
-END FUNCTION
+FUNCTION GetTab (BYVAL iTab AS LONG, BYVAL ptbPos AS SINGLE PTR, BYVAL ptbAlign AS LONG PTR, _
+   BYVAL ptbLeader AS LONG PTR) AS HRESULT
 ```
 
 | Parameter | Description |
@@ -1735,16 +1727,14 @@ If **GetTab** succeeds, it returns **S_OK**. If the method fails, it returns one
 | **CO_E_RELEASED** | The paragraph formatting object is attached to a range that has been deleted. |
 | **S_FALSE** | There is no tab corresponding to iTab. |
 
-# <a name="GetBorders"></a>GetBorders
+---
+
+# <a name="getborders"></a>GetBorders
 
 Not implemented. Gets the borders collection.
 
 ```
 FUNCTION GetBorders () AS IUnknown PTR
-   DIM pBorders AS IUnknown PTR
-   this.SetResult(m_pTextPara2->lpvtbl->GetBorders(m_pTextPara2, @pBorders))
-   RETURN pBorders
-END FUNCTION
 ```
 
 #### Return value
@@ -1755,16 +1745,14 @@ The borders collection.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetFontAlignment"></a>GetFontAlignment
+---
+
+# <a name="getfontalignment"></a>GetFontAlignment
 
 Gets the paragraph font alignment state.
 
 ```
 FUNCTION GetFontAlignment () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetFontAlignment(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 
 #### Return value
@@ -1783,15 +1771,14 @@ The paragraph font alignment state. It can be one of the following values.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="SetFontAlignment"></a>SetFontAlignment
+---
+
+# <a name="setfontalignment"></a>SetFontAlignment
 
 Sets the paragraph font alignment for Chinese, Japanese, Korean text.
 
 ```
 FUNCTION SetFontAlignment (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetFontAlignment(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1814,16 +1801,14 @@ The paragraph font alignment state. It can be one of the following values.
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetHangingPunctuation"></a>GetHangingPunctuation
+---
+
+# <a name="gethangingpunctuation"></a>GetHangingPunctuation
 
 Gets whether to hang punctuation symbols on the right margin when the paragraph is justified.
 
 ```
 FUNCTION GetHangingPunctuation () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetHangingPunctuation(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 
 #### Return value
@@ -1840,16 +1825,16 @@ A **tomBool** value that can be one of the following.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="SetHangingPunctuation"></a>SetHangingPunctuation
+---
+
+# <a name="sethangingpunctuation"></a>SetHangingPunctuation
 
 Sets whether to hang punctuation symbols on the right margin when the paragraph is justified.
 
 ```
 FUNCTION SetHangingPunctuation (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetHangingPunctuation(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
+
 | Parameter | Description |
 | ----- | ------- |
 | **Value** | A **tomBool** value that can be one of the following. |
@@ -1865,16 +1850,14 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetSnapToGrid"></a>GetSnapToGrid
+---
+
+# <a name="getsnapogrid"></a>GetSnapToGrid
 
 Gets whether paragraph lines snap to a vertical grid that could be defined for the whole document.
 
 ```
 FUNCTION GetSnapToGrid () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetSnapToGrid(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 
 #### Return value
@@ -1891,15 +1874,14 @@ A **tomBool** value that can be one of the following.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="SetSnapToGrid"></a>SetSnapToGrid
+---
+
+# <a name="setsnaptogrid"></a>SetSnapToGrid
 
 Sets whether paragraph lines snap to a vertical grid that could be defined for the whole document.
 
 ```
 FUNCTION SetSnapToGrid (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetSnapToGrid(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1917,16 +1899,14 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetTrimPunctuationAtStart"></a>GetTrimPunctuationAtStart
+---
+
+# <a name="gettrimpunctuationatstart"></a>GetTrimPunctuationAtStart
 
 Gets whether to trim the leading space of a punctuation symbol at the start of a line.
 
 ```
 FUNCTION GetTrimPunctuationAtStart () AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetTrimPunctuationAtStart(m_pTextPara2, @Value))
-   RETURN Value
-END FUNCTION
 ```
 
 #### Return value
@@ -1943,15 +1923,14 @@ A **tomBool** value that can be one of the following.
 
 If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="SetTrimPunctuationAtStart"></a>SetTrimPunctuationAtStart
+---
+
+# <a name="settrimpunctuationatstart"></a>SetTrimPunctuationAtStart
 
 Sets whether to trim the leading space of a punctuation symbol at the start of a line.
 
 ```
 FUNCTION SetTrimPunctuationAtStart (BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetTrimPunctuationAtStart(m_pTextPara2, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -1969,15 +1948,14 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="GetEffects"></a>GetEffects
+---
+
+# <a name="geteffects"></a>GetEffects
 
 Gets the paragraph format effects.
 
 ```
 FUNCTION GetEffects (BYVAL pValue AS LONG PTR, BYVAL pMask AS LONG PTR) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->GetEffects(m_pTextPara2, pValue, pMask))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2011,52 +1989,14 @@ If the method succeeds, **GetLastResult** returns **NOERROR**. Otherwise, it ret
 
 If the **tomTable** flag is set, you can use the **GetTable** method to get more table properties.
 
-# <a name="GetProperty"></a>GetProperty
+---
 
-Gets the value of the specified property.
-
-```
-FUNCTION GetProperty (BYVAL nType AS LONG) AS LONG
-   DIM Value AS LONG
-   this.SetResult(m_pTextPara2->lpvtbl->GetProperty(m_pTextPara2, nType, @Value))
-   RETURN Value
-END FUNCTION
-```
-
-| Parameter | Description |
-| ----- | ------- |
-| **nType** | The ID of the property value to retrieve. |
-
-#### Return value
-
-The property value.
-
-#### Result code
-
-If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
-
-#### Remarks
-
-The **tomParaPropMathAlign** property sets the math alignment for math paragraphs in a text paragraph. It can have one of the following values.
-
-| Value | Meaning |
-| ----- | ------- |
-| **tomMathParaAlignDefault** | The default alignment for math paragraphs. |
-| **tomMathParaAlignCenterGroup** | Center math paragraphs as a group. |
-| **tomMathParaAlignCenter** | Center math paragraphs. |
-| **tomMathParaAlignLeft** | Left-align math paragraphs. |
-| **tomMathParaAlignRight** | Right-align math paragraphs. |
-
-# <a name="SetEffects"></a>SetEffects
+# <a name="seteffects"></a>SetEffects
 
 Sets the paragraph format effects.
 
 ```
 FUNCTION SetEffects (BYVAL Value AS LONG, BYVAL Mask AS LONG) AS HRESULT
-   IF m_pTextPara2 = NULL THEN m_Result = E_POINTER: RETURN m_Result
-   this.SetResult(m_pTextPara2->lpvtbl->SetEffects(m_pTextPara2, Value, Mask))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2083,15 +2023,48 @@ END FUNCTION
 
 If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
 
-# <a name="SetProperty"></a>SetProperty
+---
+
+# <a name="getproperty"></a>GetProperty
+
+Gets the value of the specified property.
+
+```
+FUNCTION GetProperty (BYVAL nType AS LONG) AS LONG
+```
+
+| Parameter | Description |
+| ----- | ------- |
+| **nType** | The ID of the property value to retrieve. |
+
+#### Return value
+
+The property value.
+
+#### Result code
+
+If the method succeeds, it returns **NOERROR**. Otherwise, it returns an **HRESULT** error code.
+
+#### Remarks
+
+The **tomParaPropMathAlign** property sets the math alignment for math paragraphs in a text paragraph. It can have one of the following values.
+
+| Value | Meaning |
+| ----- | ------- |
+| **tomMathParaAlignDefault** | The default alignment for math paragraphs. |
+| **tomMathParaAlignCenterGroup** | Center math paragraphs as a group. |
+| **tomMathParaAlignCenter** | Center math paragraphs. |
+| **tomMathParaAlignLeft** | Left-align math paragraphs. |
+| **tomMathParaAlignRight** | Right-align math paragraphs. |
+
+---
+
+# <a name="setproperty"></a>SetProperty
 
 Sets the value of the specified property.
 
 ```
 FUNCTION SetProperty (BYVAL nType AS LONG, BYVAL Value AS LONG) AS HRESULT
-   this.SetResult(m_pTextPara2->lpvtbl->SetProperty(m_pTextPara2, nType, Value))
-   RETURN m_Result
-END FUNCTION
 ```
 
 | Parameter | Description |
@@ -2114,3 +2087,5 @@ The **tomParaPropMathAlign** property sets the math alignment for math paragraph
 | **tomMathParaAlignCenter** | Center math paragraphs. |
 | **tomMathParaAlignLeft** | Left-align math paragraphs. |
 | **tomMathParaAlignRight** | Right-align math paragraphs. |
+
+---
