@@ -472,10 +472,8 @@ TYPE CRichEditCtrl EXTENDS CTextObjectBase
       DECLARE FUNCTION NewStory () AS ITextStory PTR
       DECLARE FUNCTION GetNewStory () AS ITextStory PTR
       DECLARE FUNCTION Notify (BYVAL nNotify AS LONG) AS HRESULT
-      DECLARE FUNCTION Range (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange PTR
-      DECLARE FUNCTION RangeFromPoint (BYVAL x AS LONG, BYVAL y AS LONG) AS ITextRange PTR
-      DECLARE FUNCTION Range2 (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange2 PTR
-      DECLARE FUNCTION RangeFromPoint2 (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG) AS ITextRange2 PTR
+      DECLARE FUNCTION Range (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange2 PTR
+      DECLARE FUNCTION RangeFromPoint (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG) AS ITextRange2 PTR
       DECLARE PROPERTY Saved () AS BOOLEAN
       DECLARE PROPERTY Saved (BYVAL value AS BOOLEAN)
       DECLARE FUNCTION GetSaved () AS BOOLEAN
@@ -566,24 +564,21 @@ PRIVATE CONSTRUCTOR CRichEditCtrl (BYVAL pWindow AS CWindow PTR, BYVAL cID AS LO
    BYVAL dwStyle AS DWORD = 0, BYVAL dwExStyle AS DWORD = 0, BYVAL lpParam AS LONG_PTR = 0)
 
    ' // Create the control
-   IF pWindow THEN
-      m_hRichEdit = pWindow->AddControl("RICHEDIT", pWindow->hWindow, cID, wszTitle, _
-      x, y, nWidth, nHeight, WS_VISIBLE OR WS_CHILD OR WS_TABSTOP OR ES_LEFT OR WS_HSCROLL OR WS_VSCROLL OR _
-         ES_AUTOHSCROLL OR ES_AUTOVSCROLL OR ES_MULTILINE OR ES_WANTRETURN OR ES_NOHIDESEL OR ES_SAVESEL, WS_EX_CLIENTEDGE, _
-         NULL, CAST(SUBCLASSPROC, @CRichEditCtrlProc), cID, CAST(DWORD_PTR, @this))
-      m_hInstance = pWindow->InstanceHandle
-      m_ScalingRatio = pWindow->rxRatio
-      ' // Set the ES_EX_ZOOMABLE (&H0010) extended style
-      ' // EM_SETEXTENDEDSTYLE = ECM_FIRST + 10
-      ' // EM_GETEXTENDEDSTYLE = ECM_FIRST + 11
-      DIM dwExStyle AS DWORD = SendMessageW(m_hRichEdit, ECM_FIRST + 11, 0, 0)
-      SendMessageW(m_hRichEdit, ECM_FIRST + 10, dwExStyle, &H0010)
-      ' // Get a pointer to the ITextDocument2 interface
-      m_pTextDocument2 = this.GetDocumentInterface
-      IF m_pTextDocument2 = NULL THEN EXIT CONSTRUCTOR
-   ELSE
-      EXIT CONSTRUCTOR
-   END IF
+   IF pWindow = NULL THEN EXIT CONSTRUCTOR
+   m_hRichEdit = pWindow->AddControl("RICHEDIT", pWindow->hWindow, cID, wszTitle, _
+   x, y, nWidth, nHeight, WS_VISIBLE OR WS_CHILD OR WS_TABSTOP OR ES_LEFT OR WS_HSCROLL OR WS_VSCROLL OR _
+      ES_AUTOHSCROLL OR ES_AUTOVSCROLL OR ES_MULTILINE OR ES_WANTRETURN OR ES_NOHIDESEL OR ES_SAVESEL, WS_EX_CLIENTEDGE, _
+      NULL, CAST(SUBCLASSPROC, @CRichEditCtrlProc), cID, CAST(DWORD_PTR, @this))
+   m_hInstance = pWindow->InstanceHandle
+   m_ScalingRatio = pWindow->rxRatio
+   ' // Set the ES_EX_ZOOMABLE (&H0010) extended style
+   ' // EM_SETEXTENDEDSTYLE = ECM_FIRST + 10
+   ' // EM_GETEXTENDEDSTYLE = ECM_FIRST + 11
+   DIM _dwExStyle AS DWORD = SendMessageW(m_hRichEdit, ECM_FIRST + 11, 0, 0)
+   SendMessageW(m_hRichEdit, ECM_FIRST + 10, _dwExStyle, &H0010)
+   ' // Get a pointer to the ITextDocument2 interface
+   m_pTextDocument2 = this.GetDocumentInterface
+   IF m_pTextDocument2 = NULL THEN EXIT CONSTRUCTOR
 
 END CONSTRUCTOR
 ' ========================================================================================
@@ -4386,18 +4381,9 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Gets a text range object for a specified range of content in the active story of the document.
-' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.Range (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange PTR
-   DIM pTextRange AS ITextRange PTR
-   m_Result = m_pTextDocument2->lpvtbl->Range(m_pTextDocument2, cpActive, cpAnchor, @pTextRange)
-   RETURN pTextRange
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
 ' Gets a new text range for the active story of the document.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.Range2 (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange2 PTR
+PRIVATE FUNCTION CRichEditCtrl.Range (BYVAL cpActive AS LONG = 0, BYVAL cpAnchor AS LONG = 0) AS ITextRange2 PTR
    DIM pRange2 AS ITextRange2 PTR
    m_Result = m_pTextDocument2->lpvtbl->Range2(m_pTextDocument2, cpActive, cpAnchor, @pRange2)
    RETURN pRange2
@@ -4405,20 +4391,10 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Retrieves a text range object for a specified range of content in the active story of the document.
-' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.RangeFromPoint (BYVAL x AS LONG, BYVAL y AS LONG) AS ITextRange PTR
-   DIM pTextRange AS ITextRange PTR
-   m_Result = m_pTextDocument2->lpvtbl->RangeFromPoint(m_pTextDocument2, x, y, @pTextRange)
-   RETURN pTextRange
-END FUNCTION
-' ========================================================================================
-' ========================================================================================
 ' Retrieves the degenerate range at (or nearest to) a particular point on the screen.
 ' ========================================================================================
-PRIVATE FUNCTION CRichEditCtrl.RangeFromPoint2 (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG) AS ITextRange2 PTR
+PRIVATE FUNCTION CRichEditCtrl.RangeFromPoint (BYVAL x AS LONG, BYVAL y AS LONG, BYVAL nType AS LONG) AS ITextRange2 PTR
    DIM pRange2 AS ITextRange2 PTR
-   IF m_pTextDocument2 = NULL THEN m_Result = E_POINTER: RETURN pRange2
    this.SetResult(m_pTextDocument2->lpvtbl->RangeFromPoint2(m_pTextDocument2, x, y, nType, @pRange2))
    RETURN pRange2
 END FUNCTION
@@ -4928,3 +4904,8 @@ END FUNCTION
 ' ========================================================================================
 
 END NAMESPACE
+
+' // Includes for other TOM classes
+#include once "Afx/CTextFont2.inc"
+#include once "Afx/CTextPara2.inc"
+#include once "Afx/CTextRange2.inc"

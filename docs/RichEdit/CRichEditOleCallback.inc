@@ -86,7 +86,6 @@ END FUNCTION
 ' for every new copy of a pointer to an interface on an object.
 ' ========================================================================================
 FUNCTION CRichEditOleCallback.AddRef () AS ULONG
-'   this.cRef += 1
    InterlockedIncrement(@cRef)
    CREC_DP("CRichEditOleCallback AddRef = " & WSTR(this.cRef))
    RETURN this.cRef
@@ -98,7 +97,6 @@ END FUNCTION
 ' If the count reaches 0, it deletes itself.
 ' ========================================================================================
 FUNCTION CRichEditOleCallback.Release () AS DWORD
-'   this.cRef -= 1
    InterlockedDecrement(@cRef)
    CREC_DP("CRichEditOleCallback Release = " & WSTR(this.cRef))
    FUNCTION = this.cRef
