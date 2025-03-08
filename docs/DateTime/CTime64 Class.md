@@ -10,26 +10,26 @@ Represents an absolute time and date.
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#Constructors1) | Create new **CTime64** objects initialized to the specified value. |
-| [CAST Operator](#CastOp1) | Returns the **CTime64** value as a long integer. |
-| [LET Operator](#LetOp1) | Assigns a value to a **CTime64** object. |
-| [Operators](#Operators1) | Adds, subtracts or compares **CTime64** objects. |
-| [Format](#Format) | Converts a **CTime64** object to a string. |
-| [FormatGmt](#Format) | Converts a **CTime64** object to a string. |
-| [GetAsFileTime](#GetAsFileTime) | Returns the time as a **FILETIME** structure. |
-| [GetAsSystemTime](#GetAsSystemTime) | Returns the time as a **SYSTEMTIME** structure. |
-| [GetCurrentTime](#GetCurrentTime) | Returns a **CTime64** object that represents the current system date and time. |
-| [GetDay](#GetDay) | Returns the day represented by the **CTime64** object. |
-| [GetDayOfWeek](#GetDayOfWeek) | Returns the day of the week represented by the **CTime64** object. |
-| [GetGmtTime](#GetGmtTime) | Gets a **tm** structure that contains a decomposition of the time contained in this **CTime64** object. |
-| [GetHour](#GetHour) | Returns the hour represented by the **CTime64** object. |
-| [GetLocalTime](#GetLocalTime) | Gets a **tm** structure that contains a decomposition of the time contained in this **CTime64** object. |
-| [GetMinute](#GetMinute) | Returns the minute represented by the **CTime64** object. |
-| [GetMonth](#GetMonth) | Returns the month represented by the **CTime64** object. |
-| [GetSecond](#GetSecond) | Returns the second represented by the **CTime64** object. |
-| [GetTime](#GetTime) | Returns a **\_\_time64_t** (LONGLONG) value for the given **CTime64** object. |
-| [GetYear](#GetYear) | Returns the year represented by the **CTime64** object. |
-| [SetDateTime](#SetDateTime) | Sets the date and time of this **CTime64** object. |
+| [Constructors](#constructors1) | Create new **CTime64** objects initialized to the specified value. |
+| [CAST Operator](#castop1) | Returns the **CTime64** value as a long integer. |
+| [LET Operator](#letop1) | Assigns a value to a **CTime64** object. |
+| [Operators](#operators1) | Adds, subtracts or compares **CTime64** objects. |
+| [Format](#format) | Converts a **CTime64** object to a string. |
+| [FormatGmt](#format) | Converts a **CTime64** object to a string. |
+| [GetAsFileTime](#getasfiletime) | Returns the time as a **FILETIME** structure. |
+| [GetAsSystemTime](#getassystemtime) | Returns the time as a **SYSTEMTIME** structure. |
+| [GetCurrentTime](#getcurrenttime) | Returns a **CTime64** object that represents the current system date and time. |
+| [GetDay](#getday) | Returns the day represented by the **CTime64** object. |
+| [GetDayOfWeek](#getdayofweek) | Returns the day of the week represented by the **CTime64** object. |
+| [GetGmtTime](#getgmttime) | Gets a **tm** structure that contains a decomposition of the time contained in this **CTime64** object. |
+| [GetHour](#gethour) | Returns the hour represented by the **CTime64** object. |
+| [GetLocalTime](#getlocaltime) | Gets a **tm** structure that contains a decomposition of the time contained in this **CTime64** object. |
+| [GetMinute](#getminute) | Returns the minute represented by the **CTime64** object. |
+| [GetMonth](#getmonth) | Returns the month represented by the **CTime64** object. |
+| [GetSecond](#getsecond) | Returns the second represented by the **CTime64** object. |
+| [GetTime](#gettime) | Returns a **\_\_time64_t** (LONGLONG) value for the given **CTime64** object. |
+| [GetYear](#getyear) | Returns the year represented by the **CTime64** object. |
+| [SetDateTime](#setdatetime) | Sets the date and time of this **CTime64** object. |
 
 # CTimeSpan Class
 
@@ -41,21 +41,21 @@ An amount of time, which is internally stored as the number of seconds in the ti
 
 | Name       | Description |
 | ---------- | ----------- |
-| [Constructors](#Constructors2) | Create new **CTimeSpan** objects initialized to the specified value. |
-| [CAST Operator](#CastOp2) | Returns the **CTimeSpan** value as a long integer. |
-| [LET Operator](#LetOp2) | Assigns a value to a **CTimeSpan** object. |
-| [Operators](#Operators2) | Adds, subtracts or compares **CTimeSpan** objects. |
-| [GetDays](#GetDays) | Returns a value that represents the number of days in this **CTimeSpan**. |
-| [GetHours](#GetHours) | Returns a value that represents the number of hours in the current day (–23 through 23). |
-| [GetMinutes](#GetMinutes) | Returns a value that represents the number of minutes in the current hour (–59 through 59). |
-| [GetSeconds](#GetSeconds) | Returns a value that represents the number of seconds in the current hour (–59 through 59). |
-| [GetTimeSpan](#GetTimeSpan) | Returns the underlying time value from this **CTimeSpan** object. |
-| [GetTotalHours](#GetTotalHours) | Returns a value that represents the total number of complete hours in this **CTimeSpan**. |
-| [GetTotalMinutes](#GetTotalMinutes) | Returns a value that represents the total number of complete minutes in this **CTimeSpan**. |
-| [GetTotalSeconds](#GetTotalSeconds) | Retrieves this date/time-span value expressed in seconds. |
-| [SetTimeSpan](#SetTimeSpan) | Sets the value of this date/time-span value. |
+| [Constructors](#constructors2) | Create new **CTimeSpan** objects initialized to the specified value. |
+| [CAST Operator](#castOp2) | Returns the **CTimeSpan** value as a long integer. |
+| [LET Operator](#letop2) | Assigns a value to a **CTimeSpan** object. |
+| [Operators](#operators2) | Adds, subtracts or compares **CTimeSpan** objects. |
+| [GetDays](#getdays) | Returns a value that represents the number of days in this **CTimeSpan**. |
+| [GetHours](#gethours) | Returns a value that represents the number of hours in the current day (–23 through 23). |
+| [GetMinutes](#getminutes) | Returns a value that represents the number of minutes in the current hour (–59 through 59). |
+| [GetSeconds](#getseconds) | Returns a value that represents the number of seconds in the current hour (–59 through 59). |
+| [GetTimeSpan](#gettimespan) | Returns the underlying time value from this **CTimeSpan** object. |
+| [GetTotalHours](#gettotalhours) | Returns a value that represents the total number of complete hours in this **CTimeSpan**. |
+| [GetTotalMinutes](#gettotalminutes) | Returns a value that represents the total number of complete minutes in this **CTimeSpan**. |
+| [GetTotalSeconds](#gettotalseconds) | Retrieves this date/time-span value expressed in seconds. |
+| [SetTimeSpan](#settimespan) | Sets the value of this date/time-span value. |
 
-# <a name="Constructors1"></a>Constructors (CTime64)
+# <a name="constructors1"></a>Constructors (CTime64)
 
 Create new **CTime64** objects initialized to the specified value.
 
@@ -120,7 +120,7 @@ ct.SetDateTime(2017, 10, 9, 11, 32, 45)
 DIM ct2 AS CTime64 = ct.GetAsSystemtime
 ```
 
-# <a name="CastOp1"></a>CAST Operator (CTime64)
+# <a name="castop1"></a>CAST Operator (CTime64)
 
 Returns the underlying value from this **CTime64** object.
 
@@ -128,7 +128,7 @@ Returns the underlying value from this **CTime64** object.
 OPERATOR CAST () AS LONGLONG
 ```
 
-# <a name="LetOp1"></a>LET Operator (=) (CTime64)
+# <a name="letop1"></a>LET Operator (=) (CTime64)
 
 Assigns a value to a **CTime64** object.
 
@@ -144,7 +144,7 @@ OPERATOR LET (BYREF ft AS FILETIME)
 | *st* | A **SYSTEMTIME** structure to be converted to a **\_\_time64_t** (LONGLONG) value and copied into the new **CTime64** object. |
 | *ft* | A **FILETIME** structure to be converted to a **\_\_time64_t** (LONGLONG) value and copied into  the new **CTime64** object. Note that **FILETIME** uses Universal Coordinated Time (UTC), so if you pass a local time in the structure, your results will be incorrect. |
 
-# <a name="Operators1"></a>Operators (CTime64)
+# <a name="operators1"></a>Operators (CTime64)
 
 Adds, subtracts or compares **CTime64** objects.
 
@@ -172,7 +172,7 @@ OPERATOR >= (BYREF dt1 AS CTime64, BYREF dt2 AS CTime64) AS BOOLEAN
 -= Subtracts a CTimeSpan object from this CTime64 object.
 ```
 
-# <a name="Format"></a>Format / FormatGmt (CTime64)
+# <a name="format"></a>Format / FormatGmt (CTime64)
 
 Converts a **CTime64** object to a string.
 
@@ -227,7 +227,7 @@ print ct.Format("%A, %B %d, %Y %H:%M:%S")
 print ct.FormatGmt("%A, %B %d, %Y %H:%M:%S")
 ```
 
-# <a name="GetAsFileTime"></a>GetAsFileTime (CTime64)
+# <a name="getasfiletime"></a>GetAsFileTime (CTime64)
 
 Converts the time information stored in the **CTime64** object to a Win32–compatible FILETIME structure. A **FILETIME** structure contains a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601 (UTC).
 
@@ -235,7 +235,7 @@ Converts the time information stored in the **CTime64** object to a Win32–comp
 FUNCTION GetAsFileTime () AS FILETIME
 ```
 
-# <a name="GetAsSystemTime"></a>GetAsSystemTime (CTime64)
+# <a name="getassystemtime"></a>GetAsSystemTime (CTime64)
 
 Converts the time information stored in the **CTime64** object to a Win32–compatible **SYSTEMTIME** structure.
 
@@ -243,7 +243,7 @@ Converts the time information stored in the **CTime64** object to a Win32–comp
 FUNCTION GetAsSystemTime () AS SYSTEMTIME
 ```
 
-# <a name="GetCurrentTime"></a>GetCurrentTime (CTime64)
+# <a name="getcurrenttime"></a>GetCurrentTime (CTime64)
 
 Returns a **CTime64** object that represents the current time.
 
@@ -251,7 +251,7 @@ Returns a **CTime64** object that represents the current time.
 FUNCTION GetCurrentTime () AS CTime64
 ```
 
-# <a name="GetDay"></a>GetDay (CTime64)
+# <a name="getday"></a>GetDay (CTime64)
 
 Returns the day represented by the **CTime64** object.
 
@@ -267,7 +267,7 @@ ct = ct.GetTime
 PRINT ct.GetDay
 ```
 
-# <a name="GetDayOfWeek"></a>GetDayOfWeek (CTime64)
+# <a name="getdayofweek"></a>GetDayOfWeek (CTime64)
 
 Returns the day of the week represented by the **CTime64** object.
 
@@ -283,7 +283,7 @@ ct = ct.GetTime
 PRINT ct.GetDayOfWeek
 ```
 
-# <a name="GetGmtTime"></a>GetGmtTime (CTime64)
+# <a name="getgmttime"></a>GetGmtTime (CTime64)
 
 Gets a **tm** structure that contains a decomposition of the time contained in this **CTime64** object.
 
@@ -305,7 +305,7 @@ tm_wday : Day of week (0 – 6; Sunday = 0).<br>
 tm_yday : Day of year (0 – 365; January 1 = 0).<br>
 tm_isdst : Positive value if daylight saving time is in effect; 0 if daylight saving time is not in effect; negative value if status of daylight saving time is unknown.
 
-# <a name="GetHour"></a>GetHour (CTime64)
+# <a name="gethour"></a>GetHour (CTime64)
 
 Returns the hour represented by the **CTime64** object.
 
@@ -321,7 +321,7 @@ ct = ct.GetTime
 PRINT ct.GetHour
 ```
 
-# <a name="GetLocalTime"></a>GetLocalTime (CTime64)
+# <a name="getlocaltime"></a>GetLocalTime (CTime64)
 
 Gets a **tm** structure that contains a decomposition of the time contained in this **CTime64** object.
 
@@ -343,7 +343,7 @@ tm_wday : Day of week (0 – 6; Sunday = 0).<br>
 tm_yday : Day of year (0 – 365; January 1 = 0).<br>
 tm_isdst : Positive value if daylight saving time is in effect; 0 if daylight saving time is not in effect; negative value if status of daylight saving time is unknown.
 
-# <a name="GetMinute"></a>GetMinute (CTime64)
+# <a name="getminute"></a>GetMinute (CTime64)
 
 Returns the minute represented by the **CTime64** object.
 
@@ -359,7 +359,7 @@ ct = ct.GetTime
 PRINT ct.GetMinute
 ```
 
-# <a name="GetMonth"></a>GetMonth (CTime64)
+# <a name="getmonth"></a>GetMonth (CTime64)
 
 Returns the month represented by the **CTime64** object.
 
@@ -375,7 +375,7 @@ ct = ct.GetTime
 PRINT ct.GetMonth
 ```
 
-# <a name="GetSecond"></a>GetSecond (CTime64)
+# <a name="getsecond"></a>GetSecond (CTime64)
 
 Returns the second represented by the **CTime64** object.
 
@@ -391,7 +391,7 @@ ct = ct.GetTime
 PRINT ct.GetSecond
 ```
 
-# <a name="GetTime"></a>GetTime (CTime64)
+# <a name="gettime"></a>GetTime (CTime64)
 
 Returns a **\_\_time64_t** (LONGLONG) value for the given **CTime64** object.
 
@@ -406,7 +406,7 @@ DIM ct AS CTime64
 ct = ct.GetTime
 ```
 
-# <a name="GetYear"></a>GetYear (CTime64)
+# <a name="getyear"></a>GetYear (CTime64)
 
 Returns the year represented by the **CTime64** object.
 
@@ -422,7 +422,7 @@ ct = ct.GetTime
 PRINT ct.GetYear
 ```
 
-# <a name="SetDateTime"></a>SetDateTime (CTime64)
+# <a name="setdatetime"></a>SetDateTime (CTime64)
 
 Sets the date and time of this **CTime64** object.
 
@@ -447,7 +447,7 @@ FUNCTION SetDateTime (BYVAL nYear AS WORD, BYVAL nMonth AS WORD, BYVAL nDay AS W
 DIM ct AS CTime64 = CTime64(2017, 10, 9, 11, 32, 45)
 ```
 
-# <a name="Constructors2"></a>Constructors (CTimeSpan)
+# <a name="constructors2"></a>Constructors (CTimeSpan)
 
 Create new **CTimespan** objects initialized to the specified value.
 
@@ -462,7 +462,7 @@ CONSTRUCTOR CTimeSpan (BYVAL lDays AS LONG, BYVAL nHours AS LONG, BYVAL nMins AS
 | *lltime* | A **\_\_time64_t** (LONGLONG) value. |
 | *lDays / nHours / nMins / nSecs* | Indicates the day and time values to be copied into the new **CTimeSpan** object. |
 
-# <a name="CastOp2"></a>CAST Operator (CTimeSpan)
+# <a name="castop2"></a>CAST Operator (CTimeSpan)
 
 Returns the underlying value from this **CTimeSpan** object.
 
@@ -470,7 +470,7 @@ Returns the underlying value from this **CTimeSpan** object.
 OPERATOR CAST () AS LONGLONG
 ```
 
-# <a name="LetOp2"></a>LET Operator (=) (CTimeSpan)
+# <a name="letop2"></a>LET Operator (=) (CTimeSpan)
 
 Assigns a value to a **CTimeSpan** object.
 
@@ -484,7 +484,7 @@ OPERATOR LET (BYREF cSpan AS CTimeSpan)
 | *nSpan* | A \_\_time64_t (LONGLONG) value. |
 | *cSpan* | A **CTimeSpan** object. |
 
-# <a name="Operators2"></a>Operators (CTimeSpan)
+# <a name="operators2"></a>Operators (CTimeSpan)
 
 Adds, subtracts or compares **CTimeSpan** objects.
 
@@ -511,7 +511,7 @@ OPERATOR >= (BYREF cSpan1 AS CTimeSpan, BYREF cSpan2 AS CTimeSpan) AS BOOLEAN
 -= Subtracts a CTimeSpan value from this CTimeSpan object.
 ```
 
-# <a name="GetDays"></a>GetDays (CTimeSpan)
+# <a name="getdays"></a>GetDays (CTimeSpan)
 
 Returns a value that represents the number of days in this **CTimeSpan**.
 
@@ -519,7 +519,7 @@ Returns a value that represents the number of days in this **CTimeSpan**.
 FUNCTION GetDays () AS LONG
 ```
 
-# <a name="GetHours"></a>GetHours (CTimeSpan)
+# <a name="gethours"></a>GetHours (CTimeSpan)
 
 Returns a value that represents the number of hours in the current day (–23 through 23).
 
@@ -527,7 +527,7 @@ Returns a value that represents the number of hours in the current day (–23 th
 FUNCTION GetHours () AS LONG
 ```
 
-# <a name="GetMinutes"></a>GetMinutes (CTimeSpan)
+# <a name="getminutes"></a>GetMinutes (CTimeSpan)
 
 Returns a value that represents the number of minutes in the current hour (–59 through 59).
 
@@ -535,7 +535,7 @@ Returns a value that represents the number of minutes in the current hour (–59
 FUNCTION GetMinutes () AS LONG
 ```
 
-# <a name="GetSeconds"></a>GetSeconds (CTimeSpan)
+# <a name="getseconds"></a>GetSeconds (CTimeSpan)
 
 Returns a value that represents the number of seconds in the current hour (–59 through 59).
 
@@ -543,7 +543,7 @@ Returns a value that represents the number of seconds in the current hour (–59
 FUNCTION GetSeconds () AS LONG
 ```
 
-# <a name="GetTimeSpan"></a>GetTimeSpan (CTimeSpan)
+# <a name="gettimespan"></a>GetTimeSpan (CTimeSpan)
 
 Returns the underlying time value from this **CTimeSpan** object.
 
@@ -551,7 +551,7 @@ Returns the underlying time value from this **CTimeSpan** object.
 FUNCTION GetTimespan () AS LONG
 ```
 
-# <a name="GetTotalHours"></a>GetTotalHours (CTimeSpan)
+# <a name="gettotalhours"></a>GetTotalHours (CTimeSpan)
 
 Returns a value that represents the total number of complete hours in this **CTimeSpan**.
 
@@ -559,7 +559,7 @@ Returns a value that represents the total number of complete hours in this **CTi
 FUNCTION GetTotalHours () AS LONG
 ```
 
-# <a name="GetTotalMinutes"></a>GetTotalMinutes (CTimeSpan)
+# <a name="gettotalminutes"></a>GetTotalMinutes (CTimeSpan)
 
 Returns a value that represents the total number of complete minutes in this **CTimeSpan**.
 
@@ -567,7 +567,7 @@ Returns a value that represents the total number of complete minutes in this **C
 FUNCTION GetTotalMinutes () AS LONG
 ```
 
-# <a name="GetTotalSeconds"></a>GetTotalSeconds (CTimeSpan)
+# <a name="gettotalseconds"></a>GetTotalSeconds (CTimeSpan)
 
 Retrieves this date/time-span value expressed in seconds.
 
@@ -575,7 +575,7 @@ Retrieves this date/time-span value expressed in seconds.
 FUNCTION GetTotalSeconds () AS LONG
 ```
 
-# <a name="SetTimeSpan"></a>SetTimeSpan (CTimeSpan)
+# <a name="settimespan"></a>SetTimeSpan (CTimeSpan)
 
 Sets the value of this date/time-span value.
 
