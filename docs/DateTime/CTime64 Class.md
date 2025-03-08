@@ -293,7 +293,7 @@ FUNCTION GetGmtTime () AS tm
 
 #### Remarks
 
-The fields of the structure type **tm** store the following values, each of which is an int:
+The fields of the structure type **tm** store the following values, each of which is an integer:
 
 tm_sec : Seconds after minute (0 – 59).<br>
 tm_min : Minutes after hour (0 – 59).<br>
