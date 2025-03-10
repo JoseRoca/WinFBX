@@ -17,8 +17,9 @@
 #include once "win/richedit.bi"
 USING Afx
 
-' // Macros to add PowerBasic compatibility
+' // Some defines to add PowerBasic compatibility. More to be added.
 #define ControlSetFocus(hDlg, id) SetFocus(GetDlgItem(hDlg, id))
+#define IsWin(hDlg) IsWindow(hDlg)
 #define MenuAttach(hMenu, hDlg) SetMenu(hDlg, hMenu)
 
 NAMESPACE Afx
@@ -36,6 +37,7 @@ TYPE CDialog
       m_fontStyle AS BYTE            ' // Font style
       m_charset AS BYTE              ' // Font character set
       m_fontName AS WSTRING * 32     ' // Font face name
+      m_IsVisible AS BOOLEAN         ' // The dialog has the WS_VISIBLE style
       m_IsModal AS BOOLEAN           ' // Dialog is modal
       m_DlgRetVal AS INT_PTR         ' // To simulate EndDialog
 
@@ -528,27 +530,16 @@ END FUNCTION
 ' ========================================================================================
 ' Create a modeless dialog in memory
 ' ========================================================================================
-'PRIVATE FUNCTION CDialog.DialogNew (BYVAL hParent AS HWND = HWND_DESKTOP, BYREF wszTitle AS WSTRING = "", _
-'   BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL cx AS LONG = 0, BYVAL cy AS LONG = 0, _
-'   BYVAL dwStyle AS LONG = 0, BYVAL dwExStyle AS LONG = 0, BYVAL pCallback AS DLGPROC = NULL) AS HWND
-
-'   ' // Default styles
-'   IF dwStyle THEN dwStyle = dwStyle OR DS_3DLOOK OR DS_NOFAILCREATE OR DS_SETFONT
-'   IF dwStyle = 0 THEN dwStyle = DS_3DLOOK OR DS_SETFONT OR DS_MODALFRAME OR DS_NOFAILCREATE OR WS_BORDER OR _
-'                                 WS_CLIPSIBLINGS OR WS_DLGFRAME OR WS_POPUP
-'   IF dwExStyle = 0 THEN dwExstyle = WS_EX_LEFT OR WS_EX_LTRREADING OR WS_EX_RIGHTSCROLLBAR
-'   DIM sTemplate AS STRING = this.DialogTemplate(wszTitle, x, y, cx, cy, dwStyle, dwExStyle)
-'   m_hDlg = CreateDialogIndirectParamW(m_hInstance, cast(LPCDLGTEMPLATEW, STRPTR(sTemplate)), _
-'            hParent, cast(DLGPROC, pCallBack), cast(LPARAM, @this))
-'   RETURN m_hDlg
-
-'END FUNCTION
-' ========================================================================================
-' ========================================================================================
 PRIVATE FUNCTION CDialog.DialogNew (BYVAL hParent AS HWND = HWND_DESKTOP, BYREF wszTitle AS WSTRING = "", _
    BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL cx AS LONG = 0, BYVAL cy AS LONG = 0, _
    BYVAL dwStyle AS LONG = 0, BYVAL dwExStyle AS LONG = 0) AS HWND
 
+   ' // If it has the WS_VISIBLE style
+   IF (dwStyle AND WS_VISIBLE) = WS_VISIBLE THEN
+      ' // Remove the WS_VISIBLE style
+      m_IsVisible = TRUE
+      dwStyle = dwStyle AND (NOT WS_VISIBLE)
+   END IF
    ' // Default styles
    IF dwStyle THEN dwStyle = dwStyle OR DS_3DLOOK OR DS_NOFAILCREATE OR DS_SETFONT
    IF dwStyle = 0 THEN dwStyle = DS_3DLOOK OR DS_SETFONT OR DS_MODALFRAME OR DS_NOFAILCREATE OR WS_BORDER OR _
@@ -590,9 +581,20 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CDialog.DialogShowModeless (BYVAL hDlg AS HWND, BYVAL pCallback AS ANY PTR = NULL) AS INT_PTR
    m_IsModal = FALSE
+   ' // If it had de WS_VISIBLE style...
+   IF m_IsVisible THEN
+      ' // ... restore it.
+      DIM dwStyle AS DWORD = GetWindowLongPtrW(hDlg, GWL_STYLE)
+      SetWindowLongPtrW(hDlg, GWL_STYLE, dwStyle OR WS_VISIBLE)
+      ' // ... and redraw the dialog
+      InvalidateRect hDlg, NULL, CTRUE
+      UpdateWindow hDlg
+      IF GetMenu(hdlg) THEN DrawMenuBar hDlg
+   END IF
    ' // Set the dialog callback
    IF pCallback = NULL THEN pCallback = PROCPTR(CDialog.CDialogProc)
    SetWindowLongPtrW(hDlg, DWLP_DLGPROC, cast(LPARAM, pCallBack))
+   ' // Send a WM_INITDIALOG message
    SendMessage(hDlg, WM_INITDIALOG, cast(WPARAM, hDlg), cast(LPARAM, @this))
    RETURN S_OK
 END FUNCTION
@@ -605,10 +607,20 @@ PRIVATE FUNCTION CDialog.DialogShowModal (BYVAL hDlg AS HWND, BYVAL pCallback AS
 
    ' // Flag the dialog as modal
    m_IsModal = TRUE
-
    ' // Set the dialog callback
    IF pCallback = NULL THEN pCallback = PROCPTR(CDialog.CDialogProc)
    SetWindowLongPtrW(hDlg, DWLP_DLGPROC, cast(LPARAM, pCallBack))
+   ' // If it had de WS_VISIBLE style...
+   IF m_IsVisible THEN
+      ' // ... restore it.
+      DIM dwStyle AS DWORD = GetWindowLongPtrW(hDlg, GWL_STYLE)
+      SetWindowLongPtrW(hDlg, GWL_STYLE, dwStyle OR WS_VISIBLE)
+      ' // ... and redraw the dialog
+      InvalidateRect hDlg, NULL, FALSE
+      UpdateWindow hDlg
+      IF GetMenu(hdlg) THEN DrawMenuBar hDlg
+   END IF
+   ' // Send a WM_INITDIALOG message
    SendMessage(hDlg, WM_INITDIALOG, cast(WPARAM, hDlg), cast(LPARAM, @this))
    ' Disable the parent window
    DIM hParent AS HWND = GetParent(hDlg)

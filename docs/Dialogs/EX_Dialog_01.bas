@@ -152,18 +152,19 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
    pDlg.ControlAdd "Button", hDlg, IDOK, "&Ok", 60, 40, 50, 12
 
    ' // Set the focus in the edit control
+   ' SetFocus(GetDlgItem(hDlg, 103))
    ControlSetFocus(hDlg, 103)
 
    ' // Display and activate the dialog as modal
-   pDlg.DialogShowModal(hDlg, @DlgProc)
+'   pDlg.DialogShowModal(hDlg, @DlgProc)
 
 '   ' // Display and activate the dialog as modeless
-'   pDlg.DialogShowModeless(hDlg, @DlgProc)
+   pDlg.DialogShowModeless(hDlg, @DlgProc)
 
 '   ' // Message handler loop
-'   DO
-'      pDlg.DialogDoEvents
-'   LOOP WHILE IsWindow(hDlg)
+   DO
+      pDlg.DialogDoEvents
+   LOOP WHILE IsWin(hDlg)
 
 
    ' // You can use a message pump instead
