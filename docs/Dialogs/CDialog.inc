@@ -414,6 +414,11 @@ PRIVATE FUNCTION CDialog.ControlAdd ( _
    SELECT CASE UCASE(wsClassName)
       CASE "BUTTON"
          IF (dwStyle AND BS_DEFPUSHBUTTON) = BS_DEFPUSHBUTTON THEN
+            ' // Removes the default button because 32768 is not a valid control ID.
+            ' // Needed if the user has set the BS_DEFBUTTON style to more of one button.
+            ' // We don't want to have more than one default button.
+            SendMessageW(hDlg, DM_SETDEFID, 32768, 0)
+            ' // Sets the specified button as the default
             SendMessageW(hDlg, DM_SETDEFID, cId, 0)
          END IF
       CASE "LISTBOX"
@@ -711,6 +716,8 @@ END FUNCTION
 ' Changes the identifier of the default push button for a dialog box.
 ' ========================================================================================
 PRIVATE FUNCTION CDialog.SetDefId (BYVAL hDlg AS HWND, BYVAL cId AS INT_PTR) AS BOOLEAN
+   ' // Removes the default button because 32768 is not a valid control ID.
+   SendMessageW(hDlg, DM_SETDEFID, 32768, 0)
    ' // Sets the specified button as the default
    RETURN SendMessageW(hDlg, DM_SETDEFID, cId, 0)
 END FUNCTION
