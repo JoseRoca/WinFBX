@@ -626,20 +626,21 @@ PRIVATE FUNCTION CDialog.DialogShowModal (BYVAL hDlg AS HWND, BYVAL pCallback AS
       DIM dwStyle AS DWORD = GetWindowLongPtrW(hDlg, GWL_STYLE)
       SetWindowLongPtrW(hDlg, GWL_STYLE, dwStyle OR WS_VISIBLE)
       ' // ... and redraw the dialog
+      ' SetWindowPos(hDlg, NULL, 0, 0, 0, 0, SWP_SHOWWINDOW OR SWP_NOSIZE OR SWP_NOMOVE OR SWP_NOACTIVATE OR SWP_NOZORDER)
       InvalidateRect hDlg, NULL, FALSE
       UpdateWindow hDlg
       IF GetMenu(hdlg) THEN DrawMenuBar hDlg
    END IF
    ' // Send a WM_INITDIALOG message
    SendMessage(hDlg, WM_INITDIALOG, cast(WPARAM, hDlg), cast(LPARAM, @this))
-   ' Disable the parent window
+   ' // Disable the parent window
    DIM hParent AS HWND = GetParent(hDlg)
    IF hParent THEN EnableWindow(hParent, FALSE)
    ' // Message handler loop
    DO
       this.DialogDoEvents
    LOOP WHILE IsWindow(hDlg)
-   ' Enable the parent window
+   ' // Enable the parent window
    IF hParent THEN EnableWindow(hParent, FALSE)
 
    RETURN S_OK
@@ -706,7 +707,10 @@ END FUNCTION
 ' Changes the identifier of the default push button for a dialog box.
 ' ========================================================================================
 PRIVATE FUNCTION CDialog.SetDefId (BYVAL hDlg AS HWND, BYVAL cId AS INT_PTR) AS BOOLEAN
-   RETURN SendMessageW(hDlg, DM_SETDEFID, cId, 0)
+   ' // Removes the default button because 32768 is not a valid control ID.
+   PostMessageW(hDlg, DM_SETDEFID, 32768, 0)
+   ' // Sets the specified button as the default
+   RETURN PostMessageW(hDlg, DM_SETDEFID, cId, 0)
 END FUNCTION
 ' ========================================================================================
 
