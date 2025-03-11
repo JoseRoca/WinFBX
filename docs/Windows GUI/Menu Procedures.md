@@ -4,6 +4,7 @@
 | ---------- | ----------- |
 | [AfxAddIconToMenuItem](#afxaddicontomenuitem) | Converts an icon handle to a bitmap and adds it to the specified *hbmpItem* field of HMENU item. |
 | [AfxCheckMenuItem](#afxcheckmenuitem) | Checks a menu item. |
+| [AfxDestroyMenu](#afxdestroymenu) | Destroys a menu. |
 | [AfxDisableMenuItem](#afxdisablemenuitem) | Disables the specified menu item. |
 | [AfxEnableMenuItem](#afxenablemenuitem) | Enables the specified menu item. |
 | [AfxGetMenuFont](#afxgetmenufont) | Retrieves information about the font used in menu bars. |
@@ -94,6 +95,28 @@ FUNCTION AfxCheckMenuItem (BYVAL hMenu AS HMENU, BYVAL uItem AS DWORD, _
 #### Return value
 
 The return value specifies the previous state of the menu item (either MF_CHECKED or MF_UNCHECKED). If the menu item does not exist, the return value is -1.
+
+# <a name="afxdestroymenu"></a>AfxDestroyMenu
+
+Destroys the specified menu and frees any memory that the menu occupies.
+The second overloaded function destroys the menu attached to a window or dialog.
+
+```
+FUNCTION AfxDestroyMenu (BYVAL hMenu AS HMENU) AS BOOLEAN
+FUNCTION AfxDestroyMenu (BYVAL hwnd AS HWND) AS BOOLEAN
+```
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hMenu* | Handle to the menu to be destroyed. |
+
+| Parameter  | Description |
+| ---------- | ----------- |
+| *hwnd* | Handle to the window or dialog that owns the menu. |
+
+#### Return value
+
+A boolean true (-1) pr false (0).
 
 # <a name="afxdisablemenuitem"></a>AfxDisableMenuItem
 
