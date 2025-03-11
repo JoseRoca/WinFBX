@@ -153,7 +153,8 @@ FUNCTION WinMain (BYVAL hInstance AS HINSTANCE, _
 
    ' // Set the focus in the edit control
    ' SetFocus(GetDlgItem(hDlg, 103))
-   ControlSetFocus(hDlg, 103)
+   ' ControlSetFocus(hDlg, 103)
+   pDlg.SetDialogFocus(hDlg, GetDlgItem(hDlg, 103))
 
    ' // Display and activate the dialog as modal
 '   pDlg.DialogShowModal(hDlg, @DlgProc)
