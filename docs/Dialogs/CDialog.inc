@@ -18,9 +18,16 @@
 USING Afx
 
 ' // Some defines to add PowerBasic compatibility. More to be added.
+#define ControlDisable(hDlg, id) EnableWindowGet(DlgItem(hDlg, id), FALSE)
+#define ControlEnable(hDlg, id) EnableWindowGet(DlgItem(hDlg, id), TRUE)
+#define ControlHandle(hDlg, id) GetDlgItem(hDlg, id)
+#define ControlKill(hDlg, id) DestroyWindow(GetDlgItem(hDlg, id))
 #define ControlSetFocus(hDlg, id) SetFocus(GetDlgItem(hDlg, id))
+#define ControlShowState(hDlg, id, showstate) ShowWindow(GetDlgItem(hDlg, id), showstate)
 #define IsWin(hDlg) IsWindow(hDlg)
 #define MenuAttach(hMenu, hDlg) SetMenu(hDlg, hMenu)
+' Iterate (DO | LOOP | FOR) Continue (DO | FOR | WHILE)
+#define _DQ_ CHR(34)
 
 NAMESPACE Afx
 
@@ -59,10 +66,13 @@ TYPE CDialog
          BYREF wszTitle AS WSTRING = "", BYVAL x AS LONG = 0, BYVAL y AS LONG = 0, BYVAL cx AS LONG = 0, BYVAL cy AS LONG = 0, _
          BYVAL dwStyle AS LONG = -1, BYVAL dwExStyle AS LONG = -1, BYVAL lpPAram AS LONG_PTR = 0, _
          BYVAL pWndProc AS SUBCLASSPROC = NULL, BYVAL uIdSubclass AS UINT_PTR = &HFFFFFFFF, _
-         BYVAL dwRefData as DWORD_PTR = NULL) AS HWND
+         BYVAL dwRefData AS DWORD_PTR = NULL) AS HWND
       DECLARE PROPERTY hDialog () AS HWND
       DECLARE PROPERTY hDialog (BYVAL hDlg AS HWND)
       DECLARE FUNCTION IsModal () AS BOOLEAN
+      DECLARE SUB SetDialogFocus (BYVAL hDlg AS HWND, BYVAL hCtl AS HWND)
+      DECLARE FUNCTION GetDefId (BYVAL hDlg AS HWND) AS INT_PTR
+      DECLARE FUNCTION SetDefId (BYVAL hDlg AS HWND, BYVAL cId AS INT_PTR) AS BOOLEAN
 
 Private:
       DECLARE STATIC FUNCTION CDialogProc (BYVAL hDlg AS HWND, BYVAL uMsg AS UINT, BYVAL wParam AS WPARAM, BYVAL lParam AS LPARAM) AS LRESULT
@@ -649,7 +659,7 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
-' Returns the value passed to DialogENd
+' Returns the value passed to DialogEnd
 ' ========================================================================================
 PRIVATE FUNCTION CDialog.DialogEndResult () AS INT_PTR
    OutputDebugStringW("CDialog.DialogEndResult")
@@ -672,6 +682,31 @@ PRIVATE FUNCTION CDialog.DialogDoEvents (BYVAL dwMilliseconds AS DWORD = 1) AS B
       Sleep_(dwMilliseconds)
       RETURN FALSE
    END IF
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Sets the focus in the specified control of a dialog box.
+' See https://devblogs.microsoft.com/oldnewthing/20040802-00/?p=38283
+' ========================================================================================
+PRIVATE SUB CDialog.SetDialogFocus (BYVAL hDlg AS HWND, BYVAL hCtl AS HWND)
+   SendMessageW(hDlg, WM_NEXTDLGCTL, cast(WPARAM, hCtl), CTRUE)
+END SUB
+' ========================================================================================
+
+' ========================================================================================
+' Retrieves the identifier of the default push button control for a dialog box.
+' ========================================================================================
+PRIVATE FUNCTION CDialog.GetDefId (BYVAL hDlg AS HWND) AS INT_PTR
+   RETURN LOWORD(SendMessageW(hDlg, DM_GETDEFID, 0, 0))
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' Changes the identifier of the default push button for a dialog box.
+' ========================================================================================
+PRIVATE FUNCTION CDialog.SetDefId (BYVAL hDlg AS HWND, BYVAL cId AS INT_PTR) AS BOOLEAN
+   RETURN SendMessageW(hDlg, DM_SETDEFID, cId, 0)
 END FUNCTION
 ' ========================================================================================
 
