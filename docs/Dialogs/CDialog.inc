@@ -412,6 +412,10 @@ PRIVATE FUNCTION CDialog.ControlAdd ( _
    ' // Set the font
    IF bSetFont THEN SendMessageW(hCtl, WM_SETFONT, SendMessageW(hDlg, WM_GETFONT, 0, 0), 0)
    SELECT CASE UCASE(wsClassName)
+      CASE "BUTTON"
+         IF (dwStyle AND BS_DEFPUSHBUTTON) = BS_DEFPUSHBUTTON THEN
+            SendMessageW(hDlg, DM_SETDEFID, cId, 0)
+         END IF
       CASE "LISTBOX"
          ' // Adjust the height of the control so that the integral height
          ' // is based on the new font rather than the default SYSTEM_FONT
@@ -707,10 +711,8 @@ END FUNCTION
 ' Changes the identifier of the default push button for a dialog box.
 ' ========================================================================================
 PRIVATE FUNCTION CDialog.SetDefId (BYVAL hDlg AS HWND, BYVAL cId AS INT_PTR) AS BOOLEAN
-   ' // Removes the default button because 32768 is not a valid control ID.
-   PostMessageW(hDlg, DM_SETDEFID, 32768, 0)
    ' // Sets the specified button as the default
-   RETURN PostMessageW(hDlg, DM_SETDEFID, cId, 0)
+   RETURN SendMessageW(hDlg, DM_SETDEFID, cId, 0)
 END FUNCTION
 ' ========================================================================================
 
