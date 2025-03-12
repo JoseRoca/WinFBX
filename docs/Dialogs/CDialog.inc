@@ -16,6 +16,14 @@
 #include once "win/richedit.bi"
 USING Afx
 
+#define CBHNDL(wp, lp) cast(HWND, lp)
+#define CBCTL(wp, lp) LOWORD(wp)
+#define CBCTLMSG(wp, lp) HIWORD(wp)
+#define CBNMCODE(wp, lp) LOWORD(wp) 
+#define CBNMHWND(wp, lp) cast(HWND, lp)
+#define CBNMID(wp, lp) HIWORD(wp)
+#define CBNMHDR(wp, lp) cast(NMHDR PTR, lp)
+
 NAMESPACE Afx
 
 ' ========================================================================================
