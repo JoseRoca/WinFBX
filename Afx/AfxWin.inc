@@ -1758,8 +1758,8 @@ PRIVATE SUB AfxGetWindowLocation (BYVAL hwnd AS HWND, BYREF nLeft AS LONG, BYREF
    ' // Convert the coordinates to be relative to the parent
    MapWindowPoints(HWND_DESKTOP, GetParent(hwnd), CAST(POINT PTR, @rc), 2)
    ' // Return the left and top values
-   nLeft = rc.Left
-   nTop = rc.Top
+   IF VARPTR(nLeft) THEN nLeft = rc.Left
+   IF VARPTR(nTop) THEN nTop = rc.Top
 END SUB
 ' ========================================================================================
 
@@ -1776,8 +1776,8 @@ END FUNCTION
 ' ========================================================================================
 ' Gets the width and height of the window, in pixels.
 ' - hwnd = Handle of the window.
-' - nWidth = The width of the client area.
-' - nHeight = The height of the client ara.
+' - nWidth = The width of window.
+' - nHeight = The height of the window.
 ' Return value: TRUE or FALSE. To get extended error information, call GetLastError.
 ' ========================================================================================
 PRIVATE FUNCTION AfxGetWindowSize (BYVAL hwnd AS HWND, BYREF nWidth AS LONG, BYREF nHeight AS LONG) AS BOOLEAN
@@ -1785,16 +1785,16 @@ PRIVATE FUNCTION AfxGetWindowSize (BYVAL hwnd AS HWND, BYREF nWidth AS LONG, BYR
    ' // Get the dimensions of the window
    FUNCTION = GetWindowRect(hwnd, @rc)
    ' // Return the width and height values
-   nWidth = rc.Right - rc.Left
-   nHeight = rc.Bottom - rc.Top
+   IF VARPTR(nWidth) THEN nWidth = rc.Right - rc.Left
+   IF VARPTR(nHeight) THEN nHeight = rc.Bottom - rc.Top
 END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
 ' Sets the size in pixels of the specified window.
 ' - hwnd = Handle of the window.
-' - nWidth = The new width of the client area.
-' - nHeight = The new height of the client ara.
+' - nWidth = The new width of the windiw.
+' - nHeight = The new height of the window.
 ' Return value: TRUE or FALSE. To get extended error information, call GetLastError.
 ' ========================================================================================
 PRIVATE FUNCTION AfxSetWindowSize (BYVAL hwnd AS HWND, BYVAL nWidth AS LONG, BYVAL nHeight AS LONG) AS BOOLEAN
