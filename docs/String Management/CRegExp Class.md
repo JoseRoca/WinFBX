@@ -1204,7 +1204,7 @@ PRINT pRegExp.Replace("0000.34500044", $"\b0{1,}\.", ".")
 
 ```
 Output:
-Paul Squires
+.34500044
 ```
 
 Removes leading zeroes.
