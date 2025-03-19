@@ -1106,7 +1106,8 @@ PRIVATE FUNCTION CDialog.MenuDestroy () AS BOOLEAN
       ' // Redraw the menu
       DrawMenuBar m_hDlg
       RETURN TRUE
-   ELSE RETURN FALSE
+   ELSE
+      RETURN FALSE
    END IF
 END FUNCTION
 ' ========================================================================================
