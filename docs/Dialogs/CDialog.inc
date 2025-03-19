@@ -1016,7 +1016,7 @@ PRIVATE FUNCTION CDialog.DialogSetClient (BYVAL nWidth AS LONG, BYVAL nHeight AS
    DIM dwStyle AS DWORD = GetWindowLongPtrW(m_hDlg, GWL_STYLE)
    AdjustWindowRectEx(@rc, dwStyle, (hMenu <> NULL), GetWindowLongPtrW(m_hDlg, GWL_EXSTYLE))
    ' // If there is a menu, we need to check how much wrapping occurs when we set
-   ' // the window to the width specified by AdjustWindowRectEX and an infinite
+   ' // the window to the width specified by AdjustWindowRectEx and an infinite
    ' // amount of height. An infinite height allows us to see every single menu wrap.
    IF hMenu <> NULL THEN
       rcTemp = rc
