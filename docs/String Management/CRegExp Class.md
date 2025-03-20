@@ -1619,7 +1619,7 @@ DIM cbs AS CBSTR = pRegExp.Extract(cbsText, "([^{]*?)(?=\})")
 PRINT cbs
 
 ' // extract the first match after the 11th position
-cbsText = "blah (xxx) blah (text beween parentheses) blah blah"
+cbsText = "blah (xxx) blah {text beween curly braces} blah blah"
 cbs = pRegExp.Extract(11, cbsText, "([^{]*?)(?=\})")
 PRINT cbs
 ```
