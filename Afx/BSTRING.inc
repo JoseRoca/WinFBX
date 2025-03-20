@@ -334,7 +334,7 @@ END OPERATOR
 ' ========================================================================================
 ' ========================================================================================
 PRIVATE OPERATOR BSTRING.LET (BYVAL pwszStr AS WSTRING PTR)
-   BSTRING_DP("BSTRING LET - WSTRING PTR " & .WSTR(m_bstr))
+   BSTRING_DP("BSTRING LET - WSTRING PTR " & .WSTR(pwszStr))
    ' Free the current OLE string
    IF m_bstr THEN SysFreeString(m_bstr)
    ' Detect if the passed handle is an OLE string.
