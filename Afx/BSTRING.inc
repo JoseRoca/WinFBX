@@ -1,14 +1,14 @@
 ' ########################################################################################
 ' Platform: Microsoft Windows
-' Filename: BSTRING.inc
-' Purpose:  Implementation of the BSTR (COM unicode strings) data type.
+' Filename: DWSTRING.inc
+' Purpose:  Implements a data type for dynamic null terminated unicode strings.
 ' Compiler: Free Basic 32 & 64 bit
-' Copyright (c) 2025 Jos√© Roca
+' Copyright (c) 2025 JosÈ Roca
 '
 ' License: Distributed under the MIT license.
 '
 ' Permission is hereby granted, free of charge, to any person obtaining a copy of this
-' software and associated documentation files (the ‚ÄúSoftware‚Äù), to deal in the Software
+' software and associated documentation files (the ìSoftwareî), to deal in the Software
 ' without restriction, including without limitation the rights to use, copy, modify, merge,
 ' publish, distribute, sublicense, and/or sell copies of the Software, and to permit
 ' persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -16,7 +16,7 @@
 ' The above copyright notice and this permission notice shall be included in all copies or
 ' substantial portions of the Software.
 
-' THE SOFTWARE IS PROVIDED ‚ÄúAS IS‚Äù, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+' THE SOFTWARE IS PROVIDED ìAS ISî, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
 ' INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
 ' PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
 ' FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
@@ -25,7 +25,6 @@
 ' ########################################################################################
 
 #pragma once
-#include once "win/Ole2.bi"
 #include once "DWString.inc"
 
 ' ========================================================================================
@@ -66,8 +65,8 @@ Public:
    DECLARE SUB Append (BYVAL pwszStr AS WSTRING PTR)
    DECLARE SUB Clear
    DECLARE SUB Attach (BYVAL pbstrSrc AS BSTR)
-   DECLARE FUNCTION Detach () AS BSTR
-   DECLARE FUNCTION Copy () AS BSTR
+   DECLARE FUNCTION Detach () AS BSTRING
+   DECLARE FUNCTION Copy () AS BSTRING
    DECLARE FUNCTION wchar () AS WSTRING PTR
    DECLARE OPERATOR [] (BYVAL nIndex AS UINT) BYREF AS USHORT
    DECLARE OPERATOR CAST () BYREF AS CONST WSTRING
@@ -228,12 +227,8 @@ END SUB
 
 ' ========================================================================================
 ' Detaches the BSTR pointer from the BSTRING object.
-' Note: The purpose of this method is to be used in exported functions that can be used
-' by other languages like PowerBASIC that use BSTRings. While PB won't be able to use an
-' exported BSTRING of DWSTRING, it will be able to use this exported BSTR. Don't use it
-' for other purposes or you may have memory leaks.
 ' ========================================================================================
-PRIVATE FUNCTION BSTRING.Detach () AS BSTR
+PRIVATE FUNCTION BSTRING.Detach () AS BSTRING
    BSTRING_DP("BSTRING Detach - " & .WSTR(m_bstr))
    DIM pbstr AS BSTR = m_bstr
    m_bstr = NULL
@@ -243,12 +238,8 @@ END FUNCTION
 
 ' ========================================================================================
 ' Allocates and returns a copy of this BSTRING.
-' Note: The purpose of this method is to be used in exported functions that can be used
-' by other languages like PowerBASIC that use BSTRings. While PB won't be able to use an
-' exported BSTRING of DWSTRING, it will be able to use this exported BSTR. Don't use it
-' for other purposes or you may have memory leaks.
 ' ========================================================================================
-PRIVATE FUNCTION BSTRING.Copy () AS BSTR
+PRIVATE FUNCTION BSTRING.Copy () AS BSTRING
    BSTRING_DP("BSTRING Copy - " & .WSTR(m_bstr))
    RETURN SysAllocStringLen(m_bstr, SysStringLen(m_bstr))
 END FUNCTION
