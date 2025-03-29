@@ -39,25 +39,12 @@ With regular expressions, you can:
 | [Extract](#extract) | Extracts a substring using VBScript regular expressions search patterns. |
 | [Find](#find) | Find function with VBScript regular expressions search patterns. |
 | [FindEx](#findex) | Global, multiline find function with VBScript regular expressions search patterns. |
-| [GetLastResult](#getlastresult) | Returns the last result code. |
-| [GetErrorInfo](#geterrprinfo) | Returns a description of the last result code. |
 | [MatchCount](#matchcount) | Returns the number of matches found. |
 | [RegExpPtr](#regexpptr) | Returns a direct pointer to the **Afx_IRegExp2** interface. |
 | [Remove](#remove) | Returns a copy of a string with text removed using a regular expression as the search string. |
 | [Replace](#replace) | Replaces text found in a regular expression search. |
 | [SubMatchValue](#submatchvalue) | Retrieves the content of the specified submatch. |
 | [Test](#test) | Executes a regular expression search against a specified string and returns a boolean value that indicates if a pattern match was found. |
-
-### <a name="getlastresult"></a>GetLastResult
-
-Returns the last result code.
-
-```
-FUNCTION GetLastResult () AS HRESULT
-```
-#### Return value
-
-S_OK (0) on success, or an error code on failure.
 
 ### <a name="execute"></a>Execute
 
