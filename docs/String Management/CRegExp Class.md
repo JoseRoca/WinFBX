@@ -28,7 +28,7 @@ With regular expressions, you can:
 | [MatchPos](#matchpos) | Returns the position in a search string where a match occurs. |
 | [MatchValue](#matchvalue) | Returns the value or text of a match found in a search string. |
 | [Multiline](#multiline) | Sets or returns a boolean value that indicates whether or not to search in strings across multiple lines. |
-| [Pattern](#pattern) | Sets or returns a boolean value that indicates whether or not to search in strings across multiple lines. |
+| [Pattern](#pattern) | Sets or returns the regular expression pattern being searched for. |
 | [SubMatchesCount](#submatchescount) | Returns the number of submatches. |
 
 ### Methods
