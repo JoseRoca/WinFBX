@@ -448,12 +448,16 @@ END FUNCTION
 ' Examples:
 ' DIM pRegExp AS CRegExp
 ' pRegExp.Pattern = "ab"
-' PRINT pRegExp.Remove("abacadabra", "ab") - prints "acadra"
+' pRegExp.Global = TRUE
+' PRINT pRegExp.Remove("abacadabra")
+' Output: "acadra"
 ' ----------------------------------------------------------------------------------------
 ' DIM pRegExp AS CRegExp
 ' pRegExp.Pattern = "[bAc]"
 ' pRegExp.IgnoreCase = TRUE
-' PRINT pRegExp.Remove("abacadabra", "[bAc]", TRUE) - prints "dr"
+' pRegExp.Global = TRUE
+' PRINT pRegExp.Remove("abacadabra")
+' Output: "dr"
 ' ========================================================================================
 PRIVATE FUNCTION CRegExp.Remove (BYREF cbsSourceString AS CBSTR) AS CBSTR
    DIM bstrDestString AS AFX_BSTR
@@ -544,7 +548,5 @@ PRIVATE FUNCTION CRegExp.Extract (BYVAL nStart AS LONG, BYREF cbsSourceString AS
    RETURN MID(cbsSourceString, nPos + nStart - 1, nLen)
 END FUNCTION
 ' ========================================================================================
-
-
 
 END NAMESPACE
