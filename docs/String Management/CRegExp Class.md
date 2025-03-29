@@ -54,6 +54,8 @@ With regular expressions, you can:
 | [SetResult](#setresult) | Sets the last result code. |
 | [GetErrorInfo](#geterrorinfo) | Returns a localized description of the last result code. |
 
+---
+
 ## <a name="getlastresult"></a>GetLastResult
 
 Returns the last result code
