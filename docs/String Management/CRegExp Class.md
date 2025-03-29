@@ -16,7 +16,7 @@ With regular expressions, you can:
 
 **Tutorial**: [Introduction to Regular Expressions](#Introduction)
 
-**Recipes**: [Recipes](#Recipes)
+**Recipes**: [recipes](#Recipes)
 
 ### Properties
 
@@ -936,7 +936,9 @@ For example, suppose you have a document containing references to Windows 3.1, W
 
 Once the match is found, the search for the next match begins immediately following the matched text, not including the characters included in the look-ahead. For example, if the expressions shown above matched 'Windows 98', the search resumes after 'Windows' not after '98'.
 
-# <a name="Recipes"></a>Recipes
+---
+
+# <a name="recipes"></a>Recipes
 
 #### Finding similar words
 
@@ -969,6 +971,7 @@ cat
 bat
 mat
 ```
+---
 
 #### Finding variations on words
 
@@ -984,6 +987,8 @@ IF pRegExp.MatchesCount THEN print pRegExp.MatchValue
 ```
 
 \b is a word boundary (matches whole words only), Jo is the common part of John, Jon and Jonathan, h? is optional (it is followed by the metacharacter ?), n is a letter common in the three names, (anathan)? is an optional group of characters that will match Jonathan, a space followed by Doe, and another word boundary (\b).
+
+---
 
 #### Removing characters
 
@@ -1019,6 +1024,8 @@ print cbs
 
 \b is word boundary.
 
+---
+
 #### Replacing characters
 
 ```
@@ -1031,6 +1038,8 @@ print cbs
 ```
 
 Replaces any of the characters, a, b or c, found in the string with an asterisk.
+
+---
 
 #### Replacing words
 
@@ -1082,6 +1091,7 @@ DIM cbs AS CBSTR = pRegExp.Replace(cbsText, "($1) $2-$3")
 print cbs
 ' Output: (555) 123-4567
 ```
+---
 
 Removes leading zeroes.
 
@@ -1120,6 +1130,7 @@ DIM cbs AS CBSTR = pRegExp.Replace(cbsText, "|")
 print cbs
 ' Output: "This is a | test string"
 ```
+---
 
 #### Searching words and substrings
 
@@ -1146,6 +1157,7 @@ DIM cbs AS CBSTR = pRegExp.FindEx(cbsText)
 PRINT cbs
 ' Output: 11,4; 26,4
 ```
+---
 
 #### Extracting words and substrings
 
@@ -1414,6 +1426,7 @@ PRINT cbs
 Output:
 "text between curly braces"
 ```
+---
 
 #### Checking if a string is numeric
 
@@ -1441,6 +1454,8 @@ The "\d+" part matches a digit one or more times.
 
 The "(?:\[Ee]\[\+\-]?\d+)?" matches "e+", "e-", "E+" or "E-" followed by one or more digits, with the "?" multiplier that allows zero or one instance of it.
 
+---
+
 #### Checking if an url is valid
 
 ```
@@ -1450,6 +1465,7 @@ pRegExp.Pattern = $"(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([
 PRINT pRegExp.Test(cbsText)
 ' Output: True
 ```
+---
 
 #### Breaking down an URI in its parts
 
@@ -1467,3 +1483,4 @@ msdn.microsoft.com
 :80
 /scripting/default.htm
 ```
+---
