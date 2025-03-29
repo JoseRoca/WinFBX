@@ -18,20 +18,18 @@ With regular expressions, you can:
 
 **Recipes**: [Recipes](#Recipes)
 
-## Constructor
+### Properties
 
-Intializes the COM library and creates an instance of the `CRegExp` class.
-
-```
-CONSTRUCTOR CRegExp
-```
-## Destructor
-
-Destroys the class and uninitializes the COM library.
-
-```
-DESTRUCTOR CRegExp
-```
+| Name  | Description |
+| ---------- | ----------- |
+| [Global](#global) | Sets or returns a boolean value that indicates if a pattern should match all occurrences in an entire search string or just the first one. |
+| [IgnoreCase](#ignorecase) | Sets or returns a boolean value that indicates if a pattern search is case-sensitive or not. |
+| [MatchLen](#matchlen) | Returns the length of a match found in a search string. |
+| [MatchPos](#matchpos) | Returns the position in a search string where a match occurs. |
+| [MatchValue](#matchvalue) | Returns the value or text of a match found in a search string. |
+| [Multiline](#multiline) | Sets or returns a boolean value that indicates whether or not to search in strings across multiple lines. |
+| [Pattern](#pattern) | Sets or returns a boolean value that indicates whether or not to search in strings across multiple lines. |
+| [SubMatchesCount](#submatchescount) | Returns the number of submatches. |
 
 ### Methods
 
@@ -50,20 +48,7 @@ DESTRUCTOR CRegExp
 | [SubMatchValue](#submatchvalue) | Retrieves the content of the specified submatch. |
 | [Test](#test) | Executes a regular expression search against a specified string and returns a boolean value that indicates if a pattern match was found. |
 
-### Properties
-
-| Name  | Description |
-| ---------- | ----------- |
-| [Global](#global) | Sets or returns a boolean value that indicates if a pattern should match all occurrences in an entire search string or just the first one. |
-| [IgnoreCase](#ignorecase) | Sets or returns a boolean value that indicates if a pattern search is case-sensitive or not. |
-| [MatchLen](#matchlen) | Returns the length of a match found in a search string. |
-| [MatchPos](#matchpos) | Returns the position in a search string where a match occurs. |
-| [MatchValue](#matchvalue) | Returns the value or text of a match found in a search string. |
-| [Multiline](#multiline) | Sets or returns a boolean value that indicates whether or not to search in strings across multiple lines. |
-| [Pattern](#pattern) | Sets or returns a boolean value that indicates whether or not to search in strings across multiple lines. |
-| [SubMatchesCount](#submatchescount) | Returns the number of submatches. |
-
-# <a name="Execute"></a>Execute
+# <a name="execute"></a>Execute
 
 Executes a regular expression search against a specified string.
 
@@ -123,94 +108,49 @@ END IF
 Extracts a substring using VBScript regular expressions search patterns.
 
 ```
-FUNCTION Extract (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
-   BYVAL bGlobal AS BOOLEAN = FALSE, BYVAL bMultiline AS BOOLEAN = FALSE) AS CBSTR
+FUNCTION Extract (BYREF cbsSourceString AS CBSTR) AS CBSTR
+FUNCTION Extract (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR) AS CBSTR
 ```
-```
-FUNCTION Extract (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
-   BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = FALSE, _
-   BYVAL bMultiline AS BOOLEAN = FALSE) AS CBSTR
-```
-```
-FUNCTION Extract (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR, _
-   BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS CBSTR
-```
-```
-FUNCTION Extract (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR, _
-   BYREF cbsPattern AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS CBSTR
-```
-
 | Parameter  | Description |
 | ---------- | ----------- |
 | *nStart* | The position in the string at which the search will begin. The first character starts at position 1. |
 | *cbsSourceString* | The text to be parsed. |
-| *cbsPattern* | The pattern to match. |
-| *bIgnoreCase* | TRUE or FALSE. Indicates if a pattern search is case-sensitive or not. |
-| *bGlobal* | TRUE or FALSE. Indicates if a pattern should match all occurrences in an entire search string or just the first one. |
-| *bMultiline* | TRUE or FALSE. Whether or not to search in strings across multiple lines. |
 
 #### Return value
 
-CBSTR. The retrieved string.
+CBSTR. The extracted string.
 
 #### Usage examples
 
 ```
 DIM pRegExp AS CRegExp
+pRegExp.Pattern = "[a-z][0-9][0-9][0-9]"
 DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
-DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
-DIM cbs AS CBSTR = pRegExp.Extract(cbsText, cbsPattern)
+DIM cbs AS CBSTR = pRegExp.Extract(cbsText)
 ' Output: a234
 ```
 ```
 DIM pRegExp AS CRegExp
+pRegExp.Pattern = "[a-z][0-9][0-9][0-9]"
 DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
-DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
-DIM cbs AS CBSTR = pRegExp.Extract(15, cbsText, cbsPattern)
+DIM cbs AS CBSTR = pRegExp.Extract(15, cbsText)
 ' Output: x345
 ```
-```
-DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
-DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
-DIM cbs AS CBSTR = CRegExp(cbsPattern).Extract(cbsText)
-' Output: a234
-```
-```
-' // Ignore case
-DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
-DIM cbsText AS CBSTR = "blah blah A234 blah blah x345 blah blah"
-DIM cbs AS CBSTR = CRegExp(cbsPattern).Extract(cbsText, TRUE)
-' Output: A234
-```
-
 # <a name="Find"></a>Find
 
 Find function with VBScript regular expressions search patterns.
 
 ```
-FUNCTION Find (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS LONG
+FUNCTION Find (BYREF cbsSourceString AS CBSTR) AS LONG
 ```
 ```
-FUNCTION Find (BYREF cbsSourceString AS CBSTR, _
-   BYREF cbsPattern AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS LONG
+FUNCTION Find (BYREF cbsSourceString AS CBSTR) AS LONG
+FUNCTION Find (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR) AS LONG
 ```
-```
-FUNCTION Find (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR, _
-   BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS LONG
-```
-```
-FUNCTION Find (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR, _
-   BYREF cbsPattern AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE) AS LONG
-```
-
 | Parameter  | Description |
 | ---------- | ----------- |
 | *nStart* | The position in the string at which the search will begin. The first character starts at position 1. |
 | *cbsSourceString* | The text to be parsed. |
-| *cbsPattern* | The pattern to match. |
-| *bIgnoreCase* | TRUE or FALSE. Indicates if a pattern search is case-sensitive or not. |
-| *bGlobal* | TRUE or FALSE. Indicates if a pattern should match all occurrences in an entire search string or just the first one. |
-| *bMultiline* | TRUE or FALSE. Whether or not to search in strings across multiple lines. |
 
 #### Return value
 
@@ -221,26 +161,18 @@ Returns the position of the match or 0 if not found. The length of the match can
 ```
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
-DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
-DIM nPos AS LONG = pRegExp.Find(cbsText, cbsPattern)
+pRegExp.Pattern = "[a-z][0-9][0-9][0-9]"
+DIM nPos AS LONG = pRegExp.Find(cbsText)
+print nPos
 ' Output: 11
 ```
 ```
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
-DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
-DIM nPos AS LONG = pRegExp.Find(15, cbsText, cbsPattern)
+pRegExp.Pattern = "[a-z][0-9][0-9][0-9]"
+DIM nPos AS LONG = pRegExp.Find(15, cbsText)
+print nPos
 ' Output: 26
-```
-```
-DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
-DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
-DIM nPos AS LONG = CRegExp(cbsPattern).Find(cbsText)
-' Output: 11
-```
-```
-DIM nPos AS LONG = CRegExp("[a-z][0-9][0-9][0-9]").Find("blah blah a234 blah blah x345 blah blah")
-' Output: 11
 ```
 
 # <a name="FindEx"></a>FindEx
@@ -248,22 +180,12 @@ DIM nPos AS LONG = CRegExp("[a-z][0-9][0-9][0-9]").Find("blah blah a234 blah bla
 Global, multiline find function with VBScript regular expressions search patterns.
 
 ```
-FUNCTION FindEx (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
-   BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = TRUE) AS CBSTR
-```
-```
-FUNCTION FindEx (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
-   BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, _
-   BYVAL bMultiline AS BOOLEAN = TRUE) AS CBSTR
+FUNCTION FindEx (BYREF cbsSourceString AS CBSTR) AS CBSTR
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
 | *cbsSourceString* | The text to be parsed. |
-| *cbsPattern* | The pattern to match. |
-| *bIgnoreCase* | TRUE or FALSE. Indicates if a pattern search is case-sensitive or not. |
-| *bGlobal* | TRUE or FALSE. Indicates if a pattern should match all occurrences in an entire search string or just the first one. |
-| *bMultiline* | TRUE or FALSE. Whether or not to search in strings across multiple lines. |
 
 #### Return value
 
@@ -274,15 +196,11 @@ Returns a list of comma separated "index, length" value pairs. The pairs are sep
 ```
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
-DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
-DIM cbsOut AS CBSTR = pRegExp.FindEx(cbsText, cbsPattern)
+pRegExp.Pattern = "[a-z][0-9][0-9][0-9]"
+DIM cbsOut AS CBSTR = pRegExp.FindEx(cbsText)
+PRINT cbsOut
 ' Output: 11,4;26,4
-```
-```
-DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
-DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
-DIM cbsOut AS CBSTR = CRegExp(cbsPattern).FindEx(cbsText)
-' Output: 11,4;26,4
+
 ```
 # <a name="GetLastResult"></a>GetLastResult
 
@@ -319,35 +237,35 @@ Since it is a direct pointer, you don't have to release it calling the **Release
 Returns a copy of a string with text removed using a regular expression as the search string.
 
 ```
-FUNCTION Remove (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
-   BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = FALSE) AS CBSTR
-```
-```
-FUNCTION Remove (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
-   BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, _
-   BYVAL bMultiline AS BOOLEAN = FALSE) AS CBSTR
+FUNCTION Remove (BYREF cbsSourceString AS CBSTR) AS CBSTR
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
 | *cbsSourceString* | The main string. |
-| *cbsPattern* | The pattern to be removed. |
-| *bIgnoreCase* | TRUE or FALSE. Indicates if a pattern search is case-sensitive or not. |
-| *bGlobal* | TRUE or FALSE. Indicates if a pattern should match all occurrences in an entire search string or just the first one. |
-| *bMultiline* | TRUE or FALSE. Whether or not to search in strings across multiple lines. |
 
 #### Usage examples
 
 ```
 DIM pRegExp AS CRegExp
-PRINT pRegExp.Remove("abacadabra", "ab") ' - prints "acadra"
-PRINT pRegExp.Remove("abacadabra", "[bAc]", TRUE) ' - prints "dr"
-PRINT pRegExp.Remove("World, worldx, world", $"\bworld\b", TRUE) ' prints ", worldx,"
+pRegExp.Pattern = "ab"
+PRINT pRegExp.Remove("abacadabra")
+' prints "acadra"
 ```
 ```
-PRINT CRegExp("ab").Remove("abacadabra") ' - prints "acadra"
-PRINT CRegExp("[bAc]").Remove("abacadabra", TRUE) ' - prints "dr"
-PRINT CRegExp($"\bworld\b").Remove("World, worldx, world", TRUE) ' prints ", worldx,"
+DIM pRegExp AS CRegExp
+pRegExp.Pattern = "[bAc]"
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = TRUE
+PRINT pRegExp.Remove("abacadabra")
+' prints "dr"
+```
+```
+DIM pRegExp AS CRegExp
+pRegExp.Pattern = "\bworld\b"
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = TRUE
+PRINT pRegExp.Remove("World, worldx, world")
 ```
 
 # <a name="Replace"></a>Replace
@@ -355,28 +273,15 @@ PRINT CRegExp($"\bworld\b").Remove("World, worldx, world", TRUE) ' prints ", wor
 Replaces text found in a regular expression search.
 
 ```
-FUNCTION Replace (BYREF cbsSourceString AS CBSTR, BYREF cvReplaceString AS CVAR, _
-   BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, _
-   BYVAL bMultiline AS BOOLEAN = FALSE) AS CBSTR
-```
-```
-FUNCTION Replace (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
-   BYREF cvReplaceString AS CVAR, BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
-   BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = FALSE) AS CBSTR
+FUNCTION Replace (BYREF cbsSourceString AS CBSTR, BYREF cvReplaceString AS CVAR) AS CBSTR
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
 | *cbsSourceString* | The main string. |
 | *cvReplaceString* | The replacement text string. |
-| *cbsPattern* | The regular string expression being searched for. |
-| *bIgnoreCase* | TRUE or FALSE. Indicates if a pattern search is case-sensitive or not. |
-| *bGlobal* | TRUE or FALSE. Indicates if a pattern should match all occurrences in an entire search string or just the first one. |
-| *bMultiline* | TRUE or FALSE. Whether or not to search in strings across multiple lines. |
 
 #### Remarks
-
-In the first overloaded function, the actual pattern for the text being replaced is set using the Pattern property.
 
 The **Replace** method returns a copy of *cbsSourceString* with the text of *cbsPattern* replaced with *cvsReplaceString*. If no match is found, a copy of *cbsSourceString* is returned unchanged.
 
@@ -408,6 +313,7 @@ DIM cbsText AS CBSTR = "The quick brown fox jumped over the lazy dog."
 ' Make replacement
 DIM cbsRes AS CBSTR = pRegExp.Replace(cbsText, "$3$2$1")
 print cbsRes
+' Outpput: "quick The brown fox jumped over the lazy dog."
 ```
 
 Suppose that you have a telephone directory, and all the phone numbers are formatted like this:
@@ -420,16 +326,8 @@ pRegExp.Pattern = "(\d{3})-(\d{3})-(\d{4})"
 DIM cbsText AS CBSTR = "555-123-4567"
 DIM cbsRes AS CBSTR = pRegExp.Replace(cbsText, "($1) $2-$3")
 print cbsRes
+' Output: "(555) 123-4567"
 ```
---or--
-
-```
-DIM cbsText AS CBSTR = "555-123-4567"
-DIM cbsPattern AS CBSTR = "(\d{3})-(\d{3})-(\d{4})"
-DIM cbsRes AS CBSTR = CRegExp(cbsPattern).Replace(cbsText, "($1) $2-$3")
-print cbsRes
-```
-
 What we have done is to search for 3 digits (\d{3}) followed by a dash, followed by 3 more digits and a dash, followed by 4 digits and add () to the first three digits and change the first dash with a space.  $1, $2, and $3 are examples of a regular expression "back reference." A back reference is simply a portion of the found text that can be saved and then reused.
 
 # <a name="SubMatchValue"></a>SubMatchValue
@@ -450,28 +348,16 @@ FUNCTION SubMatchValue (BYVAL MatchIndex AS LONG = 0, BYVAL SubMatchIndex AS LON
 Executes a regular expression search against a specified string and returns a boolean value that indicates if a pattern match was found.
 
 ```
-FUNCTION Test (BYREF cbsSourceString AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
-   BYVAL bMultiline AS BOOLEAN = FALSE) AS BOOLEAN
-```
-```
-FUNCTION Test (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
-   BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bMultiline AS BOOLEAN = FALSE) AS BOOLEAN
+FUNCTION Test (BYREF cbsSourceString AS CBSTR) AS BOOLEAN
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
 | *cbsSourceString* | The main string. |
-| *cbsPattern* | The regular string expression being searched for. |
-| *bIgnoreCase* | TRUE or FALSE. Indicates if a pattern search is case-sensitive or not. |
-| *bMultiline* | TRUE or FALSE. Whether or not to search in strings across multiple lines. |
 
 #### Return value
 
 BOOLEAN. True if a pattern match is found; False if no match is found.
-
-#### Remarks
-
-In the first overloaded method, the actual pattern for the regular expression search is set using the **Pattern** property. The **Global** property has no effect on the **Test** method.
 
 # <a name="Global"></a>Global
 
@@ -993,12 +879,13 @@ Once the match is found, the search for the next match begins immediately follow
 ```
 #INCLUDE ONCE "Afx/CRegExp.inc"
 USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "My cat found a dead bat over the mat"
-DIM cbsPattern AS CBSTR = $"\b[bcm]at\b"
-'-or- DIM cbsPattern AS CBSTR = $"\b(b|c|m)at\b"
-pRegExp.Execute(cbsText, cbsPattern)
+pRegExp.Pattern = $"\b[bcm]at\b"
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = TRUE
+'-or- pRegPattern = "\b(b|c|m)at\b"
+pRegExp.Execute(cbsText)
 FOR i AS LONG = 0 TO pRegExp.MatchesCount - 1
    print pRegExp.MatchValue(i)
 NEXT
@@ -1007,10 +894,10 @@ NEXT
 As an alternative, we can use the operator "\|":
 
 ```
-DIM cbsPattern AS CBSTR = $"\b(b|c|m)at\b"
+pRegExp.Pattern = $"\b(b|c|m)at\b"
 ```
 
-\\b is a word boundary, \[bcm] one of b, c, or m, followed by at and finally another word boundary (\\b),
+\b is a word boundary, [bcm] one of b, c, or m, followed by at and finally another word boundary (\b),
 
 ```
 Output:
@@ -1022,262 +909,178 @@ mat
 #### Finding variations on words
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "Hello, my name is John Doe, what's your name?"
-DIM cbsPattern AS CBSTR = $"\bJoh?n(athan)? Doe\b"
-pRegExp.Execute(cbsText, cbsPattern)
+pRegExp.Pattern = $"\bJoh?n(athan)? Doe\b"
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = TRUE
+pRegExp.Execute(cbsText)
 IF pRegExp.MatchesCount THEN print pRegExp.MatchValue
+' Output "John Doe"
 ```
 
-\\b is a word boundary (matches whole words only), Jo is the common part of John, Jon and Jonathan, h? is optional (it is followed by the metacharacter ?), n is a letter common in the three names, (anathan)? is an optional group of characters that will match Jonathan, a space followed by Doe, and another word boundary (\\b).
-
-```
-Output:
-John Doe
-```
+\b is a word boundary (matches whole words only), Jo is the common part of John, Jon and Jonathan, h? is optional (it is followed by the metacharacter ?), n is a letter common in the three names, (anathan)? is an optional group of characters that will match Jonathan, a space followed by Doe, and another word boundary (\b).
 
 #### Removing characters
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
-DIM cbs AS CBSTR
-cbs = pRegExp.Remove("abacadabra", "[abc]", TRUE) ' - prints "dr"
-print cbs
+pRegExp.Global = TRUE
+pRegExp.Pattern = "[abc]"
+DIM cbs AS CBSTR = pRegExp.Remove("abacadabra")
+print cbs ' - prints "dr"
 ```
 
 Removes any of the characters, a, b or c, found in the string.
 
-```
-Output:
-dr
-```
-
 #### Removing words
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
-DIM cbs AS CBSTR
-cbs = pRegExp.Remove("abacadabra", "ab")
+pRegExp.Pattern = "ab"
+pRegExp.Global = TRUE
+DIM cbs AS CBSTR = pRegExp.Remove("abacadabra")
 print cbs
+'Output: acadra
 ```
 ```
-Output:
-acadra
-```
-
-```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
-DIM cbs AS CBSTR
-cbs = pRegExp.Remove("World, worldx, world", $"\bworld\b", TRUE)
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = TRUE
+pRegExp.Pattern = $"\bworld\b"
+DIM cbs AS CBSTR = pRegExp.Remove("World, worldx, world")
 print cbs
+' Output: ", worldx,"
 ```
 
-\\b is word boundary. TRUE in the third parameter indicates that it must ignore the case.
-
-```
-Output:
-, worldx,
-```
+\b is word boundary.
 
 #### Replacing characters
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
-DIM cbs AS CBSTR
-cbs = pRegExp.Replace("abacadabra", "[bac]", "*")
+pRegExp.Global = TRUE
+pRegExp.Pattern = "[bac]"
+DIM cbs AS CBSTR = pRegExp.Replace("abacadabra", "*")
 print cbs
+' Output: "*****d**r*"
 ```
 
 Replaces any of the characters, a, b or c, found in the string with an asterisk.
 
-```
-Output:
-*****d**r*
-```
-
 #### Replacing words
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
-DIM cbs AS CBSTR
-cbs = pRegExp.Replace("Hello World", "World", "Earth")
+pRegExp.Global = TRUE
+pRegExp.IgnoreCase = TRUE
+pRegExp.Pattern = "World"
+DIM cbs AS CBSTR = pRegExp.Replace("Hello World", "Earth")
 print cbs
-```
-
-```
-Output:
-Hello, Earth
+' Output: "Hello Earth"
 ```
 
 Replaces any occurrence of two consecutive identical words in a string of text with a single occurrence of the same word. The TRUE in the fourth parameter indicates that the operation is not case sensitive.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "Is is the cost of of gasoline going up up?"
-DIM cbsPattern AS CBSTR = $"\b([a-z]+) \1\b"
-DIM cbs AS CBSTR = pRegExp.Replace(cbsText, cbsPattern, "$1", TRUE)
+pRegExp.Global = TRUE
+pRegExp.IgnoreCase = TRUE
+pRegExp.Pattern = $"\b([a-z]+) \1\b"
+DIM cbs AS CBSTR = pRegExp.Replace(cbsText, "$1")
 print cbs
-```
-
-```
-Output:
-Is the cost of gasoline going up?
+' Output: "Is the cost of gasoline going up?"
 ```
 
 Adds an space after the dots that are immediately followed by a word.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "This is a text.With some dots.Between words. This one not."
-DIM cbsPattern AS CBSTR = "(\.)(\w)"
-DIM cbs AS CBSTR = pRegExp.Replace(cbsText, cbsPattern, "$1 $2")
+pRegExp.Pattern = "(\.)(\w)"
+pRegExp.Global = TRUE
+pRegExp.IgnoreCase = TRUE
+DIM cbs AS CBSTR = pRegExp.Replace(cbsText, "$1 $2")
 print cbs
-```
-
-```
-Output:
-This is a text. With some dots. Between words. This one not."
+' Output: This is a text. With some dots. Between words. This one not."
 ```
 
 Changes the format of a telephone number.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
-PRINT pRegExp.Replace("555-123-4567", "(\d{3})-(\d{3})-(\d{4})", "($1) $2-$3")
-```
-
-```
-Output:
-(555) 123-4567
-```
-
-Swaps to words and removes the comma.
-
-```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
-DIM pRegExp AS CRegExp
-PRINT pRegExp.Replace("0000.34500044", $"\b0{1,}\.", ".")
-```
-
-```
-Output:
-.34500044
+DIM cbsText AS CBSTR = "555-123-4567"
+pRegExp.Pattern = "(\d{3})-(\d{3})-(\d{4})"
+pRegExp.Global = TRUE
+pRegExp.IgnoreCase = TRUE
+DIM cbs AS CBSTR = pRegExp.Replace(cbsText, "($1) $2-$3")
+print cbs
+' Output: (555) 123-4567
 ```
 
 Removes leading zeroes.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
-PRINT pRegExp.Replace("0000.34500044", $"\b0{1,}\.", ".")
-```
-
-```
-Output:
-.34500044
+DIM cbsText AS CBSTR = "0000.34500044"
+pRegExp.Pattern = $"\b0{1,}\."
+pRegExp.Global = TRUE
+pRegExp.IgnoreCase = TRUE
+DIM cbs AS CBSTR = pRegExp.Replace(cbsText, ".")
+print cbs
+' Output: ".34500044"
 ```
 
 Replaces everything between quotes with three asterisks.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "This is a ""quoted"" string"
-DIm cbsPattern AS CBSTR = """[^""]*"""
-PRINT pRegExp.Replace(cbsText, cbsPattern, "***")
-```
-
-```
-Output:
-This is a "***"" string
+pRegExp.Pattern = """[^""]*"""
+pRegExp.Global = TRUE
+DIM cbs AS CBSTR = pRegExp.Replace(cbsText, "***")
+print cbs
+' Output: "This is a "***"" string"
 ```
 
 Replaces a tab with a pipe character.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "This is a " & CHR(9) & " test string"
 'DIM cbsText AS CBSTR = !"This is a \t test string" ' alternative way
-DIm cbsPattern AS CBSTR = $"\t"
-PRINT pRegExp.Replace(cbsText, cbsPattern, "|")
-```
-
-```
-Output:
-This is a | test string
+pRegExp.Pattern = $"\t"
+pRegExp.Global = TRUE
+DIM cbs AS CBSTR = pRegExp.Replace(cbsText, "|")
+print cbs
+' Output: "This is a | test string"
 ```
 
 #### Searching words and substrings
 
-Searches for the first occurence of a word that stars with a letter ans is followed by three numbers. If found, it returns its position.
+Searches for the first occurence of a word that starts with a letter ans is followed by three numbers. If found, it returns its position.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
-DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
-DIM nPos AS LONG = pRegExp.Find(cbsText, cbsPattern)
+pRegExp.Pattern = "[a-z][0-9][0-9][0-9]"
+pRegExp.Global = TRUE
+DIM nPos AS LONG = pRegExp.Find(cbsText)
 PRINT nPos
-```
-
-```
-Output: 11
+' Output: 11
 ```
 
 Searches all the occurences of a word that stars with a letter ans is followed by three numbers. Returns a list of comma separated "index, length" value pairs. The pairs are separated by a semicolon.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
-DIM cbsPattern AS CBSTR = "[a-z][0-9][0-9][0-9]"
-DIM cbsOut AS CBSTR
-cbsOut = pRegExp.FindEx(cbsText, cbsPattern)
-print cbsOut
-```
-
-```
-Output: 11,4; 26,4
+pRegExp.Pattern = "[a-z][0-9][0-9][0-9]"
+pRegExp.Global = TRUE
+DIM cbs AS CBSTR = pRegExp.FindEx(cbsText)
+PRINT cbs
+' Output: 11,4; 26,4
 ```
 
 #### Extracting words and substrings
@@ -1285,110 +1088,81 @@ Output: 11,4; 26,4
 Searches for the first occurrence of a word. Case-sensitive and not global.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "This is a test string"
-DIM cbsPattern AS CBSTR = "test"
-IF pRegExp.Execute(cbsText, cbsPattern, FALSE, FALSE) THEN PRINT pRegExp.MatchValue
-```
-
-```
-Output:
-test
+pRegExp.Pattern = "test"
+pRegExp.Global = TRUE
+IF pRegExp.Execute(cbsText) THEN PRINT pRegExp.MatchValue
+' Output: "test"
 ```
 
 Searches for the first occurrence of a word. Case-insensitive and not global.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "This is a test string"
-DIM cbsPattern AS CBSTR = "Test"
-IF pRegExp.Execute(cbsText, cbsPattern, TRUE, FALSE) THEN PRINT pRegExp.MatchValue
-```
-
-```
-Output:
-test
+pRegExp.Pattern = "test"
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = FALSE
+IF pRegExp.Execute(cbsText) THEN PRINT pRegExp.MatchValue
+' Output: "test"
 ```
 
 Searches for the first occurrence of a substring. Case-sensitive and not global.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "This is a test string"
-DIM cbsPattern AS CBSTR = "is a test"
-IF pRegExp.Execute(cbsText, cbsPattern, FALSE) THEN PRINT pRegExp.MatchValue
-```
-
-```
-Output:
-is a test
+pRegExp.Pattern = "is a test"
+pRegExp.IgnoreCase = FALSE
+pRegExp.Global = FALSE
+IF pRegExp.Execute(cbsText) THEN PRINT pRegExp.MatchValue
+' Output: "is a test"
 ```
 
 Searches for the first occurrence of a substring. Case-insensitive and not global.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "This is a test string"
-DIM cbsPattern AS CBSTR = "is a test"
-IF pRegExp.Execute(cbsText, cbsPattern, TRUE, FALSE) THEN PRINT pRegExp.MatchValue
-```
-
-```
-Output:
-is a test
+pRegExp.Pattern = "is a test"
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = FALSE
+IF pRegExp.Execute(cbsText) THEN PRINT pRegExp.MatchValue
+' Output: "is a test"
 ```
 
 Searches for the all the occurrences of a word. Case-sensitive and global.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "This is a test testx string"
-DIM cbsPattern AS CBSTR = "test"
-IF pRegExp.Execute(cbsText, cbsPattern, FALSE) THEN
+pRegExp.Pattern = "test"
+pRegExp.IgnoreCase = FALSE
+pRegExp.Global = TRUE
+IF pRegExp.Execute(cbsText) THEN
    FOR i AS LONG = 0 TO pRegExp.MatchesCount
       PRINT pRegExp.MatchValue(i)
    NEXT
 END IF
-```
-
-```
-Output:
-test
-test
+' Output:
+' test
+' test
 ```
 
 Searches for the all the occurrences of a word. Case-insensitive and global.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "This is a test testx string"
-DIM cbsPattern AS CBSTR = "Test"
-IF pRegExp.Execute(cbsText, cbsPattern, TRUE) THEN
+pRegExp.Pattern = "test"
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = TRUE
+IF pRegExp.Execute(cbsText) THEN
    FOR i AS LONG = 0 TO pRegExp.MatchesCount
       PRINT pRegExp.MatchValue(i)
    NEXT
 END IF
-```
-
-```
 Output:
 test
 test
@@ -1397,109 +1171,85 @@ test
 Searches for the all the occurrences of a whole word. Case-insensitive and global.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "This is a test testx string"
-DIM cbsPattern AS CBSTR = $"\bTest\b"
-IF pRegExp.Execute(cbsText, cbsPattern, TRUE) THEN
+pRegExp.Pattern = $"\bTest\b"
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = TRUE
+IF pRegExp.Execute(cbsText) THEN
    FOR i AS LONG = 0 TO pRegExp.MatchesCount
       PRINT pRegExp.MatchValue(i)
    NEXT
 END IF
-```
-
-```
-Output:
-test
+' Output: "test"
 ```
 
 Case sensitive, double search (c.t and d.g), whole words. Retrieves cut, cat, i.e. whole words with three letters that begin with c and end with t or begin with d and end with g.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-#INCLUDE ONCE "Afx/CWSTR.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "I have a cat and a dog, because I love cats and dogs"
-DIM cbsPattern AS CBSTR = "c.t|d.g"
-pRegExp.Execute(cbsText, cbsPattern, FALSE)
-FOR i AS LONG = 0 TO pRegExp.MatchesCount - 1
-   PRINT pRegExp.MatchValue(i)
-NEXT
+pRegExp.Pattern = "c.t|d.g"
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = TRUE
+IF pRegExp.Execute(cbsText) THEN
+   FOR i AS LONG = 0 TO pRegExp.MatchesCount - 1
+      PRINT pRegExp.MatchValue(i)
+   NEXT
+END IF
+' Output:
+' cat
+' dog
+' cat
+' dog
 ```
 
-```
-Output:
-cat
-dog
-cat
-dog
-```
-
-Case insensitive, double search (c.t and d.g), whole words. Retrieves cut, cat, i.e. whole words with three letters that begin with c and end with t or begin with d and end with g.
+Case insensitive, double search (c.t and d.g), whole words. Retrieves cat, dog, i.e. whole words with three letters that begin with c and end with t or begin with d and end with g.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-#include once "afx/cwstr.inc"
-USING Afx
-
-' // With this constructor we set the pattern, ignore case and global
-DIM pRegExp AS CRegExp = CRegExp($"\bc.t\b|\bd.g\b", TRUE, TRUE)
-pRegExp.Execute("I have a cat and a dog, because I love cats and dogs")
-FOR i AS LONG = 0 TO pRegExp.MatchCount - 1
-   PRINT pRegExp.MatchValue(i)
-NEXT
-```
-
-```
-Output:
-cat
-dog
-cat
-dog
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "I have a cat and a dog, because I love cats and dogs"
+pRegExp.Pattern = $"\bc.t\b|\bd.g\b"
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = TRUE
+IF pRegExp.Execute(cbsText) THEN
+   FOR i AS LONG = 0 TO pRegExp.MatchesCount - 1
+      PRINT pRegExp.MatchValue(i)
+   NEXT
+END IF
+' Output:
+' cat
+' dog
 ```
 
 We can search for more than a word at the same time.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-#INCLUDE ONCE "Afx/CWSTR.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "The contests will be in January, July and November"
-DIm cbsPattern AS CBSTR = $"\b(january|february|march|april|may|june|july|" & _
+pRegExp.Pattern = $"\b(january|february|march|april|may|june|july|" & _
     $"august|september|october|november|december)\b"
-PRINT pRegExp.Execute(cbsText, cbsPattern, TRUE)
-For i AS LONG = 0 TO pRegExp.MatchesCount - 1
-   PRINT pRegExp.MatchValue(i)
-NEXT
-```
-
-```
-Output:
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = TRUE
+IF pRegExp.Execute(cbsText) THEN
+   FOR i AS LONG = 0 TO pRegExp.MatchesCount - 1
+      PRINT pRegExp.MatchValue(i)
+   NEXT
+END IFOutput:
 January
 July
-September
+November
 ```
 
 Extracts a quoted string.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "29:Sep:2017 ""This is an Example!"""
-DIM cbsPattern AS CBSTR = """.*?"""
-PRINT pRegExp.Execute(cbsText, cbsPattern)
-PRINT pRegExp.MatchValue
-```
-
-```
+pRegExp.Pattern = """.*?"""
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = TRUE
+IF pRegExp.Execute(cbsText) THEN PRINT pRegExp.MatchValue
 Output:
 "This is an Example!"
 ```
@@ -1507,19 +1257,16 @@ Output:
 Extracts all the alphabetic words.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "29:Sep:2017 ""This is an Example!"""
-DIM cbsPattern AS CBSTR = "(?:[a-z][a-z]+)"
-pRegExp.Execute(cbsText, cbsPattern, TRUE)
-FOR i AS LONG = 0 TO pRegExp.MatchesCount - 1
-   PRINT pRegExp.MatchValue(i)
-NEXT
-```
-
-```
+pRegExp.Pattern = "(?:[a-z][a-z]+)"
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = TRUE
+IF pRegExp.Execute(cbsText) THEN
+   FOR i AS LONG = 0 TO pRegExp.MatchesCount - 1
+      PRINT pRegExp.MatchValue(i)
+   NEXT
+END IF
 Output:
 Sep
 This
@@ -1531,17 +1278,12 @@ Example
 Extracts the year.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "29:Sep:2017 ""This is an Example!"""
-DIM cbsPattern AS CBSTR = $"((?:(?:[1]{1}\d{1}\d{1}\d{1})|(?:[2]{1}\d{3})))(?![\d])"
-pRegExp.Execute(cbsText, cbsPattern)
-PRINT pRegExp.MatchValue
-```
-
-```
+pRegExp.Pattern = $"((?:(?:[1]{1}\d{1}\d{1}\d{1})|(?:[2]{1}\d{3})))(?![\d])"
+IF pRegExp.Execute(cbsText) THEN
+   PRINT pRegExp.MatchValue
+END IF
 Output:
 2017
 ```
@@ -1549,19 +1291,15 @@ Output:
 Extracts integers.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "29:Sep:2017 ""This is an Example!"""
-DIM cbsPattern AS CBSTR = $"(\d+)"
-pRegExp.Execute(cbsText, cbsPattern)
-FOR i AS LONG = 0 TO pRegExp.MatchesCount
-   PRINT pRegExp.MatchValue(i)
-NEXT
-```
-
-```
+pRegExp.Pattern = $"(\d+)"
+pRegExp.Global = TRUE
+IF pRegExp.Execute(cbsText) THEN
+   FOR i AS LONG = 0 TO pRegExp.MatchesCount
+      PRINT pRegExp.MatchValue(i)
+   NEXT
+END IF
 Output:
 29
 2017
@@ -1570,22 +1308,23 @@ Output:
 Extracts text between parentheses.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
-
 ' // extract the first match
+DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "blah blah (text beween parentheses) blah blah"
-DIM cbs AS CBSTR = pRegExp.Extract(cbsText, "([^(]*?)(?=\))")
-PRINT cbs
-
-' // extract the first match after the 11th position
-cbsText = "blah (xxx) blah (text beween parentheses) blah blah"
-cbs = pRegExp.Extract(11, cbsText, "([^(]*?)(?=\))")
+pRegExp.Pattern = $"([^(]*?)(?=\))"
+DIM cbs AS CBSTR = pRegExp.Extract(cbsText)
 PRINT cbs
 ```
-
+```
+DIM pRegExp AS CRegExp
+' // extract the first match after the 11th position
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "blah (xxx) blah (text beween parentheses) blah blah"
+pRegExp.Pattern = $"([^(]*?)(?=\))"
+DIM cbs AS CBSTR = pRegExp.Extract(15, cbsText)
+PRINT cbs
+```
 ```
 Output:
 "text between parentheses"
@@ -1594,22 +1333,19 @@ Output:
 Extracts text between curly braces.
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
-
-' // extract the first match
-DIM cbsText AS CBSTR = "blah blah {text beween curly braces} blah blah"
-DIM cbs AS CBSTR = pRegExp.Extract(cbsText, "([^{]*?)(?=\})")
-PRINT cbs
-
-' // extract the first match after the 11th position
-cbsText = "blah (xxx) blah {text beween curly braces} blah blah"
-cbs = pRegExp.Extract(11, cbsText, "([^{]*?)(?=\})")
+DIM cbsText AS CBSTR = "blah (xxx) blah {text beween curly braces} blah blah"
+pRegExp.Pattern = $"([^{]*?)(?=\})"
+DIM cbs AS CBSTR = pRegExp.Extract(cbsText)
 PRINT cbs
 ```
-
+```
+DIM pRegExp AS CRegExp
+DIM cbsText AS CBSTR = "blah (xxx) blah {text beween curly braces} blah blah"
+pRegExp.Pattern = $"([^{]*?)(?=\})"
+DIM cbs AS CBSTR = pRegExp.Extract(15, cbsText)
+PRINT cbs
+```
 ```
 Output:
 "text between curly braces"
@@ -1618,18 +1354,11 @@ Output:
 #### Checking if a string is numeric
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "1.2345678901234567e+029"
-DIM cbsPattern AS CBSTR = "^[\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?$"
-PRINT pRegExp.Test(cbsText, cbsPattern)
-```
-
-```
-Output:
-True
+pRegExp.Pattern = $"^[\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?$"
+PRINT pRegExp.Test(cbsText)
+' Output: True
 ```
 
 ```
@@ -1638,46 +1367,36 @@ Pattern: "^[\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?$"
 
 The initial "^" and the final "$" match the start and the end of the string, to ensure the check spans the whole string.
 
-The "\[\\+\\-]?" part is the inital plus or minus sign with the "?" multiplier that allows zero or one instance of it.
+The "\[\+\-]?" part is the inital plus or minus sign with the "?" multiplier that allows zero or one instance of it.
 
-The "\\d*" is a digit, zero or more times.
+The "\d*" is a digit, zero or more times.
 
-"\\\.?" is the decimal point, zero or one time.
+"\.?" is the decimal point, zero or one time.
 
-The "\\d+" part matches a digit one or more times.
+The "\d+" part matches a digit one or more times.
 
-The "(?:\[Ee]\[\\+\\-]?\\d+)?" matches "e+", "e-", "E+" or "E-" followed by one or more digits, with the "?" multiplier that allows zero or one instance of it.
+The "(?:\[Ee]\[\+\-]?\d+)?" matches "e+", "e-", "E+" or "E-" followed by one or more digits, with the "?" multiplier that allows zero or one instance of it.
 
 #### Checking if an url is valid
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "https://www.google.es/search?q=msdn+jscript+check+if+an+url+is+valid&client=firefox-b&dcr=0&ei=hM_OWfb2BMzSU-mhr7AG&start=20&sa=N&biw=947&bih=394"
-DIM cbsPattern AS CBSTR = "(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?"
-PRINT pRegExp.Test(cbsText, cbsPattern)
+pRegExp.Pattern = $"(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?"
+PRINT pRegExp.Test(cbsText)
+' Output: True
 ```
 
 #### Breaking down an URI in its parts
 
 ```
-#INCLUDE ONCE "Afx/CRegExp.inc"
-USING Afx
-
-' // Breaks down a URI down to the protocol (ftp, http, and so on), the domain
-' // address, and the page/path
 DIM pRegExp AS CRegExp
 DIM cbsText AS CBSTR = "http://msdn.microsoft.com:80/scripting/default.htm"
-DIM cbsPattern AS CBSTR = $"(\w+):\/\/([^/:]+)(:\d*)?([^# ]*)"
-pRegExp.Execute(cbsText, cbsPattern)
+pRegExp.Pattern = $"(\w+):\/\/([^/:]+)(:\d*)?([^# ]*)"
+PRINT pRegExp.Execute(cbsText)
 FOR i AS LONG = 0 TO pRegExp.SubMatchesCount - 1
    PRINT pRegExp.SubMatchValue(0, i)
 NEXT
-```
-
-```
 Output:
 http
 msdn.microsoft.com
