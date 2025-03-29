@@ -48,7 +48,18 @@ With regular expressions, you can:
 | [SubMatchValue](#submatchvalue) | Retrieves the content of the specified submatch. |
 | [Test](#test) | Executes a regular expression search against a specified string and returns a boolean value that indicates if a pattern match was found. |
 
-# <a name="execute"></a>Execute
+### <a name="getlastresult"></a>GetLastResult
+
+Returns the last result code.
+
+```
+FUNCTION GetLastResult () AS HRESULT
+```
+#### Return value
+
+S_OK (0) on success, or an error code on failure.
+
+### <a name="execute"></a>Execute
 
 Executes a regular expression search against a specified string.
 
@@ -103,7 +114,7 @@ ELSE
 END IF
 ```
 
-# <a name="Extract"></a>Extract
+### <a name="extract"></a>Extract
 
 Extracts a substring using VBScript regular expressions search patterns.
 
@@ -136,7 +147,7 @@ DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
 DIM cbs AS CBSTR = pRegExp.Extract(15, cbsText)
 ' Output: x345
 ```
-# <a name="Find"></a>Find
+### <a name="find"></a>Find
 
 Find function with VBScript regular expressions search patterns.
 
@@ -175,7 +186,7 @@ print nPos
 ' Output: 26
 ```
 
-# <a name="FindEx"></a>FindEx
+### <a name="findex"></a>FindEx
 
 Global, multiline find function with VBScript regular expressions search patterns.
 
@@ -200,20 +211,9 @@ pRegExp.Pattern = "[a-z][0-9][0-9][0-9]"
 DIM cbsOut AS CBSTR = pRegExp.FindEx(cbsText)
 PRINT cbsOut
 ' Output: 11,4;26,4
-
 ```
-# <a name="GetLastResult"></a>GetLastResult
 
-Returns the last result code.
-
-```
-FUNCTION GetLastResult () AS HRESULT
-```
-#### Return value
-
-S_OK (0) on success, or an error code on failure.
-
-# <a name="MatchCount"></a>MatchCount
+### <a name="matchcount"></a>MatchCount
 
 Returns the number of matches found.
 
@@ -221,7 +221,7 @@ Returns the number of matches found.
 FUNCTION MatchCount () AS LONG
 ```
 
-# <a name="RegExpPtr"></a>RegExpPtr
+### <a name="regexpptr"></a>RegExpPtr
 
 Returns a direct pointer to the Afx_IRegExp2 interface.
 
@@ -232,7 +232,7 @@ FUNCTION RegExpPtr () AS Afx_IRegExp2 PTR
 
 Since it is a direct pointer, you don't have to release it calling the **Release** method.
 
-# <a name="Remove"></a>Remove
+### <a name="remove"></a>Remove
 
 Returns a copy of a string with text removed using a regular expression as the search string.
 
@@ -268,7 +268,7 @@ pRegExp.Global = TRUE
 PRINT pRegExp.Remove("World, worldx, world")
 ```
 
-# <a name="Replace"></a>Replace
+### <a name="replace"></a>Replace
 
 Replaces text found in a regular expression search.
 
@@ -330,7 +330,7 @@ print cbsRes
 ```
 What we have done is to search for 3 digits (\d{3}) followed by a dash, followed by 3 more digits and a dash, followed by 4 digits and add () to the first three digits and change the first dash with a space.  $1, $2, and $3 are examples of a regular expression "back reference." A back reference is simply a portion of the found text that can be saved and then reused.
 
-# <a name="SubMatchValue"></a>SubMatchValue
+### <a name="submatchvalue"></a>SubMatchValue
 
 Retrieves the content of the specified submatch.
 
@@ -343,7 +343,7 @@ FUNCTION SubMatchValue (BYVAL MatchIndex AS LONG = 0, BYVAL SubMatchIndex AS LON
 | *MatchIndex* | 0-based index of the match to retrieve. |
 | *SubMatchIndex* | 0-based index of the submatch to retrieve. |
 
-# <a name="Test"></a>Test
+### <a name="test"></a>Test
 
 Executes a regular expression search against a specified string and returns a boolean value that indicates if a pattern match was found.
 
@@ -359,7 +359,7 @@ FUNCTION Test (BYREF cbsSourceString AS CBSTR) AS BOOLEAN
 
 BOOLEAN. True if a pattern match is found; False if no match is found.
 
-# <a name="Global"></a>Global
+### <a name="global"></a>Global
 
 Sets or returns a boolean value that indicates if a pattern should match all occurrences in an entire search string or just the first one.
 
@@ -372,7 +372,7 @@ PROPERTY Global (BYVAL bGlobal AS BOOLEAN)
 | ---------- | ----------- |
 | *bGlobal* | True if the search applies to the entire string, False if it does not. Default is False. |
 
-# <a name="IgnoreCase"></a>IgnoreCase
+### <a name="ignorecase"></a>IgnoreCase
 
 Sets or returns a boolean value that indicates if a pattern search is case-sensitive or not.
 
@@ -385,7 +385,7 @@ PROPERTY IgnoreCase (BYVAL bIgnoreCase AS BOOLEAN)
 | ---------- | ----------- |
 | *bIgnoreCase* | False if the search is case-sensitive, True if it is not. Default is False. |
 
-# <a name="MatchLen"></a>MatchLen
+### <a name="matchlen"></a>MatchLen
 
 Returns the length of a match found in a search string.
 
@@ -397,7 +397,7 @@ PROPERTY MatchLen (BYVAL index AS LONG = 0) AS LONG
 | ---------- | ----------- |
 | *index* | 0-based index of the match to retrieve. |
 
-# <a name="MatchPos"></a>MatchPos
+### <a name="matchpos"></a>MatchPos
 
 Returns the position in a search string where a match occurs.
 
@@ -413,7 +413,7 @@ PROPERTY MatchPos (BYVAL index AS LONG = 0) AS LONG
 
 The **MatchPos** property uses a zero-based offset from the beginning of the search string. In other words, the first character in the string is identified as character zero (0).
 
-# <a name="MatchValue"></a>MatchValue
+### <a name="matchvalue"></a>MatchValue
 
 Returns the value or text of a match found in a search string.
 
@@ -425,7 +425,7 @@ PROPERTY MatchValue (BYVAL index AS LONG = 0) AS CBSTR
 | ---------- | ----------- |
 | *index* | 0-based index of the match to retrieve. |
 
-# <a name="Multiline"></a>Multiline
+### <a name="multiline"></a>Multiline
 
 Sets or returns a boolean value that indicates whether or not to search in strings across multiple lines.
 
@@ -438,7 +438,7 @@ PROPERTY Multiline (BYVAL bMultiline AS BOOLEAN)
 | ---------- | ----------- |
 | *bMultiline* | True if the search is performed across multiple lines, False if it is not. Default is False. |
 
-# <a name="Pattern"></a>Pattern
+### <a name="pattern"></a>Pattern
 
 Sets or returns the regular expression pattern being searched for.
 
@@ -518,7 +518,7 @@ PRINT "Press any key..."
 SLEEP
 ```
 
-# <a name="SubMatchesCount"></a>SubMatchesCount
+### <a name="submatchescount"></a>SubMatchesCount
 
 Returns the number of submatches.
 
