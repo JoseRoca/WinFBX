@@ -1093,7 +1093,6 @@ DIM cbs AS CBSTR = pRegExp.Replace(cbsText, "($1) $2-$3")
 print cbs
 ' Output: (555) 123-4567
 ```
----
 
 Removes leading zeroes.
 
