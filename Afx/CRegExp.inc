@@ -53,6 +53,7 @@ TYPE CRegExp
       DECLARE FUNCTION SubMatchValue (BYVAL MatchIndex AS LONG = 0, BYVAL SubMatchIndex AS LONG = 0) AS CVAR
       DECLARE FUNCTION Test (BYREF cbsSourceString AS CBSTR) AS BOOLEAN
       DECLARE FUNCTION Find (BYREF cbsSourceString AS CBSTR) AS LONG
+      DECLARE FUNCTION Find (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR) AS LONG
       DECLARE FUNCTION FindEx (BYREF cbsSourceString AS CBSTR) AS CBSTR
       DECLARE FUNCTION Replace (BYREF cbsSourceString AS CBSTR, BYREF cvReplaceString AS CVAR) AS CBSTR
       DECLARE FUNCTION Remove (BYREF cbsSourceString AS CBSTR) AS CBSTR
@@ -196,7 +197,6 @@ END PROPERTY
 ' ========================================================================================
 ' * Executes a regular expression search against a specified string.
 ' Example:
-' #define UNICODE
 ' #include once "Afx/CRegExp.inc"
 ' USING Afx
 ' DIM pRegExp AS CRegExp
@@ -371,6 +371,32 @@ END FUNCTION
 ' ========================================================================================
 
 ' ========================================================================================
+' Find function with VBScript regular expressions search patterns.
+' Parameters:
+' - nStart: The position in the string at which the search will begin. The first character
+'   starts at position 1.
+' - cbsSourceString = The text to be parsed.
+' Return value:
+' - Returns the position of the match or 0 if not found.
+'   The length of the match can be retrieved calling pRegExp.MatchLen.
+' Usage example:
+'   DIM pRegExp AS CRegExp
+'   DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
+'   pRegExp.Pattern = "[a-z][0-9][0-9][0-9]"
+'   DIM nPos AS LONG = pRegExp.Find(15, cbsText)
+' ========================================================================================
+PRIVATE FUNCTION CRegExp.Find (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR) AS LONG
+   IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN 0
+   IF m_pMatches THEN AfxSafeRelease(m_pMatches)
+   DIM pbstr AS BSTR
+   IF nStart < 0 OR nStart > SysStringLen(cbsSourceString.m_bstr) THEN RETURN 0
+   DIM cbs AS CBSTR = cbsSourceString.MidChars(nStart)
+   this.SetResult(m_pRegExp->Execute(cbs, cast(Afx_IDispatch PTR PTR, @m_pMatches)))
+   RETURN this.MatchPos(0) + nStart - 1
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
 ' * Global, multiline find function with VBScript regular expressions search patterns.
 ' Parameters:
 ' - cbsSourceString = The text to be parsed.
@@ -412,6 +438,28 @@ PRIVATE FUNCTION CRegExp.FindEx (BYREF cbsSourceString AS CBSTR) AS CBSTR
       AfxSafeRelease(pMatches)
    END IF
    RETURN cbsOut
+END FUNCTION
+' ========================================================================================
+
+' ========================================================================================
+' * Returns a copy of a string with text removed using a regular expression as the search string.
+' Parameters:
+' - cbsSourceString : The source string.
+' Examples:
+' DIM pRegExp AS CRegExp
+' pRegExp.Pattern = "ab"
+' PRINT pRegExp.Remove("abacadabra", "ab") - prints "acadra"
+' ----------------------------------------------------------------------------------------
+' DIM pRegExp AS CRegExp
+' pRegExp.Pattern = "[bAc]"
+' pRegExp.IgnoreCase = TRUE
+' PRINT pRegExp.Remove("abacadabra", "[bAc]", TRUE) - prints "dr"
+' ========================================================================================
+PRIVATE FUNCTION CRegExp.Remove (BYREF cbsSourceString AS CBSTR) AS CBSTR
+   DIM bstrDestString AS AFX_BSTR
+   IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN bstrDestString
+   this.SetResult(m_pRegExp->Replace(cbsSourceString, CVAR(""), @bstrDestString))
+   RETURN bstrDestString
 END FUNCTION
 ' ========================================================================================
 
@@ -480,7 +528,7 @@ END FUNCTION
 ' Usage example:
 '   DIM pRegExp AS CRegExp
 '   DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
-'   pRegExo.Pattern = "[a-z][0-9][0-9][0-9]"
+'   pRegExp.Pattern = "[a-z][0-9][0-9][0-9]"
 '   DIM cbs AS CBSTR = pRegExp.Extract(15, cbsText)
 '   PRINT cbs   ' prints "x345"
 ' ========================================================================================
@@ -496,5 +544,7 @@ PRIVATE FUNCTION CRegExp.Extract (BYVAL nStart AS LONG, BYREF cbsSourceString AS
    RETURN MID(cbsSourceString, nPos + nStart - 1, nLen)
 END FUNCTION
 ' ========================================================================================
+
+
 
 END NAMESPACE
