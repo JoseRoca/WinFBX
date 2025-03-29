@@ -1,6 +1,6 @@
 # CRegExp Class
 
-**CRegExp** is a wrapper class on top of the VB Script Regular Expressions.
+`CRegExp` is a wrapper class on top of the VB Script Regular Expressions.
 
 In a typical search and replace operation, you must provide the exact text for which you are searching. That technique may be adequate for simple search and replace tasks in static text, but it lacks flexibility and makes searching dynamic text difficult, if not impossible.
 
@@ -18,100 +18,90 @@ With regular expressions, you can:
 
 **Recipes**: [Recipes](#Recipes)
 
-### Constructors
+## Constructor
+
+Intializes the COM library and creates an instance of the `CRegExp` class.
 
 ```
-CONSTRUCTOR CRegExp (BYREF cbsPattern AS CBSTR, BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
-   BYVAL bGlobal AS BOOLEAN = FALSE, BYVAL bMultiline AS BOOLEAN = FALSE)
+CONSTRUCTOR CRegExp
 ```
-```
-CONSTRUCTOR CRegExp (BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
-   BYVAL bGlobal AS BOOLEAN = FALSE, BYVAL bMultiline AS BOOLEAN = FALSE)
-```
+## Destructor
 
-| Parameter  | Description |
-| ---------- | ----------- |
-| *cbsPattern* | The regular expression pattern being searched for. |
-| *bIgnoreCase* | TRUE or FALSE. Indicates if a pattern search is case-sensitive or not. |
-| *bGlobal* | TRUE or FALSE. Indicates if a pattern should match all occurrences in an entire search string or just the first one. |
-| *bMultiline* | TRUE or FALSE. Whether or not to search in strings across multiple lines. |
+Destroys the class and uninitializes the COM library.
 
 ```
-CONSTRUCTOR CRegExp (BYREF pRegExp AS CRegExp)
+DESTRUCTOR CRegExp
 ```
-
-| Parameter  | Description |
-| ---------- | ----------- |
-| *pRegExp* | Reference to an instance of a **CRegExp** class to be cloned. |
 
 ### Methods
 
 | Name  | Description |
 | ---------- | ----------- |
-| [Execute](#Execute) | Executes a regular expression search against a specified string. |
-| [Extract](#Extract) | Extracts a substring using VBScript regular expressions search patterns. |
-| [Find](#Find) | Find function with VBScript regular expressions search patterns. |
-| [FindEx](#FindEx) | Global, multiline find function with VBScript regular expressions search patterns. |
-| [GetLastResult](#GetLastResult) | Returns the last result code. |
-| [MatchCount](#MatchCount) | Returns the number of matches found. |
-| [RegExpPtr](#RegExpPtr) | Returns a direct pointer to the **Afx_IRegExp2** interface. |
-| [Remove](#Remove) | Returns a copy of a string with text removed using a regular expression as the search string. |
-| [Replace](#Replace) | Replaces text found in a regular expression search. |
-| [SubMatchValue](#SubMatchValue) | Retrieves the content of the specified submatch. |
-| [Test](#Test) | Executes a regular expression search against a specified string and returns a boolean value that indicates if a pattern match was found. |
+| [Execute](#execute) | Executes a regular expression search against a specified string. |
+| [Extract](#extract) | Extracts a substring using VBScript regular expressions search patterns. |
+| [Find](#find) | Find function with VBScript regular expressions search patterns. |
+| [FindEx](#findex) | Global, multiline find function with VBScript regular expressions search patterns. |
+| [GetLastResult](#getlastresult) | Returns the last result code. |
+| [GetErrorInfo](#geterrprinfo) | Returns a description of the last result code. |
+| [MatchCount](#matchcount) | Returns the number of matches found. |
+| [RegExpPtr](#regexpptr) | Returns a direct pointer to the **Afx_IRegExp2** interface. |
+| [Remove](#remove) | Returns a copy of a string with text removed using a regular expression as the search string. |
+| [Replace](#replace) | Replaces text found in a regular expression search. |
+| [SubMatchValue](#submatchvalue) | Retrieves the content of the specified submatch. |
+| [Test](#test) | Executes a regular expression search against a specified string and returns a boolean value that indicates if a pattern match was found. |
 
 ### Properties
 
 | Name  | Description |
 | ---------- | ----------- |
-| [Global](#Global) | Sets or returns a boolean value that indicates if a pattern should match all occurrences in an entire search string or just the first one. |
-| [IgnoreCase](#IgnoreCase) | Sets or returns a boolean value that indicates if a pattern search is case-sensitive or not. |
-| [MatchLen](#MatchLen) | Returns the length of a match found in a search string. |
-| [MatchPos](#MatchPos) | Returns the position in a search string where a match occurs. |
-| [MatchValue](#MatchValue) | Returns the value or text of a match found in a search string. |
-| [Multiline](#Multiline) | Sets or returns a boolean value that indicates whether or not to search in strings across multiple lines. |
-| [Pattern](#Pattern) | Sets or returns a boolean value that indicates whether or not to search in strings across multiple lines. |
-| [SubMatchesCount](#SubMatchesCount) | Returns the number of submatches. |
+| [Global](#global) | Sets or returns a boolean value that indicates if a pattern should match all occurrences in an entire search string or just the first one. |
+| [IgnoreCase](#ignorecase) | Sets or returns a boolean value that indicates if a pattern search is case-sensitive or not. |
+| [MatchLen](#matchlen) | Returns the length of a match found in a search string. |
+| [MatchPos](#matchpos) | Returns the position in a search string where a match occurs. |
+| [MatchValue](#matchvalue) | Returns the value or text of a match found in a search string. |
+| [Multiline](#multiline) | Sets or returns a boolean value that indicates whether or not to search in strings across multiple lines. |
+| [Pattern](#pattern) | Sets or returns a boolean value that indicates whether or not to search in strings across multiple lines. |
+| [SubMatchesCount](#submatchescount) | Returns the number of submatches. |
 
 # <a name="Execute"></a>Execute
 
 Executes a regular expression search against a specified string.
 
 ```
-FUNCTION Execute (BYREF cbsSourceString AS CBSTR, BYREF cvReplaceString AS CVAR, _
-   BYVAL bIgnoreCase AS BOOLEAN = FALSE, BYVAL bGlobal AS BOOLEAN = TRUE, _
-   BYVAL bMultiline AS BOOLEAN = FALSE) AS BOOLEAN
-```
-```
-FUNCTION Execute (BYREF cbsSourceString AS CBSTR, BYREF cbsPattern AS CBSTR, _
-   BYREF cvReplaceString AS CVAR,BYVAL bIgnoreCase AS BOOLEAN = FALSE, _
-   BYVAL bGlobal AS BOOLEAN = TRUE, BYVAL bMultiline AS BOOLEAN = FALSE) AS BOOLEAN
+FUNCTION Execute (BYREF cbsSourceString AS CBSTR) AS BOOLEAN
 ```
 
 | Parameter  | Description |
 | ---------- | ----------- |
 | *cbsSourceString* | The main string. |
-| *cbsPattern* | The regular string expression being searched for. |
-| *cvReplaceString* | The replacement text string. |
-| *bIgnoreCase* | TRUE or FALSE. Indicates if a pattern search is case-sensitive or not.  |
-| *bGlobal* | TRUE or FALSE. Indicates if a pattern should match all occurrences in an entire search string or just the first one. |
-| *bMultiline* | TRUE or FALSE. Whether or not to search in strings across multiple lines. |
-
-#### Remarks
-
-In the first overloaded method, the actual pattern for the regular expression search is set using the **Pattern** property.
 
 #### Return value
 
 BOOLEAN. True on success or False on failure.
 
-#### Example
-
+#### Examples
 ```
-'#CONSOLE ON
+#include once "Afx/CRegExp.inc"
+USING Afx
+DIM pRegExp AS CRegExp
+pRegExp.Pattern = "is."
+pRegExp.IgnoreCase = TRUE
+pRegExp.Global = TRUE
+IF pRegExp.Execute("IS1 is2 IS3 is4") = FALSE THEN
+   PRINT "No match found"
+ELSE
+   DIM nCount AS LONG = pRegExp.MatchesCount
+   FOR i AS LONG = 0 TO nCount - 1
+      PRINT "Value: ", pRegExp.MatchValue(i)
+      PRINT "Position: ", pRegExp.MatchPos(i)
+      PRINT "Length: ", pRegExp.MatchLen(i)
+      PRINT
+   NEXT
+END IF
+```
+```
 #INCLUDE ONCE "Afx/CRegExp.inc"
 USING Afx
-
 DIM pRegExp AS CRegExp
 pRegExp.Pattern = "(\w+)@(\w+)\.(\w+)"
 pRegExp.IgnoreCase = TRUE
@@ -126,10 +116,6 @@ ELSE
       print pRegExp.SubMatchValue(0, i)
    NEXT
 END IF
-
-PRINT
-PRINT "Press any key..."
-SLEEP
 ```
 
 # <a name="Extract"></a>Extract
