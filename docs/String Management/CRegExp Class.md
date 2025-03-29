@@ -1002,6 +1002,8 @@ print cbs ' - prints "dr"
 
 Removes any of the characters, a, b or c, found in the string.
 
+---
+
 #### Removing words
 
 ```
