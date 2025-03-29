@@ -46,6 +46,48 @@ With regular expressions, you can:
 | [SubMatchValue](#submatchvalue) | Retrieves the content of the specified submatch. |
 | [Test](#test) | Executes a regular expression search against a specified string and returns a boolean value that indicates if a pattern match was found. |
 
+## Error and result codes procedures
+
+| Name       | Description |
+| ---------- | ----------- |
+| [GetLastResult](#getlastresult) | Returns the last result code. |
+| [SetResult](#setresult) | Sets the last result code. |
+| [GetErrorInfo](#geterrorinfo) | Returns a localized description of the last result code. |
+
+## <a name="getlastresult"></a>GetLastResult
+
+Returns the last result code
+```
+FUNCTION GetLastResult () AS HRESULT
+   RETURN m_Result
+END FUNCTION
+```
+---
+
+## <a name="setresult"></a>SetResult
+
+Sets the last result code.
+```
+FUNCTION SetResult (BYVAL Result AS HRESULT) AS HRESULT
+   m_Result = Result
+   RETURN m_Result
+END FUNCTION
+```
+| Parameter | Description |
+| --------- | ----------- |
+| *Result* | The **HRESULT** error code returned by the methods. |
+
+---
+
+## <a name="geterrorinfo"></a>GetErrorInfo
+
+Returns a description of the last result code.
+```
+PRIVATE FUNCTION GetErrorInfo (BYVAL nError AS LONG = -1) AS CWSTR
+```
+
+---
+
 ### <a name="execute"></a>Execute
 
 Executes a regular expression search against a specified string.
@@ -100,6 +142,7 @@ ELSE
    NEXT
 END IF
 ```
+---
 
 ### <a name="extract"></a>Extract
 
@@ -134,6 +177,8 @@ DIM cbsText AS CBSTR = "blah blah a234 blah blah x345 blah blah"
 DIM cbs AS CBSTR = pRegExp.Extract(15, cbsText)
 ' Output: x345
 ```
+---
+
 ### <a name="find"></a>Find
 
 Find function with VBScript regular expressions search patterns.
@@ -173,6 +218,8 @@ print nPos
 ' Output: 26
 ```
 
+---
+
 ### <a name="findex"></a>FindEx
 
 Global, multiline find function with VBScript regular expressions search patterns.
@@ -200,6 +247,8 @@ PRINT cbsOut
 ' Output: 11,4;26,4
 ```
 
+---
+
 ### <a name="matchcount"></a>MatchCount
 
 Returns the number of matches found.
@@ -207,6 +256,8 @@ Returns the number of matches found.
 ```
 FUNCTION MatchCount () AS LONG
 ```
+
+---
 
 ### <a name="regexpptr"></a>RegExpPtr
 
@@ -218,6 +269,8 @@ FUNCTION RegExpPtr () AS Afx_IRegExp2 PTR
 #### Remarks
 
 Since it is a direct pointer, you don't have to release it calling the **Release** method.
+
+---
 
 ### <a name="remove"></a>Remove
 
@@ -254,6 +307,7 @@ pRegExp.IgnoreCase = TRUE
 pRegExp.Global = TRUE
 PRINT pRegExp.Remove("World, worldx, world")
 ```
+---
 
 ### <a name="replace"></a>Replace
 
@@ -317,6 +371,8 @@ print cbsRes
 ```
 What we have done is to search for 3 digits (\d{3}) followed by a dash, followed by 3 more digits and a dash, followed by 4 digits and add () to the first three digits and change the first dash with a space.  $1, $2, and $3 are examples of a regular expression "back reference." A back reference is simply a portion of the found text that can be saved and then reused.
 
+---
+
 ### <a name="submatchvalue"></a>SubMatchValue
 
 Retrieves the content of the specified submatch.
@@ -329,6 +385,8 @@ FUNCTION SubMatchValue (BYVAL MatchIndex AS LONG = 0, BYVAL SubMatchIndex AS LON
 | ---------- | ----------- |
 | *MatchIndex* | 0-based index of the match to retrieve. |
 | *SubMatchIndex* | 0-based index of the submatch to retrieve. |
+
+---
 
 ### <a name="test"></a>Test
 
@@ -346,6 +404,8 @@ FUNCTION Test (BYREF cbsSourceString AS CBSTR) AS BOOLEAN
 
 BOOLEAN. True if a pattern match is found; False if no match is found.
 
+---
+
 ### <a name="global"></a>Global
 
 Sets or returns a boolean value that indicates if a pattern should match all occurrences in an entire search string or just the first one.
@@ -358,6 +418,8 @@ PROPERTY Global (BYVAL bGlobal AS BOOLEAN)
 | Parameter  | Description |
 | ---------- | ----------- |
 | *bGlobal* | True if the search applies to the entire string, False if it does not. Default is False. |
+
+---
 
 ### <a name="ignorecase"></a>IgnoreCase
 
@@ -372,6 +434,8 @@ PROPERTY IgnoreCase (BYVAL bIgnoreCase AS BOOLEAN)
 | ---------- | ----------- |
 | *bIgnoreCase* | False if the search is case-sensitive, True if it is not. Default is False. |
 
+---
+
 ### <a name="matchlen"></a>MatchLen
 
 Returns the length of a match found in a search string.
@@ -383,6 +447,8 @@ PROPERTY MatchLen (BYVAL index AS LONG = 0) AS LONG
 | Parameter  | Description |
 | ---------- | ----------- |
 | *index* | 0-based index of the match to retrieve. |
+
+---
 
 ### <a name="matchpos"></a>MatchPos
 
@@ -400,6 +466,8 @@ PROPERTY MatchPos (BYVAL index AS LONG = 0) AS LONG
 
 The **MatchPos** property uses a zero-based offset from the beginning of the search string. In other words, the first character in the string is identified as character zero (0).
 
+---
+
 ### <a name="matchvalue"></a>MatchValue
 
 Returns the value or text of a match found in a search string.
@@ -411,6 +479,8 @@ PROPERTY MatchValue (BYVAL index AS LONG = 0) AS CBSTR
 | Parameter  | Description |
 | ---------- | ----------- |
 | *index* | 0-based index of the match to retrieve. |
+
+---
 
 ### <a name="multiline"></a>Multiline
 
@@ -424,6 +494,8 @@ PROPERTY Multiline (BYVAL bMultiline AS BOOLEAN)
 | Parameter  | Description |
 | ---------- | ----------- |
 | *bMultiline* | True if the search is performed across multiple lines, False if it is not. Default is False. |
+
+---
 
 ### <a name="pattern"></a>Pattern
 
@@ -504,6 +576,7 @@ PRINT
 PRINT "Press any key..."
 SLEEP
 ```
+---
 
 ### <a name="submatchescount"></a>SubMatchesCount
 
@@ -516,6 +589,8 @@ PROPERTY SubMatchesCount (BYVAL index AS LONG = 0) AS LONG
 | Parameter  | Description |
 | ---------- | ----------- |
 | *index* | 0-based index of the match to retrieve. |
+
+---
 
 # <a name="Introduction"></a>Introduction to Regular Expressions
 
