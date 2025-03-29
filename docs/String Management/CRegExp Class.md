@@ -16,7 +16,7 @@ With regular expressions, you can:
 
 **Tutorial**: [Introduction to Regular Expressions](#Introduction)
 
-**Recipes**: [recipes](#Recipes)
+**Recipes**: [Recipes](#recipes)
 
 ### Properties
 
