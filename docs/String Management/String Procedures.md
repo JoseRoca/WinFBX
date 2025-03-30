@@ -581,7 +581,7 @@ FUNCTION AfxStrRemainAny (BYREF wszMainStr AS CONST WSTRING, _
 #### Usage example
 
 ```
-DIM cws AS CWSTR = AfxStrRemainAny("I think, therefore I am", ",")   ' Returns "therefore I am"
+DIM cws AS CWSTR = AfxStrRemainAny("I think, therefore I am", ",")   ' Returns " therefore I am"
 ```
 
 # <a name="AfxStrRemainAnyI"></a>AfxStrRemainAnyI
