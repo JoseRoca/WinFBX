@@ -386,7 +386,6 @@ END FUNCTION
 '   DIM nPos AS LONG = pRegExp.Find(15, cbsText)
 ' ========================================================================================
 PRIVATE FUNCTION CRegExp.Find (BYVAL nStart AS LONG, BYREF cbsSourceString AS CBSTR) AS LONG
-   IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN 0
    IF m_pMatches THEN AfxSafeRelease(m_pMatches)
    DIM pbstr AS BSTR
    IF nStart < 0 OR nStart > SysStringLen(cbsSourceString.m_bstr) THEN RETURN 0
@@ -461,7 +460,6 @@ END FUNCTION
 ' ========================================================================================
 PRIVATE FUNCTION CRegExp.Remove (BYREF cbsSourceString AS CBSTR) AS CBSTR
    DIM bstrDestString AS AFX_BSTR
-   IF m_pRegExp = NULL THEN this.SetResult(E_POINTER): RETURN bstrDestString
    this.SetResult(m_pRegExp->Replace(cbsSourceString, CVAR(""), @bstrDestString))
    RETURN bstrDestString
 END FUNCTION
