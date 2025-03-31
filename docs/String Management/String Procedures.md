@@ -141,7 +141,7 @@ FUNCTION AfxStrDelete (BYREF wszMainStr AS CONST WSTRING, _
 #### Usage example
 
 ```
-DIM cws AS CWSTR = AfxStrDelete("1234567890", 4, 3)   ' Returns 12347890"
+DIM cws AS CWSTR = AfxStrDelete("1234567890", 4, 3)   ' Returns 1237890"
 ```
 
 # <a name="AfxStrExtract"></a>AfxStrExtract
