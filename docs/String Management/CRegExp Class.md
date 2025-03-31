@@ -1068,7 +1068,7 @@ print cbs
 ' Output: "Is the cost of gasoline going up?"
 ```
 
-Adds an space after the dots that are immediately followed by a word.
+Adds a space after the dots that are immediately followed by a word.
 
 ```
 DIM pRegExp AS CRegExp
