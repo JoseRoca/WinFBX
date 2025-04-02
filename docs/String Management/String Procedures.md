@@ -1145,6 +1145,10 @@ For a complete list see: [LCMapStringEx function](https://docs.microsoft.com/en-
 
 The string conversion functions available in FreeBasic are not fully suitable for some languages. For example, the Turkish word "karışıklığı" is uppercased as "KARıŞıKLıĞı" instead of "KARIŞIKLIĞI", and "KARIŞIKLIĞI" is lowercased to "karişikliği" instead of "karışıklığı". Notice the "ı", that is not an "i".
 
+For Turkey, use:
+AfxStrUcase("karışıklığı", "tr-TR")
+AfxStrLCase("KARIŞIKLIĞI", "tr-TR")
+
 #### Return value
 
 The uppercased string.
