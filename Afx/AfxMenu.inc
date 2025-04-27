@@ -317,6 +317,7 @@ END FUNCTION
 ' Removes the system menu close option and disables the X button.
 ' Parameter: hwnd = Handle of the window that owns the menu.
 ' Return value: TRUE of FALSE.
+' Note: To restore the close menu, call GetSystemMenu(hwnd, TRUE)
 ' ========================================================================================
 PRIVATE FUNCTION AfxRemoveCloseMenu (BYVAL hwnd AS HWND) AS BOOLEAN
    ' // Get the system menu handle
@@ -469,7 +470,7 @@ PRIVATE FUNCTION AfxGetMenuFont (BYVAL plfw AS LOGFONTW PTR) AS BOOLEAN
    DIM ncm AS NONCLIENTMETRICSW
    IF plfw = NULL THEN RETURN FALSE
    IF AfxWindowsVersion >= 6 THEN ncm.cbSize = 504 ELSE ncm.cbSize = 500
-   IF SystemParametersInfoW(SPI_GETNONCLIENTMETRICS, SIZEOF(ncm), @ncm, 0) = 0 THEN RETURN FALSE
+   IF SystemParametersInfoW(SPI_GETNONCLIENTMETRICS, SIZEOF(ncm), @ncm, 0) <> 0 THEN RETURN FALSE
    *plfw = ncm.lfMenuFont
    RETURN TRUE
 END FUNCTION
