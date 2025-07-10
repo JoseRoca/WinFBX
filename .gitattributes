@@ -28,6 +28,7 @@
 *.exe binary
 *.dll binary
 *.lib binary
+*.avi binary
 
 # Standard to msysgit
 *.doc	 diff=astextplain
