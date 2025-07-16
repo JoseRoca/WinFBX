@@ -100,11 +100,11 @@ FUNCTION GetDouble (BYREF wszSectionName AS WSTRING, _
 | ---------- | ----------- |
 | *wszSectionName* | The name of the section. |
 | *wszKeyName* | The name of the key. |
-| *nDefaultValue* | A default value to be returned if the key key cannot be found in the initialization file. |
+| *nDefaultValue* | A default value to be returned if the key cannot be found in the initialization file. |
 
 #### Return value
 
-DOUBLE. The retrieved value. If the key key cannot be found in the initialization file, the default value is returned.
+DOUBLE. The retrieved value. If the key cannot be found in the initialization file, the default value is returned.
 
 # <a name="GetInt"></a>GetInt
 
@@ -119,11 +119,11 @@ FUNCTION GetInt (BYREF wszSectionName AS WSTRING, _
 | ---------- | ----------- |
 | *wszSectionName* | The name of the section. |
 | *wszKeyName* | The name of the key. |
-| *nDefaultValue* | A default value to be returned if the key key cannot be found in the initialization file. |
+| *nDefaultValue* | A default value to be returned if the key cannot be found in the initialization file. |
 
 #### Return value
 
-LONG. The retrieved value. If the key key cannot be found in the initialization file, the default value is returned.
+LONG. The retrieved value. If the key cannot be found in the initialization file, the default value is returned.
 
 # <a name="GetKeyNames"></a>GetKeyNames
 
@@ -211,11 +211,11 @@ FUNCTION GetString (BYREF wszSectionName AS WSTRING, _
 | ---------- | ----------- |
 | *wszSectionName* | The name of the section. |
 | *wszKeyName* | The name of the key. |
-| *wszDefaultValue* | A default string. If the key key cannot be found in the initialization file, the default string is returned. Avoid specifying a default string with trailing blank characters. The function inserts a null character in the returned buffer to strip any trailing blanks. |
+| *wszDefaultValue* | A default string. If the key cannot be found in the initialization file, the default string is returned. Avoid specifying a default string with trailing blank characters. The function inserts a null character in the returned buffer to strip any trailing blanks. |
 
 #### Return value
 
-CWSTR. The retrieved string. If the key key cannot be found in the initialization file, the default value is returned.
+CWSTR. The retrieved string. If the key cannot be found in the initialization file, the default value is returned.
 
 # <a name="WriteValue"></a>WriteValue
 
